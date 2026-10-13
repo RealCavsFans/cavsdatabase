@@ -1,0 +1,1028 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Cleveland Cavaliers reference: record, schedule, roster, salary cap, contracts, key dates, injuries and the Cleveland Charge.">
+<title>cavsdatabase.com</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='2' y='2' width='96' height='96' rx='18' fill='%237A1F33'/%3E%3Cpath d='M16 14H36C70 14 86 32 86 50S70 86 36 86H16Z' stroke='%23F2B231' stroke-width='10' stroke-linejoin='round' fill='none'/%3E%3Cpath d='M48 38A13 13 0 1 0 48 62' stroke='%23FFFFFF' stroke-width='10' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Saira+Condensed:wght@600;700;800&family=Geist+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: white masthead; two-column home (season, next game, dates, cap bar | history, injuries, Charge); section index below. Reference-tool calm: ink, one wine accent, gold on the logo and the timeline swords. */
+:root{
+  --bg:#FFFFFF; --sub:#F5F6F3; --fg:#101419; --fg2:#2F363E; --muted:#5D646C; --line:#E3E5E0; --line2:#EFF0EC;
+  --wine:#7A1F33; --wine-ink:#7A1F33; --gold:#D99A12; --track:#E4E7E1; --tick:#C9CEC6;
+  --z1:#F1F6EE; --z2:#FBF5E6; --z3:#FBEEE6; --z4:#F7E6EA;
+  --sans:'Archivo',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Geist Mono',ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111417; --sub:#171B1F; --fg:#EEF0EC; --fg2:#D2D6DA; --muted:#9AA1A9; --line:#2A3036; --line2:#20252A;
+  --wine-ink:#E3B04B; --track:#252B30; --tick:#3A4148; --z1:#16201A; --z2:#221F15; --z3:#261B16; --z4:#29171D; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111417; --sub:#171B1F; --fg:#EEF0EC; --fg2:#D2D6DA; --muted:#9AA1A9; --line:#2A3036; --line2:#20252A;
+  --wine-ink:#E3B04B; --track:#252B30; --tick:#3A4148; --z1:#16201A; --z2:#221F15; --z3:#261B16; --z4:#29171D; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:400 15px/1.55 var(--sans)}
+a{color:var(--wine-ink);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:20px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.sr{position:absolute;left:-9999px}
+.cap-label{font:700 11px var(--sans);font-stretch:125%;text-transform:uppercase;letter-spacing:.11em;color:var(--muted)}
+
+/* masthead */
+.mast .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;padding-block:16px 10px}
+.brand{display:flex;align-items:center;gap:12px;color:var(--fg)}
+.brand:hover{text-decoration:none}
+.brand svg{width:40px;height:40px;flex:0 0 auto}
+.brand b{font:800 20px var(--sans);font-stretch:125%;letter-spacing:-.01em}
+.brand b span{color:var(--muted);font-weight:500}
+/* search */
+.search{position:relative;display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:8px;padding:0 12px;height:42px;background:var(--sub);flex:0 1 300px;min-width:0}
+.search input{border:0;background:transparent;font:inherit;font-size:14px;width:100%;outline:none;color:var(--fg)}
+.search:focus-within{border-color:var(--fg2)}
+.sres{position:absolute;top:calc(100% + 6px);right:0;width:min(420px,calc(100vw - 40px));max-height:420px;overflow:auto;background:var(--bg);border:1px solid var(--line);box-shadow:0 12px 32px rgba(0,0,0,.12);z-index:20;list-style:none;margin:0;padding:6px 0}
+.sres button{appearance:none;border:0;background:none;width:100%;text-align:left;font:inherit;color:var(--fg);padding:9px 14px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;cursor:pointer}
+.sres button:hover,.sres button:focus{background:var(--sub);outline:none}
+.sres b{font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sres span{grid-column:1;font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sres em{grid-row:1/span 2;grid-column:2;align-self:center;font:700 10px var(--sans);font-stretch:125%;letter-spacing:.08em;text-transform:uppercase;font-style:normal;color:var(--muted)}
+.sres .none{padding:10px 14px;font-size:13px;color:var(--muted)}
+.flash{animation:flash 1.8s ease}
+@keyframes flash{0%,40%{background:var(--z2)}100%{background:transparent}}
+@media (prefers-reduced-motion:reduce){.flash{animation:none;outline:2px solid var(--gold)}}
+
+/* nav */
+.tabs{border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.tabs .wrap{display:flex;gap:4px;overflow-x:auto}
+.tabs button{appearance:none;border:0;background:none;font:600 13px var(--sans);font-stretch:110%;letter-spacing:.02em;color:var(--muted);min-height:48px;padding:0 12px;white-space:nowrap;cursor:pointer}
+.tabs button:first-child{padding-left:0}
+.tabs button[aria-selected="true"]{color:var(--fg);box-shadow:inset 0 -2px 0 var(--fg)}
+
+/* home layout */
+.home{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:32px;padding-block:32px 24px;align-items:start}
+.col{display:flex;flex-direction:column;gap:36px;min-width:0}
+.block-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:2px solid var(--fg);padding-bottom:8px;margin-bottom:18px}
+.block-h h2{margin:0;font:800 13px var(--sans);font-stretch:125%;text-transform:uppercase;letter-spacing:.1em}
+.block-h span{font-size:13px;color:var(--muted);white-space:nowrap}
+
+/* record */
+.record{display:flex;flex-wrap:wrap;align-items:flex-end;gap:24px 40px}
+.wl{display:flex}
+.wl div{display:flex;flex-direction:column;padding-right:26px}
+.wl div+div{padding-left:26px;padding-right:0;border-left:1px solid var(--line)}
+.wl b{font:900 clamp(88px,13vw,150px)/.82 var(--sans);font-stretch:125%;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.wl .w b{color:var(--wine-ink)}
+.wl small{margin-top:12px}
+.splits{flex:1 1 360px;min-width:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:0}
+.splits div{padding:10px 12px 10px 0;border-top:1px solid var(--line)}
+.splits dt{font-size:12px;color:var(--muted)}
+.splits dd{margin:0;font:500 19px var(--mono);font-variant-numeric:tabular-nums}
+.strip-wrap{margin-top:22px}
+.strip{display:grid;grid-template-columns:repeat(82,minmax(0,1fr));gap:2px}
+.strip span{height:30px;background:var(--track)}
+.strip span:nth-child(10n){box-shadow:inset 0 -5px 0 var(--tick)}
+.strip .w{background:var(--wine)}.strip .l{background:var(--fg)}
+.strip-legend{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin-top:8px;font-size:12px;color:var(--muted)}
+.strip-legend i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
+
+/* next game */
+.fin{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;padding:12px 18px;margin-bottom:12px;border:1px solid var(--line);border-left:3px solid var(--wine);color:var(--fg)}
+.fin:hover{text-decoration:none;background:var(--sub)}
+.fin .lr{font:800 14px var(--sans);font-stretch:118%;letter-spacing:.04em}
+.fin .lr.w{color:var(--wine-ink)}
+.fin .ls{font:700 18px var(--mono);font-variant-numeric:tabular-nums}
+.fin .lo{font-size:14px;color:var(--fg2)}
+.fin .lb{margin-left:auto;font-size:13px;color:var(--wine-ink)}
+.next{display:flex;flex-wrap:wrap;border:1px solid var(--line)}
+.next .who{flex:999 1 340px;min-width:0;padding:20px 24px}
+.next h3{margin:6px 0 0;font:800 clamp(24px,3.4vw,32px)/1.1 var(--sans);font-stretch:115%;letter-spacing:-.02em;text-wrap:balance}
+.next .meta{color:var(--muted);margin-top:6px;font-size:14px}
+.count{flex:1 1 140px;background:var(--sub);color:var(--fg);border-left:1px solid var(--line);padding:20px 24px;display:flex;flex-direction:column;justify-content:center}
+.count b{font:800 44px/1 var(--sans);font-stretch:125%;color:var(--wine-ink)}
+.count small{font:700 11px var(--sans);font-stretch:125%;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.next .then{flex-basis:100%;border-top:1px solid var(--line);padding:12px 24px;font-size:14px;color:var(--fg2);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
+
+/* dates — horizontal timeline; past dates drop off automatically */
+.tl{overflow-x:auto;padding:8px 0 6px}
+.tl ol{list-style:none;margin:0;padding:0;display:flex;min-width:max-content;border-top:1px solid var(--fg)}
+.tl li{width:158px;padding-right:18px;position:relative}
+.tl li::before{content:"";position:absolute;top:-6px;left:0;width:2px;height:11px;background:var(--muted)}
+.tl li.cav::before{top:-20px;left:-4px;width:10px;height:25px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 25'%3E%3Ccircle cx='5' cy='1.8' r='1.6' fill='%23D99A12'/%3E%3Crect x='4.1' y='3.2' width='1.8' height='4.4' fill='%237A1F33'/%3E%3Crect x='0.4' y='7.4' width='9.2' height='1.9' rx='.9' fill='%23D99A12'/%3E%3Cpath d='M3.9 9.3H6.1V20L5 24.6L3.9 20Z' fill='%237A1F33'/%3E%3C/svg%3E") no-repeat center/contain}
+.tl{padding-top:24px}
+.tl .d{display:block;font:500 13px var(--mono);margin-top:14px}
+.tl li.cav .d{color:var(--wine-ink)}
+.tl .t{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:14px;line-height:1.4;color:var(--fg2);margin-top:4px}
+
+/* resources + assets */
+.res-group{display:flex;flex-direction:column;gap:0}
+.res{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:14px 0;border-bottom:1px solid var(--line2);color:var(--fg)}
+.res:hover{text-decoration:none;background:var(--sub)}
+.res b{font-weight:700}.res span{grid-column:1;font-size:13px;color:var(--muted)}
+.res em{grid-row:1/span 2;grid-column:2;align-self:center;font:500 12px var(--mono);font-style:normal;color:var(--muted)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px 40px}
+.kv{list-style:none;margin:0;padding:0}
+.kv li{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line2);font-size:14px}
+.kv b{font:500 14px var(--mono);white-space:nowrap}
+.kv small{display:block;color:var(--muted);font-size:12px}
+.kv.plain li{padding:8px 0;font-size:13px}.kv.plain b{font:600 13px var(--sans)}
+
+/* right column */
+.side{display:flex;flex-direction:column;gap:20px;min-width:0}
+.rail{border:1px solid var(--line);padding:20px 20px 18px;background:var(--bg)}
+.inj{list-style:none;margin:0;padding:0}
+.inj li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;padding:10px 0;border-bottom:1px solid var(--line2)}
+.inj b{font-weight:700;font-size:14px}
+.inj span{font-size:13px;color:var(--muted)}
+.inj .st{grid-row:1/span 2;grid-column:2;align-self:center;font:500 12px var(--sans);color:var(--muted);white-space:nowrap;text-align:right}
+.inj .st.out{color:var(--fg)}
+.inj-note{font-size:12px;color:var(--muted);margin-top:10px}
+.otd-when{font:700 11px var(--sans);font-stretch:125%;text-transform:uppercase;letter-spacing:.1em;color:var(--wine-ink);margin-top:4px}
+.otd-when b{font:800 26px/1 var(--sans);font-stretch:125%;letter-spacing:-.02em;color:var(--fg);display:block;margin-top:6px;text-transform:none}
+.otd-text{margin:10px 0 8px;font-size:14px;line-height:1.5}
+.otd-src{font-size:12px}
+.key{display:inline-flex;align-items:center;gap:6px}
+.key-tick{display:inline-block;width:2px;height:11px;background:var(--muted)}
+/* team chips: abbreviation on the team's primary color (no logos) */
+.chip{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:22px;padding:0 6px;border-radius:4px;font:800 11px var(--sans);font-stretch:118%;letter-spacing:.04em;color:#FFFFFF;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);vertical-align:2px}
+.next h3 .chip{height:26px;min-width:48px;font-size:13px;margin-right:10px;vertical-align:4px}
+/* Charge */
+.ch-next{font-weight:700;font-size:15px;line-height:1.35;margin-top:4px}
+.ch-meta{font-size:13px;color:var(--muted);margin-top:2px}
+.rail .block-h{margin-bottom:6px}
+.capsum{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 32px}
+.capsum-main{flex:1 1 260px;min-width:0}
+.payroll{font:800 34px/1 var(--sans);font-stretch:112%}
+.payroll-note{font-size:12px;color:var(--muted);margin-top:6px}
+.room{flex:2 1 420px;min-width:0;margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.room li{display:flex;flex-direction:column;gap:2px;padding:8px 12px 0 0;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+.room b{font:500 16px var(--mono);color:var(--fg)}
+.room .over{color:var(--wine-ink)}
+/* horizontal cap bar: labels alternate above and below so close lines don't collide */
+.hbar{position:relative;margin-top:22px;padding-block:44px}
+.track{position:relative;height:16px;background:var(--track);overflow:hidden}
+.track .zone{position:absolute;top:0;bottom:0}
+.fill{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--wine);transition:width .6s ease}
+.ln{position:absolute;top:30px;bottom:30px;width:0;border-left:1px dashed var(--fg2)}
+.ln.hard{border-left:2px solid var(--fg)}
+.ln span{position:absolute;left:0;transform:translateX(-50%);white-space:nowrap;text-align:center;font:600 12px/1.25 var(--sans);font-stretch:108%;color:var(--fg2)}
+.ln span em{display:block;font:500 11px var(--mono);font-style:normal;color:var(--muted)}
+.ln.up span{bottom:100%;margin-bottom:6px}
+.ln.down span{top:100%;margin-top:6px}
+.ln.first span{transform:translateX(-12px);text-align:left}
+.ln.last span{transform:translateX(calc(-100% + 12px));text-align:right}
+.ln.hard span{color:var(--fg)}
+.ln span i{font-style:normal}.ln .short{display:none}
+
+/* index */
+.index{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-block:24px 64px}
+.index button{appearance:none;border:0;background:var(--bg);color:var(--fg);text-align:left;font:inherit;cursor:pointer;padding:18px 20px;display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:10px;align-items:baseline}
+.index button:hover{background:var(--sub)}
+.index .code{grid-row:span 2;font:800 12px var(--sans);font-stretch:125%;letter-spacing:.06em;color:var(--wine-ink)}
+.index b{font:700 15px var(--sans);font-stretch:105%}
+.index span:last-child{font-size:13px;color:var(--muted)}
+
+/* cap page */
+.page{padding-block:32px 64px;display:flex;flex-direction:column;gap:20px}
+h1{margin:0;font:800 clamp(28px,4vw,36px)/1.1 var(--sans);font-stretch:115%;letter-spacing:-.02em;text-wrap:balance}
+.tablebox{overflow-x:auto;border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:860px}
+th{text-align:left;font:700 11px var(--sans);font-stretch:125%;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);padding:12px 10px;background:var(--sub)}
+td{padding:12px 10px;border-top:1px solid var(--line2)}
+th:first-child,td:first-child{padding-left:20px}
+.r{text-align:right}.dim{color:var(--muted)}
+.cap th.cur,.cap td.cur{background:var(--sub)}
+.cap th.cur{color:var(--fg)}
+.cap th.cur small{display:block;font-size:9px;color:var(--wine-ink);letter-spacing:.12em}
+.cap td.cur{font:700 15px var(--mono);font-variant-numeric:tabular-nums}
+.cap td.fut{font:400 13px var(--mono);color:var(--fg2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.cap .opt{display:inline-block;margin-left:5px;font:700 9px var(--sans);font-stretch:125%;letter-spacing:.06em;color:var(--wine-ink);vertical-align:1px}
+.cap .fa{font:600 11px var(--sans);font-stretch:118%;letter-spacing:.06em;color:var(--muted)}
+.pbtn{appearance:none;border:0;background:none;padding:0;font:inherit;font-weight:600;color:var(--fg);cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-align:left}
+.pbtn::after{content:"";width:6px;height:6px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:rotate(45deg) translateY(-2px);transition:transform .15s}
+.pbtn[aria-expanded="true"]::after{transform:rotate(-135deg) translateY(-1px)}
+.pbtn:hover{color:var(--wine-ink)}
+tr.det td{background:var(--sub);border-top:0;padding:4px 20px 18px}
+.det-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 28px;max-width:980px}
+.det-grid h4{margin:10px 0 4px;font:800 11px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.det-grid p{margin:0;font-size:13px;line-height:1.5;color:var(--fg2);white-space:normal}
+.det-grid p b{color:var(--fg)}
+@media (max-width:720px){.det-grid{grid-template-columns:minmax(0,1fr)}}
+/* video */
+.vlinks{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 28px}
+.vlinks a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:12px 0;border-bottom:1px solid var(--line2);color:var(--fg)}
+.vlinks a:hover{text-decoration:none;background:var(--sub)}
+.vlinks b{font-weight:600;font-size:14px}.vlinks span{grid-column:1;font-size:12px;color:var(--muted)}
+.vlinks em{grid-row:1/span 2;grid-column:2;align-self:center;font-style:normal;font-size:12px;color:var(--muted)}
+.vone{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:16px 24px;align-items:center}
+.vone .vcard small{display:none}
+.vone-txt b{display:block;font-size:17px;font-weight:700;line-height:1.3}
+.vone-txt p{margin:6px 0 0;font-size:14px;color:var(--muted)}
+@media (max-width:520px){.vone{grid-template-columns:minmax(0,1fr)}}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.vcard{display:flex;flex-direction:column;gap:8px;min-width:0;color:var(--fg)}
+a.vcard:hover{text-decoration:none}
+a.vcard:hover .vplay span{background:var(--wine)}
+.vthumb.poster{background:#14181D;border-color:#14181D}
+.poster::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:var(--wine)}
+.poster .vplay{pointer-events:none}
+.poster .vplay span{background:rgba(255,255,255,.16);box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
+.poster .ptag{position:absolute;left:12px;top:10px;font:700 10px var(--sans);font-stretch:125%;letter-spacing:.12em;text-transform:uppercase;color:#C9CED4}
+.poster .ptitle{position:absolute;left:12px;right:12px;bottom:14px;font:800 16px/1.2 var(--sans);font-stretch:112%;color:#FFFFFF}
+.vthumb{position:relative;aspect-ratio:16/9;max-width:100%;background:var(--sub);border:1px solid var(--line);overflow:hidden}
+.vthumb img,.vthumb iframe{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
+.vplay{appearance:none;position:absolute;inset:0;border:0;background:transparent;cursor:pointer;display:grid;place-items:center}
+.vplay span{width:56px;height:56px;border-radius:50%;background:rgba(16,20,25,.78);display:grid;place-items:center}
+.vplay span::after{content:"";margin-left:4px;border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent}
+.vplay:hover span{background:var(--wine)}
+.vcard b{font-size:14px;line-height:1.35;font-weight:600}
+.vcard small{font-size:12px;color:var(--muted)}
+.pill{display:inline-block;padding:2px 8px;border:1px solid var(--line);border-radius:999px;font-size:12px;white-space:nowrap;color:var(--fg2)}
+tfoot td{border-top:2px solid var(--fg);font-weight:700}
+.empty{border:1px solid var(--line);padding:48px 24px;text-align:center;color:var(--muted)}
+
+footer{border-top:1px solid var(--line);color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px;font-size:13px}
+
+.headline{font:700 15px/1.35 var(--sans);margin-top:12px;color:var(--fg)}
+.headline strong{color:var(--wine-ink)}
+@media (max-width:720px){
+  /* phone: record, next game, then history / injuries / Charge, then the rest */
+  .home{grid-template-columns:minmax(0,1fr);gap:36px}
+  .col,.side{display:contents}
+  .o-rec{order:1}.o-next{order:2}.side>*{order:3}.o-vid{order:4}.o-dates{order:5}.o-cap{order:6}
+  .room{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:8px}
+}
+@media (max-width:520px){
+  .ln .full{display:none}.ln .short{display:inline}
+  .strip span{height:22px}
+  .dates li{grid-template-columns:70px 10px minmax(0,1fr)}
+  .dates .tag{display:none}
+  .wl div{padding-right:18px}.wl div+div{padding-left:18px}
+  .splits{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:reduce){.fill{transition:none}}
+
+/* ===== Game Night layer ===== */
+:root{--page:#EEF0F2;--card:#FFFFFF;--cond:'Saira Condensed','Archivo Narrow',system-ui,sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--page:#0B0D0F;--card:#15181B}}
+:root[data-theme="dark"]{--page:#0B0D0F;--card:#15181B}
+body{background:var(--page)}
+.tick{background:#0D1014;color:#C9CDD3;font:600 12px var(--mono);letter-spacing:.02em}
+.tick .in{max-width:1200px;margin:0 auto;padding:7px 20px;display:flex;gap:26px;overflow-x:auto;white-space:nowrap}
+.tick b{color:#F2B231;font-weight:600;margin-right:6px}
+.gbar{background:#860038;color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:10}
+.gin{display:flex;flex-wrap:wrap;align-items:center;gap:0 20px;min-height:58px}
+.gbrand{display:flex;align-items:center;gap:8px;color:#fff;font:800 26px/1 var(--cond);text-transform:uppercase;letter-spacing:.01em}
+.gbrand:hover{text-decoration:none}
+.gbrand svg{width:30px;height:30px}
+.gbrand span{color:#F2B231}
+.gnav{display:flex;flex:1 1 auto;gap:0 2px;overflow-x:auto;min-width:0}
+.gnav button{appearance:none;border:0;background:none;cursor:pointer;font:700 15px var(--cond);text-transform:uppercase;letter-spacing:.04em;color:#F4D6DD;padding:0 9px;min-height:58px;white-space:nowrap}
+.gnav button:hover{color:#fff}
+.gnav button[aria-selected="true"]{color:#fff;box-shadow:inset 0 -4px 0 #F2B231}
+.gbar .search{flex:0 1 200px;height:36px;background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22)}
+.gbar .search input{color:#fff}
+.gbar .search input::placeholder{color:#F4D6DD}
+.gbar .search:focus-within{border-color:#F2B231}
+@media (max-width:900px){.gin{padding-block:8px;gap:6px 14px}.gnav{order:3;flex-basis:100%}.gnav button{min-height:44px}.gbar .search{flex:1 1 160px}}
+/* modules */
+.home{padding-block:18px 24px;gap:16px}
+.col{gap:16px}.side{gap:16px}
+.col>section,.rail{background:var(--card);border:0;border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.08);padding:16px 18px}
+.block-h{border-bottom:3px solid var(--fg);padding-bottom:6px;margin-bottom:14px}
+.block-h h2{font:800 17px var(--cond);text-transform:uppercase;letter-spacing:.05em}
+.block-h a{font-size:13px}
+.index,.tablebox{background:var(--card)}
+/* scoreboard */
+.gscore{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1.3fr);padding:0!important;overflow:hidden}
+.grec{background:#14171A;color:#fff;padding:18px 22px;display:flex;flex-direction:column;gap:12px}
+.gk{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;font:700 12px var(--cond);letter-spacing:.14em;text-transform:uppercase;color:#9BA1A8}
+.gk a{font:600 13px var(--sans);letter-spacing:0;text-transform:none}
+.gbig{font:800 96px/.85 var(--cond);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.gbig i{font-style:normal;color:#F2B231}
+.gsp{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 12px;margin:0}
+.gsp div{min-width:0}
+.gsp dt{font:700 10.5px var(--cond);letter-spacing:.08em;text-transform:uppercase;color:#8E959D;line-height:1.2}
+.gsp dd{margin:0;font:500 15px var(--mono);color:#E6E8EA}
+.gmu{padding:18px 22px;display:flex;flex-direction:column;gap:10px;justify-content:center}
+.gmu .gk{color:var(--muted)}
+.gteams{display:flex;align-items:center;gap:18px}
+.gteams .tm{font:800 clamp(44px,6vw,64px)/1 var(--cond);text-transform:uppercase}
+.gteams .cle{color:var(--wine-ink)}
+.gat{font:600 20px var(--cond);color:var(--muted)}
+.ginfo{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:13px;color:var(--fg2)}
+.gdays b{font:800 18px var(--cond);color:var(--wine-ink)}
+.gmu .fin{margin:0 0 4px}
+.gstripbox{padding:12px 18px!important}
+.gstripbox .strip span{height:22px}
+@media (max-width:860px){.gscore{grid-template-columns:minmax(0,1fr)}}
+/* key dates */
+.gd{list-style:none;margin:0;padding:0;display:flex;overflow-x:auto}
+.gd li{flex:0 0 136px;padding:4px 14px 6px 0;margin-right:14px;border-right:1px solid var(--line)}
+.gd .d{display:flex;align-items:center;gap:5px;font:700 19px var(--cond);color:var(--muted)}
+.gd li.cav .d{color:var(--wine-ink)}
+.gd li.cav .d::before{content:"";width:6px;height:15px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 25'%3E%3Ccircle cx='5' cy='1.8' r='1.6' fill='%23D99A12'/%3E%3Crect x='4.1' y='3.2' width='1.8' height='4.4' fill='%237A1F33'/%3E%3Crect x='0.4' y='7.4' width='9.2' height='1.9' rx='.9' fill='%23D99A12'/%3E%3Cpath d='M3.9 9.3H6.1V20L5 24.6L3.9 20Z' fill='%237A1F33'/%3E%3C/svg%3E") no-repeat center/contain}
+.gd .t{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:13px;line-height:1.35;color:var(--fg2);margin-top:2px}
+/* injuries */
+.ginj{list-style:none;margin:0;padding:0}
+.ginj li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line2);font-size:13px}
+.ginj li span:last-child{font:700 13px var(--cond);letter-spacing:.06em;color:var(--muted)}
+.ginj li span:last-child.out{color:var(--wine-ink)}
+/* video */
+.vone{grid-template-columns:minmax(0,460px)}
+.vone-txt{display:none}
+.vthumb.poster{border-radius:4px}
+.poster .ptitle{font:700 18px var(--cond);text-transform:uppercase;letter-spacing:.04em}
+.poster .vplay span{width:60px;height:60px;background:transparent;box-shadow:none}
+.poster .vplay span::after{border-left-width:24px;border-top-width:14px;border-bottom-width:14px}
+</style>
+<style>[hidden]{display:none!important}</style>
+</head>
+<body>
+<div class="tick" role="region" aria-label="Quick facts"><div class="in" id="tick"></div></div>
+<header class="gbar"><div class="wrap gin">
+  <a class="gbrand" href="#home" data-go="home" aria-label="cavsdatabase.com home">
+    <svg viewBox="0 0 100 100" aria-hidden="true">
+      <path d="M14 30V74C14 84 30 92 50 92S86 84 86 74V30" fill="#5A1726"/>
+      <path d="M14 52C14 62 30 70 50 70S86 62 86 52" stroke="#FFFFFF" stroke-width="3" fill="none" opacity=".45"/>
+      <ellipse cx="50" cy="30" rx="36" ry="16" fill="#F2B231"/>
+      <path d="M14 30H86M50 14V46M30 17C38 24 38 36 30 43M70 17C62 24 62 36 70 43" stroke="#7A1F33" stroke-width="2" fill="none" opacity=".75"/>
+    </svg>Cavs<span>DB</span></a>
+  <nav class="gnav" id="tabs" role="tablist" aria-label="Sections"></nav>
+  <form class="search" role="search" id="sform" autocomplete="off">
+    <label for="q" class="sr">Search players, contracts, dates</label>
+    <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F4D6DD" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+    <input id="q" type="search" placeholder="Search" aria-controls="sres" aria-expanded="false">
+    <ul class="sres" id="sres" hidden></ul>
+  </form>
+</div></header>
+
+<main id="view-home">
+  <div class="wrap home">
+    <div class="col">
+      <section class="o-rec gscore" aria-labelledby="rec-h">
+        <h2 id="rec-h" class="sr">2026–27 season and next game</h2>
+        <div class="grec">
+          <div class="gk" style="justify-content:flex-start">2026–27 · <span id="played"></span></div>
+          <div class="gbig"><span id="wins">0</span><i>–</i><span id="losses">0</span></div>
+          <dl class="gsp" id="splits"></dl>
+        </div>
+        <div class="gmu">
+          <a class="fin" id="last" hidden target="_blank" rel="noopener"></a>
+          <div class="gk" id="next-h-row"><span id="nx-label"></span><a href="#schedule" data-go="schedule">Full schedule →</a></div>
+          <h3 class="sr" id="nx-title"></h3><span class="sr" id="next-h"></span>
+          <div class="gteams" aria-hidden="true"><span class="tm cle">CLE</span><span class="gat" id="nx-at"></span><span class="tm" id="nx-opp"></span></div>
+          <div class="ginfo"><span id="nx-meta"></span><span id="nx-then"></span><span class="gdays"><b id="days">–</b> days to tip</span></div>
+        </div>
+      </section>
+
+      <section class="o-next gstripbox" aria-label="Game by game results">
+        <div class="strip" id="strip" role="img" aria-label="Game-by-game results: no games played yet"></div>
+        <div class="strip-legend">
+          <span>Game 1</span>
+          <span><i style="background:var(--wine)"></i>Win &nbsp; <i style="background:var(--fg)"></i>Loss &nbsp; <i style="background:var(--track)"></i>Upcoming</span>
+          <span>Game 82</span>
+        </div>
+      </section>
+
+      <section class="o-vid" aria-labelledby="vid-h">
+        <div class="block-h"><h2 id="vid-h">Latest video</h2><a href="#video" data-go="video">All video →</a></div>
+        <div id="vid-home"></div>
+      </section>
+
+      <section class="o-dates" aria-labelledby="dates-h">
+        <div class="block-h"><h2 id="dates-h">Key dates</h2><span class="key"><svg width="7" height="17" viewBox="0 0 10 25" aria-hidden="true"><circle cx="5" cy="1.8" r="1.6" fill="#D99A12"/><rect x="4.1" y="3.2" width="1.8" height="4.4" fill="#7A1F33"/><rect x="0.4" y="7.4" width="9.2" height="1.9" rx=".9" fill="#D99A12"/><path d="M3.9 9.3H6.1V20L5 24.6L3.9 20Z" fill="#7A1F33"/></svg> Cavs &nbsp; <i class="key-tick"></i> League</span></div>
+        <ol class="gd" id="dates"></ol>
+      </section>
+
+      <section class="o-cap" aria-labelledby="cap-h">
+        <div class="block-h"><h2 id="cap-h">Cap position</h2><a href="#cap" data-go="cap">Cap sheet</a></div>
+        <div class="capsum">
+          <div class="capsum-main">
+            <div class="payroll mono" id="payroll"></div>
+            <div class="payroll-note" id="payroll-note"></div>
+          </div>
+          <ul class="room" id="room"></ul>
+        </div>
+        <div class="hbar" id="hbar" role="img">
+          <div class="track" id="track"><div class="fill" id="fill"></div></div>
+        </div>
+      </section>
+    </div>
+
+    <div class="side">
+    <section class="rail" aria-labelledby="otd-h">
+      <div class="block-h"><h2 id="otd-h">This day in Cavs history</h2></div>
+      <div class="otd-when" id="otd-when"></div>
+      <p class="otd-text" id="otd-text"></p>
+      <a class="otd-src" id="otd-src" target="_blank" rel="noopener"></a>
+    </section>
+    <section class="rail" aria-labelledby="inj-h">
+      <div class="block-h"><h2 id="inj-h">Injury report</h2><span id="inj-count"></span></div>
+      <ul class="ginj" id="inj"></ul>
+      <div class="inj-note" id="inj-note"></div>
+    </section>
+    <section class="rail" aria-labelledby="chg-h">
+      <div class="block-h"><h2 id="chg-h">Cleveland Charge</h2><span>G League</span></div>
+      <div class="cap-label" id="ch-label"></div>
+      <div class="ch-next" id="ch-next"></div>
+      <div class="ch-meta" id="ch-meta"></div>
+      <ul class="kv plain" id="ch-kv" style="margin-top:10px"></ul>
+      <a class="otd-src" href="https://cleveland.gleague.nba.com/" target="_blank" rel="noopener">Cleveland Charge site ↗</a>
+    </section>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="block-h" style="margin-top:12px"><h2>Browse the database</h2></div>
+    <nav class="index" id="index" aria-label="All sections"></nav>
+  </div>
+</main>
+
+<main id="view-cap" hidden>
+  <div class="wrap page">
+    <div>
+      <div class="dim" style="font-size:13px"><a href="#home" data-go="home">Home</a> / Salary Cap</div>
+      <h1 style="margin-top:6px">Cap sheet</h1>
+      <p class="dim" style="margin:6px 0 0">Salaries by season, Bird rights, free agency and options.</p>
+    </div>
+    <div class="tablebox"><table class="cap">
+      <thead><tr><th>Player</th><th>Pos</th><th class="r cur">2026–27<small>Current</small></th><th class="r">2027–28</th><th class="r">2028–29</th><th class="r">2029–30</th><th class="r">2030–31</th><th>Bird rights</th><th>Notes</th></tr></thead>
+      <tbody id="capbody"></tbody>
+      <tfoot><tr id="captot"></tr></tfoot>
+    </table></div>
+    <p class="dim" style="margin:-8px 0 0;font-size:13px">Click a player for his Bird rights, free agency and options in plain English. PO = player option, TO = team option.</p>
+    <div class="cols">
+      <section><div class="block-h"><h2>Two-way</h2><span>3 of 3</span></div><ul class="kv" id="twoway"></ul></section>
+      <section><div class="block-h"><h2>Training camp</h2><span>Exhibit 10</span></div><ul class="kv" id="camp"></ul></section>
+    </div>
+    <p class="dim" style="margin:0;font-size:13px">14 of 15 standard spots filled. Salaries: Capsheets (2026–27) and Salary Swish (future years). Bird rights and free agency: Salary Swish. Option dates: Spotrac. Free agent year is the summer the player hits the market.</p>
+  </div>
+</main>
+
+<main id="view-assets" hidden>
+  <div class="wrap page">
+    <div>
+      <div class="dim" style="font-size:13px"><a href="#home" data-go="home">Home</a> / Assets</div>
+      <h1 style="margin-top:6px">Assets</h1>
+      <p class="dim" style="margin:6px 0 0">Draft picks and exceptions the front office can use in trades and signings.</p>
+    </div>
+    <div class="cols">
+      <section><div class="block-h"><h2>Draft picks</h2><span>Next 7 drafts</span></div><ul class="kv" id="picks"></ul></section>
+      <section><div class="block-h"><h2>Exceptions</h2><span>2026–27</span></div><ul class="kv" id="exc"></ul></section>
+    </div>
+    <p class="dim" style="margin:0;font-size:13px">Source: Capsheets.com.</p>
+  </div>
+</main>
+
+<main id="view-resources" hidden>
+  <div class="wrap page">
+    <div>
+      <div class="dim" style="font-size:13px"><a href="#home" data-go="home">Home</a> / Resources</div>
+      <h1 style="margin-top:6px">Resources</h1>
+      <p class="dim" style="margin:6px 0 0">Where to go for the numbers this site doesn't carry.</p>
+    </div>
+    <div class="cols" id="res"></div>
+  </div>
+</main>
+
+<main id="view-schedule" hidden>
+  <div class="wrap page">
+    <div>
+      <div class="dim" style="font-size:13px"><a href="#home" data-go="home">Home</a> / Schedule</div>
+      <h1 style="margin-top:6px">2026–27 schedule</h1>
+      <p class="dim" style="margin:6px 0 0">80 games set; 2 more are scheduled after the NBA Cup knockout round. All times Eastern.</p>
+    </div>
+    <div id="sched"></div>
+    <p class="dim" style="margin:0;font-size:13px">Source: Cavaliers printable schedule. TV: Sports Media Watch.</p>
+  </div>
+</main>
+
+<main id="view-staff" hidden>
+  <div class="wrap page">
+    <div>
+      <div class="dim" style="font-size:13px"><a href="#home" data-go="home">Home</a> / Coaches &amp; Front Office</div>
+      <h1 style="margin-top:6px">Coaches &amp; front office</h1>
+      <p class="dim" style="margin:6px 0 0">Basketball side only. Season shown is when each person started their current role.</p>
+    </div>
+    <div class="cols" id="staff"></div>
+    <p class="dim" style="margin:0;font-size:13px">Source: RealGM staff directory.</p>
+  </div>
+</main>
+
+<main id="view-video" hidden>
+  <div class="wrap page">
+    <div>
+      <div class="dim" style="font-size:13px"><a href="#home" data-go="home">Home</a> / Video</div>
+      <h1 style="margin-top:6px">Video</h1>
+      <p class="dim" style="margin:6px 0 0">Press conferences, practice availability and the latest from the official Cavs channel.</p>
+    </div>
+    <div id="vid-page"></div>
+    <p class="dim" style="margin:0;font-size:13px">All video from the Cleveland Cavaliers' official YouTube channel.</p>
+  </div>
+</main>
+
+<main id="view-stub" hidden>
+  <div class="wrap page"><h1 id="stub-h"></h1><div class="empty" id="stub-b"></div></div>
+</main>
+
+<footer><div class="wrap">
+  <span>cavsdatabase.com · Independent fan reference. Not affiliated with the Cleveland Cavaliers or the NBA.</span>
+  <span>Sources: Capsheets, Salary Swish, Spotrac, Basketball Reference, RealGM · Updated Oct 13, 2026</span>
+</div></footer>
+
+<script>
+const SECTIONS=[
+  ['home','Home','',''],
+  ['roster','Roster','ROS','Players, positions, bios.'],
+  ['cap','Salary Cap','CAP','Cap sheet, guarantees, options.'],
+  ['assets','Assets','AST','Draft picks, swaps, exceptions.'],
+  ['staff','Coaches & Front Office','STF','Staff, executives, tenures.'],
+  ['charge','Cleveland Charge','CHG','G League roster and assignments.'],
+  ['schedule','Schedule','SCH','All 82 games, results, TV.'],
+  ['rcf','RCF Content','RCF','Every RealCavsFans graphic.'],
+  ['video','Video','VID','Press conferences and the latest Cavs video.'],
+  ['resources','Resources','RES','The best stat and cap sites.']
+];
+const PICKS=[['2028 1st','Lesser of own or ATL · not trade-eligible'],['2030 1st','Own'],['2032 1st','Own'],['2033 1st','Own · frozen, not trade-eligible'],['2033 2nd','Own · trade-eligible']];
+const EXC=[['Non-taxpayer mid-level','$15,044,000','Expires Apr 11, 2027'],['Bi-annual','$5,477,000','Expires Apr 11, 2027'],['Trade exception (Max Strus)','$16,660,836','Expires Aug 20, 2027'],['Trade exception (Lonzo Ball)','$10,000,000','Expires Feb 5, 2027'],['Trade exception (De’Andre Hunter)','$1,439,674','Expires Feb 1, 2027']];
+const RES=[
+  ['Stats',[
+    ['NBA.com Stats','Official box scores, tracking, lineups','nba.com/stats','https://www.nba.com/stats'],
+    ['Basketball Reference','Career numbers, game logs, history','basketball-reference.com','https://www.basketball-reference.com/teams/CLE/2027.html'],
+    ['Cleaning the Glass','Garbage-time-filtered team and player data','cleaningtheglass.com','https://cleaningtheglass.com'],
+    ['PBP Stats','Possession-level on/off and lineups','pbpstats.com','https://www.pbpstats.com'],
+    ['Dunks & Threes','Adjusted ratings and team projections','dunksandthrees.com','https://dunksandthrees.com']
+  ]],
+  ['Cap & contracts',[
+    ['Spotrac','Contracts, deadlines, transactions','spotrac.com','https://www.spotrac.com/nba/cleveland-cavaliers/yearly'],
+    ['Capsheets','Full cap sheet, exceptions, picks','capsheets.com','https://www.capsheets.com/cleveland-cavaliers-cap-sheet-2026-2027-season/'],
+    ['NBA.com Key Dates','League calendar and deadlines','nba.com','https://www.nba.com/news/key-dates']
+  ]],
+  ['Team',[
+    ['Cavaliers roster','Official roster and staff','nba.com/cavaliers','https://www.nba.com/cavaliers/roster'],
+    ['RealCavsFans','Analysis and graphics','realcavsfans.com','https://realcavsfans.com']
+  ]]
+];
+const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e};
+
+/* nav + index */
+const tabs=document.getElementById('tabs');
+const SHORT={cap:'Cap',staff:'Staff',charge:'Charge',rcf:'RCF',resources:'Links'};
+SECTIONS.forEach(([id,l])=>{const b=el('button',null,SHORT[id]||l);b.title=l;b.type='button';b.setAttribute('role','tab');b.dataset.go=id;tabs.appendChild(b)});
+const idx=document.getElementById('index');
+SECTIONS.slice(1).forEach(([id,l,c,d])=>{const b=el('button');b.type='button';b.dataset.go=id;b.append(el('span','code',c),el('b',null,l),el('span',null,d));idx.appendChild(b)});
+
+/* ===== DAILY DATA ===== */
+/* Regular season, from the Cavs' printable schedule (all times ET, PM). [date, opponent, H/A, time].
+   80 games listed; 2 more are set after the NBA Cup knockout round. */
+const SCHEDULE=[
+  ['2026-10-22','PHI','A','7:00'],
+  ['2026-10-24','BKN','H','7:30'],
+  ['2026-10-26','MIN','H','7:00'],
+  ['2026-10-28','WAS','H','7:00'],
+  ['2026-10-29','ATL','A','7:00'],
+  ['2026-10-31','MIL','A','8:00'],
+  ['2026-11-02','OKC','H','7:00'],
+  ['2026-11-04','OKC','A','8:00'],
+  ['2026-11-06','PHI','H','7:30'],
+  ['2026-11-07','NYK','H','8:00'],
+  ['2026-11-09','CHA','A','7:00'],
+  ['2026-11-11','NYK','A','7:00'],
+  ['2026-11-13','MIA','A','8:00'],
+  ['2026-11-14','DAL','H','7:30'],
+  ['2026-11-16','CHI','H','7:00'],
+  ['2026-11-18','MEM','H','7:00'],
+  ['2026-11-20','IND','H','7:30'],
+  ['2026-11-23','CHI','A','8:00'],
+  ['2026-11-25','NYK','A','7:30'],
+  ['2026-11-29','MIA','H','6:00'],
+  ['2026-12-01','IND','H','7:00'],
+  ['2026-12-03','CHI','A','8:00'],
+  ['2026-12-12','GSW','H','8:00'],
+  ['2026-12-15','SAS','H','8:00'],
+  ['2026-12-16','ORL','A','7:00'],
+  ['2026-12-18','DET','A','7:30'],
+  ['2026-12-20','UTA','H','6:00'],
+  ['2026-12-21','NYK','H','7:00'],
+  ['2026-12-23','WAS','A','7:00'],
+  ['2026-12-27','WAS','H','6:00'],
+  ['2026-12-28','BOS','A','8:00'],
+  ['2026-12-31','LAC','H','3:00'],
+  ['2027-01-02','CHA','A','1:00'],
+  ['2027-01-03','HOU','A','7:00'],
+  ['2027-01-05','TOR','H','7:00'],
+  ['2027-01-07','ORL','A','7:00'],
+  ['2027-01-09','DEN','H','5:00'],
+  ['2027-01-11','MIN','A','8:00'],
+  ['2027-01-13','ATL','A','7:00'],
+  ['2027-01-15','MIL','A','8:00'],
+  ['2027-01-16','MEM','A','8:00'],
+  ['2027-01-18','DET','H','12:00'],
+  ['2027-01-21','BKN','A','7:30'],
+  ['2027-01-23','DAL','A','8:00'],
+  ['2027-01-25','NOP','A','8:00'],
+  ['2027-01-27','DET','H','7:00'],
+  ['2027-01-29','TOR','A','7:00'],
+  ['2027-01-30','NOP','H','7:30'],
+  ['2027-02-01','UTA','A','9:00'],
+  ['2027-02-03','PHX','A','9:00'],
+  ['2027-02-04','POR','A','10:00'],
+  ['2027-02-06','ORL','H','7:30'],
+  ['2027-02-09','TOR','H','7:00'],
+  ['2027-02-10','IND','A','7:00'],
+  ['2027-02-12','TOR','A','7:30'],
+  ['2027-02-14','PHX','H','1:00'],
+  ['2027-02-16','MIL','H','7:00'],
+  ['2027-02-17','MIL','H','7:00'],
+  ['2027-02-25','SAC','H','7:00'],
+  ['2027-02-26','BOS','A','7:30'],
+  ['2027-03-01','PHI','H','7:00'],
+  ['2027-03-04','POR','H','7:00'],
+  ['2027-03-06','ATL','H','5:30'],
+  ['2027-03-09','DET','A','8:00'],
+  ['2027-03-11','LAC','A','10:30'],
+  ['2027-03-12','LAL','A','10:00'],
+  ['2027-03-14','SAC','A','6:00'],
+  ['2027-03-16','GSW','A','10:00'],
+  ['2027-03-18','DEN','A','9:00'],
+  ['2027-03-20','CHI','H','7:30'],
+  ['2027-03-22','HOU','H','7:00'],
+  ['2027-03-25','LAL','H','7:00'],
+  ['2027-03-29','MIA','H','7:00'],
+  ['2027-03-31','BKN','A','7:30'],
+  ['2027-04-01','BOS','H','7:00'],
+  ['2027-04-04','CHA','H','3:00'],
+  ['2027-04-05','BKN','H','7:00'],
+  ['2027-04-07','SAS','A','7:30'],
+  ['2027-04-09','IND','A','7:00'],
+  ['2027-04-11','ATL','H','6:00']
+];
+/* TV by game date (Sports Media Watch). Missing = not yet announced. */
+const TV={'2026-10-22':'ESPN','2026-10-29':'NBA TV'};
+/* One letter per game played, in schedule order: W or L. Optional score per date in SCORES. */
+const SEASON={results:'',eastRank:'—',cup:'0–0'};
+const SCORES={}; /* e.g. '2026-10-22':'112-104' (Cavs first) */
+const BOX={};    /* optional exact NBA.com box score URL per date; otherwise the page links NBA.com's games page for that date */
+/* Net ratings (Basketball Reference). Shown in the season block; '—' until games are played. */
+const NRTG={}; /* 2026-27 season, all 30 teams: 'CLE':[net rating, games played] (used for the Cavs value and league rank) */
+const L14={};  /* Cavs only, last 14 days: 'CLE':[net rating, games] */
+/* Cleveland Charge (RealGM). [date, opponent, H/A, time ET, result e.g. 'W 118-110' or ''] */
+const CHARGE={record:'0–0',coach:'Eli Kell-Abrams',venue:'Public Hall',games:[
+  ['2026-11-10','Motor City Cruise','H','7:00',''],['2026-11-14','Sioux Falls Skyforce','H','5:00',''],['2026-11-17','Iowa Wolves','H','7:00',''],
+  ['2026-11-20','Grand Rapids Gold','A','7:00',''],['2026-11-22','Grand Rapids Gold','A','3:00',''],['2026-11-25','Sioux Falls Skyforce','A','7:30','']]};
+/* ===== end daily data ===== */
+
+const COLORS={ATL:'#C8102E',BOS:'#007A33',BKN:'#000000',CHA:'#1D1160',CHI:'#CE1141',CLE:'#860038',DAL:'#00538C',DEN:'#0E2240',DET:'#C8102E',GSW:'#1D428A',HOU:'#CE1141',IND:'#002D62',LAC:'#C8102E',LAL:'#552583',MEM:'#5D76A9',MIA:'#98002E',MIL:'#00471B',MIN:'#0C2340',NOP:'#0C2340',NYK:'#006BB6',OKC:'#007AC1',ORL:'#0077C0',PHI:'#006BB6',PHX:'#1D1160',POR:'#C8102E',SAC:'#5A2D81',SAS:'#000000',TOR:'#CE1141',UTA:'#002B5C',WAS:'#002B5C'};
+const chip=t=>{const c=el('span','chip',t);c.style.background=COLORS[t]||'#5D646C';return c};
+const TEAMS={ATL:'Atlanta',BOS:'Boston',BKN:'Brooklyn',CHA:'Charlotte',CHI:'Chicago',DAL:'Dallas',DEN:'Denver',DET:'Detroit',GSW:'Golden State',HOU:'Houston',IND:'Indiana',LAC:'LA Clippers',LAL:'LA Lakers',MEM:'Memphis',MIA:'Miami',MIL:'Milwaukee',MIN:'Minnesota',NOP:'New Orleans',NYK:'New York',OKC:'Oklahoma City',ORL:'Orlando',PHI:'Philadelphia',PHX:'Phoenix',POR:'Portland',SAC:'Sacramento',SAS:'San Antonio',TOR:'Toronto',UTA:'Utah',WAS:'Washington'};
+const res=SEASON.results.split('');const W=res.filter(x=>x==='W').length,L=res.length-W;
+const rec=(ha)=>{let w=0,l=0;res.forEach((r,i)=>{if(SCHEDULE[i]&&SCHEDULE[i][2]===ha){r==='W'?w++:l++}});return w+'–'+l};
+document.getElementById('wins').textContent=W;document.getElementById('losses').textContent=L;
+document.getElementById('played').textContent=res.length+' of 82 played';
+const last10=res.slice(-10);let streak='—';if(res.length){const k=res[res.length-1];let n=0;for(let i=res.length-1;i>=0&&res[i]===k;i--)n++;streak=k+n}
+const sp=document.getElementById('splits');
+const sgn=v=>(v>0?'+':v<0?'\u2212':'')+Math.abs(v).toFixed(1);
+const ord=n=>{const x=['th','st','nd','rd'],v=n%100;return n+(x[(v-20)%10]||x[v]||x[0])};
+const nr=NRTG.CLE?sgn(NRTG.CLE[0])+' ('+ord(1+Object.values(NRTG).filter(v=>v[0]>NRTG.CLE[0]).length)+')':'—';
+const nr14=L14.CLE?sgn(L14.CLE[0]):'—';
+[['East rank',SEASON.eastRank],['Home',rec('H')],['Road',rec('A')],['NBA Cup',SEASON.cup],['Last 10',last10.length?last10.filter(x=>x==='W').length+'–'+last10.filter(x=>x==='L').length:'—'],['Streak',streak],['Net rating',nr],['Net rtg, last 2 wks',nr14]]
+  .forEach(([k,v])=>{const d=el('div');d.append(el('dt',null,k),el('dd',null,v));sp.appendChild(d)});
+const strip=document.getElementById('strip');for(let i=0;i<82;i++)strip.appendChild(el('span',res[i]==='W'?'w':res[i]==='L'?'l':null));
+strip.setAttribute('aria-label','Game-by-game results: '+W+' wins, '+L+' losses');
+const tipOf=g=>{const [h,m]=g[3].split(':').map(Number);const hh=h===12?12:h+12;const off=(g[0]<'2026-11-01'||g[0]>='2027-03-14')?'-04:00':'-05:00';
+  return new Date(g[0]+'T'+String(hh).padStart(2,'0')+':'+String(m).padStart(2,'0')+':00'+off)};
+const boxUrl=d=>BOX[d]||'https://www.nba.com/games?date='+d;
+const dayFmt=new Intl.DateTimeFormat('en-US',{weekday:'long',month:'short',day:'numeric',timeZone:'America/New_York'});
+const shortFmt=new Intl.DateTimeFormat('en-US',{weekday:'short',month:'short',day:'numeric',timeZone:'America/New_York'});
+const ni=SCHEDULE.findIndex((g,i)=>i>=res.length&&tipOf(g)>new Date(Date.now()-3*3600e3));
+const ng=SCHEDULE[ni],nx=SCHEDULE[ni+1];
+if(ng){
+  const firstHome=SCHEDULE.findIndex(g=>g[2]==='H');
+  document.getElementById('nx-label').textContent=(ni===0?'Season opener · ':ni===firstHome?'Home opener · ':'Game '+(ni+1)+' · ')+(ng[2]==='H'?'Home':'Road');
+  const t=document.getElementById('nx-title');t.textContent='';t.append((ng[2]==='H'?'vs ':'at ')+TEAMS[ng[1]]);
+  document.getElementById('nx-meta').textContent=dayFmt.format(tipOf(ng))+' · '+ng[3]+' PM ET'+(TV[ng[0]]?' · '+TV[ng[0]]:'');
+  const th=document.getElementById('nx-then');th.textContent='';if(nx){th.append('Then: '+shortFmt.format(tipOf(nx))+(nx[2]==='H'?' vs ':' at ')+TEAMS[nx[1]]+' · '+nx[3]+' PM')}
+  document.getElementById('days').textContent=Math.max(0,Math.ceil((tipOf(ng)-new Date())/864e5));
+}
+
+/* scoreboard matchup */
+if(ng){document.getElementById('nx-at').textContent=ng[2]==='H'?'vs':'at';document.getElementById('nx-opp').textContent=ng[1];}
+
+/* last completed game */
+if(res.length){const i=res.length-1,g=SCHEDULE[i],a=document.getElementById('last');document.getElementById('next-h').textContent='Last result & next game';
+  a.hidden=false;a.href=boxUrl(g[0]);a.setAttribute('aria-label','Box score on NBA.com');
+  a.append(el('span','cap-label','Final'),el('span','lr '+(res[i]==='W'?'w':'l'),res[i]),el('span','ls',SCORES[g[0]]?SCORES[g[0]].replace('-','–'):''),
+    el('span','lo',(g[2]==='H'?'vs ':'at ')+TEAMS[g[1]]+' · '+shortFmt.format(tipOf(g))),el('span','lb','Box score on NBA.com ↗'))}
+
+/* key dates */
+const DATES=[
+  ['2026-10-19','Opening Day rosters set',0],
+  ['2026-10-22','Season opener at Philadelphia',1],
+  ['2026-10-24','Home opener vs Brooklyn',1],
+  ['2026-10-30','NBA Cup group play begins',0],
+  ['2026-10-31','Tyson 2027–28 club option ($5.64M)',1],
+  ['2026-11-15','Hezonja 2026–27 salary guaranteed ($2.85M)',1],
+  ['2026-12-11','NBA Cup final, Indianapolis',0],
+  ['2027-01-10','All contracts guaranteed, incl. Porter Jr. ($2.41M)',1],
+  ['2027-02-11','Trade deadline',0],
+  ['2027-02-19','All-Star Weekend, Phoenix (Feb 19–21)',0],
+  ['2027-03-01','Playoff eligibility waiver deadline',0],
+  ['2027-04-11','Regular season ends',0],
+  ['2027-04-13','Play-In Tournament (Apr 13–16)',0],
+  ['2027-04-17','Playoffs begin',0],
+  ['2027-06-29','Mitchell player option decision ($53.8M)',1],
+  ['2027-06-29','Tomlin qualifying offer due',1],
+  ['2027-07-01','Proctor and Tyson extension eligible',1]
+];
+const fmt=new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric'});
+const today=new Date();today.setHours(0,0,0,0);
+const upcoming=DATES.filter(([d])=>new Date(d+'T00:00:00')>=today);
+const list=document.getElementById('dates');
+upcoming.forEach(([d,t,c],i)=>{const li=el('li',c?'cav':null);li.id='d-'+i;li.title=t;li.append(el('span','d',fmt.format(new Date(d+'T00:00:00'))),el('span','t',t));list.appendChild(li)});
+
+/* cap bar — figures in $M. Thresholds: NBA, 2026-27. */
+const TEAM_SALARY=208.969955; /* capsheets.com: payroll $206,725,846 + dead money $2,244,109 */
+const LINES=[
+  ['Minimum',148.465,0],['Salary cap',164.961,0],['Luxury tax',200.428,0],['First apron',209.015,1],['Second apron',221.686,1]
+];
+const LO=140,HI=232,pct=v=>Math.max(0,Math.min(100,(v-LO)/(HI-LO)*100));
+const money=v=>Math.abs(v)<1?'$'+Math.round(v*1000)+'K':'$'+v.toFixed(1)+'M';
+document.getElementById('payroll').textContent=money(TEAM_SALARY);
+document.getElementById('payroll-note').textContent='Team salary incl. $2.24M dead money · Capsheets';
+const TAX_BILL=9.161442; /* projected luxury tax payment, $M (Capsheets) */
+const near=LINES.find(([,v])=>v>=TEAM_SALARY);const tax=LINES.find(l=>l[0]==='Luxury tax')[1];
+const hl=el('div','headline');
+if(near)hl.append(money(near[1]-TEAM_SALARY)+' under the '+near[0].toLowerCase());else hl.append('Over the second apron');
+if(TEAM_SALARY>tax){hl.append(', ',el('strong',null,money(TEAM_SALARY-tax)+' over the tax'),'. Projected tax bill '+money(TAX_BILL)+'.')}else hl.append('. Below the tax line.');
+document.getElementById('payroll-note').after(hl);
+const track=document.getElementById('track'),hbar=document.getElementById('hbar');
+const zones=[[LO,164.961,'var(--z1)'],[164.961,200.428,'var(--track)'],[200.428,209.015,'var(--z2)'],[209.015,221.686,'var(--z3)'],[221.686,HI,'var(--z4)']];
+zones.forEach(([a,b,c])=>{const z=el('div','zone');z.style.left=pct(a)+'%';z.style.width=(pct(b)-pct(a))+'%';z.style.background=c;track.insertBefore(z,track.firstChild)});
+LINES.forEach(([n,v,hard],i)=>{const r=el('div','ln'+(hard?' hard':'')+(i%2?' up':' down')+(i===0?' first':'')+(i===LINES.length-1?' last':''));
+  r.style.left=pct(v)+'%';const SHORT={'Minimum':'Min','Salary cap':'Cap','Luxury tax':'Tax','First apron':'Apron 1','Second apron':'Apron 2'};const sp=el('span');sp.append(el('i','full',n),el('i','short',SHORT[n]||n),el('em',null,money(v)));r.appendChild(sp);hbar.appendChild(r)});
+hbar.setAttribute('aria-label','Team salary '+money(TEAM_SALARY)+' against the cap, tax and apron lines');
+requestAnimationFrame(()=>{document.getElementById('fill').style.width=pct(TEAM_SALARY)+'%'});
+const room=document.getElementById('room');
+LINES.slice(1).forEach(([n,v])=>{const d=v-TEAM_SALARY;const li=el('li');li.append(el('span',null,(d>=0?'Under ':'Over ')+n.toLowerCase()));li.appendChild(el('b',d<0?'over':null,money(Math.abs(d))));room.appendChild(li)});
+
+/* injuries — status: Out | Doubtful | Questionable | Probable | Game-time decision */
+const INJ_UPDATED='Oct 1';
+const INJURIES=[['Peyton Watson','SF','Hamstring','Game-time decision']];
+const ij=document.getElementById('inj');
+if(!INJURIES.length){ij.appendChild(el('li',null,'No injuries reported.'))}
+const ABBR={'Out':'OUT','Doubtful':'DOUBT','Questionable':'Q','Probable':'PROB','Game-time decision':'GTD','Day-to-day':'DTD'};
+INJURIES.forEach(([n,p,inj,st])=>{const li=el('li');const a=el('span');a.append(el('b',null,n),' · '+inj);const z=el('span',st==='Out'?'out':null,ABBR[st]||st);z.title=st;li.append(a,z);ij.appendChild(li)});
+document.getElementById('inj-count').textContent=INJURIES.length+(INJURIES.length===1?' player':' players');
+document.getElementById('inj-note').textContent='Updated '+INJ_UPDATED+' · CBS Sports';
+
+/* Charge */
+(function(){
+  const now=new Date(Date.now()-3*3600e3);const tip=g=>new Date(g[0]+'T'+String(+g[3].split(':')[0]+12).padStart(2,'0')+':'+g[3].split(':')[1]+':00-05:00');
+  const nxt=CHARGE.games.find(g=>!g[4]&&tip(g)>now);const last=[...CHARGE.games].reverse().find(g=>g[4]);
+  const played=CHARGE.games.some(g=>g[4]);
+  document.getElementById('ch-label').textContent=nxt?(played?'Next game':'Season opener'):'Season complete';
+  if(nxt){document.getElementById('ch-next').textContent=(nxt[2]==='H'?'vs ':'at ')+nxt[1];
+    document.getElementById('ch-meta').textContent=shortFmt.format(tip(nxt))+' · '+nxt[3]+' PM'+(nxt[2]==='H'?' · '+CHARGE.venue:'')}
+  const kv=document.getElementById('ch-kv');
+  [['Record',CHARGE.record]].forEach(([a,b])=>{const li=el('li');li.append(el('span',null,a),el('b',null,b));kv.appendChild(li)});
+
+})();
+
+/* this day in Cavs history — [MM-DD, year, fact, source label, source url]. Every entry verified against its source. */
+const HISTORY=[
+  ['10-13',1978,'Friday the 13th turned out lucky: the Cavs opened the season with a 115–101 win at Boston Garden. Campy Russell led the way with 21.','Basketball Reference','https://www.basketball-reference.com/boxscores/197810130BOS.html'],
+  ['10-14',1970,'The Cavs played their first game ever, a 107–92 loss at the Buffalo Braves. Bingo Smith led Cleveland with 21.','Basketball Reference','https://www.basketball-reference.com/boxscores/197010140BUF.html'],
+  ['10-17',1994,'Gund Arena, today’s Rocket Arena, opened with a Billy Joel concert.','Rocket Arena','https://www.rocketarena.com/thirty/timeline'],
+  ['10-25',2016,'Ring night: the Cavs raised their first championship banner, then beat the Knicks 117–88.','ABC News','https://abc7.com/post/cavaliers-raise-first-championship-banner-say-next-step-is-repeat/1573276/'],
+  ['10-26',1974,'Richfield Coliseum opened. It was the Cavs’ home for the next 20 seasons.','Wikipedia','https://en.wikipedia.org/wiki/Richfield_Coliseum'],
+  ['10-29',2003,'LeBron James made his NBA debut at Sacramento: 25 points, 6 rebounds and 9 assists in a 106–92 loss.','History.com','https://www.history.com/this-day-in-history/october-29/lebron-james-nba-debut'],
+  ['10-30',2014,'LeBron’s first home game back. The Knicks spoiled it 95–90; he had 17 points and a career-high 8 turnovers.','Basketball Reference','https://www.basketball-reference.com/boxscores/201410300CLE.html'],
+  ['11-08',1994,'First Cavs game at Gund Arena: a 100–98 loss to Houston.','Basketball Reference','https://www.basketball-reference.com/boxscores/199411080CLE.html'],
+  ['11-19',2024,'Boston ended the Cavs’ 15–0 start, 120–117. The 15–0 start is tied for the second best in NBA history.','Sports Illustrated','https://www.si.com/nba/cavaliers/news/boston-celtics-snap-cleveland-cavaliers-record-setting-winning-streak'],
+  ['11-23',2016,'Kevin Love scored 34 points in the first quarter against Portland, an NBA first-quarter record. He finished with 40 in a 137–125 win.','Basketball Reference','https://www.basketball-reference.com/boxscores/201611230CLE.html'],
+  ['12-02',2010,'LeBron’s first game back in Cleveland with Miami: 38 points in a 118–90 Heat win.','Basketball Reference','https://www.basketball-reference.com/boxscores/201012020CLE.html'],
+  ['12-27',2024,'The Cavs scored 149 at Denver, the most in a road game in franchise history, winning 149–135.','Cleveland 19','https://www.cleveland19.com/2024/12/28/cavaliers-beat-nuggets-149-135-mile-high-shootout-denver'],
+  ['12-30',1984,'LeBron James was born in Akron.','Basketball Reference','https://www.basketball-reference.com/players/j/jamesle01.html'],
+  ['01-02',2023,'Donovan Mitchell scored 71 points in a 145–134 overtime win over the Bulls.','Basketball Reference','https://www.basketball-reference.com/boxscores/202301020CLE.html']
+];
+(function(){
+  const now=new Date(new Date().toLocaleString('en-US',{timeZone:'America/New_York'}));
+  const md=String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  const sorted=[...HISTORY].sort((a,b)=>a[0]<b[0]?-1:1);
+  /* exact date first; else the most recent fact from the past week; else the most recent fact on the calendar */
+  const back=k=>{const d=new Date(now);d.setDate(d.getDate()-k);return String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+  let h=sorted.find(x=>x[0]===md),label='On this day';
+  if(!h){for(let k=1;k<=6&&!h;k++)h=sorted.find(x=>x[0]===back(k));if(h){label='Earlier this week';document.getElementById('otd-h').textContent='This week in Cavs history'}}
+  if(!h){h=[...sorted].reverse().find(x=>x[0]<md)||sorted[sorted.length-1];label='From the archive';document.getElementById('otd-h').textContent='From the Cavs archive'}
+  const [m,d]=h[0].split('-').map(Number);
+  const when=document.getElementById('otd-when');
+  when.textContent=label+' · '+new Date(2000,m-1,d).toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  when.appendChild(el('b',null,String(h[1])));
+  document.getElementById('otd-text').textContent=h[2];
+  const a=document.getElementById('otd-src');a.href=h[4];a.textContent='Source: '+h[3]+' ↗';
+})();
+
+/* cap sheet */
+/* [name, pos, [2026-27 … 2030-31], Bird rights, free agency, note].
+   Each season: dollars | [dollars,'P'] player option | [dollars,'T'] team option | 'UFA' / 'RFA' (free agent that summer) | null.
+   Salaries: Capsheets (2026-27), Salary Swish (future). Bird rights + FA: Salary Swish. */
+const SEASONS=['2026–27','2027–28','2028–29','2029–30','2030–31'];
+const ROSTER=[
+  ['Donovan Mitchell','G',[50105628,60937500,65812500,70687500,[75562500,'P']],'Full Bird','2031 UFA',''],
+  ['Evan Mobley','F/C',[50105628,53817156,57528684,61240212,'UFA'],'Full Bird','2030 UFA',''],
+  ['James Harden','G',[30647619,32180000,[33712381,'P'],'UFA',null],'Full Bird','2029 UFA',''],
+  ['Jarrett Allen','C',[28000000,30240000,32480000,'UFA',null],'Full Bird','2029 UFA',''],
+  ['Peyton Watson','F',[20465116,21488372,22511628,[23534884,'P'],'UFA'],'Full Bird','2030 UFA',''],
+  ['Sam Merrill','G',[9160715,9839285,10517856,'UFA',null],'Full Bird','2029 UFA',''],
+  ['Jaylon Tyson','F',[3658560,[5641500,'T'],'RFA',null,null],'Full Bird','2028 RFA','Option decision due Oct 31'],
+  ['Thomas Bryant','C',[2449421,'UFA',null,null,null],'Early Bird','2027 UFA',''],
+  ['Mario Hezonja','F',[2449421,'UFA',null,null,null],'Non-Bird','2027 UFA','Non-guaranteed until Nov 15'],
+  ['Nae’Qwan Tomlin','F',[2411090,'RFA',null,null,null],'Full Bird','2027 RFA',''],
+  ['Craig Porter Jr.','G',[2406205,'UFA',null,null,null],'Full Bird','2027 UFA','Non-guaranteed until Jan 10'],
+  ['Tyrese Proctor','G',[2150917,2525901,[2735698,'T'],'UFA',null],'Full Bird','2029 UFA','2027–28 partly guaranteed ($500K)'],
+  ['Khalifa Diop','C',[1357763,2294370,2694363,[2918152,'T'],'RFA'],'Full Bird','2030 RFA','Future years non-guaranteed'],
+  ['Meleek Thomas','G',[1357763,2294370,2694363,[2918152,'T'],'RFA'],'Full Bird','2030 RFA','Rookie scale'],
+  ['Cam Whitmore','—',[1819437,null,null,null,null],'—','—','Dead money'],
+  ['Ricky Rubio','—',[424672,null,null,null,null],'—','—','Dead money']
+];
+const TWOWAY=[['Tristan Enaruna','Full Bird','2027 RFA'],['Riley Minix','Early Bird','2027 RFA'],['Ernest Udeh Jr.','Non-Bird','2027 RFA']];
+const CAMP=['Rashaun Agee','Zach Austin','Jaxson Robinson','Noam Yaacov'];
+const slug=t=>t.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const usd=v=>'$'+Math.round(v).toLocaleString('en-US');
+const usdM=v=>'$'+(v/1e6).toFixed(1)+'M';
+const BIRD={
+  'Full Bird':'Cleveland can re-sign him for any amount up to the max, for up to five years, even while over the cap. Earned by spending three seasons with the team without changing teams as a free agent.',
+  'Early Bird':'Cleveland can go over the cap to re-sign him for up to 175% of his previous salary or 105% of the league’s average salary, whichever is greater, on a deal of two to four years. Earned after two seasons.',
+  'Non-Bird':'Cleveland can go over the cap to re-sign him for up to 120% of his previous salary or 120% of the minimum salary, whichever is greater. Applies after one season with the team.'
+};
+const FA={UFA:'Unrestricted: he can sign with any team.',RFA:'Restricted: if Cleveland extends a qualifying offer, it can match any offer sheet he signs with another team.'};
+const cb=document.getElementById('capbody');const totals=[0,0,0,0,0];
+ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
+  const tr=el('tr');tr.id='p-'+slug(n);const dead=t==='Dead money';
+  const nameTd=el('td');
+  const cells=[nameTd,el('td','dim',p)];
+  yrs.forEach((y,i)=>{const td=el('td','r '+(i===0?'cur':'fut'));
+    if(typeof y==='number'){td.textContent=i===0?usd(y):usdM(y);totals[i]+=y}
+    else if(Array.isArray(y)){td.textContent=i===0?usd(y[0]):usdM(y[0]);td.appendChild(el('span','opt',y[1]==='P'?'PO':'TO'));totals[i]+=y[0]}
+    else if(y){td.appendChild(el('span','fa',y))}
+    cells.push(td)});
+  cells.push(el('td',bird==='Full Bird'?null:'dim',bird));
+  const note=el('td');if(t)note.appendChild(el('span','pill',t));cells.push(note);
+  tr.append(...cells);cb.appendChild(tr);
+  if(dead){nameTd.textContent=n;nameTd.style.fontWeight='600';return}
+  const btn=el('button','pbtn',n);btn.type='button';btn.setAttribute('aria-expanded','false');nameTd.appendChild(btn);
+  const det=el('tr','det');det.hidden=true;const dtd=el('td');dtd.colSpan=9;const g=el('div','det-grid');
+  const blk=(h,html)=>{const d=el('div');d.appendChild(el('h4',null,h));const pp=el('p');html.forEach(x=>pp.append(x));d.appendChild(pp);g.appendChild(d)};
+  blk('Bird rights · '+bird,[BIRD[bird]||'']);
+  const [yr,type]=fa.split(' ');
+  blk('Free agency · '+fa,['Becomes a free agent in the summer of '+yr+'. ',FA[type]||'']);
+  const opts=[];yrs.forEach((y,i)=>{if(Array.isArray(y))opts.push((y[1]==='P'?'Player option':'Team option')+' for '+SEASONS[i]+' ('+usd(y[0])+'): '+(y[1]==='P'?'he decides whether to stay for that season.':'Cleveland decides whether to keep him for that season.'))});
+  const left=yrs.filter(y=>typeof y==='number'||Array.isArray(y)).length;
+  blk('Contract',[left+(left===1?' season':' seasons')+' remaining including this one. ',opts.join(' ')||'No options.',t?' '+t+'.':'']);
+  dtd.appendChild(g);det.appendChild(dtd);cb.appendChild(det);
+  btn.addEventListener('click',()=>{const o=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',String(!o));det.hidden=o});
+});
+const tot=document.getElementById('captot');
+tot.append(el('td',null,'Team total'),el('td'));
+totals.forEach((v,i)=>tot.appendChild(el('td','r '+(i===0?'cur':'fut'),v?(i===0?usd(v):usdM(v)):'')));
+tot.append(el('td'),el('td'));
+const tw=document.getElementById('twoway');TWOWAY.forEach(([n,b,f])=>{const li=el('li');li.id='p-'+slug(n);const sp2=el('span',null,n);sp2.append(el('small',null,b+' · '+f));li.append(sp2,el('b',null,'Two-way'));tw.appendChild(li)});
+const cp=document.getElementById('camp');CAMP.forEach(n=>{const li=el('li');li.id='p-'+slug(n);const sp2=el('span',null,n);sp2.append(el('small',null,'Exhibit 10 · Non-Bird'));li.append(sp2,el('b',null,'$1,357,763'));cp.appendChild(li)});
+
+/* assets */
+const pk=document.getElementById('picks');PICKS.forEach(([a,b])=>{const li=el('li');const s=el('span',null,a);s.append(el('small',null,b));li.appendChild(s);pk.appendChild(li)});
+const ex=document.getElementById('exc');EXC.forEach(([a,v,b])=>{const li=el('li');const s=el('span',null,a);s.append(el('small',null,b));li.append(s,el('b',null,v));ex.appendChild(li)});
+
+/* resources */
+const rs=document.getElementById('res');
+RES.forEach(([g,items])=>{const sec=el('section');const h=el('div','block-h');h.appendChild(el('h2',null,g));sec.appendChild(h);
+  items.forEach(([n,d,dom,u])=>{const a=el('a','res');a.href=u;a.target='_blank';a.rel='noopener';a.append(el('b',null,n),el('span',null,d),el('em',null,dom+' ↗'));sec.appendChild(a)});rs.appendChild(sec)});
+
+/* schedule page */
+const sc=document.getElementById('sched');let curM='';let tb;
+const mFmt=new Intl.DateTimeFormat('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
+SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
+  if(m!==curM){curM=m;const sec=el('section');sec.style.marginTop='8px';const h=el('div','block-h');h.appendChild(el('h2',null,mFmt.format(new Date(m+'-15T12:00:00Z'))));
+    const box=el('div','tablebox');const t=el('table');t.style.minWidth='560px';t.innerHTML='<thead><tr><th>Date</th><th>Opponent</th><th>Time</th><th>TV</th><th class="r">Result</th><th class="r">Box score</th></tr></thead>';tb=el('tbody');t.appendChild(tb);box.appendChild(t);sec.append(h,box);sc.appendChild(sec)}
+  const tr=el('tr');tr.id='g-'+g[0];const r=res[i];
+  tr.append(el('td','mono',shortFmt.format(tipOf(g))),(()=>{const td=el('td');td.append((g[2]==='H'?'vs ':'at ')+TEAMS[g[1]]);return td})(),el('td','mono dim',g[3]+' PM'),el('td','dim',TV[g[0]]||''),el('td','r mono',r?(r+(SCORES[g[0]]?' '+SCORES[g[0]].replace('-','–'):'')):''),(()=>{const td=el('td','r');if(r){const a=el('a',null,'NBA.com ↗');a.href=boxUrl(g[0]);a.target='_blank';a.rel='noopener';td.appendChild(a)}return td})());
+  if(i===ni)tr.style.background='var(--sub)';tb.appendChild(tr)});
+
+/* staff page — [name, title, first season] */
+const STAFF=[
+  ['Ownership',[['Dan Gilbert','Chairman','2004–05'],['Nate Forbes','Vice Chairman','2004–05'],['Jeff Cohen','Minority Owner','2004–05']]],
+  ['Front office',[['Koby Altman','President of Basketball Operations','2021–22'],['Jason Hillman','VP, Basketball Operations','2021–22'],['Brandon Weems','Assistant General Manager','2021–22'],['Jon Nichols','VP, Basketball Strategy','2021–22'],['Max Weisberg','Director of Basketball Strategy','2023–24'],['Brendon Yu','Director of Scouting','2023–24'],['Mark Cashman','Director of Team Operations','2011–12'],['Bernie Bickerstaff','Senior Basketball Advisor','2017–18'],['Zydrunas Ilgauskas','Special Assistant to the GM','2013–14'],['Jos\u00e9 Calder\u00f3n','Special Advisor to the GM','2021–22']]],
+  ['Coaching staff',[['Kenny Atkinson','Head Coach','2024–25'],['Johnnie Bryant','Associate Head Coach','2024–25'],['Jawad Williams','Assistant Coach','2025–26'],['Mike Gerrity','Assistant Coach','2024–25'],['Trevor Hendry','Assistant Coach','2024–25'],['Nate Reinking','Assistant Coach','2024–25'],['Omar Cook','Assistant Coach','2023–24'],['Andrew Olson','Shooting Coach','2018–19'],['D.J. Ham','Player Development Coach','2024–25'],['Steve Frankoski','Player Development Coach','2019–20']]],
+  ['Performance & medical',[['Dr. Mark Kovacs','Sr. Director, Sports Science and Health','2019–20'],['Steve Spiro','Head Athletic Trainer','2013–14'],['Derek Millender','Head Strength & Conditioning Coach','2017–18']]]
+];
+const st=document.getElementById('staff');
+STAFF.forEach(([g,people])=>{const sec=el('section');const h=el('div','block-h');h.append(el('h2',null,g),el('span',null,people.length+''));const ul=el('ul','kv');
+  people.forEach(([n,t,y])=>{const li=el('li');li.id='s-'+slug(n);const s2=el('span',null,n);s2.append(el('small',null,t));li.append(s2,el('b',null,y));ul.appendChild(li)});sec.append(h,ul);st.appendChild(sec)});
+
+/* video.
+   On cavsdatabase.com, a scheduled job (scripts/fetch-videos.mjs) writes /videos.json from the official Cavs YouTube feed,
+   and the page shows players that load on click. Anywhere else (like this preview) it shows links that are always current. */
+const YT='https://www.youtube.com/@cavs';
+const VLINKS=[['Latest uploads','Newest videos from the official channel',YT+'/videos'],['Postgame press conferences','Newest first',YT+'/search?query=postgame'],['Practice & shootaround','Coach and player availability',YT+'/search?query=practice'],['Media day','Every player, every year',YT+'/search?query=media%20day']];
+const VCATS=[['Postgame press conferences',/post-?game|press conference|presser/i],['Practice & shootaround',/practice|shootaround/i],['Media day',/media day/i]];
+const ON_DOMAIN=/(^|\.)cavsdatabase\.com$/.test(location.hostname);
+const posters=items=>{const g=el('div','vgrid');items.forEach(([t,d,u])=>{const a=el('a','vcard');a.href=u;a.target='_blank';a.rel='noopener';a.setAttribute('aria-label',t+' on YouTube');
+  const th=el('div','vthumb poster');const pl=el('div','vplay');pl.appendChild(el('span'));th.append(el('span','ptag','Cavs · YouTube'),pl,el('span','ptitle',t));
+  a.append(th,el('small',null,d));g.appendChild(a)});return g};
+const linkList=items=>{const ul=el('ul','vlinks');items.forEach(([t,d,u])=>{const li=el('li');const a=el('a');a.href=u;a.target='_blank';a.rel='noopener';a.append(el('b',null,t),el('span',null,d),el('em',null,'YouTube ↗'));li.appendChild(a);ul.appendChild(li)});return ul};
+const vDate=new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric'});
+function vCard(v){
+  const c=el('div','vcard');const th=el('div','vthumb');
+  const img=el('img');img.src='https://i.ytimg.com/vi/'+v.id+'/hqdefault.jpg';img.alt='';img.loading='lazy';
+  const b=el('button','vplay');b.type='button';b.setAttribute('aria-label','Play: '+v.title);b.appendChild(el('span'));
+  b.addEventListener('click',()=>{const f=el('iframe');f.src='https://www.youtube-nocookie.com/embed/'+v.id+'?autoplay=1&rel=0';f.title=v.title;f.allow='autoplay; encrypted-media; picture-in-picture';f.allowFullscreen=true;th.textContent='';th.appendChild(f)});
+  th.append(img,b);c.append(th,el('b',null,v.title),el('small',null,vDate.format(new Date(v.published))));return c}
+function renderVideo(list){
+  const home=document.getElementById('vid-home'),page=document.getElementById('vid-page');home.textContent='';page.textContent='';
+  /* home: one video, the latest upload */
+  const one=el('div','vone');const txt=el('div','vone-txt');
+  if(!list||!list.length){one.appendChild(posters([VLINKS[0]]).firstChild);txt.append(el('b',null,'Latest from the Cavs'),el('p',null,'Press conferences, practice availability and highlights from the official channel.'))}
+  else{const v=list[0];one.appendChild(vCard(v));txt.append(el('b',null,v.title),el('p',null,vDate.format(new Date(v.published))))}
+  const more=el('a',null,'More press conferences and video →');more.href='#video';more.dataset.go='video';more.style.cssText='display:inline-block;margin-top:10px;font-size:14px';txt.appendChild(more);
+  one.appendChild(txt);home.appendChild(one);
+  if(!list||!list.length){page.appendChild(posters(VLINKS));return}
+  VCATS.concat([['Latest uploads',/./]]).forEach(([name,re])=>{const vs=list.filter(v=>re.test(v.title)).slice(0,name==='Latest uploads'?12:9);if(!vs.length)return;
+    const sec=el('section');const h=el('div','block-h');h.appendChild(el('h2',null,name));sec.appendChild(h);const gg=el('div','vgrid');vs.forEach(v=>gg.appendChild(vCard(v)));sec.appendChild(gg);page.appendChild(sec)});
+  page.appendChild(linkList(VLINKS.slice(1)))}
+renderVideo(null);
+if(ON_DOMAIN)fetch('/videos.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(d=>{if(d&&d.length)renderVideo(d)}).catch(()=>{});
+
+/* search — everything on the site is already in the page, so it searches locally */
+const fold=t=>String(t).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+const IDX=[];
+const add=(title,sub,kind,go,id,extra)=>IDX.push({title,sub,kind,go,id,hay:fold([title,sub,extra||''].join(' '))});
+SECTIONS.slice(1).forEach(([id,l,,d])=>add(l,d,'Page',id,null));
+ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{const y=yrs[0];add(n,(t==='Dead money'?'Dead money · ':p+' · ')+usd(Array.isArray(y)?y[0]:y)+(bird!=='—'?' · '+bird:''),'Player','cap','p-'+slug(n),fa+' '+t)});
+TWOWAY.forEach(([n,b,f])=>add(n,'Two-way · '+b+' · '+f,'Player','cap','p-'+slug(n),'two way'));
+CAMP.forEach(n=>add(n,'Training camp · Exhibit 10','Player','cap','p-'+slug(n),'camp'));
+INJURIES.forEach(([n,p,inj,st])=>add(n+' injury',inj+' · '+st,'Injury','home','inj','injury report'));
+SCHEDULE.forEach(g=>{const d=tipOf(g);add((g[2]==='H'?'vs ':'at ')+TEAMS[g[1]],dayFmt.format(d)+' · '+g[3]+' PM'+(TV[g[0]]?' · '+TV[g[0]]:''),'Game','schedule','g-'+g[0],g[1]+' '+new Intl.DateTimeFormat('en-US',{month:'long',timeZone:'America/New_York'}).format(d)+' game schedule '+(g[2]==='H'?'home':'road away'))});
+upcoming.forEach(([d,t],i)=>add(t,fmt.format(new Date(d+'T00:00:00')),'Date','home','d-'+i,'deadline key date '+new Date(d+'T00:00:00').toLocaleDateString('en-US',{month:'long'})));
+STAFF.forEach(([g,people])=>people.forEach(([n,t])=>add(n,t,'Staff','staff','s-'+slug(n),g)));
+PICKS.forEach(([a,b])=>add(a+' pick',b,'Asset','assets','picks','draft pick'));
+EXC.forEach(([a,v,b])=>add(a,v+' · '+b,'Asset','assets','exc','exception'));
+RES.forEach(([g,items])=>items.forEach(([n,d])=>add(n,d,'Link','resources',null,g)));
+add('Cleveland Charge','G League · next game and record','Charge','home','chg-h','g league');
+const q=document.getElementById('q'),sres=document.getElementById('sres');
+function runSearch(){
+  const terms=fold(q.value.trim()).split(/\s+/).filter(Boolean);
+  sres.textContent='';
+  if(!terms.length){sres.hidden=true;q.setAttribute('aria-expanded','false');return []}
+  const hits=IDX.filter(x=>terms.every(t=>x.hay.includes(t))).map(x=>{const tt=fold(x.title);return [x,(tt.startsWith(terms[0])?0:tt.includes(terms[0])?1:2)+(x.kind==='Player'?0:.5)]}).sort((a,b)=>a[1]-b[1]).slice(0,8).map(x=>x[0]);
+  if(!hits.length){sres.appendChild(el('li','none','No matches. Try a player, an opponent, a month or a staff name.'))}
+  hits.forEach(x=>{const li=el('li');const b=el('button');b.type='button';b.append(el('b',null,x.title),el('span',null,x.sub),el('em',null,x.kind));b.addEventListener('click',()=>goTo(x));li.appendChild(b);sres.appendChild(li)});
+  sres.hidden=false;q.setAttribute('aria-expanded','true');return hits}
+function goTo(x){
+  sres.hidden=true;q.setAttribute('aria-expanded','false');q.value='';q.blur();
+  try{history.replaceState(null,'','#'+x.go)}catch(_){}show(x.go);
+  if(!x.id)return;
+  requestAnimationFrame(()=>{const t=document.getElementById(x.id);if(!t)return;
+    const btn=t.querySelector('.pbtn');if(btn&&btn.getAttribute('aria-expanded')!=='true')btn.click();
+    t.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+    t.classList.remove('flash');void t.offsetWidth;t.classList.add('flash')})}
+q.addEventListener('input',runSearch);
+q.addEventListener('focus',()=>{if(q.value.trim())runSearch()});
+document.getElementById('sform').addEventListener('submit',e=>{e.preventDefault();const h=runSearch();if(h&&h[0])goTo(h[0])});
+q.addEventListener('keydown',e=>{if(e.key==='ArrowDown'){const f=sres.querySelector('button');if(f){e.preventDefault();f.focus()}}if(e.key==='Escape'){sres.hidden=true;q.setAttribute('aria-expanded','false')}});
+sres.addEventListener('keydown',e=>{const bs=[...sres.querySelectorAll('button')];const i=bs.indexOf(document.activeElement);
+  if(e.key==='ArrowDown'&&i<bs.length-1){e.preventDefault();bs[i+1].focus()}
+  if(e.key==='ArrowUp'){e.preventDefault();(i>0?bs[i-1]:q).focus()}
+  if(e.key==='Escape'){sres.hidden=true;q.focus()}});
+document.addEventListener('click',e=>{if(!e.target.closest('.search')){sres.hidden=true;q.setAttribute('aria-expanded','false')}});
+
+/* ticker */
+(function(){const t=document.getElementById('tick');const item=(k,v)=>{const sp=el('span');sp.append(el('b',null,k),v);t.appendChild(sp)};
+  const md=d=>{const x=new Date(d+'T12:00:00');return (x.getMonth()+1)+'/'+x.getDate()};
+  if(res.length){const i=res.length-1,g=SCHEDULE[i];item('FINAL',res[i]+' '+(SCORES[g[0]]||'').replace('-','–')+' '+(g[2]==='H'?'VS ':'@ ')+g[1])}
+  if(ng)item('NEXT','CLE '+(ng[2]==='H'?'VS ':'@ ')+ng[1]+' · '+shortFmt.format(tipOf(ng)).toUpperCase()+' · '+ng[3]+' ET'+(TV[ng[0]]?' · '+TV[ng[0]]:''));
+  INJURIES.forEach(([n,p,inj,st])=>item('INJ',n.split(' ').slice(-1)[0].toUpperCase()+' ('+inj.toUpperCase()+') '+(ABBR[st]||st)));
+  item('CAP',money(TEAM_SALARY)+(near?' · '+money(near[1]-TEAM_SALARY).toUpperCase()+' UNDER '+near[0].toUpperCase():''));
+  const cn=CHARGE.games.find(g=>!g[4]);if(cn)item('CHARGE',(CHARGE.games.some(g=>g[4])?'NEXT ':'OPENS ')+md(cn[0])+(cn[2]==='H'?' VS ':' @ ')+cn[1].toUpperCase());
+  const nd=upcoming.find(x=>x[2]);if(nd)item(md(nd[0]),nd[1].toUpperCase());
+})();
+
+/* routing */
+const BUILT=['home','cap','assets','resources','schedule','staff','video'];
+function show(id){
+  if(!SECTIONS.some(s=>s[0]===id))id='home';
+  BUILT.forEach(v=>{document.getElementById('view-'+v).hidden=id!==v});
+  const stub=document.getElementById('view-stub');stub.hidden=BUILT.includes(id);
+  if(!stub.hidden){const s=SECTIONS.find(x=>x[0]===id);document.getElementById('stub-h').textContent=s[1];document.getElementById('stub-b').textContent=s[3]+' This page is next to build.'}
+  tabs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.go===id?'true':'false'));
+  window.scrollTo(0,0);
+}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-go]');if(!t)return;e.preventDefault();try{history.replaceState(null,'','#'+t.dataset.go)}catch(_){}show(t.dataset.go)});
+show((location.hash||'#home').slice(1));
+</script>
+</body>
+</html>

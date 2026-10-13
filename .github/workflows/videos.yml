@@ -1,0 +1,22 @@
+name: Update videos
+on:
+  schedule:
+    - cron: '*/30 * * * *'   # every 30 minutes, so postgame pressers show up quickly
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  videos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/fetch-videos.mjs
+      - name: Commit if changed
+        run: |
+          git config user.name "cavsdatabase-bot"
+          git config user.email "bot@cavsdatabase.com"
+          git add videos.json
+          git diff --cached --quiet || (git commit -m "Update videos" && git push)
