@@ -85,18 +85,18 @@ a{color:var(--wine-ink);text-decoration:none}a:hover{text-decoration:underline}
 .strip{display:grid;grid-template-columns:repeat(82,minmax(0,1fr));gap:2px}
 .strip span{height:30px;background:var(--track)}
 .strip span:nth-child(10n){box-shadow:inset 0 -5px 0 var(--tick)}
-.strip .w{background:var(--wine)}.strip .l{background:var(--fg)}
+.strip .w{background:var(--wine)}.strip .l{background:var(--gold)}
 .strip-legend{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin-top:8px;font-size:12px;color:var(--muted)}
 .strip-legend i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
 
 /* next game */
-.fin{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;padding:12px 18px;margin-bottom:12px;border:1px solid var(--line);border-left:3px solid var(--wine);color:var(--fg)}
+.fin{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;padding:12px 18px;margin-bottom:12px;border:1px solid var(--line);border-left:3px solid var(--wine);color:var(--fg)}
 .fin:hover{text-decoration:none;background:var(--sub)}
-.fin .lr{font:800 14px var(--sans);font-stretch:118%;letter-spacing:.04em}
+.fin .lr{line-height:1;font:800 16px/1 var(--sans);font-stretch:118%;letter-spacing:.04em}
 .fin .lr.w{color:var(--wine-ink)}
-.fin .ls{font:700 18px var(--mono);font-variant-numeric:tabular-nums}
-.fin .lo{font-size:14px;color:var(--fg2)}
-.fin .lb{margin-left:auto;font-size:13px;color:var(--wine-ink)}
+.fin .ls{font:700 18px/1 var(--mono);font-variant-numeric:tabular-nums}
+.fin .lo{font-size:14px;line-height:1;color:var(--fg2)}
+.fin .lb{margin-left:auto;font-size:13px;line-height:1;color:var(--wine-ink)}
 .next{display:flex;flex-wrap:wrap;border:1px solid var(--line)}
 .next .who{flex:999 1 340px;min-width:0;padding:20px 24px}
 .next h3{margin:6px 0 0;font:800 clamp(24px,3.4vw,32px)/1.1 var(--sans);font-stretch:115%;letter-spacing:-.02em;text-wrap:balance}
@@ -308,11 +308,11 @@ body{background:var(--page)}
 .index,.tablebox{background:var(--card)}
 /* scoreboard */
 .gscore{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1.3fr);padding:0!important;overflow:hidden}
-.grec{background:#14171A;color:#fff;padding:18px 22px;display:flex;flex-direction:column;gap:12px}
+.grec{background:#0F2140;color:#fff;padding:18px 22px;display:flex;flex-direction:column;gap:12px}
 .gk{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;font:700 12px var(--cond);letter-spacing:.14em;text-transform:uppercase;color:#9BA1A8}
 .gk a{font:600 13px var(--sans);letter-spacing:0;text-transform:none}
 .gbig{font:800 96px/.85 var(--cond);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
-.gbig i{font-style:normal;color:#F2B231}
+.gbig i{font-style:normal;font-weight:400;color:#8FA0BA;margin:0 .04em}
 .gsp{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 12px;margin:0}
 .gsp div{min-width:0}
 .gsp dt{font:700 10.5px var(--cond);letter-spacing:.08em;text-transform:uppercase;color:#8E959D;line-height:1.2}
@@ -324,7 +324,8 @@ body{background:var(--page)}
 .gteams .cle{color:var(--wine-ink)}
 .gat{font:600 20px var(--cond);color:var(--muted)}
 .ginfo{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 18px;font-size:13px;color:var(--fg2)}
-.gdays b{font:800 13px/1 var(--sans);color:var(--wine-ink)}
+.gdays{margin-left:auto;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 12px;border:1px solid var(--line);color:var(--muted);font:600 11px/1 var(--sans);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.gdays b{font:800 26px/1 var(--cond);color:var(--wine-ink);letter-spacing:0}
 .gmu .fin{margin:0 0 4px}
 .gstripbox{padding:12px 18px!important}
 .gstripbox .strip span{height:22px}
@@ -349,6 +350,20 @@ body{background:var(--page)}
 .poster .ptitle{font:700 18px var(--cond);text-transform:uppercase;letter-spacing:.04em}
 .poster .vplay span{width:60px;height:60px;background:transparent;box-shadow:none}
 .poster .vplay span::after{border-left-width:24px;border-top-width:14px;border-bottom-width:14px}
+.fin .cap-label{line-height:1}
+.ln.lock{border-left:3px solid var(--wine-ink)}
+.ln.lock span{color:var(--wine-ink)}
+.ln .lk{display:inline-flex;vertical-align:-1px;margin-right:4px}
+/* roster */
+.segs{display:inline-flex;align-self:flex-start;border:1px solid var(--line);background:var(--card)}
+.segs button{appearance:none;border:0;background:none;padding:8px 16px;font:700 12px var(--sans);font-stretch:118%;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);cursor:pointer}
+.segs button[aria-selected="true"]{background:var(--wine);color:#fff}
+.ros td{white-space:nowrap}
+.ros td.num{font:700 15px var(--mono);color:var(--wine-ink)}
+.ros td.m{font:400 13px var(--mono);font-variant-numeric:tabular-nums}
+.ros .tag{display:inline-block;margin-left:6px;padding:1px 5px;border:1px solid var(--line);font:700 9px var(--sans);font-stretch:125%;letter-spacing:.08em;color:var(--muted);vertical-align:1px}
+.ros tr.grp td{background:var(--sub);font:800 11px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-block:8px}
+.ros .pl{font-weight:600}
 </style>
 <style>[hidden]{display:none!important}</style>
 </head>
@@ -384,8 +399,8 @@ body{background:var(--page)}
           <a class="fin" id="last" hidden target="_blank" rel="noopener"></a>
           <div class="gk" id="next-h-row"><span id="nx-label"></span><a href="#schedule" data-go="schedule">Full schedule →</a></div>
           <h3 class="sr" id="nx-title"></h3><span class="sr" id="next-h"></span>
-          <div class="gteams" aria-hidden="true"><span class="tm cle">CLE</span><span class="gat" id="nx-at"></span><span class="tm" id="nx-opp"></span></div>
-          <div class="ginfo"><span id="nx-meta"></span><span id="nx-then"></span><span class="gdays"><b id="days">–</b> days to tip</span></div>
+          <div class="gteams"><span class="tm cle" aria-hidden="true">CLE</span><span class="gat" id="nx-at" aria-hidden="true"></span><span class="tm" id="nx-opp" aria-hidden="true"></span><span class="gdays"><b id="days">–</b><span>days to tip</span></span></div>
+          <div class="ginfo"><span id="nx-meta"></span><span id="nx-then"></span></div>
         </div>
       </section>
 
@@ -393,7 +408,7 @@ body{background:var(--page)}
         <div class="strip" id="strip" role="img" aria-label="Game-by-game results: no games played yet"></div>
         <div class="strip-legend">
           <span>Game 1</span>
-          <span><i style="background:var(--wine)"></i>Win &nbsp; <i style="background:var(--fg)"></i>Loss &nbsp; <i style="background:var(--track)"></i>Upcoming</span>
+          <span><i style="background:var(--wine)"></i>Win &nbsp; <i style="background:var(--gold)"></i>Loss &nbsp; <i style="background:var(--track)"></i>Upcoming</span>
           <span>Game 82</span>
         </div>
       </section>
@@ -535,6 +550,26 @@ body{background:var(--page)}
   </div>
 </main>
 
+<main id="view-roster" hidden>
+  <div class="wrap page">
+    <div>
+      <div class="dim" style="font-size:13px"><a href="#home" data-go="home">Home</a> / Roster</div>
+      <h1 style="margin-top:6px">2026–27 roster</h1>
+      <p class="dim" style="margin:6px 0 0" id="ros-sub"></p>
+    </div>
+    <div class="segs" role="tablist" aria-label="Roster view"><button role="tab" aria-selected="true" data-rv="bio">Bio</button><button role="tab" aria-selected="false" data-rv="meas">Measurements</button></div>
+    <div class="tablebox" id="rv-bio"><table class="ros">
+      <thead><tr><th class="r">No.</th><th>Player</th><th>Pos</th><th>Ht</th><th class="r">Wt</th><th class="r">Age</th><th>Born</th><th class="r">Exp</th><th>College / last team</th><th>Country</th><th>Draft</th></tr></thead>
+      <tbody id="rosbody"></tbody>
+    </table></div>
+    <div class="tablebox" id="rv-meas" hidden><table class="ros">
+      <thead><tr><th>Player</th><th>Ht (no shoes)</th><th>Ht (shoes)</th><th>Wingspan</th><th>Wing +/−</th><th>Standing reach</th><th class="r">Wt</th><th class="r">Body fat</th><th>Hand L × W</th><th>Source</th></tr></thead>
+      <tbody id="measbody"></tbody>
+    </table></div>
+    <p class="dim" style="margin:0;font-size:13px">Bio, draft and combine figures: NBA.com. Combine measurements are from the player's draft combine year; height and weight in the bio table are current listings. Wingspans sourced to CraftedNBA are used only where the player has no NBA combine measurement. Exp counts NBA seasons before this one (R = rookie). TW = two-way contract; Camp = training camp deal.</p>
+  </div>
+</main>
+
 <main id="view-stub" hidden>
   <div class="wrap page"><h1 id="stub-h"></h1><div class="empty" id="stub-b"></div></div>
 </main>
@@ -548,14 +583,14 @@ body{background:var(--page)}
 const SECTIONS=[
   ['home','Home','',''],
   ['roster','Roster','ROS','Players, positions, bios.'],
-  ['cap','Salary Cap','CAP','Cap sheet, guarantees, options.'],
-  ['assets','Assets','AST','Draft picks, swaps, exceptions.'],
-  ['staff','Coaches & Front Office','STF','Staff, executives, tenures.'],
-  ['charge','Cleveland Charge','CHG','G League roster and assignments.'],
+  ['cap','Salary Cap','CAP','Cap sheet and all salary and salary cap information.'],
+  ['assets','Assets','AST','Draft picks, exceptions and drafted players.'],
+  ['staff','Coaches & Front Office','STF','Staff and executive information.'],
+  ['charge','Cleveland Charge','CHG','G League roster and Charge information.'],
   ['schedule','Schedule','SCH','All 82 games, results, TV.'],
   ['rcf','RCF Content','RCF','Every RealCavsFans graphic.'],
   ['video','Video','VID','Press conferences and the latest Cavs video.'],
-  ['resources','Resources','RES','The best stat and cap sites.']
+  ['resources','Resources','RES','Database-approved NBA and Cavs sites.']
 ];
 const PICKS=[['2028 1st','Lesser of own or ATL · not trade-eligible'],['2030 1st','Own'],['2032 1st','Own'],['2033 1st','Own · frozen, not trade-eligible'],['2033 2nd','Own · trade-eligible']];
 const EXC=[['Non-taxpayer mid-level','$15,044,000','Expires Apr 11, 2027'],['Bi-annual','$5,477,000','Expires Apr 11, 2027'],['Trade exception (Max Strus)','$16,660,836','Expires Aug 20, 2027'],['Trade exception (Lonzo Ball)','$10,000,000','Expires Feb 5, 2027'],['Trade exception (De’Andre Hunter)','$1,439,674','Expires Feb 1, 2027']];
@@ -765,21 +800,23 @@ const TEAM_SALARY=208.969955; /* capsheets.com: payroll $206,725,846 + dead mone
 const LINES=[
   ['Minimum',148.465,0],['Salary cap',164.961,0],['Luxury tax',200.428,0],['First apron',209.015,1],['Second apron',221.686,1]
 ];
+const LOCK='<svg viewBox="0 0 12 14" width="11" height="13" aria-hidden="true"><path d="M3.2 6V4.2a2.8 2.8 0 0 1 5.6 0V6" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="1" y="6" width="10" height="7.5" rx="1.4" fill="currentColor"/></svg>';
+const HARDCAP='First apron'; /* Cavs are hard-capped at the first apron */
 const LO=140,HI=232,pct=v=>Math.max(0,Math.min(100,(v-LO)/(HI-LO)*100));
 const money=v=>Math.abs(v)<1?'$'+Math.round(v*1000)+'K':'$'+v.toFixed(1)+'M';
 document.getElementById('payroll').textContent=money(TEAM_SALARY);
-document.getElementById('payroll-note').textContent='Team salary incl. $2.24M dead money · Capsheets';
+document.getElementById('payroll-note').textContent='Team salary incl. $2.24M dead money';
 const TAX_BILL=9.161442; /* projected luxury tax payment, $M (Capsheets) */
 const near=LINES.find(([,v])=>v>=TEAM_SALARY);const tax=LINES.find(l=>l[0]==='Luxury tax')[1];
 const hl=el('div','headline');
-if(near)hl.append(money(near[1]-TEAM_SALARY)+' under the '+near[0].toLowerCase());else hl.append('Over the second apron');
+if(near)hl.append(money(near[1]-TEAM_SALARY)+' under the '+near[0].toLowerCase()+(near[0]===HARDCAP?' (hard cap)':''));else hl.append('Over the second apron');
 if(TEAM_SALARY>tax){hl.append(', ',el('strong',null,money(TEAM_SALARY-tax)+' over the tax'),'. Projected tax bill '+money(TAX_BILL)+'.')}else hl.append('. Below the tax line.');
 document.getElementById('payroll-note').after(hl);
 const track=document.getElementById('track'),hbar=document.getElementById('hbar');
 const zones=[[LO,164.961,'var(--z1)'],[164.961,200.428,'var(--track)'],[200.428,209.015,'var(--z2)'],[209.015,221.686,'var(--z3)'],[221.686,HI,'var(--z4)']];
 zones.forEach(([a,b,c])=>{const z=el('div','zone');z.style.left=pct(a)+'%';z.style.width=(pct(b)-pct(a))+'%';z.style.background=c;track.insertBefore(z,track.firstChild)});
 LINES.forEach(([n,v,hard],i)=>{const r=el('div','ln'+(hard?' hard':'')+(i%2?' up':' down')+(i===0?' first':'')+(i===LINES.length-1?' last':''));
-  r.style.left=pct(v)+'%';const SHORT={'Minimum':'Min','Salary cap':'Cap','Luxury tax':'Tax','First apron':'Apron 1','Second apron':'Apron 2'};const sp=el('span');sp.append(el('i','full',n),el('i','short',SHORT[n]||n),el('em',null,money(v)));r.appendChild(sp);hbar.appendChild(r)});
+  r.style.left=pct(v)+'%';const SHORT={'Minimum':'Min','Salary cap':'Cap','Luxury tax':'Tax','First apron':'Apron 1','Second apron':'Apron 2'};const sp=el('span');if(n===HARDCAP){r.classList.add('lock');const k=document.createElement('b');k.className='lk';k.innerHTML=LOCK;k.title='Hard cap';sp.appendChild(k)}sp.append(el('i','full',n),el('i','short',SHORT[n]||n),el('em',null,n===HARDCAP?money(v)+' · hard cap':money(v)));r.appendChild(sp);hbar.appendChild(r)});
 hbar.setAttribute('aria-label','Team salary '+money(TEAM_SALARY)+' against the cap, tax and apron lines');
 requestAnimationFrame(()=>{document.getElementById('fill').style.width=pct(TEAM_SALARY)+'%'});
 const room=document.getElementById('room');
@@ -1039,7 +1076,78 @@ document.addEventListener('click',e=>{if(!e.target.closest('.search')){sres.hidd
 
 
 /* routing */
-const BUILT=['home','cap','assets','resources','schedule','staff','video'];
+
+/* roster — NBA.com (commonteamroster + commonplayerinfo + draft combine anthro), pulled Oct 14, 2026.
+   [no, name, pos, ht, wt, born, age, exp, school, country, draft, status, playerId]
+   draft: [year, round, pick] or null for undrafted. status: '' | 'TW' | 'Camp' */
+const PLAYERS=[
+ ['1','James Harden','G','6-4',220,'1989-08-26',37,'17','Arizona State','USA',[2009,1,3],'',201935],
+ ['3','Thomas Bryant','C-F','6-9',260,'1997-07-31',29,'9','Indiana','USA',[2017,2,42],'',1628418],
+ ['4','Evan Mobley','C','6-11',230,'2001-06-18',25,'5','USC','USA',[2021,1,3],'',1630596],
+ ['5','Sam Merrill','G','6-4',195,'1996-05-15',30,'6','Utah State','USA',[2020,2,60],'',1630241],
+ ['8','Peyton Watson','G','6-7',215,'2002-09-11',24,'4','UCLA','USA',[2022,1,30],'',1631212],
+ ['9','Craig Porter Jr.','G','6-1',194,'2000-02-26',26,'3','Wichita State','USA',null,'',1641854],
+ ['15','Meleek Thomas','G','6-3',190,'2006-08-06',20,'R','Arkansas','USA',[2026,2,34],'',1643509],
+ ['18','Khalifa Diop','C','6-10',231,'2002-01-15',24,'R','Gran Canaria (Spain)','Senegal',[2022,2,39],'',1631215],
+ ['20','Jaylon Tyson','G-F','6-6',224,'2002-12-02',23,'2','California','USA',[2024,1,20],'',1642281],
+ ['24','Tyrese Proctor','G','6-4',185,'2004-04-01',22,'1','Duke','Australia',[2025,2,49],'',1642878],
+ ['31','Jarrett Allen','C','6-9',250,'1998-04-21',28,'9','Texas','USA',[2017,1,22],'',1628386],
+ ['33','Mario Hezonja','F-G','6-8',255,'1995-02-25',31,'5','FC Barcelona (Spain)','Croatia',[2015,1,5],'',1626209],
+ ['35',"Nae'Qwan Tomlin",'F','6-8',210,'2000-12-19',25,'2','Memphis','USA',null,'',1641772],
+ ['45','Donovan Mitchell','G','6-2',228,'1996-09-07',30,'9','Louisville','USA',[2017,1,13],'',1628378],
+ ['12','Riley Minix','F','6-7',230,'2000-09-22',26,'2','Morehead State','USA',null,'TW',1642434],
+ ['21','Tristan Enaruna','F','6-7',220,'2001-06-26',25,'1','Cleveland State','Netherlands',null,'TW',1642400],
+ ['88','Ernest Udeh Jr.','C','6-9',266,'2004-01-08',22,'R','Miami','USA',null,'TW',1643640],
+ ['','Rashaun Agee','—','—',null,'2000-11-02',25,'R','—','—',null,'Camp',1643772],
+ ['','Zack Austin','G','6-5',216,'2001-08-11',25,'R','Pittsburgh','USA',null,'Camp',1643113],
+ ['','Jaxson Robinson','G-F','6-7',190,'2002-12-03',23,'R','Kentucky','USA',null,'Camp',1642283],
+ ['','Noam Yaacov','G','6-1',null,'2004-10-20',21,'R','Israel','Israel',null,'Camp',1643037]
+];
+/* combine anthro: name -> [year, ht no shoes, ht shoes, wingspan, reach, wt, body fat %, hand L, hand W, source]. Inches. */
+const COMBINE={
+ 'James Harden':[2009,76,77.25,82.75,103.5,222,10.1,null,null,'NBA combine'],
+ 'Thomas Bryant':[2017,81.5,82.75,90,112.5,247.8,9.4,9.5,10.25,'NBA combine'],
+ 'Jarrett Allen':[2017,81,82.25,89.25,109.5,233.6,7.4,9.5,10.5,'NBA combine'],
+ 'Donovan Mitchell':[2017,73.25,75,82,97,211.4,5.9,8.5,9.5,'NBA combine'],
+ 'Peyton Watson':[2022,78.75,80,84.5,107.5,203.4,5.2,8.5,9.5,'NBA combine'],
+ 'Jaxson Robinson':[2024,76.75,null,83.25,103,188.6,null,9,9.5,'NBA combine'],
+ "Nae'Qwan Tomlin":[2024,80.25,null,86.5,109,205,null,9,10,'NBA combine'],
+ 'Jaylon Tyson':[2024,77.5,null,80,102.5,218.2,null,8.25,9.5,'NBA combine'],
+ 'Tyrese Proctor':[2025,76.25,null,79.25,100.5,183.2,null,8.25,9,'NBA combine'],
+ 'Meleek Thomas':[2026,75,null,78.75,100,189.6,null,8,7.5,'NBA combine'],
+ 'Evan Mobley':[null,null,null,88,null,null,null,null,null,'Crafted'],
+ 'Sam Merrill':[null,null,null,77,null,null,null,null,null,'Crafted'],
+ 'Craig Porter Jr.':[null,null,null,76,null,null,null,null,null,'Crafted']
+};
+(function(){
+  const ftin=v=>{if(v==null)return '—';const f=Math.floor(v/12),i=+(v-f*12).toFixed(2);return f+'′ '+i+'″'};
+  const htIn=h=>{const m=/^(\d+)-(\d+)$/.exec(h);return m?+m[1]*12+ +m[2]:null};
+  const born=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  const ord=n=>n===1?'1st':n===2?'2nd':n+'th';
+  const groups=[['','Standard contracts'],['TW','Two-way'],['Camp','Training camp']];
+  const rb=document.getElementById('rosbody'),mb=document.getElementById('measbody');
+  groups.forEach(([st,label])=>{
+    const ps=PLAYERS.filter(p=>p[11]===st).sort((a,b)=>(+a[0]||999)-(+b[0]||999)||a[1].localeCompare(b[1]));
+    if(!ps.length)return;
+    [rb,mb].forEach((tb,k)=>{const g=el('tr','grp');const td=el('td',null,label+' · '+ps.length);td.colSpan=k?10:11;g.appendChild(td);tb.appendChild(g)});
+    ps.forEach(([no,n,pos,ht,wt,b,age,exp,sch,cty,dr,stt])=>{
+      const tr=el('tr');tr.id='r-'+slug(n);
+      const nm=el('td','pl',n);if(stt){nm.appendChild(el('span','tag',stt))}
+      tr.append(el('td','r num',no||'—'),nm,el('td',null,pos),el('td','m',ht==='—'?'—':ht.replace('-','′ ')+'″'),el('td','r m',wt?String(wt):'—'),el('td','r m',String(age)),el('td','m',born(b)),el('td','r m',exp),el('td',null,sch),el('td',null,cty),
+        el('td',dr?null:'dim',dr?dr[0]+' · '+ord(dr[1])+' rd, #'+dr[2]:'Undrafted'));
+      rb.appendChild(tr);
+      const c=COMBINE[n];const mr=el('tr');
+      if(c){const listed=htIn(ht),base=c[1]??listed;const wd=c[3]!=null&&base?c[3]-base:null;
+        mr.append(el('td','pl',n),el('td','m',ftin(c[1])),el('td','m',ftin(c[2])),el('td','m',ftin(c[3])),el('td','m',wd==null?'—':(wd>=0?'+':'−')+Math.abs(+wd.toFixed(2))+'″'),el('td','m',ftin(c[4])),el('td','r m',c[5]?c[5]+' lb':'—'),el('td','r m',c[6]!=null?c[6]+'%':'—'),el('td','m',c[7]?c[7]+'″ × '+c[8]+'″':'—'),el('td','dim',c[9]==='Crafted'?'CraftedNBA':c[9]+' '+c[0]))}
+      else{mr.append(el('td','pl',n));const td=el('td','dim','No combine measurements on record');td.colSpan=9;mr.appendChild(td)}
+      mb.appendChild(mr);
+    });
+  });
+  const std=PLAYERS.filter(p=>!p[11]).length,tw=PLAYERS.filter(p=>p[11]==='TW').length,cp=PLAYERS.filter(p=>p[11]==='Camp').length;
+  document.getElementById('ros-sub').textContent=std+' standard, '+tw+' two-way, '+cp+' training camp. Updated Oct 14, 2026.';
+  document.querySelectorAll('[data-rv]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-rv]').forEach(x=>x.setAttribute('aria-selected',x===b?'true':'false'));document.getElementById('rv-bio').hidden=b.dataset.rv!=='bio';document.getElementById('rv-meas').hidden=b.dataset.rv!=='meas'}));
+})();
+const BUILT=['home','roster','cap','assets','resources','schedule','staff','video'];
 function show(id){
   if(!SECTIONS.some(s=>s[0]===id))id='home';
   BUILT.forEach(v=>{document.getElementById('view-'+v).hidden=id!==v});
