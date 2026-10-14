@@ -271,20 +271,18 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--page:#0B0D0F;--card:#15181B}}
 :root[data-theme="dark"]{--page:#0B0D0F;--card:#15181B}
 body{background:var(--page)}
-.tick{background:#0D1014;color:#C9CDD3;font:600 12px var(--mono);letter-spacing:.02em}
-.tick .in{max-width:1200px;margin:0 auto;padding:7px 20px;display:flex;gap:26px;overflow-x:auto;white-space:nowrap}
-.tick b{color:#F2B231;font-weight:600;margin-right:6px}
 .gbar{background:#860038;color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:10}
-.gin{display:flex;flex-wrap:wrap;align-items:center;gap:0 20px;min-height:58px}
-.gbrand{display:flex;align-items:center;gap:8px;color:#fff;font:800 26px/1 var(--cond);text-transform:uppercase;letter-spacing:.01em}
+.gin{display:flex;flex-wrap:wrap;align-items:center;gap:0 18px;min-height:74px}
+@media (min-width:901px){.gin{flex-wrap:nowrap}.gbar .search{flex:0 0 180px}}
+.gbrand{display:flex;align-items:center;gap:8px;color:#fff;font:800 34px/1 var(--cond);text-transform:uppercase;letter-spacing:.01em}
 .gbrand:hover{text-decoration:none}
-.gbrand svg{width:30px;height:30px}
+.gbrand svg{width:38px;height:38px}
 .gbrand span{color:#F2B231}
 .gnav{display:flex;flex:1 1 auto;gap:0 2px;overflow-x:auto;min-width:0}
-.gnav button{appearance:none;border:0;background:none;cursor:pointer;font:700 15px var(--cond);text-transform:uppercase;letter-spacing:.04em;color:#F4D6DD;padding:0 9px;min-height:58px;white-space:nowrap}
+.gnav button{appearance:none;border:0;background:none;cursor:pointer;font:700 16px var(--cond);text-transform:uppercase;letter-spacing:.03em;color:#F4D6DD;padding:0 8px;min-height:74px;white-space:nowrap}
 .gnav button:hover{color:#fff}
 .gnav button[aria-selected="true"]{color:#fff;box-shadow:inset 0 -4px 0 #F2B231}
-.gbar .search{flex:0 1 200px;height:36px;background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22)}
+.gbar .search{flex:0 1 180px;height:40px;background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22)}
 .gbar .search input{color:#fff}
 .gbar .search input::placeholder{color:#F4D6DD}
 .gbar .search:focus-within{border-color:#F2B231}
@@ -343,7 +341,6 @@ body{background:var(--page)}
 <style>[hidden]{display:none!important}</style>
 </head>
 <body>
-<div class="tick" role="region" aria-label="Quick facts"><div class="in" id="tick"></div></div>
 <header class="gbar"><div class="wrap gin">
   <a class="gbrand" href="#home" data-go="home" aria-label="cavsdatabase.com home">
     <svg viewBox="0 0 100 100" aria-hidden="true">
@@ -667,6 +664,8 @@ const TV={'2026-10-22':'ESPN','2026-10-29':'NBA TV'};
 /* One letter per game played, in schedule order: W or L. Optional score per date in SCORES. */
 const SEASON={results:'',eastRank:'—',cup:'0–0'};
 const SCORES={}; /* e.g. '2026-10-22':'112-104' (Cavs first) */
+/* Preseason finals, shown in the last-result card until the regular season starts. [date, opp, H/A, W/L, 'Cavs-Opp'] */
+const PRESEASON=[['2026-10-08','BOS','H','L','113-124'],['2026-10-11','ORL','H','W','119-105']];
 const BOX={};    /* optional exact NBA.com box score URL per date; otherwise the page links NBA.com's games page for that date */
 /* Net ratings (Basketball Reference). Shown in the season block; '—' until games are played. */
 const NRTG={}; /* 2026-27 season, all 30 teams: 'CLE':[net rating, games played] (used for the Cavs value and league rank) */
@@ -714,10 +713,14 @@ if(ng){
 if(ng){document.getElementById('nx-at').textContent=ng[2]==='H'?'vs':'at';document.getElementById('nx-opp').textContent=ng[1];}
 
 /* last completed game */
-if(res.length){const i=res.length-1,g=SCHEDULE[i],a=document.getElementById('last');document.getElementById('next-h').textContent='Last result & next game';
-  a.hidden=false;a.href=boxUrl(g[0]);a.setAttribute('aria-label','Box score on NBA.com');
-  a.append(el('span','cap-label','Final'),el('span','lr '+(res[i]==='W'?'w':'l'),res[i]),el('span','ls',SCORES[g[0]]?SCORES[g[0]].replace('-','–'):''),
-    el('span','lo',(g[2]==='H'?'vs ':'at ')+TEAMS[g[1]]+' · '+shortFmt.format(tipOf(g))),el('span','lb','Box score on NBA.com ↗'))}
+{let L=null;
+  if(res.length){const i=res.length-1,g=SCHEDULE[i];L={d:g[0],o:g[1],ha:g[2],r:res[i],sc:SCORES[g[0]]||'',lbl:'Final'}}
+  else if(PRESEASON.length){const g=PRESEASON[PRESEASON.length-1];L={d:g[0],o:g[1],ha:g[2],r:g[3],sc:g[4],lbl:'Preseason final'}}
+  if(L){const a=document.getElementById('last');document.getElementById('next-h').textContent='Last result & next game';
+    const dt=new Date(L.d+'T19:00:00-04:00');
+    a.hidden=false;a.href=boxUrl(L.d);a.setAttribute('aria-label','Box score on NBA.com');
+    a.append(el('span','cap-label',L.lbl),el('span','lr '+(L.r==='W'?'w':'l'),L.r),el('span','ls',L.sc.replace('-','–')),
+      el('span','lo',(L.ha==='H'?'vs ':'at ')+TEAMS[L.o]+' · '+shortFmt.format(dt)),el('span','lb','Box score on NBA.com ↗'))}}
 
 /* key dates */
 const DATES=[
@@ -1000,16 +1003,6 @@ sres.addEventListener('keydown',e=>{const bs=[...sres.querySelectorAll('button')
   if(e.key==='Escape'){sres.hidden=true;q.focus()}});
 document.addEventListener('click',e=>{if(!e.target.closest('.search')){sres.hidden=true;q.setAttribute('aria-expanded','false')}});
 
-/* ticker */
-(function(){const t=document.getElementById('tick');const item=(k,v)=>{const sp=el('span');sp.append(el('b',null,k),v);t.appendChild(sp)};
-  const md=d=>{const x=new Date(d+'T12:00:00');return (x.getMonth()+1)+'/'+x.getDate()};
-  if(res.length){const i=res.length-1,g=SCHEDULE[i];item('FINAL',res[i]+' '+(SCORES[g[0]]||'').replace('-','–')+' '+(g[2]==='H'?'VS ':'@ ')+g[1])}
-  if(ng)item('NEXT','CLE '+(ng[2]==='H'?'VS ':'@ ')+ng[1]+' · '+shortFmt.format(tipOf(ng)).toUpperCase()+' · '+ng[3]+' ET'+(TV[ng[0]]?' · '+TV[ng[0]]:''));
-  INJURIES.forEach(([n,p,inj,st])=>item('INJ',n.split(' ').slice(-1)[0].toUpperCase()+' ('+inj.toUpperCase()+') '+(ABBR[st]||st)));
-  item('CAP',money(TEAM_SALARY)+(near?' · '+money(near[1]-TEAM_SALARY).toUpperCase()+' UNDER '+near[0].toUpperCase():''));
-  const cn=CHARGE.games.find(g=>!g[4]);if(cn)item('CHARGE',(CHARGE.games.some(g=>g[4])?'NEXT ':'OPENS ')+md(cn[0])+(cn[2]==='H'?' VS ':' @ ')+cn[1].toUpperCase());
-  const nd=upcoming.find(x=>x[2]);if(nd)item(md(nd[0]),nd[1].toUpperCase());
-})();
 
 /* routing */
 const BUILT=['home','cap','assets','resources','schedule','staff','video'];
