@@ -415,6 +415,10 @@ body{background:var(--page)}
       <p class="otd-text" id="otd-text"></p>
       <a class="otd-src" id="otd-src" target="_blank" rel="noopener"></a>
     </section>
+    <section class="rail o-vid" aria-labelledby="vid-h">
+      <div class="block-h"><h2 id="vid-h">Latest video</h2><a href="#video" data-go="video">All video →</a></div>
+      <div id="vid-home"></div>
+    </section>
     <section class="rail" aria-labelledby="inj-h">
       <div class="block-h"><h2 id="inj-h">Injury report</h2><span id="inj-count"></span></div>
       <ul class="ginj" id="inj"></ul>
@@ -427,10 +431,6 @@ body{background:var(--page)}
       <div class="ch-meta" id="ch-meta"></div>
       <ul class="kv plain" id="ch-kv" style="margin-top:10px"></ul>
       <a class="otd-src" href="https://cleveland.gleague.nba.com/schedule" target="_blank" rel="noopener">Charge schedule ↗</a>
-    </section>
-    <section class="rail o-vid" aria-labelledby="vid-h">
-      <div class="block-h"><h2 id="vid-h">Latest video</h2><a href="#video" data-go="video">All video →</a></div>
-      <div id="vid-home"></div>
     </section>
     </div>
   </div>
@@ -571,7 +571,7 @@ const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt
 /* nav + index */
 const tabs=document.getElementById('tabs');
 const SHORT={cap:'Cap',staff:'Staff',charge:'Charge',rcf:'RCF',resources:'Links'};
-SECTIONS.forEach(([id,l])=>{const b=el('button',null,SHORT[id]||l);b.title=l;b.type='button';b.setAttribute('role','tab');b.dataset.go=id;tabs.appendChild(b)});
+SECTIONS.filter(([id])=>id!=='resources').forEach(([id,l])=>{const b=el('button',null,SHORT[id]||l);b.title=l;b.type='button';b.setAttribute('role','tab');b.dataset.go=id;tabs.appendChild(b)});
 const idx=document.getElementById('index');
 SECTIONS.slice(1).forEach(([id,l,c,d])=>{const b=el('button');b.type='button';b.dataset.go=id;b.append(el('span','code',c),el('b',null,l),el('span',null,d));idx.appendChild(b)});
 
