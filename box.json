@@ -1,1 +1,340 @@
-{}
+{
+ "2026-10-08": {
+  "url": "https://www.nba.com/game/bos-vs-cle-0012600011/box-score",
+  "status": "final",
+  "score": "113-124",
+  "result": "L"
+ },
+ "2026-10-11": {
+  "url": "https://www.nba.com/game/orl-vs-cle-0012600041/box-score",
+  "status": "final",
+  "score": "119-105",
+  "result": "W"
+ },
+ "2026-10-13": {
+  "url": "https://www.nba.com/game/cle-vs-orl-0012600045/box-score",
+  "status": "final",
+  "score": "116-132",
+  "result": "L"
+ },
+ "2026-10-22": {
+  "url": "https://www.nba.com/game/cle-vs-phi-0022600006/box-score",
+  "status": "scheduled"
+ },
+ "2026-10-24": {
+  "url": "https://www.nba.com/game/bkn-vs-cle-0022600105/box-score",
+  "status": "scheduled"
+ },
+ "2026-10-26": {
+  "url": "https://www.nba.com/game/min-vs-cle-0022600120/box-score",
+  "status": "scheduled"
+ },
+ "2026-10-28": {
+  "url": "https://www.nba.com/game/was-vs-cle-0022600133/box-score",
+  "status": "scheduled"
+ },
+ "2026-10-29": {
+  "url": "https://www.nba.com/game/cle-vs-atl-0022600144/box-score",
+  "status": "scheduled"
+ },
+ "2026-10-31": {
+  "url": "https://www.nba.com/game/cle-vs-mil-0022600151/box-score",
+  "status": "scheduled"
+ },
+ "2026-11-02": {
+  "url": "https://www.nba.com/game/okc-vs-cle-0022600158/box-score",
+  "status": "scheduled"
+ },
+ "2026-11-04": {
+  "url": "https://www.nba.com/game/cle-vs-okc-0022600180/box-score",
+  "status": "scheduled"
+ },
+ "2026-11-06": {
+  "url": "https://www.nba.com/game/phi-vs-cle-0022600027/box-score",
+  "status": "scheduled"
+ },
+ "2026-11-07": {
+  "url": "https://www.nba.com/game/nyk-vs-cle-0022600191/box-score",
+  "status": "scheduled"
+ },
+ "2026-11-09": {
+  "url": "https://www.nba.com/game/cle-vs-cha-0022600204/box-score",
+  "status": "scheduled"
+ },
+ "2026-11-11": {
+  "url": "https://www.nba.com/game/cle-vs-nyk-0022600218/box-score",
+  "status": "scheduled"
+ },
+ "2026-11-13": {
+  "url": "https://www.nba.com/game/cle-vs-mia-0022600036/box-score",
+  "status": "scheduled"
+ },
+ "2026-11-14": {
+  "url": "https://www.nba.com/game/dal-vs-cle-0022600232/box-score",
+  "status": "scheduled"
+ },
+ "2026-11-16": {
+  "url": "https://www.nba.com/game/chi-vs-cle-0022600246/box-score",
+  "status": "scheduled"
+ },
+ "2026-11-18": {
+  "url": "https://www.nba.com/game/mem-vs-cle-0022600258/box-score",
+  "status": "scheduled"
+ },
+ "2026-11-20": {
+  "url": "https://www.nba.com/game/ind-vs-cle-0022600045/box-score",
+  "status": "scheduled"
+ },
+ "2026-11-23": {
+  "url": "https://www.nba.com/game/cle-vs-chi-0022600292/box-score",
+  "status": "scheduled"
+ },
+ "2026-11-25": {
+  "url": "https://www.nba.com/game/cle-vs-nyk-0022600057/box-score",
+  "status": "scheduled"
+ },
+ "2026-11-29": {
+  "url": "https://www.nba.com/game/mia-vs-cle-0022600305/box-score",
+  "status": "scheduled"
+ },
+ "2026-12-01": {
+  "url": "https://www.nba.com/game/ind-vs-cle-0022600319/box-score",
+  "status": "scheduled"
+ },
+ "2026-12-03": {
+  "url": "https://www.nba.com/game/cle-vs-chi-0022600338/box-score",
+  "status": "scheduled"
+ },
+ "2026-12-12": {
+  "url": "https://www.nba.com/game/gsw-vs-cle-0022600344/box-score",
+  "status": "scheduled"
+ },
+ "2026-12-15": {
+  "url": "https://www.nba.com/game/sas-vs-cle-0022600366/box-score",
+  "status": "scheduled"
+ },
+ "2026-12-16": {
+  "url": "https://www.nba.com/game/cle-vs-orl-0022600372/box-score",
+  "status": "scheduled"
+ },
+ "2026-12-18": {
+  "url": "https://www.nba.com/game/cle-vs-det-0022600389/box-score",
+  "status": "scheduled"
+ },
+ "2026-12-20": {
+  "url": "https://www.nba.com/game/uta-vs-cle-0022600403/box-score",
+  "status": "scheduled"
+ },
+ "2026-12-21": {
+  "url": "https://www.nba.com/game/nyk-vs-cle-0022600411/box-score",
+  "status": "scheduled"
+ },
+ "2026-12-23": {
+  "url": "https://www.nba.com/game/cle-vs-was-0022600425/box-score",
+  "status": "scheduled"
+ },
+ "2026-12-27": {
+  "url": "https://www.nba.com/game/was-vs-cle-0022600447/box-score",
+  "status": "scheduled"
+ },
+ "2026-12-28": {
+  "url": "https://www.nba.com/game/cle-vs-bos-0022600459/box-score",
+  "status": "scheduled"
+ },
+ "2026-12-31": {
+  "url": "https://www.nba.com/game/lac-vs-cle-0022600479/box-score",
+  "status": "scheduled"
+ },
+ "2027-01-02": {
+  "url": "https://www.nba.com/game/cle-vs-cha-0022600492/box-score",
+  "status": "scheduled"
+ },
+ "2027-01-03": {
+  "url": "https://www.nba.com/game/cle-vs-hou-0022600507/box-score",
+  "status": "scheduled"
+ },
+ "2027-01-05": {
+  "url": "https://www.nba.com/game/tor-vs-cle-0022600517/box-score",
+  "status": "scheduled"
+ },
+ "2027-01-07": {
+  "url": "https://www.nba.com/game/cle-vs-orl-0022600532/box-score",
+  "status": "scheduled"
+ },
+ "2027-01-09": {
+  "url": "https://www.nba.com/game/den-vs-cle-0022600550/box-score",
+  "status": "scheduled"
+ },
+ "2027-01-11": {
+  "url": "https://www.nba.com/game/cle-vs-min-0022600568/box-score",
+  "status": "scheduled"
+ },
+ "2027-01-13": {
+  "url": "https://www.nba.com/game/cle-vs-atl-0022600578/box-score",
+  "status": "scheduled"
+ },
+ "2027-01-15": {
+  "url": "https://www.nba.com/game/cle-vs-mil-0022600596/box-score",
+  "status": "scheduled"
+ },
+ "2027-01-16": {
+  "url": "https://www.nba.com/game/cle-vs-mem-0022600604/box-score",
+  "status": "scheduled"
+ },
+ "2027-01-18": {
+  "url": "https://www.nba.com/game/det-vs-cle-0022600077/box-score",
+  "status": "scheduled"
+ },
+ "2027-01-21": {
+  "url": "https://www.nba.com/game/cle-vs-bkn-0022600635/box-score",
+  "status": "scheduled"
+ },
+ "2027-01-23": {
+  "url": "https://www.nba.com/game/cle-vs-dal-0022600653/box-score",
+  "status": "scheduled"
+ },
+ "2027-01-25": {
+  "url": "https://www.nba.com/game/cle-vs-nop-0022600668/box-score",
+  "status": "scheduled"
+ },
+ "2027-01-27": {
+  "url": "https://www.nba.com/game/det-vs-cle-0022600677/box-score",
+  "status": "scheduled"
+ },
+ "2027-01-29": {
+  "url": "https://www.nba.com/game/cle-vs-tor-0022600694/box-score",
+  "status": "scheduled"
+ },
+ "2027-01-30": {
+  "url": "https://www.nba.com/game/nop-vs-cle-0022600704/box-score",
+  "status": "scheduled"
+ },
+ "2027-02-01": {
+  "url": "https://www.nba.com/game/cle-vs-uta-0022600721/box-score",
+  "status": "scheduled"
+ },
+ "2027-02-03": {
+  "url": "https://www.nba.com/game/cle-vs-phx-0022600734/box-score",
+  "status": "scheduled"
+ },
+ "2027-02-04": {
+  "url": "https://www.nba.com/game/cle-vs-por-0022600745/box-score",
+  "status": "scheduled"
+ },
+ "2027-02-06": {
+  "url": "https://www.nba.com/game/orl-vs-cle-0022600757/box-score",
+  "status": "scheduled"
+ },
+ "2027-02-09": {
+  "url": "https://www.nba.com/game/tor-vs-cle-0022600777/box-score",
+  "status": "scheduled"
+ },
+ "2027-02-10": {
+  "url": "https://www.nba.com/game/cle-vs-ind-0022600788/box-score",
+  "status": "scheduled"
+ },
+ "2027-02-12": {
+  "url": "https://www.nba.com/game/cle-vs-tor-0022600804/box-score",
+  "status": "scheduled"
+ },
+ "2027-02-14": {
+  "url": "https://www.nba.com/game/phx-vs-cle-0022600818/box-score",
+  "status": "scheduled"
+ },
+ "2027-02-16": {
+  "url": "https://www.nba.com/game/mil-vs-cle-0022600827/box-score",
+  "status": "scheduled"
+ },
+ "2027-02-17": {
+  "url": "https://www.nba.com/game/mil-vs-cle-0022600833/box-score",
+  "status": "scheduled"
+ },
+ "2027-02-25": {
+  "url": "https://www.nba.com/game/sac-vs-cle-0022600849/box-score",
+  "status": "scheduled"
+ },
+ "2027-02-26": {
+  "url": "https://www.nba.com/game/cle-vs-bos-0022600859/box-score",
+  "status": "scheduled"
+ },
+ "2027-03-01": {
+  "url": "https://www.nba.com/game/phi-vs-cle-0022600881/box-score",
+  "status": "scheduled"
+ },
+ "2027-03-04": {
+  "url": "https://www.nba.com/game/por-vs-cle-0022600903/box-score",
+  "status": "scheduled"
+ },
+ "2027-03-06": {
+  "url": "https://www.nba.com/game/atl-vs-cle-0022600919/box-score",
+  "status": "scheduled"
+ },
+ "2027-03-09": {
+  "url": "https://www.nba.com/game/cle-vs-det-0022600940/box-score",
+  "status": "scheduled"
+ },
+ "2027-03-11": {
+  "url": "https://www.nba.com/game/cle-vs-lac-0022600961/box-score",
+  "status": "scheduled"
+ },
+ "2027-03-12": {
+  "url": "https://www.nba.com/game/cle-vs-lal-0022600967/box-score",
+  "status": "scheduled"
+ },
+ "2027-03-14": {
+  "url": "https://www.nba.com/game/cle-vs-sac-0022600979/box-score",
+  "status": "scheduled"
+ },
+ "2027-03-16": {
+  "url": "https://www.nba.com/game/cle-vs-gsw-0022600995/box-score",
+  "status": "scheduled"
+ },
+ "2027-03-18": {
+  "url": "https://www.nba.com/game/cle-vs-den-0022601012/box-score",
+  "status": "scheduled"
+ },
+ "2027-03-20": {
+  "url": "https://www.nba.com/game/chi-vs-cle-0022601023/box-score",
+  "status": "scheduled"
+ },
+ "2027-03-22": {
+  "url": "https://www.nba.com/game/hou-vs-cle-0022601035/box-score",
+  "status": "scheduled"
+ },
+ "2027-03-25": {
+  "url": "https://www.nba.com/game/lal-vs-cle-0022601060/box-score",
+  "status": "scheduled"
+ },
+ "2027-03-29": {
+  "url": "https://www.nba.com/game/mia-vs-cle-0022601090/box-score",
+  "status": "scheduled"
+ },
+ "2027-03-31": {
+  "url": "https://www.nba.com/game/cle-vs-bkn-0022601107/box-score",
+  "status": "scheduled"
+ },
+ "2027-04-01": {
+  "url": "https://www.nba.com/game/bos-vs-cle-0022601113/box-score",
+  "status": "scheduled"
+ },
+ "2027-04-04": {
+  "url": "https://www.nba.com/game/cha-vs-cle-0022601133/box-score",
+  "status": "scheduled"
+ },
+ "2027-04-05": {
+  "url": "https://www.nba.com/game/bkn-vs-cle-0022601144/box-score",
+  "status": "scheduled"
+ },
+ "2027-04-07": {
+  "url": "https://www.nba.com/game/cle-vs-sas-0022601161/box-score",
+  "status": "scheduled"
+ },
+ "2027-04-09": {
+  "url": "https://www.nba.com/game/cle-vs-ind-0022601174/box-score",
+  "status": "scheduled"
+ },
+ "2027-04-11": {
+  "url": "https://www.nba.com/game/atl-vs-cle-0022601188/box-score",
+  "status": "scheduled"
+ }
+}
