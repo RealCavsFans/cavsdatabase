@@ -378,6 +378,25 @@ body{background:var(--page)}
 @keyframes blink{50%{opacity:0}}
 @media (prefers-reduced-motion:reduce){.gbrand .wm-term s{animation:none}}
 @media (max-width:600px){.gbrand .wm-term{font-size:23px}}
+
+/* record: split-flap board on a white card */
+.grec{background:var(--card);color:var(--fg);border-right:1px solid var(--line);box-shadow:inset 0 4px 0 var(--wine);padding-top:22px}
+.grec .gk{color:var(--muted)}
+.gbig{display:flex;align-items:center;gap:10px;font:inherit;line-height:1}
+.gbig>span{display:flex;gap:5px}
+.gbig i{font-style:normal;font-weight:400;width:22px;height:5px;background:#F2B231;margin:0 2px;font-size:0;color:transparent;opacity:1}
+.flap{position:relative;display:inline-grid;place-items:center;width:74px;height:100px;border-radius:7px;background:linear-gradient(#7A1F33 0 50%,#6A1A2C 50% 100%);color:#fff;font:700 74px/1 var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.04em;perspective:300px;box-shadow:0 1px 0 rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.08);overflow:hidden}
+.flap::after{content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(0,0,0,.35)}
+.flap b{display:block;font:inherit;transform-origin:50% 50%}
+.flap b.go{animation:flapIn .09s ease-out}
+@keyframes flapIn{from{transform:rotateX(85deg);opacity:.4}to{transform:none;opacity:1}}
+.gsp{border-top:1px solid var(--line);padding-top:4px}
+.gsp div{padding:6px 0;border-bottom:1px solid var(--line2)}
+.gsp dt{color:var(--muted)}
+.gsp dd{color:var(--fg)}
+@media (max-width:720px){.flap{width:60px;height:82px;font-size:60px}}
+@media (max-width:860px){.grec{border-right:0;border-bottom:1px solid var(--line)}}
+@media (prefers-reduced-motion:reduce){.flap b.go{animation:none}}
 </style>
 <style>[hidden]{display:none!important}</style>
 </head>
@@ -1186,6 +1205,20 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-go]');if(!
 window.addEventListener('popstate',()=>show((location.hash||'#home').slice(1)));
 window.addEventListener('hashchange',()=>show((location.hash||'#home').slice(1)));
 show((location.hash||'#home').slice(1));
+
+/* split-flap: record tiles flip into place on load; splits and the last score scramble in */
+(function(){
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const DIG='0123456789';
+  function tiles(el){const v=el.textContent.trim();el.textContent='';el.setAttribute('aria-label',v);
+    [...v].forEach((ch,i)=>{const t=document.createElement('span');t.className='flap';t.setAttribute('aria-hidden','true');const b=document.createElement('b');b.textContent=reduce?ch:DIG[(Math.random()*10)|0];t.appendChild(b);el.appendChild(t);
+      if(reduce)return;let n=10+i*4+((el.id==='losses')?6:0);const iv=setInterval(()=>{n--;b.textContent=n<=0?ch:DIG[(Math.random()*10)|0];b.classList.remove('go');void b.offsetWidth;b.classList.add('go');if(n<=0)clearInterval(iv)},70)})}
+  function scramble(el,delay){const fin=el.textContent;if(reduce||!/[0-9]/.test(fin))return;let k=0;const steps=10;
+    setTimeout(()=>{const iv=setInterval(()=>{k++;el.textContent=[...fin].map((c,i)=>/[0-9]/.test(c)&&k<steps+i?DIG[(Math.random()*10)|0]:c).join('');if(k>=steps+fin.length){el.textContent=fin;clearInterval(iv)}},55)},delay||0)}
+  tiles(document.getElementById('wins'));tiles(document.getElementById('losses'));
+  document.querySelectorAll('#splits dd').forEach((d,i)=>scramble(d,150+i*60));
+  const ls=document.querySelector('#last .ls');if(ls)scramble(ls,300);
+})();
 </script>
 </body>
 </html>
