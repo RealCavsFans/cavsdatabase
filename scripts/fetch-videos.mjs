@@ -33,14 +33,31 @@ async function getFeed() {
   return null;
 }
 
-const xml = await getFeed();
-if (!xml) { warn('YouTube feed unavailable; keeping existing videos.json'); process.exit(0); }
+// Preferred: YouTube Data API (reliable from GitHub's servers). Set the YT_API_KEY repository secret.
+async function fromApi(key) {
+  const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=UU${CHANNEL.slice(2)}&key=${key}`;
+  const res = await fetch(url);
+  if (!res.ok) { warn(`YouTube Data API: HTTP ${res.status} ${(await res.text()).slice(0, 200)}`); return null; }
+  const data = await res.json();
+  return (data.items || []).map(i => ({
+    id: i.snippet?.resourceId?.videoId,
+    title: i.snippet?.title,
+    published: i.snippet?.publishedAt,
+  })).filter(v => v.id && v.title && v.title !== 'Private video' && v.title !== 'Deleted video');
+}
 
-const fresh = [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/g)].map(([, e]) => ({
-  id: pick(e, 'yt:videoId'),
-  title: unescape(pick(e, 'title')),
-  published: pick(e, 'published'),
-})).filter(v => v.id && v.title);
+let fresh = null;
+if (process.env.YT_API_KEY) fresh = await fromApi(process.env.YT_API_KEY);
+if (!fresh || !fresh.length) {
+  if (!process.env.YT_API_KEY) warn('YT_API_KEY secret not set; trying the public feed');
+  const xml = await getFeed();
+  if (!xml) { warn('No video source answered; keeping existing videos.json'); process.exit(0); }
+  fresh = [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/g)].map(([, e]) => ({
+    id: pick(e, 'yt:videoId'),
+    title: unescape(pick(e, 'title')),
+    published: pick(e, 'published'),
+  })).filter(v => v.id && v.title);
+}
 
 let old = [];
 try { old = JSON.parse(await readFile(OUT, 'utf8')); } catch {}
