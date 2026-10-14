@@ -284,20 +284,21 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
 body{background:var(--page)}
 .gbar{background:#860038;color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:10}
 .gin{display:flex;flex-wrap:wrap;align-items:center;gap:0 18px;min-height:74px}
-@media (min-width:901px){.gin{flex-wrap:nowrap}.gbar .search{flex:0 0 180px}}
+@media (min-width:1181px){.gin{flex-wrap:nowrap;gap:0 14px}}
 .gbrand{display:flex;align-items:center;gap:8px;color:#fff;font:800 34px/1 var(--cond);text-transform:uppercase;letter-spacing:.01em}
 .gbrand:hover{text-decoration:none}
 .gbrand svg{width:38px;height:38px}
 .gbrand span{color:#F2B231}
 .gnav{display:flex;flex:1 1 auto;gap:0 2px;overflow-x:auto;min-width:0}
-.gnav button{appearance:none;border:0;background:none;cursor:pointer;font:700 16px var(--cond);text-transform:uppercase;letter-spacing:.03em;color:#F4D6DD;padding:0 8px;min-height:74px;white-space:nowrap}
+.gnav button{appearance:none;border:0;background:none;cursor:pointer;font:700 15.5px var(--cond);text-transform:uppercase;letter-spacing:.02em;color:#F4D6DD;padding:0 6px;min-height:74px;white-space:nowrap}
 .gnav button:hover{color:#fff}
 .gnav button[aria-selected="true"]{color:#fff;box-shadow:inset 0 -4px 0 #F2B231}
-.gbar .search{flex:0 1 180px;height:40px;background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22)}
+.gbar .search{flex:0 1 150px;height:40px;background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22)}
 .gbar .search input{color:#fff}
 .gbar .search input::placeholder{color:#F4D6DD}
 .gbar .search:focus-within{border-color:#F2B231}
-@media (max-width:900px){.gin{padding-block:8px;gap:6px 14px}.gnav{order:3;flex-basis:100%}.gnav button{min-height:44px}.gbar .search{flex:1 1 160px}}
+@media (max-width:1180px){.gin{padding-block:8px;gap:6px 14px}.gbrand{margin-right:auto}.gnav{order:3;flex-basis:100%;margin-inline:-7px}.gnav button{min-height:44px}.gbar .search{flex:0 1 260px}}
+@media (max-width:900px){.gbar .search{flex:1 1 160px}}
 /* modules */
 .home{padding-block:18px 24px;gap:16px}
 .col{gap:16px}.side{gap:16px}
@@ -582,14 +583,14 @@ body{background:var(--page)}
 <script>
 const SECTIONS=[
   ['home','Home','',''],
+  ['schedule','Schedule','SCH','All 82 games, results, TV.'],
   ['roster','Roster','ROS','Players, positions, bios.'],
+  ['staff','Coaches & Front Office','STF','Staff and executive information.'],
   ['cap','Salary Cap','CAP','Cap sheet and all salary and salary cap information.'],
   ['assets','Assets','AST','Draft picks, exceptions and drafted players.'],
-  ['staff','Coaches & Front Office','STF','Staff and executive information.'],
   ['charge','Cleveland Charge','CHG','G League roster and Charge information.'],
-  ['schedule','Schedule','SCH','All 82 games, results, TV.'],
-  ['rcf','RCF Content','RCF','Every RealCavsFans graphic.'],
   ['video','Video','VID','Press conferences and the latest Cavs video.'],
+  ['rcf','RCF Content','RCF','Every RealCavsFans graphic.'],
   ['resources','Resources','RES','Database-approved NBA and Cavs sites.']
 ];
 const PICKS=[['2028 1st','Lesser of own or ATL · not trade-eligible'],['2030 1st','Own'],['2032 1st','Own'],['2033 1st','Own · frozen, not trade-eligible'],['2033 2nd','Own · trade-eligible']];
@@ -600,7 +601,12 @@ const RES=[
     ['Basketball Reference','Career numbers, game logs, history','basketball-reference.com','https://www.basketball-reference.com/teams/CLE/2027.html'],
     ['Cleaning the Glass','Garbage-time-filtered team and player data','cleaningtheglass.com','https://cleaningtheglass.com'],
     ['PBP Stats','Possession-level on/off and lineups','pbpstats.com','https://www.pbpstats.com'],
-    ['Dunks & Threes','Adjusted ratings and team projections','dunksandthrees.com','https://dunksandthrees.com']
+    ['Dunks & Threes','Adjusted ratings and team projections','dunksandthrees.com','https://dunksandthrees.com'],
+    ['CraftedNBA','Player roles, traits, wingspans and comps','craftednba.com','https://craftednba.com'],
+    ['BBall Index','Player grades, skill ratings and LEBRON','bball-index.com','https://www.bball-index.com'],
+    ['NBA RAPM','Multi-year RAPM and impact metrics','nbarapm.com','https://www.nbarapm.com'],
+    ['databallr','On/off, lineup and shot data tools','databallr.com','https://databallr.com'],
+    ['CourtSketch','Shot charts and court visuals','courtsketch.com','https://courtsketch.com']
   ]],
   ['Cap & contracts',[
     ['Spotrac','Contracts, deadlines, transactions','spotrac.com','https://www.spotrac.com/nba/cleveland-cavaliers/yearly'],
@@ -609,15 +615,19 @@ const RES=[
   ]],
   ['Team',[
     ['Cavaliers roster','Official roster and staff','nba.com/cavaliers','https://www.nba.com/cavaliers/roster'],
-    ['RealCavsFans','Analysis and graphics','realcavsfans.com','https://realcavsfans.com']
+    ['RealCavsFans','Analysis and graphics','realcavsfans.com','https://realcavsfans.com'],
+    ['HoopsHype depth charts','Every team’s rotation, updated through the season','hoopshype.com','https://www.hoopshype.com/story/sports/nba/2026/07/21/2025-26-nba-depth-charts/71286522007/']
+  ]],
+  ['Draft',[
+    ['draftballr','Draft prospect scouting and analytics','draftballr.com','https://draftballr.com']
   ]]
 ];
 const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e};
 
 /* nav + index */
 const tabs=document.getElementById('tabs');
-const SHORT={cap:'Cap',staff:'Staff',charge:'Charge',rcf:'RCF',resources:'Links'};
-SECTIONS.filter(([id])=>id!=='resources').forEach(([id,l])=>{const b=el('button',null,SHORT[id]||l);b.title=l;b.type='button';b.setAttribute('role','tab');b.dataset.go=id;tabs.appendChild(b)});
+const SHORT={cap:'Cap',staff:'Staff',charge:'Charge',rcf:'RCF',resources:'Resources'};
+SECTIONS.forEach(([id,l])=>{const b=el('button',null,SHORT[id]||l);b.title=l;b.type='button';b.setAttribute('role','tab');b.dataset.go=id;tabs.appendChild(b)});
 const idx=document.getElementById('index');
 SECTIONS.slice(1).forEach(([id,l,c,d])=>{const b=el('button');b.type='button';b.dataset.go=id;b.append(el('span','code',c),el('b',null,l),el('span',null,d));idx.appendChild(b)});
 
@@ -742,7 +752,10 @@ const strip=document.getElementById('strip');for(let i=0;i<82;i++)strip.appendCh
 strip.setAttribute('aria-label','Game-by-game results: '+W+' wins, '+L+' losses');
 const tipOf=g=>{const [h,m]=g[3].split(':').map(Number);const hh=h===12?12:h+12;const off=(g[0]<'2026-11-01'||g[0]>='2027-03-14')?'-04:00':'-05:00';
   return new Date(g[0]+'T'+String(hh).padStart(2,'0')+':'+String(m).padStart(2,'0')+':00'+off)};
-const boxUrl=d=>BOX[d]||'https://www.nba.com/games?date='+d;
+/* Regular season: direct Basketball Reference box score (date + home team code). Preseason: NBA.com games page for that date. */
+const BBR={BKN:'BRK',CHA:'CHO',PHX:'PHO'};
+const boxUrl=d=>{if(BOX[d])return BOX[d];const g=SCHEDULE.find(x=>x[0]===d);if(!g)return 'https://www.nba.com/games?date='+d;const h=g[2]==='H'?'CLE':(BBR[g[1]]||g[1]);return 'https://www.basketball-reference.com/boxscores/'+d.replace(/-/g,'')+'0'+h+'.html'};
+const boxSrc=d=>(BOX[d]||!SCHEDULE.some(x=>x[0]===d))?'NBA.com':'Basketball Reference';
 const dayFmt=new Intl.DateTimeFormat('en-US',{weekday:'long',month:'short',day:'numeric',timeZone:'America/New_York'});
 const shortFmt=new Intl.DateTimeFormat('en-US',{weekday:'short',month:'short',day:'numeric',timeZone:'America/New_York'});
 const ni=SCHEDULE.findIndex((g,i)=>i>=res.length&&tipOf(g)>new Date(Date.now()-3*3600e3));
@@ -765,9 +778,9 @@ if(ng){document.getElementById('nx-at').textContent=ng[2]==='H'?'vs':'at';docume
   else if(PRESEASON.length){const g=PRESEASON[PRESEASON.length-1];L={d:g[0],o:g[1],ha:g[2],r:g[3],sc:g[4],lbl:'Preseason final'}}
   if(L){const a=document.getElementById('last');document.getElementById('next-h').textContent='Last result & next game';
     const dt=new Date(L.d+'T19:00:00-04:00');
-    a.hidden=false;a.href=boxUrl(L.d);a.setAttribute('aria-label','Box score on NBA.com');
+    a.hidden=false;a.href=boxUrl(L.d);a.setAttribute('aria-label','Box score on '+boxSrc(L.d));
     a.append(el('span','cap-label',L.lbl),el('span','lr '+(L.r==='W'?'w':'l'),L.r),el('span','ls',L.sc.replace('-','–')),
-      el('span','lo',(L.ha==='H'?'vs ':'at ')+TEAMS[L.o]+' · '+shortFmt.format(dt)),el('span','lb','Box score on NBA.com ↗'))}}
+      el('span','lo',(L.ha==='H'?'vs ':'at ')+TEAMS[L.o]+' · '+shortFmt.format(dt)),el('span','lb','Box score on '+boxSrc(L.d)+' ↗'))}}
 
 /* key dates */
 const DATES=[
@@ -984,7 +997,7 @@ SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
   if(m!==curM){curM=m;const sec=el('section');sec.style.marginTop='8px';const h=el('div','block-h');h.appendChild(el('h2',null,mFmt.format(new Date(m+'-15T12:00:00Z'))));
     const box=el('div','tablebox');const t=el('table');t.style.minWidth='560px';t.innerHTML='<thead><tr><th>Date</th><th>Opponent</th><th>Time</th><th>TV</th><th class="r">Result</th><th class="r">Box score</th></tr></thead>';tb=el('tbody');t.appendChild(tb);box.appendChild(t);sec.append(h,box);sc.appendChild(sec)}
   const tr=el('tr');tr.id='g-'+g[0];const r=res[i];
-  tr.append(el('td','mono',shortFmt.format(tipOf(g))),(()=>{const td=el('td');td.append((g[2]==='H'?'vs ':'at ')+TEAMS[g[1]]);return td})(),el('td','mono dim',g[3]+' PM'),el('td','dim',TV[g[0]]||''),el('td','r mono',r?(r+(SCORES[g[0]]?' '+SCORES[g[0]].replace('-','–'):'')):''),(()=>{const td=el('td','r');if(r){const a=el('a',null,'NBA.com ↗');a.href=boxUrl(g[0]);a.target='_blank';a.rel='noopener';td.appendChild(a)}return td})());
+  tr.append(el('td','mono',shortFmt.format(tipOf(g))),(()=>{const td=el('td');td.append((g[2]==='H'?'vs ':'at ')+TEAMS[g[1]]);return td})(),el('td','mono dim',g[3]+' PM'),el('td','dim',TV[g[0]]||''),el('td','r mono',r?(r+(SCORES[g[0]]?' '+SCORES[g[0]].replace('-','–'):'')):''),(()=>{const td=el('td','r');if(r){const a=el('a',null,'Box score ↗');a.title=boxSrc(g[0]);a.href=boxUrl(g[0]);a.target='_blank';a.rel='noopener';td.appendChild(a)}return td})());
   if(i===ni)tr.style.background='var(--sub)';tb.appendChild(tr)});
 
 /* staff page — [name, title, first season] */
