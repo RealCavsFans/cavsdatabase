@@ -1,0 +1,585 @@
+180621 [2018 NBA Draft] CLE selected Collin Sexton in Round 1 with Pick 8 in the 2018 NBA Draft.
+180208 [Trade Deadline] George Hill, Rodney Hood and the draft rights to Arturas Gudaitis -> CLE for Jae Crowder, Derrick Rose, Iman Shumpert, the draft rights to Dimitrios Agravanis, a 2020 2nd rd (MIA own), a Swap 2024 2nd rds and cash. Jae Crowder, Derrick Rose, a Swap 2024 2nd rds and multiple TPEs -> the Utah Jazz for Rodney Hood, Joe Johnson and cash. Joe Johnson, Iman Shumpert, the draft rights to Dimitrios Agravanis, a 2020 2nd rd (MIA own) and cash -> the Sacramento Kings for George Hill and the draft rights to Arturas Gudaitis.
+180208 [Trade Deadline] Dwyane Wade -> the Miami Heat from CLE for: a conditional 2024 2nd rd (MIA own) and a TPE.
+180208 [Trade Deadline] Jordan Clarkson and Larry Nance, Jr. -> CLE from the Los Angeles Lakers for: Channing Frye, Isaiah Thomas, a conditional 2018 1st rd (CLE own) and a TPE.
+190620 [2019 NBA Draft] CLE selected Darius Garland in Round 1 with Pick 5 in the 2019 NBA Draft.
+190620 [2019 NBA Draft] CLE selected Dylan Windler in Round 1 with Pick 26 in the 2019 NBA Draft.
+190207 [Trade Deadline] Alec Burks and a 2020 2nd rd (HOU own) -> the Sacramento Kings for Iman Shumpert and a Swap 2020 2nd rds. Marquese Chriss, Brandon Knight, a conditional 2019 1st rd (HOU own), a 2022 2nd rd (HOU own) and multiple TPEs -> CLE for Wade Baldwin IV, Alec Burks, Nik Stauskas, a 2021 2nd rd (MIL own) and a TPE. Wade Baldwin IV, Iman Shumpert, Nik Stauskas, a Swap 2020 2nd rds, a 2021 2nd rd (MIL own) and multiple TPEs -> the Houston Rockets for Marquese Chriss, Brandon Knight, a conditional 2019 1st rd (HOU own), a 2020 2nd rd (HOU own) and a 2022 2nd rd (HOU own).
+190207 [Trade Deadline] CLE renounced their free-agent exception rights to Deron Williams.
+190207 [Trade Deadline] CLE renounced their free-agent exception rights to Dahntay Jones.
+201118 [2020 NBA Draft] CLE selected Isaac Okoro in Round 1 with Pick 5 in the 2020 NBA Draft.
+200206 [Trade Deadline] Andre Drummond -> CLE from the Detroit Pistons for: John Henson, Brandon Knight, a LF 2023 2nd rd and a TPE.
+210729 [2021 NBA Draft] CLE selected Evan Mobley in Round 1 with Pick 3 in the 2021 NBA Draft.
+210325 [Trade Deadline] JaVale McGee and a TPE -> the Denver Nuggets from CLE for: Isaiah Hartenstein, a conditional 2023 2nd rd (DEN own), a 2027 2nd rd (DEN own) and a TPE.
+220623 [2022 NBA Draft] CLE selected Ochai Agbaji in Round 1 with Pick 14 in the 2022 NBA Draft.
+220623 [2022 NBA Draft] CLE selected Khalifa Diop in Round 2 with Pick 9 in the 2022 NBA Draft.
+220623 [2022 NBA Draft] CLE selected Isaiah Mobley in Round 2 with Pick 19 in the 2022 NBA Draft.
+220623 [2022 NBA Draft] CLE selected Luke Travers in Round 2 with Pick 26 in the 2022 NBA Draft.
+230622 [2023 NBA Draft] CLE selected Emoni Bates in Round 2 with Pick 19 in the 2023 NBA Draft.
+240626 [2024 NBA Draft] CLE selected Jaylon Tyson in Round 1 with Pick 20 in the 2024 NBA Draft.
+250206 [Trade Deadline] De'Andre Hunter and a TPE -> CLE from the Atlanta Hawks for: Caris LeVert, Georges Niang, a Swap 2026 1st rds, a 2027 2nd rd (CLE own), a Swap 2028 1st rds, a 2029 2nd rd (CLE own) and a 2031 2nd rd (CLE own).
+260623 [2026 NBA Draft] CLE selected Alex Karaban in Round 1 with Pick 29 in the 2026 NBA Draft.
+260205 [Trade Deadline] Lonzo Ball, a 2028 2nd rd (CLE own) and a 2032 2nd rd (CLE own) -> the Utah Jazz from CLE for: cash and a TPE.
+180627 CLE exercised their Team Option to extend the contract of Kendrick Perkins.
+180627 CLE tendered a Qualifying Offer to make Rodney Hood a Restricted FA.
+180614 London Perrantes ~FA
+180612 London Perrantes ~E2W
+180411 Kendrick Perkins ~SM
+180407 Okaro White ~SM
+180328 Okaro White ~FA
+180318 Okaro White ~S
+180304 Marcus Thornton ~FA
+180222 Marcus Thornton ~S
+171018 London Perrantes ~S2W
+171016 Isaac Hamilton ~FA
+171016 Kendrick Perkins ~FA
+171014 Kendrick Perkins ~W
+171014 Isaac Hamilton ~W
+171014 The draft rights to Dimitrios Agravanis, the draft rights to Sergii Gladyr and multiple TPEs -> CLE from the Atlanta Hawks for: Kay Felder, Richard Jefferson, a conditional 2020 2nd rd (POR own), a LF 2019 2nd rd and cash.
+171013 Edy Tavares ~FA
+171011 Isaac Hamilton ~S
+171011 Edy Tavares ~W
+170929 Jacorey Williams ~FA
+170927 Dwyane Wade ~S
+170927 Jacorey Williams ~W
+170926 Jacorey Williams ~S
+170925 Kendrick Perkins ~S
+170907 John Holland ~S2W
+170822 Kyrie Irving -> the Boston Celtics from CLE for: Jae Crowder, Isaiah Thomas, Ante Zizic, a 2018 1st rd (BRK own), a 2020 2nd rd (MIA own) and a TPE.
+170725 Derrick Rose ~S
+170718 Cedi Osman ~SM
+170712 Kyle Korver ~SM
+170711 Jeff Green ~S
+170710 Jose Calderon ~S
+170701 Dahntay Jones ~FA
+170701 James Jones ~FA
+170701 Kyle Korver ~FA
+170701 Deron Williams ~FA
+170701 Derrick Williams ~FA
+190626 The draft rights to Kevin Porter, Jr. -> CLE from the Detroit Pistons for: a conditional 2024 2nd rd (MIA own), a 2020 2nd rd (UTH own), a 2021 2nd rd (POR own), a 2023 2nd rd (POR own) and cash.
+190211 Nik Stauskas ~S
+190204 Rodney Hood -> the Portland Trail Blazers from CLE for: Wade Baldwin IV, Nik Stauskas, a 2021 2nd rd (POR own), a 2023 2nd rd (POR own) and a TPE.
+190204 CLE terminated the 10 day contract for Kobi Simmons.
+190204 Kobi Simmons ~FA
+190127 Kobi Simmons ~S
+190126 Cameron Payne ~FA
+190117 Jalen Jones ~FA
+190116 Cameron Payne ~FA
+190116 Cameron Payne ~S
+190115 Deng Adel ~S2W
+190115 Jalen Jones ~E2W
+190109 Patrick McCaw ~FA
+190106 Cameron Payne ~S
+190106 Patrick McCaw ~W
+181231 Patrick McCaw ~SM
+181228 Patrick McCaw signed a multi-year offer sheet with CLE. Since he is a restricted free agent, the Golden State Warriors can match.
+181207 Sam Dekker, a conditional 2020 2nd rd (WAS own) and a TPE -> the Washington Wizards for Jason Smith, a 2020 2nd rd (WAS own), a 2022 2nd rd (WAS own), cash and a TPE. Matt Dellavedova, John Henson, a 2021 2nd rd (MIL own), a conditional 2022 1st rd (MIL own), a 2022 2nd rd (WAS own) and a TPE -> CLE for Sam Dekker, George Hill and a 2021 2nd rd (WAS own). George Hill, Jason Smith, a 2020 2nd rd (WAS own), a 2021 2nd rd (WAS own) and cash -> the Milwaukee Bucks for Matt Dellavedova, John Henson, a conditional 2020 2nd rd (WAS own), a 2021 2nd rd (MIL own) and a conditional 2022 1st rd (MIL own).
+181204 Billy Preston ~FA
+181202 Jalen Jones ~S2W
+181202 Jaron Blossomgame ~S2W
+181202 Billy Preston ~E2W
+181202 Andrew Harrison ~E2W
+181129 Kyle Korver and a TPE -> the Utah Jazz from CLE for: Alec Burks, a 2020 2nd rd (UTH own) and a 2021 2nd rd (WAS own).
+181129 CLE renounced their free-agent exception rights to Shawn Marion.
+181129 CLE renounced their free-agent exception rights to James Jones.
+181111 John Holland ~FA
+181109 Andrew Harrison ~S2W
+181109 John Holland ~E2W
+181029 CLE exercised their Team Option to extend the contract of Ante Zizic.
+181015 Larry Nance, Jr. signed a rookie scale extension with CLE.
+181015 Bonzie Colson, Jr. ~FA
+181015 Kobi Simmons ~FA
+181015 Isaiah Taylor ~FA
+181015 Emanuel Terry ~FA
+181013 Emanuel Terry ~W
+181013 Isaiah Taylor ~W
+181013 Kobi Simmons ~W
+181013 Bonzie Colson, Jr. ~W
+181012 Levi Randolph ~FA
+181011 Emanuel Terry ~S
+181010 Levi Randolph ~W
+180921 Jacorey Williams ~FA
+180919 Kobi Simmons ~S
+180919 Jacorey Williams ~W
+180916 Isaac Hamilton ~FA
+180916 Scoochie Smith ~FA
+180914 Levi Randolph ~S
+180914 Bonzie Colson, Jr. ~S
+180914 Scoochie Smith ~W
+180914 Isaac Hamilton ~W
+180913 Jacorey Williams ~S
+180910 Scoochie Smith ~S
+180910 Isaac Hamilton ~S
+180909 Rodney Hood ~S
+180908 David Nwaba ~S
+180816 Isaiah Taylor ~S
+180807 The draft rights to Vladimir Veremeenko and a TPE -> the Los Angeles Clippers from CLE for: Sam Dekker, the draft rights to Renaldas Seibutis and cash.
+180807 Okaro White ~FA
+180805 Okaro White ~W
+180724 Kevin Love signed a veteran extension with CLE.
+180719 Channing Frye ~S
+180719 Kendrick Perkins ~FA
+180717 Kendrick Perkins ~W
+180706 Billy Preston ~S2W
+180704 Collin Sexton ~SM
+180701 Jose Calderon ~FA
+180701 Jeff Green ~FA
+180701 Rodney Hood ~FA
+180701 LeBron James ~FA
+201117 Andre Drummond exercised a Player Option to extend his contract.
+200629 Jordan Bell ~SM
+200629 Dean Wade ~SM
+200629 Dean Wade ~E2W
+200318 Sheldon Mac ~FA
+200314 Dom Pointer ~FA
+200308 Sheldon Mac ~S
+200304 Dom Pointer ~S
+200222 Malik Newman ~FA
+200214 CLE terminated the 10 day contract for J.P. Macura.
+200214 J.P. Macura ~FA
+200209 Malik Newman ~S
+200209 Marques Bolden ~FA
+200209 J.P. Macura ~S
+200208 Alfonzo McKinnie ~SM
+200202 Alfonzo McKinnie ~FA
+200130 Marques Bolden ~S
+200130 Tyler Cook ~FA
+200123 Alfonzo McKinnie ~S
+200120 Tyler Cook ~S
+200119 Tyler Cook ~FA
+200119 Alfonzo McKinnie ~FA
+200115 Matt Mooney ~S2W
+200114 Levi Randolph ~FA
+200112 Levi Randolph ~E2W
+200109 Tyler Cook ~S
+200109 Alfonzo McKinnie ~S
+200108 Tyler Cook ~FA
+200108 Alfonzo McKinnie ~FA
+200106 Levi Randolph ~S2W
+200106 Alfonzo McKinnie ~W
+200106 Tyler Cook ~W
+200103 Tyler Cook ~S
+200103 Tyler Cook ~E2W
+191223 Jordan Clarkson -> the Utah Jazz from CLE for: Dante Exum, a 2022 2nd rd (SAN own), a 2023 2nd rd (GOS own) and a TPE.
+191029 CLE exercised their Team Option to extend the contract of Collin Sexton.
+191025 Cedi Osman signed a veteran extension with CLE.
+191021 CLE made a successful waiver claim for the contract of Alfonzo McKinnie.
+191021 Marques Bolden ~FA
+191021 Jarell Martin ~FA
+191019 Jarell Martin ~W
+191019 Marques Bolden ~W
+191018 CLE made a successful waiver claim for the contract of Tyler Cook.
+191018 Daniel Hamilton ~FA
+191018 Timothe Luwawu-Cabarrot ~FA
+191018 J.P. Macura ~FA
+191018 Sindarius Thornwell ~FA
+191016 Sindarius Thornwell ~W
+191016 J.P. Macura ~W
+191016 Timothe Luwawu-Cabarrot ~W
+191016 Daniel Hamilton ~W
+191007 Dom Pointer ~FA
+191004 Dom Pointer ~W
+191004 Dom Pointer ~S
+190925 Alex Robinson ~FA
+190923 Timothe Luwawu-Cabarrot ~S
+190923 Alex Robinson ~W
+190905 Malik Newman ~FA
+190905 Levi Randolph ~FA
+190903 Daniel Hamilton ~S
+190903 Levi Randolph ~W
+190903 Marques Bolden ~S
+190903 Malik Newman ~W
+190903 J.P. Macura ~S
+190903 Sindarius Thornwell ~S
+190819 Alex Robinson ~S
+190816 Jarell Martin ~S
+190805 Levi Randolph ~S
+190805 Malik Newman ~S
+190717 J.R. Smith ~FA
+190715 J.R. Smith ~W
+190703 Kevin Porter, Jr. ~SM
+190701 Dylan Windler ~SM
+190701 Darius Garland ~SM
+190701 Dean Wade ~S2W
+190701 Deng Adel ~FA
+190701 Jaron Blossomgame ~FA
+190701 Marquese Chriss ~FA
+190701 Channing Frye ~FA
+190701 David Nwaba ~FA
+190701 Nik Stauskas ~FA
+210802 Ricky Rubio -> CLE from the Minnesota Timberwolves for: Taurean Prince, a 2022 2nd rd (WAS own), cash and a TPE.
+210730 CLE tendered a Qualifying Offer to make Brodric Thomas a Restricted FA.
+210723 CLE tendered a Qualifying Offer to make Jarrett Allen a Restricted FA.
+210517 Anderson Varejao ~FA
+210514 Anderson Varejao ~FA
+210514 Anderson Varejao ~S
+210504 Anderson Varejao ~S
+210501 Mfiondu Kabengele ~FA
+210501 Mfiondu Kabengele ~SM
+210428 Jeremiah Martin ~S2W
+210421 Mfiondu Kabengele ~S
+210420 Mfiondu Kabengele ~FA
+210414 Lamar Stevens ~SM
+210414 Lamar Stevens ~E2W
+210410 Mfiondu Kabengele ~S
+210401 Quinn Cook ~FA
+210328 Andre Drummond ~FA
+210326 Andre Drummond ~W
+210322 Quinn Cook ~FA
+210322 Quinn Cook ~S
+210312 Quinn Cook ~S
+210226 Marques Bolden ~FA
+210224 Brodric Thomas ~S2W
+210224 Marques Bolden ~E2W
+210122 Kevin Porter, Jr. -> the Houston Rockets from CLE for: a 2024 2nd rd (GOS own) and a TPE.
+210116 James Harden -> the Brooklyn Nets for Jarrett Allen, Rodions Kurucs, Caris LeVert, Taurean Prince, the draft rights to Sasha Vezenkov, a Swap 2021 1st rds, a 2022 1st rd (BRK own), a Swap 2023 1st rds, a 2024 1st rd (BRK own), a Swap 2025 1st rds, a 2026 1st rd (BRK own), a Swap 2027 1st rds and cash. Jarrett Allen, Taurean Prince, the draft rights to Sasha Vezenkov and a Swap 2024 2nd rds -> CLE for Dante Exum, a conditional 2022 1st rd (MIL own) and a TPE. Caris LeVert, cash and a TPE -> the Indiana Pacers for Victor Oladipo, a Swap 2023 2nd rds and a Swap 2024 2nd rds. Dante Exum, Rodions Kurucs, Victor Oladipo, a Swap 2021 1st rds, a 2022 1st rd (BRK own), a conditional 2022 1st rd (MIL own), a Swap 2023 1st rds, a Swap 2023 2nd rds, a 2024 1st rd (BRK own), a Swap 2025 1st rds, a 2026 1st rd (BRK own), a Swap 2027 1st rds and a TPE -> the Houston Rockets for James Harden and a TPE.
+210116 Thon Maker ~FA
+210114 CLE renounced their free-agent exception rights to Ante Zizic.
+210114 CLE renounced their free-agent exception rights to Channing Frye.
+210114 Thon Maker ~W
+210114 CLE terminated the 10 day contract for Yogi Ferrell.
+210114 Yogi Ferrell ~FA
+210111 Yogi Ferrell ~S
+201223 CLE exercised their Team Option to extend the contract of Darius Garland.
+201223 CLE exercised their Team Option to extend the contract of Kevin Porter, Jr..
+201223 CLE exercised their Team Option to extend the contract of Dylan Windler.
+201223 CLE exercised their Team Option to extend the contract of Collin Sexton.
+201221 Charles Matthews ~FA
+201221 Matt Mooney ~FA
+201221 Norvel Pelle ~FA
+201221 Levi Randolph ~FA
+201219 Levi Randolph ~W
+201219 Norvel Pelle ~W
+201219 Charles Matthews ~W
+201219 Norvel Pelle ~S
+201219 CLE converted Marques Bolden to a Two-Way contract with the Cleveland Charge.
+201219 Matt Mooney ~E2W
+201201 Levi Randolph ~S
+201130 Rayjon Tucker ~FA
+201128 Rayjon Tucker ~W
+201128 Thon Maker ~S
+201128 Marques Bolden ~S
+201128 Lamar Stevens ~S2W
+201127 Charles Matthews ~S
+201127 Rayjon Tucker and a 2027 2nd rd (UTH own) -> CLE from the Utah Jazz for: cash and a TPE.
+201124 Damyean Dotson ~SM
+201124 Matt Dellavedova ~S
+201123 JaVale McGee and a 2026 2nd rd (LAL own) -> CLE from the Los Angeles Lakers for: Jordan Bell, Alfonzo McKinnie and a TPE.
+201123 CLE renounced their free-agent exception rights to Matt Dellavedova.
+201123 CLE renounced their free-agent exception rights to Tristan Thompson.
+201121 Isaac Okoro ~SM
+201121 Matt Dellavedova ~FA
+201121 Tristan Thompson ~FA
+201121 Ante Zizic ~FA
+220628 CLE tendered a Qualifying Offer to make R.J. Nembhard a Restricted FA.
+220628 CLE tendered a Qualifying Offer to make Collin Sexton a Restricted FA.
+220622 CLE exercised their Team Option to extend the contract of Dean Wade.
+220410 R.J. Nembhard ~S2W
+220409 Moses Brown ~S
+220409 Moses Brown ~E2W
+220409 R.J. Nembhard ~FA
+220407 R.J. Nembhard ~W
+220331 Moses Brown ~S2W
+220331 R.J. Nembhard ~S
+220331 Moses Brown ~FA
+220331 R.J. Nembhard ~E2W
+220321 Moses Brown ~S
+220320 Moses Brown ~FA
+220310 Moses Brown ~S
+220308 Tim Frazier ~FA
+220226 Tim Frazier ~S
+220221 Kevin Pangos ~FA
+220219 Kevin Pangos ~W
+220207 Caris LeVert, a 2022 2nd rd (MIA own) and a TPE -> CLE from the Indiana Pacers for: Ricky Rubio, a 2022 2nd rd (HOU own), a conditional 2022 1st rd (CLE own) and a 2027 2nd rd (UTH own).
+220111 Tacko Fall ~FA
+220109 Brandon Goodwin ~S2W
+220109 CLE terminated the 10 day contract for Brandon Goodwin.
+220109 Tacko Fall ~E2W
+220109 Brandon Goodwin ~FA
+220108 Malik Newman ~FA
+220103 Rajon Rondo and a TPE -> CLE for Denzel Valentine. The draft rights to Louis Labeyrie and a TPE -> the Los Angeles Lakers for Rajon Rondo, the draft rights to Brad Newley, the draft rights to Zhelin Wang and cash. Denzel Valentine, the draft rights to Brad Newley, the draft rights to Zhelin Wang and cash -> the New York Knicks for the draft rights to Louis Labeyrie.
+211231 Brandon Goodwin ~S
+211231 CLE terminated the 10 day contract for Tre Scott.
+211231 Justin Anderson ~FA
+211231 Luke Kornet ~FA
+211231 Tre Scott ~FA
+211229 Malik Newman ~S
+211222 Tre Scott ~S
+211221 Luke Kornet ~S
+211221 Justin Anderson ~S
+211029 CLE exercised their Team Option to extend the contract of Dylan Windler.
+211029 CLE exercised their Team Option to extend the contract of Darius Garland.
+211029 CLE exercised their Team Option to extend the contract of Isaac Okoro.
+211018 Mitch Ballock ~FA
+211018 Kyle Guy ~FA
+211018 Justin James ~FA
+211016 Justin James ~W
+211016 Kyle Guy ~W
+211016 Mitch Ballock ~W
+211016 CLE converted R.J. Nembhard to a Two-Way contract with the Cleveland Charge.
+211016 CLE converted Tacko Fall to a Two-Way contract with the Cleveland Charge.
+211014 Mfiondu Kabengele ~FA
+211014 Brodric Thomas ~FA
+211013 Ed Davis ~S
+211012 Justin James ~S
+211012 Brodric Thomas ~E2W
+211012 Mfiondu Kabengele ~W
+210925 Kyle Guy ~S
+210922 Denzel Valentine ~SM
+210917 Kevin Pangos ~SM
+210917 Tre Scott ~FA
+210915 Brodric Thomas ~S2W
+210915 Tre Scott ~W
+210912 Damyean Dotson ~FA
+210910 Damyean Dotson ~W
+210908 R.J. Nembhard ~S
+210908 Mitch Ballock ~S
+210908 Tacko Fall ~S
+210906 Tre Scott ~S
+210828 Larry Nance, Jr. -> the Portland Trail Blazers for Derrick Jones and a conditional 2022 1st rd (POR own). Lauri Markkanen -> CLE for Larry Nance, Jr. and a conditional 2023 2nd rd (DEN own). Derrick Jones, a conditional 2023 2nd rd (DEN own) and a conditional 2022 1st rd (POR own) -> the Chicago Bulls for Lauri Markkanen.
+210828 CLE renounced their free-agent exception rights to Jeremiah Martin.
+210806 Jarrett Allen ~SM
+210803 Evan Mobley ~SM
+210803 Jarrett Allen ~FA
+210803 Matt Dellavedova ~FA
+210803 Isaiah Hartenstein ~FA
+210803 Jeremiah Martin ~FA
+210803 Brodric Thomas ~FA
+230628 CLE tendered a Qualifying Offer to make Isaiah Mobley a Restricted FA.
+230623 CLE exercised their Team Option to extend the contract of Lamar Stevens.
+230314 Sam Merrill ~SM
+230313 Sam Merrill ~FA
+230303 Sam Merrill ~S
+230220 Kevin Love ~FA
+230218 Kevin Love ~W
+230214 Danny Green ~S
+221019 Didi Louzada ~FA
+221017 Mamadi Diakite ~S2W
+221017 Didi Louzada ~E2W
+221017 Didi Louzada ~S2W
+221017 Sharife Cooper ~FA
+221017 Mamadi Diakite ~FA
+221017 Nathaniel Hinton ~FA
+221017 R.J. Nembhard ~FA
+221017 Jamorko Pickett ~FA
+221015 Jamorko Pickett ~W
+221015 R.J. Nembhard ~E2W
+221015 Nathaniel Hinton ~W
+221015 Mamadi Diakite ~W
+221015 Sharife Cooper ~W
+221015 CLE exercised their Team Option to extend the contract of Isaac Okoro.
+221015 CLE exercised their Team Option to extend the contract of Evan Mobley.
+220927 Dean Wade signed a veteran extension with CLE.
+220922 Chandler Vaudrin ~FA
+220920 Sharife Cooper ~S
+220920 Chandler Vaudrin ~W
+220919 Mamadi Diakite ~S
+220919 Nathaniel Hinton ~S
+220908 Chandler Vaudrin ~S
+220908 Jamorko Pickett ~S
+220903 Donovan Mitchell and a TPE -> CLE from the Utah Jazz for: Ochai Agbaji, Lauri Markkanen, Collin Sexton, a 2025 1st rd (CLE own), a Swap 2026 1st rds, a 2027 1st rd (CLE own), a Swap 2028 1st rds and a 2029 1st rd (CLE own).
+220708 Darius Garland signed a rookie scale extension with CLE.
+220707 Ricky Rubio ~SM
+220707 Raulzinho Neto ~S
+220707 Robin Lopez ~S
+220702 R.J. Nembhard ~S2W
+220702 Isaiah Mobley ~S2W
+220702 Ochai Agbaji ~SM
+220701 Moses Brown ~FA
+220701 Ed Davis ~FA
+220701 Brandon Goodwin ~FA
+220701 R.J. Nembhard ~FA
+220701 Rajon Rondo ~FA
+220701 Collin Sexton ~FA
+240629 CLE tendered a Qualifying Offer to make Isaac Okoro a Restricted FA.
+240629 CLE tendered a Qualifying Offer to make Emoni Bates a Restricted FA.
+240329 Marcus Morris ~S
+240328 Marcus Morris ~FA
+240318 Marcus Morris ~S
+240307 Sharife Cooper ~FA
+240226 Sharife Cooper ~S
+240223 Zhaire Smith ~FA
+240219 Pete Nance ~S2W
+240214 Craig Porter, Jr. ~SM
+240214 Craig Porter, Jr. ~E2W
+240211 Zhaire Smith ~S
+240128 Pete Nance ~FA
+240118 Pete Nance ~S
+240107 Ricky Rubio ~FA
+240104 Ricky Rubio ~W
+231023 Sharife Cooper ~FA
+231023 Rob Edwards ~FA
+231023 Aleem Ford ~FA
+231023 Pete Nance ~FA
+231023 Justin Powell ~FA
+231023 Devontae Shuler ~FA
+231023 Zhaire Smith ~FA
+231021 Devontae Shuler ~W
+231021 Aleem Ford ~W
+231021 Rob Edwards ~W
+231020 Devontae Shuler ~S
+231020 Aleem Ford ~S
+231020 Rob Edwards ~S
+231020 Zhaire Smith ~W
+231020 Justin Powell ~W
+231020 Pete Nance ~W
+231020 Sharife Cooper ~W
+231019 CLE exercised their Team Option to extend the contract of Evan Mobley.
+230914 Zhaire Smith ~S
+230912 Justin Powell ~S
+230912 Pete Nance ~S
+230912 Sharife Cooper ~S
+230912 Tristan Thompson ~S
+230708 Damian Jones -> CLE from the Utah Jazz for: cash and a TPE.
+230707 Emoni Bates ~S2W
+230706 Ty Jerome ~SM
+230706 Georges Niang ~SM
+230706 Max Strus -> CLE for Cedi Osman, Lamar Stevens, a 2026 2nd rd (LAL own), a 2030 2nd rd (CLE own) and cash. A 2026 2nd rd (LAL own), a LF 2027 2nd rd and a TPE -> the Miami Heat for Max Strus and a LF 2026 2nd rd. Cedi Osman, Lamar Stevens, a LF 2026 2nd rd, a 2030 2nd rd (CLE own) and cash -> the San Antonio Spurs for a LF 2027 2nd rd.
+230706 Caris LeVert ~SM
+230703 Craig Porter, Jr. ~S2W
+230703 Isaiah Mobley ~S2W
+230701 Mamadi Diakite ~FA
+230701 Danny Green ~FA
+230701 Caris LeVert ~FA
+230701 Robin Lopez ~FA
+230701 Isaiah Mobley ~FA
+230701 Raulzinho Neto ~FA
+230701 Dylan Windler ~FA
+250628 CLE tendered a Qualifying Offer to make Luke Travers a Restricted FA.
+250626 CLE selected Tyrese Proctor in Round 2 with Pick 19 in the 2025 NBA Draft.
+250626 CLE selected Saliou Niang in Round 2 with Pick 28 in the 2025 NBA Draft.
+250405 Chuma Okeke ~SM
+250302 Nae'qwan Tomlin ~S2W
+250302 Nae'qwan Tomlin ~FA
+250301 J.T. Thor ~E2W
+250223 Javonte Green ~S
+250220 Nae'qwan Tomlin ~S
+241021 Jules Bernard ~FA
+241021 Pete Nance ~FA
+241020 Darius Brown II ~FA
+241020 Elijah Hughes ~FA
+241019 Pete Nance ~W
+241019 Jules Bernard ~W
+241018 Elijah Hughes ~W
+241018 Darius Brown II ~W
+241017 Zhaire Smith ~FA
+241016 Elijah Hughes ~S
+241016 Jacob Gilyard ~FA
+241015 Zhaire Smith ~W
+241014 Darius Brown II ~S
+241014 Jacob Gilyard ~W
+240926 Gabe Osabuohien ~FA
+240926 Nae'qwan Tomlin ~FA
+240924 Jacob Gilyard ~S
+240924 Zhaire Smith ~S
+240924 Nae'qwan Tomlin ~W
+240924 Gabe Osabuohien ~W
+240923 Nae'qwan Tomlin ~S
+240923 Gabe Osabuohien ~S
+240923 Jules Bernard ~S
+240923 Pete Nance ~S
+240917 Isaac Okoro ~SM
+240908 Tristan Thompson ~S
+240908 J.T. Thor ~S2W
+240828 Luke Travers ~S2W
+240820 Emoni Bates ~S2W
+240802 Jarrett Allen signed a veteran extension with CLE.
+240722 Evan Mobley signed a rookie scale extension with CLE.
+240707 Donovan Mitchell signed a veteran extension with CLE.
+240702 Jaylon Tyson ~SM
+240701 Emoni Bates ~FA
+240701 Damian Jones ~FA
+240701 Isaiah Mobley ~FA
+240701 Marcus Morris ~FA
+240701 Pete Nance ~FA
+240701 Isaac Okoro ~FA
+240701 Tristan Thompson ~FA
+260624 CLE selected Meleek Thomas in Round 2 with Pick 4 in the 2026 NBA Draft.
+260622 CLE exercised their Team Option to extend the contract of Craig Porter, Jr..
+260305 Darius Brown II ~FA
+260303 Olivier Sarr ~S2W
+260303 Darius Brown II ~E2W
+260220 Darius Brown II ~S2W
+260219 Emanuel Miller ~E2W
+260213 Riley Minix ~S2W
+260211 Nae'qwan Tomlin ~SM
+260211 Nae'qwan Tomlin ~E2W
+260204 James Harden -> CLE from the Los Angeles Clippers for: Darius Garland and a 2026 2nd rd (CLE own).
+260203 Luke Travers ~FA
+260201 De'Andre Hunter and a TPE -> the Sacramento Kings for Keon Ellis, Dario Saric, Dennis Schroder and a LF 2029 2nd rd. Keon Ellis, Dennis Schroder and a TPE -> CLE for De'Andre Hunter and a 2027 2nd rd (DEN own). Dario Saric, a 2027 2nd rd (DEN own) and a LF 2029 2nd rd -> the Chicago Bulls for a TPE.
+260201 Luke Travers ~E2W
+260129 Chris Livingston ~FA
+260128 Tristan Enaruna ~S2W
+260127 Chris Livingston ~E2W
+251031 Chris Livingston ~S2W
+251022 CLE exercised their Team Option to extend the contract of Jaylon Tyson.
+251020 Zeke Mayo ~FA
+251018 Zeke Mayo ~W
+251018 Darius Brown II ~FA
+251017 Zeke Mayo ~S
+251017 Tristan Enaruna ~FA
+251017 Killian Hayes ~FA
+251017 Norchad Omier ~FA
+251016 Darius Brown II ~W
+251015 Norchad Omier ~W
+251015 Killian Hayes ~W
+251015 Tristan Enaruna ~W
+251015 Chaney Johnson ~FA
+251015 Miller Kopp ~FA
+251013 Darius Brown II ~S
+251013 Chaney Johnson ~W
+251013 Miller Kopp ~W
+250928 Warith Alatishe ~FA
+250928 Jax Robinson ~FA
+250926 Tristan Enaruna ~S
+250926 Miller Kopp ~S
+250926 Killian Hayes ~S
+250926 Norchad Omier ~S
+250926 Chaney Johnson ~S
+250926 Jax Robinson ~W
+250926 Warith Alatishe ~W
+250925 Warith Alatishe ~S
+250925 Jax Robinson ~S
+250925 Thomas Bryant ~S
+250706 Larry Nance, Jr. ~S
+250706 Sam Merrill ~SM
+250706 Isaac Okoro -> the Chicago Bulls from CLE for: Lonzo Ball and a TPE.
+250701 Luke Travers ~S2W
+250701 Tyrese Proctor ~SM
+250701 Emoni Bates ~FA
+250701 Javonte Green ~FA
+250701 Ty Jerome ~FA
+250701 Sam Merrill ~FA
+250701 Chuma Okeke ~FA
+250701 Tristan Thompson ~FA
+250701 Luke Travers ~FA
+261011 Curtis Jones ~FA
+261011 Kadary Richmond ~FA
+261009 Jax Robinson ~S
+261009 Noam Yaacov ~S
+261009 Kadary Richmond ~W
+261009 Curtis Jones ~W
+260923 Rashaun Agee ~S
+260923 Zack Austin ~S
+260923 Curtis Jones ~S
+260923 Kadary Richmond ~S
+260919 Sean McNeil ~FA
+260917 Sean McNeil ~W
+260915 Sean McNeil ~S
+260908 James Harden ~SM
+260902 Khalifa Diop ~SM
+260830 Cam Whitmore ~FA
+260828 Cam Whitmore ~W
+260820 Max Strus -> the Los Angeles Clippers for the draft rights to Ismael Kamagate, a 2027 2nd rd (PHL own) and a TPE. A 2031 1st rd (CLE own), a 2032 2nd rd (SAC own) and a TPE -> the Denver Nuggets for Peyton Watson. Peyton Watson, Cam Whitmore, the draft rights to Ismael Kamagate and a TPE -> CLE for Dennis Schroder, Max Strus, a 2031 1st rd (CLE own), a 2032 2nd rd (SAC own), cash and a TPE. Dennis Schroder and cash -> the Charlotte Hornets for Tre Mann. Tre Mann, a 2027 2nd rd (PHL own) and cash -> the Washington Wizards for Cam Whitmore.
+260820 Peyton Watson signed a multi-year contract with the Denver Nuggets as part of an eventual sign and trade to CLE.
+260731 Mario Hezonja ~S
+260708 Donovan Mitchell signed a veteran extension with CLE.
+260707 Thomas Bryant ~S
+260701 Ernest Udeh, Jr. ~S2W
+260701 Meleek Thomas ~SM
+260701 Thomas Bryant ~FA
+260701 Keon Ellis ~FA
+260701 James Harden ~FA
+260701 Larry Nance, Jr. ~FA
+260701 Olivier Sarr ~FA
+260701 Dean Wade ~FA
