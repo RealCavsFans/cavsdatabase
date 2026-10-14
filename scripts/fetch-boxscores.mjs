@@ -29,4 +29,5 @@ try {
   console.log('box.json:', Object.keys(sorted).length, 'games');
 } catch (e) {
   console.warn('Box score feed unavailable, keeping existing box.json:', e.message);
+  await writeFile('box-status.txt', new Date().toISOString() + ' ' + String(e.message || e) + (e.cause ? ' / ' + String(e.cause.code || e.cause.message || e.cause) : '') + '\n');
 }
