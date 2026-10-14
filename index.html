@@ -331,7 +331,8 @@ body{background:var(--page)}
 .ginj li span:last-child{font:700 13px var(--cond);letter-spacing:.06em;color:var(--muted)}
 .ginj li span:last-child.out{color:var(--wine-ink)}
 /* video */
-.vone{grid-template-columns:minmax(0,460px)}
+.vone{grid-template-columns:minmax(0,1fr)}
+.rail .vthumb.poster .ptitle{font-size:15px}
 .vone-txt{display:none}
 .vthumb.poster{border-radius:4px}
 .poster .ptitle{font:700 18px var(--cond);text-transform:uppercase;letter-spacing:.04em}
@@ -386,10 +387,6 @@ body{background:var(--page)}
         </div>
       </section>
 
-      <section class="o-vid" aria-labelledby="vid-h">
-        <div class="block-h"><h2 id="vid-h">Latest video</h2><a href="#video" data-go="video">All video →</a></div>
-        <div id="vid-home"></div>
-      </section>
 
       <section class="o-dates" aria-labelledby="dates-h">
         <div class="block-h"><h2 id="dates-h">Key dates</h2><span class="key"><svg width="7" height="17" viewBox="0 0 10 25" aria-hidden="true"><circle cx="5" cy="1.8" r="1.6" fill="#D99A12"/><rect x="4.1" y="3.2" width="1.8" height="4.4" fill="#7A1F33"/><rect x="0.4" y="7.4" width="9.2" height="1.9" rx=".9" fill="#D99A12"/><path d="M3.9 9.3H6.1V20L5 24.6L3.9 20Z" fill="#7A1F33"/></svg> Cavs &nbsp; <i class="key-tick"></i> League</span></div>
@@ -430,6 +427,10 @@ body{background:var(--page)}
       <div class="ch-meta" id="ch-meta"></div>
       <ul class="kv plain" id="ch-kv" style="margin-top:10px"></ul>
       <a class="otd-src" href="https://cleveland.gleague.nba.com/schedule" target="_blank" rel="noopener">Charge schedule ↗</a>
+    </section>
+    <section class="rail o-vid" aria-labelledby="vid-h">
+      <div class="block-h"><h2 id="vid-h">Latest video</h2><a href="#video" data-go="video">All video →</a></div>
+      <div id="vid-home"></div>
     </section>
     </div>
   </div>
@@ -987,7 +988,7 @@ function runSearch(){
   sres.hidden=false;q.setAttribute('aria-expanded','true');return hits}
 function goTo(x){
   sres.hidden=true;q.setAttribute('aria-expanded','false');q.value='';q.blur();
-  try{history.replaceState(null,'','#'+x.go)}catch(_){}show(x.go);
+  go(x.go);
   if(!x.id)return;
   requestAnimationFrame(()=>{const t=document.getElementById(x.id);if(!t)return;
     const btn=t.querySelector('.pbtn');if(btn&&btn.getAttribute('aria-expanded')!=='true')btn.click();
@@ -1014,7 +1015,11 @@ function show(id){
   tabs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.go===id?'true':'false'));
   window.scrollTo(0,0);
 }
-document.addEventListener('click',e=>{const t=e.target.closest('[data-go]');if(!t)return;e.preventDefault();try{history.replaceState(null,'','#'+t.dataset.go)}catch(_){}show(t.dataset.go)});
+/* each page change is a real history entry, so Back returns to the previous cavsdatabase page */
+function go(id){if(location.hash!=='#'+id){try{history.pushState({p:id},'','#'+id)}catch(_){}}show(id)}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-go]');if(!t)return;e.preventDefault();go(t.dataset.go)});
+window.addEventListener('popstate',()=>show((location.hash||'#home').slice(1)));
+window.addEventListener('hashchange',()=>show((location.hash||'#home').slice(1)));
 show((location.hash||'#home').slice(1));
 </script>
 </body>
