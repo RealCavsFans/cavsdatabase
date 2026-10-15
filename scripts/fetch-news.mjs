@@ -24,6 +24,7 @@ for (const [src, url, must] of FEEDS) {
       if (src === 'Google News') { const m = title.match(/^(.*) - ([^-]+)$/); if (m) { title = m[1]; from = m[2].trim(); } }
       if (!title || !link || isNaN(d)) continue;
       if (must && !must.test(title)) continue;
+      if (/sportsbook|draftkings|fanduel|betmgm|caesars|bet365|odds shark|covers\.com|action network|pickswise/i.test(from) || /\b(odds|betting|bets?|picks?|prediction|predictions|spread|parlay|props?|best bet)\b/i.test(title)) continue;
       if (Date.now() - d > MAX_AGE_H * 3600e3) continue;
       out.push({ t: title, u: link, s: from, d: d.toISOString() });
     }
