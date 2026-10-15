@@ -1,4 +1,4 @@
-name: Update videos and box scores
+name: Update videos, box scores and news
 on:
   schedule:
     - cron: '*/30 * * * *'   # every 30 minutes, so postgame pressers show up quickly
@@ -20,12 +20,13 @@ jobs:
         env:
           YT_API_KEY: ${{ secrets.YT_API_KEY }}
       - run: node scripts/fetch-boxscores.mjs
+      - run: node scripts/fetch-news.mjs
       - name: Commit if changed
         run: |
           git config user.name "cavsdatabase-bot"
           git config user.email "bot@cavsdatabase.com"
-          git add videos.json box.json; [ -f box-status.txt ] && git add box-status.txt || true
+          git add videos.json box.json news.json; [ -f box-status.txt ] && git add box-status.txt || true
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Update videos and box scores"
+          git commit -m "Update videos and news"
           git pull --rebase origin main
           git push
