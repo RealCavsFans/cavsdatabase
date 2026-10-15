@@ -156,6 +156,7 @@ a{color:var(--wine-ink);text-decoration:none}a:hover{text-decoration:underline}
 .otd-text{margin:10px 0 8px;font-size:14px;line-height:1.5}
 .otd-src{font-size:12px}
 .key{display:inline-flex;align-items:center;gap:6px}
+.kt{display:inline-block;width:11px;height:12px;background:var(--fg)}.kt.cav{background:var(--wine);box-shadow:inset 0 -2px 0 #F2B231}
 .key-tick{display:inline-block;width:2px;height:11px;background:var(--muted)}
 /* team chips: abbreviation on the team's primary color (no logos) */
 .chip{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:22px;padding:0 6px;border-radius:4px;font:800 11px var(--sans);font-stretch:118%;letter-spacing:.04em;color:#FFFFFF;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);vertical-align:2px}
@@ -232,6 +233,52 @@ tr.det td{background:var(--sub);border-top:0;padding:4px 20px 18px}
 .sh-leg span{flex:1;color:var(--fg2)}.sh-leg b{font:500 12px var(--mono)}
 .share p.dim{font-size:12px;margin:8px 0 0}
 .soc{display:inline-flex;gap:7px;margin-left:9px;vertical-align:-2px}.soc a{color:var(--muted);opacity:.7;line-height:0}.soc a:hover{color:var(--wine-ink);opacity:1}
+.dsheet{background:var(--card);border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.08);overflow:hidden}
+.ds-hdr{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding:16px 18px 12px;border-bottom:3px solid var(--fg)}
+.ds-hdr b{font:800 19px var(--sans);font-stretch:112%}.ds-hdr span{font:500 12px var(--mono);color:var(--muted)}
+.ds-grid{display:grid;grid-template-columns:64px repeat(3,minmax(0,1fr)) minmax(0,.9fr)}
+.ds-grid>div{border-bottom:1px solid var(--line2);padding:10px 12px;display:flex;align-items:center;min-width:0}
+.ds-grid .ch{font:700 10.5px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:9px 12px 7px;background:var(--sub)}
+.ds-grid .ch.s1{color:var(--wine-ink)}
+.ds-grid .pz{font:800 26px var(--cond);color:var(--wine-ink);justify-content:center;border-right:1px solid var(--line2)}
+.ds-grid .c1{background:linear-gradient(90deg,rgba(122,31,51,.08),rgba(122,31,51,.02))}
+.ds-grid a{display:flex;align-items:center;gap:10px;min-width:0;color:var(--fg);text-decoration:none}
+.ds-grid a:hover b{color:var(--wine-ink)}
+.ds-grid .av{position:relative;width:44px;height:44px;border-radius:50%;overflow:hidden;background:var(--sub);flex:none}
+.ds-grid .av img{width:150%;margin:3px 0 0 -25%}
+.ds-grid .c1 .av{width:54px;height:54px;box-shadow:0 0 0 2px var(--wine)}
+.ds-grid .av.sm{width:34px;height:34px}
+.ds-grid .t{min-width:0}.ds-grid .t b{display:block;font:700 14px var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ds-grid .c1 .t b{font-size:15.5px}
+.ds-grid .t span{font:500 11px var(--mono);color:var(--muted)}.ds-grid .t em{font-style:normal;color:var(--wine-ink);font-weight:700}
+.ds-grid .tw{border-left:1px dashed var(--line)}.ds-grid .tw .t b{font-size:13px;font-weight:600}
+.ds-foot{padding:10px 18px 12px;font-size:12px;color:var(--muted)}
+.dstacks{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;background:var(--card);border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.08);padding:22px 18px 10px}
+.dstack{position:relative;height:300px;cursor:pointer;transition:height .45s;outline:none}
+.dstack.open{height:540px}
+.dstack .ptag{font:800 12px var(--sans);font-stretch:118%;letter-spacing:.14em;color:var(--muted);text-align:center}
+.dcard{position:absolute;left:0;right:0;top:24px;margin:auto;width:100%;max-width:176px;border-radius:9px;overflow:hidden;background:linear-gradient(160deg,#9b2a44,var(--wine) 45%,#5a1424);box-shadow:0 10px 20px rgba(0,0,0,.18);transition:transform .45s cubic-bezier(.2,.8,.2,1);transform-origin:50% 100%}
+.dcard .ph{position:relative;aspect-ratio:156/138;overflow:hidden;background:radial-gradient(circle at 50% 100%,rgba(242,178,49,.35),transparent 70%)}
+.dcard .ph img{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:122%}
+.dcard .no{position:absolute;top:6px;left:9px;font:800 38px/1 var(--cond);color:rgba(255,255,255,.25)}
+.dcard .bar{background:var(--card);padding:8px 11px 9px;border-top:3px solid #F2B231}
+.dcard .bar b{display:block;font:800 14.5px/1.1 var(--sans);text-transform:uppercase;color:var(--fg)}
+.dcard .bar span{font:500 11px var(--mono);color:var(--muted)}
+.dcard .rk{position:absolute;top:8px;right:8px;background:#F2B231;color:#101419;font:800 9.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:3px 6px;border-radius:3px}
+.dcard.s{z-index:2}.dcard.b1{transform:translate(12px,-12px) rotate(5deg) scale(.94);filter:brightness(.92);z-index:1}.dcard.b2{transform:translate(22px,-22px) rotate(10deg) scale(.88);filter:brightness(.84)}
+.dstack.open .dcard.s{transform:translateY(-6px)}.dstack.open .dcard.b1{transform:translateY(112%) scale(.8);filter:none}.dstack.open .dcard.b2{transform:translateY(215%) scale(.66);filter:none}
+.dstack:focus-visible .dcard.s{box-shadow:0 0 0 3px #F2B231,0 10px 20px rgba(0,0,0,.18)}
+@media (max-width:760px){
+ .ds-grid{grid-template-columns:48px minmax(0,1fr)}
+ .ds-grid .ch{display:none}
+ .ds-grid .pz{grid-row:span 4;align-items:flex-start;padding-top:16px;font-size:22px}
+ .ds-grid .c2,.ds-grid .c3,.ds-grid .tw{padding-block:6px;border-bottom:0}
+ .ds-grid .tw{border-left:0;border-bottom:1px solid var(--line2);padding-bottom:12px}
+ .ds-grid .c1{border-bottom:0}
+ .ds-grid .c2 .av,.ds-grid .c3 .av{width:34px;height:34px}
+ .dstacks{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px;padding:16px 12px 6px}
+ .dstack{height:250px}.dstack.open{height:440px}
+}
 .captop{margin:0}.ct-nums{display:flex;flex-wrap:wrap;gap:10px 34px}.ct-nums div{display:flex;flex-direction:column}.ct-nums b{font:700 24px var(--mono);letter-spacing:-.02em}.ct-nums .key b{color:var(--wine-ink)}.ct-nums span{font-size:12px;color:var(--muted)}.captop .hbar{margin-top:6px}
 .det-grid .wide{grid-column:1/-1}.pcap{list-style:none;margin:0;padding:0;font-size:13px}.pcap li{display:flex;justify-content:space-between;gap:12px;max-width:200px;padding:1px 0;color:var(--fg2)}.pcap b{font:500 13px var(--mono);color:var(--fg);position:relative}.pcap sup{position:absolute;left:100%;top:-2px;color:var(--wine-ink)}
 table.comps{border-collapse:collapse;font-size:12.5px;width:100%;max-width:640px;table-layout:auto;margin-bottom:6px}table.comps th{font-weight:600;color:var(--muted);text-align:left;padding:4px 10px 4px 0;border-bottom:1px solid var(--line2);font-size:11.5px}table.comps td{padding:4px 10px 4px 0;border-bottom:1px solid var(--line2);white-space:nowrap;font-size:12.5px}table.comps .r{text-align:right}table.comps tr.me td{font-weight:700}table.comps small{color:var(--muted);font-size:11px}
@@ -561,30 +608,32 @@ body.has-ticker{padding-bottom:42px}
 .ros td.pl .hs{float:left;width:44px;height:32px;object-fit:cover;object-position:top;margin:0 10px 0 0;border-radius:3px;background:var(--sub)}
 .ros td.pl small.pos{display:block;font-weight:400;color:var(--muted);font-size:12px}
 .ros td.two small{display:block;color:var(--muted);font-size:11.5px;font-family:var(--sans)}
-.ros td.wrap{white-space:normal;font-size:13px;max-width:180px}
+.ros td.sch{white-space:normal;font-size:13px;max-width:180px}
 .ros td.acq{min-width:150px}
 .ros td,.ros th{padding-inline:8px}
 @media (max-width:760px){
  #rv-bio table.ros thead{display:none}
  #rv-bio table.ros,#rv-bio .ros tbody,#rv-bio .ros tr{display:block;width:100%}
- #rv-bio .ros tr{display:grid;grid-template-columns:34px 1fr 1fr;gap:6px 12px;padding:12px;border-top:1px solid var(--line2)}
+ #rv-bio .ros tr{display:grid;grid-template-columns:30px 1.1fr .8fr .6fr;gap:10px 12px;padding:14px 12px;border-top:1px solid var(--line2)}
  #rv-bio .ros tr.grp{display:block;padding:8px 12px}
- #rv-bio .ros td{border:0;padding:0;white-space:normal;max-width:none;min-width:0;font-size:13px}
- #rv-bio .ros td:nth-child(1){grid-column:1;grid-row:1/span 4;text-align:left}
- #rv-bio .ros td:nth-child(2){grid-column:2/4}
+ #rv-bio .ros td{border:0;padding:0;white-space:normal;max-width:none;min-width:0;font-size:13px;text-align:left}
+ #rv-bio .ros td[data-l]::before{content:attr(data-l);display:block;font:700 9.5px var(--sans);font-stretch:118%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+ #rv-bio .ros td:nth-child(1){grid-column:1;grid-row:1/span 4;font-size:16px}
+ #rv-bio .ros td:nth-child(2){grid-column:2/5}
  #rv-bio .ros td:nth-child(n+3){font-family:var(--sans)}
- #rv-bio .ros td:nth-child(3){grid-column:2}#rv-bio .ros td:nth-child(4){grid-column:3}
- #rv-bio .ros td:nth-child(5){grid-column:2;text-align:left}#rv-bio .ros td:nth-child(6){grid-column:3}
- #rv-bio .ros td:nth-child(7){grid-column:2}#rv-bio .ros td:nth-child(8){grid-column:3}
- #rv-bio .ros td:nth-child(5)::before{content:"Exp: ";color:var(--muted)}
+ #rv-bio .ros td:nth-child(3){grid-column:2}#rv-bio .ros td:nth-child(4){grid-column:3}#rv-bio .ros td:nth-child(5){grid-column:4}
+ #rv-bio .ros td:nth-child(6){grid-column:2}#rv-bio .ros td:nth-child(7){grid-column:3/5}
+ #rv-bio .ros td:nth-child(8){grid-column:2/5}
+ #rv-bio .ros td.pl .hs{width:52px;height:38px}
 }
 }
 table.cap{min-width:0}
 .cap td,.cap th{padding-inline:8px}
 .cap td.po,.cap td.to{position:relative}
-.cap .ov{padding-bottom:2px}.cap .ov.po{box-shadow:inset 0 -3px 0 #E3A72F}.cap .ov.to{box-shadow:inset 0 -3px 0 var(--wine)}
+.cap .ov{display:inline-flex;align-items:center;gap:6px}.cap .ov::after{font:800 9.5px/1 var(--sans);letter-spacing:.06em;padding:3px 4px 2px;border-radius:2px}.cap .ov.po::after{content:"PO";background:#F2B231;color:#101419}.cap .ov.to::after{content:"TO";background:var(--wine);color:#fff}
+.cap td:has(.ov.po){background:rgba(242,178,49,.13)}.cap td:has(.ov.to){background:rgba(122,31,51,.08)}
 table.cap{table-layout:fixed}.cap th:nth-child(1){width:23%}.cap th:nth-child(2){width:5%}.cap th:nth-child(3){width:14%}.cap th:nth-child(n+4):nth-child(-n+7){width:11%}.cap th:nth-child(8){width:14%}
-.lg{display:inline-block;margin-left:10px;padding-bottom:1px}.lg.po{box-shadow:inset 0 -3px 0 #E3A72F}.lg.to{box-shadow:inset 0 -3px 0 var(--wine)}
+.lg{display:inline-flex;align-items:center;gap:5px;margin-left:10px}.lg::before{font:800 9.5px/1 var(--sans);letter-spacing:.06em;padding:3px 4px 2px;border-radius:2px}.lg.po::before{content:"PO";background:#F2B231;color:#101419}.lg.to::before{content:"TO";background:var(--wine);color:#fff}
 .cap small.cnote{display:block;font-weight:400;font-size:11.5px;color:var(--muted);white-space:normal;max-width:240px}
 .cap small.cnt{display:block;font:500 11px var(--sans);color:var(--muted)}
 .cap td:first-child{white-space:normal}
@@ -656,7 +705,7 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:23%}.cap th:nth-child(2)
 
 
       <section class="o-dates" aria-labelledby="dates-h">
-        <div class="block-h"><h2 id="dates-h">Key dates</h2><span class="key"><svg width="7" height="17" viewBox="0 0 10 25" aria-hidden="true"><circle cx="5" cy="1.8" r="1.6" fill="#D99A12"/><rect x="4.1" y="3.2" width="1.8" height="4.4" fill="#7A1F33"/><rect x="0.4" y="7.4" width="9.2" height="1.9" rx=".9" fill="#D99A12"/><path d="M3.9 9.3H6.1V20L5 24.6L3.9 20Z" fill="#7A1F33"/></svg> Cavs &nbsp; <i class="key-tick"></i> League</span></div>
+        <div class="block-h"><h2 id="dates-h">Key dates</h2><span class="key"><i class="kt cav"></i>Cavs &nbsp; <i class="kt"></i>League</span></div>
         <ol class="gd" id="dates"></ol>
       </section>
 
@@ -820,6 +869,8 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:23%}.cap th:nth-child(2)
       <thead><tr><th>Player</th><th>Ht (no shoes)</th><th>Ht (shoes)</th><th>Wingspan</th><th>Wing +/−</th><th>Standing reach</th><th class="r">Wt</th><th class="r">Body fat</th><th>Hand L × W</th><th>Source</th></tr></thead>
       <tbody id="measbody"></tbody>
     </table></div>
+    <div id="rv-depth" hidden></div>
+    <div id="rv-stack" hidden></div>
     <p class="dim" style="margin:0;font-size:13px">Bio, draft and combine figures: NBA.com. Combine measurements are from the player's draft combine year; height and weight in the bio table are current listings. Wingspans sourced to CraftedNBA are used only where the player has no NBA combine measurement. Exp counts NBA seasons before this one (R = rookie). Player names link to nbarapm profiles, or NBA.com for players nbarapm doesn't cover yet. TW = two-way contract; Camp = training camp deal.</p>
   </div>
 </main>
@@ -1868,6 +1919,30 @@ const SOC_NET={x:['X','https://x.com/','<path d="M2 2h3.6l3 4.3L12.3 2H14l-4.6 5
  tw:['Twitch','https://www.twitch.tv/','<path d="M3 2l-1 2.5V13h3v1.5h1.6L8.1 13h2.4L14 9.5V2zm9.8 6.9-1.9 1.9H8l-1.6 1.6v-1.6H4V3.2h8.8zM10.5 5h1.2v3.4h-1.2zM7.7 5h1.2v3.4H7.7z"/>'],
  kk:['Kick','https://kick.com/','<path d="M2.5 2h3.6v3h1.2V3.5h1.5V2h4.7v4.3h-1.5v1.6h-1.5v.2h1.5v1.6H13.5V14H8.8v-1.5H7.3V11H6.1v3H2.5z"/>']};
 const socialLinks=n=>{const S=SOCIAL[n];if(!S)return null;const w=el('span','soc');Object.keys(SOC_NET).forEach(k=>{if(!S[k])return;const [lab,base,svg]=SOC_NET[k];const a=el('a');a.href=base+S[k];a.target='_blank';a.rel='noopener';a.title=lab+' · @'+S[k];a.setAttribute('aria-label',n+' on '+lab);a.innerHTML='<svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" aria-hidden="true">'+svg+'</svg>';w.appendChild(a)});return w};
+
+/* depth chart (preview: ?preview=depth). Order: placeholder until a source is chosen. */
+const DEPTH_ON=/preview=(depth|stack)/.test(location.search);
+const DEPTH=[['PG',['James Harden','Craig Porter Jr.','Tyrese Proctor'],null],['SG',['Donovan Mitchell','Sam Merrill','Meleek Thomas'],null],['SF',['Peyton Watson','Jaylon Tyson','Mario Hezonja'],'Riley Minix'],['PF',['Evan Mobley',"Nae'Qwan Tomlin",'Tristan Enaruna'],null],['C',['Jarrett Allen','Thomas Bryant','Khalifa Diop'],'Ernest Udeh Jr.']];
+function buildDepth(){
+  const P=n=>PLAYERS.find(p=>p[1]===n);const HSU=id=>'https://cdn.nba.com/headshots/nba/latest/260x190/'+id+'.png';
+  const lastN=n=>n.split(' ').filter(w=>!/^(Jr\.|III|II)$/.test(w)).pop();
+  const face=(p,cls)=>'<span class="'+cls+'"><img src="'+HSU(p[12])+'" alt="" loading="lazy" onerror="this.remove()"></span>';
+  const link=(p,inner)=>'<a href="'+profileUrl(p[1],p[12])+'" target="_blank" rel="noopener">'+inner+'</a>';
+  /* sheet */
+  let h='<div class="dsheet"><div class="ds-hdr"><b>Cavaliers depth chart</b><span>2026–27 · updated Oct 14</span></div><div class="ds-grid"><div class="ch">Pos</div><div class="ch s1">Starter</div><div class="ch">2nd</div><div class="ch">3rd</div><div class="ch">Two-way</div>';
+  DEPTH.forEach(([pos,ns,tw])=>{h+='<div class="pz">'+pos+'</div>';ns.forEach((n,k)=>{const p=P(n);const tag=p[11]==='TW'?' · two-way':'';h+='<div class="'+(k?'c'+(k+1):'c1')+'">'+link(p,face(p,'av')+'<span class="t"><b>'+n+'</b><span><em>#'+p[0]+'</em>'+(k===0?' · '+p[6]+' yrs old':' · '+(k===1?'2nd':'3rd'))+tag+'</span></span>')+'</div>'});
+    const t=tw&&P(tw);h+='<div class="tw">'+(t?link(t,face(t,'av sm')+'<span class="t"><b>'+t[1]+'</b><span><em>#'+t[0]+'</em> · two-way</span></span>'):'<span class="dim">—</span>')+'</div>'});
+  h+='</div><div class="ds-foot">Tinted column = starting lineup · names link to player profiles · order is a placeholder until we pick a source</div></div>';
+  document.getElementById('rv-depth').innerHTML=h;
+  /* stacks */
+  let st='<div class="dstacks">';
+  DEPTH.forEach(([pos,ns])=>{st+='<div class="dstack" tabindex="0" role="button" aria-label="'+pos+' depth, tap to fan out"><div class="ptag">'+pos+'</div>';
+    ns.slice().reverse().forEach((n,j)=>{const r=ns.length-1-j;const p=P(n);st+='<div class="dcard '+(r===0?'s':'b'+r)+'"><div class="ph"><span class="no">'+p[0]+'</span><img src="'+HSU(p[12])+'" alt="" loading="lazy" onerror="this.remove()"></div><div class="bar"><b>'+lastN(n)+'</b><span>'+(r===0?p[6]+' · '+(p[7]==='R'?'rookie':p[7]+' yrs'):'#'+p[0]+' · '+(r===1?'2nd':'3rd'))+'</span></div>'+(r===0?'<span class="rk">Starter</span>':'')+'</div>'});
+    st+='</div>'});
+  st+='</div><p class="dim" style="font-size:12.5px;margin:10px 0 0;text-align:center">Tap a stack to deal out the depth at that spot</p>';
+  const rs=document.getElementById('rv-stack');rs.innerHTML=st;
+  rs.querySelectorAll('.dstack').forEach(d=>{const t=()=>d.classList.toggle('open');d.addEventListener('click',t);d.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();t()}})});
+}
 /* profile link: nbarapm when it has a page for the player, otherwise NBA.com */
 const RAPM={'James Harden':'James_Harden','Thomas Bryant':'Thomas_Bryant','Evan Mobley':'Evan_Mobley','Sam Merrill':'Sam_Merrill','Peyton Watson':'Peyton_Watson','Craig Porter Jr.':'Craig_Porter','Jaylon Tyson':'Jaylon_Tyson','Tyrese Proctor':'Tyrese_Proctor','Jarrett Allen':'Jarrett_Allen','Mario Hezonja':'Mario_Hezonja',"Nae'Qwan Tomlin":"Nae'Qwan_Tomlin",'Donovan Mitchell':'Donovan_Mitchell','Riley Minix':'Riley_Minix','Tristan Enaruna':'Tristan_Enaruna'};
 const profileUrl=(n,id)=>RAPM[n]?'https://nbarapm.com/player/'+encodeURIComponent(RAPM[n]):'https://www.nba.com/player/'+id;
@@ -1902,8 +1977,9 @@ const COMBINE={
       const nm=el('td','pl');const pa=el('a','plink',n);pa.href=profileUrl(n,pid);pa.target='_blank';pa.rel='noopener';pa.title=RAPM[n]?'RAPM profile on nbarapm':'Profile on NBA.com';nm.appendChild(pa);if(stt){nm.appendChild(el('span','tag',stt))}
       const hs=el('img','hs');hs.src='https://cdn.nba.com/headshots/nba/latest/260x190/'+pid+'.png';hs.alt='';hs.loading='lazy';hs.onerror=()=>hs.remove();nm.prepend(hs);{const sm=el('small','pos',pos+' · '+cty);const so=socialLinks(n);if(so)sm.appendChild(so);nm.appendChild(sm)}
       const two=(a,b2)=>{const td=el('td','m two');td.append(a);td.appendChild(el('small',null,b2));return td};
-      tr.append(el('td','r num',no||'—'),nm,two(ht==='—'?'—':ht.replace('-','′ ')+'″',wt?wt+' lb':'—'),two(String(age),born(b)),el('td','r m',exp),el('td','wrap',sch),
-        el('td',dr?null:'dim',dr?dr[0]+' · '+ord(dr[1])+' rd, #'+dr[2]:'Undrafted'),(()=>{const q=ACQ[n];const td=el('td','acq');if(q){td.append(q[0]);td.appendChild(el('small',null,born(q[1])))}return td})());
+      const L=(td,l)=>{td.dataset.l=l;return td};
+      tr.append(el('td','r num',no||'—'),nm,L(two(ht==='—'?'—':ht.replace('-','′ ')+'″',wt?wt+' lb':'—'),'Height'),L(two(String(age),born(b)),'Age'),L(el('td','r m',exp),'Exp'),L(el('td','sch',sch),'College / last'),
+        L(el('td',dr?null:'dim',dr?dr[0]+' · '+ord(dr[1])+' rd, #'+dr[2]:'Undrafted'),'Draft'),(()=>{const q=ACQ[n];const td=L(el('td','acq'),'How acquired');if(q){td.append(q[0]);td.appendChild(el('small',null,born(q[1])))}return td})());
       rb.appendChild(tr);
       const c=COMBINE[n];const mr=el('tr');
       if(c){const listed=htIn(ht),base=c[1]??listed;const wd=c[3]!=null&&base?c[3]-base:null;
@@ -1914,7 +1990,11 @@ const COMBINE={
   });
   const std=PLAYERS.filter(p=>!p[11]).length,tw=PLAYERS.filter(p=>p[11]==='TW').length,cp=PLAYERS.filter(p=>p[11]==='Camp').length;
   document.getElementById('ros-sub').textContent=std+' standard, '+tw+' two-way, '+cp+' training camp. Updated Oct 14, 2026.';
-  document.querySelectorAll('[data-rv]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-rv]').forEach(x=>x.setAttribute('aria-selected',x===b?'true':'false'));document.getElementById('rv-bio').hidden=b.dataset.rv!=='bio';document.getElementById('rv-meas').hidden=b.dataset.rv!=='meas'}));
+  const segs=document.querySelector('[aria-label="Roster view"]');
+  if(DEPTH_ON){segs.insertAdjacentHTML('beforeend','<button role="tab" aria-selected="false" data-rv="depth">Depth chart</button><button role="tab" aria-selected="false" data-rv="stack">Cards</button>');buildDepth()}
+  const pickRv=v=>{document.querySelectorAll('[data-rv]').forEach(x=>x.setAttribute('aria-selected',x.dataset.rv===v?'true':'false'));document.querySelectorAll('[id^="rv-"]').forEach(p=>p.hidden=p.id!=='rv-'+v)};
+  document.querySelectorAll('[data-rv]').forEach(b=>b.addEventListener('click',()=>pickRv(b.dataset.rv)));
+  if(DEPTH_ON)pickRv(/stack/.test(location.search)?'stack':'depth');
 })();
 if(typeof ng!=='undefined'&&ng)add('Next game: '+(ng[2]==='H'?'vs ':'at ')+TEAMS[ng[1]],dayFmt.format(tipOf(ng))+' · '+ng[3]+' PM ET','Game','home','next-h-row','next game play when tip off tonight upcoming schedule');
 PLAYERS.forEach(p=>add(p[1],[p[2],'age '+p[6],p[8],p[9]].filter(Boolean).join(' · '),'Player bio','roster','r-'+slug(p[1]),'height weight wingspan college born age country draft bio measurements'));
