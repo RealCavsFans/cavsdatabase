@@ -210,7 +210,12 @@ tr.det td{background:var(--sub);border-top:0;padding:4px 20px 18px}
 .det-grid h4{margin:10px 0 4px;font:800 11px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .det-grid p{margin:0;font-size:13px;line-height:1.5;color:var(--fg2);white-space:normal}
 .det-grid p b{color:var(--fg)}
-@media (max-width:720px){.det-grid{grid-template-columns:minmax(0,1fr)}}
+.captop{margin:0}.ct-nums{display:flex;flex-wrap:wrap;gap:10px 34px}.ct-nums div{display:flex;flex-direction:column}.ct-nums b{font:700 24px var(--mono);letter-spacing:-.02em}.ct-nums .key b{color:var(--wine-ink)}.ct-nums span{font-size:12px;color:var(--muted)}.captop .hbar{margin-top:6px}
+.det-grid .wide{grid-column:1/-1}.pcap{list-style:none;margin:0;padding:0;font-size:13px}.pcap li{display:flex;justify-content:space-between;gap:12px;max-width:200px;padding:1px 0;color:var(--fg2)}.pcap b{font:500 13px var(--mono);color:var(--fg);position:relative}.pcap sup{position:absolute;left:100%;top:-2px;color:var(--wine-ink)}
+table.comps{border-collapse:collapse;font-size:12.5px;width:100%;max-width:640px;table-layout:auto;margin-bottom:6px}table.comps th{font-weight:600;color:var(--muted);text-align:left;padding:4px 10px 4px 0;border-bottom:1px solid var(--line2);font-size:11.5px}table.comps td{padding:4px 10px 4px 0;border-bottom:1px solid var(--line2);white-space:nowrap;font-size:12.5px}table.comps .r{text-align:right}table.comps tr.me td{font-weight:700}table.comps small{color:var(--muted);font-size:11px}
+.det-grid p.dim{font-size:11.5px;color:var(--muted)}.splink{font-weight:600;font-size:13px}
+.kv li.tw small+small{margin-top:1px}.kv li.tw a{color:inherit;font-weight:600}
+@media (max-width:720px){.det-grid{grid-template-columns:minmax(0,1fr)}.ct-nums{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px}.ct-nums b{font-size:20px}tr.det .det-grid{position:sticky;left:0;width:calc(100vw - 92px);box-sizing:border-box}table.comps td,table.comps th{white-space:normal}}
 /* video */
 .vlinks{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 28px}
 .vlinks a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:12px 0;border-bottom:1px solid var(--line2);color:var(--fg)}
@@ -689,6 +694,7 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:23%}.cap th:nth-child(2)
       <h1 style="margin-top:6px">Cap sheet</h1>
       <p class="dim" style="margin:6px 0 0">Salaries by season, Bird rights, free agency and options.</p>
     </div>
+    <section class="captop" id="captop" aria-label="2026–27 cap position"></section>
     <div class="tablebox"><table class="cap">
       <thead><tr><th>Player</th><th>Pos</th><th class="r cur">2026–27<small>Current</small></th><th class="r">2027–28</th><th class="r">2028–29</th><th class="r">2029–30</th><th class="r">2030–31</th><th>Bird rights</th></tr></thead>
       <tbody id="capbody"></tbody>
@@ -696,8 +702,11 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:23%}.cap th:nth-child(2)
     </table></div>
     <p class="dim" style="margin:-8px 0 0;font-size:13px">Click a player for his Bird rights, free agency and options in plain English. <span class="lg po">Player option</span> <span class="lg to">Team option</span><br>Cavs position counts only salary already committed for each season. Future years will rise as the roster is filled.<br><b style="color:var(--wine-ink)">*</b> Thresholds for 2027–28 and later are projections from RealGM, not official figures. The NBA sets each season's cap and tax lines the summer before, and they move with league revenue.</p>
     <div class="cols">
-      <section><div class="block-h"><h2>Two-way</h2><span>3 of 3</span></div><ul class="kv" id="twoway"></ul></section>
-      <section><div class="block-h"><h2>Training camp</h2><span>Exhibit 10</span></div><ul class="kv" id="camp"></ul></section>
+      <section><div class="block-h"><h2>Two-way</h2><span>3 of 3 · eligibility left</span></div><ul class="kv" id="twoway"></ul>
+        <p class="dim" style="margin:8px 0 0;font-size:12.5px">Players with fewer than 4 years of NBA service can sign two-way deals. Names link to Spotrac.</p></section>
+      <section><div class="block-h"><h2>Training camp</h2><span>Exhibit 10</span></div><ul class="kv" id="camp"></ul>
+        <div class="block-h" style="margin-top:22px"><h2>Cap holds</h2><span id="holds-tot"></span></div><p id="holds" style="margin:10px 0 0;font-size:13.5px;line-height:1.5"></p>
+        <p class="dim" style="margin:6px 0 0;font-size:12.5px">Old free agents Cleveland has never renounced. They only count if the Cavs try to get under the cap. They don't count toward the tax, the aprons or the hard cap.</p></section>
     </div>
     <p class="dim" style="margin:0;font-size:13px">14 of 15 standard spots filled. Salaries: Capsheets (2026–27) and Salary Swish (future years). Bird rights and free agency: Salary Swish. Option dates: Spotrac. Free agent year is the summer the player hits the market.</p>
     <section class="gloss" id="glossary" aria-labelledby="gl-h">
@@ -1165,6 +1174,10 @@ LINES.forEach(([n,v,hard],i)=>{const r=el('div','ln'+(hard?' hard':'')+(i%2?' up
   r.style.left=pct(v)+'%';const SHORT={'Minimum':'Min','Salary cap':'Cap','Luxury tax':'Tax','First apron':'Apron 1','Second apron':'Apron 2'};const sp=el('span');if(n===HARDCAP){r.classList.add('lock');const k=document.createElement('b');k.className='lk';k.innerHTML=LOCK;k.title='Hard cap';sp.appendChild(k)}sp.append(el('i','full',n),el('i','short',SHORT[n]||n),el('em',null,n===HARDCAP?money(v)+' · hard cap':money(v)));r.appendChild(sp);hbar.appendChild(r)});
 hbar.setAttribute('aria-label','Team salary '+money(TEAM_SALARY)+' against the cap, tax and apron lines');
 requestAnimationFrame(()=>{document.getElementById('fill').style.width=pct(TEAM_SALARY)+'%'});
+{const top=document.getElementById('captop');const nums=el('div','ct-nums');
+ [[money(TEAM_SALARY),'Team salary'],[money(HC_ROOM),'Under hard cap'],[money(TEAM_SALARY-tax),'Over the tax'],[money(TAX_BILL),'Tax bill']].forEach(([v,l],i)=>{const d=el('div',i===1?'key':null);d.append(el('b',null,v),el('span',null,l));nums.appendChild(d)});
+ const hb=hbar.cloneNode(true);hb.removeAttribute('id');hb.querySelectorAll('[id]').forEach(x=>x.removeAttribute('id'));hb.querySelector('.fill').style.width=pct(TEAM_SALARY)+'%';
+ top.append(nums,hb)}
 
 /* injuries — status: Out | Doubtful | Questionable | Probable | Game-time decision */
 const INJ_UPDATED='Oct 13';
@@ -1263,15 +1276,76 @@ const ROSTER=[
 ];
 const TWOWAY=[['Tristan Enaruna','Full Bird','2027 RFA'],['Riley Minix','Early Bird','2027 RFA'],['Ernest Udeh Jr.','Non-Bird','2027 RFA']];
 const CAMP=['Rashaun Agee','Zack Austin','Noam Yaacov'];
+/* contract detail for the cap-sheet dropdowns. Source: Spotrac player pages + Spotrac NBA contracts by position (Oct 14, 2026).
+   sp: Spotrac id/slug · ag: agents · yos: years of service · deal: [years, total, seasons, how signed] · aav · lang: contract language
+   rank: [position, rank by AAV, active contracts at that position] · rapm: [nbarapm time-decay RAPM, rank of 582] or null
+   comps: [name, team, deal, aav, rapm] — closest AAV at the same position, length within a year */
+const CONTRACTS={
+  'Donovan Mitchell':{sp:'23608/donovan-mitchell',ag:'Austin Brown (CAA)',yos:9,deal:[3,150316884,'2024–25 to 2026–27','Bird rights'],aav:50105628,rank:['SG',3,128],rapm:[4.5,9],
+    lang:['Extension already signed: 4 years, $275,968,000 from 2027–28 (AAV $68,992,000), with a 2030–31 player option and a 15% trade bonus.','He gave up a 2027–28 player option as part of the extension.'],
+    comps:[['Paul George','BOS','4 yrs / $211.6M',52.9,[2.4,45]],['Austin Reaves','LAL','4 yrs / $184.8M',46.19,[2.5,44]],['Devin Booker','PHX','4 yrs / $220.4M',55.11,[3.4,21]]]},
+  'Evan Mobley':{sp:'74110/evan-mobley',ag:'Thaddeus Foucher, Joe Smith (THE·TEAM)',yos:5,deal:[5,269085780,'2025–26 to 2029–30','Designated rookie-scale extension'],aav:53817156,rank:['PF',3,97],rapm:[1.8,62],
+    lang:['15% trade bonus.','Starts at 30% of the cap instead of 25%: the higher max was triggered by his 2024–25 Defensive Player of the Year award.'],
+    comps:[['Jaren Jackson Jr.','UTA','4 yrs / $205.0M',51.25,[2.1,55]],['Lauri Markkanen','UTA','4 yrs / $195.9M',48.97,[3.4,20]],['Paolo Banchero','ORL','5 yrs / $239.2M',47.84,[-1.2,340]]]},
+  'James Harden':{sp:'6312/james-harden',ag:'Mike Silverman, Troy Payne, Brandon Grier (Equity Sports)',yos:16,deal:[3,96540000,'2026–27 to 2028–29','Bird rights'],aav:32180000,rank:['PG',17,102],rapm:[0.8,125],
+    lang:['2028–29 player option.','15% trade bonus. It paid out $263,397 when the Clippers traded him to Cleveland.'],
+    comps:[['Jrue Holiday','POR','4 yrs / $134.4M',33.6,[3.3,22]],['Derrick White','BOS','4 yrs / $118.0M',29.51,[3.6,19]],['Dejounte Murray','NOP','4 yrs / $114.2M',28.56,[-0.5,238]]]},
+  'Jarrett Allen':{sp:'23617/jarrett-allen',ag:'Derrick Powell, Jim Tanner (Elite Athlete Group)',yos:9,deal:[3,90720000,'2026–27 to 2028–29','Veteran extension'],aav:30240000,rank:['C',10,115],rapm:[2.8,31],
+    lang:['Fully guaranteed. No options and no trade bonus.'],
+    comps:[['Walker Kessler','LAL','4 yrs / $129.5M',32.37,[0.8,131]],['Myles Turner','MIL','4 yrs / $108.9M',27.22,[2.1,54]],['Isaiah Hartenstein','OKC','3 yrs / $75.0M',25.0,[3.7,17]]]},
+  'Peyton Watson':{sp:'78138/peyton-watson',ag:'Jeff Schwartz',yos:4,deal:[4,88000000,'2026–27 to 2029–30','Sign-and-trade from Denver'],aav:22000000,rank:['SF',14,90],rapm:[-1.7,394],
+    lang:['2029–30 player option.','Acquiring him in a sign-and-trade is what hard-caps the Cavs at the first apron this season.'],
+    comps:[['De’Andre Hunter','SAC','4 yrs / $90.0M',22.5,[0.3,163]],['Dillon Brooks','PHX','4 yrs / $86.0M',21.5,[0.8,130]],['Cameron Johnson','DEN','4 yrs / $94.5M',23.63,[2.6,40]]]},
+  'Sam Merrill':{sp:'70702/sam-merrill',ag:'Kieran Piller, Mark Bartelstein (Priority Sports)',yos:6,deal:[4,38000000,'2025–26 to 2028–29','Bird rights'],aav:9500000,rank:['SG',42,128],rapm:[1.5,80],
+    lang:['Fully guaranteed. No options and no trade bonus.'],
+    comps:[['Buddy Hield','CHI','4 yrs / $37.8M',9.44,[-1.2,331]],['Tre Johnson','WAS','4 yrs / $37.4M',9.36,[-1.6,387]],['Ty Jerome','MEM','3 yrs / $27.7M',9.22,[1.0,108]]]},
+  'Jaylon Tyson':{sp:'91773/jaylon-tyson',ag:'Wallace Prather (Prather Sports)',yos:2,deal:[4,16118700,'2024–25 to 2027–28','First-round rookie scale'],aav:4029675,rank:['SG',70,128],rapm:[-1.5,375],
+    lang:['2027–28 team option. If Cleveland declines it, he becomes an unrestricted free agent next summer instead of restricted in 2028.'],
+    comps:[['Brandin Podziemski','GSW','',4.06,[1.1,96]],['Drake Powell','BKN','',4.18,[-6.6,582]],['Ja’Kobe Walter','TOR','',4.2,[-3.0,514]]]},
+  'Thomas Bryant':{sp:'23643/thomas-bryant',ag:'Todd Ramasar (Life Sports)',yos:9,deal:[1,3524948,'2026–27','Veteran minimum'],aav:3524948,rank:['C',67,115],rapm:[-0.9,288],
+    lang:['He is paid $3,524,948, but only $2,449,421 counts on the cap. The league covers the difference on one-year minimum deals for veterans.'],
+    comps:[['Marvin Bagley III','DEN','',3.51,[-1.1,313]],['Drew Eubanks','NYK','',3.51,[-2.5,480]],['Tony Bradley','NYK','',3.51,[-1.4,350]]]},
+  'Mario Hezonja':{sp:'17833/mario-hezonja',ag:null,yos:5,deal:[1,2845883,'2026–27','Veteran minimum'],aav:2845883,rank:['SF',61,90],rapm:null,
+    lang:['Non-guaranteed until Nov 15, 2026. Cleveland can waive him before then without owing the rest.','He is paid $2,845,883, but only $2,449,421 counts on the cap.'],
+    comps:[['Ziaire Williams','LAL','',2.85,[-2.4,462]],['Kenyon Martin Jr.','MIN','',2.85,null],['Simone Fontecchio','MIA','',2.63,[-0.6,249]]]},
+  'Nae’Qwan Tomlin':{sp:'95599/naeqwan-tomlin',ag:null,yos:2,deal:[2,3129240,'2025–26 to 2026–27','Minimum'],aav:1564620,rank:['PF',85,97],rapm:[0.0,198],
+    lang:['Restricted free agent next summer if Cleveland extends a qualifying offer.'],
+    comps:[['Olivier-Maxence Prosper','MEM','',1.51,[-3.1,520]],['Cam Corhen','ATL','',1.36,null],['Karlo Matkovic','NOP','',1.8,[0.2,178]]]},
+  'Craig Porter Jr.':{sp:'84768/craig-porter-jr',ag:'Ryan Straining',yos:3,deal:[4,8019739,'2023–24 to 2026–27','Non-taxpayer mid-level'],aav:2004935,rank:['PG',90,102],rapm:[-0.7,260],
+    lang:['Cleveland picked up the 2026–27 team option.','Non-guaranteed until Jan 10, 2027.'],
+    comps:[['Bronny James','LAL','',1.97,[-3.8,553]],['Jamal Shead','TOR','',2.04,[1.4,85]],['Emanuel Sharp','SAC','',2.12,null]]},
+  'Tyrese Proctor':{sp:'98636/tyrese-proctor',ag:'Austin Brown, Max Saidman (CAA)',yos:1,deal:[4,8685387,'2025–26 to 2028–29','Second-round exception'],aav:2171347,rank:['PG',87,102],rapm:[0.0,188],
+    lang:['2027–28 is guaranteed for $500,000 only.','2028–29 team option.'],
+    comps:[['Emanuel Sharp','SAC','',2.12,null],['Tyler Kolek','NYK','',2.27,[-0.9,284]],['Jamal Shead','TOR','',2.04,[1.4,85]]]},
+  'Khalifa Diop':{sp:'78152/khalifa-diop',ag:'Jason Ranne',yos:0,deal:[4,9264648,'2026–27 to 2029–30','Rookie contract'],aav:2316162,rank:['C',89,115],rapm:null,
+    lang:['Only this season is guaranteed. Future years are non-guaranteed.','2029–30 team option.'],
+    comps:[['Henri Veesaar','ATL','',2.32,null],['Neemias Queta','BOS','',2.39,[3.7,16]],['Ryan Kalkbrenner','CHA','',2.49,[-0.8,279]]]},
+  'Meleek Thomas':{sp:'107945/meleek-thomas',ag:'Sam Permut (Roc Nation)',yos:0,deal:[4,9264648,'2026–27 to 2029–30','Rookie contract'],aav:2316162,rank:['SG',103,128],rapm:null,
+    lang:['2029–30 team option.'],
+    comps:[['Isaiah Evans','MIN','',2.32,null],['Justin Edwards','PHI','',2.36,[-2.8,501]],['Micah Peavy','MEM','',2.17,[-0.5,239]]]}
+};
+/* two-way: [name, contract years, through, years of service, Spotrac id/slug, agent] */
+const TW_DEAL={'Tristan Enaruna':[2,'2026–27',1,'94520/tristan-enaruna','Phillip Parun (PPGroup)'],'Riley Minix':[2,'2026–27',2,'95269/riley-minix',null],'Ernest Udeh Jr.':[1,'2026–27',0,'108828/ernest-udeh-jr','Todd Ramasar (Life Sports)']};
+/* cap holds — unrenounced free agents (Spotrac). Each is a minimum-salary hold. */
+const HOLDS=['Tristan Thompson','Olivier Sarr','Rajon Rondo','Chuma Okeke','Raul Neto','Damian Jones','Ed Davis'];const HOLD_EACH=2449421;
 const slug=t=>t.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const usd=v=>'$'+Math.round(v).toLocaleString('en-US');
 const usdM=v=>'$'+(v/1e6).toFixed(1)+'M';
+const ordn=k=>k+(k%100>10&&k%100<14?"th":({1:"st",2:"nd",3:"rd"})[k%10]||"th");
+const POSN={PG:'point guards',SG:'shooting guards',SF:'small forwards',PF:'power forwards',C:'centers'};
 const BIRD={
   'Full Bird':'Cleveland can re-sign him for any amount up to the max, for up to five years, even while over the cap. Earned by spending three seasons with the team without changing teams as a free agent.',
   'Early Bird':'Cleveland can go over the cap to re-sign him for up to 175% of his previous salary or 105% of the league’s average salary, whichever is greater, on a deal of two to four years. Earned after two seasons.',
   'Non-Bird':'Cleveland can go over the cap to re-sign him for up to 120% of his previous salary or 120% of the minimum salary, whichever is greater. Applies after one season with the team.'
 };
 const FA={UFA:'Unrestricted: he can sign with any team.',RFA:'Restricted: if Cleveland extends a qualifying offer, it can match any offer sheet he signs with another team.'};
+/* League thresholds by season. 2026-27 is official (NBA); later seasons are RealGM projections. */
+const THRESH=[
+  ['Salary cap',[164961000,176000000,184800000,194040000,203742000]],
+  ['Luxury tax',[200428000,213000000,224532000,235759000,247547000]],
+  ['First apron',[209015000,222000000,234113000,245819000,258110000]],
+  ['Second apron',[221686000,236000000,248308000,260724000,273760000]]
+];
 const cb=document.getElementById('capbody');const totals=[0,0,0,0,0];
 ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
   const tr=el('tr');tr.id='p-'+slug(n);const dead=t==='Dead money';
@@ -1288,13 +1362,30 @@ ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
   if(dead){nameTd.textContent=n;nameTd.appendChild(el('small','cnote','Dead money'));nameTd.style.fontWeight='600';return}
   const btn=el('button','pbtn',n);btn.type='button';btn.setAttribute('aria-expanded','false');nameTd.appendChild(btn);if(t)nameTd.appendChild(el('small','cnote',t));
   const det=el('tr','det');det.hidden=true;const dtd=el('td');dtd.colSpan=8;const g=el('div','det-grid');
-  const blk=(h,html)=>{const d=el('div');d.appendChild(el('h4',null,h));const pp=el('p');html.forEach(x=>pp.append(x));d.appendChild(pp);g.appendChild(d)};
+  const blk=(h,html,cls)=>{const d=el('div',cls);d.appendChild(el('h4',null,h));const pp=el('p');html.forEach(x=>pp.append(x));d.appendChild(pp);g.appendChild(d);return d};
+  const C=CONTRACTS[n];
+  if(C){const [len,total,span,how]=C.deal;
+    blk('Contract',[el('b',null,len+(len===1?' year':' years')+', '+usd(total)),' · '+span,el('br'),'Average per year '+usd(C.aav),el('br'),'Signed with: '+how]);
+    blk('Pay rank · '+C.rank[0],[el('b',null,ordn(C.rank[1])+' of '+C.rank[2]),' '+POSN[C.rank[0]]+' by average salary',el('br'),el('span','dim','Active contracts, Spotrac')]);
+    blk('Agent · service',[C.ag||'No agent listed',el('br'),C.yos+(C.yos===1?' year':' years')+' of NBA service']);}
+  /* % of the league salary cap, each season he is under contract */
+  const pc=el('ul','pcap');yrs.forEach((y,i)=>{const v=typeof y==='number'?y:Array.isArray(y)?y[0]:null;if(v==null)return;const li=el('li');li.append(el('span',null,SEASONS[i]),(()=>{const b=el('b',null,(v/THRESH[0][1][i]*100).toFixed(1)+'%');const m=el('sup',null,i?'*':'');b.appendChild(m);return b})());pc.appendChild(li)});
+  {const d=el('div');d.appendChild(el('h4',null,'Share of the salary cap'));d.appendChild(pc);g.appendChild(d)}
   blk('Bird rights · '+bird,[BIRD[bird]||'']);
   const [yr,type]=fa.split(' ');
   blk('Free agency · '+fa,['Becomes a free agent in the summer of '+yr+'. ',FA[type]||'']);
-  const opts=[];yrs.forEach((y,i)=>{if(Array.isArray(y))opts.push((y[1]==='P'?'Player option':'Team option')+' for '+SEASONS[i]+' ('+usd(y[0])+'): '+(y[1]==='P'?'he decides whether to stay for that season.':'Cleveland decides whether to keep him for that season.'))});
+  const opts=[];yrs.forEach((y,i)=>{if(Array.isArray(y))opts.push((y[1]==='P'?'Player option':'Team option')+' for '+SEASONS[i]+' ('+usd(y[0])+').')});
   const left=yrs.filter(y=>typeof y==='number'||Array.isArray(y)).length;
-  blk('Contract',[left+(left===1?' season':' seasons')+' remaining including this one. ',opts.join(' ')||'No options.',t?' '+t+'.':'']);
+  const lang=[left+(left===1?' season':' seasons')+' left including this one. ',...opts.map(o=>o+' ')];if(C)C.lang.forEach(l=>lang.push(l+' '));else if(t)lang.push(t+'.');
+  blk('Contract language',lang,'wide');
+  if(C){const d=el('div','wide');d.appendChild(el('h4',null,'Closest contracts · '+C.rank[0]+', similar average and length'));
+    const tb=el('table','comps');tb.innerHTML='<thead><tr><th>Player</th><th>Deal</th><th class="r">Per year</th><th class="r">Impact</th></tr></thead>';const bd=el('tbody');
+    const rp=r=>r?(r[0]>0?'+':'')+r[0].toFixed(1)+' · #'+r[1]:'—';
+    const me=el('tr','me');me.append(el('td',null,n),el('td',null,C.deal[0]+' yrs / '+usdM(C.deal[1])),el('td','r',usdM(C.aav)),el('td','r',rp(C.rapm)));bd.appendChild(me);
+    C.comps.forEach(([cn,tm,dl,a,r])=>{const tr2=el('tr');const c1=el('td',null,cn);c1.appendChild(el('small',null,' '+tm));tr2.append(c1,el('td',null,dl||'—'),el('td','r','$'+a.toFixed(2)+'M'),el('td','r',rp(r)));bd.appendChild(tr2)});
+    tb.appendChild(bd);d.appendChild(tb);
+    d.appendChild(el('p','dim','Impact: nbarapm time-decay RAPM and league rank of 582 players (Aug 30, 2026). — means no rating yet.'));g.appendChild(d)}
+  if(C){const a=el('a','splink','Full contract on Spotrac ↗');a.href='https://www.spotrac.com/nba/player/_/id/'+C.sp;a.target='_blank';a.rel='noopener';const d=el('div','wide');d.appendChild(a);g.appendChild(d)}
   dtd.appendChild(g);det.appendChild(dtd);cb.appendChild(det);
   btn.addEventListener('click',()=>{const o=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',String(!o));det.hidden=o});
 });
@@ -1303,13 +1394,6 @@ tot.append(el('td',null,'Team total'),el('td'));
 const counts=[0,1,2,3,4].map(i=>{let pl=0,dm=0;ROSTER.forEach(([n,p,yrs,b,f,t])=>{const y=yrs[i];if(typeof y==='number'||Array.isArray(y)){t==='Dead money'?dm++:pl++}});return [pl,dm]});
 totals.forEach((v,i)=>{const td=el('td','r '+(i===0?'cur':'fut'),v?(i===0?usd(v):usdM(v)):'');const [pl,dm]=counts[i];if(v)td.appendChild(el('small','cnt',pl+' player'+(pl===1?'':'s')+(dm?' + '+dm+' dead':'')));tot.appendChild(td)});
 tot.append(el('td'));
-/* League thresholds by season. 2026-27 is official (NBA); later seasons are RealGM projections. */
-const THRESH=[
-  ['Salary cap',[164961000,176000000,184800000,194040000,203742000]],
-  ['Luxury tax',[200428000,213000000,224532000,235759000,247547000]],
-  ['First apron',[209015000,222000000,234113000,245819000,258110000]],
-  ['Second apron',[221686000,236000000,248308000,260724000,273760000]]
-];
 const tf=tot.parentNode;
 const hdr=el('tr','thr-h');const hc=el('td',null,'League thresholds');hc.colSpan=8;hdr.appendChild(hc);tf.appendChild(hdr);
 THRESH.forEach(([n,vals])=>{const tr=el('tr','thr');tr.append(el('td',null,n),el('td'));
@@ -1326,7 +1410,12 @@ totals.forEach((v,i)=>{const L=THRESH.map(([n,a])=>[n,a[i]]);const td=el('td','r
   td.appendChild(el('small',null,counts[i][0]+' player'+(counts[i][0]===1?'':'s')+' committed'));
   pos.appendChild(td)});
 pos.append(el('td'),el('td'));tf.insertBefore(pos,hdr);
-const tw=document.getElementById('twoway');TWOWAY.forEach(([n,b,f])=>{const li=el('li');li.id='p-'+slug(n);const sp2=el('span',null,n);sp2.append(el('small',null,b+' · '+f));li.append(sp2,el('b',null,'Two-way'));tw.appendChild(li)});
+const tw=document.getElementById('twoway');TWOWAY.forEach(([n,b,f])=>{const [len,thru,yos,sp,ag]=TW_DEAL[n];const li=el('li','tw');li.id='p-'+slug(n);const sp2=el('span');
+  const a=el('a',null,n);a.href='https://www.spotrac.com/nba/player/_/id/'+sp;a.target='_blank';a.rel='noopener';sp2.appendChild(a);
+  sp2.append(el('small',null,len+'-year two-way, through '+thru+' · '+b+' · '+f),el('small',null,yos+(yos===1?' year':' years')+' of NBA service'+(ag?' · Agent: '+ag:'')));
+  li.append(sp2,el('b',null,(4-yos)+' more season'+(4-yos===1?'':'s')));tw.appendChild(li)});
+{document.getElementById('holds').textContent=HOLDS.join(', ')+'. '+usd(HOLD_EACH)+' each.';
+ document.getElementById('holds-tot').textContent=HOLDS.length+' · '+usdM(HOLDS.length*HOLD_EACH)}
 const cp=document.getElementById('camp');CAMP.forEach(n=>{const li=el('li');li.id='p-'+slug(n);const sp2=el('span',null,n);sp2.append(el('small',null,'Exhibit 10 · Non-Bird'));li.append(sp2,el('b',null,'$1,357,763'));cp.appendChild(li)});
 
 /* assets */
