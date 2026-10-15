@@ -180,7 +180,7 @@ D.forEach(([p,ps])=>{const [s,...b]=ps;const [x,y]=spots[p];const e=document.cre
  e.style.transform='translate(-50%,-62%)';fl.appendChild(e)});
 
 /* D */
-const TWP={PG:null,SG:null,SF:['Riley Minix',12,1642434],PF:['Tristan Enaruna',21,1642400],C:['Ernest Udeh Jr.',88,1643640]};
+const TWP={PG:null,SG:null,SF:['Riley Minix',12,1642434],PF:null,C:['Ernest Udeh Jr.',88,1643640]};
 const sh=document.getElementById('sheet');
 const chip=([n,no,id],k)=>'<div class="chip"><span class="av"><img src="'+H(id)+'" alt=""></span><span class="t"><b>'+n+'</b><span><em>#'+no+'</em>'+(k===0?' · starter':'')+'</span></span></div>';
 D.forEach(([p,ps])=>{sh.insertAdjacentHTML('beforeend','<div class="pz">'+p+'</div>'+ps.map((x,k)=>'<div class="'+(k===0?'c1':'')+'">'+chip(x,k)+'</div>').join('')+'<div class="tw">'+(TWP[p]?'<b>#'+TWP[p][1]+' '+TWP[p][0]+'</b>two-way':'—')+'</div>')});
