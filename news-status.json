@@ -1,5 +1,5 @@
 {
- "at": "2026-10-15T20:31:24.415Z",
+ "at": "2026-10-15T21:27:26.618Z",
  "status": {
   "Cavs.com": {
    "ok": true,
@@ -24,7 +24,7 @@
   "Sports Illustrated": {
    "ok": true,
    "url": "https://www.si.com/news-sitemap.xml",
-   "recent": 7
+   "recent": 8
   },
   "The Athletic": {
    "ok": true,
