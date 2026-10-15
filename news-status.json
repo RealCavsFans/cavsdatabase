@@ -1,5 +1,5 @@
 {
- "at": "2026-10-15T03:00:01.887Z",
+ "at": "2026-10-15T03:32:40.319Z",
  "status": {
   "Cavs.com": {
    "ok": true,
@@ -49,7 +49,7 @@
   "Cavs Nation": {
    "ok": true,
    "url": "https://cavsnation.com/feed/",
-   "recent": 3
+   "recent": 2
   },
   "Cavaliers Nation": {
    "ok": true,
