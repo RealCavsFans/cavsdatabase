@@ -1,0 +1,80 @@
+{
+ "at": "2026-10-15T02:03:29.362Z",
+ "status": {
+  "Cavs.com": {
+   "ok": false,
+   "errs": [
+    "https://www.nba.com/cavaliers/rss.xml HTTP 403",
+    "https://www.nba.com/cavaliers/news/rss.xml HTTP 404",
+    "https://www.nba.com/cavaliers/feed HTTP 404"
+   ]
+  },
+  "Hoops Rumors": {
+   "ok": true,
+   "url": "https://www.hoopsrumors.com/cleveland-cavaliers/feed",
+   "recent": 3
+  },
+  "RealGM": {
+   "ok": true,
+   "url": "https://basketball.realgm.com/rss/wiretap/5/0.xml",
+   "recent": 0
+  },
+  "cleveland.com": {
+   "ok": true,
+   "url": "https://www.cleveland.com/arc/outboundfeeds/rss/category/cavs/?outputType=xml",
+   "recent": 10
+  },
+  "Sports Illustrated": {
+   "ok": false,
+   "errs": [
+    "https://www.si.com/nba/cavaliers/rss HTTP 404",
+    "https://www.si.com/nba/cavaliers/.rss/full/ HTTP 404",
+    "https://www.si.com/.rss/full/nba/cavaliers HTTP 404"
+   ]
+  },
+  "The Athletic": {
+   "ok": true,
+   "url": "https://www.nytimes.com/athletic/rss/nba/cavaliers/",
+   "recent": 1
+  },
+  "WKYC": {
+   "ok": true,
+   "url": "https://www.wkyc.com/feeds/syndication/rss/sports/nba/cavaliers",
+   "recent": 0
+  },
+  "News 5 Cleveland": {
+   "ok": true,
+   "url": "https://www.news5cleveland.com/sports.rss",
+   "recent": 9
+  },
+  "Fear The Sword": {
+   "ok": false,
+   "errs": [
+    "https://www.fearthesword.com/rss/index.xml no items"
+   ]
+  },
+  "Cavs Nation": {
+   "ok": true,
+   "url": "https://cavsnation.com/feed/",
+   "recent": 3
+  },
+  "Cavaliers Nation": {
+   "ok": true,
+   "url": "https://cavaliersnation.com/feed/",
+   "recent": 2
+  },
+  "ClutchPoints": {
+   "ok": true,
+   "url": "https://clutchpoints.com/nba/cleveland-cavaliers/feed",
+   "recent": 1
+  },
+  "HoopsHype": {
+   "ok": false,
+   "errs": [
+    "https://www.hoopshype.com/team/cleveland-cavaliers/feed/ HTTP 404",
+    "https://www.hoopshype.com/feed/ HTTP 404",
+    "https://www.hoopshype.com/rss/ HTTP 404"
+   ]
+  }
+ }
+}
