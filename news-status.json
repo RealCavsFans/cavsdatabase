@@ -1,5 +1,5 @@
 {
- "at": "2026-10-15T17:58:31.939Z",
+ "at": "2026-10-15T18:35:52.243Z",
  "status": {
   "Cavs.com": {
    "ok": true,
@@ -24,7 +24,7 @@
   "Sports Illustrated": {
    "ok": true,
    "url": "https://www.si.com/news-sitemap.xml",
-   "recent": 6
+   "recent": 7
   },
   "The Athletic": {
    "ok": true,
@@ -59,7 +59,7 @@
   "ClutchPoints": {
    "ok": true,
    "url": "https://clutchpoints.com/nba/cleveland-cavaliers/feed",
-   "recent": 2
+   "recent": 1
   }
  }
 }
