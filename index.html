@@ -316,7 +316,7 @@ body{background:var(--page)}
 .gbig i{font-style:normal;font-weight:400;color:#8FA0BA;margin:0 .04em}
 .gsp{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 12px;margin:0}
 .gsp div{min-width:0}
-.gsp dt{font:700 10.5px var(--cond);letter-spacing:.08em;text-transform:uppercase;color:#8E959D;line-height:1.2}
+.gsp dt{font:700 10.5px var(--cond);letter-spacing:.03em;text-transform:uppercase;color:#8E959D;line-height:1.2}
 .gsp dd{margin:0;font:500 15px var(--mono);color:#E6E8EA}
 .gmu{padding:18px 22px;display:flex;flex-direction:column;gap:10px;justify-content:center}
 .gmu .gk{color:var(--muted)}
@@ -478,6 +478,30 @@ table.atk tr.avg td{background:var(--sub);font-weight:700}
 .tx-cols small{display:block;font:700 10.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
 .tx-cols ul{margin:0;padding-left:16px;font-size:13.5px;line-height:1.45}
 @media (max-width:600px){.tx{grid-template-columns:54px 1fr}.tx .tx-body{grid-column:1/-1}.tx-cols{grid-template-columns:1fr}}
+.upnext{display:inline-flex;align-items:center;gap:8px}
+.upnext b{display:inline-flex;align-items:center;gap:6px;background:var(--wine);color:#fff;font:700 10.5px var(--sans);font-stretch:118%;letter-spacing:.1em;padding:4px 8px 4px 9px;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 50%,calc(100% - 8px) 100%,0 100%);padding-right:14px}
+.nx-when{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 14px;font-size:14px;font-weight:600;color:var(--fg);margin-top:-2px}
+.nx-when a{font-weight:600;font-size:13px}
+.gmu .gdays{margin-top:4px}
+.nx-then-row{border-top:1px solid var(--line2);padding-top:8px}.nx-then-row b{font:700 10.5px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.gsp dt,.rv dt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* key dates: show full text */
+.gd li{flex:0 0 170px}
+.gd .t{display:block;-webkit-line-clamp:unset;overflow:visible}
+.hc-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.hc-tile{border:1px solid var(--line);border-top:3px solid var(--wine);padding:10px 12px;background:var(--sub);position:relative}
+.hc-tile b{display:block;font:700 22px/1.1 var(--mono);color:var(--fg)}.hc-tile:first-child b{color:var(--wine-ink)}
+.hc-tile span{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.hc-tile em{position:absolute;top:8px;right:10px;font:700 9px var(--sans);font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--wine);padding:2px 5px}
+.hc-cap{display:flex;justify-content:space-between;gap:10px;font-size:13px;margin-bottom:4px}.hc-cap b{color:var(--wine-ink)}.hc-cap span{color:var(--muted);font-size:12px}
+.hc-checks{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:2px 18px}
+.hc-checks li{display:flex;gap:8px;align-items:baseline;font-size:13px;padding:4px 0}
+.hc-checks i{font-style:normal;font-weight:800;width:14px;text-align:center}.hc-checks .yes i{color:#2E7D4F}.hc-checks .no i{color:var(--wine-ink)}
+@media (max-width:600px){.hc-tiles{grid-template-columns:1fr 1fr 1fr}.hc-tile b{font-size:16px}.hc-tile em{display:none}}
+.h-link{color:inherit}.h-link:hover{color:var(--wine-ink)}
+.ch-tiles{display:flex;flex-wrap:wrap;gap:10px}.ch-tiles .txs b{font-size:20px}
+table.chs{min-width:620px}
+.ch-tag{font:700 10.5px var(--sans)!important;letter-spacing:.06em;text-transform:uppercase;color:var(--wine-ink)}
 </style>
 <style>[hidden]{display:none!important}</style>
 </head>
@@ -506,10 +530,12 @@ table.atk tr.avg td{background:var(--sub);font-weight:700}
         </div>
         <div class="gmu">
           <a class="fin" id="last" hidden target="_blank" rel="noopener"></a>
-          <div class="gk" id="next-h-row"><span id="nx-label"></span><span class="gk-links"><a id="nx-prev" hidden target="_blank" rel="noopener">Game preview ↗</a><a href="#schedule" data-go="schedule">Full schedule →</a></span></div>
+          <div class="gk" id="next-h-row"><span class="upnext"><b>Up next</b><span id="nx-label"></span></span><a href="#schedule" data-go="schedule">Full schedule →</a></div>
           <h3 class="sr" id="nx-title"></h3><span class="sr" id="next-h"></span>
-          <div class="gteams"><span class="tm cle" aria-hidden="true">CLE</span><span class="gat" id="nx-at" aria-hidden="true"></span><span class="tm" id="nx-opp"></span><span class="gdays" id="cd" role="timer" aria-label="Countdown to tip-off"><small>Tip-off in</small><span class="cdw"><span class="cdn"><b id="cd-d">–</b><b id="cd-h">–</b><b id="cd-m">–</b><b id="cd-s">–</b></span><span class="cdl"><i>Days</i><i>Hrs</i><i>Min</i><i>Sec</i></span></span></span></div>
-          <div class="ginfo"><span id="nx-meta"></span><span id="nx-then"></span></div>
+          <div class="gteams"><span class="tm cle" aria-hidden="true">CLE</span><span class="gat" id="nx-at" aria-hidden="true"></span><span class="tm" id="nx-opp"></span></div>
+          <div class="nx-when"><span id="nx-meta"></span><a id="nx-prev" hidden target="_blank" rel="noopener">Game preview ↗</a></div>
+          <span class="gdays" id="cd" role="timer" aria-label="Countdown to tip-off"><small>Tip-off in</small><span class="cdw"><span class="cdn"><b id="cd-d">–</b><b id="cd-h">–</b><b id="cd-m">–</b><b id="cd-s">–</b></span><span class="cdl"><i>Days</i><i>Hrs</i><i>Min</i><i>Sec</i></span></span></span>
+          <div class="ginfo nx-then-row"><span id="nx-then"></span></div>
         </div>
       </section>
 
@@ -560,12 +586,12 @@ table.atk tr.avg td{background:var(--sub);font-weight:700}
       <div class="inj-note" id="inj-note"></div>
     </section>
     <section class="rail" aria-labelledby="chg-h">
-      <div class="block-h"><h2 id="chg-h">Cleveland Charge</h2><span>G League</span></div>
+      <div class="block-h"><h2 id="chg-h"><a href="#charge" data-go="charge" class="h-link">Cleveland Charge</a></h2><span>G League</span></div>
       <div class="cap-label" id="ch-label"></div>
       <div class="ch-next" id="ch-next"></div>
       <div class="ch-meta" id="ch-meta"></div>
       <ul class="kv plain" id="ch-kv" style="margin-top:10px"></ul>
-      <a class="otd-src" href="https://cleveland.gleague.nba.com/schedule" target="_blank" rel="noopener">Charge schedule ↗</a>
+      <a class="otd-src" href="#charge" data-go="charge">Charge schedule, roster &amp; staff →</a>
     </section>
     </div>
   </div>
@@ -706,6 +732,26 @@ table.atk tr.avg td{background:var(--sub);font-weight:700}
   </div>
 </main>
 
+<main id="view-charge" hidden>
+  <div class="wrap page">
+    <div>
+      <div class="dim" style="font-size:13px"><a href="#home" data-go="home">Home</a> / Cleveland Charge</div>
+      <h1 style="margin-top:6px">Cleveland Charge</h1>
+      <p class="dim" style="margin:6px 0 0">The Cavaliers' G League affiliate. Home games at Public Hall (Public Auditorium), downtown Cleveland.</p>
+    </div>
+    <div class="ch-tiles" id="ch-tiles"></div>
+    <section><div class="block-h"><h2>Schedule</h2><a href="https://cleveland.gleague.nba.com/schedule" target="_blank" rel="noopener">Tickets ↗</a></div>
+      <div class="tablebox"><table class="chs"><thead><tr><th>Date</th><th>Opponent</th><th>Time (ET)</th><th>Arena</th><th class="r">Result</th></tr></thead><tbody id="ch-sched"></tbody></table></div>
+      <p class="dim" style="margin:8px 0 0;font-size:13px">The G League has posted games through Dec 1 (the Tip-Off Tournament). The rest of the schedule is added when the league releases it.</p></section>
+    <section><div class="block-h"><h2>Roster</h2><span id="ch-ros-n"></span></div>
+      <div class="cols" id="ch-roster"></div>
+      <p class="dim" style="margin:8px 0 0;font-size:13px">The Charge haven't posted their 2026–27 roster yet; it's set before the Nov 10 opener. Two-way players split time between the Cavs and Charge. Exhibit 10 players waived by the Cavs before the season can join the Charge as affiliate players. G League returning-player rights fill in as signings are announced.</p></section>
+    <section><div class="block-h"><h2>Front office &amp; coaching staff</h2><span>2025–26 staff · 2026–27 staff not yet announced</span></div>
+      <div class="cols" id="ch-staff"></div></section>
+    <p class="dim" style="margin:0;font-size:13px">Sources: Cleveland Charge (cleveland.gleague.nba.com) schedule and 2025–26 staff release; NBA G League; Cavaliers roster (NBA.com).</p>
+  </div>
+</main>
+
 <main id="view-stub" hidden>
   <div class="wrap page"><h1 id="stub-h"></h1><div class="empty" id="stub-b"></div></div>
 </main>
@@ -719,9 +765,9 @@ table.atk tr.avg td{background:var(--sub);font-weight:700}
 const SECTIONS=[
   ['home','Home','',''],
   ['schedule','Schedule','SCH','All 82 games, results, TV.'],
-  ['roster','Roster','ROS','Players, positions, bios.'],
-  ['staff','Coaches & Front Office','STF','Staff and executive information.'],
-  ['cap','Salary Cap','CAP','Cap sheet and all salary and salary cap information.'],
+  ['roster','Roster','ROS','Player bios, information and measurements.'],
+  ['staff','Coaches & Front Office','STF',''],
+  ['cap','Salary Cap','CAP','Cap sheet and salary cap information.'],
   ['assets','Assets','AST','Draft picks, exceptions and drafted players.'],
   ['moves','Transactions','TXN','Every Cavs move since Koby Altman took over in 2017.'],
   ['charge','Cleveland Charge','CHG','G League roster and Charge information.'],
@@ -888,7 +934,7 @@ const SCHEDULE=[
 /* TV by game date (Sports Media Watch). Missing = not yet announced. */
 const TV={'2026-10-22':'ESPN','2026-10-29':'NBA TV'};
 /* One letter per game played, in schedule order: W or L. Optional score per date in SCORES. */
-const SEASON={results:'',eastRank:'—',cup:'0–0'};
+const SEASON={results:'',eastRank:'—',centralRank:'—',cup:'0–0'};
 const SCORES={}; /* e.g. '2026-10-22':'112-104' (Cavs first) */
 /* Preseason finals, shown in the last-result card until the regular season starts. [date, opp, H/A, W/L, 'Cavs-Opp'] */
 const PRESEASON=[['2026-10-08','BOS','H','L','113-124'],['2026-10-11','ORL','H','W','119-105'],['2026-10-13','ORL','A','L','116-132']];
@@ -899,7 +945,8 @@ const L14={};  /* Cavs only, last 14 days: 'CLE':[net rating, games] */
 /* Cleveland Charge (RealGM). [date, opponent, H/A, time ET, result e.g. 'W 118-110' or ''] */
 const CHARGE={record:'0–0',coach:'Eli Kell-Abrams',venue:'Public Hall',games:[
   ['2026-11-10','Motor City Cruise','H','7:00',''],['2026-11-14','Sioux Falls Skyforce','H','5:00',''],['2026-11-17','Iowa Wolves','H','7:00',''],
-  ['2026-11-20','Grand Rapids Gold','A','7:00',''],['2026-11-22','Grand Rapids Gold','A','3:00',''],['2026-11-25','Sioux Falls Skyforce','A','7:30','']]};
+  ['2026-11-20','Grand Rapids Gold','A','7:00',''],['2026-11-22','Grand Rapids Gold','A','3:00',''],['2026-11-25','Sioux Falls Skyforce','A','7:30',''],
+  ['2026-11-28','Iowa Wolves','H','7:00',''],['2026-12-01','Wisconsin Herd','A','12:30','']]};
 /* NBA.com schedule feed, pulled Oct 14 2026: date -> [game id (without leading 00), national TV, Cavs-side TV, opponent TV, Cavs-side radio, opponent radio, extra national radio, label] */
 const NBAG={"2026-10-08":["12600011",0,"DAZN-CLE","NBCSB/PCK-BOS","WTAM 1100 / 100.7 WMMS / S: La Mega 1300","WROR (105.7 FM)",0,"Preseason"],"2026-10-11":["12600041","ESPN","DAZN-CLE",0,"WTAM 1100 / 100.7 WMMS / S: La Mega 1300",0,0,"Preseason"],"2026-10-13":["12600045","Peacock/NBC Sports Network","DAZN-CLE",0,"WTAM 1100 / 100.7 WMMS / S: La Mega 1300","96.9 FM The Game",0,"Preseason"],"2026-10-22":["22600006","ESPN",0,0,0,0,0,0],"2026-10-24":["22600105",0,0,"DAZN (YES)",0,0,0,0],"2026-10-26":["22600120",0,0,"DAZN-MIN",0,"830 WCCO",0,0],"2026-10-28":["22600133",0,0,0,0,0,0,0],"2026-10-29":["22600144","NBA TV",0,0,0,0,0,0],"2026-10-31":["22600151",0,0,0,0,0,0,0],"2026-11-02":["22600158","Peacock/NBC Sports Network",0,0,0,"WWLS 98.1FM OKC",0,0],"2026-11-04":["22600180",0,0,"KSBI OKC",0,"WWLS/WKY",0,0],"2026-11-06":["22600027","Prime Video",0,0,0,0,"ESPN Radio","Emirates NBA Cup · East Group B"],"2026-11-07":["22600191","NBA TV",0,0,0,0,0,0],"2026-11-09":["22600204",0,0,0,0,0,0,0],"2026-11-11":["22600218","ESPN",0,0,0,0,0,0],"2026-11-13":["22600036",0,0,"WPLG Local 10/Local10+ Platinum",0,"FM 104.3 WQAM / S: WAQI 710",0,"Emirates NBA Cup · East Group B"],"2026-11-14":["22600232",0,0,0,0,0,0,0],"2026-11-16":["22600246",0,0,"CHSN/CHSN App",0,0,0,0],"2026-11-18":["22600258",0,0,0,0,0,0,0],"2026-11-20":["22600045",0,0,0,0,0,0,"Emirates NBA Cup · East Group B"],"2026-11-23":["22600292",0,0,"CHSN/CHSN App",0,0,0,0],"2026-11-25":["22600057",0,0,0,0,0,0,"Emirates NBA Cup · East Group B"],"2026-11-29":["22600305",0,0,"WPLG Local 10/Local10+ Platinum",0,"FM 104.3 WQAM / S: WAQI 710",0,0],"2026-12-01":["22600319",0,0,0,0,0,0,0],"2026-12-03":["22600338","NBA TV",0,"CHSN/CHSN App",0,0,0,0],"2026-12-12":["22600344",0,0,"NBCSBA/PCK-GSW",0,0,0,0],"2026-12-15":["22600366","NBC/Peacock",0,0,0,0,0,0],"2026-12-16":["22600372",0,0,0,0,0,0,0],"2026-12-18":["22600389",0,0,0,0,0,0,0],"2026-12-20":["22600403",0,0,0,0,0,0,0],"2026-12-21":["22600411","Peacock/NBC Sports Network",0,0,0,0,0,0],"2026-12-23":["22600425",0,0,0,0,0,0,0],"2026-12-27":["22600447",0,0,0,0,0,0,0],"2026-12-28":["22600459","NBC/Peacock",0,"NBCSB/PCK-BOS",0,0,0,0],"2026-12-31":["22600479",0,0,0,0,0,0,0],"2027-01-02":["22600492",0,0,0,0,0,0,0],"2027-01-03":["22600507",0,0,0,0,0,0,0],"2027-01-05":["22600517",0,0,0,0,0,0,0],"2027-01-07":["22600532",0,0,0,0,0,0,0],"2027-01-09":["22600550",0,0,"Altitude/Altitude+",0,0,0,0],"2027-01-11":["22600568",0,0,"DAZN-MIN",0,"830 WCCO",0,0],"2027-01-13":["22600578",0,0,0,0,0,0,0],"2027-01-15":["22600596",0,0,0,0,0,0,0],"2027-01-16":["22600604",0,0,0,0,0,0,0],"2027-01-18":["22600077","NBC/Peacock",0,0,0,0,0,0],"2027-01-21":["22600635",0,0,"DAZN (YES)",0,0,0,0],"2027-01-23":["22600653",0,0,0,0,0,0,0],"2027-01-25":["22600668",0,0,0,0,0,0,0],"2027-01-27":["22600677","ESPN",0,0,0,0,0,"AWS NBA Rivals Week"],"2027-01-29":["22600694","ESPN",0,0,0,0,0,"AWS NBA Rivals Week"],"2027-01-30":["22600704",0,0,0,0,0,0,0],"2027-02-01":["22600721",0,0,0,0,0,0,0],"2027-02-03":["22600734",0,0,"3TV/AZFS/Suns+ on AZFS App",0,"AZ Sports 98.7 FM / S: KSUN 1400AM",0,0],"2027-02-04":["22600745",0,0,"KUNP",0,"Rip City Radio 620",0,0],"2027-02-06":["22600757",0,0,0,0,0,0,0],"2027-02-09":["22600777",0,0,0,0,0,0,0],"2027-02-10":["22600788",0,0,0,0,0,0,0],"2027-02-12":["22600804",0,0,0,0,0,0,0],"2027-02-14":["22600818",0,0,"3TV/AZFS/Suns+ on AZFS App",0,"AZ Sports 98.7 FM / S: KSUN 1400AM",0,0],"2027-02-16":["22600827",0,0,0,0,0,0,0],"2027-02-17":["22600833",0,0,0,0,0,0,0],"2027-02-25":["22600849",0,0,"NBCSCA/PCK-SAC",0,0,0,0],"2027-02-26":["22600859","ESPN",0,"NBCSB/PCK-BOS",0,0,0,0],"2027-03-01":["22600881","Peacock/NBC Sports Network",0,0,0,0,0,0],"2027-03-04":["22600903",0,0,"KUNP",0,"Rip City Radio 620",0,0],"2027-03-06":["22600919","Prime Video",0,0,0,0,0,0],"2027-03-09":["22600940","NBC/Peacock",0,0,0,0,0,0],"2027-03-11":["22600961",0,0,0,0,0,0,0],"2027-03-12":["22600967",0,0,"Spectrum SportsNet",0,"ESPN LA 710/980 KFWB",0,0],"2027-03-14":["22600979",0,0,"NBCSCA/PCK-SAC",0,0,0,0],"2027-03-16":["22600995",0,0,"NBCSBA/PCK-GSW",0,0,0,0],"2027-03-18":["22601012",0,0,"ALT/ALT+/KTVD/KUSA",0,0,0,0],"2027-03-20":["22601023",0,0,"CHSN/CHSN App",0,0,0,0],"2027-03-22":["22601035",0,0,0,0,0,0,0],"2027-03-25":["22601060",0,0,"Spectrum SportsNet",0,"ESPN LA 710/980 KFWB",0,0],"2027-03-29":["22601090","Peacock/NBC Sports Network",0,"WPLG Local 10/Local10+ Platinum",0,"FM 104.3 WQAM / S: WAQI 710",0,0],"2027-03-31":["22601107",0,0,"DAZN (YES)",0,0,0,0],"2027-04-01":["22601113","Prime Video",0,"NBCSB/PCK-BOS",0,0,0,0],"2027-04-04":["22601133",0,0,0,0,0,0,0],"2027-04-05":["22601144",0,0,"DAZN (YES)",0,0,0,0],"2027-04-07":["22601161","ESPN",0,0,0,0,0,0],"2027-04-09":["22601174",0,0,0,0,0,0,0],"2027-04-11":["22601188",0,0,0,0,0,0,0]};
 /* 15 free over-the-air games (Gray Media / DAZN, Cleveland 19 News, Sep 15 2026); simulcast on DAZN and Rock Entertainment Sports Network */
@@ -922,7 +969,7 @@ const sgn=v=>(v>0?'+':v<0?'\u2212':'')+Math.abs(v).toFixed(1);
 const ord=n=>{const x=['th','st','nd','rd'],v=n%100;return n+(x[(v-20)%10]||x[v]||x[0])};
 const nr=NRTG.CLE?sgn(NRTG.CLE[0])+' ('+ord(1+Object.values(NRTG).filter(v=>v[0]>NRTG.CLE[0]).length)+')':'—';
 const nr14=L14.CLE?sgn(L14.CLE[0]):'—';
-[['East rank',SEASON.eastRank],['Home',rec('H')],['Road',rec('A')],['NBA Cup',SEASON.cup],['Last 10',last10.length?last10.filter(x=>x==='W').length+'–'+last10.filter(x=>x==='L').length:'—'],['Streak',streak],['Net rating',nr],['Net rtg, last 2 wks',nr14]]
+[['East rank',SEASON.eastRank],['Central rank',SEASON.centralRank||'—'],['Home',rec('H')],['Road',rec('A')],['Last 10',last10.length?last10.filter(x=>x==='W').length+'–'+last10.filter(x=>x==='L').length:'—'],['Streak',streak],['Net rating',nr],['Net, 2 wks',nr14]]
   .forEach(([k,v])=>{const d=el('div');d.append(el('dt',null,k),el('dd',null,v));sp.appendChild(d)});
 const strip=document.getElementById('strip');for(let i=0;i<82;i++)strip.appendChild(el('span',res[i]==='W'?'w':res[i]==='L'?'l':null));
 strip.setAttribute('aria-label','Game-by-game results: '+W+' wins, '+L+' losses');
@@ -945,10 +992,10 @@ const ni=SCHEDULE.findIndex((g,i)=>i>=res.length&&tipOf(g)>new Date(Date.now()-3
 const ng=SCHEDULE[ni],nx=SCHEDULE[ni+1];
 if(ng){
   const firstHome=SCHEDULE.findIndex(g=>g[2]==='H');
-  document.getElementById('nx-label').textContent=(ni===0?'Season opener · ':ni===firstHome?'Home opener · ':'Game '+(ni+1)+' · ')+(ng[2]==='H'?'Home':'Road');
+  document.getElementById('nx-label').textContent=(ni===0?'Season opener':ni===firstHome?'Home opener':'Game '+(ni+1));
   const t=document.getElementById('nx-title');t.textContent='';t.append((ng[2]==='H'?'vs ':'at ')+TEAMS[ng[1]]);
   {const tv=tvFor(ng[0]);document.getElementById('nx-meta').textContent=dayFmt.format(tipOf(ng))+' · '+ng[3]+' PM ET'+(tv.nat?' · '+tv.nat:'')+(tv.loc?' · '+tv.loc:'')}
-  const th=document.getElementById('nx-then');th.textContent='';if(nx){const a=el('a',null,TEAMS[nx[1]]);a.href=bbTeam(nx[1]);a.target='_blank';a.rel='noopener';a.className='opp';th.append('Then: '+shortFmt.format(tipOf(nx))+(nx[2]==='H'?' vs ':' at '),a,' · '+nx[3]+' PM')}
+  const th=document.getElementById('nx-then');th.textContent='';if(nx){const a=el('a',null,TEAMS[nx[1]]);a.href=bbTeam(nx[1]);a.target='_blank';a.rel='noopener';a.className='opp';th.append(el('b',null,'After that '),shortFmt.format(tipOf(nx))+(nx[2]==='H'?' vs ':' at '),a,' · '+nx[3]+' PM')}
   (function(){const T=tipOf(ng).getTime(),p=n=>String(n).padStart(2,'0'),$=id=>document.getElementById(id);
     function tick(){let ms=T-Date.now();if(ms<=0){document.querySelector('#cd small').textContent='Tip-off';['d','h','m','s'].forEach(k=>$('cd-'+k).textContent='00');return false}
       const t=Math.floor(ms/1e3);$('cd-d').textContent=p(Math.floor(t/86400));$('cd-h').textContent=p(Math.floor(t%86400/3600));$('cd-m').textContent=p(Math.floor(t%3600/60));$('cd-s').textContent=p(t%60);return true}
@@ -1020,16 +1067,12 @@ const TAX_BILL=9.161442; /* projected luxury tax payment, $M (Capsheets) */
 const near=LINES.find(([,v])=>v>=TEAM_SALARY);const tax=LINES.find(l=>l[0]==='Luxury tax')[1];
 /* hard cap: what the Cavs can't do this season (Hoops Rumors hard-cap explainer; ESPN/Roundtable on the Watson sign-and-trade) */
 const HC_ROOM=LINES.find(l=>l[0]===HARDCAP)[1]-TEAM_SALARY;
-const HC_RULES=[
-  ['Go over '+money(LINES.find(l=>l[0]===HARDCAP)[1])+' for any reason','The first apron is a hard ceiling through June 30, 2027, no matter how a player is added.'],
-  ['Add a player without sending salary out','With '+money(HC_ROOM)+' of room, even a minimum contract doesn’t fit for most of the season. A 15th roster spot needs a cut, a stretch or a trade first.'],
-  ['Take back more salary in a trade than they send','Incoming salary can only exceed outgoing by the '+money(HC_ROOM)+' of room left.'],
-  ['Use their mid-level, bi-annual or trade exceptions as-is','Each one only works if the new salary still fits under the apron.'],
-  ['Convert a two-way player or sign off the buyout market for free','A conversion or signing adds salary, so room has to be made first.']
-];
-{const h=document.getElementById('hcap');const top=el('div','hcap-h');top.append(el('b',null,'Hard-capped at the first apron'),el('span',null,money(HC_ROOM)+' of room · '+money(TEAM_SALARY-tax)+' over the tax · tax bill '+money(TAX_BILL)));
- const ul=el('ul','hcap-l');HC_RULES.forEach(([t,d])=>{const li=el('li');li.append(el('b',null,'Can’t: '+t),el('span',null,d));ul.appendChild(li)});
- h.append(top,el('p','hcap-why','Triggered by the August 2026 sign-and-trade for Peyton Watson.'),ul)}
+const HC_RULES=[[1,'Re-sign their own players'],[1,'Sign minimum contracts (if they fit)'],[1,'Trade salary for equal salary'],[0,'Go over the first apron'],[0,'Take back more salary than they send'],[0,'Use the bi-annual exception'],[0,'Use the full mid-level without room']];
+{const h=document.getElementById('hcap');
+ const tiles=el('div','hc-tiles');[[money(HC_ROOM),'Room under 1st apron','hard cap'],[money(TEAM_SALARY-tax),'Over the tax',''],[money(TAX_BILL),'Projected tax bill','']].forEach(([v,l,t])=>{const d=el('div','hc-tile');d.append(el('b',null,v),el('span',null,l));if(t)d.appendChild(el('em',null,t));tiles.appendChild(d)});
+ const ul=el('ul','hc-checks');HC_RULES.forEach(([ok,t])=>{const li=el('li',ok?'yes':'no');li.append(el('i',null,ok?'✓':'✕'),t);ul.appendChild(li)});
+ const cap=el('div','hc-cap');cap.append(el('b',null,'Hard-capped at the first apron'),el('span',null,'Through June 30, 2027'));
+ h.append(tiles,cap,ul)}
 const track=document.getElementById('track'),hbar=document.getElementById('hbar');
 const zones=[[LO,164.961,'var(--z1)'],[164.961,200.428,'var(--track)'],[200.428,209.015,'var(--z2)'],[209.015,221.686,'var(--z3)'],[221.686,HI,'var(--z4)']];
 zones.forEach(([a,b,c])=>{const z=el('div','zone');z.style.left=pct(a)+'%';z.style.width=(pct(b)-pct(a))+'%';z.style.background=c;track.insertBefore(z,track.firstChild)});
@@ -1065,7 +1108,7 @@ document.getElementById('inj-note').textContent='Updated '+INJ_UPDATED+' · CBS 
 
 /* Charge */
 (function(){
-  const now=new Date(Date.now()-3*3600e3);const tip=g=>new Date(g[0]+'T'+String(+g[3].split(':')[0]+12).padStart(2,'0')+':'+g[3].split(':')[1]+':00-05:00');
+  const now=new Date(Date.now()-3*3600e3);const tip=g=>new Date(g[0]+'T'+String(+g[3].split(':')[0]+(+g[3].split(':')[0]<12?12:0)).padStart(2,'0')+':'+g[3].split(':')[1]+':00-05:00');
   const nxt=CHARGE.games.find(g=>!g[4]&&tip(g)>now);const last=[...CHARGE.games].reverse().find(g=>g[4]);
   const played=CHARGE.games.some(g=>g[4]);
   document.getElementById('ch-label').textContent=nxt?(played?'Next game':'Season opener'):'Season complete';
@@ -1458,6 +1501,27 @@ TX.filter(r=>r.k==='trade').forEach(r=>add('Trade · '+(r.got||[]).slice(0,2).jo
     const roots=document.querySelectorAll('#view-'+id+' '+SEL[id].split(', ').join(', #view-'+id+' '));let i=0;
     roots.forEach(r=>{const w=document.createTreeWalker(r,NodeFilter.SHOW_TEXT);let n;while((n=w.nextNode()))rollText(n,Math.min(600,i*12));i++})};
 })();
+
+/* Charge page */
+const CH_ARENA={H:'Public Auditorium, Cleveland','Grand Rapids Gold':'Van Andel Arena, Grand Rapids','Sioux Falls Skyforce':'Sanford Pentagon, Sioux Falls','Wisconsin Herd':'Oshkosh Arena, Oshkosh'};
+const CH_ROSTER=[
+  ['Two-way contracts (Cavs)',[['Tristan Enaruna','F','Two-way','Also on the Cavs roster'],['Riley Minix','F','Two-way','Also on the Cavs roster'],['Ernest Udeh Jr.','C','Two-way','Also on the Cavs roster']]],
+  ['Cavs Exhibit 10 (training camp)',[['Rashaun Agee','F','Exhibit 10','In Cavs camp'],['Zack Austin','G','Exhibit 10','In Cavs camp'],['Jaxson Robinson','G-F','Exhibit 10','In Cavs camp'],['Noam Yaacov','G','Exhibit 10','In Cavs camp']]],
+  ['Waived by the Cavs in camp',[['Curtis Jones','G','Waived Oct 9','G League rights not yet announced'],['Kadary Richmond','G','Waived Oct 9','G League rights not yet announced']]]
+];
+const CH_STAFF=[
+  ['Coaching staff',[['Eli Kell-Abrams','Head Coach','Previously head video coordinator, Portland Trail Blazers; earlier with the 76ers and Heat'],['Doron Perkins','Assistant Coach',''],['Willie Williams','Assistant Coach / Director of Video',''],['Sam Hershberger','Assistant Coach','Five seasons at Brown'],['Daniel Sokolovsky','Assistant Coach','Former New Zealand national team assistant'],['Mickell Gladness','Coaching Development Program Assistant','Played 26 NBA games (2011–12)'],['Takuya Kikuchi','Head Athletic Trainer',''],['Myles Thornton','Athletic Trainer',''],['Raphael Whittingham','Strength & Conditioning Coach','']]],
+  ['Front office',[['Liron Fanan','General Manager','GM since 2023; first woman to lead the Charge front office'],['Luis Gonzalez Infante','Assistant General Manager',''],['Max Weisberg','Assistant General Manager','Also Cavs Director of Basketball Strategy'],['Brandon Halupnik','Director of Basketball Ops & Player Personnel',''],['Max Brandt','Director of Coaching Analytics','']]]
+];
+(function(){const tb=document.getElementById('ch-sched');if(!tb)return;
+  const now=new Date(Date.now()-3*3600e3);const tip=g=>new Date(g[0]+'T'+String(+g[3].split(':')[0]+(+g[3].split(':')[0]<12?12:0)).padStart(2,'0')+':'+g[3].split(':')[1]+':00-05:00');
+  const nxt=CHARGE.games.find(g=>!g[4]&&tip(g)>now);
+  CHARGE.games.forEach(g=>{const tr=el('tr');if(g===nxt)tr.classList.add('nextg');tr.append(el('td','mono',shortFmt.format(new Date(g[0]+'T12:00:00'))),el('td',null,(g[2]==='H'?'vs ':'at ')+g[1]),el('td','mono dim',g[3]+' PM'),el('td','dim',g[2]==='H'?CH_ARENA.H:(CH_ARENA[g[1]]||'')),el('td','r mono',g[4]||''));tb.appendChild(tr)});
+  const t=document.getElementById('ch-tiles');[[CHARGE.record,'Record'],[nxt?shortFmt.format(new Date(nxt[0]+'T12:00:00')):'—','Next game'+(nxt?' · '+(nxt[2]==='H'?'vs ':'at ')+nxt[1]:'')],[CHARGE.coach,'Head coach'],['Liron Fanan','General manager']].forEach(([v,l])=>{const d=el('div','txs');d.append(el('b',null,v),el('span',null,l));t.appendChild(d)});
+  const ro=document.getElementById('ch-roster');let n=0;CH_ROSTER.forEach(([g,ps])=>{const sec=el('section');const h=el('div','block-h');h.append(el('h2',null,g),el('span',null,String(ps.length)));const ul=el('ul','kv');ps.forEach(([nm,pos,tag,note])=>{n++;const li=el('li');const sp=el('span',null,nm);sp.appendChild(el('small',null,pos+' · '+note));li.append(sp,el('b','ch-tag',tag));ul.appendChild(li)});sec.append(h,ul);ro.appendChild(sec)});
+  document.getElementById('ch-ros-n').textContent='Pending · '+n+' tied to the Cavs';
+  const sf=document.getElementById('ch-staff');CH_STAFF.forEach(([g,ps])=>{const sec=el('section');const h=el('div','block-h');h.append(el('h2',null,g),el('span',null,String(ps.length)));const ul=el('ul','kv');ps.forEach(([nm,t2,note])=>{const li=el('li');const sp=el('span',null,nm);sp.appendChild(el('small',null,t2+(note?' · '+note:'')));li.appendChild(sp);ul.appendChild(li)});sec.append(h,ul);sf.appendChild(sec)});
+})();
 /* routing */
 
 /* roster — NBA.com (commonteamroster + commonplayerinfo + draft combine anthro), pulled Oct 14, 2026.
@@ -1535,7 +1599,7 @@ const COMBINE={
   document.getElementById('ros-sub').textContent=std+' standard, '+tw+' two-way, '+cp+' training camp. Updated Oct 14, 2026.';
   document.querySelectorAll('[data-rv]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-rv]').forEach(x=>x.setAttribute('aria-selected',x===b?'true':'false'));document.getElementById('rv-bio').hidden=b.dataset.rv!=='bio';document.getElementById('rv-meas').hidden=b.dataset.rv!=='meas'}));
 })();
-const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video'];
+const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge'];
 function show(id){
   if(!SECTIONS.some(s=>s[0]===id))id='home';
   BUILT.forEach(v=>{document.getElementById('view-'+v).hidden=id!==v});
