@@ -274,6 +274,8 @@ tr.det td{background:var(--sub);border-top:0;padding:4px 20px 18px}
  .ds-grid .pz{grid-row:span 4;align-items:flex-start;padding-top:16px;font-size:22px}
  .ds-grid .c2,.ds-grid .c3,.ds-grid .tw{padding-block:6px;border-bottom:0}
  .ds-grid .tw{border-left:0;border-bottom:1px solid var(--line2);padding-bottom:12px}
+ .ds-grid .tw.none{padding:0 0 6px}.ds-grid .tw.none span{display:none}
+ .ds-grid .pz{grid-row:span 4}
  .ds-grid .c1{border-bottom:0}
  .ds-grid .c2 .av,.ds-grid .c3 .av{width:34px;height:34px}
  .dstacks{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px;padding:16px 12px 6px}
@@ -438,6 +440,8 @@ body{background:var(--page)}
 .segs{display:inline-flex;align-self:flex-start;border:1px solid var(--line);background:var(--card)}
 .segs button{appearance:none;border:0;background:none;padding:8px 16px;font:700 12px var(--sans);font-stretch:118%;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);cursor:pointer}
 .segs button[aria-selected="true"]{background:var(--wine);color:#fff}
+.segs button{white-space:nowrap}
+@media (max-width:520px){.segs{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));width:100%}.segs button{padding:9px 6px;font-size:11px;letter-spacing:.03em}}
 .ros td{white-space:nowrap}
 .ros td.num{font:700 15px var(--mono);color:var(--wine-ink)}
 .ros td.m{font:400 13px var(--mono);font-variant-numeric:tabular-nums}
@@ -1931,7 +1935,7 @@ function buildDepth(){
   /* sheet */
   let h='<div class="dsheet"><div class="ds-hdr"><b>Cavaliers depth chart</b><span>2026–27 · updated Oct 14</span></div><div class="ds-grid"><div class="ch">Pos</div><div class="ch s1">Starter</div><div class="ch">2nd</div><div class="ch">3rd</div><div class="ch">Two-way</div>';
   DEPTH.forEach(([pos,ns,tw])=>{h+='<div class="pz">'+pos+'</div>';ns.forEach((n,k)=>{const p=P(n);const tag=p[11]==='TW'?' · two-way':'';h+='<div class="'+(k?'c'+(k+1):'c1')+'">'+link(p,face(p,'av')+'<span class="t"><b>'+n+'</b><span><em>#'+p[0]+'</em>'+(k===0?' · '+p[6]+' yrs old':' · '+(k===1?'2nd':'3rd'))+tag+'</span></span>')+'</div>'});
-    const t=tw&&P(tw);h+='<div class="tw">'+(t?link(t,face(t,'av sm')+'<span class="t"><b>'+t[1]+'</b><span><em>#'+t[0]+'</em> · two-way</span></span>'):'<span class="dim">—</span>')+'</div>'});
+    const t=tw&&P(tw);h+='<div class="tw'+(t?'':' none')+'">'+(t?link(t,face(t,'av sm')+'<span class="t"><b>'+t[1]+'</b><span><em>#'+t[0]+'</em> · two-way</span></span>'):'<span class="dim">—</span>')+'</div>'});
   h+='</div><div class="ds-foot">Tinted column = starting lineup · names link to player profiles · order is a placeholder until we pick a source</div></div>';
   document.getElementById('rv-depth').innerHTML=h;
   /* stacks */
