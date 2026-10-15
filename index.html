@@ -142,6 +142,21 @@ a{color:var(--wine-ink);text-decoration:none}a:hover{text-decoration:underline}
 .inj-note{font-size:12px;color:var(--muted);margin-top:10px}
 .otd-when{font:700 11px var(--sans);font-stretch:125%;text-transform:uppercase;letter-spacing:.1em;color:var(--wine-ink);margin-top:4px}
 .otd-when b{font:800 26px/1 var(--sans);font-stretch:125%;letter-spacing:-.02em;color:var(--fg);display:block;margin-top:6px;text-transform:none}
+.otd-row{display:flex;align-items:center;gap:16px;margin-top:6px}
+.dcal{position:relative;flex:0 0 74px;height:84px;margin-top:6px}
+.dc-pg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;background:#fffdf8;color:#1a1a1a;border-radius:3px;box-shadow:0 1px 0 #e7e1d6,0 2px 0 #fffdf8,0 3px 0 #e2dbcf,0 5px 8px rgba(0,0,0,.14);overflow:hidden;transform-origin:8% 0}
+.dc-m{display:block;width:100%;text-align:center;background:var(--wine);color:#fff;font:800 11px/1 var(--sans);font-stretch:125%;letter-spacing:.14em;padding:7px 0 5px;box-shadow:inset 0 -2px 0 #F2B231}
+.dc-d{font:800 36px/1 var(--cond);margin-top:7px;letter-spacing:-.01em}
+.dc-w{font:700 9.5px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:#7a746b;margin-top:2px}
+.dc-pg.top{z-index:2;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.dc-ring{position:absolute;z-index:4;top:-5px;left:18px;width:6px;height:12px;border-radius:3px;background:linear-gradient(#bbb,#666)}
+.dc-ring.r2{left:auto;right:18px}
+.dc-stub{position:absolute;z-index:3;left:0;right:0;top:0;height:7px;background:#fffdf8;opacity:0;clip-path:polygon(0 0,100% 0,100% 55%,94% 100%,88% 45%,81% 95%,75% 40%,68% 100%,61% 50%,55% 95%,48% 35%,41% 100%,35% 45%,28% 90%,21% 40%,14% 100%,7% 50%,0 90%)}
+.dcal.rip .dc-pg.top{animation:dc-rip .95s cubic-bezier(.45,.05,.55,.95) forwards}
+.dcal.rip .dc-stub{opacity:1;transition:opacity .1s .12s}
+.dcal.rip.instant .dc-pg.top{animation:none;opacity:0}
+@keyframes dc-rip{0%{transform:none}18%{transform:rotate(-4deg) translate(0,2px);clip-path:inset(0 0 0 0)}35%{transform:rotate(-9deg) translate(6px,6px);clip-path:inset(6px 0 0 0)}100%{transform:rotate(-38deg) translate(-30px,120px);opacity:0;clip-path:inset(7px 0 0 0)}}
+.otd-when{margin-top:0}
 .otd-text{margin:10px 0 8px;font-size:14px;line-height:1.5}
 .otd-src{font-size:12px}
 .key{display:inline-flex;align-items:center;gap:6px}
@@ -210,12 +225,23 @@ tr.det td{background:var(--sub);border-top:0;padding:4px 20px 18px}
 .det-grid h4{margin:10px 0 4px;font:800 11px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .det-grid p{margin:0;font-size:13px;line-height:1.5;color:var(--fg2);white-space:normal}
 .det-grid p b{color:var(--fg)}
+.share{margin-top:4px}.share h3{font:800 11px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.sh-bar{display:flex;height:46px;gap:2px;border-radius:3px;overflow:hidden}
+.sh-seg{display:flex;flex-direction:column;justify-content:center;padding:0 7px;min-width:3px;color:#fff;text-decoration:none;overflow:hidden;white-space:nowrap;flex-grow:0;flex-shrink:1}
+.sh-seg b{font:700 12px var(--sans);overflow:hidden;text-overflow:ellipsis}.sh-seg span{font:500 11px var(--mono);opacity:.85}
+.sh-seg.dead{background:repeating-linear-gradient(135deg,var(--line) 0 4px,var(--line2) 4px 8px)}
+.sh-seg:hover{filter:brightness(1.15)}
+.sh-leg{list-style:none;margin:10px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:3px 22px;font-size:12.5px}
+.sh-leg li{display:flex;align-items:center;gap:7px}.sh-leg i{width:9px;height:9px;flex:none;border-radius:2px}.sh-leg li.dead i{background:repeating-linear-gradient(135deg,var(--muted) 0 2px,transparent 2px 4px)}
+.sh-leg span{flex:1;color:var(--fg2)}.sh-leg b{font:500 12px var(--mono)}
+.share p.dim{font-size:12px;margin:8px 0 0}
+.soc{display:inline-flex;gap:7px;margin-left:9px;vertical-align:-2px}.soc a{color:var(--muted);opacity:.7;line-height:0}.soc a:hover{color:var(--wine-ink);opacity:1}
 .captop{margin:0}.ct-nums{display:flex;flex-wrap:wrap;gap:10px 34px}.ct-nums div{display:flex;flex-direction:column}.ct-nums b{font:700 24px var(--mono);letter-spacing:-.02em}.ct-nums .key b{color:var(--wine-ink)}.ct-nums span{font-size:12px;color:var(--muted)}.captop .hbar{margin-top:6px}
 .det-grid .wide{grid-column:1/-1}.pcap{list-style:none;margin:0;padding:0;font-size:13px}.pcap li{display:flex;justify-content:space-between;gap:12px;max-width:200px;padding:1px 0;color:var(--fg2)}.pcap b{font:500 13px var(--mono);color:var(--fg);position:relative}.pcap sup{position:absolute;left:100%;top:-2px;color:var(--wine-ink)}
 table.comps{border-collapse:collapse;font-size:12.5px;width:100%;max-width:640px;table-layout:auto;margin-bottom:6px}table.comps th{font-weight:600;color:var(--muted);text-align:left;padding:4px 10px 4px 0;border-bottom:1px solid var(--line2);font-size:11.5px}table.comps td{padding:4px 10px 4px 0;border-bottom:1px solid var(--line2);white-space:nowrap;font-size:12.5px}table.comps .r{text-align:right}table.comps tr.me td{font-weight:700}table.comps small{color:var(--muted);font-size:11px}
 .det-grid p.dim{font-size:11.5px;color:var(--muted)}.splink{font-weight:600;font-size:13px}
 .kv li.tw small+small{margin-top:1px}.kv li.tw a{color:inherit;font-weight:600}
-@media (max-width:720px){.det-grid{grid-template-columns:minmax(0,1fr)}.ct-nums{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px}.ct-nums b{font-size:20px}tr.det .det-grid{position:sticky;left:0;width:calc(100vw - 92px);box-sizing:border-box}table.comps td,table.comps th{white-space:normal}}
+@media (max-width:720px){.sh-seg b,.sh-seg span{display:none}.sh-bar{height:30px}.sh-leg{grid-template-columns:1fr 1fr;gap:3px 16px;font-size:12px}.det-grid{grid-template-columns:minmax(0,1fr)}.ct-nums{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px}.ct-nums b{font-size:20px}tr.det .det-grid{position:sticky;left:0;width:calc(100vw - 92px);box-sizing:border-box}table.comps td,table.comps th{white-space:normal}}
 /* video */
 .vlinks{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 28px}
 .vlinks a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:12px 0;border-bottom:1px solid var(--line2);color:var(--fg)}
@@ -656,14 +682,13 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:23%}.cap th:nth-child(2)
     <div class="side">
     <section class="rail" aria-labelledby="otd-h">
       <div class="block-h"><h2 id="otd-h">This day in Cavs history</h2></div>
-      <div class="otd-when" id="otd-when"></div>
+      <div class="otd-row"><div class="dcal" id="dcal" aria-hidden="true"></div><div class="otd-when" id="otd-when"></div></div>
       <p class="otd-text" id="otd-text"></p>
       <a class="otd-src" id="otd-src" target="_blank" rel="noopener"></a>
     </section>
     <section class="rail o-vid" aria-labelledby="vid-h">
       <div class="block-h"><h2 id="vid-h">Latest video</h2><a href="#video" data-go="video">All video →</a></div>
       <div id="vid-home"></div>
-      <a class="otd-src yt-link" href="https://www.youtube.com/@cavs" target="_blank" rel="noopener">Cavs YouTube channel ↗</a>
     </section>
     <section class="rail" aria-labelledby="inj-h">
       <div class="block-h"><h2 id="inj-h">Injury report</h2><span id="inj-count"></span></div>
@@ -700,7 +725,7 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:23%}.cap th:nth-child(2)
       <tbody id="capbody"></tbody>
       <tfoot><tr id="captot"></tr></tfoot>
     </table></div>
-    <p class="dim" style="margin:-8px 0 0;font-size:13px">Click a player for his Bird rights, free agency and options in plain English. <span class="lg po">Player option</span> <span class="lg to">Team option</span><br>Cavs position counts only salary already committed for each season. Future years will rise as the roster is filled.<br><b style="color:var(--wine-ink)">*</b> Thresholds for 2027–28 and later are projections from RealGM, not official figures. The NBA sets each season's cap and tax lines the summer before, and they move with league revenue.</p>
+    <p class="dim" style="margin:-8px 0 0;font-size:13px">Click a player for his Bird rights, free agency and options in plain English. <span class="lg po">Player option</span> <span class="lg to">Team option</span><br>Cavs position counts only salary already committed for each season. Future years will rise as the roster is filled.<br><b style="color:var(--wine-ink)">*</b> Thresholds for 2027–28 and later are Spotrac projections, not official figures. The NBA sets each season's cap and tax lines the summer before, and they move with league revenue.</p>
     <div class="cols">
       <section><div class="block-h"><h2>Two-way</h2><span>3 of 3 · eligibility left</span></div><ul class="kv" id="twoway"></ul>
         <p class="dim" style="margin:8px 0 0;font-size:12.5px">Players with fewer than 4 years of NBA service can sign two-way deals. Names link to Spotrac.</p></section>
@@ -708,7 +733,7 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:23%}.cap th:nth-child(2)
         <div class="block-h" style="margin-top:22px"><h2>Cap holds</h2><span id="holds-tot"></span></div><p id="holds" style="margin:10px 0 0;font-size:13.5px;line-height:1.5"></p>
         <p class="dim" style="margin:6px 0 0;font-size:12.5px">Old free agents Cleveland has never renounced. They only count if the Cavs try to get under the cap. They don't count toward the tax, the aprons or the hard cap.</p></section>
     </div>
-    <p class="dim" style="margin:0;font-size:13px">14 of 15 standard spots filled. Salaries: Capsheets (2026–27) and Salary Swish (future years). Bird rights and free agency: Salary Swish. Option dates: Spotrac. Free agent year is the summer the player hits the market.</p>
+    <p class="dim" style="margin:0;font-size:13px">14 of 15 standard spots filled. Salaries: Capsheets for 2026–27 and Spotrac for later seasons. Bird rights: Salary Swish. Free agency: Spotrac. Option dates: Spotrac. Free agent year is the summer the player hits the market.</p>
     <section class="gloss" id="glossary" aria-labelledby="gl-h">
       <div class="block-h"><h2 id="gl-h">CBA glossary</h2><span>The terms on this page, in plain English</span></div>
       <div class="gl-filter"><input id="glq" type="search" placeholder="Find a term" aria-label="Find a glossary term"></div>
@@ -728,7 +753,7 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:23%}.cap th:nth-child(2)
     <div class="cols">
       <section><div class="block-h"><h2>Draft picks the Cavs own</h2><span>Next 7 drafts</span></div><ul class="xl" id="picks"></ul>
         <div class="block-h" style="margin-top:22px"><h2>Picks the Cavs owe</h2><span>Traded away</span></div><ul class="xl" id="owed"></ul></section>
-      <section><div class="block-h"><h2>Exceptions</h2><span>2026–27 · tap for how they work</span></div><ul class="xl" id="exc"></ul>
+      <section><div class="block-h"><h2>Exceptions</h2><span>2026–27 · amount left · tap for details</span></div><ul class="xl" id="exc"></ul>
         <div class="block-h" style="margin-top:22px"><h2>Drafted players</h2><span>Unsigned draft rights held</span></div><ul class="kv" id="rights"></ul></section>
     </div>
     <p class="dim" style="margin:0;font-size:13px">Picks and pick routing: RealGM future draft picks. Exceptions: Capsheets. Draft rights: RealGM. Trade rules: Hoops Rumors and Larry Coon's CBA FAQ. Stepien rule: a team can't be left without a first-round pick in back-to-back future drafts, and picks can be traded up to seven drafts out.</p>
@@ -776,7 +801,7 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:23%}.cap th:nth-child(2)
     <div>
       <div class="dim" style="font-size:13px"><a href="#home" data-go="home">Home</a> / Video</div>
       <h1 style="margin-top:6px">Video</h1>
-      <p class="dim" style="margin:6px 0 0">Press conferences, practice availability and the latest from the official Cavs channel.</p>
+      <p class="dim" style="margin:6px 0 0">Press conferences, practice availability and the latest from the official Cavs channel. <a href="https://www.youtube.com/@cavs" target="_blank" rel="noopener">Cavs YouTube channel ↗</a></p>
     </div>
     <div id="vid-page"></div>
     <p class="dim" style="margin:0;font-size:13px">All video from the Cleveland Cavaliers' official YouTube channel.</p>
@@ -886,12 +911,13 @@ const OWED=[
 ];
 const RIGHTS=[['Saliou Niang','F','2025 · No. 58','Senegal/Italy'],['Ismael Kamagate','C','2022 · No. 46','France · acquired from LAC, Aug 2026'],['Arturas Gudaitis','C','2015 · No. 47','Lithuania'],['Milan Macvan','PF','2011 · No. 54','Serbia'],['Chu Maduabum','PF','2011 · No. 56','Nigeria'],['Sergii Gladyr','G','2009 · No. 49','Ukraine'],['Renaldas Seibutis','SG','2007 · No. 50','Lithuania'],['Ejike Ugboaja','F','2006 · No. 55','Nigeria'],['Edin Bavcic','C','2006 · No. 56','Bosnia and Herzegovina']];
 /* exceptions — [name, amount, expires, how it works, can the Cavs use it now?] */
+/* exceptions — Capsheets. [name, full amount, expires, how it works, uses so far: [date, player, amount]] */
 const EXC=[
-  ['Non-taxpayer mid-level','$15,044,000','Expires Apr 11, 2027','Signs one or more free agents for up to four seasons, starting at up to this amount in total. Only teams that stay under the first apron can use the full amount, and using more than the taxpayer mid-level hard-caps a team at the first apron.','Not without clearing room first. The Cavs are hard-capped with $45K of room, so any signing has to fit under $209.0M.'],
-  ['Bi-annual','$5,477,000','Expires Apr 11, 2027','Signs a free agent for up to two seasons. A team can’t use it two years in a row, and teams above the first apron can’t use it at all. Using it hard-caps a team at the first apron.','Same limit: it only works if the salary fits under the hard cap.'],
-  ['Trade exception (Max Strus)','$16,660,836','Expires Aug 20, 2027','Created when the Cavs sent out more salary than they took back. It lets them take in a player by trade or waiver claim earning up to this amount without sending salary back. It can’t be combined with other salaries and expires one year after the trade.','Only if the incoming salary fits under the $209.0M hard cap, which means shedding salary first.'],
-  ['Trade exception (Lonzo Ball)','$10,000,000','Expires Feb 5, 2027','Same rules as above. It was created last season, so using it after the offseason began would trigger a first-apron hard cap. The Cavs are already hard-capped.','Only with room under the hard cap.'],
-  ['Trade exception (De’Andre Hunter)','$1,439,674','Expires Feb 1, 2027','Small exception left from the Hunter trade. Enough for a minimum-salary player.','Only with room under the hard cap.']
+  ['Non-taxpayer mid-level',15044000,'Apr 11, 2027','Signs one or more free agents for up to four seasons, starting at up to this amount in total. Using more than the taxpayer mid-level hard-caps a team at the first apron.',[]],
+  ['Bi-annual',5477000,'Apr 11, 2027','Signs a free agent for up to two seasons. A team can’t use it two years in a row. Using it hard-caps a team at the first apron.',[]],
+  ['Trade exception (Max Strus)',16660836,'Aug 20, 2027','Created when the Cavs sent out more salary than they took back. It lets them take in a player by trade or waiver claim earning up to this amount without sending salary back. It can’t be combined with other salaries and expires one year after the trade.',[]],
+  ['Trade exception (Lonzo Ball)',10000000,'Feb 5, 2027','Same rules as the Strus exception. It expires one year after the Lonzo Ball trade.',[]],
+  ['Trade exception (De’Andre Hunter)',1439674,'Feb 1, 2027','Small exception left from the Hunter trade. Enough for a minimum-salary player.',[]]
 ];
 const RES=[
   ['Stats',[
@@ -905,14 +931,17 @@ const RES=[
     ['NBA RAPM','Multi-year RAPM and impact metrics','nbarapm.com','https://www.nbarapm.com'],
     ['databallr','On/off, lineup and shot data tools','databallr.com','https://databallr.com'],
     ['CourtSketch','Shot charts and court visuals','courtsketch.com','https://courtsketch.com'],
-    ['ESPN Analytics','BPI ratings, projections and playoff odds','espn.com','https://www.espn.com/nba/bpi']
+    ['ESPN Analytics','BPI ratings, projections and playoff odds','espn.com','https://www.espn.com/nba/bpi'],
+    ['DARKO','Daily player ratings, projections and career arcs','darko.app','https://www.darko.app'],
+    ['Hoopology','Build your own scatter plots and stat charts','hoopologyviz.com','https://hoopologyviz.com']
   ]],
   ['Cap & contracts',[
     ['Spotrac','Contracts, deadlines, transactions','spotrac.com','https://www.spotrac.com/nba/cleveland-cavaliers/yearly'],
     ['Capsheets','Full cap sheet, exceptions, picks','capsheets.com','https://www.capsheets.com/cleveland-cavaliers-cap-sheet-2026-2027-season/'],
     ['NBA.com Key Dates','League calendar and deadlines','nba.com','https://www.nba.com/news/key-dates'],
     ['Hoops Rumors','Transactions, deadlines and cap explainers','hoopsrumors.com','https://www.hoopsrumors.com'],
-    ['Salary Swish','Contracts, Bird rights and injury logs','salaryswish.com','https://www.salaryswish.com/teams/cavaliers']
+    ['Salary Swish','Contracts, Bird rights and injury logs','salaryswish.com','https://www.salaryswish.com/teams/cavaliers'],
+    ['NBA Salary Model','Modeled value of player contracts','nbasalarymodel.xyz','https://nbasalarymodel.xyz']
   ]],
   ['Trade machines',[
     ['Spotrac Trade Machine','Build and check trades against the cap','spotrac.com','https://www.spotrac.com/nba/trade-machine'],
@@ -1157,6 +1186,8 @@ const LO=140,HI=232,pct=v=>Math.max(0,Math.min(100,(v-LO)/(HI-LO)*100));
 const money=v=>Math.abs(v)<1?'$'+Math.round(v*1000)+'K':'$'+v.toFixed(1)+'M';
 document.getElementById('payroll').textContent=money(TEAM_SALARY);
 document.getElementById('payroll-note').textContent='Team salary incl. $2.24M dead money';
+/* 2026-27 team salary (active + dead), highest first. Spotrac team cap tracker, Oct 14, 2026. */
+const LEAGUE_PAY=[['GSW',220838432],['NYK',218412232],['DEN',218127179],['ORL',217865321],['PHX',216225506],['MIN',214930954],['OKC',214279492],['CLE',208969955],['PHI',207186472],['IND',206299934],['MIA',206189256],['TOR',201188888],['LAL',200897322],['HOU',200413923],['BOS',198722406],['ATL',198669512],['SAS',198279967],['SAC',197280158],['NOP',196369877],['DET',194498178],['POR',192093473],['WAS',192013104],['DAL',190515516],['MIL',190298316],['LAC',185362824],['UTA',180515680],['CHA',174547971],['CHI',165770083],['MEM',161113773],['BKN',160056358]];
 const TAX_BILL=9.161442; /* projected luxury tax payment, $M (Capsheets) */
 const near=LINES.find(([,v])=>v>=TEAM_SALARY);const tax=LINES.find(l=>l[0]==='Luxury tax')[1];
 /* hard cap: what the Cavs can't do this season (Hoops Rumors hard-cap explainer; ESPN/Roundtable on the Watson sign-and-trade) */
@@ -1175,9 +1206,11 @@ LINES.forEach(([n,v,hard],i)=>{const r=el('div','ln'+(hard?' hard':'')+(i%2?' up
 hbar.setAttribute('aria-label','Team salary '+money(TEAM_SALARY)+' against the cap, tax and apron lines');
 requestAnimationFrame(()=>{document.getElementById('fill').style.width=pct(TEAM_SALARY)+'%'});
 {const top=document.getElementById('captop');const nums=el('div','ct-nums');
- [[money(TEAM_SALARY),'Team salary'],[money(HC_ROOM),'Under hard cap'],[money(TEAM_SALARY-tax),'Over the tax'],[money(TAX_BILL),'Tax bill']].forEach(([v,l],i)=>{const d=el('div',i===1?'key':null);d.append(el('b',null,v),el('span',null,l));nums.appendChild(d)});
+ const PAY_RANK=LEAGUE_PAY.findIndex(t=>t[0]==='CLE')+1;
+ [[money(TEAM_SALARY),'Team salary'],[money(HC_ROOM),'Under hard cap'],[money(TEAM_SALARY-tax),'Over the tax'],[money(TAX_BILL),'Tax bill'],[PAY_RANK+(PAY_RANK===1?'st':PAY_RANK===2?'nd':PAY_RANK===3?'rd':'th'),'Highest payroll of 30']].forEach(([v,l],i)=>{const d=el('div',i===1?'key':null);d.append(el('b',null,v),el('span',null,l));nums.appendChild(d)});
  const hb=hbar.cloneNode(true);hb.removeAttribute('id');hb.querySelectorAll('[id]').forEach(x=>x.removeAttribute('id'));hb.querySelector('.fill').style.width=pct(TEAM_SALARY)+'%';
- top.append(nums,hb)}
+ top.append(nums,hb);
+ top.appendChild(el('div','share',''));top.lastChild.id='share'}
 
 /* injuries — status: Out | Doubtful | Questionable | Probable | Game-time decision */
 const INJ_UPDATED='Oct 13';
@@ -1245,7 +1278,16 @@ const HISTORY=[
   if(!h){h=[...sorted].reverse().find(x=>x[0]<md)||sorted[sorted.length-1];label='From the archive';document.getElementById('otd-h').textContent='From the Cavs archive'}
   const [m,d]=h[0].split('-').map(Number);
   const when=document.getElementById('otd-when');
-  when.textContent=label+' · '+new Date(2000,m-1,d).toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  when.textContent=label;
+  /* desk calendar: the day before tears away to reveal the date */
+  {const cal=document.getElementById('dcal');const dt=new Date(2000,m-1,d),prev=new Date(2000,m-1,d-1);
+   const MON=x=>x.toLocaleDateString('en-US',{month:'short'}).toUpperCase(),WK=x=>new Date(now.getFullYear(),x.getMonth(),x.getDate()).toLocaleDateString('en-US',{weekday:'short'});
+   const page=(x,cls)=>{const p=el('div','dc-pg'+(cls?' '+cls:''));p.append(el('span','dc-m',MON(x)),el('b','dc-d',String(x.getDate())),el('span','dc-w',WK(x)));return p};
+   cal.append(el('i','dc-ring'),el('i','dc-ring r2'),page(dt,'base'),page(prev,'top'),el('div','dc-stub'));
+   const play=()=>{if(cal.dataset.done)return;cal.dataset.done=1;setTimeout(()=>cal.classList.add('rip'),350)};
+   window.resetCal=()=>{delete cal.dataset.done;cal.classList.remove('rip')};
+   if(matchMedia('(prefers-reduced-motion: reduce)').matches){cal.classList.add('rip','instant');window.resetCal=()=>{}}
+   else if('IntersectionObserver' in window){new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)play()}),{threshold:.7}).observe(cal)}else play()}
   when.appendChild(el('b',null,String(h[1])));
   document.getElementById('otd-text').textContent=h[2];
   const a=document.getElementById('otd-src');a.href=h[4];a.textContent='Source: '+h[3]+' ↗';
@@ -1254,10 +1296,10 @@ const HISTORY=[
 /* cap sheet */
 /* [name, pos, [2026-27 … 2030-31], Bird rights, free agency, note].
    Each season: dollars | [dollars,'P'] player option | [dollars,'T'] team option | 'UFA' / 'RFA' (free agent that summer) | null.
-   Salaries: Capsheets (2026-27), Salary Swish (future). Bird rights + FA: Salary Swish. */
+   Salaries: Capsheets (2026-27, the official figures), Spotrac for later seasons Capsheets doesn't show. Bird rights: Salary Swish. */
 const SEASONS=['2026–27','2027–28','2028–29','2029–30','2030–31'];
 const ROSTER=[
-  ['Donovan Mitchell','G',[50105628,60937500,65812500,70687500,[75562500,'P']],'Full Bird','2031 UFA',''],
+  ['Donovan Mitchell','G',[50105628,61600000,66528000,71456000,[76384000,'P']],'Full Bird','2031 UFA',''],
   ['Evan Mobley','F/C',[50105628,53817156,57528684,61240212,'UFA'],'Full Bird','2030 UFA',''],
   ['James Harden','G',[30647619,32180000,[33712381,'P'],'UFA',null],'Full Bird','2029 UFA',''],
   ['Jarrett Allen','C',[28000000,30240000,32480000,'UFA',null],'Full Bird','2029 UFA',''],
@@ -1269,9 +1311,9 @@ const ROSTER=[
   ['Nae’Qwan Tomlin','F',[2411090,'RFA',null,null,null],'Full Bird','2027 RFA',''],
   ['Craig Porter Jr.','G',[2406205,'UFA',null,null,null],'Full Bird','2027 UFA','Non-guaranteed until Jan 10'],
   ['Tyrese Proctor','G',[2150917,2525901,[2735698,'T'],'UFA',null],'Full Bird','2029 UFA','2027–28 partly guaranteed ($500K)'],
-  ['Khalifa Diop','C',[1357763,2294370,2694363,[2918152,'T'],'RFA'],'Full Bird','2030 RFA','Future years non-guaranteed'],
-  ['Meleek Thomas','G',[1357763,2294370,2694363,[2918152,'T'],'RFA'],'Full Bird','2030 RFA','Rookie scale'],
-  ['Cam Whitmore','—',[1819437,null,null,null,null],'—','—','Dead money'],
+  ['Khalifa Diop','C',[1357763,2294370,2694363,[2918152,'T'],'UFA'],'Full Bird','2030 UFA','Future years non-guaranteed'],
+  ['Meleek Thomas','G',[1357763,2294370,2694363,[2918152,'T'],'UFA'],'Full Bird','2030 UFA',''],
+  ['Cam Whitmore','—',[1819437,1819437,1819437,null,null],'—','—','Dead money'],
   ['Ricky Rubio','—',[424672,null,null,null,null],'—','—','Dead money']
 ];
 const TWOWAY=[['Tristan Enaruna','Full Bird','2027 RFA'],['Riley Minix','Early Bird','2027 RFA'],['Ernest Udeh Jr.','Non-Bird','2027 RFA']];
@@ -1326,8 +1368,8 @@ const CONTRACTS={
 };
 /* two-way: [name, contract years, through, years of service, Spotrac id/slug, agent] */
 const TW_DEAL={'Tristan Enaruna':[2,'2026–27',1,'94520/tristan-enaruna','Phillip Parun (PPGroup)'],'Riley Minix':[2,'2026–27',2,'95269/riley-minix',null],'Ernest Udeh Jr.':[1,'2026–27',0,'108828/ernest-udeh-jr','Todd Ramasar (Life Sports)']};
-/* cap holds — unrenounced free agents (Spotrac). Each is a minimum-salary hold. */
-const HOLDS=['Tristan Thompson','Olivier Sarr','Rajon Rondo','Chuma Okeke','Raul Neto','Damian Jones','Ed Davis'];const HOLD_EACH=2449421;
+/* cap holds — unrenounced free agents (Capsheets) */
+const HOLDS=[['Ed Davis',2449421],['Damian Jones',2449421],['Raul Neto',2449421],['Chuma Okeke',2449421],['Rajon Rondo',2449421],['Tristan Thompson',2449421],['Olivier Sarr',2185116]]; /* Capsheets */
 const slug=t=>t.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const usd=v=>'$'+Math.round(v).toLocaleString('en-US');
 const usdM=v=>'$'+(v/1e6).toFixed(1)+'M';
@@ -1339,12 +1381,12 @@ const BIRD={
   'Non-Bird':'Cleveland can go over the cap to re-sign him for up to 120% of his previous salary or 120% of the minimum salary, whichever is greater. Applies after one season with the team.'
 };
 const FA={UFA:'Unrestricted: he can sign with any team.',RFA:'Restricted: if Cleveland extends a qualifying offer, it can match any offer sheet he signs with another team.'};
-/* League thresholds by season. 2026-27 is official (NBA); later seasons are RealGM projections. */
+/* League thresholds by season. 2026-27 is official (NBA); later seasons are Spotrac projections. */
 const THRESH=[
   ['Salary cap',[164961000,176000000,184800000,194040000,203742000]],
   ['Luxury tax',[200428000,213000000,224532000,235759000,247547000]],
-  ['First apron',[209015000,222000000,234113000,245819000,258110000]],
-  ['Second apron',[221686000,236000000,248308000,260724000,273760000]]
+  ['First apron',[209015000,223000000,234154000,245862000,258156000]],
+  ['Second apron',[221686000,236000000,248348000,260766000,273805000]]
 ];
 const cb=document.getElementById('capbody');const totals=[0,0,0,0,0];
 ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
@@ -1389,6 +1431,17 @@ ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
   dtd.appendChild(g);det.appendChild(dtd);cb.appendChild(det);
   btn.addEventListener('click',()=>{const o=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',String(!o));det.hidden=o});
 });
+/* where the 2026-27 money goes: each player's share of team salary */
+{const sh=document.getElementById('share');const sum=totals[0];
+ sh.appendChild(el('h3',null,'Where the 2026–27 money goes'));
+ const bar=el('div','sh-bar'),leg=el('ul','sh-leg');const items=ROSTER.map(r=>[r[0],typeof r[2][0]==='number'?r[2][0]:r[2][0][0],r[5]==='Dead money']).sort((a,b)=>b[1]-a[1]);
+ items.forEach(([n,v,dead],i)=>{const pc=v/sum*100;const last=n.split(' ').filter(w=>!/^(Jr\.|III|II)$/.test(w)).pop();
+   const seg=el('a','sh-seg'+(dead?' dead':''));seg.href='#cap';seg.style.flexBasis=pc+'%';if(!dead)seg.style.background='hsl(336 '+(85-i*3)+'% '+(27+i*3.6)+'%)';
+   seg.title=n+': '+usd(v)+' · '+pc.toFixed(1)+'% of team salary'+(dead?' (dead money)':'');
+   if(pc>=7)seg.append(el('b',null,last),el('span',null,pc.toFixed(0)+'%'));
+   seg.addEventListener('click',e=>{e.preventDefault();const r=document.getElementById('p-'+slug(n));if(r)r.scrollIntoView({behavior:'smooth',block:'center'})});bar.appendChild(seg);
+   const li=el('li',dead?'dead':null);const sw=el('i');if(!dead)sw.style.background=seg.style.background;li.append(sw,el('span',null,n),el('b',null,pc.toFixed(1)+'%'));leg.appendChild(li)});
+ sh.append(bar,leg);sh.appendChild(el('p','dim','Share of the Cavs’ '+usd(sum)+' team salary, including dead money. Tap a name for his row.'))}
 const tot=document.getElementById('captot');
 tot.append(el('td',null,'Team total'),el('td'));
 const counts=[0,1,2,3,4].map(i=>{let pl=0,dm=0;ROSTER.forEach(([n,p,yrs,b,f,t])=>{const y=yrs[i];if(typeof y==='number'||Array.isArray(y)){t==='Dead money'?dm++:pl++}});return [pl,dm]});
@@ -1414,15 +1467,18 @@ const tw=document.getElementById('twoway');TWOWAY.forEach(([n,b,f])=>{const [len
   const a=el('a',null,n);a.href='https://www.spotrac.com/nba/player/_/id/'+sp;a.target='_blank';a.rel='noopener';sp2.appendChild(a);
   sp2.append(el('small',null,len+'-year two-way, through '+thru+' · '+b+' · '+f),el('small',null,yos+(yos===1?' year':' years')+' of NBA service'+(ag?' · Agent: '+ag:'')));
   li.append(sp2,el('b',null,(4-yos)+' more season'+(4-yos===1?'':'s')));tw.appendChild(li)});
-{document.getElementById('holds').textContent=HOLDS.join(', ')+'. '+usd(HOLD_EACH)+' each.';
- document.getElementById('holds-tot').textContent=HOLDS.length+' · '+usdM(HOLDS.length*HOLD_EACH)}
+{document.getElementById('holds').textContent=HOLDS.map(([n,v])=>n+' '+usdM(v)).join(' · ');
+ document.getElementById('holds-tot').textContent=HOLDS.length+' · '+usd(HOLDS.reduce((a,[,v])=>a+v,0))}
 const cp=document.getElementById('camp');CAMP.forEach(n=>{const li=el('li');li.id='p-'+slug(n);const sp2=el('span',null,n);sp2.append(el('small',null,'Exhibit 10 · Non-Bird'));li.append(sp2,el('b',null,'$1,357,763'));cp.appendChild(li)});
 
 /* assets */
 const xitem=(head,sub,val,body)=>{const li=el('li');const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,head));if(sub)l.appendChild(el('small',null,sub));sm.appendChild(l);if(val)sm.appendChild(val);d.appendChild(sm);const bx=el('div','xb');body.forEach(([h,t])=>{const p=el('p');if(h)p.appendChild(el('strong',null,h+' '));p.append(t);bx.appendChild(p)});d.appendChild(bx);li.appendChild(d);return li};
 const pk=document.getElementById('picks');PICKS.forEach(([y,r,st,how,ok,why])=>{const v=el('span','pill '+(ok?'ok':'no'),ok?'Tradable':'Not tradable');pk.appendChild(xitem(y+' '+r+' round',st,v,[['How it works:',how],['Trade status:',why]]))});
 const ow=document.getElementById('owed');OWED.forEach(([y,r,to,how])=>{ow.appendChild(xitem(y+' '+r+' round',to,el('span','pill out','Owed'),how?[['',how]]:[['','Owed out.']]))});
-const ex=document.getElementById('exc');EXC.forEach(([a,v,b,how,now])=>{const val=el('b','mono num-sc',v);ex.appendChild(xitem(a,b,val,[['How it works:',how],['Cavs right now:',now]]))});
+const ex=document.getElementById('exc');EXC.forEach(([a,full,exp,how,used])=>{const spent=used.reduce((t,u)=>t+u[2],0),left=full-spent;
+  const val=el('b','mono num-sc',usd(left));
+  const usedTxt=used.length?used.map(([d,pl,amt])=>pl+', '+d+': '+usd(amt)).join('. ')+'.':'Not used yet.';
+  ex.appendChild(xitem(a,'Expires '+exp+' · '+(used.length?'Partly used':'Unused'),val,[['How it works:',how],['Used:',usedTxt],['Left:',usd(left)+' of '+usd(full)+'.'],['Under the 1st apron:','The Cavs are hard-capped with '+usd(HC_ROOM*1e6)+' of room, so they can only use as much of this as fits under '+usd(209015000)+' unless they shed salary first.']]))});
 const rt=document.getElementById('rights');RIGHTS.forEach(([n,p2,d,c])=>{const li=el('li');const s2=el('span',null,n);s2.append(el('small',null,p2+' · '+c));li.append(s2,el('b',null,d));rt.appendChild(li)});
 
 /* resources */
@@ -1574,7 +1630,7 @@ SCHEDULE.forEach(g=>{const d=tipOf(g);add((g[2]==='H'?'vs ':'at ')+TEAMS[g[1]],d
 upcoming.forEach(([d,t],i)=>add(t,fmt.format(new Date(d+'T00:00:00')),'Date','home','d-'+i,'deadline key date '+new Date(d+'T00:00:00').toLocaleDateString('en-US',{month:'long'})));
 STAFF.forEach(([g,people])=>people.forEach(([n,t])=>add(n,t,'Staff','staff','s-'+slug(n),g)));
 PICKS.forEach(([y,r,st])=>add(y+' '+r+'-round pick',st,'Asset','assets','picks','draft pick'));
-EXC.forEach(([a,v,b])=>add(a,v+' · '+b,'Asset','assets','exc','exception'));
+EXC.forEach(([a,v,b])=>add(a,usd(v)+' · expires '+b,'Asset','assets','exc','exception'));
 RES.forEach(([g,items])=>items.forEach(([n,d])=>add(n,d,'Link','resources',null,g)));
 add('Cleveland Charge','G League · next game and record','Charge','home','chg-h','g league');
 const q=document.getElementById('q'),sres=document.getElementById('sres');
@@ -1800,6 +1856,22 @@ const PLAYERS=[
 /* combine anthro: name -> [year, ht no shoes, ht shoes, wingspan, reach, wt, body fat %, hand L, hand W, source]. Inches. */
 /* how acquired — NBA.com roster feed. name -> [how, date] */
 const ACQ={'James Harden':['Trade from LAC (re-signed Sep 2026)','2026-02-04'],'Thomas Bryant':['Free agent','2025-09-25'],'Evan Mobley':['Draft, No. 3 (2021)','2021-07-29'],'Sam Merrill':['Free agent','2023-03-03'],'Peyton Watson':['Sign-and-trade from DEN','2026-08-20'],'Craig Porter Jr.':['Undrafted free agent','2023-07-03'],'Meleek Thomas':['Draft, No. 34 (2026)','2026-06-24'],'Khalifa Diop':['Draft, No. 39 (2022); signed from Spain','2026-09-02'],'Jaylon Tyson':['Draft, No. 20 (2024)','2024-06-26'],'Tyrese Proctor':['Draft, No. 49 (2025)','2025-06-26'],'Jarrett Allen':['Trade from BKN','2021-01-16'],'Mario Hezonja':['Free agent','2026-07-31'],"Nae'Qwan Tomlin":['Undrafted free agent','2024-09-23'],'Donovan Mitchell':['Trade from UTA','2022-09-03'],'Riley Minix':['Free agent (two-way)','2026-02-13'],'Tristan Enaruna':['Free agent','2025-09-26'],'Ernest Udeh Jr.':['Undrafted free agent (two-way)','2026-07-01'],'Rashaun Agee':['Free agent (camp)','2026-09-23'],'Zack Austin':['Free agent (camp)','2026-09-23'],'Noam Yaacov':['Free agent (camp)','2026-10-09']};
+/* player socials — Instagram: Basketball Reference; X and Facebook: Wikidata (Oct 14, 2026). Only accounts a source lists. */
+const SOCIAL={
+ 'James Harden':{x:'JHarden13',ig:'jharden13',fb:'jharden13'},'Thomas Bryant':{x:'nolimittb31',ig:'nolimittb'},'Evan Mobley':{x:'evan_mobley7',ig:'evanmobley4'},
+ 'Sam Merrill':{ig:'smerrill05'},'Peyton Watson':{ig:'peytonwatson'},'Craig Porter Jr.':{ig:'cpeezy3m'},'Meleek Thomas':{x:'ThomasMeleek',ig:'leek'},
+ 'Khalifa Diop':{ig:'khalifa_diop_kd'},'Jaylon Tyson':{x:'jaylontyson',ig:'JT20'},'Tyrese Proctor':{ig:'tyrese4proctor'},'Jarrett Allen':{x:'_bigjayy_',ig:'_bigjayy_'},
+ 'Mario Hezonja':{x:'mariohezonja',ig:'supermariohezonja'},"Nae'Qwan Tomlin":{ig:'nae_ratty'},'Donovan Mitchell':{x:'spidadmitchell',ig:'spidadmitchell',fb:'spidadmitchell45'},
+ 'Riley Minix':{ig:'riley.minix'},'Tristan Enaruna':{ig:'kiddtris'},'Ernest Udeh Jr.':{ig:'ernestudehjr'},'Rashaun Agee':{ig:'ageerashaun12'},'Zack Austin':{ig:'zackaustiin'},'Noam Yaacov':{x:'NoamYaacov',ig:'noaamyaacov'}
+};
+const SOC_NET={x:['X','https://x.com/','<path d="M2 2h3.6l3 4.3L12.3 2H14l-4.6 5.4L14.5 14h-3.6L7.7 9.4 3.8 14H2l4.9-5.6z"/>'],
+ ig:['Instagram','https://instagram.com/','<rect x="2" y="2" width="12" height="12" rx="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="2.7" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="11.7" cy="4.3" r=".9"/>'],
+ fb:['Facebook','https://facebook.com/','<path d="M9.2 14V8.6h1.8l.3-2.1H9.2V5.2c0-.6.2-1 1-1h1.1V2.3c-.2 0-.9-.1-1.6-.1-1.6 0-2.7 1-2.7 2.8v1.5H5.2v2.1H7V14z"/>'],
+ tt:['TikTok','https://www.tiktok.com/@','<path d="M10.6 2c.2 1.5 1.1 2.5 2.6 2.6v2c-.9 0-1.8-.3-2.6-.8v4.1A3.6 3.6 0 1 1 7 6.3v2.1a1.6 1.6 0 1 0 1.6 1.6V2z"/>'],
+ yt:['YouTube','https://www.youtube.com/','<path d="M14.6 4.6c-.2-.8-.8-1.3-1.5-1.5C11.8 2.8 8 2.8 8 2.8s-3.8 0-5.1.3c-.7.2-1.3.7-1.5 1.5C1.1 5.9 1.1 8 1.1 8s0 2.1.3 3.4c.2.8.8 1.3 1.5 1.5 1.3.3 5.1.3 5.1.3s3.8 0 5.1-.3c.7-.2 1.3-.7 1.5-1.5.3-1.3.3-3.4.3-3.4s0-2.1-.3-3.4zM6.6 10.3V5.7L10.5 8z"/>'],
+ tw:['Twitch','https://www.twitch.tv/','<path d="M3 2l-1 2.5V13h3v1.5h1.6L8.1 13h2.4L14 9.5V2zm9.8 6.9-1.9 1.9H8l-1.6 1.6v-1.6H4V3.2h8.8zM10.5 5h1.2v3.4h-1.2zM7.7 5h1.2v3.4H7.7z"/>'],
+ kk:['Kick','https://kick.com/','<path d="M2.5 2h3.6v3h1.2V3.5h1.5V2h4.7v4.3h-1.5v1.6h-1.5v.2h1.5v1.6H13.5V14H8.8v-1.5H7.3V11H6.1v3H2.5z"/>']};
+const socialLinks=n=>{const S=SOCIAL[n];if(!S)return null;const w=el('span','soc');Object.keys(SOC_NET).forEach(k=>{if(!S[k])return;const [lab,base,svg]=SOC_NET[k];const a=el('a');a.href=base+S[k];a.target='_blank';a.rel='noopener';a.title=lab+' · @'+S[k];a.setAttribute('aria-label',n+' on '+lab);a.innerHTML='<svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" aria-hidden="true">'+svg+'</svg>';w.appendChild(a)});return w};
 /* profile link: nbarapm when it has a page for the player, otherwise NBA.com */
 const RAPM={'James Harden':'James_Harden','Thomas Bryant':'Thomas_Bryant','Evan Mobley':'Evan_Mobley','Sam Merrill':'Sam_Merrill','Peyton Watson':'Peyton_Watson','Craig Porter Jr.':'Craig_Porter','Jaylon Tyson':'Jaylon_Tyson','Tyrese Proctor':'Tyrese_Proctor','Jarrett Allen':'Jarrett_Allen','Mario Hezonja':'Mario_Hezonja',"Nae'Qwan Tomlin":"Nae'Qwan_Tomlin",'Donovan Mitchell':'Donovan_Mitchell','Riley Minix':'Riley_Minix','Tristan Enaruna':'Tristan_Enaruna'};
 const profileUrl=(n,id)=>RAPM[n]?'https://nbarapm.com/player/'+encodeURIComponent(RAPM[n]):'https://www.nba.com/player/'+id;
@@ -1832,7 +1904,7 @@ const COMBINE={
     ps.forEach(([no,n,pos,ht,wt,b,age,exp,sch,cty,dr,stt,pid])=>{
       const tr=el('tr');tr.id='r-'+slug(n);
       const nm=el('td','pl');const pa=el('a','plink',n);pa.href=profileUrl(n,pid);pa.target='_blank';pa.rel='noopener';pa.title=RAPM[n]?'RAPM profile on nbarapm':'Profile on NBA.com';nm.appendChild(pa);if(stt){nm.appendChild(el('span','tag',stt))}
-      const hs=el('img','hs');hs.src='https://cdn.nba.com/headshots/nba/latest/260x190/'+pid+'.png';hs.alt='';hs.loading='lazy';hs.onerror=()=>hs.remove();nm.prepend(hs);nm.appendChild(el('small','pos',pos+' · '+cty));
+      const hs=el('img','hs');hs.src='https://cdn.nba.com/headshots/nba/latest/260x190/'+pid+'.png';hs.alt='';hs.loading='lazy';hs.onerror=()=>hs.remove();nm.prepend(hs);{const sm=el('small','pos',pos+' · '+cty);const so=socialLinks(n);if(so)sm.appendChild(so);nm.appendChild(sm)}
       const two=(a,b2)=>{const td=el('td','m two');td.append(a);td.appendChild(el('small',null,b2));return td};
       tr.append(el('td','r num',no||'—'),nm,two(ht==='—'?'—':ht.replace('-','′ ')+'″',wt?wt+' lb':'—'),two(String(age),born(b)),el('td','r m',exp),el('td','wrap',sch),
         el('td',dr?null:'dim',dr?dr[0]+' · '+ord(dr[1])+' rd, #'+dr[2]:'Undrafted'),(()=>{const q=ACQ[n];const td=el('td','acq');if(q){td.append(q[0]);td.appendChild(el('small',null,born(q[1])))}return td})());
@@ -1859,6 +1931,7 @@ function show(id){
   tabs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.go===id?'true':'false'));
   window.scrollTo(0,0);
   if(window.scrambleView)scrambleView(id);
+  if(id==='home'&&window.resetCal){resetCal();const c=document.getElementById('dcal');if(c&&c.getBoundingClientRect().top<innerHeight){c.dataset.done=1;setTimeout(()=>c.classList.add('rip'),500)}}
 }
 /* each page change is a real history entry, so Back returns to the previous cavsdatabase page */
 function go(id){if(location.hash!=='#'+id){try{history.pushState({p:id},'','#'+id)}catch(_){}}show(id)}
