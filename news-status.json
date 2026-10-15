@@ -1,5 +1,5 @@
 {
- "at": "2026-10-15T09:06:58.873Z",
+ "at": "2026-10-15T10:03:00.990Z",
  "status": {
   "Cavs.com": {
    "ok": true,
@@ -19,7 +19,7 @@
   "cleveland.com": {
    "ok": true,
    "url": "https://www.cleveland.com/arc/outboundfeeds/rss/category/cavs/?outputType=xml",
-   "recent": 10
+   "recent": 12
   },
   "Sports Illustrated": {
    "ok": true,
