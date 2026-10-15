@@ -67,6 +67,43 @@ h2{font:800 28px/1.1 var(--sans);font-stretch:110%;margin:6px 0 4px}
 .pl .sb span{width:22px;height:22px;border-radius:50%;overflow:hidden;background:#e7e2da;display:inline-block}
 .pl .sb span img{width:150%;margin:1px 0 0 -25%}
 .note{font-size:12px;color:var(--muted);margin-top:10px}
+
+/* ===== D. depth sheet ===== */
+.sheet{background:var(--card);border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);overflow:hidden}
+.sheet .hdr{display:flex;justify-content:space-between;align-items:flex-end;padding:18px 22px 14px;border-bottom:3px solid var(--fg)}
+.sheet .hdr b{font:800 20px var(--sans);font-stretch:112%;letter-spacing:-.01em}
+.sheet .hdr span{font:500 12px var(--mono);color:var(--muted)}
+.grid{display:grid;grid-template-columns:70px repeat(3,1fr) 150px}
+.grid>div{border-bottom:1px solid var(--line2);padding:10px 12px;display:flex;align-items:center}
+.grid .ch{font:700 10.5px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:10px 12px 8px;background:#f7f8f6}
+.grid .ch.s1{color:var(--wine)}
+.grid .pz{font:800 26px var(--cond);color:var(--wine);justify-content:center;border-right:1px solid var(--line2)}
+.grid .c1{background:linear-gradient(90deg,rgba(122,31,51,.07),rgba(122,31,51,.02))}
+.chip{display:flex;align-items:center;gap:10px;min-width:0}
+.chip .av{position:relative;width:46px;height:46px;border-radius:50%;overflow:hidden;background:#e9e4dc;flex:none}
+.chip .av img{width:150%;margin:3px 0 0 -25%}
+.c1 .chip .av{width:54px;height:54px;box-shadow:0 0 0 2px var(--wine)}
+.chip .t b{display:block;font:700 14px var(--sans);white-space:nowrap}
+.c1 .chip .t b{font-size:15.5px}
+.chip .t span{font:500 11px var(--mono);color:var(--muted)}
+.chip .t span em{font-style:normal;color:var(--wine);font-weight:700}
+.grid .tw{font-size:12px;color:var(--muted);flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;border-left:1px dashed var(--line)}
+.grid .tw b{color:var(--fg2);font-weight:600}
+.legend{display:flex;gap:18px;padding:10px 22px 14px;font-size:12px;color:var(--muted)}
+/* ===== E. pyramid ===== */
+.pyr{background:var(--card);border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);padding:26px 22px 18px}
+.tier{display:grid;grid-template-columns:170px 1fr;align-items:center;gap:16px;padding:12px 0}
+.tier+.tier{border-top:1px solid var(--line2)}
+.tl b{display:block;font:800 13px var(--sans);font-stretch:118%;letter-spacing:.08em;text-transform:uppercase}
+.tl span{display:block;font-size:12px;color:var(--muted);margin-top:3px;line-height:1.35}
+.row{display:flex;justify-content:center;gap:14px;margin:0 auto;padding:10px 0;border-radius:6px;position:relative}
+.row::before{content:"";position:absolute;inset:0;border-radius:6px;background:var(--wine);opacity:var(--o);z-index:0}
+.pp{position:relative;z-index:1;text-align:center;width:var(--w)}
+.pp .av{width:var(--w);height:var(--w);border-radius:50%;overflow:hidden;background:#e9e4dc;margin:0 auto;box-shadow:0 0 0 3px #fff}
+.pp .av img{width:150%;margin:4% 0 0 -25%}
+.pp b{display:block;font:700 12.5px var(--sans);margin-top:6px;white-space:nowrap}
+.pp span{font:500 10.5px var(--mono);color:var(--muted)}
+.t1 .pp b{font-size:15px}.t1 .row b,.t2 .row b{color:#fff}.t1 .row span,.t2 .row span{color:rgba(255,255,255,.75)}
 @media (max-width:760px){.stacks,.lockers{grid-template-columns:repeat(2,1fr)}.floor{height:auto}}
 </style></head><body>
 
@@ -98,6 +135,21 @@ h2{font:800 28px/1.1 var(--sans);font-stretch:110%;margin:6px 0 4px}
  <p class="note">Mockup order. The live version would follow the depth source you pick.</p>
 </section>
 
+<section class="concept">
+ <div class="lab">Idea D · The real thing</div><h2>An actual depth chart</h2>
+ <p class="sub">The sheet a team hands out: positions down the side, first, second and third string across, with the starter column tinted. It has faces and numbers, and nothing to figure out. The last column holds the two-way guys who can slot in at each spot.</p>
+ <div class="sheet"><div class="hdr"><b>Cavaliers depth chart</b><span>2026–27 · updated Oct 14</span></div>
+  <div class="grid" id="sheet"><div class="ch">Pos</div><div class="ch s1">Starter</div><div class="ch">2nd</div><div class="ch">3rd</div><div class="ch">Two-way</div></div>
+  <div class="legend"><span>Tinted column = starting lineup</span><span>Tap a player for his bio and contract</span></div></div>
+</section>
+
+<section class="concept">
+ <div class="lab">Idea E · Pyramid</div><h2>Roles, from cornerstones down</h2>
+ <p class="sub">Not by position but by importance. The cornerstones sit at the top, then the rest of the starting five, the rotation, the depth, and the two-way and development players at the base. The pyramid widens as the roles get smaller and the color fades with it, so you can see how the roster is built in one look.</p>
+ <div class="pyr" id="pyr"></div>
+ <p class="note">Tiers are an editorial call (yours), or they can follow minutes once the season starts.</p>
+</section>
+
 <script>
 const H=id=>'https://cdn.nba.com/headshots/nba/latest/260x190/'+id+'.png';
 const D=[
@@ -126,5 +178,21 @@ const fl=document.getElementById('floor');
 D.forEach(([p,ps])=>{const [s,...b]=ps;const [x,y]=spots[p];const e=document.createElement('div');e.className='pl';e.style.left=x+'%';e.style.top=y+'%';
  e.innerHTML='<div class="cut"><img src="'+H(s[2])+'" alt=""></div><div class="tag"><i>'+p+'</i><b>'+s[0]+'</b><em>'+s[1]+'</em></div><div class="subs">'+b.map(([n,no,id])=>'<span class="sb"><span><img src="'+H(id)+'" alt=""></span>'+last(n)+'</span>').join('')+'</div>';
  e.style.transform='translate(-50%,-62%)';fl.appendChild(e)});
+
+/* D */
+const TWP={PG:null,SG:null,SF:['Riley Minix',12,1642434],PF:['Tristan Enaruna',21,1642400],C:['Ernest Udeh Jr.',88,1643640]};
+const sh=document.getElementById('sheet');
+const chip=([n,no,id],k)=>'<div class="chip"><span class="av"><img src="'+H(id)+'" alt=""></span><span class="t"><b>'+n+'</b><span><em>#'+no+'</em>'+(k===0?' · starter':'')+'</span></span></div>';
+D.forEach(([p,ps])=>{sh.insertAdjacentHTML('beforeend','<div class="pz">'+p+'</div>'+ps.map((x,k)=>'<div class="'+(k===0?'c1':'')+'">'+chip(x,k)+'</div>').join('')+'<div class="tw">'+(TWP[p]?'<b>#'+TWP[p][1]+' '+TWP[p][0]+'</b>two-way':'—')+'</div>')});
+/* E */
+const TIERS=[
+ ['Cornerstones','The two the roster is built around',[['Donovan Mitchell',45,1628378],['Evan Mobley',4,1630596]],86,.95],
+ ['Starters','The rest of the opening five',[['James Harden',1,201935],['Jarrett Allen',31,1628386],['Peyton Watson',8,1631212]],72,.75],
+ ['Rotation','Nightly minutes off the bench',[['Sam Merrill',5,1630241],['Jaylon Tyson',20,1642281],['Craig Porter Jr.',9,1641854],['Thomas Bryant',3,1628418]],60,.14],
+ ['Depth','Spot minutes, matchups, injuries',[["Nae'Qwan Tomlin",35,1641772],['Tyrese Proctor',24,1642878],['Mario Hezonja',33,1626209],['Meleek Thomas',15,1643509],['Khalifa Diop',18,1631215]],50,.07],
+ ['Two-way','Split time with the Charge',[['Tristan Enaruna',21,1642400],['Riley Minix',12,1642434],['Ernest Udeh Jr.',88,1643640]],44,.03]
+];
+const py=document.getElementById('pyr');
+TIERS.forEach(([t,d,ps,w,o],i)=>{const width=[34,52,70,86,62][i];py.insertAdjacentHTML('beforeend','<div class="tier t'+(i+1)+'"><div class="tl"><b>'+t+'</b><span>'+d+'</span></div><div class="row" style="--o:'+o+';width:'+width+'%">'+ps.map(([n,no,id])=>'<div class="pp" style="--w:'+w+'px"><div class="av"><img src="'+H(id)+'" alt=""></div><b>'+last(n)+'</b><span>#'+no+'</span></div>').join('')+'</div></div>')});
 </script>
 </body></html>
