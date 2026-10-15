@@ -1,10 +1,10 @@
 {
- "at": "2026-10-15T21:59:23.806Z",
+ "at": "2026-10-15T22:30:58.290Z",
  "status": {
   "Cavs.com": {
    "ok": true,
    "url": "https://www.nba.com/cavaliers/news",
-   "recent": 7
+   "recent": 6
   },
   "Hoops Rumors": {
    "ok": true,
@@ -54,12 +54,12 @@
   "Cavaliers Nation": {
    "ok": true,
    "url": "https://cavaliersnation.com/feed/",
-   "recent": 1
+   "recent": 2
   },
   "ClutchPoints": {
    "ok": true,
    "url": "https://clutchpoints.com/nba/cleveland-cavaliers/feed",
-   "recent": 2
+   "recent": 3
   }
  }
 }
