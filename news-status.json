@@ -1,5 +1,5 @@
 {
- "at": "2026-10-15T03:32:40.319Z",
+ "at": "2026-10-15T04:26:55.136Z",
  "status": {
   "Cavs.com": {
    "ok": true,
@@ -19,7 +19,7 @@
   "cleveland.com": {
    "ok": true,
    "url": "https://www.cleveland.com/arc/outboundfeeds/rss/category/cavs/?outputType=xml",
-   "recent": 10
+   "recent": 9
   },
   "Sports Illustrated": {
    "ok": true,
@@ -44,7 +44,7 @@
   "Fear The Sword": {
    "ok": true,
    "url": "https://www.fearthesword.com/rss/index.xml",
-   "recent": 9
+   "recent": 8
   },
   "Cavs Nation": {
    "ok": true,
