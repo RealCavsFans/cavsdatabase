@@ -1,5 +1,5 @@
 {
- "at": "2026-10-15T18:35:52.243Z",
+ "at": "2026-10-15T19:28:16.983Z",
  "status": {
   "Cavs.com": {
    "ok": true,
@@ -9,7 +9,7 @@
   "Hoops Rumors": {
    "ok": true,
    "url": "https://www.hoopsrumors.com/cleveland-cavaliers/feed",
-   "recent": 3
+   "recent": 2
   },
   "RealGM": {
    "ok": true,
@@ -59,7 +59,7 @@
   "ClutchPoints": {
    "ok": true,
    "url": "https://clutchpoints.com/nba/cleveland-cavaliers/feed",
-   "recent": 1
+   "recent": 2
   }
  }
 }
