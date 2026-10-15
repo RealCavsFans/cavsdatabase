@@ -1,13 +1,10 @@
 {
- "at": "2026-10-15T02:03:29.362Z",
+ "at": "2026-10-15T03:00:01.887Z",
  "status": {
   "Cavs.com": {
-   "ok": false,
-   "errs": [
-    "https://www.nba.com/cavaliers/rss.xml HTTP 403",
-    "https://www.nba.com/cavaliers/news/rss.xml HTTP 404",
-    "https://www.nba.com/cavaliers/feed HTTP 404"
-   ]
+   "ok": true,
+   "url": "https://www.nba.com/cavaliers/news",
+   "recent": 6
   },
   "Hoops Rumors": {
    "ok": true,
@@ -25,12 +22,9 @@
    "recent": 10
   },
   "Sports Illustrated": {
-   "ok": false,
-   "errs": [
-    "https://www.si.com/nba/cavaliers/rss HTTP 404",
-    "https://www.si.com/nba/cavaliers/.rss/full/ HTTP 404",
-    "https://www.si.com/.rss/full/nba/cavaliers HTTP 404"
-   ]
+   "ok": true,
+   "url": "https://www.si.com/news-sitemap.xml",
+   "recent": 4
   },
   "The Athletic": {
    "ok": true,
@@ -48,10 +42,9 @@
    "recent": 9
   },
   "Fear The Sword": {
-   "ok": false,
-   "errs": [
-    "https://www.fearthesword.com/rss/index.xml no items"
-   ]
+   "ok": true,
+   "url": "https://www.fearthesword.com/rss/index.xml",
+   "recent": 9
   },
   "Cavs Nation": {
    "ok": true,
@@ -67,14 +60,6 @@
    "ok": true,
    "url": "https://clutchpoints.com/nba/cleveland-cavaliers/feed",
    "recent": 1
-  },
-  "HoopsHype": {
-   "ok": false,
-   "errs": [
-    "https://www.hoopshype.com/team/cleveland-cavaliers/feed/ HTTP 404",
-    "https://www.hoopshype.com/feed/ HTTP 404",
-    "https://www.hoopshype.com/rss/ HTTP 404"
-   ]
   }
  }
 }
