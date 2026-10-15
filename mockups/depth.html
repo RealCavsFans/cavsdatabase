@@ -193,6 +193,6 @@ const TIERS=[
  ['Two-way','Split time with the Charge',[['Tristan Enaruna',21,1642400],['Riley Minix',12,1642434],['Ernest Udeh Jr.',88,1643640]],44,.03]
 ];
 const py=document.getElementById('pyr');
-TIERS.forEach(([t,d,ps,w,o],i)=>{const width=[34,52,70,86,62][i];py.insertAdjacentHTML('beforeend','<div class="tier t'+(i+1)+'"><div class="tl"><b>'+t+'</b><span>'+d+'</span></div><div class="row" style="--o:'+o+';width:'+width+'%">'+ps.map(([n,no,id])=>'<div class="pp" style="--w:'+w+'px"><div class="av"><img src="'+H(id)+'" alt=""></div><b>'+last(n)+'</b><span>#'+no+'</span></div>').join('')+'</div></div>')});
+TIERS.forEach(([t,d,ps,w,o],i)=>{const width=[30,46,62,80,96][i];py.insertAdjacentHTML('beforeend','<div class="tier t'+(i+1)+'"><div class="tl"><b>'+t+'</b><span>'+d+'</span></div><div class="row" style="--o:'+o+';width:'+width+'%">'+ps.map(([n,no,id])=>'<div class="pp" style="--w:'+w+'px"><div class="av"><img src="'+H(id)+'" alt=""></div><b>'+last(n)+'</b><span>#'+no+'</span></div>').join('')+'</div></div>')});
 </script>
 </body></html>
