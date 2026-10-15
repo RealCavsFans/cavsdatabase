@@ -1926,8 +1926,9 @@ const SOC_NET={x:['X','https://x.com/','<path d="M2 2h3.6l3 4.3L12.3 2H14l-4.6 5
  kk:['Kick','https://kick.com/','<path d="M2.5 2h3.6v3h1.2V3.5h1.5V2h4.7v4.3h-1.5v1.6h-1.5v.2h1.5v1.6H13.5V14H8.8v-1.5H7.3V11H6.1v3H2.5z"/>']};
 const socialLinks=n=>{const S=SOCIAL[n];if(!S)return null;const w=el('span','soc');Object.keys(SOC_NET).forEach(k=>{if(!S[k])return;const [lab,base,svg]=SOC_NET[k];const a=el('a');a.href=base+S[k];a.target='_blank';a.rel='noopener';a.title=lab+' · @'+S[k];a.setAttribute('aria-label',n+' on '+lab);a.innerHTML='<svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" aria-hidden="true">'+svg+'</svg>';w.appendChild(a)});return w};
 
-/* depth chart (preview: ?preview=depth). Order: placeholder until a source is chosen. */
-const DEPTH_ON=/preview=(depth|stack)/.test(location.search);
+/* depth chart + card stacks (roster tabs). Order: placeholder until a source is chosen. */
+const DEPTH_ON=true;
+const DEPTH_PICK=/preview=stack/.test(location.search)?'stack':/preview=depth/.test(location.search)?'depth':null;
 const DEPTH=[['PG',['James Harden','Craig Porter Jr.','Tyrese Proctor'],null],['SG',['Donovan Mitchell','Sam Merrill','Meleek Thomas'],null],['SF',['Peyton Watson','Jaylon Tyson','Mario Hezonja'],'Riley Minix'],['PF',['Evan Mobley',"Nae'Qwan Tomlin",'Tristan Enaruna'],null],['C',['Jarrett Allen','Thomas Bryant','Khalifa Diop'],'Ernest Udeh Jr.']];
 function buildDepth(){
   const P=n=>PLAYERS.find(p=>p[1]===n);const HSU=id=>'https://cdn.nba.com/headshots/nba/latest/260x190/'+id+'.png';
@@ -2000,7 +2001,7 @@ const COMBINE={
   if(DEPTH_ON){segs.insertAdjacentHTML('beforeend','<button role="tab" aria-selected="false" data-rv="depth">Depth chart</button><button role="tab" aria-selected="false" data-rv="stack">Cards</button>');buildDepth()}
   const pickRv=v=>{document.querySelectorAll('[data-rv]').forEach(x=>x.setAttribute('aria-selected',x.dataset.rv===v?'true':'false'));document.querySelectorAll('[id^="rv-"]').forEach(p=>p.hidden=p.id!=='rv-'+v)};
   document.querySelectorAll('[data-rv]').forEach(b=>b.addEventListener('click',()=>pickRv(b.dataset.rv)));
-  if(DEPTH_ON)pickRv(/stack/.test(location.search)?'stack':'depth');
+  if(DEPTH_PICK)pickRv(DEPTH_PICK);
 })();
 if(typeof ng!=='undefined'&&ng)add('Next game: '+(ng[2]==='H'?'vs ':'at ')+TEAMS[ng[1]],dayFmt.format(tipOf(ng))+' · '+ng[3]+' PM ET','Game','home','next-h-row','next game play when tip off tonight upcoming schedule');
 PLAYERS.forEach(p=>add(p[1],[p[2],'age '+p[6],p[8],p[9]].filter(Boolean).join(' · '),'Player bio','roster','r-'+slug(p[1]),'height weight wingspan college born age country draft bio measurements'));
