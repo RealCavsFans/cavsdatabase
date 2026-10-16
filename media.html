@@ -855,7 +855,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 .tip{font-weight:700;color:var(--wine-ink);text-decoration:none;border-bottom:2px solid #F2B231}
 .gp{display:block}.gp-k{display:block;margin-bottom:6px}
 .gp-teams{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center;margin-bottom:8px}
-@media (min-width:761px){.gp{display:grid;grid-template-columns:auto minmax(0,460px) 1fr;column-gap:22px;align-items:center}.gp-k{grid-column:1;grid-row:1}.gp-teams{grid-column:2;grid-row:1;margin:0;padding:8px 14px;background:var(--card,var(--bg));border:1px solid var(--line2)}.gp-f{grid-column:3;grid-row:1;justify-self:start;text-align:left;border-top:0;padding:0;flex-direction:column;align-items:flex-start;gap:3px}.gp-l{margin-left:0}}
+@media (min-width:761px){.gp{display:grid;grid-template-columns:auto minmax(0,460px) 1fr;column-gap:22px;align-items:center}.gp-k{grid-column:1;grid-row:1}.gp-teams{grid-column:2;grid-row:1;margin:0;padding:8px 14px;background:var(--card,var(--bg));border:1px solid var(--line2)}.gprev td{text-align:left}.gp-f{grid-column:3;grid-row:1;justify-self:start;text-align:left;border-top:0;padding:0;display:grid;grid-template-columns:repeat(2,max-content);gap:4px 26px;align-items:baseline}.gp-f .gp-inj{grid-column:1/-1}.gp-l{margin-left:0}}
 .gp-t{display:flex;flex-direction:column;gap:1px}.gp-t b{font:800 14px var(--sans);color:var(--fg)}.gp-t span{font:500 12px var(--mono);color:var(--fg2)}
 .gp-teams .gp-t:last-child{text-align:right}.gp-vs{font-style:normal;font:700 11px var(--sans);color:var(--muted);text-transform:uppercase}
 .gp-f{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;border-top:1px solid var(--line2);padding-top:7px}
@@ -2284,6 +2284,11 @@ SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
     [['Season series',met.length?'Cavs '+mw+'–'+(met.length-mw)+(left-met.length>0?' · '+(left-met.length)+' left':''):left+' meeting'+(left===1?'':'s')+' this season'],
      [g[2]==='H'?'Cavs at home':'Cavs on the road',rec_ha(g[2])],
      ['Rest',rest==null?'Season opener':rest===0?'Back-to-back':rest+' day'+(rest===1?'':'s')]].forEach(([k,v])=>{const x=el('span','gp-i');x.append(el('b',null,k+' '),v);facts.appendChild(x)});
+    /* a little more: Cavs form, who's on the injury report, where to watch/listen */
+    {const done=res.slice(0,i).filter(Boolean);if(done.length){let k=done.length-1,st=0;while(k>=0&&done[k]===done[done.length-1]){st++;k--}const l10=done.slice(-10),w10=l10.filter(x=>x==='W').length;
+      const x=el('span','gp-i');x.append(el('b',null,'Cavs form '),done[done.length-1]+st+' · '+w10+'–'+(l10.length-w10)+' last '+l10.length);facts.appendChild(x)}
+     if(INJURIES.length){const x=el('span','gp-i gp-inj');x.append(el('b',null,'Cavs injuries '),INJURIES.map(r=>r[0].split(' ').slice(-1)[0].replace(/^Jr\.$/,r[0].split(' ').slice(-2)[0])+' ('+r[3].replace('Game-time decision','GTD')+')').join(', '));facts.appendChild(x)}
+     const tv=tvFor(g[0]),ra=radioFor(g[0]);const wt=[tv.nat,tv.loc].filter(Boolean).join(' · ');const x=el('span','gp-i');x.append(el('b',null,'Watch '),wt||'TBA',el('b',null,' · Listen '),(ra.cavs||'').split(' · ')[0]);facts.appendChild(x)}
     w.appendChild(facts);
     const il=el('a','gp-l','Injury report ↗');il.href='https://www.cbssports.com/nba/injuries/';il.target='_blank';il.rel='noopener';facts.appendChild(il);
     td.appendChild(w);pr.appendChild(td);tb.appendChild(pr)}});
