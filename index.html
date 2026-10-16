@@ -799,6 +799,14 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 .fb-open{display:none;appearance:none;border:0;background:var(--wine);color:#fff;font:700 12.5px var(--sans);padding:6px 12px;cursor:pointer;margin-left:10px}
 .fb.mini{padding:10px 40px 10px 12px}.fb.mini #fb-ask{display:flex;align-items:center;justify-content:space-between}.fb.mini p,.fb.mini form{display:none}.fb.mini .fb-open{display:inline-block}.fb.mini .fb-x{top:50%;transform:translateY(-50%)}
 @media (max-width:520px){.fb{padding:10px 12px;font-size:12.5px}.fb b{font-size:13.5px}.fb p{font-size:11.5px;margin:2px 0 6px}.fb textarea{height:58px;font-size:13px;padding:6px 8px;margin-bottom:6px}.fb input{font-size:13px;padding:6px 8px;margin-bottom:6px}#fb-s{padding:6px 14px}}
+.ci{position:fixed;inset:0;z-index:80;background:#101419;color:#EEF0EC;display:flex;align-items:center;justify-content:center;transition:opacity .6s,transform .6s}
+.ci.out{opacity:0;transform:scale(1.03);pointer-events:none}
+.ci-ln{font:500 clamp(18px,3.4vw,40px) var(--mono);white-space:pre;max-width:92vw;overflow:hidden}.ci-ln b{color:#F2B231;margin-right:.5em}
+.ci-cur{display:inline-block;width:.5em;height:1.05em;background:#F2B231;vertical-align:-.18em;margin-left:.08em;animation:ciB 1s steps(1) infinite}@keyframes ciB{50%{opacity:0}}
+.ci-br{position:absolute;inset:0;background:#7A1F33;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;text-align:center;padding:0 16px}
+.ci-br.on{opacity:1}.ci-logo{width:clamp(64px,9vw,110px)}.ci-wm{font:600 clamp(56px,11vw,132px)/1 var(--mono);color:#fff;margin-top:10px;letter-spacing:-.03em}.ci-wm span{color:#F2B231}
+.ci-tg{font:700 clamp(22px,3.4vw,42px)/1.25 var(--sans);color:#fff;margin:22px 0 0;opacity:0;transform:translateY(8px);transition:all .45s}.ci-tg.on{opacity:1;transform:none}.ci-tg em{display:block;font-style:normal;color:#F2B231}
+.ci-skip{position:absolute;right:18px;bottom:18px;z-index:2;background:none;border:1px solid rgba(255,255,255,.35);color:#fff;font:600 13px var(--sans);padding:8px 14px;cursor:pointer}
 .tks{display:inline-flex;gap:10px;flex:0 0 auto}
 .tk{display:inline-flex;align-items:center;gap:4px;font:600 11.5px var(--sans);white-space:nowrap;color:var(--fg2)}.tk i{font-style:normal;font-weight:800}
 .tk.y i{color:#2E7D4F}.tk.n{color:var(--muted)}.tk.n i{color:var(--wine-ink)}.tk.out{color:var(--fg2)}.tk.out i{color:var(--wine-ink)}
@@ -1152,6 +1160,9 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
       <div class="fb-row"><button type="submit" id="fb-s">Send</button><button type="button" class="fb-later" id="fb-l">Not now</button></div></form></div>
   <div id="fb-done" hidden><b>Thanks!</b><p>Got it. Your note was sent.</p></div>
 </div>
+<div class="ci" id="ci" hidden aria-hidden="true"><div class="ci-ln"><b>&gt;</b><span id="ci-t"></span><i class="ci-cur"></i></div>
+ <div class="ci-br" id="ci-br"><svg viewBox="0 0 100 100" class="ci-logo" aria-hidden="true"><g transform="translate(8 6) scale(.84)"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#7A1F33" stroke-width="2.5" fill="none"/></g></svg><div class="ci-wm">cavs_<span>db</span><i class="ci-cur"></i></div><h2 class="ci-tg" id="ci-tg">Everything Cavaliers.<em>Everything you need.</em></h2></div>
+ <button class="ci-skip" id="ci-skip" type="button">Skip</button></div>
 <footer><div class="wrap">
   <span>cavsdatabase.com · Independent fan reference. Not affiliated with the Cleveland Cavaliers or the NBA.</span>
 </div></footer>
@@ -2809,6 +2820,19 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-go]');if(!
 window.addEventListener('popstate',()=>show(routeOf()));
 window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(SECTIONS.some(x=>x[0]===h)||ROUTE_ALIAS[h])go(ROUTE_ALIAS[h]||h)});
 {const r=routeOf();if(location.protocol!=='file:'&&location.hash&&(SECTIONS.some(x=>x[0]===location.hash.slice(1))||ROUTE_ALIAS[location.hash.slice(1)])){try{history.replaceState({p:r},'',(r==='home'?'/':'/'+r)+location.search)}catch(_){}}show(r)}
+
+/* first-visit intro: home page only, once per browser, skipped for reduced motion and on June 19 */
+(function(){const I=document.getElementById('ci');if(!I)return;let seen=false;try{seen=!!localStorage.getItem('cdb-intro')}catch(e){seen=true}
+  const force=/preview=intro/.test(location.search);
+  if(!force&&(seen||routeOf()!=='home'||matchMedia('(prefers-reduced-motion: reduce)').matches||document.getElementById('cel')))return;
+  try{localStorage.setItem('cdb-intro','1')}catch(e){}
+  const T=document.getElementById('ci-t'),B=document.getElementById('ci-br'),G=document.getElementById('ci-tg');let stop=false;
+  const done=()=>{stop=true;I.classList.add('out');document.documentElement.style.overflow='';setTimeout(()=>I.remove(),700)};
+  I.hidden=false;I.removeAttribute('aria-hidden');document.documentElement.style.overflow='hidden';document.getElementById('ci-skip').onclick=done;
+  const sl=ms=>new Promise(r=>setTimeout(r,ms));
+  (async()=>{const Q=['how much cap space do the cavs have?','who does the 2027 first go to?','when is the trade deadline?'];await sl(300);
+    for(const q of Q){for(const c of q){if(stop)return;T.textContent+=c;await sl(30)}await sl(380);while(T.textContent.length){if(stop)return;T.textContent=T.textContent.slice(0,-1);await sl(9)}await sl(100)}
+    if(stop)return;B.classList.add('on');await sl(70);B.classList.remove('on');await sl(70);B.classList.add('on');await sl(300);G.classList.add('on');await sl(1400);if(!stop)done()})()})();
 
 /* split-flap: record tiles flip into place on load; splits and the last score scramble in */
 (function(){
