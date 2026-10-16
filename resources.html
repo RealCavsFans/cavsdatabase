@@ -237,6 +237,16 @@ a{color:var(--wine-ink);text-decoration:none}a:hover{text-decoration:underline}
 .page{padding-block:32px 64px;display:flex;flex-direction:column;gap:20px}
 h1{margin:0;font:800 clamp(28px,4vw,36px)/1.1 var(--sans);font-stretch:115%;letter-spacing:-.02em;text-wrap:balance}
 .tablebox{overflow-x:auto;border:1px solid var(--line);overscroll-behavior-x:contain}
+.say{appearance:none;border:0;background:none;padding:2px 3px;margin-left:4px;color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:4px;vertical-align:-2px;border-radius:4px}.say svg{width:15px;height:15px}.say i{font:600 10.5px var(--mono);font-style:normal;letter-spacing:.02em}.say:hover,.say.on{color:var(--wine-ink)}.say.on svg{animation:sayp .6s ease-in-out infinite alternate}@keyframes sayp{to{transform:scale(1.18)}}
+.ds-ed{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--wine-ink);margin-left:auto;font:700 11.5px var(--sans);letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;cursor:pointer;margin-right:8px}.ds-ed[aria-pressed=true]{background:#F2B231;border-color:#F2B231;color:#101419}
+.ds-note{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#FFF6E0;border-left:3px solid #F2B231;padding:8px 12px;font-size:13px;color:#101419}.ds-rs{appearance:none;border:0;background:none;color:var(--wine-ink);font:700 13px var(--sans);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.dnd{user-select:none;-webkit-user-select:none}.dnd #dv-chart .c1,.dnd #dv-chart .c2,.dnd #dv-chart .c3,.dnd #dv-chart .tw,.dnd .pt-faces>a{cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;outline:1px dashed rgba(122,31,51,.35);outline-offset:-3px}
+.dnd .pt-faces>a{outline-offset:2px;border-radius:6px}
+.ds-from{opacity:.3}.ds-over{outline:2px solid #F2B231!important;outline-offset:-2px!important;background:rgba(242,178,49,.18)!important}
+.ds-ghost{position:fixed;z-index:200;pointer-events:none;display:flex;align-items:center;gap:8px;background:#101419;color:#fff;box-shadow:0 12px 28px rgba(0,0,0,.3);transform:rotate(-3deg);border-radius:30px;padding:4px 14px 4px 4px;font:700 13px var(--sans);white-space:nowrap;border:2px solid #F2B231}.ds-ghost img{width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:50% 10%;background:#2a2f36}
+.ds-pop{animation:dspop .45s ease-out}@keyframes dspop{0%{transform:scale(1.08);background:rgba(242,178,49,.3)}100%{transform:none}}
+
+tr.mark td{white-space:normal!important;line-height:1.45;text-indent:-16px;padding-left:28px!important}tr.mark{max-width:100%}
 .fapp{appearance:none;background:none;border:0;padding:0;cursor:pointer}@media (max-width:760px){.fright{flex-wrap:wrap;justify-content:center;gap:10px 18px}}.app-lede{margin:0 0 10px;font-size:14px;color:var(--muted)}.app-ol{list-style:none;margin:0;padding:0}.app-ol li{padding:9px 0;border-top:1px solid var(--line2);font-size:14.5px}.app-ol b{display:block;font-weight:700}.app-ol span{color:var(--fg)}
 .cmp{position:fixed;inset:0;z-index:120}.cmp-bg{position:absolute;inset:0;background:rgba(16,20,25,.42)}
 .cmp-p{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:min(560px,100%);max-height:88vh;overflow:auto;background:var(--card);border-top:3px solid #860038;border-radius:12px 12px 0 0;box-shadow:0 -14px 40px rgba(0,0,0,.25);padding:14px 16px 18px;animation:cmpup .22s ease-out}
@@ -1159,7 +1169,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
       <div class="inj-note" id="inj-note"></div>
     </section>
     <section class="rail" aria-labelledby="chg-h">
-      <div class="block-h"><h2 id="chg-h"><a href="/charge" data-go="charge" class="h-link">Cleveland Charge</a></h2><span>G League</span></div>
+      <div class="block-h"><h2 id="chg-h"><a href="https://cleveland.gleague.nba.com/" target="_blank" rel="noopener" class="h-link" title="Official Cleveland Charge site">Cleveland Charge ↗</a></h2><span>G League</span></div>
       <div class="cap-label" id="ch-label"></div>
       <div class="ch-next" id="ch-next"></div>
       <div class="ch-meta" id="ch-meta"></div>
@@ -2724,7 +2734,7 @@ setTimeout(function(){const G={};GLOSS.forEach(([,items])=>items.forEach(([t,d])
   document.addEventListener('click',e=>{const sp=e.target.closest('.gt');if(sp){e.preventDefault();e.stopPropagation();if(tip&&tip._for===sp){close();return}open(sp);tip._for=sp;return}if(tip&&!tip.contains(e.target))close()},true);
   document.addEventListener('keydown',e=>{if(e.key==='Escape')close();if(e.key==='Enter'&&document.activeElement&&document.activeElement.classList.contains('gt'))open(document.activeElement)});
   addEventListener('scroll',()=>{if(tip&&Math.abs((tip._y||scrollY)-scrollY)>80)close();if(tip)tip._y=tip._y||scrollY},{passive:true});
-  const ROOTS=['#view-cap','#view-assets','#view-home .o-cap','#view-moves','#view-staff'];
+  const ROOTS=['#view-cap','#view-assets'];
   const run=()=>ROOTS.forEach(q=>document.querySelectorAll(q).forEach(wrap));
   if(document.readyState==='complete')setTimeout(run,300);else addEventListener('load',()=>setTimeout(run,300));
   window.cdbTerms=wrap},0);
@@ -3101,7 +3111,7 @@ const CH_STAFF=[
 (function(){const tb=document.getElementById('ch-sched');if(!tb)return;
   const now=new Date(Date.now()-3*3600e3);const tip=chTip;
   const nxt=CHARGE.games.find(g=>!g[4]&&tip(g)>now);
-  CHARGE.games.forEach(g=>{const tr=el('tr');if(g===nxt)tr.classList.add('nextg');const dtd=el('td','mono chd');const dt0=new Date(g[0]+'T12:00:00');dtd.append(el('span','dw',dt0.toLocaleDateString('en-US',{weekday:'short'})),' ',el('span','dd',dt0.toLocaleDateString('en-US',{month:'short',day:'numeric'})));const otd=el('td','opp');otd.append(g[2]==='H'?'vs ':'at ');if(CH_TEAM_URL[g[1]]){const oa=el('a',null,g[1]);oa.href=CH_TEAM_URL[g[1]];oa.target='_blank';oa.rel='noopener';otd.appendChild(oa)}else otd.append(g[1]);tr.append(dtd,otd,el('td','mono dim',chTime(g)),el('td','dim',g[5]||(g[2]==='H'?CH_ARENA.H:(CH_ARENA[g[1]]||''))),el('td','r mono',g[4]||''));tb.appendChild(tr)});
+  CHARGE.games.forEach(g=>{const tr=el('tr');if(g===nxt)tr.classList.add('nextg');const dtd=el('td','mono chd');const dt0=new Date(g[0]+'T12:00:00');dtd.append(el('span','dw',dt0.toLocaleDateString('en-US',{weekday:'short'})),' ',el('span','dd',dt0.toLocaleDateString('en-US',{month:'short',day:'numeric'})));const otd=el('td','opp');otd.append(g[2]==='H'?'vs ':'at ');if(CH_TEAM_URL[g[1]]){const oa=el('a',null,g[1]);oa.href=CH_TEAM_URL[g[1]];oa.target='_blank';oa.rel='noopener';otd.appendChild(oa)}else otd.append(g[1]);tr.append(dtd,otd,el('td','mono dim',chTime(g)),el('td','dim',g[5]||(g[2]==='H'?CH_ARENA.H:(CH_ARENA[g[1]]||''))),(()=>{const td=el('td','r mono');if(g[4]){const d=g[0].replace(/-/g,'');const a=el('a','reslink',g[4]+' ↗');a.href=g[6]||(g[2]==='H'?'https://www.basketball-reference.com/gleague/boxscores/'+d+'0CLC.html':'https://www.basketball-reference.com/gleague/boxscores/?month='+(+g[0].slice(5,7))+'&day='+(+g[0].slice(8))+'&year='+g[0].slice(0,4));a.target='_blank';a.rel='noopener';a.title='Box score';td.appendChild(a)}return td})());tb.appendChild(tr)});
   /* leaders: top 3 in each category once the season starts */
   if(CH_STATS.length){const box=document.getElementById('ch-lead');document.getElementById('ch-lead-sec').hidden=false;
     const mg=Math.max(...CH_STATS.map(r=>r[1])),q=r=>r[1]>=Math.max(1,Math.ceil(mg*.4));
@@ -3212,6 +3222,7 @@ const DEPTH_ON=true;
 const DEPTH_PICK=/preview=(depth|stack)/.test(location.search)?'depth':null;
 const DEPTH=[['PG',['James Harden','Craig Porter Jr.','Tyrese Proctor'],null],['SG',['Donovan Mitchell','Sam Merrill','Meleek Thomas'],null],['SF',['Peyton Watson','Jaylon Tyson','Tristan Enaruna'],'Riley Minix'],['PF',['Evan Mobley','Mario Hezonja',"Nae'Qwan Tomlin"],null],['C',['Jarrett Allen','Thomas Bryant','Khalifa Diop'],'Ernest Udeh Jr.']];
 const DEPTH_TIERS=[['Starters','The opening five',['James Harden','Donovan Mitchell','Peyton Watson','Evan Mobley','Jarrett Allen']],['Rotation','Nightly minutes off the bench',['Sam Merrill','Jaylon Tyson','Craig Porter Jr.','Mario Hezonja']],['Depth','Spot minutes, matchups, injuries',['Thomas Bryant',"Nae'Qwan Tomlin",'Tyrese Proctor','Meleek Thomas']],['Developmental','Young players and two-ways; time with the Charge',['Khalifa Diop','Tristan Enaruna','Riley Minix','Ernest Udeh Jr.']]];
+const DND_ON=false;
 function buildDepth(){
   const P=n=>PLAYERS.find(p=>p[1]===n);const HSU=id=>'https://cdn.nba.com/headshots/nba/latest/260x190/'+id+'.png';
   const lastN=n=>n.split(' ').filter(w=>!/^(Jr\.|III|II)$/.test(w)).pop();
@@ -3220,7 +3231,7 @@ function buildDepth(){
   const INJ=n=>{const r=INJURIES.find(x=>x[0]===n);return r?'<i class="injx" title="'+r[2]+': '+r[3]+'">+</i>':''};
   const nm=p=>'<span class="t"><b>'+p[1]+INJ(p[1])+' <em>#'+p[0]+'</em></b>'+(p[11]==='TW'?'<span>two-way</span>':'')+'</span>';
   /* chart */
-  let h='<div class="dsheet"><div class="ds-hdr"><b>Cavaliers Depth Chart</b><span class="dsw" role="group" aria-label="Depth view"><button type="button" data-dv="chart" aria-pressed="true">Chart</button><button type="button" data-dv="pyr" aria-pressed="false">Pyramid</button></span></div>';
+  let h='<div class="dsheet"><div class="ds-hdr"><b>Cavaliers Depth Chart</b>'+(DND_ON||/[?&]dnd=1/.test(location.search)?'<button type="button" class="ds-ed" id="ds-ed" aria-pressed="false">Make your own</button>':'')+'<span class="dsw" role="group" aria-label="Depth view"><button type="button" data-dv="chart" aria-pressed="true">Chart</button><button type="button" data-dv="pyr" aria-pressed="false">Pyramid</button></span></div>';
   h+='<div id="dv-chart"><div class="ds-grid"><div class="ch">Pos</div><div class="ch s1">Starter</div><div class="ch">2nd</div><div class="ch">3rd</div><div class="ch">Two-way</div>';
   DEPTH.forEach(([pos,ns,tw])=>{h+='<div class="pz">'+pos+'</div>';ns.forEach((n,k)=>{const p=P(n);h+='<div class="'+(k?'c'+(k+1):'c1')+'">'+link(p,face(p,'av')+nm(p))+'</div>'});
     const t=tw&&P(tw);h+='<div class="tw'+(t?'':' none')+'">'+(t?link(t,face(t,'av sm')+nm(t)):'<span class="dim">—</span>')+'</div>'});
@@ -3231,6 +3242,25 @@ function buildDepth(){
   h+='</div><div class="ds-foot">Tiers are an editorial call and will follow minutes once the season starts</div></div></div>';
   const rd=document.getElementById('rv-depth');rd.innerHTML=h;
   rd.querySelectorAll('[data-dv]').forEach(b=>b.addEventListener('click',()=>{rd.querySelectorAll('[data-dv]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));document.getElementById('dv-chart').hidden=b.dataset.dv!=='chart';document.getElementById('dv-pyr').hidden=b.dataset.dv!=='pyr'}));
+  /* make your own: drag any player onto another to swap them (chart), or onto another tier (pyramid). Nothing is saved; leaving the page resets it. */
+  const ed=document.getElementById('ds-ed');if(ed){const sheet=rd.querySelector('.dsheet');const orig={c:document.getElementById('dv-chart').innerHTML,p:document.getElementById('dv-pyr').innerHTML};
+    const note=el('div','ds-note');note.hidden=true;note.innerHTML='<span><b>Your depth chart.</b> Drag a player onto another to swap. Resets when you leave.</span>';const rs=el('button','ds-rs','Reset');rs.type='button';note.appendChild(rs);sheet.querySelector('.ds-hdr').after(note);
+    rs.onclick=()=>{document.getElementById('dv-chart').innerHTML=orig.c;document.getElementById('dv-pyr').innerHTML=orig.p};
+    ed.onclick=()=>{const on=ed.getAttribute('aria-pressed')!=='true';ed.setAttribute('aria-pressed',String(on));ed.textContent=on?'Done':'Make your own';sheet.classList.toggle('dnd',on);note.hidden=!on};
+    const SLOT='#dv-chart .c1,#dv-chart .c2,#dv-chart .c3,#dv-chart .tw,#dv-pyr .pt-faces>a';
+    let drag=null;
+    sheet.addEventListener('click',e=>{if(sheet.classList.contains('dnd')&&e.target.closest('#dv-chart a,#dv-pyr a'))e.preventDefault()},true);
+    sheet.addEventListener('pointerdown',e=>{if(!sheet.classList.contains('dnd'))return;const sl=e.target.closest(SLOT);if(!sl||!sl.querySelector('img,b')&&!sl.matches('a'))return;e.preventDefault();
+      const r=sl.getBoundingClientRect();const g=el('div','ds-ghost');const im=sl.querySelector('img');if(im){const i2=document.createElement('img');i2.src=im.src;i2.alt='';g.appendChild(i2)}g.appendChild(el('b',null,(sl.querySelector('b')?.childNodes[0]?.textContent||'').trim()));g.style.left=(e.clientX-24)+'px';g.style.top=(e.clientY-24)+'px';document.body.appendChild(g);
+      drag={sl,g,dx:24,dy:24,over:null};sl.classList.add('ds-from');try{sl.setPointerCapture(e.pointerId)}catch(x){}});
+    const targetAt=(x,y)=>{drag.g.style.display='none';const t=document.elementFromPoint(x,y);drag.g.style.display='';if(!t)return null;return t.closest(SLOT)||t.closest('#dv-pyr .pt-band')};
+    addEventListener('pointermove',e=>{if(!drag)return;drag.g.style.left=(e.clientX-drag.dx)+'px';drag.g.style.top=(e.clientY-drag.dy)+'px';const t=targetAt(e.clientX,e.clientY);if(drag.over&&drag.over!==t)drag.over.classList.remove('ds-over');if(t&&t!==drag.sl){t.classList.add('ds-over');drag.over=t}else drag.over=null});
+    const end=e=>{if(!drag)return;const {sl,g}=drag;const t=drag.over;g.remove();sl.classList.remove('ds-from');if(t)t.classList.remove('ds-over');
+      if(t&&t!==sl){const pyr=sl.matches('a');if(pyr){if(t.matches('a')){const ph=document.createComment('');t.before(ph);sl.before(t);ph.replaceWith(sl)}else if(t.matches('.pt-band')&&!t.contains(sl))t.querySelector('.pt-faces').appendChild(sl)}
+        else if(!t.matches('a,.pt-band')){const a=[...sl.childNodes],b=[...t.childNodes];sl.replaceChildren(...b);t.replaceChildren(...a);sl.classList.toggle('none',!sl.querySelector('img,b'));t.classList.toggle('none',!t.querySelector('img,b'))}
+        const moved=sl.matches('a')?sl:t;moved.classList.add('ds-pop');setTimeout(()=>moved.classList.remove('ds-pop'),450)}
+      drag=null};
+    addEventListener('pointerup',end);addEventListener('pointercancel',end)}
 }
 /* announcement for each acquisition (NBA.com / NBA G League) */
 const ACQ_URL={'James Harden':'https://www.nba.com/cavaliers/news/releases-james-harden-260204','Thomas Bryant':'https://www.nba.com/news/cavaliers-sign-thomas-bryant','Evan Mobley':'https://www.nba.com/cavaliers/features/draft-mobley-210729','Sam Merrill':'https://www.nba.com/cavaliers/news/releases-sam-merrill-10-day-230303','Peyton Watson':'https://www.nba.com/cavaliers/news/releases-peyton-watson-260821','Craig Porter Jr.':'https://gleague.nba.com/news/cavaliers-sign-emoni-bates-isaiah-mobley-and-craig-porter-jr-to-two-way-contracts','Meleek Thomas':'https://www.nba.com/cavaliers/news/releases-thomas-udeh-signing-260701','Khalifa Diop':'https://www.nba.com/cavaliers/news/releases-khalifa-diop-260902','Jaylon Tyson':'https://www.nba.com/cavaliers/news/releases-jaylon-tyson-240627','Tyrese Proctor':'https://www.nba.com/cavaliers/news/features-nba-draft-250627','Jarrett Allen':'https://www.nba.com/cavaliers/releases/allen-prince-trade-210114','Mario Hezonja':'https://www.nba.com/cavaliers/news/releases-mario-hezonja-260731',"Nae'Qwan Tomlin":'https://www.nba.com/cavaliers/news/releases-naeqwan-tomlin-10-day-250220','Donovan Mitchell':'https://www.nba.com/cavaliers/news/releases-mitchell-trade-220903','Riley Minix':'https://www.nba.com/cavaliers/news/releases-riley-minix-260214','Tristan Enaruna':'https://www.nba.com/cavaliers/news/releases-tristan-enaruna-two-way-260128','Ernest Udeh Jr.':'https://www.nba.com/cavaliers/news/releases-thomas-udeh-signing-260701'};
@@ -3243,6 +3273,8 @@ const MCOMP={"James Harden":[["Ochai Agbaji","NYK",1630534,2022,76.5,82.25,104,2
 const WPCT={"James Harden":["G",93,94,88],"Thomas Bryant":["B",95,94,93],"Evan Mobley":["B",80,null,48],"Sam Merrill":["G",25,null,5],"Peyton Watson":["W",78,90,69],"Craig Porter Jr.":["G",19,null,24],"Meleek Thomas":["G",46,61,37],"Jaylon Tyson":["W",9,25,18],"Tyrese Proctor":["G",54,67,24],"Jarrett Allen":["B",91,72,91],"Nae'Qwan Tomlin":["B",60,65,68],"Donovan Mitchell":["G",87,27,98]};const WGRP={G:['guards',688],W:['wings',496],B:['bigs',629]};
 /* Basketball Reference college codes: links each college to every NBA player who went there */
 const COLLEGE_BBR={'Arizona State':'arizonast','Arkansas':'arkansas','California':'california','Cleveland State':'clevst','Duke':'duke','Indiana':'indiana','Louisville':'louisville','Memphis':'memphis','Miami':'miamifl','Morehead State':'morehead','Pittsburgh':'pitt','Texas':'texas','UCLA':'ucla','USC':'usc','Utah State':'utahst','Wichita State':'wichitast'};
+/* how to say it: the player's own recording from NBA.com's 2025–26 pronunciation guide (cdn.nba.com/logos/nba/playername-audio/2025-26/<file>.wav), plus the guide's written respelling where it gives one. Players without a clip are left out. */
+const PRON={"James Harden":"lac/jamesHARDEN_201935","Thomas Bryant":"cle/thomasBRYANT_1628418","Evan Mobley":"cle/evanMOBLEY_1630596","Sam Merrill":"cle/samMERRILL_1630241","Peyton Watson":"den/peytonWATSON_1631212","Craig Porter Jr.":"cle/craigPORTER_JR_1641854","Jaylon Tyson":"cle/jaylonTYSON_1642281","Tyrese Proctor":"cle/tyresePROCTOR_1642878","Jarrett Allen":"cle/jarrettALLEN_1628386","Nae'Qwan Tomlin":"cle/naeqwanTOMLIN_1641772","Donovan Mitchell":"cle/donovanMITCHELL_1628378"};const PRON_TX={"Jaylon Tyson":"JAY-len","Nae'Qwan Tomlin":"NAY-KWAN"};
 const COMBINE={
  'James Harden':[2009,76,77.25,82.75,103.5,222,10.1,null,null,'NBA combine'],
  'Thomas Bryant':[2017,81.5,82.75,90,112.5,247.8,9.4,9.5,10.25,'NBA combine'],
@@ -3271,7 +3303,7 @@ const COMBINE={
     [rb,mb].forEach((tb,k)=>{const g=el('tr','grp');const td=el('td',null,label+' · '+ps.length);td.colSpan=k?10:8;g.appendChild(td);tb.appendChild(g)});
     ps.forEach(([no,n,pos,ht,wt,b,age,exp,sch,cty,dr,stt,pid])=>{
       const tr=el('tr');tr.id='r-'+slug(n);
-      const nm=el('td','pl');const pa=el('a','plink',n);if(PP_ON){pa.href='/players/'+slug(n);pa.dataset.go='players/'+slug(n);pa.title=n+': full player page'}else{pa.href=profileUrl(n,pid);pa.target='_blank';pa.rel='noopener';pa.title=RAPM[n]?'RAPM profile on nbarapm':'Profile on NBA.com'}nm.appendChild(pa);if(stt){nm.appendChild(el('span','tag',stt))}
+      const nm=el('td','pl');const pa=el('a','plink',n);if(PP_ON){pa.href='/players/'+slug(n);pa.dataset.go='players/'+slug(n);pa.title=n+': full player page'}else{pa.href=profileUrl(n,pid);pa.target='_blank';pa.rel='noopener';pa.title=RAPM[n]?'RAPM profile on nbarapm':'Profile on NBA.com'}nm.appendChild(pa);if(PRON[n]){const sb=el('button','say');sb.type='button';sb.title='Hear '+n+' say his name'+(PRON_TX[n]?' ('+PRON_TX[n]+')':'');sb.setAttribute('aria-label',sb.title);sb.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';if(PRON_TX[n])sb.appendChild(el('i',null,PRON_TX[n]));sb.onclick=e=>{e.preventDefault();e.stopPropagation();const au=window._say||(window._say=new Audio());au.src='https://cdn.nba.com/logos/nba/playername-audio/2025-26/'+PRON[n]+'.wav';sb.classList.add('on');au.onended=au.onerror=()=>sb.classList.remove('on');au.play().catch(()=>sb.classList.remove('on'))};nm.appendChild(sb)}if(stt){nm.appendChild(el('span','tag',stt))}
       const hs=el('img','hs');hs.src='https://cdn.nba.com/headshots/nba/latest/260x190/'+pid+'.png';hs.alt='';hs.loading='lazy';hs.onerror=()=>hs.remove();nm.prepend(hs);{const sm=el('small','pos',pos+' · '+cty);const so=socialLinks(n);if(so)sm.appendChild(so);nm.appendChild(sm)}
       const two=(a,b2)=>{const td=el('td','m two');td.append(a);td.appendChild(el('small',null,b2));return td};
       const L=(td,l)=>{td.dataset.l=l;return td};
