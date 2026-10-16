@@ -1026,7 +1026,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
           <h3 class="sr" id="nx-title">at Philadelphia</h3><span class="sr" id="next-h">Last result &amp; next game</span>
           <div class="gteams"><span class="tm cle" aria-hidden="true">CLE</span><span class="gat" id="nx-at" aria-hidden="true">at</span><span class="tm" id="nx-opp"><a class="opp" href="https://www.basketball-reference.com/teams/PHI/2027.html" target="_blank" rel="noopener" title="Philadelphia on Basketball Reference">PHI</a></span></div>
           <div class="nx-when"><span id="nx-meta"><a class="pvlink" href="https://www.nba.com/game/cle-vs-phi-0022600006" target="_blank" rel="noopener" title="Game preview on NBA.com">Thursday, Oct 22 · 7:00 PM ET · ESPN ↗</a></span></div>
-          <span class="gdays" id="cd" role="timer" aria-label="Countdown to tip-off"><small>Tip-off in</small><span class="cdw"><span class="cdn"><b id="cd-d">06</b><b id="cd-h">07</b><b id="cd-m">09</b><b id="cd-s">34</b></span><span class="cdl"><i>Days</i><i>Hrs</i><i>Min</i><i>Sec</i></span></span></span>
+          <span class="gdays" id="cd" role="timer" aria-label="Countdown to tip-off"><small>Tip-off in</small><span class="cdw"><span class="cdn"><b id="cd-d">06</b><b id="cd-h">07</b><b id="cd-m">05</b><b id="cd-s">51</b></span><span class="cdl"><i>Days</i><i>Hrs</i><i>Min</i><i>Sec</i></span></span></span>
           <div class="ginfo nx-then-row"><span id="nx-then"><b>After that </b>Sat, Oct 24 vs <a href="https://www.basketball-reference.com/teams/BRK/2027.html" target="_blank" rel="noopener" class="opp">Brooklyn</a> · 7:30 PM</span></div>
         </div>
       </section>
@@ -2495,7 +2495,7 @@ SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
     /* tale of the tape: each stat with its league rank, better side in bold */
     if(TS.CLE&&TS[o]){const tape=el('div','gp-tape');const all=Object.values(TS);
       const rk=(v,i,hi)=>1+all.filter(t=>hi?t[i]>v:t[i]<v).length;
-      const ROWS=[['Record',-2,1,null],['Net, last 2 wks',-3,1,v=>(v>0?'+':'')+v.toFixed(1)],['Off rating',4,1,v=>v.toFixed(1)],['Def rating',5,0,v=>v.toFixed(1)],['Net rating',-1,1,v=>(v>0?'+':'')+v.toFixed(1)],['Pace',6,1,v=>v.toFixed(1)]];
+      const ROWS=[['Record',-2,1,null],['Off rating',4,1,v=>v.toFixed(1)],['Def rating',5,0,v=>v.toFixed(1)],['Net rating',-1,1,v=>(v>0?'+':'')+v.toFixed(1)],['Net, last 2 wks',-3,1,v=>(v>0?'+':'')+v.toFixed(1)],['Pace',6,1,v=>v.toFixed(1)]];
       const l14=Object.values(L14).map(x=>x[0]);const val=(t,i)=>i===-3?(t===TS.CLE?(L14.CLE||[])[0]:(L14[o]||[])[0]):i===-2?t[0]/Math.max(1,t[0]+t[1]):i<0?+(t[4]-t[5]).toFixed(1):t[i];
       ROWS.forEach(([lab,i,hi,f])=>{const a=val(TS.CLE,i),b=val(TS[o],i);if(i===-3&&(a==null||b==null)){tape.append(el('span','gtv',a==null?'—':f(a)),el('span','gtl',lab),el('span','gtv r',b==null?'—':f(b)));return}const rr=v=>1+(i===-3?l14.filter(x=>x>v).length:all.filter(t=>val(t,i)>v).length);const ra=i<0?rr(a):rk(a,i,hi),rb=i<0?rr(b):rk(b,i,hi);const fmt=(t,v)=>f?f(v):t[0]+'–'+t[1];
         const better=lab==='Pace'?0:(hi?a>b:a<b)?1:(hi?b>a:b<a)?2:0;
