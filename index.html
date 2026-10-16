@@ -535,7 +535,7 @@ tr.nextg td{background:color-mix(in srgb,var(--wine) 7%,transparent)}
  .sched .tvc b,.sched .tvc span{display:inline}.sched .tvc b+span::before{content:" · "}
  .sched .gtag{margin-left:6px;font-size:8.5px;padding:0 4px}
  .sched tr.mark{display:block;padding:0;border-top:1px solid var(--line2)}
- .sched tr.nextg{background:color-mix(in srgb,var(--wine) 7%,transparent)}
+ .sched tr.nextg{background:color-mix(in srgb,var(--wine) 7%,transparent)}.sched tr.nextg td{background:none!important}
  .sched tr.mark td{display:block;background:var(--sub);font:600 12px var(--sans);color:var(--fg);padding:7px 12px!important;box-shadow:inset 3px 0 0 var(--wine)}
  .sched tr.mark.cupm td{box-shadow:inset 3px 0 0 #D99A12}
  .sched tr.mark .mk-dot{width:6px;height:6px;margin-right:8px;vertical-align:1px}
@@ -750,6 +750,8 @@ table.apt{width:100%;min-width:0;border-collapse:collapse;font-size:13px;table-l
 .rc-in{min-width:0;display:flex;flex-direction:column;gap:1px}.rc-in>b{font-size:14px;color:var(--fg)}.rc-bio,.rc-sz{font-size:12px;color:var(--muted)}.rc-sz{margin-top:4px;color:var(--fg2);font-weight:600}
 .rc-st{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}.rc-st div{background:var(--bg);border:1px solid var(--line);padding:3px 7px;text-align:center;min-width:44px}.rc-st b{display:block;font:700 13px var(--mono);color:var(--fg)}.rc-st span{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
 .rc-note{font-size:11.5px;color:var(--muted);margin:0 0 6px!important}.rc-hl{margin:0 0 8px;padding-left:18px;font-size:12.5px}.rc-hl li{border:0!important;margin-bottom:3px}
+.gprev td{background:color-mix(in srgb,var(--wine) 4%,transparent);padding:8px 12px!important;border-top:0!important}.gp{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;font-size:12.5px;color:var(--fg2)}.gp-k{font:700 10px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--wine-ink)}.gp-i b{font-weight:700;color:var(--fg)}.gp-l{font-weight:600;margin-left:auto}
+@media (max-width:760px){.sched tr.gprev{display:block;padding:0 12px 10px;border-top:0;background:color-mix(in srgb,var(--wine) 4%,transparent)}.sched tr.gprev td{display:block;background:none;padding:0!important}.gp{gap:4px 14px}.gp-l{margin-left:0}}
 .sp-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:24px;align-items:start}@media(max-width:900px){.sp-top{grid-template-columns:minmax(0,1fr)}}
 .sp-card{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--wine);padding:14px 16px}
 .sp-mu b{display:block;font-size:18px}.sp-mu span{font-size:12.5px;color:var(--muted)}
@@ -1015,7 +1017,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
       <h1 style="margin-top:6px">2026–27 schedule</h1>
       <p class="dim" style="margin:6px 0 0">80 games set; 2 more are scheduled after the NBA Cup knockout round. All times Eastern.</p>
     </div>
-    <div class="sp-top"><section id="sp-prev"></section><section id="sp-std"></section></div>
+    <section id="sp-std"></section>
     <div id="sched"></div>
     <p class="dim" style="margin:0;font-size:13px">Local TV: DAZN, plus 15 free over-the-air games on WOIO 19 and WUAB 43 (also on Rock Entertainment Sports Network). Games on ESPN, ABC, NBC, Peacock or Prime Video are national broadcasts and may not air locally.</p>
   </div>
@@ -1062,7 +1064,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
       <tbody id="measbody"></tbody>
     </table></div>
     <div id="rv-depth" hidden></div>
-    <section class="msw"><div class="block-h"><h2>Milestone watch</h2><span>At this season’s pace</span></div><div class="ms" id="ms"></div></section>
+
   </div>
 </main>
 
@@ -1335,20 +1337,6 @@ const BOX={};    /* optional exact NBA.com box score URL per date; otherwise the
 /* Net ratings (Basketball Reference). Shown in the season block; '—' until games are played. */
 /* standings, all 30 teams once the season starts: [abbr, 'E'|'W', W, L]. Basketball Reference standings (daily task). */
 const STANDINGS=[];
-/* next opponent extras (daily task): injuries from CBS Sports (real injuries only, not rest), last meeting and last season's series from Basketball Reference */
-const NEXT_OPP={opp:'PHI',inj:[['Anfernee Simons','Hamstring','Game-time decision'],['Adem Bona','Foot','Game-time decision'],['Dom Barlow','Back','Game-time decision'],['Tacko Fall','Hip','Game-time decision'],['Ariel Hukporti','Achilles','Out']],last:'W 115–101 vs Philadelphia, Mar 9, 2026',series:'2025–26: Cavs 4–0'};
-/* milestone watch: [player, 'Cavs'|'Career', stat, current total, target, per game this season (last season until games are played), what it means]. Basketball Reference totals through 2025–26. */
-const MILESTONES=[
- ['James Harden','Career','points',29339,30000,23.6,'30,000 career points'],
- ['James Harden','Career','assists',8873,9000,8.0,'9,000 career assists'],
- ['Donovan Mitchell','Cavs','3-pointers',884,957,3.2,'Passes Darius Garland (956) for 3rd in Cavs history'],
- ['Donovan Mitchell','Cavs','points',7038,7664,27.9,'Passes Kevin Love (7,663) for 10th in Cavs history'],
- ['Jarrett Allen','Cavs','blocks',431,451,0.84,'Passes Jim Chones (450) for 7th in Cavs history'],
- ['Jarrett Allen','Cavs','rebounds',3859,4455,8.5,'Passes Anderson Varejão (4,454) for 7th in Cavs history'],
- ['Evan Mobley','Cavs','rebounds',2994,3000,9.0,'3,000 rebounds as a Cavalier'],
- ['Evan Mobley','Cavs','blocks',532,600,1.74,'600 blocks as a Cavalier'],
- ['Sam Merrill','Cavs','3-pointers',443,551,3.0,'Passes Wesley Person (550) for 10th in Cavs history']
-];
 const NRTG={}; /* 2026-27 season, all 30 teams: 'CLE':[net rating, games played] (used for the Cavs value and league rank) */
 const L14={};  /* Cavs only, last 14 days: 'CLE':[net rating, games] */
 /* Cleveland Charge (RealGM). [date, opponent, H/A, time ET, result e.g. 'W 118-110' or ''] */
@@ -1401,9 +1389,7 @@ const nr=NRTG.CLE?sgn(NRTG.CLE[0])+' ('+ord(1+Object.values(NRTG).filter(v=>v[0]
 const nr14=L14.CLE?sgn(L14.CLE[0]):'—';
 [['East rank',SEASON.eastRank],['Central rank',SEASON.centralRank||'—'],['Home',rec('H')],['Road',rec('A')],['Last 10',last10.length?last10.filter(x=>x==='W').length+'–'+last10.filter(x=>x==='L').length:'—'],['Streak',streak],['Net rating',nr],['Net, 2 wks',nr14]]
   .forEach(([k,v])=>{const d=el('div');d.append(el('dt',null,k),el('dd',null,v));sp.appendChild(d)});
-{const hl=el('p','home-std');const E=STANDINGS.filter(t=>t[1]==='E').sort((x,y)=>(y[2]-y[3])-(x[2]-x[3])||y[2]-x[2]);const ci=E.findIndex(t=>t[0]==='CLE');
- if(ci>=0){const top=E[0],C=E[ci];const gbv=((top[2]-C[2])+(C[3]-top[3]))/2;hl.append(ord(ci+1)+' in the East · '+(ci===0?'leads by '+(E[1]?(((C[2]-E[1][2])+(E[1][3]-C[3]))/2).toFixed(1):'0')+' games':gbv.toFixed(1)+' games back of '+TEAMS[top[0]])+' · ')}else hl.append('Standings start after opening night · ');
- const a=el('a',null,'Standings & schedule →');a.href='#schedule';a.dataset.go='schedule';hl.appendChild(a);sp.parentNode.insertBefore(hl,sp.nextSibling)}
+{const hl=el('p','home-std');const a=el('a',null,'Standings →');a.href='#schedule';a.dataset.go='schedule';hl.appendChild(a);sp.parentNode.insertBefore(hl,sp.nextSibling)}
 const strip=document.getElementById('strip');for(let i=0;i<82;i++)strip.appendChild(el('span',res[i]==='W'?'w':res[i]==='L'?'l':null));
 strip.setAttribute('aria-label','Game-by-game results: '+W+' wins, '+L+' losses');
 const tipOf=g=>{const [h,m]=g[3].split(':').map(Number);const hh=h===12?12:h+12;const off=(g[0]<'2026-11-01'||g[0]>='2027-03-14')?'-04:00':'-05:00';
@@ -2100,25 +2086,9 @@ RES.forEach(([g,items])=>{const sec=el('section');const h=el('div','block-h');h.
   items.forEach(([n,d,dom,u])=>{const a=el('a','res');a.href=u;a.target='_blank';a.rel='noopener';a.append(el('b',null,n),el('span',null,d),el('em',null,dom+' ↗'));sec.appendChild(a)});rs.appendChild(sec)});
 
 /* schedule page: next-game preview and standings & race */
-(function(){const pv=document.getElementById('sp-prev'),sd=document.getElementById('sp-std');if(!pv||!sd)return;
+(function(){const sd=document.getElementById('sp-std');if(!sd)return;
   const recOf=a=>{const t=STANDINGS.find(x=>x[0]===a);return t?t[2]+'–'+t[3]:'0–0'};
   const nrOf=a=>NRTG[a]?sgn(NRTG[a][0])+' ('+ord(1+Object.values(NRTG).filter(v=>v[0]>NRTG[a][0]).length)+')':'—';
-  /* preview */
-  const g=SCHEDULE[ni];if(g){const o=g[1],tv=tvFor(g[0]);
-    const h=el('div','block-h');h.append(el('h2',null,'Next game'),el('span',null,shortFmt.format(tipOf(g))+' · '+g[3]+' PM'));pv.appendChild(h);
-    const c=el('div','sp-card');const top=el('div','sp-mu');top.append(el('b',null,(g[2]==='H'?'vs ':'at ')+TEAMS[o]),el('span',null,[tv.nat,tv.loc].filter(Boolean).join(' · ')||'TV TBA'));c.appendChild(top);
-    const prevG=ni>0?SCHEDULE[ni-1]:null;const rest=prevG?Math.round((new Date(g[0])-new Date(prevG[0]))/864e5)-1:null;
-    const cmp=el('div','sp-cmp');[['Record',recOf('CLE'),recOf(o)],['Net rating',nrOf('CLE'),nrOf(o)],['Days of rest',rest==null?'—':rest===0?'0 (back-to-back)':String(rest),'—']].forEach(([k,a,b])=>{cmp.append(el('span','a',a),el('span','m',k),el('span','b',b))});
-    const hd=el('div','sp-cmp sp-h');hd.append(el('span','a','CLE'),el('span','m',''),el('span','b',o));c.append(hd,cmp);
-    const met=SCHEDULE.slice(0,res.length).map((x,i)=>[x,res[i]]).filter(([x])=>x[1]===o);
-    const inj=el('div','sp-inj');inj.appendChild(el('div','pv-k','Injury report'));const ch=el('div','chips');
-    INJURIES.forEach(([n,,,st])=>ch.appendChild(el('span','chip o','CLE · '+n.split(' ').slice(-1)[0]+' ('+st+')')));
-    if(NEXT_OPP.opp===o)NEXT_OPP.inj.forEach(([n,,st])=>ch.appendChild(el('span','chip',o+' · '+n.split(' ').slice(-1)[0]+' ('+st+')')));
-    if(!ch.childNodes.length)ch.appendChild(el('span','dim','No one listed'));inj.appendChild(ch);c.appendChild(inj);
-    const ml=el('p','sp-meet');const thisS=met.length?'This season: '+met.filter(m=>m[1]==='W').length+'–'+met.filter(m=>m[1]==='L').length:'First meeting this season';
-    ml.textContent=(NEXT_OPP.opp===o&&NEXT_OPP.last?'Last meeting: '+NEXT_OPP.last+' · '+NEXT_OPP.series+' · ':'')+thisS;c.appendChild(ml);
-    const lk=el('a','sp-lk','Game preview ↗');const pu=gameUrl(g[0]);if(pu){lk.href=pu;lk.target='_blank';lk.rel='noopener';c.appendChild(lk)}
-    pv.appendChild(c)}
   /* standings & race */
   const h2=el('div','block-h');h2.append(el('h2',null,'East standings & race'));sd.appendChild(h2);
   const E=STANDINGS.filter(t=>t[1]==='E').map(t=>({a:t[0],w:t[2],l:t[3]})).sort((x,y)=>(y.w-y.l)-(x.w-x.l)||y.w-x.w);
@@ -2140,14 +2110,6 @@ RES.forEach(([g,items])=>{const sec=el('section');const h=el('div','block-h');h.
         const r=el('div','tb');r.append(el('i',w>l?'y':l>w?'n':'q',w>l?'✓':l>w?'✕':'–'),TEAMS[t.a]+' · '+w+'–'+l+(lf?', '+lf+' left':''));tbx.appendChild(r)});race.appendChild(tbx)}}
   wrap.appendChild(race);sd.appendChild(wrap)})();
 
-/* milestone watch: closest marks first; ETA counts Cavs games at the player's per-game pace */
-(function(){const box=document.getElementById('ms');if(!box)return;const played=SEASON.results.length;
-  MILESTONES.map(m=>({m,left:m[4]-m[3],games:Math.ceil((m[4]-m[3])/m[5])})).sort((a,b)=>a.games-b.games).forEach(({m,left,games})=>{const [n,sc,st,cur,tg,pg,txt]=m;
-    const d=el('div','mi');const ini=n.split(' ').map(w=>w[0]).join('').slice(0,2);d.append(el('div','av',ini),el('b',null,n.split(' ').slice(-1)[0]+' · '+sc+' '+st),el('span','t',txt));
-    const bar=el('div','bar');const i=el('i');i.style.width=Math.min(100,cur/tg*100).toFixed(1)+'%';bar.appendChild(i);d.appendChild(bar);
-    const f=el('div','f');const g=SCHEDULE[played+games-1];
-    f.append(el('span',null,cur.toLocaleString()+' / '+tg.toLocaleString()),el('em',null,left<=0?'Reached ✓':left.toLocaleString()+' to go'+(g?' · ~'+new Date(g[0]+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):' · next season')));d.appendChild(f);box.appendChild(d)})})();
-
 /* schedule page */
 const sc=document.getElementById('sched');let curM='';let tb;
 const mFmt=new Intl.DateTimeFormat('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
@@ -2167,7 +2129,14 @@ SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
   const rac=el('td','tvc');rac.appendChild(el('span',null,ra.cavs));rac.appendChild(el('small',null,ra.nat));if(ra.opp)rac.appendChild(el('small',null,TEAMS[g[1]]+': '+ra.opp));
   const lk=el('td','r');if(r){const b=el('a',null,'Box score ↗');b.title=boxSrc(g[0]);b.href=boxUrl(g[0]);b.target='_blank';b.rel='noopener';lk.appendChild(b)}else{const pv=gameUrl(g[0]);if(pv){const b=el('a',null,'Preview ↗');b.title='NBA.com game page';b.href=pv;b.target='_blank';b.rel='noopener';lk.appendChild(b)}}
   tr.append(el('td','mono',shortFmt.format(tipOf(g))),op,el('td','mono dim',g[3]+' PM'),tvc,rac,el('td','r mono',r?(r+(SCORES[g[0]]?' '+SCORES[g[0]].replace('-','–'):'')):''),lk);if(mtag)tr.appendChild(mtag);
-  if(i===ni)tr.classList.add('nextg');tb.appendChild(tr)});
+  if(i===ni)tr.classList.add('nextg');tb.appendChild(tr);
+  if(i===ni){const pr=el('tr','gprev');const td=el('td');td.colSpan=7;const o=g[1];
+    const rec=a=>{const t=STANDINGS.find(x=>x[0]===a);return t?t[2]+'–'+t[3]:'0–0'};const nrt=a=>NRTG[a]?sgn(NRTG[a][0]):'—';
+    const prv=i>0?SCHEDULE[i-1]:null;const rest=prv?Math.round((new Date(g[0])-new Date(prv[0]))/864e5)-1:null;
+    const w=el('div','gp');w.appendChild(el('span','gp-k','Preview'));
+    [['Cavs',rec('CLE')+' · net '+nrt('CLE')],[TEAMS[o],rec(o)+' · net '+nrt(o)],['Rest',rest==null?'Season opener':rest===0?'Back-to-back':rest+' day'+(rest===1?'':'s')]].forEach(([k,v])=>{const x=el('span','gp-i');x.append(el('b',null,k+' '),v);w.appendChild(x)});
+    const il=el('a','gp-l','Injury report ↗');il.href='https://www.cbssports.com/nba/injuries/';il.target='_blank';il.rel='noopener';w.appendChild(il);
+    td.appendChild(w);pr.appendChild(td);tb.appendChild(pr)}});
 while(mk<SCHED_MARKS.length){tb.appendChild(markRow(shortFmt.format(new Date(SCHED_MARKS[mk][0]+'T12:00:00'))+' · '+SCHED_MARKS[mk][1]));mk++}
 
 /* staff page — [name, title, first season] */
