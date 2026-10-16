@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Game-day Home mockup</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Saira+Condensed:wght@600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap">
+<style>
+:root{--wine:#860038;--ink:#7A1F33;--gold:#F2B231;--fg:#101419;--fg2:#2F363E;--muted:#5D646C;--line:#E3E5E0;--line2:#EFF0EC;--page:#EEF0F2;--sub:#F5F6F3;--sans:'Archivo',system-ui,sans-serif;--cond:'Saira Condensed',sans-serif;--mono:'Geist Mono',ui-monospace,monospace}
+*{box-sizing:border-box}body{margin:0;background:#E4E6E9;font-family:var(--sans);color:var(--fg)}
+.w{max-width:1260px;margin:0 auto;padding:24px 16px 50px}h1{font:800 24px var(--sans);margin:0 0 4px}.sub{color:var(--muted);font-size:14px;margin:0 0 20px;max-width:760px;line-height:1.5}
+.g{display:grid;grid-template-columns:repeat(3,390px);gap:26px;justify-content:center}@media(max-width:1260px){.g{grid-template-columns:390px}}
+.lab{font:800 11px var(--sans);font-stretch:125%;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);margin:0 0 8px}
+.lab small{display:block;font:500 12.5px var(--sans);letter-spacing:0;text-transform:none;color:var(--muted);margin-top:3px}
+.ph{background:var(--page);border-radius:28px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.18);border:8px solid #0b0d0f}
+.hd{background:#860038;color:#fff;padding:12px 16px 0}.hd .r{display:flex;align-items:center;gap:8px;font:700 21px var(--mono)}.hd .r em{font-style:normal;color:var(--gold)}.hd svg{width:30px;height:30px}
+.nav{display:flex;gap:14px;font:800 13px var(--cond);letter-spacing:.3px;text-transform:uppercase;padding:12px 0 9px;color:#F4D6DD;white-space:nowrap;overflow:hidden}.nav b{color:#fff;border-bottom:3px solid var(--gold);padding-bottom:6px}
+.pad{padding:14px}
+.card{background:#fff;border:1px solid var(--line);margin-bottom:12px}
+.ck{display:flex;justify-content:space-between;align-items:center;padding:12px 14px 0;font:800 10.5px var(--sans);font-stretch:125%;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}.ck a{color:var(--ink);letter-spacing:0;text-transform:none;font:600 12.5px var(--sans)}
+.rec{display:flex;align-items:center;gap:10px;padding:10px 14px 14px}.flip{display:inline-grid;place-items:center;width:58px;height:66px;border-radius:5px;background:linear-gradient(180deg,#8e2741 0 50%,#7A1F33 50%);color:#fff;font:700 40px var(--mono);position:relative}.flip::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(0,0,0,.25)}.dash{width:16px;height:4px;background:var(--gold)}
+.mini{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:0 14px 14px}.mini div{border-top:1px solid var(--line);padding-top:6px}.mini span{display:block;font:800 9px var(--sans);letter-spacing:.08em;color:var(--muted)}.mini b{font:600 14px var(--mono)}
+.up{padding:12px 14px 14px}.tag{display:inline-block;background:var(--wine);color:#fff;font:800 10px var(--sans);font-stretch:125%;letter-spacing:.12em;padding:4px 13px 4px 7px;clip-path:polygon(0 0,calc(100% - 7px) 0,100% 50%,calc(100% - 7px) 100%,0 100%)}
+.mu{font:800 46px/1 var(--cond);margin:8px 0 4px}.mu .c{color:var(--wine)}.mu small{font:500 18px var(--sans);color:var(--muted);margin:0 6px}
+.when{font:600 13.5px var(--sans);text-decoration:underline dotted;text-underline-offset:3px}
+.cd{display:inline-flex;align-items:center;gap:10px;margin-top:10px;background:var(--sub);border-left:3px solid var(--wine);padding:8px 12px}.cd span{font:800 9.5px var(--sans);letter-spacing:.12em;color:var(--muted)}.cd b{font:700 22px var(--mono);color:var(--wine)}
+/* game day */
+.gd{background:linear-gradient(160deg,#8e2741,#5E0027);color:#fff;border:0;position:relative;overflow:hidden}
+.gd .ck{color:var(--gold)}.gd .ck a{color:#fff}
+.live{display:inline-flex;align-items:center;gap:6px}.live i{width:8px;height:8px;border-radius:50%;background:#FF4D4D;box-shadow:0 0 0 3px rgba(255,77,77,.25)}
+.gd .mu{color:#fff}.gd .mu .c{color:var(--gold)}.gd .mu small{color:#F4D6DD}
+.gd .t{font:700 15px var(--sans)}.gd .t em{font-style:normal;color:var(--gold)}
+.big{font:700 34px var(--mono);letter-spacing:-.5px}.big small{font:600 11px var(--sans);letter-spacing:.1em;color:#F4D6DD;margin-left:4px}
+.how{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 14px 14px}.how div{background:rgba(255,255,255,.1);border-radius:6px;padding:9px 10px}.how span{display:block;font:800 9.5px var(--sans);letter-spacing:.12em;color:#F4D6DD}.how b{font:700 15px var(--sans)}
+.tape{display:grid;grid-template-columns:1fr auto 1fr;gap:5px 10px;padding:12px 14px;font-size:13px}.tape .l{text-align:right;font:600 13px var(--mono)}.tape .m{font:800 9.5px var(--sans);letter-spacing:.1em;color:var(--muted);text-align:center;align-self:center}.tape .r{font:600 13px var(--mono)}.tape b{color:var(--wine)}
+.inj{padding:4px 14px 12px}.inj div{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line2);font-size:13.5px}.inj div:last-child{border:0}.inj span{color:#B26B00;font-weight:600;font-size:12.5px}
+/* morning after */
+.fin .sb{display:flex;align-items:center;gap:8px;padding:10px 14px 4px}.fin .tm{font:800 30px var(--cond)}.fin .tm.c{color:var(--wine)}.fin .tl{display:inline-grid;place-items:center;min-width:60px;height:52px;border-radius:5px;background:linear-gradient(180deg,#8e2741 0 50%,#7A1F33 50%);color:#fff;font:700 28px var(--mono)}.fin .tl.o{background:linear-gradient(180deg,#2B3036 0 50%,#1E2227 50%)}.fin .w{margin-left:auto;background:var(--wine);color:#fff;font:800 11px var(--sans);letter-spacing:.12em;padding:4px 8px;border-radius:3px}
+.top1{display:flex;gap:10px;align-items:center;margin:8px 14px 0;padding:9px 10px;background:var(--sub);border-left:3px solid var(--gold)}.hs{width:46px;height:46px;border-radius:50%;overflow:hidden;background:#fff;box-shadow:0 0 0 2px var(--gold);flex:none}.hs img{width:150%;margin:3px 0 0 -25%}.top1 small{display:block;font:800 9px var(--sans);letter-spacing:.12em;color:var(--muted)}.top1 b{font:700 14px var(--sans)}.top1 .ln{font:600 12px var(--mono);color:var(--fg2)}
+.links{display:flex;gap:14px;padding:10px 14px 14px;font:700 13px var(--sans)}.links a{color:var(--ink);text-decoration:none}
+.more{color:var(--muted);text-align:center;font-size:12px;padding:6px 0 10px}
+ul.n{max-width:900px;margin:26px auto 0;color:var(--fg2);font-size:14px;line-height:1.6}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs><symbol id="db" viewBox="0 0 100 100"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#860038" stroke-width="2" fill="none"/></symbol></defs></svg>
+<div class="w">
+<h1>Game-day Home</h1>
+<p class="sub">The top of Home changes on its own with the schedule. Everything below it (key dates, cap position, this day in history, video, injuries, the Charge) stays where it is today.</p>
+<div class="g">
+
+<div><div class="lab">1 · An off day<small>Today’s Home, unchanged.</small></div>
+<div class="ph"><div class="hd"><div class="r"><svg><use href="#db"/></svg>cavs<em>_db</em></div><div class="nav"><b>Home</b><span>Schedule</span><span>Roster</span><span>Staff</span><span>Cap</span></div></div>
+<div class="pad">
+ <div class="card"><div class="ck">2026–27 · 0 of 82 played<a href="#">Standings →</a></div><div class="rec"><span class="flip">0</span><span class="dash"></span><span class="flip">0</span></div><div class="mini"><div><span>EAST</span><b>—</b></div><div><span>HOME</span><b>0–0</b></div><div><span>ROAD</span><b>0–0</b></div><div><span>NET</span><b>—</b></div></div>
+ <div class="up" style="border-top:1px solid var(--line)"><span class="tag">UP NEXT</span><div class="mu"><span class="c">CLE</span><small>at</small>PHI</div><div class="when">Thursday, Oct 22 · 7:00 PM ET · ESPN ↗</div><div class="cd"><span>TIP-OFF IN</span><b>06 : 07 : 10</b></div></div></div>
+ <div class="more">Key dates · Cap position · This day in history …</div>
+</div></div></div>
+
+<div><div class="lab">2 · Game day<small>From 6 AM until tip. The card turns wine and leads with how to watch.</small></div>
+<div class="ph"><div class="hd"><div class="r"><svg><use href="#db"/></svg>cavs<em>_db</em></div><div class="nav"><b>Home</b><span>Schedule</span><span>Roster</span><span>Staff</span><span>Cap</span></div></div>
+<div class="pad">
+ <div class="card gd"><div class="ck"><span class="live"><i></i>Game day · season opener</span><a href="#">Preview →</a></div>
+  <div class="up" style="padding-bottom:10px"><div class="mu"><span class="c">CLE</span><small>at</small>PHI</div><div class="t">Tonight · <em>7:00 PM ET</em> · at Philadelphia</div>
+  <div class="big" style="margin-top:8px">04:12:38<small>TO TIP</small></div></div>
+  <div class="how"><div><span>WATCH</span><b>ESPN</b></div><div><span>LISTEN</span><b>WTAM 1100</b></div></div></div>
+ <div class="card"><div class="ck">Tale of the tape · 2025–26<a href="#">Full preview →</a></div>
+  <div class="tape"><span class="l"><b>52–30</b></span><span class="m">RECORD</span><span class="r">45–37</span><span class="l"><b>+4.1</b></span><span class="m">NET RATING</span><span class="r">−0.2</span><span class="l"><b>119.3</b></span><span class="m">OFF RATING</span><span class="r">115.4</span></div></div>
+ <div class="card"><div class="ck">Injury report<a href="#">Details →</a></div><div class="inj"><div>Sam Merrill · elbow<span>Questionable</span></div><div>Khalifa Diop · knee<span>Questionable</span></div><div>Nae’Qwan Tomlin · back<span>Questionable</span></div></div></div>
+</div></div></div>
+
+<div><div class="lab">3 · The morning after<small>Until the next game day. Final, top line, then what’s next. (Sample score.)</small></div>
+<div class="ph"><div class="hd"><div class="r"><svg><use href="#db"/></svg>cavs<em>_db</em></div><div class="nav"><b>Home</b><span>Schedule</span><span>Roster</span><span>Staff</span><span>Cap</span></div></div>
+<div class="pad">
+ <div class="card fin"><div class="ck">Final · at Philadelphia<a href="#">Box score →</a></div>
+  <div class="sb"><span class="tm c">CLE</span><span class="tl">112</span><span class="dash"></span><span class="tl o">104</span><span class="tm">PHI</span><span class="w">W</span></div>
+  <div class="top1"><div class="hs"><img src="/img/h/1628378.png" alt=""></div><div><small>TOP LINE</small><b>Donovan Mitchell</b><div class="ln">31 PTS · 5 REB · 7 AST</div></div></div>
+  <div class="links"><a href="#">Recap on RCF →</a><a href="#">Postgame video →</a></div></div>
+ <div class="card"><div class="ck">1–0 · 3rd in the East<a href="#">Standings →</a></div><div class="up"><span class="tag">UP NEXT</span><div class="mu" style="font-size:38px"><span class="c">CLE</span><small>vs</small>BKN</div><div class="when">Saturday, Oct 24 · 7:30 PM ET · DAZN ↗</div></div></div>
+ <div class="more">Key dates · Cap position · This day in history …</div>
+</div></div></div>
+</div>
+<ul class="n"><li>Switches automatically from the schedule and the update job’s box scores. Nothing for you to do on game days.</li><li>Off days keep today’s Home exactly as it is.</li><li>“Recap on RCF” appears once the RealCavsFans recap posts; “Postgame video” once the pressers hit the Cavs channel.</li></ul>
+</div></body></html>
