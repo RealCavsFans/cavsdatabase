@@ -1,2 +1,8 @@
 /video /media 301
 /rcf /media/rcf 301
+/data/* / 302
+/tools/* / 302
+/logos/* / 302
+/scripts/* / 302
+/README.md / 302
+/box-status.txt / 302
