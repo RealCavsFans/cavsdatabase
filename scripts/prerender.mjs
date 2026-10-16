@@ -48,7 +48,7 @@ export default async function prerender(root, META) {
       if (route !== 'home') await page.evaluate(r => go(r), route);
       await page.waitForTimeout(1200);
       const snap = await page.evaluate(() => { const m = [...document.querySelectorAll('main[id^="view-"]')].find(x => !x.hidden && x.id !== 'view-stub'); if (!m) return null; const c = m.cloneNode(true); c.querySelectorAll('.xtoast,.gwrap').forEach(x => x.remove()); return { id: m.id, html: c.outerHTML }; });
-      if (!data) data = await page.evaluate(() => ({ SCHEDULE, PLAYERS: PLAYERS.map(p => p[0]) }));
+      if (!data) data = await page.evaluate(() => ({ SCHEDULE, PLAYERS: PLAYERS.map(p => p[1]) }));
       if (!snap || errs.length) { console.log('::warning::prerender skipped ' + route + ' ' + errs.join('; ')); continue; }
       const file = new URL((route === 'home' ? 'home' : route) + '.html', root);
       let html = await readFile(file, 'utf8');
