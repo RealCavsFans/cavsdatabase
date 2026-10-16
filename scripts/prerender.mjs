@@ -48,7 +48,7 @@ export default async function prerender(root, META) {
       if (route !== 'home') await page.evaluate(r => go(r), route);
       await page.waitForTimeout(1200);
       const snap = await page.evaluate(() => { const m = [...document.querySelectorAll('main[id^="view-"]')].find(x => !x.hidden && x.id !== 'view-stub'); if (!m) return null; const c = m.cloneNode(true); c.querySelectorAll('.xtoast,.gwrap').forEach(x => x.remove()); return { id: m.id, html: c.outerHTML }; });
-      if (!data) data = await page.evaluate(() => ({ SCHEDULE, PLAYERS: PLAYERS.map(p => p[1]) }));
+      if (!data) data = await page.evaluate(() => ({ SCHEDULE, PLAYERS: PLAYERS.map(p => p[1]), PL: PLAYERS }));
       if (!snap || errs.length) { console.log('::warning::prerender skipped ' + route + ' ' + errs.join('; ')); continue; }
       const file = new URL((route === 'home' ? 'home' : route) + '.html', root);
       let html = await readFile(file, 'utf8');
@@ -59,7 +59,10 @@ export default async function prerender(root, META) {
       if (snap.id !== 'view-home') html = html.replace('<main id="view-home">', '<main id="view-home" hidden>');
       // structured data for this page
       const graph = [];
-      if (route !== 'home') graph.push({ '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: LABEL[route] || META[route][0].split(' | ')[0], item: SITE + '/' + route }] });
+      const pl = route.startsWith('players/') ? data.PL.find(p => 'players/' + p[1].normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') === route) : null;
+      if (pl) graph.push({ '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: 'Roster', item: SITE + '/roster' }, { '@type': 'ListItem', position: 3, name: pl[1], item: SITE + '/' + route }] },
+        { '@type': 'Person', name: pl[1], url: SITE + '/' + route, image: 'https://cdn.nba.com/headshots/nba/latest/1040x760/' + pl[12] + '.png', jobTitle: 'Basketball player', birthDate: pl[5], ...(pl[3] && pl[3] !== '—' ? { height: pl[3].replace('-', ' ft ') + ' in' } : {}), ...(pl[4] ? { weight: pl[4] + ' lb' } : {}), memberOf: team('CLE'), sameAs: ['https://www.nba.com/player/' + pl[12]] });
+      else if (route !== 'home') graph.push({ '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: LABEL[route] || META[route][0].split(' | ')[0], item: SITE + '/' + route }] });
       const today = new Date().toISOString().slice(0, 10);
       if (route === 'schedule') data.SCHEDULE.forEach(g => graph.push(game(g)));
       if (route === 'home') { const nx = data.SCHEDULE.find(g => g[0] >= today); if (nx) graph.push(game(nx)); }

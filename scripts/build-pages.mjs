@@ -19,6 +19,10 @@ if (PRE) { let old = ''; try { old = (await readFile(HASHF, 'utf8')).trim(); } c
 const m = html.match(/const PAGE_META=(\{[\s\S]*?\});\n/);
 if (!m) { console.log('::warning::PAGE_META not found'); process.exit(0); }
 const META = Function('return ' + m[1])();
+// one page per player (players/<name>), titles matching the site's PP_TITLE / PP_DESC
+const pm = html.match(/const PLAYERS=(\[[\s\S]*?\]);\n/);
+const slug = t => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+if (pm) for (const p of Function('return ' + pm[1])()) META['players/' + slug(p[1])] = [p[1] + ': Contract, Stats & Measurements | cavs_db', p[1] + '’s Cavs contract by season, height and wingspan, how Cleveland got him, depth chart spot and stats. Updated daily.'];
 const esc = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 await writeFile(new URL('home.html', root), html); // front page copy (served at / via _redirects)
 for (const [route, [title, desc]] of Object.entries(META)) {
@@ -32,7 +36,7 @@ for (const [route, [title, desc]] of Object.entries(META)) {
     .replace(/<meta property="og:title" content="[^"]*">/, `<meta property="og:title" content="${esc(title)}">`)
     .replace(/<meta property="og:description" content="[^"]*">/, `<meta property="og:description" content="${esc(desc)}">`);
   // each page has its own share image in og/<route>.jpg (media/rcf -> og/media-rcf.jpg); fall back to the site-wide one
-  const img = 'og/' + route.replace(/\//g, '-') + '.jpg';
+  const img = 'og/' + (route.startsWith('players/') ? 'roster' : route.replace(/\//g, '-')) + '.jpg';
   if (await exists(new URL(img, root))) {
     const u = 'https://cavsdatabase.com/' + img + '?v=1';
     out = out.replace(/<meta property="og:image" content="[^"]*">/, `<meta property="og:image" content="${u}">`)
