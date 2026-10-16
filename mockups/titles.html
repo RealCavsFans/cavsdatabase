@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Page titles mockup</title>
+<style>
+body{margin:0;background:#fff;font-family:Arial,Helvetica,sans-serif;color:#202124}
+.wrap{max-width:760px;margin:0 auto;padding:24px 16px 60px}
+h1{font:700 22px Arial;margin:0 0 4px}.sub{color:#5f6368;font-size:14px;margin:0 0 22px;line-height:1.45}
+.q{display:flex;align-items:center;gap:10px;border:1px solid #dfe1e5;border-radius:24px;padding:10px 18px;margin:28px 0 14px;font-size:15px;color:#202124;box-shadow:0 1px 4px rgba(32,33,36,.12)}.q i{font-style:normal;color:#9aa0a6}
+.r{margin:0 0 26px}.site{display:flex;align-items:center;gap:10px}.fav{width:28px;height:28px;border-radius:50%;background:#F1F3F4;display:grid;place-items:center}.fav img{width:18px;height:18px;border-radius:4px}
+.site b{display:block;font:400 14px Arial;color:#202124}.site span{font:400 12px Arial;color:#4d5156}
+.t{display:block;font:400 20px/1.3 Arial;color:#1a0dab;margin:6px 0 3px;text-decoration:none}.d{font:400 14px/1.58 Arial;color:#4d5156}
+.tag{display:inline-block;font:700 10px Arial;letter-spacing:.06em;text-transform:uppercase;background:#F2B231;color:#101419;padding:2px 6px;border-radius:3px;margin-left:6px;vertical-align:2px}
+.now{background:#f8f9fa;border:1px dashed #dadce0;border-radius:8px;padding:12px 14px;margin:0 0 20px;font-size:13.5px;color:#5f6368}
+</style></head><body><div class="wrap">
+<h1>Page titles &amp; descriptions</h1>
+<p class="sub">How each page would show up in Google, under a search someone might actually type. Titles stay under ~60 characters and descriptions under ~155 so Google doesn't cut them off. Page content doesn't change. Only the browser tab text and the search listing.</p>
+<div class="now"><b>Today, every page shows as:</b> “cavs_db · cavsdatabase.com” with the same description, so Google treats them as one page.</div>
+<div id="list"></div>
+<script>
+const P=[
+ ['cavaliers schedule tv','/', 'cavs_db · Cleveland Cavaliers Schedule, Roster & Cap','Everything Cavaliers. Everything you need. The Cavs record, next game and TV, key dates, injuries, salary cap and the Cleveland Charge, updated daily.','Home'],
+ ['cavs schedule 2026-27','/schedule','Cavaliers 2026–27 Schedule, TV & Standings | cavs_db','All 82 Cavs games with TV and radio for each, results, East standings and the playoff race. National TV, DAZN and free over-the-air games marked.'],
+ ['cavaliers roster','/roster','Cavaliers Roster 2026–27 & Depth Chart | cavs_db','Every Cavs player with height, wingspan, age, college, how he was acquired and his socials, plus the depth chart and combine measurements.'],
+ ['cavs coaching staff','/staff','Cavaliers Coaches & Front Office | cavs_db','Kenny Atkinson, Koby Altman and the full Cavs coaching staff and front office, with career timelines, coaching records and crossover with current players.'],
+ ['cavs salary cap','/cap','Cavaliers Salary Cap 2026–27 & Contracts | cavs_db','The Cavs cap sheet: every contract by season, the first-apron hard cap, tax bill, options, extension dates, two-way deals and a 145-term CBA glossary.'],
+ ['cavs draft picks','/assets','Cavaliers Draft Picks & Trade Exceptions | cavs_db','Every pick the Cavs own and owe through 2033 with protections and full trade history, plus trade exceptions left and unsigned draft rights.'],
+ ['cavs transactions','/moves','Cavaliers Transactions & Trades Since 2017 | cavs_db','Every Cavs trade, signing, extension, draft pick and waiver since 2017, with what moved in each deal.'],
+ ['cleveland charge schedule','/charge','Cleveland Charge 2026–27 Schedule & Roster | cavs_db','The Cavs’ G League affiliate: full schedule with results, two-way and affiliate players, and coach and front office bios.'],
+ ['cavs press conference','/media','Cavaliers Video & RealCavsFans Articles | cavs_db','The latest Cavs press conferences and highlights from the team’s YouTube channel, plus articles and recaps from RealCavsFans.com.'],
+ ['cavs stats sites','/resources','Cavaliers & NBA Stats, Cap and Draft Sites | cavs_db','The sites worth bookmarking for Cavs fans: stats, salary cap tools, trade machines, draft boards, franchise history and the RealCavsFans forum.']
+];
+const L=document.getElementById('list');
+P.forEach(([q,u,t,d])=>{const w=document.createElement('div');
+ w.innerHTML='<div class="q"><i>🔍</i>'+q+'</div><div class="r"><div class="site"><div class="fav"><img src="/icon-180.png" alt=""></div><div><b>cavs_db</b><span>https://cavsdatabase.com'+(u==='/'?'':u)+'</span></div></div><a class="t" href="'+u+'">'+t+'</a><div class="d">'+d+'</div><div style="font-size:12px;color:#9aa0a6;margin-top:6px">Title '+t.length+' chars · description '+d.length+' chars</div></div>';L.appendChild(w)});
+</script>
+</div></body></html>
