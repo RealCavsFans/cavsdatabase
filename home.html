@@ -236,6 +236,24 @@ a{color:var(--wine-ink);text-decoration:none}a:hover{text-decoration:underline}
 .page{padding-block:32px 64px;display:flex;flex-direction:column;gap:20px}
 h1{margin:0;font:800 clamp(28px,4vw,36px)/1.1 var(--sans);font-stretch:115%;letter-spacing:-.02em;text-wrap:balance}
 .tablebox{overflow-x:auto;border:1px solid var(--line);overscroll-behavior-x:contain}
+.col>section.gdm{background:none;box-shadow:none;padding:0;border-radius:0;margin-bottom:16px;display:grid;gap:12px}.gdm[hidden]{display:none!important}.gdm-c{border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.gdm-c{background:var(--card);border:1px solid var(--line)}
+.gdm-k{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px 0;font:800 11px var(--sans);font-stretch:125%;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.gdm-k a{font:600 13px var(--sans);letter-spacing:0;text-transform:none;color:var(--wine-ink)}
+.gdm-day{background:linear-gradient(160deg,#8e2741,#5E0027);border:0;color:#fff}.gdm-day .gdm-k{color:#F2B231}.gdm-day .gdm-k a{color:#fff}
+.gdm-live{display:inline-flex;align-items:center;gap:7px}.gdm-live i{width:8px;height:8px;border-radius:50%;background:#FF4D4D;box-shadow:0 0 0 3px rgba(255,77,77,.25)}
+.gdm-mu{font:800 52px/1 var(--cond);padding:10px 16px 0;letter-spacing:.5px}.gdm-mu .c{color:#F2B231}.gdm-mu small{font:500 20px var(--sans);color:#F4D6DD;margin:0 8px}
+.gdm-t{padding:4px 16px 0;font:700 15px var(--sans)}.gdm-t em{font-style:normal;color:#F2B231}
+.gdm-cd{padding:8px 16px 0;font:700 36px var(--mono);letter-spacing:-.5px}.gdm-cd small{font:600 11px var(--sans);letter-spacing:.12em;color:#F4D6DD;margin-left:6px}
+.gdm-how{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 16px 16px}.gdm-how div{background:rgba(255,255,255,.1);border-radius:6px;padding:9px 11px;min-width:0}.gdm-how span{display:block;font:800 9.5px var(--sans);letter-spacing:.12em;color:#F4D6DD}.gdm-how b{font:700 15px var(--sans)}
+.gdm-tape{display:grid;grid-template-columns:1fr auto 1fr;gap:6px 12px;padding:12px 16px 14px}.gdm-tape .l{text-align:right;font:600 14px var(--mono)}.gdm-tape .m{font:800 9.5px var(--sans);letter-spacing:.1em;color:var(--muted);text-align:center;align-self:center;text-transform:uppercase}.gdm-tape .r{font:600 14px var(--mono)}.gdm-tape b{color:var(--wine-ink)}
+.gdm-inj{padding:4px 16px 10px}.gdm-inj div{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line2);font-size:14px}.gdm-inj div:last-child{border:0}.gdm-inj span{color:#B26B00;font-weight:600;font-size:13px;white-space:nowrap}
+.gdm-sb{display:flex;align-items:center;gap:9px;padding:12px 16px 4px}.gdm-sb .tm{font:800 32px var(--cond)}.gdm-sb .tm.c{color:var(--wine-ink)}.gdm-tl{display:inline-grid;place-items:center;min-width:64px;height:56px;padding:0 8px;border-radius:5px;background:linear-gradient(180deg,#8e2741 0 50%,#7A1F33 50%);color:#fff;font:700 30px var(--mono)}.gdm-tl.o{background:linear-gradient(180deg,#2B3036 0 50%,#1E2227 50%)}.gdm-dash{width:16px;height:4px;background:#F2B231}
+.gdm-wl{margin-left:auto;background:var(--wine);color:#fff;font:800 11px var(--sans);letter-spacing:.12em;padding:4px 8px;border-radius:3px}.gdm-wl.l{background:#2B3036}
+.gdm-top{display:flex;gap:11px;align-items:center;margin:8px 16px 0;padding:9px 11px;background:var(--sub);border-left:3px solid #F2B231}.gdm-hs{width:48px;height:48px;border-radius:50%;overflow:hidden;background:#fff;box-shadow:0 0 0 2px #F2B231;flex:none}.gdm-hs img{width:150%;margin:3px 0 0 -25%}
+.gdm-top small{display:block;font:800 9px var(--sans);letter-spacing:.12em;color:var(--muted)}.gdm-top b{font:700 15px var(--sans)}.gdm-top .ln{font:600 12.5px var(--mono);color:var(--fg2)}
+.gdm-links{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 16px 14px;font:700 13.5px var(--sans)}.gdm-links a{color:var(--wine-ink)}
+@media (max-width:520px){.gdm-mu{font-size:46px}.gdm-cd{font-size:32px}.gdm-sb{gap:7px;padding:12px 14px 4px}.gdm-sb .tm{font-size:27px}.gdm-tl{min-width:52px;height:48px;font-size:25px}.gdm-k,.gdm-top,.gdm-links,.gdm-tape,.gdm-inj{padding-left:14px;padding-right:14px}.gdm-top{margin-left:14px;margin-right:14px}}
+
 .gnav.fr{-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);mask-image:linear-gradient(90deg,#000 82%,transparent)}.gnav.fl{-webkit-mask-image:linear-gradient(90deg,transparent,#000 18%);mask-image:linear-gradient(90deg,transparent,#000 18%)}.gnav.fl.fr{-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 82%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 82%,transparent)}
 .art-h{scroll-margin-top:150px;margin-top:34px;padding-top:22px;border-top:2px solid var(--fg)}.art-h h2{margin:0;font:800 21px var(--sans);font-stretch:110%}
 .pp-hero{display:flex;gap:22px;align-items:flex-end;background:linear-gradient(135deg,#8e2741,#6E1A2D);color:#fff;margin:12px 0 22px;padding:20px 22px 0;overflow:hidden;position:relative}
@@ -1039,6 +1057,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 <main id="view-home">
   <div class="wrap home">
     <div class="col">
+      <section class="gdm" id="gdm" hidden="" aria-live="polite"></section>
       <section class="o-rec gscore" aria-labelledby="rec-h">
         <h2 id="rec-h" class="sr">2026–27 season and next game</h2>
         <div class="grec">
@@ -1052,7 +1071,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
           <h3 class="sr" id="nx-title">at Philadelphia</h3><span class="sr" id="next-h">Last result &amp; next game</span>
           <div class="gteams"><span class="tm cle" aria-hidden="true">CLE</span><span class="gat" id="nx-at" aria-hidden="true">at</span><span class="tm" id="nx-opp"><a class="opp" href="https://www.basketball-reference.com/teams/PHI/2027.html" target="_blank" rel="noopener" title="Philadelphia on Basketball Reference">PHI</a></span></div>
           <div class="nx-when"><span id="nx-meta"><a class="pvlink" href="https://www.nba.com/game/cle-vs-phi-0022600006" target="_blank" rel="noopener" title="Game preview on NBA.com">Thursday, Oct 22 · 7:00 PM ET · ESPN ↗</a></span></div>
-          <span class="gdays" id="cd" role="timer" aria-label="Countdown to tip-off"><small>Tip-off in</small><span class="cdw"><span class="cdn"><b id="cd-d">06</b><b id="cd-h">02</b><b id="cd-m">24</b><b id="cd-s">43</b></span><span class="cdl"><i>Days</i><i>Hrs</i><i>Min</i><i>Sec</i></span></span></span>
+          <span class="gdays" id="cd" role="timer" aria-label="Countdown to tip-off"><small>Tip-off in</small><span class="cdw"><span class="cdn"><b id="cd-d">06</b><b id="cd-h">02</b><b id="cd-m">16</b><b id="cd-s">33</b></span><span class="cdl"><i>Days</i><i>Hrs</i><i>Min</i><i>Sec</i></span></span></span>
           <div class="ginfo nx-then-row"><span id="nx-then"><b>After that </b>Sat, Oct 24 vs <a href="https://www.basketball-reference.com/teams/BRK/2027.html" target="_blank" rel="noopener" class="opp">Brooklyn</a> · 7:30 PM</span></div>
         </div>
       </section>
@@ -1122,6 +1141,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 </main><template id="pre-tpl" data-view="view-home">
   <div class="wrap home">
     <div class="col">
+      <section class="gdm" id="gdm" hidden aria-live="polite"></section>
       <section class="o-rec gscore" aria-labelledby="rec-h">
         <h2 id="rec-h" class="sr">2026–27 season and next game</h2>
         <div class="grec">
@@ -2641,6 +2661,43 @@ const GALERT_ON=true;
 })();
 /* menu tabs: soft fade on the edge that has more tabs past it, so people know to swipe */
 (function(){const n=document.getElementById('tabs');if(!n)return;const f=()=>{const m=n.scrollWidth-n.clientWidth;n.classList.toggle('fl',n.scrollLeft>4);n.classList.toggle('fr',m>4&&n.scrollLeft<m-4)};n.addEventListener('scroll',f,{passive:true});addEventListener('resize',f);setTimeout(f,300);f()})();
+/* game-day Home: on game days the top card leads with tip time and how to watch; the morning after it shows the final and the top stat line. ?gameday=day|after previews either one */
+(function(){const box=document.getElementById('gdm');if(!box)return;
+  const H=36e5,PV=(/[?&]gameday=(day|after)/.exec(location.search)||[])[1];
+  const etDay=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(new Date());
+  const rec=document.querySelector('#view-home .o-rec');let B={},RC=null,tick=null;
+  const wd=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'});
+  const card=(cls,k,a)=>{const c=el('div','gdm-c'+(cls?' '+cls:''));const h=el('div','gdm-k');h.appendChild(k instanceof Node?k:el('span',null,k));if(a){const l=el('a',null,a[0]+' →');l.href=a[1];if(a[2])l.dataset.go=a[2];else{l.target='_blank';l.rel='noopener'}h.appendChild(l)}c.appendChild(h);return c};
+  function day(g){const t=tipOf(g).getTime(),tv=tvFor(g[0]),ra=radioFor(g[0]);const first=g===SCHEDULE[0];
+    const kk=el('span','gdm-live');kk.append(el('i'),'Game day'+(first?' · season opener':''));const c=card('gdm-day',kk,['Preview','/schedule#g-'+g[0],'schedule']);
+    const mu=el('div','gdm-mu');mu.append(el('span','c','CLE'),el('small',null,g[2]==='H'?'vs':'at'),g[1]);c.appendChild(mu);
+    const tt=el('div','gdm-t');tt.append('Tonight · ',el('em',null,g[3]+' PM ET'),' · '+(g[2]==='H'?'Rocket Arena':'at '+TEAMS[g[1]]));c.appendChild(tt);
+    const cd=el('div','gdm-cd');c.appendChild(cd);
+    const upd=()=>{const ms=t-Date.now();if(ms<=0){cd.textContent='';cd.append(el('span',null,'On now'));return}const h=Math.floor(ms/H),m=Math.floor(ms%H/6e4),s2=Math.floor(ms%6e4/1e3);cd.textContent=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s2).padStart(2,'0');cd.appendChild(el('small',null,'TO TIP'))};upd();clearInterval(tick);tick=setInterval(upd,1000);
+    const how=el('div','gdm-how');const w1=el('div');w1.append(el('span',null,'WATCH'),el('b',null,[tv.nat,tv.loc].filter(Boolean)[0]||'TBA'));const w2=el('div');w2.append(el('span',null,'LISTEN'),el('b',null,(ra.cavs||'').split(' · ')[0]));how.append(w1,w2);c.appendChild(how);box.appendChild(c);
+    const cur=TSTATS.CLE&&TSTATS[g[1]]&&TSTATS.CLE[0]+TSTATS.CLE[1]>=5,TS=cur?TSTATS:TSTATS_PREV;
+    if(TS.CLE&&TS[g[1]]){const c2=card('','Tale of the tape · '+(cur?'2026–27':'2025–26'),['Full preview','/schedule#g-'+g[0],'schedule']);const tp=el('div','gdm-tape');
+      const a=TS.CLE,b=TS[g[1]],net=x=>x[4]-x[5],f1=v=>(v>0?'+':'')+v.toFixed(1);
+      [['Record',a[0]+'–'+a[1],b[0]+'–'+b[1],a[0]/(a[0]+a[1]||1)>b[0]/(b[0]+b[1]||1)],['Net rating',f1(net(a)),f1(net(b)),net(a)>net(b)],['Off rating',a[4].toFixed(1),b[4].toFixed(1),a[4]>b[4]],['Def rating',a[5].toFixed(1),b[5].toFixed(1),a[5]<b[5]]].forEach(([k,x,y,cw])=>{const l=el('span','l');if(cw)l.appendChild(el('b',null,x));else l.textContent=x;const r=el('span','r');if(!cw)r.appendChild(el('b',null,y));else r.textContent=y;tp.append(l,el('span','m',k),r)});
+      c2.appendChild(tp);box.appendChild(c2)}
+    if(INJURIES.length){const c3=card('','Injury report');const li=el('div','gdm-inj');INJURIES.forEach(([n,p,inj,st])=>{const r=el('div');r.append(n+' · '+inj.toLowerCase(),el('span',null,st));li.appendChild(r)});c3.appendChild(li);box.appendChild(c3)}
+    if(rec)rec.hidden=true}
+  function after(g,score,top,url,pre){const [cs,os]=score.split('-').map(Number);const c=card('',(pre?'Preseason final':'Final')+' · '+(g[2]==='H'?'vs '+TEAMS[g[1]]:'at '+TEAMS[g[1]]),['Box score',url]);
+    const sb=el('div','gdm-sb');sb.append(el('span','tm c','CLE'),el('span','gdm-tl',String(cs)),el('span','gdm-dash'),el('span','gdm-tl o',String(os)),el('span','tm',g[1]),el('span','gdm-wl'+(cs>os?'':' l'),cs>os?'W':'L'));c.appendChild(sb);
+    if(top){const [nm,ln]=top.split(': ');const p=PLAYERS.find(x=>x[1]===nm);const t=el('div','gdm-top');if(p){const hs=el('div','gdm-hs');const im=el('img');im.src='https://cdn.nba.com/headshots/nba/latest/260x190/'+p[12]+'.png';im.alt='';im.onerror=()=>im.remove();hs.appendChild(im);t.appendChild(hs)}const tx=el('div');tx.append(el('small',null,'TOP LINE'),el('b',null,nm),el('div','ln',(ln||'').toUpperCase().replace(/, /g,' · ')));t.appendChild(tx);c.appendChild(t)}
+    const lk=el('div','gdm-links');const rc=RC&&RC.items&&RC.items.find(x=>/recap/i.test(x.title)&&x.date&&x.date.slice(0,10)>=g[0]);if(rc){const a=el('a',null,'Recap on RCF →');a.href=rc.link;a.target='_blank';a.rel='noopener';lk.appendChild(a)}
+    const v=el('a',null,'Postgame video →');v.href='/media';v.dataset.go='media';lk.appendChild(v);c.appendChild(lk);box.appendChild(c);if(rec)rec.hidden=false}
+  function render(){clearInterval(tick);box.textContent='';box.hidden=true;if(rec)rec.hidden=false;const today=etDay(),now=Date.now();
+    const isFin=d=>(B[d]&&B[d].status==='final')||!!SCORES[d];
+    if(PV==='day'){const g=SCHEDULE.find(x=>tipOf(x).getTime()>now)||SCHEDULE[0];day(g);box.hidden=false;return}
+    if(PV==='after'){const p=PRESEASON[PRESEASON.length-1];const b=B[p[0]]||{};after([p[0],p[1],p[2]],p[4],b.top||'',b.url||boxUrl(p[0]),true);box.hidden=false;return}
+    const g=SCHEDULE.find(x=>x[0]===today);
+    if(g&&!isFin(g[0])&&now<tipOf(g).getTime()+3.5*H){day(g);box.hidden=false;return}
+    const last=[...SCHEDULE].reverse().find(x=>x[0]<=today&&isFin(x[0]));
+    if(last){const b=B[last[0]]||{};const sc=SCORES[last[0]]||b.score;if(sc){after(last,sc,b.top||'',b.url||boxUrl(last[0]),false);box.hidden=false}}}
+  render();
+  const load=()=>Promise.all([fetch('/box.json',{cache:'no-cache'}).then(r=>r.ok?r.json():{}).catch(()=>({})),fetch('/rcf.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null)]).then(([b,r])=>{B=b||{};RC=r;render()});
+  if(location.protocol!=='file:')load();setInterval(load,10*6e4)})();
 /* mobile: coach/exec cards show basic info, the rest behind More */
 function coMore(c){const dl=c.querySelector('.bio-f');if(!dl)return;const b=el('button','co-more','More ▾');b.type='button';b.setAttribute('aria-expanded','false');b.onclick=()=>{const o=c.classList.toggle('open');b.textContent=o?'Less ▴':'More ▾';b.setAttribute('aria-expanded',o)};dl.after(b)}
 /* callouts: Altman and Atkinson */

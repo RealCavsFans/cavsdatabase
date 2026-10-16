@@ -23,6 +23,8 @@ const game = g => { const [d, o, ha, t] = g; const home = ha === 'H' ? 'CLE' : o
   const e = { '@type': 'SportsEvent', name: `${NICK[away]} at ${NICK[home]}`, sport: 'Basketball', startDate: iso(d, t), eventStatus: 'https://schema.org/EventScheduled', homeTeam: team(home), awayTeam: team(away), competitor: [team(away), team(home)] };
   if (ha === 'H') e.location = { '@type': 'Place', name: 'Rocket Arena', address: { '@type': 'PostalAddress', streetAddress: '1 Center Court', addressLocality: 'Cleveland', addressRegion: 'OH', postalCode: '44115', addressCountry: 'US' } };
   return e; };
+/* finished games: add the final score so search engines can show it */
+const withScore = (e, g, S) => { const sc = S && S[g[0]]; if (!sc) return e; const [c, o] = sc.split('-'); e.description = `Final: Cleveland Cavaliers ${c}, ${NICK[g[1]]} ${o}`; e.eventStatus = 'https://schema.org/EventScheduled'; return e; };
 
 export default async function prerender(root, META) {
   const pw = loadPw();
@@ -48,7 +50,7 @@ export default async function prerender(root, META) {
       if (route !== 'home') await page.evaluate(r => go(r), route);
       await page.waitForTimeout(1200);
       const snap = await page.evaluate(() => { const m = [...document.querySelectorAll('main[id^="view-"]')].find(x => !x.hidden && x.id !== 'view-stub'); if (!m) return null; const c = m.cloneNode(true); c.querySelectorAll('.xtoast,.gwrap').forEach(x => x.remove()); return { id: m.id, html: c.outerHTML }; });
-      if (!data) data = await page.evaluate(() => ({ SCHEDULE, PLAYERS: PLAYERS.map(p => p[1]), PL: PLAYERS }));
+      if (!data) data = await page.evaluate(() => ({ SCORES, SCHEDULE, PLAYERS: PLAYERS.map(p => p[1]), PL: PLAYERS }));
       if (!snap || errs.length) { console.log('::warning::prerender skipped ' + route + ' ' + errs.join('; ')); continue; }
       const file = new URL((route === 'home' ? 'home' : route) + '.html', root);
       let html = await readFile(file, 'utf8');
@@ -64,7 +66,7 @@ export default async function prerender(root, META) {
         { '@type': 'Person', name: pl[1], url: SITE + '/' + route, image: 'https://cdn.nba.com/headshots/nba/latest/1040x760/' + pl[12] + '.png', jobTitle: 'Basketball player', birthDate: pl[5], ...(pl[3] && pl[3] !== '—' ? { height: pl[3].replace('-', ' ft ') + ' in' } : {}), ...(pl[4] ? { weight: pl[4] + ' lb' } : {}), memberOf: team('CLE'), sameAs: ['https://www.nba.com/player/' + pl[12]] });
       else if (route !== 'home') graph.push({ '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: LABEL[route] || META[route][0].split(' | ')[0], item: SITE + '/' + route }] });
       const today = new Date().toISOString().slice(0, 10);
-      if (route === 'schedule') data.SCHEDULE.forEach(g => graph.push(game(g)));
+      if (route === 'schedule') data.SCHEDULE.forEach(g => graph.push(withScore(game(g), g, data.SCORES)));
       if (route === 'home') { const nx = data.SCHEDULE.find(g => g[0] >= today); if (nx) graph.push(game(nx)); }
       if (route === 'roster') graph.push({ '@type': 'ItemList', name: 'Cleveland Cavaliers roster', itemListElement: data.PLAYERS.map((n, i) => ({ '@type': 'ListItem', position: i + 1, item: { '@type': 'Person', name: n, jobTitle: 'Basketball player', memberOf: team('CLE') } })) });
       if (graph.length) html = html.replace('</head>', `<script type="application/ld+json" id="ld-page">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c')}</script>\n</head>`);
