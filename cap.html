@@ -234,7 +234,11 @@ a{color:var(--wine-ink);text-decoration:none}a:hover{text-decoration:underline}
 /* cap page */
 .page{padding-block:32px 64px;display:flex;flex-direction:column;gap:20px}
 h1{margin:0;font:800 clamp(28px,4vw,36px)/1.1 var(--sans);font-stretch:115%;letter-spacing:-.02em;text-wrap:balance}
-.tablebox{overflow-x:auto;border:1px solid var(--line)}
+.tablebox{overflow-x:auto;border:1px solid var(--line);overscroll-behavior-x:contain}
+html,body{overflow-x:clip}
+#twoway summary>b.mono,#camp li>b{font-size:12px}
+.co-more{display:none}
+@media (max-width:600px){.co{padding:14px 14px}.co h2{font-size:24px}.co-hs{width:62px;height:62px;border-width:2px}.co-top{gap:12px;margin-bottom:8px}.co .bio-f{font-size:13px}.co:not(.open):not(.capmode) .bio-f>:nth-child(n+7),.co:not(.open):not(.capmode)>.co-d,.co:not(.open):not(.capmode)>.bio-links,.co:not(.open):not(.capmode)>.co-link,.co:not(.open):not(.capmode)>.tablebox{display:none}.co-more{display:inline-flex;align-items:center;gap:4px;margin:2px 0 0;padding:6px 0;border:0;background:none;font:700 13.5px var(--sans);color:var(--wine-ink);cursor:pointer}.co.capmode .co-more{display:none}}
 table{width:100%;border-collapse:collapse;font-size:14px;min-width:860px}
 th{text-align:left;font:700 11px var(--sans);font-stretch:125%;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);padding:12px 10px;background:var(--sub)}
 td{padding:12px 10px;border-top:1px solid var(--line2)}
@@ -775,7 +779,7 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:27%}.cap th:nth-child(2)
 .lg{display:inline-flex;align-items:center;gap:5px;margin-left:10px}.lg::before{font:800 9.5px/1 var(--sans);letter-spacing:.06em;padding:3px 4px 2px;border-radius:2px}.lg.po::before{content:"PO";background:#F2B231;color:#101419}.lg.to::before{content:"TO";background:var(--wine);color:#fff}
 
 .vshort{display:none}@media (max-width:760px){.vfull{display:none}.vshort{display:inline}.cap tfoot tr.thr td.cur{font-size:12px}}
-.cap tr.deadrow td{color:var(--muted);opacity:.55;font-weight:400}.cap tr.deadrow td.cur{font-weight:500}
+.cap tr.deadrow td{color:var(--muted);font-weight:400}.cap tr.deadrow td:first-child{background:var(--card)}.cap tr.deadrow td.cur{font-weight:500}
 .extb{display:inline-block;margin-left:5px;padding:1px 3px 0;border:1px solid #2f6f9a;color:#2f6f9a;font:800 8.5px/1.3 var(--sans);letter-spacing:.06em;border-radius:2px;vertical-align:1px}
 .lg.ext::before{content:"EXT";background:none;border:1px solid #2f6f9a;color:#2f6f9a}
 .cap .pbtn{display:grid;grid-template-columns:minmax(0,1fr) auto 8px;column-gap:0;width:100%;align-items:center}.cap .pbtn .nflag{grid-column:2;margin:0 2px 0 5px}.cap .pbtn::after{grid-column:3;grid-row:1;justify-self:end;margin-left:5px}
@@ -1463,7 +1467,7 @@ const BOX={};    /* optional exact NBA.com box score URL per date; otherwise the
 /* standings, all 30 teams once the season starts: [abbr, 'E'|'W', W, L]. Basketball Reference standings (daily task). */
 const STANDINGS=[];
 const NRTG={}; /* 2026-27 season, all 30 teams: 'CLE':[net rating, games played] (used for the Cavs value and league rank) */
-const L14={};  /* Cavs only, last 14 days: 'CLE':[net rating, games] */
+const L14={};  /* all 30 teams, last 14 days: 'CLE':[net rating, games] (daily task) */
 /* Cleveland Charge (RealGM). [date, opponent, H/A, time ET, result e.g. 'W 118-110' or ''] */
 /* games: [date, opponent, 'H'/'A', 'h:mm' (PM unless it ends in ' AM'), result, optional arena override]. RealGM schedule (48 games); home arena is Public Hall (RealGM's 'Wolstein Center' is out of date). Mar 3 STEM Day game at Rocket Arena (Roundtable). */
 const CHARGE={record:'0–0',coach:'Eli Kell-Abrams',venue:'Public Hall',games:[
@@ -2323,9 +2327,9 @@ SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
     /* tale of the tape: each stat with its league rank, better side in bold */
     if(TS.CLE&&TS[o]){const tape=el('div','gp-tape');const all=Object.values(TS);
       const rk=(v,i,hi)=>1+all.filter(t=>hi?t[i]>v:t[i]<v).length;
-      const ROWS=[['Record',-2,1,null],['Points',2,1,v=>v.toFixed(1)],['Allowed',3,0,v=>v.toFixed(1)],['Off rating',4,1,v=>v.toFixed(1)],['Def rating',5,0,v=>v.toFixed(1)],['Net rating',-1,1,v=>(v>0?'+':'')+v.toFixed(1)],['Pace',6,1,v=>v.toFixed(1)]];
-      const val=(t,i)=>i===-2?t[0]/Math.max(1,t[0]+t[1]):i<0?+(t[4]-t[5]).toFixed(1):t[i];
-      ROWS.forEach(([lab,i,hi,f])=>{const a=val(TS.CLE,i),b=val(TS[o],i);const rr=v=>1+all.filter(t=>val(t,i)>v).length;const ra=i<0?rr(a):rk(a,i,hi),rb=i<0?rr(b):rk(b,i,hi);const fmt=(t,v)=>f?f(v):t[0]+'–'+t[1];
+      const ROWS=[['Record',-2,1,null],['Net, last 2 wks',-3,1,v=>(v>0?'+':'')+v.toFixed(1)],['Off rating',4,1,v=>v.toFixed(1)],['Def rating',5,0,v=>v.toFixed(1)],['Net rating',-1,1,v=>(v>0?'+':'')+v.toFixed(1)],['Pace',6,1,v=>v.toFixed(1)]];
+      const l14=Object.values(L14).map(x=>x[0]);const val=(t,i)=>i===-3?(t===TS.CLE?(L14.CLE||[])[0]:(L14[o]||[])[0]):i===-2?t[0]/Math.max(1,t[0]+t[1]):i<0?+(t[4]-t[5]).toFixed(1):t[i];
+      ROWS.forEach(([lab,i,hi,f])=>{const a=val(TS.CLE,i),b=val(TS[o],i);if(i===-3&&(a==null||b==null)){tape.append(el('span','gtv',a==null?'—':f(a)),el('span','gtl',lab),el('span','gtv r',b==null?'—':f(b)));return}const rr=v=>1+(i===-3?l14.filter(x=>x>v).length:all.filter(t=>val(t,i)>v).length);const ra=i<0?rr(a):rk(a,i,hi),rb=i<0?rr(b):rk(b,i,hi);const fmt=(t,v)=>f?f(v):t[0]+'–'+t[1];
         const better=lab==='Pace'?0:(hi?a>b:a<b)?1:(hi?b>a:b<a)?2:0;
         const L=el('span','gtv'+(better===1?' up':''));L.append(fmt(TS.CLE,a),el('small',null,' '+ord(ra)));const Rr=el('span','gtv r'+(better===2?' up':''));Rr.append(el('small',null,ord(rb)+' '),fmt(TS[o],b));tape.append(L,el('span','gtl',lab),Rr)});
       teams.appendChild(tape);teams.appendChild(el('span','gp-note','Bold = better · league rank'+(cur?'':' · 2025–26 stats until 5 games played')))}
@@ -2410,6 +2414,8 @@ const bioBox=(n,img)=>{const b=BIOS[n];const box=el('div','xb bio');
   if(lk.childNodes.length)body.appendChild(lk);box.appendChild(body);return box};
 STAFF.forEach(([g,people])=>{const sec=el('section');const h=el('div','block-h');h.append(el('h2',null,g),el('span',null,people.length+''));const ul=el('ul','xl');
   people.forEach(([n,t,y,img])=>{const li=el('li');li.id='s-'+slug(n);const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,n),el('small',null,t));sm.append(l,el('b',null,y));const bb=bioBox(n,img);bb.insertBefore(staffX(n,t,()=>[li]),bb.firstChild);d.append(sm,bb);li.appendChild(d);ul.appendChild(li)});sec.append(h,ul);st.appendChild(sec)});
+/* mobile: coach/exec cards show basic info, the rest behind More */
+function coMore(c){const dl=c.querySelector('.bio-f');if(!dl)return;const b=el('button','co-more','More ▾');b.type='button';b.setAttribute('aria-expanded','false');b.onclick=()=>{const o=c.classList.toggle('open');b.textContent=o?'Less ▴':'More ▾';b.setAttribute('aria-expanded',o)};dl.after(b)}
 /* callouts: Altman and Atkinson */
 const ATK=[ /* season, team, W, L, playoffs, ORtg rank, DRtg rank, Net rank, Pace rank (of 30) — Basketball Reference */
   ['2016–17','BKN',20,62,'—',28,23,28,1],['2017–18','BKN',28,54,'—',21,22,24,6],['2018–19','BKN',42,40,'R1 (1–4)',19,14,15,11],['2019–20','BKN',28,34,'— (left Mar 2020)',22,9,15,9],['2024–25','CLE',64,18,'R2 (5–4)',1,8,2,10],['2025–26','CLE',52,30,'ECF (8–10)',6,15,9,14]];
@@ -2436,7 +2442,7 @@ const ATK=[ /* season, team, W, L, playoffs, ORtg rank, DRtg rank, Net rank, Pac
   const atk=card('Head Coach','Kenny Atkinson','Head Coach · 3rd season','https://cdn.nba.com/headshots/nba/latest/260x190/201690.png',[['Born','June 2, 1967 · Northport, N.Y. (age 59)'],['High school','St. Anthony’s (South Huntington, N.Y.)'],['College','Richmond (1986–90), point guard; 1988 NCAA Tournament'],['Head coaching record',w+'–'+(g-w)+' (.'+String(Math.round(w/g*1000)).padStart(3,'0')+') · Cavs 116–48 (.707)'],['Playoffs','14–18 · Cavs 13–14'],['Average team rank','Off '+avg(5)+' · Def '+avg(6)+' · Net '+avg(7)],['Honors','2024–25 NBA and NBCA Coach of the Year; 2022 NBA champion (Warriors assistant); 2025 All-Star Game coach']]);
   atk.append(det('Season-by-season record and team ranks',wrap),det('Career path',pathList([['1990–2004','Pro point guard: CBA/USBL, then Spain, Italy, Germany, France and the Netherlands'],['2004–06','Paris Basket Racing, assistant'],['2008–12','New York Knicks, assistant (Mike D’Antoni)'],['2012–16','Atlanta Hawks, assistant (Mike Budenholzer)'],['2016–20','Brooklyn Nets, head coach (118–190)'],['2020–21','LA Clippers, assistant (Tyronn Lue)'],['2021–24','Golden State Warriors, assistant (2022 title)'],['2022','Agreed to coach Charlotte, then stayed with Golden State'],['Jun 2024–','Cavaliers head coach']])),det('Crossover with current players',(()=>{const d=el('div','xover');d.appendChild(el('p',null,'Jarrett Allen: coached him in Brooklyn (2017–20), including his first three NBA seasons.'));d.appendChild(el('p',null,'Trevor Hendry: on his Nets staff 2016–20, now a Cavs assistant.'));return d})()));
   {const h=atk.querySelector('h2');const nb=el('a','co-name','Kenny Atkinson');nb.href='https://nbacoaches.com/kenny-atkinson/';nb.target='_blank';nb.rel='noopener';nb.title='NBA Coaches Association profile';h.textContent='';h.appendChild(nb)}
-  co.append(alt,atk)})();
+  [alt,atk].forEach(coMore);co.append(alt,atk)})();
 
 /* video.
    On cavsdatabase.com, a scheduled job (scripts/fetch-videos.mjs) writes /videos.json from the official Cavs YouTube feed,
@@ -2830,7 +2836,7 @@ const CH_STAFF=[
     ['Firsts','First woman to serve as Charge GM; the fourth woman GM in G League history when hired']],'https://cleveland.gleague.nba.com/news/liron-fanan-named-2025-26-nba-g-league-basketball-executive-of-the-year');
   lir.append(det('Career path',pathList([['2005–09','Maccabi Tel Aviv (EuroLeague), assistant general manager'],['2009–18','Co-founder, 2Talent Sports Management (player representation)'],['2018–20','Cavaliers, Director of G League Player Development'],['2020–23','Charge, assistant general manager'],['Jul 2023','Charge, general manager'],['Now','Also President of G League Operations, Cavaliers']])),
     links([['GM promotion release','https://cleveland.gleague.nba.com/news/brendon-yu-elevated-to-director-of-scouting-for-the-cavaliers-and-liron-fanan-to-general-manager-of-charge'],['Executive of the Year release','https://cleveland.gleague.nba.com/news/liron-fanan-named-2025-26-nba-g-league-basketball-executive-of-the-year'],['Charge front office','https://cleveland.gleague.nba.com/charge-front-office']]));
-  co.append(eli,lir)})();
+  [eli,lir].forEach(coMore);co.append(eli,lir)})();
 
 /* "updated" status under the wordmark: green when updated within ~36 hours, gold when older */
 (function(){const d=new Date(SITE_UPDATED+'T12:00:00');const u=document.getElementById('upd');if(!u)return;
