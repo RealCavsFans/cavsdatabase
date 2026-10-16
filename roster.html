@@ -812,13 +812,18 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 .ci-tg{font:700 clamp(22px,3.4vw,42px)/1.25 var(--sans);color:#fff;margin:22px 0 0;opacity:0;transform:translateY(8px);transition:all .45s}.ci-tg.on{opacity:1;transform:none}.ci-tg em{display:block;font-style:normal;color:#F2B231}
 .ci-skip{position:absolute;right:18px;bottom:18px;z-index:2;background:none;border:1px solid rgba(255,255,255,.35);color:#fff;font:600 13px var(--sans);padding:8px 14px;cursor:pointer}
 .injx{display:inline-grid;place-items:center;width:13px;height:13px;margin-left:4px;border-radius:3px;background:#C8102E;color:#fff;font:800 11px/1 var(--sans);font-style:normal;vertical-align:1px}
-@media (max-width:720px){table.comps,table.comps tbody{display:block;width:100%}table.comps thead{display:none}table.comps tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 10px;padding:6px 0;border-bottom:1px solid var(--line2)}table.comps td{border:0!important;padding:0!important;white-space:normal}table.comps td:nth-child(1){grid-column:1;font-weight:600}table.comps td:nth-child(2){grid-column:1;font-size:12px;color:var(--muted)}table.comps td:nth-child(3){grid-column:2;grid-row:1}table.comps td:nth-child(4){grid-column:2;grid-row:2;font-size:12px;color:var(--muted)}}
+@media (max-width:720px){table.comps{min-width:0!important}table.comps,table.comps tbody{display:block;width:100%}table.comps thead{display:none}table.comps tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 10px;padding:6px 0;border-bottom:1px solid var(--line2)}table.comps td{border:0!important;padding:0!important;white-space:normal}table.comps td{font-size:12px!important}table.comps td:nth-child(1){grid-column:1;font-weight:600}table.comps td:nth-child(2){grid-column:1;font-size:12px;color:var(--muted)}table.comps td:nth-child(3){grid-column:2;grid-row:1}table.comps td:nth-child(4){grid-column:2;grid-row:2;font-size:12px;color:var(--muted)}}
 .tip{font-weight:700;color:var(--wine-ink);text-decoration:none;border-bottom:2px solid #F2B231}
 .gp{display:block}.gp-k{display:block;margin-bottom:6px}
 .gp-teams{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center;margin-bottom:8px}
 .gp-t{display:flex;flex-direction:column;gap:1px}.gp-t b{font:800 14px var(--sans);color:var(--fg)}.gp-t span{font:500 12px var(--mono);color:var(--fg2)}
 .gp-teams .gp-t:last-child{text-align:right}.gp-vs{font-style:normal;font:700 11px var(--sans);color:var(--muted);text-transform:uppercase}
 .gp-f{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;border-top:1px solid var(--line2);padding-top:7px}
+.csheet{position:fixed;inset:0;z-index:70}.csheet[hidden]{display:none}.cs-bg{position:absolute;inset:0;background:rgba(10,12,16,.45)}
+.cs-panel{position:absolute;left:0;right:0;bottom:0;max-height:86vh;background:var(--card,var(--bg));border-radius:14px 14px 0 0;display:flex;flex-direction:column;box-shadow:0 -10px 30px rgba(0,0,0,.2)}
+.cs-hd{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:3px solid var(--fg)}.cs-hd b{font:800 17px var(--sans)}.cs-x{appearance:none;border:0;background:var(--sub);width:32px;height:32px;border-radius:50%;font-size:14px;cursor:pointer;color:var(--fg)}
+.cs-body{overflow-y:auto;padding:12px 16px 24px;-webkit-overflow-scrolling:touch}.cs-body .det-grid{position:static!important;width:auto!important}
+.cs-body table.comps td{font:500 12px/1.35 var(--sans)!important}.cs-body table.comps td:nth-child(1){font-weight:700!important}.cs-body table.comps td:nth-child(3){font:600 12px var(--mono)!important}
 .tks{display:inline-flex;gap:10px;flex:0 0 auto}
 .tk{display:inline-flex;align-items:center;gap:4px;font:600 11.5px var(--sans);white-space:nowrap;color:var(--fg2)}.tk i{font-style:normal;font-weight:800}
 .tk.y i{color:#2E7D4F}.tk.n{color:var(--muted)}.tk.n i{color:var(--wine-ink)}.tk.out{color:var(--fg2)}.tk.out i{color:var(--wine-ink)}
@@ -1964,6 +1969,13 @@ const EXT={'Evan Mobley':1,'Donovan Mitchell':3,'James Harden':2,'Jarrett Allen'
 /* a this-season note stops showing the day after its date (Jul–Dec = 2026, Jan–Jun = 2027) */
 const notePast=t=>{const m=t.match(/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* (\d{1,2})/);if(!m)return false;const mi='JanFebMarAprMayJunJulAugSepOctNovDec'.indexOf(m[1])/3;const d=new Date(mi>=6?2026:2027,mi,+m[2]+1);return new Date()>=d};
 const extText=i=>i===0?'Eligible now, through June 30, 2027.':'Becomes eligible during the '+SEASONS[i]+' league year, which starts July 1, '+(2026+i)+'.';
+/* phones: a player's contract details open in a sheet over the page, so sideways scrolling of the cap table can't drag them */
+function openCapSheet(name,grid,home){let sh=document.getElementById('capsheet');
+  if(!sh){sh=el('div','csheet');sh.id='capsheet';sh.innerHTML='<div class="cs-bg"></div><div class="cs-panel" role="dialog" aria-modal="true"><div class="cs-hd"><b></b><button type="button" class="cs-x" aria-label="Close">✕</button></div><div class="cs-body"></div></div>';document.body.appendChild(sh);
+    const close=()=>{const b=sh.querySelector('.cs-body');if(sh._home&&b.firstChild)sh._home.appendChild(b.firstChild);sh.hidden=true;document.documentElement.style.overflow=''};
+    sh.querySelector('.cs-x').onclick=close;sh.querySelector('.cs-bg').onclick=close;sh._close=close}
+  if(!sh.hidden&&sh._close)sh._close();
+  sh.querySelector('.cs-hd b').textContent=name;sh.querySelector('.cs-body').appendChild(grid);sh._home=home;sh.hidden=false;sh.querySelector('.cs-body').scrollTop=0;document.documentElement.style.overflow='hidden'}
 const cb=document.getElementById('capbody');const totals=[0,0,0,0,0];
 const salOf=y=>typeof y==='number'?y:Array.isArray(y)?y[0]:null;
 ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
@@ -2015,7 +2027,7 @@ ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
     d.appendChild(el('p','dim','Impact: nbarapm time-decay RAPM and league rank of 582 players (Aug 30, 2026). — means no rating yet.'));g.appendChild(d)}
   if(C){const a=el('a','splink','Full contract on Spotrac ↗');a.href='https://www.spotrac.com/nba/player/_/id/'+C.sp;a.target='_blank';a.rel='noopener';const d=el('div','wide');d.appendChild(a);g.appendChild(d)}
   dtd.appendChild(g);det.appendChild(dtd);cb.appendChild(det);
-  btn.addEventListener('click',()=>{const o=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',String(!o));det.hidden=o});
+  btn.addEventListener('click',()=>{if(matchMedia('(max-width:720px)').matches){openCapSheet(n,g,dtd);return}const o=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',String(!o));det.hidden=o});
 });
 /* where the 2026-27 money goes: each player's share of team salary */
 {const sh=document.getElementById('share');const sum=totals[0];
