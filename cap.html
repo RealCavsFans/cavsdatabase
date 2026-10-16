@@ -250,7 +250,8 @@ th:first-child,td:first-child{padding-left:20px}
 .pbtn::after{content:"";width:6px;height:6px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:rotate(45deg) translateY(-2px);transition:transform .15s}
 .pbtn[aria-expanded="true"]::after{transform:rotate(-135deg) translateY(-1px)}
 .pbtn:hover{color:var(--wine-ink)}
-tr.det td{background:var(--sub);border-top:0;padding:4px 20px 18px}
+tr.det td{background:var(--sub);border-top:0;padding:4px 20px 18px;position:relative}.det-x{position:absolute;top:8px;right:14px;margin:0;z-index:2}.cs-xa{margin-left:auto;margin-right:10px}.capcard{background:var(--sub);padding:14px 20px 18px}.capcard .det-grid{position:static!important;width:auto!important}.capcard-h{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px 14px;border-bottom:3px solid var(--fg);padding-bottom:8px;margin-bottom:14px}.capcard-h b{font:800 22px var(--sans)}.capcard-h span{font:600 13px var(--mono);color:var(--muted)}.cs-xa .xact{margin:0}
+@media (max-width:720px){.det-x{display:none}}
 .det-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 28px;max-width:980px}
 .det-grid h4{margin:10px 0 4px;font:800 11px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .det-grid p{margin:0;font-size:13px;line-height:1.5;color:var(--fg2);white-space:normal}
@@ -2016,11 +2017,11 @@ const notePast=t=>{const m=t.match(/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov
 const extText=i=>i===0?'Eligible now, through June 30, 2027.':'Becomes eligible during the '+SEASONS[i]+' league year, which starts July 1, '+(2026+i)+'.';
 /* phones: a player's contract details open in a sheet over the page, so sideways scrolling of the cap table can't drag them */
 function openCapSheet(name,grid,home){let sh=document.getElementById('capsheet');
-  if(!sh){sh=el('div','csheet');sh.id='capsheet';sh.innerHTML='<div class="cs-bg"></div><div class="cs-panel" role="dialog" aria-modal="true"><div class="cs-hd"><b></b><button type="button" class="cs-x" aria-label="Close">✕</button></div><div class="cs-body"></div></div>';document.body.appendChild(sh);
+  if(!sh){sh=el('div','csheet');sh.id='capsheet';sh.innerHTML='<div class="cs-bg"></div><div class="cs-panel" role="dialog" aria-modal="true"><div class="cs-hd"><b></b><span class="cs-xa"></span><button type="button" class="cs-x" aria-label="Close">✕</button></div><div class="cs-body"></div></div>';document.body.appendChild(sh);
     const close=()=>{const b=sh.querySelector('.cs-body');if(sh._home&&b.firstChild)sh._home.appendChild(b.firstChild);sh.hidden=true;document.documentElement.style.overflow=''};
     sh.querySelector('.cs-x').onclick=close;sh.querySelector('.cs-bg').onclick=close;sh._close=close}
   if(!sh.hidden&&sh._close)sh._close();
-  sh.querySelector('.cs-hd b').textContent=name;sh.querySelector('.cs-body').appendChild(grid);sh._home=home;sh.hidden=false;sh.querySelector('.cs-body').scrollTop=0;document.documentElement.style.overflow='hidden'}
+  sh.querySelector('.cs-hd b').textContent=name;{const sl=sh.querySelector('.cs-xa');sl.innerHTML='';if(grid._mkx)sl.appendChild(grid._mkx())}sh.querySelector('.cs-body').appendChild(grid);sh._home=home;sh.hidden=false;sh.querySelector('.cs-body').scrollTop=0;document.documentElement.style.overflow='hidden'}
 const cb=document.getElementById('capbody');const totals=[0,0,0,0,0];
 const salOf=y=>typeof y==='number'?y:Array.isArray(y)?y[0]:null;
 ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
@@ -2072,6 +2073,11 @@ ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
     tb.appendChild(bd);d.appendChild(tb);
     d.appendChild(el('p','dim','Impact: nbarapm time-decay RAPM and league rank of 582 players (Aug 30, 2026). — means no rating yet.'));g.appendChild(d)}
   if(C){const a=el('a','splink','Full contract on Spotrac ↗');a.href='https://www.spotrac.com/nba/player/_/id/'+C.sp;a.target='_blank';a.rel='noopener';const d=el('div','wide');d.appendChild(a);g.appendChild(d)}
+  {const cur=salOf(yrs[0]),sub=(cur?usd(cur)+' in 2026–27':'')+(C?' · '+C.deal[0]+' yrs, '+usdM(C.deal[1]):'');
+   g._mkx=()=>{const xa=el('span','xact');const b1=el('button');b1.type='button';b1.title='Share link';b1.setAttribute('aria-label','Share a link to '+n+'\u2019s contract');const b2=el('button');b2.type='button';b2.title='Save as image';b2.setAttribute('aria-label','Save '+n+'\u2019s contract card as an image');
+     if(window.cdbIcons){b1.innerHTML=window.cdbIcons[0];b2.innerHTML=window.cdbIcons[1]}
+     b1.onclick=()=>window.cdbShare&&window.cdbShare('cap',slug(n),n+' contract');b2.onclick=async()=>{if(!window.cdbCap)return;const gw=el('div','gwrap'),cc=el('div','capcard');cc.style.width=Math.max(g.clientWidth+40,380)+'px';const hd=el('div','capcard-h');hd.append(el('b',null,n),el('span',null,sub));cc.append(hd,g.cloneNode(true));gw.appendChild(cc);document.body.appendChild(gw);try{await window.cdbCap('cap',slug(n),n,[cc],b2)}finally{gw.remove()}};xa.append(b1,b2);return xa};
+   const dx=g._mkx();dx.classList.add('det-x');dtd.appendChild(dx)}
   dtd.appendChild(g);det.appendChild(dtd);cb.appendChild(det);
   btn.addEventListener('click',()=>{if(matchMedia('(max-width:720px)').matches){openCapSheet(n,g,dtd);return}const o=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',String(!o));det.hidden=o});
 });
@@ -3087,7 +3093,7 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
    if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]}))toast('Image ready','Save or share',save);else save();
   }catch(e){toast('Couldn’t make the image. Try again.')}
   finally{boxes[0].removeAttribute('data-capfirst');if(capEl)capEl.classList.remove('capmode');btn.disabled=false}}
- function attach(){document.querySelectorAll('.rc-x button:empty').forEach((b,i)=>{b.innerHTML=b.title==='Share link'?I_L:I_C});document.querySelectorAll('.gsave button:empty').forEach(b=>{b.innerHTML=I_C});T.forEach(([id,route,hdr,boxes,label])=>{const h=hdr();if(!h||h.dataset.anchor)return;h.dataset.anchor=id;h.classList.add('hasx');
+ function attach(){document.querySelectorAll('.xact button:empty').forEach(b=>{b.innerHTML=b.title==='Share link'?I_L:I_C});T.forEach(([id,route,hdr,boxes,label])=>{const h=hdr();if(!h||h.dataset.anchor)return;h.dataset.anchor=id;h.classList.add('hasx');
   const w=document.createElement('span');w.className='xact';
   const b1=document.createElement('button');b1.type='button';b1.innerHTML=I_L;b1.title='Share link';b1.setAttribute('aria-label','Share a link to '+label);b1.onclick=()=>share(route,id,label);
   const b2=document.createElement('button');b2.type='button';b2.innerHTML=I_C;b2.title='Save as image';b2.setAttribute('aria-label','Save '+label+' as an image');b2.onclick=()=>{const bx=boxes().filter(Boolean);if(bx.length)capture(route,id,label,bx,b2)};
