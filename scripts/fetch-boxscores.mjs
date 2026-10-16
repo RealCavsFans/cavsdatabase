@@ -1,4 +1,5 @@
-// Builds box.json: { "YYYY-MM-DD": { url, status, score } } for every Cavs game
+// Builds box.json: { "YYYY-MM-DD": { url, status, score, top } } for every Cavs game
+// (top = the best Cavs stat line, from ESPN's public box score, for recent finals; used by the site's final-score alert)
 // (preseason + regular season) from NBA.com's public schedule feed.
 // On any failure it keeps the existing box.json and exits 0.
 import { readFile, writeFile } from 'node:fs/promises';
@@ -21,8 +22,25 @@ try {
       const fin = g.gameStatus === 3;
       const cle = h === 'CLE' ? g.homeTeam.score : g.awayTeam.score;
       const opp = h === 'CLE' ? g.awayTeam.score : g.homeTeam.score;
-      out[date] = { url, status: fin ? 'final' : 'scheduled', ...(fin ? { score: `${cle}-${opp}`, result: cle > opp ? 'W' : 'L' } : {}) };
+      out[date] = { url, status: fin ? 'final' : 'scheduled', ...(fin ? { score: `${cle}-${opp}`, result: cle > opp ? 'W' : 'L' } : {}), ...(fin && prev[date]?.top ? { top: prev[date].top } : {}) };
     }
+  }
+  // best Cavs stat line for finals in the last 3 days (ESPN box score)
+  const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba';
+  for (const [date, g] of Object.entries(out)) {
+    if (g.status !== 'final' || g.top || Date.now() - Date.parse(date + 'T12:00:00Z') > 3 * 864e5) continue;
+    try {
+      const sb = await (await fetch(`${ESPN}/scoreboard?dates=${date.replace(/-/g, '')}`)).json();
+      const ev = (sb.events || []).find(e => e.competitions?.[0]?.competitors?.some(c => c.team?.abbreviation === 'CLE'));
+      if (!ev) continue;
+      const sum = await (await fetch(`${ESPN}/summary?event=${ev.id}`)).json();
+      const t = (sum.boxscore?.players || []).find(p => p.team?.abbreviation === 'CLE');
+      const st = t?.statistics?.[0]; if (!st) continue;
+      const keys = (st.names || st.labels || []).map(x => String(x).toUpperCase());
+      const n = (a, k) => parseFloat(a.stats[keys.indexOf(k)]) || 0;
+      const best = (st.athletes || []).filter(a => a.stats?.length).sort((x, y) => ['PTS', 'REB', 'AST', 'STL', 'BLK'].reduce((s2, k) => s2 + n(y, k) - n(x, k), 0))[0];
+      if (best) g.top = `${best.athlete.displayName}: ${n(best, 'PTS')} pts, ${n(best, 'REB')} reb, ${n(best, 'AST')} ast`;
+    } catch (e) { console.warn('top line unavailable for', date, e.message); }
   }
   const sorted = Object.fromEntries(Object.entries(out).sort(([x], [y]) => x.localeCompare(y)));
   await writeFile('box.json', JSON.stringify(sorted, null, 1) + '\n');
