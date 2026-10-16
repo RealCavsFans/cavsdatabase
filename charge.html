@@ -236,6 +236,8 @@ a{color:var(--wine-ink);text-decoration:none}a:hover{text-decoration:underline}
 .page{padding-block:32px 64px;display:flex;flex-direction:column;gap:20px}
 h1{margin:0;font:800 clamp(28px,4vw,36px)/1.1 var(--sans);font-stretch:115%;letter-spacing:-.02em;text-wrap:balance}
 .tablebox{overflow-x:auto;border:1px solid var(--line);overscroll-behavior-x:contain}
+.gnav.fr{-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);mask-image:linear-gradient(90deg,#000 82%,transparent)}.gnav.fl{-webkit-mask-image:linear-gradient(90deg,transparent,#000 18%);mask-image:linear-gradient(90deg,transparent,#000 18%)}.gnav.fl.fr{-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 82%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 82%,transparent)}
+.art-h{scroll-margin-top:150px;margin-top:34px;padding-top:22px;border-top:2px solid var(--fg)}.art-h h2{margin:0;font:800 21px var(--sans);font-stretch:110%}
 .pp-hero{display:flex;gap:22px;align-items:flex-end;background:linear-gradient(135deg,#8e2741,#6E1A2D);color:#fff;margin:12px 0 22px;padding:20px 22px 0;overflow:hidden;position:relative}
 .pp-ph{width:220px;flex:none;align-self:flex-end;display:grid;place-items:center;font:800 54px var(--cond);color:rgba(255,255,255,.5);min-height:160px}.pp-ph img{width:100%;display:block}
 .pp-tx{padding-bottom:20px;min-width:0}.pp-k{font:800 11px var(--sans);font-stretch:125%;letter-spacing:.12em;text-transform:uppercase;color:#F2B231}
@@ -1215,11 +1217,15 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
     <div>
       <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Media</div>
       <h1 style="margin-top:6px">Media</h1>
-      <div class="segs msegs" role="tablist" aria-label="Media"><a role="tab" aria-selected="true" href="/media" data-go="media">Video</a><a role="tab" aria-selected="false" href="/media/rcf" data-go="media/rcf">RealCavsFans</a></div>
       <p class="dim vdesc" style="margin:6px 0 0"><span>Press conferences, practice availability and the latest from the official Cavs channel.</span><a href="https://www.youtube.com/@cavs" target="_blank" rel="noopener">Cavs YouTube channel ↗</a></p>
     </div>
     <div id="vid-page"></div>
     <p class="dim" style="margin:0;font-size:13px">All video from the Cleveland Cavaliers' official YouTube channel.</p>
+    <div id="articles" class="art-h"><h2>Articles &amp; recaps</h2><p class="dim" style="margin:4px 0 0">From RealCavsFans.com and @realcavsfans on X.</p></div>
+    <div class="rcf-cols">
+      <section><div class="block-h"><h2>RealCavsFans.com</h2><a href="https://realcavsfans.com/index.php?forums/FrontPage/" target="_blank" rel="noopener">Front page ↗</a></div><div class="rcf-list" id="rcf-list"></div></section>
+      <section><div class="block-h"><h2>On X</h2><a href="https://x.com/realcavsfans" target="_blank" rel="noopener">@realcavsfans ↗</a></div><div class="rcf-x" id="rcf-x"><a class="xcard" href="https://x.com/realcavsfans" target="_blank" rel="noopener"><b>@realcavsfans</b><span>RealCavsFans.com on X · graphics, analysis and game-night posts</span><em>Open on X ↗</em></a></div></section>
+    </div>
   </div>
 </main>
 
@@ -1301,21 +1307,6 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
       <div class="cols" id="ch-staff"></div></section>
   </div>
 </template>
-
-<main id="view-rcf" hidden>
-  <div class="wrap page">
-    <div>
-      <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Media</div>
-      <h1 style="margin-top:6px">Media</h1>
-      <div class="segs msegs" role="tablist" aria-label="Media"><a role="tab" aria-selected="false" href="/media" data-go="media">Video</a><a role="tab" aria-selected="true" href="/media/rcf" data-go="media/rcf">RealCavsFans</a></div>
-      <p class="dim" style="margin:6px 0 0">Articles and recaps from RealCavsFans.com, and posts from @realcavsfans on X.</p>
-    </div>
-    <div class="rcf-cols">
-      <section><div class="block-h"><h2>RealCavsFans.com</h2><a href="https://realcavsfans.com/index.php?forums/FrontPage/" target="_blank" rel="noopener">Front page ↗</a></div><div class="rcf-list" id="rcf-list"></div></section>
-      <section><div class="block-h"><h2>On X</h2><a href="https://x.com/realcavsfans" target="_blank" rel="noopener">@realcavsfans ↗</a></div><div class="rcf-x" id="rcf-x"><a class="xcard" href="https://x.com/realcavsfans" target="_blank" rel="noopener"><b>@realcavsfans</b><span>RealCavsFans.com on X · graphics, analysis and game-night posts</span><em>Open on X ↗</em></a></div></section>
-    </div>
-  </div>
-</main>
 
 <main id="view-player" hidden></main>
 <main id="view-stub" hidden>
@@ -2584,6 +2575,8 @@ const GALERT_ON=true;
     document.body.appendChild(bar);return}
   if(GALERT_ON){load();setInterval(()=>{const t0=now();const near=SCHEDULE.some(g=>{const t=tipOf(g).getTime();return t0>t-H&&t0<t+6*H});if(near)load();else check()},5*6e4)}
 })();
+/* menu tabs: soft fade on the edge that has more tabs past it, so people know to swipe */
+(function(){const n=document.getElementById('tabs');if(!n)return;const f=()=>{const m=n.scrollWidth-n.clientWidth;n.classList.toggle('fl',n.scrollLeft>4);n.classList.toggle('fr',m>4&&n.scrollLeft<m-4)};n.addEventListener('scroll',f,{passive:true});addEventListener('resize',f);setTimeout(f,300);f()})();
 /* mobile: coach/exec cards show basic info, the rest behind More */
 function coMore(c){const dl=c.querySelector('.bio-f');if(!dl)return;const b=el('button','co-more','More ▾');b.type='button';b.setAttribute('aria-expanded','false');b.onclick=()=>{const o=c.classList.toggle('open');b.textContent=o?'Less ▴':'More ▾';b.setAttribute('aria-expanded',o)};dl.after(b)}
 /* callouts: Altman and Atkinson */
@@ -3203,7 +3196,6 @@ const PAGE_META={
  'moves':['Cavs Transactions & Trade History Since 2017 | cavs_db','Every Cavs trade, signing, extension, draft pick and waiver since 2017, with what moved in each deal.'],
  'charge':['Cleveland Charge Schedule, Roster & Stats 2026–27 (G League) | cavs_db','The Cavs’ G League affiliate: full schedule with results, player stats and leaders, two-way and affiliate players, and coach and front office bios.'],
  'media':['Cavs Press Conferences, Highlights & Articles | cavs_db','The latest Cavs press conferences and highlights from the team’s YouTube channel, plus articles and recaps from RealCavsFans.com.'],
- 'media/rcf':['RealCavsFans.com Articles & Recaps | cavs_db','The latest Cavs articles, recaps and previews from RealCavsFans.com, plus @realcavsfans on X.'],
  'resources':['Best Cavs & NBA Stats, Salary Cap and Draft Sites | cavs_db','cavs_db approved sites for NBA and Cavs knowledge.']
 };
 /* tip jar: set to the Buy Me a Coffee page address to show the footer link */
@@ -3269,16 +3261,16 @@ window.renderPlayer=function(s){
     rows.forEach(r=>{const li=el('li');li.append(el('span','mono',dfmt(r.d)),r.t||((r.got||[]).includes(n)?'Acquired by trade':'Traded away')+(r.w?' ('+r.w.join(', ')+')':''));const X=TX_X[r.d+'|'+(r.p||(r.got||[])[0]||'')];if(X&&X.value&&!/^Ended/.test(r.t||''))li.appendChild(el('b','pp-val',X.value));ul.appendChild(li)});
     c.appendChild(ul);const a=el('a','pp-more','All Cavs transactions →');a.href='/moves';a.dataset.go='moves';c.appendChild(a);grid.appendChild(c)}}
   return true};
-const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge','rcf','player'];
+const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge','player'];
 /* page titles and descriptions per route (search engines and browser tabs) */
-const ROUTE_ALIAS={video:'media',rcf:'media/rcf'};
+const ROUTE_ALIAS={video:'media',rcf:'media/rcf'}; /* media/rcf now opens Media scrolled to the articles */
 function routeOf(){let r=location.pathname.replace(/^\/+|\/+$/g,'').toLowerCase();if(/index\.html$/.test(r)||location.protocol==='file:')r='';const h=location.hash.slice(1);if(!r&&h&&(SECTIONS.some(x=>x[0]===h)||ROUTE_ALIAS[h]))r=h;const AL={video:'media',rcf:'media/rcf'};return AL[r]||r||'home'}
 function show(route){
   if(window.cdbAttachX)setTimeout(window.cdbAttachX,60);
   {const cur=document.querySelector('.wm-term s');if(cur&&!matchMedia('(prefers-reduced-motion: reduce)').matches){cur.style.animation='none';void cur.offsetWidth;cur.style.animation=''}}
-  let id=route.split('/')[0];if(id==='media')id=route==='media/rcf'?'rcf':'video';
+  let id=route.split('/')[0];const toArt=route==='media/rcf';if(toArt)route='media';if(id==='media')id='video';
   if(id==='players'){id='player';if(!PP_VIS||!window.renderPlayer||!renderPlayer(route.split('/')[1]||'')){id='home';route='home'}}
-  const sec=id==='video'||id==='rcf'?'media':id==='player'?'roster':id;
+  const sec=id==='video'?'media':id==='player'?'roster':id;
   if(!SECTIONS.some(s=>s[0]===sec)){id='home';route='home'}
   BUILT.forEach(v=>{document.getElementById('view-'+v).hidden=id!==v});
   const stub=document.getElementById('view-stub');stub.hidden=BUILT.includes(id);
@@ -3287,7 +3279,7 @@ function show(route){
   const path=route==='home'?'/':'/'+route;const cl=document.querySelector('link[rel=canonical]');if(cl)cl.href='https://cavsdatabase.com'+path;const ou=document.querySelector('meta[property="og:url"]');if(ou)ou.content='https://cavsdatabase.com'+path;
   window.scrollTo(0,0);
   if(window.scrambleView)scrambleView(id);
-  if(id==='rcf')loadRcf();
+  if(id==='video'){loadRcf();if(toArt){try{history.replaceState({p:'media'},'','/media')}catch(_){}}if(toArt)setTimeout(()=>{const a=document.getElementById('articles');if(a)a.scrollIntoView({block:'start'})},60)}
   if(id==='home'&&window.resetCal){resetCal();const c=document.getElementById('dcal');if(c&&c.getBoundingClientRect().top<innerHeight){c.dataset.done=1;setTimeout(()=>c.classList.add('rip'),500)}}
 }
 /* real page addresses: /cap, /roster, /media/rcf … Old #links still work and are rewritten to the new address. */
@@ -3308,7 +3300,9 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
 /* first-visit intro: home page only, once per browser, skipped for reduced motion and on June 19 */
 (function(){const I=document.getElementById('ci');if(!I)return;let seen=false;try{seen=!!localStorage.getItem('cdb-intro')}catch(e){seen=true}
   const force=/preview=intro/.test(location.search);
-  if(!force&&(seen||routeOf()!=='home'||matchMedia('(prefers-reduced-motion: reduce)').matches||document.getElementById('cel'))){startHints();return}
+  /* only for people who typed the address or used a bookmark: anyone arriving from Google, X or a shared link goes straight to the page */
+  let ext=false;try{ext=!!document.referrer&&new URL(document.referrer).host!==location.host}catch(e){}
+  if(!force&&(seen||ext||location.search||location.hash||routeOf()!=='home'||matchMedia('(prefers-reduced-motion: reduce)').matches||document.getElementById('cel'))){startHints();return}
   try{localStorage.setItem('cdb-intro','1')}catch(e){}
   const T=document.getElementById('ci-t'),B=document.getElementById('ci-br'),G=document.getElementById('ci-tg');let stop=false;
   const done=()=>{stop=true;startHints();I.classList.add('out');document.documentElement.style.overflow='';setTimeout(()=>I.remove(),700)};
