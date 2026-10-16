@@ -155,6 +155,19 @@ a{color:var(--wine-ink);text-decoration:none}a:hover{text-decoration:underline}
 .otd-when{margin-top:0}
 .otd-text{margin:10px 0 8px;font-size:14px;line-height:1.5}
 .otd-src{font-size:12px}
+.otd-tag{display:inline-block;margin-right:6px;padding:1px 6px;font:700 9.5px var(--sans);font-stretch:118%;letter-spacing:.07em;text-transform:uppercase;border:1px solid var(--line);color:var(--muted);vertical-align:1px}
+.otd-tag.title{border-color:#D99A12;color:#9A6A00;background:color-mix(in srgb,#F2B231 14%,transparent)}.otd-tag.passing{border-color:var(--fg2);color:var(--fg2)}
+.otd-also{list-style:none;margin:12px 0 0;padding:10px 0 0;border-top:1px solid var(--line2);font-size:13px;line-height:1.45}
+.otd-also li{margin:0 0 6px}.otd-also li b{font:700 12px var(--mono);margin-right:6px;color:var(--wine-ink)}.otd-also a{font-size:12px;white-space:nowrap}
+/* June 19 */
+.cel{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:rgba(10,12,16,.82);padding:16px}
+.cel-in{width:min(960px,100%);text-align:center;color:#fff}
+.cel-k{font:700 12px var(--sans);font-stretch:125%;letter-spacing:.14em;text-transform:uppercase;color:#F2B231;margin-bottom:6px}
+.cel-h{font:800 clamp(22px,4.5vw,40px)/1.1 var(--sans);font-stretch:118%;margin:0 0 14px}
+.cel-v{position:relative;aspect-ratio:16/9;background:#000;box-shadow:0 20px 60px rgba(0,0,0,.5)}.cel-v iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.cel-x{position:absolute;top:14px;right:14px;appearance:none;border:1px solid rgba(255,255,255,.4);background:rgba(0,0,0,.4);color:#fff;font:700 13px var(--sans);padding:8px 12px;cursor:pointer}
+.cel-s{margin-top:10px;font-size:12.5px;color:rgba(255,255,255,.75)}
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:70}
 .key{display:inline-flex;align-items:center;gap:6px}
 .kt{display:inline-block;width:11px;height:12px;background:var(--fg)}.kt.cav{background:var(--wine);box-shadow:inset 0 -2px 0 #F2B231}
 .key-tick{display:inline-block;width:2px;height:11px;background:var(--muted)}
@@ -284,7 +297,8 @@ tr.det td{background:var(--sub);border-top:0;padding:4px 20px 18px}
 .pt-lab b{display:block;font:800 13px var(--sans);font-stretch:118%;letter-spacing:.08em;text-transform:uppercase}
 .pt-lab span{font-size:12px;color:var(--muted);line-height:1.35}
 @media (max-width:760px){.pt{grid-template-columns:1fr;gap:4px}.pt-lab{order:-1;text-align:center}.pt-lab span{display:block}.pt1{--w:100%}.pt2{--w:100%}.pt3{--w:100%}.pt4{--w:100%}.pt-band{clip-path:none;border-radius:6px}.pt-faces{gap:6px 6px}.pt-faces a{width:58px}.pt-faces b{font-size:11px}.pt-faces .pf{width:44px;height:44px}.pt1 .pf{width:48px;height:48px}.pyr{padding:14px 10px 6px;gap:12px}.ds-hdr{flex-wrap:wrap;gap:10px}.ds-hdr b{font-size:17px}}
-.captop{margin:0}.ct-nums{display:flex;flex-wrap:wrap;gap:10px 34px}.ct-nums div{display:flex;flex-direction:column}.ct-nums b{font:700 24px var(--mono);letter-spacing:-.02em}.ct-nums .key b{color:var(--wine-ink)}.ct-nums span{font-size:12px;color:var(--muted)}.captop .hbar{margin-top:6px}
+@media (max-width:760px){.ct-nums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px}.ct-nums b{font-size:20px}.ct-nums span{font-size:11.5px;line-height:1.3}main .page p.dim{font-size:12px!important}.block-h span{font-size:11.5px}}
+.captop{margin:0}.ct-nums{display:flex;flex-wrap:wrap;gap:10px 34px}.ct-nums div{display:flex;flex-direction:column}.ct-nums b{font:700 24px var(--mono);letter-spacing:-.02em}.ct-nums .ctkey b{color:var(--wine-ink)}.ct-nums span{font-size:12px;color:var(--muted)}.captop .hbar{margin-top:6px}
 .det-grid .wide{grid-column:1/-1}.pcap{list-style:none;margin:0;padding:0;font-size:13px}.pcap li{display:flex;justify-content:space-between;gap:12px;max-width:200px;padding:1px 0;color:var(--fg2)}.pcap b{font:500 13px var(--mono);color:var(--fg);position:relative}.pcap sup{position:absolute;left:100%;top:-2px;color:var(--wine-ink)}
 table.comps{border-collapse:collapse;font-size:12.5px;width:100%;max-width:640px;table-layout:auto;margin-bottom:6px}table.comps th{font-weight:600;color:var(--muted);text-align:left;padding:4px 10px 4px 0;border-bottom:1px solid var(--line2);font-size:11.5px}table.comps td{padding:4px 10px 4px 0;border-bottom:1px solid var(--line2);white-space:nowrap;font-size:12.5px}table.comps .r{text-align:right}table.comps tr.me td{font-weight:700}table.comps small{color:var(--muted);font-size:11px}
 .det-grid p.dim{font-size:11.5px;color:var(--muted)}.splink{font-weight:600;font-size:13px}
@@ -444,7 +458,7 @@ body{background:var(--page)}
 .segs button{appearance:none;border:0;background:none;padding:8px 16px;font:700 12px var(--sans);font-stretch:118%;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);cursor:pointer}
 .segs button[aria-selected="true"]{background:var(--wine);color:#fff}
 .segs button{white-space:nowrap}
-@media (max-width:520px){.segs{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));width:100%}.segs button{padding:9px 6px;font-size:11px;letter-spacing:.03em}}
+@media (max-width:520px){.segs{display:flex;width:100%}.segs button{flex:1 1 auto;min-width:0;padding:9px 6px;font-size:10.5px;letter-spacing:.02em;font-stretch:100%}}
 .ros td{white-space:nowrap}
 .ros td.num{font:700 15px var(--mono);color:var(--wine-ink)}
 .ros td.m{font:400 13.5px var(--sans);font-variant-numeric:tabular-nums}
@@ -497,7 +511,9 @@ table.sched{min-width:980px;table-layout:fixed}
 .tvc{font-size:13px;line-height:1.35}.tvc b,.tvc span,.tvc small{display:block}.tvc b{font-weight:700}.tvc small{color:var(--muted);font-size:11.5px}
 .gtag{display:inline-block;margin-left:8px;padding:1px 6px;border:1px solid var(--line);font:700 9.5px var(--sans);font-stretch:118%;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);vertical-align:1px}
 .gtag.cup{border-color:#D99A12;color:#9A6A00}
-tr.mark td{background:var(--sub);font:600 12.5px var(--sans);color:var(--fg2);padding-block:8px}
+tr.mark td{background:var(--sub);font:600 12.5px var(--sans);color:var(--fg);padding-block:8px;box-shadow:inset 3px 0 0 var(--wine)}
+tr.mark.cupm td{box-shadow:inset 3px 0 0 #D99A12}tr.mark.cupm .mk-dot{background:#D99A12}
+td.mtag{display:none}
 .mk-dot{display:inline-block;width:8px;height:8px;background:var(--wine);transform:rotate(45deg);margin-right:10px;vertical-align:1px}
 tr.nextg td{background:color-mix(in srgb,var(--wine) 7%,transparent)}
 @media (max-width:760px){
@@ -520,8 +536,15 @@ tr.nextg td{background:color-mix(in srgb,var(--wine) 7%,transparent)}
  .sched .gtag{margin-left:6px;font-size:8.5px;padding:0 4px}
  .sched tr.mark{display:block;padding:0;border-top:1px solid var(--line2)}
  .sched tr.nextg{background:color-mix(in srgb,var(--wine) 7%,transparent)}
- .sched tr.mark td{display:block;background:none;font:500 11.5px var(--sans);color:var(--muted);padding:6px 12px!important}
- .sched tr.mark .mk-dot{width:5px;height:5px;margin-right:7px;vertical-align:2px;background:var(--muted)}
+ .sched tr.mark td{display:block;background:var(--sub);font:600 12px var(--sans);color:var(--fg);padding:7px 12px!important;box-shadow:inset 3px 0 0 var(--wine)}
+ .sched tr.mark.cupm td{box-shadow:inset 3px 0 0 #D99A12}
+ .sched tr.mark .mk-dot{width:6px;height:6px;margin-right:8px;vertical-align:1px}
+ .sched .tvc b{font-weight:400}
+ .sched td:nth-child(2) .gtag{display:none}
+ .sched td.mtag{display:block;grid-column:1/-1;grid-row:1;margin-bottom:2px}.sched td.mtag .gtag{margin:0}
+ .sched tr.hastag td:nth-child(1){grid-row:2/span 2}.sched tr.hastag td:nth-child(2),.sched tr.hastag td:nth-child(3){grid-row:2}
+ .sched tr.hastag td:nth-child(4),.sched tr.hastag td:nth-child(6),.sched tr.hastag td:nth-child(7){grid-row:3}
+ .sched tr.hastag td:nth-child(6):not(:empty)+td{grid-row:4}
 }
 
 /* injuries expand */
@@ -671,6 +694,18 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:27%}.cap th:nth-child(2)
 .lg.ext::before{content:"EXT";background:none;border:1px solid #2f6f9a;color:#2f6f9a}
 .nflag{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;background:#F2B231;color:#101419;font:800 10px/1 var(--sans);margin-left:2px}
 .lg.nf::before{content:"!";background:#F2B231;color:#101419;border-radius:50%;padding:2px 5px}
+.aprons{margin-top:6px}.aptbox{border:1px solid var(--line);background:var(--bg)}
+table.apt{width:100%;min-width:0;border-collapse:collapse;font-size:13px;table-layout:fixed}.apt tbody th{font:500 13px/1.35 var(--sans);text-transform:none;letter-spacing:0;background:none;padding-left:12px}.apt thead th{background:var(--sub)}.apt thead th:first-child{padding-left:12px}
+.apt th,.apt td{padding:8px 8px;border-bottom:1px solid var(--line2);text-align:center;vertical-align:top}
+.apt thead th{font:700 11px var(--sans);text-transform:uppercase;letter-spacing:.04em;color:var(--muted);vertical-align:bottom}
+.apt thead th small{display:block;text-transform:none;letter-spacing:0;font-weight:500;font-size:10.5px}
+.apt thead th:first-child,.apt tbody th{width:34%}
+.apt tbody th{text-align:left;font-weight:500;color:var(--fg)}
+.apt td{font-weight:700}.apt td small{display:block;font:500 11px/1.3 var(--sans);color:var(--muted);margin-top:2px}
+.apt td.y{color:#2E7D4F}.apt td.n{color:var(--wine-ink)}.apt td.na{color:var(--muted);font-weight:400}
+.apt .cav{background:color-mix(in srgb,#F2B231 13%,transparent)}.apt thead th.cav{color:var(--fg)}
+@media (max-width:760px){.apt{font-size:12px}.apt th,.apt td{padding:7px 4px}.apt thead th{font-size:9.5px}.apt td small{font-size:10px}.apt thead th:first-child,.apt tbody th{width:31%}.apt tbody th{font-size:12px;padding-left:8px!important}}
+.co-name{color:inherit;text-decoration:none;border-bottom:1px solid color-mix(in srgb,currentColor 30%,transparent)}.co-name:hover{color:var(--wine-ink)}
 .bio-links{font-size:12.5px;margin-top:10px}
 .det-grid .note p{color:var(--fg)}
 .det-grid .note{background:color-mix(in srgb,#F2B231 14%,transparent);border-left:3px solid #F2B231;padding:8px 12px}
@@ -790,6 +825,7 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:27%}.cap th:nth-child(2)
       <div class="otd-row"><div class="dcal" id="dcal" aria-hidden="true"></div><div class="otd-when" id="otd-when"></div></div>
       <p class="otd-text" id="otd-text"></p>
       <a class="otd-src" id="otd-src" target="_blank" rel="noopener"></a>
+      <ul class="otd-also" id="otd-also" hidden></ul>
     </section>
     <section class="rail o-vid" aria-labelledby="vid-h">
       <div class="block-h"><h2 id="vid-h">Latest video</h2><a href="#video" data-go="video">All video →</a></div>
@@ -830,10 +866,15 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:27%}.cap th:nth-child(2)
       <tbody id="capbody"></tbody>
       <tfoot><tr id="captot"></tr></tfoot>
     </table></div>
-    <p class="dim" style="margin:-8px 0 0;font-size:13px">Tap a player for his contract, guarantees, Bird rights and free agency. <span class="lg po">Player option</span> <span class="lg to">Team option</span> <span class="lg ext">Extension eligible (Spotrac)</span> <span class="lg nf">Note for this season</span><br>Committed salary only; future years rise as the roster fills.<br><b style="color:var(--wine-ink)">*</b> Thresholds for 2027–28 and later are Spotrac projections, not official figures. The NBA sets each season's cap and tax lines the summer before, and they move with league revenue.</p>
+    <p class="dim" style="margin:-8px 0 0;font-size:13px">Tap a player for his contract, guarantees, Bird rights and free agency. <span class="lg po">Player option</span> <span class="lg to">Team option</span> <span class="lg ext">Extension eligible</span> <span class="lg nf">Note for this season</span><br>Committed salary only; future years rise as the roster fills.<br><b style="color:var(--wine-ink)">*</b> Thresholds for 2027–28 and later are Spotrac projections, not official figures. The NBA sets each season's cap and tax lines the summer before, and they move with league revenue.</p>
+    <section class="aprons" aria-labelledby="ap-h">
+      <div class="block-h"><h2 id="ap-h">What each line allows</h2><span id="ap-sub">Cavs column highlighted</span></div>
+      <div class="aptbox"><table class="apt" id="apt"><thead><tr><th></th><th>Under the cap</th><th>Over the cap<small>incl. over the tax</small></th><th>Over 1st apron</th><th>Over 2nd apron</th></tr></thead><tbody><tr><th scope="row">Sign free agents with cap space</th><td class="y">✓</td><td class="n">✕</td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Room mid-level exception</th><td class="y">✓<small>after using space</small></td><td class="n">✕</td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Non-taxpayer mid-level exception</th><td class="na">—</td><td class="y">✓<small>hard caps at 1st apron</small></td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Taxpayer mid-level exception</th><td class="na">—</td><td class="na">—</td><td class="y">✓<small>hard caps at 2nd apron</small></td><td class="n">✕</td></tr><tr><th scope="row">Bi-annual exception</th><td class="na">—</td><td class="y">✓<small>hard caps at 1st apron</small></td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Take back more salary than they send in a trade</th><td class="y">✓<small>into cap space</small></td><td class="y">✓<small>up to 200% / 125% + $250K</small></td><td class="n">✕<small>100% max</small></td><td class="n">✕<small>100% max</small></td></tr><tr><th scope="row">Combine several players’ salaries in one trade</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">✕</td></tr><tr><th scope="row">Send cash in a trade</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">✕</td></tr><tr><th scope="row">Acquire a player in a sign-and-trade</th><td class="y">✓</td><td class="y">✓<small>hard caps at 1st apron</small></td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Use a trade exception created during this season</th><td class="y">✓</td><td class="y">✓</td><td class="n">✕<small>not until the season ends</small></td><td class="n">✕<small>not until the season ends</small></td></tr><tr><th scope="row">Sign a bought-out player who earned more than the non-taxpayer MLE</th><td class="y">✓</td><td class="y">✓</td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Trade the first-round pick seven years out</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">✕<small>frozen if over at season’s end</small></td></tr></tbody></table></div>
+      <p class="dim" style="margin:8px 0 0;font-size:12.5px">A team's position after the move is what counts. Making a move marked "hard caps" means the team can't go over that line for the rest of the league year. The Cavs are hard-capped at the first apron this season. Rules: NBA CBA, as summarized by the <a href="https://cbaguide.com/thresholds/apron/" target="_blank" rel="noopener">CBA Guide</a>.</p>
+    </section>
     <div class="cols">
-      <section><div class="block-h"><h2>Two-way</h2><span>3 of 3 · eligibility left</span></div><ul class="kv" id="twoway"></ul>
-        <p class="dim" style="margin:8px 0 0;font-size:12.5px">Players with fewer than 4 years of NBA service can sign two-way deals. Tap a player for his contract details.</p></section>
+      <section><div class="block-h"><h2>Two-way</h2><span>3 of 3 · two-way seasons left with CLE</span></div><ul class="kv" id="twoway"></ul>
+        <p class="dim" style="margin:8px 0 0;font-size:12.5px">Two limits apply, and the tighter one wins: a player needs 3 or fewer years of NBA service to sign a two-way, and he can spend no more than 3 seasons on two-ways with the same team. Tap a player for his details.</p></section>
       <section><div class="block-h"><h2>Training camp</h2><span>Exhibit 10</span></div><ul class="kv" id="camp"></ul>
         <div class="block-h" style="margin-top:22px"><h2>Cap holds</h2><span id="holds-tot"></span></div><p id="holds" style="margin:10px 0 0;font-size:13.5px;line-height:1.5"></p>
         <p class="dim" style="margin:6px 0 0;font-size:12.5px">Old free agents Cleveland has never renounced. They only count if the Cavs try to get under the cap. They don't count toward the tax, the aprons or the hard cap.</p></section>
@@ -861,7 +902,7 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:27%}.cap th:nth-child(2)
       <section><div class="block-h"><h2>Exceptions</h2><span>2026–27 · amount left · tap for details</span></div><ul class="xl" id="exc"></ul>
         <div class="block-h" style="margin-top:22px"><h2>Drafted players</h2><span>Unsigned draft rights held</span></div><ul class="kv" id="rights"></ul></section>
     </div>
-    <p class="dim" style="margin:0;font-size:13px">Picks and pick routing: RealGM future draft picks. Exceptions: Capsheets. Draft rights: RealGM. Trade rules: Hoops Rumors and Larry Coon's CBA FAQ. Stepien rule: a team can't be left without a first-round pick in back-to-back future drafts, and picks can be traded up to seven drafts out.</p>
+    <p class="dim" style="margin:0;font-size:13px">Picks and pick routing: RealGM future draft picks. Exceptions: Capsheets. Draft rights: RealGM. Trade rules: Hoops Rumors and Larry Coon's CBA FAQ. Stepien Rule: a team can't be left without a first-round pick in back-to-back future drafts, and picks can be traded up to seven drafts out.</p>
   </div>
 </main>
 
@@ -897,7 +938,6 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:27%}.cap th:nth-child(2)
     </div>
     <div class="callouts" id="callouts"></div>
     <div class="cols" id="staff-list"></div>
-    <p class="dim" style="margin:0;font-size:13px">Sources: Cavaliers leadership bios (NBA.com), NBA.com roster, Basketball Reference (coaching record and team ranks), RealGM staff directory.</p>
   </div>
 </main>
 
@@ -978,7 +1018,6 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:27%}.cap th:nth-child(2)
 
 <footer><div class="wrap">
   <span>cavsdatabase.com · Independent fan reference. Not affiliated with the Cleveland Cavaliers or the NBA.</span>
-  <a href="#resources" data-go="resources">Sources &amp; resources</a>
 </div></footer>
 
 <script>
@@ -997,9 +1036,9 @@ const SECTIONS=[
 ];
 /* picks — RealGM future draft picks, Oct 14 2026. [draft, pick, plain-English status, how it's decided, trade-eligible?, why] */
 const PICKS=[
-  ['2028','1st','Least favorable of CLE, UTA and ATL','Swap rights from the Mitchell trade (2022, Utah) and the Hunter trade (2025, Atlanta). After the 2027–28 season, the three teams’ picks are ranked by draft order. Utah and Atlanta take the better picks through their swaps, and the Cavs keep the worst of the three.',false,'Stepien rule: the 2027 and 2029 firsts are already owed out.'],
-  ['2030','1st','Own','Cleveland’s own pick, no protections or swaps.',false,'Stepien rule: the 2029 and 2031 firsts are owed, so trading 2030 would leave back-to-back drafts without a first. Swap rights can still be traded.'],
-  ['2032','1st','Own','Cleveland’s own pick, no protections or swaps.',false,'Stepien rule: the 2031 first is owed to Denver. Swap rights can still be traded.'],
+  ['2028','1st','Least favorable of CLE, UTA and ATL','Swap rights from the Mitchell trade (2022, Utah) and the Hunter trade (2025, Atlanta). After the 2027–28 season, the three teams’ picks are ranked by draft order. Utah and Atlanta take the better picks through their swaps, and the Cavs keep the worst of the three.',false,'Stepien Rule: the 2027 and 2029 firsts are already owed out.'],
+  ['2030','1st','Own','Cleveland’s own pick, no protections or swaps.',false,'Stepien Rule: the 2029 and 2031 firsts are owed, so trading 2030 would leave back-to-back drafts without a first. Swap rights can still be traded.'],
+  ['2032','1st','Own','Cleveland’s own pick, no protections or swaps.',false,'Stepien Rule: the 2031 first is owed to Denver. Swap rights can still be traded.'],
   ['2033','1st','Own · frozen','Cleveland’s own pick. It is frozen under the second-apron rules and can’t be traded through the 2028–29 season. It unfreezes if the Cavs stay under the second apron long enough.',false,'Frozen (second-apron rule).'],
   ['2033','2nd','Own','Cleveland’s own second-round pick.',true,'No restrictions.']
 ];
@@ -1196,6 +1235,8 @@ const CAVS_TV='DAZN'; /* exclusive local partner for games not on national TV (C
 const CAVS_RADIO='WTAM 1100 · 100.7 WMMS · La Mega 1300 (Spanish)';
 const CAVS_RADIO_SHORT='WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)';
 /* site last updated (ET date) — the daily task sets this when data changes */
+/* minutes per game this regular season (Basketball Reference per-game table); empty until the season starts. Shown on the depth pyramid. */
+const MPG={};
 const SITE_UPDATED='2026-10-15';
 /* ===== end daily data ===== */
 
@@ -1333,10 +1374,15 @@ hbar.setAttribute('aria-label','Team salary '+money(TEAM_SALARY)+' against the c
 requestAnimationFrame(()=>{document.getElementById('fill').style.width=pct(TEAM_SALARY)+'%'});
 {const top=document.getElementById('captop');const nums=el('div','ct-nums');
  const PAY_RANK=LEAGUE_PAY.findIndex(t=>t[0]==='CLE')+1;
- [[money(TEAM_SALARY),'Team salary'],[money(HC_ROOM),'Under hard cap'],[money(TEAM_SALARY-tax),'Over the tax'],[money(TAX_BILL),'Tax bill'],[PAY_RANK+(PAY_RANK===1?'st':PAY_RANK===2?'nd':PAY_RANK===3?'rd':'th'),'Highest payroll of 30'],[TAX_RANK[0]+(TAX_RANK[0]===1?'st':TAX_RANK[0]===2?'nd':TAX_RANK[0]===3?'rd':'th'),'Largest tax bill of '+TAX_RANK[1]]].forEach(([v,l],i)=>{const d=el('div',i===1?'key':null);d.append(el('b',null,v),el('span',null,l));nums.appendChild(d)});
+ [[money(TEAM_SALARY),'Team salary'],[money(HC_ROOM),'Under hard cap'],[money(TEAM_SALARY-tax),'Over the tax'],[money(TAX_BILL),'Tax bill'],[PAY_RANK+(PAY_RANK===1?'st':PAY_RANK===2?'nd':PAY_RANK===3?'rd':'th'),'Highest payroll of 30'],[TAX_RANK[0]+(TAX_RANK[0]===1?'st':TAX_RANK[0]===2?'nd':TAX_RANK[0]===3?'rd':'th'),'Largest tax bill of '+TAX_RANK[1]]].forEach(([v,l],i)=>{const d=el('div',i===1?'ctkey':null);d.append(el('b',null,v),el('span',null,l));nums.appendChild(d)});
  const hb=hbar.cloneNode(true);hb.removeAttribute('id');hb.querySelectorAll('[id]').forEach(x=>x.removeAttribute('id'));hb.querySelector('.fill').style.width=pct(TEAM_SALARY)+'%';
  top.append(nums,hb);
  top.appendChild(el('div','share',''));top.lastChild.id='share'}
+
+/* apron chart: highlight the column for the Cavs' current band */
+{const V=n=>LINES.find(l=>l[0]===n)[1];const sal=TEAM_SALARY;const col=sal>V('Second apron')?4:sal>V('First apron')?3:sal>V('Salary cap')?2:1;
+ document.querySelectorAll('#apt tr').forEach(tr=>{const c=tr.children[col];if(c)c.classList.add('cav')});
+ const h=document.querySelector('#apt thead th.cav');if(h)h.insertAdjacentHTML('beforeend','<small>← Cavs</small>')}
 
 /* injuries — status: Out | Doubtful | Questionable | Probable | Game-time decision */
 const INJ_UPDATED='Oct 13';
@@ -1396,6 +1442,29 @@ const HISTORY=[
 /* one game per calendar date: the most notable Cavs game ever played on it (playoffs first, then biggest win).
    Basketball Reference team game logs, 1970–71 through 2025–26. MMDD|year|playoffs|opponent|H/A/N|win|cavs pts|opp pts|OT|game,series W,series L,series over,round|box score id */
 const HIST_GAMES='0101|2012|0|Nets|H|1|98|82|0||201201010CLE;0102|2009|0|Bulls|H|1|117|92|0||200901020CLE;0103|2024|0|Wizards|H|1|140|101|0||202401030CLE;0104|2016|0|Raptors|H|1|122|100|0||201601040CLE;0105|2024|0|Wizards|H|1|114|90|0||202401050CLE;0106|1998|0|Rockets|H|1|100|70|0||199801060CLE;0107|2009|0|Bobcats|H|1|111|81|0||200901070CLE;0108|2016|0|Timberwolves|A|1|125|99|0||201601080MIN;0109|1993|0|Timberwolves|H|1|116|93|0||199301090CLE;0110|2026|0|Timberwolves|H|1|146|134|0||202601100CLE;0111|2024|0|Nets|H|1|111|102|0||202401110CLE;0112|2022|0|Jazz|A|1|111|91|0||202201120UTA;0113|1998|0|Suns|A|1|102|84|0||199801130PHO;0114|2026|0|76ers|A|1|133|107|0||202601140PHI;0115|1994|0|76ers|H|1|110|67|0||199401150CLE;0116|1993|0|Hawks|H|1|127|99|0||199301160CLE;0117|2024|0|Bucks|H|1|135|95|0||202401170CLE;0118|1986|0|Pacers|H|1|108|95|0||198601180CLE;0119|1971|0|Braves|N|1|111|79|0||197101190BUF;0120|2025|0|Suns|H|1|118|92|0||202501200CLE;0121|2006|0|Jazz|A|1|108|90|0||200601210UTA;0122|2024|0|Magic|A|1|126|99|0||202401220ORL;0123|2015|0|Hornets|H|1|129|90|0||201501230CLE;0124|1976|0|Bucks|H|1|132|89|0||197601240CLE;0125|1997|0|Hornets|H|1|106|73|0||199701250CLE;0126|2023|0|Rockets|A|1|113|95|0||202301260HOU;0127|2016|0|Suns|H|1|115|93|0||201601270CLE;0128|2026|0|Lakers|H|1|129|99|0||202601280CLE;0129|2002|0|Timberwolves|H|1|114|81|0||200201290CLE;0130|2007|0|Warriors|H|1|124|97|0||200701300CLE;0131|2010|0|Clippers|H|1|114|89|0||201001310CLE;0201|2017|0|Timberwolves|H|1|125|97|0||201702010CLE;0202|2025|0|Mavericks|H|1|144|101|0||202502020CLE;0203|1984|0|Bulls|H|1|106|76|0||198402030CLE;0204|2026|0|Clippers|A|1|124|91|0||202602040LAC;0205|2024|0|Kings|H|1|136|110|0||202402050CLE;0206|2013|0|Bobcats|H|1|122|95|0||201302060CLE;0207|1978|0|Jazz|H|1|122|99|0||197802070CLE;0208|2023|0|Pistons|H|1|113|85|0||202302080CLE;0209|2007|0|Heat|H|1|103|79|0||200702090CLE;0210|2024|0|Raptors|A|1|119|95|0||202402100TOR;0211|2026|0|Wizards|H|1|138|113|0||202602110CLE;0212|2025|0|Raptors|A|1|131|108|0||202502120TOR;0213|1986|0|Nets|H|1|135|117|0||198602130CLE;0214|1981|0|Warriors|H|1|108|90|0||198102140CLE;0215|1992|0|Nets|H|1|128|92|0||199202150CLE;0216|1978|0|Nuggets|H|1|119|87|0||197802160CLE;0217|1993|0|Mavericks|H|1|124|97|0||199302170CLE;0218|2014|0|76ers|A|1|114|85|0||201402180PHI;0219|2026|0|Nets|H|1|112|84|0||202602190CLE;0220|2015|0|Wizards|A|1|127|89|0||201502200WAS;0221|2025|0|Knicks|H|1|142|105|0||202502210CLE;0222|1994|0|Timberwolves|H|1|114|81|0||199402220CLE;0223|1990|0|Magic|H|1|123|96|0||199002230CLE;0224|1989|0|Trail Blazers|H|1|128|91|0||198902240CLE;0225|2025|0|Magic|A|1|122|82|0||202502250ORL;0226|2023|0|Raptors|H|1|118|93|0||202302260CLE;0227|1978|0|Rockets|A|1|110|97|0||197802270HOU;0228|1985|0|SuperSonics|A|1|120|95|0||198502280SEA;0229|1996|0|Bucks|A|1|95|86|0||199602290MIL;0301|2010|0|Knicks|H|1|124|93|0||201003010CLE;0302|1989|0|Spurs|H|1|112|84|0||198903020CLE;0303|2004|0|Hawks|H|1|112|80|0||200403030CLE;0304|1998|0|Raptors|H|1|122|88|0||199803040CLE;0305|2018|0|Pistons|H|1|112|90|0||201803050CLE;0306|1999|0|Warriors|H|1|97|80|0||199903060CLE;0307|1973|0|Rockets|N|1|118|100|0||197303070CLE;0308|1994|0|Kings|H|1|103|82|0||199403080CLE;0309|1988|0|Bucks|H|1|117|91|0||198803090CLE;0310|2015|0|Mavericks|A|1|127|94|0||201503100DAL;0311|2019|0|Raptors|H|1|126|101|0||201903110CLE;0312|1995|0|76ers|A|1|92|72|0||199503120PHI;0313|2026|0|Mavericks|A|1|138|105|0||202603130DAL;0314|2017|0|Pistons|H|1|128|96|0||201703140CLE;0315|1989|0|Bulls|H|1|115|91|0||198903150CLE;0316|2003|0|Jazz|H|1|122|95|0||200303160CLE;0317|1996|0|Kings|H|1|115|84|0||199603170CLE;0318|2015|0|Nets|H|1|117|92|0||201503180CLE;0319|1985|0|76ers|H|1|116|89|0||198503190CLE;0320|1973|0|76ers|H|1|131|105|0||197303200CLE;0321|2016|0|Nuggets|H|1|124|91|0||201603210CLE;0322|1992|0|Hawks|H|1|123|80|0||199203220CLE;0323|1993|0|Spurs|H|1|127|90|0||199303230CLE;0324|1974|0|Knicks|H|1|114|92|0||197403240CLE;0325|2024|0|Hornets|H|1|115|92|0||202403250CLE;0326|1990|0|Kings|H|1|116|95|0||199003260CLE;0327|2009|0|Timberwolves|H|1|107|85|0||200903270CLE;0328|2018|0|Hornets|A|1|118|105|0||201803280CHO;0329|1977|0|Celtics|H|1|110|82|0||197703290CLE;0330|1996|0|Warriors|A|1|90|64|0||199603300GSW;0331|2016|0|Nets|H|1|107|87|0||201603310CLE;0401|1990|0|Pacers|H|1|121|91|0||199004010CLE;0402|2015|0|Heat|H|1|114|88|0||201504020CLE;0403|2005|0|Mavericks|H|1|100|80|0||200504030CLE;0404|2006|0|76ers|H|1|124|91|0||200604040CLE;0405|2016|0|Bucks|A|1|109|80|0||201604050MIL;0406|2023|0|Magic|A|1|118|94|0||202304060ORL;0407|1987|0|Celtics|H|1|107|83|0||198704070CLE;0408|2021|0|Thunder|A|1|129|102|0||202104080OKC;0409|2014|0|Pistons|H|1|122|100|0||201404090CLE;0410|2002|0|Bucks|H|1|106|81|0||200204100CLE;0411|2016|0|Hawks|H|1|109|94|0||201604110CLE;0412|1978|1|Knicks|H|0|114|132|0|1,0,1,0,|197804120CLE;0413|1976|1|Bullets|H|0|95|100|0|1,0,1,0,|197604130CLE;0414|1978|1|Knicks|A|0|107|109|0|2,0,2,1,|197804140NYK;0415|1977|1|Bullets|H|1|91|83|0|2,1,1,0,|197704150CLE;0416|2014|0|Nets|H|1|114|85|0||201404160CLE;0417|2010|1|Bulls|H|1|96|83|0|1,1,0,0,|201004170CLE;0418|2009|1|Pistons|H|1|102|84|0|1,1,0,0,|200904180CLE;0419|2015|1|Celtics|H|1|113|100|0|1,1,0,0,|201504190CLE;0420|2025|1|Heat|H|1|121|100|0|1,1,0,0,|202504200CLE;0421|2008|1|Wizards|H|1|116|86|0|2,2,0,0,|200804210CLE;0422|2007|1|Wizards|H|1|97|82|0|1,1,0,0,|200704220CLE;0423|2017|1|Pacers|A|1|106|102|0|4,4,0,1,|201704230IND;0424|2016|1|Pistons|A|1|100|98|0|4,4,0,1,|201604240DET;0425|2010|1|Bulls|A|1|121|98|0|4,3,1,0,|201004250CHI;0426|2009|1|Pistons|A|1|99|78|0|4,4,0,1,|200904260DET;0427|2010|1|Bulls|H|1|96|94|0|5,4,1,1,|201004270CLE;0428|2025|1|Heat|A|1|138|83|0|4,4,0,1,|202504280MIA;0429|2018|1|Pacers|H|1|105|101|0|7,4,3,1,|201804290CLE;0430|1992|1|Nets|A|1|98|89|0|4,3,1,1,|199204300NJN;0501|1990|1|76ers|H|1|122|95|0|3,1,2,0,|199005010CLE;0502|2008|1|Wizards|A|1|105|88|0|6,4,2,1,|200805020WAS;0503|2026|1|Raptors|H|1|114|102|0|7,4,3,1,|202605030CLE;0504|2016|1|Hawks|H|1|123|98|0|2,2,0,0,|201605040CLE;0505|2024|1|Magic|H|1|106|94|0|7,4,3,1,|202405050CLE;0506|2015|1|Bulls|H|1|106|91|0|2,1,1,0,|201505060CLE;0507|2018|1|Raptors|H|1|128|93|0|4,4,0,1,|201805070CLE;0508|2016|1|Hawks|A|1|100|99|0|4,4,0,1,|201605080ATL;0509|1993|1|Nets|H|1|99|89|0|5,3,2,1,|199305090CLE;0510|2008|1|Celtics|H|1|108|84|0|3,1,2,0,|200805100CLE;0511|2009|1|Hawks|A|1|84|74|0|4,4,0,1,|200905110ATL;0512|2008|1|Celtics|H|1|88|77|0|4,2,2,0,|200805120CLE;0513|1992|1|Celtics|H|1|114|98|0|5,3,2,0,|199205130CLE;0514|2015|1|Bulls|A|1|94|73|0|6,4,2,1,|201505140CHI;0515|2006|1|Pistons|H|1|74|72|0|4,2,2,0,|200605150CLE;0516|2008|1|Celtics|H|1|74|69|0|6,3,3,0,|200805160CLE;0517|2026|1|Pistons|A|1|125|94|0|7,4,3,1,|202605170DET;0518|2007|1|Nets|A|1|88|72|0|6,4,2,1,|200705180NJN;0519|2017|1|Celtics|A|1|130|86|0|2,2,0,0,East finals|201705190BOS;0520|2015|1|Hawks|A|1|97|89|0|1,1,0,0,East finals|201505200ATL;0521|1992|1|Bulls|A|1|107|81|0|2,1,1,0,East finals|199205210CHI;0522|2015|1|Hawks|A|1|94|82|0|2,2,0,0,East finals|201505220ATL;0523|2017|1|Celtics|H|1|112|99|0|4,3,1,0,East finals|201705230CLE;0524|2015|1|Hawks|H|1|114|111|1|3,3,0,0,East finals|201505240CLE;0525|2017|1|Celtics|A|1|135|102|0|5,4,1,1,East finals|201705250BOS;0526|2015|1|Hawks|H|1|118|88|0|4,4,0,1,East finals|201505260CLE;0527|2018|1|Celtics|A|1|87|79|0|7,4,3,1,East finals|201805270BOS;0528|2009|1|Magic|H|1|112|102|0|5,2,3,0,East finals|200905280CLE;0529|2007|1|Pistons|H|1|91|87|0|4,2,2,0,East finals|200705290CLE;0530|2009|1|Magic|A|0|90|103|0|6,2,4,1,East finals|200905300ORL;0531|2018|1|Warriors|A|0|114|124|1|1,0,1,0,Finals|201805310GSW;0601|2017|1|Warriors|A|0|91|113|0|1,0,1,0,Finals|201706010GSW;0602|2007|1|Pistons|H|1|98|82|0|6,4,2,1,East finals|200706020CLE;0603|2018|1|Warriors|A|0|103|122|0|2,0,2,0,Finals|201806030GSW;0604|2015|1|Warriors|A|0|100|108|1|1,0,1,0,Finals|201506040GSW;0605|2016|1|Warriors|A|0|77|110|0|2,0,2,0,Finals|201606050GSW;0606|2018|1|Warriors|H|0|102|110|0|3,0,3,0,Finals|201806060CLE;0607|2015|1|Warriors|A|1|95|93|1|2,1,1,0,Finals|201506070GSW;0608|2016|1|Warriors|H|1|120|90|0|3,1,2,0,Finals|201606080CLE;0609|2017|1|Warriors|H|1|137|116|0|4,1,3,0,Finals|201706090CLE;0610|2016|1|Warriors|H|0|97|108|0|4,1,3,0,Finals|201606100CLE;0611|2015|1|Warriors|H|0|82|103|0|4,2,2,0,Finals|201506110CLE;0612|2007|1|Spurs|H|0|72|75|0|3,0,3,0,Finals|200706120CLE;0613|2016|1|Warriors|A|1|112|97|0|5,2,3,0,Finals|201606130GSW;0614|2007|1|Spurs|H|0|82|83|0|4,0,4,1,Finals|200706140CLE;0616|2016|1|Warriors|H|1|115|101|0|6,3,3,0,Finals|201606160CLE;0619|2016|1|Warriors|A|1|93|89|0|7,4,3,1,Finals|201606190GSW;1010|1972|0|Bullets|H|0|90|102|0||197210100CLE;1011|1980|0|Nets|H|0|96|99|0||198010110CLE;1012|1973|0|Rockets|H|0|99|106|0||197310120CLE;1013|1978|0|Celtics|A|1|115|101|0||197810130BOS;1014|1980|0|Pistons|H|1|99|91|0||198010140CLE;1015|1971|0|Braves|H|0|109|111|1||197110150CLE;1016|1979|0|Pistons|H|1|137|117|0||197910160CLE;1017|2017|0|Celtics|H|1|102|99|0||201710170CLE;1018|1979|0|Spurs|H|1|141|134|0||197910180CLE;1019|1974|0|Warriors|A|0|110|113|0||197410190GSW;1020|2017|0|Bucks|A|1|116|97|0||201710200MIL;1021|1978|0|Bulls|H|1|113|104|0||197810210CLE;1022|2022|0|Bulls|A|1|128|96|0||202210220CHI;1023|2024|0|Raptors|A|1|136|106|0||202410230TOR;1024|1974|0|Hawks|A|1|116|97|0||197410240ATL;1025|2016|0|Knicks|H|1|117|88|0||201610250CLE;1026|2024|0|Wizards|A|1|135|116|0||202410260WAS;1027|2025|0|Pistons|A|1|116|95|0||202510270DET;1028|2015|0|Grizzlies|A|1|106|76|0||201510280MEM;1029|1972|0|Kings|H|1|115|97|0||197210290CLE;1030|2024|0|Lakers|H|1|134|110|0||202410300CLE;1031|1974|0|Pistons|H|1|118|101|0||197410310CLE;1101|1977|0|Nuggets|H|1|110|93|0||197711010CLE;1102|2005|0|Hornets|H|1|109|87|0||200511020CLE;1103|1972|0|Braves|H|1|124|97|0||197211030CLE;1104|1988|0|Hornets|A|1|133|93|0||198811040CHH;1105|2002|0|Lakers|H|1|89|70|0||200211050CLE;1106|1973|0|Lakers|H|1|115|96|0||197311060CLE;1107|2025|0|Wizards|A|1|148|115|0||202511070WAS;1108|1992|0|Hornets|H|1|127|107|0||199211080CLE;1109|2005|0|SuperSonics|H|1|112|85|0||200511090CLE;1110|1992|0|Bullets|H|1|131|92|0||199211100CLE;1111|1997|0|Bulls|H|1|101|80|0||199711110CLE;1112|1988|0|Pacers|H|1|121|96|0||198811120CLE;1113|2004|0|Wizards|H|1|105|74|0||200411130CLE;1114|1990|0|Pacers|H|1|113|95|0||199011140CLE;1115|2014|0|Hawks|H|1|127|94|0||201411150CLE;1116|1991|0|Pacers|H|1|127|117|0||199111160CLE;1117|1995|0|76ers|A|1|114|82|0||199511170PHI;1118|2008|0|Nets|A|1|106|82|0||200811180NJN;1119|2015|0|Bucks|H|1|115|100|0||201511190CLE;1120|2024|0|Pelicans|H|1|128|100|0||202411200CLE;1121|1974|0|Warriors|H|1|106|74|0||197411210CLE;1122|1994|0|Timberwolves|H|1|112|79|0||199411220CLE;1123|1974|0|Jazz|H|1|121|100|0||197411230CLE;1124|2014|0|Magic|H|1|106|74|0||201411240CLE;1125|2016|0|Mavericks|H|1|128|90|0||201611250CLE;1126|2008|0|Thunder|H|1|117|82|0||200811260CLE;1127|1988|0|Heat|H|1|109|80|0||198811270CLE;1128|2023|0|Hawks|H|1|128|105|0||202311280CLE;1129|2021|0|Mavericks|A|1|114|96|0||202111290DAL;1130|1994|0|Lakers|H|1|117|79|0||199411300CLE;1201|2021|0|Heat|A|1|111|85|0||202112010MIA;1202|1988|0|Celtics|H|1|112|84|0||198812020CLE;1203|2008|0|Knicks|H|1|118|82|0||200812030CLE;1204|1996|0|Magic|A|1|84|57|0||199612040ORL;1205|1974|0|Kings|H|1|124|91|0||197412050CLE;1206|2008|0|Bobcats|A|1|94|74|0||200812060CHA;1207|2016|0|Knicks|A|1|126|94|0||201612070NYK;1208|1995|0|76ers|H|1|113|85|0||199512080CLE;1209|2006|0|Pacers|H|1|107|75|0||200612090CLE;1210|1997|0|Nuggets|H|1|102|83|0||199712100CLE;1211|2015|0|Magic|A|1|111|76|0||201512110ORL;1212|1991|0|Hawks|H|1|134|107|0||199112120CLE;1213|1975|0|Jazz|H|1|112|90|0||197512130CLE;1214|1999|0|Celtics|H|1|115|88|0||199912140CLE;1215|2021|0|Rockets|H|1|124|89|0||202112150CLE;1216|2024|0|Nets|A|1|130|101|0||202412160BRK;1217|1991|0|Heat|H|1|148|80|0||199112170CLE;1218|2021|0|Bucks|A|1|119|90|0||202112180MIL;1219|1993|0|Lakers|H|1|122|92|0||199312190CLE;1220|2005|0|Jazz|H|1|110|85|0||200512200CLE;1221|2024|0|76ers|H|1|126|99|0||202412210CLE;1222|1985|0|Mavericks|H|1|119|105|0||198512220CLE;1223|2025|0|Pelicans|H|1|141|118|0||202512230CLE;1225|2009|0|Lakers|A|1|102|87|0||200912250LAL;1226|2021|0|Raptors|H|1|144|99|0||202112260CLE;1227|2009|0|Rockets|H|1|108|83|0||200912270CLE;1228|1988|0|Hornets|H|1|122|98|0||198812280CLE;1229|1979|0|Nuggets|H|1|124|106|0||197912290CLE;1230|1991|0|Rockets|H|1|121|89|0||199112300CLE;1231|2025|0|Suns|H|1|129|113|0||202512310CLE';
+/* June 19: the 2016 championship. Confetti, plus the final buzzer of Game 7 over the front page (closable). */
+const TITLE_VIDEO={id:'',ch:''};
+function celebrate(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const go=()=>{if(document.getElementById('cel'))return;
+    if(TITLE_VIDEO.id){const o=el('div','cel');o.id='cel';o.setAttribute('role','dialog');o.setAttribute('aria-label','2016 NBA champions');
+      const x=el('button','cel-x','Close ✕');x.type='button';x.onclick=()=>o.remove();
+      const inn=el('div','cel-in');inn.append(el('div','cel-k','June 19, 2016 · Game 7 · Oakland'),el('h2','cel-h','Cleveland Cavaliers, NBA champions'));
+      const v=el('div','cel-v');const f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+TITLE_VIDEO.id+'?autoplay=1&mute=1&playsinline=1&rel=0';f.allow='autoplay; encrypted-media; picture-in-picture';f.allowFullscreen=true;f.title='Final buzzer, 2016 NBA Finals Game 7';v.appendChild(f);
+      inn.append(v,el('p','cel-s','Cavs 93, Warriors 89. Down 3–1, first title in franchise history. Video: '+TITLE_VIDEO.ch+'. Tap the video for sound.'));
+      o.append(x,inn);o.addEventListener('click',e=>{if(e.target===o)o.remove()});document.addEventListener('keydown',e=>{if(e.key==='Escape')o.remove()},{once:true});document.body.appendChild(o)}
+    confetti()};
+  if(document.readyState==='complete')go();else addEventListener('load',go)}
+function confetti(){const c=document.createElement('canvas');c.id='confetti';document.body.appendChild(c);const x=c.getContext('2d');
+  const fit=()=>{c.width=innerWidth*devicePixelRatio;c.height=innerHeight*devicePixelRatio};fit();addEventListener('resize',fit);
+  const C=['#860038','#FDBB30','#041E42','#FFFFFF','#B8860B'];const N=Math.min(220,Math.round(innerWidth/5));const t0=performance.now();
+  const P=Array.from({length:N},()=>({x:Math.random()*c.width,y:-Math.random()*c.height,w:(6+Math.random()*6)*devicePixelRatio,h:(9+Math.random()*8)*devicePixelRatio,vy:(1.4+Math.random()*2.2)*devicePixelRatio,vx:(Math.random()-.5)*1.2*devicePixelRatio,r:Math.random()*6.3,vr:(Math.random()-.5)*.2,c:C[Math.random()*C.length|0],sw:Math.random()*6.3}));
+  const loop=t=>{const el2=t-t0;x.clearRect(0,0,c.width,c.height);let live=0;
+    P.forEach(p=>{p.sw+=.03;p.x+=p.vx+Math.sin(p.sw)*.6*devicePixelRatio;p.y+=p.vy;p.r+=p.vr;
+      if(p.y>c.height+20){if(el2<9000){p.y=-20;p.x=Math.random()*c.width}else return}
+      live++;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.w/2,-p.h/2,p.w,p.h*Math.abs(Math.cos(p.sw)));x.restore()});
+    if(live)requestAnimationFrame(loop);else c.remove()};requestAnimationFrame(loop)}
+const HIST_X=[];
 function renderHistory(){
   const now=new Date(new Date().toLocaleString('en-US',{timeZone:'America/New_York'}));
   const key=d=>String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
@@ -1411,12 +1480,21 @@ function renderHistory(){
     return t};
   const TXP=['trade','draft','ext','sign','fa','twoway','option','other','waive'];
   const txText=t=>{if(t.k==='trade'){const g=(t.got||[]).filter(x=>!/^(Cash|Trade exception)$/.test(x));return 'The Cavs traded for '+(g.join(', ')||'cash considerations')+'.'}return 'The Cavs '+t.t.charAt(0).toLowerCase()+t.t.slice(1)+'.'};
-  const factFor=k=>{const c=HISTORY.find(x=>x[0]===k);if(c)return {y:c[1],t:c[2],src:c[3],u:c[4]};
-    const g=games[k];if(g)return {y:+g[1],t:gameText(g),src:'Basketball Reference',u:'https://www.basketball-reference.com/boxscores/'+g[10]+'.html'};
+  const XTAG={title:'Championship',highlight:'Moment',perf:'Performance',staff:'Front office & bench',passing:'In memoriam',owner:'Ownership'};
+  const XORD=['title','highlight','perf','staff','owner','passing'];
+  const host=u=>{try{const h=new URL(u).hostname.replace(/^www\./,'');return {'basketball-reference.com':'Basketball Reference','en.wikipedia.org':'Wikipedia','nba.com':'NBA.com','espn.com':'ESPN','cleveland.com':'cleveland.com'}[h]||h}catch(e){return 'Source'}};
+  const factsFor=k=>{const out=[];
+    HIST_X.filter(x=>x[0]===k&&x[2]==='title').forEach(x=>out.push({y:x[1],t:x[3],src:host(x[4]),u:x[4],tag:'title'}));
+    HISTORY.filter(x=>x[0]===k).forEach(c=>out.push({y:c[1],t:c[2],src:c[3],u:c[4]}));
+    HIST_X.filter(x=>x[0]===k&&x[2]!=='title').sort((a,b)=>XORD.indexOf(a[2])-XORD.indexOf(b[2])||a[1]-b[1]).forEach(x=>out.push({y:x[1],t:x[3],src:host(x[4]),u:x[4],tag:x[2]}));
+    const g=games[k];if(g)out.push({y:+g[1],t:gameText(g),src:'Basketball Reference',u:'https://www.basketball-reference.com/boxscores/'+g[10]+'.html',tag:'game'});
     const tx=TX.filter(t=>t.d.slice(5)===k).sort((a,b)=>TXP.indexOf(a.k)-TXP.indexOf(b.k)||(a.d<b.d?1:-1))[0];
-    if(tx)return {y:+tx.d.slice(0,4),t:txText(tx),src:'RealGM',u:'https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Transactions'};return null};
-  let label='On this day',fk=md,f=factFor(md);
-  if(!f){for(let k=1;k<=200&&!f;k++){const d=new Date(now);d.setDate(d.getDate()-k);fk=key(d);f=factFor(fk)}label='Closest date on record'}
+    if(tx)out.push({y:+tx.d.slice(0,4),t:txText(tx),src:'RealGM',u:'https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Transactions',tag:'move'});
+    const seen=new Set();return out.filter(f=>{const z=f.y+f.t;if(seen.has(z))return false;seen.add(z);return true})};
+  const TAGL={game:'Game',move:'Transaction'};
+  let label='On this day',fk=md,list=factsFor(md);
+  if(!list.length){for(let k=1;k<=200&&!list.length;k++){const d=new Date(now);d.setDate(d.getDate()-k);fk=key(d);list=factsFor(fk)}label='Closest date on record'}
+  const f=list[0];
   const [m,d]=fk.split('-').map(Number);
   const when=document.getElementById('otd-when');when.textContent=label;
   {const cal=document.getElementById('dcal');const dt=new Date(2000,m-1,d),prev=new Date(2000,m-1,d-1);
@@ -1428,8 +1506,12 @@ function renderHistory(){
    if(matchMedia('(prefers-reduced-motion: reduce)').matches){cal.classList.add('rip','instant');window.resetCal=()=>{}}
    else if('IntersectionObserver' in window){new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)play()}),{threshold:.7}).observe(cal)}else play()}
   when.appendChild(el('b',null,String(f.y)));
-  document.getElementById('otd-text').textContent=f.t;
+  {const tx=document.getElementById('otd-text');tx.textContent='';const tg=f.tag&&f.tag!=='game'&&f.tag!=='move'?f.tag:null;if(tg)tx.appendChild(el('span','otd-tag '+tg,XTAG[tg]));tx.append(f.t)}
   const a=document.getElementById('otd-src');a.href=f.u;a.textContent='Source: '+f.src+' ↗';
+  const also=document.getElementById('otd-also');const rest=list.slice(1,4);
+  if(rest.length){also.hidden=false;also.appendChild(el('li','dim','Also on '+new Date(2000,m-1,d).toLocaleDateString('en-US',{month:'long',day:'numeric'})+':'));
+    rest.forEach(x=>{const li=el('li');li.append(el('b',null,String(x.y)),x.t+' ');const s2=el('a',null,'↗');s2.href=x.u;s2.target='_blank';s2.rel='noopener';s2.title=x.src;li.appendChild(s2);also.appendChild(li)})}
+  if((md==='06-19'||/preview=june19/.test(location.search))&&(!location.hash||location.hash==='#home'))celebrate();
 }
 
 /* cap sheet */
@@ -1507,6 +1589,8 @@ const CONTRACTS={
 };
 /* two-way: [name, contract years, through, years of service, Spotrac id/slug, agent] */
 const TW_DEAL={'Tristan Enaruna':[2,'2026–27',1,'94520/tristan-enaruna','Phillip Parun (PPGroup)'],'Riley Minix':[2,'2026–27',2,'95269/riley-minix',null],'Ernest Udeh Jr.':[1,'2026–27',0,'108828/ernest-udeh-jr','Todd Ramasar (Life Sports)']};
+/* seasons on a Cavs two-way, counting 2026–27 (Basketball Reference transactions): Enaruna since Jan 2026, Minix since Feb 2026 */
+const TW_CLE={'Tristan Enaruna':2,'Riley Minix':2,'Ernest Udeh Jr.':1};
 /* cap holds — unrenounced free agents (Capsheets) */
 const HOLDS=[['Ed Davis',2449421],['Damian Jones',2449421],['Raul Neto',2449421],['Chuma Okeke',2449421],['Rajon Rondo',2449421],['Tristan Thompson',2449421],['Olivier Sarr',2185116]]; /* Capsheets */
 const slug=t=>t.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
@@ -1530,6 +1614,8 @@ const THRESH=[
 /* guarantee details by season index (Spotrac), extension eligibility season index (Spotrac "Ext. Elig." marker) */
 const GUAR={'Mario Hezonja':{0:'Non-guaranteed until Nov 15, 2026'},'Craig Porter Jr.':{0:'Non-guaranteed until Jan 10, 2027'},'Tyrese Proctor':{1:'Partially guaranteed ($500,000)'},'Khalifa Diop':{1:'Non-guaranteed',2:'Non-guaranteed'}};
 const EXT={'Evan Mobley':1,'Donovan Mitchell':3,'James Harden':2,'Jarrett Allen':1,'Peyton Watson':2,'Sam Merrill':1,'Jaylon Tyson':1,'Craig Porter Jr.':0,'Tyrese Proctor':1,'Meleek Thomas':2,'Khalifa Diop':2};
+/* a this-season note stops showing the day after its date (Jul–Dec = 2026, Jan–Jun = 2027) */
+const notePast=t=>{const m=t.match(/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* (\d{1,2})/);if(!m)return false;const mi='JanFebMarAprMayJunJulAugSepOctNovDec'.indexOf(m[1])/3;const d=new Date(mi>=6?2026:2027,mi,+m[2]+1);return new Date()>=d};
 const extText=i=>i===0?'Eligible now, through June 30, 2027.':'Becomes eligible during the '+SEASONS[i]+' league year, which starts July 1, '+(2026+i)+'.';
 const cb=document.getElementById('capbody');const totals=[0,0,0,0,0];
 const salOf=y=>typeof y==='number'?y:Array.isArray(y)?y[0]:null;
@@ -1544,7 +1630,7 @@ ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
     cells.push(td)});
   tr.append(...cells);cb.appendChild(tr);
   if(dead){nameTd.textContent=n;nameTd.appendChild(el('small','cnote','Dead money'));return}
-  const now=t&&/(Nov|Dec|Jan|Feb|due|until)/.test(t)&&!/^20\d\d/.test(t)?t:'';
+  const now=t&&/(Nov|Dec|Jan|Feb|due|until)/.test(t)&&!/^20\d\d/.test(t)&&!notePast(t)?t:'';
   const btn=el('button','pbtn',n);btn.type='button';btn.setAttribute('aria-expanded','false');nameTd.appendChild(btn);
   if(now){const f=el('span','nflag','!');f.title='This season: '+now;btn.appendChild(f)}
   const det=el('tr','det');det.hidden=true;const dtd=el('td');dtd.colSpan=6;const g=el('div','det-grid');
@@ -1568,7 +1654,7 @@ ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
   {const d=el('div');d.appendChild(el('h4',null,'Share of the salary cap'));const ch=el('div','capbars');
    yrs.forEach((y,i)=>{const v=salOf(y);if(v==null)return;const pc=v/THRESH[0][1][i]*100;const c=el('div','cb');const bar=el('i');bar.style.height=Math.max(3,pc/40*54)+'px';c.append(el('b',null,pc.toFixed(1)+'%'),bar,el('span',null,SEASONS[i].slice(2)+(i?'*':'')));ch.appendChild(c)});
    d.appendChild(ch);g.appendChild(d)}
-  if(EXT[n]!=null)blk('Extension eligible',[extText(EXT[n]),' (Spotrac)']);
+  if(EXT[n]!=null)blk('Extension eligible',[extText(EXT[n])]);
   blk('Bird rights · '+bird,[BIRD[bird]||'',' Bird rights never override a hard cap: while Cleveland is hard-capped at the first apron (through June 30, 2027), any re-signing still has to fit under it.']);
   {const [yr,type]=fa.split(' ');const optTxt=[];yrs.forEach((y,i)=>{if(Array.isArray(y))optTxt.push(y[1]==='P'?' His contract runs through '+(+yr-1)+'–'+String(yr).slice(2)+', but it includes a '+SEASONS[i]+' player option: if he declines it (decided the summer before that season), he becomes a free agent in '+(2026+i)+' instead.':' His contract runs through '+(+yr-1)+'–'+String(yr).slice(2)+', but '+SEASONS[i]+' is a team option: if Cleveland declines it, he becomes a free agent in '+(2026+i)+' instead.')});
    blk('Free agency · '+fa,['Contract ends: free agent in the summer of '+yr+'. ',FA[type]||'',...optTxt],'wide')}
@@ -1615,11 +1701,13 @@ totals.forEach((v,i)=>{const L=THRESH.map(([n,a])=>[n,a[i]]);const td=el('td','r
   pos.appendChild(td)});
 tf.insertBefore(pos,hdr);
 const tw=document.getElementById('twoway');tw.className='xl tw2';TWOWAY.forEach(([n,b,f])=>{const [len,thru,yos,sp,ag]=TW_DEAL[n];const li=el('li');li.id='p-'+slug(n);
-  const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,n),el('small',null,len+'-year two-way · through '+thru));sm.append(l,el('b','mono',(4-yos)+' more season'+(4-yos===1?'':'s')));
+  const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,n),el('small',null,len+'-year two-way · through '+thru));const svc=3-yos,team=3-(TW_CLE[n]||1),left=Math.max(0,Math.min(svc,team));sm.append(l,el('b','mono',left+' more season'+(left===1?'':'s')));
   const bx=el('div','xb twb');const [yr,type]=f.split(' ');
   const row=(h,t)=>{const p=el('p');p.append(el('strong',null,h+' '),t);bx.appendChild(p)};
   row('Contract:',len+'-year two-way deal, through '+thru+'. Two-way players are paid a set two-way salary and don’t count against the cap.');
-  row('Two-way eligibility:','Players with fewer than 4 years of NBA service can sign two-way deals. He has '+yos+(yos===1?' year':' years')+', so he can stay on two-ways for '+(4-yos)+' more season'+(4-yos===1?'':'s')+'.');
+  row('Years of service:','He has '+yos+(yos===1?' year':' years')+' of NBA service (two-way time counts). A player needs 3 or fewer years to sign a two-way, so service allows '+svc+' more after this season.');
+  row('Seasons with the Cavs:','This is his '+ordn(TW_CLE[n]||1)+' season on a Cavs two-way. The limit is 3 with one team, so the Cavs could keep him on a two-way for '+team+' more.');
+  row('Bottom line:',left?'The tighter limit is '+(svc<=team?'his service time':'the 3-season team limit')+': the Cavs can bring him back on a two-way for '+left+' more season'+(left===1?'':'s')+' after 2026–27. Separately, his current deal runs through '+thru+'.':'He can’t sign another two-way with the Cavs after 2026–27. To keep him, they would need to give him a standard contract.');
   row('Agent:',ag||'No agent listed');
   row('Bird rights · '+b+':',BIRD[b]||'');
   row('Free agency · '+f+':','Free agent in the summer of '+yr+'. '+(FA[type]||''));
@@ -1650,19 +1738,19 @@ const mFmt=new Intl.DateTimeFormat('en-US',{month:'long',year:'numeric',timeZone
 /* league dates shown as marker rows between games */
 const SCHED_MARKS=[['2026-11-27','NBA Cup group play ends'],['2026-12-04','NBA Cup knockout rounds (Dec 4–11). Two more Cavs games are scheduled once the bracket is set.'],['2027-02-11','Trade deadline'],['2027-02-18','All-Star break · All-Star Weekend in Phoenix, Feb 19–21'],['2027-04-13','Play-In Tournament (Apr 13–16)']];
 let mk=0;
-const markRow=t=>{const tr=el('tr','mark');const td=el('td');td.colSpan=7;td.append(el('span','mk-dot'),t);tr.appendChild(td);return tr};
+const markRow=t=>{const tr=el('tr','mark'+(/Cup/.test(t)?' cupm':''));const td=el('td');td.colSpan=7;td.append(el('span','mk-dot'),t);tr.appendChild(td);return tr};
 SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
   if(m!==curM){curM=m;const sec=el('section');sec.style.marginTop='8px';const h=el('div','block-h');h.appendChild(el('h2',null,mFmt.format(new Date(m+'-15T12:00:00Z'))));
     const box=el('div','tablebox');const t=el('table','sched');t.innerHTML='<thead><tr><th>Date</th><th>Opponent</th><th>Time</th><th>TV</th><th>Radio</th><th class="r">Result</th><th class="r">Game</th></tr></thead>';tb=el('tbody');t.appendChild(tb);box.appendChild(t);sec.append(h,box);sc.appendChild(sec)}
   while(mk<SCHED_MARKS.length&&SCHED_MARKS[mk][0]<=g[0]){tb.appendChild(markRow(shortFmt.format(new Date(SCHED_MARKS[mk][0]+'T12:00:00'))+' · '+SCHED_MARKS[mk][1]));mk++}
   const tr=el('tr');tr.id='g-'+g[0];const r=res[i];const n=NBAG[g[0]]||[];
   const op=el('td','opp-cell');const a=el('a','opp',TEAMS[g[1]]);a.href=bbTeam(g[1]);a.target='_blank';a.rel='noopener';op.append((g[2]==='H'?'vs ':'at '),a);
-  if(n[7]){const lab=n[7].replace('Emirates ','').replace('AWS NBA ','');op.appendChild(el('span','gtag'+(/Cup/.test(lab)?' cup':''),lab))}
+  let mtag=null;if(n[7]){const lab=n[7].replace('Emirates ','').replace('AWS NBA ','');op.appendChild(el('span','gtag'+(/Cup/.test(lab)?' cup':''),lab));mtag=el('td','mtag');mtag.appendChild(el('span','gtag'+(/Cup/.test(lab)?' cup':''),lab));tr.classList.add('hastag')}
   const tv=tvFor(g[0]),ra=radioFor(g[0]);
   const tvc=el('td','tvc');if(tv.nat)tvc.appendChild(el('b',null,tv.nat));if(tv.loc)tvc.appendChild(el('span',null,tv.loc));if(tv.opp)tvc.appendChild(el('small',null,TEAMS[g[1]]+': '+tv.opp));if(!tv.nat&&!tv.loc)tvc.appendChild(el('span','dim','TBA'));
   const rac=el('td','tvc');rac.appendChild(el('span',null,ra.cavs));rac.appendChild(el('small',null,ra.nat));if(ra.opp)rac.appendChild(el('small',null,TEAMS[g[1]]+': '+ra.opp));
   const lk=el('td','r');if(r){const b=el('a',null,'Box score ↗');b.title=boxSrc(g[0]);b.href=boxUrl(g[0]);b.target='_blank';b.rel='noopener';lk.appendChild(b)}else{const pv=gameUrl(g[0]);if(pv){const b=el('a',null,'Preview ↗');b.title='NBA.com game page';b.href=pv;b.target='_blank';b.rel='noopener';lk.appendChild(b)}}
-  tr.append(el('td','mono',shortFmt.format(tipOf(g))),op,el('td','mono dim',g[3]+' PM'),tvc,rac,el('td','r mono',r?(r+(SCORES[g[0]]?' '+SCORES[g[0]].replace('-','–'):'')):''),lk);
+  tr.append(el('td','mono',shortFmt.format(tipOf(g))),op,el('td','mono dim',g[3]+' PM'),tvc,rac,el('td','r mono',r?(r+(SCORES[g[0]]?' '+SCORES[g[0]].replace('-','–'):'')):''),lk);if(mtag)tr.appendChild(mtag);
   if(i===ni)tr.classList.add('nextg');tb.appendChild(tr)});
 while(mk<SCHED_MARKS.length){tb.appendChild(markRow(shortFmt.format(new Date(SCHED_MARKS[mk][0]+'T12:00:00'))+' · '+SCHED_MARKS[mk][1]));mk++}
 
@@ -1671,8 +1759,8 @@ while(mk<SCHED_MARKS.length){tb.appendChild(markRow(shortFmt.format(new Date(SCH
 const HS=id=>typeof id==='number'?'https://cdn.nba.com/headshots/nba/latest/260x190/'+id+'.png':id;
 const STAFF=[
   ['Ownership & leadership',[['Dan Gilbert','Chairman','2004–05','https://cdn.nba.com/teams/uploads/sites/1610612739/2022/04/dan-gilbert-quicken-loans.jpg'],['Nic Barlage','CEO, Cavaliers and Rock Entertainment Group','2021–22','https://cdn.nba.com/teams/uploads/sites/1610612739/2024/11/nic-barlage-headshot_500x500-1.jpg'],['Nate Forbes','Vice Chairman','2004–05'],['Jeff Cohen','Minority Owner','2004–05']]],
-  ['Front office',[['Koby Altman','President of Basketball Operations','2017–18','https://cdn.nba.com/teams/uploads/sites/1610612739/2024/11/koby-altman-headshot_500x500.jpg'],['Brandon Weems','General Manager','2026–27','https://cdn.nba.com/teams/uploads/sites/1610612739/2024/11/brandon-weems-headshot_500x500.jpg'],['Jon Nichols','Associate General Manager','2026–27'],['Brendon Yu','Assistant General Manager','2026–27'],['José Calderón','Assistant General Manager','2026–27'],['Jason Hillman','VP, Basketball Operations / Team Counsel','2021–22','https://cdn.nba.com/teams/uploads/sites/1610612739/2026/01/jason-hillman-headshot_500x500.jpg'],['Dashiell Flynn','Chief Technology Officer, Basketball Operations','2026–27'],['Max Weisberg','Director of Basketball Strategy','2023–24'],['Mark Cashman','Director of Team Operations','2011–12'],['Zydrunas Ilgauskas','Special Assistant to the GM','2013–14']]],
-  ['Coaching staff',[['Kenny Atkinson','Head Coach','2024–25',201690],['Johnnie Bryant','Associate Head Coach','2024–25',204008],['Mike Gerrity','Assistant Coach','2024–25',202565],['Trevor Hendry','Assistant Coach','2024–25',1631326],['Nate Reinking','Assistant Coach','2021–22',1642529],['Omar Cook','Assistant Coach','2023–24',1641539],['Jawad Williams','Assistant Coach','2025–26',1643351],['Andrew Olson','Assistant Coach','2018–19',1643352],['Steve Frankoski','Player Development Coach','2019–20']]],
+  ['Front office',[['Brandon Weems','General Manager','2026–27','https://cdn.nba.com/teams/uploads/sites/1610612739/2024/11/brandon-weems-headshot_500x500.jpg'],['Jon Nichols','Associate General Manager','2026–27'],['Brendon Yu','Assistant General Manager','2026–27'],['José Calderón','Assistant General Manager','2026–27'],['Jason Hillman','VP, Basketball Operations / Team Counsel','2021–22','https://cdn.nba.com/teams/uploads/sites/1610612739/2026/01/jason-hillman-headshot_500x500.jpg'],['Dashiell Flynn','Chief Technology Officer, Basketball Operations','2026–27'],['Max Weisberg','Director of Basketball Strategy','2023–24'],['Mark Cashman','Director of Team Operations','2011–12'],['Zydrunas Ilgauskas','Special Assistant to the GM','2013–14']]],
+  ['Coaching staff',[['Johnnie Bryant','Associate Head Coach','2024–25',204008],['Mike Gerrity','Assistant Coach','2024–25',202565],['Trevor Hendry','Assistant Coach','2024–25',1631326],['Nate Reinking','Assistant Coach','2021–22',1642529],['Omar Cook','Assistant Coach','2023–24',1641539],['Jawad Williams','Assistant Coach','2025–26',1643351],['Andrew Olson','Assistant Coach','2018–19',1643352],['Steve Frankoski','Player Development Coach','2019–20']]],
   ['Performance & medical',[['Dr. Mark Kovacs','Sr. Director, Sports Science and Health','2019–20'],['Steve Spiro','Head Athletic Trainer','2013–14',204286],['Derek Millender','Head Strength & Conditioning Coach','2017–18']]]
 ];
 /* bios — Wikipedia, Basketball Reference, Cavaliers/NBA.com releases. facts: [label, value]; path: [years, role]; kenny / players: crossover notes (coaches only) */
@@ -1754,7 +1842,7 @@ const ATK=[ /* season, team, W, L, playoffs, ORtg rank, DRtg rank, Net rank, Pac
   const wrap=el('div');wrap.append(tw,el('p','dim','Off/Def/Net/Pace are full-season team ranks out of 30 (Basketball Reference). Playoffs: round reached and playoff record. Brooklyn 2019–20: Atkinson coached the first 62 games (28–34); ranks cover the full season.'));
   const atk=card('Head Coach','Kenny Atkinson','Head Coach · 3rd season','https://cdn.nba.com/headshots/nba/latest/260x190/201690.png',[['Born','June 2, 1967 · Northport, N.Y. (age 59)'],['High school','St. Anthony’s (South Huntington, N.Y.)'],['College','Richmond (1986–90), point guard; 1988 NCAA Tournament'],['Head coaching record',w+'–'+(g-w)+' (.'+String(Math.round(w/g*1000)).padStart(3,'0')+') · Cavs 116–48 (.707)'],['Playoffs','14–18 · Cavs 13–14'],['Average team rank','Off '+avg(5)+' · Def '+avg(6)+' · Net '+avg(7)],['Honors','2024–25 NBA and NBCA Coach of the Year; 2022 NBA champion (Warriors assistant); 2025 All-Star Game coach']]);
   atk.append(det('Season-by-season record and team ranks',wrap),det('Career path',pathList([['1990–2004','Pro point guard: CBA/USBL, then Spain, Italy, Germany, France and the Netherlands'],['2004–06','Paris Basket Racing, assistant'],['2008–12','New York Knicks, assistant (Mike D’Antoni)'],['2012–16','Atlanta Hawks, assistant (Mike Budenholzer)'],['2016–20','Brooklyn Nets, head coach (118–190)'],['2020–21','LA Clippers, assistant (Tyronn Lue)'],['2021–24','Golden State Warriors, assistant (2022 title)'],['2022','Agreed to coach Charlotte, then stayed with Golden State'],['Jun 2024–','Cavaliers head coach']])),det('Crossover with current players',(()=>{const d=el('div','xover');d.appendChild(el('p',null,'Jarrett Allen: coached him in Brooklyn (2017–20), including his first three NBA seasons.'));d.appendChild(el('p',null,'Trevor Hendry: on his Nets staff 2016–20, now a Cavs assistant.'));return d})()));
-  {const nb=el('a','co-link','NBA Coaches Association profile ↗');nb.href='https://nbacoaches.com/kenny-atkinson/';nb.target='_blank';nb.rel='noopener';atk.appendChild(nb)}
+  {const h=atk.querySelector('h2');const nb=el('a','co-name','Kenny Atkinson');nb.href='https://nbacoaches.com/kenny-atkinson/';nb.target='_blank';nb.rel='noopener';nb.title='NBA Coaches Association profile';h.textContent='';h.appendChild(nb)}
   co.append(alt,atk)})();
 
 /* video.
@@ -1917,7 +2005,7 @@ const GLOSS=[
  ['Trades & picks',[
   ['Salary matching','Teams over the cap must roughly match salaries in trades. Teams under the first apron can take back somewhat more than they send; teams above it can’t take back more than they send.'],
   ['Aggregation','Combining several players’ salaries to match one bigger salary. Not allowed above the second apron.'],
-  ['Stepien rule','A team can’t trade away its first-round picks in back-to-back future drafts. Picks can be traded up to seven drafts out.'],
+  ['Stepien Rule','A team can’t trade away its first-round picks in back-to-back future drafts. Picks can be traded up to seven drafts out.'],
   ['Pick swap','The right to exchange picks with another team in a given draft if the other team’s pick lands higher.'],
   ['Protected pick','A pick that stays with the original team if it lands in a protected range, e.g. top-10 protected.'],
   ['Most / least favorable','When a team is owed one of several picks, the more favorable one is the higher pick.'],
@@ -2051,7 +2139,7 @@ const socialLinks=n=>{const S=SOCIAL[n];if(!S)return null;const w=el('span','soc
 const DEPTH_ON=true;
 const DEPTH_PICK=/preview=(depth|stack)/.test(location.search)?'depth':null;
 const DEPTH=[['PG',['James Harden','Craig Porter Jr.','Tyrese Proctor'],null],['SG',['Donovan Mitchell','Sam Merrill','Meleek Thomas'],null],['SF',['Peyton Watson','Jaylon Tyson','Tristan Enaruna'],'Riley Minix'],['PF',['Evan Mobley','Mario Hezonja',"Nae'Qwan Tomlin"],null],['C',['Jarrett Allen','Thomas Bryant','Khalifa Diop'],'Ernest Udeh Jr.']];
-const DEPTH_TIERS=[['Starters','The opening five',['James Harden','Donovan Mitchell','Peyton Watson','Evan Mobley','Jarrett Allen']],['Rotation','Nightly minutes off the bench',['Sam Merrill','Jaylon Tyson','Craig Porter Jr.','Thomas Bryant']],['Depth','Spot minutes, matchups, injuries',["Nae'Qwan Tomlin",'Tyrese Proctor','Mario Hezonja','Meleek Thomas','Khalifa Diop']],['Developmental','Two-way deals; time with the Charge',['Tristan Enaruna','Riley Minix','Ernest Udeh Jr.']]];
+const DEPTH_TIERS=[['Starters','The opening five',['James Harden','Donovan Mitchell','Peyton Watson','Evan Mobley','Jarrett Allen']],['Rotation','Nightly minutes off the bench',['Sam Merrill','Jaylon Tyson','Craig Porter Jr.','Mario Hezonja']],['Depth','Spot minutes, matchups, injuries',['Thomas Bryant',"Nae'Qwan Tomlin",'Tyrese Proctor','Meleek Thomas']],['Developmental','Young players and two-ways; time with the Charge',['Khalifa Diop','Tristan Enaruna','Riley Minix','Ernest Udeh Jr.']]];
 function buildDepth(){
   const P=n=>PLAYERS.find(p=>p[1]===n);const HSU=id=>'https://cdn.nba.com/headshots/nba/latest/260x190/'+id+'.png';
   const lastN=n=>n.split(' ').filter(w=>!/^(Jr\.|III|II)$/.test(w)).pop();
@@ -2066,7 +2154,7 @@ function buildDepth(){
   h+='</div><div class="ds-foot">Tinted column = starting lineup · names link to player profiles</div></div>';
   /* pyramid */
   h+='<div id="dv-pyr" hidden><div class="pyr">';
-  DEPTH_TIERS.forEach(([t,d,ns],i)=>{h+='<div class="pt pt'+(i+1)+'"><div class="pt-band"><div class="pt-faces">'+ns.map(n=>{const p=P(n);return link(p,face(p,'pf')+'<b>'+lastN(n)+'</b><span>#'+p[0]+'</span>')}).join('')+'</div></div><div class="pt-lab"><b>'+t+'</b><span>'+d+'</span></div></div>'});
+  DEPTH_TIERS.forEach(([t,d,ns],i)=>{h+='<div class="pt pt'+(i+1)+'"><div class="pt-band"><div class="pt-faces">'+ns.map(n=>{const p=P(n);return link(p,face(p,'pf')+'<b>'+lastN(n)+'</b><span>'+(MPG[n]!=null?MPG[n].toFixed(1)+' mpg':'#'+p[0])+'</span>')}).join('')+'</div></div><div class="pt-lab"><b>'+t+'</b><span>'+d+'</span></div></div>'});
   h+='</div><div class="ds-foot">Tiers are an editorial call and will follow minutes once the season starts</div></div></div>';
   const rd=document.getElementById('rv-depth');rd.innerHTML=h;
   rd.querySelectorAll('[data-dv]').forEach(b=>b.addEventListener('click',()=>{rd.querySelectorAll('[data-dv]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));document.getElementById('dv-chart').hidden=b.dataset.dv!=='chart';document.getElementById('dv-pyr').hidden=b.dataset.dv!=='pyr'}));
