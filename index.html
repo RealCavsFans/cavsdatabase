@@ -909,7 +909,7 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:23%}.cap th:nth-child(2)
     <div class="ch-tiles" id="ch-tiles"></div>
     <section><div class="block-h"><h2>Schedule</h2><a href="https://cleveland.gleague.nba.com/schedule" target="_blank" rel="noopener">Tickets ↗</a></div>
       <div class="tablebox"><table class="chs"><thead><tr><th>Date</th><th>Opponent</th><th>Time (ET)</th><th>Arena</th><th class="r">Result</th></tr></thead><tbody id="ch-sched"></tbody></table></div>
-      <p class="dim" style="margin:8px 0 0;font-size:13px">The G League has posted games through Dec 1 (the Tip-Off Tournament). The rest of the schedule is added when the league releases it.</p></section>
+      <p class="dim" style="margin:8px 0 0;font-size:13px">Full 2026–27 schedule: 14 Tip-Off Tournament games (Nov 10 to Dec 15), then 34 regular-season games through Mar 27. Times are Eastern.</p></section>
     <section><div class="block-h"><h2>Roster</h2><span id="ch-ros-n"></span></div>
       <div class="cols" id="ch-roster"></div>
       <p class="dim" style="margin:8px 0 0;font-size:13px">The Charge haven't posted their 2026–27 roster yet; it's set before the Nov 10 opener. Two-way players split time between the Cavs and Charge. Exhibit 10 players waived by the Cavs before the season can join the Charge as affiliate players. G League returning-player rights fill in as signings are announced.</p></section>
@@ -925,7 +925,7 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:23%}.cap th:nth-child(2)
 
 <footer><div class="wrap">
   <span>cavsdatabase.com · Independent fan reference. Not affiliated with the Cleveland Cavaliers or the NBA.</span>
-  <span>Sources: Capsheets, Salary Swish, Spotrac, Basketball Reference, RealGM · Updated Oct 13, 2026</span>
+  <span>Sources: Capsheets, Salary Swish, Spotrac, Basketball Reference, RealGM · Updated Oct 15, 2026</span>
 </div></footer>
 
 <div class="nticker" id="nticker" hidden aria-label="Latest Cavs news"><span class="nt-label">Cavs news</span><div class="nt-view"><div class="nt-track" id="nt-track"></div></div></div>
@@ -1115,10 +1115,27 @@ const BOX={};    /* optional exact NBA.com box score URL per date; otherwise the
 const NRTG={}; /* 2026-27 season, all 30 teams: 'CLE':[net rating, games played] (used for the Cavs value and league rank) */
 const L14={};  /* Cavs only, last 14 days: 'CLE':[net rating, games] */
 /* Cleveland Charge (RealGM). [date, opponent, H/A, time ET, result e.g. 'W 118-110' or ''] */
+/* games: [date, opponent, 'H'/'A', 'h:mm' (PM unless it ends in ' AM'), result, optional arena override]. RealGM schedule (48 games); home arena is Public Hall (RealGM's 'Wolstein Center' is out of date). Mar 3 STEM Day game at Rocket Arena (Roundtable). */
 const CHARGE={record:'0–0',coach:'Eli Kell-Abrams',venue:'Public Hall',games:[
   ['2026-11-10','Motor City Cruise','H','7:00',''],['2026-11-14','Sioux Falls Skyforce','H','5:00',''],['2026-11-17','Iowa Wolves','H','7:00',''],
   ['2026-11-20','Grand Rapids Gold','A','7:00',''],['2026-11-22','Grand Rapids Gold','A','3:00',''],['2026-11-25','Sioux Falls Skyforce','A','7:30',''],
-  ['2026-11-28','Iowa Wolves','H','7:00',''],['2026-12-01','Wisconsin Herd','A','12:30','']]};
+  ['2026-11-28','Iowa Wolves','H','7:00',''],['2026-12-01','Wisconsin Herd','A','12:30',''],['2026-12-02','Wisconsin Herd','A','12:30',''],
+  ['2026-12-04','Noblesville Boom','A','7:00',''],['2026-12-06','Noblesville Boom','A','2:00',''],['2026-12-11','Windy City Bulls','H','7:00',''],
+  ['2026-12-12','Windy City Bulls','H','6:00',''],['2026-12-15','Motor City Cruise','H','7:00',''],['2026-12-27','Raptors 905','A','7:30',''],
+  ['2026-12-29','Grand Rapids Gold','H','7:00',''],['2026-12-31','Delaware Blue Coats','H','1:00',''],['2027-01-02','Delaware Blue Coats','H','7:00',''],
+  ['2027-01-06','Motor City Cruise','A','7:00',''],['2027-01-08','Maine Celtics','H','7:00',''],['2027-01-09','Maine Celtics','H','7:00',''],
+  ['2027-01-13','Greensboro Swarm','A','7:00',''],['2027-01-15','Greensboro Swarm','A','7:00',''],['2027-01-18','Westchester Knicks','A','1:00',''],
+  ['2027-01-20','Westchester Knicks','A','1:00',''],['2027-01-22','Maine Celtics','A','7:00',''],['2027-01-24','Maine Celtics','A','1:00',''],
+  ['2027-01-29','Noblesville Boom','H','7:00',''],['2027-01-31','Noblesville Boom','H','2:00',''],['2027-02-03','Raptors 905','A','7:30',''],
+  ['2027-02-05','Long Island Nets','H','7:00',''],['2027-02-07','Osceola Magic','H','4:00',''],['2027-02-12','Windy City Bulls','A','8:00',''],
+  ['2027-02-13','Windy City Bulls','A','8:00',''],['2027-02-16','Laketown Squadron','A','7:30',''],['2027-02-18','Laketown Squadron','A','7:30',''],
+  ['2027-02-25','Grand Rapids Gold','H','7:00',''],['2027-02-27','Delaware Blue Coats','A','1:00',''],['2027-02-28','Delaware Blue Coats','A','1:00',''],
+  ['2027-03-03','College Park Skyhawks','H','11:00 AM','','Rocket Arena, Cleveland (STEM Day)'],['2027-03-05','Westchester Knicks','H','7:00',''],['2027-03-07','Westchester Knicks','H','5:00',''],
+  ['2027-03-13','Wisconsin Herd','H','7:00',''],['2027-03-14','Wisconsin Herd','H','5:00',''],['2027-03-19','Osceola Magic','H','7:00',''],
+  ['2027-03-21','Capital City Go-Go','A','3:00',''],['2027-03-23','Capital City Go-Go','A','7:00',''],['2027-03-27','College Park Skyhawks','H','7:00','']]};
+/* Charge tip time and label; times are PM unless marked AM */
+const chTip=g=>{const am=/AM$/.test(g[3]);const [h,m]=g[3].replace(/ ?AM$/,'').split(':').map(Number);const H=am?(h===12?0:h):(h<12?h+12:h);return new Date(g[0]+'T'+String(H).padStart(2,'0')+':'+String(m).padStart(2,'0')+':00-05:00')};
+const chTime=g=>/AM$/.test(g[3])?g[3]:g[3]+' PM';
 /* NBA.com schedule feed, pulled Oct 14 2026: date -> [game id (without leading 00), national TV, Cavs-side TV, opponent TV, Cavs-side radio, opponent radio, extra national radio, label] */
 const NBAG={"2026-10-08":["12600011",0,"DAZN-CLE","NBCSB/PCK-BOS","WTAM 1100 / 100.7 WMMS / S: La Mega 1300","WROR (105.7 FM)",0,"Preseason"],"2026-10-11":["12600041","ESPN","DAZN-CLE",0,"WTAM 1100 / 100.7 WMMS / S: La Mega 1300",0,0,"Preseason"],"2026-10-13":["12600045","Peacock/NBC Sports Network","DAZN-CLE",0,"WTAM 1100 / 100.7 WMMS / S: La Mega 1300","96.9 FM The Game",0,"Preseason"],"2026-10-22":["22600006","ESPN",0,0,0,0,0,0],"2026-10-24":["22600105",0,0,"DAZN (YES)",0,0,0,0],"2026-10-26":["22600120",0,0,"DAZN-MIN",0,"830 WCCO",0,0],"2026-10-28":["22600133",0,0,0,0,0,0,0],"2026-10-29":["22600144","NBA TV",0,0,0,0,0,0],"2026-10-31":["22600151",0,0,0,0,0,0,0],"2026-11-02":["22600158","Peacock/NBC Sports Network",0,0,0,"WWLS 98.1FM OKC",0,0],"2026-11-04":["22600180",0,0,"KSBI OKC",0,"WWLS/WKY",0,0],"2026-11-06":["22600027","Prime Video",0,0,0,0,"ESPN Radio","Emirates NBA Cup · East Group B"],"2026-11-07":["22600191","NBA TV",0,0,0,0,0,0],"2026-11-09":["22600204",0,0,0,0,0,0,0],"2026-11-11":["22600218","ESPN",0,0,0,0,0,0],"2026-11-13":["22600036",0,0,"WPLG Local 10/Local10+ Platinum",0,"FM 104.3 WQAM / S: WAQI 710",0,"Emirates NBA Cup · East Group B"],"2026-11-14":["22600232",0,0,0,0,0,0,0],"2026-11-16":["22600246",0,0,"CHSN/CHSN App",0,0,0,0],"2026-11-18":["22600258",0,0,0,0,0,0,0],"2026-11-20":["22600045",0,0,0,0,0,0,"Emirates NBA Cup · East Group B"],"2026-11-23":["22600292",0,0,"CHSN/CHSN App",0,0,0,0],"2026-11-25":["22600057",0,0,0,0,0,0,"Emirates NBA Cup · East Group B"],"2026-11-29":["22600305",0,0,"WPLG Local 10/Local10+ Platinum",0,"FM 104.3 WQAM / S: WAQI 710",0,0],"2026-12-01":["22600319",0,0,0,0,0,0,0],"2026-12-03":["22600338","NBA TV",0,"CHSN/CHSN App",0,0,0,0],"2026-12-12":["22600344",0,0,"NBCSBA/PCK-GSW",0,0,0,0],"2026-12-15":["22600366","NBC/Peacock",0,0,0,0,0,0],"2026-12-16":["22600372",0,0,0,0,0,0,0],"2026-12-18":["22600389",0,0,0,0,0,0,0],"2026-12-20":["22600403",0,0,0,0,0,0,0],"2026-12-21":["22600411","Peacock/NBC Sports Network",0,0,0,0,0,0],"2026-12-23":["22600425",0,0,0,0,0,0,0],"2026-12-27":["22600447",0,0,0,0,0,0,0],"2026-12-28":["22600459","NBC/Peacock",0,"NBCSB/PCK-BOS",0,0,0,0],"2026-12-31":["22600479",0,0,0,0,0,0,0],"2027-01-02":["22600492",0,0,0,0,0,0,0],"2027-01-03":["22600507",0,0,0,0,0,0,0],"2027-01-05":["22600517",0,0,0,0,0,0,0],"2027-01-07":["22600532",0,0,0,0,0,0,0],"2027-01-09":["22600550",0,0,"Altitude/Altitude+",0,0,0,0],"2027-01-11":["22600568",0,0,"DAZN-MIN",0,"830 WCCO",0,0],"2027-01-13":["22600578",0,0,0,0,0,0,0],"2027-01-15":["22600596",0,0,0,0,0,0,0],"2027-01-16":["22600604",0,0,0,0,0,0,0],"2027-01-18":["22600077","NBC/Peacock",0,0,0,0,0,0],"2027-01-21":["22600635",0,0,"DAZN (YES)",0,0,0,0],"2027-01-23":["22600653",0,0,0,0,0,0,0],"2027-01-25":["22600668",0,0,0,0,0,0,0],"2027-01-27":["22600677","ESPN",0,0,0,0,0,"AWS NBA Rivals Week"],"2027-01-29":["22600694","ESPN",0,0,0,0,0,"AWS NBA Rivals Week"],"2027-01-30":["22600704",0,0,0,0,0,0,0],"2027-02-01":["22600721",0,0,0,0,0,0,0],"2027-02-03":["22600734",0,0,"3TV/AZFS/Suns+ on AZFS App",0,"AZ Sports 98.7 FM / S: KSUN 1400AM",0,0],"2027-02-04":["22600745",0,0,"KUNP",0,"Rip City Radio 620",0,0],"2027-02-06":["22600757",0,0,0,0,0,0,0],"2027-02-09":["22600777",0,0,0,0,0,0,0],"2027-02-10":["22600788",0,0,0,0,0,0,0],"2027-02-12":["22600804",0,0,0,0,0,0,0],"2027-02-14":["22600818",0,0,"3TV/AZFS/Suns+ on AZFS App",0,"AZ Sports 98.7 FM / S: KSUN 1400AM",0,0],"2027-02-16":["22600827",0,0,0,0,0,0,0],"2027-02-17":["22600833",0,0,0,0,0,0,0],"2027-02-25":["22600849",0,0,"NBCSCA/PCK-SAC",0,0,0,0],"2027-02-26":["22600859","ESPN",0,"NBCSB/PCK-BOS",0,0,0,0],"2027-03-01":["22600881","Peacock/NBC Sports Network",0,0,0,0,0,0],"2027-03-04":["22600903",0,0,"KUNP",0,"Rip City Radio 620",0,0],"2027-03-06":["22600919","Prime Video",0,0,0,0,0,0],"2027-03-09":["22600940","NBC/Peacock",0,0,0,0,0,0],"2027-03-11":["22600961",0,0,0,0,0,0,0],"2027-03-12":["22600967",0,0,"Spectrum SportsNet",0,"ESPN LA 710/980 KFWB",0,0],"2027-03-14":["22600979",0,0,"NBCSCA/PCK-SAC",0,0,0,0],"2027-03-16":["22600995",0,0,"NBCSBA/PCK-GSW",0,0,0,0],"2027-03-18":["22601012",0,0,"ALT/ALT+/KTVD/KUSA",0,0,0,0],"2027-03-20":["22601023",0,0,"CHSN/CHSN App",0,0,0,0],"2027-03-22":["22601035",0,0,0,0,0,0,0],"2027-03-25":["22601060",0,0,"Spectrum SportsNet",0,"ESPN LA 710/980 KFWB",0,0],"2027-03-29":["22601090","Peacock/NBC Sports Network",0,"WPLG Local 10/Local10+ Platinum",0,"FM 104.3 WQAM / S: WAQI 710",0,0],"2027-03-31":["22601107",0,0,"DAZN (YES)",0,0,0,0],"2027-04-01":["22601113","Prime Video",0,"NBCSB/PCK-BOS",0,0,0,0],"2027-04-04":["22601133",0,0,0,0,0,0,0],"2027-04-05":["22601144",0,0,"DAZN (YES)",0,0,0,0],"2027-04-07":["22601161","ESPN",0,0,0,0,0,0],"2027-04-09":["22601174",0,0,0,0,0,0,0],"2027-04-11":["22601188",0,0,0,0,0,0,0]};
 /* 15 free over-the-air games (Gray Media / DAZN, Cleveland 19 News, Sep 15 2026); simulcast on DAZN and Rock Entertainment Sports Network */
@@ -1292,12 +1309,12 @@ document.getElementById('inj-note').textContent='Updated '+INJ_UPDATED+' · CBS 
 
 /* Charge */
 (function(){
-  const now=new Date(Date.now()-3*3600e3);const tip=g=>new Date(g[0]+'T'+String(+g[3].split(':')[0]+(+g[3].split(':')[0]<12?12:0)).padStart(2,'0')+':'+g[3].split(':')[1]+':00-05:00');
+  const now=new Date(Date.now()-3*3600e3);const tip=chTip;
   const nxt=CHARGE.games.find(g=>!g[4]&&tip(g)>now);const last=[...CHARGE.games].reverse().find(g=>g[4]);
   const played=CHARGE.games.some(g=>g[4]);
   document.getElementById('ch-label').textContent=nxt?(played?'Next game':'Season opener'):'Season complete';
   if(nxt){document.getElementById('ch-next').textContent=(nxt[2]==='H'?'vs ':'at ')+nxt[1];
-    document.getElementById('ch-meta').textContent=shortFmt.format(tip(nxt))+' · '+nxt[3]+' PM'+(nxt[2]==='H'?' · '+CHARGE.venue:'')}
+    document.getElementById('ch-meta').textContent=shortFmt.format(tip(nxt))+' · '+chTime(nxt)+(nxt[5]?' · '+nxt[5].split(',')[0]:nxt[2]==='H'?' · '+CHARGE.venue:'')}
   const kv=document.getElementById('ch-kv');
   [['Record',CHARGE.record]].forEach(([a,b])=>{const li=el('li');li.append(el('span',null,a),el('b',null,b));kv.appendChild(li)});
 
@@ -1853,7 +1870,7 @@ TX.filter(r=>r.k==='trade').forEach(r=>add('Trade · '+(r.got||[]).slice(0,2).jo
 })();
 
 /* Charge page */
-const CH_ARENA={H:'Public Auditorium, Cleveland','Grand Rapids Gold':'Van Andel Arena, Grand Rapids','Sioux Falls Skyforce':'Sanford Pentagon, Sioux Falls','Wisconsin Herd':'Oshkosh Arena, Oshkosh'};
+const CH_ARENA={H:'Public Auditorium, Cleveland','Grand Rapids Gold':'Van Andel Arena, Grand Rapids','Sioux Falls Skyforce':'Sanford Pentagon, Sioux Falls','Wisconsin Herd':'Oshkosh Arena, Oshkosh','Noblesville Boom':'Arena at Innovation Mile, Noblesville','Raptors 905':'Paramount Fine Foods Centre, Mississauga','Motor City Cruise':'Wayne State Fieldhouse, Detroit','Greensboro Swarm':'First Horizon Coliseum, Greensboro','Westchester Knicks':'Westchester County Center, White Plains','Maine Celtics':'Portland Exposition Building, Portland','Windy City Bulls':'NOW Arena, Hoffman Estates','Laketown Squadron':'Pontchartrain Center, Kenner','Delaware Blue Coats':'Chase Fieldhouse, Wilmington','Capital City Go-Go':'CareFirst Arena, Washington'};
 const CH_ROSTER=[
   ['Two-way contracts (Cavs)',[['Tristan Enaruna','F','Two-way','Also on the Cavs roster'],['Riley Minix','F','Two-way','Also on the Cavs roster'],['Ernest Udeh Jr.','C','Two-way','Also on the Cavs roster']]],
   ['Cavs Exhibit 10 (training camp)',[['Rashaun Agee','F','Exhibit 10','In Cavs camp'],['Zack Austin','G','Exhibit 10','In Cavs camp'],['Noam Yaacov','G','Exhibit 10','In Cavs camp']]],
@@ -1864,9 +1881,9 @@ const CH_STAFF=[
   ['Front office',[['Liron Fanan','General Manager','GM since 2023; first woman to lead the Charge front office'],['Luis Gonzalez Infante','Assistant General Manager',''],['Max Weisberg','Assistant General Manager','Also Cavs Director of Basketball Strategy'],['Brandon Halupnik','Director of Basketball Ops & Player Personnel',''],['Max Brandt','Director of Coaching Analytics','']]]
 ];
 (function(){const tb=document.getElementById('ch-sched');if(!tb)return;
-  const now=new Date(Date.now()-3*3600e3);const tip=g=>new Date(g[0]+'T'+String(+g[3].split(':')[0]+(+g[3].split(':')[0]<12?12:0)).padStart(2,'0')+':'+g[3].split(':')[1]+':00-05:00');
+  const now=new Date(Date.now()-3*3600e3);const tip=chTip;
   const nxt=CHARGE.games.find(g=>!g[4]&&tip(g)>now);
-  CHARGE.games.forEach(g=>{const tr=el('tr');if(g===nxt)tr.classList.add('nextg');tr.append(el('td','mono',shortFmt.format(new Date(g[0]+'T12:00:00'))),el('td',null,(g[2]==='H'?'vs ':'at ')+g[1]),el('td','mono dim',g[3]+' PM'),el('td','dim',g[2]==='H'?CH_ARENA.H:(CH_ARENA[g[1]]||'')),el('td','r mono',g[4]||''));tb.appendChild(tr)});
+  CHARGE.games.forEach(g=>{const tr=el('tr');if(g===nxt)tr.classList.add('nextg');tr.append(el('td','mono',shortFmt.format(new Date(g[0]+'T12:00:00'))),el('td',null,(g[2]==='H'?'vs ':'at ')+g[1]),el('td','mono dim',chTime(g)),el('td','dim',g[5]||(g[2]==='H'?CH_ARENA.H:(CH_ARENA[g[1]]||''))),el('td','r mono',g[4]||''));tb.appendChild(tr)});
   const t=document.getElementById('ch-tiles');[[CHARGE.record,'Record'],[nxt?shortFmt.format(new Date(nxt[0]+'T12:00:00')):'—','Next game'+(nxt?' · '+(nxt[2]==='H'?'vs ':'at ')+nxt[1]:'')],[CHARGE.coach,'Head coach'],['Liron Fanan','General manager']].forEach(([v,l])=>{const d=el('div','txs');d.append(el('b',null,v),el('span',null,l));t.appendChild(d)});
   const ro=document.getElementById('ch-roster');let n=0;CH_ROSTER.forEach(([g,ps])=>{const sec=el('section');const h=el('div','block-h');h.append(el('h2',null,g),el('span',null,String(ps.length)));const ul=el('ul','kv');ps.forEach(([nm,pos,tag,note])=>{n++;const li=el('li');const sp=el('span',null,nm);sp.appendChild(el('small',null,pos+' · '+note));li.append(sp,el('b','ch-tag',tag));ul.appendChild(li)});sec.append(h,ul);ro.appendChild(sec)});
   document.getElementById('ch-ros-n').textContent='Pending · '+n+' tied to the Cavs';
