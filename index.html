@@ -727,6 +727,21 @@ table.apt{width:100%;min-width:0;border-collapse:collapse;font-size:13px;table-l
 .exk{display:flex;align-items:center;gap:6px;font-size:12px}.sw{display:inline-block;width:10px;height:10px}.sw.left{background:var(--wine)}.sw.used{background:var(--line)}
 .exuse{display:flex;flex-direction:column;gap:3px}.exuse .tk{white-space:normal}
 .ex-w>span{color:var(--muted)}.ex-w>b{font:600 11px var(--sans)!important;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.rcf-cols{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:28px}
+@media (max-width:900px){.rcf-cols{grid-template-columns:minmax(0,1fr)}}
+.rcf-list{display:grid;gap:14px}
+.rcf-card{display:grid;grid-template-columns:180px minmax(0,1fr);gap:14px;background:var(--card);border:1px solid var(--line);padding:12px;color:inherit;text-decoration:none}
+.rcf-card:hover{border-color:var(--wine)}.rcf-card,.rcf-card:hover{text-decoration:none}.rcf-card.noimg{grid-template-columns:minmax(0,1fr)!important}.rcf-card img{width:100%;aspect-ratio:3/2;object-fit:cover;background:var(--sub)}
+.rcf-t b{display:block;font-size:15px;line-height:1.3}.rcf-m{display:block;font-size:12px;color:var(--muted);margin:3px 0 6px}.rcf-t p{margin:0;font-size:13px;line-height:1.45;color:var(--fg2)}
+@media (max-width:520px){.rcf-card{grid-template-columns:96px minmax(0,1fr);gap:10px;padding:10px}.rcf-t b{font-size:14px}.rcf-t p{display:none}}
+.rcf-x{background:var(--card);border:1px solid var(--line);padding:10px;min-height:200px}.rcf-xfb{margin:10px 2px 0}
+.frz{margin:0 0 10px;padding:10px 12px;border:1px solid var(--line);background:var(--bg)}
+.frz-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:6px 0 8px}
+.frz-c{border:1px solid var(--line);padding:7px 8px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.frz-c b{font:700 12px var(--mono)}.frz-s{font:700 11px var(--sans)}.frz-c small{font-size:10.5px;color:var(--muted);line-height:1.3}
+.frz-c.under,.frz-c.lock{border-color:#2E7D4F}.frz-c.under .frz-s,.frz-c.lock .frz-s{color:#2E7D4F}.frz-c.over{border-color:var(--wine-ink)}.frz-c.over .frz-s{color:var(--wine-ink)}.frz-c.tbd .frz-s{color:var(--muted)}
+.frz-p{margin:0 0 4px!important;font-size:12px}.frz-p.warn{color:var(--muted)}
+@media (max-width:520px){.frz-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .tks{display:inline-flex;gap:10px;flex:0 0 auto}
 .tk{display:inline-flex;align-items:center;gap:4px;font:600 11.5px var(--sans);white-space:nowrap;color:var(--fg2)}.tk i{font-style:normal;font-weight:800}
 .tk.y i{color:#2E7D4F}.tk.n{color:var(--muted)}.tk.n i{color:var(--wine-ink)}.tk.out{color:var(--fg2)}.tk.out i{color:var(--wine-ink)}
@@ -1049,6 +1064,20 @@ table.apt{width:100%;min-width:0;border-collapse:collapse;font-size:13px;table-l
   </div>
 </main>
 
+<main id="view-rcf" hidden>
+  <div class="wrap page">
+    <div>
+      <div class="dim" style="font-size:13px"><a href="#home" data-go="home">Home</a> / RCF Content</div>
+      <h1 style="margin-top:6px">RCF Content</h1>
+      <p class="dim" style="margin:6px 0 0">Articles and recaps from RealCavsFans.com, and posts from @realcavsfans on X.</p>
+    </div>
+    <div class="rcf-cols">
+      <section><div class="block-h"><h2>RealCavsFans.com</h2><a href="https://realcavsfans.com/index.php?forums/FrontPage/" target="_blank" rel="noopener">Front page ↗</a></div><div class="rcf-list" id="rcf-list"></div></section>
+      <section><div class="block-h"><h2>On X</h2><a href="https://x.com/realcavsfans" target="_blank" rel="noopener">@realcavsfans ↗</a></div><div class="rcf-x" id="rcf-x"><a class="twitter-timeline" data-height="1100" data-dnt="true" data-chrome="noheader nofooter" href="https://twitter.com/realcavsfans">Posts by @realcavsfans</a><p class="dim rcf-xfb" style="font-size:12.5px">If the posts don't load here, X may be limiting embeds for viewers who aren't signed in. <a href="https://x.com/realcavsfans" target="_blank" rel="noopener">Open @realcavsfans on X ↗</a></p></div></section>
+    </div>
+  </div>
+</main>
+
 <main id="view-stub" hidden>
   <div class="wrap page"><h1 id="stub-h"></h1><div class="empty" id="stub-b"></div></div>
 </main>
@@ -1061,15 +1090,15 @@ table.apt{width:100%;min-width:0;border-collapse:collapse;font-size:13px;table-l
 const SECTIONS=[
   ['home','Home','',''],
   ['schedule','Schedule','SCH','All 82 games, results, TV.'],
-  ['roster','Roster','ROS','Player bios, combine measurements and how each player arrived.'],
+  ['roster','Roster','ROS','Player bios, measurements and career info.'],
   ['staff','Coaches & Front Office','STF','Executive and coaching staff listings with bios.'],
-  ['cap','Salary Cap','CAP','Cap sheet, apron lines and a CBA glossary.'],
+  ['cap','Salary Cap','CAP','Team cap sheet, player contract information, apron explanation and CBA glossary.'],
   ['assets','Assets','AST','Draft picks, exceptions and drafted players.'],
   ['moves','Transactions','TXN','Every Cavs trade, signing and draft pick since 2017.'],
   ['charge','Cleveland Charge','CHG','G League schedule, roster and staff.'],
   ['video','Video','VID','Press conferences, highlights and the latest Cavs video.'],
-  ['rcf','RCF Content','RCF','Every RealCavsFans graphic.'],
-  ['resources','Resources','RES','Database-approved NBA and Cavs sites.']
+  ['rcf','RCF Content','RCF','RealCavsFans.com articles and @realcavsfans posts.'],
+  ['resources','Resources','RES','Database approved NBA and Cavs sites.']
 ];
 /* picks — RealGM future draft picks, Oct 14 2026. [draft, pick, plain-English status, how it's decided, trade-eligible?, why] */
 /* picks the Cavs hold: [year, round, label, visual, can trade outright, can trade swap rights, status note, origin of the pick/routing]
@@ -1078,7 +1107,7 @@ const PICKS=[
   ['2028','1st','Least favorable of CLE, UTA and ATL',['pool',['CLE','UTA','ATL'],[['Most favorable','UTA or ATL'],['Middle','UTA or ATL'],['Least favorable','CLE']]],false,false,'The Cavs’ 2027 and 2029 firsts are already owed, so the Stepien Rule blocks trading this one outright. Utah and Atlanta already hold the swap rights on it.',"In the Mitchell trade (Sept. 3, 2022), Utah got the right to swap 2028 firsts with Cleveland; the full package is listed under the 2027 first. In the Hunter trade (Feb. 6, 2025), Atlanta got the right to swap its 2028 first for the less favorable of CLE and UTA; that package is listed under the 2029 second. On July 8, 2026, Utah sent Walker Kessler to the Lakers for the right to swap the more favorable of CLE/UTA 2028 firsts for the Lakers’ 2028 first, a 2030 Lakers swap, and Lakers firsts in 2031 and 2033. Utah has since passed part of its swap to the Lakers. That changes who gets the better picks, not the Cavs’ result: they keep the worst of the three."],
   ['2030','1st','Own',['own'],false,true,'Trading it outright would leave the Cavs without a first in back-to-back drafts (2029 and 2031 are owed), which the Stepien Rule forbids. They can still trade the right to swap it.',''],
   ['2032','1st','Own',['own'],false,true,'The 2031 first is owed to Denver, so trading 2032 outright would break the Stepien Rule. Swap rights can still be traded.',''],
-  ['2033','1st','Own · frozen',['frozen'],false,false,'Frozen under the second-apron rules through the 2028–29 season. It unfreezes if the Cavs stay under the second apron long enough.',''],
+  ['2033','1st','Own · frozen',['frozen'],false,false,'Frozen because the Cavs finished the 2025–26 regular season over the second apron. The NBA freezes the first-round pick seven drafts out (2026 + 7 = 2033).',''],
   ['2033','2nd','Own',['own'],true,true,'No restrictions.','']
 ];
 /* picks the Cavs owe: [year, round, short label, visual, routing note, how it left (full transaction)] */
@@ -1141,7 +1170,8 @@ const RES=[
   ['Draft',[
     ['draftballr','Draft prospect scouting and analytics','draftballr.com','https://draftballr.com'],
     ['No Ceilings','Big boards, scouting reports and draft coverage','noceilingsnba.com','https://www.noceilingsnba.com'],
-    ['Tankathon','Mock drafts, lottery odds and every team’s future picks','tankathon.com','https://www.tankathon.com']
+    ['Tankathon','Mock drafts, lottery odds and every team’s future picks','tankathon.com','https://www.tankathon.com'],
+    ['Swish Theory','Draft guide, scouting reports and analysis','theswishtheory.com','https://theswishtheory.com']
   ]],
   ['Fan forum',[
     ['RealCavsFans','Cavs fan forum, analysis and graphics','realcavsfans.com','https://realcavsfans.com']
@@ -1689,6 +1719,14 @@ function renderHistory(){
   const TAGL={game:'Game',move:'Transaction'};
   let label='On this day',fk=md,list=factsFor(md);
   if(!list.length){for(let k=1;k<=200&&!list.length;k++){const d=new Date(now);d.setDate(d.getDate()-k);fk=key(d);list=factsFor(fk)}label='Closest date on record'}
+  /* show one fact: the most surprising on record for the date */
+  const wow=x=>{let v={title:100,highlight:62,perf:58,staff:40,owner:40,passing:36,game:18,move:8}[x.tag]??60;
+    if(/record|first|most|youngest|only|never|history|NBA-record|franchise/i.test(x.t))v+=14;
+    if(/buzzer|Game 7|NBA Finals|lottery|\b(5\d|6\d|7\d) points/i.test(x.t))v+=10;
+    if(x.tag==='game'&&/Finals|Game|playoff/i.test(x.t))v+=12;
+    const pts=+((x.t.match(/(\d{2}) points/)||[])[1]||0);if(pts>=70)v+=40;else if(pts>=55)v+=16;
+    if(/straight|final 25|in a row|0–15|15–0/i.test(x.t))v+=12;return v};
+  list.sort((a,b)=>wow(b)-wow(a));
   const f=list[0];
   const [m,d]=fk.split('-').map(Number);
   const when=document.getElementById('otd-when');when.textContent=label;
@@ -1703,7 +1741,7 @@ function renderHistory(){
   when.appendChild(el('b',null,String(f.y)));
   {const tx=document.getElementById('otd-text');tx.textContent='';const tg=f.tag&&f.tag!=='game'&&f.tag!=='move'?f.tag:null;if(tg)tx.appendChild(el('span','otd-tag '+tg,XTAG[tg]));tx.append(f.t)}
   const a=document.getElementById('otd-src');a.href=f.u;a.textContent='Source: '+f.src+' ↗';
-  const also=document.getElementById('otd-also');const rest=list.slice(1,4);
+  const also=document.getElementById('otd-also');const rest=[];
   if(rest.length){also.hidden=false;also.appendChild(el('li','dim','Also on '+new Date(2000,m-1,d).toLocaleDateString('en-US',{month:'long',day:'numeric'})+':'));
     rest.forEach(x=>{const li=el('li');li.append(el('b',null,String(x.y)),x.t+' ');const s2=el('a',null,'↗');s2.href=x.u;s2.target='_blank';s2.rel='noopener';s2.title=x.src;li.appendChild(s2);also.appendChild(li)})}
   if((md==='06-19'||/preview=june19/.test(location.search))&&(!location.hash||location.hash==='#home'))celebrate();
@@ -1927,8 +1965,22 @@ const pviz=v=>{const w=el('div','pviz');
 const tmark=(ok,lab)=>{const s2=el('span','tk '+(ok?'y':'n'));s2.append(el('i',null,ok?'✓':'✕'),lab);return s2};
 const pickItem=(head,sub,val,blocks)=>{const li=el('li');const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,head));if(sub)l.appendChild(el('small',null,sub));sm.append(l,val);const bx=el('div','xb');blocks.forEach(b=>{if(!b)return;if(b instanceof Node){bx.appendChild(b);return}const p=el('p');p.appendChild(el('strong',null,b[0]+' '));p.append(b[1]);bx.appendChild(p)});d.append(sm,bx);li.appendChild(d);return li};
 const PICK_NOTE='Even when a pick can’t be traded outright, the Cavs have two workarounds: trade the right to swap it with another team’s pick, or make the selection on draft night and trade the player they draft (a draft-and-trade), which works like trading the pick.';
+/* 2033 frozen pick: seasons checked against the second apron at the end of each regular season.
+   result: 'under' | 'over' | '' (not decided yet). 2026–27 is locked under: the Cavs are hard-capped at the first apron. */
+const FREEZE_TRACK=[['2026–27',''],['2027–28',''],['2028–29',''],['2029–30','']];
+const freezeBox=()=>{const w=el('div','frz');const ap2=(THRESH.find(t=>t[0]==='Second apron')||[0,[]])[1];
+  w.appendChild(el('div','pv-k','Unfreeze tracker'));
+  const row=el('div','frz-row');let under=0,over=0;
+  FREEZE_TRACK.forEach(([sz,r],i)=>{const c=el('div','frz-c '+(r||(i===0?'lock':'tbd')));if(r==='under')under++;if(r==='over')over++;
+    c.append(el('b',null,sz),el('span','frz-s',r==='under'?'✓ Under':r==='over'?'✕ Over':i===0?'Locked under':'To be decided'));
+    const v=totals[i],a=ap2[i];if(!r&&v&&a)c.appendChild(el('small',null,i===0?'Hard-capped at 1st apron':'Committed '+usdM(v)+' vs '+usdM(a)+(i?'*':'')));c.appendChild(el('small','frz-n',i===0?'In progress':''));row.appendChild(c)});
+  w.appendChild(row);
+  const need=3-under;
+  w.appendChild(el('p','frz-p',under>=3?'Unfrozen: three seasons under the second apron.':'Needs 3 seasons under the second apron to unfreeze; '+under+' of 3 done. 2026–27 can’t go over (hard cap), so if the Cavs also stay under in 2027–28 and 2028–29, the pick unfreezes after the 2028–29 regular season.'));
+  w.appendChild(el('p','frz-p warn','Over in 2 of these 4 seasons: the pick slides to the end of the first round (No. 30) instead.'+(over?' Over so far: '+over+'.':'')));
+  return w};
 const pk=document.getElementById('picks');PICKS.forEach(([y,r,st,v,tr,sw,why,orig])=>{const val=el('span','tks');val.append(tmark(tr,'Trade'),tmark(sw,'Swap'));
-  pk.appendChild(pickItem(y+' '+r+' round',st,val,[pviz(v),['Trade outright:',(tr?'Yes. ':'No. ')+(tr?'':why)],['Trade swap rights:',sw?'Yes. Another team can get the right to swap picks with the Cavs that year.':(v[0]==='frozen'?'No, while frozen.':'No. Those swap rights are already held by other teams.')],orig?['How it got here:',orig]:null,r==='1st'?el('p','pnote',PICK_NOTE):null]))});
+  pk.appendChild(pickItem(y+' '+r+' round',st,val,[pviz(v),v[0]==='frozen'?freezeBox():null,['Trade outright:',(tr?'Yes. ':'No. ')+(tr?'':why)],['Trade swap rights:',sw?'Yes. Another team can get the right to swap picks with the Cavs that year.':(v[0]==='frozen'?'No, while frozen.':'No. Those swap rights are already held by other teams.')],orig?['How it got here:',orig]:null,r==='1st'?el('p','pnote',PICK_NOTE):null]))});
 const ow=document.getElementById('owed');OWED.forEach(([y,r,to,v,how,deal])=>{const val=el('span','tk out');val.append(el('i',null,'→'),v[0]==='to'?v[1]:v[2].map(x=>x[1]).join(' / '));
   ow.appendChild(pickItem(y+' '+r+' round',to,val,[pviz(v),how?['How it’s decided:',how]:null,deal?(()=>{const q=el('p');q.appendChild(el('strong',null,'How it left:'));return q})():null,deal?(()=>{const ul=el('ul','deal');deal.split(/(?<=\.) (?=(?:On |At the |Atlanta then|Charlotte |Utah |Phoenix ))/).forEach(t=>ul.appendChild(el('li',null,t)));return ul})():null]))});
 const ex=document.getElementById('exc');
@@ -1954,7 +2006,7 @@ const rt=document.getElementById('rights');rt.className='xl';RIGHTS.forEach(([n,
   const li=el('li');const de=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,n),el('small',null,p2+' · '+c));sm.append(l,el('b','mono',dd));
   const bx=el('div','xb');const P=(h,t)=>{const p=el('p');p.appendChild(el('strong',null,h+' '));p.append(t);bx.appendChild(p);return p};
   if(X[0])P('Status:',X[0]);
-  const dl=el('a',null,yr+' NBA draft ↗');dl.href='https://www.basketball-reference.com/draft/NBA_'+yr+'.html';dl.target='_blank';dl.rel='noopener';P('Drafted:',dd.replace(/^\d{4} · /,'')+' in the ').appendChild(dl);
+  const dl=el('a',null,dd.replace(/^\d{4} · /,'')+' in the '+yr+' NBA draft ↗');dl.href='https://www.basketball-reference.com/draft/NBA_'+yr+'.html';dl.target='_blank';dl.rel='noopener';P('Drafted:','').appendChild(dl);
   const links=el('p','bio-links');if(X[1]){const a2=el('a',null,(/^Retired/.test(X[0]||'')?'Career profile':'Player profile and stats')+' ↗');a2.href=X[1];a2.target='_blank';a2.rel='noopener';links.appendChild(a2)}
   if(X[2]){if(links.childNodes.length)links.append(' · ');const a3=el('a',null,'Pre-draft scouting report ↗');a3.href=X[2];a3.target='_blank';a3.rel='noopener';links.appendChild(a3)}
   if(links.childNodes.length)bx.appendChild(links);
@@ -2397,15 +2449,15 @@ const CH_ROSTER=[
 ];
 /* Charge front office page (cleveland.gleague.nba.com/charge-front-office) and the 2025–26 staff release */
 const CH_STAFF=[
-  ["Coaching staff",[["Eli Kell-Abrams", "Head Coach", ""], ["Doron Perkins", "Assistant Coach", "Named in the 2025–26 staff release"], ["Willie Williams", "Assistant Coach / Director of Video", "Named in the 2025–26 staff release"], ["Sam Hershberger", "Assistant Coach", "Five seasons at Brown; Elon alum"], ["Daniel Sokolovsky", "Assistant Coach", "Former New Zealand national team assistant and NZ Breakers associate head coach"], ["Mickell Gladness", "NBA Coaching Development Program Assistant", "Played 26 NBA games in 2011–12 (Heat, Warriors)"], ["Takuya Kikuchi", "Head Athletic Trainer", ""], ["Myles Thornton", "Cleveland Clinic Athletic Trainer", "Formerly SMU men’s basketball"], ["Raphael Whittingham", "Strength & Conditioning Coach", ""]]],
-  ["Basketball operations",[["Koby Altman", "President of Basketball Operations, Cavaliers", ""], ["Liron Fanan", "General Manager · President of G League Operations, Cavaliers", ""], ["Luis Gonzalez Infante", "Assistant General Manager", ""], ["Max Weisberg", "Assistant General Manager", "Also Cavs Director of Basketball Strategy"], ["Brandon Halupnik", "Director, Scouting and Player Personnel", ""], ["Max Brandt", "Director of Coaching Analytics", "Named in the 2025–26 staff release"]]],
+  ["Coaching staff",[["Doron Perkins", "Assistant Coach", "Named in the 2025–26 staff release"], ["Willie Williams", "Assistant Coach / Director of Video", "Named in the 2025–26 staff release"], ["Sam Hershberger", "Assistant Coach", "Five seasons at Brown; Elon alum"], ["Daniel Sokolovsky", "Assistant Coach", "Former New Zealand national team assistant and NZ Breakers associate head coach"], ["Mickell Gladness", "NBA Coaching Development Program Assistant", "Played 26 NBA games in 2011–12 (Heat, Warriors)"], ["Takuya Kikuchi", "Head Athletic Trainer", ""], ["Myles Thornton", "Cleveland Clinic Athletic Trainer", "Formerly SMU men’s basketball"], ["Raphael Whittingham", "Strength & Conditioning Coach", ""]]],
+  ["Basketball operations",[["Luis Gonzalez Infante", "Assistant General Manager", ""], ["Max Weisberg", "Assistant General Manager", "Also Cavs Director of Basketball Strategy"], ["Brandon Halupnik", "Director, Scouting and Player Personnel", ""], ["Max Brandt", "Director of Coaching Analytics", "Named in the 2025–26 staff release"]]],
   ["Business operations",[["Mike Ostrowski", "President, Franchise Operations", ""], ["Rocco Maragas", "President, Cleveland Charge", ""], ["Ben Adams", "SVP, Chief Marketing Officer, Franchise Properties", ""], ["Sean Wyatt", "VP, Basketball Communications & Team Services", ""], ["Grant Hesselbart", "Vice President, Ticket Sales and Service", ""], ["Nicole Del Villano", "Senior Director, Communications & Community Impact, REG-Franchise Properties", ""], ["Ryan Caler", "Senior Director, Service and Retention, Franchise Foundation", ""], ["Scott Zurilla", "Director, Broadcasting / Charge Play-by-Play Announcer", ""], ["Sam Armstrong", "Director, Marketing & Promotions", ""], ["Jarrett Griebeler", "Director, Franchise Partnership Development", ""], ["Griffin Foster", "Director, Franchise Partnership Marketing", ""], ["Steve McClave", "Director, Charge Ticket Sales", ""], ["Joshua Chua", "Director, Ticket Sales & Revenue, Rock Entertainment Group", ""], ["Keith Dea", "Senior Manager, Ticket Operations", ""], ["Raven Payne", "Senior Manager, Community Impact & Engagement, REG-Franchise Properties", ""]]]
 ];
 (function(){const tb=document.getElementById('ch-sched');if(!tb)return;
   const now=new Date(Date.now()-3*3600e3);const tip=chTip;
   const nxt=CHARGE.games.find(g=>!g[4]&&tip(g)>now);
   CHARGE.games.forEach(g=>{const tr=el('tr');if(g===nxt)tr.classList.add('nextg');const dtd=el('td','mono chd');const dt0=new Date(g[0]+'T12:00:00');dtd.append(el('span','dw',dt0.toLocaleDateString('en-US',{weekday:'short'})),' ',el('span','dd',dt0.toLocaleDateString('en-US',{month:'short',day:'numeric'})));const otd=el('td','opp');otd.append(g[2]==='H'?'vs ':'at ');if(CH_TEAM_URL[g[1]]){const oa=el('a',null,g[1]);oa.href=CH_TEAM_URL[g[1]];oa.target='_blank';oa.rel='noopener';otd.appendChild(oa)}else otd.append(g[1]);tr.append(dtd,otd,el('td','mono dim',chTime(g)),el('td','dim',g[5]||(g[2]==='H'?CH_ARENA.H:(CH_ARENA[g[1]]||''))),el('td','r mono',g[4]||''));tb.appendChild(tr)});
-  const t=document.getElementById('ch-tiles');[[CHARGE.record,'Record'],[nxt?shortFmt.format(new Date(nxt[0]+'T12:00:00')):'—','Next game'+(nxt?' · '+(nxt[2]==='H'?'vs ':'at ')+nxt[1]:'')],[CHARGE.coach,'Head coach'],['Liron Fanan','General manager']].forEach(([v,l])=>{const d=el('div','txs');d.append(el('b',null,v),el('span',null,l));t.appendChild(d)});
+  const t=document.getElementById('ch-tiles');[[CHARGE.record,'Record'],[nxt?shortFmt.format(new Date(nxt[0]+'T12:00:00')):'—','Next game'+(nxt?' · '+(nxt[2]==='H'?'vs ':'at ')+nxt[1]:'')]].forEach(([v,l])=>{const d=el('div','txs');d.append(el('b',null,v),el('span',null,l));t.appendChild(d)});
   const ro=document.getElementById('ch-roster');let n=0;CH_ROSTER.forEach(([g,ps])=>{const sec=el('section');const h=el('div','block-h');h.append(el('h2',null,g),el('span',null,String(ps.length)));const ul=el('ul','kv');ps.forEach(([nm,pos,tag,note])=>{n++;const li=el('li');const sp=el('span',null,nm);sp.appendChild(el('small',null,pos+' · '+note));li.append(sp,el('b','ch-tag',tag));ul.appendChild(li)});sec.append(h,ul);ro.appendChild(sec)});
   document.getElementById('ch-ros-n').textContent=n+' tied to the Cavs';
   const sf=document.getElementById('ch-staff');CH_STAFF.forEach(([g,ps])=>{const sec=el('section');const h=el('div','block-h');h.append(el('h2',null,g),el('span',null,String(ps.length)));const ul=el('ul','kv');ps.forEach(([nm,t2,note])=>{const li=el('li');const sp=el('span',null,nm);sp.appendChild(el('small',null,t2+(note?' · '+note:'')));li.appendChild(sp);ul.appendChild(li)});sec.append(h,ul);sf.appendChild(sec)});
@@ -2571,7 +2623,17 @@ const COMBINE={
 })();
 if(typeof ng!=='undefined'&&ng)add('Next game: '+(ng[2]==='H'?'vs ':'at ')+TEAMS[ng[1]],dayFmt.format(tipOf(ng))+' · '+ng[3]+' PM ET','Game','home','next-h-row','next game play when tip off tonight upcoming schedule');
 PLAYERS.forEach(p=>add(p[1],[p[2],'age '+p[6],p[8],p[9]].filter(Boolean).join(' · '),'Player bio','roster','r-'+slug(p[1]),'height weight wingspan college born age country draft bio measurements'));
-const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge'];
+
+/* RCF page: RealCavsFans.com front page (rcf.json, refreshed by the scheduled job) and the @realcavsfans X timeline */
+let rcfLoaded=false;
+function loadRcf(){if(rcfLoaded)return;rcfLoaded=true;
+  const box=document.getElementById('rcf-list');
+  const render=d=>{box.textContent='';(d.items||[]).forEach(x=>{const a=el('a','rcf-card');a.href=x.link;a.target='_blank';a.rel='noopener';
+      if(x.img){const im=el('img');im.src=x.img;im.alt='';im.loading='lazy';im.onerror=()=>{im.remove();a.classList.add('noimg')};a.appendChild(im)}else a.classList.add('noimg');
+      const t=el('div','rcf-t');t.append(el('b',null,x.title),el('span','rcf-m',new Date(x.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+(x.author?' · '+x.author:'')),el('p',null,x.excerpt||''));a.appendChild(t);box.appendChild(a)})};
+  fetch('rcf.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(d=>{if(d)render(d);else box.appendChild(el('p','dim','Articles couldn’t load. Visit RealCavsFans.com.'))}).catch(()=>box.appendChild(el('p','dim','Articles couldn’t load. Visit RealCavsFans.com.')));
+  const sc=document.createElement('script');sc.src='https://platform.twitter.com/widgets.js';sc.async=true;sc.charset='utf-8';document.body.appendChild(sc)}
+const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge','rcf'];
 function show(id){
   if(!SECTIONS.some(s=>s[0]===id))id='home';
   BUILT.forEach(v=>{document.getElementById('view-'+v).hidden=id!==v});
@@ -2580,6 +2642,7 @@ function show(id){
   tabs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.go===id?'true':'false'));
   window.scrollTo(0,0);
   if(window.scrambleView)scrambleView(id);
+  if(id==='rcf')loadRcf();
   if(id==='home'&&window.resetCal){resetCal();const c=document.getElementById('dcal');if(c&&c.getBoundingClientRect().top<innerHeight){c.dataset.done=1;setTimeout(()=>c.classList.add('rip'),500)}}
 }
 /* each page change is a real history entry, so Back returns to the previous cavsdatabase page */
