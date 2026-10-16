@@ -419,7 +419,7 @@ body{background:var(--page)}
 .btt.on{opacity:1;transform:none;pointer-events:auto}.btt svg{width:18px;height:18px}.btt:hover{background:#6b002c}
 @media (max-width:520px){.btt{right:12px;bottom:12px;width:40px;height:40px}}
 .thm2{display:none;align-items:center;gap:6px;appearance:none;border:1px solid var(--line);background:var(--card,var(--bg));color:var(--fg2);font:600 12.5px var(--sans);padding:6px 11px;border-radius:999px;cursor:pointer}.thm2 svg{width:14px;height:14px;color:var(--wine-ink)}
-.thm2{display:inline-flex}
+.thm2{display:inline-flex}.fcontact{appearance:none;border:0;background:none;padding:0;font:600 13px var(--sans);color:var(--wine-ink);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 @media print{.btt,.thm,.thm2{display:none}}
 /* share + save-as-image buttons */
 .hasx{flex-wrap:wrap}.block-h.hasx{justify-content:flex-start}.block-h.hasx>h2{margin-right:auto}.ds-hdr.hasx>b{margin-right:auto}h1.hasx{display:flex;align-items:center;gap:10px}h1.hasx .xact{margin-left:auto}
@@ -1224,6 +1224,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 <button type="button" class="btt" id="btt" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg></button>
 <footer><div class="wrap">
   <span>cavsdatabase.com · Independent fan reference. Not affiliated with the Cleveland Cavaliers or the NBA.</span>
+  <button type="button" class="fcontact" onclick="window.cdbFeedback&&window.cdbFeedback()">Contact &amp; feedback</button>
   <button type="button" class="thm2" id="thm2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Dark mode</span></button>
   <a id="tip" class="tip" hidden target="_blank" rel="noopener">Like the site? Throw the hammer down →</a>
 </div></footer>
@@ -2911,12 +2912,17 @@ function loadRcf(){if(rcfLoaded)return;rcfLoaded=true;
    Sends through FormSubmit to the editor's inbox (the first submission triggers a one-time activation email). */
 (function(){const F=document.getElementById('fb');if(!F)return;const K='cdb-fb';
   const get=()=>{try{return JSON.parse(localStorage.getItem(K)||'{}')}catch(e){return {}}},put=o=>{try{localStorage.setItem(K,JSON.stringify(o))}catch(e){}};
-  const st=get();if(st.sent||(st.snooze&&Date.now()<st.snooze))return;
+  const st=get();const quiet=st.sent||(st.snooze&&Date.now()<st.snooze);
   if(/preview=feedback/.test(location.search)){setTimeout(()=>{if(matchMedia('(max-width:520px)').matches)F.classList.add('mini');F.hidden=false},400)}
   let clicks=0,shown=false,active=st.t||0,last=Date.now();
   let idle=0;const arm=()=>{clearTimeout(idle);idle=setTimeout(()=>{if(!F.hidden&&!F.contains(document.activeElement)&&!document.getElementById('fb-t').value.trim())close(7)},60000)};
   ['pointerdown','focusin','input','keydown'].forEach(ev=>F.addEventListener(ev,()=>{clearTimeout(idle);if(ev!=='focusin')arm()}));
-  const open=()=>{if(shown||document.getElementById('cel'))return;shown=true;if(matchMedia('(max-width:520px)').matches)F.classList.add('mini');F.hidden=false;arm()};
+  const open=()=>{if(quiet||shown||document.getElementById('cel'))return;shown=true;if(matchMedia('(max-width:520px)').matches)F.classList.add('mini');F.hidden=false;arm()};
+  /* footer "Contact & feedback": opens the form any time, addressed to the editor's email */
+  window.cdbFeedback=()=>{clearTimeout(idle);F.classList.remove('mini');document.getElementById('fb-ask').hidden=false;document.getElementById('fb-done').hidden=true;
+    const b=document.getElementById('fb-s');b.disabled=false;b.textContent='Send';document.getElementById('fb-h').textContent='Contact & feedback';
+    const ad=['rcfwriter','gmail.com'].join('@');const pp=F.querySelector('#fb-ask p');pp.textContent='Questions, corrections or ideas. It goes straight to the site’s editor at ';const a=document.createElement('a');a.href='mailto:'+ad;a.textContent=ad;pp.append(a,'.');
+    document.getElementById('fb-t').placeholder='Your message…';F.hidden=false;shown=true;setTimeout(()=>document.getElementById('fb-t').focus(),50)};
   document.getElementById('fb-o').onclick=()=>{F.classList.remove('mini');document.getElementById('fb-t').focus()};
   document.addEventListener('click',e=>{if(F.contains(e.target))return;clicks++;if(clicks>=15)open()});
   setInterval(()=>{if(document.hidden)return;active+=5;put({...get(),t:active});if(active>=120)open()},5000);
