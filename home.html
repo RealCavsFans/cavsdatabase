@@ -236,6 +236,13 @@ a{color:var(--wine-ink);text-decoration:none}a:hover{text-decoration:underline}
 .page{padding-block:32px 64px;display:flex;flex-direction:column;gap:20px}
 h1{margin:0;font:800 clamp(28px,4vw,36px)/1.1 var(--sans);font-stretch:115%;letter-spacing:-.02em;text-wrap:balance}
 .tablebox{overflow-x:auto;border:1px solid var(--line);overscroll-behavior-x:contain}
+@media (max-width:760px){.gp-met{flex-basis:100%}}.gp-met a.gp-ml{color:var(--wine-ink);font-weight:600;white-space:nowrap}
+#rv-meas th.srt{cursor:pointer;user-select:none;white-space:nowrap}#rv-meas th.srt:hover{color:var(--wine-ink)}#rv-meas th.srt::after{content:'';display:inline-block;width:0;height:0;margin-left:5px;vertical-align:2px;border:4px solid transparent;border-top:5px solid currentColor;opacity:.22}#rv-meas th[aria-sort=descending]::after{opacity:1;color:var(--wine-ink)}#rv-meas th[aria-sort=ascending]::after{opacity:1;color:var(--wine-ink);border-top:0;border-bottom:5px solid currentColor;vertical-align:4px}#rv-meas th[aria-sort=ascending],#rv-meas th[aria-sort=descending]{color:var(--wine-ink)}
+
+.gt{border-bottom:1.5px dotted currentColor;cursor:help;text-decoration:none}.gt:hover{color:var(--wine-ink)}
+.gtip{position:absolute;z-index:95;width:min(320px,calc(100vw - 24px));background:#101419;color:#fff;border-radius:10px;padding:12px 14px 11px;font:400 13.5px/1.5 var(--sans);box-shadow:0 14px 34px rgba(0,0,0,.3)}
+.gtip b{display:block;color:#F2B231;font:800 10.5px var(--sans);font-stretch:125%;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}.gtip a{color:#F2B231;font-weight:700;font-size:12.5px;display:inline-block;margin-top:6px}
+
 .col>section.nlsu{background:none;box-shadow:none;padding:0;border-radius:0;order:2;min-width:0}.su{min-width:0}.nlsu[hidden]{display:none!important}.nlsu-r{margin-top:26px}
 .su{position:relative;background:var(--card);border:1px solid var(--line);border-left:3px solid #F2B231;border-radius:6px;padding:14px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
 .sumug{width:54px;height:54px;flex:none;transition:transform .18s;cursor:pointer}.sumug.pop{transform:scale(1.18)}
@@ -244,7 +251,7 @@ h1{margin:0;font:800 clamp(28px,4vw,36px)/1.1 var(--sans);font-stretch:115%;lett
 .su-f{display:flex;gap:6px;flex:1 1 100%;min-width:0}.su-f input[type=email]{flex:1;min-width:0;border:1px solid var(--line);border-radius:4px;padding:9px 11px;font:14px var(--sans);background:var(--bg,#fff);color:var(--fg)}.su-f button{border:0;background:var(--wine);color:#fff;font:700 13.5px var(--sans);padding:9px 16px;border-radius:999px;cursor:pointer;white-space:nowrap}
 .nltoast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:90;background:#101419;color:#fff;border-radius:10px;padding:12px 16px;font:600 14px var(--sans);box-shadow:0 12px 30px rgba(0,0,0,.25);max-width:calc(100vw - 32px);display:flex;gap:10px;align-items:center}.nltoast button{border:0;background:none;color:#fff;font-size:18px;cursor:pointer}
 
-.calw{position:relative;margin-top:12px}.calbtn{appearance:none;border:0;background:var(--wine);color:#fff;border-radius:999px;padding:9px 16px;font:700 14px var(--sans);cursor:pointer}.calbtn:hover{background:#6E002E}
+.calw{position:relative}.calbtn{display:inline-flex;align-items:center;gap:5px;appearance:none;background:none;border:0;padding:0;color:var(--wine-ink);font:inherit;font-weight:600;cursor:pointer;white-space:nowrap}.calbtn svg{width:14px;height:14px;flex:none}.calbtn:hover{text-decoration:underline}.calw .calmenu{left:auto;right:0}@media (max-width:760px){.calw .calmenu{left:0;right:auto}}
 .calmenu{position:absolute;z-index:30;top:calc(100% + 8px);left:0;width:min(340px,calc(100vw - 32px));background:var(--card);border:1px solid var(--line);box-shadow:0 14px 34px rgba(0,0,0,.16);border-radius:8px;padding:6px}
 .calmenu a,.calmenu button{display:block;width:100%;text-align:left;padding:11px 12px;border-radius:6px;font:600 14.5px var(--sans);color:var(--fg);text-decoration:none;background:none;border:0;cursor:pointer}.calmenu a:hover,.calmenu button:hover{background:var(--sub)}
 .calmenu small{display:block;padding:8px 12px 6px;font-size:12px;line-height:1.45;color:var(--muted);border-top:1px solid var(--line2);margin-top:4px}
@@ -1084,7 +1091,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
           <h3 class="sr" id="nx-title">at Philadelphia</h3><span class="sr" id="next-h">Last result &amp; next game</span>
           <div class="gteams"><span class="tm cle" aria-hidden="true">CLE</span><span class="gat" id="nx-at" aria-hidden="true">at</span><span class="tm" id="nx-opp"><a class="opp" href="https://www.basketball-reference.com/teams/PHI/2027.html" target="_blank" rel="noopener" title="Philadelphia on Basketball Reference">PHI</a></span></div>
           <div class="nx-when"><span id="nx-meta"><a class="pvlink" href="https://www.nba.com/game/cle-vs-phi-0022600006" target="_blank" rel="noopener" title="Game preview on NBA.com">Thursday, Oct 22 · 7:00 PM ET · ESPN ↗</a></span></div>
-          <span class="gdays" id="cd" role="timer" aria-label="Countdown to tip-off"><small>Tip-off in</small><span class="cdw"><span class="cdn"><b id="cd-d">06</b><b id="cd-h">01</b><b id="cd-m">54</b><b id="cd-s">22</b></span><span class="cdl"><i>Days</i><i>Hrs</i><i>Min</i><i>Sec</i></span></span></span>
+          <span class="gdays" id="cd" role="timer" aria-label="Countdown to tip-off"><small>Tip-off in</small><span class="cdw"><span class="cdn"><b id="cd-d">06</b><b id="cd-h">01</b><b id="cd-m">43</b><b id="cd-s">05</b></span><span class="cdl"><i>Days</i><i>Hrs</i><i>Min</i><i>Sec</i></span></span></span>
           <div class="ginfo nx-then-row"><span id="nx-then"><b>After that </b>Sat, Oct 24 vs <a href="https://www.basketball-reference.com/teams/BRK/2027.html" target="_blank" rel="noopener" class="opp">Brooklyn</a> · 7:30 PM</span></div>
         </div>
       </section>
@@ -1112,7 +1119,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
             <div class="payroll mono" id="payroll">$209.0M</div>
             <div class="payroll-note" id="payroll-note">Team salary incl. $2.24M dead money</div>
           </div>
-          <div class="hcap" id="hcap"><div class="hc-cap"><b>Hard-capped at the first apron</b><span>through June 30, 2027</span></div><div class="hc-tiles"><div class="hc-tile key"><b>$45K</b><span>Room under 1st apron</span></div><div class="hc-tile"><b>$8.5M</b><span>Over the tax</span></div><div class="hc-tile"><b>$9.2M</b><span>Projected tax bill</span></div></div><ul class="hc-checks"><li class="no"><i>✕</i>Go over the first apron, at any time, for any reason</li><li class="yes"><i>✓</i>Use the mid-level, up to their room under the apron</li><li class="yes"><i>✓</i>Use the bi-annual, up to their room under the apron</li><li class="yes"><i>✓</i>Use trade exceptions, up to their room under the apron</li><li class="yes"><i>✓</i>Take back more salary in a trade, if they stay under</li><li class="yes"><i>✓</i>Aggregate salaries in trades</li><li class="yes"><i>✓</i>Sign buyout players</li></ul></div>
+          <div class="hcap" id="hcap"><div class="hc-cap"><b>Hard-capped at the first apron</b><span>through June 30, 2027</span></div><div class="hc-tiles"><div class="hc-tile key"><b>$45K</b><span>Room under 1st apron</span></div><div class="hc-tile"><b>$8.5M</b><span>Over the tax</span></div><div class="hc-tile"><b>$9.2M</b><span>Projected tax bill</span></div></div><ul class="hc-checks"><li class="no"><i>✕</i>Go over the <span class="gt" tabindex="0" data-g="First apron">first apron</span>, at any time, for any reason</li><li class="yes"><i>✓</i>Use the <span class="gt" tabindex="0" data-g="Non-taxpayer mid-level exception (NTMLE)">mid-level</span>, up to their room under the apron</li><li class="yes"><i>✓</i>Use the <span class="gt" tabindex="0" data-g="Bi-annual exception (BAE)">bi-annual</span>, up to their room under the apron</li><li class="yes"><i>✓</i>Use <span class="gt" tabindex="0" data-g="Traded player exception (TPE)">trade exceptions</span>, up to their room under the apron</li><li class="yes"><i>✓</i>Take back more salary in a trade, if they stay under</li><li class="yes"><i>✓</i><span class="gt" tabindex="0" data-g="Aggregation">Aggregate</span> salaries in trades</li><li class="yes"><i>✓</i>Sign buyout players</li></ul></div>
         </div>
         <div class="hbar" id="hbar" role="img" aria-label="Team salary $209.0M against the cap, tax and apron lines">
           <div class="track" id="track"><div class="zone" style="left: 88.7891%; width: 11.2109%; background: var(--z4);"></div><div class="zone" style="left: 75.0163%; width: 13.7728%; background: var(--z3);"></div><div class="zone" style="left: 65.6826%; width: 9.3337%; background: var(--z2);"></div><div class="zone" style="left: 27.1315%; width: 38.5511%; background: var(--track);"></div><div class="zone" style="left: 0%; width: 27.1315%; background: var(--z1);"></div><div class="fill" id="fill" style="width: 74.9673%;"></div></div>
@@ -1310,9 +1317,8 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
     <div>
       <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Schedule</div>
       <h1 style="margin-top:6px">2026–27 Schedule</h1>
-      <p class="dim" style="margin:6px 0 0">80 games set; 2 more are scheduled after the NBA Cup knockout round. All times Eastern.</p>
-      <div class="calw"><button type="button" class="calbtn" id="calbtn" aria-expanded="false" aria-controls="calmenu">📅 Add every game to my calendar</button>
-        <div class="calmenu" id="calmenu" hidden><a href="webcal://cavsdatabase.com/cavs.ics">Apple Calendar (iPhone, Mac)</a><a href="https://calendar.google.com/calendar/render?cid=webcal%3A%2F%2Fcavsdatabase.com%2Fcavs.ics" target="_blank" rel="noopener">Google Calendar</a><a href="https://outlook.live.com/calendar/0/addfromweb?url=https%3A%2F%2Fcavsdatabase.com%2Fcavs.ics&amp;name=Cavs%202026-27" target="_blank" rel="noopener">Outlook</a><button type="button" id="calcopy">Copy the calendar link</button><small>Each game includes TV and radio. Time and channel changes update on their own (calendar apps re-check every few hours).</small></div></div>
+      <div class="dim vdesc" style="margin:6px 0 0"><span>80 games set; 2 more are scheduled after the NBA Cup knockout round. All times Eastern.</span><div class="calw"><button type="button" class="calbtn" id="calbtn" aria-expanded="false" aria-controls="calmenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Add to calendar</button>
+        <div class="calmenu" id="calmenu" hidden><a href="webcal://cavsdatabase.com/cavs.ics">Apple Calendar (iPhone, Mac)</a><a href="https://calendar.google.com/calendar/render?cid=webcal%3A%2F%2Fcavsdatabase.com%2Fcavs.ics" target="_blank" rel="noopener">Google Calendar</a><a href="https://outlook.live.com/calendar/0/addfromweb?url=https%3A%2F%2Fcavsdatabase.com%2Fcavs.ics&amp;name=Cavs%202026-27" target="_blank" rel="noopener">Outlook</a><button type="button" id="calcopy">Copy the calendar link</button><small>Each game includes TV and radio. Time and channel changes update on their own (calendar apps re-check every few hours).</small></div></div></div>
     </div>
     <section id="sp-std"></section>
     <section id="sp-rest"></section>
@@ -2566,6 +2572,10 @@ SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
     [['Season series',met.length?'Cavs '+mw+'–'+(met.length-mw)+(left-met.length>0?' · '+(left-met.length)+' left':''):left+' meeting'+(left===1?'':'s')+' this season'],
      [g[2]==='H'?'Cavs at home':'Cavs on the road',rec_ha(g[2])],
      ['Rest',rest==null?'Season opener':rest===0?'Back-to-back':rest+' day'+(rest===1?'':'s')]].forEach(([k,v])=>{const x=el('span','gp-i');x.append(el('b',null,k+' '),v);facts.appendChild(x)});
+    /* earlier meetings this season: result, score and a direct box score link for each */
+    if(met.length){const x=el('span','gp-i gp-met');x.appendChild(el('b',null,(met.length===1?'Last meeting':'Earlier meetings')+' '));
+      met.forEach(([m,r],k)=>{if(k)x.append(' · ');const sc=SCORES[m[0]];const d=new Date(m[0]+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});
+        x.appendChild(lnk(d+' · '+r+(sc?' '+sc.replace('-','–'):'')+' ↗',boxUrl(m[0]),'Box score · '+boxSrc(m[0]),'gp-ml'))});facts.insertBefore(x,facts.children[1]||null)}
     /* a little more: Cavs form, who's on the injury report, where to watch/listen */
     {const done=res.slice(0,i).filter(Boolean);if(done.length){let k=done.length-1,st=0;while(k>=0&&done[k]===done[done.length-1]){st++;k--}const l10=done.slice(-10),w10=l10.filter(x=>x==='W').length;
       const x=el('span','gp-i');x.append(el('b',null,'Cavs form '),done[done.length-1]+st+' · '+w10+'–'+(l10.length-w10)+' last '+l10.length);facts.appendChild(x)}
@@ -2736,6 +2746,27 @@ const NL_ON=false;
   /* after Buttondown sends people back */
   const q=location.search;const msg=/[?&]subscribe=check/.test(q)?'Almost there: check your email to confirm your Cavs & Coffee sign-up.':/[?&]subscribed=1/.test(q)?'You’re in ☕ The first issue lands the morning after the next Cavs game.':'';
   if(msg){const t=el('div','nltoast');t.setAttribute('role','status');t.append(msg);const x=el('button',null,'×');x.type='button';x.setAttribute('aria-label','Close');x.onclick=()=>t.remove();t.appendChild(x);document.body.appendChild(t);setTimeout(()=>t.remove(),9000);try{history.replaceState(history.state,'',location.pathname)}catch(_){}}})();
+/* tap a term: cap and contract words get a dotted underline; tap for the glossary's plain-English meaning */
+setTimeout(function(){const G={};GLOSS.forEach(([,items])=>items.forEach(([t,d])=>{G[t]=d}));
+  const MAP=[['non-taxpayer mid-level','Non-taxpayer mid-level exception (NTMLE)'],['taxpayer mid-level','Taxpayer mid-level exception (TMLE)'],['mid-level','Non-taxpayer mid-level exception (NTMLE)'],['first apron','First apron'],['second apron','Second apron'],['luxury tax','Luxury tax'],['tax line','Luxury tax'],['hard-capped','Hard cap'],['hard cap','Hard cap'],['salary cap','Salary cap'],['dead money','Dead money (dead salary)'],['cap holds?','Cap hold'],['bi-annual','Bi-annual exception (BAE)'],['trade exceptions?','Traded player exception (TPE)'],['early bird','Early Bird rights'],['non-bird','Non-Bird rights'],['full bird','Bird rights (Veteran Free Agent Exception)'],['bird rights','Bird rights (Veteran Free Agent Exception)'],['two-way','Two-way contract'],['exhibit 10','Exhibit 10'],['player option','Player option'],['team option','Team option'],['qualifying offer','Qualifying offer (QO)'],['stepien rule','Stepien Rule'],['sign-and-trade','Sign-and-trade'],['rookie[- ]scale','Rookie scale contract'],['restricted free agent','Restricted free agent (RFA)'],['swap rights','Pick swap'],['frozen','Frozen pick'],['aggregat\\w*','Aggregation'],['stretch provision','Stretch provision'],['non-guaranteed','Non-guaranteed contract'],['trade bonus','Trade kicker (trade bonus)'],['supermax','Designated veteran extension (supermax)'],['UFA','Unrestricted free agent (UFA)'],['RFA','Restricted free agent (RFA)']].filter(([,g])=>G[g]);
+  const RE=new RegExp('\\b('+MAP.map(m=>m[0]).join('|')+')\\b','i');const pick=w=>{const x=MAP.find(([p])=>new RegExp('^(?:'+p+')$','i').test(w));return x&&x[1]};
+  const SKIP='a,button,summary,h1,h2,h3,h4,th,table,nav,header,label,select,input,textarea,script,style,svg,.gloss,.gt,.tk,.tks,.pchip,.gtip,.xact,.gdm-k,.ab-pk,.flip,.mono,.num-sc,code,.tx-val,.pv-row';
+  function wrap(root){if(!root)return;const seen=new Map();const tw=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>{if(!n.nodeValue.trim()||!n.parentElement||n.parentElement.closest(SKIP)||!n.parentElement.closest('p,li,dd,.note,.sub'))return NodeFilter.FILTER_REJECT;return RE.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP}});
+    const nodes=[];while(tw.nextNode())nodes.push(tw.currentNode);
+    nodes.forEach(n=>{const blk=n.parentElement.closest('p,li,dd,td,div')||root;let used=seen.get(blk);if(!used){used=new Set();seen.set(blk,used)}
+      let t=n.nodeValue,m,frag=document.createDocumentFragment(),changed=false;
+      while((m=RE.exec(t))){const g=pick(m[1]);const pre=t.slice(0,m.index);frag.append(pre);if(g&&!used.has(g)){used.add(g);const sp=document.createElement('span');sp.className='gt';sp.tabIndex=0;sp.dataset.g=g;sp.textContent=m[1];frag.appendChild(sp);changed=true}else frag.append(m[1]);t=t.slice(m.index+m[1].length)}
+      if(changed){frag.append(t);n.replaceWith(frag)}})}
+  let tip=null;const close=()=>{if(tip){tip.remove();tip=null}};
+  function open(sp){close();const g=sp.dataset.g;tip=el('div','gtip');tip.setAttribute('role','dialog');tip.append(el('b',null,g.replace(/\s*\(.*\)$/,'')),G[g]);const a=el('a',null,'Full glossary →');a.href='/cap#glossary';tip.appendChild(document.createElement('br'));tip.appendChild(a);document.body.appendChild(tip);
+    const r=sp.getBoundingClientRect(),w=tip.offsetWidth;let x=r.left+scrollX+r.width/2-w/2;x=Math.max(12+scrollX,Math.min(x,scrollX+document.documentElement.clientWidth-w-12));let y=r.bottom+scrollY+8;if(r.bottom+tip.offsetHeight+16>innerHeight&&r.top>tip.offsetHeight+16)y=r.top+scrollY-tip.offsetHeight-8;tip.style.left=x+'px';tip.style.top=y+'px'}
+  document.addEventListener('click',e=>{const sp=e.target.closest('.gt');if(sp){e.preventDefault();e.stopPropagation();if(tip&&tip._for===sp){close();return}open(sp);tip._for=sp;return}if(tip&&!tip.contains(e.target))close()},true);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')close();if(e.key==='Enter'&&document.activeElement&&document.activeElement.classList.contains('gt'))open(document.activeElement)});
+  addEventListener('scroll',()=>{if(tip&&Math.abs((tip._y||scrollY)-scrollY)>80)close();if(tip)tip._y=tip._y||scrollY},{passive:true});
+  const ROOTS=['#view-cap','#view-assets','#view-home .o-cap','#view-moves','#view-staff'];
+  const run=()=>ROOTS.forEach(q=>document.querySelectorAll(q).forEach(wrap));
+  if(document.readyState==='complete')setTimeout(run,300);else addEventListener('load',()=>setTimeout(run,300));
+  window.cdbTerms=wrap},0);
 /* mobile: coach/exec cards show basic info, the rest behind More */
 function coMore(c){const dl=c.querySelector('.bio-f');if(!dl)return;const b=el('button','co-more','More ▾');b.type='button';b.setAttribute('aria-expanded','false');b.onclick=()=>{const o=c.classList.toggle('open');b.textContent=o?'Less ▴':'More ▾';b.setAttribute('aria-expanded',o)};dl.after(b)}
 /* callouts: Altman and Atkinson */
@@ -3283,8 +3314,8 @@ const COMBINE={
       rb.appendChild(tr);
       const c=COMBINE[n];const mr=el('tr');
       if(c){const listed=htIn(ht),base=c[1]??listed;const wd=c[3]!=null&&base?c[3]-base:null;
-        mr.append(el('td','pl',n),el('td','m',ftin(c[1])),el('td','m',ftin(c[2])),el('td','m',ftin(c[3])),el('td','m',wd==null?'—':(wd>=0?'+':'−')+Math.abs(+wd.toFixed(2))+'″'),el('td','m',ftin(c[4])),el('td','r m',c[5]?c[5]+' lb':'—'),el('td','r m',c[6]!=null?c[6]+'%':'—'),el('td','m',c[7]?c[7]+'″ × '+c[8]+'″':'—'),(()=>{const td=el('td','dim');const a=el('a','dlink',c[9]==='Crafted'?'CraftedNBA':c[9]+' '+c[0]);a.href=c[9]==='Crafted'?'https://craftednba.com':'https://www.nba.com/stats/draft/combine-anthro?SeasonYear='+c[0]+'-'+String(c[0]+1).slice(2);a.target='_blank';a.rel='noopener';a.title=c[9]==='Crafted'?'CraftedNBA':'Full '+c[0]+' combine measurements on NBA.com';td.appendChild(a);return td})())}
-      else{mr.append(el('td','pl',n));const td=el('td','dim','No combine measurements on record');td.colSpan=9;mr.appendChild(td)}
+        mr._k=[n,c[1],c[2],c[3],wd,c[4],c[5],c[6],c[7]?c[7]+c[8]/100:null,c[0]];mr.append(el('td','pl',n),el('td','m',ftin(c[1])),el('td','m',ftin(c[2])),el('td','m',ftin(c[3])),el('td','m',wd==null?'—':(wd>=0?'+':'−')+Math.abs(+wd.toFixed(2))+'″'),el('td','m',ftin(c[4])),el('td','r m',c[5]?c[5]+' lb':'—'),el('td','r m',c[6]!=null?c[6]+'%':'—'),el('td','m',c[7]?c[7]+'″ × '+c[8]+'″':'—'),(()=>{const td=el('td','dim');const a=el('a','dlink',c[9]==='Crafted'?'CraftedNBA':c[9]+' '+c[0]);a.href=c[9]==='Crafted'?'https://craftednba.com':'https://www.nba.com/stats/draft/combine-anthro?SeasonYear='+c[0]+'-'+String(c[0]+1).slice(2);a.target='_blank';a.rel='noopener';a.title=c[9]==='Crafted'?'CraftedNBA':'Full '+c[0]+' combine measurements on NBA.com';td.appendChild(a);return td})())}
+      else{mr._k=[n];mr.append(el('td','pl',n));const td=el('td','dim','No combine measurements on record');td.colSpan=9;mr.appendChild(td)}
       mb.appendChild(mr);
       const mc=MCOMP[n];if(mc){const td0=mr.firstChild;td0.textContent='';const bt=el('button','pbtn',n);bt.type='button';bt.setAttribute('aria-expanded','false');bt.title='Players with similar measurements';td0.appendChild(bt);
         const dr=el('tr','mcrow');dr.hidden=true;const dt=el('td');dt.colSpan=10;const box=el('div','mcbox');
@@ -3293,10 +3324,20 @@ const COMBINE={
         mc.forEach(([nm2,tm,id,yr,h,w,rch,wt2])=>{const r=el('tr');const t1=el('td');const a=el('a','dlink',nm2);a.href='https://www.nba.com/player/'+id;a.target='_blank';a.rel='noopener';t1.append(a,' ',el('small',null,tm+' · '+yr));r.append(t1,el('td','m',ftin(h)),el('td','m',ftin(w)),el('td','m',ftin(rch)),el('td','r m',Math.round(wt2)+' lb'));bd.appendChild(r)});
         tb.appendChild(bd);box.appendChild(tb);
         box.appendChild(el('p','mcnote',(c&&c[9]==='NBA combine'?'Compared with his '+c[0]+' combine numbers. ':'He wasn’t measured at a combine, so this uses his listed height and weight and his CraftedNBA wingspan. ')+'Closest active players by height without shoes, wingspan, standing reach and weight, from NBA.com combine records since 2000. Year = their combine.'));
-        dt.appendChild(box);dr.appendChild(dt);mb.appendChild(dr);
+        dt.appendChild(box);dr.appendChild(dt);mb.appendChild(dr);mr._d=dr;
         bt.onclick=()=>{const o=bt.getAttribute('aria-expanded')!=='true';bt.setAttribute('aria-expanded',String(o));dr.hidden=!o}}
     });
   });
+  /* measurements: tap any column header to sort (biggest first, tap again for smallest, third tap back to roster order) */
+  {const ths=[...document.querySelectorAll('#rv-meas thead th')];const orig=[...mb.children];let col=-1,dir=0;
+    ths.forEach((th,i)=>{th.classList.add('srt');th.tabIndex=0;th.setAttribute('aria-sort','none');const go=()=>{
+      if(col!==i){col=i;dir=i===0?1:-1}else if(dir===(i===0?1:-1))dir=-dir;else{col=-1;dir=0}
+      ths.forEach((h,j)=>h.setAttribute('aria-sort',j===col?(dir>0?'ascending':'descending'):'none'));
+      if(col<0){orig.forEach(r=>{r.style.display='';mb.appendChild(r)});return}
+      const rows=orig.filter(r=>r._k);orig.forEach(r=>{if(r.classList.contains('grp'))r.style.display='none'});
+      rows.sort((a,b)=>{const x=a._k[col],y=b._k[col];if(col===0)return dir*x.localeCompare(y);if(x==null&&y==null)return a._k[0].localeCompare(b._k[0]);if(x==null)return 1;if(y==null)return -1;return dir*(x-y)||a._k[0].localeCompare(b._k[0])});
+      rows.forEach(r=>{mb.appendChild(r);if(r._d)mb.appendChild(r._d)})};
+      th.addEventListener('click',go);th.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}})})}
   const std=PLAYERS.filter(p=>!p[11]).length,tw=PLAYERS.filter(p=>p[11]==='TW').length,cp=PLAYERS.filter(p=>p[11]==='Camp').length;
   document.getElementById('ros-sub').textContent=std+' standard, '+tw+' two-way, '+cp+' training camp';
   const segs=document.querySelector('[aria-label="Roster view"]');
