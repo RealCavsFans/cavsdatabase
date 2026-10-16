@@ -1535,7 +1535,7 @@ if(ng){document.getElementById('nx-at').textContent=ng[2]==='H'?'vs':'at';const 
   if(L){const a=document.getElementById('last');document.getElementById('next-h').textContent='Last result & next game';
     const dt=new Date(L.d+'T19:00:00-04:00');
     a.hidden=false;a.href=boxUrl(L.d);a.title='Box score';
-    a.append(el('span','cap-label',L.lbl),el('span','lr '+(L.r==='W'?'w':'l'),L.r),el('span','ls',L.sc.replace('-','–')+' ↗'),
+    a.append((()=>{const c=el('span','cap-label');if(L.lbl==='Preseason final')c.append('Preseason',el('span','hide-sm',' final'));else c.append(L.lbl);return c})(),el('span','lr '+(L.r==='W'?'w':'l'),L.r),el('span','ls',L.sc.replace('-','–')+' ↗'),
       (()=>{const lo=el('span','lo',(L.ha==='H'?'vs ':'at ')+L.o+' · ');const f=shortFmt.format(dt),k=f.indexOf(', ');if(k>0){lo.append(el('span','hide-sm',f.slice(0,k+2)),f.slice(k+2))}else lo.append(f);return lo})())}}
 
 /* key dates */
