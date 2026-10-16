@@ -1902,7 +1902,7 @@ function renderHistory(){
    if(matchMedia('(prefers-reduced-motion: reduce)').matches){cal.classList.add('rip','instant');window.resetCal=()=>{}}
    else if('IntersectionObserver' in window){new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)play()}),{threshold:.7}).observe(cal)}else play()}
   when.appendChild(el('b',null,String(f.y)));
-  {const tx=document.getElementById('otd-text');tx.textContent='';const tg=f.tag&&f.tag!=='game'&&f.tag!=='move'?f.tag:null;if(tg)tx.appendChild(el('span','otd-tag '+tg,XTAG[tg]));tx.append(f.t)}
+  {const tx=document.getElementById('otd-text');tx.textContent='';tx.append(f.t)}
   const a=document.getElementById('otd-src');a.href=f.u;a.textContent='Source: '+f.src+' ↗';
   const also=document.getElementById('otd-also');const rest=[];
   if(rest.length){also.hidden=false;also.appendChild(el('li','dim','Also on '+new Date(2000,m-1,d).toLocaleDateString('en-US',{month:'long',day:'numeric'})+':'));
