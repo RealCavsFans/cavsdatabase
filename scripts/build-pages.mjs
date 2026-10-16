@@ -38,7 +38,7 @@ for (const [route, [title, desc]] of Object.entries(META)) {
   // each page has its own share image in og/<route>.jpg (media/rcf -> og/media-rcf.jpg); fall back to the site-wide one
   const img = 'og/' + (route.startsWith('players/') ? 'roster' : route.replace(/\//g, '-')) + '.jpg';
   if (await exists(new URL(img, root))) {
-    const u = 'https://cavsdatabase.com/' + img + '?v=1';
+    const u = 'https://cavsdatabase.com/' + img + '?v=2';
     out = out.replace(/<meta property="og:image" content="[^"]*">/, `<meta property="og:image" content="${u}">`)
       .replace(/<meta name="twitter:image" content="[^"]*">/, `<meta name="twitter:image" content="${u}">`)
       .replace(/<meta property="og:image:alt" content="[^"]*">/, `<meta property="og:image:alt" content="${esc(title)}">`);
