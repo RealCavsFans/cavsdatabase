@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Feature mockups</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Saira+Condensed:wght@600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap">
+<style>
+:root{--wine:#7A1F33;--gold:#D99A12;--goldl:#F2B231;--fg:#101419;--fg2:#2F363E;--muted:#5D646C;--line:#E3E5E0;--line2:#EFF0EC;--card:#fff;--page:#EEF0F2;--sub:#F5F6F3;--ok:#2E7D4F;--sans:'Archivo',system-ui,sans-serif;--mono:'Geist Mono',ui-monospace,monospace}
+*{box-sizing:border-box}body{margin:0;background:var(--page);font-family:var(--sans);color:var(--fg)}
+.top{background:var(--wine);color:#fff;padding:18px 20px}.top b{font:800 20px var(--sans);font-stretch:118%}.top span{display:block;font-size:13px;opacity:.85;margin-top:2px}
+.concept{max-width:1100px;margin:0 auto;padding:30px 16px 8px}
+.lab{font:800 11px var(--sans);font-stretch:125%;letter-spacing:.14em;text-transform:uppercase;color:var(--wine)}
+h2{font:800 26px/1.1 var(--sans);font-stretch:110%;margin:6px 0 4px}
+.sub{color:var(--muted);font-size:14px;margin:0 0 14px;max-width:820px;line-height:1.45}
+.note{font-size:12px;color:var(--muted);margin:10px 0 0}
+.card{background:var(--card);border:1px solid var(--line);padding:16px 18px}
+.bh{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px solid var(--fg);padding-bottom:6px;margin-bottom:12px}
+.bh h3{margin:0;font:800 15px var(--sans);font-stretch:125%;text-transform:uppercase;letter-spacing:.06em}.bh a{font-size:12.5px;color:var(--wine);font-weight:600;text-decoration:none}
+.mono{font-family:var(--mono)}.dim{color:var(--muted)}
+/* 1 today strip */
+.today{display:flex;align-items:stretch;background:var(--card);border:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.today::-webkit-scrollbar{display:none}
+.td-lab{flex:0 0 auto;background:var(--fg);color:#fff;padding:10px 14px;display:flex;flex-direction:column;justify-content:center}
+.td-lab b{font:800 11px var(--sans);letter-spacing:.14em}.td-lab span{font:600 12px var(--mono);opacity:.8;margin-top:2px}
+.td-i{flex:0 0 auto;padding:10px 16px;border-left:1px solid var(--line2);display:flex;flex-direction:column;justify-content:center;min-width:180px}
+.td-i .k{font:700 10px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.td-i b{font-size:14px;margin-top:2px}.td-i span{font-size:12px;color:var(--muted)}
+.td-i.cav{box-shadow:inset 0 3px 0 var(--wine)}.td-i.ch{box-shadow:inset 0 3px 0 #0E3A6B}.td-i.dl{box-shadow:inset 0 3px 0 var(--goldl)}.td-i.ab{box-shadow:inset 0 3px 0 var(--muted)}
+/* 2 standings */
+.stw{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:18px}
+@media(max-width:820px){.stw{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font:700 10.5px var(--sans);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:6px 6px;border-bottom:1px solid var(--line)}
+td{padding:7px 6px;border-bottom:1px solid var(--line2)}td.r,th.r{text-align:right}
+tr.cle td{background:color-mix(in srgb,var(--wine) 8%,transparent);font-weight:700}
+tr.line td{border-bottom:2px dashed var(--muted)}
+.lnl{font:700 9.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right;padding:2px 6px 6px}
+.seed{display:inline-grid;place-items:center;width:20px;height:20px;font:700 11px var(--mono);background:var(--sub);border:1px solid var(--line)}
+.race{display:grid;gap:10px}
+.rc{border:1px solid var(--line);padding:10px 12px}.rc .k{font:700 10px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.rc b{display:block;font:700 20px var(--mono);margin:2px 0}.rc span{font-size:12px;color:var(--muted)}
+.tb{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:5px 0;border-bottom:1px solid var(--line2)}.tb i{font-style:normal;font-weight:800;width:16px}.tb .y{color:var(--ok)}.tb .n{color:var(--wine)}.tb .q{color:var(--muted)}
+/* 3 next opponent */
+.nop{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border:1px solid var(--line);background:var(--card)}
+.nop>div{padding:14px 16px}.nop>div+div{border-left:1px solid var(--line)}
+@media(max-width:640px){.nop{grid-template-columns:1fr}.nop>div+div{border-left:0;border-top:1px solid var(--line)}}
+.nh{display:flex;align-items:center;gap:10px;margin-bottom:10px}.lg{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:800 11px var(--sans);color:#fff}
+.nh b{font-size:16px}.nh span{display:block;font-size:12px;color:var(--muted)}
+.cmp{display:grid;grid-template-columns:1fr auto 1fr;gap:4px 10px;font-size:13px;align-items:center}
+.cmp .m{font:700 10px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center}
+.cmp .a{text-align:right;font-family:var(--mono)}.cmp .b{font-family:var(--mono)}.cmp .w{font-weight:700;color:var(--wine)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.chip{font-size:11.5px;border:1px solid var(--line);padding:3px 7px;background:var(--sub)}.chip.o{border-color:var(--wine);color:var(--wine)}
+.lm{font-size:12.5px;line-height:1.5}
+/* 4 milestones */
+.ms{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.mi{background:var(--card);border:1px solid var(--line);padding:12px 14px;display:grid;grid-template-columns:44px 1fr;gap:4px 12px;align-items:center}
+.av{width:44px;height:44px;border-radius:50%;background:var(--wine);color:#fff;display:grid;place-items:center;font:800 13px var(--sans);grid-row:1/span 2}
+.mi b{font-size:14px}.mi .t{font-size:12.5px;color:var(--fg2)}
+.bar{grid-column:1/-1;height:8px;background:var(--line2);margin-top:6px;position:relative}.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--wine)}
+.mi .f{grid-column:1/-1;display:flex;justify-content:space-between;font:600 11.5px var(--mono);color:var(--muted)}
+.mi .f em{font-style:normal;color:var(--wine)}
+.sample{display:inline-block;font:700 10px var(--sans);letter-spacing:.08em;text-transform:uppercase;background:var(--goldl);color:var(--fg);padding:2px 6px;margin-left:8px;vertical-align:3px}
+</style></head><body>
+<div class="top"><b>cavs_db · feature mockups</b><span>Four ideas to react to before anything gets built. Layouts are real; numbers marked SAMPLE are placeholders.</span></div>
+
+<section class="concept">
+  <div class="lab">1 · Front page, top</div>
+  <h2>Today strip</h2>
+  <p class="sub">One thin bar under the masthead with everything Cavs happening today, in the order it happens. It scrolls sideways on phones. When nothing is on, it shows the next thing coming up. Colored top edges: wine for the Cavs, navy for the Charge, gold for deadlines, grey for players abroad.</p>
+  <div class="today">
+    <div class="td-lab"><b>TODAY</b><span>Sat, Oct 17</span></div>
+    <div class="td-i ab"><span class="k">Draft rights · LKL</span><b>Gudaitis: Rytas at Šiauliai</b><span>9:30 AM ET · lkl.lt live stats</span></div>
+    <div class="td-i dl"><span class="k">Deadline</span><b>Last day to waive non-guaranteed players</b><span>Without paying them</span></div>
+    <div class="td-i cav"><span class="k">Cavs · next game</span><b>Thu, Oct 22 at Philadelphia</b><span>7:00 PM · ESPN · season opener</span></div>
+    <div class="td-i ch"><span class="k">Charge · next game</span><b>Tue, Nov 10 vs Motor City</b><span>7:00 PM · Public Hall</span></div>
+  </div>
+  <p class="note">Built from data the site already has (schedule, Charge schedule, key dates, draft-rights next games), so it costs nothing extra to keep current.</p>
+</section>
+
+<section class="concept">
+  <div class="lab">2 · New tab</div>
+  <h2>Standings &amp; race <span class="sample">Sample numbers</span></h2>
+  <p class="sub">East standings with the lines that matter drawn right into the table (top 6 = playoffs, 7–10 = play-in), the Cavs row highlighted. Beside it: where the Cavs stand in the races that matter, and the tiebreakers against the teams around them. Updated by the daily task.</p>
+  <div class="stw">
+    <div class="card"><div class="bh"><h3>Eastern Conference</h3><a href="#">Full NBA ↗</a></div>
+      <table><thead><tr><th></th><th>Team</th><th class="r">W–L</th><th class="r">GB</th><th class="r">L10</th><th class="r">Net</th><th class="r">Left SOS</th></tr></thead><tbody>
+        <tr><td><span class="seed">1</span></td><td>New York</td><td class="r mono">9–2</td><td class="r mono">—</td><td class="r mono">8–2</td><td class="r mono">+9.1</td><td class="r mono">.498</td></tr>
+        <tr class="cle"><td><span class="seed">2</span></td><td>Cleveland</td><td class="r mono">8–3</td><td class="r mono">1.0</td><td class="r mono">7–3</td><td class="r mono">+7.4</td><td class="r mono">.503</td></tr>
+        <tr><td><span class="seed">3</span></td><td>Detroit</td><td class="r mono">8–4</td><td class="r mono">1.5</td><td class="r mono">6–4</td><td class="r mono">+5.2</td><td class="r mono">.507</td></tr>
+        <tr><td><span class="seed">4</span></td><td>Orlando</td><td class="r mono">7–4</td><td class="r mono">2.0</td><td class="r mono">6–4</td><td class="r mono">+3.8</td><td class="r mono">.495</td></tr>
+        <tr><td><span class="seed">5</span></td><td>Boston</td><td class="r mono">6–5</td><td class="r mono">3.0</td><td class="r mono">5–5</td><td class="r mono">+2.1</td><td class="r mono">.501</td></tr>
+        <tr class="line"><td><span class="seed">6</span></td><td>Atlanta</td><td class="r mono">6–6</td><td class="r mono">3.5</td><td class="r mono">5–5</td><td class="r mono">+0.4</td><td class="r mono">.494</td></tr>
+        <tr><td colspan="7" class="lnl">↑ Playoffs · Play-In ↓</td></tr>
+        <tr><td><span class="seed">7</span></td><td>Philadelphia</td><td class="r mono">5–6</td><td class="r mono">4.0</td><td class="r mono">4–6</td><td class="r mono">−0.8</td><td class="r mono">.509</td></tr>
+        <tr><td><span class="seed">8</span></td><td>Milwaukee</td><td class="r mono">5–7</td><td class="r mono">4.5</td><td class="r mono">4–6</td><td class="r mono">−1.5</td><td class="r mono">.500</td></tr>
+      </tbody></table></div>
+    <div class="race">
+      <div class="rc"><span class="k">Race for the 1 seed</span><b>1.0 GB</b><span>New York · 71 games left · 4 head-to-head games left</span></div>
+      <div class="rc"><span class="k">Cushion over the play-in</span><b>4.5 games</b><span>Over No. 7 Philadelphia</span></div>
+      <div class="card" style="padding:12px 14px"><div class="bh" style="margin-bottom:6px"><h3 style="font-size:12px">Tiebreakers</h3></div>
+        <div class="tb"><i class="y">✓</i>vs Detroit · won season series 3–1</div>
+        <div class="tb"><i class="q">–</i>vs New York · 1–1, two games left</div>
+        <div class="tb"><i class="n">✕</i>vs Orlando · lost 0–2, one left</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="concept">
+  <div class="lab">3 · Front page, inside the next-game box</div>
+  <h2>Next-opponent preview <span class="sample">Sample numbers</span></h2>
+  <p class="sub">A two-column tale of the tape under the countdown: records, ranks and rest side by side, the better number in wine. Below: who’s out, last meeting, and how to watch. Expands from the existing “Up next” card rather than adding a new box.</p>
+  <div class="nop">
+    <div>
+      <div class="nh"><div class="lg" style="background:var(--wine)">CLE</div><div><b>Cavaliers</b><span>8–3 · 2nd East</span></div></div>
+      <div class="cmp">
+        <div class="a w">+7.4</div><div class="m">Net rating</div><div class="b">+1.2</div>
+        <div class="a w">4th</div><div class="m">Offense</div><div class="b">12th</div>
+        <div class="a">9th</div><div class="m">Defense</div><div class="b w">7th</div>
+        <div class="a">101.2</div><div class="m">Pace</div><div class="b">98.7</div>
+        <div class="a w">1 day</div><div class="m">Rest</div><div class="b">0 (B2B)</div>
+      </div>
+    </div>
+    <div>
+      <div class="nh"><div class="lg" style="background:#006BB6">PHI</div><div><b>at Philadelphia</b><span>5–6 · 7th East · Thu 7:00 PM · ESPN</span></div></div>
+      <div class="lm"><b style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Out / questionable</b>
+        <div class="chips"><span class="chip o">CLE · Merrill (GTD)</span><span class="chip">PHI · Embiid (Out)</span><span class="chip">PHI · Oubre (Q)</span></div>
+        <p style="margin:10px 0 0"><b>Last meeting:</b> W 118–104, Apr 9 (Mitchell 31)</p>
+        <p style="margin:4px 0 0"><b>Series:</b> 2025–26 Cavs 3–1 · all-time 132–146</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="concept">
+  <div class="lab">4 · Front page card, or a strip on the roster page</div>
+  <h2>Milestone watch <span class="sample">Sample numbers</span></h2>
+  <p class="sub">Players closing in on franchise ranks or round-number career marks, with a progress bar and how far is left (and at his current pace, roughly when). Only shows milestones within reach this season, so it stays short.</p>
+  <div class="ms">
+    <div class="mi"><div class="av">DM</div><b>Mitchell · Cavs points</b><span class="t">Passing Kevin Love for 6th in franchise history</span><div class="bar"><i style="width:94%"></i></div><div class="f"><span>7,812 / 8,296</span><em>484 to go · ~Dec 18</em></div></div>
+    <div class="mi"><div class="av">EM</div><b>Mobley · Cavs blocks</b><span class="t">2nd in franchise history (Ilgauskas, 1,269)</span><div class="bar"><i style="width:81%"></i></div><div class="f"><span>1,031 / 1,269</span><em>238 to go · next season</em></div></div>
+    <div class="mi"><div class="av">JH</div><b>Harden · career assists</b><span class="t">9,000 career assists (6th ever to get there)</span><div class="bar"><i style="width:97%"></i></div><div class="f"><span>8,742 / 9,000</span><em>258 to go · ~Nov 30</em></div></div>
+    <div class="mi"><div class="av">JA</div><b>Allen · Cavs games</b><span class="t">500 games as a Cavalier</span><div class="bar"><i style="width:96%"></i></div><div class="f"><span>481 / 500</span><em>19 to go · ~Nov 28</em></div></div>
+  </div>
+  <p class="note">Real version would pull franchise and career totals from Basketball Reference in the daily task. The names and targets above are placeholders, not real figures.</p>
+</section>
+<div style="height:40px"></div>
+</body></html>
