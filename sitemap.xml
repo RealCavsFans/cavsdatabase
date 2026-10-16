@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://cavsdatabase.com/</loc><changefreq>daily</changefreq></url>
-  <url><loc>https://cavsdatabase.com/schedule</loc><changefreq>daily</changefreq></url>
-  <url><loc>https://cavsdatabase.com/roster</loc><changefreq>daily</changefreq></url>
-  <url><loc>https://cavsdatabase.com/staff</loc><changefreq>daily</changefreq></url>
-  <url><loc>https://cavsdatabase.com/cap</loc><changefreq>daily</changefreq></url>
-  <url><loc>https://cavsdatabase.com/assets</loc><changefreq>daily</changefreq></url>
-  <url><loc>https://cavsdatabase.com/moves</loc><changefreq>daily</changefreq></url>
-  <url><loc>https://cavsdatabase.com/charge</loc><changefreq>daily</changefreq></url>
-  <url><loc>https://cavsdatabase.com/media</loc><changefreq>daily</changefreq></url>
-  <url><loc>https://cavsdatabase.com/media/rcf</loc><changefreq>daily</changefreq></url>
-  <url><loc>https://cavsdatabase.com/resources</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://cavsdatabase.com/</loc><lastmod>2026-10-16</lastmod><changefreq>daily</changefreq></url>
+  <url><loc>https://cavsdatabase.com/schedule</loc><lastmod>2026-10-16</lastmod><changefreq>daily</changefreq></url>
+  <url><loc>https://cavsdatabase.com/roster</loc><lastmod>2026-10-16</lastmod><changefreq>daily</changefreq></url>
+  <url><loc>https://cavsdatabase.com/staff</loc><lastmod>2026-10-16</lastmod><changefreq>daily</changefreq></url>
+  <url><loc>https://cavsdatabase.com/cap</loc><lastmod>2026-10-16</lastmod><changefreq>daily</changefreq></url>
+  <url><loc>https://cavsdatabase.com/assets</loc><lastmod>2026-10-16</lastmod><changefreq>daily</changefreq></url>
+  <url><loc>https://cavsdatabase.com/moves</loc><lastmod>2026-10-16</lastmod><changefreq>daily</changefreq></url>
+  <url><loc>https://cavsdatabase.com/charge</loc><lastmod>2026-10-16</lastmod><changefreq>daily</changefreq></url>
+  <url><loc>https://cavsdatabase.com/media</loc><lastmod>2026-10-16</lastmod><changefreq>daily</changefreq></url>
+  <url><loc>https://cavsdatabase.com/media/rcf</loc><lastmod>2026-10-16</lastmod><changefreq>daily</changefreq></url>
+  <url><loc>https://cavsdatabase.com/resources</loc><lastmod>2026-10-16</lastmod><changefreq>daily</changefreq></url>
 </urlset>
