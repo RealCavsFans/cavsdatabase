@@ -416,7 +416,20 @@ body{background:var(--page)}
 .btt{position:fixed;right:16px;bottom:16px;z-index:54;width:42px;height:42px;border-radius:50%;appearance:none;border:2px solid #F2B231;background:#860038;color:#F2B231;display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s,bottom .2s;padding:0}
 .btt.on{opacity:1;transform:none;pointer-events:auto}.btt svg{width:18px;height:18px}.btt:hover{background:#6b002c}
 @media (max-width:520px){.btt{right:12px;bottom:12px;width:40px;height:40px}}
-@media print{.btt,.thm{display:none}}
+.thm2{display:none;align-items:center;gap:6px;appearance:none;border:1px solid var(--line);background:var(--card,var(--bg));color:var(--fg2);font:600 12.5px var(--sans);padding:6px 11px;border-radius:999px;cursor:pointer}.thm2 svg{width:14px;height:14px;color:var(--wine-ink)}
+@media (max-width:600px){.gbar .thm{display:none}.thm2{display:inline-flex}}
+@media print{.btt,.thm,.thm2{display:none}}
+/* share + save-as-image buttons */
+.hasx{flex-wrap:wrap}.block-h.hasx{justify-content:flex-start}.block-h.hasx>h2{margin-right:auto}.ds-hdr.hasx>b{margin-right:auto}h1.hasx{display:flex;align-items:center;gap:10px}h1.hasx .xact{margin-left:auto}
+.xact{display:inline-flex;gap:6px;flex:none;align-self:center;margin-left:10px}
+.xact button{width:28px;height:28px;display:grid;place-items:center;padding:0;appearance:none;border:1px solid var(--line);background:var(--card,var(--bg));color:var(--muted);border-radius:6px;cursor:pointer;transition:color .15s,border-color .15s}
+.xact button:hover,.xact button:focus-visible{color:var(--wine-ink);border-color:var(--wine-ink)}.xact button:disabled{opacity:.5;cursor:progress}.xact svg{width:14px;height:14px}
+[data-anchor]{scroll-margin-top:120px}
+.xtoast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);z-index:80;display:flex;align-items:center;gap:10px;background:#101419;color:#fff;font:700 13.5px var(--sans);padding:10px 16px;border-radius:999px;box-shadow:0 10px 26px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:calc(100vw - 32px)}
+.xtoast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}.xtoast i{font-style:normal;color:#F2B231}.xtoast button{appearance:none;border:0;background:#F2B231;color:#101419;font:800 13px var(--sans);padding:6px 12px;border-radius:999px;cursor:pointer}
+@media (max-width:600px){.block-h.hasx:has(>span:not(.xact))>h2{flex-basis:100%}.block-h.hasx>span:not(.xact){margin-right:auto}.xact{margin-left:8px}}
+@media print{.xact{display:none}}
+
 .gbar{cursor:default}
 @media (max-width:1180px){.gin{padding-block:8px;gap:6px 14px}.gbrand{margin-right:auto}.gnav{order:3;flex-basis:100%;margin-inline:-7px}.gnav button,.gnav a{min-height:44px}.gbar .search{flex:0 1 260px}}
 @media (max-width:900px){.gbar .search{flex:1 1 100px;min-width:0}}
@@ -479,7 +492,7 @@ body{background:var(--page)}
 .poster .vplay span::after{border-left-width:24px;border-top-width:14px;border-bottom-width:14px}
 .fin .cap-label{line-height:1}
 .ln.lock{border-left:3px solid var(--wine-ink)}
-.ln.lock span{color:var(--wine-ink)}
+.ln.lock span{color:var(--wine-ink)}.ln em small.hcx{font:inherit;position:static}
 .ln .lk{display:inline-flex;vertical-align:-1px;margin-right:4px}
 /* roster */
 .segs{display:inline-flex;align-self:flex-start;border:1px solid var(--line);background:var(--card)}
@@ -1005,7 +1018,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
   <div class="wrap page">
     <div>
       <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Salary Cap</div>
-      <h1 style="margin-top:6px">Cap Sheet</h1>
+      <h1 style="margin-top:6px" id="cs-h">Cap Sheet</h1>
       <p class="dim" style="margin:6px 0 0">Salaries by season, Bird rights, free agency and options.</p>
     </div>
     <section class="captop" id="captop" aria-label="2026–27 cap position"></section>
@@ -1198,6 +1211,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 <button type="button" class="btt" id="btt" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg></button>
 <footer><div class="wrap">
   <span>cavsdatabase.com · Independent fan reference. Not affiliated with the Cleveland Cavaliers or the NBA.</span>
+  <button type="button" class="thm2" id="thm2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Dark mode</span></button>
   <a id="tip" class="tip" hidden target="_blank" rel="noopener">Like the site? Throw the hammer down →</a>
 </div></footer>
 
@@ -1572,7 +1586,7 @@ const track=document.getElementById('track'),hbar=document.getElementById('hbar'
 const zones=[[LO,164.961,'var(--z1)'],[164.961,200.428,'var(--track)'],[200.428,209.015,'var(--z2)'],[209.015,221.686,'var(--z3)'],[221.686,HI,'var(--z4)']];
 zones.forEach(([a,b,c])=>{const z=el('div','zone');z.style.left=pct(a)+'%';z.style.width=(pct(b)-pct(a))+'%';z.style.background=c;track.insertBefore(z,track.firstChild)});
 LINES.forEach(([n,v,hard],i)=>{const r=el('div','ln'+(hard?' hard':'')+(i%2?' up':' down')+(i===0?' first':'')+(i===LINES.length-1?' last':''));
-  r.style.left=pct(v)+'%';const SHORT={'Minimum':'Min','Salary cap':'Cap','Luxury tax':'Tax','First apron':'Apron 1','Second apron':'Apron 2'};const sp=el('span');if(n===HARDCAP){r.classList.add('lock');const k=document.createElement('b');k.className='lk';k.innerHTML=LOCK;k.title='Hard cap';sp.appendChild(k)}sp.append(el('i','full',n),el('i','short',SHORT[n]||n),(()=>{const e=el('em',null,money(v));if(n===HARDCAP)e.appendChild(el('span','hide-sm',' · hard cap'));return e})());r.appendChild(sp);hbar.appendChild(r)});
+  r.style.left=pct(v)+'%';const SHORT={'Minimum':'Min','Salary cap':'Cap','Luxury tax':'Tax','First apron':'Apron 1','Second apron':'Apron 2'};const sp=el('span');if(n===HARDCAP){r.classList.add('lock');const k=document.createElement('b');k.className='lk';k.innerHTML=LOCK;k.title='Hard cap';sp.appendChild(k)}sp.append(el('i','full',n),el('i','short',SHORT[n]||n),(()=>{const e=el('em',null,money(v));if(n===HARDCAP)e.appendChild(el('small','hide-sm hcx',' · hard cap'));return e})());r.appendChild(sp);hbar.appendChild(r)});
 hbar.setAttribute('aria-label','Team salary '+money(TEAM_SALARY)+' against the cap, tax and apron lines');
 requestAnimationFrame(()=>{document.getElementById('fill').style.width=pct(TEAM_SALARY)+'%'});
 {const top=document.getElementById('captop');const nums=el('div','ct-nums');
@@ -2898,6 +2912,7 @@ const BUILT=['home','roster','cap','assets','moves','resources','schedule','staf
 const ROUTE_ALIAS={video:'media',rcf:'media/rcf'};
 function routeOf(){let r=location.pathname.replace(/^\/+|\/+$/g,'').toLowerCase();if(/index\.html$/.test(r)||location.protocol==='file:')r='';const h=location.hash.slice(1);if(!r&&h&&(SECTIONS.some(x=>x[0]===h)||ROUTE_ALIAS[h]))r=h;const AL={video:'media',rcf:'media/rcf'};return AL[r]||r||'home'}
 function show(route){
+  if(window.cdbAttachX)setTimeout(window.cdbAttachX,60);
   {const cur=document.querySelector('.wm-term s');if(cur&&!matchMedia('(prefers-reduced-motion: reduce)').matches){cur.style.animation='none';void cur.offsetWidth;cur.style.animation=''}}
   let id=route.split('/')[0];if(id==='media')id=route==='media/rcf'?'rcf':'video';
   const sec=id==='video'||id==='rcf'?'media':id;
@@ -2958,14 +2973,97 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
 <script>
 (function(){const R=document.documentElement,B=document.getElementById('thm'),T=document.getElementById('btt'),F=document.getElementById('fb');
  const dark=()=>R.dataset.theme?R.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
- const lab=()=>{if(B)B.setAttribute('aria-label',dark()?'Switch to light mode':'Switch to dark mode')};lab();
- if(B)B.onclick=()=>{const t=dark()?'light':'dark';R.dataset.theme=t;try{localStorage.setItem('cdb-theme',t)}catch(e){}lab()};
+ const B2=document.getElementById('thm2');const lab=()=>{if(B)B.setAttribute('aria-label',dark()?'Switch to light mode':'Switch to dark mode');if(B2)B2.querySelector('span').textContent=dark()?'Light mode':'Dark mode'};lab();
+ const flip=()=>{const t=dark()?'light':'dark';R.dataset.theme=t;try{localStorage.setItem('cdb-theme',t)}catch(e){}lab()};if(B)B.onclick=flip;if(B2)B2.onclick=flip;
  const top=()=>scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
  if(T)T.onclick=top;
  const bar=document.querySelector('.gbar');if(bar)bar.addEventListener('click',e=>{if(e.target.closest('a,button,input,form,nav [role=tab],.sres'))return;top()});
  let tk=0;const upd=()=>{tk=0;if(!T)return;T.classList.toggle('on',scrollY>innerHeight*0.9);const fv=F&&!F.hidden&&F.offsetHeight;T.style.bottom=fv?(F.getBoundingClientRect().height+(innerWidth<=520?20:26))+'px':''};
  addEventListener('scroll',()=>{if(!tk){tk=1;requestAnimationFrame(upd)}},{passive:true});addEventListener('resize',upd);
  if(F)new MutationObserver(upd).observe(F,{attributes:true,attributeFilter:['hidden','class']});upd();
+})();
+</script>
+
+<script>
+/* share links + save-as-image. Images are drawn in the browser by modern-screenshot (MIT, vendor/), loaded only on first use. */
+(function(){
+ const $=id=>document.getElementById(id);
+ const hOf=id=>{let p=$(id);p=p&&p.previousElementSibling;while(p&&!p.classList.contains('block-h'))p=p.previousElementSibling;return p};
+ const par=el=>el&&el.closest('.block-h');
+ const T=[
+  ['cap-position','home',()=>par($('cap-h')),()=>[document.querySelector('section.o-cap')],'Cap position'],
+  ['this-day','home',()=>par($('otd-h')),()=>[document.querySelector('section.o-otd')],'This day in Cavs history'],
+  ['cap-sheet','cap',()=>$('cs-h'),()=>[document.querySelector('table.cap')],'Cap sheet'],
+  ['aprons','cap',()=>par($('ap-h')),()=>[document.querySelector('section.aprons')],'What each apron allows'],
+  ['draft-picks','assets',()=>hOf('picks'),()=>[hOf('picks'),$('picks')],'Draft picks the Cavs own'],
+  ['picks-owed','assets',()=>hOf('owed'),()=>[hOf('owed'),$('owed')],'Picks the Cavs owe'],
+  ['exceptions','assets',()=>hOf('exc'),()=>[hOf('exc'),$('exc')],'Trade exceptions'],
+  ['drafted-players','assets',()=>hOf('rights'),()=>[hOf('rights'),$('rights')],'Drafted players'],
+  ['depth-chart','roster',()=>document.querySelector('.dsheet .ds-hdr'),()=>[document.querySelector('.dsheet')],'Depth chart'],
+  ['standings','schedule',()=>document.querySelector('#sp-std>.block-h'),()=>[$('sp-std')],'East standings']];
+ const I_L='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>';
+ const I_C='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
+ const coarse=()=>matchMedia('(pointer: coarse)').matches;
+ let tt=0;const toast=(msg,btn,fn)=>{let t=$('xtoast');if(!t){t=document.createElement('div');t.id='xtoast';t.className='xtoast';t.setAttribute('role','status');document.body.appendChild(t)}
+  t.innerHTML='';const i=document.createElement('i');i.textContent='✓';t.append(i,msg);if(btn){const b=document.createElement('button');b.type='button';b.textContent=btn;b.onclick=()=>{t.classList.remove('on');fn()};t.appendChild(b)}
+  t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),btn?6000:2200)};
+ const pageUrl=(route,id)=>'https://cavsdatabase.com'+(route==='home'?'/':'/'+route)+'#'+id;
+ function share(route,id,label){const url=pageUrl(route,id),title=label+' | cavs_db';
+  if(navigator.share&&coarse()){navigator.share({title,url}).catch(()=>{});return}
+  const done=()=>toast('Link copied');
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url).then(done,()=>fallback(url,done));else fallback(url,done)}
+ function fallback(url,done){const ta=document.createElement('textarea');ta.value=url;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){toast(url)}ta.remove()}
+ let lib=null;const load=()=>lib||(lib=new Promise((res,rej)=>{if(window.modernScreenshot)return res(window.modernScreenshot);const sc=document.createElement('script');sc.src='/vendor/modern-screenshot-4.6.0.js';sc.onload=()=>res(window.modernScreenshot);sc.onerror=()=>{lib=null;rej(new Error('load'))};document.head.appendChild(sc)}));
+ const toData=b=>new Promise(r=>{const f=new FileReader();f.onload=()=>r(f.result);f.onerror=()=>r(false);f.readAsDataURL(b)});
+ const fetchFn=async url=>{const m=/headshots\/nba\/latest\/260x190\/(\d+)\.png/.exec(url);if(!m)return false;try{const r=await fetch('/img/h/'+m[1]+'.png');if(!r.ok)return false;return await toData(await r.blob())}catch(e){return false}};
+ const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+ const LOGO='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#860038" stroke-width="2" fill="none"/></svg>';
+ const img=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
+ /* multi-part images are drawn a little tall, then the empty space at the bottom is cut off */
+ function trim(cv,keep){const g=cv.getContext('2d'),w=cv.width,h=cv.height;const d=g.getImageData(0,0,w,h).data;const bg=[d[(h-1)*w*4],d[(h-1)*w*4+1],d[(h-1)*w*4+2]];
+  let y=h-1;outer:for(;y>0;y--){const o=y*w*4;for(let x=0;x<w;x+=2){const i=o+x*4;if(Math.abs(d[i]-bg[0])+Math.abs(d[i+1]-bg[1])+Math.abs(d[i+2]-bg[2])>24)break outer}}
+  const nh=Math.min(h,Math.ceil(y+1+keep));if(nh>=h)return;const t=document.createElement('canvas');t.width=w;t.height=nh;t.getContext('2d').drawImage(cv,0,0);cv.width=w;cv.height=nh;cv.getContext('2d').drawImage(t,0,0)}
+ async function capture(route,id,label,boxes,btn){
+  btn.disabled=true;toast('Making the image…');
+  try{const ms=await load();let el=boxes[0];
+   let keep=null,parent=null,hgt=null;if(boxes.length>1){parent=boxes[0].parentElement;keep=new Set(boxes);el=parent;boxes[0].setAttribute('data-capfirst','1');
+    const pc=getComputedStyle(parent);hgt=parseFloat(pc.paddingTop)+parseFloat(pc.paddingBottom)+parseFloat(pc.borderTopWidth)+parseFloat(pc.borderBottomWidth);boxes.forEach((b,i)=>{const bc=getComputedStyle(b);hgt+=b.offsetHeight+(i?parseFloat(bc.marginTop):0)+(i<boxes.length-1?parseFloat(bc.marginBottom):0)});hgt=Math.ceil(hgt)+240}
+   let bg=getComputedStyle(el).backgroundColor;if(!bg||bg==='rgba(0, 0, 0, 0)'||bg==='transparent'){let a=el.closest('section')||el.parentElement;while(a){const b=getComputedStyle(a).backgroundColor;if(b&&b!=='rgba(0, 0, 0, 0)'&&b!=='transparent'){bg=b;break}a=a.parentElement}if(!a)bg=getComputedStyle(document.body).backgroundColor}
+   const S=2,pad=16;const shot=await ms.domToCanvas(el,{scale:S,backgroundColor:bg,fetchFn,timeout:10000,style:hgt?{margin:'0',height:hgt+'px',minHeight:'0'}:{margin:'0'},...(hgt?{height:hgt}:{}),
+     filter:n=>{if(n.nodeType!==1)return true;if(n.classList.contains('xact'))return false;if(n.classList.contains('dc-pg')&&n.classList.contains('top'))return false;if(keep&&n.parentElement===parent&&!keep.has(n))return false;return true},
+     onCloneNode:c=>{if(c.nodeType===1&&c.getAttribute&&c.getAttribute('data-capfirst')){c.style.marginTop='0';c.removeAttribute('data-capfirst')}}});
+   boxes[0].removeAttribute('data-capfirst');
+   if(hgt)trim(shot,Math.max(parseFloat(getComputedStyle(parent).paddingBottom)||0,14)*S);
+   const W=Math.max(shot.width+pad*2*S,380*S),HH=58*S,GOLD=5*S,FT=40*S;const H=HH+GOLD+pad*S+shot.height+FT;
+   const cv=document.createElement('canvas');cv.width=W;cv.height=H;const g=cv.getContext('2d');
+   g.fillStyle=css('--page')||'#EEF0F2';g.fillRect(0,0,W,H);g.fillStyle='#860038';g.fillRect(0,0,W,HH);g.fillStyle='#F2B231';g.fillRect(0,HH,W,GOLD);
+   const lg=await img('data:image/svg+xml;charset=utf-8,'+encodeURIComponent(LOGO));if(lg)g.drawImage(lg,pad*S,13*S,32*S,32*S);
+   const mono=css('--mono')||'monospace',sans=css('--sans')||'sans-serif';
+   g.textBaseline='middle';g.font='700 '+(22*S)+'px '+mono;g.fillStyle='#fff';g.fillText('cavs',(pad+40)*S,HH/2);const w1=g.measureText('cavs').width;g.fillStyle='#F2B231';g.fillText('_db',(pad+40)*S+w1,HH/2);
+   g.textAlign='right';g.font='800 '+(11*S)+'px '+sans;g.fillStyle='#F4D6DD';if('letterSpacing' in g)g.letterSpacing=(1.4*S)+'px';
+   let lab=label.toUpperCase();const maxw=W-(pad+150)*S;while(g.measureText(lab).width>maxw&&lab.length>4)lab=lab.slice(0,-2)+'…';g.fillText(lab,W-pad*S,HH/2);if('letterSpacing' in g)g.letterSpacing='0px';
+   g.drawImage(shot,Math.round((W-shot.width)/2),HH+GOLD+pad*S);
+   const fy=H-FT/2;g.textAlign='left';g.font='700 '+(12*S)+'px '+mono;g.fillStyle=css('--wine-ink')||'#860038';g.fillText('cavsdatabase.com'+(route==='home'?'':'/'+route),pad*S,fy);
+   g.textAlign='right';g.font='600 '+(12*S)+'px '+mono;g.fillStyle=css('--muted')||'#5D646C';const now=new Date();g.fillText(now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),W-pad*S,fy);
+   const blob=await new Promise(r=>cv.toBlob(r,'image/png'));const name='cavsdb-'+id+'-'+now.toISOString().slice(0,10)+'.png';
+   const file=new File([blob],name,{type:'image/png'});
+   const save=()=>{if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:label+' | cavs_db'}).catch(e=>{if(e&&e.name==='NotAllowedError')toast('Image ready','Save',save)})}else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Image saved')}};
+   if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]}))toast('Image ready','Save or share',save);else save();
+  }catch(e){toast('Couldn’t make the image. Try again.')}
+  finally{boxes[0].removeAttribute('data-capfirst');btn.disabled=false}}
+ function attach(){T.forEach(([id,route,hdr,boxes,label])=>{const h=hdr();if(!h||h.dataset.anchor)return;h.dataset.anchor=id;h.classList.add('hasx');
+  const w=document.createElement('span');w.className='xact';
+  const b1=document.createElement('button');b1.type='button';b1.innerHTML=I_L;b1.title='Share link';b1.setAttribute('aria-label','Share a link to '+label);b1.onclick=()=>share(route,id,label);
+  const b2=document.createElement('button');b2.type='button';b2.innerHTML=I_C;b2.title='Save as image';b2.setAttribute('aria-label','Save '+label+' as an image');b2.onclick=()=>{const bx=boxes().filter(Boolean);if(bx.length)capture(route,id,label,bx,b2)};
+  w.append(b1,b2);h.appendChild(w)})}
+ window.cdbAttachX=attach;
+ /* deep links: /assets#picks-owed, /roster#donovan-mitchell, /cap#donovan-mitchell */
+ function jump(){const h=decodeURIComponent(location.hash.slice(1));if(!h)return;attach();
+  const t=document.querySelector('[data-anchor="'+h.replace(/"/g,'')+'"]')||document.getElementById(h)||document.getElementById('r-'+h)||document.getElementById('p-'+h)||document.getElementById('s-'+h);
+  if(!t||t.closest('[hidden]'))return;const b=t.querySelector&&t.querySelector('.pbtn');if(b&&b.getAttribute('aria-expanded')!=='true')b.click();
+  t.scrollIntoView({block:t.dataset.anchor?'start':'center'});if(!t.dataset.anchor){t.classList.remove('flash');void t.offsetWidth;t.classList.add('flash')}}
+ const run=()=>{attach();setTimeout(attach,600)};run();setTimeout(jump,450);
+ addEventListener('popstate',()=>setTimeout(attach,50));addEventListener('hashchange',()=>setTimeout(jump,50));
 })();
 </script>
 </body>
