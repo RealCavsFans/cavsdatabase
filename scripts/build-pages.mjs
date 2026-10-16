@@ -49,10 +49,10 @@ for (const [route, [title, desc]] of Object.entries(META)) {
 }
 console.log('built', Object.keys(META).length, 'pages');
 if (PRE) {
-  const { default: prerender } = await import('./prerender.mjs');
+  const { default: prerender, modDates } = await import('./prerender.mjs');
   if (await prerender(root, META)) {
     const day = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date());
-    const urls = Object.keys(META).map(r => `  <url><loc>https://cavsdatabase.com/${r === 'home' ? '' : r}</loc><lastmod>${day}</lastmod><changefreq>daily</changefreq></url>`);
+    const urls = Object.keys(META).map(r => `  <url><loc>https://cavsdatabase.com/${r === 'home' ? '' : r}</loc><lastmod>${(modDates() && modDates()(r)) || day}</lastmod><changefreq>daily</changefreq></url>`);
     await writeFile(new URL('sitemap.xml', root), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`);
     await mkdir(new URL('data/', root), { recursive: true });
     await writeFile(HASHF, hash + '\n');

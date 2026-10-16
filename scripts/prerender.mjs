@@ -14,6 +14,14 @@ const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'applic
 const PIXEL = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=', 'base64');
 const NICK = { ATL: 'Atlanta Hawks', BOS: 'Boston Celtics', BKN: 'Brooklyn Nets', CHA: 'Charlotte Hornets', CHI: 'Chicago Bulls', CLE: 'Cleveland Cavaliers', DAL: 'Dallas Mavericks', DEN: 'Denver Nuggets', DET: 'Detroit Pistons', GSW: 'Golden State Warriors', HOU: 'Houston Rockets', IND: 'Indiana Pacers', LAC: 'LA Clippers', LAL: 'Los Angeles Lakers', MEM: 'Memphis Grizzlies', MIA: 'Miami Heat', MIL: 'Milwaukee Bucks', MIN: 'Minnesota Timberwolves', NOP: 'New Orleans Pelicans', NYK: 'New York Knicks', OKC: 'Oklahoma City Thunder', ORL: 'Orlando Magic', PHI: 'Philadelphia 76ers', PHX: 'Phoenix Suns', POR: 'Portland Trail Blazers', SAC: 'Sacramento Kings', SAS: 'San Antonio Spurs', TOR: 'Toronto Raptors', UTA: 'Utah Jazz', WAS: 'Washington Wizards' };
 const SITE = 'https://cavsdatabase.com';
+/* home city of each team, for the game listings' location (search engines require one for events) */
+const CITY = { ATL: ['Atlanta', 'GA', 'US'], BOS: ['Boston', 'MA', 'US'], BKN: ['Brooklyn', 'NY', 'US'], CHA: ['Charlotte', 'NC', 'US'], CHI: ['Chicago', 'IL', 'US'], CLE: ['Cleveland', 'OH', 'US'], DAL: ['Dallas', 'TX', 'US'], DEN: ['Denver', 'CO', 'US'], DET: ['Detroit', 'MI', 'US'], GSW: ['San Francisco', 'CA', 'US'], HOU: ['Houston', 'TX', 'US'], IND: ['Indianapolis', 'IN', 'US'], LAC: ['Inglewood', 'CA', 'US'], LAL: ['Los Angeles', 'CA', 'US'], MEM: ['Memphis', 'TN', 'US'], MIA: ['Miami', 'FL', 'US'], MIL: ['Milwaukee', 'WI', 'US'], MIN: ['Minneapolis', 'MN', 'US'], NOP: ['New Orleans', 'LA', 'US'], NYK: ['New York', 'NY', 'US'], OKC: ['Oklahoma City', 'OK', 'US'], ORL: ['Orlando', 'FL', 'US'], PHI: ['Philadelphia', 'PA', 'US'], PHX: ['Phoenix', 'AZ', 'US'], POR: ['Portland', 'OR', 'US'], SAC: ['Sacramento', 'CA', 'US'], SAS: ['San Antonio', 'TX', 'US'], TOR: ['Toronto', 'ON', 'CA'], UTA: ['Salt Lake City', 'UT', 'US'], WAS: ['Washington', 'DC', 'US'] };
+/* when each page's content last changed: daily data (SITE_UPDATED), plus newest video/article for Media and Home, newest final score for Schedule and Home */
+let MODCTX = null;
+const etDay = t => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(t));
+const MOD = route => { if (!MODCTX) return ''; const { upd, vid, art, score } = MODCTX; const pick = (...a) => a.filter(Boolean).sort().pop() || '';
+  return route === 'home' ? pick(upd, vid, art, score) : route === 'media' ? pick(upd, vid, art) : route === 'schedule' ? pick(upd, score) : pick(upd); };
+export const modDates = () => MODCTX ? MOD : null;
 const LABEL = { schedule: 'Schedule', roster: 'Roster', staff: 'Staff', cap: 'Salary cap', assets: 'Assets', moves: 'Transactions', charge: 'Cleveland Charge', media: 'Media', resources: 'Resources' };
 
 const etOffset = d => { const p = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', timeZoneName: 'shortOffset' }).formatToParts(new Date(d + 'T17:00:00Z')).find(x => x.type === 'timeZoneName').value; const n = +(p.match(/GMT([+-]\d+)/) || [0, -5])[1]; return (n < 0 ? '-' : '+') + String(Math.abs(n)).padStart(2, '0') + ':00'; };
@@ -22,6 +30,14 @@ const team = a => ({ '@type': 'SportsTeam', name: NICK[a] || a });
 const game = g => { const [d, o, ha, t] = g; const home = ha === 'H' ? 'CLE' : o, away = ha === 'H' ? o : 'CLE';
   const e = { '@type': 'SportsEvent', name: `${NICK[away]} at ${NICK[home]}`, sport: 'Basketball', startDate: iso(d, t), eventStatus: 'https://schema.org/EventScheduled', homeTeam: team(home), awayTeam: team(away), competitor: [team(away), team(home)] };
   if (ha === 'H') e.location = { '@type': 'Place', name: 'Rocket Arena', address: { '@type': 'PostalAddress', streetAddress: '1 Center Court', addressLocality: 'Cleveland', addressRegion: 'OH', postalCode: '44115', addressCountry: 'US' } };
+  else { const c = CITY[o]; if (c) e.location = { '@type': 'Place', name: `${NICK[o]} home arena, ${c[0]}`, address: { '@type': 'PostalAddress', addressLocality: c[0], addressRegion: c[1], addressCountry: c[2] } }; }
+  if (/T/.test(e.startDate)) { const en = new Date(new Date(e.startDate).getTime() + 150 * 60000); const P = Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(en).map(x => [x.type, x.value])); const dd = `${P.year}-${P.month}-${P.day}`; e.endDate = `${dd}T${P.hour}:${P.minute}:00${etOffset(dd)}`; }
+  e.eventAttendanceMode = 'https://schema.org/OfflineEventAttendanceMode';
+  e.description = `${NICK[away]} at ${NICK[home]}, 2026–27 NBA regular season.`;
+  e.image = SITE + '/og/schedule.jpg';
+  e.organizer = { '@type': 'SportsOrganization', name: 'NBA', url: 'https://www.nba.com' };
+  e.performer = [team(away), team(home)];
+  e.url = SITE + '/schedule';
   return e; };
 /* finished games: add the final score so search engines can show it */
 const withScore = (e, g, S) => { const sc = S && S[g[0]]; if (!sc) return e; const [c, o] = sc.split('-'); e.description = `Final: Cleveland Cavaliers ${c}, ${NICK[g[1]]} ${o}`; e.eventStatus = 'https://schema.org/EventScheduled'; return e; };
@@ -50,7 +66,10 @@ export default async function prerender(root, META) {
       if (route !== 'home') await page.evaluate(r => go(r), route);
       await page.waitForTimeout(1200);
       const snap = await page.evaluate(() => { const m = [...document.querySelectorAll('main[id^="view-"]')].find(x => !x.hidden && x.id !== 'view-stub'); if (!m) return null; const c = m.cloneNode(true); c.querySelectorAll('.xtoast,.gwrap').forEach(x => x.remove()); return { id: m.id, html: c.outerHTML }; });
-      if (!data) data = await page.evaluate(() => ({ SCORES, SCHEDULE, PLAYERS: PLAYERS.map(p => p[1]), PL: PLAYERS }));
+      if (!data) data = await page.evaluate(() => ({ SCORES, SCHEDULE, PLAYERS: PLAYERS.map(p => p[1]), PL: PLAYERS, UPD: typeof SITE_UPDATED === 'string' ? SITE_UPDATED : '' }));
+      if (data && !MODCTX) { const rj = async f => { try { return JSON.parse(await readFile(new URL(f, root), 'utf8')) } catch (e) { return null } };
+        const v = await rj('videos.json'), r = await rj('rcf.json'); const sd = Object.keys(data.SCORES || {}).sort().pop();
+        MODCTX = { upd: data.UPD, vid: v && v[0] && v[0].published ? etDay(v[0].published) : '', art: r && r.items && r.items[0] && r.items[0].date ? etDay(r.items.map(x => x.date).sort().pop()) : '', score: sd || '' }; }
       if (!snap || errs.length) { console.log('::warning::prerender skipped ' + route + ' ' + errs.join('; ')); continue; }
       const file = new URL((route === 'home' ? 'home' : route) + '.html', root);
       let html = await readFile(file, 'utf8');
@@ -66,6 +85,8 @@ export default async function prerender(root, META) {
         { '@type': 'Person', name: pl[1], url: SITE + '/' + route, image: 'https://cdn.nba.com/headshots/nba/latest/1040x760/' + pl[12] + '.png', jobTitle: 'Basketball player', birthDate: pl[5], ...(pl[3] && pl[3] !== '—' ? { height: pl[3].replace('-', ' ft ') + ' in' } : {}), ...(pl[4] ? { weight: pl[4] + ' lb' } : {}), memberOf: team('CLE'), sameAs: ['https://www.nba.com/player/' + pl[12]] });
       else if (route !== 'home') graph.push({ '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: LABEL[route] || META[route][0].split(' | ')[0], item: SITE + '/' + route }] });
       const today = new Date().toISOString().slice(0, 10);
+      { const url = SITE + '/' + (route === 'home' ? '' : route); const title = META[route][0], desc = META[route][1];
+        graph.unshift({ '@type': 'WebPage', '@id': url + '#page', url, name: title, ...(desc ? { description: desc } : {}), isPartOf: { '@id': SITE + '/#site' }, inLanguage: 'en-US', ...(MOD(route) ? { dateModified: MOD(route) } : {}), primaryImageOfPage: { '@type': 'ImageObject', url: SITE + '/' + (route === 'home' ? 'og.jpg' : 'og/' + (route.startsWith('players/') ? 'roster' : route.replace(/\//g, '-')) + '.jpg') } }); }
       if (route === 'schedule') data.SCHEDULE.forEach(g => graph.push(withScore(game(g), g, data.SCORES)));
       if (route === 'home') { const nx = data.SCHEDULE.find(g => g[0] >= today); if (nx) graph.push(game(nx)); }
       if (route === 'roster') graph.push({ '@type': 'ItemList', name: 'Cleveland Cavaliers roster', itemListElement: data.PLAYERS.map((n, i) => ({ '@type': 'ListItem', position: i + 1, item: { '@type': 'Person', name: n, jobTitle: 'Basketball player', memberOf: team('CLE') } })) });
