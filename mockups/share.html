@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Share and capture mockup</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Geist+Mono:wght@500;600&display=swap">
+<style>
+:root{--wine:#860038;--gold:#F2B231;--fg:#101419;--muted:#5D646C;--line:#E3E5E0;--page:#EEF0F2;--sans:'Archivo',system-ui,sans-serif;--mono:'Geist Mono',ui-monospace,monospace}
+*{box-sizing:border-box}body{margin:0;background:var(--page);font-family:var(--sans);color:var(--fg)}
+.wrap{max-width:980px;margin:0 auto;padding:24px 16px 60px}
+h1{font:800 24px var(--sans);margin:0 0 4px}.sub{color:var(--muted);font-size:14px;margin:0 0 8px;line-height:1.45}
+.lab{font:800 11px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--wine);margin:30px 0 8px}
+.note{font-size:13.5px;color:var(--muted);margin:0 0 12px;line-height:1.5}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:760px){.grid{grid-template-columns:1fr}}
+.card{background:#fff;border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.08);padding:16px 18px}
+.hd{display:flex;align-items:center;gap:8px;border-bottom:3px solid var(--fg);padding-bottom:8px}
+.hd h2{margin:0;font:800 17px var(--sans);letter-spacing:.04em;text-transform:uppercase;flex:1}
+.ib{width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--line);background:#fff;color:var(--muted);border-radius:6px;cursor:pointer;padding:0}
+.ib:hover{color:var(--wine);border-color:var(--wine)}.ib svg{width:15px;height:15px}
+.rows{font-size:14px;margin-top:10px}.rows div{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line)}.rows b{font-family:var(--mono)}
+.toast{display:inline-flex;align-items:center;gap:8px;background:var(--fg);color:#fff;font:700 13px var(--sans);padding:9px 14px;border-radius:999px;box-shadow:0 8px 20px rgba(0,0,0,.2)}.toast i{color:var(--gold);font-style:normal}
+.menu{display:inline-block;background:#fff;border:1px solid var(--line);box-shadow:0 10px 26px rgba(0,0,0,.14);border-radius:8px;padding:6px;min-width:220px}
+.menu div{padding:9px 10px;font-size:14px;border-radius:5px;display:flex;gap:10px;align-items:center}.menu div:hover{background:#F5F6F3}.menu svg{width:16px;height:16px;color:var(--wine)}
+/* iMessage-style link preview */
+.phone{background:#fff;border-radius:22px;padding:18px 14px;max-width:360px;border:1px solid var(--line)}
+.bub{margin-left:auto;max-width:270px;border-radius:18px;overflow:hidden;background:#E9E9EB}
+.bub img{display:block;width:100%;aspect-ratio:1200/630;object-fit:cover}.bub .t{padding:9px 12px 10px;font:600 13.5px/1.3 -apple-system,system-ui,sans-serif;color:#000}.bub .t small{display:block;font-weight:400;color:#6b6b70;margin-top:2px}
+.blue{margin:8px 0 0 auto;width:max-content;max-width:260px;background:#0A84FF;color:#fff;border-radius:18px;padding:8px 12px;font:15px -apple-system,system-ui,sans-serif}
+.xcard{border:1px solid #cfd9de;border-radius:16px;overflow:hidden;max-width:420px;background:#fff}.xcard img{display:block;width:100%;aspect-ratio:1200/630;object-fit:cover}
+.xcard .t{padding:8px 12px 10px;font:13.5px/1.35 -apple-system,system-ui,sans-serif;color:#536471}.xcard .t b{display:block;color:#0f1419;font-weight:400}
+.shot{max-width:400px;border-radius:6px;box-shadow:0 10px 30px rgba(0,0,0,.18);display:block;max-height:640px;object-fit:cover;object-position:top}
+ul{margin:6px 0 0;padding-left:18px;font-size:14px;line-height:1.6}
+.pill{display:inline-block;font:700 11px var(--mono);background:#F5F6F3;border:1px solid var(--line);padding:2px 7px;margin:2px 4px 2px 0}
+</style></head><body><div class="wrap">
+<h1>Share + capture</h1>
+<p class="sub">Two small icons in the top-right corner of a section header. Nothing else on the page changes.</p>
+
+<div class="lab">1 · The buttons</div>
+<p class="note">Link icon = share. Camera icon = save as image. They're grey until you hover, so they don't compete with the content.</p>
+<div class="grid">
+ <div class="card"><div class="hd"><h2>Cap position</h2>
+  <button class="ib" type="button" title="Share link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></button>
+  <button class="ib" type="button" title="Save as image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button></div>
+  <div class="rows"><div><span>Team salary</span><b>$209.0M</b></div><div><span>Room under 1st apron</span><b>$45K</b></div><div><span>Projected tax bill</span><b>$9.2M</b></div></div></div>
+ <div class="card"><div class="hd"><h2>Cavaliers Depth Chart</h2>
+  <button class="ib" type="button" title="Share link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></button>
+  <button class="ib" type="button" title="Save as image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button></div>
+  <div class="rows"><div><span>PG</span><b>Harden · Porter · Proctor</b></div><div><span>SG</span><b>Mitchell · Merrill · Thomas</b></div><div><span>SF</span><b>Watson · Tyson · Enaruna</b></div></div></div>
+</div>
+
+<div class="lab">2 · What happens when you tap share</div>
+<div class="grid">
+ <div><p class="note"><b>On a phone:</b> the normal iPhone/Android share sheet opens (Messages, X, copy, etc.) with the link to that exact section.</p>
+  <p class="note"><b>On a computer:</b> the link copies and this pops up for two seconds:</p><span class="toast"><i>✓</i> Link copied</span></div>
+ <div><p class="note">Links go straight to the spot, not just the page:</p>
+  <ul><li><span class="pill">cavsdatabase.com/cap#aprons</span></li><li><span class="pill">cavsdatabase.com/roster#depth</span></li><li><span class="pill">cavsdatabase.com/roster#donovan-mitchell</span> opens his player card</li><li><span class="pill">cavsdatabase.com/assets#2028-1st</span> opens that pick</li></ul></div>
+</div>
+
+<div class="lab">3 · How the link looks when it's sent</div>
+<p class="note">This comes from each page's title and the share image that are already live. Every page gets its own title. The image is the same for all pages for now. I could make one image per page later (cap, roster, picks…).</p>
+<div class="grid">
+ <div class="phone"><div class="bub"><img src="/og.jpg?v=3" alt=""><div class="t">Cavaliers Salary Cap 2026–27 & Contracts | cavs_db<small>cavsdatabase.com</small></div></div><div class="blue">we are $45K under the apron 😬</div></div>
+ <div><div class="xcard"><img src="/og.jpg?v=3" alt=""><div class="t">cavsdatabase.com<b>Cavaliers Roster 2026–27 & Depth Chart | cavs_db</b></div></div><p class="note" style="margin-top:8px">How it looks on X</p></div>
+</div>
+
+<div class="lab">4 · Save as image (the capture button)</div>
+<p class="note">Tap the camera and you get a clean, branded picture of that box: wine header with the logo, the box itself, and the page link and date at the bottom. On a phone it opens the share sheet so you can tap “Save Image” or post it straight to X. On a computer it downloads a PNG. It's made in your browser, so it's instant and costs nothing.</p>
+<div class="grid">
+ <div><img class="shot" src="share-capture.png" alt="Sample saved image of the apron chart"><p class="note" style="margin-top:8px">Real output from the apron chart, made from the live page.</p></div>
+ <div><p class="note" style="margin-top:0"><b>Boxes that would get the camera:</b></p>
+  <ul><li>Depth chart (chart and pyramid)</li><li>Player card (photo, bio, stats)</li><li>Cap sheet and cap position</li><li>What each apron allows</li><li>Draft picks owed / owned, and the pick routing</li><li>Trade exceptions</li><li>East standings</li><li>This day in Cavs history</li><li>A game's line in the schedule (final score card)</li></ul>
+  <p class="note" style="margin-top:12px"><b>Why a small icon instead of a big button:</b> people who want it find it fast, and everybody else never notices it. A big “Download” button on every box would clutter the pages.</p>
+  <p class="note"><b>One behind-the-scenes step:</b> NBA.com doesn't let other sites copy its player photos into images. So the site would keep its own copy of each headshot, refreshed by the same job that updates videos. The page looks the same.</p></div>
+</div>
+</div></body></html>
