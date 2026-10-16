@@ -430,6 +430,13 @@ body{background:var(--page)}
 @media (max-width:600px){.block-h.hasx:has(>span:not(.xact))>h2{flex-basis:100%}.block-h.hasx>span:not(.xact){margin-right:auto}.xact{margin-left:8px}}
 /* while an image is being made: let names run a hair wider instead of clipping */
 .capmode .ds-grid .t b{overflow:visible;text-overflow:clip}
+.rcard .rc-x{position:absolute;top:8px;right:8px;margin:0}.rcard .rc-x button{width:26px;height:26px;background:var(--card,var(--bg))}
+/* final score card, built only when someone saves a game as an image */
+.gwrap{position:fixed;left:-10000px;top:0}.gcard{width:420px;background:var(--card,#fff);color:var(--fg);padding:18px 20px 16px;font-family:var(--sans)}
+.gcard .gk{display:flex;justify-content:space-between;font:800 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:3px solid var(--fg);padding-bottom:8px}.gcard .gk b{color:var(--wine-ink)}
+.gcard .gt{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:4px 12px;padding:12px 0 4px}.gcard .gt i{font:800 13px var(--mono);font-style:normal;background:var(--sub);padding:3px 6px;text-align:center}.gcard .gt span{font:700 19px var(--sans)}.gcard .gt b{font:700 34px/1.15 var(--mono);letter-spacing:-.02em;text-align:right}.gcard .gt .lo{color:var(--muted);font-weight:500}.gcard .gt .cle i{background:var(--wine);color:#fff}
+.gcard .gf{display:flex;justify-content:space-between;gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font:600 12.5px var(--sans);color:var(--muted)}.gcard .gf b{color:var(--fg)}
+.sched .gsave{margin-left:6px;width:24px;height:24px;vertical-align:middle;display:inline-grid}
 @media print{.xact{display:none}}
 
 .gbar{cursor:default}
@@ -794,7 +801,7 @@ table.apt{width:100%;min-width:0;border-collapse:collapse;font-size:13px;table-l
 .begm{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;padding:10px 14px;background:var(--card);border:1px solid var(--line);border-left:4px solid #F2B231;font-size:13.5px}.begm b{font:800 11px var(--sans);text-transform:uppercase;letter-spacing:.1em;color:var(--fg)}.begm a{font-weight:600}
 .rt-dr{font:500 14px var(--mono);white-space:nowrap;color:var(--wine-ink);text-decoration:none}.rt-dr:hover{text-decoration:underline}@media (max-width:520px){.rt-dr{font-size:12.5px}}
 .xl summary small.nx{color:var(--wine-ink);font-weight:600}.nxbox{margin:0 0 8px;padding:10px 12px;border:1px solid var(--line);background:var(--bg)}.nxl{margin:4px 0 6px;padding-left:18px;font-size:12.5px}.nxl li{border:0!important;margin-bottom:2px}.nxw{font-size:12px;color:var(--muted);margin:0 0 6px!important}.nxbox a{font-size:12.5px;font-weight:600}
-.rcard{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;background:var(--sub);border-left:3px solid var(--wine);margin:2px 0 8px}
+.rcard{position:relative;display:flex;gap:12px;align-items:flex-start;padding:10px 12px;background:var(--sub);border-left:3px solid var(--wine);margin:2px 0 8px}
 .rc-ph{flex:0 0 64px;width:64px;height:64px;border-radius:50%;overflow:hidden;background:var(--line);display:grid;place-items:center;font:700 18px var(--sans);color:var(--muted);border:2px solid var(--wine)}.rc-ph img{width:100%;height:100%;object-fit:cover;object-position:top}
 .rc-in{min-width:0;display:flex;flex-direction:column;gap:1px}.rc-in>b{font-size:14px;color:var(--fg)}.rc-bio,.rc-sz{font-size:12px;color:var(--muted)}.rc-sz{margin-top:4px;color:var(--fg2);font-weight:600}
 .rc-st{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}.rc-st div{background:var(--bg);border:1px solid var(--line);padding:3px 7px;text-align:center;min-width:44px}.rc-st b{display:block;font:700 13px var(--mono);color:var(--fg)}.rc-st span{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
@@ -2166,7 +2173,7 @@ EXC.forEach(([a,full,exp,how,used])=>{const spent=used.reduce((t,u)=>t+u[2],0),l
   P('Under the 1st apron:','The Cavs are hard-capped with '+usd(HC_ROOM*1e6)+' of room, so they can only use as much of this as fits under '+usd(209015000)+' unless they shed salary first.');
   d.append(sm,bx);li.appendChild(d);ex.appendChild(li)});
 const rt=document.getElementById('rights');rt.className='xl';RIGHTS.forEach(([n,p2,dd,c])=>{const X=RIGHTS_X[n]||[];const yr=dd.slice(0,4);
-  const li=el('li');const de=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,n),el('small',null,p2+' · '+c));
+  const li=el('li');li.id='d-'+slug(n);const de=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,n),el('small',null,p2+' · '+c));
   const NXT=INTL_NEXT[n],today=new Date(new Date().toLocaleString('en-US',{timeZone:'America/New_York'})).toISOString().slice(0,10);const up=NXT?NXT.g.filter(g=>g[0]>=today):[];
   const gtxt=g=>new Date(g[0]+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})+' · '+(g[2]==='H'?'vs ':g[2]==='A'?'at ':'vs ')+g[1]+' ('+g[3]+')'+(g[4]?' · '+g[4]:'');
   if(up.length)l.appendChild(el('small','nx','Next: '+gtxt(up[0])));const dla=el('a','mono rt-dr',dd+' ↗');dla.href='https://www.basketball-reference.com/draft/NBA_'+yr+'.html';dla.target='_blank';dla.rel='noopener';dla.title=yr+' NBA draft';sm.append(l,dla);
@@ -2175,6 +2182,11 @@ const rt=document.getElementById('rights');rt.className='xl';RIGHTS.forEach(([n,
     const info=el('div','rc-in');info.append(el('b',null,n),el('span','rc-bio',[C.pos,C.ht,C.nat].filter(Boolean).join(' · ')),el('span','rc-bio',C.born?'Born '+C.born:''));
     const [sz,tm,lg,gp,pp,rp,ap,fg,tp]=C.s;const sts=el('div','rc-st');[['GP',gp],['PPG',pp],['RPG',rp],['APG',ap],['FG%',fg],['3P%',tp]].forEach(([k,v])=>{if(v==null)return;const x=el('div');x.append(el('b',null,typeof v==='number'&&k!=='GP'?v.toFixed(1):String(v)),el('span',null,k));sts.appendChild(x)});
     info.append(el('span','rc-sz',[sz,tm,lg].filter(Boolean).join(' · ')),sts);cd.append(ph,info);bx.appendChild(cd);
+    {const xa=el('span','xact rc-x');const s1=el('button');s1.type='button';s1.title='Share link';s1.setAttribute('aria-label','Share a link to '+n);const s2=el('button');s2.type='button';s2.title='Save as image';s2.setAttribute('aria-label','Save '+n+'\u2019s card as an image');
+     
+     s1.onclick=()=>window.cdbShare&&window.cdbShare('assets',slug(n),n+', Cavs draft rights');
+     s2.onclick=()=>{if(!window.cdbCap)return;const parts=[cd];[...bx.children].forEach(c=>{if(c.classList.contains('rc-note')||c.classList.contains('rc-hl'))parts.push(c)});window.cdbCap('assets',slug(n),n,parts,s2)};
+     xa.append(s1,s2);cd.appendChild(xa)}
     if(C.s[9])bx.appendChild(el('p','rc-note',C.s[9]));
     if(C.hl&&C.hl.length){const ul=el('ul','rc-hl');C.hl.forEach(h=>ul.appendChild(el('li',null,h)));bx.appendChild(ul)}}}
   if(X[0])P('Status:',X[0]);
@@ -2217,6 +2229,12 @@ RES.forEach(([g,items])=>{const sec=el('section');const h=el('div','block-h');h.
 
 /* schedule page */
 const sc=document.getElementById('sched');let curM='';let tb;
+/* final score card for "save as image" */
+function gameCard(i){const g=SCHEDULE[i],[cs,os]=(SCORES[g[0]]||'0-0').split('-').map(Number),won=cs>os;let w=0,l=0;for(let k=0;k<=i;k++){if(res[k]==='W')w++;else if(res[k]==='L')l++}
+  const c=el('div','gcard');const k=el('div','gk');const tag=(NBAG[g[0]]||[])[7];k.append(el('b',null,'Final'+(tag?' · '+tag.replace('Emirates ','').replace('AWS NBA ',''):'')),el('span',null,new Date(g[0]+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'})));
+  const t=el('div','gt');const team=(ab,name,pts,win,cle)=>{const i2=el('i',null,ab),s2=el('span',win?null:'lo',name),b2=el('b',win?null:'lo',String(pts));if(cle){i2.className='';}const wrap=[i2,s2,b2];if(cle)i2.style.cssText='background:#860038;color:#fff';t.append(...wrap)};
+  const away=g[2]==='H'?[g[1],TEAMS[g[1]],os,!won,0]:['CLE','Cleveland',cs,won,1],home=g[2]==='H'?['CLE','Cleveland',cs,won,1]:[g[1],TEAMS[g[1]],os,!won,0];team(...away);team(...home);
+  const f=el('div','gf');const rec=el('span');rec.append('Cavs ',el('b',null,w+'–'+l),won?' · W':' · L');f.append(rec,el('span',null,g[2]==='H'?'Rocket Arena, Cleveland':'at '+TEAMS[g[1]]));c.append(k,t,f);return c}
 const mFmt=new Intl.DateTimeFormat('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
 /* league dates shown as marker rows between games */
 const SCHED_MARKS=[['2026-11-27','NBA Cup group play ends'],['2026-12-04','NBA Cup knockout rounds (Dec 4–11). Two more Cavs games are scheduled once the bracket is set.'],['2027-02-11','Trade deadline'],['2027-02-18','All-Star break · All-Star Weekend in Phoenix, Feb 19–21'],['2027-04-13','Play-In Tournament (Apr 13–16)']];
@@ -2233,7 +2251,10 @@ SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
   const tvc=el('td','tvc');if(tv.nat)tvc.appendChild(el('b',null,tv.nat));if(tv.loc)tvc.appendChild(el('span',null,tv.loc));if(tv.opp)tvc.appendChild(el('small',null,TEAMS[g[1]]+': '+tv.opp));if(!tv.nat&&!tv.loc)tvc.appendChild(el('span','dim','TBA'));
   const rac=el('td','tvc');rac.appendChild(el('span',null,ra.cavs));rac.appendChild(el('small',null,ra.nat));if(ra.opp)rac.appendChild(el('small',null,TEAMS[g[1]]+': '+ra.opp));
   const lk=el('td','r');if(r){const b=el('a',null,'Box score ↗');b.title=boxSrc(g[0]);b.href=boxUrl(g[0]);b.target='_blank';b.rel='noopener';lk.appendChild(b)}else{const pv=gameUrl(g[0]);if(pv){const b=el('a',null,'Preview ↗');b.title='NBA.com game page';b.href=pv;b.target='_blank';b.rel='noopener';lk.appendChild(b)}}
-  tr.append(el('td','mono',shortFmt.format(tipOf(g))),op,el('td','mono dim',g[3]+' PM'),tvc,rac,el('td','r mono',r?(r+(SCORES[g[0]]?' '+SCORES[g[0]].replace('-','–'):'')):''),lk);if(mtag)tr.appendChild(mtag);
+  const rtd=el('td','r mono',r?(r+(SCORES[g[0]]?' '+SCORES[g[0]].replace('-','–'):'')):'');
+  if(r&&SCORES[g[0]]){const xa=el('span','xact gsave');const b2=el('button');b2.type='button';b2.title='Save final score as an image';b2.setAttribute('aria-label','Save the final score as an image');
+    b2.onclick=async()=>{if(!window.cdbCap)return;const card=gameCard(i),gw=el('div','gwrap');gw.appendChild(card);document.body.appendChild(gw);try{await window.cdbCap('schedule','g-'+g[0],'Final score',[card],b2)}finally{gw.remove()}};xa.appendChild(b2);rtd.appendChild(xa)}
+  tr.append(el('td','mono',shortFmt.format(tipOf(g))),op,el('td','mono dim',g[3]+' PM'),tvc,rac,rtd,lk);if(mtag)tr.appendChild(mtag);
   if(i===ni)tr.classList.add('nextg');tb.appendChild(tr);
   if(i===ni){const pr=el('tr','gprev');const td=el('td');td.colSpan=7;const o=g[1];
     const rec=a=>{const t=STANDINGS.find(x=>x[0]===a);return t?t[2]+'–'+t[3]:'0–0'};const nrt=a=>NRTG[a]?sgn(NRTG[a][0]):'—';
@@ -3019,8 +3040,10 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
  const toData=b=>new Promise(r=>{const f=new FileReader();f.onload=()=>r(f.result);f.onerror=()=>r(false);f.readAsDataURL(b)});
  const HSRE=/headshots\/nba\/latest\/260x190\/(\d+)\.png/,HSC=new Map();
  const local=id=>HSC.get(id)||(HSC.set(id,fetch('/img/h/'+id+'.png').then(r=>r.ok?r.blob().then(toData):false).catch(()=>false)),HSC.get(id));
- const fetchFn=async url=>{const m=HSRE.exec(url);return m?await local(m[1]):false};
- const warm=root=>Promise.all([...root.querySelectorAll('img')].map(i=>{const m=HSRE.exec(i.currentSrc||i.src||'');return m?local(m[1]):null}));
+ let XMAP=null;const xmap=()=>XMAP||(XMAP=fetch('/img/x/map.json').then(r=>r.ok?r.json():{}).catch(()=>({})));const XC=new Map();
+ const fetchFn=async url=>{const m=HSRE.exec(url);if(m)return await local(m[1]);if(url.startsWith(location.origin)||url.startsWith('data:'))return false;
+  const p=(await xmap())[url];if(!p)return false;if(!XC.has(p))XC.set(p,fetch(p).then(r=>r.ok?r.blob().then(toData):false).catch(()=>false));return await XC.get(p)};
+ const warm=root=>Promise.all([...root.querySelectorAll('img')].map(i=>fetchFn(i.currentSrc||i.src||'')));
  const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
  const LOGO='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#860038" stroke-width="2" fill="none"/></svg>';
  const img=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
@@ -3064,16 +3087,16 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
    if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]}))toast('Image ready','Save or share',save);else save();
   }catch(e){toast('Couldn’t make the image. Try again.')}
   finally{boxes[0].removeAttribute('data-capfirst');if(capEl)capEl.classList.remove('capmode');btn.disabled=false}}
- function attach(){T.forEach(([id,route,hdr,boxes,label])=>{const h=hdr();if(!h||h.dataset.anchor)return;h.dataset.anchor=id;h.classList.add('hasx');
+ function attach(){document.querySelectorAll('.rc-x button:empty').forEach((b,i)=>{b.innerHTML=b.title==='Share link'?I_L:I_C});document.querySelectorAll('.gsave button:empty').forEach(b=>{b.innerHTML=I_C});T.forEach(([id,route,hdr,boxes,label])=>{const h=hdr();if(!h||h.dataset.anchor)return;h.dataset.anchor=id;h.classList.add('hasx');
   const w=document.createElement('span');w.className='xact';
   const b1=document.createElement('button');b1.type='button';b1.innerHTML=I_L;b1.title='Share link';b1.setAttribute('aria-label','Share a link to '+label);b1.onclick=()=>share(route,id,label);
   const b2=document.createElement('button');b2.type='button';b2.innerHTML=I_C;b2.title='Save as image';b2.setAttribute('aria-label','Save '+label+' as an image');b2.onclick=()=>{const bx=boxes().filter(Boolean);if(bx.length)capture(route,id,label,bx,b2)};
   w.append(b1,b2);h.appendChild(w)})}
- window.cdbAttachX=attach;
+ window.cdbAttachX=attach;window.cdbCap=capture;window.cdbShare=share;window.cdbIcons=[I_L,I_C];
  /* deep links: /assets#picks-owed, /roster#donovan-mitchell, /cap#donovan-mitchell */
  function jump(){const h=decodeURIComponent(location.hash.slice(1));if(!h)return;attach();
-  const t=document.querySelector('[data-anchor="'+h.replace(/"/g,'')+'"]')||document.getElementById(h)||document.getElementById('r-'+h)||document.getElementById('p-'+h)||document.getElementById('s-'+h);
-  if(!t||t.closest('[hidden]'))return;const b=t.querySelector&&t.querySelector('.pbtn');if(b&&b.getAttribute('aria-expanded')!=='true')b.click();
+  const t=document.querySelector('[data-anchor="'+h.replace(/"/g,'')+'"]')||document.getElementById(h)||document.getElementById('r-'+h)||document.getElementById('p-'+h)||document.getElementById('s-'+h)||document.getElementById('d-'+h)||document.getElementById('g-'+h);
+  if(!t||t.closest('[hidden]'))return;const dt=t.querySelector&&t.querySelector('details');if(dt)dt.open=true;const b=t.querySelector&&t.querySelector('.pbtn');if(b&&b.getAttribute('aria-expanded')!=='true')b.click();
   t.scrollIntoView({block:t.dataset.anchor?'start':'center'});if(!t.dataset.anchor){t.classList.remove('flash');void t.offsetWidth;t.classList.add('flash')}}
  const run=()=>{attach();setTimeout(attach,600)};run();setTimeout(jump,450);
  addEventListener('popstate',()=>setTimeout(attach,50));addEventListener('hashchange',()=>setTimeout(jump,50));
