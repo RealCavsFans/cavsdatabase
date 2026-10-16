@@ -862,7 +862,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 .tip{font-weight:700;color:var(--wine-ink);text-decoration:none;border-bottom:2px solid #F2B231}
 .gp{display:block}.gp-k{display:block;margin-bottom:6px}
 .gp-teams{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center;margin-bottom:8px}
-@media (min-width:761px){.gp{display:block;max-width:560px}.gp-k{display:block;margin-bottom:6px}.gp-teams{padding:10px 14px;background:var(--card,var(--bg));border:1px solid var(--line2)}.gp-f{margin-top:8px}}
+@media (min-width:761px){.gp{display:grid;grid-template-columns:minmax(0,560px) minmax(0,1fr);gap:6px 14px;align-items:stretch}.gp-k{grid-column:1/-1}.gp-teams{grid-column:1;margin:0;padding:10px 14px;background:var(--card,var(--bg));border:1px solid var(--line2)}.gp .gp-f{grid-column:2;margin:0;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:10px;padding:14px 16px;background:var(--card,var(--bg));border:1px solid var(--line2);font-size:13.5px}.gp .gp-f .gp-i{display:block}.gp .gp-links{flex:0 0 auto;margin-top:auto;padding-top:10px;border-top:1px solid var(--line2)}}
 .gp-t{display:flex;flex-direction:column;gap:1px}.gp-t b{font:800 14px var(--sans);color:var(--fg)}.gp-t span{font:500 12px var(--mono);color:var(--fg2)}
 .gp-teams .gp-t:nth-child(3){text-align:right}
 .gp-links{flex-basis:100%;width:100%;display:flex;justify-content:space-between;gap:12px}.gp-links .gp-l{margin:0}
