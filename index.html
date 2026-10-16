@@ -3008,7 +3008,7 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
  const coarse=()=>matchMedia('(pointer: coarse)').matches;
  let tt=0;const toast=(msg,btn,fn)=>{let t=$('xtoast');if(!t){t=document.createElement('div');t.id='xtoast';t.className='xtoast';t.setAttribute('role','status');document.body.appendChild(t)}
   t.innerHTML='';const i=document.createElement('i');i.textContent='✓';t.append(i,msg);if(btn){const b=document.createElement('button');b.type='button';b.textContent=btn;b.onclick=()=>{t.classList.remove('on');fn()};t.appendChild(b)}
-  t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),btn?6000:2200)};
+  t.classList.add('on');clearTimeout(tt);if(msg.endsWith('…'))return;tt=setTimeout(()=>t.classList.remove('on'),btn?6000:2200)};
  const pageUrl=(route,id)=>'https://cavsdatabase.com'+(route==='home'?'/':'/'+route)+'#'+id;
  function share(route,id,label){const url=pageUrl(route,id),title=label+' | cavs_db';
   if(navigator.share&&coarse()){navigator.share({title,url}).catch(()=>{});return}
@@ -3035,7 +3035,11 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
     const pc=getComputedStyle(parent);hgt=parseFloat(pc.paddingTop)+parseFloat(pc.paddingBottom)+parseFloat(pc.borderTopWidth)+parseFloat(pc.borderBottomWidth);boxes.forEach((b,i)=>{const bc=getComputedStyle(b);hgt+=b.offsetHeight+(i?parseFloat(bc.marginTop):0)+(i<boxes.length-1?parseFloat(bc.marginBottom):0)});hgt=Math.ceil(hgt)+240}
    el.classList.add('capmode');capEl=el;
    let bg=getComputedStyle(el).backgroundColor;if(!bg||bg==='rgba(0, 0, 0, 0)'||bg==='transparent'){let a=el.closest('section')||el.parentElement;while(a){const b=getComputedStyle(a).backgroundColor;if(b&&b!=='rgba(0, 0, 0, 0)'&&b!=='transparent'){bg=b;break}a=a.parentElement}if(!a)bg=getComputedStyle(document.body).backgroundColor}
-   const S=2,pad=16;await Promise.all(boxes.map(warm));const opts={scale:S,backgroundColor:bg,fetchFn,timeout:10000,style:hgt?{margin:'0',height:hgt+'px',minHeight:'0'}:{margin:'0'},...(hgt?{height:hgt}:{}),
+   const S=2,pad=16;
+   /* lazy photos that haven't loaded yet make the drawing wait; load them now (max 3s) */
+   const lz=[];boxes.forEach(b=>b.querySelectorAll('img').forEach(i=>{if(i.loading==='lazy')i.loading='eager';if(!i.complete)lz.push(new Promise(r=>{i.addEventListener('load',r,{once:true});i.addEventListener('error',r,{once:true})}))}));
+   await Promise.race([Promise.all(lz),new Promise(r=>setTimeout(r,3000))]);
+   await Promise.all(boxes.map(warm));const opts={scale:S,backgroundColor:bg,fetchFn,timeout:6000,style:hgt?{margin:'0',height:hgt+'px',minHeight:'0'}:{margin:'0'},...(hgt?{height:hgt}:{}),
      filter:n=>{if(n.nodeType!==1)return true;if(n.classList.contains('xact'))return false;if(n.classList.contains('dc-pg')&&n.classList.contains('top'))return false;if(keep&&n.parentElement===parent&&!keep.has(n))return false;return true},
      onCloneNode:c=>{if(c.nodeType!==1)return;if(c.tagName==='IMG')c.removeAttribute('loading');if(c.getAttribute('data-capfirst')){c.style.marginTop='0';c.removeAttribute('data-capfirst')}}};
    /* the browser can drop photos on the very first drawing; a quick small draw first fixes it */
