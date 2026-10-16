@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Cleveland Cavaliers reference: record, schedule, roster, salary cap, contracts, key dates, injuries and the Cleveland Charge.">
-<title>cavs_db · cavsdatabase.com</title>
+<meta name="description" content="Everything Cavaliers. Everything you need. The Cavs record, next game and TV, key dates, injuries, salary cap and the Cleveland Charge, updated daily.">
+<title>cavs_db · Cleveland Cavaliers Schedule, Roster &amp; Cap</title>
 <link rel="canonical" href="https://cavsdatabase.com/">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="theme-color" content="#860038">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="cavs_db">
 <meta property="og:url" content="https://cavsdatabase.com/">
-<meta property="og:title" content="cavs_db · cavsdatabase.com">
-<meta property="og:description" content="Cleveland Cavaliers reference: record, schedule, roster, salary cap, contracts, key dates, injuries and the Cleveland Charge.">
+<meta property="og:title" content="cavs_db · Cleveland Cavaliers Schedule, Roster &amp; Cap">
+<meta property="og:description" content="Everything Cavaliers. Everything you need. The Cavs record, next game and TV, key dates, injuries, salary cap and the Cleveland Charge, updated daily.">
 <meta property="og:image" content="https://cavsdatabase.com/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -376,7 +376,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
   /* phone: record, next game, then history / injuries / Charge, then the rest */
   .home{grid-template-columns:minmax(0,1fr);gap:36px}
   .col,.side{display:contents}
-  .o-rec{order:1}.o-next{order:2}.side>*{order:3}.o-vid{order:4}.o-dates{order:5}.o-cap{order:6}
+  .o-rec{order:1}.o-next{order:2}.o-dates{order:3}.o-otd{order:4}.o-vid{order:5}.side>*{order:6}.side>.o-otd{order:4}.side>.o-vid{order:5}.o-cap{order:7}
   .room{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:8px}
 }
 @media (max-width:520px){
@@ -804,12 +804,15 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 @media (max-width:520px){.fb{padding:10px 12px;font-size:12.5px}.fb b{font-size:13.5px}.fb p{font-size:11.5px;margin:2px 0 6px}.fb textarea{height:58px;font-size:13px;padding:6px 8px;margin-bottom:6px}.fb input{font-size:13px;padding:6px 8px;margin-bottom:6px}#fb-s{padding:6px 14px}}
 .ci{position:fixed;inset:0;z-index:80;background:#101419;color:#EEF0EC;display:flex;align-items:center;justify-content:center;transition:opacity .6s,transform .6s}
 .ci.out{opacity:0;transform:scale(1.03);pointer-events:none}
-.ci-ln{font:500 clamp(18px,3.4vw,40px) var(--mono);white-space:pre;max-width:92vw;overflow:hidden}.ci-ln b{color:#F2B231;margin-right:.5em}
+.ci-ln{font:500 clamp(14px,4.1vw,40px) var(--mono);white-space:pre;max-width:92vw;overflow:hidden}.ci-ln b{color:#F2B231;margin-right:.5em}
 .ci-cur{display:inline-block;width:.5em;height:1.05em;background:#F2B231;vertical-align:-.18em;margin-left:.08em;animation:ciB 1s steps(1) infinite}@keyframes ciB{50%{opacity:0}}
 .ci-br{position:absolute;inset:0;background:#7A1F33;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;text-align:center;padding:0 16px}
 .ci-br.on{opacity:1}.ci-logo{width:clamp(64px,9vw,110px)}.ci-wm{font:600 clamp(56px,11vw,132px)/1 var(--mono);color:#fff;margin-top:10px;letter-spacing:-.03em}.ci-wm span{color:#F2B231}
 .ci-tg{font:700 clamp(22px,3.4vw,42px)/1.25 var(--sans);color:#fff;margin:22px 0 0;opacity:0;transform:translateY(8px);transition:all .45s}.ci-tg.on{opacity:1;transform:none}.ci-tg em{display:block;font-style:normal;color:#F2B231}
 .ci-skip{position:absolute;right:18px;bottom:18px;z-index:2;background:none;border:1px solid rgba(255,255,255,.35);color:#fff;font:600 13px var(--sans);padding:8px 14px;cursor:pointer}
+.injx{display:inline-grid;place-items:center;width:13px;height:13px;margin-left:4px;border-radius:3px;background:#C8102E;color:#fff;font:800 11px/1 var(--sans);font-style:normal;vertical-align:1px}
+@media (max-width:720px){table.comps,table.comps tbody{display:block;width:100%}table.comps thead{display:none}table.comps tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 10px;padding:6px 0;border-bottom:1px solid var(--line2)}table.comps td{border:0!important;padding:0!important;white-space:normal}table.comps td:nth-child(1){grid-column:1;font-weight:600}table.comps td:nth-child(2){grid-column:1;font-size:12px;color:var(--muted)}table.comps td:nth-child(3){grid-column:2;grid-row:1}table.comps td:nth-child(4){grid-column:2;grid-row:2;font-size:12px;color:var(--muted)}}
+.tip{font-weight:700;color:var(--wine-ink);text-decoration:none;border-bottom:2px solid #F2B231}
 .tks{display:inline-flex;gap:10px;flex:0 0 auto}
 .tk{display:inline-flex;align-items:center;gap:4px;font:600 11.5px var(--sans);white-space:nowrap;color:var(--fg2)}.tk i{font-style:normal;font-weight:800}
 .tk.y i{color:#2E7D4F}.tk.n{color:var(--muted)}.tk.n i{color:var(--wine-ink)}.tk.out{color:var(--fg2)}.tk.out i{color:var(--wine-ink)}
@@ -925,7 +928,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
       </section>
 
       <section class="o-cap" aria-labelledby="cap-h">
-        <div class="block-h"><h2 id="cap-h">Cap position</h2><a href="/cap" data-go="cap">Cap sheet</a></div>
+        <div class="block-h"><h2 id="cap-h">Cap position</h2><a href="/cap" data-go="cap">Full cap sheet →</a></div>
         <div class="capsum">
           <div class="capsum-main">
             <div class="payroll mono" id="payroll"></div>
@@ -940,7 +943,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
     </div>
 
     <div class="side">
-    <section class="rail" aria-labelledby="otd-h">
+    <section class="rail o-otd" aria-labelledby="otd-h">
       <div class="block-h"><h2 id="otd-h">This day in Cavs history</h2></div>
       <div class="otd-row"><div class="dcal" id="dcal" aria-hidden="true"></div><div class="otd-when" id="otd-when"></div></div>
       <p class="otd-text" id="otd-text"></p>
@@ -1032,7 +1035,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
     <div>
       <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Resources</div>
       <h1 style="margin-top:6px">Resources</h1>
-      <p class="dim" style="margin:6px 0 0">Where to go for the numbers this site doesn't carry.</p>
+      <p class="dim" style="margin:6px 0 0">Where to go for the information this site doesn't carry.</p>
     </div>
     <div class="cols" id="res"></div>
   </div>
@@ -1169,6 +1172,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 <noscript><nav aria-label="Pages" style="padding:16px"><a href="/">Home</a> · <a href="/schedule">Cavaliers schedule</a> · <a href="/roster">Cavaliers roster</a> · <a href="/staff">Coaches &amp; front office</a> · <a href="/cap">Cavaliers salary cap</a> · <a href="/assets">Draft picks &amp; exceptions</a> · <a href="/moves">Transactions</a> · <a href="/charge">Cleveland Charge</a> · <a href="/media">Media</a> · <a href="/resources">Resources</a></nav></noscript>
 <footer><div class="wrap">
   <span>cavsdatabase.com · Independent fan reference. Not affiliated with the Cleveland Cavaliers or the NBA.</span>
+  <a id="tip" class="tip" hidden target="_blank" rel="noopener">Like the site? Throw the hammer down →</a>
 </div></footer>
 
 <script>
@@ -2295,8 +2299,8 @@ function renderVideo(list){
   one.appendChild(txt);home.appendChild(one);
   if(!list||!list.length){page.appendChild(posters(VLINKS));return}
   VCATS.concat([['Latest uploads',/./]]).forEach(([name,re])=>{const vs=list.filter(v=>re.test(v.title)).slice(0,name==='Latest uploads'?12:9);if(!vs.length)return;
-    const sec=el('section');const h=el('div','block-h');h.appendChild(el('h2',null,name));sec.appendChild(h);const gg=el('div','vgrid');vs.forEach(v=>gg.appendChild(vCard(v)));sec.appendChild(gg);page.appendChild(sec)});
-  page.appendChild(linkList(VLINKS.slice(1)))}
+    const sec=el('section');const h=el('div','block-h');h.appendChild(el('h2',null,name));const vl=VLINKS.find(x=>x[0]===name);if(vl){const ya=el('a',null,'YouTube ↗');ya.href=vl[2];ya.target='_blank';ya.rel='noopener';h.appendChild(ya)}sec.appendChild(h);const gg=el('div','vgrid');vs.forEach(v=>gg.appendChild(vCard(v)));sec.appendChild(gg);page.appendChild(sec)});
+}
 renderVideo(null);
 if(ON_DOMAIN)fetch('/videos.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(d=>{if(d&&d.length)renderVideo(d)}).catch(()=>{});
 
@@ -2700,7 +2704,8 @@ function buildDepth(){
   const lastN=n=>n.split(' ').filter(w=>!/^(Jr\.|III|II)$/.test(w)).pop();
   const face=(p,cls)=>'<span class="'+cls+'"><img src="'+HSU(p[12])+'" alt="" loading="lazy" onerror="this.remove()"></span>';
   const link=(p,inner)=>'<a href="'+profileUrl(p[1],p[12])+'" target="_blank" rel="noopener">'+inner+'</a>';
-  const nm=p=>'<span class="t"><b>'+p[1]+' <em>#'+p[0]+'</em></b>'+(p[11]==='TW'?'<span>two-way</span>':'')+'</span>';
+  const INJ=n=>{const r=INJURIES.find(x=>x[0]===n);return r?'<i class="injx" title="'+r[2]+': '+r[3]+'">+</i>':''};
+  const nm=p=>'<span class="t"><b>'+p[1]+INJ(p[1])+' <em>#'+p[0]+'</em></b>'+(p[11]==='TW'?'<span>two-way</span>':'')+'</span>';
   /* chart */
   let h='<div class="dsheet"><div class="ds-hdr"><b>Cavaliers Depth Chart</b><span class="dsw" role="group" aria-label="Depth view"><button type="button" data-dv="chart" aria-pressed="true">Chart</button><button type="button" data-dv="pyr" aria-pressed="false">Pyramid</button></span></div>';
   h+='<div id="dv-chart"><div class="ds-grid"><div class="ch">Pos</div><div class="ch s1">Starter</div><div class="ch">2nd</div><div class="ch">3rd</div><div class="ch">Two-way</div>';
@@ -2709,7 +2714,7 @@ function buildDepth(){
   h+='</div><div class="ds-foot">Tinted column = starting lineup · names link to player profiles</div></div>';
   /* pyramid */
   h+='<div id="dv-pyr" hidden><div class="pyr">';
-  DEPTH_TIERS.forEach(([t,d,ns],i)=>{h+='<div class="pt pt'+(i+1)+'"><div class="pt-band"><div class="pt-faces">'+ns.map(n=>{const p=P(n);return link(p,face(p,'pf')+'<b>'+lastN(n)+'</b><span>'+(MPG[n]!=null?MPG[n].toFixed(1)+' mpg':'#'+p[0])+'</span>')}).join('')+'</div></div><div class="pt-lab"><b>'+t+'</b><span>'+d+'</span></div></div>'});
+  DEPTH_TIERS.forEach(([t,d,ns],i)=>{h+='<div class="pt pt'+(i+1)+'"><div class="pt-band"><div class="pt-faces">'+ns.map(n=>{const p=P(n);return link(p,face(p,'pf')+'<b>'+lastN(n)+INJ(n)+'</b><span>'+(MPG[n]!=null?MPG[n].toFixed(1)+' mpg':'#'+p[0])+'</span>')}).join('')+'</div></div><div class="pt-lab"><b>'+t+'</b><span>'+d+'</span></div></div>'});
   h+='</div><div class="ds-foot">Tiers are an editorial call and will follow minutes once the season starts</div></div></div>';
   const rd=document.getElementById('rv-depth');rd.innerHTML=h;
   rd.querySelectorAll('[data-dv]').forEach(b=>b.addEventListener('click',()=>{rd.querySelectorAll('[data-dv]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));document.getElementById('dv-chart').hidden=b.dataset.dv!=='chart';document.getElementById('dv-pyr').hidden=b.dataset.dv!=='pyr'}));
@@ -2801,6 +2806,23 @@ function loadRcf(){if(rcfLoaded)return;rcfLoaded=true;
       if(!r.ok)throw 0;document.getElementById('fb-ask').hidden=true;document.getElementById('fb-done').hidden=false;put({...get(),sent:1});setTimeout(()=>F.hidden=true,3500)}
     catch(err){b.disabled=false;b.textContent='Send';location.href='mailto:rcfwriter@gmail.com?subject='+encodeURIComponent('cavsdatabase.com feedback')+'&body='+encodeURIComponent(t)}});
 })();
+/* page titles and descriptions (browser tab, search results, link previews); scripts/build-pages.mjs bakes them into per-page copies */
+const PAGE_META={
+ 'home':['cavs_db · Cleveland Cavaliers Schedule, Roster & Cap','Everything Cavaliers. Everything you need. The Cavs record, next game and TV, key dates, injuries, salary cap and the Cleveland Charge, updated daily.'],
+ 'schedule':['Cavaliers 2026–27 Schedule, TV & Standings | cavs_db','All 82 Cavs games with TV and radio for each, results, East standings and the playoff race. National TV, DAZN and free over-the-air games marked.'],
+ 'roster':['Cavaliers Roster 2026–27 & Depth Chart | cavs_db','Every Cavs player with height, wingspan, age, college, how he was acquired and his socials, plus the depth chart and combine measurements.'],
+ 'staff':['Cavaliers Coaches & Front Office | cavs_db','Kenny Atkinson, Koby Altman and the full Cavs coaching staff and front office, with career timelines, coaching records and crossover with current players.'],
+ 'cap':['Cavaliers Salary Cap 2026–27 & Contracts | cavs_db','The Cavs cap sheet: every contract by season, the first-apron hard cap, tax bill, options, extension dates, two-way deals and a 145-term CBA glossary.'],
+ 'assets':['Cavaliers Draft Picks & Trade Exceptions | cavs_db','Every pick the Cavs own and owe through 2033 with protections and full trade history, plus trade exceptions left and unsigned draft rights.'],
+ 'moves':['Cavaliers Transactions & Trades Since 2017 | cavs_db','Every Cavs trade, signing, extension, draft pick and waiver since 2017, with what moved in each deal.'],
+ 'charge':['Cleveland Charge 2026–27 Schedule & Roster | cavs_db','The Cavs’ G League affiliate: full schedule with results, two-way and affiliate players, and coach and front office bios.'],
+ 'media':['Cavaliers Video & RealCavsFans Articles | cavs_db','The latest Cavs press conferences and highlights from the team’s YouTube channel, plus articles and recaps from RealCavsFans.com.'],
+ 'media/rcf':['RealCavsFans.com Articles & Recaps | cavs_db','The latest Cavs articles, recaps and previews from RealCavsFans.com, plus @realcavsfans on X.'],
+ 'resources':['Cavaliers & NBA Stats, Cap and Draft Sites | cavs_db','The sites worth bookmarking for Cavs fans: stats, salary cap tools, trade machines, draft boards, franchise history and the RealCavsFans forum.']
+};
+/* tip jar: set to the Buy Me a Coffee page address to show the footer link */
+const TIP_URL='';
+{const t=document.getElementById('tip');if(t&&TIP_URL){t.href=TIP_URL;t.hidden=false}}
 const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge','rcf'];
 /* page titles and descriptions per route (search engines and browser tabs) */
 const ROUTE_ALIAS={video:'media',rcf:'media/rcf'};
@@ -2812,6 +2834,7 @@ function show(route){
   BUILT.forEach(v=>{document.getElementById('view-'+v).hidden=id!==v});
   const stub=document.getElementById('view-stub');stub.hidden=BUILT.includes(id);
   tabs.querySelectorAll('[data-go]').forEach(b=>b.setAttribute('aria-selected',b.dataset.go===(id==='video'||id==='rcf'?'media':id)?'true':'false'));
+  {const M=PAGE_META[route]||PAGE_META[id]||PAGE_META.home;document.title=M[0];const set=(sel,v)=>{const e=document.querySelector(sel);if(e)e.setAttribute('content',v)};set('meta[name=description]',M[1]);set('meta[property="og:title"]',M[0]);set('meta[property="og:description"]',M[1])}
   const path=route==='home'?'/':'/'+route;const cl=document.querySelector('link[rel=canonical]');if(cl)cl.href='https://cavsdatabase.com'+path;const ou=document.querySelector('meta[property="og:url"]');if(ou)ou.content='https://cavsdatabase.com'+path;
   window.scrollTo(0,0);
   if(window.scrambleView)scrambleView(id);
@@ -2830,7 +2853,7 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
   const H=['Mitchell player option','2028 first round pick','what is the second apron?','Charge schedule','Mobley contract','when is the trade deadline?'];let i=0,j=0,del=false;
   const tick=()=>{if(document.activeElement===q||q.value){q.placeholder='Search';setTimeout(tick,1500);return}const h=H[i];
     if(!del){j++;q.placeholder='Try: '+h.slice(0,j);if(j===h.length){del=true;setTimeout(tick,1600);return}}
-    else{j--;q.placeholder=j?'Try: '+h.slice(0,j):'Search';if(j===0){del=false;i=(i+1)%H.length;setTimeout(tick,500);return}}
+    else{j--;q.placeholder=j?'Try: '+h.slice(0,j):'Search';if(j===0){del=false;i++;if(i>=3){q.placeholder='Search';return}setTimeout(tick,500);return}}
     setTimeout(tick,del?25:60)};setTimeout(tick,1200)}
 
 /* first-visit intro: home page only, once per browser, skipped for reduced motion and on June 19 */
