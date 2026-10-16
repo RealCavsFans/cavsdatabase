@@ -8,6 +8,7 @@
 <link rel="canonical" href="https://cavsdatabase.com/charge">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="theme-color" content="#860038">
+<script>try{var t=localStorage.getItem('cdb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="cavs_db">
 <meta property="og:url" content="https://cavsdatabase.com/charge">
@@ -396,7 +397,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
 body{background:var(--page)}
 .gbar{background:#860038;color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:10}
 .gin{display:flex;flex-wrap:wrap;align-items:center;gap:0 18px;min-height:74px}
-@media (min-width:1181px){.gin{flex-wrap:nowrap;gap:0 14px}}
+@media (min-width:1181px){.gin{flex-wrap:nowrap;gap:0 12px}.gin .search{flex-basis:132px}.thm{width:34px;margin-left:-4px}}
 .gbrand{display:flex;align-items:center;gap:8px;color:#fff;font:800 34px/1 var(--cond);text-transform:uppercase;letter-spacing:.01em}
 .gbrand:hover{text-decoration:none}
 .gbrand svg{width:38px;height:38px}
@@ -409,6 +410,14 @@ body{background:var(--page)}
 .gbar .search input{color:#fff}
 .gbar .search input::placeholder{color:#F4D6DD}
 .gbar .search:focus-within{border-color:#F2B231}
+.thm{flex:0 0 auto;width:38px;height:40px;display:grid;place-items:center;appearance:none;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.12);color:#F2B231;cursor:pointer;padding:0}.thm:hover{border-color:#F2B231}.thm svg{width:18px;height:18px}.thm .sun{display:none}
+:root[data-theme="dark"] .thm .sun{display:block}:root[data-theme="dark"] .thm .moon{display:none}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .thm .sun{display:block}:root:not([data-theme="light"]) .thm .moon{display:none}}
+.btt{position:fixed;right:16px;bottom:16px;z-index:54;width:42px;height:42px;border-radius:50%;appearance:none;border:2px solid #F2B231;background:#860038;color:#F2B231;display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s,bottom .2s;padding:0}
+.btt.on{opacity:1;transform:none;pointer-events:auto}.btt svg{width:18px;height:18px}.btt:hover{background:#6b002c}
+@media (max-width:520px){.btt{right:12px;bottom:12px;width:40px;height:40px}}
+@media print{.btt,.thm{display:none}}
+.gbar{cursor:default}
 @media (max-width:1180px){.gin{padding-block:8px;gap:6px 14px}.gbrand{margin-right:auto}.gnav{order:3;flex-basis:100%;margin-inline:-7px}.gnav button,.gnav a{min-height:44px}.gbar .search{flex:0 1 260px}}
 @media (max-width:900px){.gbar .search{flex:1 1 160px}}
 /* modules */
@@ -900,6 +909,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
     <input id="q" type="search" placeholder="Search" aria-controls="sres" aria-expanded="false">
     <ul class="sres" id="sres" hidden></ul>
   </form>
+  <button type="button" class="thm" id="thm" aria-label="Switch to dark mode" title="Light / dark"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg></button>
 </div></header>
 
 <main id="view-home">
@@ -1181,6 +1191,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
  <div class="ci-br" id="ci-br"><svg viewBox="0 0 100 100" class="ci-logo" aria-hidden="true"><g transform="translate(8 6) scale(.84)"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#7A1F33" stroke-width="2.5" fill="none"/></g></svg><div class="ci-wm">cavs_<span>db</span><i class="ci-cur"></i></div><h2 class="ci-tg" id="ci-tg">Everything Cavaliers.<em>Everything you need.</em></h2></div>
  <button class="ci-skip" id="ci-skip" type="button">Skip</button></div>
 <noscript><nav aria-label="Pages" style="padding:16px"><a href="/">Home</a> · <a href="/schedule">Cavaliers schedule</a> · <a href="/roster">Cavaliers roster</a> · <a href="/staff">Coaches &amp; front office</a> · <a href="/cap">Cavaliers salary cap</a> · <a href="/assets">Draft picks &amp; exceptions</a> · <a href="/moves">Transactions</a> · <a href="/charge">Cleveland Charge</a> · <a href="/media">Media</a> · <a href="/resources">Resources</a></nav></noscript>
+<button type="button" class="btt" id="btt" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg></button>
 <footer><div class="wrap">
   <span>cavsdatabase.com · Independent fan reference. Not affiliated with the Cleveland Cavaliers or the NBA.</span>
   <a id="tip" class="tip" hidden target="_blank" rel="noopener">Like the site? Throw the hammer down →</a>
@@ -1654,6 +1665,7 @@ function confetti(){const c=document.createElement('canvas');c.id='confetti';doc
     if(live)requestAnimationFrame(loop);else c.remove()};requestAnimationFrame(loop)}
 /* dated Cavs history beyond game results: title, highlight, perf, staff, passing. [MM-DD, year, type, fact, source URL] */
 const HIST_X = [
+  ["10-16", 2021, "highlight", "The Cavs signed 7‑foot‑6 Tacko Fall to a two-way deal, the tallest player in franchise history. He stood three inches taller than Big Z.", "https://en.wikipedia.org/wiki/List_of_tallest_players_in_NBA_history"],
   ["01-02", 2014, "perf", "Anderson Varejão grabbed 25 rebounds against Orlando, tying Rick Roberson's franchise record.", "https://www.nba.com/cavaliers/news/breaking-down-varejao-25-boards-140103"],
   ["01-02", 2023, "perf", "Donovan Mitchell scored 71 points with 8 rebounds and 11 assists in a 145–134 overtime win over Chicago, the most points in franchise history.", "https://en.wikipedia.org/wiki/Donovan_Mitchell"],
   ["01-03", 1981, "highlight", "The Cavaliers retired Austin Carr's No. 34.", "https://en.wikipedia.org/wiki/Cleveland_Cavaliers"],
@@ -1855,7 +1867,7 @@ function renderHistory(){
    window.resetCal=()=>{delete cal.dataset.done;cal.classList.remove('rip')};
    if(matchMedia('(prefers-reduced-motion: reduce)').matches){cal.classList.add('rip','instant');window.resetCal=()=>{}}
    else if('IntersectionObserver' in window){new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)play()}),{threshold:.7}).observe(cal)}else play()}
-  when.appendChild(el('b',null,String(f.y)));{const ya=now.getFullYear()-f.y;if(ya>0)when.appendChild(el('span','otd-ago',ya+(ya===1?' year':' years')+' ago today'))}
+  when.appendChild(el('b',null,String(f.y)));
   {const tx=document.getElementById('otd-text');tx.textContent='';const tg=f.tag&&f.tag!=='game'&&f.tag!=='move'?f.tag:null;if(tg)tx.appendChild(el('span','otd-tag '+tg,XTAG[tg]));tx.append(f.t)}
   const a=document.getElementById('otd-src');a.href=f.u;a.textContent='Source: '+f.src+' ↗';
   const also=document.getElementById('otd-also');const rest=[];
@@ -2917,6 +2929,20 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
   tiles(document.getElementById('wins'));tiles(document.getElementById('losses'));
   document.querySelectorAll('#splits dd').forEach((d,i)=>scramble(d,150+i*60));
   const ls=document.querySelector('#last .ls');if(ls)scramble(ls,300);
+})();
+</script>
+
+<script>
+(function(){const R=document.documentElement,B=document.getElementById('thm'),T=document.getElementById('btt'),F=document.getElementById('fb');
+ const dark=()=>R.dataset.theme?R.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+ const lab=()=>{if(B)B.setAttribute('aria-label',dark()?'Switch to light mode':'Switch to dark mode')};lab();
+ if(B)B.onclick=()=>{const t=dark()?'light':'dark';R.dataset.theme=t;try{localStorage.setItem('cdb-theme',t)}catch(e){}lab()};
+ const top=()=>scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+ if(T)T.onclick=top;
+ const bar=document.querySelector('.gbar');if(bar)bar.addEventListener('click',e=>{if(e.target.closest('a,button,input,form,nav [role=tab],.sres'))return;top()});
+ let tk=0;const upd=()=>{tk=0;if(!T)return;T.classList.toggle('on',scrollY>innerHeight*0.9);const fv=F&&!F.hidden&&F.offsetHeight;T.style.bottom=fv?(F.getBoundingClientRect().height+(innerWidth<=520?20:26))+'px':''};
+ addEventListener('scroll',()=>{if(!tk){tk=1;requestAnimationFrame(upd)}},{passive:true});addEventListener('resize',upd);
+ if(F)new MutationObserver(upd).observe(F,{attributes:true,attributeFilter:['hidden','class']});upd();
 })();
 </script>
 </body>
