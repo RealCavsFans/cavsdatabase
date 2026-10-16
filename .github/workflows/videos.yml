@@ -27,8 +27,23 @@ jobs:
         run: |
           git config user.name "cavsdatabase-bot"
           git config user.email "bot@cavsdatabase.com"
-          git add videos.json box.json rcf.json *.html media/*.html; [ -d img ] && git add img || true; [ -f box-status.txt ] && git add box-status.txt || true
+          add(){ git add videos.json box.json rcf.json *.html media/*.html; [ -d img ] && git add img || true; [ -f box-status.txt ] && git add box-status.txt || true; }
+          add
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Update videos"
-          git pull --rebase origin main
-          git push
+          # main can move while this runs (site edits, the daily data task). If the rebase or push
+          # fails, keep this run's fresh data files, rebuild the page copies on top of the latest main and retry.
+          for i in 1 2 3; do
+            if git pull --rebase origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            mkdir -p /tmp/keep && cp -r videos.json box.json rcf.json /tmp/keep/ 2>/dev/null || true
+            [ -d img ] && cp -r img /tmp/keep/ || true
+            git fetch origin main && git reset --hard origin/main
+            cp -r /tmp/keep/. . 2>/dev/null || true
+            node scripts/build-pages.mjs
+            add
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "Update videos"
+            sleep $((i*10))
+          done
+          exit 1
