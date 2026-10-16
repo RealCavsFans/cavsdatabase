@@ -235,7 +235,7 @@ a{color:var(--wine-ink);text-decoration:none}a:hover{text-decoration:underline}
 .page{padding-block:32px 64px;display:flex;flex-direction:column;gap:20px}
 h1{margin:0;font:800 clamp(28px,4vw,36px)/1.1 var(--sans);font-stretch:115%;letter-spacing:-.02em;text-wrap:balance}
 .tablebox{overflow-x:auto;border:1px solid var(--line);overscroll-behavior-x:contain}
-html,body{overflow-x:clip}
+html,body{overflow-x:clip}body{position:relative}main,header.gbar,footer{overflow-x:clip;max-width:100%}
 #twoway summary>b.mono,#camp li>b{font-size:12px}
 .co-more{display:none}
 @media (max-width:600px){.co{padding:14px 14px}.co h2{font-size:24px}.co-hs{width:62px;height:62px;border-width:2px}.co-top{gap:12px;margin-bottom:8px}.co .bio-f{font-size:13px}.co:not(.open):not(.capmode) .bio-f>:nth-child(n+7),.co:not(.open):not(.capmode)>.co-d,.co:not(.open):not(.capmode)>.bio-links,.co:not(.open):not(.capmode)>.co-link,.co:not(.open):not(.capmode)>.tablebox{display:none}.co-more{display:inline-flex;align-items:center;gap:4px;margin:2px 0 0;padding:6px 0;border:0;background:none;font:700 13.5px var(--sans);color:var(--wine-ink);cursor:pointer}.co.capmode .co-more{display:none}}
@@ -679,7 +679,7 @@ table.atk tr.avg td{background:var(--sub);font-weight:700}
 .tx-trade{background:color-mix(in srgb,var(--wine) 4%,transparent)}
 .tx-h{font-weight:700;margin-bottom:6px}.tx-rel{color:inherit;text-decoration:underline dotted 1.5px;text-decoration-color:var(--wine-ink);text-underline-offset:3px}.tx-rel:hover{color:var(--wine-ink)}
 .tx a.tx-p{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:2px}.tx a.tx-p:hover{color:var(--wine-ink);text-decoration-color:var(--wine-ink)}.tx-amt{color:var(--muted);font:500 12.5px var(--mono)}
-.tx-line{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.tx-val{margin-left:auto;font:600 12.5px var(--mono);color:var(--fg2);white-space:nowrap}
+.tx-line{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.tx-val{margin-left:auto;font:600 12.5px var(--mono);color:var(--fg2);text-align:right;max-width:100%}
 .tx-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 24px}
 .tx-cols small{display:block;font:700 10.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
 .tx-cols ul{margin:0;padding-left:16px;font-size:13.5px;line-height:1.45}
@@ -2414,6 +2414,8 @@ const bioBox=(n,img)=>{const b=BIOS[n];const box=el('div','xb bio');
   if(lk.childNodes.length)body.appendChild(lk);box.appendChild(body);return box};
 STAFF.forEach(([g,people])=>{const sec=el('section');const h=el('div','block-h');h.append(el('h2',null,g),el('span',null,people.length+''));const ul=el('ul','xl');
   people.forEach(([n,t,y,img])=>{const li=el('li');li.id='s-'+slug(n);const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,n),el('small',null,t));sm.append(l,el('b',null,y));const bb=bioBox(n,img);bb.insertBefore(staffX(n,t,()=>[li]),bb.firstChild);d.append(sm,bb);li.appendChild(d);ul.appendChild(li)});sec.append(h,ul);st.appendChild(sec)});
+/* ?ovf: phone debug, lists anything wider than the screen */
+if(/[?&]ovf/.test(location.search))setTimeout(()=>{const W=document.documentElement.clientWidth,out=[];document.querySelectorAll('body *').forEach(e=>{const r=e.getBoundingClientRect();if(r.width&&r.right>W+1&&getComputedStyle(e).position!=='fixed'){out.push((e.tagName+'.'+(e.className&&e.className.baseVal===undefined?e.className:'')+'#'+e.id).slice(0,50)+' R'+Math.round(r.right))}});const d=document.createElement('pre');d.style.cssText='position:fixed;left:0;right:0;bottom:0;max-height:45vh;overflow:auto;background:#000;color:#0f0;font:11px monospace;z-index:999;margin:0;padding:8px;white-space:pre-wrap';d.textContent='W='+W+' doc='+document.documentElement.scrollWidth+' vv='+visualViewport.width+'\n'+out.slice(0,40).join('\n');document.body.appendChild(d)},2500);
 /* mobile: coach/exec cards show basic info, the rest behind More */
 function coMore(c){const dl=c.querySelector('.bio-f');if(!dl)return;const b=el('button','co-more','More ▾');b.type='button';b.setAttribute('aria-expanded','false');b.onclick=()=>{const o=c.classList.toggle('open');b.textContent=o?'Less ▴':'More ▾';b.setAttribute('aria-expanded',o)};dl.after(b)}
 /* callouts: Altman and Atkinson */
