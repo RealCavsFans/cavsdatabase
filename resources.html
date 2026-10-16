@@ -428,6 +428,8 @@ body{background:var(--page)}
 .xtoast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);z-index:80;display:flex;align-items:center;gap:10px;background:#101419;color:#fff;font:700 13.5px var(--sans);padding:10px 16px;border-radius:999px;box-shadow:0 10px 26px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:calc(100vw - 32px)}
 .xtoast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}.xtoast i{font-style:normal;color:#F2B231}.xtoast button{appearance:none;border:0;background:#F2B231;color:#101419;font:800 13px var(--sans);padding:6px 12px;border-radius:999px;cursor:pointer}
 @media (max-width:600px){.block-h.hasx:has(>span:not(.xact))>h2{flex-basis:100%}.block-h.hasx>span:not(.xact){margin-right:auto}.xact{margin-left:8px}}
+/* while an image is being made: let names run a hair wider instead of clipping */
+.capmode .ds-grid .t b{overflow:visible;text-overflow:clip}
 @media print{.xact{display:none}}
 
 .gbar{cursor:default}
@@ -3024,10 +3026,11 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
   let y=h-1;outer:for(;y>0;y--){const o=y*w*4;for(let x=0;x<w;x+=2){const i=o+x*4;if(Math.abs(d[i]-bg[0])+Math.abs(d[i+1]-bg[1])+Math.abs(d[i+2]-bg[2])>24)break outer}}
   const nh=Math.min(h,Math.ceil(y+1+keep));if(nh>=h)return;const t=document.createElement('canvas');t.width=w;t.height=nh;t.getContext('2d').drawImage(cv,0,0);cv.width=w;cv.height=nh;cv.getContext('2d').drawImage(t,0,0)}
  async function capture(route,id,label,boxes,btn){
-  btn.disabled=true;toast('Making the image…');
+  btn.disabled=true;toast('Making the image…');let capEl=null;
   try{const ms=await load();let el=boxes[0];
    let keep=null,parent=null,hgt=null;if(boxes.length>1){parent=boxes[0].parentElement;keep=new Set(boxes);el=parent;boxes[0].setAttribute('data-capfirst','1');
     const pc=getComputedStyle(parent);hgt=parseFloat(pc.paddingTop)+parseFloat(pc.paddingBottom)+parseFloat(pc.borderTopWidth)+parseFloat(pc.borderBottomWidth);boxes.forEach((b,i)=>{const bc=getComputedStyle(b);hgt+=b.offsetHeight+(i?parseFloat(bc.marginTop):0)+(i<boxes.length-1?parseFloat(bc.marginBottom):0)});hgt=Math.ceil(hgt)+240}
+   el.classList.add('capmode');capEl=el;
    let bg=getComputedStyle(el).backgroundColor;if(!bg||bg==='rgba(0, 0, 0, 0)'||bg==='transparent'){let a=el.closest('section')||el.parentElement;while(a){const b=getComputedStyle(a).backgroundColor;if(b&&b!=='rgba(0, 0, 0, 0)'&&b!=='transparent'){bg=b;break}a=a.parentElement}if(!a)bg=getComputedStyle(document.body).backgroundColor}
    const S=2,pad=16;const shot=await ms.domToCanvas(el,{scale:S,backgroundColor:bg,fetchFn,timeout:10000,style:hgt?{margin:'0',height:hgt+'px',minHeight:'0'}:{margin:'0'},...(hgt?{height:hgt}:{}),
      filter:n=>{if(n.nodeType!==1)return true;if(n.classList.contains('xact'))return false;if(n.classList.contains('dc-pg')&&n.classList.contains('top'))return false;if(keep&&n.parentElement===parent&&!keep.has(n))return false;return true},
@@ -3050,7 +3053,7 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
    const save=()=>{if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:label+' | cavs_db'}).catch(e=>{if(e&&e.name==='NotAllowedError')toast('Image ready','Save',save)})}else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Image saved')}};
    if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]}))toast('Image ready','Save or share',save);else save();
   }catch(e){toast('Couldn’t make the image. Try again.')}
-  finally{boxes[0].removeAttribute('data-capfirst');btn.disabled=false}}
+  finally{boxes[0].removeAttribute('data-capfirst');if(capEl)capEl.classList.remove('capmode');btn.disabled=false}}
  function attach(){T.forEach(([id,route,hdr,boxes,label])=>{const h=hdr();if(!h||h.dataset.anchor)return;h.dataset.anchor=id;h.classList.add('hasx');
   const w=document.createElement('span');w.className='xact';
   const b1=document.createElement('button');b1.type='button';b1.innerHTML=I_L;b1.title='Share link';b1.setAttribute('aria-label','Share a link to '+label);b1.onclick=()=>share(route,id,label);
