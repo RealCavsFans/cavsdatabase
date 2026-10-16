@@ -235,6 +235,15 @@ a{color:var(--wine-ink);text-decoration:none}a:hover{text-decoration:underline}
 .page{padding-block:32px 64px;display:flex;flex-direction:column;gap:20px}
 h1{margin:0;font:800 clamp(28px,4vw,36px)/1.1 var(--sans);font-stretch:115%;letter-spacing:-.02em;text-wrap:balance}
 .tablebox{overflow-x:auto;border:1px solid var(--line);overscroll-behavior-x:contain}
+.galert{position:fixed;left:16px;bottom:16px;z-index:70;width:min(360px,calc(100vw - 32px));background:var(--card);border:1px solid var(--line);border-left:4px solid var(--wine);box-shadow:0 10px 28px rgba(0,0,0,.18);padding:10px 34px 11px 13px;font-size:13.5px;line-height:1.4;animation:gaIn .25s ease-out}
+@keyframes gaIn{from{transform:translateY(12px);opacity:0}}
+.galert .ga-k{display:flex;align-items:center;gap:6px;font:800 10.5px var(--sans);font-stretch:125%;letter-spacing:.12em;text-transform:uppercase;color:var(--wine-ink)}.galert .ga-k i{width:7px;height:7px;border-radius:50%;background:#D32F2F;box-shadow:0 0 0 3px rgba(211,47,47,.18)}
+.galert .ga-t{display:block;font-weight:800;font-size:15px;margin:3px 0 1px}.galert .ga-s{color:var(--fg2)}.galert a{display:table;margin-top:5px;font-weight:700;color:var(--wine-ink)}.galert .ga-x{position:absolute;top:6px;right:6px;border:0;background:none;font-size:19px;color:var(--muted);cursor:pointer;line-height:1;padding:2px 5px}
+.galert.ga-fin{border-left-color:var(--fg)}.galert .ga-sc{font:700 15px var(--mono)}
+.ga-demo{position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:90;display:flex;gap:4px;background:#101419;padding:5px;border-radius:999px;font:700 12px var(--sans)}.ga-demo button{border:0;border-radius:999px;padding:5px 9px;white-space:nowrap;font:700 11.5px var(--sans);background:#2A2F35;color:#fff;cursor:pointer}.ga-demo button.on{background:#F2B231;color:#101419}
+@media (max-width:600px){.galert{left:12px;right:12px;bottom:12px;width:auto}body.ga-on .btt{opacity:0;pointer-events:none}}
+@media (prefers-reduced-motion:reduce){.galert{animation:none}}
+
 :root{--ab-cond-bg:#FFF6E0;--ab-cond-ink:#8A5E00;--ab-frz-a:#E8F1F8;--ab-frz-b:#DCEAF4;--ab-frz-bd:#9CC3DD;--ab-frz-ink:#1B4A66;--ab-frz-i:#2D6E95;--ab-gold:#F2B231}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--ab-cond-bg:#2A2210;--ab-cond-ink:#F2C45A;--ab-frz-a:#13212B;--ab-frz-b:#182A36;--ab-frz-bd:#3B6A88;--ab-frz-ink:#B5D6EA;--ab-frz-i:#8CC0E0}}
 :root[data-theme="dark"]{--ab-cond-bg:#2A2210;--ab-cond-ink:#F2C45A;--ab-frz-a:#13212B;--ab-frz-b:#182A36;--ab-frz-bd:#3B6A88;--ab-frz-ink:#B5D6EA;--ab-frz-i:#8CC0E0}
@@ -1313,15 +1322,15 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 {const t=document.getElementById('pre-tpl');if(t){const m=document.getElementById(t.dataset.view);if(m)m.innerHTML=t.innerHTML;t.remove()}}
 const SECTIONS=[
   ['home','Home','',''],
-  ['schedule','Schedule','SCH','All 82 games, results, TV.'],
+  ['schedule','Schedule','SCH','All 82 games, results, standings and how to watch or listen.'],
   ['roster','Roster','ROS','Player bios, measurements and career info.'],
   ['staff','Coaches & Front Office','STF','Executive and coaching staff listings with bios.'],
   ['cap','Salary Cap','CAP','Team cap sheet, player contract information, apron explanation and CBA glossary.'],
   ['assets','Assets','AST','Draft picks, exceptions and drafted players.'],
   ['moves','Transactions','TXN','Every Cavs trade, signing and draft pick since 2017.'],
-  ['charge','Cleveland Charge','CHG','G League schedule, roster and staff.'],
+  ['charge','Cleveland Charge','CHG','G League schedule, roster, stats and staff.'],
   ['media','Media','MED','Cavs video, press conferences and RealCavsFans articles.'],
-  ['resources','Resources','RES','cavs_db approved sites to further inform your NBA and Cavs expertise.']
+  ['resources','Resources','RES','cavs_db approved sites for NBA and Cavs knowledge.']
 ];
 /* picks — RealGM future draft picks, Oct 14 2026. [draft, pick, plain-English status, how it's decided, trade-eligible?, why] */
 /* picks the Cavs hold: [year, round, label, visual, can trade outright, can trade swap rights, status note, origin of the pick/routing]
@@ -2288,7 +2297,7 @@ const freezeBox=()=>{const w=el('div','frz');const ap2=(THRESH.find(t=>t[0]==='S
   T(f.length,f.length===1?'First held':'Firsts held',f.map(p=>p[0]).join(' · '));
   T(sc.length,sc.length===1?'Second held':'Seconds held',sc.map(p=>p[0]).join(' · '));
   const left=EXC.reduce((t,e)=>t+e[1]-e[4].reduce((a,u)=>a+u[2],0),0);
-  T(usdM(left),'Exceptions',EXC.length+' open','gold');
+  T(usdM(left),'Exceptions',EXC.length+' open');
   const act=RIGHTS.filter(r=>/^(Active|Unsigned)/.test((RIGHTS_X[r[0]]||[])[0]||'')).length;
   T(RIGHTS.length,'Draft rights',act+' playing this season')})();
 const ex=document.getElementById('exc');
@@ -2511,6 +2520,39 @@ STAFF.forEach(([g,people])=>{const sec=el('section');const h=el('div','block-h')
   people.forEach(([n,t,y,img])=>{const li=el('li');li.id='s-'+slug(n);const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,n),el('small',null,t));sm.append(l,el('b',null,y));const bb=bioBox(n,img);bb.insertBefore(staffX(n,t,()=>[li]),bb.firstChild);d.append(sm,bb);li.appendChild(d);ul.appendChild(li)});sec.append(h,ul);st.appendChild(sec)});
 /* ?ovf: phone debug, lists anything wider than the screen */
 if(/[?&]ovf/.test(location.search))setTimeout(()=>{const W=document.documentElement.clientWidth,out=[];document.querySelectorAll('body *').forEach(e=>{const r=e.getBoundingClientRect();if(r.width&&r.right>W+1&&getComputedStyle(e).position!=='fixed'){out.push((e.tagName+'.'+(e.className&&e.className.baseVal===undefined?e.className:'')+'#'+e.id).slice(0,50)+' R'+Math.round(r.right))}});const d=document.createElement('pre');d.style.cssText='position:fixed;left:0;right:0;bottom:0;max-height:45vh;overflow:auto;background:#000;color:#0f0;font:11px monospace;z-index:999;margin:0;padding:8px;white-space:pre-wrap';d.textContent='W='+W+' doc='+document.documentElement.scrollWidth+' vv='+visualViewport.width+'\n'+out.slice(0,40).join('\n');document.body.appendChild(d)},2500);
+/* game alerts: a small card around Cavs (and Niang/LSU) tip-off, and after the final. GALERT_ON turns it on for everyone; ?alerts=preview shows samples */
+const GALERT_ON=false;
+(function(){const PREVIEW=/[?&]alerts=preview/.test(location.search);if(!GALERT_ON&&!PREVIEW)return;
+  const H=36e5,now=()=>Date.now();const seen=k=>{try{return !!localStorage.getItem('cdb-ga-'+k)}catch(e){return false}};const hide=k=>{try{localStorage.setItem('cdb-ga-'+k,'1')}catch(e){}};
+  let card=null;const clear=()=>{if(card)card.remove();card=null;document.body.classList.remove('ga-on')};
+  const show=(key,o)=>{clear();card=el('div','galert'+(o.fin?' ga-fin':''));card.setAttribute('role','status');const k=el('div','ga-k');if(o.live)k.appendChild(el('i'));k.append(o.kick);card.appendChild(k);
+    const t=el('div','ga-t');if(o.fin)t.appendChild(el('span','ga-sc',o.title));else t.textContent=o.title;card.appendChild(t);if(o.sub)card.appendChild(el('div','ga-s',o.sub));
+    if(o.link){const a=el('a',null,o.link[0]+' →');a.href=o.link[1];if(/^https?:/.test(o.link[1])){a.target='_blank';a.rel='noopener'}else if(o.link[2]){a.dataset.go=o.link[2]}card.appendChild(a)}
+    const x=el('button','ga-x','×');x.type='button';x.setAttribute('aria-label','Dismiss');x.onclick=()=>{if(!PREVIEW)hide(key);clear()};card.appendChild(x);document.body.appendChild(card);document.body.classList.add('ga-on')};
+  const vs=g=>(g[2]==='H'?'Cavs vs ':'Cavs at ')+TEAMS[g[1]];
+  const mins=ms=>{const m=Math.round(ms/6e4);return m>=60?'1 hour':m+' min'};
+  const cavsPre=(g,t)=>{const tv=tvFor(g[0]),ra=radioFor(g[0]);const w=[tv.nat,tv.loc].filter(Boolean).join(' · ');const left=t-now();
+    return {live:true,kick:left>0?'Tip-off in '+mins(left):'On now',title:vs(g)+' · '+g[3]+' PM ET',sub:'Watch: '+(w||'TBA')+' · Listen: '+(ra.cavs||'').split(' · ')[0],link:['Game preview','/schedule#g-'+g[0],'schedule']}};
+  const cavsFin=(g,b)=>{const [c,o]=(b.score||SCORES[g[0]]||'').split('-');const rec=(SEASON.results||'').replace(/[^WL]/g,'');const w=(rec.match(/W/g)||[]).length,l=rec.length-w;
+    return {fin:true,kick:'Final',title:'Cavs '+c+', '+TEAMS[g[1]]+' '+o,sub:(+c>+o?'Win':'Loss')+(rec.length?' · Cavs are '+w+'–'+l:''),link:['Box score',b.url||boxUrl(g[0])]}};
+  const NI=(INTL_NEXT['Saliou Niang']||{g:[]});const nOn=!/pending/i.test(NI.team||'');
+  const nTip=g=>{const m=(g[4]||'').match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);if(!m)return null;let h=+m[1]%12+(/pm/i.test(m[3])?12:0);const off=(g[0]<'2026-11-01'||g[0]>='2027-03-14')?'-04:00':'-05:00';return Date.parse(g[0]+'T'+String(h).padStart(2,'0')+':'+m[2]+':00'+off)};
+  const nPre=(g,t)=>{const left=t-now();const tv=(g[4]||'').split('·').slice(1).join('·').trim();return {live:true,kick:'Saliou Niang · LSU · '+(left>0?'starts in '+mins(left):'on now'),title:'LSU '+(g[2]==='H'?'vs ':g[2]==='A'?'at ':'vs ')+g[1]+' · '+(g[4]||'').split('·')[0].trim(),sub:tv?'Watch: '+tv:'',link:['His draft-rights card','/assets#saliou-niang','assets']}};
+  const nFin=n=>({fin:true,kick:'Final · Saliou Niang',title:n.score,sub:n.line?'Niang: '+n.line:'Did not play',link:n.url?['Box score',n.url]:null});
+  let box={},nia=null;
+  const check=()=>{if(PREVIEW)return;const t0=now();
+    for(const g of SCHEDULE){const t=tipOf(g).getTime();const b=box[g[0]]||{};const fin=b.status==='final'||!!SCORES[g[0]];
+      if(fin&&t0>t&&t0<t+16*H&&!seen('f'+g[0])){show('f'+g[0],cavsFin(g,b));return}
+      if(!fin&&t0>t-H&&t0<t+H&&!seen('p'+g[0])){show('p'+g[0],cavsPre(g,t));return}}
+    if(nOn&&nia&&nia.date&&t0<Date.parse(nia.date+'T12:00:00Z')+30*H&&!seen('nf'+nia.date)){show('nf'+nia.date,nFin(nia));return}
+    if(nOn)for(const g of NI.g){const t=nTip(g);if(t&&t0>t-H&&t0<t+H&&!seen('np'+g[0])){show('np'+g[0],nPre(g,t));return}}};
+  const load=()=>Promise.all([fetch('/box.json',{cache:'no-cache'}).then(r=>r.ok?r.json():{}).catch(()=>({})),fetch('/niang.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null)]).then(([b,n])=>{box=b||{};nia=n;check()});
+  if(PREVIEW){const bar=el('div','ga-demo');const nx=SCHEDULE.find(g=>tipOf(g).getTime()>now())||SCHEDULE[0];const t=tipOf(nx).getTime();
+    const S=[['Cavs · before',()=>{const o=cavsPre(nx,t);o.kick='Tip-off in 45 min';return o}],['Cavs · final',()=>cavsFin(nx,{score:'112-104',url:boxUrl(nx[0])})],['Niang · before',()=>{const g=NI.g[0]||['2026-10-24','Florida State','A','Exhibition','1:00 PM ET · ACCNX'];const o=nPre(g,now()+50*6e4);return o}],['Niang · final',()=>nFin({score:'LSU 78, Florida State 70',line:'12 pts, 6 reb, 2 ast · 5-9 FG in 24 min',url:'https://lsusports.net/sports/mens-basketball/schedule/'})]];
+    S.forEach(([lab,f],i)=>{const b=el('button',null,lab);b.type='button';b.onclick=()=>{bar.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');show('demo',f())};bar.appendChild(b);if(!i)setTimeout(()=>b.click(),300)});
+    document.body.appendChild(bar);return}
+  if(ON_DOMAIN||GALERT_ON){load();setInterval(()=>{const t0=now();const near=SCHEDULE.some(g=>{const t=tipOf(g).getTime();return t0>t-H&&t0<t+6*H});if(near)load();else check()},5*6e4)}
+})();
 /* mobile: coach/exec cards show basic info, the rest behind More */
 function coMore(c){const dl=c.querySelector('.bio-f');if(!dl)return;const b=el('button','co-more','More ▾');b.type='button';b.setAttribute('aria-expanded','false');b.onclick=()=>{const o=c.classList.toggle('open');b.textContent=o?'Less ▴':'More ▾';b.setAttribute('aria-expanded',o)};dl.after(b)}
 /* callouts: Altman and Atkinson */
@@ -3121,16 +3163,16 @@ function loadRcf(){if(rcfLoaded)return;rcfLoaded=true;
 /* page titles and descriptions (browser tab, search results, link previews); scripts/build-pages.mjs bakes them into per-page copies */
 const PAGE_META={
  'home':['Cleveland Cavaliers Schedule, Roster & Salary Cap 2026–27 | cavs_db','Everything Cavaliers. Everything you need. The Cavs record, next game and TV, key dates, injuries, salary cap and the Cleveland Charge, updated daily.'],
- 'schedule':['Cavs Schedule 2026–27: TV Channel for Every Game & Standings | cavs_db','All 82 Cavs games with TV and radio for each, results, East standings and the playoff race. National TV, DAZN and free over-the-air games marked.'],
+ 'schedule':['Cavs Schedule & Standings 2026–27: How to Watch & Listen | cavs_db','All 82 Cavs games with how to watch and listen to each, results, East standings and the playoff race. National TV, DAZN, free over-the-air and radio for every game.'],
  'roster':['Cavs Roster 2026–27: Depth Chart, Heights & Wingspans | cavs_db','Every Cavs player with height, wingspan, age, college, how he was acquired and his socials, plus the depth chart and combine measurements.'],
  'staff':['Cavs Coaches & Front Office: Kenny Atkinson, Koby Altman | cavs_db','Kenny Atkinson, Koby Altman and the full Cavs coaching staff and front office, with career timelines, coaching records and crossover with current players.'],
  'cap':['Cavs Salary Cap 2026–27: Contracts, Cap Space & Aprons | cavs_db','The Cavs cap sheet: every contract by season, the first-apron hard cap, tax bill, options, extension dates, two-way deals and a 145-term CBA glossary.'],
  'assets':['Cavs Draft Picks & Trade Exceptions: Every Pick Owned & Owed | cavs_db','Every pick the Cavs own and owe through 2033 with protections and full trade history, plus trade exceptions left and unsigned draft rights.'],
  'moves':['Cavs Transactions & Trade History Since 2017 | cavs_db','Every Cavs trade, signing, extension, draft pick and waiver since 2017, with what moved in each deal.'],
- 'charge':['Cleveland Charge Schedule & Roster 2026–27 (G League) | cavs_db','The Cavs’ G League affiliate: full schedule with results, two-way and affiliate players, and coach and front office bios.'],
+ 'charge':['Cleveland Charge Schedule, Roster & Stats 2026–27 (G League) | cavs_db','The Cavs’ G League affiliate: full schedule with results, player stats and leaders, two-way and affiliate players, and coach and front office bios.'],
  'media':['Cavs Press Conferences, Highlights & Articles | cavs_db','The latest Cavs press conferences and highlights from the team’s YouTube channel, plus articles and recaps from RealCavsFans.com.'],
  'media/rcf':['RealCavsFans.com Articles & Recaps | cavs_db','The latest Cavs articles, recaps and previews from RealCavsFans.com, plus @realcavsfans on X.'],
- 'resources':['Best Cavs & NBA Stats, Salary Cap and Draft Sites | cavs_db','The sites worth bookmarking for Cavs fans: stats, salary cap tools, trade machines, draft boards, franchise history and the RealCavsFans forum.']
+ 'resources':['Best Cavs & NBA Stats, Salary Cap and Draft Sites | cavs_db','cavs_db approved sites for NBA and Cavs knowledge.']
 };
 /* tip jar: set to the Buy Me a Coffee page address to show the footer link */
 const TIP_URL='';

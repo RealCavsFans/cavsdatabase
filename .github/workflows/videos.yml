@@ -21,6 +21,7 @@ jobs:
           YT_API_KEY: ${{ secrets.YT_API_KEY }}
       - run: node scripts/fetch-boxscores.mjs
       - run: node scripts/fetch-rcf.mjs
+      - run: node scripts/fetch-niang.mjs
       - run: node scripts/fetch-headshots.mjs
       - name: Install headless Chrome driver (for prerendering page copies)
         run: npm i --no-save --no-package-lock --no-audit --no-fund playwright-core@1.56.0
@@ -31,7 +32,7 @@ jobs:
         run: |
           git config user.name "cavsdatabase-bot"
           git config user.email "bot@cavsdatabase.com"
-          add(){ git add videos.json box.json rcf.json *.html media/*.html sitemap.xml; git add -A data/prerender-hash.txt 2>/dev/null || true; [ -d img ] && git add img || true; [ -f box-status.txt ] && git add box-status.txt || true; }
+          add(){ git add videos.json box.json rcf.json; [ -f niang.json ] && git add niang.json || true; git add *.html media/*.html sitemap.xml; git add -A data/prerender-hash.txt 2>/dev/null || true; [ -d img ] && git add img || true; [ -f box-status.txt ] && git add box-status.txt || true; }
           # after a push that changed the pages, tell Bing/Yandex/others (IndexNow) to recrawl
           ping(){ if git diff --name-only HEAD~1 HEAD | grep -q prerender-hash; then
             K=$(ls *.txt | grep -E '^[0-9a-f]{32}\.txt$' | head -1 | sed 's/\.txt$//'); [ -n "$K" ] || return 0
@@ -45,7 +46,7 @@ jobs:
           for i in 1 2 3; do
             if git pull --rebase origin main && git push; then sleep 60; ping; exit 0; fi
             git rebase --abort 2>/dev/null || true
-            mkdir -p /tmp/keep && cp -r videos.json box.json rcf.json /tmp/keep/ 2>/dev/null || true
+            mkdir -p /tmp/keep && cp -r videos.json box.json rcf.json niang.json /tmp/keep/ 2>/dev/null || true
             [ -d img ] && cp -r img /tmp/keep/ || true
             git fetch origin main && git reset --hard origin/main
             cp -r /tmp/keep/. . 2>/dev/null || true
