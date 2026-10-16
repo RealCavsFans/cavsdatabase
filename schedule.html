@@ -371,7 +371,7 @@ tfoot td{border-top:2px solid var(--fg);font-weight:700}
 .empty{border:1px solid var(--line);padding:48px 24px;text-align:center;color:var(--muted)}
 
 footer{border-top:1px solid var(--line);color:var(--muted)}
-footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;padding-block:22px;font-size:13px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 18px;padding-block:22px;font-size:13px;text-align:center}
 
 .headline{font:700 15px/1.35 var(--sans);margin-top:12px;color:var(--fg)}
 .headline strong{color:var(--wine-ink)}
@@ -399,7 +399,8 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-ite
 body{background:var(--page)}
 .gbar{background:#860038;color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:10}
 .gin{display:flex;flex-wrap:wrap;align-items:center;gap:0 18px;min-height:74px}
-@media (min-width:1181px){.gin{flex-wrap:nowrap;gap:0 12px}.gbar .search{flex:0 1 210px}}
+@media (min-width:1181px){.gin{flex-wrap:nowrap;gap:0 10px}.gbar .gin .search{flex:0 1 240px;min-width:190px}.gbar .gnav button,.gbar .gnav a{padding-inline:4px;font-size:14.5px}}
+@media (min-width:1181px) and (max-width:1260px){.gbar .gin .search{flex-basis:210px}}
 .gbrand{display:flex;align-items:center;gap:8px;color:#fff;font:800 34px/1 var(--cond);text-transform:uppercase;letter-spacing:.01em}
 .gbrand:hover{text-decoration:none}
 .gbrand svg{width:38px;height:38px}
@@ -419,7 +420,7 @@ body{background:var(--page)}
 .btt.on{opacity:1;transform:none;pointer-events:auto}.btt svg{width:18px;height:18px}.btt:hover{background:#6b002c}
 @media (max-width:520px){.btt{right:12px;bottom:12px;width:40px;height:40px}}
 .thm2{display:none;align-items:center;gap:6px;appearance:none;border:1px solid var(--line);background:var(--card,var(--bg));color:var(--fg2);font:600 12.5px var(--sans);padding:6px 11px;border-radius:999px;cursor:pointer}.thm2 svg{width:14px;height:14px;color:var(--wine-ink)}
-.thm2{display:inline-flex}.fright{display:flex;align-items:center;gap:16px;margin-left:auto}@media (max-width:600px){.fright{margin-left:0;width:100%;justify-content:space-between}}.fcontact{appearance:none;border:0;background:none;padding:0;font:600 13px var(--sans);color:var(--wine-ink);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.thm2{display:inline-flex;border:0!important;background:none!important;padding:0!important;font:600 13px var(--sans)!important;color:var(--wine-ink)!important;text-decoration:underline;text-underline-offset:3px}.fright{display:flex;align-items:center;gap:18px}.fright::before{content:'·';color:var(--muted);margin-right:-6px}@media (max-width:600px){.fright::before{content:none}}.fcontact{appearance:none;border:0;background:none;padding:0;font:600 13px var(--sans);color:var(--wine-ink);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 @media print{.btt,.thm,.thm2{display:none}}
 /* share + save-as-image buttons */
 .hasx{flex-wrap:wrap}.block-h.hasx{justify-content:flex-start}.block-h.hasx>h2{margin-right:auto}.ds-hdr.hasx>b{margin-right:auto}h1.hasx{display:flex;align-items:center;gap:10px}h1.hasx .xact{margin-left:auto}
@@ -690,6 +691,11 @@ table.atk tr.avg td{background:var(--sub);font-weight:700}
 .hc-checks li{display:flex;gap:8px;align-items:baseline;font-size:13px;padding:3px 0}
 .hc-checks i{font-style:normal;font-weight:800;width:14px;text-align:center}.hc-checks .yes i{color:#2E7D4F}.hc-checks .no i{color:var(--wine-ink)}
 .h-link{color:inherit}.h-link:hover{color:var(--wine-ink)}
+.chl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}@media (max-width:860px){.chl{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}
+.chl-c{background:var(--card,var(--bg));border:1px solid var(--line);border-top:3px solid var(--wine);padding:12px 14px}.chl-k{display:block;font:800 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.chl-1{display:flex;flex-direction:column;margin:4px 0 8px}.chl-1 b{font:700 28px/1.1 var(--mono);color:var(--wine-ink)}.chl-1 span{font:700 14px var(--sans);color:var(--fg)}
+.chl-r{list-style:none;margin:0;padding:6px 0 0;border-top:1px solid var(--line2);font-size:12.5px;color:var(--fg2)}.chl-r li{display:flex;justify-content:space-between;gap:8px;padding:2px 0}.chl-r b{font:600 12.5px var(--mono)}
+@media (max-width:520px){.chl-c{padding:10px 11px}.chl-1 b{font-size:22px}.chl-1 span{font-size:13px}.chl-r{font-size:11.5px}}
 .ch-tiles{display:flex;flex-wrap:wrap;gap:10px}.ch-tiles .txs b{font-size:20px}
 table.chs{min-width:620px}.chs td.mono{white-space:nowrap}.chs td:first-child{width:110px}
 .ch-sh{margin-bottom:6px}.ch-sh h2{white-space:nowrap}.ch-ssub{margin:0 0 14px;font-size:12.5px;color:var(--muted)}
@@ -826,7 +832,8 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 .sp-race{display:grid;gap:8px}.rc{background:var(--card);border:1px solid var(--line);padding:10px 12px}.rc .k{display:block;font:700 10px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.rc b{display:block;font:700 18px var(--mono);margin:2px 0}.rc span{font-size:12px;color:var(--muted)}
 .rc .tb{display:flex;gap:8px;font-size:12.5px;padding:4px 0}.rc .tb i{font-style:normal;font-weight:800;width:14px}.tb .y{color:#2E7D4F}.tb .n{color:var(--wine-ink)}.tb .q{color:var(--muted)}
 .sp-empty{background:var(--card);border:1px solid var(--line);padding:14px 16px;margin:0;font-size:13px}
-.home-std{margin:10px 0 0;font-size:13px;color:var(--fg2)}.home-std a{font-weight:600}
+.vdesc{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px}.vdesc a{white-space:nowrap}#vid-page .block-h h2{font-size:21px}
+.home-std{margin-left:auto;font:600 13px var(--sans);letter-spacing:0;text-transform:none}.grec .gsp{flex:1;align-content:space-evenly}.grec .gk{flex-wrap:nowrap;white-space:nowrap}@media (min-width:861px){.gsp dt{font-size:11px}.gsp dd{font-size:16px}}
 .msw{margin-top:28px}.ms{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
 .mi{background:var(--card);border:1px solid var(--line);padding:12px 14px;display:grid;grid-template-columns:40px 1fr;gap:2px 12px;align-items:center}
 .mi .av{width:40px;height:40px;border-radius:50%;background:var(--wine);color:#fff;display:grid;place-items:center;font:800 12px var(--sans);grid-row:1/span 2}
@@ -855,7 +862,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 .tip{font-weight:700;color:var(--wine-ink);text-decoration:none;border-bottom:2px solid #F2B231}
 .gp{display:block}.gp-k{display:block;margin-bottom:6px}
 .gp-teams{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center;margin-bottom:8px}
-@media (min-width:761px){.gp{display:grid;grid-template-columns:auto minmax(0,460px) 1fr;column-gap:22px;align-items:center}.gp-k{grid-column:1;grid-row:1}.gp-teams{grid-column:2;grid-row:1;margin:0;padding:8px 14px;background:var(--card,var(--bg));border:1px solid var(--line2)}.gprev td{text-align:left}.gp .gp-f{border-top:0;padding-top:0}.gp-f{grid-column:3;grid-row:1;justify-self:start;text-align:left;border-top:0;padding:0;display:grid;grid-template-columns:repeat(2,max-content);gap:4px 26px;align-items:baseline}.gp-f .gp-inj{grid-column:1/-1}.gp-l{margin-left:0}}
+@media (min-width:761px){.gp{display:block;max-width:560px}.gp-k{display:block;margin-bottom:6px}.gp-teams{padding:10px 14px;background:var(--card,var(--bg));border:1px solid var(--line2)}.gp-f{margin-top:8px}}
 .gp-t{display:flex;flex-direction:column;gap:1px}.gp-t b{font:800 14px var(--sans);color:var(--fg)}.gp-t span{font:500 12px var(--mono);color:var(--fg2)}
 .gp-teams .gp-t:nth-child(3){text-align:right}
 .gp-links{flex-basis:100%;width:100%;display:flex;justify-content:space-between;gap:12px}.gp-links .gp-l{margin:0}
@@ -1127,7 +1134,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
       <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Media</div>
       <h1 style="margin-top:6px">Media</h1>
       <div class="segs msegs" role="tablist" aria-label="Media"><a role="tab" aria-selected="true" href="/media" data-go="media">Video</a><a role="tab" aria-selected="false" href="/media/rcf" data-go="media/rcf">RealCavsFans</a></div>
-      <p class="dim" style="margin:6px 0 0">Press conferences, practice availability and the latest from the official Cavs channel. <a href="https://www.youtube.com/@cavs" target="_blank" rel="noopener">Cavs YouTube channel ↗</a></p>
+      <p class="dim vdesc" style="margin:6px 0 0"><span>Press conferences, practice availability and the latest from the official Cavs channel.</span><a href="https://www.youtube.com/@cavs" target="_blank" rel="noopener">Cavs YouTube channel ↗</a></p>
     </div>
     <div id="vid-page"></div>
     <p class="dim" style="margin:0;font-size:13px">All video from the Cleveland Cavaliers' official YouTube channel.</p>
@@ -1182,6 +1189,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
     </div>
     <div class="ch-tiles" id="ch-tiles"></div>
     <div class="callouts" id="ch-callouts"></div>
+    <section id="ch-lead-sec" hidden><div class="block-h"><h2>Leaders</h2><span id="ch-lead-n"></span></div><div class="chl" id="ch-lead"></div></section>
     <section><div class="block-h"><h2>Schedule</h2></div>
       <div class="tablebox"><table class="chs"><thead><tr><th>Date</th><th>Opponent</th><th>Time (ET)</th><th>Arena</th><th class="r">Result</th></tr></thead><tbody id="ch-sched"></tbody></table></div>
       <p class="dim" style="margin:8px 0 0;font-size:13px">Full 2026–27 schedule: 14 Tip-Off Tournament games (Nov 10 to Dec 15), then 34 regular-season games through Mar 27. Times are Eastern.</p></section>
@@ -1493,7 +1501,7 @@ const nr=NRTG.CLE?sgn(NRTG.CLE[0])+' ('+ord(1+Object.values(NRTG).filter(v=>v[0]
 const nr14=L14.CLE?sgn(L14.CLE[0]):'—';
 [['East rank',SEASON.eastRank],['Central rank',SEASON.centralRank||'—'],['Home',rec('H')],['Road',rec('A')],['Last 10',last10.length?last10.filter(x=>x==='W').length+'–'+last10.filter(x=>x==='L').length:'—'],['Streak',streak],['Net rating',nr],['Net, 2 wks',nr14]]
   .forEach(([k,v])=>{const d=el('div');d.append(el('dt',null,k),el('dd',null,v));sp.appendChild(d)});
-{const hl=el('p','home-std');const a=el('a',null,'Standings →');a.href='/schedule';a.dataset.go='schedule';hl.appendChild(a);sp.parentNode.insertBefore(hl,sp.nextSibling)}
+{const a=el('a','home-std','Standings →');a.href='/schedule';a.dataset.go='schedule';const gk=document.getElementById('played').parentElement;gk.appendChild(a)}
 const strip=document.getElementById('strip');for(let i=0;i<82;i++)strip.appendChild(el('span',res[i]==='W'?'w':res[i]==='L'?'l':null));
 strip.setAttribute('aria-label','Game-by-game results: '+W+' wins, '+L+' losses');
 const tipOf=g=>{const [h,m]=g[3].split(':').map(Number);const hh=h===12?12:h+12;const off=(g[0]<'2026-11-01'||g[0]>='2027-03-14')?'-04:00':'-05:00';
@@ -2285,16 +2293,16 @@ SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
     const left=SCHEDULE.filter(x=>x[1]===o).length;
     const w=el('div','gp');w.appendChild(el('span','gp-k','Preview'));
     const cur=(TSTATS.CLE&&TSTATS[o]&&TSTATS.CLE[0]+TSTATS.CLE[1]>=5&&TSTATS[o][0]+TSTATS[o][1]>=5),TS=cur?TSTATS:TSTATS_PREV;
-    const team=(nm,a)=>{const x=el('div','gp-t');const t=TS[a];x.append(el('b',null,nm),el('span',null,cur?rec(a)+(seed(a)?' · '+seed(a):''):(t?t[0]+'–'+t[1]+' last season':'')));return x};
+    const team=(nm,a)=>{const x=el('div','gp-t');const t=TS[a];x.append(el('b',null,nm),el('span',null,cur?(seed(a)||''):'Last season'));return x};
     const teams=el('div','gp-teams');teams.append(team('Cavs','CLE'),el('i','gp-vs',g[2]==='H'?'vs':'at'),team(TEAMS[o],o));
     /* tale of the tape: each stat with its league rank, better side in bold */
     if(TS.CLE&&TS[o]){const tape=el('div','gp-tape');const all=Object.values(TS);
       const rk=(v,i,hi)=>1+all.filter(t=>hi?t[i]>v:t[i]<v).length;
-      const ROWS=[['Points',2,1,v=>v.toFixed(1)],['Allowed',3,0,v=>v.toFixed(1)],['Off rating',4,1,v=>v.toFixed(1)],['Def rating',5,0,v=>v.toFixed(1)],['Net rating',-1,1,v=>(v>0?'+':'')+v.toFixed(1)],['Pace',6,1,v=>v.toFixed(1)],['3P%',7,1,v=>v.toFixed(1)+'%']];
-      const val=(t,i)=>i<0?+(t[4]-t[5]).toFixed(1):t[i];
-      ROWS.forEach(([lab,i,hi,f])=>{const a=val(TS.CLE,i),b=val(TS[o],i);const ra=i<0?1+all.filter(t=>t[4]-t[5]>a).length:rk(a,i,hi),rb=i<0?1+all.filter(t=>t[4]-t[5]>b).length:rk(b,i,hi);
+      const ROWS=[['Record',-2,1,null],['Points',2,1,v=>v.toFixed(1)],['Allowed',3,0,v=>v.toFixed(1)],['Off rating',4,1,v=>v.toFixed(1)],['Def rating',5,0,v=>v.toFixed(1)],['Net rating',-1,1,v=>(v>0?'+':'')+v.toFixed(1)],['Pace',6,1,v=>v.toFixed(1)]];
+      const val=(t,i)=>i===-2?t[0]/Math.max(1,t[0]+t[1]):i<0?+(t[4]-t[5]).toFixed(1):t[i];
+      ROWS.forEach(([lab,i,hi,f])=>{const a=val(TS.CLE,i),b=val(TS[o],i);const rr=v=>1+all.filter(t=>val(t,i)>v).length;const ra=i<0?rr(a):rk(a,i,hi),rb=i<0?rr(b):rk(b,i,hi);const fmt=(t,v)=>f?f(v):t[0]+'–'+t[1];
         const better=lab==='Pace'?0:(hi?a>b:a<b)?1:(hi?b>a:b<a)?2:0;
-        const L=el('span','gtv'+(better===1?' up':''));L.append(f(a),el('small',null,' '+ord(ra)));const Rr=el('span','gtv r'+(better===2?' up':''));Rr.append(el('small',null,ord(rb)+' '),f(b));tape.append(L,el('span','gtl',lab),Rr)});
+        const L=el('span','gtv'+(better===1?' up':''));L.append(fmt(TS.CLE,a),el('small',null,' '+ord(ra)));const Rr=el('span','gtv r'+(better===2?' up':''));Rr.append(el('small',null,ord(rb)+' '),fmt(TS[o],b));tape.append(L,el('span','gtl',lab),Rr)});
       teams.appendChild(tape);teams.appendChild(el('span','gp-note','Bold = better · league rank'+(cur?'':' · 2025–26 stats until 5 games played')))}
     w.appendChild(teams);
     const facts=el('div','gp-f');
@@ -2413,7 +2421,7 @@ const VLINKS=[['Latest uploads','Newest videos from the official channel',YT+'/v
 const VCATS=[['Postgame press conferences',/post-?game|press conference|presser/i],['Highlights',/highlight/i],['Practice & shootaround',/practice|shootaround/i],['Media day',/media day/i]];
 const ON_DOMAIN=/(^|\.)cavsdatabase\.com$/.test(location.hostname);
 const posters=items=>{const g=el('div','vgrid');items.forEach(([t,d,u])=>{const a=el('a','vcard');a.href=u;a.target='_blank';a.rel='noopener';a.setAttribute('aria-label',t+' on YouTube');
-  const th=el('div','vthumb poster');const pl=el('div','vplay');pl.appendChild(el('span'));th.append(el('span','ptag','Cavs · YouTube'),pl,el('span','ptitle',t));
+  const th=el('div','vthumb poster');const pl=el('div','vplay');pl.appendChild(el('span'));th.append(pl,el('span','ptitle',t));
   a.append(th,el('small',null,d));g.appendChild(a)});return g};
 const linkList=items=>{const ul=el('ul','vlinks');items.forEach(([t,d,u])=>{const li=el('li');const a=el('a');a.href=u;a.target='_blank';a.rel='noopener';a.append(el('b',null,t),el('span',null,d),el('em',null,'YouTube ↗'));li.appendChild(a);ul.appendChild(li)});return ul};
 const vDate=new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric'});
@@ -2433,7 +2441,7 @@ function renderVideo(list){
   one.appendChild(txt);home.appendChild(one);
   if(!list||!list.length){page.appendChild(posters(VLINKS));return}
   VCATS.concat([['Latest uploads',/./]]).forEach(([name,re])=>{const vs=list.filter(v=>re.test(v.title)).slice(0,name==='Latest uploads'?12:9);if(!vs.length)return;
-    const sec=el('section');const h=el('div','block-h');h.appendChild(el('h2',null,name));const vl=VLINKS.find(x=>x[0]===name);if(vl){const ya=el('a',null,'YouTube ↗');ya.href=vl[2];ya.target='_blank';ya.rel='noopener';h.appendChild(ya)}sec.appendChild(h);const gg=el('div','vgrid');vs.forEach(v=>gg.appendChild(vCard(v)));sec.appendChild(gg);page.appendChild(sec)});
+    const sec=el('section');const h=el('div','block-h');h.appendChild(el('h2',null,name));sec.appendChild(h);const gg=el('div','vgrid');vs.forEach(v=>gg.appendChild(vCard(v)));sec.appendChild(gg);page.appendChild(sec)});
 }
 renderVideo(null);
 if(ON_DOMAIN)fetch('/videos.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(d=>{if(d&&d.length)renderVideo(d)}).catch(()=>{});
@@ -2718,6 +2726,9 @@ TX.filter(r=>r.k==='trade').forEach(r=>add('Trade · '+(r.got||[]).slice(0,2).jo
 const CH_ARENA={H:'Public Auditorium, Cleveland','Grand Rapids Gold':'Van Andel Arena, Grand Rapids','Sioux Falls Skyforce':'Sanford Pentagon, Sioux Falls','Wisconsin Herd':'Oshkosh Arena, Oshkosh','Noblesville Boom':'Arena at Innovation Mile, Noblesville','Raptors 905':'Paramount Fine Foods Centre, Mississauga','Motor City Cruise':'Wayne State Fieldhouse, Detroit','Greensboro Swarm':'First Horizon Coliseum, Greensboro','Westchester Knicks':'Westchester County Center, White Plains','Maine Celtics':'Portland Exposition Building, Portland','Windy City Bulls':'NOW Arena, Hoffman Estates','Laketown Squadron':'Pontchartrain Center, Kenner','Delaware Blue Coats':'Chase Fieldhouse, Wilmington','Capital City Go-Go':'CareFirst Arena, Washington'};
 /* G League team sites, linked from the Charge schedule */
 const CH_TEAM_URL={"Grand Rapids Gold": "https://grandrapids.gleague.nba.com/", "Sioux Falls Skyforce": "https://siouxfalls.gleague.nba.com/", "Wisconsin Herd": "https://wisconsin.gleague.nba.com/", "Noblesville Boom": "https://noblesville.gleague.nba.com/", "Raptors 905": "https://raptors905.gleague.nba.com/", "Motor City Cruise": "https://detroit.gleague.nba.com/", "Greensboro Swarm": "https://greensboro.gleague.nba.com/", "Westchester Knicks": "https://westchester.gleague.nba.com/", "Maine Celtics": "https://maine.gleague.nba.com/", "Windy City Bulls": "https://windycity.gleague.nba.com/", "Laketown Squadron": "https://laketown.gleague.nba.com/", "Delaware Blue Coats": "https://bluecoats.gleague.nba.com/", "Capital City Go-Go": "https://capitalcity.gleague.nba.com/", "College Park Skyhawks": "https://cpskyhawks.gleague.nba.com/", "Iowa Wolves": "https://iowa.gleague.nba.com/", "Long Island Nets": "https://longisland.gleague.nba.com/", "Osceola Magic": "https://osceola.gleague.nba.com/"};
+/* Charge player season stats, per game (RealGM). Empty until the season starts; the Leaders section stays hidden until then.
+   [name, games, minutes, points, rebounds, assists, steals, blocks, FGM, FGA, 3PM, 3PA, PER] */
+const CH_STATS=[];
 const CH_ROSTER=[
   ['Two-way contracts (Cavs)',[['Tristan Enaruna','F','Two-way','Also on the Cavs roster'],['Riley Minix','F','Two-way','Also on the Cavs roster'],['Ernest Udeh Jr.','C','Two-way','Also on the Cavs roster']]],
   ['Cavs Exhibit 10 (training camp)',[['Rashaun Agee','F','Exhibit 10','In Cavs camp'],['Zack Austin','F','Exhibit 10','In Cavs camp'],['Noam Yaacov','G','Exhibit 10','In Cavs camp']]]
@@ -2733,6 +2744,16 @@ const CH_STAFF=[
   const now=new Date(Date.now()-3*3600e3);const tip=chTip;
   const nxt=CHARGE.games.find(g=>!g[4]&&tip(g)>now);
   CHARGE.games.forEach(g=>{const tr=el('tr');if(g===nxt)tr.classList.add('nextg');const dtd=el('td','mono chd');const dt0=new Date(g[0]+'T12:00:00');dtd.append(el('span','dw',dt0.toLocaleDateString('en-US',{weekday:'short'})),' ',el('span','dd',dt0.toLocaleDateString('en-US',{month:'short',day:'numeric'})));const otd=el('td','opp');otd.append(g[2]==='H'?'vs ':'at ');if(CH_TEAM_URL[g[1]]){const oa=el('a',null,g[1]);oa.href=CH_TEAM_URL[g[1]];oa.target='_blank';oa.rel='noopener';otd.appendChild(oa)}else otd.append(g[1]);tr.append(dtd,otd,el('td','mono dim',chTime(g)),el('td','dim',g[5]||(g[2]==='H'?CH_ARENA.H:(CH_ARENA[g[1]]||''))),el('td','r mono',g[4]||''));tb.appendChild(tr)});
+  /* leaders: top 3 in each category once the season starts */
+  if(CH_STATS.length){const box=document.getElementById('ch-lead');document.getElementById('ch-lead-sec').hidden=false;
+    const mg=Math.max(...CH_STATS.map(r=>r[1])),q=r=>r[1]>=Math.max(1,Math.ceil(mg*.4));
+    const pct=(m,a)=>a?m/a*100:0;
+    const CATS=[['Points',r=>r[3],r=>q(r),v=>v.toFixed(1)],['Rebounds',r=>r[4],q,v=>v.toFixed(1)],['Assists',r=>r[5],q,v=>v.toFixed(1)],['Steals',r=>r[6],q,v=>v.toFixed(1)],['Blocks',r=>r[7],q,v=>v.toFixed(1)],
+      ['FG%',r=>pct(r[8],r[9]),r=>q(r)&&r[9]>=3,v=>v.toFixed(1)+'%'],['3P%',r=>pct(r[10],r[11]),r=>q(r)&&r[11]>=1.5,v=>v.toFixed(1)+'%'],['PER',r=>r[12],r=>q(r)&&r[2]>=10,v=>v.toFixed(1)]];
+    CATS.forEach(([lab,f,ok,fmt])=>{const top=CH_STATS.filter(ok).filter(r=>f(r)!=null&&!isNaN(f(r))).sort((a,b)=>f(b)-f(a)).slice(0,3);if(!top.length)return;
+      const c=el('div','chl-c');c.appendChild(el('span','chl-k',lab));const lead=el('div','chl-1');lead.append(el('b',null,fmt(f(top[0]))),el('span',null,top[0][0]));c.appendChild(lead);
+      const ul=el('ol','chl-r');top.slice(1).forEach(r=>{const li=el('li');li.append(el('span',null,r[0]),el('b',null,fmt(f(r))));ul.appendChild(li)});c.appendChild(ul);box.appendChild(c)});
+    document.getElementById('ch-lead-n').textContent='Per game · min. '+Math.max(1,Math.ceil(mg*.4))+' games'}
   const t=document.getElementById('ch-tiles');[[CHARGE.record,'Record'],[nxt?shortFmt.format(new Date(nxt[0]+'T12:00:00')):'—','Next game']].forEach(([v,l])=>{const d=el('div','txs');d.append(el('b',null,v),el('span',null,l));t.appendChild(d)});
   const ro=document.getElementById('ch-roster');let n=0;CH_ROSTER.forEach(([g,ps])=>{const sec=el('section');const h=el('div','block-h');h.append(el('h2',null,g),el('span',null,String(ps.length)));const ul=el('ul','kv');ps.forEach(([nm,pos,tag,note])=>{n++;const li=el('li');const sp=el('span',null,nm);sp.appendChild(el('small',null,pos+' · '+note));li.append(sp,el('b','ch-tag',tag));ul.appendChild(li)});sec.append(h,ul);ro.appendChild(sec)});
   document.getElementById('ch-ros-n').textContent=n+' tied to the Cavs';
