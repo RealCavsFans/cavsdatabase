@@ -235,6 +235,42 @@ a{color:var(--wine-ink);text-decoration:none}a:hover{text-decoration:underline}
 .page{padding-block:32px 64px;display:flex;flex-direction:column;gap:20px}
 h1{margin:0;font:800 clamp(28px,4vw,36px)/1.1 var(--sans);font-stretch:115%;letter-spacing:-.02em;text-wrap:balance}
 .tablebox{overflow-x:auto;border:1px solid var(--line);overscroll-behavior-x:contain}
+:root{--ab-cond-bg:#FFF6E0;--ab-cond-ink:#8A5E00;--ab-frz-a:#E8F1F8;--ab-frz-b:#DCEAF4;--ab-frz-bd:#9CC3DD;--ab-frz-ink:#1B4A66;--ab-frz-i:#2D6E95;--ab-gold:#F2B231}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--ab-cond-bg:#2A2210;--ab-cond-ink:#F2C45A;--ab-frz-a:#13212B;--ab-frz-b:#182A36;--ab-frz-bd:#3B6A88;--ab-frz-ink:#B5D6EA;--ab-frz-i:#8CC0E0}}
+:root[data-theme="dark"]{--ab-cond-bg:#2A2210;--ab-cond-ink:#F2C45A;--ab-frz-a:#13212B;--ab-frz-b:#182A36;--ab-frz-bd:#3B6A88;--ab-frz-ink:#B5D6EA;--ab-frz-i:#8CC0E0}
+.ab-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 28px}
+.ab-tile{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--wine);padding:14px 16px;min-width:0}.ab-tile.gold{border-top-color:var(--ab-gold)}
+.ab-tile b{display:block;font:700 30px/1.1 var(--mono);color:var(--wine-ink)}.ab-tile.gold b{color:var(--ab-cond-ink)}
+.ab-tile>span{display:block;font:800 11px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:4px}.ab-tile small{display:block;font-size:12.5px;color:var(--fg2);margin-top:6px}
+.ab-board{display:grid;grid-template-columns:64px repeat(7,minmax(0,1fr));gap:8px;background:var(--card);border:1px solid var(--line);padding:14px}
+.ab-yr{grid-column:var(--c);grid-row:1;font:800 22px var(--cond);text-align:center}.ab-rl{grid-column:1;grid-row:var(--r);align-self:center;font:800 11px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.ab-ym{display:none}
+.ab-pk{grid-column:var(--c);grid-row:var(--r);appearance:none;border:0;margin:0;text-align:left;border-radius:6px;min-height:80px;padding:9px 9px 8px;display:flex;flex-direction:column;justify-content:space-between;gap:4px;font:12px/1.25 var(--sans);cursor:pointer;transition:transform .12s;min-width:0}
+.ab-pk:hover{transform:translateY(-2px)}.ab-pk[aria-expanded="true"]{outline:2px solid var(--fg);outline-offset:2px}
+.ab-pk i{font:700 10px var(--sans);font-style:normal;letter-spacing:.08em;text-transform:uppercase}.ab-pk b{font:800 13px var(--sans)}
+.ab-pk.own{background:var(--wine);color:#fff}.ab-pk.own i{color:var(--ab-gold)}
+.ab-pk.cond{background:var(--ab-cond-bg);border:2px solid var(--ab-gold);color:var(--fg)}.ab-pk.cond i{color:var(--ab-cond-ink)}
+.ab-pk.frz{background:repeating-linear-gradient(135deg,var(--ab-frz-a) 0 8px,var(--ab-frz-b) 8px 16px);border:2px solid var(--ab-frz-bd);color:var(--ab-frz-ink)}.ab-pk.frz i{color:var(--ab-frz-i)}
+.ab-pk.gone{background:var(--sub);border:1px dashed var(--line);color:var(--muted)}.ab-pk.gone b{color:var(--fg2)}.ab-pk.gone i{color:var(--muted)}
+.ab-det{grid-column:1/-1;grid-row:4;border:1px solid var(--line);border-top:3px solid var(--wine);padding:12px 14px 2px;margin-top:4px;background:var(--card)}
+.ab-dh{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}.ab-dh b{font-weight:800;font-size:15px}.ab-dh small{color:var(--muted);font-size:13px}.ab-dx{margin-left:auto;appearance:none;border:0;background:none;font-size:20px;line-height:1;color:var(--muted);cursor:pointer;padding:2px 4px}
+.ab-leg{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:12.5px;color:var(--fg2)}.ab-leg span{display:inline-flex;align-items:center;gap:6px}.ab-leg i{width:14px;height:14px;border-radius:3px;display:inline-block;box-sizing:border-box}
+.ab-sec{margin-top:30px}
+.ab-cards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ab-cards>li{background:var(--card);border:1px solid var(--line);min-width:0}.ab-cards>li:has(details[open]){grid-column:1/-1}
+.ab-cards summary{list-style:none;cursor:pointer;padding:14px 16px;display:block}.ab-cards summary::-webkit-details-marker{display:none}
+.ab-cards .ab-n{display:block;font:800 12px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+#exc summary>b{display:block;font:700 26px var(--mono);margin-top:2px}
+.ab-bar{height:8px;border-radius:4px;background:var(--line2);margin:10px 0 6px;overflow:hidden}.ab-bar i{display:block;height:100%;background:var(--wine)}
+.ab-cards summary small{display:block;font-size:12.5px;color:var(--fg2)}
+.ab-cards .xb{padding:0 16px 14px}
+.ab-rt>li{border-left:4px solid var(--wine)}.ab-rt>li.dim{border-left-color:var(--line)}
+.ab-rt summary{display:flex;gap:12px;align-items:center}.ab-av{width:48px;height:48px;border-radius:50%;background:var(--sub);display:grid;place-items:center;font:800 15px var(--sans);color:var(--wine-ink);flex:none;overflow:hidden}.ab-av img{width:100%;height:100%;object-fit:cover;object-position:top}
+.ab-rt summary>span{min-width:0}.ab-rt summary b{display:block;font:700 15px var(--sans)}.ab-rt .rt-dr{display:inline-block;font:600 12px var(--mono);color:var(--wine-ink);margin-top:2px}
+@media (max-width:760px){.ab-tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.ab-tile b{font-size:26px}
+ .ab-board{grid-template-columns:repeat(2,minmax(0,1fr));padding:12px}.ab-yr,.ab-rl{display:none}.ab-pk{grid-column:auto;grid-row:auto}.ab-det{grid-row:auto}
+ .ab-ym{display:block;grid-column:1/-1;font:800 18px var(--cond);border-bottom:2px solid var(--fg);padding-bottom:2px;margin-top:6px}.ab-ym:first-child{margin-top:0}
+ .ab-cards{grid-template-columns:1fr}}
+
 html,body{overflow-x:clip}body{position:relative}main,header.gbar,footer{overflow-x:clip;max-width:100%}
 #twoway summary>b.mono,#camp li>b{font-size:12px}
 .co-more{display:none}
@@ -1096,12 +1132,10 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
       <h1 style="margin-top:6px">Assets</h1>
       <p class="dim" style="margin:6px 0 0">Draft picks and exceptions the front office can use in trades and signings.</p>
     </div>
-    <div class="cols">
-      <section><div class="block-h"><h2>Draft picks the Cavs own</h2><span>Next 7 drafts</span></div><ul class="xl" id="picks"></ul>
-        <div class="block-h" style="margin-top:22px"><h2>Picks the Cavs owe</h2><span>Traded away</span></div><ul class="xl" id="owed"></ul></section>
-      <section><div class="block-h"><h2>Exceptions</h2><span>2026–27 · amount left · tap for details</span></div><ul class="xl" id="exc"></ul>
-        <div class="block-h" style="margin-top:22px"><h2>Drafted players</h2><span>Unsigned draft rights held</span></div><ul class="xl" id="rights"></ul></section>
-    </div>
+    <div class="ab-tiles" id="ab-tiles"></div>
+    <section><div class="block-h"><h2>Draft picks</h2><span>2027–2033 · tap a pick for details</span></div><div class="ab-board" id="board"></div><div class="ab-leg" id="board-leg"></div></section>
+    <section class="ab-sec"><div class="block-h"><h2>Exceptions</h2><span>2026–27 · amount left · tap for details</span></div><ul class="ab-cards" id="exc"></ul></section>
+    <section class="ab-sec"><div class="block-h"><h2>Drafted players</h2><span>Unsigned draft rights held</span></div><ul class="ab-cards ab-rt" id="rights"></ul></section>
   </div>
 </main>
 
@@ -2212,17 +2246,55 @@ const freezeBox=()=>{const w=el('div','frz');const ap2=(THRESH.find(t=>t[0]==='S
   w.appendChild(el('p','frz-p',under>=3?'Unfrozen: three seasons under the second apron.':'Needs 3 seasons under the second apron to unfreeze; '+under+' of 3 done. 2026–27 can’t go over (hard cap), so if the Cavs also stay under in 2027–28 and 2028–29, the pick unfreezes after the 2028–29 regular season.'));
   w.appendChild(el('p','frz-p warn','Over in 2 of these 4 seasons: the pick slides to the end of the first round (No. 30) instead.'+(over?' Over so far: '+over+'.':'')));
   return w};
-const pk=document.getElementById('picks');PICKS.forEach(([y,r,st,v,tr,sw,why,orig])=>{const val=el('span','tks');val.append(tmark(tr,'Trade'),tmark(sw,'Swap'));
-  pk.appendChild(pickItem(y+' '+r+' round',st,val,[pviz(v),v[0]==='frozen'?freezeBox():null,['Trade outright:',(tr?'Yes. ':'No. ')+(tr?'':why)],['Trade swap rights:',sw?'Yes. Another team can get the right to swap picks with the Cavs that year.':(v[0]==='frozen'?'No, while frozen.':'No. Those swap rights are already held by other teams.')],orig?['How it got here:',orig]:null,r==='1st'?el('p','pnote',PICK_NOTE):null]))});
-const ow=document.getElementById('owed');OWED.forEach(([y,r,to,v,how,deal])=>{const val=el('span','tk out');val.append(el('i',null,'→'),v[0]==='to'?v[1]:v[2].map(x=>x[1]).join(' / '));
-  ow.appendChild(pickItem(y+' '+r+' round',to,val,[pviz(v),how?['How it’s decided:',how]:null,deal?(()=>{const q=el('p');q.appendChild(el('strong',null,'How it left:'));return q})():null,deal?(()=>{const ul=el('ul','deal');deal.split(/(?<=\.) (?=(?:On |At the |Atlanta then|Charlotte |Utah |Phoenix ))/).forEach(t=>ul.appendChild(el('li',null,t)));return ul})():null]))});
+/* draft board: every pick 2027–2033, tap for the full details */
+(function(){const bd=document.getElementById('board');if(!bd)return;
+  const pickBlocks=([y,r,st,v,tr,sw,why,orig])=>[pviz(v),v[0]==='frozen'?freezeBox():null,['Trade outright:',(tr?'Yes. ':'No. ')+(tr?'':why)],['Trade swap rights:',sw?'Yes. Another team can get the right to swap picks with the Cavs that year.':(v[0]==='frozen'?'No, while frozen.':'No. Those swap rights are already held by other teams.')],orig?['How it got here:',orig]:null,r==='1st'?el('p','pnote',PICK_NOTE):null];
+  const owedBlocks=([y,r,to,v,how,deal])=>[pviz(v),how?['How it’s decided:',how]:null,deal?(()=>{const q=el('p');q.appendChild(el('strong',null,'How it left:'));return q})():null,deal?(()=>{const ul=el('ul','deal');deal.split(/(?<=\.) (?=(?:On |At the |Atlanta then|Charlotte |Utah |Phoenix ))/).forEach(t=>ul.appendChild(el('li',null,t)));return ul})():null];
+  const YRS=[];for(let y=2027;y<=2033;y++)YRS.push(String(y));
+  const cells={};
+  PICKS.forEach(P=>{const [y,r,st,v,tr,sw]=P;const k=v[0]==='frozen'?'frz':v[0]==='pool'?'cond':'own';
+    const [b1,b2]=k==='cond'?(st.match(/^(.*?) of (.*)$/)||[0,st,'']).slice(1):['Cavs',k==='frz'?'Can’t move yet':tr&&sw?'Tradable':sw?'Swap tradable':tr?'Tradable':'Can’t trade'];
+    cells[y+r]={k,tag:r+' · '+(k==='frz'?'frozen':k==='cond'?'conditional':'own'),b:b1,sub:k==='cond'?'of '+b2.replace(' and ',', '):b2,title:y+' '+r+' round',st,marks:[tmark(tr,'Trade'),tmark(sw,'Swap')],blocks:pickBlocks(P)}});
+  OWED.forEach(O=>{const [y,r,to,v]=O;const dest=v[0]==='to'?v[1]:v[2].map(x=>x[1]).join(' / ');
+    cells[y+r]={k:'gone',tag:r+' · traded',b:'→ '+dest,sub:v[0]==='to'?(v[2]||''):v[1].length+'-team pool',title:y+' '+r+' round',st:to,marks:[],blocks:owedBlocks(O)}});
+  let det=null,cur=null;
+  const close=()=>{if(det)det.remove();det=null;if(cur)cur.setAttribute('aria-expanded','false');cur=null};
+  bd.appendChild(el('span'));YRS.forEach((y,i)=>{const h=el('span','ab-yr',y);h.style.setProperty('--c',i+2);bd.appendChild(h)});
+  ['1st','2nd'].forEach((r,j)=>{const l=el('span','ab-rl',r);l.style.setProperty('--r',j+2);bd.appendChild(l)});
+  YRS.forEach((y,i)=>{bd.appendChild(el('span','ab-ym',y));let last=null;
+    ['1st','2nd'].forEach((r,j)=>{const C=cells[y+r];const b=el('button','ab-pk '+(C?C.k:'gone'));b.type='button';b.style.setProperty('--c',i+2);b.style.setProperty('--r',j+2);
+      if(!C){b.append(el('i',null,r),el('b',null,'—'));b.disabled=true;bd.appendChild(b);last=b;return}
+      b.id='pk-'+y+'-'+r;b.setAttribute('aria-expanded','false');b.setAttribute('aria-label',C.title+': '+C.st);
+      b.append(el('i',null,C.tag),el('b',null,C.b));if(C.sub)b.append(el('span',null,C.sub));
+      b.onclick=()=>{const was=cur===b;close();if(was)return;cur=b;b.setAttribute('aria-expanded','true');
+        det=el('div','ab-det');const hd=el('div','ab-dh');hd.append(el('b',null,C.title),el('small',null,C.st));const mk=el('span','tks');C.marks.forEach(m=>mk.appendChild(m.cloneNode(true)));if(C.marks.length)hd.appendChild(mk);
+        const x=el('button','ab-dx','×');x.type='button';x.setAttribute('aria-label','Close');x.onclick=close;hd.appendChild(x);det.appendChild(hd);
+        const bx=el('div','xb');C.blocks.forEach(k=>{if(!k)return;if(k instanceof Node){bx.appendChild(k);return}const p=el('p');p.appendChild(el('strong',null,k[0]+' '));p.append(k[1]);bx.appendChild(p)});det.appendChild(bx);
+        b.parentNode.insertBefore(det,b.dataset.last?b.nextSibling:b.nextSibling.nextSibling);
+        if(matchMedia('(max-width:760px)').matches)det.scrollIntoView({block:'nearest',behavior:'smooth'})};
+      if(j===1)b.dataset.last='1';bd.appendChild(b);last=b})});
+  const lg=document.getElementById('board-leg');if(lg)[['var(--wine)','','Cavs have it'],['var(--ab-cond-bg)','2px solid var(--ab-gold)','Conditional / pool'],['var(--ab-frz-b)','2px solid var(--ab-frz-bd)','Frozen'],['var(--sub)','1px dashed var(--muted)','Traded away']].forEach(([bg,bo,t])=>{const s2=el('span');const i=el('i');i.style.background=bg;if(bo)i.style.border=bo;s2.append(i,t);lg.appendChild(s2)});
+  /* deep links like /assets#2028-1st open that pick */
+  const open=()=>{const m=decodeURIComponent(location.hash.slice(1)).match(/^(\d{4})-(1st|2nd)$/);if(!m)return;const b=document.getElementById('pk-'+m[1]+'-'+m[2]);if(b&&!b.closest('[hidden]')&&cur!==b){b.click();b.scrollIntoView({block:'center'})}};
+  addEventListener('hashchange',open);setTimeout(open,500);
+})();
+/* assets summary tiles */
+(function(){const w=document.getElementById('ab-tiles');if(!w)return;
+  const T=(n,lab,sm,cls)=>{const d=el('div','ab-tile'+(cls?' '+cls:''));d.append(el('b',null,String(n)),el('span',null,lab));if(sm)d.appendChild(el('small',null,sm));w.appendChild(d)};
+  const f=PICKS.filter(p=>p[1]==='1st'),sc=PICKS.filter(p=>p[1]==='2nd');
+  T(f.length,f.length===1?'First held':'Firsts held',f.map(p=>p[0]).join(' · '));
+  T(sc.length,sc.length===1?'Second held':'Seconds held',sc.map(p=>p[0]).join(' · '));
+  const left=EXC.reduce((t,e)=>t+e[1]-e[4].reduce((a,u)=>a+u[2],0),0);
+  T(usdM(left),'Exceptions',EXC.length+' open','gold');
+  const act=RIGHTS.filter(r=>/^(Active|Unsigned)/.test((RIGHTS_X[r[0]]||[])[0]||'')).length;
+  T(RIGHTS.length,'Draft rights',act+' playing this season')})();
 const ex=document.getElementById('exc');
 const donut=(used,full)=>{const r=26,c=2*Math.PI*r,f=full?used/full:0;const ns='http://www.w3.org/2000/svg';const sv=document.createElementNS(ns,'svg');sv.setAttribute('viewBox','0 0 64 64');sv.setAttribute('class','dnut');sv.setAttribute('aria-hidden','true');
   const ring=(col,len,off)=>{const k=document.createElementNS(ns,'circle');k.setAttribute('cx',32);k.setAttribute('cy',32);k.setAttribute('r',r);k.setAttribute('fill','none');k.setAttribute('stroke',col);k.setAttribute('stroke-width',10);k.setAttribute('stroke-dasharray',len+' '+(c-len));k.setAttribute('stroke-dashoffset',off);k.setAttribute('transform','rotate(-90 32 32)');sv.appendChild(k)};
   ring('var(--wine)',c,0);if(f>0)ring('var(--line)',c*f,0);return sv};
 EXC.forEach(([a,full,exp,how,used])=>{const spent=used.reduce((t,u)=>t+u[2],0),left=full-spent;const tpe=/Trade exception/.test(a),mle=/mid-level/i.test(a);
   const val=el('b','mono num-sc',usd(left));
-  const li=el('li');const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,a),el('small',null,'Expires '+exp+' · '+(used.length?'Partly used':'Unused')));sm.append(l,val);
+  const li=el('li');const d=document.createElement('details');const sm=document.createElement('summary');const bar=el('div','ab-bar');const bi=el('i');bi.style.width=Math.round(left/full*100)+'%';bar.appendChild(bi);sm.append(el('span','ab-n',a.replace(/^Trade exception \((.*)\)$/,'Trade exception · $1')),val,bar,el('small',null,'Expires '+exp+' · '+(used.length?'Partly used':'Unused')));
   const bx=el('div','xb');
   const viz=el('div','exviz');viz.appendChild(donut(spent,full));const lg=el('div','exlg');
   lg.append(el('div','exbig',usd(left)),el('div','exsub','left of '+usd(full)));
@@ -2235,11 +2307,12 @@ EXC.forEach(([a,full,exp,how,used])=>{const spent=used.reduce((t,u)=>t+u[2],0),l
   P('Used:',used.length?used.map(([dd,pl,amt])=>pl+', '+dd+': '+usd(amt)).join('. ')+'.':'Not used yet.');
   P('Under the 1st apron:','The Cavs are hard-capped with '+usd(HC_ROOM*1e6)+' of room, so they can only use as much of this as fits under '+usd(209015000)+' unless they shed salary first.');
   d.append(sm,bx);li.appendChild(d);ex.appendChild(li)});
-const rt=document.getElementById('rights');rt.className='xl';RIGHTS.forEach(([n,p2,dd,c])=>{const X=RIGHTS_X[n]||[];const yr=dd.slice(0,4);
-  const li=el('li');li.id='d-'+slug(n);const de=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,n),el('small',null,p2+' · '+c));
+const rt=document.getElementById('rights');RIGHTS.forEach(([n,p2,dd,c])=>{const X=RIGHTS_X[n]||[];const yr=dd.slice(0,4);
+  const li=el('li');li.id='d-'+slug(n);if(!/^(Active|Unsigned)/.test(X[0]||''))li.className='dim';const de=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,n),el('small',null,p2+' · '+c));
+  {const av=el('div','ab-av');const C0=RIGHTS_CARD[n];const ini=n.split(' ').map(w=>w[0]).join('');if(C0&&C0.img){const im=el('img');im.src=C0.img;im.alt='';im.loading='lazy';im.onerror=()=>{im.remove();av.textContent=ini};av.appendChild(im)}else av.textContent=ini;sm.appendChild(av)}
   const NXT=INTL_NEXT[n],today=new Date(new Date().toLocaleString('en-US',{timeZone:'America/New_York'})).toISOString().slice(0,10);const up=NXT?NXT.g.filter(g=>g[0]>=today):[];
   const gtxt=g=>new Date(g[0]+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})+' · '+(g[2]==='H'?'vs ':g[2]==='A'?'at ':'vs ')+g[1]+' ('+g[3]+')'+(g[4]?' · '+g[4]:'');
-  if(up.length)l.appendChild(el('small','nx','Next: '+gtxt(up[0])));const dla=el('a','mono rt-dr',dd+' ↗');dla.href='https://www.basketball-reference.com/draft/NBA_'+yr+'.html';dla.target='_blank';dla.rel='noopener';dla.title=yr+' NBA draft';sm.append(l,dla);
+  if(up.length)l.appendChild(el('small','nx','Next: '+gtxt(up[0])));const dla=el('a','mono rt-dr',dd+' ↗');dla.href='https://www.basketball-reference.com/draft/NBA_'+yr+'.html';dla.target='_blank';dla.rel='noopener';dla.title=yr+' NBA draft';l.appendChild(dla);sm.append(l);
   const bx=el('div','xb');const P=(h,t)=>{const p=el('p');p.appendChild(el('strong',null,h+' '));p.append(t);bx.appendChild(p);return p};
   {const C=RIGHTS_CARD[n];if(C){const cd=el('div','rcard');const ph=el('div','rc-ph');if(C.img){const im=el('img');im.src=C.img;im.alt=n;im.loading='lazy';im.onerror=()=>{im.remove();ph.textContent=n.split(' ').map(w=>w[0]).join('')};ph.appendChild(im)}else ph.textContent=n.split(' ').map(w=>w[0]).join('');
     const info=el('div','rc-in');info.append(el('b',null,n),el('span','rc-bio',[C.pos,C.ht,C.nat].filter(Boolean).join(' · ')),el('span','rc-bio',C.born?'Born '+C.born:''));
@@ -2510,7 +2583,7 @@ INJURIES.forEach(([n,p,inj,st])=>add(n+' injury',inj+' · '+st,'Injury','home','
 SCHEDULE.forEach(g=>{const d=tipOf(g);add((g[2]==='H'?'vs ':'at ')+TEAMS[g[1]],dayFmt.format(d)+' · '+g[3]+' PM'+(TV[g[0]]?' · '+TV[g[0]]:''),'Game','schedule','g-'+g[0],g[1]+' '+new Intl.DateTimeFormat('en-US',{month:'long',timeZone:'America/New_York'}).format(d)+' game schedule '+(g[2]==='H'?'home':'road away'))});
 upcoming.forEach(([d,t],i)=>add(t,fmt.format(new Date(d+'T00:00:00')),'Date','home','d-'+i,'deadline key date '+new Date(d+'T00:00:00').toLocaleDateString('en-US',{month:'long'})));
 STAFF.forEach(([g,people])=>people.forEach(([n,t])=>add(n,t,'Staff','staff','s-'+slug(n),g)));
-PICKS.forEach(([y,r,st])=>add(y+' '+r+'-round pick',st,'Asset','assets','picks','draft pick'));
+PICKS.forEach(([y,r,st])=>add(y+' '+r+'-round pick',st,'Asset','assets','pk-'+y+'-'+r,'draft pick'));
 EXC.forEach(([a,v,b])=>add(a,usd(v)+' · expires '+b,'Asset','assets','exc','exception'));
 RES.forEach(([g,items])=>items.forEach(([n,d])=>add(n,d,'Link','resources',null,g)));
 add('Cleveland Charge','G League · next game and record','Charge','home','chg-h','g league');
@@ -3148,8 +3221,7 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
   ['cap-summary','cap',()=>$('captop'),()=>[$('captop')],'Cap position 2026–27','tr'],
   ['cap-sheet','cap',()=>$('cs-x'),()=>[document.querySelector('table.cap')],'Cap sheet'],
   ['aprons','cap',()=>par($('ap-h')),()=>[document.querySelector('section.aprons')],'What each apron allows'],
-  ['draft-picks','assets',()=>hOf('picks'),()=>[hOf('picks'),$('picks')],'Draft picks the Cavs own'],
-  ['picks-owed','assets',()=>hOf('owed'),()=>[hOf('owed'),$('owed')],'Picks the Cavs owe'],
+  ['draft-picks','assets',()=>hOf('board'),()=>[hOf('board'),$('board'),$('board-leg')],'Cavs draft picks'],
   ['exceptions','assets',()=>hOf('exc'),()=>[hOf('exc'),$('exc')],'Trade exceptions'],
   ['drafted-players','assets',()=>hOf('rights'),()=>[hOf('rights'),$('rights')],'Drafted players'],
   ['depth-chart','roster',()=>document.querySelector('.dsheet .ds-hdr'),()=>[document.querySelector('.dsheet')],'Depth chart'],
