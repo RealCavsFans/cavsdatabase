@@ -2,7 +2,7 @@
 // NBA.com and most photo hosts don't allow other sites to read their images from the browser,
 // so images made in the browser would come out without photos. The pages themselves still show the originals.
 //  - Cavs player headshots: img/h/<NBA id>.png
-//  - Drafted-player card photos (RIGHTS_CARD): img/x/<short hash>.<ext>, listed in img/x/map.json
+//  - Every other photo on the page (drafted players, staff): img/x/<short hash>.<ext>, listed in img/x/map.json
 // Runs from .github/workflows/videos.yml. Node 20+, no dependencies. Never fails the job.
 import { readFile, writeFile, mkdir, stat } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -18,6 +18,8 @@ const ids = new Set();
 const block = (html.match(/const PLAYERS\s*=\s*\[([\s\S]*?)\n\];/) || [])[1] || '';
 for (const m of block.matchAll(/,(\d{6,8})\]/g)) ids.add(m[1]);
 for (const m of html.matchAll(/headshots\/nba\/latest\/260x190\/(\d+)\.png/g)) ids.add(m[1]);
+const staff = (html.match(/const STAFF\s*=\s*\[([\s\S]*?)\n\];/) || [])[1] || '';
+for (const m of staff.matchAll(/',(\d{5,8})\]/g)) ids.add(m[1]);
 await mkdir(new URL('img/h/', root), { recursive: true });
 let got = 0;
 for (const id of ids) {
@@ -32,9 +34,9 @@ for (const id of ids) {
 console.log(`headshots: ${ids.size} players, ${got} added`);
 
 // 2. drafted-player card photos
-const cardSrc = (html.match(/const RIGHTS_CARD\s*=\s*(\{[^\n]*\});/) || [])[1];
+// every other photo the page shows (drafted-player cards, staff, Charge staff)
 const urls = new Set();
-if (cardSrc) { try { for (const c of Object.values(JSON.parse(cardSrc))) if (c && c.img) urls.add(c.img); } catch (e) { warn('RIGHTS_CARD did not parse: ' + e.message); } }
+for (const m of html.matchAll(/https:\/\/[^'"\s)]+\.(?:png|jpe?g|webp)/gi)) { const u = m[0]; if (/headshots\/nba\/latest\/260x190|cavsdatabase\.com/.test(u)) continue; urls.add(u); }
 await mkdir(new URL('img/x/', root), { recursive: true });
 const mapUrl = new URL('img/x/map.json', root);
 let map = {}; try { map = JSON.parse(await readFile(mapUrl, 'utf8')); } catch {}
@@ -53,4 +55,4 @@ for (const u of urls) {
 }
 for (const k of Object.keys(map)) if (!urls.has(k)) delete map[k];
 await writeFile(mapUrl, JSON.stringify(map, null, 1) + '\n');
-console.log(`card photos: ${urls.size}, ${added} added`);
+console.log(`other photos: ${urls.size}, ${added} added`);

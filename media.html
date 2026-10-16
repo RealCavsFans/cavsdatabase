@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="apple-touch-icon" href="/icon-180.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Saira+Condensed:wght@600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" crossorigin="anonymous" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Saira+Condensed:wght@600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: white masthead; two-column home (season, next game, dates, cap bar | history, injuries, Charge); section index below. Reference-tool calm: ink, one wine accent, gold on the logo and the timeline swords. */
 :root{
@@ -173,7 +173,7 @@ a{color:var(--wine-ink);text-decoration:none}a:hover{text-decoration:underline}
 .dcal.rip.instant .dc-pg.top{animation:none;opacity:0}
 @keyframes dc-flip{0%{transform:rotateX(0)}100%{transform:rotateX(-100deg);opacity:0}}
 .otd-when{margin-top:0}
-.otd-text{margin:12px 0 8px;font:700 16px/1.42 var(--sans);color:var(--fg)}.otd-ago{display:block;font:600 11px var(--mono);letter-spacing:.02em;text-transform:none;color:var(--muted);margin-top:4px}
+.otd-text{margin:12px 0 8px;font:500 15px/1.48 var(--sans);color:var(--fg)}.otd-ago{display:block;font:600 11px var(--mono);letter-spacing:.02em;text-transform:none;color:var(--muted);margin-top:4px}
 .otd-src{font-size:12px}
 .otd-tag{display:inline-block;margin-right:6px;padding:1px 6px;font:700 9.5px var(--sans);font-stretch:118%;letter-spacing:.07em;text-transform:uppercase;border:1px solid var(--line);color:var(--muted);vertical-align:1px}
 .otd-tag.title{border-color:#D99A12;color:#9A6A00;background:color-mix(in srgb,#F2B231 14%,transparent)}.otd-tag.passing{border-color:var(--fg2);color:var(--fg2)}
@@ -398,7 +398,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
 body{background:var(--page)}
 .gbar{background:#860038;color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:10}
 .gin{display:flex;flex-wrap:wrap;align-items:center;gap:0 18px;min-height:74px}
-@media (min-width:1181px){.gin{flex-wrap:nowrap;gap:0 12px}.gin .search{flex-basis:132px}.thm{width:34px;margin-left:-4px}}
+@media (min-width:1181px){.gin{flex-wrap:nowrap;gap:0 12px}.gbar .search{flex:0 1 210px}}
 .gbrand{display:flex;align-items:center;gap:8px;color:#fff;font:800 34px/1 var(--cond);text-transform:uppercase;letter-spacing:.01em}
 .gbrand:hover{text-decoration:none}
 .gbrand svg{width:38px;height:38px}
@@ -418,7 +418,7 @@ body{background:var(--page)}
 .btt.on{opacity:1;transform:none;pointer-events:auto}.btt svg{width:18px;height:18px}.btt:hover{background:#6b002c}
 @media (max-width:520px){.btt{right:12px;bottom:12px;width:40px;height:40px}}
 .thm2{display:none;align-items:center;gap:6px;appearance:none;border:1px solid var(--line);background:var(--card,var(--bg));color:var(--fg2);font:600 12.5px var(--sans);padding:6px 11px;border-radius:999px;cursor:pointer}.thm2 svg{width:14px;height:14px;color:var(--wine-ink)}
-@media (max-width:600px){.gbar .thm{display:none}.thm2{display:inline-flex}}
+.thm2{display:inline-flex}
 @media print{.btt,.thm,.thm2{display:none}}
 /* share + save-as-image buttons */
 .hasx{flex-wrap:wrap}.block-h.hasx{justify-content:flex-start}.block-h.hasx>h2{margin-right:auto}.ds-hdr.hasx>b{margin-right:auto}h1.hasx{display:flex;align-items:center;gap:10px}h1.hasx .xact{margin-left:auto}
@@ -426,6 +426,9 @@ body{background:var(--page)}
 .xact button{width:28px;height:28px;display:grid;place-items:center;padding:0;appearance:none;border:1px solid var(--line);background:var(--card,var(--bg));color:var(--muted);border-radius:6px;cursor:pointer;transition:color .15s,border-color .15s}
 .xact button:hover,.xact button:focus-visible{color:var(--wine-ink);border-color:var(--wine-ink)}.xact button:disabled{opacity:.5;cursor:progress}.xact svg{width:14px;height:14px}
 [data-anchor]{scroll-margin-top:120px}
+.xhost{position:relative}.xact.xact-br{position:absolute;right:14px;bottom:12px;margin:0;opacity:.55;transition:opacity .15s}.xact.xact-tr{position:absolute;right:0;top:0;margin:0;opacity:.7}.xhost:hover .xact-br,.xhost:hover .xact-tr,.xact-br:focus-within,.xact-tr:focus-within{opacity:1}
+.xact.xact-br button,.xact.xact-tr button{width:24px;height:24px}.xact.xact-br svg,.xact.xact-tr svg{width:12px;height:12px}
+.co{position:relative}.co>.xact{position:absolute;top:12px;right:12px;margin:0;opacity:.6}.co:hover>.xact,.co>.xact:focus-within{opacity:1}.bio{position:relative}.bio>.xact{position:absolute;top:8px;right:8px;margin:0;opacity:.6;z-index:1}.bio>.xact:hover,.bio>.xact:focus-within{opacity:1}
 .xtoast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);z-index:80;display:flex;align-items:center;gap:10px;background:#101419;color:#fff;font:700 13.5px var(--sans);padding:10px 16px;border-radius:999px;box-shadow:0 10px 26px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:calc(100vw - 32px)}
 .xtoast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}.xtoast i{font-style:normal;color:#F2B231}.xtoast button{appearance:none;border:0;background:#F2B231;color:#101419;font:800 13px var(--sans);padding:6px 12px;border-radius:999px;cursor:pointer}
 @media (max-width:600px){.block-h.hasx:has(>span:not(.xact))>h2{flex-basis:100%}.block-h.hasx>span:not(.xact){margin-right:auto}.xact{margin-left:8px}}
@@ -557,7 +560,8 @@ body{background:var(--page)}
 #nx-opp a.opp{color:inherit;text-decoration:none}#nx-opp a.opp:hover{text-decoration:underline;text-decoration-thickness:3px}
 a.opp{color:var(--fg);font-weight:600}
 table.sched{min-width:980px;table-layout:fixed}
-.sched th:nth-child(1){width:110px}.sched th:nth-child(2){width:230px}.sched th:nth-child(3){width:84px}.sched th:nth-child(4){width:230px}.sched th:nth-child(6){width:96px}.sched th:nth-child(7){width:96px}
+.sched th:nth-child(1){width:110px}.sched th:nth-child(2){width:230px}.sched th:nth-child(3){width:84px}.sched th:nth-child(4){width:230px}.sched th:nth-child(6){width:150px}
+.sched a.pvlink,.sched a.reslink{color:var(--wine-ink);text-decoration:underline;text-decoration-style:dotted;text-decoration-thickness:1.5px;text-underline-offset:3px}.sched a.pvlink:hover,.sched a.reslink:hover{text-decoration-style:solid}.sched a.reslink{font-weight:700}
 .sched td.mono{white-space:nowrap}
 .sched td{vertical-align:top}
 .tvc{font-size:13px;line-height:1.35}.tvc b,.tvc span,.tvc small{display:block}.tvc b{font-weight:700}.tvc small{color:var(--muted);font-size:11.5px}
@@ -581,8 +585,6 @@ tr.nextg td{background:color-mix(in srgb,var(--wine) 7%,transparent)}
  .sched td:nth-child(4) small{display:none}
  .sched td:nth-child(5){display:none}
  .sched td:nth-child(6){grid-column:3;grid-row:2;text-align:right;font-size:12px}
- .sched td:nth-child(7){grid-column:3;grid-row:2;text-align:right;font-size:12px}
- .sched td:nth-child(6):not(:empty)+td{grid-row:3}
  .sched td:nth-child(6):empty{display:none}
  .sched .tvc b,.sched .tvc span{display:inline}.sched .tvc b+span::before{content:" · "}
  .sched .gtag{margin-left:6px;font-size:8.5px;padding:0 4px}
@@ -595,8 +597,7 @@ tr.nextg td{background:color-mix(in srgb,var(--wine) 7%,transparent)}
  .sched td:nth-child(2) .gtag{display:none}
  .sched td.mtag{display:block;grid-column:1/-1;grid-row:1;margin-bottom:2px}.sched td.mtag .gtag{margin:0}
  .sched tr.hastag td:nth-child(1){grid-row:2/span 2}.sched tr.hastag td:nth-child(2),.sched tr.hastag td:nth-child(3){grid-row:2}
- .sched tr.hastag td:nth-child(4),.sched tr.hastag td:nth-child(6),.sched tr.hastag td:nth-child(7){grid-row:3}
- .sched tr.hastag td:nth-child(6):not(:empty)+td{grid-row:4}
+ .sched tr.hastag td:nth-child(4),.sched tr.hastag td:nth-child(6){grid-row:3}
 }
 
 /* injuries expand */
@@ -852,6 +853,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 .tip{font-weight:700;color:var(--wine-ink);text-decoration:none;border-bottom:2px solid #F2B231}
 .gp{display:block}.gp-k{display:block;margin-bottom:6px}
 .gp-teams{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center;margin-bottom:8px}
+@media (min-width:761px){.gp{display:grid;grid-template-columns:auto minmax(0,460px) 1fr;column-gap:22px;align-items:center}.gp-k{grid-column:1;grid-row:1}.gp-teams{grid-column:2;grid-row:1;margin:0;padding:8px 14px;background:var(--card,var(--bg));border:1px solid var(--line2)}.gp-f{grid-column:3;grid-row:1;justify-self:start;text-align:left;border-top:0;padding:0;flex-direction:column;align-items:flex-start;gap:3px}.gp-l{margin-left:0}}
 .gp-t{display:flex;flex-direction:column;gap:1px}.gp-t b{font:800 14px var(--sans);color:var(--fg)}.gp-t span{font:500 12px var(--mono);color:var(--fg2)}
 .gp-teams .gp-t:last-child{text-align:right}.gp-vs{font-style:normal;font:700 11px var(--sans);color:var(--muted);text-transform:uppercase}
 .gp-f{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;border-top:1px solid var(--line2);padding-top:7px}
@@ -936,7 +938,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
     <input id="q" type="search" placeholder="Search" aria-controls="sres" aria-expanded="false">
     <ul class="sres" id="sres" hidden></ul>
   </form>
-  <button type="button" class="thm" id="thm" aria-label="Switch to dark mode" title="Light / dark"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg></button>
+
 </div></header>
 
 <main id="view-home">
@@ -1236,7 +1238,7 @@ const SECTIONS=[
   ['moves','Transactions','TXN','Every Cavs trade, signing and draft pick since 2017.'],
   ['charge','Cleveland Charge','CHG','G League schedule, roster and staff.'],
   ['media','Media','MED','Cavs video, press conferences and RealCavsFans articles.'],
-  ['resources','Resources','RES','Other sites to further your Cavs and NBA knowledge.']
+  ['resources','Resources','RES','cavs_db approved sites to further inform your NBA and Cavs expertise.']
 ];
 /* picks — RealGM future draft picks, Oct 14 2026. [draft, pick, plain-English status, how it's decided, trade-eligible?, why] */
 /* picks the Cavs hold: [year, round, label, visual, can trade outright, can trade swap rights, status note, origin of the pick/routing]
@@ -2126,8 +2128,8 @@ const tw=document.getElementById('twoway');tw.className='xl tw2';TWOWAY.forEach(
   d.append(sm,bx);li.appendChild(d);tw.appendChild(li)});
 {document.getElementById('holds').textContent=HOLDS.map(([n,v])=>n+' '+usdM(v)).join(' · ');
  document.getElementById('holds-tot').textContent=HOLDS.length+' · '+usd(HOLDS.reduce((a,[,v])=>a+v,0))}
-const cp=document.getElementById('camp');EX10.forEach(([n,ps,sg,wv,nt])=>{const li=el('li');if(!wv)li.id='p-'+slug(n);const sp2=el('span',null,n);sp2.append(el('small',null,ps+' · '+(wv?'Signed '+sg+', waived '+wv+' · Charge affiliate if he reports (not yet announced)'+(nt?' · '+nt:''):'In camp · signed '+sg+' · Non-Bird')));li.append(sp2,el('b',null,wv?'Waived':'$1,357,763'));if(wv)li.classList.add('ex-w');cp.appendChild(li)});
-document.getElementById('ex10-n').textContent=EX10.length+' signed · '+EX10.filter(x=>!x[3]).length+' in camp';
+const cp=document.getElementById('camp');EX10.filter(x=>!x[3]).forEach(([n,ps,sg,wv,nt])=>{const li=el('li');if(!wv)li.id='p-'+slug(n);const sp2=el('span',null,n);sp2.append(el('small',null,ps+' · '+(wv?'Signed '+sg+', waived '+wv+' · Charge affiliate if he reports (not yet announced)'+(nt?' · '+nt:''):'In camp · signed '+sg+' · Non-Bird')));li.append(sp2,el('b',null,wv?'Waived':'$1,357,763'));if(wv)li.classList.add('ex-w');cp.appendChild(li)});
+document.getElementById('ex10-n').textContent=EX10.filter(x=>!x[3]).length+' in camp';
 
 /* assets */
 const xitem=(head,sub,val,body)=>{const li=el('li');const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,head));if(sub)l.appendChild(el('small',null,sub));sm.appendChild(l);if(val)sm.appendChild(val);d.appendChild(sm);const bx=el('div','xb');body.forEach(([h,t])=>{const p=el('p');if(h)p.appendChild(el('strong',null,h+' '));p.append(t);bx.appendChild(p)});d.appendChild(bx);li.appendChild(d);return li};
@@ -2245,10 +2247,10 @@ const mFmt=new Intl.DateTimeFormat('en-US',{month:'long',year:'numeric',timeZone
 /* league dates shown as marker rows between games */
 const SCHED_MARKS=[['2026-11-27','NBA Cup group play ends'],['2026-12-04','NBA Cup knockout rounds (Dec 4–11). Two more Cavs games are scheduled once the bracket is set.'],['2027-02-11','Trade deadline'],['2027-02-18','All-Star break · All-Star Weekend in Phoenix, Feb 19–21'],['2027-04-13','Play-In Tournament (Apr 13–16)']];
 let mk=0;
-const markRow=t=>{const tr=el('tr','mark'+(/Cup/.test(t)?' cupm':''));const td=el('td');td.colSpan=7;td.append(el('span','mk-dot'),t);tr.appendChild(td);return tr};
+const markRow=t=>{const tr=el('tr','mark'+(/Cup/.test(t)?' cupm':''));const td=el('td');td.colSpan=6;td.append(el('span','mk-dot'),t);tr.appendChild(td);return tr};
 SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
   if(m!==curM){curM=m;const sec=el('section');sec.style.marginTop='8px';const h=el('div','block-h');h.appendChild(el('h2',null,mFmt.format(new Date(m+'-15T12:00:00Z'))));
-    const box=el('div','tablebox');const t=el('table','sched');t.innerHTML='<thead><tr><th>Date</th><th>Opponent</th><th>Time</th><th>TV</th><th>Radio</th><th class="r">Result</th><th class="r">Game</th></tr></thead>';tb=el('tbody');t.appendChild(tb);box.appendChild(t);sec.append(h,box);sc.appendChild(sec)}
+    const box=el('div','tablebox');const t=el('table','sched');t.innerHTML='<thead><tr><th>Date</th><th>Opponent</th><th>Time</th><th>TV</th><th>Radio</th><th class="r">Result</th></tr></thead>';tb=el('tbody');t.appendChild(tb);box.appendChild(t);sec.append(h,box);sc.appendChild(sec)}
   while(mk<SCHED_MARKS.length&&SCHED_MARKS[mk][0]<=g[0]){tb.appendChild(markRow(shortFmt.format(new Date(SCHED_MARKS[mk][0]+'T12:00:00'))+' · '+SCHED_MARKS[mk][1]));mk++}
   const tr=el('tr');tr.id='g-'+g[0];const r=res[i];const n=NBAG[g[0]]||[];
   const op=el('td','opp-cell');const a=el('a','opp',TEAMS[g[1]]);a.href=bbTeam(g[1]);a.target='_blank';a.rel='noopener';op.append((g[2]==='H'?'vs ':'at '),a);
@@ -2256,13 +2258,14 @@ SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
   const tv=tvFor(g[0]),ra=radioFor(g[0]);
   const tvc=el('td','tvc');if(tv.nat)tvc.appendChild(el('b',null,tv.nat));if(tv.loc)tvc.appendChild(el('span',null,tv.loc));if(tv.opp)tvc.appendChild(el('small',null,TEAMS[g[1]]+': '+tv.opp));if(!tv.nat&&!tv.loc)tvc.appendChild(el('span','dim','TBA'));
   const rac=el('td','tvc');rac.appendChild(el('span',null,ra.cavs));rac.appendChild(el('small',null,ra.nat));if(ra.opp)rac.appendChild(el('small',null,TEAMS[g[1]]+': '+ra.opp));
-  const lk=el('td','r');if(r){const b=el('a',null,'Box score ↗');b.title=boxSrc(g[0]);b.href=boxUrl(g[0]);b.target='_blank';b.rel='noopener';lk.appendChild(b)}else{const pv=gameUrl(g[0]);if(pv){const b=el('a',null,'Preview ↗');b.title='NBA.com game page';b.href=pv;b.target='_blank';b.rel='noopener';lk.appendChild(b)}}
-  const rtd=el('td','r mono',r?(r+(SCORES[g[0]]?' '+SCORES[g[0]].replace('-','–'):'')):'');
+  const pv=r?null:gameUrl(g[0]);const lnk=(t,href,title,cls)=>{const a=el('a',cls,t);a.href=href;a.target='_blank';a.rel='noopener';a.title=title;return a};
+  const rtd=el('td','r mono');if(r)rtd.appendChild(lnk(r+(SCORES[g[0]]?' '+SCORES[g[0]].replace('-','–'):'')+' ↗',boxUrl(g[0]),'Box score · '+boxSrc(g[0]),'reslink'));
+  const dtd=el('td','mono'),ttd=el('td','mono dim');if(pv){dtd.appendChild(lnk(shortFmt.format(tipOf(g)),pv,'Game preview on NBA.com','pvlink'));ttd.appendChild(lnk(g[3]+' PM ↗',pv,'Game preview on NBA.com','pvlink'))}else{dtd.textContent=shortFmt.format(tipOf(g));ttd.textContent=g[3]+' PM'}
   if(r&&SCORES[g[0]]){const xa=el('span','xact gsave');const b2=el('button');b2.type='button';b2.title='Save final score as an image';b2.setAttribute('aria-label','Save the final score as an image');
     b2.onclick=async()=>{if(!window.cdbCap)return;const card=gameCard(i),gw=el('div','gwrap');gw.appendChild(card);document.body.appendChild(gw);try{await window.cdbCap('schedule','g-'+g[0],'Final score',[card],b2)}finally{gw.remove()}};xa.appendChild(b2);rtd.appendChild(xa)}
-  tr.append(el('td','mono',shortFmt.format(tipOf(g))),op,el('td','mono dim',g[3]+' PM'),tvc,rac,rtd,lk);if(mtag)tr.appendChild(mtag);
+  tr.append(dtd,op,ttd,tvc,rac,rtd);if(mtag)tr.appendChild(mtag);
   if(i===ni)tr.classList.add('nextg');tb.appendChild(tr);
-  if(i===ni){const pr=el('tr','gprev');const td=el('td');td.colSpan=7;const o=g[1];
+  if(i===ni){const pr=el('tr','gprev');const td=el('td');td.colSpan=6;const o=g[1];
     const rec=a=>{const t=STANDINGS.find(x=>x[0]===a);return t?t[2]+'–'+t[3]:'0–0'};const nrt=a=>NRTG[a]?sgn(NRTG[a][0]):'—';
     const prv=i>0?SCHEDULE[i-1]:null;const rest=prv?Math.round((new Date(g[0])-new Date(prv[0]))/864e5)-1:null;
     const E=STANDINGS.filter(t=>t[1]==='E').sort((x,y)=>(y[2]-y[3])-(x[2]-x[3])||y[2]-x[2]),W=STANDINGS.filter(t=>t[1]==='W').sort((x,y)=>(y[2]-y[3])-(x[2]-x[3])||y[2]-x[2]);
@@ -2332,6 +2335,9 @@ const BIOS={
 };
 const st=document.getElementById("staff-list");
 const pathList=rows=>{const ol=el('ol','bio-p');rows.forEach(([y,t])=>{const li=el('li');li.append(el('b',null,y),el('span',null,t));ol.appendChild(li)});return ol};
+/* subtle share + save-as-image for staff */
+const staffX=(n,t,boxes)=>{const xa=el('span','xact');const b1=el('button');b1.type='button';b1.title='Share link';b1.setAttribute('aria-label','Share a link to '+n);const b2=el('button');b2.type='button';b2.title='Save as image';b2.setAttribute('aria-label','Save '+n+'\u2019s bio as an image');
+  if(window.cdbIcons){b1.innerHTML=window.cdbIcons[0];b2.innerHTML=window.cdbIcons[1]}b1.onclick=e=>{e.preventDefault();window.cdbShare&&window.cdbShare('staff',slug(n),n+', '+t)};b2.onclick=e=>{e.preventDefault();window.cdbCap&&window.cdbCap('staff',slug(n),n,boxes(),b2)};xa.append(b1,b2);return xa};
 const bioBox=(n,img)=>{const b=BIOS[n];const box=el('div','xb bio');
   if(img){const im=el('img','bio-hs');im.src=HS(img);im.alt=n;im.loading='lazy';im.onerror=()=>im.remove();box.appendChild(im)}
   if(!b){box.appendChild(el('p','dim','Background for this staff member is being added.'));if(NBCA[n]||STAFF_SOC[n]){const lk=el('p','bio-links');if(NBCA[n]){const a=el('a',null,'NBA Coaches Association profile ↗');a.href='https://nbacoaches.com/'+NBCA[n]+'/';a.target='_blank';a.rel='noopener';lk.appendChild(a)}(STAFF_SOC[n]||[]).forEach(([net,u,h])=>{if(lk.childNodes.length)lk.append(' · ');const a=el('a',null,net+' '+h+' ↗');a.href=u;a.target='_blank';a.rel='noopener';lk.appendChild(a)});box.appendChild(lk)}return box}
@@ -2344,12 +2350,12 @@ const bioBox=(n,img)=>{const b=BIOS[n];const box=el('div','xb bio');
   (STAFF_SOC[n]||[]).forEach(([net,u,h])=>{if(lk.childNodes.length)lk.append(' · ');const a=el('a',null,net+' '+h+' ↗');a.href=u;a.target='_blank';a.rel='noopener';lk.appendChild(a)});
   if(lk.childNodes.length)body.appendChild(lk);box.appendChild(body);return box};
 STAFF.forEach(([g,people])=>{const sec=el('section');const h=el('div','block-h');h.append(el('h2',null,g),el('span',null,people.length+''));const ul=el('ul','xl');
-  people.forEach(([n,t,y,img])=>{const li=el('li');li.id='s-'+slug(n);const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,n),el('small',null,t));sm.append(l,el('b',null,y));d.append(sm,bioBox(n,img));li.appendChild(d);ul.appendChild(li)});sec.append(h,ul);st.appendChild(sec)});
+  people.forEach(([n,t,y,img])=>{const li=el('li');li.id='s-'+slug(n);const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,n),el('small',null,t));sm.append(l,el('b',null,y));const bb=bioBox(n,img);bb.insertBefore(staffX(n,t,()=>[li]),bb.firstChild);d.append(sm,bb);li.appendChild(d);ul.appendChild(li)});sec.append(h,ul);st.appendChild(sec)});
 /* callouts: Altman and Atkinson */
 const ATK=[ /* season, team, W, L, playoffs, ORtg rank, DRtg rank, Net rank, Pace rank (of 30) — Basketball Reference */
   ['2016–17','BKN',20,62,'—',28,23,28,1],['2017–18','BKN',28,54,'—',21,22,24,6],['2018–19','BKN',42,40,'R1 (1–4)',19,14,15,11],['2019–20','BKN',28,34,'— (left Mar 2020)',22,9,15,9],['2024–25','CLE',64,18,'R2 (5–4)',1,8,2,10],['2025–26','CLE',52,30,'ECF (8–10)',6,15,9,14]];
 (function(){const co=document.getElementById('callouts');if(!co)return;
-  const card=(kick,name,title,img,facts)=>{const c=el('article','co');const top=el('div','co-top');const im=el('img','co-hs');im.src=img;im.alt=name;im.onerror=()=>im.remove();const tx=el('div');tx.append(el('div','co-k',kick),el('h2',null,name),el('div','co-t',title));top.append(im,tx);c.appendChild(top);const dl=el('dl','bio-f');facts.forEach(([k,v])=>dl.append(el('dt',null,k),el('dd',null,v)));c.appendChild(dl);return c};
+  const card=(kick,name,title,img,facts)=>{const c=el('article','co');const top=el('div','co-top');const im=el('img','co-hs');im.src=img;im.alt=name;im.onerror=()=>im.remove();const tx=el('div');tx.append(el('div','co-k',kick),el('h2',null,name),el('div','co-t',title));top.append(im,tx);c.appendChild(top);const dl=el('dl','bio-f');facts.forEach(([k,v])=>dl.append(el('dt',null,k),el('dd',null,v)));c.appendChild(dl);c.id='co-'+slug(name);c.appendChild(staffX(name,title,()=>[c]));return c};
   const det=(label,body,open)=>{const d=document.createElement('details');d.className='co-d';if(open)d.open=true;const sm=document.createElement('summary');sm.textContent=label;d.append(sm,body);return d};
   const alt=card('Front Office','Koby Altman','President of Basketball Operations · 15th season','https://cdn.nba.com/teams/uploads/sites/1610612739/2024/11/koby-altman-headshot_500x500.jpg',[['Born','Sep 16, 1982 · Brooklyn, N.Y. (age 44)'],['High school','New Utrecht (Brooklyn)'],['College','Middlebury (2000–04), three-year starting point guard; UMass, master’s in sport management'],['Record as top executive','369–342 (.519) since 2017–18 · 5 playoff trips · 2018 NBA Finals'],['Contract','Extended in July 2025 through 2029–30'],['Recognition','Executive of the Year finalist 2021–22, 2022–23, 2024–25']]);
   const tl=el('a','co-link','Every Altman transaction →');tl.href='/moves';tl.dataset.go='moves';
@@ -2907,7 +2913,9 @@ function loadRcf(){if(rcfLoaded)return;rcfLoaded=true;
   const st=get();if(st.sent||(st.snooze&&Date.now()<st.snooze))return;
   if(/preview=feedback/.test(location.search)){setTimeout(()=>{if(matchMedia('(max-width:520px)').matches)F.classList.add('mini');F.hidden=false},400)}
   let clicks=0,shown=false,active=st.t||0,last=Date.now();
-  const open=()=>{if(shown||document.getElementById('cel'))return;shown=true;if(matchMedia('(max-width:520px)').matches)F.classList.add('mini');F.hidden=false};
+  let idle=0;const arm=()=>{clearTimeout(idle);idle=setTimeout(()=>{if(!F.hidden&&!F.contains(document.activeElement)&&!document.getElementById('fb-t').value.trim())close(7)},60000)};
+  ['pointerdown','focusin','input','keydown'].forEach(ev=>F.addEventListener(ev,()=>{clearTimeout(idle);if(ev!=='focusin')arm()}));
+  const open=()=>{if(shown||document.getElementById('cel'))return;shown=true;if(matchMedia('(max-width:520px)').matches)F.classList.add('mini');F.hidden=false;arm()};
   document.getElementById('fb-o').onclick=()=>{F.classList.remove('mini');document.getElementById('fb-t').focus()};
   document.addEventListener('click',e=>{if(F.contains(e.target))return;clicks++;if(clicks>=15)open()});
   setInterval(()=>{if(document.hidden)return;active+=5;put({...get(),t:active});if(active>=120)open()},5000);
@@ -3021,7 +3029,8 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
  const par=el=>el&&el.closest('.block-h');
  const T=[
   ['cap-position','home',()=>par($('cap-h')),()=>[document.querySelector('section.o-cap')],'Cap position'],
-  ['this-day','home',()=>par($('otd-h')),()=>[document.querySelector('section.o-otd')],'This day in Cavs history'],
+  ['this-day','home',()=>par($('otd-h')),()=>[document.querySelector('section.o-otd')],'This day in Cavs history','br'],
+  ['cap-summary','cap',()=>$('captop'),()=>[$('captop')],'Cap position 2026–27','tr'],
   ['cap-sheet','cap',()=>$('cs-h'),()=>[document.querySelector('table.cap')],'Cap sheet'],
   ['aprons','cap',()=>par($('ap-h')),()=>[document.querySelector('section.aprons')],'What each apron allows'],
   ['draft-picks','assets',()=>hOf('picks'),()=>[hOf('picks'),$('picks')],'Draft picks the Cavs own'],
@@ -3097,7 +3106,7 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
   const w=document.createElement('span');w.className='xact';
   const b1=document.createElement('button');b1.type='button';b1.innerHTML=I_L;b1.title='Share link';b1.setAttribute('aria-label','Share a link to '+label);b1.onclick=()=>share(route,id,label);
   const b2=document.createElement('button');b2.type='button';b2.innerHTML=I_C;b2.title='Save as image';b2.setAttribute('aria-label','Save '+label+' as an image');b2.onclick=()=>{const bx=boxes().filter(Boolean);if(bx.length)capture(route,id,label,bx,b2)};
-  w.append(b1,b2);h.appendChild(w)})}
+  w.append(b1,b2);const pl=T.find(x=>x[0]===id)[5];if(pl){w.classList.add('xact-'+pl);const bx=boxes()[0];if(bx){bx.classList.add('xhost');bx.appendChild(w)}}else h.appendChild(w)})}
  window.cdbAttachX=attach;window.cdbCap=capture;window.cdbShare=share;window.cdbIcons=[I_L,I_C];
  /* deep links: /assets#picks-owed, /roster#donovan-mitchell, /cap#donovan-mitchell */
  function jump(){const h=decodeURIComponent(location.hash.slice(1));if(!h)return;attach();
