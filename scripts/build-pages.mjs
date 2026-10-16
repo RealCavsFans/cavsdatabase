@@ -22,7 +22,7 @@ const META = Function('return ' + m[1])();
 // one page per player (players/<name>), titles matching the site's PP_TITLE / PP_DESC
 const pm = html.match(/const PLAYERS=(\[[\s\S]*?\]);\n/);
 const slug = t => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-if (pm) for (const p of Function('return ' + pm[1])()) META['players/' + slug(p[1])] = [p[1] + ': Contract, Stats & Measurements | cavs_db', p[1] + '’s Cavs contract by season, height and wingspan, how Cleveland got him, depth chart spot and stats. Updated daily.'];
+if (pm && /const PP_ON=true/.test(html)) for (const p of Function('return ' + pm[1])()) META['players/' + slug(p[1])] = [p[1] + ': Contract, Stats & Measurements | cavs_db', p[1] + '’s Cavs contract by season, height and wingspan, how Cleveland got him, depth chart spot and stats. Updated daily.'];
 const esc = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 await writeFile(new URL('home.html', root), html); // front page copy (served at / via _redirects)
 for (const [route, [title, desc]] of Object.entries(META)) {
