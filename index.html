@@ -2825,13 +2825,21 @@ window.addEventListener('popstate',()=>show(routeOf()));
 window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(SECTIONS.some(x=>x[0]===h)||ROUTE_ALIAS[h])go(ROUTE_ALIAS[h]||h)});
 {const r=routeOf();if(location.protocol!=='file:'&&location.hash&&(SECTIONS.some(x=>x[0]===location.hash.slice(1))||ROUTE_ALIAS[location.hash.slice(1)])){try{history.replaceState({p:r},'',(r==='home'?'/':'/'+r)+location.search)}catch(_){}}show(r)}
 
+/* search hints: the search box types example searches until someone taps it (starts after the intro) */
+function startHints(){const q=document.getElementById('q');if(!q||window._hints)return;window._hints=1;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const H=['Mitchell player option','2028 first round pick','what is the second apron?','Charge schedule','Mobley contract','when is the trade deadline?'];let i=0,j=0,del=false;
+  const tick=()=>{if(document.activeElement===q||q.value){q.placeholder='Search';setTimeout(tick,1500);return}const h=H[i];
+    if(!del){j++;q.placeholder='Try: '+h.slice(0,j);if(j===h.length){del=true;setTimeout(tick,1600);return}}
+    else{j--;q.placeholder=j?'Try: '+h.slice(0,j):'Search';if(j===0){del=false;i=(i+1)%H.length;setTimeout(tick,500);return}}
+    setTimeout(tick,del?25:60)};setTimeout(tick,1200)}
+
 /* first-visit intro: home page only, once per browser, skipped for reduced motion and on June 19 */
 (function(){const I=document.getElementById('ci');if(!I)return;let seen=false;try{seen=!!localStorage.getItem('cdb-intro')}catch(e){seen=true}
   const force=/preview=intro/.test(location.search);
-  if(!force&&(seen||routeOf()!=='home'||matchMedia('(prefers-reduced-motion: reduce)').matches||document.getElementById('cel')))return;
+  if(!force&&(seen||routeOf()!=='home'||matchMedia('(prefers-reduced-motion: reduce)').matches||document.getElementById('cel'))){startHints();return}
   try{localStorage.setItem('cdb-intro','1')}catch(e){}
   const T=document.getElementById('ci-t'),B=document.getElementById('ci-br'),G=document.getElementById('ci-tg');let stop=false;
-  const done=()=>{stop=true;I.classList.add('out');document.documentElement.style.overflow='';setTimeout(()=>I.remove(),700)};
+  const done=()=>{stop=true;startHints();I.classList.add('out');document.documentElement.style.overflow='';setTimeout(()=>I.remove(),700)};
   I.hidden=false;I.removeAttribute('aria-hidden');document.documentElement.style.overflow='hidden';document.getElementById('ci-skip').onclick=done;
   const sl=ms=>new Promise(r=>setTimeout(r,ms));
   (async()=>{const Q=['how much cap space do the cavs have?','who does the 2027 first go to?','when is the trade deadline?'];await sl(300);
