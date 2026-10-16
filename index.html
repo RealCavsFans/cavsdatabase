@@ -1037,6 +1037,7 @@ table.apt{width:100%;min-width:0;border-collapse:collapse;font-size:13px;table-l
       <p class="dim" style="margin:6px 0 0">The Cavaliers' G League affiliate. Home games at Public Hall (Public Auditorium), downtown Cleveland.</p>
     </div>
     <div class="ch-tiles" id="ch-tiles"></div>
+    <div class="callouts" id="ch-callouts"></div>
     <section><div class="block-h"><h2>Schedule</h2></div>
       <div class="tablebox"><table class="chs"><thead><tr><th>Date</th><th>Opponent</th><th>Time (ET)</th><th>Arena</th><th class="r">Result</th></tr></thead><tbody id="ch-sched"></tbody></table></div>
       <p class="dim" style="margin:8px 0 0;font-size:13px">Full 2026–27 schedule: 14 Tip-Off Tournament games (Nov 10 to Dec 15), then 34 regular-season games through Mar 27. Times are Eastern.</p></section>
@@ -2389,14 +2390,16 @@ TX.filter(r=>r.k==='trade').forEach(r=>add('Trade · '+(r.got||[]).slice(0,2).jo
 /* Charge page */
 const CH_ARENA={H:'Public Auditorium, Cleveland','Grand Rapids Gold':'Van Andel Arena, Grand Rapids','Sioux Falls Skyforce':'Sanford Pentagon, Sioux Falls','Wisconsin Herd':'Oshkosh Arena, Oshkosh','Noblesville Boom':'Arena at Innovation Mile, Noblesville','Raptors 905':'Paramount Fine Foods Centre, Mississauga','Motor City Cruise':'Wayne State Fieldhouse, Detroit','Greensboro Swarm':'First Horizon Coliseum, Greensboro','Westchester Knicks':'Westchester County Center, White Plains','Maine Celtics':'Portland Exposition Building, Portland','Windy City Bulls':'NOW Arena, Hoffman Estates','Laketown Squadron':'Pontchartrain Center, Kenner','Delaware Blue Coats':'Chase Fieldhouse, Wilmington','Capital City Go-Go':'CareFirst Arena, Washington'};
 /* G League team sites, linked from the Charge schedule */
-const CH_TEAM_URL={};
+const CH_TEAM_URL={"Grand Rapids Gold": "https://grandrapids.gleague.nba.com/", "Sioux Falls Skyforce": "https://siouxfalls.gleague.nba.com/", "Wisconsin Herd": "https://wisconsin.gleague.nba.com/", "Noblesville Boom": "https://noblesville.gleague.nba.com/", "Raptors 905": "https://raptors905.gleague.nba.com/", "Motor City Cruise": "https://detroit.gleague.nba.com/", "Greensboro Swarm": "https://greensboro.gleague.nba.com/", "Westchester Knicks": "https://westchester.gleague.nba.com/", "Maine Celtics": "https://maine.gleague.nba.com/", "Windy City Bulls": "https://windycity.gleague.nba.com/", "Laketown Squadron": "https://laketown.gleague.nba.com/", "Delaware Blue Coats": "https://bluecoats.gleague.nba.com/", "Capital City Go-Go": "https://capitalcity.gleague.nba.com/", "College Park Skyhawks": "https://cpskyhawks.gleague.nba.com/", "Iowa Wolves": "https://iowa.gleague.nba.com/", "Long Island Nets": "https://longisland.gleague.nba.com/", "Osceola Magic": "https://osceola.gleague.nba.com/"};
 const CH_ROSTER=[
   ['Two-way contracts (Cavs)',[['Tristan Enaruna','F','Two-way','Also on the Cavs roster'],['Riley Minix','F','Two-way','Also on the Cavs roster'],['Ernest Udeh Jr.','C','Two-way','Also on the Cavs roster']]],
-  ['Cavs Exhibit 10 (training camp)',[['Rashaun Agee','F','Exhibit 10','In Cavs camp'],['Zack Austin','G','Exhibit 10','In Cavs camp'],['Noam Yaacov','G','Exhibit 10','In Cavs camp']]]
+  ['Cavs Exhibit 10 (training camp)',[['Rashaun Agee','F','Exhibit 10','In Cavs camp'],['Zack Austin','F','Exhibit 10','In Cavs camp'],['Noam Yaacov','G','Exhibit 10','In Cavs camp']]]
 ];
+/* Charge front office page (cleveland.gleague.nba.com/charge-front-office) and the 2025–26 staff release */
 const CH_STAFF=[
-  ['Coaching staff',[['Eli Kell-Abrams','Head Coach','Previously head video coordinator, Portland Trail Blazers; earlier with the 76ers and Heat'],['Doron Perkins','Assistant Coach',''],['Willie Williams','Assistant Coach / Director of Video',''],['Sam Hershberger','Assistant Coach','Five seasons at Brown'],['Daniel Sokolovsky','Assistant Coach','Former New Zealand national team assistant'],['Mickell Gladness','Coaching Development Program Assistant','Played 26 NBA games (2011–12)'],['Takuya Kikuchi','Head Athletic Trainer',''],['Myles Thornton','Athletic Trainer',''],['Raphael Whittingham','Strength & Conditioning Coach','']]],
-  ['Front office',[['Liron Fanan','General Manager','GM since 2023; first woman to lead the Charge front office'],['Luis Gonzalez Infante','Assistant General Manager',''],['Max Weisberg','Assistant General Manager','Also Cavs Director of Basketball Strategy'],['Brandon Halupnik','Director of Basketball Ops & Player Personnel',''],['Max Brandt','Director of Coaching Analytics','']]]
+  ["Coaching staff",[["Eli Kell-Abrams", "Head Coach", ""], ["Doron Perkins", "Assistant Coach", "Named in the 2025–26 staff release"], ["Willie Williams", "Assistant Coach / Director of Video", "Named in the 2025–26 staff release"], ["Sam Hershberger", "Assistant Coach", "Five seasons at Brown; Elon alum"], ["Daniel Sokolovsky", "Assistant Coach", "Former New Zealand national team assistant and NZ Breakers associate head coach"], ["Mickell Gladness", "NBA Coaching Development Program Assistant", "Played 26 NBA games in 2011–12 (Heat, Warriors)"], ["Takuya Kikuchi", "Head Athletic Trainer", ""], ["Myles Thornton", "Cleveland Clinic Athletic Trainer", "Formerly SMU men’s basketball"], ["Raphael Whittingham", "Strength & Conditioning Coach", ""]]],
+  ["Basketball operations",[["Koby Altman", "President of Basketball Operations, Cavaliers", ""], ["Liron Fanan", "General Manager · President of G League Operations, Cavaliers", ""], ["Luis Gonzalez Infante", "Assistant General Manager", ""], ["Max Weisberg", "Assistant General Manager", "Also Cavs Director of Basketball Strategy"], ["Brandon Halupnik", "Director, Scouting and Player Personnel", ""], ["Max Brandt", "Director of Coaching Analytics", "Named in the 2025–26 staff release"]]],
+  ["Business operations",[["Mike Ostrowski", "President, Franchise Operations", ""], ["Rocco Maragas", "President, Cleveland Charge", ""], ["Ben Adams", "SVP, Chief Marketing Officer, Franchise Properties", ""], ["Sean Wyatt", "VP, Basketball Communications & Team Services", ""], ["Grant Hesselbart", "Vice President, Ticket Sales and Service", ""], ["Nicole Del Villano", "Senior Director, Communications & Community Impact, REG-Franchise Properties", ""], ["Ryan Caler", "Senior Director, Service and Retention, Franchise Foundation", ""], ["Scott Zurilla", "Director, Broadcasting / Charge Play-by-Play Announcer", ""], ["Sam Armstrong", "Director, Marketing & Promotions", ""], ["Jarrett Griebeler", "Director, Franchise Partnership Development", ""], ["Griffin Foster", "Director, Franchise Partnership Marketing", ""], ["Steve McClave", "Director, Charge Ticket Sales", ""], ["Joshua Chua", "Director, Ticket Sales & Revenue, Rock Entertainment Group", ""], ["Keith Dea", "Senior Manager, Ticket Operations", ""], ["Raven Payne", "Senior Manager, Community Impact & Engagement, REG-Franchise Properties", ""]]]
 ];
 (function(){const tb=document.getElementById('ch-sched');if(!tb)return;
   const now=new Date(Date.now()-3*3600e3);const tip=chTip;
@@ -2408,6 +2411,30 @@ const CH_STAFF=[
   const sf=document.getElementById('ch-staff');CH_STAFF.forEach(([g,ps])=>{const sec=el('section');const h=el('div','block-h');h.append(el('h2',null,g),el('span',null,String(ps.length)));const ul=el('ul','kv');ps.forEach(([nm,t2,note])=>{const li=el('li');const sp=el('span',null,nm);sp.appendChild(el('small',null,t2+(note?' · '+note:'')));li.appendChild(sp);ul.appendChild(li)});sec.append(h,ul);sf.appendChild(sec)});
 })();
 
+
+/* Charge callouts: head coach and GM (Charge/G League releases, SI, Howard Blas, Cleveland Jewish News) */
+(function(){const co=document.getElementById('ch-callouts');if(!co)return;
+  const card=(kick,name,title,facts,url)=>{const c=el('article','co');const tx=el('div');const h=el('h2');if(url){const a=el('a','co-name',name);a.href=url;a.target='_blank';a.rel='noopener';h.appendChild(a)}else h.textContent=name;tx.append(el('div','co-k',kick),h,el('div','co-t',title));c.appendChild(tx);const dl=el('dl','bio-f');facts.forEach(([k,v])=>dl.append(el('dt',null,k),el('dd',null,v)));c.appendChild(dl);return c};
+  const det=(label,body)=>{const d=document.createElement('details');d.className='co-d';const sm=document.createElement('summary');sm.textContent=label;d.append(sm,body);return d};
+  const links=ls=>{const p=el('p','bio-links');ls.forEach(([t,u],i)=>{if(i)p.append(' · ');const a=el('a',null,t+' ↗');a.href=u;a.target='_blank';a.rel='noopener';p.appendChild(a)});return p};
+  const eli=card('Head Coach','Eli Kell-Abrams','Head Coach · 2nd season',[
+    ['Hired','August 2025. His first head coaching job.'],
+    ['2025–26 record','31–19 overall, tying the franchise record for wins. Tip-Off Tournament 8–6, regular season 23–13 (No. 3 seed in the East).'],
+    ['Playoffs','0–1. Lost 126–123 to Capital City in the first round, Apr. 1, 2026.'],
+    ['2025–26 team','1st in the G League in assists (29.9 a game); 2nd in offensive rating, scoring and field-goal percentage.'],
+    ['Call-ups','Enaruna, Minix and Darius Brown II (Cavs); Chaney Johnson (Nets), Norchad Omier (Clippers), Killian Hayes (Kings). Enaruna was the G League’s Most Improved Player.']],'https://cleveland.gleague.nba.com/news/new-head-coach-2025');
+  eli.append(det('Career path',pathList([['2015–17','University of Miami, graduate assistant'],['2017–18','St. Thomas Aquinas College, assistant coach'],['2018–19','Miami Heat, video intern'],['2019–21','Miami Heat, assistant video coordinator'],['2021–23','Philadelphia 76ers, head video coordinator'],['2023–25','Portland Trail Blazers, head video coordinator'],['Jun 2025','Named lead assistant, Rip City Remix'],['Aug 2025','Cleveland Charge, head coach']])),
+    links([['Charge hiring release','https://cleveland.gleague.nba.com/news/new-head-coach-2025'],['G League release','https://gleague.nba.com/news/eli-kell-abrams-named-head-coach-of-charge']]));
+  const lir=card('General Manager','Liron Fanan','General Manager · 4th season',[
+    ['Also','Listed as President of G League Operations for the Cavaliers on the Charge front office page'],
+    ['From','Israel. Served in the Israel Defense Forces, 1997–99'],
+    ['Education','NYU, B.A. in sports marketing and sports management (2005)'],
+    ['With the organization','Since 2018 (9th season)'],
+    ['Honors','2025–26 G League Basketball Executive of the Year, the first woman to win it'],
+    ['Firsts','First woman to serve as Charge GM; the fourth woman GM in G League history when hired']],'https://cleveland.gleague.nba.com/news/liron-fanan-named-2025-26-nba-g-league-basketball-executive-of-the-year');
+  lir.append(det('Career path',pathList([['2005–09','Maccabi Tel Aviv (EuroLeague), assistant general manager'],['2009–18','Co-founder, 2Talent Sports Management (player representation)'],['2018–20','Cavaliers, Director of G League Player Development'],['2020–23','Charge, assistant general manager'],['Jul 2023','Charge, general manager'],['Now','Also President of G League Operations, Cavaliers']])),
+    links([['GM promotion release','https://cleveland.gleague.nba.com/news/brendon-yu-elevated-to-director-of-scouting-for-the-cavaliers-and-liron-fanan-to-general-manager-of-charge'],['Executive of the Year release','https://cleveland.gleague.nba.com/news/liron-fanan-named-2025-26-nba-g-league-basketball-executive-of-the-year'],['Charge front office','https://cleveland.gleague.nba.com/charge-front-office']]));
+  co.append(eli,lir)})();
 
 /* "updated" status under the wordmark: green when updated within ~36 hours, gold when older */
 (function(){const d=new Date(SITE_UPDATED+'T12:00:00');const u=document.getElementById('upd');if(!u)return;
