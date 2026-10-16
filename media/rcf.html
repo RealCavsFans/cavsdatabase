@@ -3035,9 +3035,12 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
     const pc=getComputedStyle(parent);hgt=parseFloat(pc.paddingTop)+parseFloat(pc.paddingBottom)+parseFloat(pc.borderTopWidth)+parseFloat(pc.borderBottomWidth);boxes.forEach((b,i)=>{const bc=getComputedStyle(b);hgt+=b.offsetHeight+(i?parseFloat(bc.marginTop):0)+(i<boxes.length-1?parseFloat(bc.marginBottom):0)});hgt=Math.ceil(hgt)+240}
    el.classList.add('capmode');capEl=el;
    let bg=getComputedStyle(el).backgroundColor;if(!bg||bg==='rgba(0, 0, 0, 0)'||bg==='transparent'){let a=el.closest('section')||el.parentElement;while(a){const b=getComputedStyle(a).backgroundColor;if(b&&b!=='rgba(0, 0, 0, 0)'&&b!=='transparent'){bg=b;break}a=a.parentElement}if(!a)bg=getComputedStyle(document.body).backgroundColor}
-   const S=2,pad=16;await Promise.all(boxes.map(warm));const shot=await ms.domToCanvas(el,{scale:S,backgroundColor:bg,fetchFn,timeout:10000,style:hgt?{margin:'0',height:hgt+'px',minHeight:'0'}:{margin:'0'},...(hgt?{height:hgt}:{}),
+   const S=2,pad=16;await Promise.all(boxes.map(warm));const opts={scale:S,backgroundColor:bg,fetchFn,timeout:10000,style:hgt?{margin:'0',height:hgt+'px',minHeight:'0'}:{margin:'0'},...(hgt?{height:hgt}:{}),
      filter:n=>{if(n.nodeType!==1)return true;if(n.classList.contains('xact'))return false;if(n.classList.contains('dc-pg')&&n.classList.contains('top'))return false;if(keep&&n.parentElement===parent&&!keep.has(n))return false;return true},
-     onCloneNode:c=>{if(c.nodeType!==1)return;if(c.tagName==='IMG')c.removeAttribute('loading');if(c.getAttribute('data-capfirst')){c.style.marginTop='0';c.removeAttribute('data-capfirst')}}});
+     onCloneNode:c=>{if(c.nodeType!==1)return;if(c.tagName==='IMG')c.removeAttribute('loading');if(c.getAttribute('data-capfirst')){c.style.marginTop='0';c.removeAttribute('data-capfirst')}}};
+   /* the browser can drop photos on the very first drawing; a quick small draw first fixes it */
+   try{await ms.domToCanvas(el,{...opts,scale:.3})}catch(e){}
+   const shot=await ms.domToCanvas(el,opts);
    boxes[0].removeAttribute('data-capfirst');
    if(hgt)trim(shot,Math.max(parseFloat(getComputedStyle(parent).paddingBottom)||0,14)*S);
    const W=Math.max(shot.width+pad*2*S,380*S),HH=58*S,GOLD=5*S,FT=40*S;const H=HH+GOLD+pad*S+shot.height+FT;
