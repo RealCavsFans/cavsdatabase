@@ -235,6 +235,11 @@ a{color:var(--wine-ink);text-decoration:none}a:hover{text-decoration:underline}
 .page{padding-block:32px 64px;display:flex;flex-direction:column;gap:20px}
 h1{margin:0;font:800 clamp(28px,4vw,36px)/1.1 var(--sans);font-stretch:115%;letter-spacing:-.02em;text-wrap:balance}
 .tablebox{overflow-x:auto;border:1px solid var(--line);overscroll-behavior-x:contain}
+.ftip{font:600 13px var(--sans);color:var(--wine-ink);text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.tipcard{margin-top:26px;background:var(--card);border:1px solid var(--line);border-left:3px solid #F2B231;padding:12px 14px;display:flex;gap:10px 16px;align-items:center;flex-wrap:wrap}
+.tipcard .tc-t{flex:1 1 280px}.tipcard b{display:block;font:800 11px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--wine-ink)}.tipcard p{margin:3px 0 0;color:var(--fg2);font-size:13px;line-height:1.45}
+.tipcard .tc-btn{display:inline-flex;align-items:center;gap:6px;background:#860038;color:#fff;border-radius:999px;padding:7px 14px;font:700 13px var(--sans);text-decoration:none;white-space:nowrap}.tipcard .tc-btn:hover{background:#6E002E}
+
 .galert{position:fixed;left:16px;bottom:16px;z-index:70;width:min(360px,calc(100vw - 32px));background:var(--card);border:1px solid var(--line);border-left:4px solid var(--wine);box-shadow:0 10px 28px rgba(0,0,0,.18);padding:10px 34px 11px 13px;font-size:13.5px;line-height:1.4;animation:gaIn .25s ease-out}
 @keyframes gaIn{from{transform:translateY(12px);opacity:0}}
 .galert .ga-k{display:flex;align-items:center;gap:6px;font:800 10.5px var(--sans);font-stretch:125%;letter-spacing:.12em;text-transform:uppercase;color:var(--wine-ink)}.galert .ga-k i{width:7px;height:7px;border-radius:50%;background:#D32F2F;box-shadow:0 0 0 3px rgba(211,47,47,.18)}
@@ -1156,6 +1161,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
       <p class="dim" style="margin:6px 0 0">Where to go for the information this site doesn't carry.</p>
     </div>
     <div class="cols" id="res"></div>
+    <div class="tipcard"><div class="tc-t"><b>Keep cavs_db free</b><p>No paywall, no ads. If the site saved you a few tabs (or settled an argument), throw the hammer down in the tip jar. It covers hosting and the late nights after West Coast games. Thank you!</p></div><a class="tc-btn" href="https://www.buymeacoffee.com/cavsdb" target="_blank" rel="noopener">☕ Buy cavs_db a coffee</a></div>
   </div>
 </main>
 
@@ -1163,7 +1169,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
   <div class="wrap page">
     <div>
       <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Schedule</div>
-      <h1 style="margin-top:6px">2026–27 schedule</h1>
+      <h1 style="margin-top:6px">2026–27 Schedule</h1>
       <p class="dim" style="margin:6px 0 0">80 games set; 2 more are scheduled after the NBA Cup knockout round. All times Eastern.</p>
     </div>
     <section id="sp-std"><div class="block-h hasx" data-anchor="standings"><h2>East standings &amp; race</h2><span class="xact"><button type="button" title="Share link" aria-label="Share a link to East standings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"></path><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"></path></svg></button><button type="button" title="Save as image" aria-label="Save East standings as an image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg></button></span></div><p class="dim sp-empty">Standings start after opening night (Oct 22 at Philadelphia). The table, games back, play-in line and tiebreakers fill in from there.</p></section>
@@ -1175,7 +1181,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
   <div class="wrap page">
     <div>
       <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Schedule</div>
-      <h1 style="margin-top:6px">2026–27 schedule</h1>
+      <h1 style="margin-top:6px">2026–27 Schedule</h1>
       <p class="dim" style="margin:6px 0 0">80 games set; 2 more are scheduled after the NBA Cup knockout round. All times Eastern.</p>
     </div>
     <section id="sp-std"></section>
@@ -1305,9 +1311,8 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 <button type="button" class="btt" id="btt" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg></button>
 <footer><div class="wrap">
   <span>cavsdatabase.com · Independent fan reference. Not affiliated with the Cleveland Cavaliers or the NBA.</span>
-  <div class="fright"><button type="button" class="fcontact" onclick="window.cdbFeedback&&window.cdbFeedback()">Contact &amp; Feedback</button>
+  <div class="fright"><a class="ftip" href="https://www.buymeacoffee.com/cavsdb" target="_blank" rel="noopener">☕ Tip jar</a><button type="button" class="fcontact" onclick="window.cdbFeedback&&window.cdbFeedback()">Contact &amp; Feedback</button>
   <button type="button" class="thm2" id="thm2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Dark mode</span></button></div>
-  <a id="tip" class="tip" hidden target="_blank" rel="noopener">Like the site? Throw the hammer down →</a>
 </div></footer>
 
 <script>
@@ -3168,8 +3173,6 @@ const PAGE_META={
  'resources':['Best Cavs & NBA Stats, Salary Cap and Draft Sites | cavs_db','cavs_db approved sites for NBA and Cavs knowledge.']
 };
 /* tip jar: set to the Buy Me a Coffee page address to show the footer link */
-const TIP_URL='';
-{const t=document.getElementById('tip');if(t&&TIP_URL){t.href=TIP_URL;t.hidden=false}}
 const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge','rcf'];
 /* page titles and descriptions per route (search engines and browser tabs) */
 const ROUTE_ALIAS={video:'media',rcf:'media/rcf'};
