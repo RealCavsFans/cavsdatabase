@@ -1,0 +1,917 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//cavsdatabase.com//Cavs schedule//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Cavs 2026–27 (cavs_db)
+X-WR-CALDESC:Every Cavaliers game with TV and radio. From cavsdatabase.com
+X-WR-TIMEZONE:America/New_York
+REFRESH-INTERVAL;VALUE=DURATION:PT4H
+X-PUBLISHED-TTL:PT4H
+BEGIN:VEVENT
+UID:cavs-2026-10-22@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261022T230000Z
+DTEND:20261023T013000Z
+SUMMARY:🏀 Cavs at Philadelphia
+LOCATION:Philadelphia
+DESCRIPTION:TV: ESPN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-10-24@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261024T233000Z
+DTEND:20261025T020000Z
+SUMMARY:🏀 Cavs vs Brooklyn
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-10-26@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261026T230000Z
+DTEND:20261027T013000Z
+SUMMARY:🏀 Cavs vs Minnesota
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN · WUAB 43\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 13
+ 00 (ES)\nPreview\, injuries and how to watch: https://cavsdatabase.com/sc
+ hedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-10-28@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261028T230000Z
+DTEND:20261029T013000Z
+SUMMARY:🏀 Cavs vs Washington
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-10-29@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261029T230000Z
+DTEND:20261030T013000Z
+SUMMARY:🏀 Cavs at Atlanta
+LOCATION:Atlanta
+DESCRIPTION:TV: NBA TV · DAZN · WUAB 43\nRadio: WTAM 1100 · WMMS 100.7 · L
+ a Mega 1300 (ES)\nPreview\, injuries and how to watch: https://cavsdataba
+ se.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-10-31@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261101T000000Z
+DTEND:20261101T023000Z
+SUMMARY:🏀 Cavs at Milwaukee
+LOCATION:Milwaukee
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-11-02@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261103T000000Z
+DTEND:20261103T023000Z
+SUMMARY:🏀 Cavs vs Oklahoma City
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: Peacock / NBC Sports Network · DAZN · WOIO 19 / WUAB 43\nR
+ adio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nPreview\, injuries and 
+ how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-11-04@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261105T010000Z
+DTEND:20261105T033000Z
+SUMMARY:🏀 Cavs at Oklahoma City
+LOCATION:Oklahoma City
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-11-06@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261107T003000Z
+DTEND:20261107T030000Z
+SUMMARY:🏀 Cavs vs Philadelphia
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: Prime Video\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 
+ (ES)\nPreview\, injuries and how to watch: https://cavsdatabase.com/sched
+ ule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-11-07@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261108T010000Z
+DTEND:20261108T033000Z
+SUMMARY:🏀 Cavs vs New York
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: NBA TV · DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 130
+ 0 (ES)\nPreview\, injuries and how to watch: https://cavsdatabase.com/sch
+ edule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-11-09@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261110T000000Z
+DTEND:20261110T023000Z
+SUMMARY:🏀 Cavs at Charlotte
+LOCATION:Charlotte
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-11-11@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261112T000000Z
+DTEND:20261112T023000Z
+SUMMARY:🏀 Cavs at New York
+LOCATION:New York
+DESCRIPTION:TV: ESPN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-11-13@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261114T010000Z
+DTEND:20261114T033000Z
+SUMMARY:🏀 Cavs at Miami
+LOCATION:Miami
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-11-14@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261115T003000Z
+DTEND:20261115T030000Z
+SUMMARY:🏀 Cavs vs Dallas
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN · WOIO 19\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 13
+ 00 (ES)\nPreview\, injuries and how to watch: https://cavsdatabase.com/sc
+ hedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-11-16@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261117T000000Z
+DTEND:20261117T023000Z
+SUMMARY:🏀 Cavs vs Chicago
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-11-18@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261119T000000Z
+DTEND:20261119T023000Z
+SUMMARY:🏀 Cavs vs Memphis
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-11-20@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261121T003000Z
+DTEND:20261121T030000Z
+SUMMARY:🏀 Cavs vs Indiana
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-11-23@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261124T010000Z
+DTEND:20261124T033000Z
+SUMMARY:🏀 Cavs at Chicago
+LOCATION:Chicago
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-11-25@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261126T003000Z
+DTEND:20261126T030000Z
+SUMMARY:🏀 Cavs at New York
+LOCATION:New York
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-11-29@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261129T230000Z
+DTEND:20261130T013000Z
+SUMMARY:🏀 Cavs vs Miami
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-12-01@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261202T000000Z
+DTEND:20261202T023000Z
+SUMMARY:🏀 Cavs vs Indiana
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-12-03@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261204T010000Z
+DTEND:20261204T033000Z
+SUMMARY:🏀 Cavs at Chicago
+LOCATION:Chicago
+DESCRIPTION:TV: NBA TV · DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 130
+ 0 (ES)\nPreview\, injuries and how to watch: https://cavsdatabase.com/sch
+ edule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-12-12@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261213T010000Z
+DTEND:20261213T033000Z
+SUMMARY:🏀 Cavs vs Golden State
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN · WOIO 19\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 13
+ 00 (ES)\nPreview\, injuries and how to watch: https://cavsdatabase.com/sc
+ hedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-12-15@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261216T010000Z
+DTEND:20261216T033000Z
+SUMMARY:🏀 Cavs vs San Antonio
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: NBC / Peacock\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 130
+ 0 (ES)\nPreview\, injuries and how to watch: https://cavsdatabase.com/sch
+ edule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-12-16@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261217T000000Z
+DTEND:20261217T023000Z
+SUMMARY:🏀 Cavs at Orlando
+LOCATION:Orlando
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-12-18@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261219T003000Z
+DTEND:20261219T030000Z
+SUMMARY:🏀 Cavs at Detroit
+LOCATION:Detroit
+DESCRIPTION:TV: DAZN · WOIO 19\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 13
+ 00 (ES)\nPreview\, injuries and how to watch: https://cavsdatabase.com/sc
+ hedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-12-20@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261220T230000Z
+DTEND:20261221T013000Z
+SUMMARY:🏀 Cavs vs Utah
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-12-21@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261222T000000Z
+DTEND:20261222T023000Z
+SUMMARY:🏀 Cavs vs New York
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: Peacock / NBC Sports Network\nRadio: WTAM 1100 · WMMS 100.
+ 7 · La Mega 1300 (ES)\nPreview\, injuries and how to watch: https://cavsd
+ atabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-12-23@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261224T000000Z
+DTEND:20261224T023000Z
+SUMMARY:🏀 Cavs at Washington
+LOCATION:Washington
+DESCRIPTION:TV: DAZN · WOIO 19\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 13
+ 00 (ES)\nPreview\, injuries and how to watch: https://cavsdatabase.com/sc
+ hedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-12-27@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261227T230000Z
+DTEND:20261228T013000Z
+SUMMARY:🏀 Cavs vs Washington
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-12-28@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261229T010000Z
+DTEND:20261229T033000Z
+SUMMARY:🏀 Cavs at Boston
+LOCATION:Boston
+DESCRIPTION:TV: NBC / Peacock\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 130
+ 0 (ES)\nPreview\, injuries and how to watch: https://cavsdatabase.com/sch
+ edule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2026-12-31@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20261231T200000Z
+DTEND:20261231T223000Z
+SUMMARY:🏀 Cavs vs LA Clippers
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-01-02@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270102T180000Z
+DTEND:20270102T203000Z
+SUMMARY:🏀 Cavs at Charlotte
+LOCATION:Charlotte
+DESCRIPTION:TV: DAZN · WOIO 19\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 13
+ 00 (ES)\nPreview\, injuries and how to watch: https://cavsdatabase.com/sc
+ hedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-01-03@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270104T000000Z
+DTEND:20270104T023000Z
+SUMMARY:🏀 Cavs at Houston
+LOCATION:Houston
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-01-05@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270106T000000Z
+DTEND:20270106T023000Z
+SUMMARY:🏀 Cavs vs Toronto
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-01-07@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270108T000000Z
+DTEND:20270108T023000Z
+SUMMARY:🏀 Cavs at Orlando
+LOCATION:Orlando
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-01-09@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270109T220000Z
+DTEND:20270110T003000Z
+SUMMARY:🏀 Cavs vs Denver
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-01-11@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270112T010000Z
+DTEND:20270112T033000Z
+SUMMARY:🏀 Cavs at Minnesota
+LOCATION:Minnesota
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-01-13@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270114T000000Z
+DTEND:20270114T023000Z
+SUMMARY:🏀 Cavs at Atlanta
+LOCATION:Atlanta
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-01-15@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270116T010000Z
+DTEND:20270116T033000Z
+SUMMARY:🏀 Cavs at Milwaukee
+LOCATION:Milwaukee
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-01-16@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270117T010000Z
+DTEND:20270117T033000Z
+SUMMARY:🏀 Cavs at Memphis
+LOCATION:Memphis
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-01-18@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270118T170000Z
+DTEND:20270118T193000Z
+SUMMARY:🏀 Cavs vs Detroit
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: NBC / Peacock\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 130
+ 0 (ES)\nPreview\, injuries and how to watch: https://cavsdatabase.com/sch
+ edule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-01-21@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270122T003000Z
+DTEND:20270122T030000Z
+SUMMARY:🏀 Cavs at Brooklyn
+LOCATION:Brooklyn
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-01-23@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270124T010000Z
+DTEND:20270124T033000Z
+SUMMARY:🏀 Cavs at Dallas
+LOCATION:Dallas
+DESCRIPTION:TV: DAZN · WOIO 19\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 13
+ 00 (ES)\nPreview\, injuries and how to watch: https://cavsdatabase.com/sc
+ hedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-01-25@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270126T010000Z
+DTEND:20270126T033000Z
+SUMMARY:🏀 Cavs at New Orleans
+LOCATION:New Orleans
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-01-27@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270128T000000Z
+DTEND:20270128T023000Z
+SUMMARY:🏀 Cavs vs Detroit
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: ESPN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-01-29@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270130T000000Z
+DTEND:20270130T023000Z
+SUMMARY:🏀 Cavs at Toronto
+LOCATION:Toronto
+DESCRIPTION:TV: ESPN · DAZN · WOIO 19\nRadio: WTAM 1100 · WMMS 100.7 · La 
+ Mega 1300 (ES)\nPreview\, injuries and how to watch: https://cavsdatabase
+ .com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-01-30@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270131T003000Z
+DTEND:20270131T030000Z
+SUMMARY:🏀 Cavs vs New Orleans
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-02-01@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270202T020000Z
+DTEND:20270202T043000Z
+SUMMARY:🏀 Cavs at Utah
+LOCATION:Utah
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-02-03@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270204T020000Z
+DTEND:20270204T043000Z
+SUMMARY:🏀 Cavs at Phoenix
+LOCATION:Phoenix
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-02-04@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270205T030000Z
+DTEND:20270205T053000Z
+SUMMARY:🏀 Cavs at Portland
+LOCATION:Portland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-02-06@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270207T003000Z
+DTEND:20270207T030000Z
+SUMMARY:🏀 Cavs vs Orlando
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN · WOIO 19\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 13
+ 00 (ES)\nPreview\, injuries and how to watch: https://cavsdatabase.com/sc
+ hedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-02-09@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270210T000000Z
+DTEND:20270210T023000Z
+SUMMARY:🏀 Cavs vs Toronto
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-02-10@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270211T000000Z
+DTEND:20270211T023000Z
+SUMMARY:🏀 Cavs at Indiana
+LOCATION:Indiana
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-02-12@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270213T003000Z
+DTEND:20270213T030000Z
+SUMMARY:🏀 Cavs at Toronto
+LOCATION:Toronto
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-02-14@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270214T180000Z
+DTEND:20270214T203000Z
+SUMMARY:🏀 Cavs vs Phoenix
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN · WOIO 19\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 13
+ 00 (ES)\nPreview\, injuries and how to watch: https://cavsdatabase.com/sc
+ hedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-02-16@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270217T000000Z
+DTEND:20270217T023000Z
+SUMMARY:🏀 Cavs vs Milwaukee
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-02-17@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270218T000000Z
+DTEND:20270218T023000Z
+SUMMARY:🏀 Cavs vs Milwaukee
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-02-25@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270226T000000Z
+DTEND:20270226T023000Z
+SUMMARY:🏀 Cavs vs Sacramento
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-02-26@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270227T003000Z
+DTEND:20270227T030000Z
+SUMMARY:🏀 Cavs at Boston
+LOCATION:Boston
+DESCRIPTION:TV: ESPN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-03-01@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270302T000000Z
+DTEND:20270302T023000Z
+SUMMARY:🏀 Cavs vs Philadelphia
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: Peacock / NBC Sports Network\nRadio: WTAM 1100 · WMMS 100.
+ 7 · La Mega 1300 (ES)\nPreview\, injuries and how to watch: https://cavsd
+ atabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-03-04@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270305T000000Z
+DTEND:20270305T023000Z
+SUMMARY:🏀 Cavs vs Portland
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-03-06@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270306T223000Z
+DTEND:20270307T010000Z
+SUMMARY:🏀 Cavs vs Atlanta
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: Prime Video\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 
+ (ES)\nPreview\, injuries and how to watch: https://cavsdatabase.com/sched
+ ule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-03-09@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270310T010000Z
+DTEND:20270310T033000Z
+SUMMARY:🏀 Cavs at Detroit
+LOCATION:Detroit
+DESCRIPTION:TV: NBC / Peacock · DAZN · WOIO 19 / WUAB 43\nRadio: WTAM 1100
+  · WMMS 100.7 · La Mega 1300 (ES)\nPreview\, injuries and how to watch: h
+ ttps://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-03-11@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270312T033000Z
+DTEND:20270312T060000Z
+SUMMARY:🏀 Cavs at LA Clippers
+LOCATION:LA Clippers
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-03-12@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270313T030000Z
+DTEND:20270313T053000Z
+SUMMARY:🏀 Cavs at LA Lakers
+LOCATION:LA Lakers
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-03-14@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270314T220000Z
+DTEND:20270315T003000Z
+SUMMARY:🏀 Cavs at Sacramento
+LOCATION:Sacramento
+DESCRIPTION:TV: DAZN · WOIO 19 / WUAB 43\nRadio: WTAM 1100 · WMMS 100.7 · 
+ La Mega 1300 (ES)\nPreview\, injuries and how to watch: https://cavsdatab
+ ase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-03-16@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270317T020000Z
+DTEND:20270317T043000Z
+SUMMARY:🏀 Cavs at Golden State
+LOCATION:Golden State
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-03-18@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270319T010000Z
+DTEND:20270319T033000Z
+SUMMARY:🏀 Cavs at Denver
+LOCATION:Denver
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-03-20@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270320T233000Z
+DTEND:20270321T020000Z
+SUMMARY:🏀 Cavs vs Chicago
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-03-22@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270322T230000Z
+DTEND:20270323T013000Z
+SUMMARY:🏀 Cavs vs Houston
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-03-25@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270325T230000Z
+DTEND:20270326T013000Z
+SUMMARY:🏀 Cavs vs LA Lakers
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-03-29@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270329T230000Z
+DTEND:20270330T013000Z
+SUMMARY:🏀 Cavs vs Miami
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: Peacock / NBC Sports Network\nRadio: WTAM 1100 · WMMS 100.
+ 7 · La Mega 1300 (ES)\nPreview\, injuries and how to watch: https://cavsd
+ atabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-03-31@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270331T233000Z
+DTEND:20270401T020000Z
+SUMMARY:🏀 Cavs at Brooklyn
+LOCATION:Brooklyn
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-04-01@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270401T230000Z
+DTEND:20270402T013000Z
+SUMMARY:🏀 Cavs vs Boston
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: Prime Video\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 
+ (ES)\nPreview\, injuries and how to watch: https://cavsdatabase.com/sched
+ ule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-04-04@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270404T190000Z
+DTEND:20270404T213000Z
+SUMMARY:🏀 Cavs vs Charlotte
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN · WOIO 19 / WUAB 43\nRadio: WTAM 1100 · WMMS 100.7 · 
+ La Mega 1300 (ES)\nPreview\, injuries and how to watch: https://cavsdatab
+ ase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-04-05@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270405T230000Z
+DTEND:20270406T013000Z
+SUMMARY:🏀 Cavs vs Brooklyn
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-04-07@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270407T233000Z
+DTEND:20270408T020000Z
+SUMMARY:🏀 Cavs at San Antonio
+LOCATION:San Antonio
+DESCRIPTION:TV: ESPN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-04-09@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270409T230000Z
+DTEND:20270410T013000Z
+SUMMARY:🏀 Cavs at Indiana
+LOCATION:Indiana
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+BEGIN:VEVENT
+UID:cavs-2027-04-11@cavsdatabase.com
+DTSTAMP:20261016T210552Z
+DTSTART:20270411T220000Z
+DTEND:20270412T003000Z
+SUMMARY:🏀 Cavs vs Atlanta
+LOCATION:Rocket Arena\, Cleveland
+DESCRIPTION:TV: DAZN\nRadio: WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)\nP
+ review\, injuries and how to watch: https://cavsdatabase.com/schedule
+URL:https://cavsdatabase.com/schedule
+END:VEVENT
+END:VCALENDAR

@@ -73,6 +73,26 @@ export default async function prerender(root, META) {
       await writeFile(file, html); ok++;
     } finally { await page.close(); }
   }
+  // calendar feed (cavs.ics): every game with TV and radio; finished games show the final. Phones that subscribe re-check it every few hours.
+  try {
+    const page = await ctx.newPage(); await page.goto(base + '/index.html', { waitUntil: 'load' });
+    const G = await page.evaluate(() => SCHEDULE.map(g => { const t = tvFor(g[0]), r = radioFor(g[0]); return { d: g[0], o: g[1], ha: g[2], tip: tipOf(g).toISOString(), opp: TEAMS[g[1]], tv: [t.nat, t.loc].filter(Boolean).join(' · '), radio: r.cavs || '', sc: SCORES[g[0]] || '' }; }));
+    await page.close();
+    const ics = s => String(s).replace(/\\/g, '\\\\').replace(/;/g, '\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+    const dt = iso => iso.replace(/[-:]/g, '').replace(/\.\d+Z$/, 'Z');
+    const fold = l => { const o = []; let x = l; while (x.length > 74) { o.push(x.slice(0, 74)); x = ' ' + x.slice(74); } o.push(x); return o.join('\r\n'); };
+    const stamp = dt(new Date().toISOString());
+    const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//cavsdatabase.com//Cavs schedule//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:Cavs 2026–27 (cavs_db)', 'X-WR-CALDESC:Every Cavaliers game with TV and radio. From cavsdatabase.com', 'X-WR-TIMEZONE:America/New_York', 'REFRESH-INTERVAL;VALUE=DURATION:PT4H', 'X-PUBLISHED-TTL:PT4H'];
+    for (const g of G) {
+      const vs = g.ha === 'H' ? 'vs' : 'at'; let sum = `🏀 Cavs ${vs} ${g.opp}`;
+      if (g.sc) { const [c, o] = g.sc.split('-').map(Number); sum = `🏀 ${c > o ? 'W' : 'L'} ${c}–${o} ${vs} ${g.opp}`; }
+      const desc = [g.tv ? 'TV: ' + g.tv : '', g.radio ? 'Radio: ' + g.radio : '', 'Preview, injuries and how to watch: ' + SITE + '/schedule'].filter(Boolean).join('\n');
+      const end = new Date(Date.parse(g.tip) + 2.5 * 36e5).toISOString();
+      L.push('BEGIN:VEVENT', 'UID:cavs-' + g.d + '@cavsdatabase.com', 'DTSTAMP:' + stamp, 'DTSTART:' + dt(g.tip), 'DTEND:' + dt(end), fold('SUMMARY:' + ics(sum)), fold('LOCATION:' + ics(g.ha === 'H' ? 'Rocket Arena, Cleveland' : g.opp)), fold('DESCRIPTION:' + ics(desc)), 'URL:' + SITE + '/schedule', 'END:VEVENT');
+    }
+    L.push('END:VCALENDAR');
+    await writeFile(new URL('cavs.ics', root), L.join('\r\n') + '\r\n');
+  } catch (e) { console.log('::warning::calendar feed skipped ' + e.message); }
   await browser.close(); server.close();
   console.log('prerendered', ok, 'pages');
   return ok > 0;
