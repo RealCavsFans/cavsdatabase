@@ -1,0 +1,41 @@
+name: Cavs & Coffee newsletter
+on:
+  schedule:
+    - cron: '7 11 * * *'   # 7:07 AM EDT
+    - cron: '7 12 * * *'   # 7:07 AM EST (the script only acts during the 7 AM ET hour)
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'test = test copy to you only; auto = normal morning run'
+        default: test
+        type: choice
+        options: [test, auto]
+permissions:
+  contents: write
+concurrency:
+  group: videos
+  cancel-in-progress: false
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: npm i --no-save --no-package-lock --no-audit --no-fund playwright-core@1.56.0
+      - name: Build and hand to Buttondown
+        run: node scripts/newsletter.mjs ${{ github.event.inputs.mode || 'auto' }}
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+          BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
+          NEWSLETTER_LIVE: ${{ vars.NEWSLETTER_LIVE }}
+      - name: Remember what went out
+        run: |
+          git config user.name "cavsdatabase-bot"
+          git config user.email "bot@cavsdatabase.com"
+          git add data/newsletter-sent.json nl/last-issue.html 2>/dev/null || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Newsletter issue"
+          for i in 1 2 3; do git pull --rebase origin main && git push && exit 0; sleep $((i*10)); done
+          exit 1
