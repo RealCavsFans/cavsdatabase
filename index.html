@@ -253,21 +253,6 @@ tr.det td{background:var(--sub);border-top:0;padding:4px 20px 18px}
 .ds-grid .t span{font:500 11px var(--mono);color:var(--muted)}.ds-grid .t em{font-style:normal;color:var(--wine-ink);font-weight:700}
 .ds-grid .tw{border-left:1px dashed var(--line)}.ds-grid .tw .t b{font-size:13px;font-weight:600}
 .ds-foot{padding:10px 18px 12px;font-size:12px;color:var(--muted)}
-.dstacks{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;background:var(--card);border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.08);padding:22px 18px 10px}
-.dstack{position:relative;height:300px;cursor:pointer;transition:height .45s;outline:none}
-.dstack.open{height:calc(var(--ch,250px)*2.44 + 50px)}
-.dstack .ptag{font:800 12px var(--sans);font-stretch:118%;letter-spacing:.14em;color:var(--muted);text-align:center}
-.dcard{position:absolute;left:0;right:0;top:24px;margin:auto;width:100%;max-width:176px;border-radius:9px;overflow:hidden;background:linear-gradient(160deg,#9b2a44,var(--wine) 45%,#5a1424);box-shadow:0 10px 20px rgba(0,0,0,.18);transition:transform .45s cubic-bezier(.2,.8,.2,1);transform-origin:50% 100%}
-.dcard .ph{position:relative;aspect-ratio:156/138;overflow:hidden;background:radial-gradient(circle at 50% 100%,rgba(242,178,49,.35),transparent 70%)}
-.dcard .ph img{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:122%}
-.dcard .no{position:absolute;top:6px;left:9px;font:800 38px/1 var(--cond);color:rgba(255,255,255,.25)}
-.dcard .bar{background:var(--card);padding:8px 11px 9px;border-top:3px solid #F2B231}
-.dcard .bar b{display:block;font:800 14.5px/1.1 var(--sans);text-transform:uppercase;color:var(--fg)}
-.dcard .bar span{font:500 11px var(--mono);color:var(--muted)}
-.dcard .rk{position:absolute;top:8px;right:8px;background:#F2B231;color:#101419;font:800 9.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:3px 6px;border-radius:3px}
-.dcard.s{z-index:2}.dcard.b1{transform:translate(12px,-12px) rotate(5deg) scale(.94);filter:brightness(.92);z-index:1}.dcard.b2{transform:translate(22px,-22px) rotate(10deg) scale(.88);filter:brightness(.84)}
-.dstack.open .dcard{transform-origin:50% 0}.dstack.open .dcard.b1{transform:translateY(calc(100% + 10px)) scale(.72);filter:none}.dstack.open .dcard.b2{transform:translateY(calc(172% + 18px)) scale(.72);filter:none}
-.dstack:focus-visible .dcard.s{box-shadow:0 0 0 3px #F2B231,0 10px 20px rgba(0,0,0,.18)}
 @media (max-width:760px){
  .ds-grid{grid-template-columns:48px minmax(0,1fr)}
  .ds-grid .ch{display:none}
@@ -278,11 +263,27 @@ tr.det td{background:var(--sub);border-top:0;padding:4px 20px 18px}
  .ds-grid .pz{grid-row:span 4}
  .ds-grid .c1{border-bottom:0}
  .ds-grid .c2 .av,.ds-grid .c3 .av{width:34px;height:34px}
- .dstacks{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px;padding:16px 12px 6px}
- .dstack{height:250px}
- .dcard{max-width:none;width:86%;margin:0}.dcard.b1{transform:translate(7px,-8px) rotate(4deg) scale(.95)}.dcard.b2{transform:translate(13px,-15px) rotate(8deg) scale(.9)}
- .dstack:last-child:nth-child(odd){grid-column:1/-1;width:50%;justify-self:center}
 }
+.dsw{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.dsw button{appearance:none;border:0;background:var(--card);padding:6px 12px;font:700 11px var(--sans);font-stretch:118%;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);cursor:pointer}
+.dsw button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.ds-grid .t b em{font:600 12px var(--mono);font-style:normal;color:var(--wine-ink);margin-left:4px}
+.ds-grid .t>span{display:block}
+.pyr{display:flex;flex-direction:column;align-items:center;gap:6px;padding:22px 18px 10px}
+.pt{width:100%;display:grid;grid-template-columns:minmax(0,1fr) 170px;align-items:center;gap:16px}
+.pt-band{justify-self:center;width:var(--w);padding:12px 8px;clip-path:polygon(var(--in) 0,calc(100% - var(--in)) 0,100% 100%,0 100%);background:var(--bgc)}
+.pt1{--w:56%;--in:5%;--bgc:linear-gradient(180deg,#8e2741,#7A1F33)}.pt2{--w:70%;--in:4%;--bgc:rgba(122,31,51,.55)}.pt3{--w:84%;--in:3%;--bgc:rgba(122,31,51,.2)}.pt4{--w:98%;--in:2.5%;--bgc:rgba(122,31,51,.08)}
+.pt-faces{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 14px}
+.pt-faces a{display:flex;flex-direction:column;align-items:center;color:var(--fg);text-decoration:none;width:72px}
+.pt1 .pt-faces a,.pt2 .pt-faces a{color:#fff}
+.pt-faces .pf{width:52px;height:52px;border-radius:50%;overflow:hidden;background:var(--sub);box-shadow:0 0 0 2px #fff}
+.pt1 .pf{width:60px;height:60px;box-shadow:0 0 0 2px #F2B231}
+.pt-faces .pf img{width:150%;margin:3px 0 0 -25%}
+.pt-faces b{font:700 12px var(--sans);margin-top:5px;white-space:nowrap}
+.pt-faces span{font:500 10.5px var(--mono);opacity:.75}
+.pt-lab b{display:block;font:800 13px var(--sans);font-stretch:118%;letter-spacing:.08em;text-transform:uppercase}
+.pt-lab span{font-size:12px;color:var(--muted);line-height:1.35}
+@media (max-width:760px){.pt{grid-template-columns:1fr;gap:4px}.pt-lab{order:-1;text-align:center}.pt-lab span{display:block}.pt1{--w:100%}.pt2{--w:100%}.pt3{--w:100%}.pt4{--w:100%}.pt-band{clip-path:none;border-radius:6px}.pt-faces{gap:6px 6px}.pt-faces a{width:58px}.pt-faces b{font-size:11px}.pt-faces .pf{width:44px;height:44px}.pt1 .pf{width:48px;height:48px}.pyr{padding:14px 10px 6px;gap:12px}.ds-hdr{flex-wrap:wrap;gap:10px}.ds-hdr b{font-size:17px}}
 .captop{margin:0}.ct-nums{display:flex;flex-wrap:wrap;gap:10px 34px}.ct-nums div{display:flex;flex-direction:column}.ct-nums b{font:700 24px var(--mono);letter-spacing:-.02em}.ct-nums .key b{color:var(--wine-ink)}.ct-nums span{font-size:12px;color:var(--muted)}.captop .hbar{margin-top:6px}
 .det-grid .wide{grid-column:1/-1}.pcap{list-style:none;margin:0;padding:0;font-size:13px}.pcap li{display:flex;justify-content:space-between;gap:12px;max-width:200px;padding:1px 0;color:var(--fg2)}.pcap b{font:500 13px var(--mono);color:var(--fg);position:relative}.pcap sup{position:absolute;left:100%;top:-2px;color:var(--wine-ink)}
 table.comps{border-collapse:collapse;font-size:12.5px;width:100%;max-width:640px;table-layout:auto;margin-bottom:6px}table.comps th{font-weight:600;color:var(--muted);text-align:left;padding:4px 10px 4px 0;border-bottom:1px solid var(--line2);font-size:11.5px}table.comps td{padding:4px 10px 4px 0;border-bottom:1px solid var(--line2);white-space:nowrap;font-size:12.5px}table.comps .r{text-align:right}table.comps tr.me td{font-weight:700}table.comps small{color:var(--muted);font-size:11px}
@@ -381,7 +382,7 @@ body{background:var(--page)}
 .home{padding-block:18px 24px;gap:16px}
 .col{gap:16px}.side{gap:16px}
 .col>section,.rail{background:var(--card);border:0;border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.08);padding:16px 18px}
-.block-h{border-bottom:3px solid var(--fg);padding-bottom:6px;margin-bottom:14px}
+.block-h{border-bottom:3px solid var(--fg);padding-bottom:6px;margin-bottom:14px;align-items:center}
 .block-h h2{font:800 17px var(--cond);text-transform:uppercase;letter-spacing:.05em}
 .block-h a{font-size:13px}
 .index,.tablebox{background:var(--card)}
@@ -446,12 +447,21 @@ body{background:var(--page)}
 @media (max-width:520px){.segs{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));width:100%}.segs button{padding:9px 6px;font-size:11px;letter-spacing:.03em}}
 .ros td{white-space:nowrap}
 .ros td.num{font:700 15px var(--mono);color:var(--wine-ink)}
-.ros td.m{font:400 13px var(--mono);font-variant-numeric:tabular-nums}
+.ros td.m{font:400 13.5px var(--sans);font-variant-numeric:tabular-nums}
 .ros .tag{display:inline-block;margin-left:6px;padding:1px 5px;border:1px solid var(--line);font:700 9px var(--sans);font-stretch:125%;letter-spacing:.08em;color:var(--muted);vertical-align:1px}
 .ros tr.grp td{background:var(--sub);font:800 11px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-block:8px}
 .ros .pl{font-weight:600}
 .gbrand{text-transform:none;gap:10px}
 .gbrand svg{width:42px;height:42px}
+.gbrand .wm{display:flex;flex-direction:column;gap:3px}
+.upd{display:flex;align-items:center;gap:5px;font:500 10.5px/1 var(--mono);letter-spacing:.02em;color:#F4D6DD;text-transform:none}
+.upd i{width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 0 rgba(74,222,128,.6);animation:upd 2.4s ease-out infinite}
+.upd.stale i{background:#F2B231;animation:none}
+@keyframes upd{0%{box-shadow:0 0 0 0 rgba(74,222,128,.55)}70%,100%{box-shadow:0 0 0 6px rgba(74,222,128,0)}}
+@media (prefers-reduced-motion:reduce){.upd i{animation:none}}
+.ros-sub{display:flex;justify-content:space-between;align-items:center;gap:4px 12px;flex-wrap:wrap}.ros-sub .stat-dot{margin-left:auto}
+.stat-dot{display:inline-flex;align-items:center;gap:6px;font:500 12px var(--mono);color:var(--muted);white-space:nowrap}
+.stat-dot i{width:7px;height:7px;border-radius:50%;background:#22c55e}
 .gbrand .wm-term{display:flex;align-items:center;font:700 25px/1 var(--mono);letter-spacing:-.02em;color:#fff}
 .gbrand .wm-term i{font-style:normal;color:#F2B231}
 .gbrand .wm-term s{display:inline-block;width:.55em;height:.95em;background:#F2B231;margin-left:4px;animation:blink 1.1s steps(1) infinite;text-decoration:none}
@@ -490,6 +500,30 @@ table.sched{min-width:980px;table-layout:fixed}
 tr.mark td{background:var(--sub);font:600 12.5px var(--sans);color:var(--fg2);padding-block:8px}
 .mk-dot{display:inline-block;width:8px;height:8px;background:var(--wine);transform:rotate(45deg);margin-right:10px;vertical-align:1px}
 tr.nextg td{background:color-mix(in srgb,var(--wine) 7%,transparent)}
+@media (max-width:760px){
+ table.sched{min-width:0;table-layout:auto}
+ .sched thead{display:none}
+ .sched,.sched tbody{display:block;width:100%}
+ .sched tr{display:grid;grid-template-columns:84px minmax(0,1fr) auto;gap:2px 10px;padding:10px 12px;border-top:1px solid var(--line2)}
+ .sched td{display:block;padding:0!important;border:0!important;width:auto!important;font-size:13px}
+ .sched td:nth-child(1){grid-column:1;grid-row:1/span 2;font-size:12px;line-height:1.5;white-space:nowrap}
+ .sched td:nth-child(2){grid-column:2;grid-row:1;font-weight:600}
+ .sched td:nth-child(3){grid-column:3;grid-row:1;text-align:right;font-size:12px}
+ .sched td:nth-child(4){grid-column:2;grid-row:2;font-size:12px}
+ .sched td:nth-child(4) small{display:none}
+ .sched td:nth-child(5){display:none}
+ .sched td:nth-child(6){grid-column:3;grid-row:2;text-align:right;font-size:12px}
+ .sched td:nth-child(7){grid-column:3;grid-row:2;text-align:right;font-size:12px}
+ .sched td:nth-child(6):not(:empty)+td{grid-row:3}
+ .sched td:nth-child(6):empty{display:none}
+ .sched .tvc b,.sched .tvc span{display:inline}.sched .tvc b+span::before{content:" · "}
+ .sched .gtag{margin-left:6px;font-size:8.5px;padding:0 4px}
+ .sched tr.mark{display:block;padding:0;border-top:1px solid var(--line2)}
+ .sched tr.nextg{background:color-mix(in srgb,var(--wine) 7%,transparent)}
+ .sched tr.mark td{display:block;background:none;font:500 11.5px var(--sans);color:var(--muted);padding:6px 12px!important}
+ .sched tr.mark .mk-dot{width:5px;height:5px;margin-right:7px;vertical-align:2px;background:var(--muted)}
+}
+
 /* injuries expand */
 .ginj li.ij{display:block}
 .ginj details summary{display:flex;justify-content:space-between;gap:10px;cursor:pointer;list-style:none}
@@ -504,6 +538,7 @@ tr.nextg td{background:color-mix(in srgb,var(--wine) 7%,transparent)}
 .hcap-l{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:2px 16px}
 .hcap-l li{padding:6px 0;border-top:2px solid var(--wine);font-size:12px;line-height:1.35}
 .hcap-l b{display:block;font-weight:700;font-size:13px}.hcap-l span{color:var(--fg2)}
+.ros a.dlink{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}.ros a.dlink:hover{color:var(--wine-ink);text-decoration-color:currentColor}
 .ros a.plink{color:var(--fg)}.ros a.plink:hover{color:var(--wine-ink)}
 .ros td.acq{white-space:normal;min-width:170px;font-size:13px}.ros td.acq small{display:block;color:var(--muted);font-size:11.5px}
 .xl{list-style:none;margin:0;padding:0}
@@ -590,21 +625,9 @@ table.chs{min-width:620px}
 .kd-when{font:700 10px var(--sans);font-stretch:118%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .kd.cav .kd-when{color:var(--wine-ink)}
 .gd li.kd .t{margin:0;font-size:13.5px;line-height:1.35;color:var(--fg);font-weight:500}
-.gd li.kd.first{border-color:var(--wine);box-shadow:0 0 0 1px var(--wine)}
-.gd li.kd.first::after{content:"Next";position:absolute;top:-1px;right:-1px;background:var(--wine);color:#fff;font:700 9.5px var(--sans);letter-spacing:.1em;text-transform:uppercase;padding:2px 6px}
 .h-link{font:inherit;letter-spacing:inherit;text-transform:inherit}
 .ch-next{font-size:16px}.ch-meta{font-size:13.5px}
 .vid-links{display:flex;gap:12px;font-size:13px}
-.nticker{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;align-items:stretch;height:38px;background:#14171A;color:#EDEDEB;border-top:3px solid var(--wine);font-size:13px}
-.nt-label{flex:0 0 auto;display:flex;align-items:center;padding:0 14px;background:var(--wine);color:#fff;font:700 11px var(--sans);font-stretch:118%;letter-spacing:.1em;text-transform:uppercase}
-.nt-view{flex:1 1 auto;overflow:hidden;position:relative}
-.nt-track{display:flex;width:max-content;height:100%;animation:nt var(--nt-dur,80s) linear infinite}
-.nticker:hover .nt-track,.nticker:focus-within .nt-track{animation-play-state:paused}
-@keyframes nt{to{transform:translateX(-50%)}}
-.nt-item{display:flex;align-items:center;gap:8px;padding:0 22px;color:#EDEDEB;white-space:nowrap;border-right:1px solid #2C3036}
-.nt-item:hover{color:#F2B231;text-decoration:none}
-.nt-item b{font:700 10.5px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:#F2B231}.nt-item em{font-style:normal;color:#8A9098;font-size:11.5px}
-body.has-ticker{padding-bottom:42px}
 @media (prefers-reduced-motion:reduce){.nt-track{animation:none}.nt-view{overflow-x:auto}}
 .yt-link{display:inline-block;margin-top:10px}
 #chg-h,#chg-h .h-link{font:800 17px var(--cond);text-transform:uppercase;letter-spacing:.05em}
@@ -617,6 +640,7 @@ body.has-ticker{padding-bottom:42px}
 .ros td.sch{white-space:normal;font-size:13px;max-width:180px}
 .ros td.acq{min-width:150px}
 .ros td,.ros th{padding-inline:8px}
+.ros .c{text-align:center}
 @media (max-width:760px){
  #rv-bio table.ros thead{display:none}
  #rv-bio table.ros,#rv-bio .ros tbody,#rv-bio .ros tr{display:block;width:100%}
@@ -659,6 +683,9 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:23%}.cap th:nth-child(2)
 .gmu .fin{border:0;background:none;padding:0 0 10px;margin:0 0 4px;border-bottom:1px solid var(--line2);gap:2px 12px}
 .gmu .fin:hover{background:none}.gmu .fin:hover .lb{text-decoration:underline}
 .gmu .fin .ls{font-size:16px}
+.gmu .fin{align-items:baseline}.gmu .fin .lr,.gmu .fin .ls,.gmu .fin .lo,.gmu .fin .lb,.gmu .fin .cap-label{line-height:1.2}
+#next-h-row{flex-wrap:nowrap;align-items:center}#next-h-row .upnext,#next-h-row .upnext b,#nx-label{white-space:nowrap}@media (max-width:420px){#next-h-row{letter-spacing:.08em}.upnext b{font-size:10px;padding:3px 7px 3px 8px}}#next-h-row a{white-space:nowrap}
+.show-sm{display:none}@media (max-width:600px){.hide-sm{display:none}.show-sm{display:inline}}
 #staff-list{grid-template-columns:repeat(auto-fit,minmax(420px,1fr))}
 .bio .bio-p li{grid-template-columns:92px minmax(0,1fr)}
 @media (max-width:520px){#staff-list{grid-template-columns:1fr}.bio{flex-direction:column}}
@@ -669,7 +696,7 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:23%}.cap th:nth-child(2)
 <body>
 <header class="gbar"><div class="wrap gin">
   <a class="gbrand" href="#home" data-go="home" aria-label="cavs_db home">
-    <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#860038" stroke-width="2" fill="none"/></svg><span class="wm-term">cavs<i>_db</i><s></s></span></a>
+    <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#860038" stroke-width="2" fill="none"/></svg><span class="wm"><span class="wm-term">cavs<i>_db</i><s></s></span><small class="upd" id="upd"><i></i><span></span></small></span></a>
   <nav class="gnav" id="tabs" role="tablist" aria-label="Sections"></nav>
   <form class="search" role="search" id="sform" autocomplete="off">
     <label for="q" class="sr">Search players, contracts, dates</label>
@@ -691,7 +718,7 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:23%}.cap th:nth-child(2)
         </div>
         <div class="gmu">
           <a class="fin" id="last" hidden target="_blank" rel="noopener"></a>
-          <div class="gk" id="next-h-row"><span class="upnext"><b>Up next</b><span id="nx-label"></span></span><a href="#schedule" data-go="schedule">Full schedule →</a></div>
+          <div class="gk" id="next-h-row"><span class="upnext"><b>Up next</b><span id="nx-label"></span></span><a href="#schedule" data-go="schedule"><span class="hide-sm">Full s</span><span class="show-sm">S</span>chedule →</a></div>
           <h3 class="sr" id="nx-title"></h3><span class="sr" id="next-h"></span>
           <div class="gteams"><span class="tm cle" aria-hidden="true">CLE</span><span class="gat" id="nx-at" aria-hidden="true"></span><span class="tm" id="nx-opp"></span></div>
           <div class="nx-when"><span id="nx-meta"></span><a id="nx-prev" hidden target="_blank" rel="noopener">Game preview ↗</a></div>
@@ -830,7 +857,7 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:23%}.cap th:nth-child(2)
       <p class="dim" style="margin:6px 0 0">80 games set; 2 more are scheduled after the NBA Cup knockout round. All times Eastern.</p>
     </div>
     <div id="sched"></div>
-    <p class="dim" style="margin:0;font-size:13px">Schedule: Cavaliers printable schedule. TV and radio: NBA.com schedule feed; local TV: Cavaliers/DAZN and Gray Media (15 free over-the-air games on WOIO 19 and WUAB 43, also on Rock Entertainment Sports Network). Games on ESPN, ABC, NBC, Peacock or Prime Video are national broadcasts and may not air locally.</p>
+    <p class="dim" style="margin:0;font-size:13px">Local TV: DAZN, plus 15 free over-the-air games on WOIO 19 and WUAB 43 (also on Rock Entertainment Sports Network). Games on ESPN, ABC, NBC, Peacock or Prime Video are national broadcasts and may not air locally.</p>
   </div>
 </main>
 
@@ -863,12 +890,12 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:23%}.cap th:nth-child(2)
   <div class="wrap page">
     <div>
       <div class="dim" style="font-size:13px"><a href="#home" data-go="home">Home</a> / Roster</div>
-      <h1 style="margin-top:6px">2026–27 roster</h1>
-      <p class="dim" style="margin:6px 0 0" id="ros-sub"></p>
+      <h1 style="margin-top:6px">2026–27 Roster</h1>
+      <p class="dim ros-sub" style="margin:6px 0 0"><span id="ros-sub"></span><span class="stat-dot" id="ros-upd"></span></p>
     </div>
     <div class="segs" role="tablist" aria-label="Roster view"><button role="tab" aria-selected="true" data-rv="bio">Bio</button><button role="tab" aria-selected="false" data-rv="meas">Measurements</button></div>
     <div class="tablebox" id="rv-bio"><table class="ros">
-      <thead><tr><th class="r">No.</th><th>Player</th><th>Ht / Wt</th><th>Age · Born</th><th class="r">Exp</th><th>College / last team</th><th>Draft</th><th>How acquired</th></tr></thead>
+      <thead><tr><th class="r">No.</th><th>Player</th><th>Ht / Wt</th><th>Age · Born</th><th class="c">Exp</th><th>College / last team</th><th>Draft</th><th>How acquired</th></tr></thead>
       <tbody id="rosbody"></tbody>
     </table></div>
     <div class="tablebox" id="rv-meas" hidden><table class="ros">
@@ -876,8 +903,7 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:23%}.cap th:nth-child(2)
       <tbody id="measbody"></tbody>
     </table></div>
     <div id="rv-depth" hidden></div>
-    <div id="rv-stack" hidden></div>
-    <p class="dim" style="margin:0;font-size:13px">Bio, draft and combine figures: NBA.com. Combine measurements are from the player's draft combine year; height and weight in the bio table are current listings. Wingspans sourced to CraftedNBA are used only where the player has no NBA combine measurement. Exp counts NBA seasons before this one (R = rookie). Player names link to nbarapm profiles, or NBA.com for players nbarapm doesn't cover yet. TW = two-way contract; Camp = training camp deal.</p>
+    
   </div>
 </main>
 
@@ -925,10 +951,9 @@ table.cap{table-layout:fixed}.cap th:nth-child(1){width:23%}.cap th:nth-child(2)
 
 <footer><div class="wrap">
   <span>cavsdatabase.com · Independent fan reference. Not affiliated with the Cleveland Cavaliers or the NBA.</span>
-  <span>Sources: Capsheets, Salary Swish, Spotrac, Basketball Reference, RealGM · Updated Oct 15, 2026</span>
+  <a href="#resources" data-go="resources">Sources &amp; resources</a>
 </div></footer>
 
-<div class="nticker" id="nticker" hidden aria-label="Latest Cavs news"><span class="nt-label">Cavs news</span><div class="nt-view"><div class="nt-track" id="nt-track"></div></div></div>
 <script>
 const SECTIONS=[
   ['home','Home','',''],
@@ -1143,6 +1168,8 @@ const OTA={"2026-10-26": "WUAB 43", "2026-10-29": "WUAB 43", "2026-11-02": "WOIO
 const CAVS_TV='DAZN'; /* exclusive local partner for games not on national TV (Cavs/DAZN, Sep 2026) */
 const CAVS_RADIO='WTAM 1100 · 100.7 WMMS · La Mega 1300 (Spanish)';
 const CAVS_RADIO_SHORT='WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)';
+/* site last updated (ET date) — the daily task sets this when data changes */
+const SITE_UPDATED='2026-10-15';
 /* ===== end daily data ===== */
 
 const COLORS={ATL:'#C8102E',BOS:'#007A33',BKN:'#000000',CHA:'#1D1160',CHI:'#CE1141',CLE:'#860038',DAL:'#00538C',DEN:'#0E2240',DET:'#C8102E',GSW:'#1D428A',HOU:'#CE1141',IND:'#002D62',LAC:'#C8102E',LAL:'#552583',MEM:'#5D76A9',MIA:'#98002E',MIL:'#00471B',MIN:'#0C2340',NOP:'#0C2340',NYK:'#006BB6',OKC:'#007AC1',ORL:'#0077C0',PHI:'#006BB6',PHX:'#1D1160',POR:'#C8102E',SAC:'#5A2D81',SAS:'#000000',TOR:'#CE1141',UTA:'#002B5C',WAS:'#002B5C'};
@@ -1201,9 +1228,9 @@ if(ng){document.getElementById('nx-at').textContent=ng[2]==='H'?'vs':'at';const 
   else if(PRESEASON.length){const g=PRESEASON[PRESEASON.length-1];L={d:g[0],o:g[1],ha:g[2],r:g[3],sc:g[4],lbl:'Preseason final'}}
   if(L){const a=document.getElementById('last');document.getElementById('next-h').textContent='Last result & next game';
     const dt=new Date(L.d+'T19:00:00-04:00');
-    a.hidden=false;a.href=boxUrl(L.d);a.setAttribute('aria-label','Box score on '+boxSrc(L.d));
+    a.hidden=false;a.href=boxUrl(L.d);a.setAttribute('aria-label','Box score');
     a.append(el('span','cap-label',L.lbl),el('span','lr '+(L.r==='W'?'w':'l'),L.r),el('span','ls',L.sc.replace('-','–')),
-      el('span','lo',(L.ha==='H'?'vs ':'at ')+TEAMS[L.o]+' · '+shortFmt.format(dt)),el('span','lb','Box score on '+boxSrc(L.d)+' ↗'))}}
+      el('span','lo',(L.ha==='H'?'vs ':'at ')+TEAMS[L.o]+' · '+shortFmt.format(dt)),el('span','lb','Box score ↗'))}}
 
 /* key dates */
 const DATES=[
@@ -1337,31 +1364,44 @@ const HISTORY=[
   ['12-30',1984,'LeBron James was born in Akron.','Basketball Reference','https://www.basketball-reference.com/players/j/jamesle01.html'],
   ['01-02',2023,'Donovan Mitchell scored 71 points in a 145–134 overtime win over the Bulls.','Basketball Reference','https://www.basketball-reference.com/boxscores/202301020CLE.html']
 ];
-(function(){
+/* one game per calendar date: the most notable Cavs game ever played on it (playoffs first, then biggest win).
+   Basketball Reference team game logs, 1970–71 through 2025–26. MMDD|year|playoffs|opponent|H/A/N|win|cavs pts|opp pts|OT|game,series W,series L,series over,round|box score id */
+const HIST_GAMES='0101|2012|0|Nets|H|1|98|82|0||201201010CLE;0102|2009|0|Bulls|H|1|117|92|0||200901020CLE;0103|2024|0|Wizards|H|1|140|101|0||202401030CLE;0104|2016|0|Raptors|H|1|122|100|0||201601040CLE;0105|2024|0|Wizards|H|1|114|90|0||202401050CLE;0106|1998|0|Rockets|H|1|100|70|0||199801060CLE;0107|2009|0|Bobcats|H|1|111|81|0||200901070CLE;0108|2016|0|Timberwolves|A|1|125|99|0||201601080MIN;0109|1993|0|Timberwolves|H|1|116|93|0||199301090CLE;0110|2026|0|Timberwolves|H|1|146|134|0||202601100CLE;0111|2024|0|Nets|H|1|111|102|0||202401110CLE;0112|2022|0|Jazz|A|1|111|91|0||202201120UTA;0113|1998|0|Suns|A|1|102|84|0||199801130PHO;0114|2026|0|76ers|A|1|133|107|0||202601140PHI;0115|1994|0|76ers|H|1|110|67|0||199401150CLE;0116|1993|0|Hawks|H|1|127|99|0||199301160CLE;0117|2024|0|Bucks|H|1|135|95|0||202401170CLE;0118|1986|0|Pacers|H|1|108|95|0||198601180CLE;0119|1971|0|Braves|N|1|111|79|0||197101190BUF;0120|2025|0|Suns|H|1|118|92|0||202501200CLE;0121|2006|0|Jazz|A|1|108|90|0||200601210UTA;0122|2024|0|Magic|A|1|126|99|0||202401220ORL;0123|2015|0|Hornets|H|1|129|90|0||201501230CLE;0124|1976|0|Bucks|H|1|132|89|0||197601240CLE;0125|1997|0|Hornets|H|1|106|73|0||199701250CLE;0126|2023|0|Rockets|A|1|113|95|0||202301260HOU;0127|2016|0|Suns|H|1|115|93|0||201601270CLE;0128|2026|0|Lakers|H|1|129|99|0||202601280CLE;0129|2002|0|Timberwolves|H|1|114|81|0||200201290CLE;0130|2007|0|Warriors|H|1|124|97|0||200701300CLE;0131|2010|0|Clippers|H|1|114|89|0||201001310CLE;0201|2017|0|Timberwolves|H|1|125|97|0||201702010CLE;0202|2025|0|Mavericks|H|1|144|101|0||202502020CLE;0203|1984|0|Bulls|H|1|106|76|0||198402030CLE;0204|2026|0|Clippers|A|1|124|91|0||202602040LAC;0205|2024|0|Kings|H|1|136|110|0||202402050CLE;0206|2013|0|Bobcats|H|1|122|95|0||201302060CLE;0207|1978|0|Jazz|H|1|122|99|0||197802070CLE;0208|2023|0|Pistons|H|1|113|85|0||202302080CLE;0209|2007|0|Heat|H|1|103|79|0||200702090CLE;0210|2024|0|Raptors|A|1|119|95|0||202402100TOR;0211|2026|0|Wizards|H|1|138|113|0||202602110CLE;0212|2025|0|Raptors|A|1|131|108|0||202502120TOR;0213|1986|0|Nets|H|1|135|117|0||198602130CLE;0214|1981|0|Warriors|H|1|108|90|0||198102140CLE;0215|1992|0|Nets|H|1|128|92|0||199202150CLE;0216|1978|0|Nuggets|H|1|119|87|0||197802160CLE;0217|1993|0|Mavericks|H|1|124|97|0||199302170CLE;0218|2014|0|76ers|A|1|114|85|0||201402180PHI;0219|2026|0|Nets|H|1|112|84|0||202602190CLE;0220|2015|0|Wizards|A|1|127|89|0||201502200WAS;0221|2025|0|Knicks|H|1|142|105|0||202502210CLE;0222|1994|0|Timberwolves|H|1|114|81|0||199402220CLE;0223|1990|0|Magic|H|1|123|96|0||199002230CLE;0224|1989|0|Trail Blazers|H|1|128|91|0||198902240CLE;0225|2025|0|Magic|A|1|122|82|0||202502250ORL;0226|2023|0|Raptors|H|1|118|93|0||202302260CLE;0227|1978|0|Rockets|A|1|110|97|0||197802270HOU;0228|1985|0|SuperSonics|A|1|120|95|0||198502280SEA;0229|1996|0|Bucks|A|1|95|86|0||199602290MIL;0301|2010|0|Knicks|H|1|124|93|0||201003010CLE;0302|1989|0|Spurs|H|1|112|84|0||198903020CLE;0303|2004|0|Hawks|H|1|112|80|0||200403030CLE;0304|1998|0|Raptors|H|1|122|88|0||199803040CLE;0305|2018|0|Pistons|H|1|112|90|0||201803050CLE;0306|1999|0|Warriors|H|1|97|80|0||199903060CLE;0307|1973|0|Rockets|N|1|118|100|0||197303070CLE;0308|1994|0|Kings|H|1|103|82|0||199403080CLE;0309|1988|0|Bucks|H|1|117|91|0||198803090CLE;0310|2015|0|Mavericks|A|1|127|94|0||201503100DAL;0311|2019|0|Raptors|H|1|126|101|0||201903110CLE;0312|1995|0|76ers|A|1|92|72|0||199503120PHI;0313|2026|0|Mavericks|A|1|138|105|0||202603130DAL;0314|2017|0|Pistons|H|1|128|96|0||201703140CLE;0315|1989|0|Bulls|H|1|115|91|0||198903150CLE;0316|2003|0|Jazz|H|1|122|95|0||200303160CLE;0317|1996|0|Kings|H|1|115|84|0||199603170CLE;0318|2015|0|Nets|H|1|117|92|0||201503180CLE;0319|1985|0|76ers|H|1|116|89|0||198503190CLE;0320|1973|0|76ers|H|1|131|105|0||197303200CLE;0321|2016|0|Nuggets|H|1|124|91|0||201603210CLE;0322|1992|0|Hawks|H|1|123|80|0||199203220CLE;0323|1993|0|Spurs|H|1|127|90|0||199303230CLE;0324|1974|0|Knicks|H|1|114|92|0||197403240CLE;0325|2024|0|Hornets|H|1|115|92|0||202403250CLE;0326|1990|0|Kings|H|1|116|95|0||199003260CLE;0327|2009|0|Timberwolves|H|1|107|85|0||200903270CLE;0328|2018|0|Hornets|A|1|118|105|0||201803280CHO;0329|1977|0|Celtics|H|1|110|82|0||197703290CLE;0330|1996|0|Warriors|A|1|90|64|0||199603300GSW;0331|2016|0|Nets|H|1|107|87|0||201603310CLE;0401|1990|0|Pacers|H|1|121|91|0||199004010CLE;0402|2015|0|Heat|H|1|114|88|0||201504020CLE;0403|2005|0|Mavericks|H|1|100|80|0||200504030CLE;0404|2006|0|76ers|H|1|124|91|0||200604040CLE;0405|2016|0|Bucks|A|1|109|80|0||201604050MIL;0406|2023|0|Magic|A|1|118|94|0||202304060ORL;0407|1987|0|Celtics|H|1|107|83|0||198704070CLE;0408|2021|0|Thunder|A|1|129|102|0||202104080OKC;0409|2014|0|Pistons|H|1|122|100|0||201404090CLE;0410|2002|0|Bucks|H|1|106|81|0||200204100CLE;0411|2016|0|Hawks|H|1|109|94|0||201604110CLE;0412|1978|1|Knicks|H|0|114|132|0|1,0,1,0,|197804120CLE;0413|1976|1|Bullets|H|0|95|100|0|1,0,1,0,|197604130CLE;0414|1978|1|Knicks|A|0|107|109|0|2,0,2,1,|197804140NYK;0415|1977|1|Bullets|H|1|91|83|0|2,1,1,0,|197704150CLE;0416|2014|0|Nets|H|1|114|85|0||201404160CLE;0417|2010|1|Bulls|H|1|96|83|0|1,1,0,0,|201004170CLE;0418|2009|1|Pistons|H|1|102|84|0|1,1,0,0,|200904180CLE;0419|2015|1|Celtics|H|1|113|100|0|1,1,0,0,|201504190CLE;0420|2025|1|Heat|H|1|121|100|0|1,1,0,0,|202504200CLE;0421|2008|1|Wizards|H|1|116|86|0|2,2,0,0,|200804210CLE;0422|2007|1|Wizards|H|1|97|82|0|1,1,0,0,|200704220CLE;0423|2017|1|Pacers|A|1|106|102|0|4,4,0,1,|201704230IND;0424|2016|1|Pistons|A|1|100|98|0|4,4,0,1,|201604240DET;0425|2010|1|Bulls|A|1|121|98|0|4,3,1,0,|201004250CHI;0426|2009|1|Pistons|A|1|99|78|0|4,4,0,1,|200904260DET;0427|2010|1|Bulls|H|1|96|94|0|5,4,1,1,|201004270CLE;0428|2025|1|Heat|A|1|138|83|0|4,4,0,1,|202504280MIA;0429|2018|1|Pacers|H|1|105|101|0|7,4,3,1,|201804290CLE;0430|1992|1|Nets|A|1|98|89|0|4,3,1,1,|199204300NJN;0501|1990|1|76ers|H|1|122|95|0|3,1,2,0,|199005010CLE;0502|2008|1|Wizards|A|1|105|88|0|6,4,2,1,|200805020WAS;0503|2026|1|Raptors|H|1|114|102|0|7,4,3,1,|202605030CLE;0504|2016|1|Hawks|H|1|123|98|0|2,2,0,0,|201605040CLE;0505|2024|1|Magic|H|1|106|94|0|7,4,3,1,|202405050CLE;0506|2015|1|Bulls|H|1|106|91|0|2,1,1,0,|201505060CLE;0507|2018|1|Raptors|H|1|128|93|0|4,4,0,1,|201805070CLE;0508|2016|1|Hawks|A|1|100|99|0|4,4,0,1,|201605080ATL;0509|1993|1|Nets|H|1|99|89|0|5,3,2,1,|199305090CLE;0510|2008|1|Celtics|H|1|108|84|0|3,1,2,0,|200805100CLE;0511|2009|1|Hawks|A|1|84|74|0|4,4,0,1,|200905110ATL;0512|2008|1|Celtics|H|1|88|77|0|4,2,2,0,|200805120CLE;0513|1992|1|Celtics|H|1|114|98|0|5,3,2,0,|199205130CLE;0514|2015|1|Bulls|A|1|94|73|0|6,4,2,1,|201505140CHI;0515|2006|1|Pistons|H|1|74|72|0|4,2,2,0,|200605150CLE;0516|2008|1|Celtics|H|1|74|69|0|6,3,3,0,|200805160CLE;0517|2026|1|Pistons|A|1|125|94|0|7,4,3,1,|202605170DET;0518|2007|1|Nets|A|1|88|72|0|6,4,2,1,|200705180NJN;0519|2017|1|Celtics|A|1|130|86|0|2,2,0,0,East finals|201705190BOS;0520|2015|1|Hawks|A|1|97|89|0|1,1,0,0,East finals|201505200ATL;0521|1992|1|Bulls|A|1|107|81|0|2,1,1,0,East finals|199205210CHI;0522|2015|1|Hawks|A|1|94|82|0|2,2,0,0,East finals|201505220ATL;0523|2017|1|Celtics|H|1|112|99|0|4,3,1,0,East finals|201705230CLE;0524|2015|1|Hawks|H|1|114|111|1|3,3,0,0,East finals|201505240CLE;0525|2017|1|Celtics|A|1|135|102|0|5,4,1,1,East finals|201705250BOS;0526|2015|1|Hawks|H|1|118|88|0|4,4,0,1,East finals|201505260CLE;0527|2018|1|Celtics|A|1|87|79|0|7,4,3,1,East finals|201805270BOS;0528|2009|1|Magic|H|1|112|102|0|5,2,3,0,East finals|200905280CLE;0529|2007|1|Pistons|H|1|91|87|0|4,2,2,0,East finals|200705290CLE;0530|2009|1|Magic|A|0|90|103|0|6,2,4,1,East finals|200905300ORL;0531|2018|1|Warriors|A|0|114|124|1|1,0,1,0,Finals|201805310GSW;0601|2017|1|Warriors|A|0|91|113|0|1,0,1,0,Finals|201706010GSW;0602|2007|1|Pistons|H|1|98|82|0|6,4,2,1,East finals|200706020CLE;0603|2018|1|Warriors|A|0|103|122|0|2,0,2,0,Finals|201806030GSW;0604|2015|1|Warriors|A|0|100|108|1|1,0,1,0,Finals|201506040GSW;0605|2016|1|Warriors|A|0|77|110|0|2,0,2,0,Finals|201606050GSW;0606|2018|1|Warriors|H|0|102|110|0|3,0,3,0,Finals|201806060CLE;0607|2015|1|Warriors|A|1|95|93|1|2,1,1,0,Finals|201506070GSW;0608|2016|1|Warriors|H|1|120|90|0|3,1,2,0,Finals|201606080CLE;0609|2017|1|Warriors|H|1|137|116|0|4,1,3,0,Finals|201706090CLE;0610|2016|1|Warriors|H|0|97|108|0|4,1,3,0,Finals|201606100CLE;0611|2015|1|Warriors|H|0|82|103|0|4,2,2,0,Finals|201506110CLE;0612|2007|1|Spurs|H|0|72|75|0|3,0,3,0,Finals|200706120CLE;0613|2016|1|Warriors|A|1|112|97|0|5,2,3,0,Finals|201606130GSW;0614|2007|1|Spurs|H|0|82|83|0|4,0,4,1,Finals|200706140CLE;0616|2016|1|Warriors|H|1|115|101|0|6,3,3,0,Finals|201606160CLE;0619|2016|1|Warriors|A|1|93|89|0|7,4,3,1,Finals|201606190GSW;1010|1972|0|Bullets|H|0|90|102|0||197210100CLE;1011|1980|0|Nets|H|0|96|99|0||198010110CLE;1012|1973|0|Rockets|H|0|99|106|0||197310120CLE;1013|1978|0|Celtics|A|1|115|101|0||197810130BOS;1014|1980|0|Pistons|H|1|99|91|0||198010140CLE;1015|1971|0|Braves|H|0|109|111|1||197110150CLE;1016|1979|0|Pistons|H|1|137|117|0||197910160CLE;1017|2017|0|Celtics|H|1|102|99|0||201710170CLE;1018|1979|0|Spurs|H|1|141|134|0||197910180CLE;1019|1974|0|Warriors|A|0|110|113|0||197410190GSW;1020|2017|0|Bucks|A|1|116|97|0||201710200MIL;1021|1978|0|Bulls|H|1|113|104|0||197810210CLE;1022|2022|0|Bulls|A|1|128|96|0||202210220CHI;1023|2024|0|Raptors|A|1|136|106|0||202410230TOR;1024|1974|0|Hawks|A|1|116|97|0||197410240ATL;1025|2016|0|Knicks|H|1|117|88|0||201610250CLE;1026|2024|0|Wizards|A|1|135|116|0||202410260WAS;1027|2025|0|Pistons|A|1|116|95|0||202510270DET;1028|2015|0|Grizzlies|A|1|106|76|0||201510280MEM;1029|1972|0|Kings|H|1|115|97|0||197210290CLE;1030|2024|0|Lakers|H|1|134|110|0||202410300CLE;1031|1974|0|Pistons|H|1|118|101|0||197410310CLE;1101|1977|0|Nuggets|H|1|110|93|0||197711010CLE;1102|2005|0|Hornets|H|1|109|87|0||200511020CLE;1103|1972|0|Braves|H|1|124|97|0||197211030CLE;1104|1988|0|Hornets|A|1|133|93|0||198811040CHH;1105|2002|0|Lakers|H|1|89|70|0||200211050CLE;1106|1973|0|Lakers|H|1|115|96|0||197311060CLE;1107|2025|0|Wizards|A|1|148|115|0||202511070WAS;1108|1992|0|Hornets|H|1|127|107|0||199211080CLE;1109|2005|0|SuperSonics|H|1|112|85|0||200511090CLE;1110|1992|0|Bullets|H|1|131|92|0||199211100CLE;1111|1997|0|Bulls|H|1|101|80|0||199711110CLE;1112|1988|0|Pacers|H|1|121|96|0||198811120CLE;1113|2004|0|Wizards|H|1|105|74|0||200411130CLE;1114|1990|0|Pacers|H|1|113|95|0||199011140CLE;1115|2014|0|Hawks|H|1|127|94|0||201411150CLE;1116|1991|0|Pacers|H|1|127|117|0||199111160CLE;1117|1995|0|76ers|A|1|114|82|0||199511170PHI;1118|2008|0|Nets|A|1|106|82|0||200811180NJN;1119|2015|0|Bucks|H|1|115|100|0||201511190CLE;1120|2024|0|Pelicans|H|1|128|100|0||202411200CLE;1121|1974|0|Warriors|H|1|106|74|0||197411210CLE;1122|1994|0|Timberwolves|H|1|112|79|0||199411220CLE;1123|1974|0|Jazz|H|1|121|100|0||197411230CLE;1124|2014|0|Magic|H|1|106|74|0||201411240CLE;1125|2016|0|Mavericks|H|1|128|90|0||201611250CLE;1126|2008|0|Thunder|H|1|117|82|0||200811260CLE;1127|1988|0|Heat|H|1|109|80|0||198811270CLE;1128|2023|0|Hawks|H|1|128|105|0||202311280CLE;1129|2021|0|Mavericks|A|1|114|96|0||202111290DAL;1130|1994|0|Lakers|H|1|117|79|0||199411300CLE;1201|2021|0|Heat|A|1|111|85|0||202112010MIA;1202|1988|0|Celtics|H|1|112|84|0||198812020CLE;1203|2008|0|Knicks|H|1|118|82|0||200812030CLE;1204|1996|0|Magic|A|1|84|57|0||199612040ORL;1205|1974|0|Kings|H|1|124|91|0||197412050CLE;1206|2008|0|Bobcats|A|1|94|74|0||200812060CHA;1207|2016|0|Knicks|A|1|126|94|0||201612070NYK;1208|1995|0|76ers|H|1|113|85|0||199512080CLE;1209|2006|0|Pacers|H|1|107|75|0||200612090CLE;1210|1997|0|Nuggets|H|1|102|83|0||199712100CLE;1211|2015|0|Magic|A|1|111|76|0||201512110ORL;1212|1991|0|Hawks|H|1|134|107|0||199112120CLE;1213|1975|0|Jazz|H|1|112|90|0||197512130CLE;1214|1999|0|Celtics|H|1|115|88|0||199912140CLE;1215|2021|0|Rockets|H|1|124|89|0||202112150CLE;1216|2024|0|Nets|A|1|130|101|0||202412160BRK;1217|1991|0|Heat|H|1|148|80|0||199112170CLE;1218|2021|0|Bucks|A|1|119|90|0||202112180MIL;1219|1993|0|Lakers|H|1|122|92|0||199312190CLE;1220|2005|0|Jazz|H|1|110|85|0||200512200CLE;1221|2024|0|76ers|H|1|126|99|0||202412210CLE;1222|1985|0|Mavericks|H|1|119|105|0||198512220CLE;1223|2025|0|Pelicans|H|1|141|118|0||202512230CLE;1225|2009|0|Lakers|A|1|102|87|0||200912250LAL;1226|2021|0|Raptors|H|1|144|99|0||202112260CLE;1227|2009|0|Rockets|H|1|108|83|0||200912270CLE;1228|1988|0|Hornets|H|1|122|98|0||198812280CLE;1229|1979|0|Nuggets|H|1|124|106|0||197912290CLE;1230|1991|0|Rockets|H|1|121|89|0||199112300CLE;1231|2025|0|Suns|H|1|129|113|0||202512310CLE';
+function renderHistory(){
   const now=new Date(new Date().toLocaleString('en-US',{timeZone:'America/New_York'}));
-  const md=String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
-  const sorted=[...HISTORY].sort((a,b)=>a[0]<b[0]?-1:1);
-  /* exact date first; else the most recent fact from the past week; else the most recent fact on the calendar */
-  const back=k=>{const d=new Date(now);d.setDate(d.getDate()-k);return String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
-  let h=sorted.find(x=>x[0]===md),label='On this day';
-  if(!h){for(let k=1;k<=6&&!h;k++)h=sorted.find(x=>x[0]===back(k));if(h){label='Earlier this week';document.getElementById('otd-h').textContent='This week in Cavs history'}}
-  if(!h){h=[...sorted].reverse().find(x=>x[0]<md)||sorted[sorted.length-1];label='From the archive';document.getElementById('otd-h').textContent='From the Cavs archive'}
-  const [m,d]=h[0].split('-').map(Number);
-  const when=document.getElementById('otd-when');
-  when.textContent=label;
-  /* desk calendar: the day before tears away to reveal the date */
+  const key=d=>String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  const md=key(now);
+  const games={};HIST_GAMES.split(';').forEach(r=>{const f=r.split('|');games[f[0].slice(0,2)+'-'+f[0].slice(2)]=f});
+  const gameText=f=>{const [,,po,opp,ha,w,p,op,ot,ser]=f;const sc=w==='1'?p+'–'+op:op+'–'+p;const otx=ot==='1'?' in overtime':'';
+    if(po!=='1')return (w==='1'?'The Cavs beat the '+opp+' '+p+'–'+op:'The Cavs lost to the '+opp+' '+op+'–'+p)+otx+(ha==='H'?' at home':ha==='A'?' on the road':'')+'.';
+    const [gn,sw,sl,end,round]=ser.split(',');const rl=round==='Finals'?'the NBA Finals':round==='East finals'?'the East finals':'a playoff series with the '+opp;
+    let t='Game '+gn+' of '+rl+': '+(w==='1'?'the Cavs beat the '+opp+' '+p+'–'+op:'the '+opp+' beat the Cavs '+op+'–'+p)+otx;
+    if(end==='1'&&w==='1')t+=round==='Finals'?' to win the NBA championship.':' to win the series '+sw+'–'+sl+'.';
+    else if(end==='1')t+=', ending the series '+sl+'–'+sw+'.';
+    else t+='. '+(+sw>+sl?'The Cavs led the series '+sw+'–'+sl:+sw<+sl?'The Cavs trailed '+sl+'–'+sw:'The series was tied '+sw+'–'+sl)+'.';
+    return t};
+  const TXP=['trade','draft','ext','sign','fa','twoway','option','other','waive'];
+  const txText=t=>{if(t.k==='trade'){const g=(t.got||[]).filter(x=>!/^(Cash|Trade exception)$/.test(x));return 'The Cavs traded for '+(g.join(', ')||'cash considerations')+'.'}return 'The Cavs '+t.t.charAt(0).toLowerCase()+t.t.slice(1)+'.'};
+  const factFor=k=>{const c=HISTORY.find(x=>x[0]===k);if(c)return {y:c[1],t:c[2],src:c[3],u:c[4]};
+    const g=games[k];if(g)return {y:+g[1],t:gameText(g),src:'Basketball Reference',u:'https://www.basketball-reference.com/boxscores/'+g[10]+'.html'};
+    const tx=TX.filter(t=>t.d.slice(5)===k).sort((a,b)=>TXP.indexOf(a.k)-TXP.indexOf(b.k)||(a.d<b.d?1:-1))[0];
+    if(tx)return {y:+tx.d.slice(0,4),t:txText(tx),src:'RealGM',u:'https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Transactions'};return null};
+  let label='On this day',fk=md,f=factFor(md);
+  if(!f){for(let k=1;k<=200&&!f;k++){const d=new Date(now);d.setDate(d.getDate()-k);fk=key(d);f=factFor(fk)}label='Closest date on record'}
+  const [m,d]=fk.split('-').map(Number);
+  const when=document.getElementById('otd-when');when.textContent=label;
   {const cal=document.getElementById('dcal');const dt=new Date(2000,m-1,d),prev=new Date(2000,m-1,d-1);
    const MON=x=>x.toLocaleDateString('en-US',{month:'short'}).toUpperCase(),WK=x=>new Date(now.getFullYear(),x.getMonth(),x.getDate()).toLocaleDateString('en-US',{weekday:'short'});
    const page=(x,cls)=>{const p=el('div','dc-pg'+(cls?' '+cls:''));p.append(el('span','dc-m',MON(x)),el('b','dc-d',String(x.getDate())),el('span','dc-w',WK(x)));return p};
-   cal.append(el('i','dc-ring'),el('i','dc-ring r2'),page(dt,'base'),page(prev,'top'),el('div','dc-stub'));
+   cal.append(page(dt,'base'),page(prev,'top'));
    const play=()=>{if(cal.dataset.done)return;cal.dataset.done=1;setTimeout(()=>cal.classList.add('rip'),350)};
    window.resetCal=()=>{delete cal.dataset.done;cal.classList.remove('rip')};
    if(matchMedia('(prefers-reduced-motion: reduce)').matches){cal.classList.add('rip','instant');window.resetCal=()=>{}}
    else if('IntersectionObserver' in window){new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)play()}),{threshold:.7}).observe(cal)}else play()}
-  when.appendChild(el('b',null,String(h[1])));
-  document.getElementById('otd-text').textContent=h[2];
-  const a=document.getElementById('otd-src');a.href=h[4];a.textContent='Source: '+h[3]+' ↗';
-})();
+  when.appendChild(el('b',null,String(f.y)));
+  document.getElementById('otd-text').textContent=f.t;
+  const a=document.getElementById('otd-src');a.href=f.u;a.textContent='Source: '+f.src+' ↗';
+}
 
 /* cap sheet */
 /* [name, pos, [2026-27 … 2030-31], Bird rights, free agency, note].
@@ -1890,12 +1930,13 @@ const CH_STAFF=[
   const sf=document.getElementById('ch-staff');CH_STAFF.forEach(([g,ps])=>{const sec=el('section');const h=el('div','block-h');h.append(el('h2',null,g),el('span',null,String(ps.length)));const ul=el('ul','kv');ps.forEach(([nm,t2,note])=>{const li=el('li');const sp=el('span',null,nm);sp.appendChild(el('small',null,t2+(note?' · '+note:'')));li.appendChild(sp);ul.appendChild(li)});sec.append(h,ul);sf.appendChild(sec)});
 })();
 
-/* news ticker: headlines from /news.json (built by scripts/fetch-news.mjs) */
-function renderNews(items){if(!items||!items.length)return;const box=document.getElementById('nticker'),tr=document.getElementById('nt-track');
-  const ago=d=>{const h=Math.max(0,Math.round((Date.now()-new Date(d))/36e5));return h<1?'now':h<24?h+'h':Math.round(h/24)+'d'};
-  const mk=()=>{const f=document.createDocumentFragment();items.forEach(n=>{const a=el('a','nt-item');a.href=n.u;a.target='_blank';a.rel='noopener';a.append(el('b',null,n.s),n.t,el('em',null,ago(n.d)));f.appendChild(a)});return f};
-  tr.append(mk(),mk());tr.style.setProperty('--nt-dur',Math.max(40,items.length*7)+'s');box.hidden=false;document.body.classList.add('has-ticker')}
-if(ON_DOMAIN)fetch('/news.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(renderNews).catch(()=>{});
+
+/* "updated" status under the wordmark: green when updated within ~36 hours, gold when older */
+(function(){const d=new Date(SITE_UPDATED+'T12:00:00');const u=document.getElementById('upd');if(!u)return;
+  const lbl=d.toLocaleDateString('en-US',{month:'short',day:'numeric'}).toLowerCase();
+  u.querySelector('span').textContent='updated '+lbl;u.title='Data last updated '+d.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  if((Date.now()-d)/36e5>48)u.classList.add('stale')})();
+try{renderHistory()}catch(e){console.warn('history',e)}
 /* routing */
 
 /* roster — NBA.com (commonteamroster + commonplayerinfo + draft combine anthro), pulled Oct 14, 2026.
@@ -1945,28 +1986,30 @@ const socialLinks=n=>{const S=SOCIAL[n];if(!S)return null;const w=el('span','soc
 
 /* depth chart + card stacks (roster tabs). Order: placeholder until a source is chosen. */
 const DEPTH_ON=true;
-const DEPTH_PICK=/preview=stack/.test(location.search)?'stack':/preview=depth/.test(location.search)?'depth':null;
+const DEPTH_PICK=/preview=(depth|stack)/.test(location.search)?'depth':null;
 const DEPTH=[['PG',['James Harden','Craig Porter Jr.','Tyrese Proctor'],null],['SG',['Donovan Mitchell','Sam Merrill','Meleek Thomas'],null],['SF',['Peyton Watson','Jaylon Tyson','Mario Hezonja'],'Riley Minix'],['PF',['Evan Mobley',"Nae'Qwan Tomlin",'Tristan Enaruna'],null],['C',['Jarrett Allen','Thomas Bryant','Khalifa Diop'],'Ernest Udeh Jr.']];
+const DEPTH_TIERS=[['Starters','The opening five',['James Harden','Donovan Mitchell','Peyton Watson','Evan Mobley','Jarrett Allen']],['Rotation','Nightly minutes off the bench',['Sam Merrill','Jaylon Tyson','Craig Porter Jr.','Thomas Bryant']],['Depth','Spot minutes, matchups, injuries',["Nae'Qwan Tomlin",'Tyrese Proctor','Mario Hezonja','Meleek Thomas','Khalifa Diop']],['Developmental','Two-way deals; time with the Charge',['Tristan Enaruna','Riley Minix','Ernest Udeh Jr.']]];
 function buildDepth(){
   const P=n=>PLAYERS.find(p=>p[1]===n);const HSU=id=>'https://cdn.nba.com/headshots/nba/latest/260x190/'+id+'.png';
   const lastN=n=>n.split(' ').filter(w=>!/^(Jr\.|III|II)$/.test(w)).pop();
   const face=(p,cls)=>'<span class="'+cls+'"><img src="'+HSU(p[12])+'" alt="" loading="lazy" onerror="this.remove()"></span>';
   const link=(p,inner)=>'<a href="'+profileUrl(p[1],p[12])+'" target="_blank" rel="noopener">'+inner+'</a>';
-  /* sheet */
-  let h='<div class="dsheet"><div class="ds-hdr"><b>Cavaliers depth chart</b><span>2026–27 · updated Oct 14</span></div><div class="ds-grid"><div class="ch">Pos</div><div class="ch s1">Starter</div><div class="ch">2nd</div><div class="ch">3rd</div><div class="ch">Two-way</div>';
-  DEPTH.forEach(([pos,ns,tw])=>{h+='<div class="pz">'+pos+'</div>';ns.forEach((n,k)=>{const p=P(n);const tag=p[11]==='TW'?' · two-way':'';h+='<div class="'+(k?'c'+(k+1):'c1')+'">'+link(p,face(p,'av')+'<span class="t"><b>'+n+'</b><span><em>#'+p[0]+'</em>'+(k===0?' · '+p[6]+' yrs old':' · '+(k===1?'2nd':'3rd'))+tag+'</span></span>')+'</div>'});
-    const t=tw&&P(tw);h+='<div class="tw'+(t?'':' none')+'">'+(t?link(t,face(t,'av sm')+'<span class="t"><b>'+t[1]+'</b><span><em>#'+t[0]+'</em> · two-way</span></span>'):'<span class="dim">—</span>')+'</div>'});
-  h+='</div><div class="ds-foot">Tinted column = starting lineup · names link to player profiles · order is a placeholder until we pick a source</div></div>';
-  document.getElementById('rv-depth').innerHTML=h;
-  /* stacks */
-  let st='<div class="dstacks">';
-  DEPTH.forEach(([pos,ns])=>{st+='<div class="dstack" tabindex="0" role="button" aria-label="'+pos+' depth, tap to fan out"><div class="ptag">'+pos+'</div>';
-    ns.slice().reverse().forEach((n,j)=>{const r=ns.length-1-j;const p=P(n);st+='<div class="dcard '+(r===0?'s':'b'+r)+'"><div class="ph"><span class="no">'+p[0]+'</span><img src="'+HSU(p[12])+'" alt="" loading="lazy" onerror="this.remove()"></div><div class="bar"><b>'+lastN(n)+'</b><span>'+(r===0?p[6]+' · '+(p[7]==='R'?'rookie':p[7]+' yrs'):'#'+p[0]+' · '+(r===1?'2nd':'3rd'))+'</span></div>'+(r===0?'<span class="rk">Starter</span>':'')+'</div>'});
-    st+='</div>'});
-  st+='</div><p class="dim" style="font-size:12.5px;margin:10px 0 0;text-align:center">Tap a stack to deal out the depth at that spot</p>';
-  const rs=document.getElementById('rv-stack');rs.innerHTML=st;
-  rs.querySelectorAll('.dstack').forEach(d=>{const t=()=>{d.style.setProperty('--ch',d.querySelector('.dcard.s').offsetHeight+'px');d.classList.toggle('open')};d.addEventListener('click',t);d.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();t()}})});
+  const nm=p=>'<span class="t"><b>'+p[1]+' <em>#'+p[0]+'</em></b>'+(p[11]==='TW'?'<span>two-way</span>':'')+'</span>';
+  /* chart */
+  let h='<div class="dsheet"><div class="ds-hdr"><b>Cavaliers depth chart</b><span class="dsw" role="group" aria-label="Depth view"><button type="button" data-dv="chart" aria-pressed="true">Chart</button><button type="button" data-dv="pyr" aria-pressed="false">Pyramid</button></span></div>';
+  h+='<div id="dv-chart"><div class="ds-grid"><div class="ch">Pos</div><div class="ch s1">Starter</div><div class="ch">2nd</div><div class="ch">3rd</div><div class="ch">Two-way</div>';
+  DEPTH.forEach(([pos,ns,tw])=>{h+='<div class="pz">'+pos+'</div>';ns.forEach((n,k)=>{const p=P(n);h+='<div class="'+(k?'c'+(k+1):'c1')+'">'+link(p,face(p,'av')+nm(p))+'</div>'});
+    const t=tw&&P(tw);h+='<div class="tw'+(t?'':' none')+'">'+(t?link(t,face(t,'av sm')+nm(t)):'<span class="dim">—</span>')+'</div>'});
+  h+='</div><div class="ds-foot">Tinted column = starting lineup · names link to player profiles</div></div>';
+  /* pyramid */
+  h+='<div id="dv-pyr" hidden><div class="pyr">';
+  DEPTH_TIERS.forEach(([t,d,ns],i)=>{h+='<div class="pt pt'+(i+1)+'"><div class="pt-band"><div class="pt-faces">'+ns.map(n=>{const p=P(n);return link(p,face(p,'pf')+'<b>'+lastN(n)+'</b><span>#'+p[0]+'</span>')}).join('')+'</div></div><div class="pt-lab"><b>'+t+'</b><span>'+d+'</span></div></div>'});
+  h+='</div><div class="ds-foot">Tiers are an editorial call and will follow minutes once the season starts</div></div></div>';
+  const rd=document.getElementById('rv-depth');rd.innerHTML=h;
+  rd.querySelectorAll('[data-dv]').forEach(b=>b.addEventListener('click',()=>{rd.querySelectorAll('[data-dv]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));document.getElementById('dv-chart').hidden=b.dataset.dv!=='chart';document.getElementById('dv-pyr').hidden=b.dataset.dv!=='pyr'}));
 }
+/* announcement for each acquisition (NBA.com / NBA G League) */
+const ACQ_URL={'James Harden':'https://www.nba.com/cavaliers/news/releases-james-harden-260204','Thomas Bryant':'https://www.nba.com/news/cavaliers-sign-thomas-bryant','Evan Mobley':'https://www.nba.com/cavaliers/features/draft-mobley-210729','Sam Merrill':'https://www.nba.com/cavaliers/news/releases-sam-merrill-10-day-230303','Peyton Watson':'https://www.nba.com/cavaliers/news/releases-peyton-watson-260821','Craig Porter Jr.':'https://gleague.nba.com/news/cavaliers-sign-emoni-bates-isaiah-mobley-and-craig-porter-jr-to-two-way-contracts','Meleek Thomas':'https://www.nba.com/cavaliers/news/releases-thomas-udeh-signing-260701','Khalifa Diop':'https://www.nba.com/cavaliers/news/releases-khalifa-diop-260902','Jaylon Tyson':'https://www.nba.com/cavaliers/news/releases-jaylon-tyson-240627','Tyrese Proctor':'https://www.nba.com/cavaliers/news/features-nba-draft-250627','Jarrett Allen':'https://www.nba.com/cavaliers/releases/allen-prince-trade-210114','Mario Hezonja':'https://www.nba.com/cavaliers/news/releases-mario-hezonja-260731',"Nae'Qwan Tomlin":'https://www.nba.com/cavaliers/news/releases-naeqwan-tomlin-10-day-250220','Donovan Mitchell':'https://www.nba.com/cavaliers/news/releases-mitchell-trade-220903','Riley Minix':'https://www.nba.com/cavaliers/news/releases-riley-minix-260214','Tristan Enaruna':'https://www.nba.com/cavaliers/news/releases-tristan-enaruna-two-way-260128','Ernest Udeh Jr.':'https://www.nba.com/cavaliers/news/releases-thomas-udeh-signing-260701'};
 /* profile link: nbarapm when it has a page for the player, otherwise NBA.com */
 const RAPM={'James Harden':'James_Harden','Thomas Bryant':'Thomas_Bryant','Evan Mobley':'Evan_Mobley','Sam Merrill':'Sam_Merrill','Peyton Watson':'Peyton_Watson','Craig Porter Jr.':'Craig_Porter','Jaylon Tyson':'Jaylon_Tyson','Tyrese Proctor':'Tyrese_Proctor','Jarrett Allen':'Jarrett_Allen','Mario Hezonja':'Mario_Hezonja',"Nae'Qwan Tomlin":"Nae'Qwan_Tomlin",'Donovan Mitchell':'Donovan_Mitchell','Riley Minix':'Riley_Minix','Tristan Enaruna':'Tristan_Enaruna'};
 const profileUrl=(n,id)=>RAPM[n]?'https://nbarapm.com/player/'+encodeURIComponent(RAPM[n]):'https://www.nba.com/player/'+id;
@@ -1986,7 +2029,7 @@ const COMBINE={
  'Craig Porter Jr.':[null,null,null,76,null,null,null,null,null,'Crafted']
 };
 (function(){
-  const ftin=v=>{if(v==null)return '—';const f=Math.floor(v/12),i=+(v-f*12).toFixed(2);return f+'′ '+i+'″'};
+  const ftin=v=>{if(v==null)return '—';const f=Math.floor(v/12),i=+(v-f*12).toFixed(2);return f+'′'+i+'″'};
   const htIn=h=>{const m=/^(\d+)-(\d+)$/.exec(h);return m?+m[1]*12+ +m[2]:null};
   const born=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
   const ord=n=>n===1?'1st':n===2?'2nd':n+'th';
@@ -2002,20 +2045,21 @@ const COMBINE={
       const hs=el('img','hs');hs.src='https://cdn.nba.com/headshots/nba/latest/260x190/'+pid+'.png';hs.alt='';hs.loading='lazy';hs.onerror=()=>hs.remove();nm.prepend(hs);{const sm=el('small','pos',pos+' · '+cty);const so=socialLinks(n);if(so)sm.appendChild(so);nm.appendChild(sm)}
       const two=(a,b2)=>{const td=el('td','m two');td.append(a);td.appendChild(el('small',null,b2));return td};
       const L=(td,l)=>{td.dataset.l=l;return td};
-      tr.append(el('td','r num',no||'—'),nm,L(two(ht==='—'?'—':ht.replace('-','′ ')+'″',wt?wt+' lb':'—'),'Height'),L(two(String(age),born(b)),'Age'),L(el('td','r m',exp),'Exp'),L(el('td','sch',sch),'College / last'),
-        L(el('td',dr?null:'dim',dr?dr[0]+' · '+ord(dr[1])+' rd, #'+dr[2]:'Undrafted'),'Draft'),(()=>{const q=ACQ[n];const td=L(el('td','acq'),'How acquired');if(q){td.append(q[0]);td.appendChild(el('small',null,born(q[1])))}return td})());
+      tr.append(el('td','r num',no||'—'),nm,L(two(ht==='—'?'—':ht.replace('-','′')+'″',wt?wt+' lb':'—'),'Height'),L(two(String(age),born(b)),'Age'),L(el('td','c m',exp),'Exp'),L(el('td','sch',sch),'College / last'),
+        L((()=>{const td=el('td',dr?null:'dim');if(dr){const a=el('a','dlink',dr[0]+' · '+ord(dr[1])+' rd, #'+dr[2]);a.href='https://www.basketball-reference.com/draft/NBA_'+dr[0]+'.html';a.target='_blank';a.rel='noopener';a.title='Full '+dr[0]+' draft on Basketball Reference';td.appendChild(a)}else td.textContent='Undrafted';return td})(),'Draft'),(()=>{const q=ACQ[n];const td=L(el('td','acq'),'How acquired');if(q){if(ACQ_URL[n]){const a=el('a','dlink',q[0]);a.href=ACQ_URL[n];a.target='_blank';a.rel='noopener';a.title='The announcement';td.append(a)}else td.append(q[0]);td.appendChild(el('small',null,born(q[1])))}return td})());
       rb.appendChild(tr);
       const c=COMBINE[n];const mr=el('tr');
       if(c){const listed=htIn(ht),base=c[1]??listed;const wd=c[3]!=null&&base?c[3]-base:null;
-        mr.append(el('td','pl',n),el('td','m',ftin(c[1])),el('td','m',ftin(c[2])),el('td','m',ftin(c[3])),el('td','m',wd==null?'—':(wd>=0?'+':'−')+Math.abs(+wd.toFixed(2))+'″'),el('td','m',ftin(c[4])),el('td','r m',c[5]?c[5]+' lb':'—'),el('td','r m',c[6]!=null?c[6]+'%':'—'),el('td','m',c[7]?c[7]+'″ × '+c[8]+'″':'—'),el('td','dim',c[9]==='Crafted'?'CraftedNBA':c[9]+' '+c[0]))}
+        mr.append(el('td','pl',n),el('td','m',ftin(c[1])),el('td','m',ftin(c[2])),el('td','m',ftin(c[3])),el('td','m',wd==null?'—':(wd>=0?'+':'−')+Math.abs(+wd.toFixed(2))+'″'),el('td','m',ftin(c[4])),el('td','r m',c[5]?c[5]+' lb':'—'),el('td','r m',c[6]!=null?c[6]+'%':'—'),el('td','m',c[7]?c[7]+'″ × '+c[8]+'″':'—'),(()=>{const td=el('td','dim');const a=el('a','dlink',c[9]==='Crafted'?'CraftedNBA':c[9]+' '+c[0]);a.href=c[9]==='Crafted'?'https://craftednba.com':'https://www.nba.com/stats/draft/combine-anthro?SeasonYear='+c[0]+'-'+String(c[0]+1).slice(2);a.target='_blank';a.rel='noopener';a.title=c[9]==='Crafted'?'CraftedNBA':'Full '+c[0]+' combine measurements on NBA.com';td.appendChild(a);return td})())}
       else{mr.append(el('td','pl',n));const td=el('td','dim','No combine measurements on record');td.colSpan=9;mr.appendChild(td)}
       mb.appendChild(mr);
     });
   });
   const std=PLAYERS.filter(p=>!p[11]).length,tw=PLAYERS.filter(p=>p[11]==='TW').length,cp=PLAYERS.filter(p=>p[11]==='Camp').length;
-  document.getElementById('ros-sub').textContent=std+' standard, '+tw+' two-way, '+cp+' training camp. Updated Oct 14, 2026.';
+  document.getElementById('ros-sub').textContent=std+' standard, '+tw+' two-way, '+cp+' training camp';
+  {const u=document.getElementById('ros-upd');const d=new Date(SITE_UPDATED+'T12:00:00');u.innerHTML='<i></i>'+d.toLocaleDateString('en-US',{month:'short',day:'numeric'});u.title='Roster last updated '+d.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}
   const segs=document.querySelector('[aria-label="Roster view"]');
-  if(DEPTH_ON){segs.insertAdjacentHTML('beforeend','<button role="tab" aria-selected="false" data-rv="depth">Depth chart</button><button role="tab" aria-selected="false" data-rv="stack">Cards</button>');buildDepth()}
+  if(DEPTH_ON){segs.insertAdjacentHTML('beforeend','<button role="tab" aria-selected="false" data-rv="depth">Depth chart</button>');buildDepth()}
   const pickRv=v=>{document.querySelectorAll('[data-rv]').forEach(x=>x.setAttribute('aria-selected',x.dataset.rv===v?'true':'false'));document.querySelectorAll('[id^="rv-"]').forEach(p=>p.hidden=p.id!=='rv-'+v)};
   document.querySelectorAll('[data-rv]').forEach(b=>b.addEventListener('click',()=>pickRv(b.dataset.rv)));
   if(DEPTH_PICK)pickRv(DEPTH_PICK);
