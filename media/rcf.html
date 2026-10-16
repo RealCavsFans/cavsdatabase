@@ -427,6 +427,7 @@ body{background:var(--page)}
 .xact button{width:28px;height:28px;display:grid;place-items:center;padding:0;appearance:none;border:1px solid var(--line);background:var(--card,var(--bg));color:var(--muted);border-radius:6px;cursor:pointer;transition:color .15s,border-color .15s}
 .xact button:hover,.xact button:focus-visible{color:var(--wine-ink);border-color:var(--wine-ink)}.xact button:disabled{opacity:.5;cursor:progress}.xact svg{width:14px;height:14px}
 [data-anchor]{scroll-margin-top:120px}
+.csx{display:flex;justify-content:flex-end;align-items:center;gap:8px;margin:0 0 -14px}.csx>span{font:600 12px var(--sans);color:var(--muted)}.csx .xact{margin-left:0}
 .xhost{position:relative}.xact.xact-br{position:absolute;right:14px;bottom:12px;margin:0;opacity:.55;transition:opacity .15s}.xact.xact-tr{position:absolute;right:0;top:0;margin:0;opacity:.7}.xhost:hover .xact-br,.xhost:hover .xact-tr,.xact-br:focus-within,.xact-tr:focus-within{opacity:1}
 .xact.xact-br button,.xact.xact-tr button{width:24px;height:24px}.xact.xact-br svg,.xact.xact-tr svg{width:12px;height:12px}
 .co{position:relative}.co>.xact{position:absolute;top:12px;right:12px;margin:0;opacity:.6}.co:hover>.xact,.co>.xact:focus-within{opacity:1}.bio{position:relative}.bio>.xact{position:absolute;top:8px;right:8px;margin:0;opacity:.6;z-index:1}.bio>.xact:hover,.bio>.xact:focus-within{opacity:1}
@@ -1035,6 +1036,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
       <p class="dim" style="margin:6px 0 0">Salaries by season, Bird rights, free agency and options.</p>
     </div>
     <section class="captop" id="captop" aria-label="2026–27 cap position"></section>
+    <div class="csx" id="cs-x"><span>Cap sheet</span></div>
     <div class="tablebox"><table class="cap">
       <thead><tr><th>Player</th><th class="r cur">2026–27<small>Current</small></th><th class="r">2027–28</th><th class="r">2028–29</th><th class="r">2029–30</th><th class="r">2030–31</th></tr></thead>
       <tbody id="capbody"></tbody>
@@ -3038,7 +3040,7 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
   ['cap-position','home',()=>par($('cap-h')),()=>[document.querySelector('section.o-cap')],'Cap position'],
   ['this-day','home',()=>par($('otd-h')),()=>[document.querySelector('section.o-otd')],'This day in Cavs history','br'],
   ['cap-summary','cap',()=>$('captop'),()=>[$('captop')],'Cap position 2026–27','tr'],
-  ['cap-sheet','cap',()=>$('cs-h'),()=>[document.querySelector('table.cap')],'Cap sheet'],
+  ['cap-sheet','cap',()=>$('cs-x'),()=>[document.querySelector('table.cap')],'Cap sheet'],
   ['aprons','cap',()=>par($('ap-h')),()=>[document.querySelector('section.aprons')],'What each apron allows'],
   ['draft-picks','assets',()=>hOf('picks'),()=>[hOf('picks'),$('picks')],'Draft picks the Cavs own'],
   ['picks-owed','assets',()=>hOf('owed'),()=>[hOf('owed'),$('owed')],'Picks the Cavs owe'],
