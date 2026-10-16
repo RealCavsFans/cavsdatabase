@@ -858,7 +858,8 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 @media (min-width:761px){.gp{display:grid;grid-template-columns:auto minmax(0,460px) 1fr;column-gap:22px;align-items:center}.gp-k{grid-column:1;grid-row:1}.gp-teams{grid-column:2;grid-row:1;margin:0;padding:8px 14px;background:var(--card,var(--bg));border:1px solid var(--line2)}.gprev td{text-align:left}.gp .gp-f{border-top:0;padding-top:0}.gp-f{grid-column:3;grid-row:1;justify-self:start;text-align:left;border-top:0;padding:0;display:grid;grid-template-columns:repeat(2,max-content);gap:4px 26px;align-items:baseline}.gp-f .gp-inj{grid-column:1/-1}.gp-l{margin-left:0}}
 .gp-t{display:flex;flex-direction:column;gap:1px}.gp-t b{font:800 14px var(--sans);color:var(--fg)}.gp-t span{font:500 12px var(--mono);color:var(--fg2)}
 .gp-teams .gp-t:nth-child(3){text-align:right}
-.gp-tape{grid-column:1/-1;display:grid;grid-template-columns:1fr auto 1fr;gap:3px 12px;margin-top:8px;padding-top:7px;border-top:1px solid var(--line2);font:500 12.5px var(--mono);color:var(--fg2)}.gp-tape .gtl{font:700 10.5px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:center;align-self:center}.gp-tape .gtv.r{text-align:right}.gp-tape .gtv.up{color:var(--fg);font-weight:700}.gp-tape small{font:500 10.5px var(--sans);color:var(--muted)}.gp-note{grid-column:1/-1;font:500 10.5px var(--sans);color:var(--muted);text-align:center;margin-top:4px}.gp-vs{font-style:normal;font:700 11px var(--sans);color:var(--muted);text-transform:uppercase}
+.gp-links{flex-basis:100%;width:100%;display:flex;justify-content:space-between;gap:12px}.gp-links .gp-l{margin:0}
+.gp-tape{grid-column:1/-1;display:grid;grid-template-columns:1fr auto 1fr;gap:3px 12px;margin-top:8px;padding-top:7px;border-top:1px solid var(--line2);font:500 12.5px var(--mono);color:var(--fg2)}.gp-tape .gtl{font:700 10.5px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:center;align-self:center}.gp-tape .gtv.r{text-align:right}.gp-tape .gtv.up{color:var(--fg);font-weight:700}.gp-tape small{font:500 10.5px var(--sans);color:var(--muted)}.gp-note{grid-column:1/-1;white-space:normal;min-width:0;font:500 10.5px var(--sans);color:var(--muted);text-align:center;margin-top:4px}.gp-vs{font-style:normal;font:700 11px var(--sans);color:var(--muted);text-transform:uppercase}
 .gp-f{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;border-top:1px solid var(--line2);padding-top:7px}
 .csheet{position:fixed;inset:0;z-index:70}.csheet[hidden]{display:none}.cs-bg{position:absolute;inset:0;background:rgba(10,12,16,.45)}
 .cs-panel{position:absolute;left:0;right:0;bottom:0;max-height:86vh;background:var(--card,var(--bg));border-radius:14px 14px 0 0;display:flex;flex-direction:column;box-shadow:0 -10px 30px rgba(0,0,0,.2)}
@@ -2294,7 +2295,7 @@ SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
       ROWS.forEach(([lab,i,hi,f])=>{const a=val(TS.CLE,i),b=val(TS[o],i);const ra=i<0?1+all.filter(t=>t[4]-t[5]>a).length:rk(a,i,hi),rb=i<0?1+all.filter(t=>t[4]-t[5]>b).length:rk(b,i,hi);
         const better=lab==='Pace'?0:(hi?a>b:a<b)?1:(hi?b>a:b<a)?2:0;
         const L=el('span','gtv'+(better===1?' up':''));L.append(f(a),el('small',null,' '+ord(ra)));const Rr=el('span','gtv r'+(better===2?' up':''));Rr.append(el('small',null,ord(rb)+' '),f(b));tape.append(L,el('span','gtl',lab),Rr)});
-      teams.appendChild(tape);if(!cur)teams.appendChild(el('span','gp-note','2025–26 numbers until both teams play 5 games · rank of 30'))}
+      teams.appendChild(tape);teams.appendChild(el('span','gp-note','Bold = better · league rank'+(cur?'':' · 2025–26 stats until 5 games played')))}
     w.appendChild(teams);
     const facts=el('div','gp-f');
     [['Season series',met.length?'Cavs '+mw+'–'+(met.length-mw)+(left-met.length>0?' · '+(left-met.length)+' left':''):left+' meeting'+(left===1?'':'s')+' this season'],
@@ -2305,8 +2306,8 @@ SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
       const x=el('span','gp-i');x.append(el('b',null,'Cavs form '),done[done.length-1]+st+' · '+w10+'–'+(l10.length-w10)+' last '+l10.length);facts.appendChild(x)}
      const tv=tvFor(g[0]),ra=radioFor(g[0]);const wt=[tv.nat,tv.loc].filter(Boolean).join(' · ');const x=el('span','gp-i');x.append(el('b',null,'Watch '),wt||'TBA',el('b',null,' · Listen '),(ra.cavs||'').split(' · ')[0]);facts.appendChild(x)}
     w.appendChild(facts);
-    {const gpv=gameUrl(g[0]);if(gpv){const pl=el('a','gp-l','Game preview ↗');pl.href=gpv;pl.target='_blank';pl.rel='noopener';pl.title='NBA.com game page';facts.appendChild(pl)}}
-    const il=el('a','gp-l','Injury report ↗');il.href='https://www.cbssports.com/nba/injuries/';il.target='_blank';il.rel='noopener';facts.appendChild(il);
+    {const lr=el('div','gp-links');const il=el('a','gp-l','Injury report ↗');il.href='https://www.cbssports.com/nba/injuries/';il.target='_blank';il.rel='noopener';lr.appendChild(il);
+     const gpv=gameUrl(g[0]);if(gpv){const pl=el('a','gp-l','Game preview ↗');pl.href=gpv;pl.target='_blank';pl.rel='noopener';pl.title='NBA.com game page';lr.appendChild(pl)}facts.appendChild(lr)}
     td.appendChild(w);pr.appendChild(td);tb.appendChild(pr)}});
 while(mk<SCHED_MARKS.length){tb.appendChild(markRow(shortFmt.format(new Date(SCHED_MARKS[mk][0]+'T12:00:00'))+' · '+SCHED_MARKS[mk][1]));mk++}
 
