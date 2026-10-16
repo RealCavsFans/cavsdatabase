@@ -1,0 +1,10 @@
+/img/*
+  Cache-Control: public, max-age=604800
+/og/*
+  Cache-Control: public, max-age=86400
+/icon-*
+  Cache-Control: public, max-age=604800
+/nl/*
+  Cache-Control: public, max-age=86400
+/sw.js
+  Cache-Control: no-cache
