@@ -77,8 +77,9 @@
 .tipl{display:inline-block;margin:6px 0 10px;background:var(--wine);color:#fff!important;border-radius:999px;padding:7px 14px;font-weight:700;text-decoration:none}
 
 /* ---------- site sign-up box (matches the tip jar card) ---------- */
-.su{background:#fff;border:1px solid var(--line);border-left:3px solid var(--gold);padding:14px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;max-width:560px}
-.su .mark{width:54px;height:54px;flex:none}
+.su{position:relative;background:#fff;border:1px solid var(--line);border-left:3px solid var(--gold);padding:14px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;max-width:560px}
+.su .mark{width:54px;height:54px;flex:none;transition:transform .18s}.su .mark.pop{transform:scale(1.18)}
+.su-shot{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:2}
 .su .tx{flex:1 1 240px}.su .tx b{display:block;font:800 22px/1 var(--cond);text-transform:uppercase;letter-spacing:.3px}.su .tx b i{font-style:normal;color:var(--gold)}
 .su .tx span{display:block;font-size:13px;color:var(--fg2);margin-top:4px;line-height:1.45}
 .su form{display:flex;gap:6px;flex:1 1 100%}.su input{flex:1;min-width:0;border:1px solid var(--line);padding:9px 11px;font:14px var(--sans)}.su button{border:0;background:var(--wine);color:#fff;font:700 13.5px var(--sans);padding:9px 16px;border-radius:999px;cursor:pointer}
@@ -171,7 +172,7 @@ ul.n{color:var(--fg2);font-size:13.5px;line-height:1.6;padding-left:18px;max-wid
 <div>
 <div class="lab">On the site · sign-up box</div>
 <p class="note">Same look as the tip jar card. Lives on the home page under the record card, and on Resources.</p>
-<div class="su"><svg class="mark"><use href="#cc"/></svg><div class="tx"><b>Cavs <i>&amp;</i> Coffee</b><span>The box score, the top line, injuries and the news, in your inbox the morning after every game. Free.</span></div><form onsubmit="return false"><input type="email" placeholder="you@email.com"><button>Sign me up</button></form></div>
+<div class="su" id="su"><svg class="su-shot" id="sushot"><path id="supath" fill="none" stroke="#F2B231" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 7" opacity="0"/><g id="suball" opacity="0"><circle r="11" fill="#F2B231"/><path d="M-11 0H11M0 -11V11M-6.5 -8.7C-2.8 -4.6 -2.8 4.6 -6.5 8.7M6.5 -8.7C2.8 -4.6 2.8 4.6 6.5 8.7" stroke="#860038" stroke-width="1.3" fill="none"/></g></svg><svg class="mark" id="sumug"><use href="#cc"/></svg><div class="tx"><b>Cavs <i>&amp;</i> Coffee</b><span>The box score, the top line, injuries and the news, in your inbox the morning after every game. Free.</span></div><form onsubmit="return false"><input type="email" placeholder="you@email.com"><button>Sign me up</button></form></div>
 
 <div class="lab" style="margin-top:30px">The mark</div>
 <p class="note">The cavs_db logo’s prompt chevron, with the basketball turned into a mug: same gold, same wine seams, steam on top.</p>
@@ -180,4 +181,24 @@ ul.n{color:var(--fg2);font-size:13.5px;line-height:1.6;padding-left:18px;max-wid
 </div>
 </div>
 </div>
+
+<script>
+/* sign-up box: the ball comes in from the right edge, bounces once, and drops into the mug (plays once when the box scrolls into view; tap the mug to replay) */
+(function(){const box=document.getElementById('su'),mug=document.getElementById('sumug'),P=document.getElementById('supath'),B=document.getElementById('suball');if(!box)return;
+ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
+ let L=0;
+ function geo(){const br=box.getBoundingClientRect(),mr=mug.getBoundingClientRect();const W=br.width,H=br.height;
+  const mx=mr.left-br.left+mr.width*.6,my=mr.top-br.top+mr.height*.36;const bx=W*.82,by=H-12;
+  P.setAttribute('d',`M${W+14} ${H*.3} Q${W-6} ${H*.6} ${bx} ${by} Q${(bx+mx)/2} ${-H*.55} ${mx} ${my}`);L=P.getTotalLength()}
+ function draw(k){if(k<=0){P.setAttribute('opacity','0');B.setAttribute('opacity','0');return}
+  P.setAttribute('opacity',k<1.6?'.7':'0');if(k>=1){B.setAttribute('opacity','0');mug.classList.toggle('pop',k<1.15);return}
+  B.setAttribute('opacity','1');const u=k<.28?ease(k/.28)*.2:.2+.8*ease((k-.28)/.72);const p=P.getPointAtLength(L*u);
+  const sc=k>.9?1-(k-.9)/.1*.7:1;B.setAttribute('transform',`translate(${p.x} ${p.y}) rotate(${-k*600}) scale(${sc})`)}
+ function play(){geo();const t0=performance.now(),D=1500;function step(now){const k=(now-t0)/D;draw(k);if(k<1.7)requestAnimationFrame(step)}requestAnimationFrame(step)}
+ window.suFrame=k=>{geo();draw(k)};
+ if(reduce)return;
+ const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){io.disconnect();setTimeout(play,250)}},{threshold:.8});io.observe(box);
+ mug.style.cursor='pointer';mug.addEventListener('click',play);window.suPlay=play})();
+</script>
 </body></html>
