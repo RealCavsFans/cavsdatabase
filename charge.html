@@ -116,7 +116,8 @@ a{color:var(--wine-ink);text-decoration:none}a:hover{text-decoration:underline}
 .fin .lr.w{color:var(--wine-ink)}
 .fin .ls{font:700 18px/1 var(--mono);font-variant-numeric:tabular-nums}
 .fin .lo{font-size:14px;line-height:1;color:var(--fg2)}
-.fin .lb{margin-left:auto;font-size:13px;line-height:1;color:var(--wine-ink)}
+.fin .ls{color:var(--wine-ink);text-decoration:underline dotted 1.5px;text-underline-offset:3px}.fin:hover .ls{text-decoration-style:solid}
+.nx-when a.pvlink{color:inherit;text-decoration:underline dotted 1.5px;text-decoration-color:var(--wine-ink);text-underline-offset:3px}.nx-when a.pvlink:hover{color:var(--wine-ink);text-decoration-style:solid}
 .next{display:flex;flex-wrap:wrap;border:1px solid var(--line)}
 .next .who{flex:999 1 340px;min-width:0;padding:20px 24px}
 .next h3{margin:6px 0 0;font:800 clamp(24px,3.4vw,32px)/1.1 var(--sans);font-stretch:115%;letter-spacing:-.02em;text-wrap:balance}
@@ -956,7 +957,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
           <div class="gk" id="next-h-row"><span class="upnext"><b>Up next</b><span id="nx-label"></span></span><a href="/schedule" data-go="schedule"><span class="hide-sm">Full s</span><span class="show-sm">S</span>chedule →</a></div>
           <h3 class="sr" id="nx-title"></h3><span class="sr" id="next-h"></span>
           <div class="gteams"><span class="tm cle" aria-hidden="true">CLE</span><span class="gat" id="nx-at" aria-hidden="true"></span><span class="tm" id="nx-opp"></span></div>
-          <div class="nx-when"><span id="nx-meta"></span><a id="nx-prev" hidden target="_blank" rel="noopener">Game preview ↗</a></div>
+          <div class="nx-when"><span id="nx-meta"></span></div>
           <span class="gdays" id="cd" role="timer" aria-label="Countdown to tip-off"><small>Tip-off in</small><span class="cdw"><span class="cdn"><b id="cd-d">–</b><b id="cd-h">–</b><b id="cd-m">–</b><b id="cd-s">–</b></span><span class="cdl"><i>Days</i><i>Hrs</i><i>Min</i><i>Sec</i></span></span></span>
           <div class="ginfo nx-then-row"><span id="nx-then"></span></div>
         </div>
@@ -1517,7 +1518,7 @@ if(ng){
 
 /* scoreboard matchup */
 if(ng){document.getElementById('nx-at').textContent=ng[2]==='H'?'vs':'at';const o=document.getElementById('nx-opp');o.textContent='';const a=el('a','opp',ng[1]);a.href=bbTeam(ng[1]);a.target='_blank';a.rel='noopener';a.title=TEAMS[ng[1]]+' on Basketball Reference';o.appendChild(a);o.removeAttribute('aria-hidden');
-  const pv=gameUrl(ng[0]);if(pv){const l=document.getElementById('nx-prev');l.href=pv;l.hidden=false}}
+  const pv=gameUrl(ng[0]);if(pv){const m=document.getElementById('nx-meta');const a=el('a','pvlink',m.textContent+' ↗');a.href=pv;a.target='_blank';a.rel='noopener';a.title='Game preview on NBA.com';m.textContent='';m.appendChild(a)}}
 
 /* last completed game */
 {let L=null;
@@ -1525,9 +1526,9 @@ if(ng){document.getElementById('nx-at').textContent=ng[2]==='H'?'vs':'at';const 
   else if(PRESEASON.length){const g=PRESEASON[PRESEASON.length-1];L={d:g[0],o:g[1],ha:g[2],r:g[3],sc:g[4],lbl:'Preseason final'}}
   if(L){const a=document.getElementById('last');document.getElementById('next-h').textContent='Last result & next game';
     const dt=new Date(L.d+'T19:00:00-04:00');
-    a.hidden=false;a.href=boxUrl(L.d);a.setAttribute('aria-label','Box score');
-    a.append(el('span','cap-label',L.lbl),el('span','lr '+(L.r==='W'?'w':'l'),L.r),el('span','ls',L.sc.replace('-','–')),
-      el('span','lo',(L.ha==='H'?'vs ':'at ')+TEAMS[L.o]+' · '+shortFmt.format(dt)),el('span','lb','Box score ↗'))}}
+    a.hidden=false;a.href=boxUrl(L.d);a.title='Box score';
+    a.append(el('span','cap-label',L.lbl),el('span','lr '+(L.r==='W'?'w':'l'),L.r),el('span','ls',L.sc.replace('-','–')+' ↗'),
+      el('span','lo',(L.ha==='H'?'vs ':'at ')+TEAMS[L.o]+' · '+shortFmt.format(dt)))}}
 
 /* key dates */
 const DATES=[
