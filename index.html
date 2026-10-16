@@ -235,6 +235,7 @@ a{color:var(--wine-ink);text-decoration:none}a:hover{text-decoration:underline}
 .page{padding-block:32px 64px;display:flex;flex-direction:column;gap:20px}
 h1{margin:0;font:800 clamp(28px,4vw,36px)/1.1 var(--sans);font-stretch:115%;letter-spacing:-.02em;text-wrap:balance}
 .tablebox{overflow-x:auto;border:1px solid var(--line);overscroll-behavior-x:contain}
+.tw-hd{display:flex;justify-content:space-between;gap:12px;padding:0 0 6px;border-bottom:1px solid var(--line);font:800 10.5px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .ftip{font:600 13px var(--sans);color:var(--wine-ink);text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
 .tipcard{margin-top:26px;background:var(--card);border:1px solid var(--line);border-left:3px solid #F2B231;padding:12px 14px;display:flex;gap:10px 16px;align-items:center;flex-wrap:wrap}
 .tipcard .tc-t{flex:1 1 280px}.tipcard b{display:block;font:800 11px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--wine-ink)}.tipcard p{margin:3px 0 0;color:var(--fg2);font-size:13px;line-height:1.45}
@@ -1121,7 +1122,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
       <p class="dim" style="margin:8px 0 0;font-size:12.5px">A team's position after the move is what counts. Making a move marked "hard caps" means the team can't go over that line for the rest of the league year. The Cavs are hard-capped at the first apron this season. Rules: NBA CBA, as summarized by the <a href="https://cbaguide.com/thresholds/apron/" target="_blank" rel="noopener">CBA Guide</a>.</p>
     </section>
     <div class="cols">
-      <section><div class="block-h"><h2>Two-way</h2><span>3 of 3 · two-way seasons left with CLE</span></div><ul class="kv" id="twoway"></ul>
+      <section><div class="block-h"><h2>Two-way</h2><span>3 of 3 spots filled</span></div><ul class="kv" id="twoway"></ul>
         <p class="dim" style="margin:8px 0 0;font-size:12.5px">Two limits apply, and the tighter one wins: a player needs 3 or fewer years of NBA service to sign a two-way, and he can spend no more than 3 seasons on two-ways with the same team. Tap a player for his details.</p></section>
       <section><div class="block-h"><h2>Exhibit 10</h2><span id="ex10-n"></span></div><ul class="kv" id="camp"></ul>
         <p class="dim" style="margin:8px 0 0;font-size:12.5px">Exhibit 10 deals are one-year, non-guaranteed minimum contracts for training camp. If the Cavs waive one of these players before the season and he signs with the Charge, Cleveland keeps his G League rights (an affiliate player) and he can earn a bonus of up to $91,000 after 60 days there.</p>
@@ -2199,7 +2200,7 @@ totals.forEach((v,i)=>{const L=THRESH.map(([n,a])=>[n,a[i]]);const td=el('td','r
   td.appendChild(el('span','band '+cls,band));
   pos.appendChild(td)});
 tf.insertBefore(pos,hdr);
-const tw=document.getElementById('twoway');tw.className='xl tw2';TWOWAY.forEach(([n,b,f])=>{const [len,thru,yos,sp,ag]=TW_DEAL[n];const li=el('li');li.id='p-'+slug(n);
+const tw=document.getElementById('twoway');tw.className='xl tw2';{const h=el('li','tw-hd');h.append(el('span',null,'Player · current deal'),el('span',null,'Eligible after this season'));tw.appendChild(h)}TWOWAY.forEach(([n,b,f])=>{const [len,thru,yos,sp,ag]=TW_DEAL[n];const li=el('li');li.id='p-'+slug(n);
   const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,n),el('small',null,len+'-year two-way · through '+thru));const svc=3-yos,team=3-(TW_CLE[n]||1),left=Math.max(0,Math.min(svc,team));sm.append(l,el('b','mono',left+' more season'+(left===1?'':'s')));
   const bx=el('div','xb twb');const [yr,type]=f.split(' ');
   const row=(h,t)=>{const p=el('p');p.append(el('strong',null,h+' '),t);bx.appendChild(p)};
