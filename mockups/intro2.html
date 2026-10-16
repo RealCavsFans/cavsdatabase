@@ -1,0 +1,43 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Shorter intro + start here + search hints</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Geist+Mono:wght@500;600&display=swap">
+<style>
+html,body{margin:0;height:100%}iframe{position:fixed;inset:0;width:100%;height:100%;border:0}
+.intro{position:fixed;inset:0;z-index:10;background:#101419;color:#EEF0EC;display:flex;align-items:center;justify-content:center;transition:opacity .5s}
+.intro.out{opacity:0;pointer-events:none}
+.ln{font:500 clamp(18px,3.4vw,40px) 'Geist Mono',monospace;white-space:pre;max-width:92vw;overflow:hidden}.ln b{color:#F2B231;margin-right:.5em}
+.cur{display:inline-block;width:.5em;height:1.05em;background:#F2B231;vertical-align:-.18em;margin-left:.08em;animation:bl 1s steps(1) infinite}@keyframes bl{50%{opacity:0}}
+.br{position:absolute;inset:0;background:#7A1F33;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;text-align:center;padding:0 16px}
+.br.on{opacity:1}.logo{width:clamp(56px,8vw,96px)}.wm{font:600 clamp(52px,10vw,120px)/1 'Geist Mono',monospace;color:#fff;margin-top:8px;letter-spacing:-.03em}.wm span{color:#F2B231}
+h1{font:700 clamp(22px,3.2vw,40px)/1.25 Archivo,sans-serif;color:#fff;margin:18px 0 0;opacity:0;transform:translateY(8px);transition:all .4s}h1.on{opacity:1;transform:none}h1 em{display:block;font-style:normal;color:#F2B231}
+.go{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:26px;opacity:0;transform:translateY(8px);transition:all .4s}.go.on{opacity:1;transform:none}
+.go span{font:700 11px Archivo,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#F4D6DD;width:100%;margin-bottom:2px}
+.go a{font:600 15px Archivo,sans-serif;color:#fff;text-decoration:none;border-bottom:2px solid #F2B231;padding:4px 2px;margin:0 8px;cursor:pointer}.go a:hover{color:#F2B231}
+.enter{margin-top:22px;opacity:0;transition:opacity .4s;background:#F2B231;color:#101419;border:0;font:800 14px Archivo,sans-serif;padding:11px 20px;cursor:pointer}.enter.on{opacity:1}
+.skip{position:absolute;right:18px;bottom:18px;z-index:2;background:none;border:1px solid rgba(255,255,255,.35);color:#fff;font:600 13px Archivo,sans-serif;padding:8px 14px;cursor:pointer}
+.ctl{position:fixed;left:12px;bottom:12px;z-index:20;display:flex;gap:6px}.ctl button{font:700 12px Archivo,sans-serif;background:#F2B231;border:0;padding:8px 12px;cursor:pointer}
+</style></head><body>
+<iframe id="f" src="/" title="cavsdatabase.com"></iframe>
+<div class="intro" id="intro"><div class="ln"><b>&gt;</b><span id="t"></span><i class="cur"></i></div>
+ <div class="br" id="br"><svg viewBox="0 0 100 100" class="logo"><g transform="translate(8 6) scale(.84)"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#7A1F33" stroke-width="2.5" fill="none"/></g></svg><div class="wm">cavs_<span>db</span></div><h1 id="tg">Everything Cavaliers.<em>Everything you need.</em></h1>
+  <div class="go" id="go"><span>Start here</span><a data-p="schedule">Schedule &amp; TV</a><a data-p="cap">Cap sheet</a><a data-p="roster">Roster</a><a data-p="assets">Draft picks</a></div>
+  <button class="enter" id="enter" type="button">Go to the site →</button></div>
+ <button class="skip" id="skip" type="button">Skip</button></div>
+<div class="ctl"><button type="button" id="rp">Replay intro</button></div>
+<script>
+const Q=['what channel is the cavs game on?','can the cavs trade their 2030 first?'];
+const I=document.getElementById('intro'),T=document.getElementById('t'),B=document.getElementById('br'),G=document.getElementById('tg'),GO=document.getElementById('go'),EN=document.getElementById('enter');let run=0;
+const sl=ms=>new Promise(r=>setTimeout(r,ms));const fw=()=>document.getElementById('f').contentWindow;
+function close(page){run++;I.classList.add('out');if(page&&fw().go)fw().go(page);startHints()}
+async function play(){const me=++run;I.classList.remove('out');[B,G,GO,EN].forEach(x=>x.classList.remove('on'));T.textContent='';
+ await sl(250);for(const q of Q){for(const c of q){if(me!==run)return;T.textContent+=c;await sl(28)}await sl(450);while(T.textContent.length){if(me!==run)return;T.textContent=T.textContent.slice(0,-1);await sl(8)}await sl(90)}
+ if(me!==run)return;B.classList.add('on');await sl(250);G.classList.add('on');await sl(350);GO.classList.add('on');EN.classList.add('on');await sl(2600);if(me===run)close()}
+GO.querySelectorAll('a').forEach(a=>a.onclick=()=>close(a.dataset.p));EN.onclick=()=>close();document.getElementById('skip').onclick=()=>close();document.getElementById('rp').onclick=play;
+/* search hints: the site's search box cycles example questions until someone taps it */
+let hintT=null;function startHints(){const d=document.getElementById('f').contentDocument;const q=d&&d.getElementById('q');if(!q||hintT)return;
+ const H=['Mitchell player option','2028 first-round pick','what is the second apron?','Charge schedule','Mobley contract','when is the trade deadline?'];let i=0,j=0,del=false;
+ const tick=()=>{if(d.activeElement===q||q.value){q.placeholder='Search';hintT=setTimeout(tick,1500);return}const h=H[i];
+  if(!del){j++;q.placeholder='Try: '+h.slice(0,j);if(j===h.length){del=true;hintT=setTimeout(tick,1600);return}}
+  else{j--;q.placeholder='Try: '+h.slice(0,j);if(j===0){del=false;i=(i+1)%H.length}}
+  hintT=setTimeout(tick,del?25:55)};tick()}
+play();
+</script></body></html>
