@@ -3017,7 +3017,10 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
  function fallback(url,done){const ta=document.createElement('textarea');ta.value=url;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){toast(url)}ta.remove()}
  let lib=null;const load=()=>lib||(lib=new Promise((res,rej)=>{if(window.modernScreenshot)return res(window.modernScreenshot);const sc=document.createElement('script');sc.src='/vendor/modern-screenshot-4.6.0.js';sc.onload=()=>res(window.modernScreenshot);sc.onerror=()=>{lib=null;rej(new Error('load'))};document.head.appendChild(sc)}));
  const toData=b=>new Promise(r=>{const f=new FileReader();f.onload=()=>r(f.result);f.onerror=()=>r(false);f.readAsDataURL(b)});
- const fetchFn=async url=>{const m=/headshots\/nba\/latest\/260x190\/(\d+)\.png/.exec(url);if(!m)return false;try{const r=await fetch('/img/h/'+m[1]+'.png');if(!r.ok)return false;return await toData(await r.blob())}catch(e){return false}};
+ const HSRE=/headshots\/nba\/latest\/260x190\/(\d+)\.png/,HSC=new Map();
+ const local=id=>HSC.get(id)||(HSC.set(id,fetch('/img/h/'+id+'.png').then(r=>r.ok?r.blob().then(toData):false).catch(()=>false)),HSC.get(id));
+ const fetchFn=async url=>{const m=HSRE.exec(url);return m?await local(m[1]):false};
+ const warm=root=>Promise.all([...root.querySelectorAll('img')].map(i=>{const m=HSRE.exec(i.currentSrc||i.src||'');return m?local(m[1]):null}));
  const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
  const LOGO='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#860038" stroke-width="2" fill="none"/></svg>';
  const img=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
@@ -3032,9 +3035,9 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
     const pc=getComputedStyle(parent);hgt=parseFloat(pc.paddingTop)+parseFloat(pc.paddingBottom)+parseFloat(pc.borderTopWidth)+parseFloat(pc.borderBottomWidth);boxes.forEach((b,i)=>{const bc=getComputedStyle(b);hgt+=b.offsetHeight+(i?parseFloat(bc.marginTop):0)+(i<boxes.length-1?parseFloat(bc.marginBottom):0)});hgt=Math.ceil(hgt)+240}
    el.classList.add('capmode');capEl=el;
    let bg=getComputedStyle(el).backgroundColor;if(!bg||bg==='rgba(0, 0, 0, 0)'||bg==='transparent'){let a=el.closest('section')||el.parentElement;while(a){const b=getComputedStyle(a).backgroundColor;if(b&&b!=='rgba(0, 0, 0, 0)'&&b!=='transparent'){bg=b;break}a=a.parentElement}if(!a)bg=getComputedStyle(document.body).backgroundColor}
-   const S=2,pad=16;const shot=await ms.domToCanvas(el,{scale:S,backgroundColor:bg,fetchFn,timeout:10000,style:hgt?{margin:'0',height:hgt+'px',minHeight:'0'}:{margin:'0'},...(hgt?{height:hgt}:{}),
+   const S=2,pad=16;await Promise.all(boxes.map(warm));const shot=await ms.domToCanvas(el,{scale:S,backgroundColor:bg,fetchFn,timeout:10000,style:hgt?{margin:'0',height:hgt+'px',minHeight:'0'}:{margin:'0'},...(hgt?{height:hgt}:{}),
      filter:n=>{if(n.nodeType!==1)return true;if(n.classList.contains('xact'))return false;if(n.classList.contains('dc-pg')&&n.classList.contains('top'))return false;if(keep&&n.parentElement===parent&&!keep.has(n))return false;return true},
-     onCloneNode:c=>{if(c.nodeType===1&&c.getAttribute&&c.getAttribute('data-capfirst')){c.style.marginTop='0';c.removeAttribute('data-capfirst')}}});
+     onCloneNode:c=>{if(c.nodeType!==1)return;if(c.tagName==='IMG')c.removeAttribute('loading');if(c.getAttribute('data-capfirst')){c.style.marginTop='0';c.removeAttribute('data-capfirst')}}});
    boxes[0].removeAttribute('data-capfirst');
    if(hgt)trim(shot,Math.max(parseFloat(getComputedStyle(parent).paddingBottom)||0,14)*S);
    const W=Math.max(shot.width+pad*2*S,380*S),HH=58*S,GOLD=5*S,FT=40*S;const H=HH+GOLD+pad*S+shot.height+FT;
