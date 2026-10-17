@@ -3269,7 +3269,8 @@ const TX_X={"2026-08-20|Peyton Watson":{"url":"https://www.nba.com/cavaliers/new
   const xkey=r=>r.d+'|'+(r.p||(r.got||[])[0]||'');
   const KINDS=[['trade','Trades'],['draft','Draft'],['ext','Extensions'],['sign','Signings'],['option','Options & QOs'],['twoway','Two-way'],['waive','Waived'],['fa','Free agency']];
   const KEY=r=>['trade','draft','ext','option'].includes(r.k)||r.big;
-  const season=d=>{const y=+d.slice(0,4),m=+d.slice(5,7);const a=m>=7?y:y-1;return a+'–'+String(a+1).slice(2)};
+  /* moves from the draft (mid-June) on count toward the next season */
+  const season=d=>{const y=+d.slice(0,4);const a=d.slice(5)>='06-15'?y:y-1;return a+'–'+String(a+1).slice(2)};
   const df=new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',timeZone:'UTC'});
   const stats=document.getElementById('tx-stats');[['trade','Trades'],['draft','Draft picks'],['ext','Extensions'],['sign','Signings']].forEach(([k,l])=>{const d=el('div','txs');d.append(el('b','num-sc',String(TX.filter(r=>r.k===k).length)),el('span',null,l));stats.appendChild(d)});
   {const d=el('div','txs');d.append(el('b','num-sc',String(new Set(TX.filter(r=>r.k==='trade').flatMap(r=>r.w||[])).size)),el('span',null,'Trade partners'));stats.appendChild(d)}
