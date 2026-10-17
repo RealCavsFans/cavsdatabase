@@ -238,6 +238,22 @@ a{color:var(--wine-ink);text-decoration:none}a:hover{text-decoration:underline}
 .page{padding-block:32px 64px;display:flex;flex-direction:column;gap:20px}
 h1{margin:0;font:800 clamp(28px,4vw,36px)/1.1 var(--sans);font-stretch:115%;letter-spacing:-.02em;text-wrap:balance}
 .tablebox{overflow-x:auto;border:1px solid var(--line);overscroll-behavior-x:contain}
+.pay-row{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap}.pay-row .hc-cap{flex-direction:column;align-items:flex-end;text-align:right;gap:0;margin:0 0 2px}.pay-row .hc-cap b{font-size:13.5px}.pay-row .hc-cap span{font-size:12px}
+@media (max-width:760px){.pay-row .hc-cap{flex-basis:100%;align-items:flex-start;text-align:left;margin-top:6px}}
+.hc-note{margin:8px 0 0;font-size:12.5px;color:var(--muted)}.hc-note b{color:var(--wine-ink);font-family:var(--mono)}
+.fin{align-items:baseline!important}.fin .cap-label{font:800 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.fin .lr{font-size:15px!important}.fin .ls{font-size:15px!important;font-weight:600!important}.fin .lo{font-size:14px!important;line-height:1.2}
+@media (min-width:900px){.index{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+.rtags{display:inline-flex;margin-left:8px;vertical-align:1px;white-space:nowrap}.rtags .rtag{margin:0!important}.rtags .rtag+.rtag{border-left:1px solid rgba(255,255,255,.35)}
+@media (max-width:760px){.rtags{display:flex;width:max-content;margin:4px 0 0}}
+.calw{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.calw .emb-s{margin:0}
+.fb-x{font-size:24px!important;line-height:1;padding:8px 10px!important;min-width:40px;min-height:40px}
+@media (max-width:760px){#measbody td.dim{font-size:12.5px}}
+@media (min-width:761px){.ds-ed{font-weight:700}}
+.gm-tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}.gm-tile{padding:10px 12px;border:1px solid var(--line);background:var(--card)}.gm-tile b{display:block;font:700 26px/1.05 var(--mono)}.gm-tile span{display:block;margin-top:4px;font:800 10px var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.gm-tile.g1{background:#7A1F33;border-color:#7A1F33}.gm-tile.g1 b{color:#fff}.gm-tile.g1 span{color:#F2B231}.gm-tile.g2 b{color:var(--wine-ink)}
+.gm-bar{display:flex;gap:2px;height:6px;margin:10px 0 2px}.gm-bar i{display:block;background:#7A1F33}
+.gm-l .n{position:relative;padding-bottom:5px}.gm-l .mb{position:absolute;left:0;bottom:0;height:3px;background:#F2B231;border-radius:2px}
+
 .pace{position:relative;margin:2px 0 6px}.pace svg{display:block;width:100%;height:34px;overflow:visible}.pace .pl{fill:none;stroke:var(--wine-ink);stroke-width:2;stroke-linejoin:round}.pace .z{stroke:var(--tick);stroke-dasharray:3 3}.pace .pj{stroke:var(--wine-ink);stroke-width:1.5;stroke-dasharray:4 4;opacity:.45}
 .pace-l{display:block;text-align:right;margin-bottom:2px;font:600 12px var(--sans);color:var(--muted)}.pace-l b{font:700 13px var(--mono);color:var(--wine-ink)}
 .gmw{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}.gm-k{font:800 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}.gm-t{grid-template-columns:repeat(2,minmax(0,1fr))!important}
@@ -1226,7 +1242,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
       <ul class="otd-also" id="otd-also" hidden></ul>
     </section>
     <section class="rail o-vid" aria-labelledby="vid-h">
-      <div class="block-h"><h2 id="vid-h">Latest video</h2><a href="/media" data-go="media">More on Media →</a></div>
+      <div class="block-h"><h2 id="vid-h">Latest video</h2><a href="/media" data-go="media">More Media →</a></div>
       <div id="vid-home"></div>
     </section>
     <section class="rail" aria-labelledby="inj-h">
@@ -1856,12 +1872,14 @@ const TAX_BILL=9.161442; /* projected luxury tax payment, $M (Capsheets) */
 const near=LINES.find(([,v])=>v>=TEAM_SALARY);const tax=LINES.find(l=>l[0]==='Luxury tax')[1];
 /* hard cap: what the Cavs can't do this season (Hoops Rumors hard-cap explainer; ESPN/Roundtable on the Watson sign-and-trade) */
 const HC_ROOM=LINES.find(l=>l[0]===HARDCAP)[1]-TEAM_SALARY;
-const HC_RULES=[[0,'Go over the first apron, at any time, for any reason'],[1,'Use the mid-level, up to their room under the apron'],[1,'Use the bi-annual, up to their room under the apron'],[1,'Use trade exceptions, up to their room under the apron'],[1,'Take back more salary in a trade, if they stay under'],[1,'Aggregate salaries in trades'],[1,'Sign buyout players']];
+const HC_RULES=[[0,'Go over the first apron, at any time, for any reason'],[1,'Use the mid-level'],[1,'Use the bi-annual'],[1,'Use trade exceptions'],[1,'Take back more salary in a trade'],[1,'Aggregate salaries in trades'],[1,'Sign buyout players']];
 {const h=document.getElementById('hcap');
  const cap=el('div','hc-cap');cap.append(el('b',null,'Hard-capped at the first apron'),el('span',null,'through June 30, 2027'));
  const tiles=el('div','hc-tiles');[[money(HC_ROOM),'Room under 1st apron'],[money(TEAM_SALARY-tax),'Over the tax'],[money(TAX_BILL),'Projected tax bill']].forEach(([v,l],i)=>{const d=el('div','hc-tile'+(i===0?' key':''));d.append(el('b',null,v),el('span',null,l));tiles.appendChild(d)});
  const ul=el('ul','hc-checks');HC_RULES.forEach(([ok,t])=>{const li=el('li',ok?'yes':'no');li.append(el('i',null,ok?'✓':'✕'),t);ul.appendChild(li)});
- h.append(cap,tiles,ul)}
+ const nt=el('p','hc-note');nt.append('Every ✓ has to fit within their ',el('b',null,money(HC_ROOM)),' of room under the first apron.');
+ h.append(tiles,ul,nt);
+ {const pr=document.getElementById('payroll');const row=el('div','pay-row');pr.parentNode.insertBefore(row,pr);row.append(pr,cap)}}
 const track=document.getElementById('track'),hbar=document.getElementById('hbar');
 const zones=[[LO,164.961,'var(--z1)'],[164.961,200.428,'var(--track)'],[200.428,209.015,'var(--z2)'],[209.015,221.686,'var(--z3)'],[221.686,HI,'var(--z4)']];
 zones.forEach(([a,b,c])=>{const z=el('div','zone');z.style.left=pct(a)+'%';z.style.width=(pct(b)-pct(a))+'%';z.style.background=c;track.insertBefore(z,track.firstChild)});
@@ -1912,8 +1930,9 @@ setTimeout(()=>{fetch('/box.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null
   const rows=Object.entries(M).map(([n,g])=>[n,g,sal(n)/82*g]).sort((a,b)=>b[1]-a[1]||b[2]-a[2]);const tg=rows.reduce((a,r)=>a+r[1],0),tc=rows.reduce((a,r)=>a+r[2],0);
   const fm=v=>v>=1e6?'$'+(v/1e6).toFixed(2)+'M':v>=1e3?'$'+Math.round(v/1e3)+'K':v?'$'+Math.round(v):'$0';
   const card=document.getElementById('inj').closest('section');const w=el('div','gmw');w.appendChild(el('div','gm-k','Season to date · '+fin.length+' game'+(fin.length===1?'':'s')));
-  const dl=el('dl','gsp gm-t');[['Games missed',String(tg)],['Salary of games missed',fm(tc)]].forEach(([k,v])=>{const d=el('div');d.append(el('dt',null,k),el('dd',null,v));dl.appendChild(d)});w.appendChild(dl);
-  if(rows.length){const det=document.createElement('details');det.className='gm-d';const sm=document.createElement('summary');sm.textContent='By player';det.appendChild(sm);const ul=el('ul','gm-l');rows.forEach(([n,g,c])=>{const li=el('li');li.append(el('span',null,n),el('span','g',g+' game'+(g===1?'':'s')),el('b',null,c?fm(c):'—'));ul.appendChild(li)});det.appendChild(ul);w.appendChild(det)}
+  const dl=el('div','gm-tiles');[['Games missed',String(tg),'g1'],['Salary of games missed',fm(tc),'g2']].forEach(([k,v,c])=>{const d=el('div','gm-tile '+c);d.append(el('b',null,v),el('span',null,k));dl.appendChild(d)});w.appendChild(dl);
+  if(rows.length){const bar=el('div','gm-bar');rows.forEach(([n,g],i)=>{const sg=el('i');sg.style.flex=g;sg.style.opacity=String(1-Math.min(i,5)*.15);sg.title=n+': '+g;bar.appendChild(sg)});w.appendChild(bar)}
+  if(rows.length){const det=document.createElement('details');det.className='gm-d';const sm=document.createElement('summary');sm.textContent='By player';det.appendChild(sm);const ul=el('ul','gm-l');const gmax=rows[0][1];rows.forEach(([n,g,c])=>{const li=el('li');const nm=el('span','n');nm.append(n);const mb=el('i','mb');mb.style.width=(g/gmax*100)+'%';nm.appendChild(mb);li.append(nm,el('span','g',g+' game'+(g===1?'':'s')),el('b',null,c?fm(c):'—'));ul.appendChild(li)});det.appendChild(ul);w.appendChild(det)}
   card.appendChild(w)})},0);
 
 /* Charge */
@@ -2556,7 +2575,7 @@ RES.forEach(([g,items])=>{const sec=el('section');const h=el('div','block-h');h.
 /* schedule page */
 /* schedule load report card */
 {const box=document.getElementById('sp-rest');const L=REST_LG,C=L.CLE;if(box&&C){
-  const h=el('div','block-h');h.append(el('h2',null,'Schedule load'),el('span',null,'Rank among 30 teams · 1st = toughest'));box.appendChild(h);
+  const h=el('div','block-h');h.append(el('h2',null,'Schedule load'),el('span',null,'Rank of 30 · 1st = toughest'));box.appendChild(h);
   const T=Object.values(L);const rk=(i,hi)=>{const v=C[i];const n=1+T.filter(r=>hi?r[i]>v:r[i]<v).length,tie=T.filter(r=>r[i]===v).length>1;return (tie?'T-':'')+ord(n)};
   const avg=i=>(T.reduce((a,r)=>a+r[i],0)/T.length).toFixed(1);
   const g=el('div','rc-grid');
@@ -2582,7 +2601,7 @@ SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
   while(mk<SCHED_MARKS.length&&SCHED_MARKS[mk][0]<=g[0]){tb.appendChild(markRow(shortFmt.format(new Date(SCHED_MARKS[mk][0]+'T12:00:00'))+' · '+SCHED_MARKS[mk][1]));mk++}
   const tr=el('tr');tr.id='g-'+g[0];const r=res[i];const n=NBAG[g[0]]||[];
   const op=el('td','opp-cell');const a=el('a','opp',TEAMS[g[1]]);a.href=bbTeam(g[1]);a.target='_blank';a.rel='noopener';op.append((g[2]==='H'?'vs ':'at '),a);
-  {const rr=REST[g[0]];if(rr){const tg=(c,t)=>op.appendChild(el('span','rtag '+c,t));if(rr[0]===0)tg('b2b','B2B');if(rr[0]!=null&&rr[0]>=1&&rr[1]===0)tg('edge','Rest edge');if(rr[0]===0&&rr[1]!=null&&rr[1]>=1)tg('tired','Opp rested');if(rr[3])tg('t34','3 in 4')}}
+  {const rr=REST[g[0]];if(rr){const rg=el('span','rtags');const tg=(c,t)=>rg.appendChild(el('span','rtag '+c,t));if(rr[0]===0)tg('b2b','B2B');if(rr[0]!=null&&rr[0]>=1&&rr[1]===0)tg('edge','Rest edge');if(rr[0]===0&&rr[1]!=null&&rr[1]>=1)tg('tired','Opp rested');if(rr[3])tg('t34','3 in 4');if(rg.childNodes.length)op.appendChild(rg)}}
   let mtag=null;if(n[7]){const lab=n[7].replace('Emirates ','').replace('AWS NBA ','');op.appendChild(el('span','gtag'+(/Cup/.test(lab)?' cup':''),lab));mtag=el('td','mtag');mtag.appendChild(el('span','gtag'+(/Cup/.test(lab)?' cup':''),lab));tr.classList.add('hastag')}
   const tv=tvFor(g[0]),ra=radioFor(g[0]);
   const tvc=el('td','tvc');if(tv.nat)tvc.appendChild(el('b',null,tv.nat));if(tv.loc)tvc.appendChild(el('span',null,tv.loc));if(tv.opp)tvc.appendChild(el('small',null,TEAMS[g[1]]+': '+tv.opp));if(!tv.nat&&!tv.loc)tvc.appendChild(el('span','dim','TBA'));
@@ -2638,10 +2657,11 @@ while(mk<SCHED_MARKS.length){tb.appendChild(markRow(shortFmt.format(new Date(SCH
 /* staff — [name, title, first season in current role, NBA.com headshot id or image url] */
 const HS=id=>typeof id==='number'?'https://cdn.nba.com/headshots/nba/latest/260x190/'+id+'.png':id;
 const STAFF=[
-  ['Ownership & leadership',[['Dan Gilbert','Chairman','2004–05','https://cdn.nba.com/teams/uploads/sites/1610612739/2022/04/dan-gilbert-quicken-loans.jpg'],['Nic Barlage','CEO, Cavaliers and Rock Entertainment Group','2021–22','https://cdn.nba.com/teams/uploads/sites/1610612739/2024/11/nic-barlage-headshot_500x500-1.jpg'],['Nate Forbes','Vice Chairman','2004–05'],['Jeff Cohen','Minority Owner','2004–05']]],
-  ['Front office',[['Brandon Weems','General Manager','2026–27','https://cdn.nba.com/teams/uploads/sites/1610612739/2024/11/brandon-weems-headshot_500x500.jpg'],['Jon Nichols','Associate General Manager','2026–27'],['Brendon Yu','Assistant General Manager','2026–27'],['José Calderón','Assistant General Manager','2026–27'],['Jason Hillman','VP, Basketball Operations / Team Counsel','2021–22','https://cdn.nba.com/teams/uploads/sites/1610612739/2026/01/jason-hillman-headshot_500x500.jpg'],['Dashiell Flynn','Chief Technology Officer, Basketball Operations','2026–27'],['Max Weisberg','Director of Basketball Strategy','2023–24'],['Mark Cashman','Director of Team Operations','2011–12'],['Zydrunas Ilgauskas','Special Assistant to the GM','2013–14']]],
-  ['Coaching staff',[['Johnnie Bryant','Associate Head Coach','2024–25',204008],['Mike Gerrity','Assistant Coach','2024–25',202565],['Trevor Hendry','Assistant Coach','2024–25',1631326],['Nate Reinking','Assistant Coach','2021–22',1642529],['Omar Cook','Assistant Coach','2023–24',1641539],['Jawad Williams','Assistant Coach','2025–26',1643351],['Andrew Olson','Assistant Coach','2018–19',1643352],['Steve Frankoski','Player Development Coach','2019–20']]],
-  ['Performance & medical',[['Dr. Mark Kovacs','Sr. Director, Sports Science and Health','2019–20'],['Steve Spiro','Head Athletic Trainer','2013–14',204286],['Derek Millender','Head Strength & Conditioning Coach','2017–18']]]
+  ['Ownership & leadership',[['Dan Gilbert','Chairman','2004–05','https://cdn.nba.com/teams/uploads/sites/1610612739/2022/04/dan-gilbert-quicken-loans.jpg'],['Nic Barlage','CEO, Cavaliers and Rock Entertainment Group','2021–22','https://cdn.nba.com/teams/uploads/sites/1610612739/2024/11/nic-barlage-headshot_500x500-1.jpg'],['Nate Forbes','Vice Chairman','2004–05','/img/s/nate-forbes.jpg'],['Jeff Cohen','Minority Owner','2004–05','/img/s/jeff-cohen.jpg']]],
+  ['Front office',[['Brandon Weems','General Manager','2026–27','https://cdn.nba.com/teams/uploads/sites/1610612739/2024/11/brandon-weems-headshot_500x500.jpg'],['Jon Nichols','Associate General Manager','2026–27','/img/s/jon-nichols.jpg'],['Brendon Yu','Assistant General Manager','2026–27','/img/s/brendon-yu.jpg'],['José Calderón','Assistant General Manager','2026–27','/img/s/jose-calderon.jpg'],['Jason Hillman','VP, Basketball Operations / Team Counsel','2021–22','https://cdn.nba.com/teams/uploads/sites/1610612739/2026/01/jason-hillman-headshot_500x500.jpg'],['Dashiell Flynn','Chief Technology Officer, Basketball Operations','2026–27','/img/s/dashiell-flynn.jpg'],['Max Weisberg','Director of Basketball Strategy','2023–24','/img/s/max-weisberg.jpg'],['Mark Cashman','Director of Team Operations','2011–12'],['Zydrunas Ilgauskas','Special Assistant to the GM','2013–14','/img/s/zydrunas-ilgauskas.jpg']]],
+  ['Coaching staff',[['Johnnie Bryant','Associate Head Coach','2024–25',204008],['Mike Gerrity','Assistant Coach','2024–25',202565],['Trevor Hendry','Assistant Coach','2024–25',1631326],['Nate Reinking','Assistant Coach','2021–22',1642529],['Omar Cook','Assistant Coach','2023–24',1641539],['Jawad Williams','Assistant Coach','2025–26',1643351],['Andrew Olson','Assistant Coach','2018–19',1643352],['Steve Frankoski','Player Development Coach','2019–20','/img/s/steve-frankoski.jpg']]],
+  ['Performance & medical',[['Dr. Mark Kovacs','Sr. Director, Sports Science and Health','2019–20','/img/s/mark-kovacs.jpg'],['Steve Spiro','Head Athletic Trainer','2013–14',204286],['Derek Millender','Head Strength & Conditioning Coach','2017–18','/img/s/derek-millender.jpg']]],
+  ['Scouting',[['William Harrison','Scouting Manager','2020–21'],['Luis Gonzalez Infante','Scouting Coordinator','2023–24'],['Dave Henderson','Scout','2011–12'],['Anton Marchand','Scout','2023–24'],['Trey Platt','Pro Scout','2023–24'],['Patrick Licursi','Advance Scout','2024–25'],['Primoz Brezec','International Scout','2017–18'],['Igor Tadic','International Scout','2019–20']]]
 ];
 /* bios — Wikipedia, Basketball Reference, Cavaliers/NBA.com releases. facts: [label, value]; path: [years, role]; kenny / players: crossover notes (coaches only) */
 /* NBA Coaches Association profiles, and staff social accounts (Wikidata) */
@@ -2673,13 +2693,21 @@ const BIOS={
     kenny:'None before Cleveland.',players:['Played at Amherst while Koby Altman was an assistant there (2007–08)']},
   'Steve Frankoski':{facts:[['College','Columbia: four-year player, captain, fifth in school history in 3-pointers']],path:[['Before 2016','Pittsburgh, graduate assistant'],['2016–19','Cavaliers, video assistant'],['2019–','Cavaliers, player development coach']]},
   'Brandon Weems':{facts:[['Hometown','Akron, Ohio · St. Vincent–St. Mary High School'],['College','Walsh University (2004–08): NAIA champion 2005, All-American 2008'],['With the Cavs since','2015 (12th season)']],path:[['2009–12','Kentucky staff under John Calipari (2012 national title)'],['2012–13','Drexel, staff assistant'],['2013–15','Oakland University, assistant coach'],['2015','Cavaliers scout'],['2017–21','Director of Scouting'],['2021–22','Senior Director of Player Personnel'],['2022–26','Assistant General Manager'],['Sep 18, 2026','General Manager: roster, contracts, global scouting and daily operations']]},
-  'Jon Nichols':{facts:[['Role','Associate General Manager (promoted Sep 2026)']],path:[['2021–26','Cavaliers VP, Basketball Strategy'],['Sep 2026','Associate General Manager']]},
-  'Brendon Yu':{facts:[['College','Indiana, student manager under Tom Crean']],path:[['Before 2019','G League operations roles with the Cavs'],['2019–23','Cleveland Charge, general manager'],['2023–26','Cavaliers Director of Scouting'],['Sep 2026','Assistant General Manager']]},
+  'Jon Nichols':{facts:[['Role','Associate General Manager (promoted Sep 2026)']],path:[['2010–13','Milwaukee Bucks, basketball analytics manager'],['2013–22','Cavaliers, director of analytics'],['2021–26','Cavaliers VP, Basketball Strategy'],['Sep 2026','Associate General Manager']]},
+  'Brendon Yu':{facts:[['College','Indiana, student manager under Tom Crean']],path:[['2014–17','Cavaliers, basketball operations intern'],['2017–19','G League operations roles with the Cavs'],['2019–23','Cleveland Charge, general manager'],['2023–26','Cavaliers Director of Scouting'],['Sep 2026','Assistant General Manager']]},
   'José Calderón':{facts:[['Born','Sep 28, 1981 · Villanueva de la Serena, Spain (age 45)'],['Playing','14 NBA seasons (2005–19): Toronto, Detroit, Dallas, New York, Lakers, Atlanta, Cleveland (2017–18), Detroit']],path:[['2019','NBPA, special assistant to the executive director'],['Jan 2022','Cavaliers, special advisor to the front office'],['Sep 2026','Assistant General Manager']]},
   'Dashiell Flynn':{facts:[['Previously','Amazon Web Services']],path:[['Sep 2026','Joined as Chief Technology Officer of Basketball Operations']]},
   'Zydrunas Ilgauskas':{facts:[['Born','Jun 5, 1975 · Kaunas, Lithuania (age 51)'],['Playing','Cavaliers 1996–2010 (two-time All-Star, number 11 retired); Miami 2010–11']],path:[['2012','Joined the front office as assistant to the GM'],['Since','Special assistant / advisor']]},
   'Jason Hillman':{facts:[['Role','Player and staff contracts, cap and trade execution, league compliance'],['With the Cavs since','2005 (business side until 2017)']],path:[['2001–05','Real estate lawyer, Jaffe, Raitt, Heuer & Weiss'],['2005–17','Cavaliers legal, rising to SVP/General Counsel'],['2017–22','Basketball Chief of Staff / Team Counsel'],['2019–22','Alternate Governor, NBA Board of Governors'],['Feb 2022','VP, Basketball Operations / Team Counsel']],note:'Was a TV and radio sportscaster in the Detroit area before and during law practice.'},
   'Nic Barlage':{facts:[['College','Saint John’s University (Minn.), psychology, 2006'],['With the Cavs since','2008–13 and again since 2017']],path:[['Early career','Premium seating, Phoenix Suns and Charlotte Bobcats'],['2008–13','Cavaliers, rising to VP of Sales and Service'],['2013–14','Phoenix Suns, SVP and Chief Sales Officer'],['2017','Cavaliers President of Business Operations'],['2021','CEO, Cavaliers and Rock Entertainment Group']]},
+  'Nate Forbes':{facts:[['Role','Vice chairman since Dan Gilbert’s group bought the team in 2005']],path:[['2005–','Cavaliers, vice chairman']]},
+  'Jeff Cohen':{facts:[['Role','Minority owner since the 2005 purchase']],path:[['2005–18','Cavaliers, vice chairman'],['2005–','Cavaliers, minority owner']]},
+  'Derek Millender':{facts:[['With the Cavs since','2010–11']],path:[['2010–13','Cavaliers, assistant strength and conditioning coach'],['2013–17','Cavaliers, sports performance specialist'],['2017–','Cavaliers, head strength and conditioning coach']]},
+  'Max Weisberg':{facts:[['Also','Assistant general manager, Cleveland Charge']],path:[['2023–','Cavaliers, director of basketball strategy']]},
+  'Mark Cashman':{facts:[['With the Cavs since','2001–02']],path:[['2001–11','Cavaliers, equipment manager'],['2011–','Cavaliers, director of team operations']]},
+  'Dave Henderson':{facts:[['Born','Jul 21, 1964'],['With the Cavs since','2011–12']]},
+  'Luis Gonzalez Infante':{facts:[['Also','Assistant general manager, Cleveland Charge']]},
+  'Primoz Brezec':{facts:[['From','Slovenia'],['With the Cavs since','2017–18']]},
   'Dan Gilbert':{facts:[['Born','Jan 17, 1962 · Detroit, Mich. (age 64)'],['Education','Michigan State (B.A.), Wayne State Law (J.D.)'],['Business','Co-founded Rock Financial (1985), now Rocket Companies']],path:[['2005','Bought the Cavaliers for $375M'],['2016','NBA championship']]}
 };
 const st=document.getElementById("staff-list");
@@ -2699,7 +2727,7 @@ const bioBox=(n,img)=>{const b=BIOS[n];const box=el('div','xb bio');
   (STAFF_SOC[n]||[]).forEach(([net,u,h])=>{if(lk.childNodes.length)lk.append(' · ');const a=el('a',null,net+' '+h+' ↗');a.href=u;a.target='_blank';a.rel='noopener';lk.appendChild(a)});
   if(lk.childNodes.length)body.appendChild(lk);box.appendChild(body);return box};
 STAFF.forEach(([g,people])=>{const sec=el('section');const h=el('div','block-h');h.append(el('h2',null,g),el('span',null,people.length+''));const ul=el('ul','xl');
-  people.forEach(([n,t,y,img])=>{const li=el('li');li.id='s-'+slug(n);const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,n),el('small',null,t));sm.append(l,el('b',null,y));const bb=bioBox(n,img);bb.insertBefore(staffX(n,t,()=>[li]),bb.firstChild);d.append(sm,bb);li.appendChild(d);ul.appendChild(li)});sec.append(h,ul);st.appendChild(sec)});
+  people.forEach(([n,t,y,img])=>{const li=el('li');li.id='s-'+slug(n);const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,n),el('small',null,t));sm.append(l,el('b',null,y));const bb=bioBox(n,img);d.append(sm,bb);li.appendChild(d);ul.appendChild(li)});sec.append(h,ul);st.appendChild(sec)});
 /* ?ovf: phone debug, lists anything wider than the screen */
 if(/[?&]ovf/.test(location.search))setTimeout(()=>{const W=document.documentElement.clientWidth,out=[];document.querySelectorAll('body *').forEach(e=>{const r=e.getBoundingClientRect();if(r.width&&r.right>W+1&&getComputedStyle(e).position!=='fixed'){out.push((e.tagName+'.'+(e.className&&e.className.baseVal===undefined?e.className:'')+'#'+e.id).slice(0,50)+' R'+Math.round(r.right))}});const d=document.createElement('pre');d.style.cssText='position:fixed;left:0;right:0;bottom:0;max-height:45vh;overflow:auto;background:#000;color:#0f0;font:11px monospace;z-index:999;margin:0;padding:8px;white-space:pre-wrap';d.textContent='W='+W+' doc='+document.documentElement.scrollWidth+' vv='+visualViewport.width+'\n'+out.slice(0,40).join('\n');document.body.appendChild(d)},2500);
 /* game alerts: a small card around Cavs (and Niang/LSU) tip-off, and after the final. GALERT_ON turns it on for everyone; ?alerts=preview shows samples */
@@ -2844,7 +2872,7 @@ function openEmbed(kind){const [t,,h]=EMB[kind];const code='<iframe src="https:/
   const fr=document.createElement('iframe');fr.src='/embed/'+kind;fr.title='Preview';fr.className='emb-prev';fr.style.height=Math.min(h,360)+'px';
   pn.append(hd,el('p','app-lede','Paste this into a blog post, forum or site. It stays up to date on its own and links back to cavsdatabase.com.'),ta,cp,el('div','pv-k emb-k','Preview'),fr);w.append(bg,pn);document.body.appendChild(w)}
 setTimeout(()=>{const cx=document.getElementById('cs-x');if(cx&&!window.CDB_EMBED){const b=el('button','emb-b','</> Embed');b.type='button';b.title='Embed the cap sheet on your site';b.onclick=()=>openEmbed('cap');cx.insertBefore(b,cx.children[1]||null)}
-  const cw=document.querySelector('.calw');if(cw&&!window.CDB_EMBED){const b=el('button','calbtn emb-s','</> Embed');b.type='button';b.title='Embed upcoming games on your site';b.onclick=()=>openEmbed('schedule');cw.querySelector('#calbtn').after(b)}},0);
+  const cw=document.querySelector('.calw');if(cw&&!window.CDB_EMBED){const b=el('button','calbtn emb-s');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>Embed';b.type='button';b.title='Embed upcoming games on your site';b.onclick=()=>openEmbed('schedule');cw.querySelector('#calbtn').after(b)}},0);
 if(window.CDB_EMBED)setTimeout(()=>{const k=window.CDB_EMBED,E=EMB[k];if(!E)return;document.documentElement.classList.add('embed');const box=el('div','emb');box.id='emb';
   if(k==='cap'){show('cap');const top=document.getElementById('captop'),tb=document.querySelector('table.cap');const t2=tb&&tb.closest('.tablebox');box.appendChild(el('div','emb-h','Cavaliers cap sheet · 2026–27'));if(top)box.appendChild(top);if(t2)box.appendChild(t2)}
   else{const now=Date.now();const up=SCHEDULE.filter(g=>tipOf(g).getTime()>now-3*36e5).slice(0,6);const res=SEASON.results.split('').filter(Boolean),w=res.filter(x=>x==='W').length;
