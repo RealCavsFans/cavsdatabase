@@ -48,54 +48,17 @@ async function siteData() {
   return d;
 }
 
-/* ---------- the email: one column, site colors, light throughout ---------- */
+/* ---------- the email: two designs from the same content (NL_DESIGN = paper | sports) ---------- */
+const DESIGN = (process.env.NL_DESIGN || 'paper').toLowerCase() === 'sports' ? 'sports' : 'paper';
 const ord = n => n + (n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] || 'th');
-const C = { wine: '#860038', wine2: '#7A1F33', gold: '#F2B231', ink: '#101419', fg2: '#2F363E', muted: '#5D646C', line: '#E3E5E0', line2: '#EFF0EC', sub: '#F5F6F3' };
-const F = { sans: 'Arial,Helvetica,sans-serif', narrow: "'Arial Narrow',Arial,Helvetica,sans-serif", mono: "'SF Mono',Menlo,Consolas,'Courier New',monospace" };
+const F = { sans: 'Arial,Helvetica,sans-serif', serif: "Georgia,'Times New Roman',serif", cond: "'Saira Condensed','Arial Narrow',Arial,Helvetica,sans-serif", mono: "'Geist Mono','SF Mono',Menlo,Consolas,'Courier New',monospace" };
 const md2 = d => new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
-// section header: the site's block heading (uppercase, ink rule), optional note and link on the right
-const H = (t, note, link) => `<tr><td style="padding:28px 28px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td style="font:800 12px ${F.sans};letter-spacing:1.4px;text-transform:uppercase;color:${C.ink};padding-bottom:6px;border-bottom:2px solid ${C.ink}">${t}${note ? `<span style="font:400 12px ${F.sans};letter-spacing:0;text-transform:none;color:${C.muted}"> &nbsp;${note}</span>` : ''}</td><td align="right" style="font:600 12.5px ${F.sans};padding-bottom:6px;border-bottom:2px solid ${C.ink};white-space:nowrap">${Array.isArray(link) ? `<a href="${link[1]}" style="color:${C.wine2};text-decoration:none">${link[0]} &rarr;</a>` : link ? `<span style="font:italic 400 12.5px ${F.sans};color:${C.muted}">${link}</span>` : ''}</td></tr></table></td></tr>`;
-const body = inner => `<tr><td style="padding:4px 28px 0">${inner}</td></tr>`;
-// one list row: left label (date, chip), main text, small meta line, optional right value
-const row = (main, o = {}) => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-bottom:1px solid ${C.line2}"><tr>${o.left ? `<td width="${o.lw || 62}" valign="top" style="padding:10px 0;font:600 12px ${F.mono};color:${C.muted}">${o.left}</td>` : ''}<td valign="top" style="padding:9px 0;font:14px/1.45 ${F.sans};color:${C.ink}">${main}${o.meta ? `<div style="font:12px ${F.sans};color:${C.muted};margin-top:2px">${o.meta}</div>` : ''}</td>${o.right ? `<td align="right" valign="top" style="padding:9px 0 9px 10px;font:600 13px ${F.sans};color:#9A6A00;white-space:nowrap">${o.right}</td>` : ''}</tr></table>`;
-const lk = (href, text) => `<a href="${esc(href)}" style="font-weight:700;color:${C.ink};text-decoration:none">${text}</a>`;
-const chip = (t, bg, fg) => `<span style="display:inline-block;background:${bg};color:${fg};font:800 9.5px ${F.sans};letter-spacing:1px;padding:3px 6px;border-radius:2px">${t}</span>`;
+const wkd = d => new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', { weekday: 'short', timeZone: 'UTC' });
 
-function tonight(D, tg) {
-  const o = tg[1], home = tg[2] === 'H', slug = tg[0] + '-' + o.toLowerCase(), i = D.SCHEDULE.indexOf(tg);
-  const rec = a => { const t = D.STANDINGS.find(x => x[0] === a); return t ? t[2] + '–' + t[3] : ''; };
-  const rr = D.REST[tg[0]] || []; const rest = rr[0] === 0 ? 'Back-to-back' : rr[0] == null ? (i === 0 ? 'Season opener' : '—') : rr[0] + ' day' + (rr[0] === 1 ? '' : 's');
-  const box = (k, v) => `<td width="33%" style="background:rgba(255,255,255,.1);padding:7px 9px"><div style="font:800 9.5px ${F.sans};letter-spacing:1px;color:#F4D6DD">${k}</div><div style="font:700 13.5px ${F.sans};color:#fff;margin-top:2px">${esc(v)}</div></td>`;
-  const TS = D.TS || {}, all = Object.values(TS);
-  const ROWS = [['Record', t => t[0] / Math.max(1, t[0] + t[1]), 1, t => t[0] + '–' + t[1]], ['Off rating', t => t[4], 1, t => t[4].toFixed(1)], ['Def rating', t => t[5], 0, t => t[5].toFixed(1)], ['Net rating', t => t[4] - t[5], 1, t => { const x = t[4] - t[5]; return (x > 0 ? '+' : '') + x.toFixed(1); }], ['Pace', t => t[6], 1, t => t[6].toFixed(1)]];
-  const tape = TS.CLE && TS[o] ? ROWS.map(([lab, f, hi, fm]) => { const rk = t => ord(1 + all.filter(u => hi ? f(u) > f(t) : f(u) < f(t)).length); return `<tr><td style="padding:5px 0;border-bottom:1px solid ${C.line2};font:600 13.5px ${F.mono};color:${C.wine2}">${fm(TS.CLE)} <span style="font:11px ${F.sans};color:${C.muted}">${rk(TS.CLE)}</span></td><td align="center" style="padding:5px 0;border-bottom:1px solid ${C.line2};font:800 10px ${F.sans};letter-spacing:1px;color:${C.muted};text-transform:uppercase">${lab}</td><td align="right" style="padding:5px 0;border-bottom:1px solid ${C.line2};font:600 13.5px ${F.mono};color:${C.ink}"><span style="font:11px ${F.sans};color:${C.muted}">${rk(TS[o])}</span> ${fm(TS[o])}</td></tr>`; }).join('') : '';
-  return `${H('Tonight', null, ['Full preview', SITE + '/games/' + slug])}
-<tr><td style="padding:12px 28px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${C.wine2};background-image:linear-gradient(160deg,#8e2741,#5E0027)"><tr><td style="padding:14px 16px">
-<div style="font:800 10.5px ${F.sans};letter-spacing:1.4px;color:${C.gold}">${esc(tg[3])} PM ET · ${esc(new Date(tg[0] + 'T12:00:00Z').toLocaleDateString('en-US', { weekday: 'long', timeZone: 'UTC' }).toUpperCase())}</div>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0 10px"><tr><td style="font:800 36px ${F.narrow};color:#fff">CLE${rec('CLE') ? `<div style="font:600 12px ${F.sans};color:#F4D6DD">${rec('CLE')}</div>` : ''}</td><td align="center" style="font:600 14px ${F.sans};color:#F4D6DD">${home ? 'vs' : 'at'}</td><td align="right" style="font:800 36px ${F.narrow};color:#fff">${o}${rec(o) ? `<div style="font:600 12px ${F.sans};color:#F4D6DD">${rec(o)}</div>` : ''}</td></tr></table>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="4" style="margin:0 -4px"><tr>${box('WATCH', D.tv[tg[0]] || 'TBA')}${box('LISTEN', D.radio)}${box('REST', rest)}</tr></table>
-<div style="font:12.5px ${F.sans};color:#F4D6DD;margin-top:8px">Game ${i + 1} of 82 · ${home ? 'Rocket Arena' : 'at ' + esc(D.TEAMS[o])}</div></td></tr></table></td></tr>
-${tape ? `<tr><td style="padding:12px 28px 0"><div style="font:800 10.5px ${F.sans};letter-spacing:1.2px;color:${C.ink};padding-bottom:4px;border-bottom:1px solid ${C.line}">TALE OF THE TAPE <span style="font-weight:400;letter-spacing:0;color:${C.muted}">· ${D.TS_CUR ? '2026–27' : '2025–26'} · league rank</span></div><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${tape}</table></td></tr>` : ''}`;
-}
-
-// standings snapshot: five East rows centered on the Cavs (rank, team, record, games back)
-function standings(D) {
-  const E = (D.STANDINGS || []).filter(t => t[1] === 'E').sort((x, y) => (y[2] - y[3]) - (x[2] - x[3]) || y[2] - x[2]);
-  const i = E.findIndex(t => t[0] === 'CLE'); if (i < 0 || !E.some(t => t[2] + t[3] > 0)) return '';
-  const a = Math.max(0, Math.min(i - 2, E.length - 5)), L = E[0];
-  const gb = t => { const g = ((L[2] - t[2]) + (t[3] - L[3])) / 2; return g ? (g % 1 ? g.toFixed(1) : String(g)) : '—'; };
-  const td = (x, o = '') => `<td style="padding:7px 0;border-bottom:1px solid ${C.line2};${o}">${x}</td>`;
-  return `${H('East standings', null, ['Full standings', SITE + '/schedule'])}<tr><td style="padding:4px 28px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-<tr>${['', 'Team', 'W–L', 'GB'].map((h, k) => `<td${k > 1 ? ' align="right"' : ''} style="padding:6px 0 4px;font:800 10px ${F.sans};letter-spacing:1px;color:${C.muted};text-transform:uppercase">${h}</td>`).join('')}</tr>
-${E.slice(a, a + 5).map((t, k) => { const me = t[0] === 'CLE', c = me ? C.wine : C.ink, w = me ? '700' : '400'; return `<tr>${td(String(a + k + 1), `width:30px;font:600 12.5px ${F.mono};color:${C.muted}`)}${td(esc(t[0] === 'CLE' ? 'Cleveland' : (D.TEAMS[t[0]] || t[0])), `font:${w} 14px ${F.sans};color:${c}`)}${td(t[2] + '–' + t[3], `text-align:right;font:${me ? 700 : 500} 13.5px ${F.mono};color:${c}`)}${td(gb(t), `width:52px;text-align:right;font:500 13px ${F.mono};color:${C.muted}`)}</tr>`; }).join('')}
-</table></td></tr>`;
-}
-
-function build(D, g, score, top, boxLink, opts) {
-  const [cs, os] = score.split('-').map(Number), win = cs > os;
-  const issueDay = opts.issueDay, md = issueDay.slice(5);
+/* everything both designs show, worked out once */
+function prep(D, g, score, top, boxLink, opts) {
+  const [cs, os] = score.split('-').map(Number), win = cs > os, issueDay = opts.issueDay, md = issueDay.slice(5);
   const rec = (D.SEASON.results || '').replace(/[^WL]/g, ''); const w = (rec.match(/W/g) || []).length, l = rec.length - w;
-  const P = n => (D.PL.find(p => p[0] === n) || [])[1];
   const [tn, tl] = (top || '').split(': ');
   const fresh = x => x.date && Date.parse(x.date) > opts.sinceTs;
   const rcfItems = opts.rcf?.items || [];
@@ -104,57 +67,112 @@ function build(D, g, score, top, boxLink, opts) {
   const hl = (opts.news?.highlights || []).find(x => x.date.slice(0, 10) >= g[0] && Date.parse(x.date) - Date.parse(g[0] + 'T12:00:00Z') < 3 * 864e5 && x.title.toUpperCase().includes(nickU));
   const reads = [...rcfItems.filter(x => x !== recap && fresh(x)).map(x => ({ ...x, src: 'RealCavsFans' })), ...(opts.news?.articles || []).filter(fresh)].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 6);
   const play = []; [...(opts.news?.videos || []).map(x => ({ ...x, kind: 'video' })), ...(opts.news?.podcasts || []).map(x => ({ ...x, kind: 'podcast' }))].filter(fresh).sort((a, b) => b.date.localeCompare(a.date)).forEach(x => { if (!play.some(p => p.src === x.src)) play.push(x); });
-  const moves = D.TX.filter(x => x.d > opts.since && x.d <= issueDay).sort((a, b) => a.d.localeCompare(b.d));
   const txText = x => x.k === 'trade' ? `Traded ${(x.sent || []).join(', ')} to ${(x.w || []).join('/')} for ${(x.got || []).join(', ')}` : (x.t || x.p || '');
-  const tg = D.SCHEDULE.find(x => x[0] === issueDay), nx = D.SCHEDULE.find(x => x[0] > g[0] && x[0] > issueDay);
-  const week = D.DATES.filter(x => x[0] >= issueDay && x[0] <= etDate(new Date(Date.parse(issueDay + 'T12:00:00Z') + 6 * 864e5))).slice(0, 3);
+  const moves = D.TX.filter(x => x.d > opts.since && x.d <= issueDay).sort((a, b) => a.d.localeCompare(b.d)).map(x => [md2(x.d), txText(x) + (x.note ? ' · ' + x.note : '')]);
+  const tg = D.SCHEDULE.find(x => x[0] === issueDay), nx = tg || D.SCHEDULE.find(x => x[0] > g[0] && x[0] > issueDay);
+  const week = D.DATES.filter(x => x[0] >= issueDay && x[0] <= etDate(new Date(Date.parse(issueDay + 'T12:00:00Z') + 6 * 864e5)) && !(nx && x[0] === nx[0] && /opener|vs |at /i.test(x[1]))).slice(0, 3).map(x => [wkd(x[0]), md2(x[0]), x[1]]);
   const otd = (D.OTD || [])[0] || D.HISTORY.find(h => h[0] === md);
-  const tq = opts.trivia;
-  const where = (g[2] === 'H' ? 'vs ' : 'at ') + D.TEAMS[g[1]];
-  // espresso shot: one quick hitter. Records and milestones go first once the career stats feed is in (opts.milestone); otherwise a streak of 3+
-  const stk = (() => { if (opts.preseason || !rec.length) return ''; const last = rec[rec.length - 1]; let n = 0; for (let k = rec.length - 1; k >= 0 && rec[k] === last; k--) n++; return n >= 3 ? (last === 'W' ? `The Cavs have won ${n} straight.` : `The Cavs have lost ${n} straight.`) : ''; })();
-  const shot = opts.milestone || stk;
-  return `<!-- Cavs & Coffee · built by cavsdatabase.com -->
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#EEF0F2"><tr><td align="center" style="padding:0">
-<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:#ffffff">
-<tr><td><a href="${SITE}"><img src="${SITE}/nl/header.png" width="600" alt="Cavs &amp; Coffee · the morning after every Cavs game · presented by cavs_db" style="display:block;width:100%;max-width:600px;height:auto;border:0"></a></td></tr>
-<tr><td style="padding:14px 28px 0;font:600 12px ${F.mono};color:${C.wine2};letter-spacing:.5px">&gt; ${esc(long(issueDay).toLowerCase())}${opts.test ? ` · <b style="color:#C8102E">test copy</b>` : ''}</td></tr>
-
-${otd ? `${H('This day in Cavs history')}<tr><td style="padding:12px 28px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td width="64" valign="top"><div style="background:${C.wine};color:#fff;text-align:center;padding:7px 0;width:52px"><div style="font:800 10px ${F.sans};letter-spacing:1px">${esc(new Date(issueDay + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' }).toUpperCase())}</div><div style="font:800 24px ${F.narrow}">${+md.slice(3)}</div></div><div style="width:52px;text-align:center;font:700 12px ${F.mono};color:${C.wine2};margin-top:4px">${esc(otd[1])}</div></td><td valign="top" style="font:14.5px/1.5 ${F.sans};color:${C.fg2}">${esc(otd[2])}</td></tr></table></td></tr>` : ''}
-
-${tq ? `${H('Daily trivia')}<tr><td style="padding:12px 28px 0"><div style="font:700 16px/1.4 ${F.sans};color:${C.ink}">${esc(tq.q)}</div><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px">${[0, 2].map(r => `<tr>${[r, r + 1].map(k => `<td width="50%" style="padding:${k % 2 ? '0 0 6px 3px' : '0 3px 6px 0'}"><div style="border:1px solid ${C.line};padding:9px 10px;font:14px ${F.sans};color:${C.fg2}"><b style="color:${C.wine2};font-family:${F.mono}">${String.fromCharCode(65 + k)}</b>&nbsp; ${esc(tq.c[k] || '')}</div></td>`).join('')}</tr>`).join('')}</table><div style="font:12px ${F.sans};color:${C.muted};margin-top:2px">Answer at the bottom</div></td></tr>` : ''}
-
-${H(opts.preseason ? 'Last game' : 'Last night', opts.preseason ? 'preseason' : null, ['Box score', boxLink])}
-<tr><td style="padding:14px 28px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid ${C.line};border-left:3px solid ${C.wine}">
-<tr><td colspan="2" style="padding:9px 14px 4px;font:800 10px ${F.sans};letter-spacing:1.2px;color:${C.muted};text-transform:uppercase">Final · ${esc(where)} · ${esc(short(g[0]))}</td><td align="right" style="padding:9px 14px 4px">${chip(win ? 'W' : 'L', win ? C.gold : C.ink, win ? C.ink : '#fff')}</td></tr>
-${[['CLE', 'Cavaliers', cs, win], [g[1], NICK[g[1]] || D.TEAMS[g[1]], os, !win]].map(([ab, nm, pts, won], k) => `<tr><td width="52" style="padding:${k ? '2px 0 11px 14px' : '4px 0 2px 14px'};font:800 20px ${F.narrow};color:${won ? C.ink : C.muted}">${ab}</td><td style="padding:${k ? '2px 0 11px' : '4px 0 2px'};font:${won ? 700 : 400} 14px ${F.sans};color:${won ? C.ink : C.muted}">${esc(nm)}</td><td align="right" style="padding:${k ? '2px 14px 11px 0' : '4px 14px 2px 0'};font:700 22px ${F.mono};color:${won ? C.ink : C.muted}">${pts}</td></tr>`).join('')}
-</table>${rec.length ? `<div style="font:12.5px ${F.sans};color:${C.muted};margin-top:6px">Cavs are ${w}–${l}</div>` : ''}</td></tr>
-${shot ? `<tr><td style="padding:12px 28px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid ${C.line};border-left:3px solid ${C.wine}"><tr><td style="padding:9px 12px;font:14px/1.45 ${F.sans};color:${C.ink}"><span style="font:800 10px ${F.sans};letter-spacing:1.2px;color:${C.wine2}">&#9749; ESPRESSO SHOT</span><br>${esc(shot)}</td></tr></table></td></tr>` : ''}
-${tn ? `<tr><td style="padding:12px 28px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${C.sub}"><tr>${P(tn) ? `<td width="62" style="padding:8px 0 8px 10px"><img src="https://cdn.nba.com/headshots/nba/latest/260x190/${P(tn)}.png" width="52" height="38" alt="" style="display:block;background:#fff"></td>` : ''}<td style="padding:9px 12px"><div style="font:800 10px ${F.sans};letter-spacing:1.2px;color:${C.muted}">TOP PERFORMER</div><div style="font:700 15px ${F.sans};color:${C.ink};margin-top:1px">${esc(tn)} <span style="font:600 13px ${F.mono};color:${C.wine2}">&nbsp;${esc((tl || '').toUpperCase().replace(/, /g, ' · '))}</span></div></td></tr></table></td></tr>` : ''}
-${hl || recap ? body(`${hl ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-bottom:1px solid ${C.line2}"><tr><td width="172" valign="top" style="padding:10px 12px 10px 0"><a href="${esc(hl.link)}"><img src="https://i.ytimg.com/vi/${esc(hl.id)}/mqdefault.jpg" width="160" alt="Full game highlights" style="display:block;width:160px;height:auto;border:0"></a></td><td valign="middle" style="padding:10px 0;font:14px/1.45 ${F.sans};color:${C.ink}">${lk(hl.link, '&#9654;&nbsp; Full game highlights')}<div style="font:12px ${F.sans};color:${C.muted};margin-top:2px">NBA · YouTube</div></td></tr></table>` : ''}${recap ? row(lk(recap.link, esc(recap.title)), { meta: 'RealCavsFans recap' }) : ''}`) : ''}
-
-${standings(D)}
-
-${tg ? tonight(D, tg) : nx ? `${H('Up next', null, ['Preview', SITE + '/games/' + nx[0] + '-' + nx[1].toLowerCase()])}${body(row(`<b>${nx[2] === 'H' ? 'vs' : 'at'} ${esc(D.TEAMS[nx[1]])}</b>`, { left: esc(short(nx[0])), lw: 92, meta: `${esc(nx[3])} PM ET${D.tv[nx[0]] ? ' · ' + esc(D.tv[nx[0]]) : ''} · ${esc(D.radio)}` }))}` : ''}
-
-${D.INJURIES.length ? `${H('Injury report', D.INJ_UPDATED ? 'updated ' + esc(D.INJ_UPDATED) : null)}${body(D.INJURIES.map(([n, , inj, st]) => row(`${esc(n)} <span style="color:${C.muted}">· ${esc(inj.toLowerCase())}</span>`, { right: esc(st) })).join(''))}` : ''}
-
-${moves.length ? `${H('Transactions', null, 'since your last cup')}${body(moves.map(x => row(esc(txText(x)) + (x.note ? ` <span style="color:${C.muted}">· ${esc(x.note)}</span>` : ''), { left: esc(md2(x.d)) })).join(''))}` : ''}
-
-${reads.length ? `${H('Morning reads')}${body(reads.map(x => row(lk(x.link, esc(x.title)), { meta: `${esc(x.src)} · ${esc(md2(x.date.slice(0, 10)))}` })).join(''))}` : ''}
-
-${play.length ? `${H('Press play', 'podcasts &amp; video')}${body(play.map(x => row(lk(x.link, esc(x.title)), { left: chip(x.kind === 'video' ? 'WATCH' : 'LISTEN', x.kind === 'video' ? C.wine : C.ink, '#fff'), lw: 64, meta: `${esc(x.src)}${x.dur ? ' · ' + esc(x.dur) : ''} · ${esc(md2(x.date.slice(0, 10)))}` })).join(''))}` : ''}
-
-${week.length ? `${H('This week', null, ['Key dates', SITE])}${body(week.map(x => row(esc(x[1]), { left: esc(short(x[0])), lw: 92 })).join(''))}` : ''}
-
-${tq ? `<tr><td style="padding:28px 28px 0"><div style="border-top:2px solid ${C.ink};padding-top:10px;font:13px/1.5 ${F.sans};color:${C.fg2}"><span style="font:800 10.5px ${F.sans};letter-spacing:1.2px;color:${C.wine2}">TRIVIA ANSWER</span><br><b style="color:${C.ink}">${String.fromCharCode(65 + tq.a)}. ${esc(tq.c[tq.a])}</b></div></td></tr>` : ''}
-
-<tr><td style="padding:28px 28px 26px;text-align:center;font:12px/1.7 ${F.sans};color:${C.muted}">
-<a href="${SITE}"><img src="${SITE}/nl/logo.png" width="140" alt="cavs_db" style="display:inline-block;width:140px;height:auto;border:0;margin-bottom:6px"></a><br>
-<a href="${SITE}" style="color:${C.wine2};font-weight:600;text-decoration:none">cavsdatabase.com</a> &nbsp;·&nbsp; <a href="https://www.buymeacoffee.com/cavsdb" style="color:${C.wine2};font-weight:600;text-decoration:none">&#9749; Buy cavs_db a coffee</a><br>
-Independent fan reference, not affiliated with the Cavaliers or the NBA.</td></tr>
-</table></td></tr></table>`;
+  // up next: records and ratings with league ranks, then any injuries as one line
+  let tape = [], nxInfo = null;
+  if (nx) {
+    const o = nx[1], TS = D.TS || {}, all = Object.values(TS), i = D.SCHEDULE.indexOf(nx);
+    const rr = D.REST[nx[0]] || []; const rest = rr[0] === 0 ? 'Back-to-back' : rr[0] == null ? (i === 0 ? 'Season opener' : '') : rr[0] + ' day' + (rr[0] === 1 ? '' : 's') + ' rest';
+    nxInfo = { o, home: nx[2] === 'H', date: nx[0], tip: nx[3], tv: D.tv[nx[0]] || '', radio: D.radio, rest, slug: nx[0] + '-' + o.toLowerCase(), tonight: !!tg, season: D.TS_CUR ? '2026–27' : '2025–26' };
+    if (TS.CLE && TS[o]) tape = [['Record', t => t[0] / Math.max(1, t[0] + t[1]), 1, t => t[0] + '–' + t[1]], ['Off rating', t => t[4], 1, t => t[4].toFixed(1)], ['Def rating', t => t[5], 0, t => t[5].toFixed(1)], ['Net rating', t => t[4] - t[5], 1, t => { const x = t[4] - t[5]; return (x > 0 ? '+' : '') + x.toFixed(1); }]]
+      .map(([lab, f, hi, fm]) => { const rk = t => ord(1 + all.filter(u => hi ? f(u) > f(t) : f(u) < f(t)).length); return [lab, fm(TS.CLE), rk(TS.CLE), fm(TS[o]), rk(TS[o])]; });
+  }
+  const inj = D.INJURIES.map(([n, , what, st]) => [n, what.toLowerCase(), st]);
+  // standings: five East rows around the Cavs (regular season only)
+  const E = (D.STANDINGS || []).filter(t => t[1] === 'E').sort((x, y) => (y[2] - y[3]) - (x[2] - x[3]) || y[2] - x[2]);
+  let stand = []; const ci = E.findIndex(t => t[0] === 'CLE');
+  if (ci >= 0 && E.some(t => t[2] + t[3] > 0)) { const a = Math.max(0, Math.min(ci - 2, E.length - 5)), L = E[0]; stand = E.slice(a, a + 5).map((t, k) => { const gb = ((L[2] - t[2]) + (t[3] - L[3])) / 2; return [a + k + 1, t[0] === 'CLE' ? 'Cleveland' : (D.TEAMS[t[0]] || t[0]), t[2] + '–' + t[3], gb ? (gb % 1 ? gb.toFixed(1) : String(gb)) : '—', t[0] === 'CLE']; }); }
+  return { g, cs, os, win, issueDay, md, w, l, hasRec: rec.length > 0, tn, tl, recap, hl, reads, play, moves, week, otd, nx: nxInfo, tape, inj, stand, tq: opts.trivia, shot: opts.milestone || (() => { if (opts.preseason || !rec.length) return ''; const last = rec[rec.length - 1]; let n = 0; for (let k = rec.length - 1; k >= 0 && rec[k] === last; k--) n++; return n >= 3 ? (last === 'W' ? `The Cavs have won ${n} straight.` : `The Cavs have lost ${n} straight.`) : ''; })(),
+    pid: n => (D.PL.find(p => p[0] === n) || [])[1], where: (g[2] === 'H' ? 'vs ' : 'at ') + D.TEAMS[g[1]], whereShort: g[2] === 'H' ? 'Rocket Arena' : 'at ' + D.TEAMS[g[1]].split(' ').slice(-1)[0], boxLink, preseason: opts.preseason, test: opts.test, TEAMS: D.TEAMS };
 }
+const fontLink = `<!--[if !mso]><!--><link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@800&family=Geist+Mono:wght@700&display=swap" rel="stylesheet"><!--<![endif]-->`;
+const wrapOpen = bg => `${fontLink}<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#EEF0F2"><tr><td align="center" style="padding:0">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:${bg}">
+<tr><td><a href="${SITE}"><img src="${SITE}/nl/header.png" width="600" alt="Cavs &amp; Coffee · the morning after every Cavs game · presented by cavs_db" style="display:block;width:100%;max-width:600px;height:auto;border:0"></a></td></tr>`;
+const footer = (rule) => `<tr><td style="padding:30px 28px 26px;text-align:center;font:12px/1.7 ${F.sans};color:#5D646C">${rule || ''}
+<a href="${SITE}"><img src="${SITE}/nl/logo.png" width="130" alt="cavs_db" style="display:inline-block;width:130px;height:auto;border:0;margin-bottom:6px"></a><br>
+<a href="${SITE}" style="color:#7A1F33;font-weight:700;text-decoration:none">cavsdatabase.com</a> &nbsp;·&nbsp; <a href="https://www.buymeacoffee.com/cavsdb" style="color:#7A1F33;font-weight:700;text-decoration:none">&#9749; Buy cavs_db a coffee</a><br>
+Independent fan reference, not affiliated with the Cavaliers or the NBA.</td></tr></table></td></tr></table>`;
+const T = (inner, attrs = '') => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" ${attrs}>${inner}</table>`;
+
+/* ========== Morning Paper: warm paper, centered headings with a gold tick, serif for stories ========== */
+function renderPaper(x) {
+  const P = { bg: '#FBF8F3', rule: '#E7E1D8', wine: '#7A1F33', ink: '#101419', fg2: '#2F363E', muted: '#5D646C' };
+  const K = t => `<tr><td style="padding:26px 26px 0;text-align:center"><div style="font:800 11px ${F.sans};letter-spacing:2.4px;text-transform:uppercase;color:${P.wine}">${t}</div><div style="width:28px;height:2px;background:#F2B231;margin:7px auto 12px;font-size:0;line-height:0">&nbsp;</div></td></tr>`;
+  const sep = `<tr><td style="padding:24px 26px 0"><div style="height:1px;background:${P.rule};font-size:0;line-height:0">&nbsp;</div></td></tr>`;
+  const B = inner => `<tr><td style="padding:0 26px">${inner}</td></tr>`;
+  const li = (main, o = {}) => T(`<tr>${o.left ? `<td width="${o.lw || 86}" valign="top" style="padding:10px 8px 10px 0;font:700 11.5px ${F.mono};color:${P.muted};white-space:nowrap">${o.left}</td>` : ''}<td valign="top" style="padding:9px 0;font:14px/1.45 ${F.sans};color:${P.ink}">${main}${o.meta ? `<div style="font:12px ${F.sans};color:${P.muted};margin-top:2px">${o.meta}</div>` : ''}</td>${o.right ? `<td align="right" valign="top" style="padding:9px 0 9px 10px;font:700 12.5px ${F.sans};color:#9A6A00;white-space:nowrap">${o.right}</td>` : ''}</tr>`, `style="border-bottom:1px solid ${P.rule}"`);
+  const a = (h, t) => `<a href="${esc(h)}" style="color:${P.ink};font-weight:700;text-decoration:none">${t}</a>`;
+  const ic = k => `<span style="color:#860038;font:15px ${F.sans}">${k === 'video' ? '&#9654;' : '&#127911;'}</span>`;
+  const s = [];
+  s.push(`<tr><td style="padding:16px 26px 0;text-align:center;font:700 11px ${F.mono};letter-spacing:1px;color:${P.wine}">${esc(long(x.issueDay).toUpperCase())}${x.test ? ' · <span style="color:#C8102E">TEST COPY</span>' : ''}</td></tr>`);
+  if (x.otd) s.push(K('This day in Cavs history'), `<tr><td style="padding:0 26px;text-align:center"><div style="font:800 34px/1 ${F.cond};color:${P.ink}">${esc(x.otd[1])}</div><div style="font:16px/1.55 ${F.serif};color:${P.fg2};margin-top:8px">${esc(x.otd[2])}</div></td></tr>`, sep);
+  if (x.tq) s.push(K('Daily trivia'), B(`<div style="text-align:center;font:700 16px/1.4 ${F.sans};color:${P.ink};margin-bottom:10px">${esc(x.tq.q)}</div>${T(x.tq.c.map((c, k) => `<tr><td style="padding:9px 4px;border-${k ? 'bottom' : 'top'}:1px solid ${P.rule};${k ? '' : `border-bottom:1px solid ${P.rule};`}font:14px ${F.sans};color:${P.ink}"><b style="color:${P.wine};font-family:${F.mono};margin-right:8px">${'ABCD'[k]}</b>${esc(c)}</td></tr>`).join(''))}<div style="text-align:center;font:12px ${F.sans};color:${P.muted};margin-top:8px">Answer at the bottom</div>`), sep);
+  // last game
+  s.push(K(x.preseason ? 'Last game · preseason' : 'Last game'));
+  s.push(`<tr><td style="padding:0 26px;text-align:center"><div style="font:800 44px/1 ${F.cond};color:${P.ink};white-space:nowrap">CLE ${x.cs} <span style="color:#B9B2A8">&ndash;</span> ${x.os} ${x.g[1]} <span style="display:inline-block;vertical-align:middle;background:${x.win ? '#F2B231' : P.ink};color:${x.win ? P.ink : '#fff'};font:800 10px ${F.sans};letter-spacing:1px;padding:4px 7px;margin-left:4px">${x.win ? 'W' : 'L'}</span></div>
+<div style="font:13px ${F.sans};color:${P.muted};margin-top:8px">${esc(x.where)} · ${esc(short(x.g[0]))}${x.hasRec ? ` · Cavs ${x.w}–${x.l}` : ''} · <a href="${esc(x.boxLink)}" style="color:${P.wine};font-weight:700;text-decoration:none">Box score</a></div>
+${x.tn ? `<div style="font:16px/1.5 ${F.serif};color:${P.fg2};margin-top:12px"><b style="font-family:${F.sans};color:${P.ink}">${esc(x.tn)}</b> led the Cavs with ${esc((x.tl || '').replace(/ pts/, ' points').replace(/ reb/, ' rebounds').replace(/, (\d+) ast/, ' and $1 assists'))}.</div>` : ''}</td></tr>`);
+  if (x.hl) s.push(`<tr><td style="padding:14px 26px 0"><a href="${esc(x.hl.link)}"><img src="https://i.ytimg.com/vi/${esc(x.hl.id)}/hq720.jpg" width="548" alt="Watch the full game highlights" style="display:block;width:100%;height:auto;border:0"></a></td></tr>`);
+  if (x.hl || x.recap) s.push(B(`${x.hl ? li(a(x.hl.link, '&#9654;&nbsp; Full game highlights'), { meta: 'NBA · YouTube' }) : ''}${x.recap ? li(a(x.recap.link, esc(x.recap.title)), { meta: 'RealCavsFans recap' }) : ''}`));
+  if (x.shot) s.push(`<tr><td style="padding:14px 26px 0;text-align:center"><div style="font:800 10px ${F.sans};letter-spacing:1.6px;color:${P.wine}">ESPRESSO SHOT</div><div style="font:italic 15.5px/1.5 ${F.serif};color:${P.ink};margin-top:4px">${esc(x.shot)}</div></td></tr>`);
+  s.push(sep);
+  // up next / tonight
+  if (x.nx) {
+    const n = x.nx;
+    s.push(K(n.tonight ? 'Tonight' : 'Up next'), `<tr><td style="padding:0 26px;text-align:center"><div style="font:800 32px/1 ${F.cond};color:${P.ink}">CLE ${n.home ? 'vs' : 'at'} ${n.o}</div><div style="font:13px ${F.sans};color:${P.muted};margin-top:6px">${esc(short(n.date))} · ${esc(n.tip)} PM ET${n.tv ? ' · ' + esc(n.tv) : ''} · ${esc(n.radio)}${n.rest ? ' · ' + esc(n.rest) : ''}</div></td></tr>`);
+    if (x.tape.length) s.push(`<tr><td style="padding:14px 26px 0">${T(`<tr><td style="padding:0 0 6px;font:800 11px ${F.cond};font-size:15px;color:#860038">CLE</td><td align="center" style="padding:0 0 6px;font:700 10px ${F.sans};letter-spacing:1px;color:${P.muted}">${n.season} · LEAGUE RANK</td><td align="right" style="padding:0 0 6px;font:800 15px ${F.cond};color:${P.ink}">${n.o}</td></tr>` + x.tape.map(([lab, a1, r1, b1, r2]) => `<tr><td style="padding:6px 0;border-top:1px solid ${P.rule};font:700 14px ${F.mono};color:${P.ink}">${a1} <span style="font:400 11px ${F.sans};color:${P.muted}">${r1}</span></td><td align="center" style="padding:6px 0;border-top:1px solid ${P.rule};font:700 10px ${F.sans};letter-spacing:1px;text-transform:uppercase;color:${P.muted}">${lab}</td><td align="right" style="padding:6px 0;border-top:1px solid ${P.rule};font:700 14px ${F.mono};color:${P.ink}"><span style="font:400 11px ${F.sans};color:${P.muted}">${r2}</span> ${b1}</td></tr>`).join(''))}</td></tr>`);
+    if (x.inj.length) s.push(`<tr><td style="padding:12px 26px 0;font:13px/1.5 ${F.sans};color:${P.fg2};text-align:center"><b style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine}">INJURIES</b>&nbsp; ${x.inj.map(([nm, what, st]) => `${esc(nm)} (${esc(what)}, ${esc(st.toLowerCase())})`).join(' · ')}</td></tr>`);
+    s.push(`<tr><td style="padding:10px 26px 0;text-align:center"><a href="${SITE}/games/${n.slug}" style="font:700 13px ${F.sans};color:${P.wine};text-decoration:none">Full game preview &rarr;</a></td></tr>`, sep);
+  }
+  if (x.stand.length) s.push(K('East standings'), B(T(x.stand.map(([rk, nm, wl, gb, me]) => `<tr><td width="28" style="padding:7px 0;border-bottom:1px solid ${P.rule};font:700 12px ${F.mono};color:${P.muted}">${rk}</td><td style="padding:7px 0;border-bottom:1px solid ${P.rule};font:${me ? 700 : 400} 14px ${F.sans};color:${me ? '#860038' : P.ink}">${esc(nm)}</td><td align="right" style="padding:7px 0;border-bottom:1px solid ${P.rule};font:700 13.5px ${F.mono};color:${me ? '#860038' : P.ink}">${wl}</td><td width="48" align="right" style="padding:7px 0;border-bottom:1px solid ${P.rule};font:700 12.5px ${F.mono};color:${P.muted}">${gb}</td></tr>`).join(''))), sep);
+  if (x.reads.length) s.push(K('Morning reads'), B(x.reads.map(r => li(a(r.link, esc(r.title)), { meta: `${esc(r.src)} · ${esc(md2(r.date.slice(0, 10)))}` })).join('')), sep);
+  if (x.play.length) s.push(K('Press play'), B(x.play.map(p => T(`<tr><td width="26" valign="top" style="padding:9px 0">${ic(p.kind)}</td><td valign="top" style="padding:9px 0;font:14px/1.45 ${F.sans}">${a(p.link, esc(p.title))}<div style="font:12px ${F.sans};color:${P.muted};margin-top:2px">${esc(p.src)}${p.dur ? ' · ' + esc(p.dur) : ''} · ${esc(md2(p.date.slice(0, 10)))}</div></td></tr>`, `style="border-bottom:1px solid ${P.rule}"`)).join('')), sep);
+  if (x.moves.length) s.push(K('Transactions'), B(x.moves.map(([d, t]) => li(esc(t), { left: esc(d), lw: 60 })).join('')), sep);
+  if (x.week.length) s.push(K('This week'), B(x.week.map(([wd, d, t]) => li(esc(t), { left: `${esc(wd)} ${esc(d)}`, lw: 96 })).join('')), sep);
+  if (x.tq) s.push(`<tr><td style="padding:22px 26px 0;text-align:center;font:12.5px ${F.sans};color:${P.muted}"><b style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine}">TRIVIA ANSWER</b>&nbsp; ${String.fromCharCode(65 + x.tq.a)}. ${esc(x.tq.c[x.tq.a])}</td></tr>`);
+  return wrapOpen(P.bg) + s.join('\n') + footer();
+}
+
+/* ========== Sports Page: old school newspaper, double rules, condensed heads, boxed linescore ========== */
+function renderSports(x) {
+  const P = { bg: '#F7F3EC', dot: '#B9B2A8', wine: '#860038', ink: '#101419', fg2: '#2F363E', muted: '#5D646C' };
+  const K = (t, link) => `<tr><td style="padding:24px 24px 0">${T(`<tr><td style="font:800 21px/1 ${F.cond};text-transform:uppercase;color:${P.ink};padding-bottom:5px;border-bottom:1px solid ${P.ink}">${t}</td><td align="right" valign="bottom" style="padding-bottom:5px;border-bottom:1px solid ${P.ink};font:700 12px ${F.sans};white-space:nowrap">${link ? `<a href="${link[1]}" style="color:#7A1F33;text-decoration:none">${link[0]} &rarr;</a>` : ''}</td></tr>`)}</td></tr>`;
+  const B = inner => `<tr><td style="padding:8px 24px 0">${inner}</td></tr>`;
+  const li = (main, o = {}) => T(`<tr>${o.left ? `<td width="${o.lw || 86}" valign="top" style="padding:9px 8px 9px 0;font:700 11.5px ${F.mono};color:${P.muted};white-space:nowrap">${o.left}</td>` : ''}<td valign="top" style="padding:8px 0;font:14px/1.45 ${F.sans};color:${P.ink}">${main}${o.meta ? `<div style="font:12px ${F.sans};color:${P.muted};margin-top:2px">${o.meta}</div>` : ''}</td></tr>`, `style="border-bottom:1px dotted ${P.dot}"`);
+  const a = (h, t) => `<a href="${esc(h)}" style="color:${P.ink};font-weight:700;text-decoration:none">${t}</a>`;
+  const s = [];
+  s.push(`<tr><td style="padding:12px 24px 0"><div style="border-bottom:3px double ${P.ink};padding-bottom:9px;text-align:center;font:700 11px ${F.mono};letter-spacing:1px;color:${P.ink}">${esc(long(x.issueDay).toUpperCase())} · CLEVELAND${x.test ? ' · <span style="color:#C8102E">TEST COPY</span>' : ''}</div></td></tr>`);
+  if (x.otd) s.push(K('This day in Cavs history · ' + esc(x.otd[1])), B(`<div style="font:16px/1.55 ${F.serif};color:${P.fg2}"><span style="float:left;font:800 46px/40px ${F.cond};color:${P.wine};padding:4px 6px 0 0">${esc(x.otd[2].charAt(0))}</span>${esc(x.otd[2].slice(1))}</div>`));
+  if (x.tq) s.push(K('Daily trivia'), B(`<div style="font:700 16px/1.4 ${F.serif};color:${P.ink};margin-bottom:6px">${esc(x.tq.q)}</div>${x.tq.c.map((c, k) => li(`<b style="color:${P.wine};font-family:${F.mono};margin-right:8px">${'ABCD'[k]}</b>${esc(c)}`)).join('')}<div style="font:12px ${F.sans};color:${P.muted};margin-top:6px">Answer at the bottom</div>`));
+  // last game: boxed linescore, winner reversed out in ink
+  const cell = (ab, pts, won, nm) => `<td width="50%" align="center" style="padding:10px 0 9px;${won ? `background:${P.ink};color:#fff;` : `color:${P.ink};`}"><div style="font:800 20px/1 ${F.cond}">${ab}</div><div style="font:700 36px/1.15 ${F.mono}">${pts}</div><div style="font:11px ${F.sans};color:${won ? '#C9CDD2' : P.muted}">${esc(nm)}</div></td>`;
+  s.push(K(x.preseason ? 'Last game · preseason' : 'Last game', ['Box score', esc(x.boxLink)]));
+  s.push(B(`${T(`<tr>${cell('CLE', x.cs, x.win, 'Cavaliers')}${cell(x.g[1], x.os, !x.win, NICK[x.g[1]] || '')}</tr>`, `style="border:2px solid ${P.ink}"`)}<div style="font:12px ${F.sans};color:${P.muted};margin-top:6px;text-align:center">FINAL · ${esc(x.where.toUpperCase())} · ${esc(short(x.g[0]).toUpperCase())}${x.hasRec ? ` · CAVS ${x.w}–${x.l}` : ''}</div>
+${x.tn ? `<div style="font:16px/1.55 ${F.serif};color:${P.fg2};margin-top:10px"><b style="font-family:${F.sans};color:${P.ink}">${esc(x.tn)}</b> led the Cavs with ${esc((x.tl || '').replace(/ pts/, ' points').replace(/ reb/, ' rebounds').replace(/, (\d+) ast/, ' and $1 assists'))}.</div>` : ''}`));
+  if (x.hl) s.push(`<tr><td style="padding:12px 24px 0"><a href="${esc(x.hl.link)}"><img src="https://i.ytimg.com/vi/${esc(x.hl.id)}/hq720.jpg" width="552" alt="Watch the full game highlights" style="display:block;width:100%;height:auto;border:0"></a></td></tr>`);
+  if (x.hl || x.recap) s.push(B(`${x.hl ? li(a(x.hl.link, '&#9654;&nbsp; Full game highlights'), { meta: 'NBA · YouTube' }) : ''}${x.recap ? li(a(x.recap.link, esc(x.recap.title)), { meta: 'RealCavsFans recap' }) : ''}`));
+  if (x.shot) s.push(B(`<div style="border:1px solid ${P.ink};padding:9px 11px;margin-top:4px;font:15px/1.5 ${F.serif};color:${P.ink}"><b style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine}">ESPRESSO SHOT</b>&nbsp; ${esc(x.shot)}</div>`));
+  if (x.nx) {
+    const n = x.nx;
+    s.push(K(n.tonight ? 'Tonight' : 'Up next', ['Preview', `${SITE}/games/${n.slug}`]), B(`<div style="font:800 26px/1 ${F.cond};color:${P.ink}">CLE ${n.home ? 'vs' : 'at'} ${n.o}</div><div style="font:13px ${F.sans};color:${P.muted};margin:4px 0 4px">${esc(short(n.date))} · ${esc(n.tip)} PM ET${n.tv ? ' · ' + esc(n.tv) : ''} · ${esc(n.radio)}${n.rest ? ' · ' + esc(n.rest) : ''}</div>`));
+    if (x.tape.length) s.push(B(T(`<tr><td style="padding:4px 0;font:800 14px ${F.cond};color:${P.wine}">CLE</td><td align="center" style="font:700 9.5px ${F.sans};letter-spacing:1px;color:${P.muted}">${n.season} · RANK</td><td align="right" style="font:800 14px ${F.cond};color:${P.ink}">${n.o}</td></tr>` + x.tape.map(([lab, a1, r1, b1, r2]) => `<tr><td style="padding:5px 0;border-top:1px dotted ${P.dot};font:700 13.5px ${F.mono}">${a1} <span style="font:400 11px ${F.sans};color:${P.muted}">${r1}</span></td><td align="center" style="padding:5px 0;border-top:1px dotted ${P.dot};font:700 10px ${F.sans};letter-spacing:1px;text-transform:uppercase;color:${P.muted}">${lab}</td><td align="right" style="padding:5px 0;border-top:1px dotted ${P.dot};font:700 13.5px ${F.mono}"><span style="font:400 11px ${F.sans};color:${P.muted}">${r2}</span> ${b1}</td></tr>`).join(''))));
+    if (x.inj.length) s.push(B(`<div style="font:13px/1.5 ${F.sans};color:${P.fg2};padding-top:6px;border-top:1px dotted ${P.dot}"><b style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine}">INJURIES</b>&nbsp; ${x.inj.map(([nm, what, st]) => `${esc(nm)} (${esc(what)}, ${esc(st.toLowerCase())})`).join(' · ')}</div>`));
+  }
+  if (x.stand.length) s.push(K('East standings'), B(T(x.stand.map(([rk, nm, wl, gb, me]) => `<tr><td width="26" style="padding:6px 0;border-bottom:1px dotted ${P.dot};font:700 12px ${F.mono};color:${P.muted}">${rk}</td><td style="padding:6px 0;border-bottom:1px dotted ${P.dot};font:${me ? 700 : 400} 14px ${F.sans};color:${me ? P.wine : P.ink}">${esc(nm)}</td><td align="right" style="padding:6px 0;border-bottom:1px dotted ${P.dot};font:700 13.5px ${F.mono}">${wl}</td><td width="46" align="right" style="padding:6px 0;border-bottom:1px dotted ${P.dot};font:700 12.5px ${F.mono};color:${P.muted}">${gb}</td></tr>`).join(''))));
+  if (x.reads.length) s.push(K('Morning reads'), B(x.reads.map(r => li(a(r.link, esc(r.title)), { meta: `${esc(r.src)} · ${esc(md2(r.date.slice(0, 10)))}` })).join('')));
+  if (x.play.length) s.push(K('Press play'), B(x.play.map(p => li(`<span style="display:inline-block;width:20px;color:${P.wine}">${p.kind === 'video' ? '&#9654;' : '&#127911;'}</span>${a(p.link, esc(p.title))}`, { meta: `<span style="display:inline-block;width:20px"></span>${esc(p.src)}${p.dur ? ' · ' + esc(p.dur) : ''} · ${esc(md2(p.date.slice(0, 10)))}` })).join('')));
+  if (x.moves.length) s.push(K('Transactions'), B(x.moves.map(([d, t]) => li(esc(t), { left: esc(d), lw: 60 })).join('')));
+  if (x.week.length) s.push(K('This week'), B(x.week.map(([wd, d, t]) => li(esc(t), { left: `${esc(wd)} ${esc(d)}`, lw: 96 })).join('')));
+  if (x.tq) s.push(`<tr><td style="padding:18px 24px 0;font:12.5px ${F.sans};color:${P.muted}"><b style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine}">TRIVIA ANSWER</b>&nbsp; ${String.fromCharCode(65 + x.tq.a)}. ${esc(x.tq.c[x.tq.a])}</td></tr>`);
+  return wrapOpen(P.bg) + s.join('\n') + footer(`<div style="border-top:3px double ${P.ink};margin:0 0 18px;font-size:0;line-height:0">&nbsp;</div>`);
+}
+
+function build(D, g, score, top, boxLink, opts) { const x = prep(D, g, score, top, boxLink, opts); return `<!-- Cavs & Coffee · ${DESIGN} design · built by cavsdatabase.com -->\n` + (DESIGN === 'sports' ? renderSports(x) : renderPaper(x)); }
 
 /* ---------- Buttondown ---------- */
 async function bd(path, method, body) {
@@ -233,7 +251,7 @@ function milestone() {
 const tq = trivia.length ? trivia[Object.keys(sent).length % trivia.length] : null;
 const html = build(D, g, score, b.top || '', b.url || D.box[g[0]] || SITE + '/schedule', { issueDay: today, rcf, news, trivia: tq, since, sinceTs, milestone: milestone(), test: MODE === 'test' || !LIVE, preseason });
 const [cs, os] = score.split('-').map(Number);
-const subj = `${MODE === 'test' || !LIVE ? '[Test] ' : ''}☕ Final: Cavs ${cs}, ${NICK[g[1]] || g[1]} ${os}${b.top ? ' · ' + b.top.split(':')[0].split(' ').slice(-1)[0] + ' ' + (b.top.match(/(\d+) pts/) || [])[1] : ''}`;
+const subj = `${MODE === 'test' || !LIVE ? `[Test · ${DESIGN === 'sports' ? 'Sports Page' : 'Morning Paper'}] ` : ''}☕ Final: Cavs ${cs}, ${NICK[g[1]] || g[1]} ${os}${b.top ? ' · ' + b.top.split(':')[0].split(' ').slice(-1)[0] + ' ' + (b.top.match(/(\d+) pts/) || [])[1] : ''}`;
 await mkdir(new URL('nl/', root), { recursive: true });
 await writeFile(new URL('nl/last-issue.html', root), `<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>${esc(subj)}</title><body style="margin:0">${html}</body>`);
 

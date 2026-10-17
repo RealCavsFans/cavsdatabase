@@ -10,6 +10,11 @@ on:
         default: test
         type: choice
         options: [test, auto]
+      design:
+        description: 'Which design: paper = Morning Paper, sports = Sports Page'
+        default: paper
+        type: choice
+        options: [paper, sports]
 permissions:
   contents: write
 concurrency:
@@ -30,6 +35,7 @@ jobs:
           CHROME_PATH: /usr/bin/google-chrome
           BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
           NEWSLETTER_LIVE: ${{ vars.NEWSLETTER_LIVE }}
+          NL_DESIGN: ${{ github.event.inputs.design || vars.NEWSLETTER_DESIGN || 'paper' }}
       - name: Remember what went out
         run: |
           git config user.name "cavsdatabase-bot"
