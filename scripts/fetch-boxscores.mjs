@@ -22,13 +22,13 @@ try {
       const fin = g.gameStatus === 3;
       const cle = h === 'CLE' ? g.homeTeam.score : g.awayTeam.score;
       const opp = h === 'CLE' ? g.awayTeam.score : g.homeTeam.score;
-      out[date] = { url, status: fin ? 'final' : 'scheduled', ...(fin ? { score: `${cle}-${opp}`, result: cle > opp ? 'W' : 'L' } : {}), ...(fin && prev[date]?.top ? { top: prev[date].top } : {}) };
+      out[date] = { url, status: fin ? 'final' : 'scheduled', ...(fin ? { score: `${cle}-${opp}`, result: cle > opp ? 'W' : 'L' } : {}), ...(fin && prev[date]?.top ? { top: prev[date].top } : {}), ...(fin && prev[date]?.out ? { out: prev[date].out } : {}) };
     }
   }
   // best Cavs stat line for finals in the last 3 days (ESPN box score)
   const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba';
   for (const [date, g] of Object.entries(out)) {
-    if (g.status !== 'final' || g.top || Date.now() - Date.parse(date + 'T12:00:00Z') > 3 * 864e5) continue;
+    if (g.status !== 'final' || (g.top && g.out) || Date.now() - Date.parse(date + 'T12:00:00Z') > 3 * 864e5) continue;
     try {
       const sb = await (await fetch(`${ESPN}/scoreboard?dates=${date.replace(/-/g, '')}`)).json();
       const ev = (sb.events || []).find(e => e.competitions?.[0]?.competitors?.some(c => c.team?.abbreviation === 'CLE'));
@@ -36,10 +36,14 @@ try {
       const sum = await (await fetch(`${ESPN}/summary?event=${ev.id}`)).json();
       const t = (sum.boxscore?.players || []).find(p => p.team?.abbreviation === 'CLE');
       const st = t?.statistics?.[0]; if (!st) continue;
+      // players out for injury or illness: inactive / did not play for any reason other than a coach's decision, plus anyone listed Out on ESPN's injury report for that game
+      if (!g.out) { const o = new Set((st.athletes || []).filter(a => (a.didNotPlay || a.active === false) && a.reason && !/coach/i.test(a.reason)).map(a => a.athlete.displayName));
+        const ij = (sum.injuries || []).find(x => x.team?.abbreviation === 'CLE'); (ij?.injuries || []).filter(i => /^out$/i.test(i.status || '')).forEach(i => { const nm = i.athlete?.displayName; if (nm && !(st.athletes || []).some(a => a.athlete?.displayName === nm && !a.didNotPlay && a.active !== false)) o.add(nm); });
+        g.out = [...o]; }
       const keys = (st.names || st.labels || []).map(x => String(x).toUpperCase());
       const n = (a, k) => parseFloat(a.stats[keys.indexOf(k)]) || 0;
       const best = (st.athletes || []).filter(a => a.stats?.length).sort((x, y) => ['PTS', 'REB', 'AST', 'STL', 'BLK'].reduce((s2, k) => s2 + n(y, k) - n(x, k), 0))[0];
-      if (best) g.top = `${best.athlete.displayName}: ${n(best, 'PTS')} pts, ${n(best, 'REB')} reb, ${n(best, 'AST')} ast`;
+      if (best && !g.top) g.top = `${best.athlete.displayName}: ${n(best, 'PTS')} pts, ${n(best, 'REB')} reb, ${n(best, 'AST')} ast`;
     } catch (e) { console.warn('top line unavailable for', date, e.message); }
   }
   const sorted = Object.fromEntries(Object.entries(out).sort(([x], [y]) => x.localeCompare(y)));
