@@ -15,6 +15,7 @@ const attr = (x, t, a) => (x.match(new RegExp(`<${t}[^>]*\\s${a}="([^"]+)"`, 'i'
 const dur = s => { s = un(s); if (!s) return ''; if (/^\d+$/.test(s)) { const m = Math.round(+s / 60); return m >= 60 ? Math.floor(m / 60) + ' hr ' + (m % 60) + ' min' : m + ' min'; } const p = s.split(':').map(Number); const m = p.length === 3 ? p[0] * 60 + p[1] : p[0]; return m >= 60 ? Math.floor(m / 60) + ' hr ' + (m % 60) + ' min' : m + ' min'; };
 const cutoff = Date.now() - KEEP_DAYS * 864e5;
 const out = { articles: [], podcasts: [], videos: [], highlights: [] };
+const status = [];
 const YT = process.env.YT_API_KEY;
 const UA = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36' };
 const get = async (u, accept) => { const r = await fetch(u, { headers: { ...UA, ...(accept ? { Accept: accept } : {}) }, signal: AbortSignal.timeout(20000) }); if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + u); return r; };
@@ -26,7 +27,7 @@ async function youtube(channel, playlist) {
     return (j.items || []).map(i => ({ id: i.snippet?.resourceId?.videoId, title: i.snippet?.title || '', date: i.snippet?.publishedAt }));
   }
   const xml = await (await get(playlist ? `https://www.youtube.com/feeds/videos.xml?playlist_id=${pl}` : `https://www.youtube.com/feeds/videos.xml?channel_id=${channel}`)).text();
-  return xml.split(/<entry[\s>]/).slice(1).map(x => ({ id: un(tag(x, 'yt:videoId')), title: un(tag(x, 'title')), date: un(tag(x, 'published')) }));
+  return xml.split(/<entry[\s>]/).slice(1).map(x => ({ id: un(tag(x, 'yt:videoId')), title: used.includes('news.google.com') ? un(tag(x, 'title')).replace(/\s+-\s+[^-]+$/, '') : un(tag(x, 'title')), date: un(tag(x, 'published')) }));
 }
 async function channelOf(handle) {
   if (YT) { const j = await (await get(`https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=${encodeURIComponent(handle)}&key=${YT}`)).json(); if (j.items?.[0]?.id) return j.items[0].id; }
@@ -45,6 +46,7 @@ async function feedsFor(s) {
     try { const h = await (await get(s.site)).text(); for (const m of h.matchAll(/<link[^>]+type="application\/(?:rss|atom)\+xml"[^>]*>/gi)) { const u = (m[0].match(/href="([^"]+)"/) || [])[1]; if (u) c.push(new URL(u.replace(/&amp;/g, '&'), s.site).href); } } catch (e) { console.log(`${s.name}: page ${e.message}`); }
     const b = s.site.replace(/\/$/, ''); c.push(b + '/feed', b + '/rss', b + '/rss/index.xml', new URL('/rss/index.xml', s.site).href);
   }
+  if (s.google) c.push('https://news.google.com/rss/search?q=' + encodeURIComponent(s.google) + '&hl=en-US&gl=US&ceid=US:en');
   return [...new Set(c)];
 }
 const vid = (src, v) => ({ src, title: un(v.title), link: 'https://www.youtube.com/watch?v=' + v.id, date: new Date(v.date).toISOString(), id: v.id });
@@ -53,8 +55,8 @@ try {
   const got = (await youtube(NBA_CHANNEL)).filter(v => v.id && /cavaliers/i.test(v.title) && /full game highlights/i.test(v.title) && !/shorts/i.test(v.title)).map(v => vid('NBA', v));
   const seen = new Set(got.map(x => x.id));
   out.highlights = [...got, ...(prev.highlights || []).filter(x => !seen.has(x.id))].filter(x => Date.parse(x.date) > cutoff);
-  console.log('NBA highlights:', got.length);
-} catch (e) { console.log(`::warning::NBA highlights: ${e.message}, keeping last run`); out.highlights = prev.highlights || []; }
+  console.log('NBA highlights:', got.length); status.push(`NBA highlights: ${got.length} new (${YT ? 'YouTube API' : 'YouTube RSS'})`);
+} catch (e) { status.push('NBA highlights: FAILED ' + e.message); console.log(`::warning::NBA highlights: ${e.message}, keeping last run`); out.highlights = prev.highlights || []; }
 for (const s of cfg.sources || []) {
   const bucket = s.type === 'podcast' ? 'podcasts' : s.type === 'video' ? 'videos' : 'articles';
   const old = (prev[bucket] || []).filter(x => x.src === s.name);
@@ -64,17 +66,18 @@ for (const s of cfg.sources || []) {
       if (s.playlist && !s.name) s.name = (await playlistName(s.playlist)) || 'YouTube';
       const ch = s.channel || (s.handle ? await channelOf(s.handle) : null);
       const got = (await youtube(ch, s.playlist)).filter(v => v.id && v.title && !/#shorts/i.test(v.title) && (!re || re.test(v.title))).map(v => vid(s.name, v)).filter(x => Date.parse(x.date) > cutoff).slice(0, 10);
-      out[bucket].push(...got); console.log(s.name + ':', got.length); continue;
+      out[bucket].push(...got); console.log(s.name + ':', got.length); status.push(`${s.name}: ${got.length} (${YT ? 'YouTube API' : 'YouTube RSS'})`); continue;
     }
     let xml = '', used = '';
     for (const u of await feedsFor(s)) { try { const t = await (await get(u, 'application/rss+xml,application/atom+xml,application/xml;q=0.9,*/*;q=0.8')).text(); if (/<(item|entry)[\s>]/i.test(t)) { xml = t; used = u; break; } } catch {} }
     if (!xml) throw new Error('no working feed found');
     const items = xml.includes('<item') ? xml.split(/<item[\s>]/i).slice(1) : xml.split(/<entry[\s>]/i).slice(1);
     const re = s.filter ? new RegExp(s.filter, 'i') : null;
-    const got = items.map(x => ({ src: s.name, title: un(tag(x, 'title')), link: un(tag(x, 'link')) || attr(x, 'link', 'href') || attr(x, 'enclosure', 'url'), date: new Date(un(tag(x, 'pubDate')) || un(tag(x, 'published')) || un(tag(x, 'updated')) || un(tag(x, 'dc:date'))).toISOString(), ...(bucket === 'podcasts' ? { dur: dur(tag(x, 'itunes:duration')) } : {}) }))
+    const got = items.map(x => ({ src: s.name, title: used.includes('news.google.com') ? un(tag(x, 'title')).replace(/\s+-\s+[^-]+$/, '') : un(tag(x, 'title')), link: un(tag(x, 'link')) || attr(x, 'link', 'href') || attr(x, 'enclosure', 'url'), date: new Date(un(tag(x, 'pubDate')) || un(tag(x, 'published')) || un(tag(x, 'updated')) || un(tag(x, 'dc:date'))).toISOString(), ...(bucket === 'podcasts' ? { dur: dur(tag(x, 'itunes:duration')) } : {}) }))
       .filter(x => x.title && x.link && Date.parse(x.date) > cutoff && (!re || re.test(x.title))).slice(0, 15);
-    out[bucket].push(...got); console.log(s.name + ':', got.length, 'from', used);
-  } catch (e) { console.log(`::warning::${s.name}: ${e.message}, keeping last run`); out[bucket].push(...old); }
+    out[bucket].push(...got); console.log(s.name + ':', got.length, 'from', used); status.push(`${s.name}: ${got.length} from ${used}`);
+  } catch (e) { console.log(`::warning::${s.name}: ${e.message}, keeping last run`); status.push(`${s.name}: FAILED ${e.message}`); out[bucket].push(...old); }
 }
 for (const k of ['articles', 'podcasts', 'videos', 'highlights']) out[k].sort((a, b) => b.date.localeCompare(a.date));
+await writeFile(new URL('news-status.txt', root), new Date().toISOString() + '\n' + status.join('\n') + '\n');
 await writeFile(new URL('news.json', root), JSON.stringify(out, null, 1) + '\n');
