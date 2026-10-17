@@ -377,15 +377,17 @@ tr.mark td{white-space:normal!important;line-height:1.45;text-indent:-16px;paddi
 .sumug{width:54px;height:54px;flex:none;transition:transform .18s;cursor:pointer}.sumug.pop{transform:scale(1.18)}
 .su-shot{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:2}
 .su-tx{flex:1 1 220px}.su-tx b{display:block;font:800 22px/1 var(--cond);text-transform:uppercase;letter-spacing:.3px}.su-tx b i{font-style:normal;color:var(--wine-ink)}.su-tx span{display:block;font-size:13px;color:var(--fg2);margin-top:4px;line-height:1.45}
-.su-f{display:flex;gap:6px;flex:1 1 100%;min-width:0}.su-f input[type=email]{flex:1;min-width:0;border:1px solid var(--line);border-radius:4px;padding:9px 11px;font:14px var(--sans);background:var(--bg,#fff);color:var(--fg)}.nlpop{position:fixed;right:18px;bottom:18px;z-index:60;width:340px;max-width:calc(100vw - 24px);background:var(--card,#fff);color:var(--fg);border:1px solid var(--line);border-top:3px solid #F2B231;box-shadow:0 10px 30px rgba(16,20,25,.18);padding:14px 16px 12px;transform:translateY(16px);opacity:0;transition:transform .3s ease,opacity .3s ease}
+.su-f{display:flex;gap:6px;flex:1 1 100%;min-width:0}.su-f input[type=email]{flex:1;min-width:0;border:1px solid var(--line);border-radius:4px;padding:9px 11px;font:14px var(--sans);background:var(--bg,#fff);color:var(--fg)}.nlpop{position:fixed;right:18px;bottom:18px;z-index:60;width:340px;max-width:calc(100vw - 24px);background:linear-gradient(160deg,#8e2741,#5E0027);color:#fff;border-bottom:3px solid #F2B231;box-shadow:0 10px 30px rgba(16,20,25,.25);padding:16px 18px 10px;transform:translateY(16px);opacity:0;transition:transform .3s ease,opacity .3s ease}
 .nlpop.on{transform:none;opacity:1}
-.nlpop-x{position:absolute;top:4px;right:6px;border:0;background:none;font:400 24px/1 var(--sans);color:var(--muted);cursor:pointer;padding:6px 8px}
-.nlpop-h{display:flex;gap:10px;align-items:center;padding-right:18px}.nlpop-h svg{width:44px;height:44px;flex:none}
-.nlpop-h b{display:block;font:800 17px var(--sans);font-stretch:112%}.nlpop-h b i{font-style:normal;color:#D99A12}.nlpop-h span{display:block;font-size:13px;line-height:1.4;color:var(--fg2,var(--muted));margin-top:2px}
-.nlpop-tags{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0}.nlpop-tags span{font:700 10.5px var(--sans);letter-spacing:.06em;text-transform:uppercase;background:var(--sub,#F5F6F3);border:1px solid var(--line);padding:3px 7px;color:var(--wine)}
-.nlpop-q{margin:8px 0 10px;font:italic 13px/1.4 var(--sans);color:var(--muted)}
-.nlpop .su-f{flex:none}
-.nlpop-no{display:block;margin:8px auto 0;border:0;background:none;font:600 12px var(--sans);color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.nlpop-x{position:absolute;top:4px;right:6px;border:0;background:none;font:400 24px/1 var(--sans);color:rgba(255,255,255,.75);cursor:pointer;padding:6px 8px}.nlpop-x:hover{color:#fff}
+.nlpop-h{display:flex;gap:12px;align-items:center;padding-right:20px}.nlpop-h img{width:54px;height:auto;flex:none}
+.nlpop-h b{font:800 27px/1 'Saira Condensed',var(--sans);text-transform:uppercase;letter-spacing:.01em;color:#fff}.nlpop-h b i{font-style:normal;color:#F2B231}
+.nlpop-p{margin:10px 0 0;font:500 15px/1.35 var(--sans);color:#fff}
+.nlpop-tags{margin:4px 0 0;font:700 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#F2B231}
+.nlpop-f{display:flex;gap:6px;margin-top:12px}.nlpop-f input{flex:1;min-width:0;border:0;border-radius:4px;padding:10px 11px;font:14px var(--sans);background:#fff;color:#101419}
+.nlpop-f button{border:0;background:#F2B231;color:#101419;font:800 13.5px var(--sans);padding:10px 16px;border-radius:999px;cursor:pointer;white-space:nowrap}.nlpop-f button:hover{background:#D99A12}
+.nlpop-f input:focus-visible,.nlpop-f button:focus-visible,.nlpop-x:focus-visible,.nlpop-no:focus-visible{outline:2px solid #F2B231;outline-offset:2px}
+.nlpop-no{display:block;margin:8px auto 0;border:0;background:none;font:600 12px var(--sans);color:rgba(255,255,255,.75);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 @media (max-width:600px){.nlpop{right:12px;left:12px;width:auto;max-width:none;bottom:calc(12px + env(safe-area-inset-bottom))}}
 @media (prefers-reduced-motion:reduce){.nlpop{transition:none}}
 @media print{.nlpop{display:none}}
@@ -2866,7 +2868,7 @@ const NL_ON=false;
   const wait=40000+Math.random()*50000;
   function pop(){if(shown||document.querySelector('dialog[open]'))return;shown=true;try{sessionStorage.setItem('cdb-nl-seen','1')}catch(_){}
     const c=el('aside','nlpop');c.setAttribute('aria-label','Cavs & Coffee newsletter');
-    c.innerHTML='<button type="button" class="nlpop-x" aria-label="Close">×</button><div class="nlpop-h"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M55 30c-5-6 5-10 0-17M67 30c-5-6 5-10 0-17" stroke="#F2B231" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M28 38h50v26a18 18 0 0 1-18 18H46a18 18 0 0 1-18-18z" fill="#860038"/><path d="M78 46h4a9 9 0 0 1 0 18h-4" stroke="#860038" stroke-width="6" fill="none"/><path d="M53 38v44M28 58h50" stroke="#F2B231" stroke-width="2.4" fill="none"/></svg><div><b>Cavs <i>&amp;</i> Coffee</b><span>The morning after every Cavs game: the score, the top line, injuries and the news.</span></div></div><div class="nlpop-tags"><span>Free</span><span>Ad free</span><span>One email per game</span></div><p class="nlpop-q">Like black coffee: just the goods, no additives.</p><form class="su-f" action="https://buttondown.com/api/emails/embed-subscribe/cavscoffee" method="post"><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email"><input type="hidden" name="embed" value="1"><button type="submit">Sign me up</button></form><button type="button" class="nlpop-no">No thanks</button>';
+    c.innerHTML='<button type="button" class="nlpop-x" aria-label="Close">×</button><div class="nlpop-h"><img src="/nl/icon-mug.png" alt="" width="54" height="41"><b>Cavs <i>&amp;</i> Coffee</b></div><p class="nlpop-p">Your Cavs news, served unfiltered.</p><p class="nlpop-tags">Free · No ads · All Cavs</p><form class="nlpop-f" action="https://buttondown.com/api/emails/embed-subscribe/cavscoffee" method="post"><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email"><input type="hidden" name="embed" value="1"><button type="submit">Pour me a cup</button></form><button type="button" class="nlpop-no">No thanks</button>';
     document.body.appendChild(c);requestAnimationFrame(()=>c.classList.add('on'));
     const close=v=>{if(v)put(v);c.classList.remove('on');setTimeout(()=>c.remove(),300)};
     c.querySelector('.nlpop-x').onclick=()=>close('no:'+Date.now());c.querySelector('.nlpop-no').onclick=()=>close('no:'+Date.now());
