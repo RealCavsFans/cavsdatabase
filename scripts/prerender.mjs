@@ -59,7 +59,6 @@ export default async function prerender(root, META) {
   await ctx.route(u => !u.href.startsWith(base), r => r.request().resourceType() === 'image' ? r.fulfill({ status: 200, contentType: 'image/png', body: PIXEL }) : r.abort());
   let ok = 0, data = null;
   for (const route of Object.keys(META)) {
-    if (route === 'media/rcf') continue; // articles load from rcf.json after the page opens; nothing to bake in
     const page = await ctx.newPage(); const errs = []; page.on('pageerror', e => errs.push(e.message));
     try {
       await page.goto(base + '/index.html', { waitUntil: 'load' });
@@ -84,7 +83,7 @@ export default async function prerender(root, META) {
       if (pl) graph.push({ '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: 'Roster', item: SITE + '/roster' }, { '@type': 'ListItem', position: 3, name: pl[1], item: SITE + '/' + route }] },
         { '@type': 'Person', name: pl[1], url: SITE + '/' + route, image: 'https://cdn.nba.com/headshots/nba/latest/1040x760/' + pl[12] + '.png', jobTitle: 'Basketball player', birthDate: pl[5], ...(pl[3] && pl[3] !== '—' ? { height: pl[3].replace('-', ' ft ') + ' in' } : {}), ...(pl[4] ? { weight: pl[4] + ' lb' } : {}), memberOf: team('CLE'), sameAs: ['https://www.nba.com/player/' + pl[12]] });
       else if (route !== 'home') graph.push({ '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: LABEL[route] || META[route][0].split(' | ')[0], item: SITE + '/' + route }] });
-      const today = new Date().toISOString().slice(0, 10);
+      const today = etDay(Date.now());
       { const url = SITE + '/' + (route === 'home' ? '' : route); const title = META[route][0], desc = META[route][1];
         graph.unshift({ '@type': 'WebPage', '@id': url + '#page', url, name: title, ...(desc ? { description: desc } : {}), isPartOf: { '@id': SITE + '/#site' }, inLanguage: 'en-US', ...(MOD(route) ? { dateModified: MOD(route) } : {}), primaryImageOfPage: { '@type': 'ImageObject', url: SITE + '/' + (route === 'home' ? 'og.jpg' : 'og/' + (route.startsWith('players/') ? 'roster' : route.replace(/\//g, '-')) + '.jpg') } }); }
       if (route === 'schedule') data.SCHEDULE.forEach(g => graph.push(withScore(game(g), g, data.SCORES)));
@@ -99,7 +98,7 @@ export default async function prerender(root, META) {
     const page = await ctx.newPage(); await page.goto(base + '/index.html', { waitUntil: 'load' });
     const G = await page.evaluate(() => SCHEDULE.map(g => { const t = tvFor(g[0]), r = radioFor(g[0]); return { d: g[0], o: g[1], ha: g[2], tip: tipOf(g).toISOString(), opp: TEAMS[g[1]], tv: [t.nat, t.loc].filter(Boolean).join(' · '), radio: r.cavs || '', sc: SCORES[g[0]] || '' }; }));
     await page.close();
-    const ics = s => String(s).replace(/\\/g, '\\\\').replace(/;/g, '\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+    const ics = s => String(s).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
     const dt = iso => iso.replace(/[-:]/g, '').replace(/\.\d+Z$/, 'Z');
     const fold = l => { const o = []; let x = l; while (x.length > 74) { o.push(x.slice(0, 74)); x = ' ' + x.slice(74); } o.push(x); return o.join('\r\n'); };
     const stamp = dt(new Date().toISOString());

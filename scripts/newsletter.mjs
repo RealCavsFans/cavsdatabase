@@ -119,9 +119,9 @@ if (MODE === 'auto') {
   else { const p = D.PRESEASON[D.PRESEASON.length - 1]; g = [p[0], p[1], p[2]]; score = p[4]; preseason = true; }
 }
 const b = box[g[0]] || {};
-const html = build(D, g, score, b.top || '', b.url || D.box[g[0]] || SITE + '/schedule', { issueDay: MODE === 'auto' ? today : today, rcf, test: MODE === 'test' || !LIVE, preseason });
+const html = build(D, g, score, b.top || '', b.url || D.box[g[0]] || SITE + '/schedule', { issueDay: today, rcf, test: MODE === 'test' || !LIVE, preseason });
 const [cs, os] = score.split('-').map(Number);
-const subj = `${MODE === 'test' || !LIVE ? '[Test] ' : ''}☕ ${cs > os ? 'Final' : 'Final'}: Cavs ${cs}, ${NICK[g[1]] || g[1]} ${os}${b.top ? ' · ' + b.top.split(':')[0].split(' ').slice(-1)[0] + ' ' + (b.top.match(/(\d+) pts/) || [])[1] : ''}`;
+const subj = `${MODE === 'test' || !LIVE ? '[Test] ' : ''}☕ Final: Cavs ${cs}, ${NICK[g[1]] || g[1]} ${os}${b.top ? ' · ' + b.top.split(':')[0].split(' ').slice(-1)[0] + ' ' + (b.top.match(/(\d+) pts/) || [])[1] : ''}`;
 await mkdir(new URL('nl/', root), { recursive: true });
 await writeFile(new URL('nl/last-issue.html', root), `<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>${esc(subj)}</title><body style="margin:0">${html}</body>`);
 

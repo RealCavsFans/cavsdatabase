@@ -242,7 +242,7 @@ h1{margin:0;font:800 clamp(28px,4vw,36px)/1.1 var(--sans);font-stretch:115%;lett
 .rt-bar{display:flex;height:10px;margin:2px 0 10px}.rt-bar i{display:block}.rt-leg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--muted);margin-bottom:14px}.rt-leg span::before{content:'';display:inline-block;width:9px;height:9px;margin-right:5px;vertical-align:-1px;background:var(--c)}
 .rt-lanes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.rt-lane h3{margin:0 0 6px;font:800 11.5px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between}.rt-lane h3 i{font-style:normal;color:var(--wine-ink)}
 .rt-p{display:flex;align-items:center;gap:9px;padding:7px 0;border-top:1px solid var(--line2)}.rt-lane h3+.rt-p{border-top:0}.rt-av{width:34px;height:34px;border-radius:50%;background:var(--sub);overflow:hidden;flex:none;display:grid;place-items:center;font:800 11px var(--sans);color:var(--wine-ink)}.rt-av img{width:150%;margin-top:4px}
-.rt-p b{display:block;font-size:13.5px}.rt-p small{display:block;font-size:11.5px;color:var(--muted)}.rt-tl{appearance:none;border:0;background:none;padding:0 0 0 6px;font:600 11px var(--sans);color:var(--wine-ink);cursor:pointer}
+.rt-p b{display:block;font-size:13.5px}.rt-p small{display:block;font-size:11.5px;color:var(--muted)}.rt-tl{white-space:nowrap;appearance:none;border:0;background:none;padding:0 0 0 6px;font:600 11px var(--sans);color:var(--wine-ink);cursor:pointer}
 .rt-sw{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}.rt-sw button{appearance:none;font:700 12px var(--sans);letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);padding:6px 11px;color:var(--fg2);background:var(--card);cursor:pointer}.rt-sw button[aria-selected=true]{background:#7A1F33;border-color:#7A1F33;color:#fff}
 .rt-tree{position:relative}.rt-ln{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}.rt-ln path{fill:none;stroke:var(--tick);stroke-width:2}.rt-ln path.g{stroke:#F2B231;stroke-width:3}
 .rt-row{display:grid;grid-template-columns:56px repeat(3,minmax(0,1fr));gap:12px;align-items:center;margin-bottom:26px;position:relative;z-index:1}
@@ -279,7 +279,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,
 
 body{margin:0}
 .gp-tape{row-gap:6px}.gp-tape .gtv small{margin-left:5px}.gp-tape .gtv.r small{margin:0 5px 0 0}
-.vmore{display:none}[data-theme="dark"] .rtag.b2b{box-shadow:inset 0 0 0 1px rgba(242,178,49,.55)}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rtag.b2b{box-shadow:inset 0 0 0 1px rgba(242,178,49,.55)}}
+.vmore{display:none}[data-theme="dark"] .extb{color:#8CC4EA!important;border-color:#8CC4EA!important}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .extb{color:#8CC4EA!important;border-color:#8CC4EA!important}}[data-theme="dark"] .apt td.y{color:#5FD08E}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .apt td.y{color:#5FD08E}}[data-theme="dark"] .rtag.b2b{box-shadow:inset 0 0 0 1px rgba(242,178,49,.55)}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rtag.b2b{box-shadow:inset 0 0 0 1px rgba(242,178,49,.55)}}
 @media (max-width:760px){body .rtag{font-size:8.5px;padding:1px 4px;letter-spacing:.03em}.vgrid:not(.all)>:nth-child(n+3){display:none}.vmore{display:block;width:100%;margin:10px 0 18px;appearance:none;background:var(--card);border:1px solid var(--line);color:var(--wine-ink);font:700 13px var(--sans);padding:10px;cursor:pointer}}
 
 .rc2-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.rc2-bio{font-size:13.5px;color:var(--muted)}.rc2-top .rc-x{position:static;flex:none}
@@ -1062,7 +1062,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 .ci-br.on{opacity:1}.ci-logo{width:clamp(64px,9vw,110px)}.ci-wm{font:600 clamp(56px,11vw,132px)/1 var(--mono);color:#fff;margin-top:10px;letter-spacing:-.03em}.ci-wm span{color:#F2B231}
 .ci-tg{font:700 clamp(22px,3.4vw,42px)/1.25 var(--sans);color:#fff;margin:22px 0 0;opacity:0;transform:translateY(8px);transition:all .45s}.ci-tg.on{opacity:1;transform:none}.ci-tg em{display:block;font-style:normal;color:#F2B231}
 .ci-skip{position:absolute;right:18px;bottom:18px;z-index:2;background:none;border:1px solid rgba(255,255,255,.35);color:#fff;font:600 13px var(--sans);padding:8px 14px;cursor:pointer}
-.injx{display:inline-grid;place-items:center;width:13px;height:13px;margin-left:4px;border-radius:3px;background:#C8102E;color:#fff;font:800 11px/1 var(--sans);font-style:normal;vertical-align:1px}
+.injx{display:inline-grid;place-items:center;width:13px;height:13px;margin-left:4px;border-radius:3px;background:#860038;color:#fff;font:800 11px/1 var(--sans);font-style:normal;vertical-align:1px}
 @media (max-width:720px){table.comps{min-width:0!important}table.comps,table.comps tbody{display:block;width:100%}table.comps thead{display:none}table.comps tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 10px;padding:6px 0;border-bottom:1px solid var(--line2)}table.comps td{border:0!important;padding:0!important;white-space:normal}table.comps td{font-size:12px!important}table.comps td:nth-child(1){grid-column:1;font-weight:600}table.comps td:nth-child(2){grid-column:1;font-size:12px;color:var(--muted)}table.comps td:nth-child(3){grid-column:2;grid-row:1}table.comps td:nth-child(4){grid-column:2;grid-row:2;font-size:12px;color:var(--muted)}}
 .tip{font-weight:700;color:var(--wine-ink);text-decoration:none;border-bottom:2px solid #F2B231}
 .gp{display:block}.gp-k{display:block;margin-bottom:6px}
@@ -1220,7 +1220,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
       <ul class="otd-also" id="otd-also" hidden></ul>
     </section>
     <section class="rail o-vid" aria-labelledby="vid-h">
-      <div class="block-h"><h2 id="vid-h">Latest video</h2><a href="/media" data-go="media">All video →</a></div>
+      <div class="block-h"><h2 id="vid-h">Latest video</h2><a href="/media" data-go="media">More on Media →</a></div>
       <div id="vid-home"></div>
     </section>
     <section class="rail" aria-labelledby="inj-h">
@@ -1267,19 +1267,19 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
       <p class="dim" style="margin:8px 0 0;font-size:12.5px">A team's position after the move is what counts. Making a move marked "hard caps" means the team can't go over that line for the rest of the league year. The Cavs are hard-capped at the first apron this season. Rules: NBA CBA, as summarized by the <a href="https://cbaguide.com/thresholds/apron/" target="_blank" rel="noopener">CBA Guide</a>.</p>
     </section>
     <div class="cols">
-      <section><div class="block-h"><h2>Two-way</h2><span>3 of 3 spots filled</span></div><ul class="kv" id="twoway"></ul>
+      <section><div class="block-h"><h2>Two-way</h2><span id="tw-spots">3 of 3 spots filled</span></div><ul class="kv" id="twoway"></ul>
         <p class="dim" style="margin:8px 0 0;font-size:12.5px">Two limits apply, and the tighter one wins: a player needs 3 or fewer years of NBA service to sign a two-way, and he can spend no more than 3 seasons on two-ways with the same team. Tap a player for his details.</p></section>
       <section><div class="block-h"><h2>Exhibit 10</h2><span id="ex10-n"></span></div><ul class="kv" id="camp"></ul>
         <p class="dim" style="margin:8px 0 0;font-size:12.5px">Exhibit 10 deals are one-year, non-guaranteed minimum contracts for training camp. If the Cavs waive one of these players before the season and he signs with the Charge, Cleveland keeps his G League rights (an affiliate player) and he can earn a bonus of up to $91,000 after 60 days there.</p>
         <div class="block-h" style="margin-top:22px"><h2>Cap holds</h2><span id="holds-tot"></span></div><p id="holds" style="margin:10px 0 0;font-size:13.5px;line-height:1.5"></p>
         <p class="dim" style="margin:6px 0 0;font-size:12.5px">Old free agents Cleveland has never renounced. They only count if the Cavs try to get under the cap. They don't count toward the tax, the aprons or the hard cap.</p></section>
     </div>
-    <p class="dim" style="margin:0;font-size:13px">14 of 15 standard spots filled. Salaries: Capsheets for 2026–27 and Spotrac for later seasons. Bird rights: Salary Swish. Free agency: Spotrac. Option dates: Spotrac. Free agent year is the summer the player hits the market.</p>
+    <p class="dim" style="margin:0;font-size:13px"><span id="std-spots">14 of 15 standard spots filled.</span> Salaries: Capsheets for 2026–27 and Spotrac for later seasons. Bird rights: Salary Swish. Free agency: Spotrac. Option dates: Spotrac. Free agent year is the summer the player hits the market.</p>
     <section class="gloss" id="glossary" aria-labelledby="gl-h">
       <div class="block-h"><h2 id="gl-h">CBA glossary</h2><span>The terms on this page, in plain English</span></div>
       <div class="gl-filter"><input id="glq" type="search" placeholder="Find a term" aria-label="Find a glossary term"></div>
       <div id="glbody"></div>
-      <p class="dim" style="margin:12px 0 0;font-size:12.5px">Figures are 2026–27. Simplified from the <a href="https://cbaguide.com" target="_blank" rel="noopener">CBA Guide</a>, the NBA's <a href="https://official.nba.com/wp-content/uploads/sites/4/2024/11/2024-25-CBA-101.pdf" target="_blank" rel="noopener">CBA 101</a>, Larry Coon's <a href="http://www.cbafaq.com" target="_blank" rel="noopener">CBA FAQ</a>, the <a href="https://www.hoopsrumors.com/hoops-rumors-glossary" target="_blank" rel="noopener">Hoops Rumors glossary</a> and <a href="https://www.salaryswish.com" target="_blank" rel="noopener">Salary Swish</a>. The CBA has exceptions to nearly every rule; those sources have the fine print.</p>
+      <p class="dim" style="margin:12px 0 0;font-size:12.5px">Figures are 2026–27. Simplified from the <a href="https://cbaguide.com" target="_blank" rel="noopener">CBA Guide</a>, the NBA's <a href="https://official.nba.com/wp-content/uploads/sites/4/2024/11/2024-25-CBA-101.pdf" target="_blank" rel="noopener">CBA 101</a>, Larry Coon's <a href="https://www.cbafaq.com" target="_blank" rel="noopener">CBA FAQ</a>, the <a href="https://www.hoopsrumors.com/hoops-rumors-glossary" target="_blank" rel="noopener">Hoops Rumors glossary</a> and <a href="https://www.salaryswish.com" target="_blank" rel="noopener">Salary Swish</a>. The CBA has exceptions to nearly every rule; those sources have the fine print.</p>
     </section>
   </div>
 </main>
@@ -1317,7 +1317,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
       <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Schedule</div>
       <h1 style="margin-top:6px">2026–27 Schedule</h1>
       <div class="dim vdesc" style="margin:6px 0 0"><span>80 games set; 2 more are scheduled after the NBA Cup knockout round. <span id="tzline">All times Eastern.</span></span><div class="calw"><button type="button" class="calbtn" id="calbtn" aria-expanded="false" aria-controls="calmenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Add to calendar</button>
-        <div class="calmenu" id="calmenu" hidden><a href="webcal://cavsdatabase.com/cavs.ics">Apple Calendar (iPhone, Mac)</a><a href="https://calendar.google.com/calendar/render?cid=webcal%3A%2F%2Fcavsdatabase.com%2Fcavs.ics" target="_blank" rel="noopener">Google Calendar</a><a href="https://outlook.live.com/calendar/0/addfromweb?url=https%3A%2F%2Fcavsdatabase.com%2Fcavs.ics&amp;name=Cavs%202026-27" target="_blank" rel="noopener">Outlook</a><button type="button" id="calcopy">Copy the calendar link</button><small>Each game includes TV and radio. Time and channel changes update on their own (calendar apps re-check every few hours).</small></div></div></div>
+        <div class="calmenu" id="calmenu" hidden><a href="webcal://cavsdatabase.com/cavs.ics">Apple Calendar (iPhone, Mac)</a><a href="https://calendar.google.com/calendar/render?cid=webcal%3A%2F%2Fcavsdatabase.com%2Fcavs.ics" target="_blank" rel="noopener">Google Calendar</a><a href="https://outlook.live.com/calendar/0/addfromweb?url=https%3A%2F%2Fcavsdatabase.com%2Fcavs.ics&amp;name=Cavs%202026%E2%80%9327" target="_blank" rel="noopener">Outlook</a><button type="button" id="calcopy">Copy the calendar link</button><small>Each game includes TV and radio. Time and channel changes update on their own (calendar apps re-check every few hours).</small></div></div></div>
     </div>
     <section id="sp-std"></section>
     <section id="sp-rest"></section>
@@ -1457,7 +1457,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
   <div id="fb-done" hidden><b>Thanks!</b><p>Got it. Your note was sent.</p></div>
 </div>
 <div class="ci" id="ci" hidden aria-hidden="true"><div class="ci-ln"><b>&gt;</b><span id="ci-t"></span><i class="ci-cur"></i></div>
- <div class="ci-br" id="ci-br"><svg viewBox="0 0 100 100" class="ci-logo" aria-hidden="true"><g transform="translate(8 6) scale(.84)"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#7A1F33" stroke-width="2.5" fill="none"/></g></svg><div class="ci-wm">cavs_<span>db</span><i class="ci-cur"></i></div><h2 class="ci-tg" id="ci-tg">Everything Cavaliers.<em>Everything you need.</em></h2></div>
+ <div class="ci-br" id="ci-br"><svg viewBox="0 0 100 100" class="ci-logo" aria-hidden="true"><g transform="translate(8 6) scale(.84)"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#7A1F33" stroke-width="2.5" fill="none"/></g></svg><div class="ci-wm">cavs<span>_db</span><i class="ci-cur"></i></div><h2 class="ci-tg" id="ci-tg">Everything Cavaliers.<em>Everything you need.</em></h2></div>
  <button class="ci-skip" id="ci-skip" type="button">Skip</button></div>
 <noscript><nav aria-label="Pages" style="padding:16px"><a href="/">Home</a> · <a href="/schedule">Cavaliers schedule</a> · <a href="/roster">Cavaliers roster</a> · <a href="/staff">Coaches &amp; front office</a> · <a href="/cap">Cavaliers salary cap</a> · <a href="/assets">Draft picks &amp; exceptions</a> · <a href="/moves">Transactions</a> · <a href="/charge">Cleveland Charge</a> · <a href="/media">Media</a> · <a href="/resources">Resources</a></nav></noscript>
 <button type="button" class="btt" id="btt" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg></button>
@@ -1947,7 +1947,7 @@ function celebrate(){
   if(document.readyState==='complete')go();else addEventListener('load',go)}
 function confetti(){const c=document.createElement('canvas');c.id='confetti';document.body.appendChild(c);const x=c.getContext('2d');
   const fit=()=>{c.width=innerWidth*devicePixelRatio;c.height=innerHeight*devicePixelRatio};fit();addEventListener('resize',fit);
-  const C=['#860038','#FDBB30','#041E42','#FFFFFF','#B8860B'];const N=Math.min(220,Math.round(innerWidth/5));const t0=performance.now();
+  const C=['#860038','#F2B231','#7A1F33','#FFFFFF','#D99A12'];const N=Math.min(220,Math.round(innerWidth/5));const t0=performance.now();
   const P=Array.from({length:N},()=>({x:Math.random()*c.width,y:-Math.random()*c.height,w:(6+Math.random()*6)*devicePixelRatio,h:(9+Math.random()*8)*devicePixelRatio,vy:(1.4+Math.random()*2.2)*devicePixelRatio,vx:(Math.random()-.5)*1.2*devicePixelRatio,r:Math.random()*6.3,vr:(Math.random()-.5)*.2,c:C[Math.random()*C.length|0],sw:Math.random()*6.3}));
   const loop=t=>{const el2=t-t0;x.clearRect(0,0,c.width,c.height);let live=0;
     P.forEach(p=>{p.sw+=.03;p.x+=p.vx+Math.sin(p.sw)*.6*devicePixelRatio;p.y+=p.vy;p.r+=p.vr;
@@ -2182,7 +2182,7 @@ const ROSTER=[
   ['Jaylon Tyson','F',[3658560,[5641500,'T'],'RFA',null,null],'Full Bird','2028 RFA','Team option decision due Nov 2'],
   ['Thomas Bryant','C',[2449421,'UFA',null,null,null],'Early Bird','2027 UFA',''],
   ['Mario Hezonja','F',[2449421,'UFA',null,null,null],'Non-Bird','2027 UFA','Non-guaranteed until Nov 15'],
-  ['Nae’Qwan Tomlin','F',[2411090,'RFA',null,null,null],'Full Bird','2027 RFA',''],
+  ["Nae'Qwan Tomlin",'F',[2411090,'RFA',null,null,null],'Full Bird','2027 RFA',''],
   ['Craig Porter Jr.','G',[2406205,'UFA',null,null,null],'Full Bird','2027 UFA','Non-guaranteed until Jan 10'],
   ['Tyrese Proctor','G',[2150917,2525901,[2735698,'T'],'UFA',null],'Full Bird','2029 UFA','2027–28 partly guaranteed ($500K)'],
   ['Khalifa Diop','C',[1357763,2294370,2694363,[2918152,'T'],'UFA'],'Full Bird','2030 UFA','Future years non-guaranteed'],
@@ -2233,7 +2233,7 @@ const CONTRACTS={
   'Mario Hezonja':{sp:'17833/mario-hezonja',ag:null,yos:5,deal:[1,2845883,'2026–27','Veteran minimum'],aav:2845883,rank:['SF',61,90],rapm:null,
     lang:['Non-guaranteed until Nov 15, 2026. Cleveland can waive him before then without owing the rest.','He is paid $2,845,883, but only $2,449,421 counts on the cap.'],
     comps:[['Ziaire Williams','LAL','',2.85,[-2.4,462]],['Kenyon Martin Jr.','MIN','',2.85,null],['Simone Fontecchio','MIA','',2.63,[-0.6,249]]]},
-  'Nae’Qwan Tomlin':{sp:'95599/naeqwan-tomlin',ag:null,yos:2,deal:[2,3129240,'2025–26 to 2026–27','Minimum'],aav:1564620,rank:['PF',85,97],rapm:[0.0,198],
+  "Nae'Qwan Tomlin":{sp:'95599/naeqwan-tomlin',ag:null,yos:2,deal:[2,3129240,'2025–26 to 2026–27','Minimum'],aav:1564620,rank:['PF',85,97],rapm:[0.0,198],
     lang:['Restricted free agent next summer if Cleveland extends a qualifying offer.'],
     comps:[['Olivier-Maxence Prosper','MEM','',1.51,[-3.1,520]],['Cam Corhen','ATL','',1.36,null],['Karlo Matkovic','NOP','',1.8,[0.2,178]]]},
   'Craig Porter Jr.':{sp:'84768/craig-porter-jr',ag:'Ryan Straining',yos:3,deal:[4,8019739,'2023–24 to 2026–27','Non-taxpayer mid-level'],aav:2004935,rank:['PG',90,102],rapm:[-0.7,260],
@@ -2858,7 +2858,7 @@ const TREES=[
   ['',[['pw','c12','now','Peyton Watson','Aug 20, 2026 · Strus, Schröder, a 2031 1st, a 2032 2nd and cash, four-team sign-and-trade']]]],
   [['lv','dh'],['dh','ds'],['ds','pw',1],['st','pw',1]],'The Watson trade also brought back Cam Whitmore and the draft rights to Ismael Kamagate.']];
 setTimeout(function(){const lanes=document.getElementById('rt-lanes');if(!lanes)return;
-  const G=[['Drafted','#7A1F33',[]],['Trade','#C8102E',[]],['Free agent','#F2B231',[]],['Two-way','#9AA1A9',[]],['Camp','#D8DCE0',[]]];
+  const G=[['Drafted','#7A1F33',[]],['Trade','#B34766',[]],['Free agent','#F2B231',[]],['Two-way','#9AA1A9',[]],['Camp','#D8DCE0',[]]];
   PLAYERS.forEach(p=>{const n=p[1],q=ACQ[n]||['',''],yr=(q[1]||'').slice(0,4);let k=p[11]==='TW'?3:p[11]==='Camp'?4:/^Draft/.test(q[0])?0:/trade/i.test(q[0])?1:2;
     let sub=k===0?(q[0].match(/\((\d{4})\)/)||[,yr])[1]+' · '+((q[0].match(/No\. \d+/)||[''])[0])+(/signed/.test(q[0])?', signed '+yr:''):k>=3?(k===3?'Two-way':'Training camp')+(yr?' · '+yr:''):yr+' · '+q[0].replace(/^Trade from /,'from ').replace(/ \(re-signed.*\)/,'').replace(/^Sign-and-trade from /,'sign-and-trade, ').replace(/^Undrafted free agent$/,'undrafted').replace(/^Free agent$/,'free agent');
     G[k][2].push([n,p[12],sub])});
@@ -2877,6 +2877,8 @@ setTimeout(function(){const lanes=document.getElementById('rt-lanes');if(!lanes)
     const P=(id,b)=>{const r=document.getElementById('rt-'+id).getBoundingClientRect();return [r.left+r.width/2-R.left,b?r.bottom-R.top:r.top-R.top]};
     cur[4].forEach(([a,b,g])=>{const [x1,y1]=P(a,1),[x2,y2]=P(b,0),m=(y1+y2)/2;const p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('d','M'+x1+' '+y1+'C'+x1+' '+m+' '+x2+' '+m+' '+x2+' '+y2);p.setAttribute('class',g?'g':'');ln.appendChild(p)})}
   window.rtDraw=draw;addEventListener('resize',draw);pick('kyrie')},0);
+/* spot counts from the data */
+setTimeout(()=>{const t=document.getElementById('tw-spots');if(t)t.textContent=TWOWAY.length+' of 3 spots filled';const n=PLAYERS.filter(p=>!p[11]).length;const st=document.getElementById('std-spots');if(st)st.textContent=n+' of 15 standard spots filled.'},0);
 /* tap a term: cap and contract words get a dotted underline; tap for the glossary's plain-English meaning */
 setTimeout(function(){const G={};GLOSS.forEach(([,items])=>items.forEach(([t,d])=>{G[t]=d}));
   const MAP=[['non-taxpayer mid-level','Non-taxpayer mid-level exception (NTMLE)'],['taxpayer mid-level','Taxpayer mid-level exception (TMLE)'],['mid-level','Non-taxpayer mid-level exception (NTMLE)'],['first apron','First apron'],['second apron','Second apron'],['luxury tax','Luxury tax'],['tax line','Luxury tax'],['hard-capped','Hard cap'],['hard cap','Hard cap'],['salary cap','Salary cap'],['dead money','Dead money (dead salary)'],['cap holds?','Cap hold'],['bi-annual','Bi-annual exception (BAE)'],['trade exceptions?','Traded player exception (TPE)'],['early bird','Early Bird rights'],['non-bird','Non-Bird rights'],['full bird','Bird rights (Veteran Free Agent Exception)'],['bird rights','Bird rights (Veteran Free Agent Exception)'],['two-way','Two-way contract'],['exhibit 10','Exhibit 10'],['player option','Player option'],['team option','Team option'],['qualifying offer','Qualifying offer (QO)'],['stepien rule','Stepien Rule'],['sign-and-trade','Sign-and-trade'],['rookie[- ]scale','Rookie scale contract'],['restricted free agent','Restricted free agent (RFA)'],['swap rights','Pick swap'],['frozen','Frozen pick'],['aggregat\\w*','Aggregation'],['stretch provision','Stretch provision'],['non-guaranteed','Non-guaranteed contract'],['trade bonus','Trade kicker (trade bonus)'],['supermax','Designated veteran extension (supermax)'],['UFA','Unrestricted free agent (UFA)'],['RFA','Restricted free agent (RFA)']].filter(([,g])=>G[g]);
@@ -2967,6 +2969,7 @@ const fold=t=>String(t).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerC
 const IDX=[];
 const add=(title,sub,kind,go,id,extra)=>IDX.push({title,sub,kind,go,id,hay:fold([title,sub,extra||''].join(' '))});
 SECTIONS.slice(1).forEach(([id,l,,d])=>add(l,d,'Page',id,null));
+add('How this roster was built','Roster tree: every player by how he arrived, plus trade trees','Page','roster-tree',null,'roster tree trade tree kyrie how acquired built');
 if(PP_ON)[...ROSTER.filter(r=>r[1]!=='—').map(r=>r[0]),...TWOWAY.map(t=>t[0])].forEach(n=>add(n,'Player page · contract, bio, measurements','Player','players/'+slug(n),null,'player page profile bio stats contract'));
 ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{const y=yrs[0];add(n,(t==='Dead money'?'Dead money · ':p+' · ')+usd(Array.isArray(y)?y[0]:y)+(bird!=='—'?' · '+bird:''),'Player','cap','p-'+slug(n),fa+' '+t)});
 TWOWAY.forEach(([n,b,f])=>add(n,'Two-way · '+b+' · '+f,'Player','cap','p-'+slug(n),'two way'));
@@ -3050,11 +3053,11 @@ const GLOSS=[
   ["Cap space (Room)", "How far a team’s salary sits below the salary cap. A team can use cap space to sign free agents or take on salary in trades without matching."],
   ["Team salary", "The total the league measures against the cap. It includes player salaries plus cap holds, dead money and certain other charges, and it leaves out two-way contracts and some other items."],
   ["Committed salary", "Salary a team is already obligated to pay players under signed contracts for a season, before cap holds are added. It is the core of team salary."],
-  ["Cap hit", "The amount a single player’s contract counts toward team salary in a given season. It can differ from what he is actually paid, for example with likely bonuses or veteran-minimum subsidies."],
+  ["Cap hit", "The amount a single player’s contract counts toward team salary in a given season. It can differ from what he is actually paid, for example with likely bonuses or veteran minimum subsidies."],
   ["Dead money (dead salary)", "Guaranteed salary still on a team’s books for a player it waived. It counts toward team salary unless removed by set-off or a long-term injury exclusion."],
-  ["Cap hold", "A placeholder amount that counts against the cap for a team’s own free agents, unsigned first-round picks, open roster spots and some exceptions. It stops teams from using cap space and then re-signing their own players over the cap."],
+  ["Cap hold", "A placeholder amount that counts against the cap for a team’s own free agents, unsigned first round picks, open roster spots and some exceptions. It stops teams from using cap space and then re-signing their own players over the cap."],
   ["Free agent cap hold", "A hold on a team’s own free agent equal to a set percentage of his prior salary (for example, 190% or 150% for a Full Bird player depending on salary). It stays until the player signs or is renounced."],
-  ["First-round pick cap hold", "An unsigned first-round pick counts at 120% of his rookie-scale amount from the moment he is drafted until he signs or his rights are lost or traded."],
+  ["First round pick cap hold", "An unsigned first round pick counts at 120% of his rookie scale amount from the moment he is drafted until he signs or his rights are lost or traded."],
   ["Open roster spot cap hold", "If a team has fewer than 12 players counting toward the cap, each empty spot up to 12 counts as a 0-year minimum salary hold."],
   ["Renounce", "Giving up the right to re-sign a free agent (or another right) so its cap hold comes off the books and frees cap space. A renounced player can still be re-signed with cap room or the minimum, but not with Bird rights."],
   ["Minimum team salary", "The salary floor, set at 90% of the cap: $148,465,000 for 2026–27. A team below it at the start of the regular season must pay the shortfall to its players and is charged a hold for the difference."],
@@ -3064,12 +3067,12 @@ const GLOSS=[
   ["Taxpayer", "A team whose tax salary at the end of the regular season is above the tax line."],
   ["Repeater tax", "Higher tax rates (starting at $3.00 per dollar) charged to teams that paid tax in at least 3 of the previous 4 seasons."],
   ["Tax distribution", "Up to half of all tax payments can be split among teams that didn’t pay tax. Teams that missed the salary floor don’t share."],
-  ["Tax salary", "The salary figure used for the luxury tax, measured at the start of a team’s last regular-season game. It adds earned unlikely bonuses and takes out likely bonuses that weren’t earned."],
+  ["Tax salary", "The salary figure used for the luxury tax, measured at the start of a team’s last regular season game. It adds earned unlikely bonuses and takes out likely bonuses that weren’t earned."],
   ["First apron", "A spending line above the tax ($209,015,000 for 2026–27). Teams above it can’t use the non-taxpayer MLE or bi-annual exception, take in a player via sign-and-trade, use an expanded TPE, or sign certain waived players, and face limits on using standard TPEs."],
-  ["Second apron", "The highest spending line ($221,686,000 for 2026–27). Teams above it also lose the taxpayer MLE, can’t combine salaries in trades, can’t send cash in trades, and risk having a future first-round pick frozen."],
+  ["Second apron", "The highest spending line ($221,686,000 for 2026–27). Teams above it also lose the taxpayer MLE, can’t combine salaries in trades, can’t send cash in trades, and risk having a future first round pick frozen."],
   ["Apron team salary", "The salary figure used to test the aprons. It starts from team salary, drops cap holds, adds unlikely bonuses, and counts 0-1 year veterans on minimum deals at the 2-year minimum, among other adjustments."],
   ["Hard cap", "A ceiling a team cannot exceed for any reason for the rest of the season. A team becomes hard-capped at the first or second apron when it uses a move limited by that apron, such as the non-taxpayer MLE or a sign-and-trade (first apron) or the taxpayer MLE (second apron). The Cavs are hard-capped at the first apron after the Watson sign-and-trade."],
-  ["Payroll vs. team salary", "Payroll is what a team actually pays its players. Team salary is the cap-accounting number, which can differ because of cap holds, minimum-salary subsidies, likely/unlikely bonuses and stretched dead money."],
+  ["Payroll vs. team salary", "Payroll is what a team actually pays its players. Team salary is the cap-accounting number, which can differ because of cap holds, minimum salary subsidies, likely/unlikely bonuses and stretched dead money."],
   ["Basketball Related Income (BRI)", "The league’s revenue base that sets the salary cap and other thresholds each year."],
   ["Average player salary / EAPS", "The league average salary. The Estimated Average Player Salary (EAPS) is 104.5% of the prior year’s average ($15,163,000 for 2026–27) and is used in several contract formulas."],
   ["Long-term injury exclusion", "After a player is waived and the league approves, a career-ending injury can let a team remove his salary from team salary. The salary comes back if he later plays 25 games."]]],
@@ -3078,7 +3081,7 @@ const GLOSS=[
   ["Taxpayer mid-level exception (TMLE)", "A smaller mid-level ($6,064,000 for 2026–27, up to 2 years) available to teams below the second apron. Using it hard-caps the team at the second apron and blocks several other moves for the year."],
   ["Room mid-level exception (Room MLE)", "For teams that use cap space: lets them go back over the cap once by up to $9,366,000 for 2026–27, for up to 3 years. A team that uses it can’t use the other MLEs or the bi-annual."],
   ["Bi-annual exception (BAE)", "Lets a team below the first apron sign players up to $5,477,000 for 2026–27, for up to 2 years. It can’t be used in back-to-back seasons."],
-  ["Minimum exception", "Lets any team sign players to minimum-salary contracts of up to 2 years, even over the cap or aprons."],
+  ["Minimum exception", "Lets any team sign players to minimum salary contracts of up to 2 years, even over the cap or aprons."],
   ["Veteran minimum subsidy", "When a veteran signs a 1-year minimum deal, the team’s cap and tax charge is only the 2-year-veteran minimum. The league pays the rest of his salary."],
   ["Minimum salary", "The lowest salary a player can earn, set by his years of service. For 2026–27 it runs from $1,357,763 (0 years) to $3,876,529 (10+ years)."],
   ["Traded player exception (TPE)", "An umbrella term for the rules that let a team over the cap take back salary in a trade. In everyday use it usually means the leftover credit a team gets when it sends out more salary than it takes back."],
@@ -3089,8 +3092,8 @@ const GLOSS=[
   ["Aggregated TPE", "Lets a team combine two or more outgoing salaries to take back up to 100% of the total plus $250,000. Only teams below the second apron can use it, and using it hard-caps the team there."],
   ["Room TPE", "A team under the cap can absorb salary in a trade as long as it ends up no more than $250,000 over the cap."],
   ["Disabled player exception (DPE)", "If the league rules that a player is likely out for the season, the team can add a replacement on a 1-year deal for the lesser of half his salary or the NTMLE amount. It must be applied for by January 15 and used by March 10."],
-  ["Rookie scale exception", "Lets a team sign its first-round picks to rookie-scale contracts even if it’s over the cap."],
-  ["Second-round pick exception", "Lets a team sign its second-round picks over the cap to deals of 2 years plus a team option or 3 years plus a team option, with salaries tied to the minimum scale. These deals don’t count toward team salary until July 31."],
+  ["Rookie scale exception", "Lets a team sign its first round picks to rookie scale contracts even if it’s over the cap."],
+  ["Second round pick exception", "Lets a team sign its second round picks over the cap to deals of 2 years plus a team option or 3 years plus a team option, with salaries tied to the minimum scale. These deals don’t count toward team salary until July 31."],
   ["Bird rights (Veteran Free Agent Exception)", "Lets a team go over the cap to re-sign its own free agent. Full Bird rights (3 seasons) allow up to the max for 5 years with 8% raises."],
   ["Early Bird rights", "After 2 seasons, a team can re-sign its player for the greater of 175% of his prior salary or 105% of the average salary ($15,235,500 for 2026–27). The deal must run 2-4 years."],
   ["Non-Bird rights", "After 1 season, a team can re-sign its player for up to the greater of 120% of his prior salary or the minimum, for up to 4 years with 5% raises."],
@@ -3098,34 +3101,34 @@ const GLOSS=[
   ["Non-aggregation of exceptions", "A team can’t combine two exceptions (say, the MLE and the BAE) to sign one player for more than either allows."],
   ["Exception proration", "Most exceptions keep full value until January 10, then shrink day by day. The minimum prorates from the start of the season, and the DPE and TPEs don’t prorate."]]],
  ["Players’ rights & free agency",[["Unrestricted free agent (UFA)", "A player not under contract who can sign with any team. His old team has no right to match offers."],
-  ["Restricted free agent (RFA)", "A free agent whose former team can match any offer sheet he signs. It usually applies to players coming off rookie-scale deals or with 3 or fewer years of service, as long as the team made a qualifying offer."],
+  ["Restricted free agent (RFA)", "A free agent whose former team can match any offer sheet he signs. It usually applies to players coming off rookie scale deals or with 3 or fewer years of service, as long as the team made a qualifying offer."],
   ["Qualifying offer (QO)", "A 1-year, fully guaranteed offer a team must make by June 29 to keep a player restricted. The amount is set by a formula tied to draft slot and starter criteria. The player can accept it and become a UFA after that season."],
   ["Starter criteria", "A player meets them by starting 41 games or playing 2,000 minutes in the prior season, or averaging that over the last two. Meeting them can raise or lower the size of his qualifying offer."],
-  ["Maximum qualifying offer", "An optional 5-year, max-salary qualifying offer a team can make to a player coming off his rookie scale. The player may accept it instead of the standard QO."],
+  ["Maximum qualifying offer", "An optional 5-year, max salary qualifying offer a team can make to a player coming off his rookie scale. The player may accept it instead of the standard QO."],
   ["Offer sheet", "A contract another team signs with a restricted free agent. It must run at least 2 years (3 against a maximum QO), and the offering team needs cap room or an exception to cover it."],
   ["Right of first refusal (matching)", "The former team’s right to keep a restricted free agent by matching an offer sheet’s principal terms, usually within about a day or two. A matched player can’t be traded for a year without his consent, and never to the offering team in that year."],
   ["Gilbert Arenas provision", "Limits offer sheets to RFAs with 1 or 2 years of service. The first year can’t exceed the non-taxpayer MLE, though the offer can jump in year 3. The matching team can spread the cap hit evenly."],
   ["Moratorium", "The early-July quiet period (July 1 through noon on July 6) when deals can be agreed to but most can’t be signed."],
   ["Prior team", "The team whose roster a player finished the season on. It’s the only team that can use his Bird rights."],
   ["Rookie free agent", "An eligible player who went undrafted, or whose draft rights lapsed. He can sign with any team."],
-  ["Years of service (YOS)", "A player earns a year of service for each season he spends at least one regular-season day on an NBA active or inactive list. YOS sets minimum and maximum salaries and two-way eligibility."],
+  ["Years of service (YOS)", "A player earns a year of service for each season he spends at least one regular season day on an NBA active or inactive list. YOS sets minimum and maximum salaries and two-way eligibility."],
   ["Draft rights", "A team’s exclusive right to negotiate with a player it drafted who hasn’t signed yet."],
-  ["Required tender", "A 1-year contract offer a team must make to its draft pick (by July 15 for first-rounders, August 5 for second-rounders) to keep his draft rights."]]],
+  ["Required tender", "A 1-year contract offer a team must make to its draft pick (by July 15 for first rounders, August 5 for second rounders) to keep his draft rights."]]],
  ["Contracts",[["Pay rank", "Used on this site’s cap sheet: where a player’s average annual salary ranks among all NBA players at his position, using Spotrac’s active contracts."],
   ["Uniform Player Contract (UPC)", "The standard contract every player signs. Teams and players modify it only through optional exhibits, such as guarantees, options and trade bonuses."],
   ["Standard contract", "Any NBA contract other than a two-way. Only standard contracts count toward the 15-man roster."],
-  ["Rookie scale contract", "The 4-year deal every first-round pick signs. The first 2 years are guaranteed and years 3 and 4 are team options. Pay is set by draft slot, from 80% to 120% of the scale amount."],
-  ["Rookie scale team options", "The third- and fourth-year options on a rookie-scale deal. Each must be picked up by October 31 of the season before it applies. If one is declined, the player becomes an unrestricted free agent, and his old team can pay him no more than the option amount."],
+  ["Rookie scale contract", "The 4-year deal every first round pick signs. The first 2 years are guaranteed and years 3 and 4 are team options. Pay is set by draft slot, from 80% to 120% of the scale amount."],
+  ["Rookie scale team options", "The third- and fourth-year options on a rookie scale deal. Each must be picked up by October 31 of the season before it applies. If one is declined, the player becomes an unrestricted free agent, and his old team can pay him no more than the option amount."],
   ["Maximum salary", "The most a player can earn in the first year of a contract, set by years of service. For 2026–27 it is $41,240,250 for 0-6 years (25% of the cap), $49,488,300 for 7-9 years (30%), and $57,736,350 for 10+ years (35%)."],
   ["Higher max criteria", "Winning MVP, making All-NBA or winning DPOY in the right seasons. Meeting them lets a player earn a higher max percentage, such as 30% instead of 25% on a rookie extension, or 35% instead of 30%."],
   ["Designated veteran extension (supermax)", "A 6-year extension at 30-35% of the cap for a player with 7 or 8 years of service who has stayed with his drafting team (or was traded in his first 4 years) and met the higher max criteria. A player who signs one can’t be traded for a year."],
-  ["Rookie scale extension", "An extension a first-round pick can sign after his third season, before his fourth season starts. It pays up to 25% of the cap (30% if he meets the higher max criteria) for up to 5 extra years."],
+  ["Rookie scale extension", "An extension a first round pick can sign after his third season, before his fourth season starts. It pays up to 25% of the cap (30% if he meets the higher max criteria) for up to 5 extra years."],
   ["Veteran extension", "An extension for a player not on a rookie deal. The first year is generally capped at 140% of his current salary or 140% of the EAPS, with up to 5 total seasons and 8% raises."],
   ["Extension eligibility", "A veteran can extend 2 years after signing a 3- or 4-year deal, or 3 years after signing a 5- or 6-year deal. A team that trades for a player must wait 6 months before giving him a big extension."],
-  ["Renegotiation", "A team with cap space raises a player’s current-season salary. It needs a 4+ year contract at least 3 years old, can’t be done from March 1 to June 30, and the player can’t be traded for 6 months afterward."],
+  ["Renegotiation", "A team with cap space raises a player’s current season salary. It needs a 4+ year contract at least 3 years old, can’t be done from March 1 to June 30, and the player can’t be traded for 6 months afterward."],
   ["Raises", "Yearly salary increases are capped at 8% of the first-year salary for Bird-rights re-signings and extensions, and 5% for most other signings."],
   ["Player option", "A one-year option the player controls to extend his contract for one more season. It generally must be decided by June 29."],
-  ["Team option", "A one-year option the team controls to extend a player’s contract for one more season. It generally must be decided by June 29 (October 31 for rookie-scale options)."],
+  ["Team option", "A one-year option the team controls to extend a player’s contract for one more season. It generally must be decided by June 29 (October 31 for rookie scale options)."],
   ["Early termination option (ETO)", "A player’s right to end his contract one year early. It can only apply after the fourth season."],
   ["Guaranteed contract", "A contract with full compensation protection: the player gets his full salary even if waived."],
   ["Partially guaranteed contract", "A contract where only part of the salary is protected if the player is waived."],
@@ -3137,14 +3140,14 @@ const GLOSS=[
   ["Signing bonus", "Up-front pay of up to 15% of a contract (10% on offer sheets). For cap purposes it is spread evenly over the contract years."],
   ["Deferred compensation", "Salary earned in a season but paid after May 1, capped at 25% of that season’s pay. It counts against the cap in the season it is earned."],
   ["Two-way contract", "A contract of up to 2 years for players with fewer than 4 years of service. It pays half the rookie minimum ($678,882 for 2026–27) and doesn’t count toward team salary. Players can be active for up to 50 NBA games. Teams can carry 3."],
-  ["Two-way three-season limit", "A team can’t sign, convert or acquire a player who has already been on a two-way with that team during parts of more than 3 seasons."],
-  ["Two-way conversion", "A team can convert a two-way to a standard contract (paying the minimum, same length) any time before its last regular-season game without the player’s consent. Two-way players aren’t playoff-eligible unless converted before the regular season ends."],
+  ["Two-way three season limit", "A team can’t sign, convert or acquire a player who has already been on a two-way with that team during parts of more than 3 seasons."],
+  ["Two-way conversion", "A team can convert a two-way to a standard contract (paying the minimum, same length) any time before its last regular season game without the player’s consent. Two-way players aren’t playoff-eligible unless converted before the regular season ends."],
   ["Under-fifteen games", "Games where a team has fewer than 15 standard contracts and a two-way player is active. A team is limited to 90 per season."],
-  ["Exhibit 9 (training camp contract)", "A 1-year training-camp contract at the minimum (or two-way salary) with no guarantee of any kind. It lets a team bring a player to camp to compete for a spot at little financial risk."],
+  ["Exhibit 9 (training camp contract)", "A 1-year training camp contract at the minimum (or two-way salary) with no guarantee of any kind. It lets a team bring a player to camp to compete for a spot at little financial risk."],
   ["Exhibit 10", "A 1-year minimum contract that can be converted to a two-way before the regular season. It can include a bonus the player earns if he is waived and then spends 60 days with the team’s G League affiliate. Teams can have 6 at once."],
   ["Exhibit 10 bonus", "A bonus of $5,000 to $91,000 (2026–27 maximum). It is paid if the player is waived before the season, signs with the team’s G League affiliate, and stays there 60 days. It doesn’t count toward team salary."],
   ["Affiliate player", "A player waived from an Exhibit 10 deal who then joins the NBA team’s G League affiliate, which keeps his G League rights. A G League team that holds his returning-player rights takes priority."],
-  ["Summer contract", "A training-camp contract signed between July 1 and the start of the season. It pays nothing until the regular season and doesn’t count toward team salary until then."],
+  ["Summer contract", "A training camp contract signed between July 1 and the start of the season. It pays nothing until the regular season and doesn’t count toward team salary until then."],
   ["10-day contract", "A contract lasting 10 days or 3 games, whichever is longer, at a prorated minimum. It can be signed from January 5 (earlier under hardship). A team can give the same player only two before signing him for the rest of the season."],
   ["Rest-of-season contract", "A standard contract signed after the regular season begins (other than a 10-day). Salary is prorated for days remaining."],
   ["Over-38 rule", "Limits how much salary in later years can be counted for players who would be 38 or older at the end of a contract."]]],
@@ -3154,18 +3157,18 @@ const GLOSS=[
   ["Two-month aggregation restriction", "A player acquired in a trade can’t be combined with other salaries in another trade for 2 months. The exception is a player acquired before December 17, who can be aggregated at the deadline."],
   ["Newly signed player trade restriction", "Most free agents signed in the offseason can’t be traded until the later of 3 months or December 15. Players re-signed with Bird rights for a raise of more than 20% wait until the later of 3 months or January 15."],
   ["Base year compensation", "When a team re-signs its own player with Bird rights for a big raise and trades him soon after (including sign-and-trades), his outgoing trade salary can count lower than his cap hit. The usual 3-month/January 15 trade restriction also applies."],
-  ["Poison pill", "Applies when a player who just signed a rookie-scale extension is traded before it kicks in. The receiving team counts him at the average salary of his full contract, while the sending team counts his current salary."],
+  ["Poison pill", "Applies when a player who just signed a rookie scale extension is traded before it kicks in. The receiving team counts him at the average salary of his full contract, while the sending team counts his current salary."],
   ["Cash in trades", "Teams can send and receive up to 5.15% of the cap in cash each season ($8,495,000 for 2026–27), tracked separately in each direction. Teams above the second apron can’t send cash."],
   ["Trade kicker (trade bonus)", "A bonus of up to 15% of remaining salary paid when a player is traded. The sending team pays it, but it counts on the receiving team’s books. It’s paid only once, and the player can waive it."],
   ["Sign-and-trade", "A team re-signs its own free agent using Bird rights and immediately trades him. The deal must run 3-4 years and be fully guaranteed in year 1, and it must be done before the season starts. The receiving team becomes hard-capped at the first apron."],
   ["Extend-and-trade", "A player signs an extension and is traded in the same move. It is limited to 120% of his prior salary, 4 total seasons and 5% raises."],
-  ["No-trade clause", "A player’s right to block a trade. Express clauses are only allowed for players with 8+ years of service and 4+ with the same team. An automatic one-season clause applies after some one-year deals."],
+  ["No-trade clause", "A player’s right to block a trade. Express clauses are only allowed for players with 8+ years of service and 4+ with the same team. An automatic one season clause applies after some one-year deals."],
   ["Trade deadline", "After the deadline (early February), no trades can be made until the team’s regular season ends."],
   ["Touch rule", "In trades involving three or more teams, every team must send or receive something from at least two others."],
-  ["Stepien Rule", "A team can’t leave itself without a first-round pick in two consecutive future drafts. Owning another team’s first that year satisfies the rule."],
+  ["Stepien Rule", "A team can’t leave itself without a first round pick in two consecutive future drafts. Owning another team’s first that year satisfies the rule."],
   ["Seven-year rule", "Picks can only be traded up to seven drafts in the future."],
-  ["Frozen pick", "If a team finishes the regular season above the second apron, its first-round pick seven years out becomes untradeable."],
-  ["Pick slide", "A frozen first-round pick moves to the end of the first round if the team is above the second apron in 2 of the next 4 seasons. Otherwise it unfreezes."]]],
+  ["Frozen pick", "If a team finishes the regular season above the second apron, its first round pick seven years out becomes untradeable."],
+  ["Pick slide", "A frozen first round pick moves to the end of the first round if the team is above the second apron in 2 of the next 4 seasons. Otherwise it unfreezes."]]],
  ["Draft & picks",[["Protected pick", "A pick that only conveys if it lands outside a set range (for example, top-10 protected). If it doesn’t convey, the trade spells out what happens next, such as rolling to a later year. Protections must still meet the Stepien Rule."],
   ["Conditional pick", "A pick that conveys only if stated conditions are met. Specific contingency language is used so it still meets the Stepien and seven-year rules."],
   ["Pick deferral", "A one-time option to delay a pick’s conveyance or receipt by one year. It can’t be combined with protections on the same pick."],
@@ -3353,7 +3356,7 @@ const PLAYERS=[
  ['12','Riley Minix','F','6-7',230,'2000-09-22',26,'2','Morehead State','USA',null,'TW',1642434],
  ['21','Tristan Enaruna','F','6-7',220,'2001-06-26',25,'1','Cleveland State','Netherlands',null,'TW',1642400],
  ['88','Ernest Udeh Jr.','C','6-9',266,'2004-01-08',22,'R','Miami','USA',null,'TW',1643640],
- ['','Rashaun Agee','—','—',null,'2000-11-02',25,'R','—','—',null,'Camp',1643772],
+ ['','Rashaun Agee','F','—',null,'2000-11-02',25,'R','—','—',null,'Camp',1643772],
  ['','Zack Austin','G','6-5',216,'2001-08-11',25,'R','Pittsburgh','USA',null,'Camp',1643113],
  ['','Noam Yaacov','G','6-1',null,'2004-10-20',21,'R','Israel','Israel',null,'Camp',1643037]
 ];

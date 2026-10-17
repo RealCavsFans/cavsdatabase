@@ -45,6 +45,7 @@ try {
   const sorted = Object.fromEntries(Object.entries(out).sort(([x], [y]) => x.localeCompare(y)));
   await writeFile('box.json', JSON.stringify(sorted, null, 1) + '\n');
   console.log('box.json:', Object.keys(sorted).length, 'games');
+  await writeFile('box-status.txt', new Date().toISOString() + ' ok\n');
 } catch (e) {
   console.warn('Box score feed unavailable, keeping existing box.json:', e.message);
   await writeFile('box-status.txt', new Date().toISOString() + ' ' + String(e.message || e) + (e.cause ? ' / ' + String(e.cause.code || e.cause.message || e.cause) : '') + '\n');
