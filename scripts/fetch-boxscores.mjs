@@ -28,7 +28,9 @@ try {
   // best Cavs stat line for finals in the last 3 days (ESPN box score)
   const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba';
   for (const [date, g] of Object.entries(out)) {
-    if (g.status !== 'final' || (g.top && g.out && g.box && g.qs) || Date.now() - Date.parse(date + 'T12:00:00Z') > 3 * 864e5) continue;
+    // the last two days are re-read on every run, so stat corrections the league makes after a game get picked up
+    const recent = Date.now() - Date.parse(date + 'T12:00:00Z') < 2 * 864e5;
+    if (g.status !== 'final' || (!recent && g.top && g.out && g.box && g.qs) || Date.now() - Date.parse(date + 'T12:00:00Z') > 3 * 864e5) continue;
     try {
       const sb = await (await fetch(`${ESPN}/scoreboard?dates=${date.replace(/-/g, '')}`)).json();
       const ev = (sb.events || []).find(e => e.competitions?.[0]?.competitors?.some(c => c.team?.abbreviation === 'CLE'));
@@ -48,10 +50,10 @@ try {
       const n = (a, k) => parseFloat(a.stats[keys.indexOf(k)]) || 0;
       const best = (st.athletes || []).filter(a => a.stats?.length).sort((x, y) => ['PTS', 'REB', 'AST', 'STL', 'BLK'].reduce((s2, k) => s2 + n(y, k) - n(x, k), 0))[0];
       // Cavs box score for the game page: [name, min, pts, reb, ast, +/-, starter, fg, 3pt, ft, stl, blk, to]
-      if (!g.box) g.box = (st.athletes || []).filter(a => a.stats?.length && !a.didNotPlay).map(a => [a.athlete.displayName, String(a.stats[keys.indexOf('MIN')] ?? ''), String(n(a, 'PTS')), String(n(a, 'REB')), String(n(a, 'AST')), String(a.stats[keys.indexOf('+/-')] ?? ''), a.starter ? 1 : 0, ...['FG', '3PT', 'FT'].map(k => { const i = keys.indexOf(k); return i < 0 ? '' : String(a.stats[i] ?? ''); }), String(n(a, 'STL')), String(n(a, 'BLK')), String(n(a, 'TO'))]).sort((x, y) => y[6] - x[6] || (parseFloat(y[1]) || 0) - (parseFloat(x[1]) || 0));
+      if (!g.box || recent) g.box = (st.athletes || []).filter(a => a.stats?.length && !a.didNotPlay).map(a => [a.athlete.displayName, String(a.stats[keys.indexOf('MIN')] ?? ''), String(n(a, 'PTS')), String(n(a, 'REB')), String(n(a, 'AST')), String(a.stats[keys.indexOf('+/-')] ?? ''), a.starter ? 1 : 0, ...['FG', '3PT', 'FT'].map(k => { const i = keys.indexOf(k); return i < 0 ? '' : String(a.stats[i] ?? ''); }), String(n(a, 'STL')), String(n(a, 'BLK')), String(n(a, 'TO'))]).sort((x, y) => y[6] - x[6] || (parseFloat(y[1]) || 0) - (parseFloat(x[1]) || 0));
       // officials from ESPN, if the NBA page wasn't caught on game day
       if (!g.refs && sum.gameInfo?.officials?.length) g.refs = sum.gameInfo.officials.map(o => [o.position?.displayName || 'Official', o.displayName || o.fullName, String(o.jerseyNumber || '')]).filter(x => x[1]);
-      if (best && !g.top) g.top = `${best.athlete.displayName}: ${n(best, 'PTS')} pts, ${n(best, 'REB')} reb, ${n(best, 'AST')} ast`;
+      if (best && (!g.top || recent)) g.top = `${best.athlete.displayName}: ${n(best, 'PTS')} pts, ${n(best, 'REB')} reb, ${n(best, 'AST')} ast`;
     } catch (e) { console.warn('top line unavailable for', date, e.message); }
   }
   // game-day officials: official.nba.com posts the crews around 9 AM ET ("Away @ Home" rows, "Name (#12)" cells)
