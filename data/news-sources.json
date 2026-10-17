@@ -1,4 +1,16 @@
 {
- "_how": "Feeds the newsletter pulls each morning. type: article or podcast. url: an RSS or Atom feed. filter (optional): only keep items whose title matches this regex, e.g. Cavs|Cavaliers for a general NBA feed.",
- "sources": []
+ "_how": "Feeds the newsletter pulls. type: article, podcast or video. Give one of: site (a page; its RSS feed is found automatically), url (an RSS/Atom feed), apple (Apple Podcasts id), handle (YouTube @handle), channel (YouTube channel id), playlist (YouTube playlist id). filter (optional) keeps only titles matching the regex.",
+ "sources": [
+  { "name": "Hoops Rumors", "type": "article", "site": "https://www.hoopsrumors.com/cleveland-cavaliers", "url": "https://www.hoopsrumors.com/cleveland-cavaliers/feed" },
+  { "name": "Cavaliers on SI", "type": "article", "site": "https://www.si.com/nba/cavaliers" },
+  { "name": "cleveland.com", "type": "article", "site": "https://www.cleveland.com/cavs/" },
+  { "name": "Fear The Sword", "type": "article", "site": "https://www.fearthesword.com/", "url": "https://www.fearthesword.com/rss/current.xml" },
+  { "name": "Wine and Gold Talk", "type": "podcast", "apple": "1339173433" },
+  { "name": "Locked On Cavs", "type": "video", "handle": "@LockedOnCavs" },
+  { "name": "The Chase Down Podcast", "type": "video", "channel": "UCOdS-I1sYkKWhtTjMUWP_TA", "filter": "Chase Down" },
+  { "name": "It's Cavalier Podcast", "type": "video", "handle": "@itscavalierpodcast1410" },
+  { "name": "The Block, The Shot, The Stop", "type": "video", "handle": "@TheBlockTheShotTheStop" },
+  { "name": "Fear The Fro", "type": "video", "handle": "@fearthefropod" },
+  { "name": "", "type": "video", "playlist": "PLXIPdVacO1d4sx24tHEl8PTmpQyYMnfE1" }
+ ]
 }

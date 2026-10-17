@@ -16,15 +16,36 @@ const dur = s => { s = un(s); if (!s) return ''; if (/^\d+$/.test(s)) { const m 
 const cutoff = Date.now() - KEEP_DAYS * 864e5;
 const out = { articles: [], podcasts: [], videos: [], highlights: [] };
 const YT = process.env.YT_API_KEY;
-async function youtube(channel) {
+const UA = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36' };
+const get = async (u, accept) => { const r = await fetch(u, { headers: { ...UA, ...(accept ? { Accept: accept } : {}) }, signal: AbortSignal.timeout(20000) }); if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + u); return r; };
+// a YouTube playlist (a channel's uploads are playlist UU + channel id minus "UC")
+async function youtube(channel, playlist) {
+  const pl = playlist || 'UU' + channel.slice(2);
   if (YT) {
-    const r = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=UU${channel.slice(2)}&key=${YT}`, { signal: AbortSignal.timeout(20000) });
-    if (!r.ok) throw new Error('YouTube API HTTP ' + r.status);
-    return ((await r.json()).items || []).map(i => ({ id: i.snippet?.resourceId?.videoId, title: i.snippet?.title || '', date: i.snippet?.publishedAt }));
+    const j = await (await get(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${pl}&key=${YT}`)).json();
+    return (j.items || []).map(i => ({ id: i.snippet?.resourceId?.videoId, title: i.snippet?.title || '', date: i.snippet?.publishedAt }));
   }
-  const r = await fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${channel}`, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; cavsdatabase.com newsletter)' }, signal: AbortSignal.timeout(20000) });
-  if (!r.ok) throw new Error('HTTP ' + r.status);
-  return (await r.text()).split(/<entry[\s>]/).slice(1).map(x => ({ id: un(tag(x, 'yt:videoId')), title: un(tag(x, 'title')), date: un(tag(x, 'published')) }));
+  const xml = await (await get(playlist ? `https://www.youtube.com/feeds/videos.xml?playlist_id=${pl}` : `https://www.youtube.com/feeds/videos.xml?channel_id=${channel}`)).text();
+  return xml.split(/<entry[\s>]/).slice(1).map(x => ({ id: un(tag(x, 'yt:videoId')), title: un(tag(x, 'title')), date: un(tag(x, 'published')) }));
+}
+async function channelOf(handle) {
+  if (YT) { const j = await (await get(`https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=${encodeURIComponent(handle)}&key=${YT}`)).json(); if (j.items?.[0]?.id) return j.items[0].id; }
+  const h = await (await get('https://www.youtube.com/' + handle)).text();
+  const m = h.match(/"(?:channelId|externalId)":"(UC[\w-]{22})"/) || h.match(/channel\/(UC[\w-]{22})/); if (!m) throw new Error('no channel id for ' + handle); return m[1];
+}
+async function playlistName(pl) {
+  try { if (YT) { const j = await (await get(`https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=${pl}&key=${YT}`)).json(); return j.items?.[0]?.snippet?.title || ''; }
+    return un(tag(await (await get(`https://www.youtube.com/feeds/videos.xml?playlist_id=${pl}`)).text(), 'title')); } catch { return ''; }
+}
+// find a site's RSS feed: the page's <link rel="alternate">, then the usual spots
+async function feedsFor(s) {
+  const c = []; if (s.url) c.push(s.url);
+  if (s.apple) { const j = await (await get('https://itunes.apple.com/lookup?id=' + s.apple)).json(); if (j.results?.[0]?.feedUrl) c.push(j.results[0].feedUrl); }
+  if (s.site) {
+    try { const h = await (await get(s.site)).text(); for (const m of h.matchAll(/<link[^>]+type="application\/(?:rss|atom)\+xml"[^>]*>/gi)) { const u = (m[0].match(/href="([^"]+)"/) || [])[1]; if (u) c.push(new URL(u.replace(/&amp;/g, '&'), s.site).href); } } catch (e) { console.log(`${s.name}: page ${e.message}`); }
+    const b = s.site.replace(/\/$/, ''); c.push(b + '/feed', b + '/rss', b + '/rss/index.xml', new URL('/rss/index.xml', s.site).href);
+  }
+  return [...new Set(c)];
 }
 const vid = (src, v) => ({ src, title: un(v.title), link: 'https://www.youtube.com/watch?v=' + v.id, date: new Date(v.date).toISOString(), id: v.id });
 const NBA_CHANNEL = 'UCWJ2lWNubArHWmf3FIHbfcQ';
@@ -38,19 +59,21 @@ for (const s of cfg.sources || []) {
   const bucket = s.type === 'podcast' ? 'podcasts' : s.type === 'video' ? 'videos' : 'articles';
   const old = (prev[bucket] || []).filter(x => x.src === s.name);
   try {
-    if (s.channel) {
+    if (s.channel || s.handle || s.playlist) {
       const re = s.filter ? new RegExp(s.filter, 'i') : null;
-      const got = (await youtube(s.channel)).filter(v => v.id && v.title && !/#shorts/i.test(v.title) && (!re || re.test(v.title))).map(v => vid(s.name, v)).filter(x => Date.parse(x.date) > cutoff).slice(0, 10);
+      if (s.playlist && !s.name) s.name = (await playlistName(s.playlist)) || 'YouTube';
+      const ch = s.channel || (s.handle ? await channelOf(s.handle) : null);
+      const got = (await youtube(ch, s.playlist)).filter(v => v.id && v.title && !/#shorts/i.test(v.title) && (!re || re.test(v.title))).map(v => vid(s.name, v)).filter(x => Date.parse(x.date) > cutoff).slice(0, 10);
       out[bucket].push(...got); console.log(s.name + ':', got.length); continue;
     }
-    const r = await fetch(s.url, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; cavsdatabase.com newsletter)', Accept: 'application/rss+xml,application/atom+xml,application/xml;q=0.9,*/*;q=0.8' }, signal: AbortSignal.timeout(20000) });
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    const xml = await r.text();
+    let xml = '', used = '';
+    for (const u of await feedsFor(s)) { try { const t = await (await get(u, 'application/rss+xml,application/atom+xml,application/xml;q=0.9,*/*;q=0.8')).text(); if (/<(item|entry)[\s>]/i.test(t)) { xml = t; used = u; break; } } catch {} }
+    if (!xml) throw new Error('no working feed found');
     const items = xml.includes('<item') ? xml.split(/<item[\s>]/i).slice(1) : xml.split(/<entry[\s>]/i).slice(1);
     const re = s.filter ? new RegExp(s.filter, 'i') : null;
     const got = items.map(x => ({ src: s.name, title: un(tag(x, 'title')), link: un(tag(x, 'link')) || attr(x, 'link', 'href') || attr(x, 'enclosure', 'url'), date: new Date(un(tag(x, 'pubDate')) || un(tag(x, 'published')) || un(tag(x, 'updated')) || un(tag(x, 'dc:date'))).toISOString(), ...(bucket === 'podcasts' ? { dur: dur(tag(x, 'itunes:duration')) } : {}) }))
       .filter(x => x.title && x.link && Date.parse(x.date) > cutoff && (!re || re.test(x.title))).slice(0, 15);
-    out[bucket].push(...got); console.log(s.name + ':', got.length);
+    out[bucket].push(...got); console.log(s.name + ':', got.length, 'from', used);
   } catch (e) { console.log(`::warning::${s.name}: ${e.message}, keeping last run`); out[bucket].push(...old); }
 }
 for (const k of ['articles', 'podcasts', 'videos', 'highlights']) out[k].sort((a, b) => b.date.localeCompare(a.date));
