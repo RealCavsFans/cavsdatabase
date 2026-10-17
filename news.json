@@ -1,16 +1,34 @@
 {
  "articles": [
   {
+   "src": "Cavaliers on SI",
+   "title": "Cleveland Big Man Gives His Personal All-Time Starting Five",
+   "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxONHozVldIMkpCVnVUM19vei1GQjlKMV9rTG1ZTkZXYWJPNzB3RGdaRWV2MElRVGRqSmJwMFhMZXpGcDFWZ2pjemhKb0dGUEhQVURsRTV0RkVfYmNhTkVob2NhcGhydWhBdUNmcnVUU3FZNl9TVHA5WWM4UldhVy1UMzZac04zQWxVTU5qSUQtYmI1cVlXRjVyWVFodXRVQXhSc0FVOVFhc3ZRbVJsVkxr?oc=5",
+   "date": "2026-10-17T16:00:02.000Z"
+  },
+  {
    "src": "Hoops Rumors",
    "title": "Minor Moves: Thunder, Rockets, Cavs, Pelicans, Blazers, Spurs",
    "link": "https://www.hoopsrumors.com/2026/10/minor-moves-thunder-rockets-cavs-pelicans-blazers-spurs.html",
    "date": "2026-10-17T01:31:38.000Z"
   },
   {
+   "src": "Fear The Sword",
+   "title": "Cavs fans decide what new addition has impressed them most in preseason",
+   "link": "https://www.fearthesword.com/cavs-game-previews/53159/cavs-mario-hezonja-cleveland-cavaliers-fanduel-peyton-watson-meleek-thomas",
+   "date": "2026-10-16T21:30:00.000Z"
+  },
+  {
    "src": "cleveland.com",
    "title": "Donovan Mitchell fiercely defends Evan Mobley after latest snub",
    "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPalZFbDROdFFHSTJLV0x1Zks1UXE3MWtEd1RULWRqWGxZVUlobmVHXzdzM0N6WnRRQ0h5TUI2VlNyaWl4WWx1MWxEbHo2M3AwTDBxVkFuVmhuQ0w4VkZiZXcwNEtuLUlzcDJYdFpBTjZ1aDI3dXVpbDBUWXNlUG1IOVJiRnI3MDYxWThGVU44OEdwMHR1NjVzNFFwdU9aYXVMdWNmRUt5bDd1Yk0?oc=5",
    "date": "2026-10-16T20:02:00.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Mike Gansey was reportedly key in the James Harden acquisition",
+   "link": "https://www.fearthesword.com/cavs-rumors/53156/cavs-mike-gansey-koby-altman-cleveland-cavaliers-james-harden-philadelphia-76ers-sixers",
+   "date": "2026-10-16T17:30:00.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -83,12 +101,6 @@
    "title": "Updated Cleveland Cavaliers Starting Lineup vs. Orlando Magic",
    "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPSlA3QlJrR2IycWF5WmdUakRGZGxtbVpOY0dkaTdfRjExRTJjbGpBcEh1OFo3NWx0RXVweXp6UXU3UGxXTkFWVU9KSnhrOTlxQ3dnc1JUQk9fZ1FWSVRJSDh5WEw4bW1oaHVrWWp1cnJySDhqWWQ3d2VWeGZrelBxTXFPVTdzZlI1eVlQY0o4TDhLdW93OUFtLWgxOWVSeGRQVUNocHIxOFFCM0RZVXhSZQ?oc=5",
    "date": "2026-10-13T22:35:15.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Counting Down the Cavs: Breaking Down the History of the Number 9 in Cleveland",
-   "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNNUhUNlBTQnNKZENzdFhRTzhzb0F1UG96ZG9KY1VsLTNJVGhobXR0dG5lblZ4YTRZREl4TlNMSFcxRnVWQTdoai1qYklCMzlmS1BJVXpsR2k0cmplQTBrbnB6V0lxTXpPaHZUMHBmZGYzQnhWM1VKMmczQ2JVcnBnYWpOU0U1WnRydzJvay1LNzVVSGdWeHBQQ0swczRESG12VXU3SWZ4OGhNRV82SVg2akIwa3g1b0U3eTJhTWVyUUdMYTlwZWJv?oc=5",
-   "date": "2026-10-13T18:00:02.000Z"
   },
   {
    "src": "cleveland.com",
@@ -181,22 +193,10 @@
    "date": "2026-10-12T12:45:00.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "Kenny Atkinson believes he’s cracked the code for Evan Mobley",
-   "link": "https://www.fearthesword.com/cavs-analysis/53046/kenny-atkinson-believes-hes-cracked-the-code-for-evan-mobley",
-   "date": "2026-10-12T11:00:00.000Z"
-  },
-  {
    "src": "cleveland.com",
    "title": "Mario Hezonja embracing challenge of readjusting to NBA",
    "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQVjNQYTR1ZnJPZTYxQjluSDdyTUVRNHN6ajJkN2I2V0dDalZjcjVuZ3hpMHFwaHplUWpxM2lzTExKR3BLREdiUm4wSlc1enZuZ3V6RlNXMUtGUlpKQmRudDV0YVJOcWkxUXc5S21XcWpLUERySWpzVC14U0VTWHpYQU5FWk5pbVlmRXhvMDFJdGtKel9tVlJmYWM4RHlrZElm?oc=5",
    "date": "2026-10-12T04:16:00.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "8 Takeaways from Cavs 119-105 preseason win over Magic: ‘It's an adjustment’",
-   "link": "https://www.fearthesword.com/cavs-analysis/53052/cavs-takeaways-preseason-cleveland-cavaliers-orlando-magic-peyton-watson-mario-hezonja-james-harden-evan-mobley",
-   "date": "2026-10-12T03:37:31.000Z"
   },
   {
    "src": "Cavaliers on SI",
