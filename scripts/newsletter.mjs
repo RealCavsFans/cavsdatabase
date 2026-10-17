@@ -195,8 +195,43 @@ const prevGame = [...D.SCHEDULE].reverse().find(x => x[0] < g[0])?.[0];
 const since = lastIssue || prevGame || etDate(new Date(Date.parse(g[0] + 'T12:00:00Z') - 3 * 864e5));
 const lastSent = Object.values(sent).map(x => x.at).filter(Boolean).sort().pop();
 const sinceTs = lastSent ? Date.parse(lastSent) : Date.parse(since + 'T12:00:00Z');
+// milestone watch / records: career and Cavs totals (through last season) plus this season's box scores
+let MS = null; try { MS = JSON.parse(await readFile(new URL('data/milestones.json', root), 'utf8')); } catch {}
+function milestone() {
+  if (!MS || preseason) return '';
+  const regs = new Set(D.SCHEDULE.map(x => x[0]));
+  const add = upto => { const t = {}; for (const [d, gm] of Object.entries(box)) { if (!regs.has(d) || d > upto || !gm.box) continue; for (const [n, , pts, reb, ast] of gm.box) { const o = t[n] || (t[n] = { GP: 0, PTS: 0, REB: 0, AST: 0 }); o.GP++; o.PTS += +pts || 0; o.REB += +reb || 0; o.AST += +ast || 0; } } return t; };
+  const prevDay = [...D.SCHEDULE].reverse().find(x => x[0] < g[0])?.[0] || '0000';
+  const now = add(g[0]), was = add(prevDay);
+  const W = { PTS: 'points', REB: 'rebounds', AST: 'assists', GP: 'games' }, LIST = { PTS: 'scoring', REB: 'rebounding', AST: 'assists', GP: 'games played' };
+  const steps = { PTS: v => v >= 10000 ? 5000 : 0, REB: v => v >= 5000 ? 2500 : 0, AST: v => v >= 5000 ? 2500 : 0, GP: v => v >= 500 ? 250 : 0 };
+  const near = { PTS: 100, REB: 30, AST: 30, GP: 1 };
+  const fmt = n => n.toLocaleString('en-US');
+  const ordn = n => n + (n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] || 'th');
+  const hits = [], watch = [];
+  for (const [n, b] of Object.entries(MS.players)) {
+    const Z = { GP: 0, PTS: 0, REB: 0, AST: 0 }, a1 = now[n] || Z, a0 = was[n] || Z;
+    const played = (now[n]?.GP || 0) > (was[n]?.GP || 0);
+    for (const k of ['PTS', 'REB', 'AST', 'GP']) {
+      const c1 = b.career[k] + a1[k], c0 = b.career[k] + a0[k];
+      // career round numbers
+      const st = steps[k](c1); if (st && played && Math.floor(c1 / st) > Math.floor(c0 / st)) hits.push([3, `${n} reached ${fmt(Math.floor(c1 / st) * st)} career ${W[k]} last night.`]);
+      const st2 = steps[k](c1 + near[k]), nx = st2 ? (Math.floor(c1 / st2) + 1) * st2 : Infinity;
+      if (isFinite(nx) && nx - c1 <= near[k] && nx > c1) watch.push([nx - c1, `Milestone watch: ${n} is ${fmt(nx - c1)} ${nx - c1 === 1 ? W[k].replace(/s$/, '') : W[k]} from ${fmt(nx)} for his career.`]);
+      // Cavs all-time lists (top 10)
+      const L = MS.franchise[k]; if (!L) continue;
+      const v1 = b.cavs[k] + a1[k], v0 = b.cavs[k] + a0[k];
+      const others = L.filter(([m]) => m !== n);
+      const rk = v => 1 + others.filter(([, x]) => x > v).length;
+      if (played && rk(v1) < rk(v0) && rk(v1) <= 10) { const passed = others.filter(([, x]) => x <= v1 && x > v0).reverse().map(([m]) => m); const lst = passed.length > 1 ? passed.slice(0, -1).join(', ') + ' and ' + passed[passed.length - 1] : passed[0]; hits.push([2, `${n} passed ${lst} for ${ordn(rk(v1))} on the Cavs' all-time ${LIST[k]} list.`]); }
+      else { const ahead = others.filter(([, x]) => x > v1).pop(); if (ahead && rk(v1) <= 11 && ahead[1] - v1 + 1 <= near[k]) watch.push([ahead[1] - v1 + 1, `Milestone watch: ${n} is ${fmt(ahead[1] - v1 + 1)} ${W[k]} from passing ${ahead[0]} for ${ordn(rk(v1) - 1)} on the Cavs' all-time ${LIST[k]} list.`]); }
+    }
+  }
+  if (hits.length) return hits.sort((x, y) => y[0] - x[0])[0][1];
+  return watch.length ? watch.sort((x, y) => x[0] - y[0])[0][1] : '';
+}
 const tq = trivia.length ? trivia[Object.keys(sent).length % trivia.length] : null;
-const html = build(D, g, score, b.top || '', b.url || D.box[g[0]] || SITE + '/schedule', { issueDay: today, rcf, news, trivia: tq, since, sinceTs, test: MODE === 'test' || !LIVE, preseason });
+const html = build(D, g, score, b.top || '', b.url || D.box[g[0]] || SITE + '/schedule', { issueDay: today, rcf, news, trivia: tq, since, sinceTs, milestone: milestone(), test: MODE === 'test' || !LIVE, preseason });
 const [cs, os] = score.split('-').map(Number);
 const subj = `${MODE === 'test' || !LIVE ? '[Test] ' : ''}☕ Final: Cavs ${cs}, ${NICK[g[1]] || g[1]} ${os}${b.top ? ' · ' + b.top.split(':')[0].split(' ').slice(-1)[0] + ' ' + (b.top.match(/(\d+) pts/) || [])[1] : ''}`;
 await mkdir(new URL('nl/', root), { recursive: true });
