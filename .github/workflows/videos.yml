@@ -32,7 +32,7 @@ jobs:
         run: |
           git config user.name "cavsdatabase-bot"
           git config user.email "bot@cavsdatabase.com"
-          add(){ git add videos.json box.json rcf.json; [ -f niang.json ] && git add niang.json || true; git add *.html sitemap.xml; [ -f cavs.ics ] && git add cavs.ics || true; git add -A data/prerender-hash.txt 2>/dev/null || true; [ -d img ] && git add img || true; [ -f box-status.txt ] && git add box-status.txt || true; }
+          add(){ git add videos.json box.json rcf.json; [ -f niang.json ] && git add niang.json || true; git add *.html sitemap.xml; [ -d embed ] && git add embed || true; [ -f cavs.ics ] && git add cavs.ics || true; git add -A data/prerender-hash.txt 2>/dev/null || true; [ -d img ] && git add img || true; [ -f box-status.txt ] && git add box-status.txt || true; }
           # after a push that changed the pages, tell Bing/Yandex/others (IndexNow) to recrawl
           ping(){ if git diff --name-only HEAD~1 HEAD | grep -q prerender-hash; then
             K=$(ls *.txt | grep -E '^[0-9a-f]{32}\.txt$' | head -1 | sed 's/\.txt$//'); [ -n "$K" ] || return 0
