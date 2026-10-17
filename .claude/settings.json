@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:www.capsheets.com)",
+      "WebFetch(domain:www.spotrac.com)",
+      "WebFetch(domain:www.salaryswish.com)",
+      "WebFetch(domain:basketball.realgm.com)",
+      "WebFetch(domain:www.cbssports.com)",
+      "WebFetch(domain:www.basketball-reference.com)",
+      "WebFetch(domain:www.sportsmediawatch.com)",
+      "WebFetch(domain:sports.yahoo.com)",
+      "WebFetch(domain:www.legabasket.it)",
+      "WebFetch(domain:www.lkl.lt)",
+      "WebFetch(domain:lsusports.net)"
+    ]
+  }
+}
