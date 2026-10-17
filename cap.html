@@ -4195,7 +4195,7 @@ function ppBuild(p,root){
   bt.appendChild(el('h1',null,n));
   const season=exp==='R'?'Rookie season':ord(+exp+1)+' season';
   const allCle=rs.length&&rs.every(r=>r[1]==='CLE');
-  {const m=el('div','ppx-m');[age+' years old',ht&&ht!=='—'?ht.replace('-','′')+'″':'',season+(allCle&&+exp>=2?', all in Cleveland':''),cty&&cty!=='USA'&&cty!=='—'?'From '+cty:''].filter(Boolean).forEach((t,i)=>{if(i)m.append(' · ');m.appendChild(el('span','nw',t))});bt.appendChild(m)}
+  {const m=el('div','ppx-m');[age+' years old',ht&&ht!=='—'?ht.replace('-','′')+'″':'',season+(allCle&&+exp>=2?', all in Cleveland':''),cty&&cty!=='USA'&&cty!=='—'?'From '+cty:''].filter(Boolean).forEach((t,i)=>{if(i)m.append(' ');m.appendChild(el('span','nw',(i?'· ':'')+t))});bt.appendChild(m)}
   const pills=el('div','ppx-pills');const pill=(k,val,cls)=>{const s2=el('span','ppx-pill'+(cls?' '+cls:''));s2.append(k+' ');s2.appendChild(el('b',null,val));pills.appendChild(s2)};
   pill('Status',inj?inj[3]+' · '+inj[2].toLowerCase():'Healthy',inj?'warn':'');
   if(R){const last=R[2].reduce((m,x,i)=>typeof x==='number'||Array.isArray(x)?i:m,-1);const po=Array.isArray(R[2][last])?(R[2][last][1]==='P'?' (player option)':' (team option)'):'';if(last>=0)pill('Signed',`through ${SEASONS[last]}${po}`)}
@@ -4207,7 +4207,7 @@ function ppBuild(p,root){
   root.appendChild(band);
   // elsewhere on the site
   {const lk=el('div','ppx-links');lk.appendChild(el('span','ppx-lkh','Also on cavs_db'));
-    lk.append(ilink('Bio & Measurements','roster','r-'+slug(n)));if(R||stt)lk.append(ilink('Contract','cap','p-'+slug(n)));lk.append(ilink('Depth chart','roster'),ilink('Transactions','moves'));
+    lk.append(ilink('Bio & Measurements','roster','r-'+slug(n)));if(R||stt)lk.append(ilink('Contract','cap','p-'+slug(n)));lk.append(ilink('Depth Chart','roster'),ilink('Transactions','moves'));
     if(stt==='TW')lk.append(ilink('Charge','charge'));
     root.appendChild(lk)}
 
