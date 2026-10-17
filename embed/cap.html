@@ -418,7 +418,7 @@ tr.mark td{white-space:normal!important;line-height:1.45;text-indent:-16px;paddi
 .ppx{max-width:860px}.ppx-body{display:grid;gap:14px;margin-top:12px}
 .ppx-band{display:flex;gap:16px;align-items:flex-end;justify-content:space-between;background:linear-gradient(135deg,#8e2741,#6E1A2D);color:#fff;padding:18px 18px 0;overflow:hidden}
 .ppx-bt{padding-bottom:16px;min-width:0}.ppx-k{font:800 12px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:#F2B231}
-.ppx-band h1{margin:4px 0;font:800 44px/1 var(--cond);text-transform:uppercase;color:#fff}.ppx-m{font:600 13px var(--mono);color:#f3d9e3}
+.ppx-band h1{margin:4px 0;font:800 44px/1 var(--cond);text-transform:uppercase;color:#fff}.ppx-m{font:600 13px var(--mono);color:#f3d9e3}.ppx-m .nw{white-space:nowrap}
 .ppx-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.ppx-pill{font:700 11.5px var(--sans);letter-spacing:.03em;border:1px solid rgba(255,255,255,.35);padding:4px 8px}.ppx-pill b{color:#F2B231}.ppx-pill.warn{border-color:#F2B231}
 .ppx-ph{width:200px;flex:none;align-self:flex-end;display:grid;place-items:center;font:800 54px var(--cond);color:rgba(255,255,255,.5);min-height:120px}.ppx-ph img{width:100%;display:block}
 .ppx-links{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}.ppx-links>a{font:700 12.5px var(--sans);text-decoration:none;color:var(--fg);border:1px solid var(--line);background:var(--card);padding:8px 10px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ppx-lkh{grid-column:1/-1;font:800 10.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.ppx-soc{display:flex;gap:14px;margin-top:12px}.ppx-band .ppx-soc a{color:#fff!important;opacity:1}.ppx-soc svg{fill:currentColor;width:18px;height:18px}.ppx-links .soc a{color:var(--fg)}.ppx-links .soc svg{fill:currentColor}
@@ -3761,8 +3761,8 @@ const CH_STAFF=[
       const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,nm),el('small',null,t2));sm.appendChild(l);
       const box=el('div','xb bio');if(B.img){const im=el('img','bio-hs');im.src=B.img;im.alt=nm;im.loading='lazy';im.onerror=()=>im.remove();box.appendChild(im)}
       const body=el('div','bio-body');if(B.facts&&B.facts.length){const dl=el('dl','bio-f');B.facts.forEach(([k,v])=>dl.append(el('dt',null,k),el('dd',null,v)));body.appendChild(dl)}
-      if(B.path&&B.path.length){body.appendChild(el('h5',null,'Career path'));body.appendChild(pathList(B.path))}
       if(B.note||note){body.appendChild(el('h5',null,'Background'));const bl=el('ul','bio-bg');[B.note,note].filter(Boolean).forEach(t=>bl.appendChild(el('li',null,t)));body.appendChild(bl)}
+      if(B.path&&B.path.length){body.appendChild(el('h5',null,'Career path'));body.appendChild(pathList(B.path))}
       box.appendChild(body);d.append(sm,box);li.appendChild(d);ul.appendChild(li)});
     sec.append(h,ul);sf.appendChild(sec)});
 })();
@@ -4157,7 +4157,7 @@ function ppBuild(p,root){
   bt.appendChild(el('h1',null,n));
   const season=exp==='R'?'Rookie season':ord(+exp+1)+' season';
   const allCle=rs.length&&rs.every(r=>r[1]==='CLE');
-  bt.appendChild(el('div','ppx-m',[age+' years old',ht&&ht!=='—'?ht.replace('-','′')+'″':'',season+(allCle&&+exp>=2?', all in Cleveland':''),cty&&cty!=='USA'&&cty!=='—'?'From '+cty:''].filter(Boolean).join(' · ')));
+  {const m=el('div','ppx-m');[age+' years old',ht&&ht!=='—'?ht.replace('-','′')+'″':'',season+(allCle&&+exp>=2?', all in Cleveland':''),cty&&cty!=='USA'&&cty!=='—'?'From '+cty:''].filter(Boolean).forEach((t,i)=>{if(i)m.append(' · ');m.appendChild(el('span','nw',t))});bt.appendChild(m)}
   const pills=el('div','ppx-pills');const pill=(k,val,cls)=>{const s2=el('span','ppx-pill'+(cls?' '+cls:''));s2.append(k+' ');s2.appendChild(el('b',null,val));pills.appendChild(s2)};
   pill('Status',inj?inj[3]+' · '+inj[2].toLowerCase():'Healthy',inj?'warn':'');
   if(R){const last=R[2].reduce((m,x,i)=>typeof x==='number'||Array.isArray(x)?i:m,-1);const po=Array.isArray(R[2][last])?(R[2][last][1]==='P'?' (player option)':' (team option)'):'';if(last>=0)pill('Signed',`through ${SEASONS[last]}${po}`)}
@@ -4169,9 +4169,8 @@ function ppBuild(p,root){
   root.appendChild(band);
   // elsewhere on the site
   {const lk=el('div','ppx-links');lk.appendChild(el('span','ppx-lkh','Also on cavs_db'));
-    lk.append(ilink('Bio & measurements','roster','r-'+slug(n)));if(R||stt)lk.append(ilink('Contract','cap','p-'+slug(n)));lk.append(ilink('Depth chart','roster'),ilink('Transactions','moves'));
+    lk.append(ilink('Bio & Measurements','roster','r-'+slug(n)));if(R||stt)lk.append(ilink('Contract','cap','p-'+slug(n)));lk.append(ilink('Depth chart','roster'),ilink('Transactions','moves'));
     if(stt==='TW')lk.append(ilink('Charge','charge'));
-    lk.append(ext('NBA.com','https://www.nba.com/player/'+pid),ext('Basketball Ref','https://www.basketball-reference.com/search/search.fcgi?search='+encodeURIComponent(n)));
     root.appendChild(lk)}
 
   /* ---------- chapters ---------- */
