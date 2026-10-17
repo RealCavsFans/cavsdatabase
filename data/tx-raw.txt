@@ -18,7 +18,6 @@
 230622 [2023 NBA Draft] CLE selected Emoni Bates in Round 2 with Pick 19 in the 2023 NBA Draft.
 240626 [2024 NBA Draft] CLE selected Jaylon Tyson in Round 1 with Pick 20 in the 2024 NBA Draft.
 250206 [Trade Deadline] De'Andre Hunter and a TPE -> CLE from the Atlanta Hawks for: Caris LeVert, Georges Niang, a Swap 2026 1st rds, a 2027 2nd rd (CLE own), a Swap 2028 1st rds, a 2029 2nd rd (CLE own) and a 2031 2nd rd (CLE own).
-260623 [2026 NBA Draft] CLE selected Alex Karaban in Round 1 with Pick 29 in the 2026 NBA Draft.
 260205 [Trade Deadline] Lonzo Ball, a 2028 2nd rd (CLE own) and a 2032 2nd rd (CLE own) -> the Utah Jazz from CLE for: cash and a TPE.
 180627 CLE exercised their Team Option to extend the contract of Kendrick Perkins.
 180627 CLE tendered a Qualifying Offer to make Rodney Hood a Restricted FA.
