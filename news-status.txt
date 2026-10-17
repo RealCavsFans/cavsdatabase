@@ -1,13 +1,13 @@
-2026-10-17T11:53:15.901Z
-NBA highlights: FAILED used is not defined
+2026-10-17T12:24:55.522Z
+NBA highlights: 0 new (YouTube API)
 Hoops Rumors: 10 from https://www.hoopsrumors.com/cleveland-cavaliers/feed
 Cavaliers on SI: 15 from https://news.google.com/rss/search?q=site%3Asi.com%2Fnba%2Fcavaliers&hl=en-US&gl=US&ceid=US:en
-cleveland.com: 11 from https://news.google.com/rss/search?q=site%3Acleveland.com%2Fcavs&hl=en-US&gl=US&ceid=US:en
+cleveland.com: 15 from https://news.google.com/rss/search?q=site%3Acleveland.com%2Fcavs&hl=en-US&gl=US&ceid=US:en
 Fear The Sword: 10 from https://www.fearthesword.com/rss/current.xml
 Wine and Gold Talk: 3 from https://feeds.megaphone.fm/wineandgoldtalk
-Locked On Cavs: FAILED used is not defined
-The Chase Down Podcast: FAILED used is not defined
-It's Cavalier Podcast: FAILED used is not defined
-The Block, The Shot, The Stop: FAILED used is not defined
-Fear The Fro: FAILED used is not defined
-Ultimate Cavaliers: FAILED used is not defined
+Locked On Cavs: 10 (YouTube API)
+The Chase Down Podcast: 2 (YouTube API)
+It's Cavalier Podcast: 10 (YouTube API)
+The Block, The Shot, The Stop: 0 (YouTube API)
+Fear The Fro: 1 (YouTube API)
+Ultimate Cavaliers: 0 (YouTube API)
