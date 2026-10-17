@@ -1,6 +1,18 @@
 {
  "articles": [
   {
+   "src": "Hoops Rumors",
+   "title": "Cavs, Nuggets, Pistons Waive Exhibit 10 Players",
+   "link": "https://www.hoopsrumors.com/2026/10/cavs-nuggets-pistons-waive-exhibit-10-players.html",
+   "date": "2026-10-17T22:34:25.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "Cavs Coach Kenny Atkinson Shows Off Incredible Three-Point Range",
+   "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPVTlYUWxGX3VvdnA3YUFBOXM3OEdfVXR4bkJJSHZfMlNxQk5jeUtXZGhlSWcyaUR5OTZXdzNZOF9OR0R5aGtMYzlJX0lxdVB3NUl6Ml9TellVRHZBcFFqXy1ZRUd3XzJ2WUxnbE5VSTF1WGlONnh4ejJhOFh4VjdBSldKSGhlaEJEYVFYMFRWakZENlB6ejV4Um5KdHp3M1NHTUZHcmxKOVI0c25CeUF5UVhOVG0wUQ?oc=5",
+   "date": "2026-10-17T21:32:52.000Z"
+  },
+  {
    "src": "Fear The Sword",
    "title": "Evan Mobley impresses in Cavs annual Wine &#038; Gold scrimmage",
    "link": "https://www.fearthesword.com/cavs-scores-results/53185/evan-mobley-impresses-in-cavs-annual-wine-gold-scrimmage",
@@ -203,12 +215,6 @@
    "title": "James Harden shows no rust in preseason debut, leads Cavs to 119-105 win over Orlando Magic",
    "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNNllNaHFQZkZwVjJ2MmxJUTB6X2thZmZBQVlaaERvWUxDM1p0bE83RnZXTG1uZGpUdHZ0cl9zRUJuRk5lN2xwMHpHXy1pdXZJVm4wNXN3T3FyNndKc1JaVFBFU0VEQWhMazJaNmFWWXpFUmZuRXVCb2JuajhTYlN5Y2tXU3RjU3pzU2E3N1U2cEhyYXV3VXYwWVJQR3luT0I3THkwUHA2dHl4R0w3VjJ1UG8tNnNLVV9nOFRCQUY5dHVENVZvbW1OelJncTlCN28?oc=5",
    "date": "2026-10-12T01:05:00.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Title: All Articles & News Stories | Cleveland Cavaliers On SI",
-   "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBsM083RDhSYUN2S0JuV0Y2enlBLXNPdGJNVHpoNjN2NlFOSzhtd1NzRU9Ec0NHNW1aOEp5cC1oWUVZWnItRGx6cUVXVnMxWm9nT2tkeEdaQmdlbjVhVWxweHkxX0h1Mm5UTXc?oc=5",
-   "date": "2026-10-11T09:58:27.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -481,5 +487,13 @@
    "id": "gqMb6Y3gAUA"
   }
  ],
- "highlights": []
+ "highlights": [
+  {
+   "src": "NBA",
+   "title": "CAVALIERS at MAGIC | NBA PRESEASON FULL GAME HIGHLIGHTS | October 13, 2026",
+   "link": "https://www.youtube.com/watch?v=c9qZ9Dc6ZvM",
+   "date": "2026-10-14T01:38:23.000Z",
+   "id": "c9qZ9Dc6ZvM"
+  }
+ ]
 }
