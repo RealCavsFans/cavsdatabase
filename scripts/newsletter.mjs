@@ -108,6 +108,30 @@ function lineScore(x, P) {
   return T(`<tr><td width="56"></td>${x.qs.cle.map((_, k) => th(lab(k))).join('')}${th('F')}</tr>${row('CLE', x.qs.cle, x.cs, 1)}${row(x.g[1], x.qs.opp, x.os, 0)}`, `style="margin-top:8px;border-collapse:collapse"`);
 }
 
+/* coffee score box: on a win the Cavs half fills with coffee (crema and steam on top);
+   on a loss it drains, leaving a stain line and drips off the edge. A roast label sets the mood by margin.
+   Images are extras: with images off, the solid fill and the label still carry it. */
+function roast(x) {
+  const m = Math.abs(x.cs - x.os), ot = x.qs && x.qs.cle && x.qs.cle.length > 4;
+  if (x.win) return ot ? { t: 'DOUBLE SHOT', bg: '#860038', fg: '#FFFFFF', line: 'Double shot. Needed the extra.' }
+    : m >= 15 ? { t: 'DARK ROAST', bg: '#3B2216', fg: '#F2B231', line: 'Dark roast. A strong brew.' }
+    : m >= 6 ? { t: 'MEDIUM ROAST', bg: '#A9744A', fg: '#FFFFFF', line: 'Medium roast. Smooth W.' }
+    : { t: 'LIGHT ROAST', bg: '#E9D6BE', fg: '#101419', line: 'Light roast, but still a W.' };
+  return m >= 15 ? { t: 'BURNT', bg: '#101419', fg: '#B9B2A8', line: 'Burnt. Dump it and brew again.' }
+    : { t: 'DECAF', bg: '#E3E5E0', fg: '#101419', line: 'Decaf. Fresh pot tomorrow.' };
+}
+function coffeeBox(x, P, cell) {
+  const CO = '#6B3E26', PAPER = '#FFFDF8', r = roast(x);
+  const chip = `<div style="margin-top:6px"><span style="display:inline-block;background:${r.bg};color:${r.fg};font:800 10px ${F.sans};letter-spacing:1.4px;padding:4px 8px">${r.t}</span></div>`;
+  const img = (f, w) => `<img src="${SITE}/nl/${f}.png" width="${w}" alt="" style="display:block;width:${w === '100%' ? '100%' : w + 'px'};height:auto;border:0;margin:0 auto">`;
+  const cav = (bg, fg, sub, dim, pad) => `<td width="50%" align="center" bgcolor="${bg}" style="background:${bg};padding:${pad}"><div style="font:800 20px/1 ${F.cond};color:${fg}">CLE</div><div style="font:700 36px/1.15 ${F.mono};color:${dim ? '#9A948B' : fg}">${x.cs}</div><div style="font:11px ${F.sans};color:${sub}">Cavaliers</div>${chip}</td>`;
+  const opp = (pad) => cell(x.g[1], x.os, !x.win, NICK[x.g[1]] || '').replace('<td ', '<td valign="middle" ').replace('padding:10px 0 9px;', `padding:${pad};`).replace(/border-bottom:4px solid [^;]+;/, '');
+  const box = rows => T(rows, `bgcolor="${PAPER}" style="border:2px solid ${P.ink};background:${PAPER};border-collapse:collapse"`);
+  if (x.win) return box(`<tr><td width="50%" style="padding:6px 0 0">${img('steam', 42)}</td><td width="50%"></td></tr><tr><td width="50%" style="padding:0;line-height:0;font-size:0">${img('crema', '100%')}</td><td width="50%"></td></tr><tr>${cav(CO, PAPER, '#E9D6BE', false, '2px 0 10px')}${opp('2px 0 10px')}</tr>`);
+  return box(`<tr>${cav(PAPER, '#9A948B', P.muted, true, '16px 0 2px')}${opp('16px 0 2px')}</tr><tr><td width="50%" bgcolor="${PAPER}" style="background:${PAPER};padding:0 10px 6px;line-height:0;font-size:0">${img('ring', '100%')}</td><td></td></tr>`)
+    + T(`<tr><td width="50%" style="padding:0 0 0 2px;line-height:0;font-size:0"><img src="${SITE}/nl/drip.png" width="100%" alt="" style="display:block;width:100%;height:auto;border:0;margin-top:-3px"></td><td width="50%"></td></tr>`);
+}
+
 /* ========== Sports Page: old school newspaper, double rules, condensed heads, boxed linescore ========== */
 function renderSports(x) {
   const P = { bg: '#F7F3EC', dot: '#B9B2A8', wine: '#860038', ink: '#101419', fg2: '#2F363E', muted: '#5D646C' };
@@ -122,7 +146,7 @@ function renderSports(x) {
   // last game: boxed linescore, winner reversed out in ink
   const cell = (ab, pts, won, nm) => `<td width="50%" align="center" style="padding:10px 0 9px;${won ? 'border-bottom:4px solid #F2B231;' : 'border-bottom:4px solid transparent;'}"><div style="font:800 20px/1 ${F.cond};color:${P.ink}">${ab}</div><div style="font:700 36px/1.15 ${F.mono};color:${won ? P.ink : '#9A948B'}">${pts}</div><div style="font:11px ${F.sans};color:${P.muted}">${esc(nm)}</div></td>`;
   s.push(K(x.preseason ? 'Last game · preseason' : 'Last game', ['Box score', esc(x.boxLink)]));
-  s.push(B(`${T(`<tr>${cell('CLE', x.cs, x.win, 'Cavaliers')}${cell(x.g[1], x.os, !x.win, NICK[x.g[1]] || '')}</tr>`, `style="border:2px solid ${P.ink}"`)}${x.qs ? lineScore(x, P) : ''}<div style="font:12px ${F.sans};color:${P.muted};margin-top:6px;text-align:center">FINAL · ${esc(x.where.toUpperCase())} · ${esc(short(x.g[0]).toUpperCase())}${x.hasRec ? ` · CAVS ${x.w}–${x.l}` : ''}</div>
+  s.push(B(`${coffeeBox(x, P, cell)}${x.qs ? lineScore(x, P) : ''}<div style="font:12px ${F.sans};color:${P.muted};margin-top:6px;text-align:center">FINAL · ${esc(x.where.toUpperCase())} · ${esc(short(x.g[0]).toUpperCase())}${x.hasRec ? ` · CAVS ${x.w}–${x.l}` : ''}</div><div style="font:italic 15px ${F.serif};color:${P.fg2};margin-top:6px;text-align:center">${roast(x).line}</div>
 ${x.tn ? `<div style="font:16px/1.55 ${F.serif};color:${P.fg2};margin-top:10px"><b style="font-family:${F.sans};color:${P.ink}">${esc(x.tn)}</b> led the Cavs with ${esc((x.tl || '').replace(/ pts/, ' points').replace(/ reb/, ' rebounds').replace(/, (\d+) ast/, ' and $1 assists'))}.</div>` : ''}`));
   if (x.hl && x.hl.id) s.push(`<tr><td style="padding:12px 24px 0"><a href="${esc(x.hl.link)}"><img src="https://i.ytimg.com/vi/${esc(x.hl.id)}/hq720.jpg" width="552" alt="Watch the full game highlights" style="display:block;width:100%;height:auto;border:0"></a></td></tr>`);
   if (x.hl || x.recap) s.push(B(`${x.hl ? li(a(x.hl.link, '&#9654;&nbsp; Full game highlights'), { meta: x.hl.nba ? 'NBA.com' : 'NBA · YouTube' }) : ''}${x.recap ? li(a(x.recap.link, esc(x.recap.title)), { meta: 'RealCavsFans recap' }) : ''}`));
