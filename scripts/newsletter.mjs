@@ -64,7 +64,7 @@ function prep(D, g, score, top, boxLink, opts) {
   const rcfItems = opts.rcf?.items || [];
   const recap = rcfItems.find(x => /recap/i.test(x.title) && x.date && x.date.slice(0, 10) >= g[0]);
   const nickU = (NICK[g[1]] || '').toUpperCase();
-  const hl = (opts.news?.highlights || []).find(x => x.date.slice(0, 10) >= g[0] && Date.parse(x.date) - Date.parse(g[0] + 'T12:00:00Z') < 3 * 864e5 && x.title.toUpperCase().includes(nickU));
+  const hl = (opts.news?.highlights || []).find(x => x.date.slice(0, 10) >= g[0] && Date.parse(x.date) - Date.parse(g[0] + 'T12:00:00Z') < 3 * 864e5 && x.title.toUpperCase().includes(nickU)) || (/nba\.com\/game\//.test(boxLink) ? { link: boxLink.replace(/\/box-score$/, ''), nba: true } : null);
   const reads = [...rcfItems.filter(x => x !== recap && fresh(x)).map(x => ({ ...x, src: 'RealCavsFans' })), ...(opts.news?.articles || []).filter(fresh)].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 6);
   const play = []; [...(opts.news?.videos || []).map(x => ({ ...x, kind: 'video' })), ...(opts.news?.podcasts || []).map(x => ({ ...x, kind: 'podcast' }))].filter(fresh).sort((a, b) => b.date.localeCompare(a.date)).forEach(x => { if (!play.some(p => p.src === x.src)) play.push(x); });
   const txText = x => x.k === 'trade' ? `Traded ${(x.sent || []).join(', ')} to ${(x.w || []).join('/')} for ${(x.got || []).join(', ')}` : (x.t || x.p || '');
@@ -86,7 +86,7 @@ function prep(D, g, score, top, boxLink, opts) {
   const E = (D.STANDINGS || []).filter(t => t[1] === 'E').sort((x, y) => (y[2] - y[3]) - (x[2] - x[3]) || y[2] - x[2]);
   let stand = []; const ci = E.findIndex(t => t[0] === 'CLE');
   if (ci >= 0 && E.some(t => t[2] + t[3] > 0)) { const a = Math.max(0, Math.min(ci - 2, E.length - 5)), L = E[0]; stand = E.slice(a, a + 5).map((t, k) => { const gb = ((L[2] - t[2]) + (t[3] - L[3])) / 2; return [a + k + 1, t[0] === 'CLE' ? 'Cleveland' : (D.TEAMS[t[0]] || t[0]), t[2] + '–' + t[3], gb ? (gb % 1 ? gb.toFixed(1) : String(gb)) : '—', t[0] === 'CLE']; }); }
-  return { g, cs, os, win, issueDay, md, w, l, hasRec: rec.length > 0, tn, tl, recap, hl, reads, play, moves, week, otd, nx: nxInfo, tape, inj, stand, tq: opts.trivia, shot: opts.milestone || (() => { if (opts.preseason || !rec.length) return ''; const last = rec[rec.length - 1]; let n = 0; for (let k = rec.length - 1; k >= 0 && rec[k] === last; k--) n++; return n >= 3 ? (last === 'W' ? `The Cavs have won ${n} straight.` : `The Cavs have lost ${n} straight.`) : ''; })(),
+  return { g, cs, os, win, issueDay, md, w, l, hasRec: rec.length > 0, tn, tl, recap, hl, reads, play, moves, week, otd, nx: nxInfo, tape, inj, stand, tq: opts.trivia, shot: opts.milestone || opts.bigNight || (() => { if (opts.preseason || !rec.length) return ''; const last = rec[rec.length - 1]; let n = 0; for (let k = rec.length - 1; k >= 0 && rec[k] === last; k--) n++; return n >= 5 ? (last === 'W' ? `The Cavs have won ${n} straight.` : `The Cavs have lost ${n} straight.`) : ''; })(),
     pid: n => (D.PL.find(p => p[0] === n) || [])[1], where: (g[2] === 'H' ? 'vs ' : 'at ') + D.TEAMS[g[1]], whereShort: g[2] === 'H' ? 'Rocket Arena' : 'at ' + D.TEAMS[g[1]].split(' ').slice(-1)[0], boxLink, preseason: opts.preseason, test: opts.test, TEAMS: D.TEAMS };
 }
 const fontLink = `<!--[if !mso]><!--><link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@800&family=Geist+Mono:wght@700&display=swap" rel="stylesheet"><!--<![endif]-->`;
@@ -117,8 +117,8 @@ function renderPaper(x) {
   s.push(`<tr><td style="padding:0 26px;text-align:center"><div style="font:800 44px/1 ${F.cond};color:${P.ink};white-space:nowrap">CLE ${x.cs} <span style="color:#B9B2A8">&ndash;</span> ${x.os} ${x.g[1]} <span style="display:inline-block;vertical-align:middle;background:${x.win ? '#F2B231' : 'transparent'};border:2px solid ${x.win ? '#F2B231' : '#860038'};color:${x.win ? P.ink : '#860038'};font:800 11px ${F.sans};letter-spacing:1px;padding:2px 6px;margin-left:4px">${x.win ? 'W' : 'L'}</span></div>
 <div style="font:13px ${F.sans};color:${P.muted};margin-top:8px">${esc(x.where)} · ${esc(short(x.g[0]))}${x.hasRec ? ` · Cavs ${x.w}–${x.l}` : ''} · <a href="${esc(x.boxLink)}" style="color:${P.wine};font-weight:700;text-decoration:none">Box score</a></div>
 ${x.tn ? `<div style="font:16px/1.5 ${F.serif};color:${P.fg2};margin-top:12px"><b style="font-family:${F.sans};color:${P.ink}">${esc(x.tn)}</b> led the Cavs with ${esc((x.tl || '').replace(/ pts/, ' points').replace(/ reb/, ' rebounds').replace(/, (\d+) ast/, ' and $1 assists'))}.</div>` : ''}</td></tr>`);
-  if (x.hl) s.push(`<tr><td style="padding:14px 26px 0"><a href="${esc(x.hl.link)}"><img src="https://i.ytimg.com/vi/${esc(x.hl.id)}/hq720.jpg" width="548" alt="Watch the full game highlights" style="display:block;width:100%;height:auto;border:0"></a></td></tr>`);
-  if (x.hl || x.recap) s.push(B(`${x.hl ? li(a(x.hl.link, '&#9654;&nbsp; Full game highlights'), { meta: 'NBA · YouTube' }) : ''}${x.recap ? li(a(x.recap.link, esc(x.recap.title)), { meta: 'RealCavsFans recap' }) : ''}`));
+  if (x.hl && x.hl.id) s.push(`<tr><td style="padding:14px 26px 0"><a href="${esc(x.hl.link)}"><img src="https://i.ytimg.com/vi/${esc(x.hl.id)}/hq720.jpg" width="548" alt="Watch the full game highlights" style="display:block;width:100%;height:auto;border:0"></a></td></tr>`);
+  if (x.hl || x.recap) s.push(B(`${x.hl ? li(a(x.hl.link, '&#9654;&nbsp; Full game highlights'), { meta: x.hl.nba ? 'NBA.com' : 'NBA · YouTube' }) : ''}${x.recap ? li(a(x.recap.link, esc(x.recap.title)), { meta: 'RealCavsFans recap' }) : ''}`));
   if (x.shot) s.push(`<tr><td style="padding:14px 26px 0;text-align:center"><div style="font:800 10px ${F.sans};letter-spacing:1.6px;color:${P.wine}">ESPRESSO SHOT</div><div style="font:italic 15.5px/1.5 ${F.serif};color:${P.ink};margin-top:4px">${esc(x.shot)}</div></td></tr>`);
   s.push(sep);
   // up next / tonight
@@ -155,8 +155,8 @@ function renderSports(x) {
   s.push(K(x.preseason ? 'Last game · preseason' : 'Last game', ['Box score', esc(x.boxLink)]));
   s.push(B(`${T(`<tr>${cell('CLE', x.cs, x.win, 'Cavaliers')}${cell(x.g[1], x.os, !x.win, NICK[x.g[1]] || '')}</tr>`, `style="border:2px solid ${P.ink}"`)}<div style="font:12px ${F.sans};color:${P.muted};margin-top:6px;text-align:center">FINAL · ${esc(x.where.toUpperCase())} · ${esc(short(x.g[0]).toUpperCase())}${x.hasRec ? ` · CAVS ${x.w}–${x.l}` : ''}</div>
 ${x.tn ? `<div style="font:16px/1.55 ${F.serif};color:${P.fg2};margin-top:10px"><b style="font-family:${F.sans};color:${P.ink}">${esc(x.tn)}</b> led the Cavs with ${esc((x.tl || '').replace(/ pts/, ' points').replace(/ reb/, ' rebounds').replace(/, (\d+) ast/, ' and $1 assists'))}.</div>` : ''}`));
-  if (x.hl) s.push(`<tr><td style="padding:12px 24px 0"><a href="${esc(x.hl.link)}"><img src="https://i.ytimg.com/vi/${esc(x.hl.id)}/hq720.jpg" width="552" alt="Watch the full game highlights" style="display:block;width:100%;height:auto;border:0"></a></td></tr>`);
-  if (x.hl || x.recap) s.push(B(`${x.hl ? li(a(x.hl.link, '&#9654;&nbsp; Full game highlights'), { meta: 'NBA · YouTube' }) : ''}${x.recap ? li(a(x.recap.link, esc(x.recap.title)), { meta: 'RealCavsFans recap' }) : ''}`));
+  if (x.hl && x.hl.id) s.push(`<tr><td style="padding:12px 24px 0"><a href="${esc(x.hl.link)}"><img src="https://i.ytimg.com/vi/${esc(x.hl.id)}/hq720.jpg" width="552" alt="Watch the full game highlights" style="display:block;width:100%;height:auto;border:0"></a></td></tr>`);
+  if (x.hl || x.recap) s.push(B(`${x.hl ? li(a(x.hl.link, '&#9654;&nbsp; Full game highlights'), { meta: x.hl.nba ? 'NBA.com' : 'NBA · YouTube' }) : ''}${x.recap ? li(a(x.recap.link, esc(x.recap.title)), { meta: 'RealCavsFans recap' }) : ''}`));
   if (x.shot) s.push(B(`<div style="border-left:3px solid #F2B231;background:#FFFDF8;padding:9px 12px;margin-top:6px;font:15px/1.5 ${F.serif};color:${P.ink}"><b style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine}">ESPRESSO SHOT</b>&nbsp; ${esc(x.shot)}</div>`));
   if (x.nx) {
     const n = x.nx;
@@ -174,7 +174,10 @@ ${x.tn ? `<div style="font:16px/1.55 ${F.serif};color:${P.fg2};margin-top:10px">
   return wrapOpen(P.bg) + s.join('\n') + footer(`<div style="border-top:4px double #F2B231;margin:0 0 18px;font-size:0;line-height:0">&nbsp;</div>`);
 }
 
-function build(D, g, score, top, boxLink, opts) { const x = prep(D, g, score, top, boxLink, opts); return `<!-- Cavs & Coffee · ${DESIGN} design · built by cavsdatabase.com -->\n` + (DESIGN === 'sports' ? renderSports(x) : renderPaper(x)); }
+function build(D, g, score, top, boxLink, opts) { const x = prep(D, g, score, top, boxLink, opts);
+  // inbox preview line (hidden in the email itself)
+  const pre = [x.tn ? `${x.tn.split(' ').slice(-1)[0]} led the way` : '', x.nx ? (x.nx.tonight ? `tonight ${x.nx.home ? 'vs' : 'at'} ${NICK[x.nx.o] || x.nx.o}` : `next up ${x.nx.home ? 'vs' : 'at'} ${NICK[x.nx.o] || x.nx.o} ${wkd(x.nx.date)}`) : '', 'injuries, the morning reads and today\u2019s trivia'].filter(Boolean).join(' · ');
+  return `<!-- Cavs & Coffee · ${DESIGN} design · built by cavsdatabase.com -->\n<div style="display:none;max-height:0;overflow:hidden;opacity:0;font-size:1px;line-height:1px;color:transparent">${esc(pre.charAt(0).toUpperCase() + pre.slice(1))}&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;&#8199;&#847;</div>\n` + (DESIGN === 'sports' ? renderSports(x) : renderPaper(x)); }
 
 /* ---------- Buttondown ---------- */
 async function bd(path, method, body) {
@@ -250,10 +253,22 @@ function milestone() {
   if (hits.length) return hits.sort((x, y) => y[0] - x[0])[0][1];
   return watch.length ? watch.sort((x, y) => x[0] - y[0])[0][1] : '';
 }
+// big nights worth an espresso shot: 40 points, a triple-double, 20 and 20
+function bigNight() {
+  const rows = box[g[0]]?.box || []; const out = [];
+  for (const [n, , p, r, a] of rows) { const P = +p || 0, Rb = +r || 0, A = +a || 0;
+    if (P >= 10 && Rb >= 10 && A >= 10) out.push([3, `${n} had a triple-double: ${P} points, ${Rb} rebounds and ${A} assists.`]);
+    else if (P >= 20 && Rb >= 20) out.push([2, `${n} put up ${P} points and ${Rb} rebounds.`]);
+    else if (P >= 40) out.push([1, `${n} scored ${P} points.`]); }
+  return out.sort((x, y) => y[0] - x[0])[0]?.[1] || '';
+}
 const tq = trivia.length ? trivia[Object.keys(sent).length % trivia.length] : null;
-const html = build(D, g, score, b.top || '', b.url || D.box[g[0]] || SITE + '/schedule', { issueDay: today, rcf, news, trivia: tq, since, sinceTs, milestone: milestone(), test: MODE === 'test' || !LIVE, preseason });
+const html = build(D, g, score, b.top || '', b.url || D.box[g[0]] || SITE + '/schedule', { issueDay: today, rcf, news, trivia: tq, since, sinceTs, milestone: milestone(), bigNight: preseason ? '' : bigNight(), test: MODE === 'test' || !LIVE, preseason });
 const [cs, os] = score.split('-').map(Number);
-const subj = `${MODE === 'test' || !LIVE ? `[Test · ${DESIGN === 'sports' ? 'Sports Page' : 'Morning Paper'}] ` : ''}☕ Final: Cavs ${cs}, ${NICK[g[1]] || g[1]} ${os}${b.top ? ' · ' + b.top.split(':')[0].split(' ').slice(-1)[0] + ' ' + (b.top.match(/(\d+) pts/) || [])[1] : ''}`;
+const topBit = b.top ? b.top.split(':')[0].split(' ').slice(-1)[0] + ' ' + (b.top.match(/(\d+) pts/) || [])[1] : '';
+const msBit = (() => { const m = (milestone() || '').match(/^(?!Milestone watch)(\S+ )?(\S+) (reached [\d,]+ career \w+|passed .+? for \d+\w+ on the Cavs' all-time \w+)/); return m ? `${m[2]} ${m[3].replace(/^reached/, 'hits').replace(/ on the Cavs' all-time (\w+)/, ' in Cavs $1').replace(/^passed .+? for/, 'moves to')}` : ''; })();
+const bnBit = (() => { const t = preseason ? '' : bigNight(); const m = t.match(/^(.+?) had a triple-double/); return m ? m[1].split(' ').slice(-1)[0] + ' triple-double' : ''; })();
+const subj = `${MODE === 'test' || !LIVE ? `[Test · ${DESIGN === 'sports' ? 'Sports Page' : 'Morning Paper'}] ` : ''}☕ Cavs ${cs}, ${NICK[g[1]] || g[1]} ${os}${msBit ? ' · ' + msBit : bnBit ? ' · ' + bnBit : topBit ? ' · ' + topBit : ''}`;
 await mkdir(new URL('nl/', root), { recursive: true });
 await writeFile(new URL('nl/last-issue.html', root), `<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>${esc(subj)}</title><body style="margin:0">${html}</body>`);
 
