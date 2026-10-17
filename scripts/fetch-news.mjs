@@ -20,11 +20,15 @@ const YT = process.env.YT_API_KEY;
 const UA = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36' };
 const get = async (u, accept) => { const r = await fetch(u, { headers: { ...UA, ...(accept ? { Accept: accept } : {}) }, signal: AbortSignal.timeout(20000) }); if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + u); return r; };
 // a YouTube playlist (a channel's uploads are playlist UU + channel id minus "UC")
-async function youtube(channel, playlist) {
+async function youtube(channel, playlist, pages = 1) {
   const pl = playlist || 'UU' + channel.slice(2);
   if (YT) {
-    const j = await (await get(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${pl}&key=${YT}`)).json();
-    return (j.items || []).map(i => ({ id: i.snippet?.resourceId?.videoId, title: i.snippet?.title || '', date: i.snippet?.publishedAt }));
+    const items = []; let tok = '';
+    for (let n = 0; n < pages; n++) {
+      const j = await (await get(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${pl}&key=${YT}${tok ? '&pageToken=' + tok : ''}`)).json();
+      items.push(...(j.items || [])); tok = j.nextPageToken; if (!tok) break;
+    }
+    return items.map(i => ({ id: i.snippet?.resourceId?.videoId, title: i.snippet?.title || '', date: i.snippet?.publishedAt }));
   }
   // YouTube's public feed often answers GitHub with a 404; try a few times before giving up
   let xml = '', err;
@@ -55,7 +59,10 @@ async function feedsFor(s) {
 const vid = (src, v) => ({ src, title: un(v.title), link: 'https://www.youtube.com/watch?v=' + v.id, date: new Date(v.date).toISOString(), id: v.id });
 const NBA_CHANNEL = 'UCWJ2lWNubArHWmf3FIHbfcQ';
 try {
-  const got = (await youtube(NBA_CHANNEL)).filter(v => v.id && /cavaliers/i.test(v.title) && /full game highlights/i.test(v.title) && !/shorts/i.test(v.title)).map(v => vid('NBA', v));
+  /* the NBA uploads dozens of videos a day, so read the last 150; the Cavs' own channel is the backup (preseason games often only appear there) */
+  const nba = (await youtube(NBA_CHANNEL, null, 3)).filter(v => v.id && /cavaliers/i.test(v.title) && /full game highlights/i.test(v.title) && !/shorts/i.test(v.title)).map(v => vid('NBA', v));
+  let cav = []; try { cav = (await youtube(await channelOf('@cavs'))).filter(v => v.id && /highlights/i.test(v.title) && !/shorts|#/i.test(v.title)).map(v => vid('Cavs', v)); } catch (e) { status.push('Cavs channel highlights: FAILED ' + e.message); }
+  const got = [...nba, ...cav];
   const seen = new Set(got.map(x => x.id));
   out.highlights = [...got, ...(prev.highlights || []).filter(x => !seen.has(x.id))].filter(x => Date.parse(x.date) > cutoff);
   console.log('NBA highlights:', got.length); status.push(`NBA highlights: ${got.length} new (${YT ? 'YouTube API' : 'YouTube RSS'})`);
