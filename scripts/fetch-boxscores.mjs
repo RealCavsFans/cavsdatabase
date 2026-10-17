@@ -47,8 +47,8 @@ try {
       const keys = (st.names || st.labels || []).map(x => String(x).toUpperCase());
       const n = (a, k) => parseFloat(a.stats[keys.indexOf(k)]) || 0;
       const best = (st.athletes || []).filter(a => a.stats?.length).sort((x, y) => ['PTS', 'REB', 'AST', 'STL', 'BLK'].reduce((s2, k) => s2 + n(y, k) - n(x, k), 0))[0];
-      // Cavs box score for the game page: [name, min, pts, reb, ast, +/-, starter]
-      if (!g.box) g.box = (st.athletes || []).filter(a => a.stats?.length && !a.didNotPlay).map(a => [a.athlete.displayName, String(a.stats[keys.indexOf('MIN')] ?? ''), String(n(a, 'PTS')), String(n(a, 'REB')), String(n(a, 'AST')), String(a.stats[keys.indexOf('+/-')] ?? ''), a.starter ? 1 : 0]).sort((x, y) => y[6] - x[6] || (parseFloat(y[1]) || 0) - (parseFloat(x[1]) || 0));
+      // Cavs box score for the game page: [name, min, pts, reb, ast, +/-, starter, fg, 3pt, ft, stl, blk, to]
+      if (!g.box) g.box = (st.athletes || []).filter(a => a.stats?.length && !a.didNotPlay).map(a => [a.athlete.displayName, String(a.stats[keys.indexOf('MIN')] ?? ''), String(n(a, 'PTS')), String(n(a, 'REB')), String(n(a, 'AST')), String(a.stats[keys.indexOf('+/-')] ?? ''), a.starter ? 1 : 0, ...['FG', '3PT', 'FT'].map(k => { const i = keys.indexOf(k); return i < 0 ? '' : String(a.stats[i] ?? ''); }), String(n(a, 'STL')), String(n(a, 'BLK')), String(n(a, 'TO'))]).sort((x, y) => y[6] - x[6] || (parseFloat(y[1]) || 0) - (parseFloat(x[1]) || 0));
       // officials from ESPN, if the NBA page wasn't caught on game day
       if (!g.refs && sum.gameInfo?.officials?.length) g.refs = sum.gameInfo.officials.map(o => [o.position?.displayName || 'Official', o.displayName || o.fullName, String(o.jerseyNumber || '')]).filter(x => x[1]);
       if (best && !g.top) g.top = `${best.athlete.displayName}: ${n(best, 'PTS')} pts, ${n(best, 'REB')} reb, ${n(best, 'AST')} ast`;
