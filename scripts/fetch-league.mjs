@@ -1,12 +1,12 @@
 // League-wide player stats for the player pages (position ranks, percentiles, league averages).
 // Reads ESPN's public scoreboard and box scores (the same feed fetch-boxscores uses), one regular season game at a time,
-// and keeps running season totals per player in data/league.json. Safe to run every 30 minutes: finished games are
+// and keeps running season totals per player in pdata/league.json. Safe to run every 30 minutes: finished games are
 // remembered by id, so each run only reads new finals (at most MAX per run, so a backfill spreads over a few runs).
-//   data/league.json = { season, updated, games: [espn event ids], players: { espnId: { n, t, p, g, gs, min, pts, reb, oreb, ast, stl, blk, tov, fgm, fga, tpm, tpa, ftm, fta, dd, b2b } } }
+//   pdata/league.json = { season, updated, games: [espn event ids], players: { espnId: { n, t, p, g, gs, min, pts, reb, oreb, ast, stl, blk, tov, fgm, fga, tpm, tpa, ftm, fta, dd, b2b } } }
 import { readFile, writeFile } from 'node:fs/promises';
 
 const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba';
-const FILE = new URL('../data/league.json', import.meta.url);
+const FILE = new URL('../pdata/league.json', import.meta.url);
 const SEASON = '2026-27', START = '2026-10-21', MAX = 40;
 const etDate = (d = new Date()) => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(d);
 

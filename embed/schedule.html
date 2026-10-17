@@ -421,8 +421,8 @@ tr.mark td{white-space:normal!important;line-height:1.45;text-indent:-16px;paddi
 .ppx-band h1{margin:4px 0;font:800 44px/1 var(--cond);text-transform:uppercase;color:#fff}.ppx-m{font:600 13px var(--mono);color:#f3d9e3}
 .ppx-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.ppx-pill{font:700 11.5px var(--sans);letter-spacing:.03em;border:1px solid rgba(255,255,255,.35);padding:4px 8px}.ppx-pill b{color:#F2B231}.ppx-pill.warn{border-color:#F2B231}
 .ppx-ph{width:200px;flex:none;align-self:flex-end;display:grid;place-items:center;font:800 54px var(--cond);color:rgba(255,255,255,.5);min-height:120px}.ppx-ph img{width:100%;display:block}
-.ppx-links{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.ppx-links>a{font:700 12px var(--sans);text-decoration:none;color:var(--fg);border:1px solid var(--line);background:var(--card);padding:6px 9px}.ppx-lkh{font:800 10.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:2px}.ppx-links .soc a{color:var(--fg)}.ppx-links .soc svg{fill:currentColor}
-.ppx-nav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}.ppx-nav a{flex:0 0 auto;font:700 11.5px var(--sans);letter-spacing:.05em;text-transform:uppercase;text-decoration:none;color:#fff;background:#101419;padding:7px 10px}
+.ppx-links{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}.ppx-links>a{font:700 12.5px var(--sans);text-decoration:none;color:var(--fg);border:1px solid var(--line);background:var(--card);padding:8px 10px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ppx-lkh{grid-column:1/-1;font:800 10.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.ppx-soc{display:flex;gap:14px;margin-top:12px}.ppx-band .ppx-soc a{color:#fff!important;opacity:1}.ppx-soc svg{fill:currentColor;width:18px;height:18px}.ppx-links .soc a{color:var(--fg)}.ppx-links .soc svg{fill:currentColor}
+.ppx-nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:6px}.ppx-nav a{font:700 11.5px var(--sans);letter-spacing:.05em;text-transform:uppercase;text-decoration:none;color:#fff;background:#101419;padding:9px 10px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ppx-ch1{scroll-margin-top:12px}.ppx-ch1>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-top:3px solid var(--fg);padding:10px 2px 8px}.ppx-ch1>summary::-webkit-details-marker{display:none}
 .ppx-ct{font:800 22px var(--cond);text-transform:uppercase;letter-spacing:.02em}.ppx-ct::before{content:"+";display:inline-block;width:18px;color:var(--wine)}.ppx-ch1[open] .ppx-ct::before{content:"−"}
 .ppx-hd{font:700 13px var(--mono);color:var(--wine-ink,#860038);text-align:right}
@@ -495,7 +495,7 @@ tr.mark td{white-space:normal!important;line-height:1.45;text-indent:-16px;paddi
 .ab-pk i{font:700 10px var(--sans);font-style:normal;letter-spacing:.08em;text-transform:uppercase}.ab-pk b{font:800 13px var(--sans)}
 .ab-pk.own{background:var(--wine);color:#fff}.ab-pk.own i{color:var(--ab-gold)}
 .ab-pk.cond{background:var(--ab-cond-bg);border:2px solid var(--ab-gold);color:var(--fg)}.ab-pk.cond i{color:var(--ab-cond-ink)}
-.ab-pk.frz{background:repeating-linear-gradient(135deg,var(--ab-frz-a) 0 8px,var(--ab-frz-b) 8px 16px);border:2px solid var(--ab-frz-bd);color:var(--ab-frz-ink)}.ab-pk.frz i{color:var(--ab-frz-i)}
+.ab-pk.frz{background:repeating-linear-gradient(135deg,var(--ab-frz-a) 0 8px,var(--ab-frz-b) 8px 16px);border:2px solid var(--ab-frz-bd);color:var(--ab-frz-ink)}.ab-pk.frz{margin:0;padding:9px 9px 8px;border:0;box-shadow:inset 0 0 0 2px var(--ab-frz-bd)}.ab-pk.frz i{color:var(--ab-frz-i)}
 .ab-pk.gone{background:var(--sub);border:1px dashed var(--line);color:var(--muted)}.ab-pk.gone b{color:var(--fg2)}.ab-pk.gone i{color:var(--muted)}
 .ab-det{grid-column:1/-1;grid-row:4;border:1px solid var(--line);border-top:3px solid var(--wine);padding:12px 14px 2px;margin-top:4px;background:var(--card)}
 .ab-dh{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}.ab-dh b{font-weight:800;font-size:15px}.ab-dh small{color:var(--muted);font-size:13px}.ab-dx{margin-left:auto;appearance:none;border:0;background:none;font-size:20px;line-height:1;color:var(--muted);cursor:pointer;padding:2px 4px}
@@ -4062,10 +4062,10 @@ const ppHref=n=>{const p=PLAYERS.find(x=>x[1]===n);return p?'players/'+slug(n):n
    One page per player at /players/<name>. Status band on top, then chapters: overview (open), offense, defense and boards,
    value to the Cavs, history. What shows depends on the player: position group (guard, wing, big) picks the stats,
    role (starter, bench, two-way, camp) picks the trackers, and experience (rookie, young, veteran, international) picks the baseline.
-   Data: box.json (our Cavs box scores), data/league.json (ESPN league feed, nightly), data/players.json (season by season NBA,
-   college and overseas lines), data/greats.json (Cavs greats by age), data/milestones.json (franchise lists), news.json. */
+   Data: box.json (our Cavs box scores), pdata/league.json (ESPN league feed, nightly), pdata/players.json (season by season NBA,
+   college and overseas lines), pdata/greats.json (Cavs greats by age), pdata/milestones.json (franchise lists; a copy of data/milestones.json made by build-pages), news.json. */
 const PPD={};
-const ppLoad=()=>Promise.all([['stats','/data/players.json'],['box','/box.json'],['league','/data/league.json'],['news','/news.json'],['ms','/data/milestones.json'],['greats','/data/greats.json']]
+const ppLoad=()=>Promise.all([['stats','/pdata/players.json'],['box','/box.json'],['league','/pdata/league.json'],['news','/news.json'],['ms','/pdata/milestones.json'],['greats','/pdata/greats.json']]
   .map(([k,u])=>PPD[k]?0:fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():{}).catch(()=>({})).then(j=>{PPD[k]=j||{}})));
 const PPX={
   grpOf:n=>{const w=WPCT[n];if(w)return w[0];const p=(PLAYERS.find(x=>x[1]===n)||[])[2]||'';return /^C/.test(p)?'B':/^G$/.test(p)?'G':'W'},
@@ -4164,21 +4164,20 @@ function ppBuild(p,root){
   else if(stt==='TW'){const td=TW_DEAL[n]||[];pill('Contract','Two-way'+(td[1]?' through '+td[1]:''))}
   else if(stt==='Camp')pill('Contract','Exhibit 10');
   {const te=TRADE_ELIG[n];if(te&&new Date(te[0]+'T23:59:59')>new Date())pill('Trade eligible',new Date(te[0]+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}),'warn')}
-  if(dr)pill('Drafted','No. '+dr[2]+', '+dr[0]);else pill('Draft','Undrafted');
-  bt.appendChild(pills);band.appendChild(bt);
+  bt.appendChild(pills);{const so=socialLinks(n);if(so){so.classList.add('ppx-soc');bt.appendChild(so)}}band.appendChild(bt);
   const ph=el('div','ppx-ph');const im=el('img');im.src='https://cdn.nba.com/headshots/nba/latest/1040x760/'+pid+'.png';im.alt='';im.loading='eager';im.onerror=()=>{im.remove();ph.textContent=n.split(' ').map(x=>x[0]).join('')};ph.appendChild(im);band.appendChild(ph);
   root.appendChild(band);
   // elsewhere on the site
   {const lk=el('div','ppx-links');lk.appendChild(el('span','ppx-lkh','Also on cavs_db'));
-    lk.append(ilink('Bio','roster','r-'+slug(n)));if(R||stt)lk.append(ilink('Contract','cap','p-'+slug(n)));lk.append(ilink('Depth chart','roster'),ilink('Measurements','roster','r-'+slug(n)),ilink('Transactions','moves'));
+    lk.append(ilink('Bio & measurements','roster','r-'+slug(n)));if(R||stt)lk.append(ilink('Contract','cap','p-'+slug(n)));lk.append(ilink('Depth chart','roster'),ilink('Transactions','moves'));
     if(stt==='TW')lk.append(ilink('Charge','charge'));
-    lk.append(ext('NBA.com','https://www.nba.com/player/'+pid),ext('Basketball Reference','https://www.basketball-reference.com/search/search.fcgi?search='+encodeURIComponent(n)));
-    {const so=socialLinks(n);if(so)lk.appendChild(so)}root.appendChild(lk)}
+    lk.append(ext('NBA.com','https://www.nba.com/player/'+pid),ext('Basketball Ref','https://www.basketball-reference.com/search/search.fcgi?search='+encodeURIComponent(n)));
+    root.appendChild(lk)}
 
   /* ---------- chapters ---------- */
   const nav=el('nav','ppx-nav');nav.setAttribute('aria-label','Chapters');root.appendChild(nav);
-  const chap=(id,title,head,open)=>{const d=document.createElement('details');d.className='ppx-ch1';d.id='ch-'+id;if(open)d.open=true;const sm=document.createElement('summary');sm.appendChild(el('span','ppx-ct',title));if(head)sm.appendChild(el('span','ppx-hd',head));d.appendChild(sm);const b2=el('div','ppx-cb');d.appendChild(b2);root.appendChild(d);
-    const a=el('a',null,title);a.href='#ch-'+id;a.addEventListener('click',e=>{e.preventDefault();d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'})});nav.appendChild(a);return b2};
+  const chap=(id,title,head,open,short)=>{const d=document.createElement('details');d.className='ppx-ch1';d.id='ch-'+id;if(open)d.open=true;const sm=document.createElement('summary');sm.appendChild(el('span','ppx-ct',title));if(head)sm.appendChild(el('span','ppx-hd',head));d.appendChild(sm);const b2=el('div','ppx-cb');d.appendChild(b2);root.appendChild(d);
+    const a=el('a',null,short||title);a.href='#ch-'+id;a.addEventListener('click',e=>{e.preventDefault();d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'})});nav.appendChild(a);return b2};
   const waiting=[];
 
   /* ===== 1 · overview ===== */
@@ -4273,7 +4272,7 @@ function ppBuild(p,root){
 
   /* ===== 3 · defense and boards ===== */
   const stocks=cur&&cur.stl!=null&&cur.blk!=null?cur.stl+cur.blk:null;
-  const df=chap('def','Defense & boards',stocks!=null?f1(stocks)+' stocks · '+f1(cur.reb)+' reb':'');
+  const df=chap('def','Defense & boards',stocks!=null?f1(stocks)+' stocks · '+f1(cur.reb)+' reb':'',false,'Defense');
   if(stocks!=null){const c=card('Defensive activity',null,`<b>Stocks</b> (steals plus blocks) is the quickest read on how disruptive a defender is${lgOK?', ranked among NBA '+GN:''}.`);
     const rk=lgOK?rankIn((meL.stl+meL.blk)/meL.g,pool.filter(x=>x!==meL).map(x=>(x.stl+x.blk)/x.g)):null;
     const rr=el('div','ppx-rr');rr.appendChild(el('span')).appendChild(tip('Stocks per game','Stocks'));rr.appendChild(el('b',null,f1(stocks)+(rk?' · '+ord(rk.r)+' of '+rk.of:'')));if(rk){const pb=el('div','pct');const i2=el('i');i2.style.width=pc(rk.pct)+'%';pb.appendChild(i2);rr.appendChild(pb)}c.appendChild(rr);
@@ -4284,7 +4283,7 @@ function ppBuild(p,root){
 
   /* ===== 4 · value to the Cavs ===== */
   const sal=R?(v2=>typeof v2==='number'?v2:Array.isArray(v2)?v2[0]:0)(R[2][0]):0;
-  const va=chap('val','Value to the Cavs',sal?usdM(sal)+' this season':stt==='TW'?'Two-way':stt==='Camp'?'Exhibit 10':'');
+  const va=chap('val','Value to the Cavs',sal?usdM(sal)+' this season':stt==='TW'?'Two-way':stt==='Camp'?'Exhibit 10':'',false,'Value');
   const teamGames=games.length;
   if(gp>=3){const withG=games.filter(g=>g.me&&g.me.min>0),without=games.filter(g=>!(g.me&&g.me.min>0));const rec=a=>a.filter(g=>g.res==='W').length+'–'+a.filter(g=>g.res==='L').length;
     const thr=avg('pts')>=15?20:10;const bigF=G==='B'?[m=>m.pts>=thr||[m.pts,m.reb,m.ast,m.stl,m.blk].filter(x=>x>=10).length>=2,'With '+thr+'+ points or a double-double']:[m=>m.pts>=thr,'When he scores '+thr+'+'];
@@ -4325,7 +4324,7 @@ function ppBuild(p,root){
   else if(stt==='Camp'){const E=EX10.find(x=>x[0]===n);const c=card('Contract',null,'Exhibit 10 deals are one year, non-guaranteed minimum contracts for training camp. If he’s waived and joins the Charge, he can earn a bonus.');if(E)c.appendChild(note('Signed '+E[2]+'.'));va.appendChild(c)}
 
   /* ===== 5 · history ===== */
-  const hs=chap('his','History in the making','');const hsH=[];
+  const hs=chap('his','History in the making','',false,'History');const hsH=[];
   // ladder
   {const F=(PPD.ms||{}).franchise||{};const cats=[['PTS','Points','pts'],['REB','Rebounds','reb'],['AST','Assists','ast'],['GP','Games','gp']].filter(([k])=>(F[k]||[]).some(x=>x[0]===n));
     if(cats.length){const c=card('The ladder','Ladder','His spot on the Cavs all-time list, the names right above him, and when he’s likely to pass each one at his current pace.');

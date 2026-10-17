@@ -7,6 +7,8 @@
 // Without it (the daily task, local edits): plain copies only; the Action prerenders them on its next run.
 import { readFile, writeFile, mkdir, stat, rm } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+// the player pages read franchise lists from /pdata (the /data folder isn't served); keep the copy current
+try { const { copyFileSync, mkdirSync } = await import('node:fs'); mkdirSync(new URL('../pdata/', import.meta.url), { recursive: true }); copyFileSync(new URL('../data/milestones.json', import.meta.url), new URL('../pdata/milestones.json', import.meta.url)); } catch (e) { console.warn('milestones copy skipped:', e.message); }
 const exists = async u => { try { await stat(u); return true; } catch { return false; } };
 const root = new URL('../', import.meta.url);
 const html = await readFile(new URL('index.html', root), 'utf8');
