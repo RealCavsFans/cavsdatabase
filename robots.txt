@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /mockups/
 Disallow: /nl/
+Disallow: /embed/
 
 Sitemap: https://cavsdatabase.com/sitemap.xml

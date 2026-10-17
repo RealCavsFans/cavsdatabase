@@ -31,7 +31,7 @@ async function siteData() {
   await new Promise(r => server.listen(0, '127.0.0.1', r));
   const opts = { headless: true }; if (process.env.CHROME_PATH) opts.executablePath = process.env.CHROME_PATH;
   const browser = await pw.chromium.launch(opts);
-  const page = await browser.newPage();
+  const page = await browser.newPage({ timezoneId: 'America/New_York' });
   await page.route(u => !u.href.startsWith('http://127.0.0.1'), r => r.abort());
   await page.goto(`http://127.0.0.1:${server.address().port}/index.html`, { waitUntil: 'load' });
   const d = await page.evaluate(() => {

@@ -54,7 +54,7 @@ export default async function prerender(root, META) {
   const base = 'http://127.0.0.1:' + server.address().port;
   const opts = { headless: true }; if (process.env.CHROME_PATH) opts.executablePath = process.env.CHROME_PATH;
   const browser = await pw.chromium.launch(opts);
-  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce', colorScheme: 'light' });
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce', colorScheme: 'light', timezoneId: 'America/New_York' });
   await ctx.addInitScript(() => { try { localStorage.setItem('cdb-intro', '1'); localStorage.removeItem('cdb-theme'); } catch {} });
   await ctx.route(u => !u.href.startsWith(base), r => r.request().resourceType() === 'image' ? r.fulfill({ status: 200, contentType: 'image/png', body: PIXEL }) : r.abort());
   let ok = 0, data = null;
