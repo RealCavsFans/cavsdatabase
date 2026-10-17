@@ -1532,7 +1532,7 @@ span.gt{width:fit-content;max-width:100%}
 
 <script>
 /* player pages (/players/<name>): built and parked. true = live everywhere; ?pp=preview shows them without linking anything */
-const PP_ON=false;
+const PP_ON=true;
 const PP_VIS=PP_ON||/[?&]pp=preview/.test(location.search);
 if(PP_ON)document.documentElement.classList.add('pp-on');
 /* prerendered page copies: swap the original section back in before drawing */
@@ -4221,7 +4221,7 @@ function ppBuild(p,root){
     const tb=el('table','ppx-t');tb.innerHTML='<thead><tr><th></th><th>GP</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>FG%</th><th>3P%</th></tr></thead>';const tbd=el('tbody');
     const row=(lab,x)=>{if(!x)return;const tr=el('tr');[lab,x.gp,f1(x.min),f1(x.pts),f1(x.reb),f1(x.ast),f3(x.fg),f3(x.tp)].forEach((v2,i)=>tr.appendChild(el('td',null,v2==null?'—':String(v2))));tbd.appendChild(tr)};
     if(pre&&!(cur&&cur.base==='pre'))row((pre.team||'')+' '+(pre.season||''),pre);if(gl)row((gl.team||'G League')+' '+(gl.season||'2025–26'),gl);tb.appendChild(tbd);const bx=el('div','ppx-tbx');bx.appendChild(tb);c.appendChild(bx);
-    if(pre&&pre.note)c.appendChild(note(pre.note));ov.appendChild(c)}
+    if(pre&&pre.note&&!(cur&&cur.base==='pre'))c.appendChild(note(pre.note));ov.appendChild(c)}
   // fingerprint
   const SK=[['Scoring','Offense',x=>x.pts/x.min],['Efficiency','Offense',x=>{const d2=2*(x.fga+0.44*x.fta);return d2?x.pts/d2:0}],['Shooting','Offense',x=>x.tpa/x.g>=1?x.tpm/x.tpa+x.tpm/x.min:x.tpm/x.min],['Playmaking','Offense',x=>x.ast/x.min],['Rim protection','Defense & boards',x=>x.blk/x.min],['Steals','Defense & boards',x=>x.stl/x.min],['Rebounding','Defense & boards',x=>x.reb/x.min],['Durability','Defense & boards',x=>x.min/Math.max(1,maxG)]];
   if(lgOK&&meL.g>=10){const c=card('Player fingerprint','Fingerprint',`His whole game on one card, split by side of the floor. Each bar is a percentile among NBA ${GN}.`);
@@ -4287,7 +4287,7 @@ function ppBuild(p,root){
   if(stocks!=null){const c=card('Defensive activity',null,`<b>Stocks</b> (steals plus blocks) is the quickest read on how disruptive a defender is${lgOK?', ranked among NBA '+GN:''}.`);
     const rk=lgOK?rankIn((meL.stl+meL.blk)/meL.g,pool.filter(x=>x!==meL).map(x=>(x.stl+x.blk)/x.g)):null;
     const rr=el('div','ppx-rr');rr.appendChild(el('span')).appendChild(tip('Stocks per game','Stocks'));rr.appendChild(el('b',null,f1(stocks)+(rk?' · '+ord(rk.r)+' of '+rk.of:'')));if(rk){const pb=el('div','pct');const i2=el('i');i2.style.width=pc(rk.pct)+'%';pb.appendChild(i2);rr.appendChild(pb)}c.appendChild(rr);
-    c.appendChild(note(`${f1(cur.stl)} steals and ${f1(cur.blk)} blocks a game${cur.src==='2026–27'?'':' ('+cur.src+')'}.`));
+    c.appendChild(note(`${f1(cur.stl)} steals and ${f1(cur.blk)} blocks a game${cur.src==='2026–27'?'':' ('+(cur.base==='pre'?pre.team+', '+pre.season:cur.src)+')'}.`));
     if(gp>=3){const tm=k=>mine.reduce((t,g)=>t+g.team[k],0);const sh=el('div','ppx-share');sh.style.marginTop='12px';[['Blocks',tot('blk')/Math.max(1,tm('blk'))],['Steals',tot('stl')/Math.max(1,tm('stl'))],['Rebounds',tot('reb')/Math.max(1,tm('reb'))]].forEach(([l,v2])=>{const r2=el('div');r2.appendChild(el('span',null,l));const t2=el('span','t');const i2=el('i');i2.style.width=pc(v2*100)+'%';const u=el('u');u.style.left='20%';t2.append(i2,u);r2.appendChild(t2);r2.appendChild(el('b',null,Math.round(v2*100)+'%'));sh.appendChild(r2)});c.appendChild(sh);c.appendChild(note('Share of the Cavs’ totals in games he played.'))}
     df.appendChild(c)}
   if(G==='B'&&WPCT[n]){const wp=WPCT[n];const c=card('Length',null,`Built for defense: his measurements as percentiles among ${WGRP[wp[0]][1]} ${WGRP[wp[0]][0]} measured at the combine since 2000.`);[['Wingspan',wp[1]],['Standing reach',wp[2]],['Height',wp[4]]].forEach(([l,v2])=>{if(v2==null)return;const rr=el('div','ppx-rr');rr.appendChild(el('span',null,l));rr.appendChild(el('b',null,ord(v2)+' pct'));const pb=el('div','pct');const i2=el('i');i2.style.width=v2+'%';pb.appendChild(i2);rr.appendChild(pb);c.appendChild(rr)});df.appendChild(c)}
