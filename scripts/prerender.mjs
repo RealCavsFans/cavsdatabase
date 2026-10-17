@@ -20,7 +20,7 @@ const CITY = { ATL: ['Atlanta', 'GA', 'US'], BOS: ['Boston', 'MA', 'US'], BKN: [
 let MODCTX = null;
 const etDay = t => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(t));
 const MOD = route => { if (!MODCTX) return ''; const { upd, vid, art, score } = MODCTX; const pick = (...a) => a.filter(Boolean).sort().pop() || '';
-  return route === 'home' ? pick(upd, vid, art, score) : route === 'media' ? pick(upd, vid, art) : route === 'schedule' ? pick(upd, score) : pick(upd); };
+  return route === 'home' ? pick(upd, vid, art, score) : route === 'media' ? pick(upd, vid, art) : route === 'schedule' || route.startsWith('games/') ? pick(upd, score) : pick(upd); };
 export const modDates = () => MODCTX ? MOD : null;
 const LABEL = { 'roster-tree': 'How the roster was built', schedule: 'Schedule', roster: 'Roster', staff: 'Staff', cap: 'Salary cap', assets: 'Assets', moves: 'Transactions', charge: 'Cleveland Charge', media: 'Media', resources: 'Resources' };
 
@@ -37,7 +37,7 @@ const game = g => { const [d, o, ha, t] = g; const home = ha === 'H' ? 'CLE' : o
   e.image = SITE + '/og/schedule.jpg';
   e.organizer = { '@type': 'SportsOrganization', name: 'NBA', url: 'https://www.nba.com' };
   e.performer = [team(away), team(home)];
-  e.url = SITE + '/schedule';
+  e.url = SITE + '/games/' + d + '-' + o.toLowerCase();
   return e; };
 /* finished games: add the final score so search engines can show it */
 const withScore = (e, g, S) => { const sc = S && S[g[0]]; if (!sc) return e; const [c, o] = sc.split('-'); e.description = `Final: Cleveland Cavaliers ${c}, ${NICK[g[1]]} ${o}`; e.eventStatus = 'https://schema.org/EventScheduled'; return e; };
@@ -82,11 +82,12 @@ export default async function prerender(root, META) {
       const pl = route.startsWith('players/') ? data.PL.find(p => 'players/' + p[1].normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') === route) : null;
       if (pl) graph.push({ '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: 'Roster', item: SITE + '/roster' }, { '@type': 'ListItem', position: 3, name: pl[1], item: SITE + '/' + route }] },
         { '@type': 'Person', name: pl[1], url: SITE + '/' + route, image: 'https://cdn.nba.com/headshots/nba/latest/1040x760/' + pl[12] + '.png', jobTitle: 'Basketball player', birthDate: pl[5], ...(pl[3] && pl[3] !== '—' ? { height: pl[3].replace('-', ' ft ') + ' in' } : {}), ...(pl[4] ? { weight: pl[4] + ' lb' } : {}), memberOf: team('CLE'), sameAs: ['https://www.nba.com/player/' + pl[12]] });
-      else if (route !== 'home') graph.push({ '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: LABEL[route] || META[route][0].split(' | ')[0], item: SITE + '/' + route }] });
+      else if (route !== 'home' && !route.startsWith('games/')) graph.push({ '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: LABEL[route] || META[route][0].split(' | ')[0], item: SITE + '/' + route }] });
       const today = etDay(Date.now());
       { const url = SITE + '/' + (route === 'home' ? '' : route); const title = META[route][0], desc = META[route][1];
         graph.unshift({ '@type': 'WebPage', '@id': url + '#page', url, name: title, ...(desc ? { description: desc } : {}), isPartOf: { '@id': SITE + '/#site' }, inLanguage: 'en-US', ...(MOD(route) ? { dateModified: MOD(route) } : {}), primaryImageOfPage: { '@type': 'ImageObject', url: SITE + '/' + (route === 'home' ? 'og.jpg' : 'og/' + (route.startsWith('players/') ? 'roster' : route.replace(/\//g, '-')) + '.jpg') } }); }
       if (route === 'schedule') data.SCHEDULE.forEach(g => graph.push(withScore(game(g), g, data.SCORES)));
+      if (route.startsWith('games/')) { const g = data.SCHEDULE.find(x => 'games/' + x[0] + '-' + x[1].toLowerCase() === route); if (g) { const e = withScore(game(g), g, data.SCORES); e.url = SITE + '/' + route; graph.push(e); graph.push({ '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' }, { '@type': 'ListItem', position: 2, name: 'Schedule', item: SITE + '/schedule' }, { '@type': 'ListItem', position: 3, name: META[route][0].split(' | ')[0], item: SITE + '/' + route }] }); } }
       if (route === 'home') { const nx = data.SCHEDULE.find(g => g[0] >= today); if (nx) graph.push(game(nx)); }
       if (route === 'roster') graph.push({ '@type': 'ItemList', name: 'Cleveland Cavaliers roster', itemListElement: data.PLAYERS.map((n, i) => ({ '@type': 'ListItem', position: i + 1, item: { '@type': 'Person', name: n, jobTitle: 'Basketball player', memberOf: team('CLE') } })) });
       if (graph.length) html = html.replace('</head>', `<script type="application/ld+json" id="ld-page">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c')}</script>\n</head>`);

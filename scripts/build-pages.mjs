@@ -23,6 +23,14 @@ const META = Function('return ' + m[1])();
 const pm = html.match(/const PLAYERS=(\[[\s\S]*?\]);\n/);
 const slug = t => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 if (pm && /const PP_ON=true/.test(html)) for (const p of Function('return ' + pm[1])()) META['players/' + slug(p[1])] = [p[1] + ': Contract, Stats & Measurements | cavs_db', p[1] + '’s Cavs contract by season, height and wingspan, how Cleveland got him, depth chart spot and stats. Updated daily.'];
+// one page per regular-season game (games/<date>-<opp>), titles matching the site's GAME_META
+{ const sm = html.match(/const SCHEDULE=(\[[\s\S]*?\]);\n/), scm = html.match(/const SCORES=(\{[^;]*\});/), rm = html.match(/const SEASON=\{results:'([WL]*)'/);
+  const NK = {ATL:'Hawks',BOS:'Celtics',BKN:'Nets',CHA:'Hornets',CHI:'Bulls',DAL:'Mavericks',DEN:'Nuggets',DET:'Pistons',GSW:'Warriors',HOU:'Rockets',IND:'Pacers',LAC:'Clippers',LAL:'Lakers',MEM:'Grizzlies',MIA:'Heat',MIL:'Bucks',MIN:'Timberwolves',NOP:'Pelicans',NYK:'Knicks',OKC:'Thunder',ORL:'Magic',PHI:'76ers',PHX:'Suns',POR:'Trail Blazers',SAC:'Kings',SAS:'Spurs',TOR:'Raptors',UTA:'Jazz',WAS:'Wizards'};
+  const CITY = {ATL:'Atlanta',BOS:'Boston',BKN:'Brooklyn',CHA:'Charlotte',CHI:'Chicago',DAL:'Dallas',DEN:'Denver',DET:'Detroit',GSW:'Golden State',HOU:'Houston',IND:'Indiana',LAC:'LA',LAL:'Los Angeles',MEM:'Memphis',MIA:'Miami',MIL:'Milwaukee',MIN:'Minnesota',NOP:'New Orleans',NYK:'New York',OKC:'Oklahoma City',ORL:'Orlando',PHI:'Philadelphia',PHX:'Phoenix',POR:'Portland',SAC:'Sacramento',SAS:'San Antonio',TOR:'Toronto',UTA:'Utah',WAS:'Washington'};
+  if (sm) { const S = Function('return ' + sm[1])(), SC = scm ? Function('return ' + scm[1])() : {}, R = rm ? rm[1] : '';
+    S.forEach((g, i) => { const [d, o, ha] = g; const dl = new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }); const nk = NK[o] || o, sc = SC[d];
+      META['games/' + d + '-' + o.toLowerCase()] = (R[i] && sc) ? ['Cavs ' + sc.split('-')[0] + ', ' + nk + ' ' + sc.split('-')[1] + ' (' + dl + '): Box Score & Recap | cavs_db', 'Final: Cavaliers ' + sc.split('-')[0] + ', ' + CITY[o] + ' ' + nk + ' ' + sc.split('-')[1] + ' on ' + dl + '. Box score, top performers, postgame video and recap.']
+        : ['Cavs ' + (ha === 'H' ? 'vs ' : 'at ') + nk + ', ' + dl + ': How to Watch, Preview & Injuries | cavs_db', 'Cavaliers ' + (ha === 'H' ? 'vs ' : 'at ') + CITY[o] + ' ' + nk + ' on ' + dl + ': tip time, TV and radio, tale of the tape, injuries and the season series.']; }); } }
 const esc = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 await writeFile(new URL('home.html', root), html); // front page copy (served at / via _redirects)
 for (const [route, [title, desc]] of Object.entries(META)) {
@@ -36,7 +44,7 @@ for (const [route, [title, desc]] of Object.entries(META)) {
     .replace(/<meta property="og:title" content="[^"]*">/, `<meta property="og:title" content="${esc(title)}">`)
     .replace(/<meta property="og:description" content="[^"]*">/, `<meta property="og:description" content="${esc(desc)}">`);
   // each page has its own share image in og/<route>.jpg (media/rcf -> og/media-rcf.jpg); fall back to the site-wide one
-  const img = 'og/' + (route.startsWith('players/') ? 'roster' : route.replace(/\//g, '-')) + '.jpg';
+  const img = 'og/' + (route.startsWith('players/') ? 'roster' : route.startsWith('games/') ? 'schedule' : route.replace(/\//g, '-')) + '.jpg';
   if (await exists(new URL(img, root))) {
     const u = 'https://cavsdatabase.com/' + img + '?v=2';
     out = out.replace(/<meta property="og:image" content="[^"]*">/, `<meta property="og:image" content="${u}">`)

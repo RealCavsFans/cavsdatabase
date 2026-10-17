@@ -22,13 +22,13 @@ try {
       const fin = g.gameStatus === 3;
       const cle = h === 'CLE' ? g.homeTeam.score : g.awayTeam.score;
       const opp = h === 'CLE' ? g.awayTeam.score : g.homeTeam.score;
-      out[date] = { url, status: fin ? 'final' : 'scheduled', ...(fin ? { score: `${cle}-${opp}`, result: cle > opp ? 'W' : 'L' } : {}), ...(fin && prev[date]?.top ? { top: prev[date].top } : {}), ...(fin && prev[date]?.out ? { out: prev[date].out } : {}) };
+      out[date] = { url, status: fin ? 'final' : 'scheduled', ...(fin ? { score: `${cle}-${opp}`, result: cle > opp ? 'W' : 'L' } : {}), ...(fin && prev[date]?.top ? { top: prev[date].top } : {}), ...(fin && prev[date]?.out ? { out: prev[date].out } : {}), ...(fin && prev[date]?.box ? { box: prev[date].box } : {}) };
     }
   }
   // best Cavs stat line for finals in the last 3 days (ESPN box score)
   const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba';
   for (const [date, g] of Object.entries(out)) {
-    if (g.status !== 'final' || (g.top && g.out) || Date.now() - Date.parse(date + 'T12:00:00Z') > 3 * 864e5) continue;
+    if (g.status !== 'final' || (g.top && g.out && g.box) || Date.now() - Date.parse(date + 'T12:00:00Z') > 3 * 864e5) continue;
     try {
       const sb = await (await fetch(`${ESPN}/scoreboard?dates=${date.replace(/-/g, '')}`)).json();
       const ev = (sb.events || []).find(e => e.competitions?.[0]?.competitors?.some(c => c.team?.abbreviation === 'CLE'));
@@ -43,6 +43,8 @@ try {
       const keys = (st.names || st.labels || []).map(x => String(x).toUpperCase());
       const n = (a, k) => parseFloat(a.stats[keys.indexOf(k)]) || 0;
       const best = (st.athletes || []).filter(a => a.stats?.length).sort((x, y) => ['PTS', 'REB', 'AST', 'STL', 'BLK'].reduce((s2, k) => s2 + n(y, k) - n(x, k), 0))[0];
+      // Cavs box score for the game page: [name, min, pts, reb, ast, +/-, starter]
+      if (!g.box) g.box = (st.athletes || []).filter(a => a.stats?.length && !a.didNotPlay).map(a => [a.athlete.displayName, String(a.stats[keys.indexOf('MIN')] ?? ''), String(n(a, 'PTS')), String(n(a, 'REB')), String(n(a, 'AST')), String(a.stats[keys.indexOf('+/-')] ?? ''), a.starter ? 1 : 0]).sort((x, y) => y[6] - x[6] || (parseFloat(y[1]) || 0) - (parseFloat(x[1]) || 0));
       if (best && !g.top) g.top = `${best.athlete.displayName}: ${n(best, 'PTS')} pts, ${n(best, 'REB')} reb, ${n(best, 'AST')} ast`;
     } catch (e) { console.warn('top line unavailable for', date, e.message); }
   }
