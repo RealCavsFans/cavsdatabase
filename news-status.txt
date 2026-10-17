@@ -1,13 +1,13 @@
-2026-10-17T06:32:03.199Z
-NBA highlights: FAILED HTTP 404 https://www.youtube.com/feeds/videos.xml?channel_id=UCWJ2lWNubArHWmf3FIHbfcQ
+2026-10-17T07:11:38.019Z
+NBA highlights: FAILED used is not defined
 Hoops Rumors: 10 from https://www.hoopsrumors.com/cleveland-cavaliers/feed
 Cavaliers on SI: 15 from https://news.google.com/rss/search?q=site%3Asi.com%2Fnba%2Fcavaliers&hl=en-US&gl=US&ceid=US:en
 cleveland.com: 15 from https://news.google.com/rss/search?q=site%3Acleveland.com%2Fcavs&hl=en-US&gl=US&ceid=US:en
 Fear The Sword: 10 from https://www.fearthesword.com/rss/current.xml
 Wine and Gold Talk: 4 from https://feeds.megaphone.fm/wineandgoldtalk
-Locked On Cavs: FAILED HTTP 404 https://www.youtube.com/feeds/videos.xml?channel_id=UCGq71v5PhzOkkwcpaIdw09g
-The Chase Down Podcast: FAILED HTTP 404 https://www.youtube.com/feeds/videos.xml?channel_id=UCOdS-I1sYkKWhtTjMUWP_TA
-It's Cavalier Podcast: FAILED HTTP 404 https://www.youtube.com/feeds/videos.xml?channel_id=UCMTu_hX9HEAlSrkWZ9ZDlAQ
-The Block, The Shot, The Stop: FAILED HTTP 404 https://www.youtube.com/feeds/videos.xml?channel_id=UCEKvQ2hyHcfrFzA_SAUbR8w
-Fear The Fro: FAILED HTTP 404 https://www.youtube.com/feeds/videos.xml?channel_id=UCsTcoW70Xdt2c1G11dTbDfQ
-Ultimate Cavaliers: FAILED HTTP 404 https://www.youtube.com/feeds/videos.xml?playlist_id=PLXIPdVacO1d4sx24tHEl8PTmpQyYMnfE1
+Locked On Cavs: FAILED used is not defined
+The Chase Down Podcast: FAILED used is not defined
+It's Cavalier Podcast: FAILED used is not defined
+The Block, The Shot, The Stop: FAILED used is not defined
+Fear The Fro: FAILED used is not defined
+Ultimate Cavaliers: FAILED used is not defined
