@@ -12,7 +12,9 @@
       "WebFetch(domain:sports.yahoo.com)",
       "WebFetch(domain:www.legabasket.it)",
       "WebFetch(domain:www.lkl.lt)",
-      "WebFetch(domain:lsusports.net)"
+      "WebFetch(domain:lsusports.net)",
+      "WebFetch(domain:legabasket.it)",
+      "WebFetch(domain:lkl.lt)"
     ]
   }
 }
