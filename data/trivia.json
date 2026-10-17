@@ -1,32 +1,1002 @@
 [
- {"q":"Who is the Cavaliers' all-time leading scorer?","c":["Zydrunas Ilgauskas","LeBron James","Brad Daugherty","Austin Carr"],"a":1},
- {"q":"The Cavs came back from what deficit to win the 2016 Finals?","c":["2–0","3–1","3–2","2–1"],"a":1},
- {"q":"Who hit the go-ahead 3 late in Game 7 of the 2016 Finals?","c":["LeBron James","J.R. Smith","Kyrie Irving","Kevin Love"],"a":2},
- {"q":"What was the Cavaliers' first season?","c":["1966–67","1970–71","1974–75","1968–69"],"a":1},
- {"q":"Austin Carr went No. 1 overall to the Cavs in which draft?","c":["1970","1971","1973","1976"],"a":1},
- {"q":"Which number did the Cavs retire for Zydrunas Ilgauskas?","c":["11","12","13","41"],"a":0},
- {"q":"The \"Miracle of Richfield\" happened in which season?","c":["1975–76","1988–89","1991–92","1978–79"],"a":0},
- {"q":"Where did the Cavs play home games from 1974 to 1994?","c":["Cleveland Arena","Public Hall","Richfield Coliseum","Wolstein Center"],"a":2},
- {"q":"What was Rocket Arena called from 2019 to 2025?","c":["Quicken Loans Arena","Gund Arena","Rocket Mortgage FieldHouse","The Q"],"a":2},
- {"q":"Which Cav won Defensive Player of the Year for 2024–25?","c":["Jarrett Allen","Evan Mobley","Isaac Okoro","Dean Wade"],"a":1},
- {"q":"Kenny Atkinson won Coach of the Year in his first season with the Cavs. Which season?","c":["2023–24","2024–25","2025–26","2022–23"],"a":1},
- {"q":"What is the franchise's best regular season record?","c":["64–18","66–16","61–21","63–19"],"a":1},
- {"q":"Who did the Cavs take No. 1 overall in 2011?","c":["Kyrie Irving","Tristan Thompson","Anthony Bennett","Andrew Wiggins"],"a":0},
- {"q":"Who did the Cavs take No. 1 overall in 2014?","c":["Joel Embiid","Jabari Parker","Andrew Wiggins","Dante Exum"],"a":2},
- {"q":"Donovan Mitchell scored how many points against Chicago on Jan. 2, 2023?","c":["61","65","68","71"],"a":3},
- {"q":"Who coached the Cavs to the 2016 title?","c":["David Blatt","Mike Brown","Tyronn Lue","Byron Scott"],"a":2},
- {"q":"Which number is retired for Brad Daugherty?","c":["42","43","44","34"],"a":1},
- {"q":"Michael Jordan's 1989 series winner, \"The Shot,\" came over which Cav?","c":["Mark Price","Craig Ehlo","Larry Nance","Ron Harper"],"a":1},
- {"q":"Evan Mobley was drafted at which pick in 2021?","c":["No. 1","No. 2","No. 3","No. 4"],"a":2},
- {"q":"Darius Garland was drafted at which pick in 2019?","c":["No. 3","No. 5","No. 7","No. 8"],"a":1},
- {"q":"Who was the Cavaliers' first head coach?","c":["Bill Fitch","Lenny Wilkens","Stan Albeck","Chuck Daly"],"a":0},
- {"q":"The Cavs lost 26 straight games in which season?","c":["1981–82","2002–03","2010–11","2018–19"],"a":2},
- {"q":"Kevin Love came to Cleveland in a 2014 trade with which team?","c":["Minnesota","Boston","Philadelphia","Milwaukee"],"a":0},
- {"q":"How many straight Finals did the Cavs and Warriors meet?","c":["2","3","4","5"],"a":2},
- {"q":"What is the name of the Cavs' dog mascot?","c":["Moondog","Rover","Sir CC","Champ"],"a":0},
- {"q":"Which number is retired for Mark Price?","c":["15","25","35","52"],"a":1},
- {"q":"Which number is retired for Austin Carr?","c":["24","32","34","43"],"a":2},
- {"q":"Who did the Cavs take No. 1 overall in 2013?","c":["Victor Oladipo","Otto Porter","Anthony Bennett","Cody Zeller"],"a":2},
- {"q":"What is the name of the Cavs' G League team?","c":["Canton Charge","Cleveland Charge","Cleveland Crunch","Akron Wings"],"a":1},
- {"q":"In the 2022 Donovan Mitchell trade, which player went to Utah along with Lauri Markkanen and Ochai Agbaji?","c":["Collin Sexton","Cedi Osman","Kevin Love","Caris LeVert"],"a":0}
+ {
+  "q": "Who is the Cavaliers' all-time leading scorer?",
+  "c": [
+   "LeBron James",
+   "Austin Carr",
+   "Zydrunas Ilgauskas",
+   "Brad Daugherty"
+  ],
+  "a": 0
+ },
+ {
+  "q": "The Cavs came back from what deficit to win the 2016 Finals?",
+  "c": [
+   "2–0",
+   "3–1",
+   "3–2",
+   "2–1"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Who hit the go-ahead 3 late in Game 7 of the 2016 Finals?",
+  "c": [
+   "LeBron James",
+   "Kevin Love",
+   "J.R. Smith",
+   "Kyrie Irving"
+  ],
+  "a": 3
+ },
+ {
+  "q": "What was the Cavaliers' first season?",
+  "c": [
+   "1966–67",
+   "1970–71",
+   "1974–75",
+   "1968–69"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Austin Carr went No. 1 overall to the Cavs in which draft?",
+  "c": [
+   "1970",
+   "1971",
+   "1973",
+   "1976"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Which number did the Cavs retire for Zydrunas Ilgauskas?",
+  "c": [
+   "11",
+   "12",
+   "13",
+   "41"
+  ],
+  "a": 0
+ },
+ {
+  "q": "The \"Miracle of Richfield\" happened in which season?",
+  "c": [
+   "1975–76",
+   "1988–89",
+   "1991–92",
+   "1978–79"
+  ],
+  "a": 0
+ },
+ {
+  "q": "Where did the Cavs play home games from 1974 to 1994?",
+  "c": [
+   "Public Hall",
+   "Wolstein Center",
+   "Cleveland Arena",
+   "Richfield Coliseum"
+  ],
+  "a": 3
+ },
+ {
+  "q": "What was Rocket Arena called from 2019 to 2025?",
+  "c": [
+   "The Q",
+   "Quicken Loans Arena",
+   "Gund Arena",
+   "Rocket Mortgage FieldHouse"
+  ],
+  "a": 3
+ },
+ {
+  "q": "Which Cav won Defensive Player of the Year for 2024–25?",
+  "c": [
+   "Jarrett Allen",
+   "Dean Wade",
+   "Isaac Okoro",
+   "Evan Mobley"
+  ],
+  "a": 3
+ },
+ {
+  "q": "Kenny Atkinson won Coach of the Year in his first season with the Cavs. Which season?",
+  "c": [
+   "2023–24",
+   "2024–25",
+   "2025–26",
+   "2022–23"
+  ],
+  "a": 1
+ },
+ {
+  "q": "What is the franchise's best regular season record?",
+  "c": [
+   "64–18",
+   "66–16",
+   "61–21",
+   "63–19"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Who did the Cavs take No. 1 overall in 2011?",
+  "c": [
+   "Tristan Thompson",
+   "Anthony Bennett",
+   "Andrew Wiggins",
+   "Kyrie Irving"
+  ],
+  "a": 3
+ },
+ {
+  "q": "Who did the Cavs take No. 1 overall in 2014?",
+  "c": [
+   "Andrew Wiggins",
+   "Joel Embiid",
+   "Jabari Parker",
+   "Dante Exum"
+  ],
+  "a": 0
+ },
+ {
+  "q": "Donovan Mitchell scored how many points against Chicago on Jan. 2, 2023?",
+  "c": [
+   "61",
+   "65",
+   "68",
+   "71"
+  ],
+  "a": 3
+ },
+ {
+  "q": "Who coached the Cavs to the 2016 title?",
+  "c": [
+   "Tyronn Lue",
+   "David Blatt",
+   "Mike Brown",
+   "Byron Scott"
+  ],
+  "a": 0
+ },
+ {
+  "q": "Which number is retired for Brad Daugherty?",
+  "c": [
+   "42",
+   "43",
+   "44",
+   "34"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Michael Jordan's 1989 series winner, \"The Shot,\" came over which Cav?",
+  "c": [
+   "Larry Nance",
+   "Ron Harper",
+   "Mark Price",
+   "Craig Ehlo"
+  ],
+  "a": 3
+ },
+ {
+  "q": "Evan Mobley was drafted at which pick in 2021?",
+  "c": [
+   "No. 1",
+   "No. 2",
+   "No. 3",
+   "No. 4"
+  ],
+  "a": 2
+ },
+ {
+  "q": "Darius Garland was drafted at which pick in 2019?",
+  "c": [
+   "No. 3",
+   "No. 5",
+   "No. 7",
+   "No. 8"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Who was the Cavaliers' first head coach?",
+  "c": [
+   "Chuck Daly",
+   "Bill Fitch",
+   "Stan Albeck",
+   "Lenny Wilkens"
+  ],
+  "a": 1
+ },
+ {
+  "q": "The Cavs lost 26 straight games in which season?",
+  "c": [
+   "1981–82",
+   "2002–03",
+   "2010–11",
+   "2018–19"
+  ],
+  "a": 2
+ },
+ {
+  "q": "Kevin Love came to Cleveland in a 2014 trade with which team?",
+  "c": [
+   "Minnesota",
+   "Boston",
+   "Milwaukee",
+   "Philadelphia"
+  ],
+  "a": 0
+ },
+ {
+  "q": "How many straight Finals did the Cavs and Warriors meet?",
+  "c": [
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "a": 2
+ },
+ {
+  "q": "What is the name of the Cavs' dog mascot?",
+  "c": [
+   "Moondog",
+   "Rover",
+   "Champ",
+   "Sir CC"
+  ],
+  "a": 0
+ },
+ {
+  "q": "Which number is retired for Mark Price?",
+  "c": [
+   "15",
+   "25",
+   "35",
+   "52"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Which number is retired for Austin Carr?",
+  "c": [
+   "24",
+   "32",
+   "34",
+   "43"
+  ],
+  "a": 2
+ },
+ {
+  "q": "Who did the Cavs take No. 1 overall in 2013?",
+  "c": [
+   "Anthony Bennett",
+   "Cody Zeller",
+   "Otto Porter",
+   "Victor Oladipo"
+  ],
+  "a": 0
+ },
+ {
+  "q": "What is the name of the Cavs' G League team?",
+  "c": [
+   "Canton Charge",
+   "Cleveland Charge",
+   "Cleveland Crunch",
+   "Akron Wings"
+  ],
+  "a": 1
+ },
+ {
+  "q": "In the 2022 Donovan Mitchell trade, which player went to Utah along with Lauri Markkanen and Ochai Agbaji?",
+  "c": [
+   "Caris LeVert",
+   "Kevin Love",
+   "Collin Sexton",
+   "Cedi Osman"
+  ],
+  "a": 2
+ },
+ {
+  "q": "Who did the Cavs play in their first-ever game, on Oct. 14, 1970?",
+  "c": [
+   "Buffalo Braves",
+   "Boston Celtics",
+   "Detroit Pistons",
+   "Portland Trail Blazers"
+  ],
+  "a": 0
+ },
+ {
+  "q": "Who was the Cavaliers' first All-Star?",
+  "c": [
+   "Bingo Smith",
+   "John Johnson",
+   "Nate Thurmond",
+   "Austin Carr"
+  ],
+  "a": 1
+ },
+ {
+  "q": "How did the team get the name \"Cavaliers\"?",
+  "c": [
+   "Named after a high school",
+   "The first coach picked it",
+   "A Plain Dealer fan contest",
+   "The league assigned it"
+  ],
+  "a": 2
+ },
+ {
+  "q": "Who owned the Cavs when they began play in 1970?",
+  "c": [
+   "Gordon Gund",
+   "Ted Stepien",
+   "Dan Gilbert",
+   "Nick Mileti"
+  ],
+  "a": 3
+ },
+ {
+  "q": "The \"Stepien Rule\" stops teams from doing what?",
+  "c": [
+   "Tanking in the last 10 games",
+   "Trading a player within 60 days of signing",
+   "Signing more than two max players",
+   "Trading first-round picks in back-to-back years"
+  ],
+  "a": 3
+ },
+ {
+  "q": "What was the Cavs' record in their first season, 1970–71?",
+  "c": [
+   "15–67",
+   "21–61",
+   "10–72",
+   "23–59"
+  ],
+  "a": 0
+ },
+ {
+  "q": "Who leads the Cavs in career rebounds?",
+  "c": [
+   "LeBron James",
+   "Zydrunas Ilgauskas",
+   "Tristan Thompson",
+   "Brad Daugherty"
+  ],
+  "a": 0
+ },
+ {
+  "q": "Who leads the Cavs in career blocks?",
+  "c": [
+   "Larry Nance",
+   "Evan Mobley",
+   "Zydrunas Ilgauskas",
+   "LeBron James"
+  ],
+  "a": 2
+ },
+ {
+  "q": "Who leads the Cavs in career assists?",
+  "c": [
+   "Kyrie Irving",
+   "LeBron James",
+   "Darius Garland",
+   "Mark Price"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Who leads the Cavs in career 3-pointers made?",
+  "c": [
+   "LeBron James",
+   "Kevin Love",
+   "Donovan Mitchell",
+   "Darius Garland"
+  ],
+  "a": 0
+ },
+ {
+  "q": "Who leads the Cavs in career steals?",
+  "c": [
+   "Craig Ehlo",
+   "LeBron James",
+   "Foots Walker",
+   "Mark Price"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Who is second on the Cavs' all-time scoring list?",
+  "c": [
+   "Austin Carr",
+   "Zydrunas Ilgauskas",
+   "Brad Daugherty",
+   "Mark Price"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Who is second on the Cavs' all-time assists list?",
+  "c": [
+   "John Bagley",
+   "Mark Price",
+   "Darius Garland",
+   "Terrell Brandon"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Who has played the most games for the Cavs?",
+  "c": [
+   "Bingo Smith",
+   "Danny Ferry",
+   "Zydrunas Ilgauskas",
+   "LeBron James"
+  ],
+  "a": 3
+ },
+ {
+  "q": "Which Hall of Famer coached the Cavs from 1986 to 1993?",
+  "c": [
+   "Mike Fratello",
+   "Chuck Daly",
+   "Bill Fitch",
+   "Lenny Wilkens"
+  ],
+  "a": 3
+ },
+ {
+  "q": "Brad Daugherty was taken at which pick in the 1986 draft?",
+  "c": [
+   "No. 1",
+   "No. 2",
+   "No. 5",
+   "No. 8"
+  ],
+  "a": 0
+ },
+ {
+  "q": "Mark Price came to the Cavs in a 1986 draft-day trade with which team?",
+  "c": [
+   "Dallas",
+   "Philadelphia",
+   "Atlanta",
+   "Milwaukee"
+  ],
+  "a": 0
+ },
+ {
+  "q": "Who coached the 66–16 Cavs in 2008–09?",
+  "c": [
+   "David Blatt",
+   "Byron Scott",
+   "Paul Silas",
+   "Mike Brown"
+  ],
+  "a": 3
+ },
+ {
+  "q": "LeBron James won his first MVP in which season?",
+  "c": [
+   "2006–07",
+   "2007–08",
+   "2008–09",
+   "2009–10"
+  ],
+  "a": 2
+ },
+ {
+  "q": "Which two Cavs have won Rookie of the Year?",
+  "c": [
+   "LeBron James and Evan Mobley",
+   "Kyrie Irving and Brad Daugherty",
+   "LeBron James and Kyrie Irving",
+   "Austin Carr and LeBron James"
+  ],
+  "a": 2
+ },
+ {
+  "q": "Evan Mobley made his first All-Star team in which year?",
+  "c": [
+   "2023",
+   "2024",
+   "2025",
+   "2026"
+  ],
+  "a": 2
+ },
+ {
+  "q": "What number does Donovan Mitchell wear for the Cavs?",
+  "c": [
+   "11",
+   "23",
+   "45",
+   "3"
+  ],
+  "a": 2
+ },
+ {
+  "q": "What number does Jarrett Allen wear?",
+  "c": [
+   "31",
+   "13",
+   "41",
+   "20"
+  ],
+  "a": 0
+ },
+ {
+  "q": "What number does Evan Mobley wear?",
+  "c": [
+   "44",
+   "4",
+   "14",
+   "40"
+  ],
+  "a": 1
+ },
+ {
+  "q": "What was the final score of Game 7 of the 2016 Finals?",
+  "c": [
+   "93–89",
+   "97–92",
+   "101–96",
+   "88–85"
+  ],
+  "a": 0
+ },
+ {
+  "q": "LeBron's famous chase-down block in Game 7 of the 2016 Finals was on which Warrior?",
+  "c": [
+   "Draymond Green",
+   "Stephen Curry",
+   "Andre Iguodala",
+   "Klay Thompson"
+  ],
+  "a": 2
+ },
+ {
+  "q": "Kyrie Irving's go-ahead 3 in Game 7 of the 2016 Finals came over which defender?",
+  "c": [
+   "Stephen Curry",
+   "Harrison Barnes",
+   "Shaun Livingston",
+   "Klay Thompson"
+  ],
+  "a": 0
+ },
+ {
+  "q": "Which Cav got the key late stop on Stephen Curry in Game 7 of the 2016 Finals?",
+  "c": [
+   "J.R. Smith",
+   "Kevin Love",
+   "Tristan Thompson",
+   "Iman Shumpert"
+  ],
+  "a": 1
+ },
+ {
+  "q": "The Cavs reached their first NBA Finals in 2007 by beating which team in the East finals?",
+  "c": [
+   "Chicago",
+   "Boston",
+   "Detroit",
+   "New Jersey"
+  ],
+  "a": 2
+ },
+ {
+  "q": "Who swept the Cavs in the 2007 Finals?",
+  "c": [
+   "Phoenix Suns",
+   "Los Angeles Lakers",
+   "San Antonio Spurs",
+   "Dallas Mavericks"
+  ],
+  "a": 2
+ },
+ {
+  "q": "In double-overtime Game 5 of the 2007 East finals, LeBron scored how many straight Cavs points to finish it?",
+  "c": [
+   "15",
+   "19",
+   "25",
+   "31"
+  ],
+  "a": 2
+ },
+ {
+  "q": "The 1976 \"Miracle of Richfield\" team beat which team in the playoffs?",
+  "c": [
+   "New York Knicks",
+   "Buffalo Braves",
+   "Boston Celtics",
+   "Washington Bullets"
+  ],
+  "a": 3
+ },
+ {
+  "q": "Dan Gilbert bought the Cavs in which year?",
+  "c": [
+   "2003",
+   "2005",
+   "2007",
+   "2010"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Who was the Cavs' general manager when they won the 2016 title?",
+  "c": [
+   "Koby Altman",
+   "Chris Grant",
+   "Danny Ferry",
+   "David Griffin"
+  ],
+  "a": 3
+ },
+ {
+  "q": "The Brooklyn pick the Cavs got for Kyrie Irving became which player?",
+  "c": [
+   "Darius Garland",
+   "Dylan Windler",
+   "Isaac Okoro",
+   "Collin Sexton"
+  ],
+  "a": 3
+ },
+ {
+  "q": "Kevin Love came from Minnesota in 2014 in a deal centered on which two players?",
+  "c": [
+   "Dion Waiters and Tristan Thompson",
+   "Andrew Wiggins and Dion Waiters",
+   "Kyrie Irving and Anderson Varejao",
+   "Andrew Wiggins and Anthony Bennett"
+  ],
+  "a": 3
+ },
+ {
+  "q": "Evan Mobley played college basketball at which school?",
+  "c": [
+   "UCLA",
+   "Stanford",
+   "Arizona",
+   "USC"
+  ],
+  "a": 3
+ },
+ {
+  "q": "Darius Garland played college basketball at which school?",
+  "c": [
+   "Kentucky",
+   "Vanderbilt",
+   "Memphis",
+   "Duke"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Jarrett Allen played college basketball at which school?",
+  "c": [
+   "Texas",
+   "Houston",
+   "Baylor",
+   "Kansas"
+  ],
+  "a": 0
+ },
+ {
+  "q": "Donovan Mitchell played college basketball at which school?",
+  "c": [
+   "Kentucky",
+   "Syracuse",
+   "Florida",
+   "Louisville"
+  ],
+  "a": 3
+ },
+ {
+  "q": "Zydrunas Ilgauskas is from which country?",
+  "c": [
+   "Serbia",
+   "Croatia",
+   "Latvia",
+   "Lithuania"
+  ],
+  "a": 3
+ },
+ {
+  "q": "Anderson Varejao is from which country?",
+  "c": [
+   "Brazil",
+   "Argentina",
+   "Portugal",
+   "Spain"
+  ],
+  "a": 0
+ },
+ {
+  "q": "Which Cav was nicknamed \"Wild Thing\"?",
+  "c": [
+   "Anderson Varejao",
+   "Larry Nance Jr.",
+   "J.R. Smith",
+   "Tristan Thompson"
+  ],
+  "a": 0
+ },
+ {
+  "q": "LeBron James went to high school at which Akron school?",
+  "c": [
+   "Buchtel",
+   "Firestone",
+   "St. Vincent–St. Mary",
+   "Archbishop Hoban"
+  ],
+  "a": 2
+ },
+ {
+  "q": "In 2014, LeBron announced his return to Cleveland through which outlet?",
+  "c": [
+   "A press conference",
+   "The Players' Tribune",
+   "Sports Illustrated",
+   "ESPN"
+  ],
+  "a": 2
+ },
+ {
+  "q": "Which Cav won the NBA Three-Point Contest in 1993 and 1994?",
+  "c": [
+   "Steve Kerr",
+   "Mark Price",
+   "Terrell Brandon",
+   "Craig Ehlo"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Kyrie Irving won the Three-Point Contest in which year?",
+  "c": [
+   "2012",
+   "2013",
+   "2014",
+   "2015"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Kyrie Irving was MVP of which All-Star Game?",
+  "c": [
+   "2012",
+   "2013",
+   "2014",
+   "2015"
+  ],
+  "a": 2
+ },
+ {
+  "q": "Who did the Cavs beat in the 2016 East finals?",
+  "c": [
+   "Detroit",
+   "Toronto",
+   "Boston",
+   "Atlanta"
+  ],
+  "a": 1
+ },
+ {
+  "q": "The Warriors swept the Cavs in which Finals?",
+  "c": [
+   "2015",
+   "2016",
+   "2017",
+   "2018"
+  ],
+  "a": 3
+ },
+ {
+  "q": "Who coached the Cavs right before Kenny Atkinson?",
+  "c": [
+   "Tyronn Lue",
+   "Larry Drew",
+   "John Beilein",
+   "J.B. Bickerstaff"
+  ],
+  "a": 3
+ },
+ {
+  "q": "The Cavs won a 2024 first-round Game 7 against which team?",
+  "c": [
+   "Miami",
+   "New York",
+   "Orlando",
+   "Philadelphia"
+  ],
+  "a": 2
+ },
+ {
+  "q": "The 2024–25 Cavs started the season with how many straight wins?",
+  "c": [
+   "10",
+   "12",
+   "15",
+   "17"
+  ],
+  "a": 2
+ },
+ {
+  "q": "Which team ended the Cavs' 2025 playoff run in the second round?",
+  "c": [
+   "Milwaukee",
+   "Boston",
+   "Indiana",
+   "New York"
+  ],
+  "a": 2
+ },
+ {
+  "q": "The Cavs got De'Andre Hunter in a 2025 trade with which team?",
+  "c": [
+   "New Orleans",
+   "Atlanta",
+   "Washington",
+   "Toronto"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Which Hall of Fame center spent the 2009–10 season with the Cavs?",
+  "c": [
+   "Dikembe Mutombo",
+   "Alonzo Mourning",
+   "Ben Wallace",
+   "Shaquille O'Neal"
+  ],
+  "a": 3
+ },
+ {
+  "q": "The Cavs took which player No. 4 overall in 2011, a few picks after Kyrie Irving?",
+  "c": [
+   "Kemba Walker",
+   "Tristan Thompson",
+   "Dion Waiters",
+   "Klay Thompson"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Isaac Okoro was taken at which pick in the 2020 draft?",
+  "c": [
+   "No. 3",
+   "No. 5",
+   "No. 7",
+   "No. 10"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Collin Sexton was taken at which pick in the 2018 draft?",
+  "c": [
+   "No. 5",
+   "No. 6",
+   "No. 8",
+   "No. 11"
+  ],
+  "a": 2
+ },
+ {
+  "q": "Cedi Osman is from which country?",
+  "c": [
+   "Turkey",
+   "Bosnia",
+   "Greece",
+   "Georgia"
+  ],
+  "a": 0
+ },
+ {
+  "q": "Max Strus came to the Cavs in 2023 from which team?",
+  "c": [
+   "Chicago",
+   "Orlando",
+   "Miami",
+   "Atlanta"
+  ],
+  "a": 2
+ },
+ {
+  "q": "Dean Wade played college basketball at which school?",
+  "c": [
+   "Wichita State",
+   "Kansas",
+   "Kansas State",
+   "Iowa State"
+  ],
+  "a": 2
+ },
+ {
+  "q": "Jarrett Allen came to the Cavs in 2021 as part of the four-team trade for which star?",
+  "c": [
+   "Kyrie Irving",
+   "James Harden",
+   "Russell Westbrook",
+   "Kevin Durant"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Who was the Cavs' first head coach?",
+  "c": [
+   "Bill Fitch",
+   "Stan Albeck",
+   "Lenny Wilkens",
+   "Don Delaney"
+  ],
+  "a": 0
+ },
+ {
+  "q": "Bobby \"Bingo\" Smith's number retired by the Cavs is?",
+  "c": [
+   "5",
+   "7",
+   "11",
+   "22"
+  ],
+  "a": 1
+ },
+ {
+  "q": "Which number is retired for Larry Nance?",
+  "c": [
+   "22",
+   "24",
+   "32",
+   "43"
+  ],
+  "a": 0
+ },
+ {
+  "q": "Which number is retired for Nate Thurmond?",
+  "c": [
+   "42",
+   "44",
+   "52",
+   "33"
+  ],
+  "a": 0
+ },
+ {
+  "q": "Who was the Cavs' radio voice for decades and called the \"Miracle of Richfield\"?",
+  "c": [
+   "Joe Tait",
+   "Fred McLeod",
+   "Jim Chones",
+   "Austin Carr"
+  ],
+  "a": 0
+ },
+ {
+  "q": "Austin Carr's nickname is?",
+  "c": [
+   "Big Smooth",
+   "The Rifleman",
+   "Mr. Cavalier",
+   "Dr. A"
+  ],
+  "a": 2
+ },
+ {
+  "q": "LeBron James was named Finals MVP of the 2016 Finals by what vote?",
+  "c": [
+   "Unanimous",
+   "6–5",
+   "8–3",
+   "9–2"
+  ],
+  "a": 0
+ }
 ]
