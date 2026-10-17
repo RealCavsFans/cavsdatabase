@@ -22,7 +22,7 @@ try {
       const fin = g.gameStatus === 3;
       const cle = h === 'CLE' ? g.homeTeam.score : g.awayTeam.score;
       const opp = h === 'CLE' ? g.awayTeam.score : g.homeTeam.score;
-      out[date] = { url, status: fin ? 'final' : 'scheduled', ...(fin ? { score: `${cle}-${opp}`, result: cle > opp ? 'W' : 'L' } : {}), ...(fin && prev[date]?.top ? { top: prev[date].top } : {}), ...(fin && prev[date]?.out ? { out: prev[date].out } : {}), ...(fin && prev[date]?.box ? { box: prev[date].box } : {}) };
+      out[date] = { url, status: fin ? 'final' : 'scheduled', ...(fin ? { score: `${cle}-${opp}`, result: cle > opp ? 'W' : 'L' } : {}), ...(fin && prev[date]?.top ? { top: prev[date].top } : {}), ...(fin && prev[date]?.out ? { out: prev[date].out } : {}), ...(fin && prev[date]?.box ? { box: prev[date].box } : {}), ...(prev[date]?.refs ? { refs: prev[date].refs } : {}) };
     }
   }
   // best Cavs stat line for finals in the last 3 days (ESPN box score)
@@ -45,9 +45,31 @@ try {
       const best = (st.athletes || []).filter(a => a.stats?.length).sort((x, y) => ['PTS', 'REB', 'AST', 'STL', 'BLK'].reduce((s2, k) => s2 + n(y, k) - n(x, k), 0))[0];
       // Cavs box score for the game page: [name, min, pts, reb, ast, +/-, starter]
       if (!g.box) g.box = (st.athletes || []).filter(a => a.stats?.length && !a.didNotPlay).map(a => [a.athlete.displayName, String(a.stats[keys.indexOf('MIN')] ?? ''), String(n(a, 'PTS')), String(n(a, 'REB')), String(n(a, 'AST')), String(a.stats[keys.indexOf('+/-')] ?? ''), a.starter ? 1 : 0]).sort((x, y) => y[6] - x[6] || (parseFloat(y[1]) || 0) - (parseFloat(x[1]) || 0));
+      // officials from ESPN, if the NBA page wasn't caught on game day
+      if (!g.refs && sum.gameInfo?.officials?.length) g.refs = sum.gameInfo.officials.map(o => [o.position?.displayName || 'Official', o.displayName || o.fullName, String(o.jerseyNumber || '')]).filter(x => x[1]);
       if (best && !g.top) g.top = `${best.athlete.displayName}: ${n(best, 'PTS')} pts, ${n(best, 'REB')} reb, ${n(best, 'AST')} ast`;
     } catch (e) { console.warn('top line unavailable for', date, e.message); }
   }
+  // game-day officials: official.nba.com posts the crews around 9 AM ET ("Away @ Home" rows, "Name (#12)" cells)
+  try {
+    const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date());
+    if (out[today] && !out[today].refs) {
+      const html = await (await fetch('https://official.nba.com/referee-assignments/', { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36' } })).text();
+      const txt = s => s.replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&#0?39;|&rsquo;/g, "'").replace(/\s+/g, ' ').trim();
+      const hd = (txt(html).match(/NBA Referee Assignments\s+((?:January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}, \d{4})/) || [])[1];
+      const day = hd && new Date(hd + ' 12:00 UTC').toISOString().slice(0, 10);
+      if (day === today) {
+        const nbaPart = html.split(/WNBA Referee Assignments/i)[0];
+        for (const row of nbaPart.split(/<tr[\s>]/i).slice(1)) {
+          const cells = [...row.matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map(m => txt(m[1]));
+          if (!cells.length || !/\bCleveland\b/.test(cells[0])) continue;
+          const refs = cells.slice(1, 5).map((c, k) => [['Crew chief', 'Referee', 'Umpire', 'Alternate'][k], c.replace(/\s*\(#?\d+\)\s*$/, '').trim(), (c.match(/#\s*(\d+)/) || [])[1] || '']).filter(x => x[1]);
+          if (refs.length) { out[today].refs = refs; console.log('officials:', refs.map(r => r[1]).join(', ')); }
+          break;
+        }
+      }
+    }
+  } catch (e) { console.warn('officials unavailable:', e.message); }
   const sorted = Object.fromEntries(Object.entries(out).sort(([x], [y]) => x.localeCompare(y)));
   await writeFile('box.json', JSON.stringify(sorted, null, 1) + '\n');
   console.log('box.json:', Object.keys(sorted).length, 'games');

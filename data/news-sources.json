@@ -1,0 +1,4 @@
+{
+ "_how": "Feeds the newsletter pulls each morning. type: article or podcast. url: an RSS or Atom feed. filter (optional): only keep items whose title matches this regex, e.g. Cavs|Cavaliers for a general NBA feed.",
+ "sources": []
+}
