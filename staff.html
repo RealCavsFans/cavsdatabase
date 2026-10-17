@@ -375,7 +375,19 @@ tr.mark td{white-space:normal!important;line-height:1.45;text-indent:-16px;paddi
 .sumug{width:54px;height:54px;flex:none;transition:transform .18s;cursor:pointer}.sumug.pop{transform:scale(1.18)}
 .su-shot{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:2}
 .su-tx{flex:1 1 220px}.su-tx b{display:block;font:800 22px/1 var(--cond);text-transform:uppercase;letter-spacing:.3px}.su-tx b i{font-style:normal;color:var(--wine-ink)}.su-tx span{display:block;font-size:13px;color:var(--fg2);margin-top:4px;line-height:1.45}
-.su-f{display:flex;gap:6px;flex:1 1 100%;min-width:0}.su-f input[type=email]{flex:1;min-width:0;border:1px solid var(--line);border-radius:4px;padding:9px 11px;font:14px var(--sans);background:var(--bg,#fff);color:var(--fg)}.su-f button{border:0;background:var(--wine);color:#fff;font:700 13.5px var(--sans);padding:9px 16px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.su-f{display:flex;gap:6px;flex:1 1 100%;min-width:0}.su-f input[type=email]{flex:1;min-width:0;border:1px solid var(--line);border-radius:4px;padding:9px 11px;font:14px var(--sans);background:var(--bg,#fff);color:var(--fg)}.nlpop{position:fixed;right:18px;bottom:18px;z-index:60;width:340px;max-width:calc(100vw - 24px);background:var(--card,#fff);color:var(--fg);border:1px solid var(--line);border-top:3px solid #F2B231;box-shadow:0 10px 30px rgba(16,20,25,.18);padding:14px 16px 12px;transform:translateY(16px);opacity:0;transition:transform .3s ease,opacity .3s ease}
+.nlpop.on{transform:none;opacity:1}
+.nlpop-x{position:absolute;top:4px;right:6px;border:0;background:none;font:400 24px/1 var(--sans);color:var(--muted);cursor:pointer;padding:6px 8px}
+.nlpop-h{display:flex;gap:10px;align-items:center;padding-right:18px}.nlpop-h svg{width:44px;height:44px;flex:none}
+.nlpop-h b{display:block;font:800 17px var(--sans);font-stretch:112%}.nlpop-h b i{font-style:normal;color:#D99A12}.nlpop-h span{display:block;font-size:13px;line-height:1.4;color:var(--fg2,var(--muted));margin-top:2px}
+.nlpop-tags{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0}.nlpop-tags span{font:700 10.5px var(--sans);letter-spacing:.06em;text-transform:uppercase;background:var(--sub,#F5F6F3);border:1px solid var(--line);padding:3px 7px;color:var(--wine)}
+.nlpop-q{margin:8px 0 10px;font:italic 13px/1.4 var(--sans);color:var(--muted)}
+.nlpop .su-f{flex:none}
+.nlpop-no{display:block;margin:8px auto 0;border:0;background:none;font:600 12px var(--sans);color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+@media (max-width:600px){.nlpop{right:12px;left:12px;width:auto;max-width:none;bottom:calc(12px + env(safe-area-inset-bottom))}}
+@media (prefers-reduced-motion:reduce){.nlpop{transition:none}}
+@media print{.nlpop{display:none}}
+.su-f button{border:0;background:var(--wine);color:#fff;font:700 13.5px var(--sans);padding:9px 16px;border-radius:999px;cursor:pointer;white-space:nowrap}
 .nltoast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:90;background:#101419;color:#fff;border-radius:10px;padding:12px 16px;font:600 14px var(--sans);box-shadow:0 12px 30px rgba(0,0,0,.25);max-width:calc(100vw - 32px);display:flex;gap:10px;align-items:center}.nltoast button{border:0;background:none;color:#fff;font-size:18px;cursor:pointer}
 
 .calw{position:relative}.calbtn{display:inline-flex;align-items:center;gap:5px;appearance:none;background:none;border:0;padding:0;color:var(--wine-ink);font:inherit;font-weight:600;cursor:pointer;white-space:nowrap}.calbtn svg{width:14px;height:14px;flex:none}.calbtn:hover{text-decoration:underline}.calw .calmenu{left:auto;right:0}@media (max-width:760px){.calw .calmenu{left:0;right:auto}}
@@ -2853,6 +2865,25 @@ const NL_ON=false;
   /* after Buttondown sends people back */
   const q=location.search;const msg=/[?&]subscribe=check/.test(q)?'Almost there: check your email to confirm your Cavs & Coffee sign-up.':/[?&]subscribed=1/.test(q)?'You’re in ☕ The first issue lands the morning after the next Cavs game.':'';
   if(msg){const t=el('div','nltoast');t.setAttribute('role','status');t.append(msg);const x=el('button',null,'×');x.type='button';x.setAttribute('aria-label','Close');x.onclick=()=>t.remove();t.appendChild(x);document.body.appendChild(t);setTimeout(()=>t.remove(),9000);try{history.replaceState(history.state,'',location.pathname)}catch(_){}}})();
+/* Cavs & Coffee nudge: a small card in the corner, at most once a visit, never on someone's first page,
+   gone for 30 days after "No thanks" and for good after signing up. NL_ON shows it; ?nl=popup previews it now. */
+(function(){const prev=/[?&]nl=popup/.test(location.search);if((!NL_ON&&!prev)||window.CDB_EMBED)return;
+  const K='cdb-nl',get=()=>{try{return localStorage.getItem(K)||''}catch(_){return ''}},put=v=>{try{localStorage.setItem(K,v)}catch(_){}};
+  if(/[?&](subscribe=check|subscribed=1)/.test(location.search))put('sub');
+  const st=get();if(!prev&&(st==='sub'||(/^no:/.test(st)&&Date.now()-+st.slice(3)<30*864e5)))return;
+  let shown=false,views=0,t0=Date.now();try{if(sessionStorage.getItem('cdb-nl-seen'))return}catch(_){}
+  const wait=40000+Math.random()*50000;
+  function pop(){if(shown||document.querySelector('dialog[open]'))return;shown=true;try{sessionStorage.setItem('cdb-nl-seen','1')}catch(_){}
+    const c=el('aside','nlpop');c.setAttribute('aria-label','Cavs & Coffee newsletter');
+    c.innerHTML='<button type="button" class="nlpop-x" aria-label="Close">×</button><div class="nlpop-h"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M55 30c-5-6 5-10 0-17M67 30c-5-6 5-10 0-17" stroke="#F2B231" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M28 38h50v26a18 18 0 0 1-18 18H46a18 18 0 0 1-18-18z" fill="#860038"/><path d="M78 46h4a9 9 0 0 1 0 18h-4" stroke="#860038" stroke-width="6" fill="none"/><path d="M53 38v44M28 58h50" stroke="#F2B231" stroke-width="2.4" fill="none"/></svg><div><b>Cavs <i>&amp;</i> Coffee</b><span>The morning after every Cavs game: the score, the top line, injuries and the news.</span></div></div><div class="nlpop-tags"><span>Free</span><span>Ad free</span><span>One email per game</span></div><p class="nlpop-q">Like black coffee: just the goods, no additives.</p><form class="su-f" action="https://buttondown.com/api/emails/embed-subscribe/cavscoffee" method="post"><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email"><input type="hidden" name="embed" value="1"><button type="submit">Sign me up</button></form><button type="button" class="nlpop-no">No thanks</button>';
+    document.body.appendChild(c);requestAnimationFrame(()=>c.classList.add('on'));
+    const close=v=>{if(v)put(v);c.classList.remove('on');setTimeout(()=>c.remove(),300)};
+    c.querySelector('.nlpop-x').onclick=()=>close('no:'+Date.now());c.querySelector('.nlpop-no').onclick=()=>close('no:'+Date.now());
+    c.querySelector('form').addEventListener('submit',()=>put('sub'));
+    document.addEventListener('keydown',function k(e){if(e.key==='Escape'&&document.body.contains(c)){close('no:'+Date.now());document.removeEventListener('keydown',k)}})}
+  if(prev){setTimeout(pop,1200);return}
+  window.cdbNlView=()=>{views++;if(views>=3&&Date.now()-t0>20000)setTimeout(pop,1500+Math.random()*4000)};
+  setTimeout(()=>{if(views>=2)pop();else window.cdbNlView=()=>{views++;if(views>=2)setTimeout(pop,1500)}},wait)})();
 if('serviceWorker' in navigator&&location.hostname.endsWith('cavsdatabase.com'))addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
 /* birthdays: a little cake next to any player, coach or exec whose birthday is today (Eastern time). ?bday=MM-DD to preview */
 setTimeout(function(){const ov=(/[?&]bday=(\d\d-\d\d)/.exec(location.search)||[])[1];
@@ -3786,6 +3817,7 @@ const BUILT=['home','roster','cap','assets','moves','resources','schedule','staf
 const ROUTE_ALIAS={video:'media',rcf:'media/rcf'}; /* media/rcf now opens Media scrolled to the articles */
 function routeOf(){let r=location.pathname.replace(/^\/+|\/+$/g,'').toLowerCase();if(/index\.html$/.test(r)||location.protocol==='file:')r='';const h=location.hash.slice(1);if(!r&&h&&(SECTIONS.some(x=>x[0]===h)||ROUTE_ALIAS[h]))r=h;const AL={video:'media',rcf:'media/rcf'};return AL[r]||r||'home'}
 function show(route){
+  if(window.cdbNlView)window.cdbNlView();
   if(window.cdbAttachX)setTimeout(window.cdbAttachX,60);
   {const cur=document.querySelector('.wm-term s');if(cur&&!matchMedia('(prefers-reduced-motion: reduce)').matches){cur.style.animation='none';void cur.offsetWidth;cur.style.animation=''}}
   let id=route.split('/')[0];const toArt=route==='media/rcf';if(toArt)route='media';if(id==='media')id='video';

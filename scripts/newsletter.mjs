@@ -78,6 +78,19 @@ function tonight(D, tg) {
 ${tape ? `<tr><td style="padding:12px 28px 0"><div style="font:800 10.5px ${F.sans};letter-spacing:1.2px;color:${C.ink};padding-bottom:4px;border-bottom:1px solid ${C.line}">TALE OF THE TAPE <span style="font-weight:400;letter-spacing:0;color:${C.muted}">· ${D.TS_CUR ? '2026–27' : '2025–26'} · league rank</span></div><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${tape}</table></td></tr>` : ''}`;
 }
 
+// standings snapshot: five East rows centered on the Cavs (rank, team, record, games back)
+function standings(D) {
+  const E = (D.STANDINGS || []).filter(t => t[1] === 'E').sort((x, y) => (y[2] - y[3]) - (x[2] - x[3]) || y[2] - x[2]);
+  const i = E.findIndex(t => t[0] === 'CLE'); if (i < 0 || !E.some(t => t[2] + t[3] > 0)) return '';
+  const a = Math.max(0, Math.min(i - 2, E.length - 5)), L = E[0];
+  const gb = t => { const g = ((L[2] - t[2]) + (t[3] - L[3])) / 2; return g ? (g % 1 ? g.toFixed(1) : String(g)) : '—'; };
+  const td = (x, o = '') => `<td style="padding:7px 0;border-bottom:1px solid ${C.line2};${o}">${x}</td>`;
+  return `${H('East standings', null, ['Full standings', SITE + '/schedule'])}<tr><td style="padding:4px 28px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+<tr>${['', 'Team', 'W–L', 'GB'].map((h, k) => `<td${k > 1 ? ' align="right"' : ''} style="padding:6px 0 4px;font:800 10px ${F.sans};letter-spacing:1px;color:${C.muted};text-transform:uppercase">${h}</td>`).join('')}</tr>
+${E.slice(a, a + 5).map((t, k) => { const me = t[0] === 'CLE', c = me ? C.wine : C.ink, w = me ? '700' : '400'; return `<tr>${td(String(a + k + 1), `width:30px;font:600 12.5px ${F.mono};color:${C.muted}`)}${td(esc(t[0] === 'CLE' ? 'Cleveland' : (D.TEAMS[t[0]] || t[0])), `font:${w} 14px ${F.sans};color:${c}`)}${td(t[2] + '–' + t[3], `text-align:right;font:${me ? 700 : 500} 13.5px ${F.mono};color:${c}`)}${td(gb(t), `width:52px;text-align:right;font:500 13px ${F.mono};color:${C.muted}`)}</tr>`; }).join('')}
+</table></td></tr>`;
+}
+
 function build(D, g, score, top, boxLink, opts) {
   const [cs, os] = score.split('-').map(Number), win = cs > os;
   const issueDay = opts.issueDay, md = issueDay.slice(5);
@@ -98,6 +111,9 @@ function build(D, g, score, top, boxLink, opts) {
   const otd = (D.OTD || [])[0] || D.HISTORY.find(h => h[0] === md);
   const tq = opts.trivia;
   const where = (g[2] === 'H' ? 'vs ' : 'at ') + D.TEAMS[g[1]];
+  // espresso shot: one quick hitter. Records and milestones go first once the career stats feed is in (opts.milestone); otherwise a streak of 3+
+  const stk = (() => { if (opts.preseason || !rec.length) return ''; const last = rec[rec.length - 1]; let n = 0; for (let k = rec.length - 1; k >= 0 && rec[k] === last; k--) n++; return n >= 3 ? (last === 'W' ? `The Cavs have won ${n} straight.` : `The Cavs have lost ${n} straight.`) : ''; })();
+  const shot = opts.milestone || stk;
   return `<!-- Cavs & Coffee · built by cavsdatabase.com -->
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#EEF0F2"><tr><td align="center" style="padding:0">
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:#ffffff">
@@ -115,8 +131,11 @@ ${H(opts.preseason ? 'Last game' : 'Last night', opts.preseason ? 'preseason' : 
 <td style="font:700 30px ${F.mono};color:${C.ink}">${os}</td><td style="padding:0 0 0 10px;font:800 30px ${F.narrow};color:${C.ink}">${g[1]}</td>
 <td style="padding-left:12px">${chip(win ? 'W' : 'L', win ? C.gold : C.ink, win ? C.ink : '#fff')}</td></tr></table>
 <div style="font:13px ${F.sans};color:${C.muted};margin-top:4px">${esc(where)} · ${esc(short(g[0]))}${rec.length ? ` · Cavs ${w}–${l}` : ''}</div></td></tr>
+${shot ? `<tr><td style="padding:12px 28px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid ${C.line};border-left:3px solid ${C.wine}"><tr><td style="padding:9px 12px;font:14px/1.45 ${F.sans};color:${C.ink}"><span style="font:800 10px ${F.sans};letter-spacing:1.2px;color:${C.wine2}">&#9749; ESPRESSO SHOT</span><br>${esc(shot)}</td></tr></table></td></tr>` : ''}
 ${tn ? `<tr><td style="padding:12px 28px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${C.sub}"><tr>${P(tn) ? `<td width="62" style="padding:8px 0 8px 10px"><img src="https://cdn.nba.com/headshots/nba/latest/260x190/${P(tn)}.png" width="52" height="38" alt="" style="display:block;background:#fff"></td>` : ''}<td style="padding:9px 12px"><div style="font:800 10px ${F.sans};letter-spacing:1.2px;color:${C.muted}">TOP PERFORMER</div><div style="font:700 15px ${F.sans};color:${C.ink};margin-top:1px">${esc(tn)} <span style="font:600 13px ${F.mono};color:${C.wine2}">&nbsp;${esc((tl || '').toUpperCase().replace(/, /g, ' · '))}</span></div></td></tr></table></td></tr>` : ''}
 ${hl || recap ? body(`${hl ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-bottom:1px solid ${C.line2}"><tr><td width="172" valign="top" style="padding:10px 12px 10px 0"><a href="${esc(hl.link)}"><img src="https://i.ytimg.com/vi/${esc(hl.id)}/mqdefault.jpg" width="160" alt="Full game highlights" style="display:block;width:160px;height:auto;border:0"></a></td><td valign="middle" style="padding:10px 0;font:14px/1.45 ${F.sans};color:${C.ink}">${lk(hl.link, '&#9654;&nbsp; Full game highlights')}<div style="font:12px ${F.sans};color:${C.muted};margin-top:2px">NBA · YouTube</div></td></tr></table>` : ''}${recap ? row(lk(recap.link, esc(recap.title)), { meta: 'RealCavsFans recap' }) : ''}`) : ''}
+
+${standings(D)}
 
 ${tg ? tonight(D, tg) : nx ? `${H('Up next', null, ['Preview', SITE + '/games/' + nx[0] + '-' + nx[1].toLowerCase()])}${body(row(`<b>${nx[2] === 'H' ? 'vs' : 'at'} ${esc(D.TEAMS[nx[1]])}</b>`, { left: esc(short(nx[0])), lw: 92, meta: `${esc(nx[3])} PM ET${D.tv[nx[0]] ? ' · ' + esc(D.tv[nx[0]]) : ''} · ${esc(D.radio)}` }))}` : ''}
 
