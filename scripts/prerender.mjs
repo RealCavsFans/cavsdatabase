@@ -22,7 +22,7 @@ const etDay = t => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_Yor
 const MOD = route => { if (!MODCTX) return ''; const { upd, vid, art, score } = MODCTX; const pick = (...a) => a.filter(Boolean).sort().pop() || '';
   return route === 'home' ? pick(upd, vid, art, score) : route === 'media' ? pick(upd, vid, art) : route === 'schedule' ? pick(upd, score) : pick(upd); };
 export const modDates = () => MODCTX ? MOD : null;
-const LABEL = { schedule: 'Schedule', roster: 'Roster', staff: 'Staff', cap: 'Salary cap', assets: 'Assets', moves: 'Transactions', charge: 'Cleveland Charge', media: 'Media', resources: 'Resources' };
+const LABEL = { 'roster-tree': 'How the roster was built', schedule: 'Schedule', roster: 'Roster', staff: 'Staff', cap: 'Salary cap', assets: 'Assets', moves: 'Transactions', charge: 'Cleveland Charge', media: 'Media', resources: 'Resources' };
 
 const etOffset = d => { const p = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', timeZoneName: 'shortOffset' }).formatToParts(new Date(d + 'T17:00:00Z')).find(x => x.type === 'timeZoneName').value; const n = +(p.match(/GMT([+-]\d+)/) || [0, -5])[1]; return (n < 0 ? '-' : '+') + String(Math.abs(n)).padStart(2, '0') + ':00'; };
 const iso = (d, t) => { if (!t || !/^\d{1,2}:\d{2}/.test(t)) return d; let [h, m] = t.split(':').map(x => parseInt(x)); if (!/AM/i.test(t) && h < 12) h += 12; return `${d}T${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:00${etOffset(d)}`; };
