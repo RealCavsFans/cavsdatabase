@@ -457,7 +457,7 @@ tr.mark td{white-space:normal!important;line-height:1.45;text-indent:-16px;paddi
 .ab-bar{height:8px;border-radius:4px;background:var(--line2);margin:10px 0 6px;overflow:hidden}.ab-bar i{display:block;height:100%;background:var(--wine)}
 .ab-cards summary small{display:block;font-size:12.5px;color:var(--fg2)}
 .ab-cards .xb{padding:0 16px 14px}
-.ab-rt>li{border-left:4px solid var(--wine)}.ab-rt>li.dim{border-left-color:var(--line)}
+.ab-rt>li{border-left:4px solid var(--wine)}.ab-rt>li.dim{border-left-color:var(--line)}.rt-key{display:inline-flex;align-items:center;gap:5px;margin-left:10px;white-space:nowrap}.rt-key i{display:inline-block;width:4px;height:13px;background:var(--line);margin-left:6px}.rt-key i.on{background:var(--wine);margin-left:0}.ab-rt>li.dim .xb{display:block}.ab-rt>li.dim .xb>*:not(.rc2){margin-top:12px}
 .ab-rt summary{display:flex;gap:12px;align-items:center}.ab-av{width:48px;height:48px;border-radius:50%;background:var(--sub);display:grid;place-items:center;font:800 15px var(--sans);color:var(--wine-ink);flex:none;overflow:hidden}.ab-av img{width:100%;height:100%;object-fit:cover;object-position:top}
 .ab-rt summary>span{min-width:0}.ab-rt summary b{display:block;font:700 15px var(--sans)}.ab-rt .rt-dr{display:inline-block;font:600 12px var(--mono);color:var(--wine-ink);margin-top:2px}
 @media (max-width:760px){.ab-tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.ab-tile b{font-size:26px}
@@ -1132,6 +1132,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 17px var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
+<script type="application/ld+json" id="ld-page">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://cavsdatabase.com/games/2027-03-29-mia#page","url":"https://cavsdatabase.com/games/2027-03-29-mia","name":"Cavs vs Heat, Mar 29, 2027: How to Watch, Preview & Injuries | cavs_db","description":"Cavaliers vs Miami Heat on Mar 29, 2027: tip time, TV and radio, tale of the tape, injuries and the season series.","isPartOf":{"@id":"https://cavsdatabase.com/#site"},"inLanguage":"en-US","dateModified":"2026-10-17","primaryImageOfPage":{"@type":"ImageObject","url":"https://cavsdatabase.com/og/games-2027-03-29-mia.jpg"}},{"@type":"SportsEvent","name":"Miami Heat at Cleveland Cavaliers","sport":"Basketball","startDate":"2027-03-29T19:00:00-04:00","eventStatus":"https://schema.org/EventScheduled","homeTeam":{"@type":"SportsTeam","name":"Cleveland Cavaliers"},"awayTeam":{"@type":"SportsTeam","name":"Miami Heat"},"competitor":[{"@type":"SportsTeam","name":"Miami Heat"},{"@type":"SportsTeam","name":"Cleveland Cavaliers"}],"location":{"@type":"Place","name":"Rocket Arena","address":{"@type":"PostalAddress","streetAddress":"1 Center Court","addressLocality":"Cleveland","addressRegion":"OH","postalCode":"44115","addressCountry":"US"}},"endDate":"2027-03-29T21:30:00-04:00","eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode","description":"Miami Heat at Cleveland Cavaliers, 2026–27 NBA regular season.","image":"https://cavsdatabase.com/og/schedule.jpg","organizer":{"@type":"SportsOrganization","name":"NBA","url":"https://www.nba.com"},"performer":[{"@type":"SportsTeam","name":"Miami Heat"},{"@type":"SportsTeam","name":"Cleveland Cavaliers"}],"url":"https://cavsdatabase.com/games/2027-03-29-mia"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://cavsdatabase.com/"},{"@type":"ListItem","position":2,"name":"Schedule","item":"https://cavsdatabase.com/schedule"},{"@type":"ListItem","position":3,"name":"Cavs vs Heat, Mar 29, 2027: How to Watch, Preview & Injuries","item":"https://cavsdatabase.com/games/2027-03-29-mia"}]}]}</script>
 </head>
 <body>
 <header class="gbar"><div class="wrap gin">
@@ -1147,7 +1148,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 
 </div></header>
 
-<main id="view-home">
+<main id="view-home" hidden>
   <div class="wrap home">
     <div class="col">
       <section class="gdm" id="gdm" hidden aria-live="polite"></section>
@@ -1283,7 +1284,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
     <div class="ab-tiles" id="ab-tiles"></div>
     <section><div class="block-h"><h2>Draft picks</h2><span>2027–2033 · tap a pick for details</span></div><div class="ab-board" id="board"></div><div class="ab-leg" id="board-leg"></div></section>
     <section class="ab-sec"><div class="block-h"><h2>Exceptions</h2><span>2026–27 · amount left · tap for details</span></div><ul class="ab-cards" id="exc"></ul></section>
-    <section class="ab-sec"><div class="block-h"><h2>Drafted players</h2><span>Unsigned draft rights held</span></div><ul class="ab-cards ab-rt" id="rights"></ul></section>
+    <section class="ab-sec"><div class="block-h"><h2>Drafted players</h2><span>Unsigned draft rights held <span class="rt-key"><i class="on"></i>Playing <i></i>Retired</span></span></div><ul class="ab-cards ab-rt" id="rights"></ul></section>
   </div>
 </main>
 
@@ -1405,7 +1406,7 @@ table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr
 </main>
 
 <main id="view-player" hidden></main>
-<main id="view-game" hidden></main>
+<main id="view-game"><div class="wrap page"><div><div class="dim" style="font-size: 13px;"><a href="/" data-go="home">Home</a> / <a href="/schedule" data-go="schedule">Schedule</a> / Mar 29 vs Miami</div><h1 style="margin-top: 6px;">Cavs vs. Heat · Mar 29, 2027</h1><p class="dim" style="margin: 6px 0px 0px;">Game 73 of 82 · Rocket Arena · meeting 3 of 3</p></div><div class="gpg"><div class="gpg-l"><div class="gph"><div class="gph-k">7:00 PM ET · Monday</div><div class="gph-mu"><div class="gph-t">CLE</div><div class="gph-m"><span>vs</span><div class="gph-cd">163d 10h</div><span>to tip</span></div><div class="gph-t r">MIA</div></div><div class="gph-meta"><div><span>Watch</span><b>Peacock / NBC Sports Network</b></div><div><span>Listen</span><b>WTAM 1100</b></div><div><span>Rest</span><b>3 days</b></div></div></div><section class="gpc"><div class="block-h"><h2>Tale of the tape</h2><span>2025–26 · league rank</span></div><div class="gp-tape"><span class="gtv up">52–30<small>8th</small></span><span class="gtl">Record</span><span class="gtv r"><small>17th</small>43–39</span><span class="gtv up">119.3<small>6th</small></span><span class="gtl">Off rating</span><span class="gtv r"><small>13th</small>116.7</span><span class="gtv">115.2<small>15th</small></span><span class="gtl">Def rating</span><span class="gtv r up"><small>11th</small>114.5</span><span class="gtv up">+4.1<small>9th</small></span><span class="gtl">Net rating</span><span class="gtv r"><small>13th</small>+2.2</span><span class="gtv">99.9<small>13th</small></span><span class="gtl">Pace</span><span class="gtv r"><small>1st</small>103.4</span></div></section></div><div class="gpg-r"><section class="gpc"><div class="block-h"><h2>Season series</h2><span>3 meetings</span></div><ul class="gp-ser"><li><span class="d">Nov 13</span><span>at MIA</span><a href="/games/2026-11-13-mia" data-go="games/2026-11-13-mia">Preview →</a></li><li><span class="d">Nov 29</span><span>vs MIA</span><a href="/games/2026-11-29-mia" data-go="games/2026-11-29-mia">Preview →</a></li><li class="cur"><span class="d">Mar 29</span><span>vs MIA · this game</span><span></span></li></ul></section><section class="gpc"><div class="block-h"><h2>Cavs injury report</h2><span>Updated Oct 13</span></div><div class="gp-inj"><div>Sam Merrill · elbow<span>Game-time decision</span></div><div>Khalifa Diop · knee<span>Game-time decision</span></div><div>Nae'Qwan Tomlin · back<span>Game-time decision</span></div></div></section><section class="gpc"><div class="block-h"><h2>Officials</h2></div><div class="gp-inj gp-ref"><p class="gp-rn">The NBA posts the crew around 9 AM ET on game day. <a href="https://official.nba.com/referee-assignments/" target="_blank" rel="noopener">NBA referee assignments ↗</a></p></div></section><section class="gpc gp-lk"><a href="https://www.nba.com/game/mia-vs-cle-0022601090" target="_blank" rel="noopener">Full preview on NBA.com<span>↗</span></a><a href="/schedule" data-go="schedule">All Cavs games<span>→</span></a></section></div></div><div class="gp-pn"><a href="/games/2027-03-25-lal" data-go="games/2027-03-25-lal">← Mar 25 vs LAL</a><a href="/games/2027-03-31-bkn" data-go="games/2027-03-31-bkn">Mar 31 at BKN →</a></div></div></main><template id="pre-tpl" data-view="view-game"></template>
 <main id="view-roster-tree" hidden>
   <div class="wrap page">
     <div>
@@ -1949,6 +1950,12 @@ function confetti(){const c=document.createElement('canvas');c.id='confetti';doc
     if(live)requestAnimationFrame(loop);else c.remove()};requestAnimationFrame(loop)}
 /* dated Cavs history beyond game results: title, highlight, perf, staff, passing. [MM-DD, year, type, fact, source URL] */
 const HIST_X = [
+  ["08-23", 2014, "highlight", "The Cavs traded for Kevin Love, sending Minnesota Andrew Wiggins, the No. 1 pick in the draft two months earlier, plus Anthony Bennett, the No. 1 pick the year before.", "https://en.wikipedia.org/wiki/Kevin_Love"],
+  ["08-22", 2017, "highlight", "The Cavs agreed to trade Kyrie Irving to Boston. The Brooklyn pick in the deal became Collin Sexton, who was later part of the Donovan Mitchell trade.", "https://en.wikipedia.org/wiki/Kyrie_Irving"],
+  ["09-01", 2022, "highlight", "The Cavs agreed to trade for Donovan Mitchell, sending Utah Collin Sexton, Lauri Markkanen, Ochai Agbaji and three first-round picks.", "https://en.wikipedia.org/wiki/Donovan_Mitchell"],
+  ["07-29", 2021, "highlight", "The Cavs drafted Evan Mobley third overall. Four years later he was the NBA's Defensive Player of the Year.", "https://en.wikipedia.org/wiki/Evan_Mobley"],
+  ["08-13", 2008, "highlight", "The Cavs traded for Mo Williams in a three-team deal. He made the All-Star team that season as the Cavs won a franchise-record 66 games.", "https://en.wikipedia.org/wiki/2008%E2%80%9309_Cleveland_Cavaliers_season"],
+  ["09-27", 2017, "highlight", "Dwyane Wade signed with the Cavs, reuniting with LeBron James. He was traded back to Miami that February.", "https://www.spokesman.com/stories/2017/sep/27/its-done-wade-makes-it-official-signs-with-clevela/"],
   ["12-25", 2016, "highlight", "Kyrie Irving's jumper in the final seconds beat Golden State 109–108 on Christmas Day, the first meeting since Game 7 of the Finals.", "https://www.si.com/nba/2016/12/25/kyrie-irving-warriors-cavs-game-winner-video-highlights"],
   ["02-11", 2011, "highlight", "The Cavs beat the Clippers 126–119 in overtime to end a 26-game losing streak, then the longest in NBA history.", "https://en.wikipedia.org/wiki/2010%E2%80%9311_Cleveland_Cavaliers_season"],
   ["12-20", 2010, "highlight", "A 101–90 home loss to Utah started a 26-game losing streak, then the longest in NBA history. It lasted until February 11.", "https://en.wikipedia.org/wiki/2010%E2%80%9311_Cleveland_Cavaliers_season"],
@@ -2142,8 +2149,10 @@ function renderHistory(){
     const seen=new Set();return out.filter(f=>{const z=f.y+f.t;if(seen.has(z))return false;seen.add(z);return true})};
   window.otdFacts=factsFor;
   const TAGL={game:'Game',move:'Transaction'};
-  let label='On this day',fk=md,list=factsFor(md);
-  if(!list.length){for(let k=1;k<=200&&!list.length;k++){const d=new Date(now);d.setDate(d.getDate()-k);fk=key(d);list=factsFor(fk)}label='Closest date on record'}
+  const COOL=['title','highlight','perf'];const cool=k=>factsFor(k).filter(f=>COOL.includes(f.tag)||!f.tag);
+  let label='On this day',fk=md,list=cool(md);
+  for(let k=1;k<=14&&!list.length;k++)for(const sg of [-1,1]){if(list.length)break;const d=new Date(now);d.setDate(d.getDate()+sg*k);const kk=key(d);const l=cool(kk);if(l.length){list=l;fk=kk;label=k<=7?'This week in Cavs history':'This month in Cavs history'}}
+  if(!list.length){list=factsFor(md);label='On this day'}
   /* show one fact: the most surprising on record for the date */
   const wow=x=>{let v={title:100,highlight:62,perf:58,staff:40,owner:40,passing:36,game:18,move:8}[x.tag]??60;
     if(/record|first|most|youngest|only|never|history|NBA-record|franchise/i.test(x.t))v+=14;
@@ -2154,7 +2163,7 @@ function renderHistory(){
   list.sort((a,b)=>wow(b)-wow(a));
   const f=list[0];
   const [m,d]=fk.split('-').map(Number);
-  const when=document.getElementById('otd-when');when.textContent=label;
+  const when=document.getElementById('otd-when');{const hh=document.getElementById('otd-h');if(label!=='On this day'){if(hh)hh.textContent=label;const nd=new Date(now.getFullYear(),m-1,d);label=nd<new Date(now.getFullYear(),now.getMonth(),now.getDate())?'Earlier this '+(/month/.test(hh&&hh.textContent||'')?'month':'week'):'Later this '+(/month/.test(hh&&hh.textContent||'')?'month':'week')}}when.textContent=label;
   {const cal=document.getElementById('dcal');const dt=new Date(2000,m-1,d),prev=new Date(2000,m-1,d-1);
    const MON=x=>x.toLocaleDateString('en-US',{month:'short'}).toUpperCase(),WK=x=>new Date(now.getFullYear(),x.getMonth(),x.getDate()).toLocaleDateString('en-US',{weekday:'short'});
    const page=(x,cls)=>{const p=el('div','dc-pg'+(cls?' '+cls:''));p.append(el('span','dc-m',MON(x)),el('b','dc-d',String(x.getDate())),el('span','dc-w',WK(x)));return p};
@@ -3404,7 +3413,7 @@ const CH_STAFF=[
 
 /* Charge callouts: head coach and GM (Charge/G League releases, SI, Howard Blas, Cleveland Jewish News) */
 (function(){const co=document.getElementById('ch-callouts');if(!co)return;
-  const card=(kick,name,title,facts,url)=>{const c=el('article','co');const top=el('div','co-top');const B=CH_BIOS[name];if(B&&B.img){const im=el('img','co-hs');im.src=B.img;im.alt=name;im.onerror=()=>im.remove();top.appendChild(im)}const tx=el('div');const h=el('h2');if(url){const a=el('a','co-name',name);a.href=url;a.target='_blank';a.rel='noopener';h.appendChild(a)}else h.textContent=name;tx.append(el('div','co-k',kick),h,el('div','co-t',title));top.appendChild(tx);c.appendChild(top);const dl=el('dl','bio-f');facts.forEach(([k,v])=>dl.append(el('dt',null,k),el('dd',null,v)));c.appendChild(dl);return c};
+  const card=(kick,name,title,facts,url)=>{const c=el('article','co');const top=el('div','co-top');const B=CH_BIOS[name];if(B&&B.img){const im=el('img','co-hs');im.src=B.img;im.alt=name;im.onerror=()=>im.remove();top.appendChild(im)}const tx=el('div');const h=el('h2');if(url){const a=el('a','co-name',name);a.href=url;a.target='_blank';a.rel='noopener';h.appendChild(a)}else h.textContent=name;tx.append(el('div','co-k',kick),h,el('div','co-t',title));top.appendChild(tx);c.appendChild(top);const dl=el('dl','bio-f');facts.forEach(([k,v])=>dl.append(el('dt',null,k),el('dd',null,v)));c.appendChild(dl);c.id='co-'+slug(name);{const xa=el('span','xact');const b1=el('button'),b2=el('button');b1.type=b2.type='button';b1.title='Share link';b2.title='Save as image';b1.setAttribute('aria-label','Share a link to '+name);b2.setAttribute('aria-label','Save '+name+'\u2019s bio as an image');if(window.cdbIcons){b1.innerHTML=window.cdbIcons[0];b2.innerHTML=window.cdbIcons[1]}b1.onclick=e=>{e.preventDefault();window.cdbShare&&window.cdbShare('charge','co-'+slug(name),name+', '+title+' · Cleveland Charge')};b2.onclick=e=>{e.preventDefault();window.cdbCap&&window.cdbCap('charge',slug(name),name,[c],b2)};xa.append(b1,b2);c.appendChild(xa)}return c};
   const det=(label,body)=>{const d=document.createElement('details');d.className='co-d';const sm=document.createElement('summary');sm.textContent=label;d.append(sm,body);return d};
   const links=ls=>{const p=el('p','bio-links');ls.forEach(([t,u],i)=>{if(i)p.append(' · ');const a=el('a',null,t+' ↗');a.href=u;a.target='_blank';a.rel='noopener';p.appendChild(a)});return p};
   const eli=card('Head Coach','Eli Kell-Abrams','Head Coach · 2nd season',[
