@@ -4133,7 +4133,9 @@ window.renderPlayer=function(s){
   {const bc=el('div','dim');bc.style.fontSize='13px';const a1=el('a',null,'Home');a1.href='/';a1.dataset.go='home';const a2=el('a',null,'Roster');a2.href='/roster';a2.dataset.go='roster';bc.append(a1,' / ',a2,' / '+n);w.appendChild(bc)}
   const body=el('div','ppx-body');w.appendChild(body);
   body.appendChild(el('p','dim','Loading…'));
-  ppLoad().then(()=>{body.innerHTML='';try{ppBuild(p,body)}catch(e){console.error(e);body.appendChild(el('p','dim','Something went wrong loading this page.'))}});
+  ppLoad().then(()=>{body.innerHTML='';try{ppBuild(p,body)}catch(e){console.error(e);body.appendChild(el('p','dim','Something went wrong loading this page.'))}
+    /* links like /players/evan-mobley#ch-his open that chapter */
+    const h=location.hash;if(/^#ch-[a-z]+$/.test(h)){const d=document.querySelector(h);if(d){d.open=true;setTimeout(()=>d.scrollIntoView({block:'start'}),150)}}});
   return true};
 
 function ppBuild(p,root){
