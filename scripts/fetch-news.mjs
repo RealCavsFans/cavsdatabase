@@ -26,7 +26,10 @@ async function youtube(channel, playlist) {
     const j = await (await get(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${pl}&key=${YT}`)).json();
     return (j.items || []).map(i => ({ id: i.snippet?.resourceId?.videoId, title: i.snippet?.title || '', date: i.snippet?.publishedAt }));
   }
-  const xml = await (await get(playlist ? `https://www.youtube.com/feeds/videos.xml?playlist_id=${pl}` : `https://www.youtube.com/feeds/videos.xml?channel_id=${channel}`)).text();
+  // YouTube's public feed often answers GitHub with a 404; try a few times before giving up
+  let xml = '', err;
+  for (let i = 0; i < 3 && !xml; i++) { try { xml = await (await get(playlist ? `https://www.youtube.com/feeds/videos.xml?playlist_id=${pl}` : `https://www.youtube.com/feeds/videos.xml?channel_id=${channel}`)).text(); } catch (e) { err = e; await new Promise(r => setTimeout(r, 2500 * (i + 1))); } }
+  if (!xml) throw err;
   return xml.split(/<entry[\s>]/).slice(1).map(x => ({ id: un(tag(x, 'yt:videoId')), title: used.includes('news.google.com') ? un(tag(x, 'title')).replace(/\s+-\s+[^-]+$/, '') : un(tag(x, 'title')), date: un(tag(x, 'published')) }));
 }
 async function channelOf(handle) {
