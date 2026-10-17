@@ -42,7 +42,8 @@ async function siteData() {
       box: Object.fromEntries(SCHEDULE.map(g => [g[0], boxUrl(g[0])])), tips: Object.fromEntries(SCHEDULE.map(g => [g[0], tipOf(g).toISOString()])),
       TS: (typeof TSTATS === 'object' && TSTATS.CLE && TSTATS.CLE[0] + TSTATS.CLE[1] >= 5) ? TSTATS : (typeof TSTATS_PREV === 'object' ? TSTATS_PREV : {}), TS_CUR: !!(typeof TSTATS === 'object' && TSTATS.CLE && TSTATS.CLE[0] + TSTATS.CLE[1] >= 5),
       STANDINGS: typeof STANDINGS === 'object' ? STANDINGS : [], REST: typeof REST === 'object' ? REST : {}, INJ_UPDATED: typeof INJ_UPDATED === 'string' ? INJ_UPDATED : '',
-      OTD: window.otdFacts ? window.otdFacts(md).slice(0, 1).map(f => [md, String(f.y), f.t]) : [] };
+      OTD: window.otdFacts ? window.otdFacts(md).slice(0, 1).map(f => [md, String(f.y), f.t]) : [],
+      WOW: [...(typeof HIST_X === 'object' ? HIST_X.filter(x => ['highlight', 'perf', 'title'].includes(x[2])).map(x => [x[0], x[1], x[3]]) : []), ...HISTORY.map(h => [h[0], h[1], h[2]])] };
   }, md);
   await browser.close(); server.close();
   return d;
@@ -70,7 +71,7 @@ function prep(D, g, score, top, boxLink, opts) {
   const moves = D.TX.filter(x => x.d > opts.since && x.d <= issueDay).sort((a, b) => a.d.localeCompare(b.d)).map(x => [md2(x.d), txText(x) + (x.note ? ' · ' + x.note : '')]);
   const tg = D.SCHEDULE.find(x => x[0] === issueDay), nx = tg || D.SCHEDULE.find(x => x[0] > g[0] && x[0] > issueDay);
   const week = D.DATES.filter(x => x[0] >= issueDay && x[0] <= etDate(new Date(Date.parse(issueDay + 'T12:00:00Z') + 6 * 864e5)) && !(nx && x[0] === nx[0] && /opener|vs |at /i.test(x[1]))).slice(0, 3).map(x => [wkd(x[0]), md2(x[0]), x[1]]);
-  const otd = (D.OTD || [])[0] || D.HISTORY.find(h => h[0] === md);
+  const otd = (() => { const used = new Set(opts.usedOtd || []); for (let k = 0; k <= 3; k++) for (const sg of k ? [-1, 1] : [0]) { const d = new Date(issueDay + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + sg * k); const m = d.toISOString().slice(5, 10); const f = (D.WOW || []).filter(x => x[0] === m && !used.has(x[0] + '|' + x[1])).sort((a, b) => b[1] - a[1])[0]; if (f) return [f[0], String(f[1]), f[2], k > 0]; } return null; })();
   // up next: records and ratings with league ranks, then any injuries as one line
   let tape = [], nxInfo = null;
   if (nx) {
@@ -85,8 +86,8 @@ function prep(D, g, score, top, boxLink, opts) {
   const E = (D.STANDINGS || []).filter(t => t[1] === 'E').sort((x, y) => (y[2] - y[3]) - (x[2] - x[3]) || y[2] - x[2]);
   let stand = []; const ci = E.findIndex(t => t[0] === 'CLE');
   if (ci >= 0 && E.some(t => t[2] + t[3] > 0)) { const a = Math.max(0, Math.min(ci - 2, E.length - 5)), L = E[0]; stand = E.slice(a, a + 5).map((t, k) => { const gb = ((L[2] - t[2]) + (t[3] - L[3])) / 2; return [a + k + 1, t[0] === 'CLE' ? 'Cleveland' : (D.TEAMS[t[0]] || t[0]), t[2] + '–' + t[3], gb ? (gb % 1 ? gb.toFixed(1) : String(gb)) : '—', t[0] === 'CLE']; }); }
-  return { g, cs, os, win, issueDay, md, w, l, hasRec: rec.length > 0, tn, tl, recap, hl, reads, play, moves, week, otd, nx: nxInfo, tape, inj, stand, tq: opts.trivia, shot: opts.milestone || opts.bigNight || (() => { if (opts.preseason || !rec.length) return ''; const last = rec[rec.length - 1]; let n = 0; for (let k = rec.length - 1; k >= 0 && rec[k] === last; k--) n++; return n >= 5 ? (last === 'W' ? `The Cavs have won ${n} straight.` : `The Cavs have lost ${n} straight.`) : ''; })(),
-    pid: n => (D.PL.find(p => p[0] === n) || [])[1], where: (g[2] === 'H' ? 'vs ' : 'at ') + D.TEAMS[g[1]], whereShort: g[2] === 'H' ? 'Rocket Arena' : 'at ' + D.TEAMS[g[1]].split(' ').slice(-1)[0], boxLink, preseason: opts.preseason, test: opts.test, TEAMS: D.TEAMS };
+  return { g, cs, os, win, issueDay, md, w, l, hasRec: rec.length > 0, tn, tl, recap, hl, reads, play, moves, week, otd, nx: nxInfo, tape, inj, stand, tq: opts.trivia, shot: opts.milestone || '',
+    pid: n => (D.PL.find(p => p[0] === n) || [])[1], qs: opts.qs || null, where: (g[2] === 'H' ? 'vs ' : 'at ') + D.TEAMS[g[1]], whereShort: g[2] === 'H' ? 'Rocket Arena' : 'at ' + D.TEAMS[g[1]].split(' ').slice(-1)[0], boxLink, preseason: opts.preseason, test: opts.test, TEAMS: D.TEAMS };
 }
 const fontLink = `<!--[if !mso]><!--><link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@800&family=Geist+Mono:wght@700&display=swap" rel="stylesheet"><!--<![endif]-->`;
 const wrapOpen = bg => `${fontLink}<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#EEF0F2"><tr><td align="center" style="padding:0">
@@ -98,6 +99,15 @@ const footer = (rule) => `<tr><td style="padding:30px 28px 26px;text-align:cente
 Independent fan reference, not affiliated with the Cavaliers or the NBA.</td></tr></table></td></tr></table>`;
 const T = (inner, attrs = '') => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" ${attrs}>${inner}</table>`;
 
+/* quarter-by-quarter line score, newspaper style */
+function lineScore(x, P) {
+  const n = x.qs.cle.length, lab = k => k < 4 ? String(k + 1) : (n > 5 ? 'OT' + (k - 3) : 'OT');
+  const th = t => `<td align="center" style="padding:4px 0;font:700 10px ${F.sans};letter-spacing:1px;color:${P.muted}">${t}</td>`;
+  const td = (v, b) => `<td align="center" style="padding:4px 0;font:${b ? 700 : 400} 13px ${F.mono};color:${P.ink}">${v}</td>`;
+  const row = (ab, q, tot, cav) => `<tr style="border-top:1px dotted ${P.dot}"><td style="padding:4px 0;font:800 14px ${F.cond};color:${cav ? P.wine : P.ink}">${ab}</td>${q.map(v => td(v)).join('')}${td(tot, 1)}</tr>`;
+  return T(`<tr><td width="56"></td>${x.qs.cle.map((_, k) => th(lab(k))).join('')}${th('F')}</tr>${row('CLE', x.qs.cle, x.cs, 1)}${row(x.g[1], x.qs.opp, x.os, 0)}`, `style="margin-top:8px;border-collapse:collapse"`);
+}
+
 /* ========== Sports Page: old school newspaper, double rules, condensed heads, boxed linescore ========== */
 function renderSports(x) {
   const P = { bg: '#F7F3EC', dot: '#B9B2A8', wine: '#860038', ink: '#101419', fg2: '#2F363E', muted: '#5D646C' };
@@ -107,12 +117,12 @@ function renderSports(x) {
   const a = (h, t) => `<a href="${esc(h)}" style="color:${P.ink};font-weight:700;text-decoration:none">${t}</a>`;
   const s = [];
   s.push(`<tr><td style="padding:12px 24px 0"><div style="border-bottom:3px double ${P.ink};padding-bottom:9px;text-align:center;font:700 11px ${F.mono};letter-spacing:1px;color:${P.ink}"><span style="color:${P.wine}">&gt;</span> ${esc(long(x.issueDay).toUpperCase())}${x.test ? ' · <span style="color:#C8102E">TEST</span>' : ' · CLEVELAND'}</div><div style="height:2px;background:#F2B231;margin-top:2px;font-size:0;line-height:0">&nbsp;</div></td></tr>`);
-  if (x.otd) s.push(K('This day in Cavs history · ' + esc(x.otd[1]), null, 17), B(`<div style="font:14.5px/1.5 ${F.serif};color:${P.fg2}"><span style="float:left;font:800 38px/33px ${F.cond};color:${P.wine};padding:3px 5px 0 0">${esc(x.otd[2].charAt(0))}</span>${esc(x.otd[2].slice(1))}</div>`));
+  if (x.otd) s.push(K((x.otd[3] ? 'This week in Cavs history · ' + esc(new Date('2000-' + x.otd[0] + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' })) + ', ' : 'This day in Cavs history · ') + esc(x.otd[1]), null, 17), B(`<div style="font:14.5px/1.5 ${F.serif};color:${P.fg2}"><span style="float:left;font:800 38px/33px ${F.cond};color:${P.wine};padding:3px 5px 0 0">${esc(x.otd[2].charAt(0))}</span>${esc(x.otd[2].slice(1))}</div>`));
   if (x.tq) s.push(K('Daily trivia', null, 17), B(`<div style="font:700 14.5px/1.4 ${F.serif};color:${P.ink};margin-bottom:4px">${esc(x.tq.q)}</div>${x.tq.c.map((c, k) => T(`<tr><td style="padding:6px 0;font:13px ${F.sans};color:${P.ink}"><b style="color:${P.wine};font-family:${F.mono};margin-right:8px">${'ABCD'[k]}</b>${esc(c)}</td></tr>`, `style="border-bottom:1px dotted ${P.dot}"`)).join('')}<div style="font:12px ${F.sans};color:${P.muted};margin-top:6px">Answer at the bottom</div>`));
   // last game: boxed linescore, winner reversed out in ink
   const cell = (ab, pts, won, nm) => `<td width="50%" align="center" style="padding:10px 0 9px;${won ? 'border-bottom:4px solid #F2B231;' : 'border-bottom:4px solid transparent;'}"><div style="font:800 20px/1 ${F.cond};color:${P.ink}">${ab}</div><div style="font:700 36px/1.15 ${F.mono};color:${won ? P.ink : '#9A948B'}">${pts}</div><div style="font:11px ${F.sans};color:${P.muted}">${esc(nm)}</div></td>`;
   s.push(K(x.preseason ? 'Last game · preseason' : 'Last game', ['Box score', esc(x.boxLink)]));
-  s.push(B(`${T(`<tr>${cell('CLE', x.cs, x.win, 'Cavaliers')}${cell(x.g[1], x.os, !x.win, NICK[x.g[1]] || '')}</tr>`, `style="border:2px solid ${P.ink}"`)}<div style="font:12px ${F.sans};color:${P.muted};margin-top:6px;text-align:center">FINAL · ${esc(x.where.toUpperCase())} · ${esc(short(x.g[0]).toUpperCase())}${x.hasRec ? ` · CAVS ${x.w}–${x.l}` : ''}</div>
+  s.push(B(`${T(`<tr>${cell('CLE', x.cs, x.win, 'Cavaliers')}${cell(x.g[1], x.os, !x.win, NICK[x.g[1]] || '')}</tr>`, `style="border:2px solid ${P.ink}"`)}${x.qs ? lineScore(x, P) : ''}<div style="font:12px ${F.sans};color:${P.muted};margin-top:6px;text-align:center">FINAL · ${esc(x.where.toUpperCase())} · ${esc(short(x.g[0]).toUpperCase())}${x.hasRec ? ` · CAVS ${x.w}–${x.l}` : ''}</div>
 ${x.tn ? `<div style="font:16px/1.55 ${F.serif};color:${P.fg2};margin-top:10px"><b style="font-family:${F.sans};color:${P.ink}">${esc(x.tn)}</b> led the Cavs with ${esc((x.tl || '').replace(/ pts/, ' points').replace(/ reb/, ' rebounds').replace(/, (\d+) ast/, ' and $1 assists'))}.</div>` : ''}`));
   if (x.hl && x.hl.id) s.push(`<tr><td style="padding:12px 24px 0"><a href="${esc(x.hl.link)}"><img src="https://i.ytimg.com/vi/${esc(x.hl.id)}/hq720.jpg" width="552" alt="Watch the full game highlights" style="display:block;width:100%;height:auto;border:0"></a></td></tr>`);
   if (x.hl || x.recap) s.push(B(`${x.hl ? li(a(x.hl.link, '&#9654;&nbsp; Full game highlights'), { meta: x.hl.nba ? 'NBA.com' : 'NBA · YouTube' }) : ''}${x.recap ? li(a(x.recap.link, esc(x.recap.title)), { meta: 'RealCavsFans recap' }) : ''}`));
@@ -212,22 +222,13 @@ function milestone() {
   if (hits.length) return hits.sort((x, y) => y[0] - x[0])[0][1];
   return watch.length ? watch.sort((x, y) => x[0] - y[0])[0][1] : '';
 }
-// big nights worth an espresso shot: 40 points, a triple-double, 20 and 20
-function bigNight() {
-  const rows = box[g[0]]?.box || []; const out = [];
-  for (const [n, , p, r, a] of rows) { const P = +p || 0, Rb = +r || 0, A = +a || 0;
-    if (P >= 10 && Rb >= 10 && A >= 10) out.push([3, `${n} had a triple-double: ${P} points, ${Rb} rebounds and ${A} assists.`]);
-    else if (P >= 20 && Rb >= 20) out.push([2, `${n} put up ${P} points and ${Rb} rebounds.`]);
-    else if (P >= 40) out.push([1, `${n} scored ${P} points.`]); }
-  return out.sort((x, y) => y[0] - x[0])[0]?.[1] || '';
-}
 const tq = trivia.length ? trivia[Object.keys(sent).length % trivia.length] : null;
-const html = build(D, g, score, b.top || '', b.url || D.box[g[0]] || SITE + '/schedule', { issueDay: today, rcf, news, trivia: tq, since, sinceTs, milestone: milestone(), bigNight: preseason ? '' : bigNight(), test: MODE === 'test' || !LIVE, preseason });
+const otdKey = (() => { const x = prep(D, g, score, b.top || '', b.url || D.box[g[0]] || SITE + '/schedule', { issueDay: today, rcf, news, trivia: null, since, sinceTs, usedOtd: Object.values(sent).map(v => v.otd).filter(Boolean).slice(-60) }); return x.otd ? x.otd[0] + '|' + x.otd[1] : null; })();
+const html = build(D, g, score, b.top || '', b.url || D.box[g[0]] || SITE + '/schedule', { issueDay: today, rcf, news, trivia: tq, since, sinceTs, qs: b.qs, milestone: milestone(), usedOtd: Object.values(sent).map(v => v.otd).filter(Boolean).slice(-60), test: MODE === 'test' || !LIVE, preseason });
 const [cs, os] = score.split('-').map(Number);
 const topBit = b.top ? b.top.split(':')[0].split(' ').slice(-1)[0] + ' ' + (b.top.match(/(\d+) pts/) || [])[1] : '';
 const msBit = (() => { const m = (milestone() || '').match(/^(?!Milestone watch)(\S+ )?(\S+) (reached [\d,]+ career \w+|passed .+? for \d+\w+ on the Cavs' all-time \w+)/); return m ? `${m[2]} ${m[3].replace(/^reached/, 'hits').replace(/ on the Cavs' all-time (\w+)/, ' in Cavs $1').replace(/^passed .+? for/, 'moves to')}` : ''; })();
-const bnBit = (() => { const t = preseason ? '' : bigNight(); const m = t.match(/^(.+?) had a triple-double/); return m ? m[1].split(' ').slice(-1)[0] + ' triple-double' : ''; })();
-const subj = `${MODE === 'test' || !LIVE ? '[Test] ' : ''}☕ Cavs ${cs}, ${NICK[g[1]] || g[1]} ${os}${msBit ? ' · ' + msBit : bnBit ? ' · ' + bnBit : topBit ? ' · ' + topBit : ''}`;
+const subj = `${MODE === 'test' || !LIVE ? '[Test] ' : ''}☕ Cavs ${cs}, ${NICK[g[1]] || g[1]} ${os}${msBit ? ' · ' + msBit : topBit ? ' · ' + topBit : ''}`;
 await mkdir(new URL('nl/', root), { recursive: true });
 await writeFile(new URL('nl/last-issue.html', root), `<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>${esc(subj)}</title><body style="margin:0">${html}</body>`);
 
@@ -241,4 +242,4 @@ if (LIVE && MODE === 'auto') {
   await bd('/emails/' + email.id + '/send-draft', 'POST', {});
   console.log('test copy sent to the newsletter owner');
 }
-if (MODE === 'auto') { sent[g[0]] = { id: email.id, live: LIVE, at: new Date().toISOString() }; await writeFile(sentFile, JSON.stringify(sent, null, 1) + '\n'); }
+if (MODE === 'auto') { sent[g[0]] = { id: email.id, live: LIVE, at: new Date().toISOString(), otd: otdKey }; await writeFile(sentFile, JSON.stringify(sent, null, 1) + '\n'); }

@@ -22,18 +22,22 @@ try {
       const fin = g.gameStatus === 3;
       const cle = h === 'CLE' ? g.homeTeam.score : g.awayTeam.score;
       const opp = h === 'CLE' ? g.awayTeam.score : g.homeTeam.score;
-      out[date] = { url, status: fin ? 'final' : 'scheduled', ...(fin ? { score: `${cle}-${opp}`, result: cle > opp ? 'W' : 'L' } : {}), ...(fin && prev[date]?.top ? { top: prev[date].top } : {}), ...(fin && prev[date]?.out ? { out: prev[date].out } : {}), ...(fin && prev[date]?.box ? { box: prev[date].box } : {}), ...(prev[date]?.refs ? { refs: prev[date].refs } : {}) };
+      out[date] = { url, status: fin ? 'final' : 'scheduled', ...(fin ? { score: `${cle}-${opp}`, result: cle > opp ? 'W' : 'L' } : {}), ...(fin && prev[date]?.top ? { top: prev[date].top } : {}), ...(fin && prev[date]?.out ? { out: prev[date].out } : {}), ...(fin && prev[date]?.box ? { box: prev[date].box } : {}), ...(fin && prev[date]?.qs ? { qs: prev[date].qs } : {}), ...(prev[date]?.refs ? { refs: prev[date].refs } : {}) };
     }
   }
   // best Cavs stat line for finals in the last 3 days (ESPN box score)
   const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba';
   for (const [date, g] of Object.entries(out)) {
-    if (g.status !== 'final' || (g.top && g.out && g.box) || Date.now() - Date.parse(date + 'T12:00:00Z') > 3 * 864e5) continue;
+    if (g.status !== 'final' || (g.top && g.out && g.box && g.qs) || Date.now() - Date.parse(date + 'T12:00:00Z') > 3 * 864e5) continue;
     try {
       const sb = await (await fetch(`${ESPN}/scoreboard?dates=${date.replace(/-/g, '')}`)).json();
       const ev = (sb.events || []).find(e => e.competitions?.[0]?.competitors?.some(c => c.team?.abbreviation === 'CLE'));
       if (!ev) continue;
       const sum = await (await fetch(`${ESPN}/summary?event=${ev.id}`)).json();
+      // quarter-by-quarter line score: { cle: [28, 31, 27, 32], opp: [...] } (overtimes add entries)
+      if (!g.qs) { const cs = sum.header?.competitions?.[0]?.competitors || []; const ls = c => (c?.linescores || []).map(q => +(q.value ?? q.displayValue)).filter(n => !isNaN(n));
+        const me = cs.find(c => c.team?.abbreviation === 'CLE'), op = cs.find(c => c.team?.abbreviation !== 'CLE');
+        if (ls(me).length >= 4 && ls(op).length === ls(me).length) g.qs = { cle: ls(me), opp: ls(op) }; }
       const t = (sum.boxscore?.players || []).find(p => p.team?.abbreviation === 'CLE');
       const st = t?.statistics?.[0]; if (!st) continue;
       // players out for injury or illness: inactive / did not play for any reason other than a coach's decision, plus anyone listed Out on ESPN's injury report for that game
