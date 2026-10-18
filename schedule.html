@@ -1278,6 +1278,15 @@ tr.hx-w td:first-child{box-shadow:inset 3px 0 0 #860038}tr.hx-l td:first-child{b
 .o-chase{background:var(--card);border:1px solid var(--line);padding:14px 18px}.chc-l{list-style:none;margin:0;padding:0}.chc-l li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line2)}
 .chc-who b,.chc-who a{display:block;font-weight:700;font-size:14.5px;color:var(--fg)}.chc-who span{font-size:12px;color:var(--muted)}.chc-n{text-align:right;font-size:12.5px;color:var(--fg2)}.chc-n b{font:800 20px var(--cond);color:var(--wine-ink);margin-right:3px}.chc-n small{display:block;color:var(--muted);font-size:11.5px}
 .chc-pass .chc-n b{color:#8A5E00}.chc-more{display:inline-block;margin-top:10px;font:600 13px var(--sans);color:var(--wine-ink)}
+.hx-full{display:inline-block;margin-top:8px;font:700 13px var(--sans);color:var(--wine-ink)}
+#view-season .sp-band{background:linear-gradient(160deg,#9b0a45,#5c0027);color:#fff;padding:20px 20px 14px;margin:12px 0}.sp-k{font:800 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:#F2B231}#view-season .sp-band h1{font:800 40px/1 var(--cond);text-transform:uppercase;margin:6px 0 6px;color:#fff}.sp-m{font:600 13px var(--mono);opacity:.9}
+.sp-nav{display:flex;justify-content:space-between;margin-top:16px;font:700 13px var(--sans)}.sp-nav a{color:#fff;opacity:.85;text-decoration:none}.sp-nav a:hover{opacity:1;text-decoration:underline}
+.sp-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 6px}.sp-tiles div{background:var(--card);border:1px solid var(--line);padding:10px 12px}.sp-tiles b{display:block;font:800 24px var(--cond);color:var(--wine-ink)}.sp-tiles span{font-size:12px;color:var(--muted)}
+.sp-sec{margin-top:22px}.sp-run{list-style:none;margin:0;padding:0;display:grid;gap:6px}.sp-run li{display:grid;grid-template-columns:120px 1fr auto;gap:4px 10px;align-items:baseline;background:var(--card);border:1px solid var(--line);border-left:4px solid #860038;padding:9px 12px;font-size:14px}.sp-run li.l{border-left-color:var(--line)}.sp-run li.t{border-left-color:#F2B231}
+.sp-run .rd{font:800 10.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.sp-run .dlink{font:700 12.5px var(--mono);white-space:nowrap}.sp-run li.l .dlink{color:var(--muted)}.sp-run small{grid-column:1/-1;color:var(--muted);font-size:12.5px}
+.sp-two{display:grid;grid-template-columns:1fr 1fr;gap:20px}.sp .kv small{display:block;color:var(--muted);font-size:12px}.sp .kv b{font:700 13px var(--mono);white-space:nowrap}.sp-note{font-size:14.5px;margin:0;max-width:70ch}
+.sp-ros{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0 18px}.sp-ros div{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid var(--line2);font-size:13.5px}.sp-ros b{font:600 12px var(--mono);color:var(--muted)}
+@media (max-width:640px){.sp-tiles{grid-template-columns:1fr 1fr}.sp-two{grid-template-columns:1fr}.sp-run li{grid-template-columns:1fr auto}.sp-run .rd{grid-column:1/-1}#view-season .sp-band h1{font-size:32px}}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 17px var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
@@ -1607,6 +1616,7 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
 
 <main id="view-player" hidden></main>
 <main id="view-game" hidden></main>
+<main id="view-season" hidden></main>
 <main id="view-roster-tree" hidden>
   <div class="wrap page">
     <div>
@@ -4543,7 +4553,7 @@ function ppBuild(p,root){
   root.appendChild(el('p','ppx-foot','Stats: our Cavs box scores (ESPN) and a nightly ESPN league feed; earlier seasons from Wikipedia and Basketball Reference. Contract data from the cap page. Updated after every game.'));
 }
 
-const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge','player','roster-tree','game','history'];
+const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge','player','roster-tree','game','history','season'];
 /* page titles and descriptions per route (search engines and browser tabs) */
 const ROUTE_ALIAS={video:'media',rcf:'media/rcf'}; /* media/rcf now opens Media scrolled to the articles */
 function routeOf(){let r=location.pathname.replace(/^\/+|\/+$/g,'').toLowerCase();if(/index\.html$/.test(r)||location.protocol==='file:')r='';const h=location.hash.slice(1);if(!r&&h&&(SECTIONS.some(x=>x[0]===h)||ROUTE_ALIAS[h]))r=h;const AL={video:'media',rcf:'media/rcf'};return AL[r]||r||'home'}
@@ -4552,9 +4562,10 @@ function show(route){
   if(window.cdbAttachX)setTimeout(window.cdbAttachX,60);
   {const cur=document.querySelector('.wm-term s');if(cur&&!matchMedia('(prefers-reduced-motion: reduce)').matches){cur.style.animation='none';void cur.offsetWidth;cur.style.animation=''}}
   let id=route.split('/')[0];const toArt=route==='media/rcf';if(toArt)route='media';if(id==='media')id='video';
+  if(id==='history'&&route.split('/')[1]){id='season';window.renderSeason&&renderSeason(route.split('/')[1])}
   if(id==='games'){id='game';if(!window.renderGame||!renderGame(route.split('/')[1]||'')){id='home';route='home'}}
   if(id==='players'){id='player';if(!PP_VIS||!window.renderPlayer||!renderPlayer(route.split('/')[1]||'')){id='home';route='home'}}
-  const sec=id==='video'?'media':id==='player'?'roster':id==='roster-tree'?'moves':id==='game'?'schedule':id;
+  const sec=id==='video'?'media':id==='player'?'roster':id==='roster-tree'?'moves':id==='game'?'schedule':id==='season'?'history':id;
   if(!SECTIONS.some(s=>s[0]===sec)){id='home';route='home'}
   BUILT.forEach(v=>{document.getElementById('view-'+v).hidden=id!==v});
   const stub=document.getElementById('view-stub');stub.hidden=BUILT.includes(id);
@@ -4590,7 +4601,7 @@ function draw(){const $=id=>document.getElementById(id);
        ['Leaders',[['pts','pts'],['reb','reb'],['ast','ast']].map(([k,l])=>x.lead[k]?x.lead[k][0]+' '+x.lead[k][1]+' '+l:'').filter(Boolean).join(' · ')],['All-Stars',(x.allstar||[]).join(', ')||'None']];
      const dl=el('dl','hx-dl');rows.forEach(([k,v])=>{dl.append(el('dt',null,k),el('dd',null,v))});det.appendChild(dl);
      if(x.note)det.appendChild(el('p','hx-note',x.note));
-     if(x.src){const a=el('a','dlink','Season page ↗');a.href=x.src;a.target='_blank';a.rel='noopener';det.appendChild(a)}};
+     {const sl=x.s.replace('–','-');const a=el('a','hx-full','Full '+x.s+' season page →');a.href='/history/'+sl;a.dataset.go='history/'+sl;det.appendChild(a)}};
    let dec=null,row;S.forEach(x=>{const d=Math.floor(num(x.s)/10)*10;if(d!==dec){dec=d;g.appendChild(el('div','hx-dec',d+'s'));row=el('div','hx-row');g.appendChild(row)}
      const b=el('button','hx-s '+LV[x.poLevel][1]);b.type='button';b.setAttribute('aria-pressed','false');b.title=x.s+': '+x.w+'–'+x.l+', '+x.po;
      b.append(el('span',null,"'"+String(num(x.s)+1).slice(2)),el('b',null,x.w+'–'+x.l));if(x.poLevel==='title')b.appendChild(el('i',null,'★'));b.onclick=()=>open(x,b);row.appendChild(b)});
@@ -4656,7 +4667,38 @@ function draw(){const $=id=>document.getElementById(id);
    $('hx-coach-h').querySelectorAll('th').forEach(th=>th.onclick=()=>{const k=+th.dataset.k;if(k===sk)dir=-dir;else{sk=k;dir=k>=2?-1:1}render()});render();
    $('hx-coach-n').textContent=new Set(H.coaches.map(c=>c[0])).size+' coaches · tap a column to sort'}
 }
-window.hxLoad=async function(){if(H){return}if(busy)return;busy=true;try{const [a,b]=await Promise.all([fetch('/pdata/history.json').then(r=>r.json()),fetch('/pdata/milestones.json').then(r=>r.json()).catch(()=>null)]);H=a;MS=b;draw()}catch(e){busy=false}};
+let loadP=null;const getH=()=>loadP||(loadP=Promise.all([fetch('/pdata/history.json').then(r=>r.json()),fetch('/pdata/milestones.json').then(r=>r.json()).catch(()=>null)]).then(([a,b])=>{H=a;MS=b}).catch(e=>{loadP=null;throw e}));
+window.hxLoad=async function(){if(busy)return;busy=true;try{await getH();draw()}catch(e){busy=false}};
+/* season pages: /history/2015-16 */
+window.renderSeason=function(sl){const v=document.getElementById('view-season');v.innerHTML='';const w=el('div','wrap page sp');v.appendChild(w);
+  const bc=el('div','dim');bc.style.fontSize='13px';const a1=el('a',null,'Home');a1.href='/';a1.dataset.go='home';const a2=el('a',null,'History');a2.href='/history';a2.dataset.go='history';bc.append(a1,' / ',a2,' / '+sl.replace('-','–'));w.appendChild(bc);
+  const body=el('div');body.innerHTML='<div class="skel-wrap"><div class="skel skel-band"></div><div class="skel skel-card"></div><div class="skel skel-card"></div></div>';w.appendChild(body);
+  getH().then(()=>{body.textContent='';const S=H.seasons,i=S.findIndex(x=>x.s===sl.replace('-','–'));if(i<0){body.appendChild(el('p','dim','No season found.'));return}
+   const x=S[i],LVc=LV[x.poLevel];const pct=(x.w/(x.w+x.l)).toFixed(3).replace(/^0/,'');document.title=x.s+' Cleveland Cavaliers: Record, Playoffs, Roster & Leaders | cavs_db';
+   const band=el('section','sp-band');band.append(el('div','sp-k','Season '+(i+1)+' of '+S.length+' · '+LVc[0]),el('h1',null,x.s+' Cavaliers'),el('div','sp-m',x.w+'–'+x.l+' · '+x.div+(x.seed?' · No. '+x.seed+' seed in the East':'')));
+   const nav=el('div','sp-nav');[[S[i-1],'← '],[S[i+1],'']].forEach(([y,pre],k)=>{if(!y){nav.appendChild(el('span'));return}const a=el('a',null,k?y.s+' →':pre+y.s);const q=y.s.replace('–','-');a.href='/history/'+q;a.dataset.go='history/'+q;nav.appendChild(a)});band.appendChild(nav);body.appendChild(band);
+   const SE=(H.series||[]).filter(r=>r.s===x.s&&!/Play-in/.test(r.round)),pw=SE.reduce((t,r)=>t+(+r.score.split('–')[0]),0),pl=SE.reduce((t,r)=>t+(+r.score.split('–')[1]),0);
+   const wr=1+S.filter(y=>y.w>x.w).length,tie=S.filter(y=>y.w===x.w).length>1;
+   const tiles=el('div','sp-tiles');[[x.w+'–'+x.l,'Record · '+pct],[(tie?'T-':'')+ord(wr),'Most wins of '+S.length+' seasons'],[SE.length?pw+'–'+pl:'—',SE.length?'Playoff record':'Playoffs: '+(x.poLevel==='playin'?'play-in':'missed')],[String(x.coach.length),x.coach.length>1?'Coaches':'Coach']].forEach(([b,t])=>{const d=el('div');d.append(el('b',null,b),el('span',null,t));tiles.appendChild(d)});body.appendChild(tiles);
+   const sec=(h,sub)=>{const d=el('section','sp-sec');const bh=el('div','block-h');bh.append(el('h2',null,h),el('span',null,sub||''));d.appendChild(bh);body.appendChild(d);return d};
+   const RS=r=>/Finals/.test(r)&&/NBA/.test(r)?'NBA Finals':/Conference Finals|Division Finals/.test(r)?'East finals':/Semifinals/.test(r)?'East semis':/First Round/.test(r)?'First round':r;
+   {const all=(H.series||[]).filter(r=>r.s===x.s);if(all.length){const d=sec('The playoff run',SE.length?pw+'–'+pl:'');const ol=el('ol','sp-run');all.forEach(r=>{const li=el('li',(r.won?'':'l ')+(x.poLevel==='title'&&/NBA Finals/.test(r.round)?'t':''));const a=el('a','dlink',(r.won?'W ':'L ')+r.score);a.href=r.src;a.target='_blank';a.rel='noopener';li.append(el('span','rd',/Play-in/.test(r.round)?'Play-in':RS(r.round)),el('b',null,r.opp),a);if(r.note)li.appendChild(el('small',null,r.note));ol.appendChild(li)});d.appendChild(ol)}
+    else{const d=sec('Playoffs');d.appendChild(el('p','dim',x.po))}}
+   const kv=(d,rows)=>{const ul=el('ul','kv');rows.forEach(([a,b,c,href])=>{const li=el('li');const sp=el('span');if(href){const l=el('a','hx-bb',a);l.href=href;l.target='_blank';l.rel='noopener';sp.appendChild(l)}else sp.append(a);if(b)sp.appendChild(el('small',null,b));li.append(sp,el('b',null,c||''));ul.appendChild(li)});d.appendChild(ul)};
+   const two=el('div','sp-two');body.appendChild(two);
+   {const d=el('section','sp-sec');const bh=el('div','block-h');bh.append(el('h2',null,'Leaders'),el('span',null,'Per game'));d.appendChild(bh);kv(d,[['Points',x.lead.pts],['Rebounds',x.lead.reb],['Assists',x.lead.ast]].filter(r=>r[1]).map(([k,v])=>[k,v[0],(+v[1]).toFixed(1)]));two.appendChild(d)}
+   {const hon=[];Object.entries(H.awards||{}).forEach(([k,v])=>v.forEach(([n,y])=>{if(y===x.s)hon.push([k,n])}));[['allNBA','All-NBA'],['allDefense','All-Defensive'],['allRookie','All-Rookie']].forEach(([k,l])=>(H[k]||[]).forEach(([n,y,t])=>{if(y===x.s)hon.push([l+(t?' '+t+' Team':''),n])}));(x.allstar||[]).forEach(n=>hon.push(['All-Star',n]));
+    const d=el('section','sp-sec');const bh=el('div','block-h');bh.append(el('h2',null,'Honors'),el('span'));d.appendChild(bh);if(hon.length)kv(d,hon.map(([a,n])=>[a,n,'★']));else d.appendChild(el('p','dim','None this season.'));two.appendChild(d)}
+   {const d=sec(x.coach.length>1?'Coaches':'Coach');kv(d,x.coach.map(([n,r])=>[n,'',r,(H.bbc||{})[n]?'https://www.basketball-reference.com/coaches/'+H.bbc[n]+'.html':null]))}
+   {const y0=+x.s.slice(0,4);let mv=[];if(y0>=2017&&typeof TX!=='undefined'){const a=y0+'-06-15',b=(y0+1)+'-06-14';const KEYK=['trade','draft','ext','sign'];mv=TX.filter(t=>t.d>=a&&t.d<=b&&KEYK.includes(t.k)&&(t.k!=='sign'||/multi-year|max|extension/i.test(t.t||''))).map(t=>{const mo=new Date(t.d+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'});
+       if(t.k==='trade')return['Trade with '+(t.w||[]).map(z=>TEAMS[z]||z).join(', '),'Got '+(t.got||[]).join(', ')+' · sent '+(t.sent||[]).join(', '),mo];return[t.t,'',mo]}).reverse()}
+     else mv=((H.moves||{})[x.s]||[]).map(([h,dd,when])=>[h,dd,when]);
+     if(mv.length){const d=sec('Key moves',y0>=2017?'From the Transactions page':'');kv(d,mv)}}
+   {const R=(H.rosters||{})[x.s];if(R&&R.length){const d=sec('Roster',R.length+' players · games played');const g=el('div','sp-ros');R.forEach(([n,id,gp])=>{const c=el('div');const a=PP_ON&&onRoster(n)&&y0now(x.s)?(()=>{const l=el('a','hx-bb',n);l.href='/players/'+slug(n);l.dataset.go='players/'+slug(n);return l})():(()=>{const l=el('a','hx-bb',n);l.href='https://www.basketball-reference.com/players/'+id[0]+'/'+id+'.html';l.target='_blank';l.rel='noopener';return l})();c.append(a,el('b',null,String(gp)));g.appendChild(c)});d.appendChild(g)}}
+   if(x.note){const d=sec('In one line');d.appendChild(el('p','sp-note',x.note))}
+  }).catch(()=>{body.textContent='';body.appendChild(el('p','dim','Could not load this season.'))});
+  return true};
+const y0now=s=>s===SEASONS[0];
 })();
 
 

@@ -15,7 +15,7 @@ const html = await readFile(new URL('index.html', root), 'utf8');
 const PRE = process.argv.includes('--prerender');
 const HASHF = new URL('data/prerender-hash.txt', root);
 const h = createHash('sha1');
-for (const f of ['index.html', 'videos.json', 'box.json', 'rcf.json', 'scripts/build-pages.mjs', 'scripts/prerender.mjs']) { try { h.update(await readFile(new URL(f, root))); } catch {} }
+for (const f of ['index.html', 'videos.json', 'box.json', 'rcf.json', 'pdata/history.json', 'scripts/build-pages.mjs', 'scripts/prerender.mjs']) { try { h.update(await readFile(new URL(f, root))); } catch {} }
 try { const { readdir } = await import('node:fs/promises'); h.update((await readdir(new URL('og/g/', root))).sort().join()); } catch {}  // a new game share image means the page copies need the new image tag
 const hash = h.digest('hex');
 if (PRE) { let old = ''; try { old = (await readFile(HASHF, 'utf8')).trim(); } catch {} if (old === hash) { console.log('pages unchanged, nothing to build'); process.exit(0); } }
@@ -26,6 +26,9 @@ const META = Function('return ' + m[1])();
 const pm = html.match(/const PLAYERS=(\[[\s\S]*?\]);\n/);
 const slug = t => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 if (pm && /const PP_ON=true/.test(html)) for (const p of Function('return ' + pm[1])()) META['players/' + slug(p[1])] = [p[1] + ' Stats, Contract & Injury Status | cavs_db', p[1] + '’s stats with context, injury status, contract and trade eligibility, and where he ranks in Cavs history. Updated after every game.'];
+// one page per Cavs season (history/1970-71 … ), titles matching the site's season page
+try { const HJ = JSON.parse(await readFile(new URL('pdata/history.json', root), 'utf8')); for (const x of HJ.seasons) { const sl = x.s.replace('–', '-');
+  META['history/' + sl] = [x.s + ' Cleveland Cavaliers: Record, Playoffs, Roster & Leaders | cavs_db', 'The ' + x.s + ' Cavaliers went ' + x.w + '–' + x.l + ' (' + x.div + '). ' + x.po + '. Season leaders, honors, coaches, key moves and the full roster.']; } } catch {}
 // one page per regular-season game (games/<date>-<opp>), titles matching the site's GAME_META
 { const sm = html.match(/const SCHEDULE=(\[[\s\S]*?\]);\n/), scm = html.match(/const SCORES=(\{[^;]*\});/), rm = html.match(/const SEASON=\{results:'([WL]*)'/);
   const NK = {ATL:'Hawks',BOS:'Celtics',BKN:'Nets',CHA:'Hornets',CHI:'Bulls',DAL:'Mavericks',DEN:'Nuggets',DET:'Pistons',GSW:'Warriors',HOU:'Rockets',IND:'Pacers',LAC:'Clippers',LAL:'Lakers',MEM:'Grizzlies',MIA:'Heat',MIL:'Bucks',MIN:'Timberwolves',NOP:'Pelicans',NYK:'Knicks',OKC:'Thunder',ORL:'Magic',PHI:'76ers',PHX:'Suns',POR:'Trail Blazers',SAC:'Kings',SAS:'Spurs',TOR:'Raptors',UTA:'Jazz',WAS:'Wizards'};
