@@ -208,6 +208,8 @@ const BOX={};    /* optional exact NBA.com box score URL per date; otherwise the
 const STANDINGS=[];
 const NRTG={}; /* 2026-27 season, all 30 teams: 'CLE':[net rating, games played] (used for the Cavs value and league rank) */
 const L14={};  /* all 30 teams, last 14 days: 'CLE':[net rating, games] (daily task) */
+const OPP_FORM={};  /* all 30 teams, last 5 results oldest to newest: 'PHI':'WLWWL' (daily task, from the same game logs as L14) */
+const OPP_INJ={};  /* next Cavs opponent's injury report: 'PHI':{d:'YYYY-MM-DD',rows:[[name,injury,status]]} (daily task, CBS Sports) */
 /* Cleveland Charge (RealGM). [date, opponent, H/A, time ET, result e.g. 'W 118-110' or ''] */
 /* games: [date, opponent, 'H'/'A', 'h:mm' (PM unless it ends in ' AM'), result, optional arena override]. RealGM schedule (48 games); home arena is Public Hall (RealGM's 'Wolstein Center' is out of date). Mar 3 STEM Day game at Rocket Arena (Roundtable). */
 const CHARGE={record:'0–0',coach:'Eli Kell-Abrams',venue:'Public Hall',games:[
@@ -1818,6 +1820,18 @@ window.renderGame=function(sl){const i=SCHEDULE.findIndex(g=>gslug(g)===sl);if(i
       const ROWS=[['Record',t=>t[0]/Math.max(1,t[0]+t[1]),1,t=>t[0]+'–'+t[1]],['Off rating',t=>t[4],1,t=>t[4].toFixed(1)],['Def rating',t=>t[5],0,t=>t[5].toFixed(1)],['Net rating',t=>t[4]-t[5],1,t=>{const x=t[4]-t[5];return (x>0?'+':'')+x.toFixed(1)}],['Pace',t=>t[6],1,t=>t[6].toFixed(1)]];
       ROWS.forEach(([lab,f,hi,fm])=>{const a=TS.CLE,b=TS[o];const rk=t=>1+all.filter(u=>hi?f(u)>f(t):f(u)<f(t)).length;const better=lab==='Pace'?0:(hi?f(a)>f(b):f(a)<f(b))?1:(hi?f(b)>f(a):f(b)<f(a))?2:0;
         const x=el('span','gtv'+(better===1?' up':''));x.append(fm(a),el('small',null,ord(rk(a))));const y=el('span','gtv r'+(better===2?' up':''));y.append(el('small',null,ord(rk(b))),fm(b));tp.append(x,el('span','gtl',lab),y)});c.appendChild(tp);L.appendChild(c)}}
+  /* their side: opponent form, standing, injuries and playoff history vs the Cavs (before) */
+  if(!fin){const c=card('The '+(GNICK[o]||TEAMS[o]),'Their side');const box=el('div','gp-opp');c.appendChild(box);
+    const row=(k,mid,val,cls,note)=>{const d=el('div','gpo-r');d.append(el('span','k',k));d.appendChild(typeof mid==='string'?el('span',null,mid):mid);d.appendChild(el('span','v'+(cls?' '+cls:''),val||''));if(note)d.appendChild(el('small',null,note));box.appendChild(d)};
+    const f=OPP_FORM[o];if(f){const dots=el('span','gpo-5');f.slice(-5).split('').forEach(x=>dots.appendChild(el('i',x==='W'?null:'l',x)));const w=f.slice(-5).split('').filter(x=>x==='W').length;row('Last 5',dots,w+'–'+(f.slice(-5).length-w))}
+    const st=STANDINGS.find(x=>x[0]===o);if(st){const conf=STANDINGS.filter(x=>x[1]===st[1]).sort((a,b)=>b[2]/Math.max(1,b[2]+b[3])-a[2]/Math.max(1,a[2]+a[3]));const rk=conf.findIndex(x=>x[0]===o)+1;row(st[1]==='E'?'East':'West',ord(rk)+(rk<=6?' · playoff spot':rk<=10?' · play-in line':''),st[2]+'–'+st[3])}
+    const inj=OPP_INJ[o];if(inj&&inj.rows&&inj.d>=new Date(Date.now()-3*864e5).toISOString().slice(0,10)){if(!inj.rows.length)row('Injuries','None reported','');else inj.rows.forEach(([n,j,s3],k)=>row(k?'':'Injuries',n+' · '+String(j).toLowerCase(),s3,/out/i.test(s3)?'out':'q'))}
+    Rr.appendChild(c);
+    const hist=H2=>{const ser=(H2&&H2.series||[]).filter(x=>x.oppAbbr===o);const RD={'Eastern Conference First Round':'First round','Eastern Conference Semifinals':'East semifinals','Eastern Conference Finals':'East finals','NBA Finals':'NBA Finals','Play-in':'Play-in'};
+      if(!ser.length){row('Playoffs vs CLE','Never met in the playoffs','');return}
+      const po=ser.filter(x=>x.round!=='Play-in'),w=po.filter(x=>x.won).length,show=ser.slice().reverse().slice(0,4);
+      show.forEach((x,k)=>row(k?'':'Playoffs vs CLE',x.s.slice(0,4)*1+1+' '+(RD[x.round]||x.round).toLowerCase().replace(/^nba/,'NBA').replace(/^east/,'East'),(x.won?'W ':'L ')+x.score,'',k===show.length-1&&po.length>1?'Cavs '+w+'–'+(po.length-w)+' in '+po.length+' playoff series'+(ser.length>show.length?' · last '+show.length+' shown':''):''))};
+    window.__H2?hist(window.__H2):fetch('/pdata/history.json').then(x=>x.ok?x.json():null).catch(()=>null).then(d=>{if(d)window.__H2=d;hist(d)})}
   /* season series */
   {const s2=el('section','gpc');const won=meets.filter(([,k])=>res[k]==='W').length,lost=meets.filter(([,k])=>res[k]==='L').length;const h=el('div','block-h');h.append(el('h2',null,'Season series'),el('span',null,won+lost?(won>lost?'Cavs lead ':won<lost?'Cavs trail ':'Tied ')+Math.max(won,lost)+'–'+Math.min(won,lost):meets.length+' meetings'));s2.appendChild(h);
     const ul=el('ul','gp-ser');meets.forEach(([x,k])=>{const li=el('li'+(k===i?'':''));if(k===i)li.className='cur';const d=new Date(x[0]+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});const rr=res[k],ss=SCORES[x[0]];li.append(el('span','d',d));const m=el('span');m.append((x[2]==='H'?'vs ':'at ')+x[1]+(rr&&ss?' · '+rr+' '+ss.replace('-','–'):k===i?' · this game':''));li.appendChild(m);

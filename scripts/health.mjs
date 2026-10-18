@@ -1,6 +1,6 @@
 // Staleness check: is the site's data actually updating? Prints each problem and exits 1 if any (0 when healthy).
 // Checks the daily data (SITE_UPDATED), the 30-minute job (last bot commit), box scores for finished games,
-// the league feed, and the news feed. Run by the daily health scheduled task, which pushes Luka a note only on problems.
+// the league feed, the news feed and the weekly outside-link check. Run by the daily health scheduled task, which pushes Luka a note only on problems.
 import { readFile } from 'node:fs/promises';
 import { execSync } from 'node:child_process';
 const root = new URL('../', import.meta.url);
@@ -35,5 +35,11 @@ const newest = N ? [...(N.articles || []), ...(N.videos || []), ...(N.podcasts |
 if (!newest) problems.push('News feed (news.json) is empty or missing.');
 else if (days(newest.slice(0, 10), today) > 3) problems.push(`Newest news item is from ${newest.slice(0, 10)}. The news fetch may be failing.`);
 else notes.push('news ' + newest.slice(0, 10));
+// 6. weekly outside-link check (.github/workflows/links.yml)
+const LK = await J('links-status.json');
+if (!LK) notes.push('link check not run yet');
+else { if (days(LK.checked.slice(0, 10), today) > 9) problems.push(`The weekly link check hasn't run since ${LK.checked.slice(0, 10)}. Check GitHub Actions.`);
+  if (LK.broken && LK.broken.length) problems.push(`${LK.broken.length} broken outside link(s) as of ${LK.checked.slice(0, 10)}: ${LK.broken.slice(0, 5).map(([u, s]) => u + ' (' + s + ')').join(', ')}${LK.broken.length > 5 ? ', …' : ''}`);
+  else notes.push(`links ok (${LK.total})`); }
 if (problems.length) { console.log('PROBLEMS:\n- ' + problems.join('\n- ')); console.log('ok: ' + notes.join(' · ')); process.exit(1); }
 console.log('HEALTHY: ' + notes.join(' · '));
