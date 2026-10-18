@@ -1,4 +1,4 @@
-// Cavs & Coffee: builds the morning-after email from the site's own data and hands it to Buttondown.
+// Cavs & Coffee: builds the freshly brewed email from the site's own data and hands it to Buttondown.
 //   node scripts/newsletter.mjs auto   (the 7 AM run: only if the Cavs played yesterday and it hasn't gone out)
 //   node scripts/newsletter.mjs test   (latest final, or the preseason finale before the opener; test copy to the owner only)
 // Nothing reaches subscribers unless the repo variable NEWSLETTER_LIVE is "true". Until then every issue is a
@@ -94,7 +94,7 @@ function prep(D, g, score, top, boxLink, opts) {
 const fontLink = `<!--[if !mso]><!--><link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@800&family=Geist+Mono:wght@700&display=swap" rel="stylesheet"><!--<![endif]-->`;
 const wrapOpen = bg => `${fontLink}<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#EEF0F2"><tr><td align="center" style="padding:0">
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:${bg}">
-<tr><td><a href="${SITE}"><img src="${SITE}/nl/header.png" width="600" alt="Cavs &amp; Coffee · the morning after every Cavs game · presented by cavs_db" style="display:block;width:100%;max-width:600px;height:auto;border:0"></a></td></tr>`;
+<tr><td><a href="${SITE}"><img src="${SITE}/nl/header.png" width="600" alt="Cavs &amp; Coffee · freshly brewed after every game · presented by cavs_db" style="display:block;width:100%;max-width:600px;height:auto;border:0"></a></td></tr>`;
 const footer = (rule) => `<tr><td style="padding:30px 28px 26px;text-align:center;font:12px/1.7 ${F.sans};color:#5D646C">${rule || ''}
 <a href="${SITE}"><img src="${SITE}/nl/logo.png" width="130" alt="cavs_db" style="display:inline-block;width:130px;height:auto;border:0;margin-bottom:6px"></a><br>
 <a href="${SITE}" style="color:#7A1F33;font-weight:700;text-decoration:none">cavsdatabase.com</a> &nbsp;·&nbsp; <a href="https://www.buymeacoffee.com/cavsdb" style="color:#7A1F33;font-weight:700;text-decoration:none">&#9749; Buy cavs_db a coffee</a><br>
