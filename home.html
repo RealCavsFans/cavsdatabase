@@ -1262,6 +1262,8 @@ tr.hx-w td:first-child{box-shadow:inset 3px 0 0 #860038}tr.hx-l td:first-child{b
 @media (max-width:720px){#hx-po .hx-t th:nth-child(2),#hx-po .hx-t td:nth-child(2){display:table-cell}#hx-po .hx-t th:nth-child(4),#hx-po .hx-t td:nth-child(4){display:table-cell}#hx-po .hx-t td{font-size:12.5px}#hx-po .hx-t td.m{font-size:11.5px}.hx-rl{grid-template-columns:1fr}}
 .hx-more{all:unset;cursor:pointer;display:block;margin:10px 0 0;font:700 13px var(--sans);color:var(--wine-ink)}.hx-more:hover{text-decoration:underline}.hx-ar{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:2px 14px;font-size:13.5px}.hx-ar div{padding:5px 0;border-bottom:1px solid var(--line2)}.hx-ar b{font:600 12px var(--mono);color:var(--muted);margin-right:8px}@media (max-width:720px){.hx-aw{grid-template-columns:1fr 1fr}.hx-ac{padding:8px 10px}.hx-ac li{font-size:12.5px}}
 .hx-ol li>a,.hx-ol li>.hx-bb,.hx-ol li>span{justify-self:start}
+.hx-tait{margin:8px 0 0}.hx-q{display:block;font:800 19px/1.2 var(--cond);letter-spacing:.01em}.hx-q b{color:var(--wine-ink);display:inline-block;transition:opacity .25s,transform .25s}.hx-q b.out{opacity:0;transform:translateY(-4px)}.hx-tait small{display:block;color:var(--muted);font-size:13px;margin-top:3px}
+.hx-bxl{display:block;margin-top:3px}.hx-bxl a{white-space:nowrap}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 17px var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
@@ -1300,7 +1302,7 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
           <h3 class="sr" id="nx-title">at Philadelphia</h3><span class="sr" id="next-h">Last result &amp; next game</span>
           <div class="gteams"><span class="tm cle" aria-hidden="true">CLE</span><span class="gat" id="nx-at" aria-hidden="true">at</span><span class="tm" id="nx-opp"><a class="opp" href="https://www.basketball-reference.com/teams/PHI/2027.html" target="_blank" rel="noopener" title="Philadelphia on Basketball Reference">PHI</a></span></div>
           <div class="nx-when nx-row"><span id="nx-meta">Thu, Oct 22 · 7:00 PM ET · ESPN</span><a class="nx-gp" href="/games/2026-10-22-phi" data-go="games/2026-10-22-phi">Preview →</a></div>
-          <span class="gdays" id="cd" role="timer" aria-label="Countdown to tip-off"><small>Tip-off in</small><span class="cdw"><span class="cdn"><b id="cd-d">04</b><b id="cd-h">09</b><b id="cd-m">18</b><b id="cd-s">24</b></span><span class="cdl"><i>Days</i><i>Hrs</i><i>Min</i><i>Sec</i></span></span></span>
+          <span class="gdays" id="cd" role="timer" aria-label="Countdown to tip-off"><small>Tip-off in</small><span class="cdw"><span class="cdn"><b id="cd-d">04</b><b id="cd-h">09</b><b id="cd-m">14</b><b id="cd-s">05</b></span><span class="cdl"><i>Days</i><i>Hrs</i><i>Min</i><i>Sec</i></span></span></span>
           <div class="ginfo nx-then-row"><span id="nx-then"><b>After that </b>Sat, Oct 24 vs <a href="https://www.basketball-reference.com/teams/BRK/2027.html" target="_blank" rel="noopener" class="opp">Brooklyn</a> · 7:30 PM</span></div>
         </div>
       </section>
@@ -1596,7 +1598,7 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
     <div>
       <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / History</div>
       <h1 style="margin-top:6px">56 seasons of Cavs basketball</h1>
-      <p class="dim vdesc" style="margin:6px 0 0"><span>Every season since 1970, the playoff runs, the numbers in the rafters, every draft pick and every head coach.</span></p>
+      <p class="hx-tait"><span class="hx-q">“It’s basketball time at the <b id="hx-arena">Cleveland Arena</b>.”</span><small>Joe Tait opened every Cavs broadcast that way. Voice of the Cavs, 1970–81 and 1983–2011.</small></p>
     </div>
     <div class="tx-stats" id="hx-stats"></div>
     <section id="hx-sea"><div class="block-h"><h2>Every season</h2><span>Tap a season</span></div>
@@ -4670,10 +4672,12 @@ function draw(){const $=id=>document.getElementById(id);
   {const RC=H.records||{},T=$('hx-rec-t'),L=$('hx-rec-l');T.textContent='';const K=[['game','Single game'],['season','Season'],['playoffs','Playoffs']];
    const pick=k=>{T.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k?'true':'false'));L.textContent='';
      (RC[k]||[]).forEach(r=>{const li=el('li');let lab,who,val,when,u;if(k==='season'){[lab,val,when,u]=r;who=''}else{[lab,who,val,when,u]=r}
-       li.append(el('b','hx-rv',val));const d=el('div');d.appendChild(el('span','hx-rlab',lab));const sm=el('small',null,[who&&who!=='Cavaliers'?who:'',when].filter(Boolean).join(' · '));const bx=(H.recBox||{})[k+'|'+lab];if(bx){const a=el('a','dlink','Box score ↗');a.href=bx;a.target='_blank';a.rel='noopener';sm.append(' ',a)}d.appendChild(sm);li.appendChild(d);L.appendChild(li)})};
+       li.append(el('b','hx-rv',val));const d=el('div');d.appendChild(el('span','hx-rlab',lab));const sm=el('small',null,[who&&who!=='Cavaliers'?who:'',when].filter(Boolean).join(' · '));const bx=(H.recBox||{})[k+'|'+lab];if(bx){const bl=el('span','hx-bxl');bx.forEach(([w,u2],i)=>{const a=el('a','dlink',(w?w+' box score':'Box score')+' ↗');a.href=u2;a.target='_blank';a.rel='noopener';if(i)bl.append(' · ');bl.appendChild(a)});sm.appendChild(bl)}d.appendChild(sm);li.appendChild(d);L.appendChild(li)})};
    K.forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('role','tab');b.dataset.k=k;b.onclick=()=>pick(k);T.appendChild(b)});pick('game')}
   /* homes */
   {const tl=$('hx-tl');tl.textContent='';[['1970–74','Cleveland Arena','East 36th and Euclid Avenue, Cleveland. Home for the first four seasons.'],['1974–94','Richfield Coliseum','Richfield Township, between Cleveland and Akron. Site of the 1976 "Miracle of Richfield."'],['1994–2005','Gund Arena','Downtown at Gateway, next to the ballpark. Same building ever since.'],['2005–19','Quicken Loans Arena','Renamed in 2005; "The Q." Home of the 2016 title team.'],['2019–25','Rocket Mortgage FieldHouse','Renamed after a major renovation.'],['2025–','Rocket Arena','Current name. One Center Court.']].forEach(([y,n,d],i)=>{const li=el('li',i>=2?'hx-dt':null);li.append(el('b',null,y));const sp=el('div');sp.append(el('span',null,n),el('small',null,d));li.appendChild(sp);tl.appendChild(li)})}
+  /* Joe Tait's opener, through every building he called games in */
+  {const b=$('hx-arena');if(b&&!b.dataset.on){b.dataset.on=1;const A=['Cleveland Arena','Richfield Coliseum','Gund Arena','Quicken Loans Arena'];let i=0;if(!matchMedia('(prefers-reduced-motion: reduce)').matches)setInterval(()=>{i=(i+1)%A.length;b.classList.add('out');setTimeout(()=>{b.textContent=A[i];b.classList.remove('out')},260)},2600)}}
   /* retired numbers */
   {const b=$('hx-ban');b.textContent='';H.retired.slice().sort((a,c)=>+a[0]-+c[0]).forEach(([n,p,y])=>{const d=el('div','hx-bn');d.append(el('b',null,n),el('span',null,p),el('small',null,y?'Retired '+y:''));b.appendChild(d)})}
   /* leaders */
@@ -4702,7 +4706,7 @@ function draw(){const $=id=>document.getElementById(id);
   /* coaches */
   {const tb=$('hx-coach-b');const wl=r=>{const m=String(r||'').match(/(\d+)\D+(\d+)/);return m?[+m[1],+m[2]]:[0,0]};
    const KEY=[c=>c[0].split(' ').slice(-1)[0]+c[0],c=>num(c[1]),c=>{const [w,l]=wl(c[2]);return w+l?w/(w+l):0},c=>wl(c[3])[0]];let sk=1,dir=1;
-   const render=()=>{tb.textContent='';H.coaches.slice().sort((a,b)=>{const x=KEY[sk](a),y=KEY[sk](b);return (x<y?-1:x>y?1:0)*dir||num(a[1])-num(b[1])}).forEach(([n,y,rec,po,nt])=>{const tr=el('tr');const td=el('td');td.append(n);if(nt)td.appendChild(el('small',null,nt));const [w,l]=wl(rec);const rt=el('td','r m',rec);if(w+l)rt.title=(w/(w+l)).toFixed(3).replace(/^0/,'')+' win pct';tr.append(td,el('td','m',y),rt,el('td','r m',po||'—'));tb.appendChild(tr)});
+   const render=()=>{tb.textContent='';H.coaches.slice().sort((a,b)=>{const x=KEY[sk](a),y=KEY[sk](b);return (x<y?-1:x>y?1:0)*dir||num(a[1])-num(b[1])}).forEach(([n,y,rec,po,nt])=>{const tr=el('tr');const td=el('td');const cid=(H.bbc||{})[n];if(cid){const a=el('a','hx-bb',n);a.href='https://www.basketball-reference.com/coaches/'+cid+'.html';a.target='_blank';a.rel='noopener';a.title=n+' on Basketball Reference';td.appendChild(a)}else td.append(n);if(nt)td.appendChild(el('small',null,nt));const [w,l]=wl(rec);const rt=el('td','r m',rec);if(w+l)rt.title=(w/(w+l)).toFixed(3).replace(/^0/,'')+' win pct';tr.append(td,el('td','m',y),rt,el('td','r m',po||'—'));tb.appendChild(tr)});
      $('hx-coach-h').querySelectorAll('th').forEach(th=>{th.dataset.dir=+th.dataset.k===sk?(dir>0?'asc':'desc'):''})};
    $('hx-coach-h').querySelectorAll('th').forEach(th=>th.onclick=()=>{const k=+th.dataset.k;if(k===sk)dir=-dir;else{sk=k;dir=k>=2?-1:1}render()});render();
    $('hx-coach-n').textContent=new Set(H.coaches.map(c=>c[0])).size+' coaches · tap a column to sort'}
