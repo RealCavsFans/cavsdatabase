@@ -1245,6 +1245,9 @@ table.hx-t{min-width:0!important;width:100%;border-collapse:collapse;font-size:1
 .sm-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}.sm-cols h4{margin:8px 0 4px;font:800 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.sm-cols .kv small{display:block;color:var(--muted);font-size:12px}.sm-cols .kv b{font:700 12.5px var(--mono);white-space:nowrap}.sm-cols b.sm-y{font:800 11px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--wine-ink)}.sm-cols b.sm-n{font:800 11px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .sm-note{font-size:12px;color:var(--muted);margin:12px 0 0}
 @media (max-width:720px){.sm-stats{grid-template-columns:1fr 1fr}.sm-cols{grid-template-columns:1fr}.sm-big{font-size:23px}}
+tr.hx-pl td:first-child{box-shadow:inset 3px 0 0 #860038;padding-left:8px}.hx-t td:first-child,.hx-t th:first-child{padding-left:8px}a.hx-bb{color:var(--fg);text-decoration:none;border-bottom:1px dotted var(--muted)}a.hx-bb:hover{color:var(--wine-ink);border-bottom-color:currentColor}.hx-t a.dlink{white-space:nowrap}
+th.hx-srt{cursor:pointer;user-select:none;white-space:nowrap}th.hx-srt:hover{color:var(--wine-ink)}th.hx-srt::after{content:'';display:inline-block;margin-left:5px;vertical-align:2px;border:4px solid transparent;border-top:5px solid currentColor;opacity:.22}th.hx-srt[data-dir=asc]::after{border-top:0;border-bottom:5px solid currentColor;opacity:1;color:var(--wine-ink)}th.hx-srt[data-dir=desc]::after{opacity:1;color:var(--wine-ink)}
+.hx-key{font-size:12.5px;margin:0 0 8px}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 17px var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
@@ -1543,10 +1546,10 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
     <section id="hx-num"><div class="block-h"><h2>Who wore it</h2><span>Every number, every player</span></div>
       <input id="hx-q" type="search" placeholder="Type a number or a name" aria-label="Find a number or player"><div class="hx-nums" id="hx-nums"></div><ul class="kv" id="hx-wore"></ul></section>
     <section id="hx-draft"><div class="block-h"><h2>Draft history</h2><span id="hx-draft-n"></span></div>
-      <div class="tx-ctrl"><select id="hx-dec" aria-label="Decade"></select><label class="hx-chk"><input type="checkbox" id="hx-r1"> First round only</label><label class="hx-chk"><input type="checkbox" id="hx-pl"> Played for the Cavs</label></div>
+      <div class="tx-ctrl"><select id="hx-dec" aria-label="Decade"></select><label class="hx-chk"><input type="checkbox" id="hx-r1"> First round only</label><label class="hx-chk"><input type="checkbox" id="hx-pl"> Played for the Cavs only</label></div><p class="dim hx-key"><span class="rt-key"><i class="on"></i>Played for the Cavs</span> · Names and years open Basketball Reference</p>
       <div class="tablebox"><table class="hx-t"><thead><tr><th>Year</th><th>Pick</th><th>Player</th><th>From</th></tr></thead><tbody id="hx-draft-b"></tbody></table></div></section>
     <section id="hx-coach"><div class="block-h"><h2>Head coaches</h2><span id="hx-coach-n"></span></div>
-      <div class="tablebox"><table class="hx-t"><thead><tr><th>Coach</th><th>Years</th><th class="r">Record</th><th class="r">Playoffs</th></tr></thead><tbody id="hx-coach-b"></tbody></table></div></section>
+      <div class="tablebox"><table class="hx-t"><thead id="hx-coach-h"><tr><th class="hx-srt" data-k="0">Coach</th><th class="hx-srt" data-k="1">Years</th><th class="r hx-srt" data-k="2">Record</th><th class="r hx-srt" data-k="3">Playoffs</th></tr></thead><tbody id="hx-coach-b"></tbody></table></div></section>
     <p class="dim" style="margin:0;font-size:13px">Sources: Wikipedia season pages and head coaches list, Stats Crew, Basketball Reference (numbers, All-Stars), NBA.com (career totals). Season leaders need at least half the team's games. Leaders run through 2025–26.</p>
   </div>
 </main>
@@ -4557,6 +4560,8 @@ function show(route){
 (function(){let H=null,MS=null,busy=false;
 const LV={title:['Champions','hx-l6'],finals:['Lost in the Finals','hx-l5'],conf:['Conference finals','hx-l4'],round2:['Second round','hx-l3'],round1:['First round','hx-l2'],playin:['Play-in','hx-l1'],missed:['Missed playoffs','hx-l0']};
 const yrs=s=>s.split('–'),num=s=>+String(s).split('–')[0];
+const bbS=n=>'https://www.basketball-reference.com/search/search.fcgi?search='+encodeURIComponent(n),bbA=(n,cls)=>{const a=el('a',cls||'dlink',n);a.href=bbS(n);a.target='_blank';a.rel='noopener';a.title=n+' on Basketball Reference';return a};
+
 function draw(){const $=id=>document.getElementById(id);
   const S=H.seasons;
   /* stat strip */
@@ -4581,7 +4586,7 @@ function draw(){const $=id=>document.getElementById(id);
   {const b=$('hx-ban');b.textContent='';H.retired.slice().sort((a,c)=>+a[0]-+c[0]).forEach(([n,p,y])=>{const d=el('div','hx-bn');d.append(el('b',null,n),el('span',null,p),el('small',null,y?'Retired '+y:''));b.appendChild(d)})}
   /* leaders */
   {const F=(MS&&MS.franchise)||{};const T=$('hx-lead-t'),L=$('hx-lead-l');T.textContent='';const K=[['PTS','Points'],['REB','Rebounds'],['AST','Assists'],['GP','Games']];
-   const pick=k=>{T.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k?'true':'false'));L.textContent='';(F[k]||[]).slice(0,10).forEach(([n,v],i)=>{const li=el('li');const nm=onRoster(n)&&PP_ON?(()=>{const a=el('a',null,n);a.href='/players/'+slug(n);a.dataset.go='players/'+slug(n);return a})():el('span',null,n);li.append(el('i',null,String(i+1)),nm,el('b',null,v.toLocaleString()));if(onRoster(n))li.classList.add('hx-now');L.appendChild(li)})};
+   const pick=k=>{T.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k?'true':'false'));L.textContent='';(F[k]||[]).slice(0,10).forEach(([n,v],i)=>{const li=el('li');const nm=onRoster(n)&&PP_ON?(()=>{const a=el('a',null,n);a.href='/players/'+slug(n);a.dataset.go='players/'+slug(n);return a})():bbA(n,'hx-bb');li.append(el('i',null,String(i+1)),nm,el('b',null,v.toLocaleString()));if(onRoster(n))li.classList.add('hx-now');L.appendChild(li)})};
    K.forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('role','tab');b.dataset.k=k;b.onclick=()=>pick(k);T.appendChild(b)});pick('PTS');
    if(MS&&MS.through)$('hx-lead-n').textContent='Regular season · through '+MS.through.replace('-','–');}
   /* who wore it */
@@ -4599,11 +4604,16 @@ function draw(){const $=id=>document.getElementById(id);
    [...new Set(D.map(d=>Math.floor(d[0]/10)*10))].sort((a,b)=>b-a).forEach(d=>sel.appendChild(new Option(d+'s',String(d))));r1.checked=true;
    const ord=n=>n+(['th','st','nd','rd'][(n%100-20)%10]||['th','st','nd','rd'][n%100]||'th');
    const render=()=>{tb.textContent='';const rows=D.filter(d=>(sel.value==='all'||Math.floor(d[0]/10)*10===+sel.value)&&(!r1.checked||d[1]===1)&&(!pl.checked||d[5])).sort((a,b)=>b[0]-a[0]||a[2]-b[2]);
-     rows.forEach(([y,r,p,n,sch,cle])=>{const tr=el('tr');const td=el('td');td.append(n);if(cle)td.appendChild(el('span','hx-cle','Played for CLE'));tr.append(el('td','m',String(y)),el('td','m',ord(r)+' · No. '+p),td,el('td','dim',sch||'—'));tb.appendChild(tr)});
+     rows.forEach(([y,r,p,n,sch,cle])=>{const tr=el('tr',cle?'hx-pl':null);const td=el('td');td.appendChild(bbA(n,'hx-bb'));const ty=el('td','m');const ya=el('a','dlink',String(y));ya.href='https://www.basketball-reference.com/draft/NBA_'+y+'.html';ya.target='_blank';ya.rel='noopener';ya.title='Full '+y+' draft on Basketball Reference';ty.appendChild(ya);tr.append(ty,el('td','m',ord(r)+' · No. '+p),td,el('td','dim',sch||'—'));tb.appendChild(tr)});
      $('hx-draft-n').textContent=rows.length+' picks shown · '+D.length+' since 1970'};
    [sel,r1,pl].forEach(e=>e.onchange=render);render()}
   /* coaches */
-  {const tb=$('hx-coach-b');tb.textContent='';H.coaches.forEach(([n,y,rec,po,nt])=>{const tr=el('tr');const td=el('td');td.append(n);if(nt)td.appendChild(el('small',null,nt));tr.append(td,el('td','m',y),el('td','r m',rec),el('td','r m',po||'—'));tb.appendChild(tr)});$('hx-coach-n').textContent=new Set(H.coaches.map(c=>c[0])).size+' coaches'}
+  {const tb=$('hx-coach-b');const wl=r=>{const m=String(r||'').match(/(\d+)\D+(\d+)/);return m?[+m[1],+m[2]]:[0,0]};
+   const KEY=[c=>c[0].split(' ').slice(-1)[0]+c[0],c=>num(c[1]),c=>{const [w,l]=wl(c[2]);return w+l?w/(w+l):0},c=>wl(c[3])[0]];let sk=1,dir=1;
+   const render=()=>{tb.textContent='';H.coaches.slice().sort((a,b)=>{const x=KEY[sk](a),y=KEY[sk](b);return (x<y?-1:x>y?1:0)*dir||num(a[1])-num(b[1])}).forEach(([n,y,rec,po,nt])=>{const tr=el('tr');const td=el('td');td.append(n);if(nt)td.appendChild(el('small',null,nt));const [w,l]=wl(rec);const rt=el('td','r m',rec);if(w+l)rt.title=(w/(w+l)).toFixed(3).replace(/^0/,'')+' win pct';tr.append(td,el('td','m',y),rt,el('td','r m',po||'—'));tb.appendChild(tr)});
+     $('hx-coach-h').querySelectorAll('th').forEach(th=>{th.dataset.dir=+th.dataset.k===sk?(dir>0?'asc':'desc'):''})};
+   $('hx-coach-h').querySelectorAll('th').forEach(th=>th.onclick=()=>{const k=+th.dataset.k;if(k===sk)dir=-dir;else{sk=k;dir=k>=2?-1:1}render()});render();
+   $('hx-coach-n').textContent=new Set(H.coaches.map(c=>c[0])).size+' coaches · tap a column to sort'}
 }
 window.hxLoad=async function(){if(H){return}if(busy)return;busy=true;try{const [a,b]=await Promise.all([fetch('/pdata/history.json').then(r=>r.json()),fetch('/pdata/milestones.json').then(r=>r.json()).catch(()=>null)]);H=a;MS=b;draw()}catch(e){busy=false}};
 })();
