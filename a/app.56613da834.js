@@ -81,27 +81,15 @@ const RES=[
     ['NBA Salary Model','Modeled value of player contracts','nbasalarymodel.xyz','https://nbasalarymodel.xyz'],
     ['CBA Guide','The collective bargaining agreement, explained rule by rule','cbaguide.com','https://cbaguide.com']
   ]],
-  ['Fan forum',[
-    ['RealCavsFans','Cavs fan forum, analysis and graphics','realcavsfans.com','https://realcavsfans.com'],
-    ['RealCavsFans on X','Graphics, recaps and breaking news','x.com/realcavsfans','https://x.com/realcavsfans']
-  ]],
-  ['Trade machines',[
-    ['Spotrac Trade Machine','Build and check trades against the cap','spotrac.com','https://www.spotrac.com/nba/trade-machine'],
-    ['bball-GM','Build and check multi-team trades with real salaries and CBA rules','bball-gm.com','https://bball-gm.com']
-  ]],
-  ['Team',[
-    ['Cavaliers roster','Official roster and staff','nba.com/cavaliers','https://www.nba.com/cavaliers/roster'],
-    ['HoopsHype depth charts','Every team’s rotation, updated through the season','hoopshype.com','https://www.hoopshype.com/story/sports/nba/2026/10/03/2025-26-nba-depth-charts/71286522007/']
-  ]],
-  ['History',[
-    ['Basketball Reference: Cavaliers franchise','Every season’s record, coach, playoff result and franchise leaders','basketball-reference.com','https://www.basketball-reference.com/teams/CLE/'],
-    ['Wikipedia: Cavaliers seasons','Season-by-season list with playoff runs and awards','wikipedia.org','https://en.wikipedia.org/wiki/List_of_Cleveland_Cavaliers_seasons']
-  ]],
   ['Draft',[
     ['draftballr','Draft prospect scouting and analytics','draftballr.com','https://draftballr.com'],
     ['No Ceilings','Big boards, scouting reports and draft coverage','noceilingsnba.com','https://www.noceilingsnba.com'],
     ['Tankathon','Mock drafts, lottery odds and every team’s future picks','tankathon.com','https://www.tankathon.com'],
     ['Swish Theory','Draft guide, scouting reports and analysis','theswishtheory.com','https://theswishtheory.com']
+  ]],
+  ['Trade machines',[
+    ['Spotrac Trade Machine','Build and check trades against the cap','spotrac.com','https://www.spotrac.com/nba/trade-machine'],
+    ['bball-GM','Build and check multi-team trades with real salaries and CBA rules','bball-gm.com','https://bball-gm.com']
   ]]
 ];
 const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e};
@@ -3062,8 +3050,8 @@ const y0now=s=>s===SEASONS[0];
 
 
 /* Media: who covers the Cavs, newest item from each outlet in news.json */
-(function(){let done=false;const HOME={'cleveland.com':['https://www.cleveland.com/cavs/','Beat writers at every game'],'Cavaliers on SI':['https://www.si.com/nba/cavaliers','Sports Illustrated team site'],'Fear The Sword':['https://www.fearthesword.com','SB Nation team site'],'Hoops Rumors':['https://www.hoopsrumors.com/cleveland-cavaliers','Transactions and rumors']};
- window.loadCovers=()=>{if(done)return;done=true;fetch('/news.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(N=>{if(!N)return;
+(function(){let done=false;const HOME={'cleveland.com':['https://www.cleveland.com/cavs/','Beat writers at every game'],'Cavaliers on SI':['https://www.si.com/nba/cavaliers','Sports Illustrated team site'],'Fear The Sword':['https://www.fearthesword.com','SB Nation team site'],'Hoops Rumors':['https://www.hoopsrumors.com/cleveland-cavaliers','Transactions and rumors'],'RealCavsFans':['https://realcavsfans.com/index.php?forums/FrontPage/','Fan forum, recaps and analysis']};
+ window.loadCovers=()=>{if(done)return;done=true;Promise.all([fetch('/news.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null),fetch('/rcf.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null)]).then(([N,RC])=>{if(!N)return;if(RC&&RC.items&&RC.items.length)N.articles=(N.articles||[]).concat(RC.items.slice(0,3).map(x=>({src:'RealCavsFans',title:x.title,link:x.link,date:x.date})));
   const md=d=>new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'America/New_York'});
   const fill=(id,items,kind)=>{const ul=document.getElementById(id);if(!ul)return;ul.textContent='';const by={};items.forEach(x=>{if(!by[x.src]||x.date>by[x.src].date)by[x.src]=x});
    Object.values(by).sort((a,b)=>b.date.localeCompare(a.date)).forEach(x=>{const li=el('li');const sp=el('span');const h=HOME[x.src];const nm=el('a',null,x.src);nm.href=h?h[0]:x.link;nm.target='_blank';nm.rel='noopener';

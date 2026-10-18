@@ -1249,7 +1249,7 @@ tr.hx-pl td:first-child{box-shadow:inset 3px 0 0 #860038;padding-left:8px}.hx-t 
 th.hx-srt{cursor:pointer;user-select:none;white-space:nowrap}th.hx-srt:hover{color:var(--wine-ink)}th.hx-srt::after{content:'';display:inline-block;margin-left:5px;vertical-align:2px;border:4px solid transparent;border-top:5px solid currentColor;opacity:.22}th.hx-srt[data-dir=asc]::after{border-top:0;border-bottom:5px solid currentColor;opacity:1;color:var(--wine-ink)}th.hx-srt[data-dir=desc]::after{opacity:1;color:var(--wine-ink)}
 .hx-key{font-size:12.5px;margin:0 0 8px}
 .xf{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:8px}.xfc{display:flex;flex-direction:column;gap:1px;background:var(--card);border:1px solid var(--line);padding:9px 12px;text-decoration:none;color:var(--fg)}.xfc:hover{border-color:var(--wine-ink)}.xfc b{font-size:14px}.xfc span{font:600 12.5px var(--mono);color:var(--wine-ink)}.xfc small{font-size:12px;color:var(--muted)}
-.hx-opp{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px;margin:0 0 10px;max-width:760px}
+.hx-opp{display:grid;grid-template-columns:repeat(auto-fit,minmax(58px,1fr));gap:6px;margin:0 0 10px}
 .hx-oc{all:unset;cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 4px 9px;background:var(--card);border:1px solid var(--line);overflow:hidden;box-sizing:border-box}
 .hx-oc b{font:800 16px/1 var(--cond);letter-spacing:.03em;color:var(--fg)}.hx-oc span{font:600 11px var(--mono);color:var(--muted)}
 .hx-oc i{position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,#860038 var(--w),var(--line2) var(--w))}
@@ -1303,6 +1303,7 @@ tr.hx-w td:first-child{box-shadow:inset 3px 0 0 #860038}tr.hx-l td:first-child{b
 .hx-dctl .hx-key{margin:0 0 0 auto;font-size:12px}@media (max-width:720px){.hx-dctl .hx-key{margin:0;flex-basis:100%}}
 @media (max-width:720px){.hx-top .hx-ban{grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}.hx-top .hx-bn{padding:10px 2px 14px}.hx-top .hx-bn b{font-size:22px}.hx-top .hx-bn span{font-size:8.5px;line-height:1.15}.hx-top .hx-bn small{display:none}}
 @media (max-width:720px){.rc2-strip{grid-auto-flow:row;grid-template-columns:repeat(5,minmax(0,1fr))}}
+.rcf-cols{grid-template-columns:minmax(0,1fr)!important}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 17px var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
@@ -1511,10 +1512,9 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
     </div>
     <div id="vid-page"></div>
     <p class="dim" style="margin:0;font-size:13px">All video from the Cleveland Cavaliers' official YouTube channel.</p>
-    <div id="articles" class="art-h"><h2>Articles &amp; recaps</h2><p class="dim" style="margin:4px 0 0">From RealCavsFans.com and @realcavsfans on X.</p></div>
+    <div id="articles" class="art-h"><h2>Articles &amp; recaps</h2><p class="dim" style="margin:4px 0 0">From RealCavsFans.com.</p></div>
     <div class="rcf-cols">
       <section><div class="block-h"><h2>RealCavsFans.com</h2><a href="https://realcavsfans.com/index.php?forums/FrontPage/" target="_blank" rel="noopener">Front page ↗</a></div><div class="rcf-list" id="rcf-list"></div></section>
-      <section><div class="block-h"><h2>On X</h2><a href="https://x.com/realcavsfans" target="_blank" rel="noopener">@realcavsfans ↗</a></div><div class="rcf-x" id="rcf-x"><a class="xcard" href="https://x.com/realcavsfans" target="_blank" rel="noopener"><b>@realcavsfans</b><span>RealCavsFans.com on X · graphics, analysis and game-night posts</span><em>Open on X ↗</em></a></div></section>
     </div>
   </div>
 </main>
@@ -1552,7 +1552,7 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
     <section class="o-chase" id="chase" hidden aria-labelledby="chase-h"><div class="block-h"><h2 id="chase-h">Chasing history</h2><span id="chase-sub">Cavs career lists</span></div><ul class="chc-l" id="chase-l"></ul></section>
     <section id="hx-sea"><div class="block-h"><h2>Every season</h2><span>Tap a season</span></div>
       <div class="hx-leg" id="hx-leg"></div><div class="hx-grid" id="hx-grid"><div class="skel skel-grid"></div></div><div class="hx-det" id="hx-det" hidden></div></section>
-    <section id="hx-po"><div class="block-h"><h2>Playoff history</h2><span id="hx-po-n"></span></div><div class="hx-opp" id="hx-opp"></div><p class="dim hx-key"><span class="rt-key"><i class="on"></i>Won the series <i></i>Lost</span> · Results open the series on Basketball Reference</p>
+    <section id="hx-po"><div class="block-h"><h2>Playoff history</h2><span id="hx-po-n"></span></div><div class="hx-opp" id="hx-opp"></div><p class="dim hx-key"><span class="rt-key"><i class="on"></i>Won the series <i></i>Lost</span></p>
       <div class="tablebox"><table class="hx-t"><thead><tr><th>Season</th><th>Round</th><th>Opponent</th><th class="r">Result</th></tr></thead><tbody id="hx-po-b"></tbody></table></div><button type="button" class="hx-more" id="hx-po-more" hidden></button></section>
     <section id="hx-hon"><div class="block-h"><h2>Honors</h2><span>While with Cleveland</span></div><div class="hx-aw" id="hx-aw"></div>
       <div class="cols hx-teams" id="hx-teams"></div></section>
@@ -1732,27 +1732,15 @@ const RES=[
     ['NBA Salary Model','Modeled value of player contracts','nbasalarymodel.xyz','https://nbasalarymodel.xyz'],
     ['CBA Guide','The collective bargaining agreement, explained rule by rule','cbaguide.com','https://cbaguide.com']
   ]],
-  ['Fan forum',[
-    ['RealCavsFans','Cavs fan forum, analysis and graphics','realcavsfans.com','https://realcavsfans.com'],
-    ['RealCavsFans on X','Graphics, recaps and breaking news','x.com/realcavsfans','https://x.com/realcavsfans']
-  ]],
-  ['Trade machines',[
-    ['Spotrac Trade Machine','Build and check trades against the cap','spotrac.com','https://www.spotrac.com/nba/trade-machine'],
-    ['bball-GM','Build and check multi-team trades with real salaries and CBA rules','bball-gm.com','https://bball-gm.com']
-  ]],
-  ['Team',[
-    ['Cavaliers roster','Official roster and staff','nba.com/cavaliers','https://www.nba.com/cavaliers/roster'],
-    ['HoopsHype depth charts','Every team’s rotation, updated through the season','hoopshype.com','https://www.hoopshype.com/story/sports/nba/2026/10/03/2025-26-nba-depth-charts/71286522007/']
-  ]],
-  ['History',[
-    ['Basketball Reference: Cavaliers franchise','Every season’s record, coach, playoff result and franchise leaders','basketball-reference.com','https://www.basketball-reference.com/teams/CLE/'],
-    ['Wikipedia: Cavaliers seasons','Season-by-season list with playoff runs and awards','wikipedia.org','https://en.wikipedia.org/wiki/List_of_Cleveland_Cavaliers_seasons']
-  ]],
   ['Draft',[
     ['draftballr','Draft prospect scouting and analytics','draftballr.com','https://draftballr.com'],
     ['No Ceilings','Big boards, scouting reports and draft coverage','noceilingsnba.com','https://www.noceilingsnba.com'],
     ['Tankathon','Mock drafts, lottery odds and every team’s future picks','tankathon.com','https://www.tankathon.com'],
     ['Swish Theory','Draft guide, scouting reports and analysis','theswishtheory.com','https://theswishtheory.com']
+  ]],
+  ['Trade machines',[
+    ['Spotrac Trade Machine','Build and check trades against the cap','spotrac.com','https://www.spotrac.com/nba/trade-machine'],
+    ['bball-GM','Build and check multi-team trades with real salaries and CBA rules','bball-gm.com','https://bball-gm.com']
   ]]
 ];
 const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e};
@@ -4713,8 +4701,8 @@ const y0now=s=>s===SEASONS[0];
 
 
 /* Media: who covers the Cavs, newest item from each outlet in news.json */
-(function(){let done=false;const HOME={'cleveland.com':['https://www.cleveland.com/cavs/','Beat writers at every game'],'Cavaliers on SI':['https://www.si.com/nba/cavaliers','Sports Illustrated team site'],'Fear The Sword':['https://www.fearthesword.com','SB Nation team site'],'Hoops Rumors':['https://www.hoopsrumors.com/cleveland-cavaliers','Transactions and rumors']};
- window.loadCovers=()=>{if(done)return;done=true;fetch('/news.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(N=>{if(!N)return;
+(function(){let done=false;const HOME={'cleveland.com':['https://www.cleveland.com/cavs/','Beat writers at every game'],'Cavaliers on SI':['https://www.si.com/nba/cavaliers','Sports Illustrated team site'],'Fear The Sword':['https://www.fearthesword.com','SB Nation team site'],'Hoops Rumors':['https://www.hoopsrumors.com/cleveland-cavaliers','Transactions and rumors'],'RealCavsFans':['https://realcavsfans.com/index.php?forums/FrontPage/','Fan forum, recaps and analysis']};
+ window.loadCovers=()=>{if(done)return;done=true;Promise.all([fetch('/news.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null),fetch('/rcf.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null)]).then(([N,RC])=>{if(!N)return;if(RC&&RC.items&&RC.items.length)N.articles=(N.articles||[]).concat(RC.items.slice(0,3).map(x=>({src:'RealCavsFans',title:x.title,link:x.link,date:x.date})));
   const md=d=>new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'America/New_York'});
   const fill=(id,items,kind)=>{const ul=document.getElementById(id);if(!ul)return;ul.textContent='';const by={};items.forEach(x=>{if(!by[x.src]||x.date>by[x.src].date)by[x.src]=x});
    Object.values(by).sort((a,b)=>b.date.localeCompare(a.date)).forEach(x=>{const li=el('li');const sp=el('span');const h=HOME[x.src];const nm=el('a',null,x.src);nm.href=h?h[0]:x.link;nm.target='_blank';nm.rel='noopener';

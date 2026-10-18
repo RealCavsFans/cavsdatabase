@@ -1216,7 +1216,7 @@ tr.hx-pl td:first-child{box-shadow:inset 3px 0 0 #860038;padding-left:8px}.hx-t 
 th.hx-srt{cursor:pointer;user-select:none;white-space:nowrap}th.hx-srt:hover{color:var(--wine-ink)}th.hx-srt::after{content:'';display:inline-block;margin-left:5px;vertical-align:2px;border:4px solid transparent;border-top:5px solid currentColor;opacity:.22}th.hx-srt[data-dir=asc]::after{border-top:0;border-bottom:5px solid currentColor;opacity:1;color:var(--wine-ink)}th.hx-srt[data-dir=desc]::after{opacity:1;color:var(--wine-ink)}
 .hx-key{font-size:12.5px;margin:0 0 8px}
 .xf{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:8px}.xfc{display:flex;flex-direction:column;gap:1px;background:var(--card);border:1px solid var(--line);padding:9px 12px;text-decoration:none;color:var(--fg)}.xfc:hover{border-color:var(--wine-ink)}.xfc b{font-size:14px}.xfc span{font:600 12.5px var(--mono);color:var(--wine-ink)}.xfc small{font-size:12px;color:var(--muted)}
-.hx-opp{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px;margin:0 0 10px;max-width:760px}
+.hx-opp{display:grid;grid-template-columns:repeat(auto-fit,minmax(58px,1fr));gap:6px;margin:0 0 10px}
 .hx-oc{all:unset;cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 4px 9px;background:var(--card);border:1px solid var(--line);overflow:hidden;box-sizing:border-box}
 .hx-oc b{font:800 16px/1 var(--cond);letter-spacing:.03em;color:var(--fg)}.hx-oc span{font:600 11px var(--mono);color:var(--muted)}
 .hx-oc i{position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,#860038 var(--w),var(--line2) var(--w))}
@@ -1270,3 +1270,4 @@ tr.hx-w td:first-child{box-shadow:inset 3px 0 0 #860038}tr.hx-l td:first-child{b
 .hx-dctl .hx-key{margin:0 0 0 auto;font-size:12px}@media (max-width:720px){.hx-dctl .hx-key{margin:0;flex-basis:100%}}
 @media (max-width:720px){.hx-top .hx-ban{grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}.hx-top .hx-bn{padding:10px 2px 14px}.hx-top .hx-bn b{font-size:22px}.hx-top .hx-bn span{font-size:8.5px;line-height:1.15}.hx-top .hx-bn small{display:none}}
 @media (max-width:720px){.rc2-strip{grid-auto-flow:row;grid-template-columns:repeat(5,minmax(0,1fr))}}
+.rcf-cols{grid-template-columns:minmax(0,1fr)!important}
