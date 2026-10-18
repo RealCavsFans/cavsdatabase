@@ -3079,7 +3079,7 @@ const y0now=s=>s===SEASONS[0];
 
 /* Resources: X accounts worth following (handles checked against search results before adding) */
 (function(){const box=document.getElementById('xf');if(!box)return;
-  [['Cavaliers','cavs','Official team account'],['cleveland.com Cavs','PDcavsinsider','cleveland.com coverage'],['Chris Fedor','chrisfedor','Beat writer'],['Ethan Sands','EjElite1','Beat writer, cleveland.com'],['Tony Pesta','Tony_Pesta','Cavs writer and podcaster'],['Mack Perry','DevaronPerry','Cavaliers on SI'],['Fear the \u2019Fro','FeartheFroPod','Cavs podcast'],['Fear The Sword','FearTheSword','SB Nation team site'],['RealCavsFans','realcavsfans','Recaps and analytics']]
+  [['Cavaliers','cavs','Official team account'],['cleveland.com Cavs','PDcavsinsider','cleveland.com coverage'],['Chris Fedor','chrisfedor','Beat writer'],['Ethan Sands','EjElite1','Beat writer, cleveland.com'],['Tony Pesta','Tony_Pesta','Cavs writer and podcaster'],['Mack Perry','DevaronPerry','Cavaliers on SI'],['Fear the \u2019Fro','FeartheFroPod','Cavs podcast'],['Fear The Sword','FearTheSword','SB Nation team site'],['Jackson Flickinger','JacksFlickinger','Fear the Sword writer'],['RealCavsFans','realcavsfans','Recaps and analytics']]
   .forEach(([n,h,d])=>{const a=el('a','xfc');a.href='https://x.com/'+h;a.target='_blank';a.rel='noopener';a.append(el('b',null,n),el('span',null,'@'+h),el('small',null,d));box.appendChild(a)})})();
 
 /* Home: Chasing history. Cavs career totals (pdata/milestones.json, through last season) plus this season's regular-season box scores;
