@@ -4556,7 +4556,7 @@ function show(route){
 (function(){let H=null,MS=null,busy=false;
 const LV={title:['Champions','hx-l6'],finals:['Lost in the Finals','hx-l5'],conf:['Conference finals','hx-l4'],round2:['Second round','hx-l3'],round1:['First round','hx-l2'],playin:['Play-in','hx-l1'],missed:['Missed playoffs','hx-l0']};
 const yrs=s=>s.split('–'),num=s=>+String(s).split('–')[0];
-const bbS=n=>'https://www.basketball-reference.com/search/search.fcgi?search='+encodeURIComponent(n),bbA=(n,cls)=>{const a=el('a',cls||'dlink',n);a.href=bbS(n);a.target='_blank';a.rel='noopener';a.title=n+' on Basketball Reference';return a};
+const bbS=n=>'https://www.basketball-reference.com/search/search.fcgi?search='+encodeURIComponent(n),bbA=(n,cls,id)=>{const a=el('a',cls||'dlink',n);a.href=id?'https://www.basketball-reference.com/players/'+id[0]+'/'+id+'.html':bbS(n);a.target='_blank';a.rel='noopener';a.title=n+' on Basketball Reference';return a};
 
 function draw(){const $=id=>document.getElementById(id);
   const S=H.seasons;
@@ -4608,7 +4608,7 @@ function draw(){const $=id=>document.getElementById(id);
   {const b=$('hx-ban');b.textContent='';H.retired.slice().sort((a,c)=>+a[0]-+c[0]).forEach(([n,p,y])=>{const d=el('div','hx-bn');d.append(el('b',null,n),el('span',null,p),el('small',null,y?'Retired '+y:''));b.appendChild(d)})}
   /* leaders */
   {const F=(MS&&MS.franchise)||{};const T=$('hx-lead-t'),L=$('hx-lead-l');T.textContent='';const K=[['PTS','Points'],['REB','Rebounds'],['AST','Assists'],['GP','Games']];
-   const pick=k=>{T.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k?'true':'false'));L.textContent='';(F[k]||[]).slice(0,10).forEach(([n,v],i)=>{const li=el('li');const nm=onRoster(n)&&PP_ON?(()=>{const a=el('a',null,n);a.href='/players/'+slug(n);a.dataset.go='players/'+slug(n);return a})():bbA(n,'hx-bb');li.append(el('i',null,String(i+1)),nm,el('b',null,v.toLocaleString()));if(onRoster(n))li.classList.add('hx-now');L.appendChild(li)})};
+   const pick=k=>{T.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k?'true':'false'));L.textContent='';(F[k]||[]).slice(0,10).forEach(([n,v],i)=>{const li=el('li');const nm=onRoster(n)&&PP_ON?(()=>{const a=el('a',null,n);a.href='/players/'+slug(n);a.dataset.go='players/'+slug(n);return a})():bbA(n,'hx-bb',(H.bbl||{})[n]);li.append(el('i',null,String(i+1)),nm,el('b',null,v.toLocaleString()));if(onRoster(n))li.classList.add('hx-now');L.appendChild(li)})};
    K.forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('role','tab');b.dataset.k=k;b.onclick=()=>pick(k);T.appendChild(b)});pick('PTS');
    if(MS&&MS.through)$('hx-lead-n').textContent='Regular season · through '+MS.through.replace('-','–');}
   /* who wore it */
@@ -4626,7 +4626,7 @@ function draw(){const $=id=>document.getElementById(id);
    [...new Set(D.map(d=>Math.floor(d[0]/10)*10))].sort((a,b)=>b-a).forEach(d=>sel.appendChild(new Option(d+'s',String(d))));r1.checked=true;
    const ord=n=>n+(['th','st','nd','rd'][(n%100-20)%10]||['th','st','nd','rd'][n%100]||'th');
    const render=()=>{tb.textContent='';const rows=D.filter(d=>(sel.value==='all'||Math.floor(d[0]/10)*10===+sel.value)&&(!r1.checked||d[1]===1)&&(!pl.checked||d[5])).sort((a,b)=>b[0]-a[0]||a[2]-b[2]);
-     rows.forEach(([y,r,p,n,sch,cle])=>{const tr=el('tr',cle?'hx-pl':null);const td=el('td');td.appendChild(bbA(n,'hx-bb'));const ty=el('td','m');const ya=el('a','dlink',String(y));ya.href='https://www.basketball-reference.com/draft/NBA_'+y+'.html';ya.target='_blank';ya.rel='noopener';ya.title='Full '+y+' draft on Basketball Reference';ty.appendChild(ya);tr.append(ty,el('td','m',ord(r)+' · No. '+p),td,el('td','dim',sch||'—'));tb.appendChild(tr)});
+     rows.forEach(([y,r,p,n,sch,cle])=>{const tr=el('tr',cle?'hx-pl':null);const td=el('td');{const id=(H.bbd||{})[y+'|'+p+'|'+n];if(id===null)td.append(n);else td.appendChild(bbA(n,'hx-bb',id))}const ty=el('td','m');const ya=el('a','dlink',String(y));ya.href='https://www.basketball-reference.com/draft/NBA_'+y+'.html';ya.target='_blank';ya.rel='noopener';ya.title='Full '+y+' draft on Basketball Reference';ty.appendChild(ya);tr.append(ty,el('td','m',ord(r)+' · No. '+p),td,el('td','dim',sch||'—'));tb.appendChild(tr)});
      $('hx-draft-n').textContent=rows.length+' picks shown · '+D.length+' since 1970'};
    [sel,r1,pl].forEach(e=>e.onchange=render);render()}
   /* coaches */
