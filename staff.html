@@ -1275,6 +1275,9 @@ tr.hx-w td:first-child{box-shadow:inset 3px 0 0 #860038}tr.hx-l td:first-child{b
 @keyframes skel{0%{background-position:100% 0}100%{background-position:-100% 0}}@media (prefers-reduced-motion:reduce){.skel{animation:none}}
 .skel-wrap{display:grid;gap:12px;margin-top:12px}.skel-band{height:220px}.skel-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.skel-b{height:44px}.skel-card{height:180px}
 .skel-grid{grid-column:1/-1;height:300px}.skel-tile{height:64px;min-width:120px}.kv li.skel-li{height:46px;margin:8px 0;border:0;display:block}
+.o-chase{background:var(--card);border:1px solid var(--line);padding:14px 18px}.chc-l{list-style:none;margin:0;padding:0}.chc-l li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line2)}
+.chc-who b,.chc-who a{display:block;font-weight:700;font-size:14.5px;color:var(--fg)}.chc-who span{font-size:12px;color:var(--muted)}.chc-n{text-align:right;font-size:12.5px;color:var(--fg2)}.chc-n b{font:800 20px var(--cond);color:var(--wine-ink);margin-right:3px}.chc-n small{display:block;color:var(--muted);font-size:11.5px}
+.chc-pass .chc-n b{color:#8A5E00}.chc-more{display:inline-block;margin-top:10px;font:600 13px var(--sans);color:var(--wine-ink)}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 17px var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
@@ -1326,6 +1329,7 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
           <span>Game 82</span>
         </div>
       </section>
+      <section class="o-next o-chase" id="chase" hidden aria-labelledby="chase-h"><div class="block-h"><h2 id="chase-h">Chasing history</h2><span id="chase-sub">Cavs career lists</span></div><ul class="chc-l" id="chase-l"></ul><a class="chc-more" href="/history#hx-lead" data-go="history">All-time leaders →</a></section>
 
 
 <section class="nlsu" hidden><div class="su"><svg class="su-shot" aria-hidden="true"><path class="supath" fill="none" stroke="#F2B231" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 7" opacity="0"/><g class="suball" opacity="0"><circle r="11" fill="#F2B231"/><path d="M-11 0H11M0 -11V11M-6.5 -8.7C-2.8 -4.6 -2.8 4.6 -6.5 8.7M6.5 -8.7C2.8 -4.6 2.8 4.6 6.5 8.7" stroke="#860038" stroke-width="1.3" fill="none"/></g></svg><svg class="sumug" viewBox="0 0 100 100" aria-hidden="true"><path d="M10 34L30 52L10 70" stroke="#860038" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M55 30c-5-6 5-10 0-17M67 30c-5-6 5-10 0-17" stroke="#F2B231" stroke-width="3.5" stroke-linecap="round" fill="none"/><path d="M40 38h42v26a18 18 0 0 1-18 18h-6a18 18 0 0 1-18-18z" fill="#860038"/><path d="M82 46h4a9 9 0 0 1 0 18h-4" stroke="#860038" stroke-width="6" fill="none"/><path d="M61 38v44M40 58h42M48 40c6 7 6 31 0 40M74 40c-6 7-6 31 0 40" stroke="#F2B231" stroke-width="2.4" fill="none"/><rect x="38" y="35" width="46" height="5" rx="2.5" fill="#860038"/></svg><div class="su-tx"><b>Cavs <i>&amp;</i> Coffee</b><span>The box score, the top line, injuries and the news, freshly brewed in your inbox after every game. Free.</span></div><form class="su-f" action="https://buttondown.com/api/emails/embed-subscribe/cavscoffee" method="post"><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email"><input type="hidden" name="embed" value="1"><button type="submit">Sign me up</button></form></div></section>
@@ -4696,6 +4700,28 @@ window.hxLoad=async function(){if(H){return}if(busy)return;busy=true;try{const [
 (function(){const box=document.getElementById('xf');if(!box)return;
   [['Cavaliers','cavs','Official team account'],['cleveland.com Cavs','PDcavsinsider','cleveland.com coverage'],['Chris Fedor','chrisfedor','Beat writer'],['Ethan Sands','EjElite1','Beat writer, cleveland.com'],['Evan Dammarell','AmNotEvan','Beat writer'],['Fear The Sword','FearTheSword','SB Nation team site'],['RealCavsFans','realcavsfans','Recaps and analytics']]
   .forEach(([n,h,d])=>{const a=el('a','xfc');a.href='https://x.com/'+h;a.target='_blank';a.rel='noopener';a.append(el('b',null,n),el('span',null,'@'+h),el('small',null,d));box.appendChild(a)})})();
+
+/* Home: Chasing history. Cavs career totals (pdata/milestones.json, through last season) plus this season's regular-season box scores;
+   shows the three closest milestones on the points, rebounds and assists lists, and calls out a name passed in the latest game. */
+(function(){const box=document.getElementById('chase');if(!box)return;
+  Promise.all([fetch('/pdata/milestones.json').then(r=>r.json()),fetch('/box.json',{cache:'no-cache'}).then(r=>r.json()).catch(()=>({}))]).then(([M,BX])=>{
+    const F=M.franchise||{},P=M.players||{},K=[['PTS','Points',2],['REB','Rebounds',3],['AST','Assists',4]];
+    const reg=new Set(SCHEDULE.map(g=>g[0]));const days=Object.keys(BX).filter(d=>reg.has(d)&&BX[d].status==='final'&&(BX[d].box||[]).length).sort();const last=days[days.length-1];
+    const add={},addPrev={},gp={};days.forEach(d=>BX[d].box.forEach(r=>{const n=r[0];if(!(parseFloat(r[1])>0))return;gp[n]=(gp[n]||0)+1;K.forEach(([k,,i])=>{add[n]=add[n]||{};add[n][k]=(add[n][k]||0)+(+r[i]||0);if(d!==last){addPrev[n]=addPrev[n]||{};addPrev[n][k]=(addPrev[n][k]||0)+(+r[i]||0)}})}));
+    const now=n=>k=>((P[n]&&P[n].cavs&&P[n].cavs[k])||0)+((add[n]||{})[k]||0),prev=n=>k=>((P[n]&&P[n].cavs&&P[n].cavs[k])||0)+((addPrev[n]||{})[k]||0);
+    const cur=PLAYERS.map(p=>p[1]).filter(n=>P[n]);const rows=[],passed=[];
+    const fresh=last&&(Date.now()-Date.parse(last+'T12:00:00-05:00'))<36*36e5;
+    K.forEach(([k,lab])=>{const list=(F[k]||[]).map(([n,v])=>[n,P[n]&&cur.includes(n)?now(n)(k):v]);
+      cur.forEach(n=>{const v=now(n)(k),pv=prev(n)(k),g=((P[n].cavs||{}).GP||0)+(gp[n]||0);if(!v||!g)return;const others=list.filter(x=>x[0]!==n);
+        if(fresh)others.forEach(([o,ov])=>{if(pv<=ov&&v>ov)passed.push({n,o,lab,k})});
+        const above=others.filter(x=>x[1]>=v);if(!above.length)return;const tgt=above.reduce((a,b)=>b[1]<a[1]?b:a);const rank=above.length+1;
+        const need=tgt[1]-v+1,pace=v/g;if(rank>21)return;rows.push({n,lab,rank,tgt:tgt[0],need,games:Math.max(1,Math.ceil(need/pace))})})});
+    rows.sort((a,b)=>a.games-b.games||a.need-b.need);const ul=document.getElementById('chase-l');ul.textContent='';
+    passed.slice(0,2).forEach(x=>{const li=el('li','chc-pass');const w=el('div','chc-who');w.append(el('b',null,x.n),el('span',null,x.lab));li.append(w,el('div','chc-n',null));li.lastChild.innerHTML='<b>Passed</b> '+x.o+'<small>in the last game</small>';ul.appendChild(li)});
+    rows.slice(0,3).forEach(x=>{const li=el('li');const w=el('div','chc-who');const a=PP_ON&&onRoster(x.n)?(()=>{const a=el('a',null,x.n);a.href='/players/'+slug(x.n);a.dataset.go='players/'+slug(x.n);return a})():el('b',null,x.n);w.append(a,el('span',null,x.lab+' · '+ord(x.rank)+' all-time'));
+      const r=el('div','chc-n');r.append(el('b',null,x.need.toLocaleString()),' to pass '+x.tgt);r.appendChild(el('small',null,'about '+x.games+(x.games===1?' game':' games')+' at his pace'));li.append(w,r);ul.appendChild(li)});
+    if(ul.children.length){box.hidden=false;document.getElementById('chase-sub').textContent=days.length?'Through the last game':'Through '+String(M.through||'').replace('-','–')}
+  }).catch(()=>{})})();
 /* real page addresses: /cap, /roster, /media/rcf … Old #links still work and are rewritten to the new address. */
 function go(route){route=ROUTE_ALIAS[route]||route;const path=route==='home'?'/':'/'+route;if(location.protocol!=='file:'&&location.pathname!==path){try{history.pushState({p:route},'',path+location.search)}catch(_){}}show(route)}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-go]');if(!t||e.metaKey||e.ctrlKey||e.shiftKey)return;e.preventDefault();go(t.dataset.go)});
