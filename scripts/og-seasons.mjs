@@ -1,5 +1,5 @@
 // Share images for season pages: og/h/<YYYY-YY>.jpg (1200x630), used as the link preview for /history/<YYYY-YY>.
-// Past seasons never change, so each card is drawn once. Usage: node scripts/og-seasons.mjs [outDir] [season,season]
+// Also draws og/history.jpg for the History page. Past seasons never change, so each card is drawn once. Usage: node scripts/og-seasons.mjs [outDir] [season,season]
 import { readFile, stat, mkdir, writeFile, unlink } from 'node:fs/promises';
 const root = new URL('../', import.meta.url);
 const H = JSON.parse(await readFile(new URL('pdata/history.json', root), 'utf8'));
@@ -12,7 +12,7 @@ const TAG = { missed: 'Missed playoffs', playin: 'Play-in', round1: 'First round
 const seasons = H.seasons;
 const need = [];
 for (const [i, x] of seasons.entries()) { if (only && !only.includes(slug(x.s))) continue; if (only || !(await exists(new URL(slug(x.s) + '.jpg', out)))) need.push([i, x]); }
-if (!need.length) { console.log('og-seasons: nothing new'); process.exit(0); }
+if (!need.length && !(!only && !process.argv[2] && !(await exists(new URL('og/history.jpg', root))))) { console.log('og-seasons: nothing new'); process.exit(0); }
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const pw = (() => { for (const m of ['playwright-core', 'playwright']) { try { return require(m); } catch {} } return null; })();
@@ -50,7 +50,11 @@ const card = (i, x) => {
 <div class="f"><span>1970–71 &nbsp;·&nbsp; EVERY CAVS SEASON &nbsp;·&nbsp; ${esc(seasons.at(-1).s)}</span><span class="m">&gt; cavs<em>_db</em></span></div>
 </body></html>`; };
 const tmp = new URL('og/_season.html', root);
+const hist = new URL('og/history.jpg', root), drawHist = !only && !process.argv[2] && !(await exists(hist));
+const overview = () => { const W = seasons.reduce((a, x) => a + x.w, 0), Lo = seasons.reduce((a, x) => a + x.l, 0), po = seasons.filter(x => x.poLevel !== 'missed' && x.poLevel !== 'playin').length;
+  return card(seasons.length - 1, seasons.at(-1)).replace(/<div class="k">[\s\S]*<div class="st">/, `<div class="k"><b>THE CAVS</b>EVERY SEASON SINCE 1970</div><div class="s" style="font-size:120px;top:118px">${seasons.length} seasons</div><div class="r">${W}–${Lo}<em>ALL-TIME</em></div><div class="p">${po} playoff trips · ${seasons.filter(x => ['finals', 'title'].includes(x.poLevel)).length} NBA Finals · 2016 champions</div><div class="st">`).replace('outline:3px solid #F2B231;outline-offset:3px;', ''); };
 for (const [i, x] of need) { await writeFile(tmp, card(i, x)); await page.goto(tmp.href); await page.evaluate(() => document.fonts.ready); await page.waitForTimeout(100);
   await page.screenshot({ path: new URL(slug(x.s) + '.jpg', out).pathname, type: 'jpeg', quality: 86 }); }
+if (drawHist) { await writeFile(tmp, overview()); await page.goto(tmp.href); await page.evaluate(() => document.fonts.ready); await page.waitForTimeout(100); await page.screenshot({ path: hist.pathname, type: 'jpeg', quality: 86 }); }
 await unlink(tmp).catch(() => {});
-await browser.close(); console.log('og-seasons: drew', need.length);
+await browser.close(); console.log('og-seasons: drew', need.length + (drawHist ? ' + history' : ''));
