@@ -38,11 +38,23 @@ try { const HJ = JSON.parse(await readFile(new URL('pdata/history.json', root), 
       META['games/' + d + '-' + o.toLowerCase()] = (R[i] && sc) ? ['Cavs ' + sc.split('-')[0] + ', ' + nk + ' ' + sc.split('-')[1] + ' (' + dl + '): Box Score & Recap | cavs_db', 'Final: Cavaliers ' + sc.split('-')[0] + ', ' + CITY[o] + ' ' + nk + ' ' + sc.split('-')[1] + ' on ' + dl + '. Box score, top performers, postgame video and recap.']
         : ['Cavs ' + (ha === 'H' ? 'vs ' : 'at ') + nk + ', ' + dl + ': How to Watch, Preview & Injuries | cavs_db', 'Cavaliers ' + (ha === 'H' ? 'vs ' : 'at ') + CITY[o] + ' ' + nk + ' on ' + dl + ': tip time, TV and radio, tale of the tape, injuries and the season series.']; }); } }
 const esc = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
-await writeFile(new URL('home.html', root), html); // front page copy (served at / via _redirects)
+// Speed: the site's big stylesheet and main script move into two shared files (a/app.<hash>.css/.js) that the browser
+// caches once and reuses on every page, instead of re-downloading ~770 KB inline with each page. index.html stays the editable source.
+let shell = html;
+{ const { createHash: ch } = await import('node:crypto'); const { readdir, unlink } = await import('node:fs/promises');
+  const sm = html.match(/<style>([\s\S]*?)<\/style>/), jm = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].sort((x, y) => y[1].length - x[1].length)[0];
+  if (sm && jm && jm[1].length > 100000) {
+    const hc = ch('sha1').update(sm[1]).digest('hex').slice(0, 10), hj = ch('sha1').update(jm[1]).digest('hex').slice(0, 10);
+    await mkdir(new URL('a/', root), { recursive: true });
+    await writeFile(new URL(`a/app.${hc}.css`, root), sm[1]); await writeFile(new URL(`a/app.${hj}.js`, root), jm[1]);
+    for (const f of await readdir(new URL('a/', root))) if (/^app\.[0-9a-f]{10}\.(css|js)$/.test(f) && f !== `app.${hc}.css` && f !== `app.${hj}.js`) await unlink(new URL('a/' + f, root));
+    shell = html.replace(sm[0], () => `<link rel="stylesheet" href="/a/app.${hc}.css">`).replace(jm[0], () => `<script src="/a/app.${hj}.js"></script>`);
+  } }
+await writeFile(new URL('home.html', root), shell); // front page copy (served at / via _redirects)
 for (const [route, [title, desc]] of Object.entries(META)) {
   if (route === 'home') continue;
   const url = 'https://cavsdatabase.com/' + route;
-  let out = html
+  let out = shell
     .replace(/<title>[^<]*<\/title>/, `<title>${esc(title)}</title>`)
     .replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${esc(desc)}">`)
     .replace(/<link rel="canonical" href="[^"]*">/, `<link rel="canonical" href="${url}">`)
@@ -65,7 +77,7 @@ for (const [route, [title, desc]] of Object.entries(META)) {
 // embeddable widgets: /embed/cap and /embed/schedule (kept out of search; the main pages are canonical)
 await mkdir(new URL('embed/', root), { recursive: true });
 for (const [k, r] of [['cap', 'cap'], ['schedule', 'schedule']]) {
-  const e = html.replace('<head>', `<head>\n<script>window.CDB_EMBED='${k}'</script>\n<meta name="robots" content="noindex">`)
+  const e = shell.replace('<head>', `<head>\n<script>window.CDB_EMBED='${k}'</script>\n<meta name="robots" content="noindex">`)
     .replace(/<link rel="canonical" href="[^"]*">/, `<link rel="canonical" href="https://cavsdatabase.com/${r}">`);
   await writeFile(new URL('embed/' + k + '.html', root), e);
 }

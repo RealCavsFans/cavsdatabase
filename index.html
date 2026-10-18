@@ -4680,7 +4680,7 @@ window.renderSeason=function(sl){const v=document.getElementById('view-season');
        if(t.k==='trade')return['Trade with '+(t.w||[]).map(z=>TEAMS[z]||z).join(', '),'Got '+(t.got||[]).join(', ')+' · sent '+(t.sent||[]).join(', '),mo];return[t.t,'',mo]}).reverse()}
      else mv=((H.moves||{})[x.s]||[]).map(([h,dd,when])=>[h,dd,when]);
      if(mv.length){const d=sec('Key moves',y0>=2017?'From the Transactions page':'');kv(d,mv)}}
-   {const R=(H.rosters||{})[x.s];if(R&&R.length){const d=sec('Roster',R.length+' players · games played');const g=el('div','sp-ros');R.forEach(([n,id,gp])=>{const c=el('div');const a=PP_ON&&onRoster(n)&&y0now(x.s)?(()=>{const l=el('a','hx-bb',n);l.href='/players/'+slug(n);l.dataset.go='players/'+slug(n);return l})():(()=>{const l=el('a','hx-bb',n);l.href='https://www.basketball-reference.com/players/'+id[0]+'/'+id+'.html';l.target='_blank';l.rel='noopener';return l})();c.append(a,el('b',null,String(gp)));g.appendChild(c)});d.appendChild(g)}}
+   {const R=(H.rosters||{})[x.s];if(R&&R.length){const d=sec('Roster',R.length+' players · games played');const g=el('div','sp-ros');R.forEach(([n,id,gp])=>{const c=el('div');const a=PP_ON&&onRoster(n)&&y0now(x.s)?(()=>{const l=el('a','hx-bb',n);l.href='/players/'+slug(n);l.dataset.go='players/'+slug(n);return l})():!id?el('span',null,n):(()=>{const l=el('a','hx-bb',n);l.href='https://www.basketball-reference.com/players/'+id[0]+'/'+id+'.html';l.target='_blank';l.rel='noopener';return l})();c.append(a,el('b',null,String(gp)));g.appendChild(c)});d.appendChild(g)}}
    if(x.note){const d=sec('In one line');d.appendChild(el('p','sp-note',x.note))}
   }).catch(()=>{body.textContent='';body.appendChild(el('p','dim','Could not load this season.'))});
   return true};
