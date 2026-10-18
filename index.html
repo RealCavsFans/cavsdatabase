@@ -1497,7 +1497,6 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
     <div class="tx-stats" id="hx-stats"></div>
     <section id="hx-sea"><div class="block-h"><h2>Every season</h2><span>Tap a season</span></div>
       <div class="hx-leg" id="hx-leg"></div><div class="hx-grid" id="hx-grid"></div><div class="hx-det" id="hx-det" hidden></div></section>
-    <section id="hx-otd"><div class="block-h"><h2>On this day</h2><span id="hx-otd-d"></span></div><ul class="kv hx-otd" id="hx-otd-l"></ul></section>
     <section id="hx-ret"><div class="block-h"><h2>In the rafters</h2><span>Retired numbers</span></div><div class="hx-ban" id="hx-ban"></div></section>
     <section id="hx-lead"><div class="block-h"><h2>All-time leaders</h2><span id="hx-lead-n">With the Cavs</span></div><div class="segs" role="tablist" id="hx-lead-t"></div><ol class="hx-ol" id="hx-lead-l"></ol></section>
     <section id="hx-num"><div class="block-h"><h2>Who wore it</h2><span>Every number, every player</span></div>
@@ -4537,12 +4536,6 @@ function draw(){const $=id=>document.getElementById(id);
      const b=el('button','hx-s '+LV[x.poLevel][1]);b.type='button';b.setAttribute('aria-pressed','false');b.title=x.s+': '+x.w+'–'+x.l+', '+x.po;
      b.append(el('span',null,"'"+String(num(x.s)+1).slice(2)),el('b',null,x.w+'–'+x.l));if(x.poLevel==='title')b.appendChild(el('i',null,'★'));b.onclick=()=>open(x,b);row.appendChild(b)});
    const t=S.find(x=>x.poLevel==='title');open(t,[...g.querySelectorAll('button')][S.indexOf(t)])}
-  /* on this day */
-  {const now=new Date(new Date().toLocaleString('en-US',{timeZone:'America/New_York'}));const md=d=>String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-   const list=window.cdbFactsFor?window.cdbFactsFor(md(now)):[];
-   $('hx-otd-d').textContent=now.toLocaleDateString('en-US',{month:'long',day:'numeric'});const ul=$('hx-otd-l');ul.textContent='';
-   list.slice().sort((a,b)=>a.y-b.y).slice(0,8).forEach(f=>{const li=el('li');const sp=el('span',null,f.t+' ');if(f.u){const a=el('a','dlink',f.src+' ↗');a.href=f.u;a.target='_blank';a.rel='noopener';sp.appendChild(a)}li.append(el('b','hx-y',String(f.y)),sp);ul.appendChild(li)});
-   if(!list.length)ul.appendChild(el('li','dim','Nothing on file for this week yet.'))}
   /* retired numbers */
   {const b=$('hx-ban');b.textContent='';H.retired.slice().sort((a,c)=>+a[0]-+c[0]).forEach(([n,p,y])=>{const d=el('div','hx-bn');d.append(el('b',null,n),el('span',null,p),el('small',null,y?'Retired '+y:''));b.appendChild(d)})}
   /* leaders */

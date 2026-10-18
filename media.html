@@ -1204,11 +1204,53 @@ p.xo{display:grid;grid-template-columns:minmax(110px,max-content) 1fr;gap:2px 12
 .cnt .nw{white-space:nowrap}.cap-leg{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;margin:8px 0;font-size:13px;color:var(--muted)}.cap-leg .lg{white-space:nowrap;margin:0!important}
 span.gt{width:fit-content;max-width:100%}
 #ch-pipe a{color:var(--fg);text-decoration:none}@media(min-width:1100px){.det-grid{grid-template-columns:repeat(4,minmax(0,1fr));max-width:1280px;grid-auto-flow:row dense}.det-grid .wide,.det-grid .b2{grid-column:span 2}.det-grid .pp-capl,.det-grid .wide.note{grid-column:1/-1}.mcbox{max-width:min(1180px,calc(100vw - 80px));display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:0 40px;align-items:start}}#ch-pipe a:hover{color:var(--wine-ink);text-decoration:underline}
+#view-history section{margin-top:28px}
+.hx-leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted);margin:0 0 10px}.hx-leg span{display:inline-flex;align-items:center;gap:6px}.hx-leg i{width:12px;height:12px;display:inline-block}
+.hx-l0,.hx-s.hx-l0{background:var(--line2);color:var(--muted)}.hx-l1,.hx-s.hx-l1{background:color-mix(in srgb,#860038 12%,var(--card));color:var(--fg)}.hx-l2,.hx-s.hx-l2{background:color-mix(in srgb,#860038 26%,var(--card));color:var(--fg)}
+.hx-l3,.hx-s.hx-l3{background:color-mix(in srgb,#860038 50%,var(--card));color:var(--fg)}.hx-l4,.hx-s.hx-l4{background:color-mix(in srgb,#860038 74%,var(--card));color:#fff}.hx-l5,.hx-s.hx-l5{background:#860038;color:#fff}.hx-l6,.hx-s.hx-l6{background:#F2B231;color:#101419}
+.hx-grid{display:grid;grid-template-columns:52px 1fr;gap:6px 10px;align-items:center}
+.hx-dec{font:800 14px var(--cond);color:var(--muted)}
+.hx-row{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:4px}
+.hx-s{all:unset;cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:46px;font:600 10px var(--mono);line-height:1.15;text-align:center;box-sizing:border-box}
+.hx-s b{font:800 13px var(--cond)}.hx-s i{position:absolute;top:1px;right:3px;font-style:normal;font-size:10px}
+.hx-s[aria-pressed="true"]{outline:2.5px solid var(--fg);outline-offset:1px;z-index:1}
+.hx-s:hover{transform:translateY(-1px)}
+.hx-det{margin-top:14px;background:var(--card);border:1px solid var(--line);padding:12px 14px}
+.hx-dh{display:flex;align-items:center;gap:10px;margin:0 0 8px}.hx-dh b{font:800 22px var(--cond)}.hx-tag{font:800 10.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:3px 7px}
+.hx-dl{display:grid;grid-template-columns:90px 1fr;gap:5px 12px;margin:0;font-size:13.5px}.hx-dl dt{font:800 10.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:2px}.hx-dl dd{margin:0}
+.hx-note{font-size:13px;color:var(--fg2);margin:10px 0 6px;line-height:1.5}
+.hx-otd li{justify-content:flex-start;align-items:baseline}.hx-otd .hx-y{font:700 13px var(--mono);min-width:44px;color:var(--wine-ink)}
+.hx-ban{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.hx-bn{background:#860038;color:#fff;text-align:center;padding:12px 4px 16px;clip-path:polygon(0 0,100% 0,100% 88%,50% 100%,0 88%);display:flex;flex-direction:column;gap:2px}
+.hx-bn b{font:800 34px/1 var(--cond);color:#F2B231}.hx-bn span{font:700 11.5px/1.2 var(--sans)}.hx-bn small{font:600 10px var(--mono);opacity:.75}
+.hx-ol{list-style:none;margin:10px 0 0;padding:0;max-width:560px}.hx-ol li{display:grid;grid-template-columns:28px 1fr auto;gap:8px;padding:7px 0;border-bottom:1px solid var(--line2);font-size:14px}.hx-ol i{font:700 12px var(--mono);font-style:normal;color:var(--muted)}.hx-ol b{font:700 13.5px var(--mono)}
+.hx-ol a{color:var(--fg)}.hx-now span,.hx-now a{font-weight:700}.hx-now b{color:var(--wine-ink)}
+#hx-q{width:100%;max-width:340px;margin:0 0 10px}
+.hx-nums{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 12px}.hx-nums button{all:unset;cursor:pointer;font:700 12px var(--mono);padding:4px 6px;min-width:26px;text-align:center;border:1px solid var(--line);background:var(--card)}
+.hx-nums button.hx-rn{border-color:#860038;color:var(--wine-ink)}.hx-nums button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+#hx-wore{max-width:560px}.hx-retl span{color:var(--wine-ink);font-weight:700}
+.hx-chk{display:inline-flex;align-items:center;gap:6px;font-size:13px}
+table.hx-t{min-width:0!important;width:100%;border-collapse:collapse;font-size:13.5px}.hx-t th{text-align:left;font:700 11px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:6px 10px 6px 0;border-bottom:1px solid var(--line)}
+.hx-t td{padding:7px 10px 7px 0;border-bottom:1px solid var(--line2);vertical-align:top}.hx-t .r{text-align:right}.hx-t .m{font-family:var(--mono);font-size:12.5px;white-space:nowrap}.hx-t small{display:block;color:var(--muted);font-size:11.5px}
+.hx-cle{display:inline-block;margin-left:8px;font:800 9.5px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--wine-ink);border:1px solid currentColor;padding:1px 4px;vertical-align:1px}
+#hx-stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}@media (max-width:720px){#hx-stats{grid-template-columns:repeat(2,minmax(0,1fr))}#hx-stats .txs:first-child{grid-column:1/-1}.hx-grid{grid-template-columns:1fr;gap:4px}.hx-dec{margin-top:6px}.hx-row{grid-template-columns:repeat(5,minmax(0,1fr))}.hx-ban{grid-template-columns:repeat(4,minmax(0,1fr))}.hx-t th:nth-child(4),.hx-t td:nth-child(4){display:none}#hx-coach .hx-t td:nth-child(4),#hx-coach .hx-t th:nth-child(4){display:table-cell}}
+
+#covers .cov-h{margin:0 0 4px;font:800 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}#covers .kv li{align-items:baseline}#covers .kv li>span>a{color:var(--fg);font-weight:700;text-decoration:none}#covers small{display:block;color:var(--muted);font-size:12.5px;line-height:1.4;margin-top:2px}#covers .cov-t{color:var(--fg2)}#covers .cov-d{font:600 12px var(--mono);color:var(--muted);white-space:nowrap}
+.sm27{margin-top:26px}.sm-card{background:var(--card);border:1px solid var(--line);padding:14px 16px}
+.sm-big{font:800 26px/1.05 var(--cond);text-transform:uppercase;margin:0 0 4px}.sm-big em{font-style:normal;color:var(--wine-ink)}.sm-sub2{color:var(--muted);font-size:13px;margin:0 0 6px;max-width:80ch}
+.sm-meter{position:relative;height:34px;margin:30px 0 32px;background:var(--line2)}.sm-meter .f{position:absolute;inset:0 auto 0 0;background:#860038}.sm-meter .o{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(45deg,#860038 0 4px,transparent 4px 8px);opacity:.8}
+.sm-meter .ln{position:absolute;top:-22px;bottom:-22px;border-left:1.5px solid var(--fg)}.sm-meter .ln b,.sm-meter .ln i{position:absolute;left:4px;font:700 10.5px var(--sans);font-style:normal;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}.sm-meter .ln b{top:0}.sm-meter .ln i{bottom:0}.sm-meter .ln.l b,.sm-meter .ln.l i{left:auto;right:4px}
+.sm-leg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:0 0 12px}.sm-leg span{display:inline-flex;align-items:center;gap:6px}.sm-leg i{width:14px;height:10px;background:#860038}.sm-leg i.o{background:repeating-linear-gradient(45deg,#860038 0 3px,transparent 3px 6px)}
+.sm-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 14px}.sm-stats div{border:1px solid var(--line);padding:9px 10px}.sm-stats b{display:block;font:800 22px var(--cond)}.sm-stats span{font-size:12px;color:var(--muted)}
+.sm-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}.sm-cols h4{margin:8px 0 4px;font:800 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.sm-cols .kv small{display:block;color:var(--muted);font-size:12px}.sm-cols .kv b{font:700 12.5px var(--mono);white-space:nowrap}.sm-cols b.sm-y{font:800 11px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--wine-ink)}.sm-cols b.sm-n{font:800 11px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.sm-note{font-size:12px;color:var(--muted);margin:12px 0 0}
+@media (max-width:720px){.sm-stats{grid-template-columns:1fr 1fr}.sm-cols{grid-template-columns:1fr}.sm-big{font-size:23px}}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 17px var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
 <script>/* OneSignal web push for alerts: loads only on the live site, never prompts on its own */
 if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async function(OneSignal){await OneSignal.init({appId:"3db75ca9-d797-40c7-8c53-c0711b41e956",serviceWorkerPath:"sw.js",serviceWorkerParam:{scope:"/"},notifyButton:{enable:false},promptOptions:{slidedown:{prompts:[]}}})});const s=document.createElement('script');s.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';s.defer=true;document.head.appendChild(s)}</script>
+<script type="application/ld+json" id="ld-page">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://cavsdatabase.com/media#page","url":"https://cavsdatabase.com/media","name":"Cavs Press Conferences, Highlights & Articles | cavs_db","description":"The latest Cavs press conferences and highlights from the team’s YouTube channel, plus articles and recaps from RealCavsFans.com.","isPartOf":{"@id":"https://cavsdatabase.com/#site"},"inLanguage":"en-US","dateModified":"2026-10-18","primaryImageOfPage":{"@type":"ImageObject","url":"https://cavsdatabase.com/og/media.jpg"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://cavsdatabase.com/"},{"@type":"ListItem","position":2,"name":"Media","item":"https://cavsdatabase.com/media"}]}]}</script>
 </head>
 <body>
 <header class="gbar"><div class="wrap gin">
@@ -1224,7 +1266,7 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
 
 </div></header>
 
-<main id="view-home">
+<main id="view-home" hidden>
   <div class="wrap home">
     <div class="col">
       <section class="gdm" id="gdm" hidden aria-live="polite"></section>
@@ -1327,6 +1369,7 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
     </table></div>
     <p class="dim cap-note" style="margin:-8px 0 0;font-size:13px">Tap a player for his contract, guarantees, Bird rights and free agency.</p><div class="cap-leg"><span class="lg po">Player option</span><span class="lg to">Team option</span><span class="lg ext">Extension eligible</span><span class="lg nf">Note for this season</span></div><p class="dim cap-note" style="margin:0;font-size:13px">Committed salary only; future years rise as the roster fills.<br><b style="color:var(--wine-ink)">*</b> Thresholds for 2027–28 and later are Spotrac projections, not official figures. The NBA sets each season's cap and tax lines the summer before, and they move with league revenue.</p>
     <div class="begm"><b>Be the GM</b><a href="https://bball-gm.com" target="_blank" rel="noopener">bball-GM trade machine ↗</a><a href="https://www.spotrac.com/nba/trade-machine" target="_blank" rel="noopener">Spotrac trade machine ↗</a></div>
+    <section id="summer" class="sm27"><div class="block-h"><h2 id="sm-h">Next summer</h2><span id="sm-sub"></span></div><div class="sm-card" id="sm-b"></div></section>
     <section class="aprons" aria-labelledby="ap-h">
       <div class="block-h"><h2 id="ap-h">What each apron allows</h2><span id="ap-sub">Cavs column highlighted</span></div>
       <div class="aptbox"><table class="apt" id="apt"><thead><tr><th></th><th>Under the cap</th><th>Over the cap<small>incl. tax</small></th><th>Over 1st apron</th><th>Over 2nd apron</th></tr></thead><tbody><tr><th scope="row">Sign free agents with cap space</th><td class="y">✓</td><td class="n">✕</td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Room mid-level exception</th><td class="y">✓<small>after using space</small></td><td class="n">✕</td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Non-taxpayer mid-level exception</th><td class="na">—</td><td class="y">✓<small>hard caps at 1st apron</small></td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Taxpayer mid-level exception</th><td class="na">—</td><td class="na">—</td><td class="y">✓<small>hard caps at 2nd apron</small></td><td class="n">✕</td></tr><tr><th scope="row">Bi-annual exception</th><td class="na">—</td><td class="y">✓<small>hard caps at 1st apron</small></td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Take back more salary than they send in a trade</th><td class="y">✓<small>into cap space</small></td><td class="y">✓<small>up to 200% / 125% + $250K</small></td><td class="n">✕<small>100% max</small></td><td class="n">✕<small>100% max</small></td></tr><tr><th scope="row">Combine several players’ salaries in one trade</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">✕</td></tr><tr><th scope="row">Send cash in a trade</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">✕</td></tr><tr><th scope="row">Acquire a player in a sign-and-trade</th><td class="y">✓</td><td class="y">✓<small>hard caps at 1st apron</small></td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Use a trade exception created during this season</th><td class="y">✓</td><td class="y">✓</td><td class="n">✕<small>not until the season ends</small></td><td class="n">✕<small>not until the season ends</small></td></tr><tr><th scope="row">Sign a bought out player who earned more than the non-taxpayer MLE</th><td class="y">✓</td><td class="y">✓</td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Trade the first round pick seven years out</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">✕<small>frozen if over at season’s end</small></td></tr></tbody></table></div>
@@ -1406,7 +1449,23 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
   </div>
 </main>
 
-<main id="view-video" hidden>
+<main id="view-video">
+  <div class="wrap page">
+    <div>
+      <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Media</div>
+      <h1 style="margin-top:6px">Media</h1>
+      <p class="dim vdesc" style="margin:6px 0 0"><span>Press conferences, practice availability and the latest from the official Cavs channel.</span> <a href="https://www.youtube.com/@cavs" target="_blank" rel="noopener">Cavs YouTube channel ↗</a></p>
+    </div>
+    <div id="vid-page"><section><div class="block-h"><h2>Latest uploads</h2></div><div class="vgrid"><div class="vcard"><div class="vthumb"><img src="https://i.ytimg.com/vi/y2WQ-Y0awZM/hqdefault.jpg" alt="" loading="lazy"><button class="vplay" type="button" aria-label="Play: Admin can’t play the audio to this video, but here’s our Rookies singing!"><span></span></button></div><b>Admin can’t play the audio to this video, but here’s our Rookies singing!</b><small>Oct 17, 2026</small></div><div class="vcard"><div class="vthumb"><img src="https://i.ytimg.com/vi/AUtEzyfH6tI/hqdefault.jpg" alt="" loading="lazy"><button class="vplay" type="button" aria-label="Play: Player Intros from inside the Cavs United Wine &amp; Gold Scrimmage! #LetEmKnow"><span></span></button></div><b>Player Intros from inside the Cavs United Wine &amp; Gold Scrimmage! #LetEmKnow</b><small>Oct 17, 2026</small></div><div class="vcard"><div class="vthumb"><img src="https://i.ytimg.com/vi/1RZJ-XZppJo/hqdefault.jpg" alt="" loading="lazy"><button class="vplay" type="button" aria-label="Play: 🫡 LEAVE IT TO COACH! #LetEmKnow"><span></span></button></div><b>🫡 LEAVE IT TO COACH! #LetEmKnow</b><small>Oct 17, 2026</small></div><div class="vcard"><div class="vthumb"><img src="https://i.ytimg.com/vi/k04bb99-Ux4/hqdefault.jpg" alt="" loading="lazy"><button class="vplay" type="button" aria-label="Play: Spida welcomes Cavs fans to our annual Wine &amp; Gold Scrimmage in front of a packed Cavs United crowd!"><span></span></button></div><b>Spida welcomes Cavs fans to our annual Wine &amp; Gold Scrimmage in front of a packed Cavs United crowd!</b><small>Oct 17, 2026</small></div><div class="vcard"><div class="vthumb"><img src="https://i.ytimg.com/vi/nXqfEeTeBKY/hqdefault.jpg" alt="" loading="lazy"><button class="vplay" type="button" aria-label="Play: Cavs Practice | Donovan Mitchell Media Availability | 10.16.2026"><span></span></button></div><b>Cavs Practice | Donovan Mitchell Media Availability | 10.16.2026</b><small>Oct 16, 2026</small></div></div><button class="vmore" type="button">Show 3 more</button></section><section><div class="block-h"><h2>Highlights</h2></div><div class="vgrid"><div class="vcard"><div class="vthumb"><img src="https://i.ytimg.com/vi/nvxkegSIwm0/hqdefault.jpg" alt="" loading="lazy"><button class="vplay" type="button" aria-label="Play: Highlights from the first half of preseason action! #LetEmKnow #Cavs #NBA #Shorts"><span></span></button></div><b>Highlights from the first half of preseason action! #LetEmKnow #Cavs #NBA #Shorts</b><small>Oct 8, 2026</small></div></div></section><section><div class="block-h"><h2>Practice &amp; shootaround</h2></div><div class="vgrid"><div class="vcard"><div class="vthumb"><img src="https://i.ytimg.com/vi/nXqfEeTeBKY/hqdefault.jpg" alt="" loading="lazy"><button class="vplay" type="button" aria-label="Play: Cavs Practice | Donovan Mitchell Media Availability | 10.16.2026"><span></span></button></div><b>Cavs Practice | Donovan Mitchell Media Availability | 10.16.2026</b><small>Oct 16, 2026</small></div><div class="vcard"><div class="vthumb"><img src="https://i.ytimg.com/vi/JqwPbmX5_PI/hqdefault.jpg" alt="" loading="lazy"><button class="vplay" type="button" aria-label="Play: Cavs Practice | Kenny Atkinson Media Availability | 10.16.2026"><span></span></button></div><b>Cavs Practice | Kenny Atkinson Media Availability | 10.16.2026</b><small>Oct 16, 2026</small></div><div class="vcard"><div class="vthumb"><img src="https://i.ytimg.com/vi/ygOSsOJDE68/hqdefault.jpg" alt="" loading="lazy"><button class="vplay" type="button" aria-label="Play: Cavs Practice | Mario Hezonja Media Availability | 10.10.2026"><span></span></button></div><b>Cavs Practice | Mario Hezonja Media Availability | 10.10.2026</b><small>Oct 10, 2026</small></div><div class="vcard"><div class="vthumb"><img src="https://i.ytimg.com/vi/dpN1AlcKTm4/hqdefault.jpg" alt="" loading="lazy"><button class="vplay" type="button" aria-label="Play: Cavs Practice | Jarrett Allen Media Availability | 10.10.2026"><span></span></button></div><b>Cavs Practice | Jarrett Allen Media Availability | 10.10.2026</b><small>Oct 10, 2026</small></div><div class="vcard"><div class="vthumb"><img src="https://i.ytimg.com/vi/kcqKY1YspmI/hqdefault.jpg" alt="" loading="lazy"><button class="vplay" type="button" aria-label="Play: Cavs Practice | Kenny Atkinson Media Availability | 10.10.2026"><span></span></button></div><b>Cavs Practice | Kenny Atkinson Media Availability | 10.10.2026</b><small>Oct 10, 2026</small></div></div><button class="vmore" type="button">Show 3 more</button></section></div>
+    <p class="dim" style="margin:0;font-size:13px">All video from the Cleveland Cavaliers' official YouTube channel.</p>
+    <div id="articles" class="art-h"><h2>Articles &amp; recaps</h2><p class="dim" style="margin:4px 0 0">From RealCavsFans.com and @realcavsfans on X.</p></div>
+    <section id="covers" style="margin-top:28px"><div class="block-h"><h2>Who covers the Cavs</h2><span>Newest from each</span></div><div class="cols cov-cols"><section><h3 class="cov-h">Daily coverage</h3><ul class="kv" id="cov-a"><li><span><a href="https://www.hoopsrumors.com/cleveland-cavaliers" target="_blank" rel="noopener">Hoops Rumors</a><small>Transactions and rumors · <a class="cov-t" href="https://www.hoopsrumors.com/2026/10/cavs-nuggets-pistons-waive-exhibit-10-players.html" target="_blank" rel="noopener">Cavs, Nuggets, Pistons Waive Exhibit 10 Players</a></small></span><b class="cov-d">Oct 17</b></li><li><span><a href="https://www.fearthesword.com" target="_blank" rel="noopener">Fear The Sword</a><small>SB Nation team site · <a class="cov-t" href="https://www.fearthesword.com/cavs-scores-results/53185/evan-mobley-impresses-in-cavs-annual-wine-gold-scrimmage" target="_blank" rel="noopener">Evan Mobley impresses in Cavs annual Wine &amp; Gold scrimmage</a></small></span><b class="cov-d">Oct 17</b></li><li><span><a href="https://www.si.com/nba/cavaliers" target="_blank" rel="noopener">Cavaliers on SI</a><small>Sports Illustrated team site · <a class="cov-t" href="https://news.google.com/rss/articles/CBMirwFBVV95cUxONHozVldIMkpCVnVUM19vei1GQjlKMV9rTG1ZTkZXYWJPNzB3RGdaRWV2MElRVGRqSmJwMFhMZXpGcDFWZ2pjemhKb0dGUEhQVURsRTV0RkVfYmNhTkVob2NhcGhydWhBdUNmcnVUU3FZNl9TVHA5WWM4UldhVy1UMzZac04zQWxVTU5qSUQtYmI1cVlXRjVyWVFodXRVQXhSc0FVOVFhc3ZRbVJsVkxr?oc=5" target="_blank" rel="noopener">Cleveland Big Man Gives His Personal All-Time Starting Five</a></small></span><b class="cov-d">Oct 17</b></li><li><span><a href="https://www.cleveland.com/cavs/" target="_blank" rel="noopener">cleveland.com</a><small>Beat writers at every game · <a class="cov-t" href="https://news.google.com/rss/articles/CBMiqwFBVV95cUxPalZFbDROdFFHSTJLV0x1Zks1UXE3MWtEd1RULWRqWGxZVUlobmVHXzdzM0N6WnRRQ0h5TUI2VlNyaWl4WWx1MWxEbHo2M3AwTDBxVkFuVmhuQ0w4VkZiZXcwNEtuLUlzcDJYdFpBTjZ1aDI3dXVpbDBUWXNlUG1IOVJiRnI3MDYxWThGVU44OEdwMHR1NjVzNFFwdU9aYXVMdWNmRUt5bDd1Yk0?oc=5" target="_blank" rel="noopener">Donovan Mitchell fiercely defends Evan Mobley after latest snub</a></small></span><b class="cov-d">Oct 16</b></li></ul></section><section><h3 class="cov-h">Podcasts &amp; shows</h3><ul class="kv" id="cov-p"><li><span><a href="https://www.youtube.com/watch?v=e9Mfaj-TUAU" target="_blank" rel="noopener">Locked On Cavs</a><small><a class="cov-t" href="https://www.youtube.com/watch?v=e9Mfaj-TUAU" target="_blank" rel="noopener">REACTION: Evan Mobley And Peyton Watson STAND OUT In Cleveland Cavaliers Wine &amp; Gold Scrimmage!</a></small></span><b class="cov-d">Oct 17</b></li><li><span><a href="https://www.youtube.com/watch?v=wPzu5FiLBGA" target="_blank" rel="noopener">It's Cavalier Podcast</a><small><a class="cov-t" href="https://www.youtube.com/watch?v=wPzu5FiLBGA" target="_blank" rel="noopener">Evan Mobley - Fadeaway Jumpers</a></small></span><b class="cov-d">Oct 16</b></li><li><span><a href="https://www.youtube.com/watch?v=Zs_JF-41_U4" target="_blank" rel="noopener">Fear The Fro</a><small><a class="cov-t" href="https://www.youtube.com/watch?v=Zs_JF-41_U4" target="_blank" rel="noopener">The 2026 Cavs Agenda Draft</a></small></span><b class="cov-d">Oct 16</b></li><li><span><a href="https://pdst.fm/e/traffic.megaphone.fm/ADLM7185587882.mp3" target="_blank" rel="noopener">Wine and Gold Talk</a><small><a class="cov-t" href="https://pdst.fm/e/traffic.megaphone.fm/ADLM7185587882.mp3" target="_blank" rel="noopener">Are the Cavs under more pressure to win now than any NBA team?</a></small></span><b class="cov-d">Oct 15</b></li><li><span><a href="https://www.youtube.com/watch?v=uOAwdloXJ0Y" target="_blank" rel="noopener">The Chase Down Podcast</a><small><a class="cov-t" href="https://www.youtube.com/watch?v=uOAwdloXJ0Y" target="_blank" rel="noopener">Chase Down Podcast Live: Cavs Wrap Up Preseason Slate</a></small></span><b class="cov-d">Oct 14</b></li></ul></section></div></section>
+    <div class="rcf-cols">
+      <section><div class="block-h"><h2>RealCavsFans.com</h2><a href="https://realcavsfans.com/index.php?forums/FrontPage/" target="_blank" rel="noopener">Front page ↗</a></div><div class="rcf-list" id="rcf-list"><a class="rcf-card" href="https://realcavsfans.com/index.php?threads/five-questions-that-will-define-the-cavs-season.54205/" target="_blank" rel="noopener"><img src="https://cdn.realcavsfans.com/data/attachments/42/42878-f6a62cd3fcee7e3132ed384bd9828c6d.jpg?hash=R334vHs0vP" alt="Five Questions That Will Define The Cavs Season" loading="lazy"><div class="rcf-t"><b>Five Questions That Will Define The Cavs Season</b><span class="rcf-m">Oct 14, 2026 · Smooth</span><p>1. Can Nae'Qwan Tomlin ascend? Thomas Bryant re-signed and Khalifa Diop was brought over. Otherwise, no additions of size were added to the frontcourt. Peyton Watson and Mario Hezonja , along with Jaylon Tyson , will…</p></div></a><a class="rcf-card" href="https://realcavsfans.com/index.php?threads/rcf-recap-cavs-lose-their-magic-116-132.54206/" target="_blank" rel="noopener"><img src="https://cdn.realcavsfans.com/data/attachments/42/42950-7c7a11d47770e80fd7626d7d2be91820.jpg?hash=y3oNPgftbF" alt="RCF Recap: Cavs lose their Magic, 116-132" loading="lazy"><div class="rcf-t"><b>RCF Recap: Cavs lose their Magic, 116-132</b><span class="rcf-m">Oct 13, 2026 · Smooth</span><p>FULL BOX SCORE It's over?: If it's any indication of how this one went, the fact that "it's over" is a highlight should speak volumes. The Cavs were down 20 by half. The starters got burnt. Some of the same defensive…</p></div></a><a class="rcf-card" href="https://realcavsfans.com/index.php?threads/rcf-recap-cavs-defeat-magic-notch-first-preseason-win.54203/" target="_blank" rel="noopener"><img src="https://cdn.realcavsfans.com/data/attachments/42/42851-ae62d65940a4bac84664177d87b29761.jpg?hash=P67N_m_rUT" alt="RCF Recap: Cavs defeat Magic, notch first preseason win" loading="lazy"><div class="rcf-t"><b>RCF Recap: Cavs defeat Magic, notch first preseason win</b><span class="rcf-m">Oct 11, 2026 · Smooth</span><p>FULL BOX SCORE Rotations: They looked good. It also helps when more of your regulars are playing ( James Harden returned) to balance the lineup. Kenny Atkinson went to Sam Merrill and Jaylon Tyson as the first two…</p></div></a><a class="rcf-card" href="https://realcavsfans.com/index.php?threads/rcf-recap-cavs-fall-in-preseason-opener.54194/" target="_blank" rel="noopener"><img src="https://cdn.realcavsfans.com/data/attachments/42/42734-dd04a79ba0348c5fd80e17c379712837.jpg?hash=ISTXL41J_g" alt="RCF Recap: Cavs Fall In Preseason Opener" loading="lazy"><div class="rcf-t"><b>RCF Recap: Cavs Fall In Preseason Opener</b><span class="rcf-m">Oct 8, 2026 · Smooth</span><p>Craig Porter Jr's playmaking: In a battle for the backup PG spot, CPJ stood out -- 10 assists, 0 turnovers with those 10 assists leading to 24 points and 6 of the assists coming at the rim . With Dennis Schroder out…</p></div></a><a class="rcf-card" href="https://realcavsfans.com/index.php?threads/cavs-tetris-finding-the-lineup-fits.54191/" target="_blank" rel="noopener"><img src="https://cdn.realcavsfans.com/data/attachments/42/42660-b78f9b1134adcc29479eed6b6c46696c.jpg?hash=E2UJ5G7gQY" alt="Cavs Tetris: Finding The Lineup Fits" loading="lazy"><div class="rcf-t"><b>Cavs Tetris: Finding The Lineup Fits</b><span class="rcf-m">Oct 6, 2026 · Smooth</span><p>If it's not playcalls or timeout usage, lineup combinations are usually next in line for coaching criticisms. And thanks to copious amounts of free, readily available lineup data, it only furthers those commentaries…</p></div></a><a class="rcf-card" href="https://realcavsfans.com/index.php?threads/return-of-the-diop.54181/" target="_blank" rel="noopener"><img src="https://cdn.realcavsfans.com/data/attachments/42/42452-77925fcc6a4cf04dbdb680ebd758e724.jpg?hash=jRstAVMc8A" alt="Return Of The Diop" loading="lazy"><div class="rcf-t"><b>Return Of The Diop</b><span class="rcf-m">Sep 26, 2026 · Smooth</span><p>DeSagna Diop was drafted 8th overall in 2001 in the same draft that brought Brendan Haywood . (It's also the same year Cavaliers legend Richard Jefferson was drafted.) Diop was a Cavs meme before memes were a thing,…</p></div></a><a class="rcf-card" href="https://realcavsfans.com/index.php?threads/peyton-watson-missing-piece-or-missing-pieces.54152/" target="_blank" rel="noopener"><img src="https://cdn.realcavsfans.com/data/attachments/41/41931-ba387a6f715e1aaa35e2e3a0ba1b7b4c.jpg?hash=aQXwoxWa86" alt="Peyton Watson: Missing Piece or Missing Pieces?" loading="lazy"><div class="rcf-t"><b>Peyton Watson: Missing Piece or Missing Pieces?</b><span class="rcf-m">Sep 4, 2026 · Smooth</span><p>The Cavs got their starting small forward represented by Klutch Sports… just maybe not the one most fans thought of at the start of the offseason. It took a while, but late offseason trades have become a bit of a…</p></div></a><a class="rcf-card" href="https://realcavsfans.com/index.php?threads/mario-hezonja-the-croatian-sensation-in-cleveland.54114/" target="_blank" rel="noopener"><img src="https://cdn.realcavsfans.com/data/attachments/41/41041-84cde15468b0a32fdbcb92555975d928.jpg?hash=-kaXzMwUdp" alt="Mario Hezonja: The Croatian Sensation in Cleveland" loading="lazy"><div class="rcf-t"><b>Mario Hezonja: The Croatian Sensation in Cleveland</b><span class="rcf-m">Aug 4, 2026 · Smooth</span><p>They say sequels are never as good as the original, and the Cavs are hoping they're wrong. After a six year lay off from the NBA, bouncing around Europe from Panathinaikos, UNICS and finally Real Madrid, Hezonja got…</p></div></a><a class="rcf-card" href="https://realcavsfans.com/index.php?threads/draft-profile-meet-meleek.54081/" target="_blank" rel="noopener"><img src="https://cdn.realcavsfans.com/data/attachments/39/39958-bc659e671de6724170dd9e9c99d8a064.jpg?hash=mxetUzQjDm" alt="Draft Profile: Meet Meleek" loading="lazy"><div class="rcf-t"><b>Draft Profile: Meet Meleek</b><span class="rcf-m">Jul 5, 2026 · Smooth</span><p>In his press conference following their selection of Arkansas freshmen guard Meleek Thomas at 34, President of Basketball Operations Koby Altman feverishly shook his head when asked if the Cavs would have considered…</p></div></a><a class="rcf-card" href="https://realcavsfans.com/index.php?threads/evaluating-a-new-keon-ellis-contract.54055/" target="_blank" rel="noopener"><img src="https://cdn.realcavsfans.com/data/attachments/39/39390-1936deaa1de4b4a580a97727e1e7248d.jpg?hash=e5r5WF7X3V" alt="Evaluating A New Keon Ellis Contract" loading="lazy"><div class="rcf-t"><b>Evaluating A New Keon Ellis Contract</b><span class="rcf-m">Jun 7, 2026 · Smooth</span><p>As each Cavalier contract is up the question always is: What are they worth? RealCavsFans has developed a methodology over the years to project contracts based on comparable players and their deals on the open…</p></div></a><a class="rcf-card" href="https://realcavsfans.com/index.php?threads/rcf-recap-the-end-is-here-as-cavs-fall-93-130.54046/" target="_blank" rel="noopener"><img src="https://cdn.realcavsfans.com/data/attachments/39/39171-1726d92d5b21ca8439bfcb2a8549f3b1.jpg?hash=EMOYHqbWO3" alt="RCF Recap: The end is here as Cavs fall, 93-130" loading="lazy"><div class="rcf-t"><b>RCF Recap: The end is here as Cavs fall, 93-130</b><span class="rcf-m">May 26, 2026 · Smooth</span><p>Game Summary The season came to an end much in a way it started -- a team that had the potential for more, leaving you wanting more but also wanting to watch less based on their inconsistent ways and bad habits.…</p></div></a><a class="rcf-card" href="https://realcavsfans.com/index.php?threads/whams-game-preview-rd3-g4-cavs-vs-knicks.54040/" target="_blank" rel="noopener"><img src="https://cdn.realcavsfans.com/data/attachments/39/39105-353fe7b47c72372eb373295650103ede.jpg?hash=ITQrwePMbZ" alt="Wham's Game Preview RD3, G4: Cavs vs Knicks" loading="lazy"><div class="rcf-t"><b>Wham's Game Preview RD3, G4: Cavs vs Knicks</b><span class="rcf-m">May 24, 2026 · Smooth</span><p>Game Preview Only question left is will this be a sweep or a gentleman’s sweep. The Knicks are clearly the better team and the more rested team. In the first two rounds the Knicks played 10 games to the Cavs’ 14.…</p></div></a></div><a class="rcf-more" href="https://realcavsfans.com/index.php?forums/FrontPage/" target="_blank" rel="noopener">More on RealCavsFans.com →</a></section>
+      <section><div class="block-h"><h2>On X</h2><a href="https://x.com/realcavsfans" target="_blank" rel="noopener">@realcavsfans ↗</a></div><div class="rcf-x" id="rcf-x"><a class="xcard" href="https://x.com/realcavsfans" target="_blank" rel="noopener"><b>@realcavsfans</b><span>RealCavsFans.com on X · graphics, analysis and game-night posts</span><em>Open on X ↗</em></a></div></section>
+    </div>
+  </div>
+</main><template id="pre-tpl" data-view="view-video">
   <div class="wrap page">
     <div>
       <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Media</div>
@@ -1416,12 +1475,13 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
     <div id="vid-page"></div>
     <p class="dim" style="margin:0;font-size:13px">All video from the Cleveland Cavaliers' official YouTube channel.</p>
     <div id="articles" class="art-h"><h2>Articles &amp; recaps</h2><p class="dim" style="margin:4px 0 0">From RealCavsFans.com and @realcavsfans on X.</p></div>
+    <section id="covers" style="margin-top:28px"><div class="block-h"><h2>Who covers the Cavs</h2><span>Newest from each</span></div><div class="cols cov-cols"><section><h3 class="cov-h">Daily coverage</h3><ul class="kv" id="cov-a"></ul></section><section><h3 class="cov-h">Podcasts &amp; shows</h3><ul class="kv" id="cov-p"></ul></section></div></section>
     <div class="rcf-cols">
       <section><div class="block-h"><h2>RealCavsFans.com</h2><a href="https://realcavsfans.com/index.php?forums/FrontPage/" target="_blank" rel="noopener">Front page ↗</a></div><div class="rcf-list" id="rcf-list"></div></section>
       <section><div class="block-h"><h2>On X</h2><a href="https://x.com/realcavsfans" target="_blank" rel="noopener">@realcavsfans ↗</a></div><div class="rcf-x" id="rcf-x"><a class="xcard" href="https://x.com/realcavsfans" target="_blank" rel="noopener"><b>@realcavsfans</b><span>RealCavsFans.com on X · graphics, analysis and game-night posts</span><em>Open on X ↗</em></a></div></section>
     </div>
   </div>
-</main>
+</template>
 
 <main id="view-roster" hidden>
   <div class="wrap page">
@@ -1441,6 +1501,29 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
     </table></div>
     <div id="rv-depth" hidden></div>
 
+  </div>
+</main>
+
+<main id="view-history" hidden>
+  <div class="wrap page">
+    <div>
+      <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / History</div>
+      <h1 style="margin-top:6px">56 seasons of Cavs basketball</h1>
+      <p class="dim vdesc" style="margin:6px 0 0"><span>Every season since 1970, the playoff runs, the numbers in the rafters, every draft pick and every head coach.</span></p>
+    </div>
+    <div class="tx-stats" id="hx-stats"></div>
+    <section id="hx-sea"><div class="block-h"><h2>Every season</h2><span>Tap a season</span></div>
+      <div class="hx-leg" id="hx-leg"></div><div class="hx-grid" id="hx-grid"></div><div class="hx-det" id="hx-det" hidden></div></section>
+    <section id="hx-ret"><div class="block-h"><h2>In the rafters</h2><span>Retired numbers</span></div><div class="hx-ban" id="hx-ban"></div></section>
+    <section id="hx-lead"><div class="block-h"><h2>All-time leaders</h2><span id="hx-lead-n">With the Cavs</span></div><div class="segs" role="tablist" id="hx-lead-t"></div><ol class="hx-ol" id="hx-lead-l"></ol></section>
+    <section id="hx-num"><div class="block-h"><h2>Who wore it</h2><span>Every number, every player</span></div>
+      <input id="hx-q" type="search" placeholder="Type a number or a name" aria-label="Find a number or player"><div class="hx-nums" id="hx-nums"></div><ul class="kv" id="hx-wore"></ul></section>
+    <section id="hx-draft"><div class="block-h"><h2>Draft history</h2><span id="hx-draft-n"></span></div>
+      <div class="tx-ctrl"><select id="hx-dec" aria-label="Decade"></select><label class="hx-chk"><input type="checkbox" id="hx-r1"> First round only</label><label class="hx-chk"><input type="checkbox" id="hx-pl"> Played for the Cavs</label></div>
+      <div class="tablebox"><table class="hx-t"><thead><tr><th>Year</th><th>Pick</th><th>Player</th><th>From</th></tr></thead><tbody id="hx-draft-b"></tbody></table></div></section>
+    <section id="hx-coach"><div class="block-h"><h2>Head coaches</h2><span id="hx-coach-n"></span></div>
+      <div class="tablebox"><table class="hx-t"><thead><tr><th>Coach</th><th>Years</th><th class="r">Record</th><th class="r">Playoffs</th></tr></thead><tbody id="hx-coach-b"></tbody></table></div></section>
+    <p class="dim" style="margin:0;font-size:13px">Sources: Wikipedia season pages and head coaches list, Stats Crew, Basketball Reference (numbers, All-Stars), NBA.com (career totals). Season leaders need at least half the team's games. Leaders run through 2025–26.</p>
   </div>
 </main>
 
@@ -1539,6 +1622,7 @@ const SECTIONS=[
   ['assets','Assets','AST','Draft picks, exceptions and drafted players.'],
   ['moves','Transactions','TXN','Every Cavs trade, signing and draft pick since 2017.'],
   ['charge','Cleveland Charge','CHG','G League schedule, roster, stats and staff.'],
+  ['history','History','HIS','Every season since 1970, retired numbers, all-time leaders, draft history and coaches.'],
   ['media','Media','MED','Cavs video, press conferences and RealCavsFans articles.'],
   ['resources','Resources','RES','cavs_db approved sites for NBA and Cavs knowledge.']
 ];
@@ -2475,6 +2559,7 @@ function renderHistory(){
   const XTAG={title:'Championship',highlight:'Moment',perf:'Performance',staff:'Front office & bench',passing:'In memoriam',owner:'Ownership'};
   const XORD=['title','highlight','perf','staff','owner','passing'];
   const host=u=>{try{const h=new URL(u).hostname.replace(/^www\./,'');return {'basketball-reference.com':'Basketball Reference','en.wikipedia.org':'Wikipedia','nba.com':'NBA.com','espn.com':'ESPN','cleveland.com':'cleveland.com'}[h]||h}catch(e){return 'Source'}};
+  window.cdbFactsFor=k=>factsFor(k);  /* History tab reuses the home page's on-this-day facts */
   const factsFor=k=>{const out=[];
     HIST_X.filter(x=>x[0]===k&&x[2]==='title').forEach(x=>out.push({y:x[1],t:x[3],src:host(x[4]),u:x[4],tag:'title'}));
     HISTORY.filter(x=>x[0]===k).forEach(c=>out.push({y:c[1],t:c[2],src:c[3],u:c[4]}));
@@ -3230,7 +3315,7 @@ setTimeout(function(){const ov=(/[?&]bday=(\d\d-\d\d)/.exec(location.search)||[]
     steps.forEach(([k,v])=>{const li=el('li');li.append(el('b',null,k),el('span',null,v));ol.appendChild(li)});
     pn.append(hd,el('p','app-lede','cavs_db opens full screen from your home screen, like an app. No app store, nothing to update.'),ol);w.append(bg,pn);document.body.appendChild(w);x.focus()}})();
 /* jump-to chips: a sticky row of section links on long pages; highlights the section you're in */
-setTimeout(function(){const J={'view-cap':[['Cap sheet','#captop'],['Apron rules','#ap-h'],['Two-way','#twoway'],['Exhibit 10','#camp'],['Cap holds','#holds'],['Glossary','#glossary']],'view-assets':[['Draft picks','#board'],['Exceptions','#exc'],['Cash','#cash-sec'],['Drafted players','#rights']]};
+setTimeout(function(){const J={'view-cap':[['Cap sheet','#captop'],['Next summer','#summer'],['Apron rules','#ap-h'],['Two-way','#twoway'],['Exhibit 10','#camp'],['Cap holds','#holds'],['Glossary','#glossary']],'view-assets':[['Draft picks','#board'],['Exceptions','#exc'],['Cash','#cash-sec'],['Drafted players','#rights']]};
   const hdr=()=>(document.querySelector('header.gbar')||{offsetHeight:0}).offsetHeight;
   Object.entries(J).forEach(([vid,items])=>{const v=document.getElementById(vid);if(!v)return;const head=v.querySelector('.page>div');if(!head)return;
     const secs=items.map(([l,q])=>{const t=document.querySelector(q);return t?[l,t.closest('section')||t]:null}).filter(Boolean);if(secs.length<2)return;
@@ -4089,6 +4174,7 @@ const PAGE_META={
  'roster-tree':['How the Cavs Roster Was Built: Trade Trees 2026–27 | cavs_db','Every Cavs player by how he arrived, plus the trade trees behind Donovan Mitchell, Jarrett Allen, James Harden and Peyton Watson, back to the 2017 Kyrie Irving trade.'],
  'moves':['Cavs Transactions & Trade History Since 2017 | cavs_db','Every Cavs trade, signing, extension, draft pick and waiver since 2017, with what moved in each deal.'],
  'charge':['Cleveland Charge Schedule, Roster & Stats 2026–27 (G League) | cavs_db','The Cavs’ G League affiliate: full schedule with results, player stats and leaders, two-way and affiliate players, and coach and front office bios.'],
+ 'history':['Cavs History: Every Season, Retired Numbers, Leaders & Draft Picks | cavs_db','Every Cleveland Cavaliers season since 1970: records, playoff results, coaches and leaders, plus retired numbers, all-time leaders, who wore each number, every draft pick and every head coach.'],
  'media':['Cavs Press Conferences, Highlights & Articles | cavs_db','The latest Cavs press conferences and highlights from the team’s YouTube channel, plus articles and recaps from RealCavsFans.com.'],
  'resources':['Best Cavs & NBA Stats, Salary Cap and Draft Sites | cavs_db','cavs_db approved sites for NBA and Cavs knowledge.']
 };
@@ -4418,7 +4504,7 @@ function ppBuild(p,root){
   root.appendChild(el('p','ppx-foot','Stats: our Cavs box scores (ESPN) and a nightly ESPN league feed; earlier seasons from Wikipedia and Basketball Reference. Contract data from the cap page. Updated after every game.'));
 }
 
-const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge','player','roster-tree','game'];
+const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge','player','roster-tree','game','history'];
 /* page titles and descriptions per route (search engines and browser tabs) */
 const ROUTE_ALIAS={video:'media',rcf:'media/rcf'}; /* media/rcf now opens Media scrolled to the articles */
 function routeOf(){let r=location.pathname.replace(/^\/+|\/+$/g,'').toLowerCase();if(/index\.html$/.test(r)||location.protocol==='file:')r='';const h=location.hash.slice(1);if(!r&&h&&(SECTIONS.some(x=>x[0]===h)||ROUTE_ALIAS[h]))r=h;const AL={video:'media',rcf:'media/rcf'};return AL[r]||r||'home'}
@@ -4438,10 +4524,105 @@ function show(route){
   const path=route==='home'?'/':'/'+route;const cl=document.querySelector('link[rel=canonical]');if(cl)cl.href='https://cavsdatabase.com'+path;const ou=document.querySelector('meta[property="og:url"]');if(ou)ou.content='https://cavsdatabase.com'+path;
   window.scrollTo(0,0);
   if(window.scrambleView)scrambleView(id);
-  if(id==='video'){loadRcf();if(toArt){try{history.replaceState({p:'media'},'','/media')}catch(_){}}if(toArt)setTimeout(()=>{const a=document.getElementById('articles');if(a)a.scrollIntoView({block:'start'})},60)}
+  if(id==='video'){loadRcf();if(window.loadCovers)loadCovers();if(toArt){try{history.replaceState({p:'media'},'','/media')}catch(_){}}if(toArt)setTimeout(()=>{const a=document.getElementById('articles');if(a)a.scrollIntoView({block:'start'})},60)}
   if(id==='roster-tree'&&window.rtDraw)setTimeout(rtDraw,30);
+  if(id==='history'&&window.hxLoad)hxLoad();
   if(id==='home'&&window.resetCal){resetCal();const c=document.getElementById('dcal');if(c&&c.getBoundingClientRect().top<innerHeight){c.dataset.done=1;setTimeout(()=>c.classList.add('rip'),500)}}
 }
+/* History tab: seasons, playoff runs, retired numbers, leaders, who wore it, draft and coaches. Data in /pdata/history.json (loaded on first visit). */
+(function(){let H=null,MS=null,busy=false;
+const LV={title:['Champions','hx-l6'],finals:['Lost in the Finals','hx-l5'],conf:['Conference finals','hx-l4'],round2:['Second round','hx-l3'],round1:['First round','hx-l2'],playin:['Play-in','hx-l1'],missed:['Missed playoffs','hx-l0']};
+const yrs=s=>s.split('–'),num=s=>+String(s).split('–')[0];
+function draw(){const $=id=>document.getElementById(id);
+  const S=H.seasons;
+  /* stat strip */
+  {const st=$('hx-stats');st.textContent='';const W=S.reduce((a,x)=>a+x.w,0),L=S.reduce((a,x)=>a+x.l,0);
+   [[W+'–'+L,'All-time record'],[S.filter(x=>!['missed','playin'].includes(x.poLevel)).length,'Playoff trips'],[S.filter(x=>['finals','title'].includes(x.poLevel)).length,'NBA Finals'],['2016','Champions'],[H.retired.length,'Retired numbers']].forEach(([v,l])=>{const d=el('div','txs');d.append(el('b','num-sc',String(v)),el('span',null,l));st.appendChild(d)})}
+  /* season grid */
+  {const lg=$('hx-leg');lg.textContent='';['title','finals','conf','round2','round1','playin','missed'].forEach(k=>{const s=el('span');s.append(el('i',LV[k][1]),LV[k][0]);lg.appendChild(s)});
+   const g=$('hx-grid');g.textContent='';const det=$('hx-det');
+   const open=(x,b)=>{g.querySelectorAll('button').forEach(z=>z.setAttribute('aria-pressed',z===b?'true':'false'));det.hidden=false;det.textContent='';
+     const h=el('div','hx-dh');h.append(el('b',null,x.s),el('span',LV[x.poLevel][1]+' hx-tag',LV[x.poLevel][0]));det.appendChild(h);
+     const pct=(x.w/(x.w+x.l)).toFixed(3).replace(/^0/,'');
+     const rows=[['Record',x.w+'–'+x.l+' ('+pct+') · '+x.div+(x.seed?' · No. '+x.seed+' seed':'')],['Playoffs',x.po],['Coach',x.coach.map(c=>c[0]+(x.coach.length>1?' ('+c[1]+')':'')).join(', ')],
+       ['Leaders',[['pts','pts'],['reb','reb'],['ast','ast']].map(([k,l])=>x.lead[k]?x.lead[k][0]+' '+x.lead[k][1]+' '+l:'').filter(Boolean).join(' · ')],['All-Stars',(x.allstar||[]).join(', ')||'None']];
+     const dl=el('dl','hx-dl');rows.forEach(([k,v])=>{dl.append(el('dt',null,k),el('dd',null,v))});det.appendChild(dl);
+     if(x.note)det.appendChild(el('p','hx-note',x.note));
+     if(x.src){const a=el('a','dlink','Season page ↗');a.href=x.src;a.target='_blank';a.rel='noopener';det.appendChild(a)}};
+   let dec=null,row;S.forEach(x=>{const d=Math.floor(num(x.s)/10)*10;if(d!==dec){dec=d;g.appendChild(el('div','hx-dec',d+'s'));row=el('div','hx-row');g.appendChild(row)}
+     const b=el('button','hx-s '+LV[x.poLevel][1]);b.type='button';b.setAttribute('aria-pressed','false');b.title=x.s+': '+x.w+'–'+x.l+', '+x.po;
+     b.append(el('span',null,"'"+String(num(x.s)+1).slice(2)),el('b',null,x.w+'–'+x.l));if(x.poLevel==='title')b.appendChild(el('i',null,'★'));b.onclick=()=>open(x,b);row.appendChild(b)});
+   const t=S.find(x=>x.poLevel==='title');open(t,[...g.querySelectorAll('button')][S.indexOf(t)])}
+  /* retired numbers */
+  {const b=$('hx-ban');b.textContent='';H.retired.slice().sort((a,c)=>+a[0]-+c[0]).forEach(([n,p,y])=>{const d=el('div','hx-bn');d.append(el('b',null,n),el('span',null,p),el('small',null,y?'Retired '+y:''));b.appendChild(d)})}
+  /* leaders */
+  {const F=(MS&&MS.franchise)||{};const T=$('hx-lead-t'),L=$('hx-lead-l');T.textContent='';const K=[['PTS','Points'],['REB','Rebounds'],['AST','Assists'],['GP','Games']];
+   const pick=k=>{T.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k?'true':'false'));L.textContent='';(F[k]||[]).slice(0,10).forEach(([n,v],i)=>{const li=el('li');const nm=onRoster(n)&&PP_ON?(()=>{const a=el('a',null,n);a.href='/players/'+slug(n);a.dataset.go='players/'+slug(n);return a})():el('span',null,n);li.append(el('i',null,String(i+1)),nm,el('b',null,v.toLocaleString()));if(onRoster(n))li.classList.add('hx-now');L.appendChild(li)})};
+   K.forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('role','tab');b.dataset.k=k;b.onclick=()=>pick(k);T.appendChild(b)});pick('PTS');
+   if(MS&&MS.through)$('hx-lead-n').textContent='Regular season · through '+MS.through.replace('-','–');}
+  /* who wore it */
+  {const N=H.numbers,keys=Object.keys(N).sort((a,b)=>(+a-+b)||(a.length-b.length)),R=new Set(H.retired.map(r=>r[0]));const box=$('hx-nums'),out=$('hx-wore'),q=$('hx-q');box.textContent='';
+   const showN=k=>{box.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.n===k?'true':'false'));out.textContent='';
+     const cur=PLAYERS.filter(p=>p[0]===k).map(p=>p[1]);cur.forEach(n=>{const li=el('li','hx-now');li.append(el('span',null,n),el('b',null,'Now'));out.appendChild(li)});
+     (N[k]||[]).slice().sort((a,b)=>num(b[1])-num(a[1])).forEach(([n,y])=>{if(cur.includes(n))return;const li=el('li');li.append(el('span',null,n),el('b',null,y));out.appendChild(li)});
+     if(R.has(k)){const r=H.retired.find(x=>x[0]===k);const li=el('li','hx-retl');li.append(el('span',null,'Retired for '+r[1]),el('b',null,r[2]||''));out.prepend(li)}};
+   keys.forEach(k=>{const b=el('button',R.has(k)?'hx-rn':null,'#'+k);b.type='button';b.dataset.n=k;b.setAttribute('aria-pressed','false');b.onclick=()=>{q.value='';showN(k)};box.appendChild(b)});
+   q.oninput=()=>{const v=q.value.trim();if(!v)return;if(/^\d{1,2}$/.test(v)){if(N[v]||PLAYERS.some(p=>p[0]===v))showN(v);return}const f=fold(v);out.textContent='';box.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed','false'));
+     keys.forEach(k=>N[k].forEach(([n,y])=>{if(fold(n).includes(f)){const li=el('li');li.append(el('span',null,n),el('b',null,'#'+k+' · '+y));out.appendChild(li)}}));if(!out.children.length)out.appendChild(el('li','dim','No match'))};
+   showN('23')}
+  /* draft */
+  {const D=H.draft,sel=$('hx-dec'),r1=$('hx-r1'),pl=$('hx-pl'),tb=$('hx-draft-b');sel.textContent='';sel.appendChild(new Option('Every year','all'));
+   [...new Set(D.map(d=>Math.floor(d[0]/10)*10))].sort((a,b)=>b-a).forEach(d=>sel.appendChild(new Option(d+'s',String(d))));r1.checked=true;
+   const ord=n=>n+(['th','st','nd','rd'][(n%100-20)%10]||['th','st','nd','rd'][n%100]||'th');
+   const render=()=>{tb.textContent='';const rows=D.filter(d=>(sel.value==='all'||Math.floor(d[0]/10)*10===+sel.value)&&(!r1.checked||d[1]===1)&&(!pl.checked||d[5])).sort((a,b)=>b[0]-a[0]||a[2]-b[2]);
+     rows.forEach(([y,r,p,n,sch,cle])=>{const tr=el('tr');const td=el('td');td.append(n);if(cle)td.appendChild(el('span','hx-cle','Played for CLE'));tr.append(el('td','m',String(y)),el('td','m',ord(r)+' · No. '+p),td,el('td','dim',sch||'—'));tb.appendChild(tr)});
+     $('hx-draft-n').textContent=rows.length+' picks shown · '+D.length+' since 1970'};
+   [sel,r1,pl].forEach(e=>e.onchange=render);render()}
+  /* coaches */
+  {const tb=$('hx-coach-b');tb.textContent='';H.coaches.forEach(([n,y,rec,po,nt])=>{const tr=el('tr');const td=el('td');td.append(n);if(nt)td.appendChild(el('small',null,nt));tr.append(td,el('td','m',y),el('td','r m',rec),el('td','r m',po||'—'));tb.appendChild(tr)});$('hx-coach-n').textContent=new Set(H.coaches.map(c=>c[0])).size+' coaches'}
+}
+window.hxLoad=async function(){if(H){return}if(busy)return;busy=true;try{const [a,b]=await Promise.all([fetch('/pdata/history.json').then(r=>r.json()),fetch('/pdata/milestones.json').then(r=>r.json()).catch(()=>null)]);H=a;MS=b;draw()}catch(e){busy=false}};
+})();
+
+
+/* Media: who covers the Cavs, newest item from each outlet in news.json */
+(function(){let done=false;const HOME={'cleveland.com':['https://www.cleveland.com/cavs/','Beat writers at every game'],'Cavaliers on SI':['https://www.si.com/nba/cavaliers','Sports Illustrated team site'],'Fear The Sword':['https://www.fearthesword.com','SB Nation team site'],'Hoops Rumors':['https://www.hoopsrumors.com/cleveland-cavaliers','Transactions and rumors']};
+ window.loadCovers=()=>{if(done)return;done=true;fetch('/news.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(N=>{if(!N)return;
+  const md=d=>new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'America/New_York'});
+  const fill=(id,items,kind)=>{const ul=document.getElementById(id);if(!ul)return;ul.textContent='';const by={};items.forEach(x=>{if(!by[x.src]||x.date>by[x.src].date)by[x.src]=x});
+   Object.values(by).sort((a,b)=>b.date.localeCompare(a.date)).forEach(x=>{const li=el('li');const sp=el('span');const h=HOME[x.src];const nm=el('a',null,x.src);nm.href=h?h[0]:x.link;nm.target='_blank';nm.rel='noopener';
+    const t=el('a','cov-t',(()=>{const ta=document.createElement('textarea');ta.innerHTML=x.title;return ta.value})());t.href=x.link;t.target='_blank';t.rel='noopener';const sm=el('small');sm.append(h?h[1]+' · ':(kind||'')+' · ',t);sp.append(nm,sm);li.append(sp,el('b','cov-d',md(x.date)));ul.appendChild(li)})};
+  fill('cov-a',N.articles||[]);fill('cov-p',[...(N.podcasts||[]).map(x=>Object.assign({},x)),...(N.videos||[])],'Latest');
+  document.querySelectorAll('#cov-p small').forEach(s2=>{s2.firstChild.textContent=s2.firstChild.textContent.replace('Latest · ','')})})};})();
+
+/* Cap: next summer's cap position, built from ROSTER and THRESH (index 1 = next season) */
+(function(){const B=document.getElementById('sm-b');if(!B)return;const I=1,NY=SEASONS[I],yr=NY.slice(0,4);
+  document.getElementById('sm-h').textContent='Summer '+yr;document.getElementById('sm-sub').textContent=NY+' · projected · updates as deals change';
+  const sal=y=>typeof y==='number'?y:Array.isArray(y)?y[0]:null;let gu=0,opt=0,n=0;const opts=[],fas=[];
+  ROSTER.forEach(([nm,p,yrs,bird,fa,t])=>{const y=yrs[I];if(typeof y==='number'){gu+=y;if(t!=='Dead money')n++}else if(Array.isArray(y)){if(y[1]==='T'){opt+=y[0];opts.push([nm,y[0],t])}else{gu+=y[0];n++}}else if(typeof y==='string')fas.push([nm,y,bird,sal(yrs[I-1])])});
+  const T=k=>THRESH.find(x=>x[0]===k)[1][I],cap=T('Salary cap'),tax=T('Luxury tax'),a1=T('First apron'),a2=T('Second apron'),tot=gu+opt;
+  const over=tot-cap,where=tot>a2?'over the second apron':tot>a1?'over the first apron':tot>tax?'over the tax line':tot>cap?'over the cap':'under the cap';
+  const big=el('p','sm-big');if(over>0){big.append('No cap space. ');big.appendChild(el('em',null,usdM(over)+' over'));big.append(' the cap')}else{big.append('About ');big.appendChild(el('em',null,usdM(-over)));big.append(' in cap space')}
+  B.appendChild(big);
+  B.appendChild(el('p','sm-sub2',n+' players plus dead money already add up to '+usdM(gu)+' for '+NY+'.'+(opts.length?' With '+opts.map(o=>o[0]+'’s team option').join(' and ')+' picked up, Cleveland starts the summer '+where+', before filling the roster.':' Cleveland starts the summer '+where+'.')));
+  /* meter */
+  const mn=Math.floor(cap*0.9/1e7)*1e7,mx=Math.max(a2,tot)*1.03,pc=v=>((v-mn)/(mx-mn)*100).toFixed(2)+'%',pw=v=>(v/(mx-mn)*100).toFixed(2)+'%';
+  const m=el('div','sm-meter');m.innerHTML='<div class="f" style="width:'+pc(gu)+'"></div>'+(opt?'<div class="o" style="left:'+pc(gu)+';width:'+pw(opt)+'"></div>':'');
+  const mS=v=>'$'+Math.round(v/1e6)+'M';[['Cap',cap],['Tax',tax],['1st apron',a1],['2nd apron',a2]].forEach(([l,v],i)=>{const d=el('div','ln l');d.style.left=pc(v);d.appendChild(el(i%2?'i':'b',null,l+' '+mS(v)));m.appendChild(d)});
+  B.appendChild(m);const lg=el('div','sm-leg');lg.innerHTML='<span><i></i>Committed '+usdM(gu)+'</span>'+(opt?'<span><i class="o"></i>Team options '+usdM(opt)+'</span>':'');B.appendChild(lg);
+  /* stat tiles */
+  const st=el('div','sm-stats');[[usdM(tot),'Committed, with options'],[String(n+opts.length),'Players signed for '+NY],[tot<a2?usdM(a2-tot):'—','Under the second apron, before filling the roster'],[fas.length+' + '+TWOWAY.length,'Free agents (standard + two-way)']].forEach(([v,l])=>{const d=el('div');d.append(el('b',null,v),el('span',null,l));st.appendChild(d)});B.appendChild(st);
+  /* lists */
+  const cols=el('div','sm-cols');const col=(h,rows)=>{const d=el('div');d.appendChild(el('h4',null,h));const ul=el('ul','kv');rows.forEach(([a,sm,b,cls])=>{const li=el('li');const sp=el('span',null,a);sp.appendChild(el('small',null,sm));li.append(sp,el('b',cls||null,b));ul.appendChild(li)});d.appendChild(ul);return d};
+  const BW={'Full Bird':'Full Bird','Early Bird':'Early Bird','Non-Bird':'Non-Bird'};
+  const c1=col('Coming off the books',fas.map(([nm,y,bird,v])=>[nm,y+' · '+(BW[bird]||bird)+(y==='RFA'?' · Cavs can match offers':''),v?usdM(v):'—']).concat(TWOWAY.length?[[TWOWAY.map(t=>t[0].replace(/ Jr\.$/,'').split(' ').slice(-1)[0]).join(', '),'Two-way · '+TWOWAY[0][2].split(' ')[1],'—']]:[]));
+  const ext=Object.entries(EXT).filter(([k,v])=>v===I).map(([k])=>k.split(' ').slice(-1)[0]);
+  const tools=[['Bird rights','Re-sign their own free agents over the cap','Yes','sm-y'],['Taxpayer mid-level','Using it hard-caps them at the second apron',tot<a2?'Tight':'No',tot<a2?'sm-y':'sm-n'],['Minimum contracts','Always available','Yes','sm-y'],['Cap space signings',over>0?'Payroll is above the cap':'Room under the cap',over>0?'No':'Yes',over>0?'sm-n':'sm-y']];
+  const dec=opts.map(([nm,v,t])=>[nm+' team option',NY+(t?' · '+t.replace('Team option decision due','due'):''),usdM(v)]).concat(ext.length?[['Extension window opens',ext.join(', ')+' become eligible','July '+yr]]:[]);
+  const c2=col('How they can add players',tools);if(dec.length){const d2=col('Decisions before then',dec);c2.append(...d2.childNodes)}
+  cols.append(c1,c2);B.appendChild(cols);
+  B.appendChild(el('p','sm-note','Salaries: the cap sheet above (Spotrac). '+NY+' cap '+usdM(cap)+', tax '+usdM(tax)+', first apron '+usdM(a1)+', second apron '+usdM(a2)+' are league projections.'));
+})();
 /* real page addresses: /cap, /roster, /media/rcf … Old #links still work and are rewritten to the new address. */
 function go(route){route=ROUTE_ALIAS[route]||route;const path=route==='home'?'/':'/'+route;if(location.protocol!=='file:'&&location.pathname!==path){try{history.pushState({p:route},'',path+location.search)}catch(_){}}show(route)}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-go]');if(!t||e.metaKey||e.ctrlKey||e.shiftKey)return;e.preventDefault();go(t.dataset.go)});
