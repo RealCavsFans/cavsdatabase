@@ -4162,13 +4162,15 @@ function loadRcf(){if(rcfLoaded)return;rcfLoaded=true;
   fetch((location.protocol==='file:'?'':'/')+'rcf.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(d=>{if(d)render(d);else box.appendChild(el('p','dim','Articles couldn’t load. Visit RealCavsFans.com.'))}).catch(()=>box.appendChild(el('p','dim','Articles couldn’t load. Visit RealCavsFans.com.')));
 }
 
-/* feedback prompt: shows once after ~2 minutes on the site or 15 clicks; "Not now" waits 30 days; sending stops it for good.
+/* feedback prompt: only for regulars. Shows once someone has visited on 2+ different days AND spent 12+ minutes on the site in total (or clicked 50 times in one visit); "Not now" waits 30 days; sending stops it for good.
    Sends through FormSubmit to the editor's inbox (the first submission triggers a one-time activation email). */
 (function(){const F=document.getElementById('fb');if(!F)return;const K='cdb-fb';
   const get=()=>{try{return JSON.parse(localStorage.getItem(K)||'{}')}catch(e){return {}}},put=o=>{try{localStorage.setItem(K,JSON.stringify(o))}catch(e){}};
   const st=get();const quiet=st.sent||(st.snooze&&Date.now()<st.snooze);
   if(/preview=feedback/.test(location.search)){setTimeout(()=>{if(matchMedia('(max-width:520px)').matches)F.classList.add('mini');F.hidden=false},400)}
   let clicks=0,shown=false,active=st.t||0,last=Date.now();
+  {const today=new Date().toISOString().slice(0,10),d=(st.d||[]).filter(x=>x!==today).concat(today).slice(-5);put({...get(),d});st.d=d}
+  const regular=()=>(st.d||[]).length>=2;
   let idle=0;const arm=()=>{clearTimeout(idle);idle=setTimeout(()=>{if(!F.hidden&&!F.contains(document.activeElement)&&!document.getElementById('fb-t').value.trim())close(7)},60000)};
   ['pointerdown','focusin','input','keydown'].forEach(ev=>F.addEventListener(ev,()=>{clearTimeout(idle);if(ev!=='focusin')arm()}));
   const open=()=>{if(quiet||shown||document.getElementById('cel'))return;shown=true;if(matchMedia('(max-width:520px)').matches)F.classList.add('mini');F.hidden=false;arm()};
@@ -4178,8 +4180,8 @@ function loadRcf(){if(rcfLoaded)return;rcfLoaded=true;
     const ad=['rcfwriter','gmail.com'].join('@');const pp=F.querySelector('#fb-ask p');pp.textContent='Questions, corrections or ideas. It goes straight to the site’s editor at ';const a=document.createElement('a');a.href='mailto:'+ad;a.textContent=ad;pp.append(a,'.');
     document.getElementById('fb-t').placeholder='Your message…';F.hidden=false;shown=true;setTimeout(()=>document.getElementById('fb-t').focus(),50)};
   document.getElementById('fb-o').onclick=()=>{F.classList.remove('mini');document.getElementById('fb-t').focus()};
-  document.addEventListener('click',e=>{if(F.contains(e.target))return;clicks++;if(clicks>=15)open()});
-  setInterval(()=>{if(document.hidden)return;active+=5;put({...get(),t:active});if(active>=120)open()},5000);
+  document.addEventListener('click',e=>{if(F.contains(e.target))return;clicks++;if(clicks>=50&&regular())open()});
+  setInterval(()=>{if(document.hidden)return;active+=5;put({...get(),t:active});if(active>=720&&regular())open()},5000);
   const close=snooze=>{F.hidden=true;put({...get(),snooze:Date.now()+(snooze||30)*864e5})};
   document.getElementById('fb-x').onclick=()=>close(30);document.getElementById('fb-l').onclick=()=>close(30);
   document.getElementById('fb-f').addEventListener('submit',async e=>{e.preventDefault();const t=document.getElementById('fb-t').value.trim();if(!t||document.getElementById('fb-hp').value)return;
