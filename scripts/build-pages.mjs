@@ -43,7 +43,7 @@ const esc = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, 
 let shell = html;
 { const { createHash: ch } = await import('node:crypto'); const { readdir, unlink } = await import('node:fs/promises');
   const sm = html.match(/<style>([\s\S]*?)<\/style>/), jm = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].sort((x, y) => y[1].length - x[1].length)[0];
-  if (sm && jm && jm[1].length > 100000) {
+  if (PRE && sm && jm && jm[1].length > 100000) {  // only in the Action (--prerender), which also commits a/; plain builds (the daily task) stay inline so nothing points at an uncommitted file
     const hc = ch('sha1').update(sm[1]).digest('hex').slice(0, 10), hj = ch('sha1').update(jm[1]).digest('hex').slice(0, 10);
     await mkdir(new URL('a/', root), { recursive: true });
     await writeFile(new URL(`a/app.${hc}.css`, root), sm[1]); await writeFile(new URL(`a/app.${hj}.js`, root), jm[1]);
