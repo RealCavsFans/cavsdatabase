@@ -1264,6 +1264,12 @@ tr.hx-w td:first-child{box-shadow:inset 3px 0 0 #860038}tr.hx-l td:first-child{b
 .hx-ol li>a,.hx-ol li>.hx-bb,.hx-ol li>span{justify-self:start}
 .hx-tait{margin:8px 0 0}.hx-q{display:block;font:800 19px/1.2 var(--cond);letter-spacing:.01em}.hx-q b{color:var(--wine-ink);display:inline-block;transition:opacity .25s,transform .25s}.hx-q b.out{opacity:0;transform:translateY(-4px)}.hx-tait small{display:block;color:var(--muted);font-size:13px;margin-top:3px}
 .hx-bxl{display:block;margin-top:3px}.hx-bxl a{white-space:nowrap}
+.sm-th{flex-basis:100%;font:600 11.5px var(--mono);color:var(--muted)}
+#ch-pipe{list-style:none;margin:0;padding:0}.cp-r{padding:12px 0 14px;border-bottom:1px solid var(--line2)}.cp-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0 0 8px}.cp-top a{font-weight:700;font-size:15px}
+.cp-steps{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;row-gap:6px}.cp-steps li{position:relative;display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--fg2);padding-right:22px}
+.cp-steps li:not(:last-child)::after{content:'';position:absolute;right:6px;top:50%;width:10px;border-top:1.5px solid var(--line)}
+.cp-steps li i{width:9px;height:9px;border-radius:50%;background:var(--card);box-shadow:inset 0 0 0 2px var(--muted);flex:none}
+.cp-steps li.cp-chg i{background:#F2B231;box-shadow:none}.cp-steps li.cp-cle i{background:#860038;box-shadow:none}.cp-steps li.cp-tw i{background:var(--card);box-shadow:inset 0 0 0 2.5px #860038}.cp-steps li.cp-cle span,.cp-steps li.cp-tw span{font-weight:700;color:var(--fg)}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 17px var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
@@ -1580,7 +1586,7 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
     <section><div class="block-h"><h2>Roster</h2><span id="ch-ros-n"></span></div>
       <div class="cols" id="ch-roster"></div>
 </section>
-    <section id="ch-pipe-sec"><div class="block-h"><h2>Charge to Cavs pipeline</h2><span>Since the Charge moved to Cleveland (2021)</span></div><ul class="kv" id="ch-pipe"></ul>
+    <section id="ch-pipe-sec"><div class="block-h"><h2>Charge to Cavs pipeline</h2><span>Since the Charge moved to Cleveland (2021)</span></div><ul id="ch-pipe"></ul>
       <p class="dim" style="margin:8px 0 0;font-size:12.5px">Players on the current Cavs roster who came through the Charge. Paths from the Cavs’ transactions.</p></section>
     <section aria-label="2026–27 front office and coaching staff">
       <div class="cols" id="ch-staff"></div></section>
@@ -2756,7 +2762,7 @@ ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
   tr.append(...cells);cb.appendChild(tr);
   if(dead){nameTd.textContent=n;nameTd.appendChild(el('small','cnote','Dead money'));return}
   const now=t&&/(Nov|Dec|Jan|Feb|due|until)/.test(t)&&!/^20\d\d/.test(t)&&!notePast(t)?t:'';
-  const btn=el('button','pbtn',n);btn.type='button';btn.setAttribute('aria-expanded','false');nameTd.appendChild(btn);
+  const btn=el('button','pbtn',n.replace(/ (Jr\.|Sr\.|II|III|IV)$/,'\u00a0$1'));btn.type='button';btn.setAttribute('aria-expanded','false');nameTd.appendChild(btn);
   if(now){const f=el('span','nflag','!');f.title='This season: '+now;btn.appendChild(f)}
   const det=el('tr','det');det.hidden=true;const dtd=el('td');dtd.colSpan=6;const g=el('div','det-grid');
   const blk=(h,html,cls)=>{const d=el('div',cls);d.appendChild(el('h4',null,h));const pp=el('p');html.forEach(x=>pp.append(x));d.appendChild(pp);g.appendChild(d);return d};
@@ -2903,7 +2909,7 @@ const CH_PIPE=[['Sam Merrill','On the Cavs',[['g','Charge 2022–23'],['','10-da
   ["Nae'Qwan Tomlin",'On the Cavs',[['g','Charge 2024–25'],['','10-day, Feb 2025'],['','Two-way'],['c','Standard deal, Feb 2026']]],
   ['Tristan Enaruna','Two-way now',[['g','Charge 2025–26 · G League Most Improved'],['c','Two-way, 2026–27']]],
   ['Riley Minix','Two-way now',[['g','Charge 2025–26'],['c','Two-way, 2026–27']]]];
-(function(){const ul=document.getElementById('ch-pipe');if(!ul)return;CH_PIPE.forEach(([n,st,steps])=>{const li=el('li');const sp=el('span');const a=el('a',null,n);a.href='/players/'+slug(n);a.dataset.go='players/'+slug(n);sp.append(a,el('small',null,steps.map(x=>x[1]).join(' → ')));li.append(sp,el('b','ch-tag',st));ul.appendChild(li)})})();
+(function(){const ul=document.getElementById('ch-pipe');if(!ul)return;CH_PIPE.forEach(([n,st,steps])=>{const li=el('li','cp-r');const top=el('div','cp-top');const a=el('a',null,n);a.href='/players/'+slug(n);a.dataset.go='players/'+slug(n);top.append(a,el('b','ch-tag',st));const tr=el('ol','cp-steps');steps.forEach(([c,t],i)=>{const s2=el('li',i===steps.length-1?(/Two-way/.test(st)?'cp-tw':'cp-cle'):i===0?'cp-chg':null);s2.append(el('i'),el('span',null,t));tr.appendChild(s2)});li.append(top,tr);ul.appendChild(li)})})();
 /* draft board: every pick 2027–2033, tap for the full details */
 (function(){const bd=document.getElementById('board');if(!bd)return;
   const pickBlocks=([y,r,st,v,tr,sw,why,orig])=>[pviz(v),v[0]==='pool'?trackBox(y,v,true):null,v[0]==='frozen'?freezeBox():null,['Trade outright:',(tr?'Yes. ':'No. ')+(tr?'':why)],['Trade swap rights:',sw?'Yes. Another team can get the right to swap picks with the Cavs that year.':(v[0]==='frozen'?'No, while frozen.':'No. Those swap rights are already held by other teams.')],orig?['How it got here:',orig]:null,r==='1st'?el('p','pnote',PICK_NOTE):null];
@@ -4663,8 +4669,8 @@ window.hxLoad=async function(){if(H){return}if(busy)return;busy=true;try{const [
   /* meter */
   const mn=Math.floor(cap*0.9/1e7)*1e7,mx=Math.max(a2,tot)*1.03,pc=v=>((v-mn)/(mx-mn)*100).toFixed(2)+'%',pw=v=>(v/(mx-mn)*100).toFixed(2)+'%';
   const m=el('div','sm-meter');m.innerHTML='<div class="f" style="width:'+pc(gu)+'"></div>'+(opt?'<div class="o" style="left:'+pc(gu)+';width:'+pw(opt)+'"></div>':'');
-  const mS=v=>'$'+Math.round(v/1e6)+'M';[['Cap',cap],['Tax',tax],['1st apron',a1],['2nd apron',a2]].forEach(([l,v],i)=>{const d=el('div','ln l');d.style.left=pc(v);d.appendChild(el(i%2?'i':'b',null,l+' '+mS(v)));m.appendChild(d)});
-  B.appendChild(m);const lg=el('div','sm-leg');lg.innerHTML='<span><i></i>Committed '+usdM(gu)+'</span>'+(opt?'<span><i class="o"></i>Team options '+usdM(opt)+'</span>':'');B.appendChild(lg);
+  const mS=v=>'$'+Math.round(v/1e6)+'M';[['Cap',cap],['Tax',tax],['1st apron',a1],['2nd apron',a2]].forEach(([l,v],i)=>{const d=el('div','ln l');d.style.left=pc(v);d.appendChild(el(i%2?'i':'b',null,l.replace(' apron','')));m.appendChild(d)});
+  B.appendChild(m);const lg=el('div','sm-leg');lg.innerHTML='<span><i></i>Committed '+usdM(gu)+'</span>'+(opt?'<span><i class="o"></i>Team options '+usdM(opt)+'</span>':'')+'<span class="sm-th">Cap '+mS(cap)+' · Tax '+mS(tax)+' · 1st apron '+mS(a1)+' · 2nd apron '+mS(a2)+'</span>';B.appendChild(lg);
   /* stat tiles */
   const st=el('div','sm-stats');[[usdM(tot),'Committed, with options'],[String(n+opts.length),'Players signed for '+NY],[tot<a2?usdM(a2-tot):'—','Under the second apron, before filling the roster'],[fas.length+' + '+TWOWAY.length,'Free agents (standard + two-way)']].forEach(([v,l])=>{const d=el('div');d.append(el('b',null,v),el('span',null,l));st.appendChild(d)});B.appendChild(st);
   /* lists */
