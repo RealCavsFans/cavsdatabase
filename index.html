@@ -2858,8 +2858,6 @@ const tw=document.getElementById('twoway');tw.className='xl tw2';{const h=el('li
   d.append(sm,bx);li.appendChild(d);tw.appendChild(li)});
 {document.getElementById('holds').textContent=HOLDS.map(([n,v])=>n+' '+usdM(v)).join(' · ');
  document.getElementById('holds-tot').textContent=HOLDS.length+' · '+usd(HOLDS.reduce((a,[,v])=>a+v,0))}
-if(document.getElementById('camp')){const cp=document.getElementById('camp');EX10.filter(x=>!x[3]).forEach(([n,ps,sg,wv,nt])=>{const li=el('li');if(!wv)li.id='p-'+slug(n);const sp2=el('span',null,n);sp2.append(el('small',null,ps+' · '+(wv?'Signed '+sg+', waived '+wv+' · Charge affiliate if he reports (not yet announced)'+(nt?' · '+nt:''):'In camp · signed '+sg+' · Non-Bird')));li.append(sp2,el('b',null,wv?'Waived':'$1,357,763'));if(wv)li.classList.add('ex-w');cp.appendChild(li)});
-document.getElementById('ex10-n').textContent=EX10.filter(x=>!x[3]).length+' in camp';if(!EX10.some(x=>!x[3])){const li=el('li','ex-none');li.append(el('span',null,'Camp is over. All '+EX10.length+' Exhibit 10 players this fall were waived, the last four on Oct 17.'));cp.appendChild(li)}}
 
 /* assets */
 const xitem=(head,sub,val,body)=>{const li=el('li');const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,head));if(sub)l.appendChild(el('small',null,sub));sm.appendChild(l);if(val)sm.appendChild(val);d.appendChild(sm);const bx=el('div','xb');body.forEach(([h,t])=>{const p=el('p');if(h)p.appendChild(el('strong',null,h+' '));p.append(t);bx.appendChild(p)});d.appendChild(bx);li.appendChild(d);return li};
@@ -2900,17 +2898,7 @@ const trackBox=(y,v,cavsGet)=>{const w=el('div','ptrk');w.appendChild(el('div','
   w.appendChild(box);
   w.appendChild(el('p','ptrk-n','Spots are before the lottery and don’t model protections. '+(cavsGet?'The Cavs keep whichever pick lands where the rule says.':'Shows where the Cavs’ pick and the others in the pool would go tonight.')));return w};
 
-/* extension and free agency calendar: extension windows (EXT), option decisions and free agency, season by season */
-(function(){const box=document.getElementById('extcal-b');if(!box)return;const ev={};
-  const add=(i,kind,n,txt)=>{(ev[i]=ev[i]||[]).push([kind,n,txt])};
-  Object.entries(EXT).forEach(([n,i])=>{if(ROSTER.some(r=>r[0]===n))add(i,'ext',n,i===0?'Can sign an extension now, through June 30, 2027.':'Becomes extension eligible July 1, '+(2026+i)+'.')});
-  ROSTER.forEach(r=>{const [n,,sal,bird,fa]=r;sal.forEach((x,i)=>{if(Array.isArray(x)&&i>0)add(i,'opt',n,(x[1]==='P'?'Player':'Team')+' option for '+SEASONS[i]+' ('+usdM(x[0])+'), decided before July 1, '+(2026+i)+'.')});
-    const m=String(fa||'').match(/^(\d{4}) (UFA|RFA)$/);if(m){const i=+m[1]-2026;if(i>=0)add(i,'fa',n,(m[2]==='UFA'?'Unrestricted':'Restricted')+' free agent July 1, '+m[1]+(bird?' · '+bird:'')+'.')}});
-  const lab={ext:['Extension','g'],opt:['Option','w'],fa:['Free agency','']};
-  const sl=i=>(2026+i)+'–'+String(2027+i).slice(2);Object.keys(ev).map(Number).sort((a,b)=>a-b).forEach((i,k)=>{const dd=document.createElement('details');dd.className='ec-d';if(k<2)dd.open=true;const h=document.createElement('summary');h.className='ec-h';h.textContent=(i===0?'Now · '+sl(0):'Summer '+(2026+i)+' · before '+sl(i))+' · '+ev[i].length;dd.appendChild(h);box.appendChild(dd);const ul=el('ul','ec');
-    ev[i].sort((a,b)=>['ext','opt','fa'].indexOf(a[0])-['ext','opt','fa'].indexOf(b[0])||a[1].localeCompare(b[1])).forEach(([k,n,t])=>{const li=el('li');const a2=el('a',null,n);a2.href='/players/'+slug(n);a2.dataset.go='players/'+slug(n);const b=el('b');b.append(a2,el('span','ec-t '+lab[k][1],lab[k][0]));li.append(b,el('small',null,t));ul.appendChild(li)});dd.appendChild(ul)});
-  box.appendChild(el('p','dim','Extension windows follow the CBA (veterans two years after signing; rookie scale deals after the third season). Max amounts depend on each player’s service and the cap, so they’re on the cap sheet drop-downs.'));
-})();
+
 
 /* Charge to Cavs pipeline: current Cavs who came through the Charge, with their path */
 const CH_PIPE=[['Sam Merrill','On the Cavs',[['g','Charge 2022–23'],['','10-day, Mar 2023'],['c','4 yrs, $38M (2025)']]],
