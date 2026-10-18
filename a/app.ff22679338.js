@@ -1980,11 +1980,14 @@ function runSearch(){
   if(isQ&&pages.size){const PG={schedule:['Schedule','All games, TV and radio'],home:['Home','Record, next game, injuries, cap position'],cap:['Salary Cap','Cap sheet and CBA glossary'],assets:['Assets','Picks and exceptions'],moves:['Transactions','Every move since 2017'],staff:['Coaches & Front Office','Bios and career paths'],charge:['Cleveland Charge','Schedule, roster and staff'],roster:['Roster','Bios and measurements'],video:['Video','Press conferences and highlights']};
     const pg=[...pages][0];const page={title:PG[pg][0],sub:PG[pg][1],kind:'Page',go:pg,id:null};
     if(!hits.length||!scored.length||scored[0][1]<4)hits=hits.length&&hits[0].kind==="Game"?[...hits,page]:[page,...hits].slice(0,8);else hits.push(page)}
+  /* a quiet nod to where the site started */
+  if(/^(rcf|realcavsfans|real cavs fans)$/.test(raw))hits=[{title:'Where it started',sub:'RealCavsFans.com',kind:'Origin',url:'https://realcavsfans.com'},...hits].slice(0,8);
   if(!hits.length){sres.appendChild(el('li','none','No matches. Try a player, an opponent, a term like “apron”, or a question like “when do the Cavs play next?”'))}
   hits.forEach((x,i)=>{const li=el('li');const b=el('button');b.type='button';if(i===0&&isQ)b.appendChild(el('i','best','Best match'));b.append(el('b',null,x.title),el('span',null,x.sub),el('em',null,x.kind));b.addEventListener('click',()=>goTo(x));li.appendChild(b);sres.appendChild(li)});
   sres.hidden=false;q.setAttribute('aria-expanded','true');return hits}
 function goTo(x){
   sres.hidden=true;q.setAttribute('aria-expanded','false');q.value='';q.blur();
+  if(x.url){window.open(x.url,'_blank','noopener');return}
   go(x.go);
   if(!x.id)return;
   requestAnimationFrame(()=>{const t=document.getElementById(x.id);if(!t)return;
