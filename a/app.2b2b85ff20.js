@@ -259,6 +259,8 @@ const CAVS_RADIO_SHORT='WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)';
 const MPG={};
 /* last season's minutes per game (2025–26, Basketball Reference), shown until this season's MPG fills in */
 const MPG_PREV={"James Harden":34.8,"Thomas Bryant":12.2,"Evan Mobley":31.9,"Sam Merrill":26.5,"Peyton Watson":29.6,"Craig Porter Jr.":17.9,"Jaylon Tyson":26.9,"Tyrese Proctor":10.9,"Jarrett Allen":27.1,"Nae'Qwan Tomlin":15.7,"Donovan Mitchell":33.5,"Riley Minix":6.4,"Tristan Enaruna":9.4};
+/* 'Updated today' / 'Updated yesterday' / 'Updated Oct 16' for data stamps */
+const relDay=d=>{const et=x=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(x);const t=et(new Date()),y=et(new Date(Date.now()-864e5));return d===t?'today':d===y?'yesterday':new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})};
 const SITE_UPDATED='2026-10-18';
 /* ===== end daily data ===== */
 
@@ -445,7 +447,7 @@ INJURIES.forEach(([n,p,inj,st])=>{const li=el('li','ij');const d=document.create
   if(PP_ON){const sl=n.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');const pl=el('a','ij-hist','Player page →');pl.href='/players/'+sl;pl.dataset.go='players/'+sl;pl.style.marginRight='14px';box.appendChild(pl)}
   if(c.hist){const l=el('a','ij-hist',"Full injury history ↗");l.href=c.hist;l.target='_blank';l.rel='noopener';box.appendChild(l)}
   d.appendChild(box);li.appendChild(d);ij.appendChild(li)});
-document.getElementById('inj-count').textContent='Updated '+INJ_UPDATED;
+{const m=new Date(INJ_UPDATED+', '+SITE_UPDATED.slice(0,4)+' 12:00');document.getElementById('inj-count').textContent='Updated '+(isNaN(m)?INJ_UPDATED:relDay(new Intl.DateTimeFormat('en-CA').format(m)))}
 {const nt=document.getElementById('inj-note');if(nt){nt.textContent='';nt.hidden=true}}
 /* games missed this season: Cavs players out of a regular-season game for injury or illness (from each final box score), and the salary paid for those games (2026–27 salary ÷ 82) */
 setTimeout(()=>{fetch('/box.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(B=>{if(!B)return;const reg=new Set(SCHEDULE.map(g=>g[0]));const fin=Object.entries(B).filter(([d,g])=>reg.has(d)&&g.status==='final');if(!fin.length)return;
@@ -1385,7 +1387,7 @@ RES.forEach(([g,items])=>{const sec=el('section');const h=el('div','block-h');h.
   const recOf=a=>{const t=STANDINGS.find(x=>x[0]===a);return t?t[2]+'–'+t[3]:'0–0'};
   const nrOf=a=>NRTG[a]?sgn(NRTG[a][0])+' ('+ord(1+Object.values(NRTG).filter(v=>v[0]>NRTG[a][0]).length)+')':'—';
   /* standings & race */
-  const h2=el('div','block-h');h2.append(el('h2',null,new Date()>=new Date(SEASONS[0].slice(0,4)*1+1+'-03-01T00:00:00')?'Playoff picture':'East standings & race'));sd.appendChild(h2);
+  const h2=el('div','block-h');h2.append(el('h2',null,new Date()>=new Date(SEASONS[0].slice(0,4)*1+1+'-03-01T00:00:00')?'Playoff picture':'East standings & race'),el('span','upd-st','Updated '+relDay(SITE_UPDATED)));sd.appendChild(h2);
   const E=STANDINGS.filter(t=>t[1]==='E').map(t=>({a:t[0],w:t[2],l:t[3]})).sort((x,y)=>(y.w-y.l)-(x.w-x.l)||y.w-x.w);
   if(!E.length){sd.appendChild(el('p','dim sp-empty','Standings start after opening night (Oct 22 at Philadelphia). The table, games back, play-in line and tiebreakers fill in from there.'));return}
   const gb=(t,r)=>((r.w-t.w)+(t.l-r.l))/2;const top=E[0];
@@ -2014,6 +2016,17 @@ function goTo(x){
     t.classList.remove('flash');void t.offsetWidth;t.classList.add('flash')})}
 q.addEventListener('input',runSearch);
 q.addEventListener('focus',()=>{if(q.value.trim())runSearch()});
+/* History in search: seasons, numbers, records, coaches, draft picks and playoff series, loaded the first time the search box is used */
+{let hxIdx=false;const loadHx=()=>{if(hxIdx)return;hxIdx=true;fetch('/pdata/history.json').then(r=>r.json()).then(H=>{
+  [['History','Every season, retired numbers, leaders, records, draft and coaches','history',null,'franchise past all-time'],['Retired numbers','In the rafters','history','hx-ret','jersey banner'],['All-time leaders','Points, rebounds, assists and games with the Cavs','history','hx-lead','career most'],['Franchise records','Single game, season and playoffs','history','hx-rec','record most best'],['Playoff history','Every series since 1976','history','hx-po','playoffs series'],['Draft history','Every Cavs draft pick since 1970','history','hx-draft','draft picks'],['Head coaches','Every Cavs head coach','history','hx-coach','coach'],['Honors','MVPs, All-NBA, All-Defense, Hall of Fame','history','hx-hon','award mvp roy dpoy']].forEach(([t,s2,g,id,x])=>add(t,s2,'History',g,id,x));
+  H.seasons.forEach(x=>{const y1=x.s.slice(0,4),y2=String(+y1+1);add(x.s+' Cavaliers',x.w+'–'+x.l+' · '+x.po,'Season','history/'+x.s.replace('–','-'),null,[y1,y2,y2.slice(2),x.coach.map(c=>c[0]).join(' '),(x.allstar||[]).join(' '),'season'].join(' '))});
+  Object.entries(H.numbers||{}).forEach(([k,v])=>add('Who wore #'+k,v.slice().sort((x,y)=>+String(y[1]).slice(0,4)-+String(x[1]).slice(0,4)).slice(0,4).map(z=>z[0]).join(', ')+(v.length>4?' and more':''),'Number','history','hx-num','number jersey wore no '+k+' '+v.map(z=>z[0]).join(' ')));
+  ['game','season','playoffs'].forEach(k=>((H.records||{})[k]||[]).forEach(r=>{const [lab,a1,a2,a3]=r;const who=k==='season'?'':a1,val=k==='season'?a1:a2;add(lab+': '+val,[who,k==='season'?a2:a3].filter(Boolean).join(' · '),'Record','history','hx-rec','record '+lab)}));
+  H.coaches.forEach(([n,y,rec])=>add(n,'Head coach '+y+' · '+rec,'Coach','history','hx-coach','coach'));
+  H.draft.forEach(([y,r,p,n])=>add(n,'Drafted '+y+' · round '+r+', No. '+p,'Draft','history','hx-draft','draft '+y));
+  (H.series||[]).forEach(x=>add(x.s+' vs '+x.opp,(x.won?'Won ':'Lost ')+x.score+' · '+x.round,'Playoffs','history/'+x.s.replace('–','-'),null,'playoffs series '+x.oppAbbr+' '+(+x.s.slice(0,4)+1)+' '+(/NBA Finals/.test(x.round)?'finals':'')));
+  if(q.value.trim())runSearch()}).catch(()=>{hxIdx=false})};q.addEventListener('focus',loadHx);q.addEventListener('input',loadHx,{once:true})}
+
 document.getElementById('sform').addEventListener('submit',e=>{e.preventDefault();const h=runSearch();if(h&&h[0])goTo(h[0])});
 q.addEventListener('keydown',e=>{if(e.key==='ArrowDown'){const f=sres.querySelector('button');if(f){e.preventDefault();f.focus()}}if(e.key==='Escape'){sres.hidden=true;q.setAttribute('aria-expanded','false')}});
 sres.addEventListener('keydown',e=>{const bs=[...sres.querySelectorAll('button')];const i=bs.indexOf(document.activeElement);
@@ -3112,6 +3125,7 @@ const y0now=s=>s===SEASONS[0];
       const r=el('div','chc-n');r.append(el('b',null,x.need.toLocaleString()),' to pass '+x.tgt);r.appendChild(el('small',null,'about '+x.games+(x.games===1?' game':' games')+' at his pace'));li.append(w,r);ul.appendChild(li)});
     if(ul.children.length){box.hidden=false;document.getElementById('chase-sub').textContent=days.length?'Through the last game':'Through '+String(M.through||'').replace('-','–')}
   }).catch(()=>{})})();
+{const c=document.getElementById('cap-upd');if(c)c.textContent='· Updated '+relDay(SITE_UPDATED)}
 /* real page addresses: /cap, /roster, /media/rcf … Old #links still work and are rewritten to the new address. */
 function go(route){route=ROUTE_ALIAS[route]||route;const path=route==='home'?'/':'/'+route;if(location.protocol!=='file:'&&location.pathname!==path){try{history.pushState({p:route},'',path+location.search)}catch(_){}}show(route)}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-go]');if(!t||e.metaKey||e.ctrlKey||e.shiftKey)return;e.preventDefault();go(t.dataset.go)});
