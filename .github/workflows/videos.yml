@@ -50,6 +50,7 @@ jobs:
           # main can move while this runs (site edits, the daily data task). If the rebase or push
           # fails, keep this run's fresh data files, rebuild the page copies on top of the latest main and retry.
           for i in 1 2 3; do
+            git stash 2>/dev/null || true
             if git pull --rebase origin main && git push; then sleep 60; ping; exit 0; fi
             git rebase --abort 2>/dev/null || true
             mkdir -p /tmp/keep && cp -r videos.json box.json rcf.json niang.json /tmp/keep/ 2>/dev/null || true; mkdir -p /tmp/keep/pdata && cp pdata/league.json /tmp/keep/pdata/ 2>/dev/null || true
