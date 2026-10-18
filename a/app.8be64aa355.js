@@ -269,7 +269,7 @@ const nr=NRTG.CLE?sgn(NRTG.CLE[0])+' ('+ord(1+Object.values(NRTG).filter(v=>v[0]
 const nr14=L14.CLE?sgn(L14.CLE[0]):'—';
 [['East rank',SEASON.eastRank],['Central rank',SEASON.centralRank||'—'],['Home',rec('H')],['Road',rec('A')],['Last 10',last10.length?last10.filter(x=>x==='W').length+'–'+last10.filter(x=>x==='L').length:'—'],['Streak',streak],['Net rating',nr],['Net, 2 wks',nr14]]
   .forEach(([k,v])=>{const d=el('div');d.append(el('dt',null,k),el('dd',null,v));sp.appendChild(d)});
-{const a=el('a','home-std','Standings →');a.href='/schedule';a.dataset.go='schedule';const gk=document.getElementById('played').parentElement;gk.appendChild(a)}
+{const a=el('a','home-std','Standings →');a.href='/schedule';a.dataset.go='schedule';const rw=el('div','home-stdrow');rw.appendChild(a);sp.parentElement.insertBefore(rw,sp)}
 const strip=document.getElementById('strip');for(let i=0;i<82;i++)strip.appendChild(el('span',res[i]==='W'?'w':res[i]==='L'?'l':null));
 /* season pace: games over/under .500 as a line over the tracker, dashed out to game 82 at the current pace (from game 5 on) */
 if(res.length>=5){const wins=res.filter(x=>x==='W').length,pace=Math.round(wins/res.length*82);let d=0;const pts=[[0,0]];res.forEach((x,i)=>{d+=x==='W'?1:-1;pts.push([i+1,d])});
@@ -1364,7 +1364,7 @@ RES.forEach(([g,items])=>{const sec=el('section');const h=el('div','block-h');h.
   const recOf=a=>{const t=STANDINGS.find(x=>x[0]===a);return t?t[2]+'–'+t[3]:'0–0'};
   const nrOf=a=>NRTG[a]?sgn(NRTG[a][0])+' ('+ord(1+Object.values(NRTG).filter(v=>v[0]>NRTG[a][0]).length)+')':'—';
   /* standings & race */
-  const h2=el('div','block-h');h2.append(el('h2',null,new Date()>=new Date(SEASONS[0].slice(0,4)*1+1+'-03-01T00:00:00')?'Playoff picture':'East standings & race'),el('span','upd-st','Updated '+relDay(SITE_UPDATED)));sd.appendChild(h2);
+  const h2=el('div','block-h');h2.append(el('h2',null,new Date()>=new Date(SEASONS[0].slice(0,4)*1+1+'-03-01T00:00:00')?'Playoff picture':'East standings & race'),el('span','upd-tag','Updated '+relDay(SITE_UPDATED)));sd.appendChild(h2);
   const E=STANDINGS.filter(t=>t[1]==='E').map(t=>({a:t[0],w:t[2],l:t[3]})).sort((x,y)=>(y.w-y.l)-(x.w-x.l)||y.w-x.w);
   if(!E.length){sd.appendChild(el('p','dim sp-empty','Standings start after opening night (Oct 22 at Philadelphia). The table, games back, play-in line and tiebreakers fill in from there.'));return}
   const gb=(t,r)=>((r.w-t.w)+(t.l-r.l))/2;const top=E[0];
@@ -3100,7 +3100,7 @@ const y0now=s=>s===SEASONS[0];
       const r=el('div','chc-n');r.append(el('b',null,x.need.toLocaleString()),' to pass '+x.tgt);r.appendChild(el('small',null,'about '+x.games+(x.games===1?' game':' games')+' at his pace'));li.append(w,r);ul.appendChild(li)});
     if(ul.children.length){box.hidden=false;document.getElementById('chase-sub').textContent=days.length?'Through the last game':'Through '+String(M.through||'').replace('-','–')}
   }).catch(()=>{})})();
-{const c=document.getElementById('cap-upd');if(c)c.textContent='· Updated '+relDay(SITE_UPDATED)}
+{const c=document.getElementById('cap-upd');if(c)c.textContent='Updated '+relDay(SITE_UPDATED)}
 /* real page addresses: /cap, /roster, /media/rcf … Old #links still work and are rewritten to the new address. */
 function go(route){route=ROUTE_ALIAS[route]||route;const path=route==='home'?'/':'/'+route;if(location.protocol!=='file:'&&location.pathname!==path){try{history.pushState({p:route},'',path+location.search)}catch(_){}}show(route)}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-go]');if(!t||e.metaKey||e.ctrlKey||e.shiftKey)return;e.preventDefault();go(t.dataset.go)});
