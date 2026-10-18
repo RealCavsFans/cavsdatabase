@@ -4222,7 +4222,7 @@ function ppBuild(p,root){
   const meL=LP.find(x=>x.n===n&&x.t==='CLE');
   const per=(x,k)=>x[k]/x.g;
   const rankIn=(val,arr,hi=true)=>{if(val==null||!arr.length)return null;const better=arr.filter(v2=>hi?v2>val:v2<val).length;return {r:better+1,of:arr.length+(arr.includes(val)?0:1),pct:Math.round(100*(arr.filter(v2=>hi?v2<val:v2>val).length)/Math.max(1,arr.length))}};
-  const lgOK=meL&&meL.g>=5&&pool.length>=20;
+  const lgOK=meL&&meL.g>=5&&meL.min/meL.g>=12&&pool.length>=20;  /* rank only players who would qualify for the pool themselves */
   const lgRank=(k,fn)=>{if(!lgOK)return null;const f=fn||(x=>per(x,k));const arr=pool.filter(x=>x!==meL).map(f);return rankIn(f(meL),arr)};
   // Cavs rank this season (players with 3+ games)
   const cavsRank=(fn)=>{if(!gp)return null;const by={};games.forEach(g=>(BX[g.d].box||[]).forEach(r=>{(by[r[0]]=by[r[0]]||[]).push(r)}));
