@@ -1288,6 +1288,20 @@ tr.hx-w td:first-child{box-shadow:inset 3px 0 0 #860038}tr.hx-l td:first-child{b
 .sp-ros{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0 18px}.sp-ros div{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid var(--line2);font-size:13.5px}.sp-ros b{font:600 12px var(--mono);color:var(--muted)}
 @media (max-width:640px){.sp-tiles{grid-template-columns:1fr 1fr}.sp-two{grid-template-columns:1fr}.sp-run li{grid-template-columns:1fr auto}.sp-run .rd{grid-column:1/-1}#view-season .sp-band h1{font-size:32px}}
 .upd-st{font:600 11.5px var(--sans);color:var(--muted);letter-spacing:0;text-transform:none}
+.cap-holds{font-size:12.5px;margin:8px 0 0;line-height:1.5}.cap-holds b{color:var(--fg2)}.twc{margin-top:22px}
+.sm-card{padding:12px 14px}.sm-big{font-size:21px}.sm-sub2{font-size:12.5px;margin-bottom:2px}.sm-meter{height:22px;margin:24px 0 26px}.sm-meter .ln{top:-18px;bottom:-18px}
+.sm-stats{gap:6px;margin-bottom:10px}.sm-stats div{padding:6px 9px}.sm-stats b{font-size:18px}.sm-stats span{font-size:11.5px}
+.sm-cols{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 22px}.sm-cols .kv li{padding:5px 0;font-size:13px}.sm-cols h4{margin:6px 0 2px}
+@media (min-width:1000px){.sm-cols{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.hx-top{margin:0 0 10px!important}.hx-top .hx-ban{gap:6px}.hx-top .hx-bn{padding-top:16px}
+#view-history .o-chase{margin-top:22px}
+.hx-ol{max-width:none;columns:2;column-gap:36px}.hx-ol li{break-inside:avoid}@media (max-width:720px){.hx-ol{columns:1}}
+.hx-cn{display:none}.hx-t td.hx-cn{font-size:12.5px;line-height:1.4}@media (min-width:900px){.hx-cn{display:table-cell}.hx-cn-m{display:none!important}}
+.hx-dctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.hx-sel{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--card);padding:0 0 0 10px;height:34px}.hx-sel span{font:800 10.5px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.hx-sel select{appearance:none;border:0;background:transparent;font:700 13px var(--sans);color:var(--fg);height:32px;padding:0 26px 0 4px;cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-position:calc(100% - 13px) 14px,calc(100% - 8px) 14px;background-size:5px 5px;background-repeat:no-repeat}
+.hx-tg{position:relative;cursor:pointer}.hx-tg input{position:absolute;opacity:0;pointer-events:none}.hx-tg span{display:inline-flex;align-items:center;height:34px;padding:0 12px;border:1px solid var(--line);background:var(--card);font:700 13px var(--sans);color:var(--fg2)}.hx-tg input:checked+span{background:#860038;border-color:#860038;color:#fff}.hx-tg input:focus-visible+span{outline:2px solid var(--fg);outline-offset:2px}
+.hx-dctl .hx-key{margin:0 0 0 auto;font-size:12px}@media (max-width:720px){.hx-dctl .hx-key{margin:0;flex-basis:100%}}
+@media (max-width:720px){.hx-top .hx-ban{grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}.hx-top .hx-bn{padding:10px 2px 14px}.hx-top .hx-bn b{font-size:22px}.hx-top .hx-bn span{font-size:8.5px;line-height:1.15}.hx-top .hx-bn small{display:none}}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 17px var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
@@ -1338,7 +1352,6 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
           <span>Game 82</span>
         </div>
       </section>
-      <section class="o-next o-chase" id="chase" hidden aria-labelledby="chase-h"><div class="block-h"><h2 id="chase-h">Chasing history</h2><span id="chase-sub">Cavs career lists</span></div><ul class="chc-l" id="chase-l"></ul><a class="chc-more" href="/history#hx-lead" data-go="history">All-time leaders →</a></section>
 
 
 <section class="nlsu" hidden><div class="su"><svg class="su-shot" aria-hidden="true"><path class="supath" fill="none" stroke="#F2B231" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 7" opacity="0"/><g class="suball" opacity="0"><circle r="11" fill="#F2B231"/><path d="M-11 0H11M0 -11V11M-6.5 -8.7C-2.8 -4.6 -2.8 4.6 -6.5 8.7M6.5 -8.7C2.8 -4.6 2.8 4.6 6.5 8.7" stroke="#860038" stroke-width="1.3" fill="none"/></g></svg><svg class="sumug" viewBox="0 0 100 100" aria-hidden="true"><path d="M10 34L30 52L10 70" stroke="#860038" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M55 30c-5-6 5-10 0-17M67 30c-5-6 5-10 0-17" stroke="#F2B231" stroke-width="3.5" stroke-linecap="round" fill="none"/><path d="M40 38h42v26a18 18 0 0 1-18 18h-6a18 18 0 0 1-18-18z" fill="#860038"/><path d="M82 46h4a9 9 0 0 1 0 18h-4" stroke="#860038" stroke-width="6" fill="none"/><path d="M61 38v44M40 58h42M48 40c6 7 6 31 0 40M74 40c-6 7-6 31 0 40" stroke="#F2B231" stroke-width="2.4" fill="none"/><rect x="38" y="35" width="46" height="5" rx="2.5" fill="#860038"/></svg><div class="su-tx"><b>Cavs <i>&amp;</i> Coffee</b><span>The box score, the top line, injuries and the news, freshly brewed in your inbox after every game. Free.</span></div><form class="su-f" action="https://buttondown.com/api/emails/embed-subscribe/cavscoffee" method="post"><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email"><input type="hidden" name="embed" value="1"><button type="submit">Sign me up</button></form></div></section>
@@ -1410,7 +1423,10 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
       <tbody id="capbody"></tbody>
       <tfoot><tr id="captot"></tr></tfoot>
     </table></div>
-    <p class="dim cap-note" style="margin:-8px 0 0;font-size:13px">Tap a player for his contract, guarantees, Bird rights and free agency.</p><div class="cap-leg"><span class="lg po">Player option</span><span class="lg to">Team option</span><span class="lg ext">Extension eligible</span><span class="lg nf">Note for this season</span></div><p class="dim cap-note" style="margin:0;font-size:13px">Committed salary only; future years rise as the roster fills.<br><b style="color:var(--wine-ink)">*</b> Thresholds for 2027–28 and later are Spotrac projections, not official figures. The NBA sets each season's cap and tax lines the summer before, and they move with league revenue.</p>
+    <p class="dim cap-note" style="margin:-8px 0 0;font-size:13px">Tap a player for his contract, guarantees, Bird rights and free agency.</p><div class="cap-leg"><span class="lg po">Player option</span><span class="lg to">Team option</span><span class="lg ext">Extension eligible</span><span class="lg nf">Note for this season</span></div><p class="dim cap-note" style="margin:0;font-size:13px">Committed salary only; future years rise as the roster fills.<br><b style="color:var(--wine-ink)">*</b> Projected thresholds; the NBA sets each season's lines the summer before.</p>
+    <p class="dim cap-holds"><span id="std-spots">14 of 15 standard spots filled.</span> · <b>Cap holds</b> <span id="holds-tot"></span>: <span id="holds"></span>. They only count if the Cavs try to get under the cap, never toward the tax, aprons or hard cap.</p>
+    <section class="twc" id="twsec"><div class="block-h"><h2>Two-way</h2><span id="tw-spots">3 of 3 spots filled</span></div><ul class="kv" id="twoway"></ul>
+        <p class="dim" style="margin:8px 0 0;font-size:12.5px">Two limits apply, and the tighter one wins: a player needs 3 or fewer years of NBA service to sign a two-way, and he can spend no more than 3 seasons on two-ways with the same team. Tap a player for his details.</p></section>
     <div class="begm"><b>Be the GM</b><a href="https://bball-gm.com" target="_blank" rel="noopener">bball-GM trade machine ↗</a><a href="https://www.spotrac.com/nba/trade-machine" target="_blank" rel="noopener">Spotrac trade machine ↗</a></div>
     <section id="summer" class="sm27"><div class="block-h"><h2 id="sm-h">Next summer</h2><span id="sm-sub"></span></div><div class="sm-card" id="sm-b"></div></section>
     <section class="aprons" aria-labelledby="ap-h">
@@ -1418,15 +1434,6 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
       <div class="aptbox"><table class="apt" id="apt"><thead><tr><th></th><th>Under the cap</th><th>Over the cap<small>incl. tax</small></th><th>Over 1st apron</th><th>Over 2nd apron</th></tr></thead><tbody><tr><th scope="row">Sign free agents with cap space</th><td class="y">✓</td><td class="n">✕</td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Room mid-level exception</th><td class="y">✓<small>after using space</small></td><td class="n">✕</td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Non-taxpayer mid-level exception</th><td class="na">—</td><td class="y">✓<small>hard caps at 1st apron</small></td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Taxpayer mid-level exception</th><td class="na">—</td><td class="na">—</td><td class="y">✓<small>hard caps at 2nd apron</small></td><td class="n">✕</td></tr><tr><th scope="row">Bi-annual exception</th><td class="na">—</td><td class="y">✓<small>hard caps at 1st apron</small></td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Take back more salary than they send in a trade</th><td class="y">✓<small>into cap space</small></td><td class="y">✓<small>up to 200% / 125% + $250K</small></td><td class="n">✕<small>100% max</small></td><td class="n">✕<small>100% max</small></td></tr><tr><th scope="row">Combine several players’ salaries in one trade</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">✕</td></tr><tr><th scope="row">Send cash in a trade</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">✕</td></tr><tr><th scope="row">Acquire a player in a sign-and-trade</th><td class="y">✓</td><td class="y">✓<small>hard caps at 1st apron</small></td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Use a trade exception created during this season</th><td class="y">✓</td><td class="y">✓</td><td class="n">✕<small>not until the season ends</small></td><td class="n">✕<small>not until the season ends</small></td></tr><tr><th scope="row">Sign a bought out player who earned more than the non-taxpayer MLE</th><td class="y">✓</td><td class="y">✓</td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Trade the first round pick seven years out</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">✕<small>frozen if over at season’s end</small></td></tr></tbody></table></div>
       <p class="dim" style="margin:8px 0 0;font-size:12.5px">A team's position after the move is what counts. Making a move marked "hard caps" means the team can't go over that line for the rest of the league year. The Cavs are hard-capped at the first apron this season. Rules: NBA CBA, as summarized by the <a href="https://cbaguide.com/thresholds/apron/" target="_blank" rel="noopener">CBA Guide</a>.</p>
     </section>
-    <div class="cols">
-      <section><div class="block-h"><h2>Two-way</h2><span id="tw-spots">3 of 3 spots filled</span></div><ul class="kv" id="twoway"></ul>
-        <p class="dim" style="margin:8px 0 0;font-size:12.5px">Two limits apply, and the tighter one wins: a player needs 3 or fewer years of NBA service to sign a two-way, and he can spend no more than 3 seasons on two-ways with the same team. Tap a player for his details.</p></section>
-      <section><div class="block-h"><h2>Exhibit 10</h2><span id="ex10-n"></span></div><ul class="kv" id="camp"></ul>
-        <p class="dim" style="margin:8px 0 0;font-size:12.5px">Exhibit 10 deals are one-year, non-guaranteed minimum contracts for training camp. If the Cavs waive one of these players before the season and he signs with the Charge, Cleveland keeps his G League rights (an affiliate player) and he can earn a bonus of up to $91,000 after 60 days there.</p>
-        <div class="block-h" style="margin-top:22px"><h2>Cap holds</h2><span id="holds-tot"></span></div><p id="holds" style="margin:10px 0 0;font-size:13.5px;line-height:1.5"></p>
-        <p class="dim" style="margin:6px 0 0;font-size:12.5px">Old free agents Cleveland has never renounced. They only count if the Cavs try to get under the cap. They don't count toward the tax, the aprons or the hard cap.</p></section>
-    </div>
-    <p class="dim" style="margin:0;font-size:13px"><span id="std-spots">14 of 15 standard spots filled.</span> Salaries: Capsheets for 2026–27 and Spotrac for later seasons. Bird rights: Salary Swish. Free agency: Spotrac. Option dates: Spotrac. Free agent year is the summer the player hits the market.</p>
     <section class="gloss" id="glossary" aria-labelledby="gl-h">
       <div class="block-h"><h2 id="gl-h">CBA glossary</h2><span>The terms on this page, in plain English</span></div>
       <div class="gl-filter"><input id="glq" type="search" placeholder="Find a term" aria-label="Find a glossary term"></div>
@@ -1459,9 +1466,9 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
       <h1 style="margin-top:6px">Resources</h1>
       <p class="dim" style="margin:6px 0 0">Where to go for the information this site doesn't carry.</p>
     </div>
-    <div class="cols" id="res"></div>
-    <section id="covers" style="margin-top:28px"><div class="block-h"><h2>Who covers the Cavs</h2><span>Newest from each</span></div><div class="cols cov-cols"><section><h3 class="cov-h">Daily coverage</h3><ul class="kv" id="cov-a"><li class="skel skel-li"></li><li class="skel skel-li"></li><li class="skel skel-li"></li></ul></section><section><h3 class="cov-h">Podcasts &amp; shows</h3><ul class="kv" id="cov-p"><li class="skel skel-li"></li><li class="skel skel-li"></li><li class="skel skel-li"></li></ul></section></div></section>
+    <section id="covers" style="margin-top:20px"><div class="block-h"><h2>Who covers the Cavs</h2><span>Newest from each</span></div><div class="cols cov-cols"><section><h3 class="cov-h">Daily coverage</h3><ul class="kv" id="cov-a"><li class="skel skel-li"></li><li class="skel skel-li"></li><li class="skel skel-li"></li></ul></section><section><h3 class="cov-h">Podcasts &amp; shows</h3><ul class="kv" id="cov-p"><li class="skel skel-li"></li><li class="skel skel-li"></li><li class="skel skel-li"></li></ul></section></div></section>
     <section id="xfollow" style="margin-top:22px"><div class="block-h"><h2>Follow on X</h2><span>Cavs news as it breaks</span></div><div class="xf" id="xf"></div></section>
+    <div class="cols" id="res"></div>
 <section class="nlsu nlsu-r" hidden><div class="su"><svg class="su-shot" aria-hidden="true"><path class="supath" fill="none" stroke="#F2B231" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 7" opacity="0"/><g class="suball" opacity="0"><circle r="11" fill="#F2B231"/><path d="M-11 0H11M0 -11V11M-6.5 -8.7C-2.8 -4.6 -2.8 4.6 -6.5 8.7M6.5 -8.7C2.8 -4.6 2.8 4.6 6.5 8.7" stroke="#860038" stroke-width="1.3" fill="none"/></g></svg><svg class="sumug" viewBox="0 0 100 100" aria-hidden="true"><path d="M10 34L30 52L10 70" stroke="#860038" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M55 30c-5-6 5-10 0-17M67 30c-5-6 5-10 0-17" stroke="#F2B231" stroke-width="3.5" stroke-linecap="round" fill="none"/><path d="M40 38h42v26a18 18 0 0 1-18 18h-6a18 18 0 0 1-18-18z" fill="#860038"/><path d="M82 46h4a9 9 0 0 1 0 18h-4" stroke="#860038" stroke-width="6" fill="none"/><path d="M61 38v44M40 58h42M48 40c6 7 6 31 0 40M74 40c-6 7-6 31 0 40" stroke="#F2B231" stroke-width="2.4" fill="none"/><rect x="38" y="35" width="46" height="5" rx="2.5" fill="#860038"/></svg><div class="su-tx"><b>Cavs <i>&amp;</i> Coffee</b><span>The box score, the top line, injuries and the news, freshly brewed in your inbox after every game. Free.</span></div><form class="su-f" action="https://buttondown.com/api/emails/embed-subscribe/cavscoffee" method="post"><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email"><input type="hidden" name="embed" value="1"><button type="submit">Sign me up</button></form></div></section>
     <div class="tipcard"><div class="tc-t"><b>Keep cavs_db free</b><p>No paywall, no ads. If the site saved you a few tabs (or settled an argument), throw the hammer down in the tip jar. It covers hosting and the late nights after West Coast games. Thank you!</p></div><a class="tc-btn" href="https://www.buymeacoffee.com/cavsdb" target="_blank" rel="noopener">☕ Buy cavs_db a coffee</a></div>
   </div>
@@ -1534,17 +1541,18 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
 
 <main id="view-history" hidden>
   <div class="wrap page">
+    <section id="hx-ret" class="hx-top"><h2 class="sr">In the rafters: retired numbers</h2><div class="hx-ban" id="hx-ban"></div></section>
     <div>
       <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / History</div>
       <h1 style="margin-top:6px">56 seasons of Cavs basketball</h1>
       <p class="hx-tait"><span class="hx-q">“It’s basketball time at the <b id="hx-arena">Cleveland Arena</b>.”</span><small>Joe Tait opened every Cavs broadcast that way. Voice of the Cavs, 1970–81 and 1983–2011.</small></p>
     </div>
     <div class="tx-stats" id="hx-stats"><div class="skel skel-tile"></div><div class="skel skel-tile"></div><div class="skel skel-tile"></div></div>
+    <section class="o-chase" id="chase" hidden aria-labelledby="chase-h"><div class="block-h"><h2 id="chase-h">Chasing history</h2><span id="chase-sub">Cavs career lists</span></div><ul class="chc-l" id="chase-l"></ul></section>
     <section id="hx-sea"><div class="block-h"><h2>Every season</h2><span>Tap a season</span></div>
       <div class="hx-leg" id="hx-leg"></div><div class="hx-grid" id="hx-grid"><div class="skel skel-grid"></div></div><div class="hx-det" id="hx-det" hidden></div></section>
     <section id="hx-po"><div class="block-h"><h2>Playoff history</h2><span id="hx-po-n"></span></div><div class="hx-opp" id="hx-opp"></div><p class="dim hx-key"><span class="rt-key"><i class="on"></i>Won the series <i></i>Lost</span> · Results open the series on Basketball Reference</p>
       <div class="tablebox"><table class="hx-t"><thead><tr><th>Season</th><th>Round</th><th>Opponent</th><th class="r">Result</th></tr></thead><tbody id="hx-po-b"></tbody></table></div><button type="button" class="hx-more" id="hx-po-more" hidden></button></section>
-    <section id="hx-ret"><div class="block-h"><h2>In the rafters</h2><span>Retired numbers</span></div><div class="hx-ban" id="hx-ban"></div></section>
     <section id="hx-hon"><div class="block-h"><h2>Honors</h2><span>While with Cleveland</span></div><div class="hx-aw" id="hx-aw"></div>
       <div class="cols hx-teams" id="hx-teams"></div></section>
     <section id="hx-lead"><div class="block-h"><h2>All-time leaders</h2><span id="hx-lead-n">With the Cavs</span></div><div class="segs" role="tablist" id="hx-lead-t"></div><ol class="hx-ol" id="hx-lead-l"></ol></section>
@@ -1552,10 +1560,10 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
     <section id="hx-num"><div class="block-h"><h2>Who wore it</h2><span>Every number, every player</span></div>
       <input id="hx-q" type="search" placeholder="Type a number or a name" aria-label="Find a number or player"><div class="hx-nums" id="hx-nums"></div><ul class="kv" id="hx-wore"></ul></section>
     <section id="hx-draft"><div class="block-h"><h2>Draft history</h2><span id="hx-draft-n"></span></div>
-      <div class="tx-ctrl"><select id="hx-dec" aria-label="Decade"></select><label class="hx-chk"><input type="checkbox" id="hx-r1"> First round only</label><label class="hx-chk"><input type="checkbox" id="hx-pl"> Played for the Cavs only</label></div><p class="dim hx-key"><span class="rt-key"><i class="on"></i>Played for the Cavs</span> · Names and years open Basketball Reference</p>
+      <div class="hx-dctl"><label class="hx-sel"><span>Decade</span><select id="hx-dec" aria-label="Decade"></select></label><label class="hx-tg"><input type="checkbox" id="hx-r1"><span>First round only</span></label><label class="hx-tg"><input type="checkbox" id="hx-pl"><span>Played for the Cavs</span></label><span class="hx-key"><span class="rt-key"><i class="on"></i>Played for the Cavs</span></span></div>
       <div class="tablebox"><table class="hx-t"><thead><tr><th>Year</th><th>Pick</th><th>Player</th><th>From</th></tr></thead><tbody id="hx-draft-b"></tbody></table></div></section>
     <section id="hx-coach"><div class="block-h"><h2>Head coaches</h2><span id="hx-coach-n"></span></div>
-      <div class="tablebox"><table class="hx-t"><thead id="hx-coach-h"><tr><th class="hx-srt" data-k="0">Coach</th><th class="hx-srt" data-k="1">Years</th><th class="r hx-srt" data-k="2">Record</th><th class="r hx-srt" data-k="3">Playoffs</th></tr></thead><tbody id="hx-coach-b"></tbody></table></div></section>
+      <div class="tablebox"><table class="hx-t"><thead id="hx-coach-h"><tr><th class="hx-srt" data-k="0">Coach</th><th class="hx-srt" data-k="1">Years</th><th class="r hx-srt" data-k="2">Record</th><th class="r hx-srt" data-k="3">Playoffs</th><th class="hx-cn">Notes</th></tr></thead><tbody id="hx-coach-b"></tbody></table></div></section>
     <section id="hx-home"><div class="block-h"><h2>Homes of the Cavs</h2><span>Three buildings</span></div><ol class="hx-tl" id="hx-tl"></ol></section>
   </div>
 </main>
@@ -1723,6 +1731,10 @@ const RES=[
     ['NBA Salary Model','Modeled value of player contracts','nbasalarymodel.xyz','https://nbasalarymodel.xyz'],
     ['CBA Guide','The collective bargaining agreement, explained rule by rule','cbaguide.com','https://cbaguide.com']
   ]],
+  ['Fan forum',[
+    ['RealCavsFans','Cavs fan forum, analysis and graphics','realcavsfans.com','https://realcavsfans.com'],
+    ['RealCavsFans on X','Graphics, recaps and breaking news','x.com/realcavsfans','https://x.com/realcavsfans']
+  ]],
   ['Trade machines',[
     ['Spotrac Trade Machine','Build and check trades against the cap','spotrac.com','https://www.spotrac.com/nba/trade-machine'],
     ['bball-GM','Build and check multi-team trades with real salaries and CBA rules','bball-gm.com','https://bball-gm.com']
@@ -1740,9 +1752,6 @@ const RES=[
     ['No Ceilings','Big boards, scouting reports and draft coverage','noceilingsnba.com','https://www.noceilingsnba.com'],
     ['Tankathon','Mock drafts, lottery odds and every team’s future picks','tankathon.com','https://www.tankathon.com'],
     ['Swish Theory','Draft guide, scouting reports and analysis','theswishtheory.com','https://theswishtheory.com']
-  ]],
-  ['Fan forum',[
-    ['RealCavsFans','Cavs fan forum, analysis and graphics','realcavsfans.com','https://realcavsfans.com']
   ]]
 ];
 const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e};
@@ -2860,8 +2869,8 @@ const tw=document.getElementById('twoway');tw.className='xl tw2';{const h=el('li
   d.append(sm,bx);li.appendChild(d);tw.appendChild(li)});
 {document.getElementById('holds').textContent=HOLDS.map(([n,v])=>n+' '+usdM(v)).join(' · ');
  document.getElementById('holds-tot').textContent=HOLDS.length+' · '+usd(HOLDS.reduce((a,[,v])=>a+v,0))}
-const cp=document.getElementById('camp');EX10.filter(x=>!x[3]).forEach(([n,ps,sg,wv,nt])=>{const li=el('li');if(!wv)li.id='p-'+slug(n);const sp2=el('span',null,n);sp2.append(el('small',null,ps+' · '+(wv?'Signed '+sg+', waived '+wv+' · Charge affiliate if he reports (not yet announced)'+(nt?' · '+nt:''):'In camp · signed '+sg+' · Non-Bird')));li.append(sp2,el('b',null,wv?'Waived':'$1,357,763'));if(wv)li.classList.add('ex-w');cp.appendChild(li)});
-document.getElementById('ex10-n').textContent=EX10.filter(x=>!x[3]).length+' in camp';if(!EX10.some(x=>!x[3])){const li=el('li','ex-none');li.append(el('span',null,'Camp is over. All '+EX10.length+' Exhibit 10 players this fall were waived, the last four on Oct 17.'));cp.appendChild(li)}
+if(document.getElementById('camp')){const cp=document.getElementById('camp');EX10.filter(x=>!x[3]).forEach(([n,ps,sg,wv,nt])=>{const li=el('li');if(!wv)li.id='p-'+slug(n);const sp2=el('span',null,n);sp2.append(el('small',null,ps+' · '+(wv?'Signed '+sg+', waived '+wv+' · Charge affiliate if he reports (not yet announced)'+(nt?' · '+nt:''):'In camp · signed '+sg+' · Non-Bird')));li.append(sp2,el('b',null,wv?'Waived':'$1,357,763'));if(wv)li.classList.add('ex-w');cp.appendChild(li)});
+document.getElementById('ex10-n').textContent=EX10.filter(x=>!x[3]).length+' in camp';if(!EX10.some(x=>!x[3])){const li=el('li','ex-none');li.append(el('span',null,'Camp is over. All '+EX10.length+' Exhibit 10 players this fall were waived, the last four on Oct 17.'));cp.appendChild(li)}}
 
 /* assets */
 const xitem=(head,sub,val,body)=>{const li=el('li');const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,head));if(sub)l.appendChild(el('small',null,sub));sm.appendChild(l);if(val)sm.appendChild(val);d.appendChild(sm);const bx=el('div','xb');body.forEach(([h,t])=>{const p=el('p');if(h)p.appendChild(el('strong',null,h+' '));p.append(t);bx.appendChild(p)});d.appendChild(bx);li.appendChild(d);return li};
@@ -3351,7 +3360,7 @@ setTimeout(function(){const ov=(/[?&]bday=(\d\d-\d\d)/.exec(location.search)||[]
     steps.forEach(([k,v])=>{const li=el('li');li.append(el('b',null,k),el('span',null,v));ol.appendChild(li)});
     pn.append(hd,el('p','app-lede','cavs_db opens full screen from your home screen, like an app. No app store, nothing to update.'),ol);w.append(bg,pn);document.body.appendChild(w);x.focus()}})();
 /* jump-to chips: a sticky row of section links on long pages; highlights the section you're in */
-setTimeout(function(){const J={'view-cap':[['Cap sheet','#captop'],['Next summer','#summer'],['Apron rules','#ap-h'],['Two-way','#twoway'],['Exhibit 10','#camp'],['Cap holds','#holds'],['Glossary','#glossary']],'view-assets':[['Draft picks','#board'],['Exceptions','#exc'],['Cash','#cash-sec'],['Drafted players','#rights']],'view-history':[['Seasons','#hx-sea'],['Playoffs','#hx-po'],['Rafters','#hx-ret'],['Honors','#hx-hon'],['Leaders','#hx-lead'],['Records','#hx-rec'],['Numbers','#hx-num'],['Draft','#hx-draft'],['Coaches','#hx-coach'],['Arenas','#hx-home']]};
+setTimeout(function(){const J={'view-cap':[['Cap sheet','#captop'],['Two-way','#twsec'],['Next summer','#summer'],['Apron rules','#ap-h'],['Glossary','#glossary']],'view-assets':[['Draft picks','#board'],['Exceptions','#exc'],['Cash','#cash-sec'],['Drafted players','#rights']],'view-history':[['Rafters','#hx-ret'],['Chasing','#chase'],['Seasons','#hx-sea'],['Playoffs','#hx-po'],['Honors','#hx-hon'],['Leaders','#hx-lead'],['Records','#hx-rec'],['Numbers','#hx-num'],['Draft','#hx-draft'],['Coaches','#hx-coach'],['Arenas','#hx-home']]};
   const hdr=()=>(document.querySelector('header.gbar')||{offsetHeight:0}).offsetHeight;
   Object.entries(J).forEach(([vid,items])=>{const v=document.getElementById(vid);if(!v)return;const head=v.querySelector('.page>div');if(!head)return;
     const secs=items.map(([l,q])=>{const t=document.querySelector(q);return t?[l,t.closest('section')||t]:null}).filter(Boolean);if(secs.length<2)return;
@@ -3887,7 +3896,7 @@ TX.filter(r=>r.k==='trade').forEach(r=>add('Trade · '+(r.got||[]).slice(0,2).jo
 /* number roll-in: digits in the chosen elements scramble for a moment, then settle (once per page view) */
 (function(){
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;const DIG='0123456789';const done=new Set();
-  const SEL={home:'#payroll, .hcap-h span',cap:'.cap td.cur, .cap td.fut, .cap tfoot td',assets:'#exc summary > b',moves:'.txs b',roster:'.ros td.m, .ros td.num'};
+  const SEL={home:'#payroll, .hcap-h span',cap:'.cap td.cur, .cap td.fut, .cap tfoot td',assets:'#exc summary > b, .cash-c > b',moves:'.txs b',roster:'.ros td.m, .ros td.num'};
   function rollText(node,delay){const fin=node.nodeValue;if(!/[0-9]/.test(fin))return;let k=0;const steps=9;
     setTimeout(()=>{const iv=setInterval(()=>{k++;node.nodeValue=[...fin].map((c,i)=>/[0-9]/.test(c)&&k<steps+(i%6)?DIG[(Math.random()*10)|0]:c).join('');if(k>=steps+6){node.nodeValue=fin;clearInterval(iv)}},50)},delay)}
   window.scrambleView=function(id){if(reduce||done.has(id)||!SEL[id])return;done.add(id);
@@ -4638,7 +4647,7 @@ function draw(){const $=id=>document.getElementById(id);
   {const b=$('hx-ban');b.textContent='';H.retired.slice().sort((a,c)=>+a[0]-+c[0]).forEach(([n,p,y])=>{const d=el('div','hx-bn');d.append(el('b',null,n),el('span',null,p),el('small',null,y?'Retired '+y:''));b.appendChild(d)})}
   /* leaders */
   {const F=(MS&&MS.franchise)||{};const T=$('hx-lead-t'),L=$('hx-lead-l');T.textContent='';const K=[['PTS','Points'],['REB','Rebounds'],['AST','Assists'],['GP','Games']];
-   const pick=k=>{T.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k?'true':'false'));L.textContent='';(F[k]||[]).slice(0,10).forEach(([n,v],i)=>{const li=el('li');const nm=onRoster(n)&&PP_ON?(()=>{const a=el('a',null,n);a.href='/players/'+slug(n);a.dataset.go='players/'+slug(n);return a})():bbA(n,'hx-bb',(H.bbl||{})[n]);li.append(el('i',null,String(i+1)),nm,el('b',null,v.toLocaleString()));if(onRoster(n))li.classList.add('hx-now');L.appendChild(li)})};
+   const pick=k=>{T.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k?'true':'false'));L.textContent='';(F[k]||[]).slice(0,20).forEach(([n,v],i)=>{const li=el('li');const nm=onRoster(n)&&PP_ON?(()=>{const a=el('a',null,n);a.href='/players/'+slug(n);a.dataset.go='players/'+slug(n);return a})():bbA(n,'hx-bb',(H.bbl||{})[n]);li.append(el('i',null,String(i+1)),nm,el('b',null,v.toLocaleString()));if(onRoster(n))li.classList.add('hx-now');L.appendChild(li)})};
    K.forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('role','tab');b.dataset.k=k;b.onclick=()=>pick(k);T.appendChild(b)});pick('PTS');
    if(MS&&MS.through)$('hx-lead-n').textContent='Regular season · through '+MS.through.replace('-','–');}
   /* who wore it */
@@ -4662,7 +4671,7 @@ function draw(){const $=id=>document.getElementById(id);
   /* coaches */
   {const tb=$('hx-coach-b');const wl=r=>{const m=String(r||'').match(/(\d+)\D+(\d+)/);return m?[+m[1],+m[2]]:[0,0]};
    const KEY=[c=>c[0].split(' ').slice(-1)[0]+c[0],c=>num(c[1]),c=>{const [w,l]=wl(c[2]);return w+l?w/(w+l):0},c=>wl(c[3])[0]];let sk=1,dir=1;
-   const render=()=>{tb.textContent='';H.coaches.slice().sort((a,b)=>{const x=KEY[sk](a),y=KEY[sk](b);return (x<y?-1:x>y?1:0)*dir||num(a[1])-num(b[1])}).forEach(([n,y,rec,po,nt])=>{const tr=el('tr');const td=el('td');const cid=(H.bbc||{})[n];if(cid){const a=el('a','hx-bb',n);a.href='https://www.basketball-reference.com/coaches/'+cid+'.html';a.target='_blank';a.rel='noopener';a.title=n+' on Basketball Reference';td.appendChild(a)}else td.append(n);if(nt)td.appendChild(el('small',null,nt));const [w,l]=wl(rec);const rt=el('td','r m',rec);if(w+l)rt.title=(w/(w+l)).toFixed(3).replace(/^0/,'')+' win pct';tr.append(td,el('td','m',y),rt,el('td','r m',po||'—'));tb.appendChild(tr)});
+   const render=()=>{tb.textContent='';H.coaches.slice().sort((a,b)=>{const x=KEY[sk](a),y=KEY[sk](b);return (x<y?-1:x>y?1:0)*dir||num(a[1])-num(b[1])}).forEach(([n,y,rec,po,nt])=>{const tr=el('tr');const td=el('td');const cid=(H.bbc||{})[n];if(cid){const a=el('a','hx-bb',n);a.href='https://www.basketball-reference.com/coaches/'+cid+'.html';a.target='_blank';a.rel='noopener';a.title=n+' on Basketball Reference';td.appendChild(a)}else td.append(n);if(nt)td.appendChild(el('small','hx-cn-m',nt));const [w,l]=wl(rec);const rt=el('td','r m',rec);if(w+l)rt.title=(w/(w+l)).toFixed(3).replace(/^0/,'')+' win pct';tr.append(td,el('td','m',y),rt,el('td','r m',po||'—'),el('td','hx-cn dim',nt||''));tb.appendChild(tr)});
      $('hx-coach-h').querySelectorAll('th').forEach(th=>{th.dataset.dir=+th.dataset.k===sk?(dir>0?'asc':'desc'):''})};
    $('hx-coach-h').querySelectorAll('th').forEach(th=>th.onclick=()=>{const k=+th.dataset.k;if(k===sk)dir=-dir;else{sk=k;dir=k>=2?-1:1}render()});render();
    $('hx-coach-n').textContent=new Set(H.coaches.map(c=>c[0])).size+' coaches · tap a column to sort'}
@@ -4736,14 +4745,12 @@ const y0now=s=>s===SEASONS[0];
   const ext=Object.entries(EXT).filter(([k,v])=>v===I).map(([k])=>k.split(' ').slice(-1)[0]);
   const tools=[['Bird rights','Re-sign their own free agents over the cap','Yes','sm-y'],['Taxpayer mid-level','Using it hard-caps them at the second apron',tot<a2?'Tight':'No',tot<a2?'sm-y':'sm-n'],['Minimum contracts','Always available','Yes','sm-y'],['Cap space signings',over>0?'Payroll is above the cap':'Room under the cap',over>0?'No':'Yes',over>0?'sm-n':'sm-y']];
   const dec=opts.map(([nm,v,t])=>[nm+' team option',NY+(t?' · '+t.replace('Team option decision due','due'):''),usdM(v)]).concat(ext.length?[['Extension window opens',ext.join(', ')+' become eligible','July '+yr]]:[]);
-  const c2=col('How they can add players',tools);if(dec.length){const d2=col('Decisions before then',dec);c2.append(...d2.childNodes)}
-  cols.append(c1,c2);B.appendChild(cols);
-  B.appendChild(el('p','sm-note','Salaries: the cap sheet above (Spotrac). '+NY+' cap '+usdM(cap)+', tax '+usdM(tax)+', first apron '+usdM(a1)+', second apron '+usdM(a2)+' are league projections.'));
+  const c2=col('How they can add players',tools);cols.append(c1,c2);if(dec.length)cols.appendChild(col('Decisions before then',dec));B.appendChild(cols);
 })();
 
 /* Resources: X accounts worth following (handles checked against search results before adding) */
 (function(){const box=document.getElementById('xf');if(!box)return;
-  [['Cavaliers','cavs','Official team account'],['cleveland.com Cavs','PDcavsinsider','cleveland.com coverage'],['Chris Fedor','chrisfedor','Beat writer'],['Ethan Sands','EjElite1','Beat writer, cleveland.com'],['Evan Dammarell','AmNotEvan','Beat writer'],['Fear The Sword','FearTheSword','SB Nation team site'],['RealCavsFans','realcavsfans','Recaps and analytics']]
+  [['Cavaliers','cavs','Official team account'],['cleveland.com Cavs','PDcavsinsider','cleveland.com coverage'],['Chris Fedor','chrisfedor','Beat writer'],['Ethan Sands','EjElite1','Beat writer, cleveland.com'],['Tony Pesta','Tony_Pesta','Cavs writer and podcaster'],['Mack Perry','DevaronPerry','Cavaliers on SI'],['Fear the \u2019Fro','FeartheFroPod','Cavs podcast'],['Fear The Sword','FearTheSword','SB Nation team site'],['RealCavsFans','realcavsfans','Recaps and analytics']]
   .forEach(([n,h,d])=>{const a=el('a','xfc');a.href='https://x.com/'+h;a.target='_blank';a.rel='noopener';a.append(el('b',null,n),el('span',null,'@'+h),el('small',null,d));box.appendChild(a)})})();
 
 /* Home: Chasing history. Cavs career totals (pdata/milestones.json, through last season) plus this season's regular-season box scores;

@@ -81,6 +81,10 @@ const RES=[
     ['NBA Salary Model','Modeled value of player contracts','nbasalarymodel.xyz','https://nbasalarymodel.xyz'],
     ['CBA Guide','The collective bargaining agreement, explained rule by rule','cbaguide.com','https://cbaguide.com']
   ]],
+  ['Fan forum',[
+    ['RealCavsFans','Cavs fan forum, analysis and graphics','realcavsfans.com','https://realcavsfans.com'],
+    ['RealCavsFans on X','Graphics, recaps and breaking news','x.com/realcavsfans','https://x.com/realcavsfans']
+  ]],
   ['Trade machines',[
     ['Spotrac Trade Machine','Build and check trades against the cap','spotrac.com','https://www.spotrac.com/nba/trade-machine'],
     ['bball-GM','Build and check multi-team trades with real salaries and CBA rules','bball-gm.com','https://bball-gm.com']
@@ -98,9 +102,6 @@ const RES=[
     ['No Ceilings','Big boards, scouting reports and draft coverage','noceilingsnba.com','https://www.noceilingsnba.com'],
     ['Tankathon','Mock drafts, lottery odds and every team’s future picks','tankathon.com','https://www.tankathon.com'],
     ['Swish Theory','Draft guide, scouting reports and analysis','theswishtheory.com','https://theswishtheory.com']
-  ]],
-  ['Fan forum',[
-    ['RealCavsFans','Cavs fan forum, analysis and graphics','realcavsfans.com','https://realcavsfans.com']
   ]]
 ];
 const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e};
@@ -1218,8 +1219,8 @@ const tw=document.getElementById('twoway');tw.className='xl tw2';{const h=el('li
   d.append(sm,bx);li.appendChild(d);tw.appendChild(li)});
 {document.getElementById('holds').textContent=HOLDS.map(([n,v])=>n+' '+usdM(v)).join(' · ');
  document.getElementById('holds-tot').textContent=HOLDS.length+' · '+usd(HOLDS.reduce((a,[,v])=>a+v,0))}
-const cp=document.getElementById('camp');EX10.filter(x=>!x[3]).forEach(([n,ps,sg,wv,nt])=>{const li=el('li');if(!wv)li.id='p-'+slug(n);const sp2=el('span',null,n);sp2.append(el('small',null,ps+' · '+(wv?'Signed '+sg+', waived '+wv+' · Charge affiliate if he reports (not yet announced)'+(nt?' · '+nt:''):'In camp · signed '+sg+' · Non-Bird')));li.append(sp2,el('b',null,wv?'Waived':'$1,357,763'));if(wv)li.classList.add('ex-w');cp.appendChild(li)});
-document.getElementById('ex10-n').textContent=EX10.filter(x=>!x[3]).length+' in camp';if(!EX10.some(x=>!x[3])){const li=el('li','ex-none');li.append(el('span',null,'Camp is over. All '+EX10.length+' Exhibit 10 players this fall were waived, the last four on Oct 17.'));cp.appendChild(li)}
+if(document.getElementById('camp')){const cp=document.getElementById('camp');EX10.filter(x=>!x[3]).forEach(([n,ps,sg,wv,nt])=>{const li=el('li');if(!wv)li.id='p-'+slug(n);const sp2=el('span',null,n);sp2.append(el('small',null,ps+' · '+(wv?'Signed '+sg+', waived '+wv+' · Charge affiliate if he reports (not yet announced)'+(nt?' · '+nt:''):'In camp · signed '+sg+' · Non-Bird')));li.append(sp2,el('b',null,wv?'Waived':'$1,357,763'));if(wv)li.classList.add('ex-w');cp.appendChild(li)});
+document.getElementById('ex10-n').textContent=EX10.filter(x=>!x[3]).length+' in camp';if(!EX10.some(x=>!x[3])){const li=el('li','ex-none');li.append(el('span',null,'Camp is over. All '+EX10.length+' Exhibit 10 players this fall were waived, the last four on Oct 17.'));cp.appendChild(li)}}
 
 /* assets */
 const xitem=(head,sub,val,body)=>{const li=el('li');const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,head));if(sub)l.appendChild(el('small',null,sub));sm.appendChild(l);if(val)sm.appendChild(val);d.appendChild(sm);const bx=el('div','xb');body.forEach(([h,t])=>{const p=el('p');if(h)p.appendChild(el('strong',null,h+' '));p.append(t);bx.appendChild(p)});d.appendChild(bx);li.appendChild(d);return li};
@@ -1709,7 +1710,7 @@ setTimeout(function(){const ov=(/[?&]bday=(\d\d-\d\d)/.exec(location.search)||[]
     steps.forEach(([k,v])=>{const li=el('li');li.append(el('b',null,k),el('span',null,v));ol.appendChild(li)});
     pn.append(hd,el('p','app-lede','cavs_db opens full screen from your home screen, like an app. No app store, nothing to update.'),ol);w.append(bg,pn);document.body.appendChild(w);x.focus()}})();
 /* jump-to chips: a sticky row of section links on long pages; highlights the section you're in */
-setTimeout(function(){const J={'view-cap':[['Cap sheet','#captop'],['Next summer','#summer'],['Apron rules','#ap-h'],['Two-way','#twoway'],['Exhibit 10','#camp'],['Cap holds','#holds'],['Glossary','#glossary']],'view-assets':[['Draft picks','#board'],['Exceptions','#exc'],['Cash','#cash-sec'],['Drafted players','#rights']],'view-history':[['Seasons','#hx-sea'],['Playoffs','#hx-po'],['Rafters','#hx-ret'],['Honors','#hx-hon'],['Leaders','#hx-lead'],['Records','#hx-rec'],['Numbers','#hx-num'],['Draft','#hx-draft'],['Coaches','#hx-coach'],['Arenas','#hx-home']]};
+setTimeout(function(){const J={'view-cap':[['Cap sheet','#captop'],['Two-way','#twsec'],['Next summer','#summer'],['Apron rules','#ap-h'],['Glossary','#glossary']],'view-assets':[['Draft picks','#board'],['Exceptions','#exc'],['Cash','#cash-sec'],['Drafted players','#rights']],'view-history':[['Rafters','#hx-ret'],['Chasing','#chase'],['Seasons','#hx-sea'],['Playoffs','#hx-po'],['Honors','#hx-hon'],['Leaders','#hx-lead'],['Records','#hx-rec'],['Numbers','#hx-num'],['Draft','#hx-draft'],['Coaches','#hx-coach'],['Arenas','#hx-home']]};
   const hdr=()=>(document.querySelector('header.gbar')||{offsetHeight:0}).offsetHeight;
   Object.entries(J).forEach(([vid,items])=>{const v=document.getElementById(vid);if(!v)return;const head=v.querySelector('.page>div');if(!head)return;
     const secs=items.map(([l,q])=>{const t=document.querySelector(q);return t?[l,t.closest('section')||t]:null}).filter(Boolean);if(secs.length<2)return;
@@ -2245,7 +2246,7 @@ TX.filter(r=>r.k==='trade').forEach(r=>add('Trade · '+(r.got||[]).slice(0,2).jo
 /* number roll-in: digits in the chosen elements scramble for a moment, then settle (once per page view) */
 (function(){
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;const DIG='0123456789';const done=new Set();
-  const SEL={home:'#payroll, .hcap-h span',cap:'.cap td.cur, .cap td.fut, .cap tfoot td',assets:'#exc summary > b',moves:'.txs b',roster:'.ros td.m, .ros td.num'};
+  const SEL={home:'#payroll, .hcap-h span',cap:'.cap td.cur, .cap td.fut, .cap tfoot td',assets:'#exc summary > b, .cash-c > b',moves:'.txs b',roster:'.ros td.m, .ros td.num'};
   function rollText(node,delay){const fin=node.nodeValue;if(!/[0-9]/.test(fin))return;let k=0;const steps=9;
     setTimeout(()=>{const iv=setInterval(()=>{k++;node.nodeValue=[...fin].map((c,i)=>/[0-9]/.test(c)&&k<steps+(i%6)?DIG[(Math.random()*10)|0]:c).join('');if(k>=steps+6){node.nodeValue=fin;clearInterval(iv)}},50)},delay)}
   window.scrambleView=function(id){if(reduce||done.has(id)||!SEL[id])return;done.add(id);
@@ -2996,7 +2997,7 @@ function draw(){const $=id=>document.getElementById(id);
   {const b=$('hx-ban');b.textContent='';H.retired.slice().sort((a,c)=>+a[0]-+c[0]).forEach(([n,p,y])=>{const d=el('div','hx-bn');d.append(el('b',null,n),el('span',null,p),el('small',null,y?'Retired '+y:''));b.appendChild(d)})}
   /* leaders */
   {const F=(MS&&MS.franchise)||{};const T=$('hx-lead-t'),L=$('hx-lead-l');T.textContent='';const K=[['PTS','Points'],['REB','Rebounds'],['AST','Assists'],['GP','Games']];
-   const pick=k=>{T.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k?'true':'false'));L.textContent='';(F[k]||[]).slice(0,10).forEach(([n,v],i)=>{const li=el('li');const nm=onRoster(n)&&PP_ON?(()=>{const a=el('a',null,n);a.href='/players/'+slug(n);a.dataset.go='players/'+slug(n);return a})():bbA(n,'hx-bb',(H.bbl||{})[n]);li.append(el('i',null,String(i+1)),nm,el('b',null,v.toLocaleString()));if(onRoster(n))li.classList.add('hx-now');L.appendChild(li)})};
+   const pick=k=>{T.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k?'true':'false'));L.textContent='';(F[k]||[]).slice(0,20).forEach(([n,v],i)=>{const li=el('li');const nm=onRoster(n)&&PP_ON?(()=>{const a=el('a',null,n);a.href='/players/'+slug(n);a.dataset.go='players/'+slug(n);return a})():bbA(n,'hx-bb',(H.bbl||{})[n]);li.append(el('i',null,String(i+1)),nm,el('b',null,v.toLocaleString()));if(onRoster(n))li.classList.add('hx-now');L.appendChild(li)})};
    K.forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('role','tab');b.dataset.k=k;b.onclick=()=>pick(k);T.appendChild(b)});pick('PTS');
    if(MS&&MS.through)$('hx-lead-n').textContent='Regular season · through '+MS.through.replace('-','–');}
   /* who wore it */
@@ -3020,7 +3021,7 @@ function draw(){const $=id=>document.getElementById(id);
   /* coaches */
   {const tb=$('hx-coach-b');const wl=r=>{const m=String(r||'').match(/(\d+)\D+(\d+)/);return m?[+m[1],+m[2]]:[0,0]};
    const KEY=[c=>c[0].split(' ').slice(-1)[0]+c[0],c=>num(c[1]),c=>{const [w,l]=wl(c[2]);return w+l?w/(w+l):0},c=>wl(c[3])[0]];let sk=1,dir=1;
-   const render=()=>{tb.textContent='';H.coaches.slice().sort((a,b)=>{const x=KEY[sk](a),y=KEY[sk](b);return (x<y?-1:x>y?1:0)*dir||num(a[1])-num(b[1])}).forEach(([n,y,rec,po,nt])=>{const tr=el('tr');const td=el('td');const cid=(H.bbc||{})[n];if(cid){const a=el('a','hx-bb',n);a.href='https://www.basketball-reference.com/coaches/'+cid+'.html';a.target='_blank';a.rel='noopener';a.title=n+' on Basketball Reference';td.appendChild(a)}else td.append(n);if(nt)td.appendChild(el('small',null,nt));const [w,l]=wl(rec);const rt=el('td','r m',rec);if(w+l)rt.title=(w/(w+l)).toFixed(3).replace(/^0/,'')+' win pct';tr.append(td,el('td','m',y),rt,el('td','r m',po||'—'));tb.appendChild(tr)});
+   const render=()=>{tb.textContent='';H.coaches.slice().sort((a,b)=>{const x=KEY[sk](a),y=KEY[sk](b);return (x<y?-1:x>y?1:0)*dir||num(a[1])-num(b[1])}).forEach(([n,y,rec,po,nt])=>{const tr=el('tr');const td=el('td');const cid=(H.bbc||{})[n];if(cid){const a=el('a','hx-bb',n);a.href='https://www.basketball-reference.com/coaches/'+cid+'.html';a.target='_blank';a.rel='noopener';a.title=n+' on Basketball Reference';td.appendChild(a)}else td.append(n);if(nt)td.appendChild(el('small','hx-cn-m',nt));const [w,l]=wl(rec);const rt=el('td','r m',rec);if(w+l)rt.title=(w/(w+l)).toFixed(3).replace(/^0/,'')+' win pct';tr.append(td,el('td','m',y),rt,el('td','r m',po||'—'),el('td','hx-cn dim',nt||''));tb.appendChild(tr)});
      $('hx-coach-h').querySelectorAll('th').forEach(th=>{th.dataset.dir=+th.dataset.k===sk?(dir>0?'asc':'desc'):''})};
    $('hx-coach-h').querySelectorAll('th').forEach(th=>th.onclick=()=>{const k=+th.dataset.k;if(k===sk)dir=-dir;else{sk=k;dir=k>=2?-1:1}render()});render();
    $('hx-coach-n').textContent=new Set(H.coaches.map(c=>c[0])).size+' coaches · tap a column to sort'}
@@ -3094,14 +3095,12 @@ const y0now=s=>s===SEASONS[0];
   const ext=Object.entries(EXT).filter(([k,v])=>v===I).map(([k])=>k.split(' ').slice(-1)[0]);
   const tools=[['Bird rights','Re-sign their own free agents over the cap','Yes','sm-y'],['Taxpayer mid-level','Using it hard-caps them at the second apron',tot<a2?'Tight':'No',tot<a2?'sm-y':'sm-n'],['Minimum contracts','Always available','Yes','sm-y'],['Cap space signings',over>0?'Payroll is above the cap':'Room under the cap',over>0?'No':'Yes',over>0?'sm-n':'sm-y']];
   const dec=opts.map(([nm,v,t])=>[nm+' team option',NY+(t?' · '+t.replace('Team option decision due','due'):''),usdM(v)]).concat(ext.length?[['Extension window opens',ext.join(', ')+' become eligible','July '+yr]]:[]);
-  const c2=col('How they can add players',tools);if(dec.length){const d2=col('Decisions before then',dec);c2.append(...d2.childNodes)}
-  cols.append(c1,c2);B.appendChild(cols);
-  B.appendChild(el('p','sm-note','Salaries: the cap sheet above (Spotrac). '+NY+' cap '+usdM(cap)+', tax '+usdM(tax)+', first apron '+usdM(a1)+', second apron '+usdM(a2)+' are league projections.'));
+  const c2=col('How they can add players',tools);cols.append(c1,c2);if(dec.length)cols.appendChild(col('Decisions before then',dec));B.appendChild(cols);
 })();
 
 /* Resources: X accounts worth following (handles checked against search results before adding) */
 (function(){const box=document.getElementById('xf');if(!box)return;
-  [['Cavaliers','cavs','Official team account'],['cleveland.com Cavs','PDcavsinsider','cleveland.com coverage'],['Chris Fedor','chrisfedor','Beat writer'],['Ethan Sands','EjElite1','Beat writer, cleveland.com'],['Evan Dammarell','AmNotEvan','Beat writer'],['Fear The Sword','FearTheSword','SB Nation team site'],['RealCavsFans','realcavsfans','Recaps and analytics']]
+  [['Cavaliers','cavs','Official team account'],['cleveland.com Cavs','PDcavsinsider','cleveland.com coverage'],['Chris Fedor','chrisfedor','Beat writer'],['Ethan Sands','EjElite1','Beat writer, cleveland.com'],['Tony Pesta','Tony_Pesta','Cavs writer and podcaster'],['Mack Perry','DevaronPerry','Cavaliers on SI'],['Fear the \u2019Fro','FeartheFroPod','Cavs podcast'],['Fear The Sword','FearTheSword','SB Nation team site'],['RealCavsFans','realcavsfans','Recaps and analytics']]
   .forEach(([n,h,d])=>{const a=el('a','xfc');a.href='https://x.com/'+h;a.target='_blank';a.rel='noopener';a.append(el('b',null,n),el('span',null,'@'+h),el('small',null,d));box.appendChild(a)})})();
 
 /* Home: Chasing history. Cavs career totals (pdata/milestones.json, through last season) plus this season's regular-season box scores;
