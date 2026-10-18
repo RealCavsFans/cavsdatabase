@@ -1270,6 +1270,11 @@ tr.hx-w td:first-child{box-shadow:inset 3px 0 0 #860038}tr.hx-l td:first-child{b
 .cp-steps li:not(:last-child)::after{content:'';position:absolute;right:6px;top:50%;width:10px;border-top:1.5px solid var(--line)}
 .cp-steps li i{width:9px;height:9px;border-radius:50%;background:var(--card);box-shadow:inset 0 0 0 2px var(--muted);flex:none}
 .cp-steps li.cp-chg i{background:#F2B231;box-shadow:none}.cp-steps li.cp-cle i{background:#860038;box-shadow:none}.cp-steps li.cp-tw i{background:var(--card);box-shadow:inset 0 0 0 2.5px #860038}.cp-steps li.cp-cle span,.cp-steps li.cp-tw span{font-weight:700;color:var(--fg)}
+@media (max-width:560px){.block-h:not(.hasx){flex-wrap:wrap;align-items:baseline;row-gap:2px}.block-h:not(.hasx)>h2{flex:0 1 auto;max-width:100%}.block-h:not(.hasx)>span{white-space:normal;text-align:left}}
+.skel{background:linear-gradient(90deg,var(--line2) 25%,var(--card) 50%,var(--line2) 75%);background-size:200% 100%;animation:skel 1.3s ease-in-out infinite;border-radius:3px}
+@keyframes skel{0%{background-position:100% 0}100%{background-position:-100% 0}}@media (prefers-reduced-motion:reduce){.skel{animation:none}}
+.skel-wrap{display:grid;gap:12px;margin-top:12px}.skel-band{height:220px}.skel-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.skel-b{height:44px}.skel-card{height:180px}
+.skel-grid{grid-column:1/-1;height:300px}.skel-tile{height:64px;min-width:120px}.kv li.skel-li{height:46px;margin:8px 0;border:0;display:block}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 17px var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
@@ -1442,7 +1447,7 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
       <p class="dim" style="margin:6px 0 0">Where to go for the information this site doesn't carry.</p>
     </div>
     <div class="cols" id="res"></div>
-    <section id="covers" style="margin-top:28px"><div class="block-h"><h2>Who covers the Cavs</h2><span>Newest from each</span></div><div class="cols cov-cols"><section><h3 class="cov-h">Daily coverage</h3><ul class="kv" id="cov-a"></ul></section><section><h3 class="cov-h">Podcasts &amp; shows</h3><ul class="kv" id="cov-p"></ul></section></div></section>
+    <section id="covers" style="margin-top:28px"><div class="block-h"><h2>Who covers the Cavs</h2><span>Newest from each</span></div><div class="cols cov-cols"><section><h3 class="cov-h">Daily coverage</h3><ul class="kv" id="cov-a"><li class="skel skel-li"></li><li class="skel skel-li"></li><li class="skel skel-li"></li></ul></section><section><h3 class="cov-h">Podcasts &amp; shows</h3><ul class="kv" id="cov-p"><li class="skel skel-li"></li><li class="skel skel-li"></li><li class="skel skel-li"></li></ul></section></div></section>
     <section id="xfollow" style="margin-top:22px"><div class="block-h"><h2>Follow on X</h2><span>Cavs news as it breaks</span></div><div class="xf" id="xf"></div></section>
 <section class="nlsu nlsu-r" hidden><div class="su"><svg class="su-shot" aria-hidden="true"><path class="supath" fill="none" stroke="#F2B231" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 7" opacity="0"/><g class="suball" opacity="0"><circle r="11" fill="#F2B231"/><path d="M-11 0H11M0 -11V11M-6.5 -8.7C-2.8 -4.6 -2.8 4.6 -6.5 8.7M6.5 -8.7C2.8 -4.6 2.8 4.6 6.5 8.7" stroke="#860038" stroke-width="1.3" fill="none"/></g></svg><svg class="sumug" viewBox="0 0 100 100" aria-hidden="true"><path d="M10 34L30 52L10 70" stroke="#860038" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M55 30c-5-6 5-10 0-17M67 30c-5-6 5-10 0-17" stroke="#F2B231" stroke-width="3.5" stroke-linecap="round" fill="none"/><path d="M40 38h42v26a18 18 0 0 1-18 18h-6a18 18 0 0 1-18-18z" fill="#860038"/><path d="M82 46h4a9 9 0 0 1 0 18h-4" stroke="#860038" stroke-width="6" fill="none"/><path d="M61 38v44M40 58h42M48 40c6 7 6 31 0 40M74 40c-6 7-6 31 0 40" stroke="#F2B231" stroke-width="2.4" fill="none"/><rect x="38" y="35" width="46" height="5" rx="2.5" fill="#860038"/></svg><div class="su-tx"><b>Cavs <i>&amp;</i> Coffee</b><span>The box score, the top line, injuries and the news, freshly brewed in your inbox after every game. Free.</span></div><form class="su-f" action="https://buttondown.com/api/emails/embed-subscribe/cavscoffee" method="post"><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email"><input type="hidden" name="embed" value="1"><button type="submit">Sign me up</button></form></div></section>
     <div class="tipcard"><div class="tc-t"><b>Keep cavs_db free</b><p>No paywall, no ads. If the site saved you a few tabs (or settled an argument), throw the hammer down in the tip jar. It covers hosting and the late nights after West Coast games. Thank you!</p></div><a class="tc-btn" href="https://www.buymeacoffee.com/cavsdb" target="_blank" rel="noopener">☕ Buy cavs_db a coffee</a></div>
@@ -1521,9 +1526,9 @@ if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=wind
       <h1 style="margin-top:6px">56 seasons of Cavs basketball</h1>
       <p class="hx-tait"><span class="hx-q">“It’s basketball time at the <b id="hx-arena">Cleveland Arena</b>.”</span><small>Joe Tait opened every Cavs broadcast that way. Voice of the Cavs, 1970–81 and 1983–2011.</small></p>
     </div>
-    <div class="tx-stats" id="hx-stats"></div>
+    <div class="tx-stats" id="hx-stats"><div class="skel skel-tile"></div><div class="skel skel-tile"></div><div class="skel skel-tile"></div></div>
     <section id="hx-sea"><div class="block-h"><h2>Every season</h2><span>Tap a season</span></div>
-      <div class="hx-leg" id="hx-leg"></div><div class="hx-grid" id="hx-grid"></div><div class="hx-det" id="hx-det" hidden></div></section>
+      <div class="hx-leg" id="hx-leg"></div><div class="hx-grid" id="hx-grid"><div class="skel skel-grid"></div></div><div class="hx-det" id="hx-det" hidden></div></section>
     <section id="hx-po"><div class="block-h"><h2>Playoff history</h2><span id="hx-po-n"></span></div><div class="hx-opp" id="hx-opp"></div><p class="dim hx-key"><span class="rt-key"><i class="on"></i>Won the series <i></i>Lost</span> · Results open the series on Basketball Reference</p>
       <div class="tablebox"><table class="hx-t"><thead><tr><th>Season</th><th>Round</th><th>Opponent</th><th class="r">Result</th></tr></thead><tbody id="hx-po-b"></tbody></table></div><button type="button" class="hx-more" id="hx-po-more" hidden></button></section>
     <section id="hx-ret"><div class="block-h"><h2>In the rafters</h2><span>Retired numbers</span></div><div class="hx-ban" id="hx-ban"></div></section>
@@ -3330,7 +3335,7 @@ setTimeout(function(){const ov=(/[?&]bday=(\d\d-\d\d)/.exec(location.search)||[]
     steps.forEach(([k,v])=>{const li=el('li');li.append(el('b',null,k),el('span',null,v));ol.appendChild(li)});
     pn.append(hd,el('p','app-lede','cavs_db opens full screen from your home screen, like an app. No app store, nothing to update.'),ol);w.append(bg,pn);document.body.appendChild(w);x.focus()}})();
 /* jump-to chips: a sticky row of section links on long pages; highlights the section you're in */
-setTimeout(function(){const J={'view-cap':[['Cap sheet','#captop'],['Next summer','#summer'],['Apron rules','#ap-h'],['Two-way','#twoway'],['Exhibit 10','#camp'],['Cap holds','#holds'],['Glossary','#glossary']],'view-assets':[['Draft picks','#board'],['Exceptions','#exc'],['Cash','#cash-sec'],['Drafted players','#rights']]};
+setTimeout(function(){const J={'view-cap':[['Cap sheet','#captop'],['Next summer','#summer'],['Apron rules','#ap-h'],['Two-way','#twoway'],['Exhibit 10','#camp'],['Cap holds','#holds'],['Glossary','#glossary']],'view-assets':[['Draft picks','#board'],['Exceptions','#exc'],['Cash','#cash-sec'],['Drafted players','#rights']],'view-history':[['Seasons','#hx-sea'],['Playoffs','#hx-po'],['Rafters','#hx-ret'],['Honors','#hx-hon'],['Leaders','#hx-lead'],['Records','#hx-rec'],['Numbers','#hx-num'],['Draft','#hx-draft'],['Coaches','#hx-coach'],['Arenas','#hx-home']]};
   const hdr=()=>(document.querySelector('header.gbar')||{offsetHeight:0}).offsetHeight;
   Object.entries(J).forEach(([vid,items])=>{const v=document.getElementById(vid);if(!v)return;const head=v.querySelector('.page>div');if(!head)return;
     const secs=items.map(([l,q])=>{const t=document.querySelector(q);return t?[l,t.closest('section')||t]:null}).filter(Boolean);if(secs.length<2)return;
@@ -4237,7 +4242,7 @@ window.renderPlayer=function(s){
   v.innerHTML='';const w=el('div','wrap page ppx');v.appendChild(w);
   {const bc=el('div','dim');bc.style.fontSize='13px';const a1=el('a',null,'Home');a1.href='/';a1.dataset.go='home';const a2=el('a',null,'Roster');a2.href='/roster';a2.dataset.go='roster';bc.append(a1,' / ',a2,' / '+n);w.appendChild(bc)}
   const body=el('div','ppx-body');w.appendChild(body);
-  body.appendChild(el('p','dim','Loading…'));
+  {const sk=el('div','skel-wrap');sk.setAttribute('aria-label','Loading');sk.innerHTML='<div class="skel skel-band"></div><div class="skel-row"><div class="skel skel-b"></div><div class="skel skel-b"></div></div><div class="skel skel-card"></div><div class="skel skel-card"></div>';body.appendChild(sk)}
   ppLoad().then(()=>{body.innerHTML='';try{ppBuild(p,body)}catch(e){console.error(e);body.appendChild(el('p','dim','Something went wrong loading this page.'))}
     /* links like /players/evan-mobley#ch-his open that chapter */
     const h=location.hash;if(/^#ch-[a-z]+$/.test(h)){const d=document.querySelector(h);if(d){d.open=true;setTimeout(()=>d.scrollIntoView({block:'start'}),150)}}});

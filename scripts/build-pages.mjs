@@ -16,6 +16,7 @@ const PRE = process.argv.includes('--prerender');
 const HASHF = new URL('data/prerender-hash.txt', root);
 const h = createHash('sha1');
 for (const f of ['index.html', 'videos.json', 'box.json', 'rcf.json', 'scripts/build-pages.mjs', 'scripts/prerender.mjs']) { try { h.update(await readFile(new URL(f, root))); } catch {} }
+try { const { readdir } = await import('node:fs/promises'); h.update((await readdir(new URL('og/g/', root))).sort().join()); } catch {}  // a new game share image means the page copies need the new image tag
 const hash = h.digest('hex');
 if (PRE) { let old = ''; try { old = (await readFile(HASHF, 'utf8')).trim(); } catch {} if (old === hash) { console.log('pages unchanged, nothing to build'); process.exit(0); } }
 const m = html.match(/const PAGE_META=(\{[\s\S]*?\});\n/);
@@ -46,7 +47,8 @@ for (const [route, [title, desc]] of Object.entries(META)) {
     .replace(/<meta property="og:title" content="[^"]*">/, `<meta property="og:title" content="${esc(title)}">`)
     .replace(/<meta property="og:description" content="[^"]*">/, `<meta property="og:description" content="${esc(desc)}">`);
   // each page has its own share image in og/<route>.jpg (media/rcf -> og/media-rcf.jpg); fall back to the site-wide one
-  const img = 'og/' + (route.startsWith('players/') ? 'roster' : route.startsWith('games/') ? 'schedule' : route.replace(/\//g, '-')) + '.jpg';
+  let img = 'og/' + (route.startsWith('players/') ? 'roster' : route.startsWith('games/') ? 'schedule' : route.replace(/\//g, '-')) + '.jpg';
+  if (route.startsWith('games/') && await exists(new URL('og/g/' + route.slice(6) + '.jpg', root))) img = 'og/g/' + route.slice(6) + '.jpg';  // finished games get their own score card (scripts/og-games.mjs)
   if (await exists(new URL(img, root))) {
     const u = 'https://cavsdatabase.com/' + img + '?v=2';
     out = out.replace(/<meta property="og:image" content="[^"]*">/, `<meta property="og:image" content="${u}">`)
