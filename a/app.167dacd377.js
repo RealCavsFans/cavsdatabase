@@ -1,1528 +1,4 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Rashaun Agee’s stats with context, injury status, contract and trade eligibility, and where he ranks in Cavs history. Updated after every game.">
-<title>Rashaun Agee Stats, Contract &amp; Injury Status | cavs_db</title>
-<meta name="msvalidate.01" content="5AE861CB57EC998AB47588ECC2B0DE67">
-<link rel="canonical" href="https://cavsdatabase.com/players/rashaun-agee">
-<meta name="robots" content="index,follow,max-image-preview:large">
-<meta name="theme-color" content="#860038">
-<script>try{var t=localStorage.getItem('cdb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="cavs_db">
-<meta property="og:url" content="https://cavsdatabase.com/players/rashaun-agee">
-<meta property="og:title" content="Rashaun Agee Stats, Contract &amp; Injury Status | cavs_db">
-<meta property="og:description" content="Rashaun Agee’s stats with context, injury status, contract and trade eligibility, and where he ranks in Cavs history. Updated after every game.">
-<meta property="og:image" content="https://cavsdatabase.com/og/roster.jpg?v=2">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Rashaun Agee Stats, Contract &amp; Injury Status | cavs_db">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cavsdatabase.com/og/roster.jpg?v=2">
-<meta name="twitter:site" content="@realcavsfans">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://cavsdatabase.com/#site","url":"https://cavsdatabase.com/","name":"cavs_db","alternateName":"cavsdatabase.com","description":"Cleveland Cavaliers reference: record, schedule, roster, salary cap, contracts, key dates, injuries and the Cleveland Charge.","inLanguage":"en-US","about":{"@type":"SportsTeam","name":"Cleveland Cavaliers","sport":"Basketball","memberOf":{"@type":"SportsOrganization","name":"NBA"},"sameAs":["https://www.nba.com/cavaliers","https://en.wikipedia.org/wiki/Cleveland_Cavaliers"]},"publisher":{"@type":"Organization","name":"RealCavsFans","url":"https://realcavsfans.com","sameAs":["https://x.com/realcavsfans"]}}]}</script>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23860038'/%3E%3Cg transform='translate%288 6%29 scale%28.84%29'%3E%3Cpath d='M14 26L40 50L14 74' stroke='%23F2B231' stroke-width='11' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='70' cy='64' r='20' fill='%23F2B231'/%3E%3Cpath d='M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79' stroke='%23860038' stroke-width='2' fill='none'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdn.nba.com">
-<link rel="apple-touch-icon" href="/icon-180.png">
-<link rel="manifest" href="/site.webmanifest">
-<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="cavs_db">
-<link rel="stylesheet" crossorigin="anonymous" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Saira+Condensed:wght@600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap">
-<style>
-/* Layout: white masthead; two-column home (season, next game, dates, cap bar | history, injuries, Charge); section index below. Reference-tool calm: ink, one wine accent, gold on the logo and the timeline swords. */
-:root{
-  --bg:#FFFFFF; --sub:#F5F6F3; --fg:#101419; --fg2:#2F363E; --muted:#5D646C; --line:#E3E5E0; --line2:#EFF0EC;
-  --wine:#7A1F33; --wine-ink:#7A1F33; --gold:#D99A12; --track:#E4E7E1; --tick:#C9CEC6;
-  --z1:#F1F6EE; --z2:#FBF5E6; --z3:#FBEEE6; --z4:#F7E6EA;
-  --sans:'Archivo',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --mono:'Geist Mono',ui-monospace,Menlo,monospace;
-}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#111417; --sub:#171B1F; --fg:#EEF0EC; --fg2:#D2D6DA; --muted:#9AA1A9; --line:#2A3036; --line2:#20252A;
-  --wine-ink:#E3B04B; --track:#252B30; --tick:#3A4148; --z1:#16201A; --z2:#221F15; --z3:#261B16; --z4:#29171D; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#111417; --sub:#171B1F; --fg:#EEF0EC; --fg2:#D2D6DA; --muted:#9AA1A9; --line:#2A3036; --line2:#20252A;
-  --wine-ink:#E3B04B; --track:#252B30; --tick:#3A4148; --z1:#16201A; --z2:#221F15; --z3:#261B16; --z4:#29171D; color-scheme:dark}
 
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-*{box-sizing:border-box}
-body{color:var(--fg);font:400 15px/1.55 var(--sans)}
-a{color:var(--wine-ink);text-decoration:none}a:hover{text-decoration:underline}
-:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.wrap{max-width:1200px;margin:0 auto;padding-inline:20px}
-.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
-.sr{position:absolute;left:-9999px}
-.cap-label{font:700 11px var(--sans);font-stretch:125%;text-transform:uppercase;letter-spacing:.11em;color:var(--muted)}
-
-/* masthead */
-/* search */
-.search{position:relative;display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:8px;padding:0 12px;height:42px;background:var(--sub);flex:0 1 300px;min-width:0}
-.search input{border:0;background:transparent;font:inherit;font-size:14px;width:100%;outline:none;color:var(--fg)}
-.search:focus-within{border-color:var(--fg2)}
-.sres{position:absolute;top:calc(100% + 6px);right:0;width:min(420px,calc(100vw - 40px));max-height:420px;overflow:auto;background:var(--bg);border:1px solid var(--line);box-shadow:0 12px 32px rgba(0,0,0,.12);z-index:20;list-style:none;margin:0;padding:6px 0}
-.sres button{appearance:none;border:0;background:none;width:100%;text-align:left;font:inherit;color:var(--fg);padding:9px 14px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;cursor:pointer}
-.sres button:hover,.sres button:focus{background:var(--sub);outline:none}
-.sres b{font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sres span{grid-column:1;font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sres em{grid-row:1/span 2;grid-column:2;align-self:center;font:700 10px var(--sans);font-stretch:125%;letter-spacing:.08em;text-transform:uppercase;font-style:normal;color:var(--muted)}
-.sres .none{padding:10px 14px;font-size:13px;color:var(--muted)}
-.flash{animation:flash 1.8s ease}
-@keyframes flash{0%,40%{background:var(--z2)}100%{background:transparent}}
-@media (prefers-reduced-motion:reduce){.flash{animation:none;outline:2px solid var(--gold)}}
-
-/* nav */
-.tabs{border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
-.tabs .wrap{display:flex;gap:4px;overflow-x:auto}
-.tabs button{appearance:none;border:0;background:none;font:600 13px var(--sans);font-stretch:110%;letter-spacing:.02em;color:var(--muted);min-height:48px;padding:0 12px;white-space:nowrap;cursor:pointer}
-.tabs button:first-child{padding-left:0}
-.tabs button[aria-selected="true"]{color:var(--fg);box-shadow:inset 0 -2px 0 var(--fg)}
-
-/* home layout */
-.home{display:grid;grid-template-columns:minmax(0,1fr) 270px;align-items:start}
-.col{display:flex;flex-direction:column;min-width:0}
-.block-h{display:flex;justify-content:space-between;gap:12px}
-.block-h h2{margin:0;font-stretch:125%}
-.block-h span{font-size:13px;color:var(--muted);white-space:nowrap}
-
-/* record */
-.record{display:flex;flex-wrap:wrap;align-items:flex-end;gap:24px 40px}
-.splits{flex:1 1 360px;min-width:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:0}
-.splits div{padding:10px 12px 10px 0;border-top:1px solid var(--line)}
-.splits dt{font-size:12px;color:var(--muted)}
-.splits dd{margin:0;font:500 19px var(--mono);font-variant-numeric:tabular-nums}
-.strip{display:grid;grid-template-columns:repeat(82,minmax(0,1fr));gap:2px}
-.strip span{height:30px;background:var(--track)}
-.strip span:nth-child(10n){box-shadow:inset 0 -5px 0 var(--tick)}
-.strip .w{background:var(--wine)}.strip .l{background:var(--gold)}
-.strip-legend{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin-top:8px;font-size:12px;color:var(--muted)}
-.strip-legend i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
-
-/* next game */
-.fin{display:flex;flex-wrap:wrap;gap:4px 14px;padding:12px 18px;margin-bottom:12px;border:1px solid var(--line);border-left:3px solid var(--wine);color:var(--fg)}
-.fin:hover{text-decoration:none;background:var(--sub)}
-.fin .lr{line-height:1;font:800 16px/1 var(--sans);font-stretch:118%;letter-spacing:.04em}
-.fin .lr.w{color:var(--wine-ink)}
-.fin .ls{font:700 18px/1 var(--mono);font-variant-numeric:tabular-nums}
-.fin .lo{color:var(--fg2)}
-.fin .ls{color:var(--wine-ink);text-decoration:underline dotted 1.5px;text-underline-offset:3px}.fin:hover .ls{text-decoration-style:solid}
-.nx-when a.pvlink{color:inherit;text-decoration:underline dotted 1.5px;text-decoration-color:var(--wine-ink);text-underline-offset:3px}.nx-when a.pvlink:hover{color:var(--wine-ink);text-decoration-style:solid}
-.next{display:flex;flex-wrap:wrap;border:1px solid var(--line)}
-.next .who{flex:999 1 340px;min-width:0;padding:20px 24px}
-.next h3{margin:6px 0 0;font:800 clamp(24px,3.4vw,32px)/1.1 var(--sans);font-stretch:115%;letter-spacing:-.02em;text-wrap:balance}
-.next .meta{color:var(--muted);margin-top:6px;font-size:14px}
-.count{flex:1 1 140px;background:var(--sub);color:var(--fg);border-left:1px solid var(--line);padding:20px 24px;display:flex;flex-direction:column;justify-content:center}
-.count b{font:800 44px/1 var(--sans);font-stretch:125%;color:var(--wine-ink)}
-.count small{font:700 11px var(--sans);font-stretch:125%;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin-top:6px}
-.next .then{flex-basis:100%;border-top:1px solid var(--line);padding:12px 24px;font-size:14px;color:var(--fg2);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
-
-/* dates — horizontal timeline; past dates drop off automatically */
-.tl{overflow-x:auto;padding:8px 0 6px}
-.tl ol{list-style:none;margin:0;padding:0;display:flex;min-width:max-content;border-top:1px solid var(--fg)}
-.tl li{width:158px;padding-right:18px;position:relative}
-.tl li::before{content:"";position:absolute;top:-6px;left:0;width:2px;height:11px;background:var(--muted)}
-.tl li.cav::before{top:-20px;left:-4px;width:10px;height:25px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 25'%3E%3Ccircle cx='5' cy='1.8' r='1.6' fill='%23D99A12'/%3E%3Crect x='4.1' y='3.2' width='1.8' height='4.4' fill='%237A1F33'/%3E%3Crect x='0.4' y='7.4' width='9.2' height='1.9' rx='.9' fill='%23D99A12'/%3E%3Cpath d='M3.9 9.3H6.1V20L5 24.6L3.9 20Z' fill='%237A1F33'/%3E%3C/svg%3E") no-repeat center/contain}
-.tl{padding-top:24px}
-.tl .d{display:block;font:500 13px var(--mono);margin-top:14px}
-.tl li.cav .d{color:var(--wine-ink)}
-.tl .t{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:14px;line-height:1.4;color:var(--fg2);margin-top:4px}
-
-/* resources + assets */
-.res{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:14px 0;border-bottom:1px solid var(--line2);color:var(--fg)}
-.res:hover{text-decoration:none;background:var(--sub)}
-.res b{font-weight:700}.res span{grid-column:1;font-size:13px;color:var(--muted)}
-.res em{grid-row:1/span 2;grid-column:2;align-self:center;font:500 12px var(--mono);font-style:normal;color:var(--muted)}
-.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px 40px}
-.kv{list-style:none;margin:0;padding:0}
-.kv li{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line2);font-size:14px}
-.kv b{font:500 14px var(--mono);white-space:nowrap}
-.kv small{display:block;color:var(--muted);font-size:12px}
-.kv.plain li{padding:8px 0;font-size:13px}.kv.plain b{font:600 13px var(--sans)}
-
-/* right column */
-.side{display:flex;flex-direction:column;min-width:0}
-.rail{border:1px solid var(--line);padding:20px 20px 18px;background:var(--bg)}
-.inj{list-style:none;margin:0;padding:0}
-.inj li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;padding:10px 0;border-bottom:1px solid var(--line2)}
-.inj b{font-weight:700;font-size:14px}
-.inj span{font-size:13px;color:var(--muted)}
-.inj .st{grid-row:1/span 2;grid-column:2;align-self:center;font:500 12px var(--sans);color:var(--muted);white-space:nowrap;text-align:right}
-.inj .st.out{color:var(--fg)}
-.inj-note{font-size:12px;color:var(--muted);margin-top:10px}
-.otd-when{font:700 11px var(--sans);font-stretch:125%;text-transform:uppercase;letter-spacing:.1em;color:var(--wine-ink)}
-.otd-when b{font:800 26px/1 var(--sans);font-stretch:125%;letter-spacing:-.02em;color:var(--fg);display:block;margin-top:6px;text-transform:none}
-.otd-row{display:flex;align-items:center;gap:14px;margin-top:8px}
-.dcal{position:relative;flex:0 0 52px;height:58px;perspective:300px}
-.dc-pg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--wine);color:#fff;box-shadow:inset 0 -3px 0 #F2B231;transform-origin:50% 0;backface-visibility:hidden}
-.dc-m{font:700 10px var(--sans);letter-spacing:.1em}
-.dc-d{font:800 26px/1 var(--cond);margin-top:1px}
-.dc-w{display:none}
-.dc-pg.top{z-index:2}
-.dcal.rip .dc-pg.top{animation:dc-flip .55s cubic-bezier(.5,0,.75,0) forwards}
-.dcal.rip.instant .dc-pg.top{animation:none;opacity:0}
-@keyframes dc-flip{0%{transform:rotateX(0)}100%{transform:rotateX(-100deg);opacity:0}}
-.otd-when{margin-top:0}
-.otd-text{margin:12px 0 8px;font:500 15px/1.48 var(--sans);color:var(--fg)}
-.otd-src{font-size:12px}
-.otd-also{list-style:none;margin:12px 0 0;padding:10px 0 0;border-top:1px solid var(--line2);font-size:13px;line-height:1.45}
-.otd-also li{margin:0 0 6px}.otd-also li b{font:700 12px var(--mono);margin-right:6px;color:var(--wine-ink)}.otd-also a{font-size:12px;white-space:nowrap}
-/* June 19 */
-.cel{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:rgba(10,12,16,.82);padding:16px}
-.cel-in{width:min(960px,100%);text-align:center;color:#fff}
-.cel-k{font:700 12px var(--sans);font-stretch:125%;letter-spacing:.14em;text-transform:uppercase;color:#F2B231;margin-bottom:6px}
-.cel-h{font:800 clamp(22px,4.5vw,40px)/1.1 var(--sans);font-stretch:118%;margin:0 0 14px}
-.cel-v{position:relative;aspect-ratio:16/9;background:#000;box-shadow:0 20px 60px rgba(0,0,0,.5)}.cel-v iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.cel-x{position:absolute;top:14px;right:14px;appearance:none;border:1px solid rgba(255,255,255,.4);background:rgba(0,0,0,.4);color:#fff;font:700 13px var(--sans);padding:8px 12px;cursor:pointer}
-.cel-s{margin-top:10px;font-size:12.5px;color:rgba(255,255,255,.75)}
-#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:70}
-.key{display:inline-flex;align-items:center;gap:6px}
-.kt{display:inline-block;width:11px;height:12px;background:var(--fg)}.kt.cav{background:var(--wine);box-shadow:inset 0 -2px 0 #F2B231}
-/* team chips: abbreviation on the team's primary color (no logos) */
-.chip{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:22px;border-radius:4px;font:800 11px var(--sans);font-stretch:118%;letter-spacing:.04em;color:#FFFFFF;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);vertical-align:2px}
-.next h3 .chip{height:26px;min-width:48px;font-size:13px;margin-right:10px;vertical-align:4px}
-/* Charge */
-.ch-next{font-weight:700;line-height:1.35;margin-top:4px}
-.ch-meta{color:var(--muted);margin-top:2px}
-.rail .block-h{margin-bottom:6px}
-.capsum{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px 32px}
-.capsum-main{flex:1 1 260px;min-width:0}
-.payroll{font:800 34px/1 var(--sans);font-stretch:112%}
-.payroll-note{font-size:12px;color:var(--muted);margin-top:6px}
-.room{flex:2 1 420px;min-width:0;margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
-.room li{display:flex;flex-direction:column;gap:2px;padding:8px 12px 0 0;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
-.room b{font:500 16px var(--mono);color:var(--fg)}
-.room .over{color:var(--wine-ink)}
-/* horizontal cap bar: labels alternate above and below so close lines don't collide */
-.hbar{position:relative;margin-top:22px;padding-block:44px}
-.track{position:relative;height:16px;background:var(--track);overflow:hidden}
-.track .zone{position:absolute;top:0;bottom:0}
-.fill{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--wine);transition:width .6s ease}
-.ln{position:absolute;top:30px;bottom:30px;width:0;border-left:1px dashed var(--fg2)}
-.ln.hard{border-left:2px solid var(--fg)}
-.ln span{position:absolute;left:0;transform:translateX(-50%);white-space:nowrap;text-align:center;font:600 12px/1.25 var(--sans);font-stretch:108%;color:var(--fg2)}
-.ln span em{display:block;font:500 11px var(--mono);font-style:normal;color:var(--muted)}
-.ln.up span{bottom:100%;margin-bottom:6px}
-.ln.down span{top:100%;margin-top:6px}
-.ln.first span{transform:translateX(-12px);text-align:left}
-.ln.last span{transform:translateX(calc(-100% + 12px));text-align:right}
-.ln.hard span{color:var(--fg)}
-.ln span i{font-style:normal}.ln .short{display:none}
-
-/* index */
-.index{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-block:24px 64px}
-.index button{appearance:none;border:0;background:var(--bg);color:var(--fg);text-align:left;font:inherit;cursor:pointer;padding:18px 20px;display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:10px;align-items:baseline}
-.index button:hover{background:var(--sub)}
-.index .code{grid-row:span 2;font:800 12px var(--sans);font-stretch:125%;letter-spacing:.06em;color:var(--wine-ink)}
-.index b{font:700 15px var(--sans);font-stretch:105%}
-.index span:last-child{font-size:13px;color:var(--muted)}
-
-/* cap page */
-.page{padding-block:32px 64px;display:flex;flex-direction:column;gap:20px}
-h1{margin:0;font:800 clamp(28px,4vw,36px)/1.1 var(--sans);font-stretch:115%;letter-spacing:-.02em;text-wrap:balance}
-.tablebox{overflow-x:auto;border:1px solid var(--line);overscroll-behavior-x:contain}
-.nx-gp{display:inline-block;margin-top:6px;font:700 13px var(--sans);color:var(--wine-ink)}
-.glink{color:inherit;text-decoration:none;border-bottom:1px dotted var(--tick)}.glink:hover{color:var(--wine-ink);border-color:var(--wine-ink)}
-.gpg{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;margin-top:16px;align-items:start}.gpg-l,.gpg-r{display:flex;flex-direction:column;gap:16px;min-width:0}
-.gpc{background:var(--card);border:1px solid var(--line);padding:14px 18px}.gpc .block-h{margin-bottom:10px}
-.gph{background:linear-gradient(160deg,#8e2741,#5E0027);color:#fff;padding:18px 20px}.gph-k{font:800 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:#F2B231}
-.gph-mu{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:12px 0 4px}.gph-t{font:800 46px/1 var(--sans);font-stretch:110%}.gph-t small{display:block;font:600 12.5px var(--sans);color:#F4D6DD;margin-top:4px}.gph-t.r{text-align:right}
-.gph-m{text-align:center;font:600 12.5px var(--sans);color:#F4D6DD;display:flex;flex-direction:column;align-items:center;gap:2px}.gph-cd{font:700 26px var(--mono);color:#fff}.gph-s{font:700 44px/1 var(--mono);color:#fff}.gph-s span{color:#F4D6DD}.gph-wl{display:inline-block;background:#F2B231;color:#101419;font:800 12px var(--sans);padding:2px 8px;margin-top:6px}.gph-wl.l{background:#fff}
-.gph-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}.gph-meta div{background:rgba(255,255,255,.1);padding:8px 10px;min-width:0}.gph-meta span{display:block;font:700 10px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:#F4D6DD}.gph-meta b{font-size:14px}.gp-tape .r{text-align:right}.gp-tape .up{color:var(--wine-ink);font-weight:700}.gp-tape small{margin:0 5px}
-.gp-top{display:flex;gap:12px;align-items:center}.gp-hs{width:64px;height:64px;border-radius:50%;background:var(--sub);overflow:hidden;flex:none}.gp-hs img{width:150%;margin:4px 0 0 -25%}.gp-top small{font:800 10.5px var(--sans);letter-spacing:.1em;color:var(--muted)}.gp-top b{display:block;font-size:17px}
-#captop .ct-nums b,.ab-tile b,#exc .num-sc{font-variant-numeric:tabular-nums}.gp-under{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;margin:10px 0 0;font:700 14px var(--sans)}.gp-under a{color:var(--wine-ink)}.gp-under .sep{color:var(--muted);font-weight:400}
-.gp-hl iframe{display:block;width:100%;aspect-ratio:16/9;border:0;background:#101419}.gp-hl-lk{font-weight:700;color:var(--wine-ink)}
-.gp-full{margin-top:16px}.gp-box.full{min-width:760px!important}.gp-box.full th:not(:first-child),.gp-box.full td:not(:first-child){width:7.5%}.gp-box.full th:first-child{width:auto}.gp-box tr.sec td{background:var(--sub);font:800 10.5px var(--sans)!important;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)!important;padding:6px 8px!important;text-align:left!important}.gp-box tr.tot td{font-weight:700;border-top:2px solid var(--fg)}.gp-box td a{color:inherit}.gp-box.full td:first-child{position:sticky;left:0;background:var(--card,#fff);z-index:1}
-.gp-ls{width:100%!important;min-width:0!important;table-layout:fixed;border-collapse:collapse;font:500 14px var(--mono)}.gp-ls th{font:700 10.5px var(--sans);letter-spacing:.06em;color:var(--muted);text-align:center;padding:4px 0;background:none!important;border:0!important}.gp-ls th:first-child,.gp-ls td:first-child{width:22%}.gp-ls td{padding-inline:0!important}.gp-ls td{text-align:center;padding:7px 0;border-top:1px solid var(--line2)}.gp-ls td:first-child{text-align:left;font:800 15px var(--sans);font-stretch:115%}.gp-ls tr.me td:first-child{color:var(--wine-ink)}.gp-ls td.f{font-weight:700}.gp-box{width:100%;min-width:0!important;border-collapse:collapse;font-size:13px}.gp-box td,.gp-box th{white-space:nowrap}.gp-box th:not(:first-child),.gp-box td:not(:first-child){width:12%}.gp-box th{font:700 10.5px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:right;padding:6px 8px;border-bottom:1px solid var(--line)}.gp-box th:first-child,.gp-box td:first-child{text-align:left}.gp-box td{padding:7px 8px;border-bottom:1px solid var(--line2);text-align:right;font-family:var(--mono)}.gp-box td:first-child{font-family:var(--sans);font-weight:600}.gp-box tr.st td:first-child{color:var(--fg)}.gp-box tr:not(.st) td:first-child{font-weight:500}@media (max-width:600px){.gp-box td,.gp-box th{padding:7px 4px}.gp-box td:first-child{white-space:normal;padding-left:8px}.gp-box{font-size:12.5px}}
-.gp-lk a{display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid var(--line2);color:var(--wine-ink);font-weight:600;text-decoration:none}.gp-lk a:first-child{border-top:0}
-.gp-ser{list-style:none;margin:0;padding:0}.gp-ser li{display:grid;grid-template-columns:64px 1fr auto;gap:8px;padding:7px 0;border-top:1px solid var(--line2);font-size:13.5px}.gp-ser li:first-child{border-top:0}.gp-ser li.cur{font-weight:700}.gp-ser .d{font:500 12.5px var(--mono);color:var(--fg2)}.gp-ser a{color:var(--wine-ink);font-weight:600;text-decoration:none;white-space:nowrap}
-.gp-inj div{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-top:1px solid var(--line2);font-size:13.5px}.gp-inj div:first-child{border-top:0}.gp-inj span{font-weight:700;color:#9A6A00}.gp-ref b{font-weight:600}.gp-ref small{font:500 12px var(--mono);color:var(--muted)}.gp-ref span{font:700 10.5px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);align-self:center}.gp-ref div{justify-content:flex-start;align-items:baseline}.gp-ref small{margin-left:6px}.gp-ref div span{margin-left:auto}.gp-rn{margin:0;font-size:13px;color:var(--muted)}.gp-rn a{color:var(--wine);font-weight:600}
-.gp-pn{display:flex;justify-content:space-between;margin-top:18px;font-size:13.5px}.gp-pn a{color:var(--wine-ink);font-weight:600;text-decoration:none}
-@media (max-width:760px){.gpg{grid-template-columns:1fr}.gph-t{font-size:30px}.gph-s{font-size:28px;white-space:nowrap}.gp-full .tablebox{overflow-x:auto!important;-webkit-overflow-scrolling:touch}.gph-cd{font-size:22px}.gph-meta{grid-template-columns:1fr 1fr}}
-
-.tx-po{display:block;font-size:12px;color:var(--wine-ink);font-weight:600;margin-top:1px}.tx-next{color:var(--wine-ink)}
-#vid-page>section+section{margin-top:28px}@media (min-width:1000px){#vid-page .vgrid{grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}#vid-page .vgrid h3,#vid-page .vgrid b{font-size:13px}}
-@media (min-width:900px){.ab-rt .xb{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:0 32px;align-items:start}.ab-rt .xb>.rc2{grid-row:1/span 3}.ab-rt .xb>*:not(.rc2){grid-column:2}.ab-rt .rc2~.nxbox{margin-top:0}}
-
-.pay-row{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap}.pay-row .hc-cap{flex-direction:column;align-items:flex-end;text-align:right;gap:0;margin:0 0 2px}.pay-row .hc-cap b{font-size:13.5px}.pay-row .hc-cap span{font-size:12px}
-@media (max-width:760px){.pay-row .hc-cap{flex-basis:100%;align-items:flex-start;text-align:left;margin-top:6px}}
-.hc-note{margin:8px 0 0;font-size:12.5px;color:var(--muted)}.hc-note b{color:var(--wine-ink);font-family:var(--mono)}
-.fin{align-items:baseline!important}.fin .cap-label{font:800 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.fin .lr{font-size:15px!important}.fin .ls{font-size:15px!important;font-weight:600!important}.fin .lo{font-size:14px!important;line-height:1.2}
-@media (min-width:900px){.index{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
-.rtags{display:inline-flex;margin-left:8px;vertical-align:1px;white-space:nowrap}.rtags .rtag{margin:0!important}.rtags .rtag+.rtag{border-left:1px solid rgba(255,255,255,.35)}
-@media (max-width:760px){.rtags{display:flex;width:max-content;margin:4px 0 0}}
-.calw{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.calw .emb-s{margin:0}
-.fb-x{font-size:24px!important;line-height:1;padding:8px 10px!important;min-width:40px;min-height:40px}
-@media (max-width:760px){#measbody td.dim{font-size:11px!important;line-height:1.3}}
-@media (min-width:761px){.ds-ed{font-weight:700}}
-.gm-tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}.gm-tile{padding:10px 12px;border:1px solid var(--line);background:var(--card)}.gm-tile b{display:block;font:700 26px/1.05 var(--mono)}.gm-tile span{display:block;margin-top:4px;font:800 10px var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}.gm-tile.g2 b{color:var(--wine-ink)}
-.gm-l .n{position:relative;padding-bottom:5px}.gm-l .mb{position:absolute;left:0;bottom:0;height:3px;background:#F2B231;border-radius:2px}
-
-.pace{position:relative;margin:2px 0 6px}.pace svg{display:block;width:100%;height:34px;overflow:visible}.pace .pl{fill:none;stroke:var(--wine-ink);stroke-width:2;stroke-linejoin:round}.pace .z{stroke:var(--tick);stroke-dasharray:3 3}.pace .pj{stroke:var(--wine-ink);stroke-width:1.5;stroke-dasharray:4 4;opacity:.45}
-.pace-l{display:block;text-align:right;margin-bottom:2px;font:600 12px var(--sans);color:var(--muted)}.pace-l b{font:700 13px var(--mono);color:var(--wine-ink)}
-.gmw{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}.gm-k{font:800 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.gm-d summary{cursor:pointer;list-style:none;font:700 12.5px var(--sans);color:var(--wine-ink);margin-top:8px}.gm-d summary::-webkit-details-marker{display:none}.gm-d summary::after{content:' ▾'}.gm-d[open] summary::after{content:' ▴'}
-.gm-l{list-style:none;margin:6px 0 0;padding:0}.gm-l li{display:grid;grid-template-columns:1fr auto auto;gap:12px;padding:6px 0;border-top:1px solid var(--line2);font-size:13.5px}.gm-l .g{font:500 12.5px var(--mono);color:var(--muted)}.gm-l b{font:700 12.5px var(--mono);min-width:52px;text-align:right}
-
-.rt-card{background:var(--card);border:1px solid var(--line);padding:18px;margin-top:18px}.rt-card .block-h{margin-bottom:12px}
-.rt-bar{display:flex;height:10px;margin:2px 0 10px}.rt-bar i{display:block}.rt-leg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--muted);margin-bottom:14px}.rt-leg span::before{content:'';display:inline-block;width:9px;height:9px;margin-right:5px;vertical-align:-1px;background:var(--c)}
-.rt-lanes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.rt-lane h3{margin:0 0 6px;font:800 11.5px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between}.rt-lane h3 i{font-style:normal;color:var(--wine-ink)}
-.rt-p{display:flex;align-items:center;gap:9px;padding:7px 0;border-top:1px solid var(--line2)}.rt-lane h3+.rt-p{border-top:0}.rt-av{width:34px;height:34px;border-radius:50%;background:var(--sub);overflow:hidden;flex:none;display:grid;place-items:center;font:800 11px var(--sans);color:var(--wine-ink)}.rt-av img{width:150%;margin-top:4px}
-.rt-p b{display:block;font-size:13.5px}.rt-p small{display:block;font-size:11.5px;color:var(--muted)}.rt-tl{white-space:nowrap;appearance:none;border:0;background:none;padding:0 0 0 6px;font:600 11px var(--sans);color:var(--wine-ink);cursor:pointer}
-.rt-sw{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}.rt-sw button{appearance:none;font:700 12px var(--sans);letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);padding:6px 11px;color:var(--fg2);background:var(--card);cursor:pointer}.rt-sw button[aria-selected=true]{background:#7A1F33;border-color:#7A1F33;color:#fff}
-.rt-tree{position:relative}.rt-ln{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}.rt-ln path{fill:none;stroke:var(--tick);stroke-width:2}.rt-ln path.g{stroke:#F2B231;stroke-width:3}
-.rt-row{display:grid;grid-template-columns:56px repeat(3,minmax(0,1fr));gap:12px;align-items:center;margin-bottom:26px;position:relative;z-index:1}
-.rt-yr{font:700 13px var(--mono);color:var(--muted);text-align:right;padding-right:6px;border-right:2px solid var(--line);align-self:stretch;display:flex;align-items:center;justify-content:flex-end}
-.rt-n{background:var(--card);border:1px solid var(--line);padding:9px 11px;font-size:13.5px;line-height:1.3}.rt-n b{display:block;font-size:14.5px}.rt-n small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
-.rt-n.move{background:var(--sub);border-style:dashed}.rt-n.move b{font:800 11px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.rt-n.move small{color:var(--fg);font-size:13.5px}
-.rt-n.pick{border-color:#E7C6CE}.rt-n.now{background:#7A1F33;border-color:#7A1F33;color:#fff}.rt-n.now b{font-size:16px}.rt-n.now small{color:#F4D6DD}.rt-st{display:block;color:#F2B231;font:800 10.5px var(--sans);letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
-.rt-n.c1{grid-column:2}.rt-n.c2{grid-column:3}.rt-n.c3{grid-column:4}.rt-n.c12{grid-column:2/4}.rt-n.c23{grid-column:3/5}.rt-n.c13{grid-column:2/5}.rt-foot{font-size:12.5px;margin:4px 0 0}
-@media (max-width:760px){.rt-lanes{grid-template-columns:1fr 1fr}.rt-row{grid-template-columns:40px repeat(3,minmax(0,1fr));gap:6px;margin-bottom:22px}.rt-n{padding:7px;font-size:11.5px}.rt-n b{font-size:12.5px}.rt-n small{font-size:10.5px}.rt-n.now b{font-size:13.5px}.rt-n.move small{font-size:11.5px}.rt-yr{font-size:11px}.rt-card{padding:14px}}
-
-.emb-b{appearance:none;border:0;background:none;padding:0;font:600 12.5px var(--sans);color:var(--muted);cursor:pointer;margin-left:auto;margin-right:10px}.emb-b:hover{color:var(--wine-ink)}.emb-s{margin-left:14px}
-.emb-code{width:100%;font:500 12px/1.45 var(--mono);border:1px solid var(--line);background:var(--sub);color:var(--fg);padding:8px;resize:none}.emb-cp{appearance:none;margin-top:8px;border:0;background:#7A1F33;color:#fff;font:700 13px var(--sans);padding:9px 14px;cursor:pointer}.emb-k{margin:14px 0 6px}.emb-prev{width:100%;border:1px solid var(--line);background:#fff}
-html.embed body>*:not(#emb){display:none!important}html.embed body{background:var(--card)!important;margin:0}html.embed{overflow:auto!important}
-.emb{padding:12px}.emb-h{font:800 13px var(--sans);font-stretch:118%;letter-spacing:.08em;text-transform:uppercase;padding:0 0 8px;border-bottom:3px solid var(--fg);margin-bottom:10px}.emb .tablebox{margin-top:12px}.emb .xact{display:none!important}
-.emb-g{list-style:none;margin:0;padding:0}.emb-g li{display:grid;grid-template-columns:96px 1fr auto;gap:2px 10px;padding:9px 0;border-top:1px solid var(--line2);font-size:14px}.emb-g li:first-child{border-top:0}.emb-g .d{font:500 13px var(--mono);color:var(--fg2)}.emb-g .t{font:500 13px var(--mono);color:var(--fg2);text-align:right}.emb-g .tv{grid-column:2/-1;font-size:12.5px;color:var(--muted)}
-.emb-f{display:flex;align-items:center;gap:8px;margin-top:12px;padding:9px 12px;background:#860038;color:#fff!important;text-decoration:none!important;font-size:12.5px}.emb-f svg{width:20px;height:20px}.emb-f span{font:700 15px var(--mono)}.emb-f span i{font-style:normal;color:#F2B231}.emb-f em{font-style:normal;margin-left:auto;color:#F4D6DD}
-
-.tzsw{appearance:none;border:0;background:none;padding:0;font:inherit;color:var(--wine-ink);font-weight:600;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px}
-.skey{display:none}
-@media (hover:hover) and (min-width:900px){.gbar .search{position:relative}.skey{display:inline-grid;place-items:center;position:absolute;right:10px;top:50%;transform:translateY(-50%);min-width:20px;height:20px;padding:0 5px;border:1px solid rgba(255,255,255,.4);border-radius:4px;font:700 12px var(--mono);color:#F4D6DD;pointer-events:none}.search:focus-within .skey,#q:not(:placeholder-shown)+.skey{display:none}}
-@media (min-width:1520px){.wrap{max-width:1440px}}
-a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:2px solid #F2B231;outline-offset:2px}
-.print-src{display:none}
-@media print{header.gbar,footer,.jump,.xact,.galert,.nlsu,.tipcard,.ftip,#sres,.skey,.ds-ed,.calw,#cmpbtn,.vmore,.gdm,.say{display:none!important}
- :root,:root[data-theme]{--bg:#fff;--page:#fff;--card:#fff;--sub:#f6f6f4;--fg:#000;--fg2:#222;--muted:#555;--line:#ccc;--line2:#e2e2e2;--wine-ink:#7A1F33}
- body{background:#fff!important;color:#000}.wrap{max-width:none!important;padding-inline:0}.print-src{display:block;margin:4px 0 0;font:500 12px var(--mono);color:#333}
- .tablebox{overflow:visible!important;border-color:#bbb}.tablebox table,table.cap{width:100%!important;min-width:0!important;font-size:10.5px}table.cap td,table.cap th{padding:5px 6px!important}table{page-break-inside:auto}tr{page-break-inside:avoid}a{text-decoration:none!important;color:inherit}
- *{-webkit-print-color-adjust:exact;print-color-adjust:exact;animation:none!important;transition:none!important}}
-
-.gdm-upd{display:flex;align-items:center;gap:7px;margin:-4px 16px 0;padding-bottom:14px;font:600 12px var(--sans);color:#F4D6DD}.gdm-upd i{width:7px;height:7px;border-radius:50%;background:#3FBF73;box-shadow:0 0 0 3px rgba(63,191,115,.22);animation:gdmp 2s ease-in-out infinite}@keyframes gdmp{50%{box-shadow:0 0 0 5px rgba(63,191,115,.08)}}@media (prefers-reduced-motion:reduce){.gdm-upd i{animation:none}}
-
-.jump{position:sticky;top:0;z-index:8;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:10px 0;margin:14px 0 0;background:var(--page,var(--bg));border-bottom:1px solid var(--line2)}.jump::-webkit-scrollbar{display:none}
-.jump a{flex:none;font:700 12px var(--sans);letter-spacing:.04em;text-transform:uppercase;color:var(--fg2);border:1px solid var(--line);background:var(--card);padding:6px 11px;text-decoration:none;white-space:nowrap}.jump a:hover{border-color:var(--wine-ink);text-decoration:none}.jump a.on{background:#7A1F33;border-color:#7A1F33;color:#fff}
-
-body{margin:0}
-.gp-tape{row-gap:6px}.gp-tape .gtv small{margin-left:5px}.gp-tape .gtv.r small{margin:0 5px 0 0}
-.vmore{display:none}[data-theme="dark"] .extb{color:#8CC4EA!important;border-color:#8CC4EA!important}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .extb{color:#8CC4EA!important;border-color:#8CC4EA!important}}[data-theme="dark"] .apt td.y{color:#5FD08E}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .apt td.y{color:#5FD08E}}[data-theme="dark"] .rtag.b2b{box-shadow:inset 0 0 0 1px rgba(242,178,49,.55)}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .rtag.b2b{box-shadow:inset 0 0 0 1px rgba(242,178,49,.55)}}
-@media (max-width:760px){body .rtag{font-size:8.5px;padding:1px 4px;letter-spacing:.03em}.vgrid:not(.all)>:nth-child(n+3){display:none}.vmore{display:block;width:100%;margin:10px 0 18px;appearance:none;background:var(--card);border:1px solid var(--line);color:var(--wine-ink);font:700 13px var(--sans);padding:10px;cursor:pointer}}
-
-.rc2-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.rc2-bio{font-size:13.5px;color:var(--muted)}.rc2-top .rc-x{position:static;flex:none}
-.rc2-st{margin:10px 0 0;background:#FFF6E0;border-left:3px solid #F2B231;padding:7px 10px;font:600 13px var(--sans);color:#101419}
-.rc2-k{margin:14px 0 6px;font:800 10.5px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.rc2-strip{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);border:1px solid var(--line);background:var(--card)}.rc2-strip div{padding:7px 4px;text-align:center;border-left:1px solid var(--line2)}.rc2-strip div:first-child{border-left:0}.rc2-strip b{display:block;font:700 15px var(--mono)}.rc2-strip span{font:600 10px var(--sans);letter-spacing:.06em;color:var(--muted)}
-.rc2-fn{margin:5px 0 0!important;font-size:12px;color:var(--muted)}.rc2-hon{display:flex;flex-wrap:wrap;gap:5px}.rc2-hon span{font-size:12.5px;background:var(--sub);border:1px solid var(--line2);padding:3px 8px}
-.rc2~.nxbox{border:0;padding:0;margin-top:14px;background:none}.rc2~.nxbox .pv-k{margin:0 0 6px;font:800 10.5px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.rc2~.nxbox .nxl{list-style:none;margin:0;padding:0}.rc2~.nxbox .nxl li{padding:6px 0;border-top:1px solid var(--line2);font-size:13.5px}.rc2~.nxbox .nxl li:first-child{border-top:0}.rc2~.nxbox .nxw{font-size:12px;color:var(--muted);margin:6px 0 4px}
-[data-theme="dark"] .rc2-st{background:#2a2414;color:#F2E6C8}
-
-.ab-pk{position:relative}.ab-pk::after,.ab-cards summary::after{content:'';position:absolute;right:10px;bottom:10px;width:6px;height:6px;border-right:1.8px solid currentColor;border-bottom:1.8px solid currentColor;transform:rotate(45deg);opacity:.45;transition:transform .18s}
-.ab-pk[aria-expanded="true"]::after,.ab-cards details[open]>summary::after{transform:rotate(225deg);bottom:7px}.ab-cards summary{position:relative}.ab-cards summary::after{right:14px;bottom:16px}.ab-cards details[open]>summary::after{bottom:12px}
-
-.tw3{display:block}.tw-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.tw-t{background:var(--card);border:1px solid var(--line2);padding:8px 10px}.tw-t span{display:block;font:700 10.5px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}.tw-t b{display:block;font:700 14px var(--mono);letter-spacing:-.02em;margin-top:2px;white-space:nowrap}.tw-t.ag b{font:600 14px var(--sans)}
-.tw-m{display:grid;grid-template-columns:1fr auto;gap:0 10px;align-items:center;margin-top:12px;font-size:13.5px}.tw-d{display:flex;gap:4px}.tw-d i{width:22px;height:8px;background:var(--line)}.tw-d i.f{background:#860038}.tw-m small{grid-column:1/-1;color:var(--muted);font-size:12px}
-.tw-bl{margin:12px 0 0!important;border-left:3px solid #F2B231;padding:2px 0 2px 10px;font-size:14px}.tw-f{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-top:10px;font-size:12.5px;color:var(--muted)}.tw-f .splink{white-space:nowrap;margin:0}
-
-.say{appearance:none;border:0;background:none;padding:2px 3px;margin-left:4px;color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:4px;vertical-align:-2px;border-radius:4px}.say svg{width:15px;height:15px}.say i{font:600 10.5px var(--mono);font-style:normal;letter-spacing:.02em}.say:hover,.say.on{color:var(--wine-ink)}.say.on svg{animation:sayp .6s ease-in-out infinite alternate}@keyframes sayp{to{transform:scale(1.18)}}
-.ds-ed{appearance:none;border:0;background:none;color:var(--muted);margin-left:auto;margin-right:12px;font:600 12.5px var(--sans);padding:4px 0;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px;white-space:nowrap}.ds-ed:hover{color:var(--wine-ink)}.ds-ed[aria-pressed=true]{color:var(--wine-ink);text-decoration:none;font-weight:700}
-.ds-note{display:flex;justify-content:flex-end;align-items:center;gap:10px;padding:6px 18px 0;font-size:12px;color:var(--muted)}.ds-rs{appearance:none;border:0;background:none;color:var(--wine-ink);font:700 13px var(--sans);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
-.dnd{user-select:none;-webkit-user-select:none}.dnd #dv-chart .c1,.dnd #dv-chart .c2,.dnd #dv-chart .c3,.dnd #dv-chart .tw,.dnd .pt-faces>a{cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;outline:1px dashed rgba(122,31,51,.35);outline-offset:-3px}
-.dnd .pt-faces>a{outline-offset:2px;border-radius:6px}
-.ds-from{opacity:.3}.ds-over{outline:2px solid #F2B231!important;outline-offset:-2px!important;background:rgba(242,178,49,.18)!important}
-.ds-ghost{position:fixed;z-index:200;pointer-events:none;display:flex;align-items:center;gap:8px;background:#101419;color:#fff;box-shadow:0 12px 28px rgba(0,0,0,.3);transform:rotate(-3deg);border-radius:30px;padding:4px 14px 4px 4px;font:700 13px var(--sans);white-space:nowrap;border:2px solid #F2B231}.ds-ghost img{width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:50% 10%;background:#2a2f36}
-.ds-pop{animation:dspop .45s ease-out}@keyframes dspop{0%{transform:scale(1.08);background:rgba(242,178,49,.3)}100%{transform:none}}
-
-tr.mark td{white-space:normal!important;line-height:1.45;text-indent:-16px;padding-left:28px!important}tr.mark{max-width:100%}
-.fapp{appearance:none;background:none;border:0;padding:0;cursor:pointer}@media (max-width:760px){.fright{flex-wrap:wrap;justify-content:center;gap:10px 18px}}.app-lede{margin:0 0 10px;font-size:14px;color:var(--muted)}.app-ol{list-style:none;margin:0;padding:0}.app-ol li{padding:9px 0;border-top:1px solid var(--line2);font-size:14.5px}.app-ol b{display:block;font-weight:700}.app-ol span{color:var(--fg)}
-.cmp{position:fixed;inset:0;z-index:120}.cmp-bg{position:absolute;inset:0;background:rgba(16,20,25,.42)}
-.cmp-p{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:min(560px,100%);max-height:88vh;overflow:auto;background:var(--card);border-top:3px solid #860038;border-radius:12px 12px 0 0;box-shadow:0 -14px 40px rgba(0,0,0,.25);padding:14px 16px 18px;animation:cmpup .22s ease-out}
-@media (min-width:761px){.cmp-p{top:50%;bottom:auto;transform:translate(-50%,-50%);border-radius:10px;animation:none}}
-@keyframes cmpup{from{transform:translate(-50%,40px);opacity:0}}
-.cmp-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.cmp-h b{font:800 13px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase}.cmp-x{appearance:none;border:0;background:none;font-size:24px;line-height:1;color:var(--muted);cursor:pointer;padding:0 4px}
-.cmp-pk{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin-bottom:8px}.cmp-pk i{font:700 12px var(--mono);color:var(--muted);font-style:normal}
-.cmp-sel select{width:100%;appearance:none;-webkit-appearance:none;border:1px solid var(--line);border-radius:6px;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23860038' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 10px center/10px;padding:9px 28px 9px 10px;font:700 14px var(--sans);color:var(--fg)}
-.cmp-r{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:baseline;padding:7px 2px;border-top:1px solid var(--line2)}.cmp-k{font:700 10.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center}.cmp-v{font:500 14px var(--mono)}.cmp-v.r{text-align:right}.cmp-v.up{font-weight:700;color:var(--wine-ink)}
-.cmp-r:nth-child(n+9) .cmp-v{font-family:var(--sans);font-size:13px}.cmp-n{margin:10px 0 0;font-size:12px;color:var(--muted);line-height:1.45}
-
-.wpct{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:2px 0 6px}.wp{background:var(--card);border:1px solid var(--line2);padding:8px 10px 9px;white-space:normal}.wp b{display:block;font:700 20px var(--mono);color:var(--wine-ink);line-height:1.1}.wp span{display:block;font:600 11.5px/1.3 var(--sans);color:var(--muted);margin:2px 0 6px}.wp i{display:block;height:4px;background:var(--line2);position:relative}.wp i::after{content:'';position:absolute;left:0;top:0;bottom:0;width:var(--p);background:#860038}.mcbox .wpct+.mcnote{margin:0 0 12px}
-.bday{display:inline-block;margin-left:6px;font-size:.95em;line-height:1;cursor:default;animation:bdw 2.4s ease-in-out 1s 2}@keyframes bdw{0%,100%{transform:none}20%{transform:rotate(-14deg)}40%{transform:rotate(12deg)}60%{transform:rotate(-6deg)}}@media (prefers-reduced-motion:reduce){.bday{animation:none}}
-@media (max-width:760px){.gp-met{flex-basis:100%}}.gp-met a.gp-ml{color:var(--wine-ink);font-weight:600;white-space:nowrap}
-#rv-meas th.srt{cursor:pointer;user-select:none;white-space:nowrap}#rv-meas th.srt:hover{color:var(--wine-ink)}#rv-meas th.srt::after{content:'';display:inline-block;width:0;height:0;margin-left:5px;vertical-align:2px;border:4px solid transparent;border-top:5px solid currentColor;opacity:.22}#rv-meas th[aria-sort=descending]::after{opacity:1;color:var(--wine-ink)}#rv-meas th[aria-sort=ascending]::after{opacity:1;color:var(--wine-ink);border-top:0;border-bottom:5px solid currentColor;vertical-align:4px}#rv-meas th[aria-sort=ascending],#rv-meas th[aria-sort=descending]{color:var(--wine-ink)}
-
-.gt{border-bottom:1.5px dotted currentColor;cursor:help;text-decoration:none}.gt:hover{color:var(--wine-ink)}
-.gtip{position:absolute;z-index:95;width:min(320px,calc(100vw - 24px));background:#101419;color:#fff;border-radius:10px;padding:12px 14px 11px;font:400 13.5px/1.5 var(--sans);box-shadow:0 14px 34px rgba(0,0,0,.3)}
-.gtip b{display:block;color:#F2B231;font:800 10.5px var(--sans);font-stretch:125%;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}.gtip a{color:#F2B231;font-weight:700;font-size:12.5px;display:inline-block;margin-top:6px}
-
-.col>section.nlsu{background:none;box-shadow:none;padding:0;border-radius:0;order:2;min-width:0}.su{min-width:0}.nlsu[hidden]{display:none!important}.nlsu-r{margin-top:26px}
-.su{position:relative;background:var(--card);border:1px solid var(--line);border-left:3px solid #F2B231;border-radius:6px;padding:14px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-.sumug{width:54px;height:54px;flex:none;transition:transform .18s;cursor:pointer}.sumug.pop{transform:scale(1.18)}
-.su-shot{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:2}
-.su-tx{flex:1 1 220px}.su-tx b{display:block;font:800 22px/1 var(--cond);text-transform:uppercase;letter-spacing:.3px}.su-tx b i{font-style:normal;color:var(--wine-ink)}.su-tx span{display:block;font-size:13px;color:var(--fg2);margin-top:4px;line-height:1.45}
-.su-f{display:flex;gap:6px;flex:1 1 100%;min-width:0}.su-f input[type=email]{flex:1;min-width:0;border:1px solid var(--line);border-radius:4px;padding:9px 11px;font:14px var(--sans);background:var(--bg,#fff);color:var(--fg)}.nlpop{position:fixed;right:18px;bottom:18px;z-index:60;width:340px;max-width:calc(100vw - 24px);background:linear-gradient(160deg,#8e2741,#5E0027);color:#fff;border-bottom:3px solid #F2B231;box-shadow:0 10px 30px rgba(16,20,25,.25);padding:16px 18px 10px;transform:translateY(16px);opacity:0;transition:transform .3s ease,opacity .3s ease}
-.nlpop.on{transform:none;opacity:1}
-.nlpop-x{position:absolute;top:4px;right:6px;border:0;background:none;font:400 24px/1 var(--sans);color:rgba(255,255,255,.75);cursor:pointer;padding:6px 8px}.nlpop-x:hover{color:#fff}
-.nlpop-h{display:flex;gap:12px;align-items:center;padding-right:20px}.nlpop-h img{width:54px;height:auto;flex:none}
-.nlpop-h b{font:800 27px/1 'Saira Condensed',var(--sans);text-transform:uppercase;letter-spacing:.01em;color:#fff}.nlpop-h b i{font-style:normal;color:#F2B231}
-.nlpop-p{margin:10px 0 0;font:500 15px/1.35 var(--sans);color:#fff}
-.nlpop-tags{margin:4px 0 0;font:700 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#F2B231}
-.nlpop-f{display:flex;gap:6px;margin-top:12px}.nlpop-f input{flex:1;min-width:0;border:0;border-radius:4px;padding:10px 11px;font:14px var(--sans);background:#fff;color:#101419}
-.nlpop-f button{border:0;background:#F2B231;color:#101419;font:800 13.5px var(--sans);padding:10px 16px;border-radius:999px;cursor:pointer;white-space:nowrap}.nlpop-f button:hover{background:#D99A12}
-.nlpop-f input:focus-visible,.nlpop-f button:focus-visible,.nlpop-x:focus-visible,.nlpop-no:focus-visible{outline:2px solid #F2B231;outline-offset:2px}
-.nlpop-no{display:block;margin:8px auto 0;border:0;background:none;font:600 12px var(--sans);color:rgba(255,255,255,.75);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
-@media (max-width:600px){.nlpop{right:12px;left:12px;width:auto;max-width:none;bottom:calc(12px + env(safe-area-inset-bottom))}}
-@media (prefers-reduced-motion:reduce){.nlpop{transition:none}}
-@media print{.nlpop{display:none}}
-.su-f button{border:0;background:var(--wine);color:#fff;font:700 13.5px var(--sans);padding:9px 16px;border-radius:999px;cursor:pointer;white-space:nowrap}
-.nltoast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:90;background:#101419;color:#fff;border-radius:10px;padding:12px 16px;font:600 14px var(--sans);box-shadow:0 12px 30px rgba(0,0,0,.25);max-width:calc(100vw - 32px);display:flex;gap:10px;align-items:center}.nltoast button{border:0;background:none;color:#fff;font-size:18px;cursor:pointer}
-
-.calw{position:relative}.calbtn{display:inline-flex;align-items:center;gap:5px;appearance:none;background:none;border:0;padding:0;color:var(--wine-ink);font:inherit;font-weight:600;cursor:pointer;white-space:nowrap}.calbtn svg{width:14px;height:14px;flex:none}.calbtn:hover{text-decoration:underline}.calw .calmenu{left:auto;right:0}@media (max-width:760px){.calw .calmenu{left:0;right:auto}}
-.calmenu{position:absolute;z-index:30;top:calc(100% + 8px);left:0;width:min(340px,calc(100vw - 32px));background:var(--card);border:1px solid var(--line);box-shadow:0 14px 34px rgba(0,0,0,.16);border-radius:8px;padding:6px}
-.calmenu a,.calmenu button{display:block;width:100%;text-align:left;padding:11px 12px;border-radius:6px;font:600 14.5px var(--sans);color:var(--fg);text-decoration:none;background:none;border:0;cursor:pointer}.calmenu a:hover,.calmenu button:hover{background:var(--sub)}
-.calmenu small{display:block;padding:8px 12px 6px;font-size:12px;line-height:1.45;color:var(--muted);border-top:1px solid var(--line2);margin-top:4px}
-
-.col>section.gdm{background:none;box-shadow:none;padding:0;border-radius:0;margin-bottom:16px;display:grid;gap:12px}.gdm[hidden]{display:none!important}.gdm-c{border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.08)}
-.gdm-c{background:var(--card);border:1px solid var(--line)}
-.gdm-k{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px 0;font:800 11px var(--sans);font-stretch:125%;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.gdm-k a{font:600 13px var(--sans);letter-spacing:0;text-transform:none;color:var(--wine-ink)}
-.gdm-day{background:linear-gradient(160deg,#8e2741,#5E0027);border:0;color:#fff}.gdm-day .gdm-k{color:#F2B231}.gdm-day .gdm-k a{color:#fff}
-.gdm-live{display:inline-flex;align-items:center;gap:7px}.gdm-live i{width:8px;height:8px;border-radius:50%;background:#FF4D4D;box-shadow:0 0 0 3px rgba(255,77,77,.25)}
-.gdm-mu{font:800 52px/1 var(--cond);padding:10px 16px 0;letter-spacing:.5px}.gdm-mu .c{color:#F2B231}.gdm-mu small{font:500 20px var(--sans);color:#F4D6DD;margin:0 8px}
-.gdm-t{padding:4px 16px 0;font:700 15px var(--sans)}.gdm-t em{font-style:normal;color:#F2B231}
-.gdm-cd{padding:8px 16px 0;font:700 36px var(--mono);letter-spacing:-.5px}.gdm-cd small{font:600 11px var(--sans);letter-spacing:.12em;color:#F4D6DD;margin-left:6px}
-.gdm-how{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 16px 16px}.gdm-how div{background:rgba(255,255,255,.1);border-radius:6px;padding:9px 11px;min-width:0}.gdm-how span{display:block;font:800 9.5px var(--sans);letter-spacing:.12em;color:#F4D6DD}.gdm-how b{font:700 15px var(--sans)}
-.gdm-tape{display:grid;grid-template-columns:1fr auto 1fr;gap:6px 12px;padding:12px 16px 14px}.gdm-tape .l{text-align:right;font:600 14px var(--mono)}.gdm-tape .m{font:800 9.5px var(--sans);letter-spacing:.1em;color:var(--muted);text-align:center;align-self:center;text-transform:uppercase}.gdm-tape .r{font:600 14px var(--mono)}.gdm-tape b{color:var(--wine-ink)}
-.gdm-inj{padding:4px 16px 10px}.gdm-inj div{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line2);font-size:14px}.gdm-inj div:last-child{border:0}.gdm-inj span{color:#B26B00;font-weight:600;font-size:13px;white-space:nowrap}
-.gdm-sb{display:flex;align-items:center;gap:9px;padding:12px 16px 4px}.gdm-sb .tm{font:800 32px var(--cond)}.gdm-sb .tm.c{color:var(--wine-ink)}.gdm-tl{display:inline-grid;place-items:center;min-width:64px;height:56px;padding:0 8px;border-radius:5px;background:linear-gradient(180deg,#8e2741 0 50%,#7A1F33 50%);color:#fff;font:700 30px var(--mono)}.gdm-tl.o{background:linear-gradient(180deg,#2B3036 0 50%,#1E2227 50%)}.gdm-dash{width:16px;height:4px;background:#F2B231}
-.gdm-wl{margin-left:auto;background:var(--wine);color:#fff;font:800 11px var(--sans);letter-spacing:.12em;padding:4px 8px;border-radius:3px}.gdm-wl.l{background:#2B3036}
-.gdm-top{display:flex;gap:11px;align-items:center;margin:8px 16px 0;padding:9px 11px;background:var(--sub);border-left:3px solid #F2B231}.gdm-hs{width:48px;height:48px;border-radius:50%;overflow:hidden;background:#fff;box-shadow:0 0 0 2px #F2B231;flex:none}.gdm-hs img{width:150%;margin:3px 0 0 -25%}
-.gdm-top small{display:block;font:800 9px var(--sans);letter-spacing:.12em;color:var(--muted)}.gdm-top b{font:700 15px var(--sans)}.gdm-top .gdm-ln{font:600 12.5px var(--mono);color:var(--fg2)}
-.gdm-links{display:flex;flex-wrap:wrap;gap:6px 16px;padding:12px 16px 14px;font:700 13.5px var(--sans)}.gdm-links a{color:var(--wine-ink)}
-@media (max-width:520px){.gdm-mu{font-size:46px}.gdm-cd{font-size:32px}.gdm-sb{gap:7px;padding:12px 14px 4px}.gdm-sb .tm{font-size:27px}.gdm-tl{min-width:52px;height:48px;font-size:25px}.gdm-k,.gdm-top,.gdm-links,.gdm-tape,.gdm-inj{padding-left:14px;padding-right:14px}.gdm-top{margin-left:14px;margin-right:14px}}
-
-.gnav.fr{-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);mask-image:linear-gradient(90deg,#000 82%,transparent)}.gnav.fl{-webkit-mask-image:linear-gradient(90deg,transparent,#000 18%);mask-image:linear-gradient(90deg,transparent,#000 18%)}.gnav.fl.fr{-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 82%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 82%,transparent)}
-.art-h{scroll-margin-top:150px;margin-top:34px;padding-top:22px;border-top:2px solid var(--fg)}.art-h h2{margin:0;font:800 21px var(--sans);font-stretch:110%}
-.pp-hero{display:flex;gap:22px;align-items:flex-end;background:linear-gradient(135deg,#8e2741,#6E1A2D);color:#fff;margin:12px 0 22px;padding:20px 22px 0;overflow:hidden;position:relative}
-.pp-ph{width:220px;flex:none;align-self:flex-end;display:grid;place-items:center;font:800 54px var(--cond);color:rgba(255,255,255,.5);min-height:160px}.pp-ph img{width:100%;display:block}
-.pp-tx{padding-bottom:20px;min-width:0}.pp-k{font:800 11px var(--sans);font-stretch:125%;letter-spacing:.12em;text-transform:uppercase;color:#F2B231}
-.pp-hero h1{margin:4px 0 4px;font:800 44px/1 var(--cond);text-transform:uppercase;color:#fff}.pp-m{font-size:14px;color:rgba(255,255,255,.85)}
-.pp-lk{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin-top:12px;font-size:13px}.pp-lk a{color:#fff;font-weight:600}.pp-lk .soc a{color:#fff}.pp-lk .soc svg{fill:currentColor}
-.pp-inj{display:inline-block;margin-top:10px;background:#F2B231;color:#101419;font:700 12px var(--sans);padding:3px 8px}
-.pp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.pp-c{background:var(--card);border:1px solid var(--line);padding:14px 16px;min-width:0}.pp-c.wide{grid-column:1/-1}
-.pp-c h2{margin:0 0 10px;padding-bottom:6px;border-bottom:2px solid var(--fg);font:800 13px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase}.pp-c h3{margin:12px 0 4px;font:800 11px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.pp-kv{display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;margin:8px 0 0;font-size:13.5px}.pp-kv dt{color:var(--muted);font-size:12.5px}.pp-kv dd{margin:0}
-.pp-bars{display:grid;gap:6px}.pp-bar{display:grid;grid-template-columns:64px 1fr 92px;gap:10px;align-items:center;font-size:13px}.pp-y{font:500 12px var(--mono);color:var(--fg2)}.pp-b{height:12px;background:var(--line2)}.pp-b i{display:block;height:100%;background:var(--wine)}.pp-b.none{background:none;border:1px dashed var(--line)}.pp-v{text-align:right;font:600 12.5px var(--mono)}
-.pp-note{margin:8px 0 0;font-size:12.5px;color:var(--muted)}.pp-ul{margin:8px 0 0;padding-left:18px;font-size:13px;line-height:1.5;color:var(--fg2)}.pp-more{display:inline-block;margin-top:12px;font-weight:700;font-size:13px;color:var(--wine-ink)}
-.pp-tx{list-style:none}.pp-c ul.pp-tx{margin:0;padding:0}.pp-c ul.pp-tx li{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;padding:7px 0;border-bottom:1px solid var(--line2);font-size:13.5px}.pp-c ul.pp-tx .mono{font-size:12px;color:var(--muted);min-width:96px}.pp-val{margin-left:auto;font:600 12px var(--mono);color:var(--fg2)}
-.ppx{max-width:860px}.ppx-body{display:grid;gap:14px;margin-top:12px}
-.ppx-band{display:flex;gap:16px;align-items:flex-end;justify-content:space-between;background:linear-gradient(135deg,#8e2741,#6E1A2D);color:#fff;padding:18px 18px 0;overflow:hidden}
-.ppx-bt{padding-bottom:16px;min-width:0}.ppx-k{font:800 12px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:#F2B231}
-.ppx-band h1{margin:4px 0;font:800 44px/1 var(--cond);text-transform:uppercase;color:#fff}.ppx-m{font:600 13px var(--mono);color:#f3d9e3}.ppx-m .nw{white-space:nowrap}
-.ppx-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.ppx-pill{font:700 11.5px var(--sans);letter-spacing:.03em;border:1px solid rgba(255,255,255,.35);padding:4px 8px}.ppx-pill b{color:#F2B231}.ppx-pill.warn{border-color:#F2B231}
-.ppx-ph{width:200px;flex:none;align-self:flex-end;display:grid;place-items:center;font:800 54px var(--cond);color:rgba(255,255,255,.5);min-height:120px}.ppx-ph img{width:100%;display:block}
-.ppx-links{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}.ppx-links>a{font:700 12.5px var(--sans);text-decoration:none;color:var(--fg);border:1px solid var(--line);background:var(--card);padding:8px 10px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ppx-lkh{grid-column:1/-1;font:800 10.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.ppx-soc{display:flex;gap:14px;margin-top:12px}.ppx-band .ppx-soc a{color:#fff!important;opacity:1}.ppx-soc svg{fill:currentColor;width:18px;height:18px}.ppx-links .soc a{color:var(--fg)}.ppx-links .soc svg{fill:currentColor}
-.ppx-nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:6px}.ppx-nav a{font:700 11.5px var(--sans);letter-spacing:.05em;text-transform:uppercase;text-decoration:none;color:#fff;background:#101419;padding:9px 10px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ppx-ch1{scroll-margin-top:12px}.ppx-ch1>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-top:3px solid var(--fg);padding:10px 2px 8px}.ppx-ch1>summary::-webkit-details-marker{display:none}
-.ppx-ct{font:800 22px var(--cond);text-transform:uppercase;letter-spacing:.02em}.ppx-ct::before{content:"+";display:inline-block;width:18px;color:var(--wine)}.ppx-ch1[open] .ppx-ct::before{content:"−"}
-.ppx-hd{font:700 13px var(--mono);color:var(--wine-ink,#860038);text-align:right}
-.ppx-cb{display:grid;gap:12px;padding-bottom:10px}
-.ppx-c{background:var(--card);border:1px solid var(--line);padding:14px 16px;min-width:0}
-.ppx-ch{border-bottom:3px solid var(--fg);padding-bottom:5px;margin-bottom:8px}.ppx-ch h2{margin:0;font:800 19px var(--cond);text-transform:uppercase;letter-spacing:.02em}
-.ppx-why{font-size:13px;color:var(--muted);margin:0 0 12px}.ppx-why b{color:var(--fg)}
-.ppx-note{font-size:12.5px;color:var(--muted);margin:10px 0 0}
-.ppx-ctx{background:var(--page);border-left:3px solid #F2B231;padding:9px 12px;margin-top:12px;font-size:14px}.ppx-ctx b{display:block;font:800 10.5px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:#8A5E00;margin-bottom:3px}
-.ppx-tl{position:relative;display:inline-flex;align-items:center;gap:4px}.ppx-tip{all:unset;cursor:pointer;width:15px;height:15px;border-radius:50%;border:1px solid var(--muted);color:var(--muted);font:700 10px/15px var(--sans);text-align:center;text-transform:none;letter-spacing:0}.ppx-tip:focus-visible{outline:2px solid #F2B231}
-.ppx-pop{position:absolute;left:0;top:calc(100% + 6px);z-index:5;width:min(260px,70vw);background:#101419;color:#fff;font:400 12.5px/1.45 var(--sans);letter-spacing:0;text-transform:none;padding:8px 10px;box-shadow:0 4px 14px rgba(0,0,0,.2)}
-.ppx-g6{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}@media (min-width:700px){.ppx-g6{grid-template-columns:repeat(6,minmax(0,1fr))}}
-.ppx-cell{border:1px solid var(--line2);padding:8px;min-width:0}.ppx-cell .k{font:800 10px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.ppx-cell .v{font:700 20px var(--mono)}.ppx-cell .r{font-size:11px;color:var(--muted)}
-.ppx .pct{height:4px;background:var(--line2);margin-top:5px}.ppx .pct i{display:block;height:100%;background:var(--wine)}
-.ppx-side{font:800 11px var(--sans);letter-spacing:.08em;text-transform:uppercase;border-left:3px solid var(--wine);padding-left:8px;margin:12px 0 8px}
-.ppx-fp{display:grid;grid-template-columns:104px minmax(0,1fr) 30px;gap:10px;align-items:center;font-size:13px;margin-bottom:6px}.ppx-fp .t{height:12px;background:var(--line2)}.ppx-fp .t i{display:block;height:100%;background:var(--wine)}.ppx-fp b{font:700 12.5px var(--mono);text-align:right}
-.ppx-line{display:flex;align-items:flex-start;justify-content:center;gap:10px;margin:2px 0 8px}.ppx-line .u{display:grid;justify-items:center}.ppx-line b{font:700 40px/1 var(--mono)}.ppx-line small{font:800 10px var(--sans);letter-spacing:.07em;color:var(--muted);margin-top:4px}.ppx-line .sep{font:500 30px/1.2 var(--mono);color:var(--muted)}
-.ppx-svg svg{display:block;max-width:100%}.ppx-svg text{fill:var(--muted);font:500 10px var(--mono)}
-.ppx-cal{display:grid;grid-template-columns:repeat(auto-fill,minmax(30px,1fr));gap:4px}.ppx-cal span{aspect-ratio:1;display:grid;place-items:center;font:600 8.5px var(--mono);color:#fff;background:var(--line2)}
-.ppx-cal .g1,.ppx-leg .g1{background:#E8C9D3;color:#5a0026}.ppx-cal .g2,.ppx-leg .g2{background:#C9708F}.ppx-cal .g3,.ppx-leg .g3{background:#9F2556}.ppx-cal .g4,.ppx-leg .g4{background:#860038}.ppx-cal .g5,.ppx-leg .g5{background:#F2B231;color:#101419}.ppx-cal .x{background:transparent;border:1px dashed var(--line);color:var(--muted)}.ppx-cal .l5{outline:2px solid var(--fg);outline-offset:1px}
-.ppx-leg{display:flex;gap:12px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-top:8px}.ppx-leg i{display:inline-block;width:11px;height:11px;margin-right:4px;vertical-align:-1px}
-.ppx-tbx{overflow-x:auto;margin-top:6px}.ppx-t{border-collapse:collapse;width:100%;min-width:0!important;font:500 12.5px var(--mono)}.ppx-t th{font:800 10px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:right;padding:5px 7px;white-space:nowrap}.ppx-t td{text-align:right;padding:7px;border-top:1px solid var(--line2);white-space:nowrap}.ppx-t td:first-child{white-space:normal}.ppx-t th:first-child,.ppx-t td:first-child{text-align:left}.ppx-t tr.me td{font-weight:700;color:var(--wine-ink,#860038)}.ppx-t td.up{color:#1F7A4D;font-weight:700}.ppx-t td.dn{color:#A8323E;font-weight:700}
-.ppx-share{display:grid;gap:9px}.ppx-share>div{display:grid;grid-template-columns:76px minmax(0,1fr) 50px;gap:10px;align-items:center;font:500 13px var(--mono)}.ppx-share .t{height:14px;background:var(--line2);position:relative}.ppx-share .t i{position:absolute;inset:0 auto 0 0;background:var(--wine)}.ppx-share .t u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--fg)}.ppx-share b{text-align:right}
-.ppx-dd{display:grid;grid-template-columns:repeat(auto-fill,minmax(16px,1fr));gap:4px}.ppx-dd i{aspect-ratio:1;border-radius:50%;background:var(--line2)}.ppx-dd i.y{background:var(--wine)}
-.ppx-rr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:baseline;border-top:1px solid var(--line2);padding:9px 0 0;margin-top:9px;font-size:14px}.ppx-rr b{font:700 15px var(--mono)}.ppx-rr small{grid-column:1/-1;color:var(--muted);font-size:12px}.ppx-rr .pct{grid-column:1/-1}
-.ppx-big2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:6px}.ppx-big2>div{border:1px solid var(--line2);padding:10px}.ppx-big2 b{display:block;font:700 24px var(--mono)}.ppx-big2 span{font-size:12.5px;color:var(--muted)}
-.ppx-elig{height:16px;background:var(--line2);position:relative;margin:10px 0 4px}.ppx-elig i{position:absolute;inset:0 auto 0 0;background:var(--wine)}.ppx-elig b{position:absolute;top:-4px;bottom:-4px;width:3px;background:#F2B231}
-.ppx-meter{height:12px;background:var(--line2);margin:4px 0 8px}.ppx-meter i{display:block;height:100%;background:#F2B231}.ppx-p{margin:0;font-size:14px}
-.ppx-c h3{font:800 11.5px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:16px 0 4px}
-.ppx-tabs{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}.ppx-tabs button{font:700 12px var(--sans);border:1px solid var(--line);background:var(--card);color:var(--fg);padding:6px 10px;cursor:pointer}.ppx-tabs button[aria-pressed=true]{background:#860038;border-color:#860038;color:#fff}
-.ppx-lad{list-style:none;margin:0;padding:0;font-size:14px}.ppx-lad li{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;padding:7px 8px;border-top:1px solid var(--line2);align-items:baseline}.ppx-lad li:first-child{border-top:0}.ppx-lad .n,.ppx-lad .p{font:700 12.5px var(--mono);color:var(--muted)}.ppx-lad .me{background:#860038;color:#fff}.ppx-lad .me .n,.ppx-lad .me .p{color:#fff}.ppx-lad .tm>span:nth-child(2){color:var(--wine-ink,#860038);font-weight:700}.ppx-lad small{display:block;color:var(--muted);font-size:11.5px;font-weight:400}
-.ppx-news{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:14px}.ppx-news li+li{border-top:1px solid var(--line2);padding-top:8px}.ppx-news small{display:block;color:var(--muted);font-size:12px}
-.ppx-last .ppx-lg{font:700 12px var(--mono);color:var(--muted)}.ppx-last .ppx-ll{font:700 18px var(--mono);margin-top:2px}
-.ppx-more{display:inline-block;margin-top:10px;font:700 13px var(--sans);color:var(--wine-ink,#860038)}
-.ppx-wait{border:1px dashed var(--line);padding:10px 14px;font-size:13px;color:var(--muted);display:grid;gap:2px}.ppx-wait b{color:var(--fg);font:800 11px var(--sans);letter-spacing:.07em;text-transform:uppercase}
-.ppx-canvas{width:100%;max-width:340px;height:auto;display:block;border:2px solid #101419}.ppx-btn{margin-top:10px;font:700 12.5px var(--sans);text-transform:uppercase;letter-spacing:.05em;background:#101419;color:#fff;padding:9px 12px;border:0;cursor:pointer}
-.ppx-foot{font-size:12px;color:var(--muted);margin:6px 0 0}
-@media (max-width:640px){.ppx-band{flex-direction:column;align-items:stretch;padding:16px 16px 0;gap:0}.ppx-band h1{font-size:38px}.ppx-ph{width:150px;min-height:100px;align-self:flex-end;margin-top:-6px}}
-.pp-capl a{font-weight:700;font-size:13px;color:var(--wine-ink)}
-.pp-on .plink{text-decoration:underline;text-decoration-color:#F2B231;text-decoration-thickness:2px;text-underline-offset:3px}
-@media (max-width:760px){.pp-hero{flex-direction:column;align-items:flex-start;padding:16px 16px 0;gap:6px}.pp-ph{width:150px;min-height:110px;order:2;align-self:center}.pp-tx{padding-bottom:4px}.pp-hero h1{font-size:34px}.pp-grid{grid-template-columns:1fr}.pp-bar{grid-template-columns:58px 1fr 84px}}
-.pt-faces .pf{opacity:1}
-
-.tw-hd{display:flex;justify-content:space-between;gap:12px;padding:0 0 6px;border-bottom:1px solid var(--line);font:800 10.5px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.ftip{font:600 13px var(--sans);color:var(--wine-ink);text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
-.tipcard{margin-top:26px;background:var(--card);border:1px solid var(--line);border-left:3px solid #F2B231;padding:12px 14px;display:flex;gap:10px 16px;align-items:center;flex-wrap:wrap}
-.tipcard .tc-t{flex:1 1 280px}.tipcard b{display:block;font:800 11px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--wine-ink)}.tipcard p{margin:3px 0 0;color:var(--fg2);font-size:13px;line-height:1.45}
-.tipcard .tc-btn{display:inline-flex;align-items:center;gap:6px;background:#860038;color:#fff;border-radius:999px;padding:7px 14px;font:700 13px var(--sans);text-decoration:none;white-space:nowrap}.tipcard .tc-btn:hover{background:#6E002E}
-
-.galert{position:fixed;left:16px;bottom:16px;z-index:70;width:min(360px,calc(100vw - 32px));background:var(--card);border:1px solid var(--line);border-left:4px solid var(--wine);box-shadow:0 10px 28px rgba(0,0,0,.18);padding:10px 34px 11px 13px;font-size:13.5px;line-height:1.4;animation:gaIn .25s ease-out}
-@keyframes gaIn{from{transform:translateY(12px);opacity:0}}
-.galert .ga-k{display:flex;align-items:center;gap:6px;font:800 10.5px var(--sans);font-stretch:125%;letter-spacing:.12em;text-transform:uppercase;color:var(--wine-ink)}.galert .ga-k i{width:7px;height:7px;border-radius:50%;background:#D32F2F;box-shadow:0 0 0 3px rgba(211,47,47,.18)}
-.galert .ga-t{display:block;font-weight:800;font-size:15px;margin:3px 0 1px}.galert .ga-s{color:var(--fg2)}.galert a{display:table;margin-top:5px;font-weight:700;color:var(--wine-ink)}.galert .ga-x{position:absolute;top:6px;right:6px;border:0;background:none;font-size:19px;color:var(--muted);cursor:pointer;line-height:1;padding:2px 5px}
-.galert.ga-fin{border-left-color:var(--fg)}.galert .ga-sc{font:700 15px var(--mono)}
-.ga-demo{position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:90;display:flex;gap:4px;background:#101419;padding:5px;border-radius:999px;font:700 12px var(--sans)}.ga-demo button{border:0;border-radius:999px;padding:5px 9px;white-space:nowrap;font:700 11.5px var(--sans);background:#2A2F35;color:#fff;cursor:pointer}.ga-demo button.on{background:#F2B231;color:#101419}
-@media (max-width:600px){.galert{left:12px;right:12px;bottom:12px;width:auto}body.ga-on .btt{opacity:0;pointer-events:none}}
-@media (prefers-reduced-motion:reduce){.galert{animation:none}}
-
-:root{--ab-cond-bg:#FFF6E0;--ab-cond-ink:#8A5E00;--ab-frz-a:#E8F1F8;--ab-frz-b:#DCEAF4;--ab-frz-bd:#9CC3DD;--ab-frz-ink:#1B4A66;--ab-frz-i:#2D6E95;--ab-gold:#F2B231}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--ab-cond-bg:#2A2210;--ab-cond-ink:#F2C45A;--ab-frz-a:#13212B;--ab-frz-b:#182A36;--ab-frz-bd:#3B6A88;--ab-frz-ink:#B5D6EA;--ab-frz-i:#8CC0E0}}
-:root[data-theme="dark"]{--ab-cond-bg:#2A2210;--ab-cond-ink:#F2C45A;--ab-frz-a:#13212B;--ab-frz-b:#182A36;--ab-frz-bd:#3B6A88;--ab-frz-ink:#B5D6EA;--ab-frz-i:#8CC0E0}
-.ab-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 28px}
-.ab-tile{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--wine);padding:14px 16px;min-width:0}.ab-tile.gold{border-top-color:var(--ab-gold)}
-.ab-tile b{display:block;font:700 30px/1.1 var(--mono);color:var(--wine-ink)}.ab-tile.gold b{color:var(--ab-cond-ink)}
-.ab-tile>span{display:block;font:800 11px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:4px}.ab-tile small{display:block;font-size:12.5px;color:var(--fg2);margin-top:6px}
-.ab-board{display:grid;grid-template-columns:64px repeat(7,minmax(0,1fr));gap:8px;background:var(--card);border:1px solid var(--line);padding:14px}
-.ab-yr{grid-column:var(--c);grid-row:1;font:800 22px var(--cond);text-align:center}.ab-rl{grid-column:1;grid-row:var(--r);align-self:center;font:800 11px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.ab-ym{display:none}
-.ab-pk{grid-column:var(--c);grid-row:var(--r);appearance:none;border:0;margin:0;text-align:left;border-radius:6px;min-height:80px;padding:9px 9px 8px;display:flex;flex-direction:column;justify-content:space-between;gap:4px;font:12px/1.25 var(--sans);cursor:pointer;transition:transform .12s;min-width:0}
-.ab-pk:hover{transform:translateY(-2px)}.ab-pk[aria-expanded="true"]{outline:2px solid var(--fg);outline-offset:2px}
-.ab-pk i{font:700 10px var(--sans);font-style:normal;letter-spacing:.08em;text-transform:uppercase}.ab-pk b{font:800 13px var(--sans)}
-.ab-pk.own{background:var(--wine);color:#fff}.ab-pk.own i{color:var(--ab-gold)}
-.ab-pk.cond{background:var(--ab-cond-bg);border:2px solid var(--ab-gold);color:var(--fg)}.ab-pk.cond i{color:var(--ab-cond-ink)}
-.ab-pk.frz{background:repeating-linear-gradient(135deg,var(--ab-frz-a) 0 8px,var(--ab-frz-b) 8px 16px);border:2px solid var(--ab-frz-bd);color:var(--ab-frz-ink)}.ab-pk.frz{margin:0;padding:9px 9px 8px;border:0;box-shadow:inset 0 0 0 2px var(--ab-frz-bd)}.ab-pk.frz i{color:var(--ab-frz-i)}
-.ab-pk.gone{background:var(--sub);border:1px dashed var(--line);color:var(--muted)}.ab-pk.gone b{color:var(--fg2)}.ab-pk.gone i{color:var(--muted)}
-.ab-det{grid-column:1/-1;grid-row:4;border:1px solid var(--line);border-top:3px solid var(--wine);padding:12px 14px 2px;margin-top:4px;background:var(--card)}
-.ab-dh{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}.ab-dh b{font-weight:800;font-size:15px}.ab-dh small{color:var(--muted);font-size:13px}.ab-dx{margin-left:auto;appearance:none;border:0;background:none;font-size:20px;line-height:1;color:var(--muted);cursor:pointer;padding:2px 4px}
-.ab-leg{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:12.5px;color:var(--fg2)}.ab-leg span{display:inline-flex;align-items:center;gap:6px}.ab-leg i{width:14px;height:14px;border-radius:3px;display:inline-block;box-sizing:border-box}
-.bio-bg{margin:4px 0 0;padding-left:18px;font-size:13.5px;line-height:1.5}.bio-bg li+li{margin-top:4px}.ab-sec{margin-top:30px}.ab-note{font-size:13px;line-height:1.5;color:var(--muted);margin:0 0 12px;max-width:72ch}.ab-note b{color:var(--ink)}.cash-tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.cash-tr .ab-note{grid-column:1/-1;margin:2px 0 0}.cash-c{border:1px solid var(--line);padding:14px 16px;display:flex;flex-direction:column;gap:4px;background:var(--card,#fff)}.cash-c .ab-n{font:800 12px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.cash-c>b{font:700 26px var(--mono)}.cash-c small{color:var(--muted)}.cash-l{list-style:none;margin:8px 0 0;padding:0;font-size:13px}.cash-l li{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-top:1px dotted var(--line)}@media (max-width:600px){.cash-tr{grid-template-columns:1fr}}
-.ab-cards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.ab-cards>li{background:var(--card);border:1px solid var(--line);min-width:0}.ab-cards>li:has(details[open]){grid-column:1/-1}
-.ab-cards summary{list-style:none;cursor:pointer;padding:14px 16px;display:block}.ab-cards summary::-webkit-details-marker{display:none}
-.ab-cards .ab-n{display:block;font:800 12px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-#exc summary>b{display:block;font:700 26px var(--mono);margin-top:2px}
-.ab-bar{height:8px;border-radius:4px;background:var(--line2);margin:10px 0 6px;overflow:hidden}.ab-bar i{display:block;height:100%;background:var(--wine)}
-.ab-cards summary small{display:block;font-size:12.5px;color:var(--fg2)}
-.ab-cards .xb{padding:0 16px 14px}
-.ab-rt>li{border-left:4px solid var(--wine)}.ab-rt>li.dim{border-left-color:var(--line)}.rt-key{display:inline-flex;align-items:center;gap:5px;margin-left:10px;white-space:nowrap}.rt-key i{display:inline-block;width:4px;height:13px;background:var(--line);margin-left:6px}.rt-key i.on{background:var(--wine);margin-left:0}.ab-rt>li.dim .xb{display:block}.ab-rt>li.dim .xb>*:not(.rc2){margin-top:12px}
-.ab-rt summary{display:flex;gap:12px;align-items:center}.ab-av{width:48px;height:48px;border-radius:50%;background:var(--sub);display:grid;place-items:center;font:800 15px var(--sans);color:var(--wine-ink);flex:none;overflow:hidden}.ab-av img{width:100%;height:100%;object-fit:cover;object-position:top}
-.ab-rt summary>span{min-width:0}.ab-rt summary b{display:block;font:700 15px var(--sans)}.ab-rt .rt-dr{display:inline-block;font:600 12px var(--mono);color:var(--wine-ink);margin-top:2px}
-@media (max-width:760px){.ab-tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.ab-tile b{font-size:26px}
- .ab-board{grid-template-columns:repeat(2,minmax(0,1fr));padding:12px}.ab-yr,.ab-rl{display:none}.ab-pk{grid-column:auto;grid-row:auto}.ab-det{grid-row:auto}
- .ab-ym{display:block;grid-column:1/-1;font:800 18px var(--cond);border-bottom:2px solid var(--fg);padding-bottom:2px;margin-top:6px}.ab-ym:first-child{margin-top:0}
- .ab-cards{grid-template-columns:1fr}}
-
-html,body{overflow-x:clip}body{position:relative}main,header.gbar,footer{overflow-x:clip;max-width:100%}
-#twoway summary>b.mono,#camp li>b{font-size:12px}
-.co-more{display:none}
-@media (max-width:600px){.co{padding:14px 14px}.co h2{font-size:24px}.co-hs{width:62px;height:62px;border-width:2px}.co-top{gap:12px;margin-bottom:8px}.co .bio-f{font-size:13px}.co:not(.open):not(.capmode) .bio-f>:nth-child(n+7),.co:not(.open):not(.capmode)>.co-d,.co:not(.open):not(.capmode)>.bio-links,.co:not(.open):not(.capmode)>.co-link,.co:not(.open):not(.capmode)>.tablebox{display:none}.co-more{display:inline-flex;align-items:center;gap:4px;margin:2px 0 0;padding:6px 0;border:0;background:none;font:700 13.5px var(--sans);color:var(--wine-ink);cursor:pointer}.co.capmode .co-more{display:none}}
-table{width:100%;border-collapse:collapse;font-size:14px;min-width:860px}
-th{text-align:left;font:700 11px var(--sans);font-stretch:125%;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);padding:12px 10px;background:var(--sub)}
-td{padding:12px 10px;border-top:1px solid var(--line2)}
-th:first-child,td:first-child{padding-left:20px}
-.r{text-align:right}.dim{color:var(--muted)}
-.cap th.cur,.cap td.cur{background:var(--sub)}
-.cap th.cur{color:var(--fg)}
-.cap th.cur small{display:block;font-size:9px;color:var(--wine-ink);letter-spacing:.12em}
-.cap td.cur{font:700 15px var(--mono);font-variant-numeric:tabular-nums}
-.cap td.fut{font:400 13px var(--mono);color:var(--fg2);font-variant-numeric:tabular-nums;white-space:nowrap}
-.cap .fa{font:600 11px var(--sans);font-stretch:118%;letter-spacing:.06em;color:var(--muted)}
-.pbtn{appearance:none;border:0;background:none;padding:0;font:inherit;font-weight:600;color:var(--fg);cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-align:left}
-.pbtn::after{content:"";width:6px;height:6px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:rotate(45deg) translateY(-2px);transition:transform .15s}
-.pbtn[aria-expanded="true"]::after{transform:rotate(-135deg) translateY(-1px)}
-.pbtn:hover{color:var(--wine-ink)}
-tr.det td{background:var(--sub);border-top:0;padding:4px 20px 18px;position:relative}.det-x{position:absolute;top:8px;right:14px;margin:0;z-index:2}.cs-xa{margin-left:auto;margin-right:10px}.capcard{background:var(--sub);padding:14px 20px 18px}.capcard .det-grid{position:static!important;width:auto!important}.capcard-h{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px 14px;border-bottom:3px solid var(--fg);padding-bottom:8px;margin-bottom:14px}.capcard-h b{font:800 22px var(--sans)}.capcard-h span{font:600 13px var(--mono);color:var(--muted)}.cs-xa .xact{margin:0}
-@media (max-width:720px){.det-x{display:none}}
-.det-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 28px;max-width:980px}
-.det-grid h4{margin:10px 0 4px;font:800 11px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.det-grid p{margin:0;font-size:13px;line-height:1.5;color:var(--fg2);white-space:normal}
-.det-grid p b{color:var(--fg)}.share h3{font:800 11px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
-.sh-bar{display:flex;height:46px;gap:2px;border-radius:3px;overflow:hidden}
-.sh-seg{display:flex;flex-direction:column;justify-content:center;padding:0 7px;min-width:3px;color:#fff;text-decoration:none;overflow:hidden;white-space:nowrap;flex-grow:0;flex-shrink:1}
-.sh-seg b{font:700 12px var(--sans);overflow:hidden;text-overflow:ellipsis}.sh-seg span{font:500 11px var(--mono);opacity:.85}
-.sh-seg.dead{background:repeating-linear-gradient(135deg,var(--line) 0 4px,var(--line2) 4px 8px)}
-.sh-seg:hover{filter:brightness(1.15)}
-.sh-leg{list-style:none;margin:10px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:3px 22px;font-size:12.5px}
-.sh-leg li{display:flex;align-items:center;gap:7px}.sh-leg i{width:9px;height:9px;flex:none;border-radius:2px}.sh-leg li.dead i{background:repeating-linear-gradient(135deg,var(--muted) 0 2px,transparent 2px 4px)}
-.sh-leg span{flex:1;color:var(--fg2)}.sh-leg b{font:500 12px var(--mono)}
-.share p.dim{font-size:12px;margin:8px 0 0}
-.soc{display:inline-flex;gap:7px;margin-left:9px;vertical-align:-2px}.soc a{color:var(--muted);opacity:.7;line-height:0}.soc a:hover{color:var(--wine-ink);opacity:1}
-.dsheet{background:var(--card);border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.08);overflow:hidden}
-.ds-hdr{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding:16px 18px 12px;border-bottom:3px solid var(--fg)}
-.ds-hdr b{font:800 19px var(--sans);font-stretch:112%}.ds-hdr span{font:500 12px var(--mono);color:var(--muted)}
-.ds-grid{display:grid;grid-template-columns:64px repeat(3,minmax(0,1fr)) minmax(0,.9fr)}
-.ds-grid>div{border-bottom:1px solid var(--line2);padding:10px 12px;display:flex;align-items:center;min-width:0}
-.ds-grid .ch{font:700 10.5px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:9px 12px 7px;background:var(--sub)}
-.ds-grid .ch.s1{color:var(--wine-ink)}
-.ds-grid .pz{font:800 26px var(--cond);color:var(--wine-ink);justify-content:center;border-right:1px solid var(--line2)}
-.ds-grid .c1{background:linear-gradient(90deg,rgba(122,31,51,.08),rgba(122,31,51,.02))}
-.ds-grid a{display:flex;align-items:center;gap:10px;min-width:0;color:var(--fg);text-decoration:none}
-.ds-grid a:hover b{color:var(--wine-ink)}
-.ds-grid .av{position:relative;width:44px;height:44px;border-radius:50%;overflow:hidden;background:var(--sub);flex:none}
-.ds-grid .av img{width:150%;margin:3px 0 0 -25%}
-.ds-grid .c1 .av{width:54px;height:54px;box-shadow:0 0 0 2px var(--wine)}
-.ds-grid .av.sm{width:34px;height:34px}
-.ds-grid .t{min-width:0}.ds-grid .t b{display:block;font:700 14px var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ds-grid .c1 .t b{font-size:15.5px}
-.ds-grid .t span{font:500 11px var(--mono);color:var(--muted)}.ds-grid .t em{font-style:normal;color:var(--wine-ink);font-weight:700}
-.ds-grid .tw{border-left:1px dashed var(--line)}.ds-grid .tw .t b{font-size:13px;font-weight:600}
-.ds-foot{padding:10px 18px 12px;font-size:12px;color:var(--muted)}
-@media (max-width:760px){
- .ds-grid{grid-template-columns:48px minmax(0,1fr)}
- .ds-grid .ch{display:none}
- .ds-grid .pz{align-items:flex-start;padding-top:16px;font-size:22px}
- .ds-grid .c2,.ds-grid .c3,.ds-grid .tw{padding-block:6px;border-bottom:0}
- .ds-grid .tw{border-left:0;border-bottom:1px solid var(--line2);padding-bottom:12px}
- .ds-grid .tw.none{padding:0 0 6px}.ds-grid .tw.none span{display:none}
- .ds-grid .pz{grid-row:span 4}
- .ds-grid .c1{border-bottom:0}
- .ds-grid .c2 .av,.ds-grid .c3 .av{width:34px;height:34px}
-}
-.dsw{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
-.dsw button{appearance:none;border:0;background:var(--card);padding:6px 12px;font:700 11px var(--sans);font-stretch:118%;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);cursor:pointer}
-.dsw button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
-.ds-grid .t b em{font:600 12px var(--mono);font-style:normal;color:var(--wine-ink);margin-left:4px}
-.ds-grid .t>span{display:block}
-.pyr{display:flex;flex-direction:column;align-items:center;gap:6px;padding:22px 18px 10px}
-.pt{width:100%;display:grid;grid-template-columns:minmax(0,1fr) 170px;align-items:center;gap:16px}
-.pt-band{justify-self:center;width:var(--w);padding:12px 8px;clip-path:polygon(var(--in) 0,calc(100% - var(--in)) 0,100% 100%,0 100%);background:var(--bgc)}
-.pt-faces{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 14px}
-.pt-faces a{display:flex;flex-direction:column;align-items:center;color:var(--fg);text-decoration:none;width:72px}
-.pt-faces .pf{width:52px;height:52px;border-radius:50%;overflow:hidden;background:var(--sub);box-shadow:0 0 0 2px #fff}
-.pt-faces .pf img{width:150%;margin:3px 0 0 -25%}
-.pt-faces b{font:700 12px var(--sans);margin-top:5px;white-space:nowrap}
-.pt-faces span{font:500 10.5px var(--mono);opacity:.75}
-.pt-lab b{display:block;font:800 13px var(--sans);font-stretch:118%;letter-spacing:.08em;text-transform:uppercase}
-.pt-lab span{font-size:12px;color:var(--muted);line-height:1.35}
-@media (max-width:760px){.pt{grid-template-columns:1fr;gap:4px}.pt-lab{order:-1;text-align:center}.pt-lab span{display:block}.pt-band{clip-path:none;border-radius:6px}.pt-faces{gap:6px 6px}.pt-faces a{width:58px}.pt-faces b{font-size:11px}.pt-faces .pf{width:44px;height:44px}.pyr{padding:14px 10px 6px;gap:12px}.ds-hdr{flex-wrap:wrap;gap:10px}.ds-hdr b{font-size:17px}}
-@media (max-width:760px){.ct-nums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px}.ct-nums b{font-size:20px}.ct-nums span{font-size:11.5px;line-height:1.3}main .page p.dim{font-size:12px!important}.block-h span{font-size:11.5px}}
-.captop{margin:0}.ct-nums{display:flex;flex-wrap:wrap;gap:10px 34px}.ct-nums div{display:flex;flex-direction:column}.ct-nums b{font:700 24px var(--mono);letter-spacing:-.02em}.ct-nums .ctkey b{color:var(--wine-ink)}.ct-nums span{font-size:12px;color:var(--muted)}.captop .hbar{margin-top:6px}@media (max-width:600px){.captop .hbar{margin-top:26px}}
-.det-grid .wide{grid-column:1/-1}
-table.comps{border-collapse:collapse;font-size:12.5px;width:100%;max-width:640px;table-layout:auto;margin-bottom:6px}table.comps th{font-weight:600;color:var(--muted);text-align:left;padding:4px 10px 4px 0;border-bottom:1px solid var(--line2);font-size:11.5px}table.comps td{padding:4px 10px 4px 0;border-bottom:1px solid var(--line2);white-space:nowrap;font-size:12.5px}table.comps .r{text-align:right}table.comps tr.me td{font-weight:700}table.comps small{color:var(--muted);font-size:11px}
-.det-grid p.dim{font-size:11.5px;color:var(--muted)}.splink{font-weight:600;font-size:13px}
-.kv li.tw small+small{margin-top:1px}.kv li.tw a{color:inherit;font-weight:600}
-@media (max-width:720px){.sh-seg b,.sh-seg span{display:none}.sh-bar{height:30px}.sh-leg{grid-template-columns:1fr 1fr;gap:3px 16px;font-size:12px}.det-grid{grid-template-columns:minmax(0,1fr)}.ct-nums{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px}.ct-nums b{font-size:20px}tr.det .det-grid{position:sticky;left:0;width:calc(100vw - 92px);box-sizing:border-box}table.comps td,table.comps th{white-space:normal}}
-/* video */
-.vlinks{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 28px}
-.vlinks a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:12px 0;border-bottom:1px solid var(--line2);color:var(--fg)}
-.vlinks a:hover{text-decoration:none;background:var(--sub)}
-.vlinks b{font-weight:600;font-size:14px}.vlinks span{grid-column:1;font-size:12px;color:var(--muted)}
-.vlinks em{grid-row:1/span 2;grid-column:2;align-self:center;font-style:normal;font-size:12px;color:var(--muted)}
-.vone{display:grid;gap:16px 24px;align-items:center}
-.vone .vcard small{display:none}
-.vone-txt b{display:block;font-size:17px;font-weight:700;line-height:1.3}
-.vone-txt p{margin:6px 0 0;font-size:14px;color:var(--muted)}
-@media (max-width:520px){.vone{grid-template-columns:minmax(0,1fr)}}
-.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
-.vcard{display:flex;flex-direction:column;gap:8px;min-width:0;color:var(--fg)}
-a.vcard:hover{text-decoration:none}
-a.vcard:hover .vplay span{background:var(--wine)}
-.vthumb.poster{background:#14181D;border-color:#14181D}
-.poster::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:var(--wine)}
-.poster .vplay{pointer-events:none}
-.poster .ptitle{position:absolute;left:12px;right:12px;bottom:14px;font-stretch:112%;color:#FFFFFF}
-.vthumb{position:relative;aspect-ratio:16/9;max-width:100%;background:var(--sub);border:1px solid var(--line);overflow:hidden}
-.vthumb img,.vthumb iframe{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
-.vplay{appearance:none;position:absolute;inset:0;border:0;background:transparent;cursor:pointer;display:grid;place-items:center}
-.vplay span{width:56px;height:56px;border-radius:50%;background:rgba(16,20,25,.78);display:grid;place-items:center}
-.vplay span::after{content:"";margin-left:4px;border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent}
-.vplay:hover span{background:var(--wine)}
-.vcard b{font-size:14px;line-height:1.35;font-weight:600}
-.vcard small{font-size:12px;color:var(--muted)}
-.cap tfoot tr.thr-h td{border-top:1px solid var(--line);padding-top:14px;font:800 11px var(--sans);font-stretch:118%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.cap tfoot tr.thr td{border-top:1px solid var(--line2);font-weight:400;color:var(--fg2)}
-.cap tfoot tr.thr td.cur{font-weight:600;font-size:14px;color:var(--fg)}
-.cap tfoot tr.pos td{border-top:1px solid var(--line2);font-weight:400;vertical-align:top}
-.cap tr.pos .band{display:inline-block;font:700 11px var(--sans);font-stretch:118%;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:999px;white-space:nowrap}
-.cap tr.pos .band.ok{background:var(--z1);color:var(--fg2)}
-.cap tr.pos .band.warn{background:var(--z2);color:var(--fg)}
-.cap tr.pos .band.hot{background:var(--z4);color:var(--wine-ink)}
-.cap tr.pos small{display:block;margin-top:4px;font:500 11.5px var(--mono);color:var(--muted);white-space:nowrap}
-.cap td.proj{font-style:italic;color:var(--muted)}
-.cap td.proj sup{font-style:normal;color:var(--wine-ink);margin-left:1px}
-.pill{display:inline-block;border-radius:999px;font-size:12px;white-space:nowrap;color:var(--fg2)}
-tfoot td{border-top:2px solid var(--fg);font-weight:700}
-.empty{border:1px solid var(--line);padding:48px 24px;text-align:center;color:var(--muted)}
-
-footer{border-top:1px solid var(--line);color:var(--muted)}
-footer .wrap{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 18px;padding-block:22px;font-size:13px;text-align:center}
-@media (max-width:720px){
-  /* phone: record, next game, then history / injuries / Charge, then the rest */
-  .home{grid-template-columns:minmax(0,1fr);gap:36px}
-  .col,.side{display:contents}
-  .o-rec{order:1}.o-next{order:2}.o-dates{order:3}.o-otd{order:4}.o-vid{order:5}.side>*{order:6}.side>.o-otd{order:4}.side>.o-vid{order:5}.o-cap{order:7}
-  .room{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:8px}
-}
-@media (max-width:520px){
-  .ln .full{display:none}.ln .short{display:inline}
-  .strip span{height:22px}
-  .dates li{grid-template-columns:70px 10px minmax(0,1fr)}
-  .dates .tag{display:none}
-  .splits{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media (prefers-reduced-motion:reduce){.fill{transition:none}}
-
-/* ===== Game Night layer ===== */
-:root{--page:#EEF0F2;--card:#FFFFFF;--cond:'Saira Condensed','Archivo Narrow',system-ui,sans-serif}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--page:#0B0D0F;--card:#15181B}}
-:root[data-theme="dark"]{--page:#0B0D0F;--card:#15181B}
-body{background:var(--page)}
-.gbar{background:#860038;color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:10}
-.gin{display:flex;flex-wrap:wrap;align-items:center;gap:0 18px;min-height:74px}
-@media (min-width:1181px){.gin{flex-wrap:nowrap;gap:0 10px}.gbar .gin .search{flex:0 1 240px;min-width:190px}.gbar .gnav button,.gbar .gnav a{padding-inline:4px;font-size:14.5px}}
-@media (min-width:1181px) and (max-width:1260px){.gbar .gin .search{flex-basis:210px}}
-.gbrand{display:flex;align-items:center;color:#fff;font:800 34px/1 var(--cond);letter-spacing:.01em}
-.gbrand:hover{text-decoration:none}
-.gbrand span{color:#F2B231}
-.gnav{display:flex;flex:1 1 auto;gap:0 2px;overflow-x:auto;min-width:0}
-.gnav a{display:inline-flex;align-items:center;text-decoration:none}.gnav button,.gnav a{appearance:none;border:0;background:none;cursor:pointer;font:700 15px var(--cond);text-transform:uppercase;letter-spacing:0;color:#F4D6DD;padding:0 5px;min-height:74px;white-space:nowrap}
-.gnav a:hover,.gnav button:hover{color:#fff}
-.gnav a[aria-selected="true"],.gnav button[aria-selected="true"]{color:#fff;box-shadow:inset 0 -4px 0 #F2B231}
-.gbar .search{flex:0 1 150px;height:40px;background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22)}
-.gbar .search input{color:#fff}
-.gbar .search input::placeholder{color:#F4D6DD}
-.gbar .search:focus-within{border-color:#F2B231}
-.thm{flex:0 0 auto;width:38px;height:40px;display:grid;place-items:center;appearance:none;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.12);color:#F2B231;cursor:pointer;padding:0}.thm:hover{border-color:#F2B231}.thm svg{width:18px;height:18px}
-.btt{position:fixed;right:16px;bottom:16px;z-index:54;width:42px;height:42px;border-radius:50%;appearance:none;border:2px solid #F2B231;background:#860038;color:#F2B231;display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s,bottom .2s;padding:0}
-.btt.on{opacity:1;transform:none;pointer-events:auto}.btt svg{width:18px;height:18px}.btt:hover{background:#6b002c}
-@media (max-width:520px){.btt{right:12px;bottom:12px;width:40px;height:40px}}
-.thm2{align-items:center;gap:6px;appearance:none;border-radius:999px;cursor:pointer}.thm2 svg{width:14px;height:14px;color:var(--wine-ink)}
-.thm2{display:inline-flex;border:0!important;background:none!important;padding:0!important;font:600 13px var(--sans)!important;color:var(--wine-ink)!important;text-decoration:underline;text-underline-offset:3px}.fright{display:flex;align-items:center;gap:18px}.fright::before{content:'·';color:var(--muted);margin-right:-6px}@media (max-width:600px){.fright::before{content:none}}.fcontact{appearance:none;border:0;background:none;padding:0;font:600 13px var(--sans);color:var(--wine-ink);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
-@media print{.btt,.thm,.thm2{display:none}}
-/* share + save-as-image buttons */
-.hasx{flex-wrap:wrap}.block-h.hasx{justify-content:flex-start}.block-h.hasx>h2{margin-right:auto}.ds-hdr.hasx>b{margin-right:auto}h1.hasx{display:flex;align-items:center;gap:10px}h1.hasx .xact{margin-left:auto}
-.xact{display:inline-flex;gap:6px;flex:none;align-self:center;margin-left:10px}
-.xact button{width:28px;height:28px;display:grid;place-items:center;padding:0;appearance:none;border:1px solid var(--line);background:var(--card,var(--bg));color:var(--muted);border-radius:6px;cursor:pointer;transition:color .15s,border-color .15s}
-.xact button:hover,.xact button:focus-visible{color:var(--wine-ink);border-color:var(--wine-ink)}.xact button:disabled{opacity:.5;cursor:progress}.xact svg{width:14px;height:14px}
-[data-anchor]{scroll-margin-top:120px}
-.csx{display:flex;justify-content:flex-end;align-items:center;gap:8px;margin:0 0 -14px}.csx>span{font:600 12px var(--sans);color:var(--muted)}.csx .xact{margin-left:0}@media (max-width:600px){.csx{justify-content:space-between}}
-.xhost{position:relative}.xact.xact-br{position:absolute;right:14px;bottom:12px;margin:0;opacity:.55;transition:opacity .15s}.xact.xact-tr{position:absolute;right:0;top:0;margin:0;opacity:.7}.xhost:hover .xact-br,.xhost:hover .xact-tr,.xact-br:focus-within,.xact-tr:focus-within{opacity:1}
-.xact.xact-br button,.xact.xact-tr button{width:24px;height:24px}.xact.xact-br svg,.xact.xact-tr svg{width:12px;height:12px}
-.co{position:relative}.co>.xact{position:absolute;top:12px;right:12px;margin:0;opacity:.6}.co:hover>.xact,.co>.xact:focus-within{opacity:1}@media (max-width:600px){.co>.xact{top:auto;bottom:14px;right:14px}.co>.xact button{width:26px;height:26px}.co>.xact svg{width:13px;height:13px}}.bio{position:relative}.bio>.xact{position:absolute;top:8px;right:8px;margin:0;opacity:.6;z-index:1}.bio>.xact:hover,.bio>.xact:focus-within{opacity:1}
-.xtoast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);z-index:80;display:flex;align-items:center;gap:10px;background:#101419;color:#fff;font:700 13.5px var(--sans);padding:10px 16px;border-radius:999px;box-shadow:0 10px 26px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:calc(100vw - 32px)}
-.xtoast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}.xtoast i{font-style:normal;color:#F2B231}.xtoast button{appearance:none;border:0;background:#F2B231;color:#101419;font:800 13px var(--sans);padding:6px 12px;border-radius:999px;cursor:pointer}
-@media (max-width:600px){.block-h.hasx:has(>span:not(.xact))>h2{flex-basis:100%}.block-h.hasx>span:not(.xact){margin-right:auto}.xact{margin-left:8px}}
-/* while an image is being made: let names run a hair wider instead of clipping */
-.capmode .ds-grid .t b{overflow:visible;text-overflow:clip}
-/* final score card, built only when someone saves a game as an image */
-.gwrap{position:fixed;left:-10000px;top:0}.gcard{width:420px;background:var(--card,#fff);color:var(--fg);padding:18px 20px 16px;font-family:var(--sans)}
-.gcard .gk{display:flex;justify-content:space-between;font:800 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:3px solid var(--fg);padding-bottom:8px}.gcard .gk b{color:var(--wine-ink)}
-.gcard .gt{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:4px 12px;padding:12px 0 4px}.gcard .gt i{font:800 13px var(--mono);font-style:normal;background:var(--sub);padding:3px 6px;text-align:center}.gcard .gt span{font:700 19px var(--sans)}.gcard .gt b{font:700 34px/1.15 var(--mono);letter-spacing:-.02em;text-align:right}.gcard .gt .lo{color:var(--muted);font-weight:500}.gcard .gt .cle i{background:var(--wine);color:#fff}
-.gcard .gf{display:flex;justify-content:space-between;gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font:600 12.5px var(--sans);color:var(--muted)}.gcard .gf b{color:var(--fg)}
-.sched .gsave{margin-left:6px;width:24px;height:24px;vertical-align:middle;display:inline-grid}
-@media print{.xact{display:none}}
-
-.gbar{cursor:default}
-@media (max-width:1180px){.gin{padding-block:8px;gap:6px 14px}.gbrand{margin-right:auto}.gnav{order:3;flex-basis:100%;margin-inline:-7px}.gnav button,.gnav a{min-height:44px}.gbar .search{flex:0 1 260px}}
-@media (max-width:900px){.gbar .search{flex:1 1 100px;min-width:0}}
-/* modules */
-.home{padding-block:18px 24px;gap:16px}
-.col{gap:16px}.side{gap:16px}
-.col>section,.rail{background:var(--card);border:0;border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.08);padding:16px 18px}
-.block-h{border-bottom:3px solid var(--fg);padding-bottom:6px;margin-bottom:14px;align-items:center}
-.block-h h2{font:800 17px var(--cond);text-transform:uppercase;letter-spacing:.05em}
-.block-h a{font-size:13px}
-.index,.tablebox{background:var(--card)}
-/* scoreboard */
-.gscore{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1.3fr);padding:0!important;overflow:hidden}
-.grec{padding:18px 22px;display:flex;flex-direction:column;gap:12px}
-.gk{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;font:700 12px var(--cond);letter-spacing:.14em;text-transform:uppercase;color:#9BA1A8}
-.gk a{font:600 13px var(--sans);letter-spacing:0;text-transform:none}
-.gbig{letter-spacing:-.01em;font-variant-numeric:tabular-nums}
-.gsp{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 12px;margin:0}
-.gsp div{min-width:0}
-.gsp dt{font:700 10px var(--cond);letter-spacing:0;text-transform:uppercase;line-height:1.2}
-.gsp dd{margin:0;font:500 15px var(--mono)}
-.gmu{padding:18px 22px;display:flex;flex-direction:column;gap:10px;justify-content:center}
-.gmu .gk{color:var(--muted)}
-.gteams{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
-.gteams .tm{font:800 clamp(44px,6vw,64px)/1 var(--cond);text-transform:uppercase}
-.gteams .cle{color:var(--wine-ink)}
-.gat{font:600 20px var(--cond);color:var(--muted)}
-.ginfo{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 18px;font-size:13px;color:var(--fg2)}
-.gdays{flex-basis:100%;display:flex;align-items:center;gap:14px;margin-top:2px;padding:8px 14px;background:var(--sub);border-left:3px solid var(--wine);white-space:nowrap;align-self:flex-start;flex-grow:0;width:max-content;max-width:100%}
-.gdays small{font:700 10.5px var(--sans);font-stretch:125%;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.gdays .cdw{display:flex;flex-direction:column;gap:3px}
-.gdays .cdn,.gdays .cdl{display:grid;grid-template-columns:repeat(4,28px);column-gap:10px}
-.gdays .cdn b{font:700 22px/1 var(--mono);color:var(--wine-ink);text-align:center;font-variant-numeric:tabular-nums;position:relative}
-.gdays .cdn b+b::before{content:":";position:absolute;left:-5px;transform:translateX(-50%);color:var(--tick);font-weight:500}
-.gdays .cdl i{font:600 9px var(--sans);font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center}
-.gstripbox{padding:12px 18px!important}
-.gstripbox .strip span{height:22px}
-@media (max-width:860px){.gscore{grid-template-columns:minmax(0,1fr)}}
-/* key dates */
-.gd{list-style:none;margin:0;display:flex;overflow-x:auto}
-.gd li{padding:4px 14px 6px 0;margin-right:14px;border-right:1px solid var(--line)}
-.gd .d{display:flex;align-items:center;gap:5px;font:700 19px var(--cond);color:var(--muted)}
-.gd li.cav .d{color:var(--wine-ink)}
-.gd li.cav .d::before{content:"";width:6px;height:15px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 25'%3E%3Ccircle cx='5' cy='1.8' r='1.6' fill='%23D99A12'/%3E%3Crect x='4.1' y='3.2' width='1.8' height='4.4' fill='%237A1F33'/%3E%3Crect x='0.4' y='7.4' width='9.2' height='1.9' rx='.9' fill='%23D99A12'/%3E%3Cpath d='M3.9 9.3H6.1V20L5 24.6L3.9 20Z' fill='%237A1F33'/%3E%3C/svg%3E") no-repeat center/contain}
-.gd .t{-webkit-box-orient:vertical;font-size:13px;line-height:1.35;color:var(--fg2);margin-top:2px}
-/* injuries */
-.ginj{list-style:none;margin:0;padding:0}
-.ginj li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line2);font-size:13px}
-.ginj li span:last-child{font:700 13px var(--cond);letter-spacing:.06em;color:var(--muted)}
-.ginj li span:last-child.out{color:var(--wine-ink)}
-/* video */
-.vone{grid-template-columns:minmax(0,1fr)}
-.rail .vthumb.poster .ptitle{font-size:15px}
-.vone-txt{display:none}
-.vthumb.poster{border-radius:4px}
-.poster .ptitle{font:700 18px var(--cond);text-transform:uppercase;letter-spacing:.04em}
-.poster .vplay span{width:60px;height:60px;background:transparent;box-shadow:none}
-.poster .vplay span::after{border-left-width:24px;border-top-width:14px;border-bottom-width:14px}
-.fin .cap-label{line-height:1}
-.ln.lock{border-left:3px solid var(--wine-ink)}
-.ln.lock span{color:var(--wine-ink)}.ln em small.hcx{font:inherit;position:static}
-.ln .lk{display:inline-flex;vertical-align:-1px;margin-right:4px}
-/* roster */
-.segs{display:inline-flex;align-self:flex-start;border:1px solid var(--line);background:var(--card)}
-.segs button{appearance:none;border:0;background:none;padding:8px 16px;font:700 12px var(--sans);font-stretch:118%;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);cursor:pointer}
-.segs button[aria-selected="true"]{background:var(--wine);color:#fff}
-.segs button{white-space:nowrap}.segs a{display:inline-flex;align-items:center;padding:8px 16px;font:700 12px var(--sans);font-stretch:118%;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-decoration:none}.segs a[aria-selected="true"]{background:var(--wine);color:#fff}
-@media (max-width:520px){.segs{display:flex;width:100%}.segs a{flex:1 1 auto;justify-content:center;min-width:0;padding:9px 6px;font-size:10.5px}.segs button{flex:1 1 auto;min-width:0;padding:9px 6px;font-size:10.5px;letter-spacing:.02em;font-stretch:100%}}
-.ros td{white-space:nowrap}
-.ros td.num{font:700 15px var(--mono);color:var(--wine-ink)}
-.ros td.m{font:400 13.5px var(--sans);font-variant-numeric:tabular-nums}
-.ros .tag{display:inline-block;margin-left:6px;padding:1px 5px;border:1px solid var(--line);font:700 9px var(--sans);font-stretch:125%;letter-spacing:.08em;color:var(--muted);vertical-align:1px}
-.ros tr.grp td{background:var(--sub);font:800 11px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-block:8px}
-.ros .pl{font-weight:600}
-.gbrand{text-transform:none;gap:10px}
-.gbrand svg{width:42px;height:42px}
-.gbrand .wm{display:flex;flex-direction:column;gap:3px}
-.upd{display:flex;align-items:center;gap:5px;font:500 10.5px/1 var(--mono);letter-spacing:.02em;color:#F4D6DD;text-transform:none}
-.upd i{width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 0 rgba(74,222,128,.6);animation:upd 2.4s ease-out infinite}
-.upd.stale i{background:#F2B231;animation:none}
-@keyframes upd{0%{box-shadow:0 0 0 0 rgba(74,222,128,.55)}70%,100%{box-shadow:0 0 0 6px rgba(74,222,128,0)}}
-@media (prefers-reduced-motion:reduce){.upd i{animation:none}}
-.ros-sub{display:flex;justify-content:space-between;align-items:center;gap:4px 12px;flex-wrap:wrap}
-.gbrand .wm-term{display:flex;align-items:center;font:700 25px/1 var(--mono);letter-spacing:-.02em;color:#fff}
-.gbrand .wm-term i{font-style:normal;color:#F2B231}
-.gbrand .wm-term s{display:inline-block;width:.55em;height:.95em;background:#F2B231;margin-left:4px;animation:blink 1.1s steps(1) 3 forwards;text-decoration:none}
-@keyframes blink{50%{opacity:0}100%{opacity:0}}
-@media (prefers-reduced-motion:reduce){.gbrand .wm-term s{animation:none}}
-@media (max-width:600px){.gbrand .wm-term{font-size:23px}}
-
-/* record: split-flap board on a white card */
-.grec{background:var(--card);color:var(--fg);border-right:1px solid var(--line);box-shadow:inset 0 4px 0 var(--wine);padding-top:22px}
-.grec .gk{color:var(--muted)}
-.gbig{display:flex;align-items:center;gap:10px;font:inherit;line-height:1}
-.gbig>span{display:flex;gap:5px}
-.gbig i{font-style:normal;font-weight:400;width:22px;height:5px;background:#F2B231;margin:0 2px;font-size:0;color:transparent;opacity:1}
-.flap{position:relative;display:inline-grid;place-items:center;width:74px;height:100px;border-radius:7px;background:linear-gradient(#7A1F33 0 50%,#6A1A2C 50% 100%);color:#fff;font:700 74px/1 var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.04em;perspective:300px;box-shadow:0 1px 0 rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.08);overflow:hidden}
-.flap::after{content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(0,0,0,.35)}
-.flap b{display:block;font:inherit;transform-origin:50% 50%}
-.flap b.go{animation:flapIn .09s ease-out}
-@keyframes flapIn{from{transform:rotateX(85deg);opacity:.4}to{transform:none;opacity:1}}
-.gsp{border-top:1px solid var(--line);padding-top:4px}
-.gsp div{padding:6px 0;border-bottom:1px solid var(--line2)}
-.gsp dt{color:var(--muted)}
-.gsp dd{color:var(--fg)}
-@media (max-width:720px){.flap{width:60px;height:82px;font-size:60px}}
-@media (max-width:860px){.grec{border-right:0;border-bottom:1px solid var(--line)}}
-@media (prefers-reduced-motion:reduce){.flap b.go{animation:none}}
-#nx-opp a.opp{color:inherit;text-decoration:none}#nx-opp a.opp:hover{text-decoration:underline;text-decoration-thickness:3px}
-a.opp{color:var(--fg);font-weight:600}
-table.sched{min-width:980px;table-layout:fixed}
-.sched th:nth-child(1){width:110px}.sched th:nth-child(2){width:230px}.sched th:nth-child(3){width:84px}.sched th:nth-child(4){width:230px}.sched th:nth-child(6){width:150px}
-.sched a.pvlink,.sched a.reslink{color:var(--wine-ink);text-decoration:underline;text-decoration-style:dotted;text-decoration-thickness:1.5px;text-underline-offset:3px}.sched a.pvlink:hover,.sched a.reslink:hover{text-decoration-style:solid}.sched a.reslink{font-weight:700}
-.sched td.mono{white-space:nowrap}
-.sched td{vertical-align:top}
-.tvc{font-size:13px;line-height:1.35}.tvc b,.tvc span,.tvc small{display:block}.tvc b{font-weight:700}.tvc small{color:var(--muted);font-size:11.5px}
-.gtag{display:inline-block;margin-left:8px;padding:1px 6px;border:1px solid var(--line);font:700 9.5px var(--sans);font-stretch:118%;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);vertical-align:1px}
-.gtag.cup{border-color:#D99A12;color:#9A6A00}
-.rtag{display:inline-block;margin-left:6px;padding:2px 6px;border-radius:0;font:700 10px var(--mono);letter-spacing:.04em;text-transform:uppercase;vertical-align:1px;white-space:nowrap}
-.rtag.b2b{background:#101419;color:#F2B231}.rtag.edge{background:#F2B231;color:#101419}.rtag.tired{background:#860038;color:#fff}.rtag.t34{background:none;color:var(--fg);border:1px solid var(--fg)}
-.rc-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}@media(max-width:1000px){.rc-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:520px){.rc-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}
-.rcg{background:var(--card,var(--bg));border:1px solid var(--line);border-top:3px solid var(--wine);padding:10px 12px}.rcg b{display:block;font:700 26px/1.1 var(--mono);color:var(--fg)}.rcg .k{display:block;font:800 10.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:3px 0 4px}.rcg span:last-child{display:block;font-size:12px;color:var(--fg2);line-height:1.35}
-@media(max-width:600px){#sp-rest .block-h{flex-wrap:wrap}#sp-rest .block-h span{white-space:normal;flex-basis:100%}}
-.rc-leg{margin:10px 0 0;font-size:12px;color:var(--muted);line-height:1.5;display:flex;flex-wrap:wrap;gap:6px 16px}.rc-leg .rl{display:inline-flex;align-items:center;gap:6px}.rc-leg .rl .rtag{margin-left:0!important}.rc-leg .rtag{margin-left:12px}.rc-leg .rtag:first-child{margin-left:0}
-tr.mark td{background:var(--sub);font:600 12.5px var(--sans);color:var(--fg);padding-block:8px;box-shadow:inset 3px 0 0 var(--wine)}
-tr.mark.cupm td{box-shadow:inset 3px 0 0 #D99A12}tr.mark.cupm .mk-dot{background:#D99A12}
-td.mtag{display:none}
-.mk-dot{display:inline-block;width:8px;height:8px;background:var(--wine);transform:rotate(45deg);margin-right:10px;vertical-align:1px}
-tr.nextg td{background:color-mix(in srgb,var(--wine) 7%,transparent)}
-@media (max-width:760px){
- table.sched{min-width:0;table-layout:auto}
- .sched thead{display:none}
- .sched,.sched tbody{display:block;width:100%}
- .sched tr{display:grid;grid-template-columns:84px minmax(0,1fr) auto;gap:2px 10px;padding:10px 12px;border-top:1px solid var(--line2)}
- .sched td{display:block;padding:0!important;border:0!important;width:auto!important;font-size:13px}
- .sched td:nth-child(1){grid-column:1;grid-row:1/span 2;font-size:12px;line-height:1.5;white-space:nowrap}
- .sched td:nth-child(2){grid-column:2;grid-row:1;font-weight:600}
- .sched td:nth-child(3){grid-column:3;grid-row:1;text-align:right;font-size:12px}
- .sched td:nth-child(4){grid-column:2;grid-row:2;font-size:12px}
- .sched td:nth-child(4) small{display:none}
- .sched td:nth-child(5){display:none}
- .sched td:nth-child(6){grid-column:3;grid-row:2;text-align:right;font-size:12px}
- .sched td:nth-child(6):empty{display:none}
- .sched .tvc b,.sched .tvc span{display:inline}.sched .tvc b+span::before{content:" · "}
- .sched .gtag{margin-left:6px;font-size:8.5px;padding:0 4px}
- .sched tr.mark{display:block;padding:0;border-top:1px solid var(--line2)}
- .sched tr.nextg{background:color-mix(in srgb,var(--wine) 7%,transparent)}.sched tr.nextg td{background:none!important}
- .sched tr.mark td{display:block;background:var(--sub);font:600 12px var(--sans);color:var(--fg);padding:7px 12px!important;box-shadow:inset 3px 0 0 var(--wine)}
- .sched tr.mark.cupm td{box-shadow:inset 3px 0 0 #D99A12}
- .sched tr.mark .mk-dot{width:6px;height:6px;margin-right:8px;vertical-align:1px}
- .sched .tvc b{font-weight:400}
- .sched td:nth-child(2) .gtag{display:none}
- .sched td.mtag{display:block;grid-column:1/-1;grid-row:1;margin-bottom:2px}.sched td.mtag .gtag{margin:0}
- .sched tr.hastag td:nth-child(1){grid-row:2/span 2}.sched tr.hastag td:nth-child(2),.sched tr.hastag td:nth-child(3){grid-row:2}
- .sched tr.hastag td:nth-child(4),.sched tr.hastag td:nth-child(6){grid-row:3}
-}
-
-/* injuries expand */
-.ginj li.ij{display:block}
-.ginj details summary{display:flex;justify-content:space-between;gap:10px;cursor:pointer;list-style:none}
-.ginj details summary::-webkit-details-marker{display:none}
-.ginj details summary>span:first-child::after{content:" ▾";color:var(--muted);font-size:11px}
-.ijx{padding:8px 0 4px;font-size:12.5px;color:var(--fg2)}.ijx p{margin:0 0 6px}
-.capsum{align-items:flex-start}
-.hcap{flex:1 1 100%;min-width:0;border-top:1px solid var(--line);padding-top:8px}
-.hcap-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;align-items:baseline}
-.hcap-h b{font:700 14px var(--sans);color:var(--wine-ink)}.hcap-h span{font:500 12px var(--mono);color:var(--muted)}
-.ros a.dlink{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}.ros a.dlink:hover{color:var(--wine-ink);text-decoration-color:currentColor}
-.ros a.plink{color:var(--fg)}.ros a.plink:hover{color:var(--wine-ink)}
-.ros td.acq{white-space:normal;font-size:13px}.ros td.acq small{display:block;color:var(--muted);font-size:11.5px}
-.xl{list-style:none;margin:0;padding:0}
-.xl li{border-bottom:1px solid var(--line2)}
-.xl summary{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;cursor:pointer;list-style:none;font-size:14px}
-.xl summary::-webkit-details-marker{display:none}
-.xl summary>span:first-child b{font-weight:700}.xl summary>span:first-child b::after{content:" ▾";color:var(--muted);font-size:11px;font-weight:400}
-.xl details[open] summary>span:first-child b::after{content:" ▴"}
-.xl summary small{display:block;color:var(--muted);font-size:12px}
-.xl summary>b{font:500 14px var(--mono);white-space:nowrap}
-.xb{padding:0 0 12px;font-size:13px;line-height:1.5;color:var(--fg2)}.xb p{margin:0 0 6px}.xb strong{color:var(--fg)}
-.pill{flex:0 0 auto;font:700 10px var(--sans);font-stretch:118%;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--line)}
-.pill.ok{color:#2E7D4F;border-color:#2E7D4F}.pill.no{color:var(--wine-ink);border-color:var(--wine-ink)}.pill.out{color:var(--muted)}
-.gloss{margin-top:18px}
-.gl-filter input{width:100%;max-width:360px;height:38px;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:0 12px;font:inherit;font-size:14px;margin-bottom:12px}
-#glbody{columns:2 380px;column-gap:40px}
-.gl-g{break-inside:avoid;margin-bottom:18px}
-.gl-g h3{margin:0 0 6px;font:800 12px var(--sans);font-stretch:125%;letter-spacing:.1em;text-transform:uppercase;color:var(--wine-ink)}
-.gl-g dl{margin:0}.gl-i{padding:7px 0;border-bottom:1px solid var(--line2);break-inside:avoid}
-.gl-i dt{font-weight:700;font-size:14px}.gl-i dd{margin:2px 0 0;font-size:13px;line-height:1.5;color:var(--fg2)}
-.callouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px}
-.co{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--wine);padding:18px 20px;min-width:0}
-.co-k{font:700 11px var(--sans);font-stretch:125%;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.co h2{margin:4px 0 0;font:800 30px/1.05 var(--cond);text-transform:uppercase}
-.co-t{color:var(--wine-ink);font-weight:600;font-size:14px;margin-bottom:10px}
-.bio-f{display:grid;grid-template-columns:max-content 1fr;gap:6px 14px;margin:0 0 8px;font-size:13.5px}
-.bio-f dt{color:var(--muted);font-size:12.5px}.bio-f dd{margin:0}
-.bio-p{list-style:none;margin:4px 0 8px;padding:0;font-size:13px}
-.bio-p li{padding:3px 0 3px 12px;position:relative}.bio-p li::before{content:"";position:absolute}
-.bio-p li{display:grid;grid-template-columns:118px minmax(0,1fr);gap:8px}.bio-p b{font:600 11.5px var(--mono);color:var(--fg2)}
-.co-d{border-top:1px solid var(--line2);margin-top:6px}.co-d summary{cursor:pointer;padding:9px 0;font-weight:700;font-size:13.5px;color:var(--wine-ink)}
-.co-link{display:inline-block;margin-top:8px;font-weight:600;font-size:13.5px}
-table.atk{min-width:520px;font-size:12.5px}table.atk td,table.atk th{padding:7px 6px}table.atk th{font-size:10px}
-table.atk tr.avg td{background:var(--sub);font-weight:700}
-.tx-stats{display:flex;flex-wrap:wrap;gap:10px}
-.txs{background:var(--card);border:1px solid var(--line);padding:10px 16px;min-width:120px}
-.txs b{display:block;font:700 28px/1 var(--mono);color:var(--wine-ink)}.txs span{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
-.tx-ctrl{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
-.tx-types{display:flex;flex-wrap:wrap;gap:6px}
-.chipf{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--fg2);font:600 12px var(--sans);padding:6px 10px;cursor:pointer}
-.chipf[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
-#txq{height:36px;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:0 12px;font:inherit;font-size:14px;min-width:220px;flex:1 1 220px;max-width:340px}
-.tx-sec{margin-top:6px}
-.tx-ol{list-style:none;margin:0;padding:0;background:var(--card);border:1px solid var(--line)}
-.tx{display:grid;grid-template-columns:62px 92px minmax(0,1fr);gap:4px 12px;align-items:baseline;padding:10px 14px;border-bottom:1px solid var(--line2);font-size:14px}
-.tx time{font:500 12.5px var(--mono);color:var(--muted)}
-.tx-k{font:700 10px var(--sans);font-stretch:118%;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.tx-h{font-weight:700;margin-bottom:6px}.tx-rel{color:inherit;text-decoration:underline dotted 1.5px;text-decoration-color:var(--wine-ink);text-underline-offset:3px}.tx-rel:hover{color:var(--wine-ink)}
-.tx a.tx-p{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:2px}.tx a.tx-p:hover{color:var(--wine-ink);text-decoration-color:var(--wine-ink)}.tx-amt{color:var(--muted);font:500 12.5px var(--mono)}
-.tx-line{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.tx-val{margin-left:auto;font:600 12.5px var(--mono);color:var(--fg2);text-align:right;max-width:100%}
-.tx-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 24px}
-.tx-cols small{display:block;font:700 10.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
-.tx-cols ul{margin:0;padding-left:16px;font-size:13.5px;line-height:1.45}
-@media (max-width:600px){.tx{grid-template-columns:54px 1fr}.tx .tx-body{grid-column:1/-1}.tx-cols{grid-template-columns:1fr}}
-.upnext{display:inline-flex;align-items:center;gap:8px}
-.upnext b{display:inline-flex;align-items:center;gap:6px;background:var(--wine);color:#fff;font:700 10.5px var(--sans);font-stretch:118%;letter-spacing:.1em;padding:4px 8px 4px 9px;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 50%,calc(100% - 8px) 100%,0 100%);padding-right:14px}
-.nx-when{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 14px;font-size:14px;font-weight:600;color:var(--fg);margin-top:-2px}
-.nx-when a{font-weight:600;font-size:13px}
-.gmu .gdays{margin-top:4px}
-.nx-then-row{border-top:1px solid var(--line2);padding-top:8px}.nx-then-row b{font:700 10.5px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-right:4px}
-.gsp dt,.rv dt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-/* key dates: show full text */
-.gd li{flex:0 0 170px}
-.gd .t{display:block;-webkit-line-clamp:unset;overflow:visible}
-.hc-cap{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;font-size:14px;margin:2px 0 10px}.hc-cap b{color:var(--wine-ink)}.hc-cap span{color:var(--muted);font-size:13px}
-.hc-tiles{display:flex;flex-wrap:wrap;gap:6px 28px;margin-bottom:10px}
-.hc-tile{display:flex;flex-direction:column;align-items:flex-start;text-align:left}
-.hc-tile b{font:700 20px/1.1 var(--mono);color:var(--fg)}.hc-tile.key b{color:var(--wine-ink)}
-.hc-tile span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
-.hc-checks{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:0 18px}
-.hc-checks li{display:flex;gap:8px;align-items:baseline;font-size:13px;padding:3px 0}
-.hc-checks i{font-style:normal;font-weight:800;width:14px;text-align:center}.hc-checks .yes i{color:#2E7D4F}.hc-checks .no i{color:var(--wine-ink)}
-.h-link{color:inherit}.h-link:hover{color:var(--wine-ink)}
-.chl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}@media (max-width:860px){.chl{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}
-.chl-c{background:var(--card,var(--bg));border:1px solid var(--line);border-top:3px solid var(--wine);padding:12px 14px}.chl-k{display:block;font:800 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.chl-1{display:flex;flex-direction:column;margin:4px 0 8px}.chl-1 b{font:700 28px/1.1 var(--mono);color:var(--wine-ink)}.chl-1 span{font:700 14px var(--sans);color:var(--fg)}
-.chl-r{list-style:none;margin:0;padding:6px 0 0;border-top:1px solid var(--line2);font-size:12.5px;color:var(--fg2)}.chl-r li{display:flex;justify-content:space-between;gap:8px;padding:2px 0}.chl-r b{font:600 12.5px var(--mono)}
-@media (max-width:520px){.chl-c{padding:10px 11px}.chl-1 b{font-size:22px}.chl-1 span{font-size:13px}.chl-r{font-size:11.5px}}
-.ch-tiles{display:flex;flex-wrap:wrap;gap:10px}.ch-tiles .txs b{font-size:20px}
-table.chs{min-width:620px}.chs td.mono{white-space:nowrap}.chs td:first-child{width:110px}
-.chd .dw::after{content:','}
-.chs .opp a{color:inherit;text-decoration:none;border-bottom:1px solid var(--line)}.chs .opp a:hover{color:var(--wine-ink)}
-@media (max-width:760px){
- .ch-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.ch-tiles .txs{min-width:0;padding:8px 10px}.ch-tiles .txs b{font-size:15px;line-height:1.2}.ch-tiles .txs span{font-size:10.5px}
- table.chs{min-width:0}.chs thead{display:none}.chs,.chs tbody{display:block;width:100%}
- .chs tr{display:grid;grid-template-columns:78px minmax(0,1fr) auto;gap:2px 10px;padding:9px 12px;border-top:1px solid var(--line2)}
- .chs td{display:block;padding:0!important;border:0!important;width:auto!important;font-size:13px}
- .chs td:nth-child(1){grid-column:1;grid-row:1/span 2;font-size:12px;line-height:1.5}
- .chs td:nth-child(2){grid-column:2;grid-row:1;font-weight:600}
- .chs td:nth-child(3){grid-column:3;grid-row:1;text-align:right;font-size:12px}
- .chs td:nth-child(4){grid-column:2;grid-row:2;font-size:11.5px}
- .chs td:nth-child(5){grid-column:3;grid-row:2;text-align:right;font-size:12px}
- .chs td:nth-child(5):empty{display:none}
- .chd{display:flex!important;flex-direction:column-reverse;justify-content:flex-end;line-height:1.25}.chd .dw::after{content:''}.chd .dd{font-weight:700;font-size:12.5px}.chd .dw{font-size:11px;color:var(--muted)}
- .chs tr.nextg{background:color-mix(in srgb,var(--wine) 7%,transparent)}.chs tr.nextg td{background:none!important}
-}
-.ch-tag{font:700 10.5px var(--sans)!important;letter-spacing:.06em;text-transform:uppercase;color:var(--wine-ink)}
-.gd{gap:12px;padding:4px 2px 8px;scroll-snap-type:x proximity}
-.gd li.kd{flex:0 0 210px;display:flex;gap:10px;align-items:flex-start;margin:0;padding:10px;border:1px solid var(--line);border-right:1px solid var(--line);background:var(--card);scroll-snap-align:start;position:relative}
-.gd li.kd::before{display:none}
-.kd-tile{flex:0 0 46px;display:flex;flex-direction:column;align-items:center;justify-content:center;height:52px;background:var(--fg);color:var(--bg)}
-.kd.cav .kd-tile{background:var(--wine);color:#fff;box-shadow:inset 0 -3px 0 #F2B231}
-.kd-tile small{font:700 10px var(--sans);letter-spacing:.1em}.kd-tile b{font:800 24px/1 var(--cond)}
-.kd-body{display:flex;flex-direction:column;gap:2px;min-width:0}
-.kd-when{font:700 10px var(--sans);font-stretch:118%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.kd.cav .kd-when{color:var(--wine-ink)}
-.gd li.kd .t{margin:0;font-size:13.5px;line-height:1.35;color:var(--fg);font-weight:500}
-.h-link{font:inherit;letter-spacing:inherit;text-transform:inherit}
-.ch-next{font-size:16px}.ch-meta{font-size:13.5px}
-#chg-h,#chg-h .h-link{font:800 17px var(--cond);text-transform:uppercase;letter-spacing:.05em}
-/* roster: fits without sideways scroll */
-#rv-bio table.ros{min-width:0;table-layout:auto}
-.ros td.pl{white-space:normal;min-width:190px}
-.ros td.pl .hs{float:left;width:44px;height:32px;object-fit:cover;object-position:top;margin:0 10px 0 0;border-radius:3px;background:var(--sub)}
-.ros td.pl small.pos{display:block;font-weight:400;color:var(--muted);font-size:12px}
-.ros td.two small{display:block;color:var(--muted);font-size:11.5px;font-family:var(--sans)}
-.ros td.sch{white-space:normal;font-size:13px;max-width:180px}
-.ros td.acq{min-width:150px}
-.ros td,.ros th{padding-inline:8px}
-.ros .c{text-align:center}
-@media (max-width:760px){
- #rv-bio table.ros thead{display:none}
- #rv-bio table.ros,#rv-bio .ros tbody,#rv-bio .ros tr{display:block;width:100%}
- #rv-bio .ros tr{display:grid;grid-template-columns:30px 1.1fr .8fr .6fr;gap:10px 12px;padding:14px 12px;border-top:1px solid var(--line2)}
- #rv-bio .ros tr.grp{display:block;padding:8px 12px}#rv-bio .ros tr.grp td{display:block;width:auto;font:800 11px/1.3 var(--sans)!important;font-stretch:125%;letter-spacing:.1em;color:var(--muted)!important;padding:4px 0!important;background:transparent}
- #rv-bio .ros td{border:0;white-space:normal;max-width:none;min-width:0;font-size:13px;text-align:left}
- #rv-bio .ros td[data-l]::before{content:attr(data-l);display:block;font:700 9.5px var(--sans);font-stretch:118%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
- #rv-bio .ros td:nth-child(1){grid-column:1;grid-row:1/span 4;font-size:16px}
- #rv-bio .ros td:nth-child(2){grid-column:2/5}
- #rv-bio .ros td:nth-child(n+3){font-family:var(--sans)}
- #rv-bio .ros td:nth-child(3){grid-column:2}#rv-bio .ros td:nth-child(4){grid-column:3}#rv-bio .ros td:nth-child(5){grid-column:4}
- #rv-bio .ros td:nth-child(6){grid-column:2}#rv-bio .ros td:nth-child(7){grid-column:3/5}
- #rv-bio .ros td:nth-child(8){grid-column:2/5}
- #rv-bio .ros td.pl .hs{width:52px;height:38px}
-}
-.cap td,.cap th{padding-inline:8px}
-.cap td.po,.cap td.to{position:relative}
-.cap .ov{display:inline-flex;align-items:center;gap:6px}.cap .ov::after{font:800 9.5px/1 var(--sans);letter-spacing:.06em;padding:3px 4px 2px;border-radius:2px}.cap .ov.po::after{content:"PO";background:#F2B231;color:#101419}.cap .ov.to::after{content:"TO";background:var(--wine);color:#fff}
-.cap td:has(.ov.po){background:rgba(242,178,49,.13)}.cap td:has(.ov.to){background:rgba(122,31,51,.08)}
-table.cap{table-layout:fixed}.cap th:nth-child(1){width:27%}.cap th:nth-child(2){width:17%}.cap th:nth-child(n+3){width:14%}
-.lg{display:inline-flex;align-items:center;gap:5px;margin-left:10px}.lg::before{font:800 9.5px/1 var(--sans);letter-spacing:.06em;padding:3px 4px 2px;border-radius:2px}.lg.po::before{content:"PO";background:#F2B231;color:#101419}.lg.to::before{content:"TO";background:var(--wine);color:#fff}
-
-.vshort{display:none}@media (max-width:760px){.vfull{display:none}.vshort{display:inline}.cap tfoot tr.thr td.cur{font-size:12px}}
-.cap tr.deadrow td{color:var(--muted);font-weight:400}.cap tr.deadrow td:first-child{background:var(--card)}.cap tr.deadrow td.cur{font-weight:500}
-.extb{display:inline-block;margin-left:5px;padding:1px 3px 0;border:1px solid #2f6f9a;color:#2f6f9a;font:800 8.5px/1.3 var(--sans);letter-spacing:.06em;border-radius:2px;vertical-align:1px}@media (max-width:760px){td .extb{display:table;margin:3px 0 0 auto}}
-.lg.ext::before{content:"EXT";background:none;border:1px solid #2f6f9a;color:#2f6f9a}
-.cap .pbtn{display:grid;grid-template-columns:minmax(0,1fr) auto 8px;column-gap:0;width:100%;align-items:center}.cap .pbtn .nflag{grid-column:2;margin:0 2px 0 5px}.cap .pbtn::after{grid-column:3;grid-row:1;justify-self:end;margin-left:5px}
-.mcrow>td{background:var(--sub);padding:0!important}.mcbox{position:sticky;left:0;max-width:min(560px,calc(100vw - 40px));padding:12px 14px 10px}.mcbox h4{margin:0 0 6px;font:800 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.mctab{min-width:0!important;width:100%;border-collapse:collapse;font-size:13px}.mctab th{font:700 10.5px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;padding:4px 8px 4px 0;border-bottom:1px solid var(--line);background:none}.mctab td{padding:6px 8px 6px 0;border-bottom:1px solid var(--line2);white-space:nowrap}.mctab .r{text-align:right}.mctab small{color:var(--muted);font-size:11px}.mcnote{margin:8px 0 0;font-size:11.5px;color:var(--muted);line-height:1.4;white-space:normal}
-@media (max-width:520px){.mcbox{max-width:calc(100vw - 66px);padding:10px 12px}.mctab{font-size:12.5px}.mctab small{display:block;margin-top:1px}.mctab th:nth-child(4),.mctab td:nth-child(4){display:none}.mctab th{font-size:9.5px}}
-.nflag{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;background:#F2B231;color:#101419;font:800 10px/1 var(--sans);margin-left:2px}
-.lg.nf::before{content:"!";background:#F2B231;color:#101419;border-radius:50%;padding:2px 5px}
-.aprons{margin-top:6px}.aptbox{border:1px solid var(--line);background:var(--bg)}
-table.apt{width:100%;min-width:0;border-collapse:collapse;font-size:13px;table-layout:fixed}.apt tbody th{font:500 13px/1.35 var(--sans);text-transform:none;letter-spacing:0;background:none;padding-left:12px}.apt thead th{background:var(--sub)}.apt thead th:first-child{padding-left:12px}
-.apt th,.apt td{padding:8px 8px;border-bottom:1px solid var(--line2);text-align:center;vertical-align:top}
-.apt thead th{font:700 11px var(--sans);text-transform:uppercase;letter-spacing:.04em;color:var(--muted);vertical-align:bottom}
-.apt thead th small{display:block;text-transform:none;letter-spacing:0;font-weight:500;font-size:10.5px;margin-top:2px}.apt-cav{display:inline-block;margin-top:5px;background:#F2B231;color:#101419;font:800 9.5px/1.4 var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:1px 6px}.apt thead th{line-height:1.25}@media (max-width:600px){.apt thead th{font-size:10px;padding:10px 4px 8px;letter-spacing:.03em}.apt thead th:first-child{padding-left:10px}}
-.apt thead th:first-child,.apt tbody th{width:34%}
-.apt tbody th{text-align:left;font-weight:500;color:var(--fg)}
-.apt td{font-weight:700}.apt td small{display:block;font:500 11px/1.3 var(--sans);color:var(--muted);margin-top:2px}
-.apt td.y{color:#2E7D4F}.apt td.n{color:var(--wine-ink)}.apt td.na{color:var(--muted);font-weight:400}
-.apt .cav{background:color-mix(in srgb,#F2B231 13%,transparent)}.apt thead th.cav{color:var(--fg)}
-@media (max-width:760px){.apt{font-size:12px}.apt th,.apt td{padding:7px 4px}.apt thead th{font-size:9.5px}.apt td small{font-size:10px}.apt thead th:first-child,.apt tbody th{width:31%}.apt tbody th{font-size:12px;padding-left:8px!important}}
-.exviz{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;margin:2px 0 10px;padding:10px 12px;background:var(--sub)}
-.dnut{width:64px;height:64px;flex:0 0 64px}.exlg{min-width:130px}.exbig{font:700 18px var(--mono);color:var(--fg)}.exsub{font-size:12px;color:var(--muted);margin-bottom:4px}
-.exk{display:flex;align-items:center;gap:6px;font-size:12px}.sw{display:inline-block;width:10px;height:10px}.sw.left{background:var(--wine)}.sw.used{background:var(--line)}
-.exuse{display:flex;flex-direction:column;gap:3px}.exuse .tk{white-space:normal}
-.ex-w>span{color:var(--muted)}.ex-w>b{font:600 11px var(--sans)!important;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-.rcf-cols{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:28px}
-@media (max-width:900px){.rcf-cols{grid-template-columns:minmax(0,1fr)}}
-.rcf-list{display:grid;gap:14px}
-.rcf-card{display:grid;grid-template-columns:180px minmax(0,1fr);gap:14px;background:var(--card);border:1px solid var(--line);padding:12px;color:inherit;text-decoration:none}
-.rcf-card:hover{border-color:var(--wine)}.rcf-card,.rcf-card:hover{text-decoration:none}.rcf-card.noimg{grid-template-columns:minmax(0,1fr)!important}.rcf-card img{width:100%;aspect-ratio:3/2;object-fit:cover;background:var(--sub)}
-.rcf-t b{display:block;font-size:15px;line-height:1.3}.rcf-m{display:block;font-size:12px;color:var(--muted);margin:3px 0 6px}.rcf-t p{margin:0;font-size:13px;line-height:1.45;color:var(--fg2)}
-@media (max-width:520px){.rcf-list{gap:8px}.rcf-card{grid-template-columns:72px minmax(0,1fr);gap:10px;padding:8px}.rcf-t b{font-size:13.5px;line-height:1.25}.rcf-m{margin:2px 0 0}.rcf-t p{display:none}.rcf-card:nth-child(n+6){display:none}.rcf-more{display:block!important}}
-.rcf-more{display:none;margin-top:10px;font-weight:700;font-size:13.5px}@media (min-width:521px){.rcf-card:nth-child(n+6){display:none}.rcf-more{display:block}}.xcard{display:block;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--wine);padding:16px 18px;color:inherit;text-decoration:none}.xcard:hover{border-color:var(--wine)}.xcard b{display:block;font-size:18px}.xcard span{display:block;font-size:13px;color:var(--muted);margin:4px 0 8px}.xcard em{font-style:normal;font-size:13px;color:var(--wine-ink);font-weight:600}
-.ptrk{margin:0 0 10px;padding:10px 12px;border:1px solid var(--line);background:var(--bg)}.ptrk-rows{display:grid;gap:5px;margin:6px 0}.ptrk-r{display:grid;grid-template-columns:44px 56px 56px minmax(0,1fr);gap:8px;align-items:center;font-size:13px;border:1px solid var(--line2);padding:6px 8px}.ptrk-r b{font:800 15px var(--cond)}.ptrk-r .sl{font:700 13px var(--mono)}.ptrk-r .to{text-align:right;color:var(--muted)}.ptrk-r.win{border-color:#F2B231;background:rgba(242,178,49,.1)}.ptrk-r.win .to{color:var(--fg);font-weight:700}.ptrk-n{margin:4px 0 0;font-size:12px;color:var(--muted)}.pipe{list-style:none;margin:0;padding:0;display:grid;gap:8px}.pipe li{background:var(--card);border:1px solid var(--line);padding:10px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px}.pipe .nm{font:800 16px var(--sans);color:var(--fg);text-decoration:none}.pipe .st2{font:700 12px var(--sans);color:var(--wine-ink)}.pipe .flow{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:4px;font:600 12px var(--mono);color:var(--muted)}.pipe .flow b{background:var(--line2);color:var(--fg);padding:2px 7px}.pipe .flow b.c{background:#860038;color:#fff}.pipe .flow b.g{background:#101419;color:#F2B231}.ec-h{font:800 11px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--wine-ink);margin:14px 0 4px;cursor:pointer}.ec-d summary::marker{color:var(--muted)}.ec{list-style:none;margin:0;padding:0;background:var(--card);border:1px solid var(--line)}.ec li{padding:9px 12px;border-top:1px solid var(--line2);display:grid;gap:2px}.ec li:first-child{border-top:0}.ec b{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.ec b a{color:var(--fg);text-decoration:none}.ec small{font-size:12.5px;color:var(--muted)}.ec-t{font:700 10px var(--sans);letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--line);padding:1px 6px;color:var(--muted)}.ec-t.g{border-color:#2E7D4F;color:#2E7D4F}.ec-t.w{border-color:#F2B231;color:#8A5E00}.frz{margin:0 0 10px;padding:10px 12px;border:1px solid var(--line);background:var(--bg)}
-.frz-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:6px 0 8px}
-.frz-c{border:1px solid var(--line);padding:7px 8px;display:flex;flex-direction:column;gap:2px;min-width:0}
-.frz-c b{font:700 12px var(--mono)}.frz-s{font:700 11px var(--sans)}.frz-c small{font-size:10.5px;color:var(--muted);line-height:1.3}
-.frz-c.under,.frz-c.lock{border-color:#2E7D4F}.frz-c.under .frz-s,.frz-c.lock .frz-s{color:#2E7D4F}.frz-c.over{border-color:var(--wine-ink)}.frz-c.over .frz-s{color:var(--wine-ink)}.frz-c.tbd .frz-s{color:var(--muted)}
-.frz-p{margin:0 0 4px!important;font-size:12px}.frz-p.warn{color:var(--muted)}
-@media (max-width:520px){.frz-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.begm{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;padding:10px 14px;background:var(--card);border:1px solid var(--line);border-left:4px solid #F2B231;font-size:13.5px}.begm b{font:800 11px var(--sans);text-transform:uppercase;letter-spacing:.1em;color:var(--fg)}.begm a{font-weight:600}
-.rt-dr{font:500 14px var(--mono);white-space:nowrap;color:var(--wine-ink);text-decoration:none}.rt-dr:hover{text-decoration:underline}@media (max-width:520px){.rt-dr{font-size:12.5px}}
-.xl summary small.nx{color:var(--wine-ink);font-weight:600}.nxbox{margin:0 0 8px;padding:10px 12px;border:1px solid var(--line);background:var(--bg)}.nxl{margin:4px 0 6px;padding-left:18px;font-size:12.5px}.nxl li{border:0!important;margin-bottom:2px}.nxw{font-size:12px;color:var(--muted);margin:0 0 6px!important}.nxbox a{font-size:12.5px;font-weight:600}
-.gprev td{background:color-mix(in srgb,var(--wine) 4%,transparent);padding:8px 12px!important;border-top:0!important}.gp{flex-wrap:wrap;align-items:center;gap:6px 18px;font-size:12.5px;color:var(--fg2)}.gp-k{font:700 10px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--wine-ink)}.gp-i b{font-weight:700;color:var(--fg)}.gp-l{font-weight:600;margin-left:auto}
-@media (max-width:760px){.sched tr.gprev{display:block;padding:0 12px 10px;border-top:0;background:color-mix(in srgb,var(--wine) 4%,transparent)}.sched tr.gprev td{display:block;background:none;padding:0!important}.gp{gap:4px 14px}.gp-l{margin-left:0}}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}.chip{font-size:11.5px;border:1px solid var(--line);padding:3px 7px;background:var(--sub)}.chip.o{border-color:var(--wine-ink);color:var(--wine-ink)}
-.sp-std{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px;align-items:start}@media(max-width:620px){.sp-std{grid-template-columns:minmax(0,1fr)}}
-table.sp-t{min-width:0;font-size:13px}.sp-t td,.sp-t th{padding:7px 8px}.sp-t tr.cle td{background:color-mix(in srgb,var(--wine) 8%,transparent);font-weight:700}.sp-t tr.line td{border-bottom:2px dashed var(--muted)}
-.sp-t tr.lnr td{font:700 9.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right;padding:2px 8px 6px;border:0}
-.seed{display:inline-grid;place-items:center;width:20px;height:20px;font:700 11px var(--mono);background:var(--sub);border:1px solid var(--line)}
-.rc.rc-wide{grid-column:1/-1}.sp-race{display:grid;gap:8px}.rc{background:var(--card);border:1px solid var(--line);padding:10px 12px}.rc .k{display:block;font:700 10px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.rc b{display:block;font:700 18px var(--mono);margin:2px 0}.rc span{font-size:12px;color:var(--muted)}
-.rc .tb{display:flex;gap:8px;font-size:12.5px;padding:4px 0}.rc .tb i{font-style:normal;font-weight:800;width:14px}.tb .y{color:#2E7D4F}.tb .n{color:var(--wine-ink)}.tb .q{color:var(--muted)}
-.sp-empty{background:var(--card);border:1px solid var(--line);padding:14px 16px;margin:0;font-size:13px}
-.vdesc{display:block}.vdesc a{white-space:nowrap;margin-left:4px}#vid-page .block-h h2{font-size:21px}
-.home-std{margin-left:auto;font:600 13px var(--sans);letter-spacing:0;text-transform:none}.grec .gsp{flex:1;align-content:space-evenly}.grec .gk{flex-wrap:nowrap;white-space:nowrap}@media (min-width:861px){.gsp dt{font-size:11px}.gsp dd{font-size:16px}}.ms{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
-.mi{background:var(--card);border:1px solid var(--line);padding:12px 14px;display:grid;grid-template-columns:40px 1fr;gap:2px 12px;align-items:center}
-.mi .av{width:40px;height:40px;border-radius:50%;background:var(--wine);color:#fff;display:grid;place-items:center;font:800 12px var(--sans);grid-row:1/span 2}
-.mi>b{font-size:14px}.mi .t{font-size:12.5px;color:var(--fg2)}.mi .bar{grid-column:1/-1;height:7px;background:var(--line2);margin-top:6px;position:relative}.mi .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--wine)}
-.mi .f{grid-column:1/-1;display:flex;justify-content:space-between;gap:8px;font:600 11.5px var(--mono);color:var(--muted)}.mi .f em{font-style:normal;color:var(--wine-ink);text-align:right}
-.fb{position:fixed;right:16px;bottom:16px;z-index:55;width:min(340px,calc(100vw - 32px));background:var(--card,var(--bg));border:1px solid var(--line);border-top:4px solid var(--wine);box-shadow:0 10px 30px rgba(0,0,0,.18);padding:14px 16px;font-size:13.5px}
-.fb b{font-size:15px}.fb p{margin:4px 0 10px;color:var(--muted);font-size:12.5px;line-height:1.4}
-.fb textarea,.fb input{width:100%;box-sizing:border-box;border:1px solid var(--line);background:var(--bg);color:var(--fg);font:14px var(--sans);padding:8px 10px;margin-bottom:8px;resize:vertical}
-.fb-row{display:flex;gap:10px;align-items:center}.fb-row button{appearance:none;border:0;cursor:pointer;font:700 13px var(--sans)}
-#fb-s{background:var(--wine);color:#fff;padding:8px 16px}#fb-s:disabled{opacity:.6}.fb-later{background:none;color:var(--muted);padding:8px 4px}
-.fb-x{position:absolute;top:8px;right:8px;appearance:none;border:0;background:none;color:var(--muted);font-size:14px;cursor:pointer;padding:4px}
-@media (max-width:520px){.fb{right:12px;left:12px;bottom:12px;width:auto}}
-.fb-open{display:none;appearance:none;border:0;background:var(--wine);color:#fff;font:700 12.5px var(--sans);padding:6px 12px;cursor:pointer;margin-left:10px}
-.fb.mini{padding:10px 40px 10px 12px}.fb.mini #fb-ask{display:flex;align-items:center;justify-content:space-between}.fb.mini p,.fb.mini form{display:none}.fb.mini .fb-open{display:inline-block}.fb.mini .fb-x{top:50%;transform:translateY(-50%)}
-@media (max-width:520px){.fb{padding:10px 12px;font-size:12.5px}.fb b{font-size:13.5px}.fb p{font-size:11.5px;margin:2px 0 6px}.fb textarea{height:58px;font-size:13px;padding:6px 8px;margin-bottom:6px}.fb input{font-size:13px;padding:6px 8px;margin-bottom:6px}#fb-s{padding:6px 14px}}
-.ci{position:fixed;inset:0;z-index:80;background:#101419;color:#EEF0EC;display:flex;align-items:center;justify-content:center;transition:opacity .6s,transform .6s}
-.ci.out{opacity:0;transform:scale(1.03);pointer-events:none}
-.ci-ln{font:500 clamp(14px,4.1vw,40px) var(--mono);white-space:pre;max-width:92vw;overflow:hidden}.ci-ln b{color:#F2B231;margin-right:.5em}
-.ci-cur{display:inline-block;width:.5em;height:1.05em;background:#F2B231;vertical-align:-.18em;margin-left:.08em;animation:ciB 1s steps(1) infinite}@keyframes ciB{50%{opacity:0}}
-.ci-br{position:absolute;inset:0;background:#7A1F33;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;text-align:center;padding:0 16px}
-.ci-br.on{opacity:1}.ci-logo{width:clamp(64px,9vw,110px)}.ci-wm{font:600 clamp(56px,11vw,132px)/1 var(--mono);color:#fff;margin-top:10px;letter-spacing:-.03em}.ci-wm span{color:#F2B231}
-.ci-tg{font:700 clamp(22px,3.4vw,42px)/1.25 var(--sans);color:#fff;margin:22px 0 0;opacity:0;transform:translateY(8px);transition:all .45s}.ci-tg.on{opacity:1;transform:none}.ci-tg em{display:block;font-style:normal;color:#F2B231}
-.ci-skip{position:absolute;right:18px;bottom:18px;z-index:2;background:none;border:1px solid rgba(255,255,255,.35);color:#fff;font:600 13px var(--sans);padding:8px 14px;cursor:pointer}
-.injx{display:inline-grid;place-items:center;width:13px;height:13px;margin-left:4px;border-radius:3px;background:#860038;color:#fff;font:800 11px/1 var(--sans);font-style:normal;vertical-align:1px}
-@media (max-width:720px){table.comps{min-width:0!important}table.comps,table.comps tbody{display:block;width:100%}table.comps thead{display:none}table.comps tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 10px;padding:6px 0;border-bottom:1px solid var(--line2)}table.comps td{border:0!important;padding:0!important;white-space:normal}table.comps td{font-size:12px!important}table.comps td:nth-child(1){grid-column:1;font-weight:600}table.comps td:nth-child(2){grid-column:1;font-size:12px;color:var(--muted)}table.comps td:nth-child(3){grid-column:2;grid-row:1}table.comps td:nth-child(4){grid-column:2;grid-row:2;font-size:12px;color:var(--muted)}}
-.tip{font-weight:700;color:var(--wine-ink);text-decoration:none;border-bottom:2px solid #F2B231}
-.gp{display:block}.gp-k{display:block;margin-bottom:6px}
-.gp-teams{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center;margin-bottom:8px}
-@media (min-width:761px){.gp{display:grid;grid-template-columns:minmax(0,560px) minmax(0,1fr);gap:6px 14px;align-items:stretch}.gp-k{grid-column:1/-1}.gp-teams{grid-column:1;margin:0;padding:10px 14px;background:var(--card,var(--bg));border:1px solid var(--line2)}.gp .gp-f{grid-column:2;margin:0;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:10px;padding:14px 16px;background:var(--card,var(--bg));border:1px solid var(--line2);font-size:13.5px}.gp .gp-f .gp-i{display:block}.gp .gp-links{flex:0 0 auto;margin-top:auto;padding-top:10px;border-top:1px solid var(--line2)}}
-.gp-t{display:flex;flex-direction:column;gap:1px}.gp-t b{font:800 14px var(--sans);color:var(--fg)}.gp-t span{font:500 12px var(--mono);color:var(--fg2)}
-.gp-teams .gp-t:nth-child(3){text-align:right}
-.gp-links{flex-basis:100%;width:100%;display:flex;justify-content:space-between;gap:12px}.gp-links .gp-l{margin:0}
-.gp-tape{grid-column:1/-1;display:grid;grid-template-columns:1fr auto 1fr;gap:3px 12px;margin-top:8px;padding-top:7px;border-top:1px solid var(--line2);font:500 12.5px var(--mono);color:var(--fg2)}.gp-tape .gtl{font:700 10.5px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:center;align-self:center}.gp-tape .gtv.r{text-align:right}.gp-tape .gtv.up{color:var(--fg);font-weight:700}.gp-tape small{font:500 10.5px var(--sans);color:var(--muted)}.gp-note{grid-column:1/-1;white-space:normal;min-width:0;font:500 10.5px var(--sans);color:var(--muted);text-align:center;margin-top:4px}.gp-vs{font-style:normal;font:700 11px var(--sans);color:var(--muted);text-transform:uppercase}
-.gp-f{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;border-top:1px solid var(--line2);padding-top:7px}
-.csheet{position:fixed;inset:0;z-index:70}.csheet[hidden]{display:none}.cs-bg{position:absolute;inset:0;background:rgba(10,12,16,.45)}
-.cs-panel{position:absolute;left:0;right:0;bottom:0;max-height:86vh;background:var(--card,var(--bg));border-radius:14px 14px 0 0;display:flex;flex-direction:column;box-shadow:0 -10px 30px rgba(0,0,0,.2)}
-.cs-hd{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:3px solid var(--fg)}.cs-hd b{font:800 17px var(--sans)}.cs-x{appearance:none;border:0;background:var(--sub);width:32px;height:32px;border-radius:50%;font-size:14px;cursor:pointer;color:var(--fg)}
-.cs-body{overflow-y:auto;padding:12px 16px 24px;-webkit-overflow-scrolling:touch}.cs-body .det-grid{position:static!important;width:auto!important}
-.cs-body table.comps td{font:500 12px/1.35 var(--sans)!important}.cs-body table.comps td:nth-child(1){font-weight:700!important}.cs-body table.comps td:nth-child(3){font:600 12px var(--mono)!important}
-.tks{display:inline-flex;gap:10px;flex:0 0 auto}
-.tk{display:inline-flex;align-items:center;gap:4px;font:600 11.5px var(--sans);white-space:nowrap;color:var(--fg2)}.tk i{font-style:normal;font-weight:800}
-.tk.y i{color:#2E7D4F}.tk.n{color:var(--muted)}.tk.n i{color:var(--wine-ink)}.tk.out{color:var(--fg2)}.tk.out i{color:var(--wine-ink)}
-.pviz{margin:2px 0 10px;padding:10px 12px;background:var(--sub);border-left:3px solid var(--wine)}
-.pv-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
-.pchip{display:inline-block;min-width:34px;text-align:center;padding:2px 6px;font:700 11px var(--mono);border:1px solid var(--line);background:var(--bg);color:var(--fg)}
-.pchip.cle{background:var(--wine);border-color:var(--wine);color:#fff}.pchip.frzc{background:var(--muted);border-color:var(--muted)}
-.pv-ar{color:var(--muted);font-weight:700}.pv-n{font-size:12px;color:var(--muted)}.pv-k{font:700 10px var(--sans);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-right:2px}
-.pv-rank{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:5px}.pv-rank li{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:12.5px;border:0}
-.pv-i{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--fg);color:var(--bg);font:700 10px var(--sans)}
-.pv-rk{min-width:150px;color:var(--fg2)}.pv-or{font-size:11px;color:var(--muted)}
-.pnote{font-size:12px;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px;margin-top:8px!important}
-.pv-to{display:inline-flex;align-items:center;gap:5px}
-@media (max-width:520px){.pv-rank li{display:grid;grid-template-columns:18px minmax(0,1fr) auto;gap:6px}.pv-rk{min-width:0}.tks{gap:8px}.tk{font-size:12.5px}}
-.deal{margin:4px 0 0;padding-left:18px}.deal li{border:0!important;margin:0 0 6px;font-size:12.5px}
-.co-name{color:inherit;text-decoration:none}.co-name:hover{color:var(--wine-ink)}
-.bio-links{font-size:12.5px;margin-top:10px}
-.det-grid .note p{color:var(--fg)}
-.det-grid .note{background:color-mix(in srgb,#F2B231 14%,transparent);border-left:3px solid #F2B231;padding:8px 12px}
-.yby{list-style:none;margin:0;padding:0;font-size:13px}
-.yby li{display:grid;grid-template-columns:62px 62px 1fr;gap:6px;align-items:center;padding:3px 0;border-bottom:1px solid var(--line2)}
-.yby .ys{font:500 12px var(--mono);color:var(--muted)}.yby b{font:600 12.5px var(--mono)}
-.yst{font:600 11px var(--sans);color:var(--fg2)}.yst.po{color:#9A6A00}.yst.to{color:var(--wine-ink)}.yst.ng{color:#b45309}.yst.fa{color:var(--muted)}
-.capbars{display:flex;align-items:flex-end;gap:12px;height:96px;padding-top:4px}
-.capbars .cb{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:3px;height:100%}
-.capbars .cb i{display:block;width:26px;background:var(--wine);border-radius:2px 2px 0 0}
-.capbars .cb:not(:first-child) i{opacity:.55}
-.capbars b{font:600 10.5px var(--mono)}.capbars span{font:500 10.5px var(--mono);color:var(--muted)}
-.cap small.dlt{display:block;font:500 10.5px var(--mono);font-style:normal}.cap small.dlt.over{color:var(--wine-ink)}.cap small.dlt.under{color:#15803d}
-.share{margin-top:22px}
-.xl.tw2 .twb p{margin:0 0 6px;font-size:13px}
-.cap small.cnote{display:block;font-weight:400;font-size:11.5px;color:var(--muted);white-space:normal;max-width:240px}
-.cap small.cnt{display:block;font:500 11px var(--sans);color:var(--muted)}
-.cap td:first-child{white-space:normal}
-@media (max-width:760px){table.cap{table-layout:auto;min-width:560px}.cap th,.cap td{width:auto!important;font-size:12px;padding-inline:6px}.cap td.cur{font-size:12.5px}.cap small.cnote{max-width:120px}
- .cap th:first-child,.cap td:first-child{position:sticky;left:0;z-index:2;background:var(--card);box-shadow:1px 0 0 var(--line);min-width:118px;max-width:130px}
- .cap tr.det td{position:static}.cap tr.det td:first-child{position:sticky;box-shadow:none}
- .cap .pbtn{font-size:12.5px;line-height:1.25}.cap .pbtn::after{flex:none}
- .cap tfoot tr.thr-h td{position:sticky;left:0}
- .cap .ov{gap:3px}.cap .ov::after{font-size:8.5px;padding:2px 3px 1px}.extb{font-size:8px}}
-@media (max-width:760px){#rv-bio .ros td{padding:0!important}}
-.co-top{display:flex;gap:14px;align-items:center;margin-bottom:10px}
-.co-hs{width:84px;height:84px;object-fit:cover;object-position:top;border-radius:50%;background:var(--sub);border:3px solid var(--wine);flex:0 0 auto}
-.bio{display:flex;gap:14px;align-items:flex-start}
-.bio-hs{width:72px;height:72px;object-fit:cover;object-position:top;border-radius:50%;background:var(--sub);flex:0 0 auto}
-.bio-body{min-width:0;flex:1}
-.bio h5{margin:8px 0 2px;font:800 10.5px var(--sans);font-stretch:118%;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.xover p{margin:2px 0;font-size:13px}
-.bio-p{border-left:0;padding-left:2px}
-.bio-p li{padding-left:22px}
-.bio-p li::before{width:13px;height:13px;left:0;top:6px;border-radius:50%;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='9' fill='%23E07B24' stroke='%237A1F33' stroke-width='1.2'/%3E%3Cpath d='M1 10H19M10 1V19M4 3.5C7 6 7 14 4 16.5M16 3.5C13 6 13 14 16 16.5' stroke='%237A1F33' stroke-width='1.1' fill='none'/%3E%3C/svg%3E") center/contain no-repeat}
-.sres .best{display:block;font:700 9.5px var(--sans);font-style:normal;letter-spacing:.1em;text-transform:uppercase;color:var(--wine-ink);margin-bottom:2px}
-.gmu .fin{border:0;background:none;padding:0 0 10px;margin:0 0 4px;border-bottom:1px solid var(--line2)}
-.gmu .fin:hover{background:none}.gmu .fin:hover .lb{text-decoration:underline}
-.gmu .fin .ls{font-size:15px;font-weight:500}.gmu .fin .lr{font-size:14px;font-weight:700}.gmu .fin .lo{font-size:13px}.gmu .fin{gap:2px 10px}@media (max-width:600px){.gmu .fin{flex-wrap:nowrap;gap:0 8px;width:100%}.gmu .fin .cap-label{font-size:9.5px;letter-spacing:.04em;white-space:nowrap}.gmu .fin .lo{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}.gmu .fin .ls{font-size:13.5px;white-space:nowrap}}
-.gmu .fin{align-items:baseline}.gmu .fin .lr,.gmu .fin .ls,.gmu .fin .lo,.gmu .fin .lb,.gmu .fin .cap-label{line-height:1.2}
-#next-h-row{flex-wrap:nowrap;align-items:center}#next-h-row .upnext,#next-h-row .upnext b,#nx-label{white-space:nowrap}@media (max-width:420px){#next-h-row{letter-spacing:.08em}.upnext b{font-size:10px;padding:3px 7px 3px 8px}}#next-h-row a{white-space:nowrap}
-.show-sm{display:none}@media (max-width:600px){.hide-sm{display:none}.show-sm{display:inline}}
-#staff-list{grid-template-columns:repeat(auto-fit,minmax(420px,1fr))}
-.bio .bio-p li{grid-template-columns:92px minmax(0,1fr)}
-@media (max-width:520px){#staff-list{grid-template-columns:1fr}.bio{flex-direction:column}}
-
-/* last result line: one size across the row */
-#last .cap-label{font-size:11px!important}#last .lr,#last .ls,#last .lo{font:600 14px/1.25 var(--sans)!important}#last .lr{font-weight:800!important}#last .ls{font-family:var(--mono)!important;font-weight:700!important}
-.nx-gp{margin-top:0;white-space:nowrap}.nx-when.nx-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.nx-when.nx-row .nx-gp{margin:0;font:700 15px var(--sans);flex:none}
-.ij-dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px 12px;margin:0 0 8px;font-size:13px}.ij-dl dt{font:700 10.5px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:2px}.ij-dl dd{margin:0;color:var(--fg2)}.ij-src{font-size:12px;white-space:nowrap}.ij-hist{font-size:13px;font-weight:600}
-@media (max-width:600px){#measbody td.dim{font-size:12px!important;font-weight:400}}
-.bio-f{align-items:baseline}
-p.xo{display:grid;grid-template-columns:minmax(110px,max-content) 1fr;gap:2px 12px;margin:4px 0;font-size:13.5px;line-height:1.45}p.xo b{font-weight:600}p.xo span{color:var(--fg2)}@media (max-width:520px){p.xo{grid-template-columns:1fr;gap:0}}
-.bio-ini{display:grid;place-items:center;background:var(--sub);color:var(--wine-ink);font:800 26px var(--sans);font-stretch:110%;border:1px solid var(--line)}
-/* depth chart pyramid tiers (classes are built in code as 'pt'+n) */
-.pt1{--w:56%;--in:5%;--bgc:linear-gradient(180deg,#8e2741,#7A1F33)}
-.pt2{--w:70%;--in:4%;--bgc:rgba(122,31,51,.55)}
-.pt3{--w:84%;--in:3%;--bgc:rgba(122,31,51,.2)}
-.pt4{--w:98%;--in:2.5%;--bgc:rgba(122,31,51,.08)}
-.pt1 .pt-faces a,.pt2 .pt-faces a{color:#fff}
-.pt1 .pf{width:60px;height:60px;box-shadow:0 0 0 2px #F2B231}
-@media (max-width:760px){.pt1{--w:100%}}
-@media (max-width:760px){.pt2{--w:100%}}
-@media (max-width:760px){.pt3{--w:100%}}
-@media (max-width:760px){.pt4{--w:100%}}
-@media (max-width:760px){.pt1 .pf{width:48px;height:48px}}
-
-.cnt .nw{white-space:nowrap}.cap-leg{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;margin:8px 0;font-size:13px;color:var(--muted)}.cap-leg .lg{white-space:nowrap;margin:0!important}
-span.gt{width:fit-content;max-width:100%}
-</style>
-<style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 17px var(--cond);text-transform:uppercase;letter-spacing:.05em}
-</style>
-<script type="application/ld+json" id="ld-page">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://cavsdatabase.com/players/rashaun-agee#page","url":"https://cavsdatabase.com/players/rashaun-agee","name":"Rashaun Agee Stats, Contract & Injury Status | cavs_db","description":"Rashaun Agee’s stats with context, injury status, contract and trade eligibility, and where he ranks in Cavs history. Updated after every game.","isPartOf":{"@id":"https://cavsdatabase.com/#site"},"inLanguage":"en-US","dateModified":"2026-10-17","primaryImageOfPage":{"@type":"ImageObject","url":"https://cavsdatabase.com/og/roster.jpg"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://cavsdatabase.com/"},{"@type":"ListItem","position":2,"name":"Roster","item":"https://cavsdatabase.com/roster"},{"@type":"ListItem","position":3,"name":"Rashaun Agee","item":"https://cavsdatabase.com/players/rashaun-agee"}]},{"@type":"Person","name":"Rashaun Agee","url":"https://cavsdatabase.com/players/rashaun-agee","image":"https://cdn.nba.com/headshots/nba/latest/1040x760/1643772.png","jobTitle":"Basketball player","birthDate":"2000-11-02","memberOf":{"@type":"SportsTeam","name":"Cleveland Cavaliers"},"sameAs":["https://www.nba.com/player/1643772"]}]}</script>
-</head>
-<body>
-<header class="gbar"><div class="wrap gin">
-  <a class="gbrand" href="/" data-go="home" aria-label="cavs_db home">
-    <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#860038" stroke-width="2" fill="none"/></svg><span class="wm"><span class="wm-term">cavs<i>_db</i><s></s></span></span></a>
-  <nav class="gnav" id="tabs" role="tablist" aria-label="Sections"></nav>
-  <form class="search" role="search" id="sform" autocomplete="off">
-    <label for="q" class="sr">Search players, contracts, dates</label>
-    <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F4D6DD" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-    <input id="q" type="search" placeholder="Search" aria-controls="sres" aria-expanded="false" aria-keyshortcuts="/"><kbd class="skey" aria-hidden="true">/</kbd>
-    <ul class="sres" id="sres" hidden></ul>
-  </form>
-
-</div></header>
-
-<main id="view-home" hidden>
-  <div class="wrap home">
-    <div class="col">
-      <section class="gdm" id="gdm" hidden aria-live="polite"></section>
-      <section class="o-rec gscore" aria-labelledby="rec-h">
-        <h2 id="rec-h" class="sr">2026–27 season and next game</h2>
-        <div class="grec">
-          <div class="gk" style="justify-content:flex-start">2026–27 · <span id="played"></span></div>
-          <div class="gbig"><span id="wins">0</span><i>–</i><span id="losses">0</span></div>
-          <dl class="gsp" id="splits"></dl>
-        </div>
-        <div class="gmu">
-          <a class="fin" id="last" hidden target="_blank" rel="noopener"></a>
-          <div class="gk" id="next-h-row"><span class="upnext"><b>Up next</b><span id="nx-label"></span></span><a href="/schedule" data-go="schedule"><span class="hide-sm">Full s</span><span class="show-sm">S</span>chedule →</a></div>
-          <h3 class="sr" id="nx-title"></h3><span class="sr" id="next-h"></span>
-          <div class="gteams"><span class="tm cle" aria-hidden="true">CLE</span><span class="gat" id="nx-at" aria-hidden="true"></span><span class="tm" id="nx-opp"></span></div>
-          <div class="nx-when"><span id="nx-meta"></span></div>
-          <span class="gdays" id="cd" role="timer" aria-label="Countdown to tip-off"><small>Tip-off in</small><span class="cdw"><span class="cdn"><b id="cd-d">–</b><b id="cd-h">–</b><b id="cd-m">–</b><b id="cd-s">–</b></span><span class="cdl"><i>Days</i><i>Hrs</i><i>Min</i><i>Sec</i></span></span></span>
-          <div class="ginfo nx-then-row"><span id="nx-then"></span></div>
-        </div>
-      </section>
-
-      <section class="o-next gstripbox" aria-label="Game by game results">
-        <div class="strip" id="strip" role="img" aria-label="Game-by-game results: no games played yet"></div>
-        <div class="strip-legend">
-          <span>Game 1</span>
-          <span><i style="background:var(--wine)"></i>Win &nbsp; <i style="background:var(--gold)"></i>Loss &nbsp; <i style="background:var(--track)"></i>Upcoming</span>
-          <span>Game 82</span>
-        </div>
-      </section>
-
-
-<section class="nlsu" hidden><div class="su"><svg class="su-shot" aria-hidden="true"><path class="supath" fill="none" stroke="#F2B231" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 7" opacity="0"/><g class="suball" opacity="0"><circle r="11" fill="#F2B231"/><path d="M-11 0H11M0 -11V11M-6.5 -8.7C-2.8 -4.6 -2.8 4.6 -6.5 8.7M6.5 -8.7C2.8 -4.6 2.8 4.6 6.5 8.7" stroke="#860038" stroke-width="1.3" fill="none"/></g></svg><svg class="sumug" viewBox="0 0 100 100" aria-hidden="true"><path d="M10 34L30 52L10 70" stroke="#860038" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M55 30c-5-6 5-10 0-17M67 30c-5-6 5-10 0-17" stroke="#F2B231" stroke-width="3.5" stroke-linecap="round" fill="none"/><path d="M40 38h42v26a18 18 0 0 1-18 18h-6a18 18 0 0 1-18-18z" fill="#860038"/><path d="M82 46h4a9 9 0 0 1 0 18h-4" stroke="#860038" stroke-width="6" fill="none"/><path d="M61 38v44M40 58h42M48 40c6 7 6 31 0 40M74 40c-6 7-6 31 0 40" stroke="#F2B231" stroke-width="2.4" fill="none"/><rect x="38" y="35" width="46" height="5" rx="2.5" fill="#860038"/></svg><div class="su-tx"><b>Cavs <i>&amp;</i> Coffee</b><span>The box score, the top line, injuries and the news, in your inbox the morning after every game. Free.</span></div><form class="su-f" action="https://buttondown.com/api/emails/embed-subscribe/cavscoffee" method="post"><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email"><input type="hidden" name="embed" value="1"><button type="submit">Sign me up</button></form></div></section>
-      <section class="o-dates" aria-labelledby="dates-h">
-        <div class="block-h"><h2 id="dates-h">Key dates</h2><span class="key"><i class="kt cav"></i>Cavs &nbsp; <i class="kt"></i>League</span></div>
-        <ol class="gd" id="dates"></ol>
-      </section>
-
-      <section class="o-cap" aria-labelledby="cap-h">
-        <div class="block-h"><h2 id="cap-h">Cap position</h2><a href="/cap" data-go="cap">Full cap sheet →</a></div>
-        <div class="capsum">
-          <div class="capsum-main">
-            <div class="payroll mono" id="payroll"></div>
-            <div class="payroll-note" id="payroll-note"></div>
-          </div>
-          <div class="hcap" id="hcap"></div>
-        </div>
-        <div class="hbar" id="hbar" role="img">
-          <div class="track" id="track"><div class="fill" id="fill"></div></div>
-        </div>
-      </section>
-    </div>
-
-    <div class="side">
-    <section class="rail o-otd" aria-labelledby="otd-h">
-      <div class="block-h"><h2 id="otd-h">This day in Cavs history</h2></div>
-      <div class="otd-row"><div class="dcal" id="dcal" aria-hidden="true"></div><div class="otd-when" id="otd-when"></div></div>
-      <p class="otd-text" id="otd-text"></p>
-      <a class="otd-src" id="otd-src" target="_blank" rel="noopener"></a>
-      <ul class="otd-also" id="otd-also" hidden></ul>
-    </section>
-    <section class="rail o-vid" aria-labelledby="vid-h">
-      <div class="block-h"><h2 id="vid-h">Latest video</h2><a href="/media" data-go="media">More Media →</a></div>
-      <div id="vid-home"></div>
-    </section>
-    <section class="rail" aria-labelledby="inj-h">
-      <div class="block-h"><h2 id="inj-h">Injury report</h2><span id="inj-count"></span></div>
-      <ul class="ginj" id="inj"></ul>
-      <div class="inj-note" id="inj-note"></div>
-    </section>
-    <section class="rail" aria-labelledby="chg-h">
-      <div class="block-h"><h2 id="chg-h"><a href="https://cleveland.gleague.nba.com/" target="_blank" rel="noopener" class="h-link" title="Official Cleveland Charge site">Cleveland Charge</a></h2><span>G League</span></div>
-      <div class="cap-label" id="ch-label"></div>
-      <div class="ch-next" id="ch-next"></div>
-      <div class="ch-meta" id="ch-meta"></div>
-      <ul class="kv plain" id="ch-kv" style="margin-top:10px"></ul>
-      <a class="otd-src" href="/charge" data-go="charge">More Charge info →</a>
-    </section>
-    </div>
-  </div>
-
-  <div class="wrap">
-    <div class="block-h" style="margin-top:12px"><h2>Browse the database</h2></div>
-    <nav class="index" id="index" aria-label="All sections"></nav>
-  </div>
-</main>
-
-<main id="view-cap" hidden>
-  <div class="wrap page">
-    <div>
-      <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Salary Cap</div>
-      <h1 style="margin-top:6px" id="cs-h">Cap Sheet</h1>
-      <p class="dim" style="margin:6px 0 0">Salaries by season, Bird rights, free agency and options.</p>
-    </div>
-    <section class="captop" id="captop" aria-label="2026–27 cap position"></section>
-    <div class="csx" id="cs-x"><span>Cap sheet</span></div>
-    <div class="tablebox"><table class="cap">
-      <thead><tr><th>Player</th><th class="r cur">2026–27<small>Current</small></th><th class="r">2027–28</th><th class="r">2028–29</th><th class="r">2029–30</th><th class="r">2030–31</th></tr></thead>
-      <tbody id="capbody"></tbody>
-      <tfoot><tr id="captot"></tr></tfoot>
-    </table></div>
-    <p class="dim cap-note" style="margin:-8px 0 0;font-size:13px">Tap a player for his contract, guarantees, Bird rights and free agency.</p><div class="cap-leg"><span class="lg po">Player option</span><span class="lg to">Team option</span><span class="lg ext">Extension eligible</span><span class="lg nf">Note for this season</span></div><p class="dim cap-note" style="margin:0;font-size:13px">Committed salary only; future years rise as the roster fills.<br><b style="color:var(--wine-ink)">*</b> Thresholds for 2027–28 and later are Spotrac projections, not official figures. The NBA sets each season's cap and tax lines the summer before, and they move with league revenue.</p>
-    <div class="begm"><b>Be the GM</b><a href="https://bball-gm.com" target="_blank" rel="noopener">bball-GM trade machine ↗</a><a href="https://www.spotrac.com/nba/trade-machine" target="_blank" rel="noopener">Spotrac trade machine ↗</a></div>
-    <section class="aprons" aria-labelledby="ap-h">
-      <div class="block-h"><h2 id="ap-h">What each apron allows</h2><span id="ap-sub">Cavs column highlighted</span></div>
-      <div class="aptbox"><table class="apt" id="apt"><thead><tr><th></th><th>Under the cap</th><th>Over the cap<small>incl. tax</small></th><th>Over 1st apron</th><th>Over 2nd apron</th></tr></thead><tbody><tr><th scope="row">Sign free agents with cap space</th><td class="y">✓</td><td class="n">✕</td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Room mid-level exception</th><td class="y">✓<small>after using space</small></td><td class="n">✕</td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Non-taxpayer mid-level exception</th><td class="na">—</td><td class="y">✓<small>hard caps at 1st apron</small></td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Taxpayer mid-level exception</th><td class="na">—</td><td class="na">—</td><td class="y">✓<small>hard caps at 2nd apron</small></td><td class="n">✕</td></tr><tr><th scope="row">Bi-annual exception</th><td class="na">—</td><td class="y">✓<small>hard caps at 1st apron</small></td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Take back more salary than they send in a trade</th><td class="y">✓<small>into cap space</small></td><td class="y">✓<small>up to 200% / 125% + $250K</small></td><td class="n">✕<small>100% max</small></td><td class="n">✕<small>100% max</small></td></tr><tr><th scope="row">Combine several players’ salaries in one trade</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">✕</td></tr><tr><th scope="row">Send cash in a trade</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">✕</td></tr><tr><th scope="row">Acquire a player in a sign-and-trade</th><td class="y">✓</td><td class="y">✓<small>hard caps at 1st apron</small></td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Use a trade exception created during this season</th><td class="y">✓</td><td class="y">✓</td><td class="n">✕<small>not until the season ends</small></td><td class="n">✕<small>not until the season ends</small></td></tr><tr><th scope="row">Sign a bought out player who earned more than the non-taxpayer MLE</th><td class="y">✓</td><td class="y">✓</td><td class="n">✕</td><td class="n">✕</td></tr><tr><th scope="row">Trade the first round pick seven years out</th><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">✕<small>frozen if over at season’s end</small></td></tr></tbody></table></div>
-      <p class="dim" style="margin:8px 0 0;font-size:12.5px">A team's position after the move is what counts. Making a move marked "hard caps" means the team can't go over that line for the rest of the league year. The Cavs are hard-capped at the first apron this season. Rules: NBA CBA, as summarized by the <a href="https://cbaguide.com/thresholds/apron/" target="_blank" rel="noopener">CBA Guide</a>.</p>
-    </section>
-    <section id="extcal" style="margin-top:22px"><div class="block-h"><h2>Extensions &amp; free agency</h2><span>Who’s next, and when</span></div><div id="extcal-b"></div></section>
-    <div class="cols">
-      <section><div class="block-h"><h2>Two-way</h2><span id="tw-spots">3 of 3 spots filled</span></div><ul class="kv" id="twoway"></ul>
-        <p class="dim" style="margin:8px 0 0;font-size:12.5px">Two limits apply, and the tighter one wins: a player needs 3 or fewer years of NBA service to sign a two-way, and he can spend no more than 3 seasons on two-ways with the same team. Tap a player for his details.</p></section>
-      <section><div class="block-h"><h2>Exhibit 10</h2><span id="ex10-n"></span></div><ul class="kv" id="camp"></ul>
-        <p class="dim" style="margin:8px 0 0;font-size:12.5px">Exhibit 10 deals are one-year, non-guaranteed minimum contracts for training camp. If the Cavs waive one of these players before the season and he signs with the Charge, Cleveland keeps his G League rights (an affiliate player) and he can earn a bonus of up to $91,000 after 60 days there.</p>
-        <div class="block-h" style="margin-top:22px"><h2>Cap holds</h2><span id="holds-tot"></span></div><p id="holds" style="margin:10px 0 0;font-size:13.5px;line-height:1.5"></p>
-        <p class="dim" style="margin:6px 0 0;font-size:12.5px">Old free agents Cleveland has never renounced. They only count if the Cavs try to get under the cap. They don't count toward the tax, the aprons or the hard cap.</p></section>
-    </div>
-    <p class="dim" style="margin:0;font-size:13px"><span id="std-spots">14 of 15 standard spots filled.</span> Salaries: Capsheets for 2026–27 and Spotrac for later seasons. Bird rights: Salary Swish. Free agency: Spotrac. Option dates: Spotrac. Free agent year is the summer the player hits the market.</p>
-    <section class="gloss" id="glossary" aria-labelledby="gl-h">
-      <div class="block-h"><h2 id="gl-h">CBA glossary</h2><span>The terms on this page, in plain English</span></div>
-      <div class="gl-filter"><input id="glq" type="search" placeholder="Find a term" aria-label="Find a glossary term"></div>
-      <div id="glbody"></div>
-      <p class="dim" style="margin:12px 0 0;font-size:12.5px">Figures are 2026–27. Simplified from the <a href="https://cbaguide.com" target="_blank" rel="noopener">CBA Guide</a>, the NBA's <a href="https://official.nba.com/wp-content/uploads/sites/4/2024/11/2024-25-CBA-101.pdf" target="_blank" rel="noopener">CBA 101</a>, Larry Coon's <a href="https://www.cbafaq.com" target="_blank" rel="noopener">CBA FAQ</a>, the <a href="https://www.hoopsrumors.com/hoops-rumors-glossary" target="_blank" rel="noopener">Hoops Rumors glossary</a> and <a href="https://www.salaryswish.com" target="_blank" rel="noopener">Salary Swish</a>. The CBA has exceptions to nearly every rule; those sources have the fine print.</p>
-    </section>
-  </div>
-</main>
-
-<main id="view-assets" hidden>
-  <div class="wrap page">
-    <div>
-      <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Assets</div>
-      <h1 style="margin-top:6px">Assets</h1>
-      <p class="dim" style="margin:6px 0 0">Draft picks and exceptions the front office can use in trades and signings.</p>
-    </div>
-    <div class="ab-tiles" id="ab-tiles"></div>
-    <section><div class="block-h"><h2>Draft picks</h2><span>2027–2033 · tap a pick for details</span></div><div class="ab-board" id="board"></div><div class="ab-leg" id="board-leg"></div></section>
-    <section class="ab-sec"><div class="block-h"><h2>Exceptions</h2><span>2026–27 · amount left · tap for details</span></div><ul class="ab-cards" id="exc"></ul></section>
-    <section class="ab-sec" id="cash-sec"><div class="block-h"><h2>Cash in trades</h2><span>2026–27 · limit $8,495,000 each way</span></div><div class="cash-tr" id="cashtr"></div></section>
-    <section class="ab-sec"><div class="block-h"><h2>Drafted players</h2><span>Unsigned draft rights held <span class="rt-key"><i class="on"></i>Playing <i></i>Retired</span></span></div>
-    <p class="ab-note"><b>Why keep rights to a retired player?</b> Mostly for trades. Every trade has to send something out, and unsigned draft rights count as an asset worth $0 in salary. If the Cavs want a player without giving up anyone under contract, they can send a drafted player’s rights and take the incoming salary into a trade exception, as Cleveland did with Vladimir Veremeenko’s rights in 2018. Holding the rights costs nothing, and only the Cavs can sign the player if he ever comes to the NBA. A team keeps them until it trades or renounces them.</p><ul class="ab-cards ab-rt" id="rights"></ul></section>
-  </div>
-</main>
-
-<main id="view-resources" hidden>
-  <div class="wrap page">
-    <div>
-      <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Resources</div>
-      <h1 style="margin-top:6px">Resources</h1>
-      <p class="dim" style="margin:6px 0 0">Where to go for the information this site doesn't carry.</p>
-    </div>
-    <div class="cols" id="res"></div>
-<section class="nlsu nlsu-r" hidden><div class="su"><svg class="su-shot" aria-hidden="true"><path class="supath" fill="none" stroke="#F2B231" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 7" opacity="0"/><g class="suball" opacity="0"><circle r="11" fill="#F2B231"/><path d="M-11 0H11M0 -11V11M-6.5 -8.7C-2.8 -4.6 -2.8 4.6 -6.5 8.7M6.5 -8.7C2.8 -4.6 2.8 4.6 6.5 8.7" stroke="#860038" stroke-width="1.3" fill="none"/></g></svg><svg class="sumug" viewBox="0 0 100 100" aria-hidden="true"><path d="M10 34L30 52L10 70" stroke="#860038" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M55 30c-5-6 5-10 0-17M67 30c-5-6 5-10 0-17" stroke="#F2B231" stroke-width="3.5" stroke-linecap="round" fill="none"/><path d="M40 38h42v26a18 18 0 0 1-18 18h-6a18 18 0 0 1-18-18z" fill="#860038"/><path d="M82 46h4a9 9 0 0 1 0 18h-4" stroke="#860038" stroke-width="6" fill="none"/><path d="M61 38v44M40 58h42M48 40c6 7 6 31 0 40M74 40c-6 7-6 31 0 40" stroke="#F2B231" stroke-width="2.4" fill="none"/><rect x="38" y="35" width="46" height="5" rx="2.5" fill="#860038"/></svg><div class="su-tx"><b>Cavs <i>&amp;</i> Coffee</b><span>The box score, the top line, injuries and the news, in your inbox the morning after every game. Free.</span></div><form class="su-f" action="https://buttondown.com/api/emails/embed-subscribe/cavscoffee" method="post"><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email"><input type="hidden" name="embed" value="1"><button type="submit">Sign me up</button></form></div></section>
-    <div class="tipcard"><div class="tc-t"><b>Keep cavs_db free</b><p>No paywall, no ads. If the site saved you a few tabs (or settled an argument), throw the hammer down in the tip jar. It covers hosting and the late nights after West Coast games. Thank you!</p></div><a class="tc-btn" href="https://www.buymeacoffee.com/cavsdb" target="_blank" rel="noopener">☕ Buy cavs_db a coffee</a></div>
-  </div>
-</main>
-
-<main id="view-schedule" hidden>
-  <div class="wrap page">
-    <div>
-      <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Schedule</div>
-      <h1 style="margin-top:6px">2026–27 Schedule</h1>
-      <div class="dim vdesc" style="margin:6px 0 0"><span>80 games set; 2 more are scheduled after the NBA Cup knockout round. <span id="tzline">All times Eastern.</span></span><div class="calw"><button type="button" class="calbtn" id="calbtn" aria-expanded="false" aria-controls="calmenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Add to calendar</button>
-        <div class="calmenu" id="calmenu" hidden><a href="webcal://cavsdatabase.com/cavs.ics">Apple Calendar (iPhone, Mac)</a><a href="https://calendar.google.com/calendar/render?cid=webcal%3A%2F%2Fcavsdatabase.com%2Fcavs.ics" target="_blank" rel="noopener">Google Calendar</a><a href="https://outlook.live.com/calendar/0/addfromweb?url=https%3A%2F%2Fcavsdatabase.com%2Fcavs.ics&amp;name=Cavs%202026%E2%80%9327" target="_blank" rel="noopener">Outlook</a><button type="button" id="calcopy">Copy the calendar link</button><small>Each game includes TV and radio. Time and channel changes update on their own (calendar apps re-check every few hours).</small></div></div></div>
-    </div>
-    <section id="sp-std"></section>
-    <section id="sp-rest"></section>
-    <div id="sched"></div>
-    <p class="dim" style="margin:0;font-size:13px">Local TV: DAZN, plus 15 free over-the-air games on WOIO 19 and WUAB 43 (also on Rock Entertainment Sports Network). Games on ESPN, ABC, NBC, Peacock or Prime Video are national broadcasts and may not air locally.</p>
-  </div>
-</main>
-
-<main id="view-staff" hidden>
-  <div class="wrap page">
-    <div>
-      <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Coaches &amp; Front Office</div>
-      <h1 style="margin-top:6px">Coaches &amp; Front Office</h1>
-      <p class="dim" style="margin:6px 0 0">Basketball side. Tap anyone for their background. Season shown is when each person started their current role.</p>
-    </div>
-    <div class="callouts" id="callouts"></div>
-    <div class="cols" id="staff-list"></div>
-  </div>
-</main>
-
-<main id="view-video" hidden>
-  <div class="wrap page">
-    <div>
-      <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Media</div>
-      <h1 style="margin-top:6px">Media</h1>
-      <p class="dim vdesc" style="margin:6px 0 0"><span>Press conferences, practice availability and the latest from the official Cavs channel.</span> <a href="https://www.youtube.com/@cavs" target="_blank" rel="noopener">Cavs YouTube channel ↗</a></p>
-    </div>
-    <div id="vid-page"></div>
-    <p class="dim" style="margin:0;font-size:13px">All video from the Cleveland Cavaliers' official YouTube channel.</p>
-    <div id="articles" class="art-h"><h2>Articles &amp; recaps</h2><p class="dim" style="margin:4px 0 0">From RealCavsFans.com and @realcavsfans on X.</p></div>
-    <div class="rcf-cols">
-      <section><div class="block-h"><h2>RealCavsFans.com</h2><a href="https://realcavsfans.com/index.php?forums/FrontPage/" target="_blank" rel="noopener">Front page ↗</a></div><div class="rcf-list" id="rcf-list"></div></section>
-      <section><div class="block-h"><h2>On X</h2><a href="https://x.com/realcavsfans" target="_blank" rel="noopener">@realcavsfans ↗</a></div><div class="rcf-x" id="rcf-x"><a class="xcard" href="https://x.com/realcavsfans" target="_blank" rel="noopener"><b>@realcavsfans</b><span>RealCavsFans.com on X · graphics, analysis and game-night posts</span><em>Open on X ↗</em></a></div></section>
-    </div>
-  </div>
-</main>
-
-<main id="view-roster" hidden>
-  <div class="wrap page">
-    <div>
-      <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Roster</div>
-      <h1 style="margin-top:6px">2026–27 Roster</h1>
-      <p class="dim ros-sub" style="margin:6px 0 0"><span id="ros-sub"></span><button type="button" class="calbtn" id="cmpbtn" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4 3 8l4 4M3 8h14M17 12l4 4-4 4M21 16H7"/></svg>Compare players</button></p>
-    </div>
-    <div class="segs" role="tablist" aria-label="Roster view"><button role="tab" aria-selected="true" data-rv="bio">Bio</button><button role="tab" aria-selected="false" data-rv="meas">Measurements</button></div>
-    <div class="tablebox" id="rv-bio"><table class="ros">
-      <thead><tr><th class="r">No.</th><th>Player</th><th>Ht / Wt</th><th>Age · Born</th><th class="c">Exp</th><th>College / last team</th><th>Draft</th><th>How acquired</th></tr></thead>
-      <tbody id="rosbody"></tbody>
-    </table></div>
-    <div class="tablebox" id="rv-meas" hidden><table class="ros">
-      <thead><tr><th>Player</th><th>Ht (no shoes)</th><th>Ht (shoes)</th><th>Wingspan</th><th>Wing +/−</th><th>Standing reach</th><th class="r">Wt</th><th class="r">Body fat</th><th>Hand L × W</th><th>Source</th></tr></thead>
-      <tbody id="measbody"></tbody>
-    </table></div>
-    <div id="rv-depth" hidden></div>
-
-  </div>
-</main>
-
-<main id="view-moves" hidden>
-  <div class="wrap page">
-    <div>
-      <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Transactions</div>
-      <h1 style="margin-top:6px">Every move under Koby Altman</h1>
-      <p class="dim vdesc" style="margin:6px 0 0"><span>From June 2017, when Altman took over basketball operations, to today. Newest first.</span><a href="/roster-tree" data-go="roster-tree">How this roster was built →</a></p>
-    </div>
-    <div class="tx-stats" id="tx-stats"></div>
-    <div class="tx-ctrl">
-      <div class="segs" role="tablist" aria-label="Which moves"><button role="tab" aria-selected="true" data-txv="key">Key moves</button><button role="tab" aria-selected="false" data-txv="all">All moves</button></div>
-      <div class="tx-types" id="tx-types"></div>
-      <input id="txq" type="search" placeholder="Find a player or team" aria-label="Search transactions">
-    </div>
-    <div id="tx-list"></div>
-    <p class="dim" style="margin:0;font-size:13px">Source: RealGM Cavaliers transaction history. Key moves are trades, draft picks, extensions, multi-year signings and option decisions. All moves adds camp deals, two-way contracts, waivers and free agency. G League assignments are left out.</p>
-  </div>
-</main>
-
-<main id="view-charge" hidden>
-  <div class="wrap page">
-    <div>
-      <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / Cleveland Charge</div>
-      <h1 style="margin-top:6px">Cleveland Charge</h1>
-      <p class="dim" style="margin:6px 0 0">The Cavaliers' G League affiliate. Home games at Public Hall (Public Auditorium), downtown Cleveland.</p>
-    </div>
-    <div class="ch-tiles" id="ch-tiles"></div>
-    <div class="callouts" id="ch-callouts"></div>
-    <section id="ch-lead-sec" hidden><div class="block-h"><h2>Leaders</h2><span id="ch-lead-n"></span></div><div class="chl" id="ch-lead"></div></section>
-    <section><div class="block-h"><h2>Schedule</h2></div>
-      <div class="tablebox"><table class="chs"><thead><tr><th>Date</th><th>Opponent</th><th>Time (ET)</th><th>Arena</th><th class="r">Result</th></tr></thead><tbody id="ch-sched"></tbody></table></div>
-      <p class="dim" style="margin:8px 0 0;font-size:13px">Full 2026–27 schedule: 14 Tip-Off Tournament games (Nov 10 to Dec 15), then 34 regular-season games through Mar 27. Times are Eastern.</p></section>
-    <section><div class="block-h"><h2>Roster</h2><span id="ch-ros-n"></span></div>
-      <div class="cols" id="ch-roster"></div>
-</section>
-    <section id="ch-pipe-sec"><div class="block-h"><h2>Charge to Cavs pipeline</h2><span>Since the Charge moved to Cleveland (2021)</span></div><ul class="pipe" id="ch-pipe"></ul>
-      <p class="dim" style="margin:8px 0 0;font-size:12.5px">Players on the current Cavs roster who came through the Charge. Paths from the Cavs’ transactions.</p></section>
-    <section aria-label="2026–27 front office and coaching staff">
-      <div class="cols" id="ch-staff"></div></section>
-  </div>
-</main>
-
-<main id="view-player"><div class="wrap page ppx"><div class="dim" style="font-size: 13px;"><a href="/" data-go="home">Home</a> / <a href="/roster" data-go="roster">Roster</a> / Rashaun Agee</div><div class="ppx-body"><section class="ppx-band"><div class="ppx-bt"><div class="ppx-k">Training camp · Forward</div><h1>Rashaun Agee</h1><div class="ppx-m"><span class="nw">25 years old</span> <span class="nw">· Rookie season</span></div><div class="ppx-pills"><span class="ppx-pill">Status <b>Healthy</b></span><span class="ppx-pill">Contract <b>Exhibit 10</b></span></div><span class="soc ppx-soc"><a href="https://instagram.com/ageerashaun12" target="_blank" rel="noopener" title="Instagram · @ageerashaun12" aria-label="Rashaun Agee on Instagram"><svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="12" height="12" rx="3.5" fill="none" stroke="currentColor" stroke-width="1.5"></rect><circle cx="8" cy="8" r="2.7" fill="none" stroke="currentColor" stroke-width="1.5"></circle><circle cx="11.7" cy="4.3" r=".9"></circle></svg></a></span></div><div class="ppx-ph"><img src="https://cdn.nba.com/headshots/nba/latest/1040x760/1643772.png" alt="" loading="eager"></div></section><div class="ppx-links"><span class="ppx-lkh">Also on cavs_db</span><a href="/roster#r-rashaun-agee" data-go="roster">Bio &amp; Measurements</a><a href="/cap#p-rashaun-agee" data-go="cap">Contract</a><a href="/roster" data-go="roster">Depth Chart</a><a href="/moves" data-go="moves">Transactions</a></div><nav class="ppx-nav" aria-label="Chapters"><a href="#ch-ov">Overview</a><a href="#ch-off">Offense</a><a href="#ch-def">Defense</a><a href="#ch-val">Value</a></nav><details class="ppx-ch1" id="ch-ov" open=""><summary><span class="ppx-ct">Overview</span><span class="ppx-hd">Season starts Oct 22</span></summary><div class="ppx-cb"><section class="ppx-c"><div class="ppx-ch"><h2>Last season · Texas A&amp;M</h2></div><p class="ppx-why">His numbers in SEC last season, the baseline until he plays for the Cavs.</p><div class="ppx-g6"><div class="ppx-cell"><div class="k"><span class="ppx-tl">PTS<button class="ppx-tip" type="button" aria-label="What is PTS?">?</button><span class="ppx-pop" hidden="">Points per game.</span></span></div><div class="v">14.6</div></div><div class="ppx-cell"><div class="k"><span class="ppx-tl">REB<button class="ppx-tip" type="button" aria-label="What is REB?">?</button><span class="ppx-pop" hidden="">Rebounds per game.</span></span></div><div class="v">8.7</div></div><div class="ppx-cell"><div class="k"><span class="ppx-tl">AST<button class="ppx-tip" type="button" aria-label="What is AST?">?</button><span class="ppx-pop" hidden="">Assists per game.</span></span></div><div class="v">2.4</div></div><div class="ppx-cell"><div class="k"><span class="ppx-tl">3P%<button class="ppx-tip" type="button" aria-label="What is 3P%?">?</button><span class="ppx-pop" hidden="">Three point percentage.</span></span></div><div class="v">.264</div></div><div class="ppx-cell"><div class="k"><span class="ppx-tl">STL<button class="ppx-tip" type="button" aria-label="What is STL?">?</button><span class="ppx-pop" hidden="">Steals per game.</span></span></div><div class="v">0.9</div></div><div class="ppx-cell"><div class="k"><span class="ppx-tl">MIN<button class="ppx-tip" type="button" aria-label="What is MIN?">?</button><span class="ppx-pop" hidden="">Minutes per game.</span></span></div><div class="v">26.8</div></div></div><p class="ppx-note">34 games at Texas A&amp;M. Third-team All-SEC; NABC Gulf District 1st team. MPG 26.8 RealGM vs 26.7 Wikipedia.</p></section><section class="ppx-wait"><b>Fills in as the season goes</b><span>Player fingerprint (after 10 games) · His typical night (after 5 games) · Game by game heat map and recent form · Rested vs tired (after his first back to backs)</span></section></div></details><details class="ppx-ch1" id="ch-off"><summary><span class="ppx-ct">Offense</span><span class="ppx-hd">14.6 pts · .493 FG</span></summary><div class="ppx-cb"><section class="ppx-c"><div class="ppx-ch"><h2>Shooting</h2></div><p class="ppx-why">His percentages from last season at Texas A&amp;M.</p><div class="ppx-share"><div><span><span class="ppx-tl">FG%<button class="ppx-tip" type="button" aria-label="What is FG%?">?</button><span class="ppx-pop" hidden="">Field goal percentage: shots made out of shots taken, threes included.</span></span></span><span class="t"><i style="width: 49.3%;"></i></span><b>.493</b></div><div><span><span class="ppx-tl">3P%<button class="ppx-tip" type="button" aria-label="What is 3P%?">?</button><span class="ppx-pop" hidden="">Three point percentage.</span></span></span><span class="t"><i style="width: 26.4%;"></i></span><b>.264</b></div><div><span><span class="ppx-tl">FT%<button class="ppx-tip" type="button" aria-label="What is FT%?">?</button><span class="ppx-pop" hidden="">Free throw percentage.</span></span></span><span class="t"><i style="width: 75%;"></i></span><b>.750</b></div></div></section></div></details><details class="ppx-ch1" id="ch-def"><summary><span class="ppx-ct">Defense &amp; boards</span><span class="ppx-hd">1.7 stocks · 8.7 reb</span></summary><div class="ppx-cb"><section class="ppx-c"><div class="ppx-ch"><h2>Defensive activity</h2></div><p class="ppx-why"><b>Stocks</b> (steals plus blocks) is the quickest read on how disruptive a defender is.</p><div class="ppx-rr"><span><span class="ppx-tl">Stocks per game<button class="ppx-tip" type="button" aria-label="What is Stocks per game?">?</button><span class="ppx-pop" hidden="">Steals plus blocks per game. The quickest read on how disruptive a defender is.</span></span></span><b>1.7</b></div><p class="ppx-note">0.9 steals and 0.8 blocks a game (Texas A&amp;M, 2025–26).</p></section></div></details><details class="ppx-ch1" id="ch-val"><summary><span class="ppx-ct">Value to the Cavs</span><span class="ppx-hd">Exhibit 10</span></summary><div class="ppx-cb"><section class="ppx-c"><div class="ppx-ch"><h2>Contract</h2></div><p class="ppx-why">Exhibit 10 deals are one year, non-guaranteed minimum contracts for training camp. If he’s waived and joins the Charge, he can earn a bonus.</p><p class="ppx-note">Signed Sep 23.</p></section></div></details><section class="ppx-c ppx-sharec"><div class="ppx-ch"><h2>Share card</h2></div><canvas width="1080" height="1080" class="ppx-canvas"></canvas><button class="ppx-btn" type="button">Save image</button></section><p class="ppx-foot">Stats: our Cavs box scores (ESPN) and a nightly ESPN league feed; earlier seasons from Wikipedia and Basketball Reference. Contract data from the cap page. Updated after every game.</p></div></div></main><template id="pre-tpl" data-view="view-player"></template>
-<main id="view-game" hidden></main>
-<main id="view-roster-tree" hidden>
-  <div class="wrap page">
-    <div>
-      <div class="dim" style="font-size:13px"><a href="/" data-go="home">Home</a> / <a href="/moves" data-go="moves">Transactions</a> / Roster tree</div>
-      <h1 style="margin-top:6px">How this roster was built</h1>
-      <p class="dim" style="margin:6px 0 0">Every player on the 2026–27 roster, by how he arrived, and the trades behind the trades.</p>
-    </div>
-    <section class="rt-card"><div class="block-h"><h2>The whole roster</h2><span id="rt-n"></span></div><div class="rt-bar" id="rt-bar"></div><div class="rt-leg" id="rt-leg"></div><div class="rt-lanes" id="rt-lanes"></div></section>
-    <section class="rt-card" id="rt-trees"><div class="block-h"><h2>Trade trees</h2><span>pick a tree</span></div><div class="rt-sw" id="rt-sw" role="tablist" aria-label="Trade trees"></div><div class="rt-tree" id="rt-tree"><svg class="rt-ln" id="rt-ln" aria-hidden="true"></svg><div id="rt-rows"></div></div><p class="dim rt-foot" id="rt-foot"></p></section>
-  </div>
-</main>
-
-<main id="view-stub" hidden>
-  <div class="wrap page"><h1 id="stub-h"></h1><div class="empty" id="stub-b"></div></div>
-</main>
-
-<div class="fb" id="fb" hidden role="dialog" aria-labelledby="fb-h">
-  <button type="button" class="fb-x" id="fb-x" aria-label="Close">✕</button>
-  <div id="fb-ask"><b id="fb-h">Help us make it better</b><button type="button" class="fb-open" id="fb-o">Tell us →</button><p>We want to make this the very best site for you and want to know how to do that. Any feedback is appreciated to make this the very best Cavs resource it can be. Thank you!</p>
-    <form id="fb-f"><textarea id="fb-t" rows="4" maxlength="2000" placeholder="I’d like to see…" required></textarea>
-      <input id="fb-e" type="email" placeholder="Email (optional, if you want a reply)" autocomplete="email">
-      <input type="text" name="_honey" id="fb-hp" tabindex="-1" autocomplete="off" style="display:none">
-      <div class="fb-row"><button type="submit" id="fb-s">Send</button><button type="button" class="fb-later" id="fb-l">Not now</button></div></form></div>
-  <div id="fb-done" hidden><b>Thanks!</b><p>Got it. Your note was sent.</p></div>
-</div>
-<div class="ci" id="ci" hidden aria-hidden="true"><div class="ci-ln"><b>&gt;</b><span id="ci-t"></span><i class="ci-cur"></i></div>
- <div class="ci-br" id="ci-br"><svg viewBox="0 0 100 100" class="ci-logo" aria-hidden="true"><g transform="translate(8 6) scale(.84)"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#7A1F33" stroke-width="2.5" fill="none"/></g></svg><div class="ci-wm">cavs<span>_db</span><i class="ci-cur"></i></div><h2 class="ci-tg" id="ci-tg">Everything Cavaliers.<em>Everything you need.</em></h2></div>
- <button class="ci-skip" id="ci-skip" type="button">Skip</button></div>
-<noscript><nav aria-label="Pages" style="padding:16px"><a href="/">Home</a> · <a href="/schedule">Cavaliers schedule</a> · <a href="/roster">Cavaliers roster</a> · <a href="/staff">Coaches &amp; front office</a> · <a href="/cap">Cavaliers salary cap</a> · <a href="/assets">Draft picks &amp; exceptions</a> · <a href="/moves">Transactions</a> · <a href="/charge">Cleveland Charge</a> · <a href="/media">Media</a> · <a href="/resources">Resources</a></nav></noscript>
-<button type="button" class="btt" id="btt" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg></button>
-<footer><div class="wrap">
-  <span>cavsdatabase.com · Independent fan reference. Not affiliated with the Cleveland Cavaliers or the NBA.</span>
-  <div class="fright"><button type="button" class="ftip fapp" id="appbtn">Get the app</button><a class="ftip" href="https://www.buymeacoffee.com/cavsdb" target="_blank" rel="noopener">☕ Tip jar</a><button type="button" class="fcontact" onclick="window.cdbFeedback&&window.cdbFeedback()">Contact &amp; Feedback</button>
-  <button type="button" class="thm2" id="thm2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Dark mode</span></button></div>
-</div></footer>
-
-<script>
 /* player pages (/players/<name>): built and parked. true = live everywhere; ?pp=preview shows them without linking anything */
 const PP_ON=true;
 const PP_VIS=PP_ON||/[?&]pp=preview/.test(location.search);
@@ -1538,6 +14,7 @@ const SECTIONS=[
   ['assets','Assets','AST','Draft picks, exceptions and drafted players.'],
   ['moves','Transactions','TXN','Every Cavs trade, signing and draft pick since 2017.'],
   ['charge','Cleveland Charge','CHG','G League schedule, roster, stats and staff.'],
+  ['history','History','HIS','Every season since 1970, retired numbers, all-time leaders, draft history and coaches.'],
   ['media','Media','MED','Cavs video, press conferences and RealCavsFans articles.'],
   ['resources','Resources','RES','cavs_db approved sites for NBA and Cavs knowledge.']
 ];
@@ -1566,9 +43,9 @@ const OWED=[
 /* status, current or career profile, pre-draft scouting report (RealGM, EuroLeague, NBADraft.net, DraftExpress, NBA.com) */
 const RIGHTS_X={"Saliou Niang": ["Unsigned · LSU eligibility pending; under contract with Virtus Bologna", "https://www.euroleaguebasketball.net/de/euroleague/players/saliou-niang/profile/012687", "https://www.nba.com/draft/2025/prospects/saliou-niang"], "Ismael Kamagate": ["Active · Openjobmetis Varese (Italy, Champions League). Rights acquired from the Clippers in the Peyton Watson trade, Aug 20, 2026", "https://basketball.realgm.com/player/Ismael-Kamagate/Summary/132958", "https://www.nbadraft.net/players/ismael-kamagate/"], "Arturas Gudaitis": ["Active · Rytas Vilnius (Lithuania, Champions League)", "https://basketball.realgm.com/player/wd/Summary/26545", "https://www.nbadraft.net/players/arturas-gudaitis/"], "Milan Macvan": ["Retired in 2020 · last played for Alvark Tokyo", "https://en.wikipedia.org/wiki/Milan_Ma%C4%8Dvan", "https://www.draftexpress.com/profile/Milan-Macvan-1356/"], "Chu Maduabum": ["Last confirmed club: Veertien Mie (Japan), 2024–25", "https://basketball.realgm.com/player/Chu-Maduabum/NBA/24596", null], "Sergii Gladyr": ["Retired in 2019 · now coaching at AS Monaco", "https://basketball.realgm.com/player/wd/Summary/1639", null], "Renaldas Seibutis": ["Retired in 2021 · now a Zalgiris assistant coach", "https://basketball.realgm.com/player/Renaldas-Seibutis/Bio/20", "https://www.nbadraft.net/players/renaldas-seibutis/"], "Ejike Ugboaja": ["Retired · played through 2016", "https://basketball.realgm.com/player/wd/Summary/120", null], "Edin Bavcic": ["Retired in 2022 · last played for Klosterneuburg (Austria)", "https://basketball.realgm.com/player/wd/Summary/121", null]};
 /* player cards: photo, bio, latest (or best) stat line, highlights. Wikipedia, RealGM, EuroLeague, Proballers, Flashscore */
-const RIGHTS_CARD={"Saliou Niang": {"img": "https://cdn.nba.com/manage/2025/06/saliou-niang.png", "born": "May 14, 2004 · Dakar, Senegal", "ht": "6-8", "pos": "F (SF)", "nat": "Italy / Senegal", "s": ["2025–26", "Virtus Bologna", "EuroLeague", 27, 6.6, 5.0, 1.8, null, 16.7, "2025–26 EuroLeague (2P% 67.9; 3P 1-of-6)"], "hl": ["LBA Most Improved Player (2025)", "Italian Cup winner with Trento (2025)", "Played for Italy at EuroBasket 2025 (5 games)"]}, "Ismael Kamagate": {"img": "https://www.proballers.com/media/cache/headshot_600/player/headshot/179716.png", "born": "January 17, 2001 · Paris, France", "ht": "6-11", "pos": "C", "nat": "France", "s": ["2025–26", "Besiktas", "Turkish Super League", 20, 8.4, 5.9, 0.4, null, null, "2025–26 Turkish BSL (EuroCup: 21 GP, 5.8 PPG, 3.8 RPG)"], "hl": ["All-Basketball Champions League First Team (2025)", "LNB Pro A Best Defender (2022)", "EuroCup blocks leader (2023)"]}, "Arturas Gudaitis": {"img": "https://basketball.realgm.com/images/nba/4.2/profiles/photos/2006/Gudaitis_Arturas_21.jpg", "born": "June 19, 1993 · Klaipeda, Lithuania", "ht": "6-10", "pos": "C", "nat": "Lithuania", "s": ["2025–26", "Rytas Vilnius", "LKL", 28, 12.5, 7.3, 1.3, 64.7, null, "2025–26 LKL (all comps: 47 GP, 11.3 PPG, 7.0 RPG, .592 FG; BCL: 16 GP, 9.9/6.6)"], "hl": ["Basketball Champions League champion and All-BCL Second Team (2026)", "All-LKL Team (2017, 2026); LKL rebounding leader (2026); LKL champion (2014, 2015)", "LBA champion with Olimpia Milano (2018); played for Lithuania at EuroBasket 2017"]}, "Milan Macvan": {"img": null, "born": "November 16, 1989 · Vukovar, SFR Yugoslavia (now Croatia)", "ht": "6-9", "pos": "PF", "nat": "Serbia", "s": ["2011–12", "Partizan", "EuroLeague", 10, 15.3, 8.2, 2.2, 55.8, 37.5, "Best season (EuroLeague career high). EuroLeague career: 86 GP, 8.0 PPG, 4.6 RPG, 1.2 APG"], "hl": ["Olympic silver medal with Serbia (2016); EuroBasket 2017 silver as captain", "FIBA U19 World Cup MVP (2007); EuroCup Rising Star (2009)", "League titles in Israel (2011), Serbia (2012), Turkey (2013), Italy (2016) and Germany (2018, 2019)"]}, "Chu Maduabum": {"img": null, "born": "March 19, 1991 · Lagos, Nigeria", "ht": "6-9", "pos": "PF/C", "nat": "Nigeria", "s": ["2015–16", "Pyrinto Tampere", "Korisliiga (Finland)", 8, 2.1, 3.4, 0.1, 43.8, null, "Most recent season with published stats (no Japan stats found for 2016-2025)"], "hl": ["Mongolian League champion (2014); Mongolian League All-Star (2014, 2016)", "Japanese league blocks leader (2017, 2019)", "Played 2012 NBA Summer League for Denver; D-League with Bakersfield and Fort Wayne"]}, "Sergii Gladyr": {"img": "https://www.proballers.com/media/cache/headshot_600/player/headshot/43850.png", "born": "October 17, 1988 · Mykolaiv, Ukraine", "ht": "6-5", "pos": "SG", "nat": "Ukraine", "s": ["2018–19", "AS Monaco", "LNB Pro A + EuroCup", 25, 5.8, 3.2, 1.3, 37.9, 38.0, "Final playing season (Pro A: 17 GP, 5.6 PPG). Best: 2014–15 Nancy, 11.4 PPG all comps (51 GP)"], "hl": ["3x French Leaders Cup winner with Monaco (2016, 2017, 2018); Leaders Cup MVP (2017)", "EuroBasket 2013: 12.0 PPG in 11 games as Ukraine finished 6th", "Played for Ukraine at the 2014 FIBA World Cup"]}, "Renaldas Seibutis": {"img": "https://basketball.realgm.com/images/nba/4.2/profiles/photos/2006/Seibutis_Renaldas_dal.jpg", "born": "July 23, 1985 · Palanga, Lithuania", "ht": "6-5", "pos": "SG", "nat": "Lithuania", "s": ["2018–19", "Casademont Zaragoza", "Liga ACB", 38, 11.2, 2.3, 2.3, 45.2, 38.0, "Final playing season (retired Aug 2021). EuroLeague career: 97 GP, 6.4 PPG"], "hl": ["Bronze medal at the 2010 FIBA World Championship; played at the 2012 London Olympics", "All-EuroCup First Team (2012); FIBA U21 World Championship MVP (2005)", "2x LKL champion with Zalgiris (2016, 2017)"]}, "Ejike Ugboaja": {"img": "https://basketball.realgm.com/images/nba/4.2/profiles/photos/2006/Ugboaja_Ejike_cle.jpg", "born": "May 28, 1985 · Lagos, Nigeria", "ht": "6-9", "pos": "PF", "nat": "Nigeria", "s": ["2013–14", "Istanbul Teknik Universitesi", "Turkish Basketball League (2nd div.)", 18, 18.7, 10.8, 0.7, 45.6, 47.5, "Most recent season with published stats; also his best. Playing career listed 2003-2016"], "hl": ["Played for Nigeria at the 2012 London Olympics", "AfroBasket 2011 bronze; also played at the 2007 and 2009 AfroBaskets and the 2006 Commonwealth Games", "Played in the NBA D-League (Albuquerque, Anaheim) after the Cavs drafted him"]}, "Edin Bavcic": {"img": null, "born": "May 6, 1984 · Foca, SFR Yugoslavia (now Bosnia and Herzegovina)", "ht": "6-10", "pos": "PF/C", "nat": "Bosnia and Herzegovina", "s": ["2021–22", "BK Klosterneuburg Dukes", "Austrian Bundesliga + Alpe-Adria Cup", 23, 5.7, 4.5, 0.9, 42.3, 25.0, "Final playing season (retired June 2022). Best: 2014–15 Sigal Prishtina, 17.1 PPG (17 GP)"], "hl": ["3x Bosnian League champion with Bosna (2005, 2006, 2008)", "Kosovo Superleague and Balkan League champion with Sigal Prishtina (2015)", "Slovenian Cup (2010) and Supercup (2009) with Union Olimpija; played EuroLeague in 2009–10"]}};
+const RIGHTS_CARD={"Saliou Niang": {"img": "https://cdn.nba.com/manage/2025/06/saliou-niang.png", "born": "May 14, 2004 · Dakar, Senegal", "ht": "6-8", "pos": "F (SF)", "nat": "Italy / Senegal", "s": ["2025–26", "Virtus Bologna", "EuroLeague", 27, 6.6, 5.0, 1.8, 65.2, 16.7, "2025–26 EuroLeague (2P% 67.9; 3P 1-of-6)"], "hl": ["LBA Most Improved Player (2025)", "Italian Cup winner with Trento (2025)", "Played for Italy at EuroBasket 2025 (5 games)"], "x": {"mpg": 21.2, "spg": 0.8, "bpg": 0.4, "ft": 79.5}}, "Ismael Kamagate": {"img": "https://www.proballers.com/media/cache/headshot_600/player/headshot/179716.png", "born": "January 17, 2001 · Paris, France", "ht": "6-11", "pos": "C", "nat": "France", "s": ["2025–26", "Besiktas", "Turkish Super League", 20, 8.4, 5.9, 0.4, 59.4, null, "2025–26 Turkish BSL (EuroCup: 21 GP, 5.8 PPG, 3.8 RPG)"], "hl": ["All-Basketball Champions League First Team (2025)", "LNB Pro A Best Defender (2022)", "EuroCup blocks leader (2023)"], "x": {"mpg": 17.6, "spg": 0.6, "bpg": 1.1, "ft": 78.8}}, "Arturas Gudaitis": {"img": "https://basketball.realgm.com/images/nba/4.2/profiles/photos/2006/Gudaitis_Arturas_21.jpg", "born": "June 19, 1993 · Klaipeda, Lithuania", "ht": "6-10", "pos": "C", "nat": "Lithuania", "s": ["2025–26", "Rytas Vilnius", "LKL", 28, 12.5, 7.3, 1.3, 64.7, null, "2025–26 LKL (all comps: 47 GP, 11.3 PPG, 7.0 RPG, .592 FG; BCL: 16 GP, 9.9/6.6)"], "hl": ["Basketball Champions League champion and All-BCL Second Team (2026)", "All-LKL Team (2017, 2026); LKL rebounding leader (2026); LKL champion (2014, 2015)", "LBA champion with Olimpia Milano (2018); played for Lithuania at EuroBasket 2017"], "x": {"mpg": 21.1, "spg": 0.5, "bpg": 1.0, "ft": 64.4}}, "Milan Macvan": {"img": "/img/s/milan-macvan.jpg", "born": "November 16, 1989 · Vukovar, SFR Yugoslavia (now Croatia)", "ht": "6-9", "pos": "PF", "nat": "Serbia", "s": ["2011–12", "Partizan", "EuroLeague", 10, 15.3, 8.2, 2.2, 55.8, 37.5, "Best season (EuroLeague career high). EuroLeague career: 86 GP, 8.0 PPG, 4.6 RPG, 1.2 APG"], "hl": ["Olympic silver medal with Serbia (2016); EuroBasket 2017 silver as captain", "FIBA U19 World Cup MVP (2007); EuroCup Rising Star (2009)", "League titles in Israel (2011), Serbia (2012), Turkey (2013), Italy (2016) and Germany (2018, 2019)"]}, "Chu Maduabum": {"img": "/img/s/chu-maduabum.jpg", "born": "March 19, 1991 · Lagos, Nigeria", "ht": "6-9", "pos": "PF/C", "nat": "Nigeria", "s": ["2015–16", "Pyrinto Tampere", "Korisliiga (Finland)", 8, 2.1, 3.4, 0.1, 43.8, null, "Most recent season with published stats (no Japan stats found for 2016-2025)"], "hl": ["Mongolian League champion (2014); Mongolian League All-Star (2014, 2016)", "Japanese league blocks leader (2017, 2019)", "Played 2012 NBA Summer League for Denver; D-League with Bakersfield and Fort Wayne"], "x": {"mpg": 12.0, "spg": 0.4, "bpg": 0.9, "ft": 37.5}}, "Sergii Gladyr": {"img": "https://www.proballers.com/media/cache/headshot_600/player/headshot/43850.png", "born": "October 17, 1988 · Mykolaiv, Ukraine", "ht": "6-5", "pos": "SG", "nat": "Ukraine", "s": ["2018–19", "AS Monaco", "LNB Pro A + EuroCup", 25, 5.8, 3.2, 1.3, 37.9, 38.0, "Final playing season (Pro A: 17 GP, 5.6 PPG). Best: 2014–15 Nancy, 11.4 PPG all comps (51 GP)"], "hl": ["3x French Leaders Cup winner with Monaco (2016, 2017, 2018); Leaders Cup MVP (2017)", "EuroBasket 2013: 12.0 PPG in 11 games as Ukraine finished 6th", "Played for Ukraine at the 2014 FIBA World Cup"], "x": {"mpg": 20.1, "ft": 81.5}}, "Renaldas Seibutis": {"img": "https://basketball.realgm.com/images/nba/4.2/profiles/photos/2006/Seibutis_Renaldas_dal.jpg", "born": "July 23, 1985 · Palanga, Lithuania", "ht": "6-5", "pos": "SG", "nat": "Lithuania", "s": ["2018–19", "Casademont Zaragoza", "Liga ACB", 38, 11.2, 2.3, 2.3, 45.2, 38.0, "Final playing season (retired Aug 2021). EuroLeague career: 97 GP, 6.4 PPG"], "hl": ["Bronze medal at the 2010 FIBA World Championship; played at the 2012 London Olympics", "All-EuroCup First Team (2012); FIBA U21 World Championship MVP (2005)", "2x LKL champion with Zalgiris (2016, 2017)"], "x": {"mpg": 25.1, "spg": 0.7, "bpg": 0.2, "ft": 89.1}}, "Ejike Ugboaja": {"img": "https://basketball.realgm.com/images/nba/4.2/profiles/photos/2006/Ugboaja_Ejike_cle.jpg", "born": "May 28, 1985 · Lagos, Nigeria", "ht": "6-9", "pos": "PF", "nat": "Nigeria", "s": ["2013–14", "Istanbul Teknik Universitesi", "Turkish Basketball League (2nd div.)", 18, 18.7, 10.8, 0.7, 45.6, 47.5, "Most recent season with published stats; also his best. Playing career listed 2003-2016"], "hl": ["Played for Nigeria at the 2012 London Olympics", "AfroBasket 2011 bronze; also played at the 2007 and 2009 AfroBaskets and the 2006 Commonwealth Games", "Played in the NBA D-League (Albuquerque, Anaheim) after the Cavs drafted him"], "x": {"mpg": 34.5, "spg": 0.9, "bpg": 0.8, "ft": 68.4}}, "Edin Bavcic": {"img": "/img/s/edin-bavcic.jpg", "born": "May 6, 1984 · Foca, SFR Yugoslavia (now Bosnia and Herzegovina)", "ht": "6-10", "pos": "PF/C", "nat": "Bosnia and Herzegovina", "s": ["2021–22", "BK Klosterneuburg Dukes", "Austrian Bundesliga + Alpe-Adria Cup", 23, 5.7, 4.5, 0.9, 42.3, 25.0, "Final playing season (retired June 2022). Best: 2014–15 Sigal Prishtina, 17.1 PPG (17 GP)"], "hl": ["3x Bosnian League champion with Bosna (2005, 2006, 2008)", "Kosovo Superleague and Balkan League champion with Sigal Prishtina (2015)", "Slovenian Cup (2010) and Supercup (2009) with Union Olimpija; played EuroLeague in 2009–10"]}};
 /* next games for active draft-rights players: legabasket.it, lkl.lt, lsusports.net. [date, opponent, H/A/N, competition, time/TV] */
-const INTL_NEXT={"Ismael Kamagate": {"team": "Openjobmetis Varese", "sched": "https://www.legabasket.it/calendario/1/serie-a", "watch": "LBA: LBA app, NapoliBasket TV in the US. Champions League: free on Courtside 1891.", "g": [["2026-10-18", "Trento", "A", "LBA", "10:00 AM ET"], ["2026-10-25", "BC Roma SPQR", "H", "LBA", ""], ["2026-11-01", "Verona", "A", "LBA", ""], ["2026-11-08", "Udine", "H", "LBA", ""]]}, "Arturas Gudaitis": {"team": "Rytas Vilnius", "sched": "https://www.lkl.lt/tvarkarastis", "watch": "LKL: no US broadcaster listed (Lithuania: BTV, Telia Play). Champions League: free on Courtside 1891.", "g": [["2026-10-17", "Šiauliai", "A", "LKL", "9:30 AM ET"], ["2026-10-21", "Tauragė", "A", "LKL", "11:00 AM ET"], ["2026-10-25", "Juventus Utena", "A", "LKL", "10:30 AM ET"], ["2026-11-02", "Žalgiris", "H", "LKL", "9:30 AM ET"]]}, "Saliou Niang": {"team": "LSU (eligibility pending)", "sched": "https://lsusports.net/sports/mens-basketball/schedule/", "watch": "LSU games air on SEC Network+, ACCNX and USA Network; he plays only if the NCAA clears him.", "g": [["2026-10-24", "Florida State", "A", "Exhibition", "1:00 PM ET · ACCNX"], ["2026-11-03", "New Orleans", "H", "NCAA", "8:00 PM ET · SEC Network+"], ["2026-11-06", "Texas Southern", "H", "NCAA", "8:00 PM ET · SEC Network+"], ["2026-11-09", "Louisiana Tech", "H", "NCAA", "8:00 PM ET · SEC Network+"], ["2026-11-14", "Gonzaga", "N", "NCAA", "USA Network · Spokane"]]}};
+const INTL_NEXT={"Ismael Kamagate": {"team": "Openjobmetis Varese", "sched": "https://www.legabasket.it/calendario/1/serie-a", "watch": "LBA: LBA app, NapoliBasket TV in the US. Champions League: free on Courtside 1891.", "g": [["2026-10-25", "BC Roma SPQR", "H", "LBA", ""], ["2026-11-01", "Verona", "A", "LBA", ""], ["2026-11-08", "Udine", "H", "LBA", ""]]}, "Arturas Gudaitis": {"team": "Rytas Vilnius", "sched": "https://www.lkl.lt/tvarkarastis", "watch": "LKL: no US broadcaster listed (Lithuania: BTV, Telia Play). Champions League: free on Courtside 1891.", "g": [["2026-10-21", "Tauragė", "A", "LKL", "11:00 AM ET"], ["2026-10-25", "Juventus Utena", "A", "LKL", "10:30 AM ET"], ["2026-11-02", "Žalgiris", "H", "LKL", "9:30 AM ET"]]}, "Saliou Niang": {"team": "LSU (eligibility pending)", "sched": "https://lsusports.net/sports/mens-basketball/schedule/", "watch": "LSU games air on SEC Network+, ACCNX and USA Network; he plays only if the NCAA clears him.", "g": [["2026-10-24", "Florida State", "A", "Exhibition", "1:00 PM ET · ACCNX"], ["2026-11-03", "New Orleans", "H", "NCAA", "8:00 PM ET · SEC Network+"], ["2026-11-06", "Texas Southern", "H", "NCAA", "8:00 PM ET · SEC Network+"], ["2026-11-09", "Louisiana Tech", "H", "NCAA", "8:00 PM ET · SEC Network+"], ["2026-11-14", "Gonzaga", "N", "NCAA", "USA Network · Spokane"]]}};
 const RIGHTS=[['Saliou Niang','F','2025 · No. 58','Senegal/Italy'],['Ismael Kamagate','C','2022 · No. 46','France'],['Arturas Gudaitis','C','2015 · No. 47','Lithuania'],['Milan Macvan','PF','2011 · No. 54','Serbia'],['Chu Maduabum','PF','2011 · No. 56','Nigeria'],['Sergii Gladyr','G','2009 · No. 49','Ukraine'],['Renaldas Seibutis','SG','2007 · No. 50','Lithuania'],['Ejike Ugboaja','F','2006 · No. 55','Nigeria'],['Edin Bavcic','C','2006 · No. 56','Bosnia and Herzegovina']];
 /* exceptions — [name, amount, expires, how it works, can the Cavs use it now?] */
 /* exceptions — Capsheets. [name, full amount, expires, how it works, uses so far: [date, player, amount]] */
@@ -1604,26 +81,15 @@ const RES=[
     ['NBA Salary Model','Modeled value of player contracts','nbasalarymodel.xyz','https://nbasalarymodel.xyz'],
     ['CBA Guide','The collective bargaining agreement, explained rule by rule','cbaguide.com','https://cbaguide.com']
   ]],
-  ['Trade machines',[
-    ['Spotrac Trade Machine','Build and check trades against the cap','spotrac.com','https://www.spotrac.com/nba/trade-machine'],
-    ['bball-GM','Build and check multi-team trades with real salaries and CBA rules','bball-gm.com','https://bball-gm.com']
-  ]],
-  ['Team',[
-    ['Cavaliers roster','Official roster and staff','nba.com/cavaliers','https://www.nba.com/cavaliers/roster'],
-    ['HoopsHype depth charts','Every team’s rotation, updated through the season','hoopshype.com','https://www.hoopshype.com/story/sports/nba/2026/10/03/2025-26-nba-depth-charts/71286522007/']
-  ]],
-  ['History',[
-    ['Basketball Reference: Cavaliers franchise','Every season’s record, coach, playoff result and franchise leaders','basketball-reference.com','https://www.basketball-reference.com/teams/CLE/'],
-    ['Wikipedia: Cavaliers seasons','Season-by-season list with playoff runs and awards','wikipedia.org','https://en.wikipedia.org/wiki/List_of_Cleveland_Cavaliers_seasons']
-  ]],
   ['Draft',[
     ['draftballr','Draft prospect scouting and analytics','draftballr.com','https://draftballr.com'],
     ['No Ceilings','Big boards, scouting reports and draft coverage','noceilingsnba.com','https://www.noceilingsnba.com'],
     ['Tankathon','Mock drafts, lottery odds and every team’s future picks','tankathon.com','https://www.tankathon.com'],
     ['Swish Theory','Draft guide, scouting reports and analysis','theswishtheory.com','https://theswishtheory.com']
   ]],
-  ['Fan forum',[
-    ['RealCavsFans','Cavs fan forum, analysis and graphics','realcavsfans.com','https://realcavsfans.com']
+  ['Trade machines',[
+    ['Spotrac Trade Machine','Build and check trades against the cap','spotrac.com','https://www.spotrac.com/nba/trade-machine'],
+    ['bball-GM','Build and check multi-team trades with real salaries and CBA rules','bball-gm.com','https://bball-gm.com']
   ]]
 ];
 const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e};
@@ -1782,7 +248,9 @@ const CAVS_RADIO_SHORT='WTAM 1100 · WMMS 100.7 · La Mega 1300 (ES)';
 const MPG={};
 /* last season's minutes per game (2025–26, Basketball Reference), shown until this season's MPG fills in */
 const MPG_PREV={"James Harden":34.8,"Thomas Bryant":12.2,"Evan Mobley":31.9,"Sam Merrill":26.5,"Peyton Watson":29.6,"Craig Porter Jr.":17.9,"Jaylon Tyson":26.9,"Tyrese Proctor":10.9,"Jarrett Allen":27.1,"Nae'Qwan Tomlin":15.7,"Donovan Mitchell":33.5,"Riley Minix":6.4,"Tristan Enaruna":9.4};
-const SITE_UPDATED='2026-10-17';
+/* 'Updated today' / 'Updated yesterday' / 'Updated Oct 16' for data stamps */
+const relDay=d=>{const et=x=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(x);const t=et(new Date()),y=et(new Date(Date.now()-864e5));return d===t?'today':d===y?'yesterday':new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})};
+const SITE_UPDATED='2026-10-18';
 /* ===== end daily data ===== */
 
 const COLORS={ATL:'#C8102E',BOS:'#007A33',BKN:'#000000',CHA:'#1D1160',CHI:'#CE1141',CLE:'#860038',DAL:'#00538C',DEN:'#0E2240',DET:'#C8102E',GSW:'#1D428A',HOU:'#CE1141',IND:'#002D62',LAC:'#C8102E',LAL:'#552583',MEM:'#5D76A9',MIA:'#98002E',MIL:'#00471B',MIN:'#0C2340',NOP:'#0C2340',NYK:'#006BB6',OKC:'#007AC1',ORL:'#0077C0',PHI:'#006BB6',PHX:'#1D1160',POR:'#C8102E',SAC:'#5A2D81',SAS:'#000000',TOR:'#CE1141',UTA:'#002B5C',WAS:'#002B5C'};
@@ -1801,7 +269,7 @@ const nr=NRTG.CLE?sgn(NRTG.CLE[0])+' ('+ord(1+Object.values(NRTG).filter(v=>v[0]
 const nr14=L14.CLE?sgn(L14.CLE[0]):'—';
 [['East rank',SEASON.eastRank],['Central rank',SEASON.centralRank||'—'],['Home',rec('H')],['Road',rec('A')],['Last 10',last10.length?last10.filter(x=>x==='W').length+'–'+last10.filter(x=>x==='L').length:'—'],['Streak',streak],['Net rating',nr],['Net, 2 wks',nr14]]
   .forEach(([k,v])=>{const d=el('div');d.append(el('dt',null,k),el('dd',null,v));sp.appendChild(d)});
-{const a=el('a','home-std','Standings →');a.href='/schedule';a.dataset.go='schedule';const gk=document.getElementById('played').parentElement;gk.appendChild(a)}
+{const a=el('a','home-std','Standings →');a.href='/schedule';a.dataset.go='schedule';document.querySelector('.grec .gbig').appendChild(a)}
 const strip=document.getElementById('strip');for(let i=0;i<82;i++)strip.appendChild(el('span',res[i]==='W'?'w':res[i]==='L'?'l':null));
 /* season pace: games over/under .500 as a line over the tracker, dashed out to game 82 at the current pace (from game 5 on) */
 if(res.length>=5){const wins=res.filter(x=>x==='W').length,pace=Math.round(wins/res.length*82);let d=0;const pts=[[0,0]];res.forEach((x,i)=>{d+=x==='W'?1:-1;pts.push([i+1,d])});
@@ -1941,7 +409,7 @@ requestAnimationFrame(()=>{document.getElementById('fill').style.width=pct(TEAM_
  const h=document.querySelector('#apt thead th.cav');if(h)h.insertAdjacentHTML('beforeend','<span class="apt-cav">Cavs</span>')}
 
 /* injuries — status: Out | Doubtful | Questionable | Probable | Game-time decision */
-const INJ_UPDATED='Oct 13';
+const INJ_UPDATED='Oct 18';
 const INJURIES=[['Sam Merrill','SG','Elbow','Game-time decision'],['Khalifa Diop','C','Knee','Game-time decision'],["Nae'Qwan Tomlin",'PF','Back','Game-time decision']];
 /* injury context: history link per player (Salary Swish injury log) and prior listings at the same body part.
    typical: only filled when the team announces a specific diagnosis that a published study covers. */
@@ -1968,7 +436,7 @@ INJURIES.forEach(([n,p,inj,st])=>{const li=el('li','ij');const d=document.create
   if(PP_ON){const sl=n.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');const pl=el('a','ij-hist','Player page →');pl.href='/players/'+sl;pl.dataset.go='players/'+sl;pl.style.marginRight='14px';box.appendChild(pl)}
   if(c.hist){const l=el('a','ij-hist',"Full injury history ↗");l.href=c.hist;l.target='_blank';l.rel='noopener';box.appendChild(l)}
   d.appendChild(box);li.appendChild(d);ij.appendChild(li)});
-document.getElementById('inj-count').textContent='Updated '+INJ_UPDATED;
+{const m=new Date(INJ_UPDATED+', '+SITE_UPDATED.slice(0,4)+' 12:00');document.getElementById('inj-count').textContent='Updated '+(isNaN(m)?INJ_UPDATED:relDay(new Intl.DateTimeFormat('en-CA').format(m)))}
 {const nt=document.getElementById('inj-note');if(nt){nt.textContent='';nt.hidden=true}}
 /* games missed this season: Cavs players out of a regular-season game for injury or illness (from each final box score), and the salary paid for those games (2026–27 salary ÷ 82) */
 setTimeout(()=>{fetch('/box.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(B=>{if(!B)return;const reg=new Set(SCHEDULE.map(g=>g[0]));const fin=Object.entries(B).filter(([d,g])=>reg.has(d)&&g.status==='final');if(!fin.length)return;
@@ -2028,7 +496,7 @@ function celebrate(){
   if(document.readyState==='complete')go();else addEventListener('load',go)}
 function confetti(){const c=document.createElement('canvas');c.id='confetti';document.body.appendChild(c);const x=c.getContext('2d');
   const fit=()=>{c.width=innerWidth*devicePixelRatio;c.height=innerHeight*devicePixelRatio};fit();addEventListener('resize',fit);
-  const C=['#860038','#F2B231','#7A1F33','#FFFFFF','#D99A12'];const N=Math.min(220,Math.round(innerWidth/5));const t0=performance.now();
+  const C=['#860038','#F2B231','#860038','#FFFFFF','#D99A12'];const N=Math.min(220,Math.round(innerWidth/5));const t0=performance.now();
   const P=Array.from({length:N},()=>({x:Math.random()*c.width,y:-Math.random()*c.height,w:(6+Math.random()*6)*devicePixelRatio,h:(9+Math.random()*8)*devicePixelRatio,vy:(1.4+Math.random()*2.2)*devicePixelRatio,vx:(Math.random()-.5)*1.2*devicePixelRatio,r:Math.random()*6.3,vr:(Math.random()-.5)*.2,c:C[Math.random()*C.length|0],sw:Math.random()*6.3}));
   const loop=t=>{const el2=t-t0;x.clearRect(0,0,c.width,c.height);let live=0;
     P.forEach(p=>{p.sw+=.03;p.x+=p.vx+Math.sin(p.sw)*.6*devicePixelRatio;p.y+=p.vy;p.r+=p.vr;
@@ -2474,6 +942,7 @@ function renderHistory(){
   const XTAG={title:'Championship',highlight:'Moment',perf:'Performance',staff:'Front office & bench',passing:'In memoriam',owner:'Ownership'};
   const XORD=['title','highlight','perf','staff','owner','passing'];
   const host=u=>{try{const h=new URL(u).hostname.replace(/^www\./,'');return {'basketball-reference.com':'Basketball Reference','en.wikipedia.org':'Wikipedia','nba.com':'NBA.com','espn.com':'ESPN','cleveland.com':'cleveland.com'}[h]||h}catch(e){return 'Source'}};
+  window.cdbFactsFor=k=>factsFor(k);  /* History tab reuses the home page's on-this-day facts */
   const factsFor=k=>{const out=[];
     HIST_X.filter(x=>x[0]===k&&x[2]==='title').forEach(x=>out.push({y:x[1],t:x[3],src:host(x[4]),u:x[4],tag:'title'}));
     HISTORY.filter(x=>x[0]===k).forEach(c=>out.push({y:c[1],t:c[2],src:c[3],u:c[4]}));
@@ -2543,9 +1012,9 @@ const ROSTER=[
 ];
 const TWOWAY=[['Tristan Enaruna','Full Bird','2027 RFA'],['Riley Minix','Early Bird','2027 RFA'],['Ernest Udeh Jr.','Non-Bird','2027 RFA']];
 const onRoster=n=>ROSTER.some(r=>r[0]===n&&r[1]!=='—')||TWOWAY.some(t=>t[0]===n);
-const CAMP=['Rashaun Agee','Zack Austin','Noam Yaacov',"Tre'von Spillers"];
+const CAMP=[];
 /* every 2026–27 Exhibit 10 signing: [name, pos, signed, waived or '', note]. Salary Swish, RealGM transactions. */
-const EX10=[['Rashaun Agee','F','Sep 23','',''],['Zack Austin','F','Sep 23','',''],['Noam Yaacov','G','Oct 9','',''],["Tre'von Spillers",'F','Oct 16','',''],['Jaxson Robinson','G/F','Oct 9','Oct 14','Played for the Charge in 2025–26'],['Curtis Jones','G','Sep 23','Oct 9',''],['Kadary Richmond','G','Sep 23','Oct 9',''],['Sean McNeil','G','Sep 15','Sep 17','Played for the Charge in 2024–25 and 2025–26']];
+const EX10=[['Rashaun Agee','F','Sep 23','Oct 17',''],['Zack Austin','F','Sep 23','Oct 17',''],['Noam Yaacov','G','Oct 9','Oct 17',''],["Tre'Von Spillers",'F','Oct 16','Oct 17',''],['Jaxson Robinson','G/F','Oct 9','Oct 14','Played for the Charge in 2025–26'],['Curtis Jones','G','Sep 23','Oct 9',''],['Kadary Richmond','G','Sep 23','Oct 9',''],['Sean McNeil','G','Sep 15','Sep 17','Played for the Charge in 2024–25 and 2025–26']];
 /* contract detail for the cap-sheet dropdowns. Source: Spotrac player pages + Spotrac NBA contracts by position (Oct 14, 2026).
    sp: Spotrac id/slug · ag: agents · yos: years of service · deal: [years, total, seasons, how signed] · aav · lang: contract language
    rank: [position, rank by AAV, active contracts at that position] · rapm: [nbarapm time-decay RAPM, rank of 582] or null
@@ -2651,7 +1120,7 @@ ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
   tr.append(...cells);cb.appendChild(tr);
   if(dead){nameTd.textContent=n;nameTd.appendChild(el('small','cnote','Dead money'));return}
   const now=t&&/(Nov|Dec|Jan|Feb|due|until)/.test(t)&&!/^20\d\d/.test(t)&&!notePast(t)?t:'';
-  const btn=el('button','pbtn',n);btn.type='button';btn.setAttribute('aria-expanded','false');nameTd.appendChild(btn);
+  const btn=el('button','pbtn',n.replace(/ (Jr\.|Sr\.|II|III|IV)$/,'\u00a0$1'));btn.type='button';btn.setAttribute('aria-expanded','false');nameTd.appendChild(btn);
   if(now){const f=el('span','nflag','!');f.title='This season: '+now;btn.appendChild(f)}
   const det=el('tr','det');det.hidden=true;const dtd=el('td');dtd.colSpan=6;const g=el('div','det-grid');
   const blk=(h,html,cls)=>{const d=el('div',cls);d.appendChild(el('h4',null,h));const pp=el('p');html.forEach(x=>pp.append(x));d.appendChild(pp);g.appendChild(d);return d};
@@ -2677,7 +1146,7 @@ ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
    yrs.forEach((y,i)=>{const v=salOf(y);if(v==null)return;const pc=v/THRESH[0][1][i]*100;const c=el('div','cb');const bar=el('i');bar.style.height=Math.max(3,pc/40*54)+'px';c.append(el('b',null,pc.toFixed(1)+'%'),bar,el('span',null,SEASONS[i].slice(2)+(i?'*':'')));ch.appendChild(c)});
    d.appendChild(ch);g.appendChild(d)}
   if(EXT[n]!=null)blk('Extension eligible',[extText(EXT[n])]);
-  blk('Bird rights · '+bird,[BIRD[bird]||'',' Bird rights never override a hard cap: while Cleveland is hard-capped at the first apron (through June 30, 2027), any re-signing still has to fit under it.']);
+  blk('Bird rights · '+bird,[BIRD[bird]||'',' Bird rights never override a hard cap: while Cleveland is hard-capped at the first apron (through June 30, 2027), any re-signing still has to fit under it.'],'b2');
   {const [yr,type]=fa.split(' ');const optTxt=[];yrs.forEach((y,i)=>{if(Array.isArray(y))optTxt.push(y[1]==='P'?' His contract runs through '+(+yr-1)+'–'+String(yr).slice(2)+', but it includes a '+SEASONS[i]+' player option: if he declines it (decided the summer before that season), he becomes a free agent in '+(2026+i)+' instead.':' His contract runs through '+(+yr-1)+'–'+String(yr).slice(2)+', but '+SEASONS[i]+' is a team option: if Cleveland declines it, he becomes a free agent in '+(2026+i)+' instead.')});
    blk('Free agency · '+fa,['Contract ends: free agent in the summer of '+yr+'. ',FA[type]||'',...optTxt],'wide')}
   if(C){const other=C.lang.filter(l=>!/guarantee|option|Only this season/i.test(l));if(other.length)blk('Contract language',other.map(l=>l+' '),'wide')}
@@ -2688,7 +1157,7 @@ ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
     C.comps.forEach(([cn,tm,dl,a,r])=>{const tr2=el('tr');const c1=el('td',null,cn);c1.appendChild(el('small',null,' '+tm));tr2.append(c1,el('td',null,dl||'—'),el('td','r','$'+a.toFixed(2)+'M'),el('td','r',rp(r)));bd.appendChild(tr2)});
     tb.appendChild(bd);d.appendChild(tb);
     d.appendChild(el('p','dim','Impact: nbarapm time-decay RAPM and league rank of 582 players (Aug 30, 2026). — means no rating yet.'));g.appendChild(d)}
-  if(C){const a=el('a','splink','Full contract on Spotrac ↗');a.href='https://www.spotrac.com/nba/player/_/id/'+C.sp;a.target='_blank';a.rel='noopener';const d=el('div','wide');d.appendChild(a);g.appendChild(d)}
+  if(C){const a=el('a','splink','Full contract on Spotrac ↗');a.href='https://www.spotrac.com/nba/player/_/id/'+C.sp;a.target='_blank';a.rel='noopener';const d=el('div','wide pp-capl');d.appendChild(a);g.appendChild(d)}
   {const cur=salOf(yrs[0]),sub=(cur?usd(cur)+' in 2026–27':'')+(C?' · '+C.deal[0]+' yrs, '+usdM(C.deal[1]):'');
    g._mkx=()=>{const xa=el('span','xact');const b1=el('button');b1.type='button';b1.title='Share link';b1.setAttribute('aria-label','Share a link to '+n+'\u2019s contract');const b2=el('button');b2.type='button';b2.title='Save as image';b2.setAttribute('aria-label','Save '+n+'\u2019s contract card as an image');
      if(window.cdbIcons){b1.innerHTML=window.cdbIcons[0];b2.innerHTML=window.cdbIcons[1]}
@@ -2738,8 +1207,6 @@ const tw=document.getElementById('twoway');tw.className='xl tw2';{const h=el('li
   d.append(sm,bx);li.appendChild(d);tw.appendChild(li)});
 {document.getElementById('holds').textContent=HOLDS.map(([n,v])=>n+' '+usdM(v)).join(' · ');
  document.getElementById('holds-tot').textContent=HOLDS.length+' · '+usd(HOLDS.reduce((a,[,v])=>a+v,0))}
-const cp=document.getElementById('camp');EX10.filter(x=>!x[3]).forEach(([n,ps,sg,wv,nt])=>{const li=el('li');if(!wv)li.id='p-'+slug(n);const sp2=el('span',null,n);sp2.append(el('small',null,ps+' · '+(wv?'Signed '+sg+', waived '+wv+' · Charge affiliate if he reports (not yet announced)'+(nt?' · '+nt:''):'In camp · signed '+sg+' · Non-Bird')));li.append(sp2,el('b',null,wv?'Waived':'$1,357,763'));if(wv)li.classList.add('ex-w');cp.appendChild(li)});
-document.getElementById('ex10-n').textContent=EX10.filter(x=>!x[3]).length+' in camp';
 
 /* assets */
 const xitem=(head,sub,val,body)=>{const li=el('li');const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,head));if(sub)l.appendChild(el('small',null,sub));sm.appendChild(l);if(val)sm.appendChild(val);d.appendChild(sm);const bx=el('div','xb');body.forEach(([h,t])=>{const p=el('p');if(h)p.appendChild(el('strong',null,h+' '));p.append(t);bx.appendChild(p)});d.appendChild(bx);li.appendChild(d);return li};
@@ -2780,17 +1247,7 @@ const trackBox=(y,v,cavsGet)=>{const w=el('div','ptrk');w.appendChild(el('div','
   w.appendChild(box);
   w.appendChild(el('p','ptrk-n','Spots are before the lottery and don’t model protections. '+(cavsGet?'The Cavs keep whichever pick lands where the rule says.':'Shows where the Cavs’ pick and the others in the pool would go tonight.')));return w};
 
-/* extension and free agency calendar: extension windows (EXT), option decisions and free agency, season by season */
-(function(){const box=document.getElementById('extcal-b');if(!box)return;const ev={};
-  const add=(i,kind,n,txt)=>{(ev[i]=ev[i]||[]).push([kind,n,txt])};
-  Object.entries(EXT).forEach(([n,i])=>{if(ROSTER.some(r=>r[0]===n))add(i,'ext',n,i===0?'Can sign an extension now, through June 30, 2027.':'Becomes extension eligible July 1, '+(2026+i)+'.')});
-  ROSTER.forEach(r=>{const [n,,sal,bird,fa]=r;sal.forEach((x,i)=>{if(Array.isArray(x)&&i>0)add(i,'opt',n,(x[1]==='P'?'Player':'Team')+' option for '+SEASONS[i]+' ('+usdM(x[0])+'), decided before July 1, '+(2026+i)+'.')});
-    const m=String(fa||'').match(/^(\d{4}) (UFA|RFA)$/);if(m){const i=+m[1]-2026;if(i>=0)add(i,'fa',n,(m[2]==='UFA'?'Unrestricted':'Restricted')+' free agent July 1, '+m[1]+(bird?' · '+bird:'')+'.')}});
-  const lab={ext:['Extension','g'],opt:['Option','w'],fa:['Free agency','']};
-  const sl=i=>(2026+i)+'–'+String(2027+i).slice(2);Object.keys(ev).map(Number).sort((a,b)=>a-b).forEach((i,k)=>{const dd=document.createElement('details');dd.className='ec-d';if(k<2)dd.open=true;const h=document.createElement('summary');h.className='ec-h';h.textContent=(i===0?'Now · '+sl(0):'Summer '+(2026+i)+' · before '+sl(i))+' · '+ev[i].length;dd.appendChild(h);box.appendChild(dd);const ul=el('ul','ec');
-    ev[i].sort((a,b)=>['ext','opt','fa'].indexOf(a[0])-['ext','opt','fa'].indexOf(b[0])||a[1].localeCompare(b[1])).forEach(([k,n,t])=>{const li=el('li');const a2=el('a',null,n);a2.href='/players/'+slug(n);a2.dataset.go='players/'+slug(n);const b=el('b');b.append(a2,el('span','ec-t '+lab[k][1],lab[k][0]));li.append(b,el('small',null,t));ul.appendChild(li)});dd.appendChild(ul)});
-  box.appendChild(el('p','dim','Extension windows follow the CBA (veterans two years after signing; rookie scale deals after the third season). Max amounts depend on each player’s service and the cap, so they’re on the cap sheet drop-downs.'));
-})();
+
 
 /* Charge to Cavs pipeline: current Cavs who came through the Charge, with their path */
 const CH_PIPE=[['Sam Merrill','On the Cavs',[['g','Charge 2022–23'],['','10-day, Mar 2023'],['c','4 yrs, $38M (2025)']]],
@@ -2798,7 +1255,7 @@ const CH_PIPE=[['Sam Merrill','On the Cavs',[['g','Charge 2022–23'],['','10-da
   ["Nae'Qwan Tomlin",'On the Cavs',[['g','Charge 2024–25'],['','10-day, Feb 2025'],['','Two-way'],['c','Standard deal, Feb 2026']]],
   ['Tristan Enaruna','Two-way now',[['g','Charge 2025–26 · G League Most Improved'],['c','Two-way, 2026–27']]],
   ['Riley Minix','Two-way now',[['g','Charge 2025–26'],['c','Two-way, 2026–27']]]];
-(function(){const ul=document.getElementById('ch-pipe');if(!ul)return;CH_PIPE.forEach(([n,st,steps])=>{const li=el('li');const a=el('a','nm',n);a.href='/players/'+slug(n);a.dataset.go='players/'+slug(n);li.append(a,el('span','st2',st));const fl=el('span','flow');steps.forEach(([c,t],i)=>{if(i)fl.append(' → ');fl.appendChild(el('b',c||null,t))});li.appendChild(fl);ul.appendChild(li)})})();
+(function(){const ul=document.getElementById('ch-pipe');if(!ul)return;CH_PIPE.forEach(([n,st,steps])=>{const li=el('li','cp-r');const top=el('div','cp-top');const a=el('a',null,n);a.href='/players/'+slug(n);a.dataset.go='players/'+slug(n);top.append(a,el('b','ch-tag',st));const tr=el('ol','cp-steps');steps.forEach(([c,t],i)=>{const s2=el('li',i===steps.length-1?(/Two-way/.test(st)?'cp-tw':'cp-cle'):i===0?'cp-chg':null);s2.append(el('i'),el('span',null,t));tr.appendChild(s2)});li.append(top,tr);ul.appendChild(li)})})();
 /* draft board: every pick 2027–2033, tap for the full details */
 (function(){const bd=document.getElementById('board');if(!bd)return;
   const pickBlocks=([y,r,st,v,tr,sw,why,orig])=>[pviz(v),v[0]==='pool'?trackBox(y,v,true):null,v[0]==='frozen'?freezeBox():null,['Trade outright:',(tr?'Yes. ':'No. ')+(tr?'':why)],['Trade swap rights:',sw?'Yes. Another team can get the right to swap picks with the Cavs that year.':(v[0]==='frozen'?'No, while frozen.':'No. Those swap rights are already held by other teams.')],orig?['How it got here:',orig]:null,r==='1st'?el('p','pnote',PICK_NOTE):null];
@@ -2885,7 +1342,7 @@ const rt=document.getElementById('rights');RIGHTS.forEach(([n,p2,dd,c])=>{const 
     cd.appendChild(top);
     if(X[0])cd.appendChild(el('div','rc2-st',X[0]));
     const [sz,tm,lg,gp,pp,rp,ap,fg,tp]=C.s;cd.appendChild(el('div','rc2-k',[sz,tm,lg].filter(Boolean).join(' · ')));
-    const sts=el('div','rc2-strip');[['GP',gp],['PPG',pp],['RPG',rp],['APG',ap],['FG%',fg],['3P%',tp]].forEach(([k,v])=>{if(v==null)return;const x=el('div');x.append(el('b',null,typeof v==='number'&&k!=='GP'?v.toFixed(1):String(v)),el('span',null,k));sts.appendChild(x)});cd.appendChild(sts);
+    const sts=el('div','rc2-strip');const XX=C.x||{};[['GP',gp],['MPG',XX.mpg],['PPG',pp],['RPG',rp],['APG',ap],['SPG',XX.spg],['BPG',XX.bpg],['FG%',fg],['3P%',tp],['FT%',XX.ft]].forEach(([k,v])=>{if(v==null)return;const x=el('div');x.append(el('b',null,typeof v==='number'&&k!=='GP'?v.toFixed(1):String(v)),el('span',null,k));sts.appendChild(x)});cd.appendChild(sts);
     if(C.s[9])cd.appendChild(el('p','rc2-fn',C.s[9].replace(/^[^(]*\((.*)\)$/,'$1')));
     if(C.hl&&C.hl.length){cd.appendChild(el('div','rc2-k','Honors'));const hw=el('div','rc2-hon');C.hl.forEach(h=>hw.appendChild(el('span',null,h)));cd.appendChild(hw)}
     bx.appendChild(cd)}}
@@ -2907,7 +1364,7 @@ RES.forEach(([g,items])=>{const sec=el('section');const h=el('div','block-h');h.
   const recOf=a=>{const t=STANDINGS.find(x=>x[0]===a);return t?t[2]+'–'+t[3]:'0–0'};
   const nrOf=a=>NRTG[a]?sgn(NRTG[a][0])+' ('+ord(1+Object.values(NRTG).filter(v=>v[0]>NRTG[a][0]).length)+')':'—';
   /* standings & race */
-  const h2=el('div','block-h');h2.append(el('h2',null,new Date()>=new Date(SEASONS[0].slice(0,4)*1+1+'-03-01T00:00:00')?'Playoff picture':'East standings & race'));sd.appendChild(h2);
+  const h2=el('div','block-h');h2.append(el('h2',null,new Date()>=new Date(SEASONS[0].slice(0,4)*1+1+'-03-01T00:00:00')?'Playoff picture':'East standings & race'),el('span','upd-tag','Updated '+relDay(SITE_UPDATED)));sd.appendChild(h2);
   const E=STANDINGS.filter(t=>t[1]==='E').map(t=>({a:t[0],w:t[2],l:t[3]})).sort((x,y)=>(y.w-y.l)-(x.w-x.l)||y.w-x.w);
   if(!E.length){sd.appendChild(el('p','dim sp-empty','Standings start after opening night (Oct 22 at Philadelphia). The table, games back, play-in line and tiebreakers fill in from there.'));return}
   const gb=(t,r)=>((r.w-t.w)+(t.l-r.l))/2;const top=E[0];
@@ -3229,7 +1686,7 @@ setTimeout(function(){const ov=(/[?&]bday=(\d\d-\d\d)/.exec(location.search)||[]
     steps.forEach(([k,v])=>{const li=el('li');li.append(el('b',null,k),el('span',null,v));ol.appendChild(li)});
     pn.append(hd,el('p','app-lede','cavs_db opens full screen from your home screen, like an app. No app store, nothing to update.'),ol);w.append(bg,pn);document.body.appendChild(w);x.focus()}})();
 /* jump-to chips: a sticky row of section links on long pages; highlights the section you're in */
-setTimeout(function(){const J={'view-cap':[['Cap sheet','#captop'],['Apron rules','#ap-h'],['Extensions','#extcal'],['Two-way','#twoway'],['Exhibit 10','#camp'],['Cap holds','#holds'],['Glossary','#glossary']],'view-assets':[['Draft picks','#board'],['Exceptions','#exc'],['Cash','#cash-sec'],['Drafted players','#rights']]};
+setTimeout(function(){const J={'view-cap':[['Cap sheet','#captop'],['Two-way','#twsec'],['Next summer','#summer'],['Apron rules','#ap-h'],['Glossary','#glossary']],'view-assets':[['Draft picks','#board'],['Exceptions','#exc'],['Cash','#cash-sec'],['Drafted players','#rights']],'view-history':[['Rafters','#hx-ret'],['Chasing','#chase'],['Seasons','#hx-sea'],['Playoffs','#hx-po'],['Honors','#hx-hon'],['Leaders','#hx-lead'],['Records','#hx-rec'],['Numbers','#hx-num'],['Draft','#hx-draft'],['Coaches','#hx-coach'],['Arenas','#hx-home']]};
   const hdr=()=>(document.querySelector('header.gbar')||{offsetHeight:0}).offsetHeight;
   Object.entries(J).forEach(([vid,items])=>{const v=document.getElementById(vid);if(!v)return;const head=v.querySelector('.page>div');if(!head)return;
     const secs=items.map(([l,q])=>{const t=document.querySelector(q);return t?[l,t.closest('section')||t]:null}).filter(Boolean);if(secs.length<2)return;
@@ -3286,7 +1743,7 @@ const TREES=[
   ['',[['pw','c12','now','Peyton Watson','Aug 20, 2026 · Strus, Schröder, a 2031 1st, a 2032 2nd and cash, four-team sign-and-trade']]]],
   [['lv','dh'],['dh','ds'],['ds','pw',1],['st','pw',1]],'The Watson trade also brought back Cam Whitmore and the draft rights to Ismael Kamagate.']];
 setTimeout(function(){const lanes=document.getElementById('rt-lanes');if(!lanes)return;
-  const G=[['Drafted','#7A1F33',[]],['Trade','#B34766',[]],['Free agent','#F2B231',[]],['Two-way','#9AA1A9',[]],['Camp','#D8DCE0',[]]];
+  const G=[['Drafted','#860038',[]],['Trade','#B34766',[]],['Free agent','#F2B231',[]],['Two-way','#9AA1A9',[]],['Camp','#D8DCE0',[]]];
   PLAYERS.forEach(p=>{const n=p[1],q=ACQ[n]||['',''],yr=(q[1]||'').slice(0,4);let k=p[11]==='TW'?3:p[11]==='Camp'?4:/^Draft/.test(q[0])?0:/trade/i.test(q[0])?1:2;
     let sub=k===0?(q[0].match(/\((\d{4})\)/)||[,yr])[1]+' · '+((q[0].match(/No\. \d+/)||[''])[0])+(/signed/.test(q[0])?', signed '+yr:''):k>=3?(k===3?'Two-way':'Training camp')+(yr?' · '+yr:''):yr+' · '+q[0].replace(/^Trade from /,'from ').replace(/ \(re-signed.*\)/,'').replace(/^Sign-and-trade from /,'sign-and-trade, ').replace(/^Undrafted free agent$/,'undrafted').replace(/^Free agent$/,'free agent');
     G[k][2].push([n,p[12],sub])});
@@ -3435,8 +1892,8 @@ const ATK=[ /* season, team, W, L, playoffs, ORtg rank, DRtg rank, Net rank, Pac
    On cavsdatabase.com, a scheduled job (scripts/fetch-videos.mjs) writes /videos.json from the official Cavs YouTube feed,
    and the page shows players that load on click. Anywhere else (like this preview) it shows links that are always current. */
 const YT='https://www.youtube.com/@cavs';
-const VLINKS=[['Latest uploads','Newest videos from the official channel',YT+'/videos'],['Postgame press conferences','Newest first',YT+'/search?query=postgame'],['Highlights','Game and player highlights',YT+'/search?query=highlights'],['Practice & shootaround','Coach and player availability',YT+'/search?query=practice'],['Media day','Every player, every year',YT+'/search?query=media%20day']];
-const VCATS=[['Postgame press conferences',/post-?game|press conference|presser/i],['Highlights',/highlight/i],['Practice & shootaround',/practice|shootaround/i],['Media day',/media day/i]];
+const VLINKS=[['Latest uploads','Newest videos from the official channel',YT+'/videos'],['Postgame press conferences','Newest first',YT+'/search?query=postgame'],['Highlights','Game and player highlights',YT+'/search?query=highlights'],['Practice & shootaround','Coach and player availability',YT+'/search?query=practice']];
+const VCATS=[['Postgame press conferences',/post-?game|press conference|presser/i],['Highlights',/highlight/i],['Practice & shootaround',/practice|shootaround/i]];
 const ON_DOMAIN=/(^|\.)cavsdatabase\.com$/.test(location.hostname)||location.hostname==='127.0.0.1';
 const posters=items=>{const g=el('div','vgrid');items.forEach(([t,d,u])=>{const a=el('a','vcard');a.href=u;a.target='_blank';a.rel='noopener';a.setAttribute('aria-label',t+' on YouTube');
   const th=el('div','vthumb poster');const pl=el('div','vplay');pl.appendChild(el('span'));th.append(pl,el('span','ptitle',t));
@@ -3458,7 +1915,7 @@ function renderVideo(list){
   const more=el('a',null,'More press conferences and video →');more.href='/media';more.dataset.go='media';more.style.cssText='display:inline-block;margin-top:10px;font-size:14px';txt.appendChild(more);
   one.appendChild(txt);home.appendChild(one);
   if(!list||!list.length){page.appendChild(posters(VLINKS));return}
-  VCATS.concat([['Latest uploads',/./]]).forEach(([name,re])=>{const vs=list.filter(v=>re.test(v.title)).slice(0,5);if(!vs.length)return;
+  [['Latest uploads',/./]].concat(VCATS).forEach(([name,re])=>{const vs=list.filter(v=>re.test(v.title)).slice(0,5);if(!vs.length)return;
     const sec=el('section');const h=el('div','block-h');h.appendChild(el('h2',null,name));sec.appendChild(h);const gg=el('div','vgrid');vs.forEach(v=>gg.appendChild(vCard(v)));sec.appendChild(gg);if(vs.length>2){const mb=el('button','vmore','Show '+(vs.length-2)+' more');mb.type='button';mb.onclick=()=>{gg.classList.add('all');mb.remove()};sec.appendChild(mb)}page.appendChild(sec)});
 }
 renderVideo(null);
@@ -3523,11 +1980,14 @@ function runSearch(){
   if(isQ&&pages.size){const PG={schedule:['Schedule','All games, TV and radio'],home:['Home','Record, next game, injuries, cap position'],cap:['Salary Cap','Cap sheet and CBA glossary'],assets:['Assets','Picks and exceptions'],moves:['Transactions','Every move since 2017'],staff:['Coaches & Front Office','Bios and career paths'],charge:['Cleveland Charge','Schedule, roster and staff'],roster:['Roster','Bios and measurements'],video:['Video','Press conferences and highlights']};
     const pg=[...pages][0];const page={title:PG[pg][0],sub:PG[pg][1],kind:'Page',go:pg,id:null};
     if(!hits.length||!scored.length||scored[0][1]<4)hits=hits.length&&hits[0].kind==="Game"?[...hits,page]:[page,...hits].slice(0,8);else hits.push(page)}
+  /* a quiet nod to where the site started */
+  if(/^(rcf|realcavsfans|real cavs fans)$/.test(raw))hits=[{title:'Where it started',sub:'RealCavsFans.com',kind:'Origin',url:'https://realcavsfans.com'},...hits].slice(0,8);
   if(!hits.length){sres.appendChild(el('li','none','No matches. Try a player, an opponent, a term like “apron”, or a question like “when do the Cavs play next?”'))}
   hits.forEach((x,i)=>{const li=el('li');const b=el('button');b.type='button';if(i===0&&isQ)b.appendChild(el('i','best','Best match'));b.append(el('b',null,x.title),el('span',null,x.sub),el('em',null,x.kind));b.addEventListener('click',()=>goTo(x));li.appendChild(b);sres.appendChild(li)});
   sres.hidden=false;q.setAttribute('aria-expanded','true');return hits}
 function goTo(x){
   sres.hidden=true;q.setAttribute('aria-expanded','false');q.value='';q.blur();
+  if(x.url){window.open(x.url,'_blank','noopener');return}
   go(x.go);
   if(!x.id)return;
   requestAnimationFrame(()=>{const t=document.getElementById(x.id);if(!t)return;
@@ -3536,6 +1996,17 @@ function goTo(x){
     t.classList.remove('flash');void t.offsetWidth;t.classList.add('flash')})}
 q.addEventListener('input',runSearch);
 q.addEventListener('focus',()=>{if(q.value.trim())runSearch()});
+/* History in search: seasons, numbers, records, coaches, draft picks and playoff series, loaded the first time the search box is used */
+{let hxIdx=false;const loadHx=()=>{if(hxIdx)return;hxIdx=true;fetch('/pdata/history.json').then(r=>r.json()).then(H=>{
+  [['History','Every season, retired numbers, leaders, records, draft and coaches','history',null,'franchise past all-time'],['Retired numbers','In the rafters','history','hx-ret','jersey banner'],['All-time leaders','Points, rebounds, assists and games with the Cavs','history','hx-lead','career most'],['Franchise records','Single game, season and playoffs','history','hx-rec','record most best'],['Playoff history','Every series since 1976','history','hx-po','playoffs series'],['Draft history','Every Cavs draft pick since 1970','history','hx-draft','draft picks'],['Head coaches','Every Cavs head coach','history','hx-coach','coach'],['Honors','MVPs, All-NBA, All-Defense, Hall of Fame','history','hx-hon','award mvp roy dpoy']].forEach(([t,s2,g,id,x])=>add(t,s2,'History',g,id,x));
+  H.seasons.forEach(x=>{const y1=x.s.slice(0,4),y2=String(+y1+1);add(x.s+' Cavaliers',x.w+'–'+x.l+' · '+x.po,'Season','history/'+x.s.replace('–','-'),null,[y1,y2,y2.slice(2),x.coach.map(c=>c[0]).join(' '),(x.allstar||[]).join(' '),'season'].join(' '))});
+  Object.entries(H.numbers||{}).forEach(([k,v])=>add('Who wore #'+k,v.slice().sort((x,y)=>+String(y[1]).slice(0,4)-+String(x[1]).slice(0,4)).slice(0,4).map(z=>z[0]).join(', ')+(v.length>4?' and more':''),'Number','history','hx-num','number jersey wore no '+k+' '+v.map(z=>z[0]).join(' ')));
+  ['game','season','playoffs'].forEach(k=>((H.records||{})[k]||[]).forEach(r=>{const [lab,a1,a2,a3]=r;const who=k==='season'?'':a1,val=k==='season'?a1:a2;add(lab+': '+val,[who,k==='season'?a2:a3].filter(Boolean).join(' · '),'Record','history','hx-rec','record '+lab)}));
+  H.coaches.forEach(([n,y,rec])=>add(n,'Head coach '+y+' · '+rec,'Coach','history','hx-coach','coach'));
+  H.draft.forEach(([y,r,p,n])=>add(n,'Drafted '+y+' · round '+r+', No. '+p,'Draft','history','hx-draft','draft '+y));
+  (H.series||[]).forEach(x=>add(x.s+' vs '+x.opp,(x.won?'Won ':'Lost ')+x.score+' · '+x.round,'Playoffs','history/'+x.s.replace('–','-'),null,'playoffs series '+x.oppAbbr+' '+(+x.s.slice(0,4)+1)+' '+(/NBA Finals/.test(x.round)?'finals':'')));
+  if(q.value.trim())runSearch()}).catch(()=>{hxIdx=false})};q.addEventListener('focus',loadHx);q.addEventListener('input',loadHx,{once:true})}
+
 document.getElementById('sform').addEventListener('submit',e=>{e.preventDefault();const h=runSearch();if(h&&h[0])goTo(h[0])});
 q.addEventListener('keydown',e=>{if(e.key==='ArrowDown'){const f=sres.querySelector('button');if(f){e.preventDefault();f.focus()}}if(e.key==='Escape'){sres.hidden=true;q.setAttribute('aria-expanded','false')}});
 sres.addEventListener('keydown',e=>{const bs=[...sres.querySelectorAll('button')];const i=bs.indexOf(document.activeElement);
@@ -3700,7 +2171,7 @@ const GLOSS=[
 GLOSS.forEach(([g,items])=>items.forEach(([t,d])=>add(t,d.slice(0,90)+(d.length>90?'…':''),'Glossary','cap','glossary','cba term definition')));
 
 /* transactions — RealGM, June 2017 to Oct 2026. k: trade | draft | sign | ext | option | twoway | waive | fa | other */
-const TX=[{"d":"2026-10-14","k":"waive","p":"Jaxson Robinson","t":"Waived Jaxson Robinson"},{"d":"2026-10-09","k":"sign","p":"Jaxson Robinson","t":"Signed Jaxson Robinson"},{"d":"2026-10-09","k":"sign","p":"Noam Yaacov","t":"Signed Noam Yaacov"},{"d":"2026-10-09","k":"waive","p":"Kadary Richmond","t":"Waived Kadary Richmond"},{"d":"2026-10-09","k":"waive","p":"Curtis Jones","t":"Waived Curtis Jones"},{"d":"2026-09-23","k":"sign","p":"Rashaun Agee","t":"Signed Rashaun Agee"},{"d":"2026-09-23","k":"sign","p":"Zack Austin","t":"Signed Zack Austin"},{"d":"2026-09-23","k":"sign","p":"Curtis Jones","t":"Signed Curtis Jones"},{"d":"2026-09-23","k":"sign","p":"Kadary Richmond","t":"Signed Kadary Richmond"},{"d":"2026-09-17","k":"waive","p":"Sean McNeil","t":"Waived Sean McNeil"},{"d":"2026-09-15","k":"sign","p":"Sean McNeil","t":"Signed Sean McNeil"},{"d":"2026-09-08","k":"sign","p":"James Harden","t":"Signed James Harden to a multi-year deal","big":1},{"d":"2026-09-02","k":"sign","p":"Khalifa Diop","t":"Signed Khalifa Diop to a multi-year deal","big":1},{"d":"2026-08-30","k":"fa","p":"Cam Whitmore","t":"Cam Whitmore became a free agent"},{"d":"2026-08-28","k":"waive","p":"Cam Whitmore","t":"Waived Cam Whitmore"},{"d":"2026-08-20","k":"trade","got":["Peyton Watson","Cam Whitmore","Rights to Ismael Kamagate","Trade exception"],"sent":["Dennis Schroder","Max Strus","2031 1st (own)","2032 2nd (SAC)","Cash","Trade exception"],"w":["LAC","DEN","CHA","WAS"]},{"d":"2026-08-20","k":"sign","p":"Peyton Watson","t":"Peyton Watson signed with DEN as part of a sign-and-trade to Cleveland"},{"d":"2026-07-31","k":"sign","p":"Mario Hezonja","t":"Signed Mario Hezonja"},{"d":"2026-07-08","k":"ext","p":"Donovan Mitchell","t":"Signed Donovan Mitchell to a veteran extension"},{"d":"2026-07-07","k":"sign","p":"Thomas Bryant","t":"Signed Thomas Bryant"},{"d":"2026-07-01","k":"twoway","p":"Ernest Udeh Jr.","t":"Signed Ernest Udeh Jr. to a two-way deal"},{"d":"2026-07-01","k":"sign","p":"Meleek Thomas","t":"Signed Meleek Thomas to a multi-year deal","big":1},{"d":"2026-07-01","k":"fa","p":"Thomas Bryant","t":"Thomas Bryant became a free agent"},{"d":"2026-07-01","k":"fa","p":"Keon Ellis","t":"Keon Ellis became a free agent"},{"d":"2026-07-01","k":"fa","p":"James Harden","t":"James Harden became a free agent"},{"d":"2026-07-01","k":"fa","p":"Larry Nance Jr.","t":"Larry Nance Jr. became a free agent"},{"d":"2026-07-01","k":"fa","p":"Olivier Sarr","t":"Olivier Sarr became a free agent"},{"d":"2026-07-01","k":"fa","p":"Dean Wade","t":"Dean Wade became a free agent"},{"d":"2026-06-24","k":"draft","p":"Meleek Thomas","t":"Drafted Meleek Thomas, No. 34 overall (2nd round)"},{"d":"2026-06-24","k":"trade","got":["2026 2nd (SAC), No. 34","2032 2nd (SAC)"],"sent":["2026 1st, No. 29"],"w":["SAC"],"note":"Draft night"},{"d":"2026-06-22","k":"option","p":"Craig Porter, Jr","t":"Picked up Craig Porter Jr.’s team option"},{"d":"2026-03-03","k":"twoway","p":"Olivier Sarr","t":"Signed Olivier Sarr to a two-way deal"},{"d":"2026-03-03","k":"twoway","p":"Darius Brown II","t":"Ended Darius Brown II’s two-way deal"},{"d":"2026-02-20","k":"twoway","p":"Darius Brown II","t":"Signed Darius Brown II to a two-way deal"},{"d":"2026-02-19","k":"twoway","p":"Emanuel Miller","t":"Ended Emanuel Miller’s two-way deal"},{"d":"2026-02-13","k":"twoway","p":"Riley Minix","t":"Signed Riley Minix to a two-way deal"},{"d":"2026-02-11","k":"sign","p":"Nae'Qwan Tomlin","t":"Signed Nae'Qwan Tomlin to a multi-year deal","big":1},{"d":"2026-02-11","k":"twoway","p":"Nae'Qwan Tomlin","t":"Ended Nae'Qwan Tomlin’s two-way deal"},{"d":"2026-02-05","k":"trade","got":["Cash","Trade exception"],"sent":["Lonzo Ball","2028 2nd (own)","2032 2nd (own)"],"note":"Trade deadline","w":["UTA"]},{"d":"2026-02-04","k":"trade","got":["James Harden"],"sent":["Darius Garland","2026 2nd (own)"],"w":["LAC"]},{"d":"2026-02-01","k":"trade","got":["Keon Ellis","Dennis Schroder","Trade exception"],"sent":["De'Andre Hunter","2027 2nd (DEN)"],"w":["SAC","CHI"]},{"d":"2026-02-01","k":"twoway","p":"Luke Travers","t":"Ended Luke Travers’s two-way deal"},{"d":"2026-01-28","k":"twoway","p":"Tristan Enaruna","t":"Signed Tristan Enaruna to a two-way deal"},{"d":"2026-01-27","k":"twoway","p":"Chris Livingston","t":"Ended Chris Livingston’s two-way deal"},{"d":"2025-10-31","k":"twoway","p":"Chris Livingston","t":"Signed Chris Livingston to a two-way deal"},{"d":"2025-10-22","k":"option","p":"Jaylon Tyson","t":"Picked up Jaylon Tyson’s team option"},{"d":"2025-10-18","k":"waive","p":"Zeke Mayo","t":"Waived Zeke Mayo"},{"d":"2025-10-17","k":"sign","p":"Zeke Mayo","t":"Signed Zeke Mayo"},{"d":"2025-10-16","k":"waive","p":"Darius Brown II","t":"Waived Darius Brown II"},{"d":"2025-10-15","k":"waive","p":"Norchad Omier","t":"Waived Norchad Omier"},{"d":"2025-10-15","k":"waive","p":"Killian Hayes","t":"Waived Killian Hayes"},{"d":"2025-10-15","k":"waive","p":"Tristan Enaruna","t":"Waived Tristan Enaruna"},{"d":"2025-10-13","k":"sign","p":"Darius Brown II","t":"Signed Darius Brown II"},{"d":"2025-10-13","k":"waive","p":"Chaney Johnson","t":"Waived Chaney Johnson"},{"d":"2025-10-13","k":"waive","p":"Miller Kopp","t":"Waived Miller Kopp"},{"d":"2025-09-26","k":"sign","p":"Tristan Enaruna","t":"Signed Tristan Enaruna"},{"d":"2025-09-26","k":"sign","p":"Miller Kopp","t":"Signed Miller Kopp"},{"d":"2025-09-26","k":"sign","p":"Killian Hayes","t":"Signed Killian Hayes"},{"d":"2025-09-26","k":"sign","p":"Norchad Omier","t":"Signed Norchad Omier"},{"d":"2025-09-26","k":"sign","p":"Chaney Johnson","t":"Signed Chaney Johnson"},{"d":"2025-09-26","k":"waive","p":"Jaxson Robinson","t":"Waived Jaxson Robinson"},{"d":"2025-09-26","k":"waive","p":"Warith Alatishe","t":"Waived Warith Alatishe"},{"d":"2025-09-25","k":"sign","p":"Warith Alatishe","t":"Signed Warith Alatishe"},{"d":"2025-09-25","k":"sign","p":"Jaxson Robinson","t":"Signed Jaxson Robinson"},{"d":"2025-09-25","k":"sign","p":"Thomas Bryant","t":"Signed Thomas Bryant"},{"d":"2025-07-06","k":"sign","p":"Larry Nance Jr.","t":"Signed Larry Nance Jr."},{"d":"2025-07-06","k":"sign","p":"Sam Merrill","t":"Signed Sam Merrill to a multi-year deal","big":1},{"d":"2025-07-06","k":"trade","got":["Lonzo Ball","Trade exception"],"sent":["Isaac Okoro"],"w":["CHI"]},{"d":"2025-07-01","k":"twoway","p":"Luke Travers","t":"Signed Luke Travers to a two-way deal"},{"d":"2025-07-01","k":"sign","p":"Tyrese Proctor","t":"Signed Tyrese Proctor to a multi-year deal","big":1},{"d":"2025-07-01","k":"fa","p":"Emoni Bates","t":"Emoni Bates became a free agent"},{"d":"2025-07-01","k":"fa","p":"Javonte Green","t":"Javonte Green became a free agent"},{"d":"2025-07-01","k":"fa","p":"Ty Jerome","t":"Ty Jerome became a free agent"},{"d":"2025-07-01","k":"fa","p":"Sam Merrill","t":"Sam Merrill became a free agent"},{"d":"2025-07-01","k":"fa","p":"Chuma Okeke","t":"Chuma Okeke became a free agent"},{"d":"2025-07-01","k":"fa","p":"Tristan Thompson","t":"Tristan Thompson became a free agent"},{"d":"2025-07-01","k":"fa","p":"Luke Travers","t":"Luke Travers became a free agent"},{"d":"2025-06-28","k":"option","p":"Luke Travers","t":"Extended a qualifying offer to Luke Travers (restricted free agent)"},{"d":"2025-06-26","k":"draft","p":"Tyrese Proctor","t":"Drafted Tyrese Proctor, No. 49 overall (2nd round)"},{"d":"2025-06-26","k":"draft","p":"Saliou Niang","t":"Drafted Saliou Niang, No. 58 overall (2nd round)"},{"d":"2025-04-05","k":"sign","p":"Chuma Okeke","t":"Signed Chuma Okeke to a multi-year deal","big":1},{"d":"2025-03-02","k":"twoway","p":"Nae'Qwan Tomlin","t":"Signed Nae'Qwan Tomlin to a two-way deal"},{"d":"2025-03-01","k":"twoway","p":"J.T. Thor","t":"Ended J.T. Thor’s two-way deal"},{"d":"2025-02-23","k":"sign","p":"Javonte Green","t":"Signed Javonte Green"},{"d":"2025-02-20","k":"sign","p":"Nae'Qwan Tomlin","t":"Signed Nae'Qwan Tomlin"},{"d":"2025-02-06","k":"trade","got":["De'Andre Hunter","Trade exception"],"sent":["Caris LeVert","Georges Niang","2026 1st round swap","2027 2nd (own)","2028 1st round swap","2029 2nd (own)","2031 2nd (own)"],"note":"Trade deadline","w":["ATL"]},{"d":"2024-10-19","k":"waive","p":"Pete Nance","t":"Waived Pete Nance"},{"d":"2024-10-19","k":"waive","p":"Jules Bernard","t":"Waived Jules Bernard"},{"d":"2024-10-18","k":"waive","p":"Elijah Hughes","t":"Waived Elijah Hughes"},{"d":"2024-10-18","k":"waive","p":"Darius Brown II","t":"Waived Darius Brown II"},{"d":"2024-10-16","k":"sign","p":"Elijah Hughes","t":"Signed Elijah Hughes"},{"d":"2024-10-15","k":"waive","p":"Zhaire Smith","t":"Waived Zhaire Smith"},{"d":"2024-10-14","k":"sign","p":"Darius Brown II","t":"Signed Darius Brown II"},{"d":"2024-10-14","k":"waive","p":"Jacob Gilyard","t":"Waived Jacob Gilyard"},{"d":"2024-09-24","k":"sign","p":"Jacob Gilyard","t":"Signed Jacob Gilyard"},{"d":"2024-09-24","k":"sign","p":"Zhaire Smith","t":"Signed Zhaire Smith"},{"d":"2024-09-24","k":"waive","p":"Nae'Qwan Tomlin","t":"Waived Nae'Qwan Tomlin"},{"d":"2024-09-24","k":"waive","p":"Gabe Osabuohien","t":"Waived Gabe Osabuohien"},{"d":"2024-09-23","k":"sign","p":"Nae'Qwan Tomlin","t":"Signed Nae'Qwan Tomlin"},{"d":"2024-09-23","k":"sign","p":"Gabe Osabuohien","t":"Signed Gabe Osabuohien"},{"d":"2024-09-23","k":"sign","p":"Jules Bernard","t":"Signed Jules Bernard"},{"d":"2024-09-23","k":"sign","p":"Pete Nance","t":"Signed Pete Nance"},{"d":"2024-09-17","k":"sign","p":"Isaac Okoro","t":"Signed Isaac Okoro to a multi-year deal","big":1},{"d":"2024-09-08","k":"sign","p":"Tristan Thompson","t":"Signed Tristan Thompson"},{"d":"2024-09-08","k":"twoway","p":"J.T. Thor","t":"Signed J.T. Thor to a two-way deal"},{"d":"2024-08-28","k":"twoway","p":"Luke Travers","t":"Signed Luke Travers to a two-way deal"},{"d":"2024-08-20","k":"twoway","p":"Emoni Bates","t":"Signed Emoni Bates to a two-way deal"},{"d":"2024-08-02","k":"ext","p":"Jarrett Allen","t":"Signed Jarrett Allen to a veteran extension"},{"d":"2024-07-22","k":"ext","p":"Evan Mobley","t":"Signed Evan Mobley to a rookie scale extension"},{"d":"2024-07-07","k":"ext","p":"Donovan Mitchell","t":"Signed Donovan Mitchell to a veteran extension"},{"d":"2024-07-02","k":"sign","p":"Jaylon Tyson","t":"Signed Jaylon Tyson to a multi-year deal","big":1},{"d":"2024-07-01","k":"fa","p":"Emoni Bates","t":"Emoni Bates became a free agent"},{"d":"2024-07-01","k":"fa","p":"Damian Jones","t":"Damian Jones became a free agent"},{"d":"2024-07-01","k":"fa","p":"Isaiah Mobley","t":"Isaiah Mobley became a free agent"},{"d":"2024-07-01","k":"fa","p":"Marcus Morris","t":"Marcus Morris became a free agent"},{"d":"2024-07-01","k":"fa","p":"Pete Nance","t":"Pete Nance became a free agent"},{"d":"2024-07-01","k":"fa","p":"Isaac Okoro","t":"Isaac Okoro became a free agent"},{"d":"2024-07-01","k":"fa","p":"Tristan Thompson","t":"Tristan Thompson became a free agent"},{"d":"2024-06-29","k":"option","p":"Isaac Okoro","t":"Extended a qualifying offer to Isaac Okoro (restricted free agent)"},{"d":"2024-06-29","k":"option","p":"Emoni Bates","t":"Extended a qualifying offer to Emoni Bates (restricted free agent)"},{"d":"2024-06-26","k":"draft","p":"Jaylon Tyson","t":"Drafted Jaylon Tyson, No. 20 overall (1st round)"},{"d":"2024-03-29","k":"sign","p":"Marcus Morris","t":"Signed Marcus Morris"},{"d":"2024-03-18","k":"sign","p":"Marcus Morris","t":"Signed Marcus Morris"},{"d":"2024-02-26","k":"sign","p":"Sharife Cooper","t":"Signed Sharife Cooper"},{"d":"2024-02-19","k":"twoway","p":"Pete Nance","t":"Signed Pete Nance to a two-way deal"},{"d":"2024-02-14","k":"sign","p":"Craig Porter Jr.","t":"Signed Craig Porter Jr. to a multi-year deal","big":1},{"d":"2024-02-14","k":"twoway","p":"Craig Porter Jr.","t":"Ended Craig Porter Jr.’s two-way deal"},{"d":"2024-02-11","k":"sign","p":"Zhaire Smith","t":"Signed Zhaire Smith"},{"d":"2024-01-18","k":"sign","p":"Pete Nance","t":"Signed Pete Nance"},{"d":"2024-01-04","k":"waive","p":"Ricky Rubio","t":"Waived Ricky Rubio"},{"d":"2023-10-21","k":"waive","p":"Devontae Shuler","t":"Waived Devontae Shuler"},{"d":"2023-10-21","k":"waive","p":"Aleem Ford","t":"Waived Aleem Ford"},{"d":"2023-10-21","k":"waive","p":"Rob Edwards","t":"Waived Rob Edwards"},{"d":"2023-10-20","k":"sign","p":"Devontae Shuler","t":"Signed Devontae Shuler"},{"d":"2023-10-20","k":"sign","p":"Aleem Ford","t":"Signed Aleem Ford"},{"d":"2023-10-20","k":"sign","p":"Rob Edwards","t":"Signed Rob Edwards"},{"d":"2023-10-20","k":"waive","p":"Zhaire Smith","t":"Waived Zhaire Smith"},{"d":"2023-10-20","k":"waive","p":"Justin Powell","t":"Waived Justin Powell"},{"d":"2023-10-20","k":"waive","p":"Pete Nance","t":"Waived Pete Nance"},{"d":"2023-10-20","k":"waive","p":"Sharife Cooper","t":"Waived Sharife Cooper"},{"d":"2023-10-19","k":"option","p":"Evan Mobley","t":"Picked up Evan Mobley’s team option"},{"d":"2023-09-14","k":"sign","p":"Zhaire Smith","t":"Signed Zhaire Smith"},{"d":"2023-09-12","k":"sign","p":"Justin Powell","t":"Signed Justin Powell"},{"d":"2023-09-12","k":"sign","p":"Pete Nance","t":"Signed Pete Nance"},{"d":"2023-09-12","k":"sign","p":"Sharife Cooper","t":"Signed Sharife Cooper"},{"d":"2023-09-12","k":"sign","p":"Tristan Thompson","t":"Signed Tristan Thompson"},{"d":"2023-07-08","k":"trade","got":["Damian Jones"],"sent":["Cash","Trade exception"],"w":["UTA"]},{"d":"2023-07-07","k":"twoway","p":"Emoni Bates","t":"Signed Emoni Bates to a two-way deal"},{"d":"2023-07-06","k":"sign","p":"Ty Jerome","t":"Signed Ty Jerome to a multi-year deal","big":1},{"d":"2023-07-06","k":"sign","p":"Georges Niang","t":"Signed Georges Niang to a multi-year deal","big":1},{"d":"2023-07-06","k":"trade","got":["Max Strus"],"sent":["Cedi Osman","Lamar Stevens","2026 2nd (LAL)","2030 2nd (own)","Cash"],"w":["MIA","SAS"]},{"d":"2023-07-06","k":"sign","p":"Caris LeVert","t":"Signed Caris LeVert to a multi-year deal","big":1},{"d":"2023-07-03","k":"twoway","p":"Craig Porter Jr.","t":"Signed Craig Porter Jr. to a two-way deal"},{"d":"2023-07-03","k":"twoway","p":"Isaiah Mobley","t":"Signed Isaiah Mobley to a two-way deal"},{"d":"2023-07-01","k":"fa","p":"Mamadi Diakite","t":"Mamadi Diakite became a free agent"},{"d":"2023-07-01","k":"fa","p":"Danny Green","t":"Danny Green became a free agent"},{"d":"2023-07-01","k":"fa","p":"Caris LeVert","t":"Caris LeVert became a free agent"},{"d":"2023-07-01","k":"fa","p":"Robin Lopez","t":"Robin Lopez became a free agent"},{"d":"2023-07-01","k":"fa","p":"Isaiah Mobley","t":"Isaiah Mobley became a free agent"},{"d":"2023-07-01","k":"fa","p":"Raulzinho Neto","t":"Raulzinho Neto became a free agent"},{"d":"2023-07-01","k":"fa","p":"Dylan Windler","t":"Dylan Windler became a free agent"},{"d":"2023-06-28","k":"option","p":"Isaiah Mobley","t":"Extended a qualifying offer to Isaiah Mobley (restricted free agent)"},{"d":"2023-06-23","k":"option","p":"Lamar Stevens","t":"Picked up Lamar Stevens’s team option"},{"d":"2023-06-22","k":"draft","p":"Emoni Bates","t":"Drafted Emoni Bates, No. 49 overall (2nd round)"},{"d":"2023-03-14","k":"sign","p":"Sam Merrill","t":"Signed Sam Merrill to a multi-year deal","big":1},{"d":"2023-03-03","k":"sign","p":"Sam Merrill","t":"Signed Sam Merrill"},{"d":"2023-02-18","k":"waive","p":"Kevin Love","t":"Waived Kevin Love"},{"d":"2023-02-14","k":"sign","p":"Danny Green","t":"Signed Danny Green"},{"d":"2022-10-17","k":"twoway","p":"Mamadi Diakite","t":"Signed Mamadi Diakite to a two-way deal"},{"d":"2022-10-17","k":"twoway","p":"Didi Louzada","t":"Ended Didi Louzada’s two-way deal"},{"d":"2022-10-17","k":"twoway","p":"Didi Louzada","t":"Signed Didi Louzada to a two-way deal"},{"d":"2022-10-15","k":"waive","p":"Jamorko Pickett","t":"Waived Jamorko Pickett"},{"d":"2022-10-15","k":"twoway","p":"R.J. Nembhard","t":"Ended R.J. Nembhard’s two-way deal"},{"d":"2022-10-15","k":"waive","p":"Nathaniel Hinton","t":"Waived Nathaniel Hinton"},{"d":"2022-10-15","k":"waive","p":"Mamadi Diakite","t":"Waived Mamadi Diakite"},{"d":"2022-10-15","k":"waive","p":"Sharife Cooper","t":"Waived Sharife Cooper"},{"d":"2022-10-15","k":"option","p":"Isaac Okoro","t":"Picked up Isaac Okoro’s team option"},{"d":"2022-10-15","k":"option","p":"Evan Mobley","t":"Picked up Evan Mobley’s team option"},{"d":"2022-09-27","k":"ext","p":"Dean Wade","t":"Signed Dean Wade to a veteran extension"},{"d":"2022-09-20","k":"sign","p":"Sharife Cooper","t":"Signed Sharife Cooper"},{"d":"2022-09-20","k":"waive","p":"Chandler Vaudrin","t":"Waived Chandler Vaudrin"},{"d":"2022-09-19","k":"sign","p":"Mamadi Diakite","t":"Signed Mamadi Diakite"},{"d":"2022-09-19","k":"sign","p":"Nathaniel Hinton","t":"Signed Nathaniel Hinton"},{"d":"2022-09-08","k":"sign","p":"Chandler Vaudrin","t":"Signed Chandler Vaudrin"},{"d":"2022-09-08","k":"sign","p":"Jamorko Pickett","t":"Signed Jamorko Pickett"},{"d":"2022-09-03","k":"trade","got":["Donovan Mitchell","Trade exception"],"sent":["Ochai Agbaji","Lauri Markkanen","Collin Sexton","2025 1st (own)","2026 1st round swap","2027 1st (own)","2028 1st round swap","2029 1st (own)"],"w":["UTA"]},{"d":"2022-07-08","k":"ext","p":"Darius Garland","t":"Signed Darius Garland to a rookie scale extension"},{"d":"2022-07-07","k":"sign","p":"Ricky Rubio","t":"Signed Ricky Rubio to a multi-year deal","big":1},{"d":"2022-07-07","k":"sign","p":"Raulzinho Neto","t":"Signed Raulzinho Neto"},{"d":"2022-07-07","k":"sign","p":"Robin Lopez","t":"Signed Robin Lopez"},{"d":"2022-07-02","k":"twoway","p":"R.J. Nembhard","t":"Signed R.J. Nembhard to a two-way deal"},{"d":"2022-07-02","k":"twoway","p":"Isaiah Mobley","t":"Signed Isaiah Mobley to a two-way deal"},{"d":"2022-07-02","k":"sign","p":"Ochai Agbaji","t":"Signed Ochai Agbaji to a multi-year deal","big":1},{"d":"2022-07-01","k":"fa","p":"Moses Brown","t":"Moses Brown became a free agent"},{"d":"2022-07-01","k":"fa","p":"Ed Davis","t":"Ed Davis became a free agent"},{"d":"2022-07-01","k":"fa","p":"Brandon Goodwin","t":"Brandon Goodwin became a free agent"},{"d":"2022-07-01","k":"fa","p":"R.J. Nembhard","t":"R.J. Nembhard became a free agent"},{"d":"2022-07-01","k":"fa","p":"Rajon Rondo","t":"Rajon Rondo became a free agent"},{"d":"2022-07-01","k":"fa","p":"Collin Sexton","t":"Collin Sexton became a free agent"},{"d":"2022-06-28","k":"option","p":"R.J. Nembhard","t":"Extended a qualifying offer to R.J. Nembhard (restricted free agent)"},{"d":"2022-06-28","k":"option","p":"Collin Sexton","t":"Extended a qualifying offer to Collin Sexton (restricted free agent)"},{"d":"2022-06-23","k":"draft","p":"Ochai Agbaji","t":"Drafted Ochai Agbaji, No. 14 overall (1st round)"},{"d":"2022-06-23","k":"draft","p":"Khalifa Diop","t":"Drafted Khalifa Diop, No. 39 overall (2nd round)"},{"d":"2022-06-23","k":"draft","p":"Isaiah Mobley","t":"Drafted Isaiah Mobley, No. 49 overall (2nd round)"},{"d":"2022-06-23","k":"draft","p":"Luke Travers","t":"Drafted Luke Travers, No. 56 overall (2nd round)"},{"d":"2022-06-22","k":"option","p":"Dean Wade","t":"Picked up Dean Wade’s team option"},{"d":"2022-04-10","k":"twoway","p":"R.J. Nembhard","t":"Signed R.J. Nembhard to a two-way deal"},{"d":"2022-04-09","k":"sign","p":"Moses Brown","t":"Signed Moses Brown"},{"d":"2022-04-09","k":"twoway","p":"Moses Brown","t":"Ended Moses Brown’s two-way deal"},{"d":"2022-04-07","k":"waive","p":"R.J. Nembhard","t":"Waived R.J. Nembhard"},{"d":"2022-03-31","k":"twoway","p":"Moses Brown","t":"Signed Moses Brown to a two-way deal"},{"d":"2022-03-31","k":"sign","p":"R.J. Nembhard","t":"Signed R.J. Nembhard"},{"d":"2022-03-31","k":"twoway","p":"R.J. Nembhard","t":"Ended R.J. Nembhard’s two-way deal"},{"d":"2022-03-21","k":"sign","p":"Moses Brown","t":"Signed Moses Brown"},{"d":"2022-03-10","k":"sign","p":"Moses Brown","t":"Signed Moses Brown"},{"d":"2022-02-26","k":"sign","p":"Tim Frazier","t":"Signed Tim Frazier"},{"d":"2022-02-19","k":"waive","p":"Kevin Pangos","t":"Waived Kevin Pangos"},{"d":"2022-02-07","k":"trade","got":["Caris LeVert","2022 2nd (MIA)","Trade exception"],"sent":["Ricky Rubio","2022 2nd (HOU)","2022 1st (own), protected","2027 2nd (UTA)"],"w":["IND"]},{"d":"2022-01-09","k":"twoway","p":"Brandon Goodwin","t":"Signed Brandon Goodwin to a two-way deal"},{"d":"2022-01-09","k":"waive","p":"Brandon Goodwin","t":"Ended Brandon Goodwin’s 10-day contract"},{"d":"2022-01-09","k":"twoway","p":"Tacko Fall","t":"Ended Tacko Fall’s two-way deal"},{"d":"2022-01-03","k":"trade","got":["Rajon Rondo","Trade exception"],"sent":["Denzel Valentine"],"w":["LAL","NYK"]},{"d":"2021-12-31","k":"sign","p":"Brandon Goodwin","t":"Signed Brandon Goodwin"},{"d":"2021-12-31","k":"waive","p":"Tre Scott","t":"Ended Tre Scott’s 10-day contract"},{"d":"2021-12-29","k":"sign","p":"Malik Newman","t":"Signed Malik Newman"},{"d":"2021-12-22","k":"sign","p":"Tre Scott","t":"Signed Tre Scott"},{"d":"2021-12-21","k":"sign","p":"Luke Kornet","t":"Signed Luke Kornet"},{"d":"2021-12-21","k":"sign","p":"Justin Anderson","t":"Signed Justin Anderson"},{"d":"2021-10-29","k":"option","p":"Dylan Windler","t":"Picked up Dylan Windler’s team option"},{"d":"2021-10-29","k":"option","p":"Darius Garland","t":"Picked up Darius Garland’s team option"},{"d":"2021-10-29","k":"option","p":"Isaac Okoro","t":"Picked up Isaac Okoro’s team option"},{"d":"2021-10-16","k":"waive","p":"Justin James","t":"Waived Justin James"},{"d":"2021-10-16","k":"waive","p":"Kyle Guy","t":"Waived Kyle Guy"},{"d":"2021-10-16","k":"waive","p":"Mitch Ballock","t":"Waived Mitch Ballock"},{"d":"2021-10-16","k":"twoway","p":"R.J. Nembhard","t":"Converted R.J. Nembhard to a two-way deal"},{"d":"2021-10-16","k":"twoway","p":"Tacko Fall","t":"Converted Tacko Fall to a two-way deal"},{"d":"2021-10-13","k":"sign","p":"Ed Davis","t":"Signed Ed Davis"},{"d":"2021-10-12","k":"sign","p":"Justin James","t":"Signed Justin James"},{"d":"2021-10-12","k":"twoway","p":"Brodric Thomas","t":"Ended Brodric Thomas’s two-way deal"},{"d":"2021-10-12","k":"waive","p":"Mfiondu Kabengele","t":"Waived Mfiondu Kabengele"},{"d":"2021-09-25","k":"sign","p":"Kyle Guy","t":"Signed Kyle Guy"},{"d":"2021-09-22","k":"sign","p":"Denzel Valentine","t":"Signed Denzel Valentine to a multi-year deal","big":1},{"d":"2021-09-17","k":"sign","p":"Kevin Pangos","t":"Signed Kevin Pangos to a multi-year deal","big":1},{"d":"2021-09-15","k":"twoway","p":"Brodric Thomas","t":"Signed Brodric Thomas to a two-way deal"},{"d":"2021-09-15","k":"waive","p":"Tre Scott","t":"Waived Tre Scott"},{"d":"2021-09-10","k":"waive","p":"Damyean Dotson","t":"Waived Damyean Dotson"},{"d":"2021-09-08","k":"sign","p":"R.J. Nembhard","t":"Signed R.J. Nembhard"},{"d":"2021-09-08","k":"sign","p":"Mitch Ballock","t":"Signed Mitch Ballock"},{"d":"2021-09-08","k":"sign","p":"Tacko Fall","t":"Signed Tacko Fall"},{"d":"2021-09-06","k":"sign","p":"Tre Scott","t":"Signed Tre Scott"},{"d":"2021-08-28","k":"trade","got":["Lauri Markkanen"],"sent":["Larry Nance Jr.","2023 2nd (DEN), protected"],"w":["POR","CHI"]},{"d":"2021-08-28","k":"other","p":"Jeremiah Martin","t":"Renounced cap hold for Jeremiah Martin"},{"d":"2021-08-06","k":"sign","p":"Jarrett Allen","t":"Signed Jarrett Allen to a multi-year deal","big":1},{"d":"2021-08-03","k":"sign","p":"Evan Mobley","t":"Signed Evan Mobley to a multi-year deal","big":1},{"d":"2021-08-03","k":"fa","p":"Jarrett Allen","t":"Jarrett Allen became a free agent"},{"d":"2021-08-03","k":"fa","p":"Matt Dellavedova","t":"Matt Dellavedova became a free agent"},{"d":"2021-08-03","k":"fa","p":"Isaiah Hartenstein","t":"Isaiah Hartenstein became a free agent"},{"d":"2021-08-03","k":"fa","p":"Jeremiah Martin","t":"Jeremiah Martin became a free agent"},{"d":"2021-08-03","k":"fa","p":"Brodric Thomas","t":"Brodric Thomas became a free agent"},{"d":"2021-08-02","k":"trade","got":["Ricky Rubio"],"sent":["Taurean Prince","2022 2nd (WAS)","Cash","Trade exception"],"w":["MIN"]},{"d":"2021-07-30","k":"option","p":"Brodric Thomas","t":"Extended a qualifying offer to Brodric Thomas (restricted free agent)"},{"d":"2021-07-29","k":"draft","p":"Evan Mobley","t":"Drafted Evan Mobley, No. 3 overall (1st round)"},{"d":"2021-07-23","k":"option","p":"Jarrett Allen","t":"Extended a qualifying offer to Jarrett Allen (restricted free agent)"},{"d":"2021-05-14","k":"sign","p":"Anderson Varejao","t":"Signed Anderson Varejao"},{"d":"2021-05-04","k":"sign","p":"Anderson Varejao","t":"Signed Anderson Varejao"},{"d":"2021-05-01","k":"sign","p":"Mfiondu Kabengele","t":"Signed Mfiondu Kabengele to a multi-year deal","big":1},{"d":"2021-04-28","k":"twoway","p":"Jeremiah Martin","t":"Signed Jeremiah Martin to a two-way deal"},{"d":"2021-04-21","k":"sign","p":"Mfiondu Kabengele","t":"Signed Mfiondu Kabengele"},{"d":"2021-04-14","k":"sign","p":"Lamar Stevens","t":"Signed Lamar Stevens to a multi-year deal","big":1},{"d":"2021-04-14","k":"twoway","p":"Lamar Stevens","t":"Ended Lamar Stevens’s two-way deal"},{"d":"2021-04-10","k":"sign","p":"Mfiondu Kabengele","t":"Signed Mfiondu Kabengele"},{"d":"2021-03-26","k":"waive","p":"Andre Drummond","t":"Waived Andre Drummond"},{"d":"2021-03-25","k":"trade","got":["Isaiah Hartenstein","2023 2nd (DEN), protected","2027 2nd (DEN)","Trade exception"],"sent":["JaVale McGee","Trade exception"],"note":"Trade deadline","w":["DEN"]},{"d":"2021-03-22","k":"sign","p":"Quinn Cook","t":"Signed Quinn Cook"},{"d":"2021-03-12","k":"sign","p":"Quinn Cook","t":"Signed Quinn Cook"},{"d":"2021-02-24","k":"twoway","p":"Brodric Thomas","t":"Signed Brodric Thomas to a two-way deal"},{"d":"2021-02-24","k":"twoway","p":"Marques Bolden","t":"Ended Marques Bolden’s two-way deal"},{"d":"2021-01-22","k":"trade","got":["2024 2nd (GSW)","Trade exception"],"sent":["Kevin Porter Jr."],"w":["HOU"]},{"d":"2021-01-16","k":"trade","got":["Jarrett Allen","Taurean Prince","Rights to Sasha Vezenkov","2024 2nd round swap"],"sent":["Dante Exum","2022 1st (MIL), protected","Trade exception"],"w":["BKN","IND","HOU"]},{"d":"2021-01-14","k":"other","p":"Ante Zizic","t":"Renounced cap hold for Ante Zizic"},{"d":"2021-01-14","k":"other","p":"Channing Frye","t":"Renounced cap hold for Channing Frye"},{"d":"2021-01-14","k":"waive","p":"Thon Maker","t":"Waived Thon Maker"},{"d":"2021-01-14","k":"waive","p":"Yogi Ferrell","t":"Ended Yogi Ferrell’s 10-day contract"},{"d":"2021-01-11","k":"sign","p":"Yogi Ferrell","t":"Signed Yogi Ferrell"},{"d":"2020-12-23","k":"option","p":"Darius Garland","t":"Picked up Darius Garland’s team option"},{"d":"2020-12-23","k":"option","p":"Kevin Porter, Jr","t":"Picked up Kevin Porter Jr.’s team option"},{"d":"2020-12-23","k":"option","p":"Dylan Windler","t":"Picked up Dylan Windler’s team option"},{"d":"2020-12-23","k":"option","p":"Collin Sexton","t":"Picked up Collin Sexton’s team option"},{"d":"2020-12-19","k":"waive","p":"Levi Randolph","t":"Waived Levi Randolph"},{"d":"2020-12-19","k":"waive","p":"Norvel Pelle","t":"Waived Norvel Pelle"},{"d":"2020-12-19","k":"waive","p":"Charles Matthews","t":"Waived Charles Matthews"},{"d":"2020-12-19","k":"sign","p":"Norvel Pelle","t":"Signed Norvel Pelle"},{"d":"2020-12-19","k":"twoway","p":"Marques Bolden","t":"Converted Marques Bolden to a two-way deal"},{"d":"2020-12-19","k":"twoway","p":"Matt Mooney","t":"Ended Matt Mooney’s two-way deal"},{"d":"2020-12-01","k":"sign","p":"Levi Randolph","t":"Signed Levi Randolph"},{"d":"2020-11-28","k":"waive","p":"Rayjon Tucker","t":"Waived Rayjon Tucker"},{"d":"2020-11-28","k":"sign","p":"Thon Maker","t":"Signed Thon Maker"},{"d":"2020-11-28","k":"sign","p":"Marques Bolden","t":"Signed Marques Bolden"},{"d":"2020-11-28","k":"twoway","p":"Lamar Stevens","t":"Signed Lamar Stevens to a two-way deal"},{"d":"2020-11-27","k":"sign","p":"Charles Matthews","t":"Signed Charles Matthews"},{"d":"2020-11-27","k":"trade","got":["Rayjon Tucker","2027 2nd (UTA)"],"sent":["Cash","Trade exception"],"w":["UTA"]},{"d":"2020-11-24","k":"sign","p":"Damyean Dotson","t":"Signed Damyean Dotson to a multi-year deal","big":1},{"d":"2020-11-24","k":"sign","p":"Matt Dellavedova","t":"Signed Matt Dellavedova"},{"d":"2020-11-23","k":"trade","got":["JaVale McGee","2026 2nd (LAL)"],"sent":["Jordan Bell","Alfonzo McKinnie","Trade exception"],"w":["LAL"]},{"d":"2020-11-23","k":"other","p":"Matt Dellavedova","t":"Renounced cap hold for Matt Dellavedova"},{"d":"2020-11-23","k":"other","p":"Tristan Thompson","t":"Renounced cap hold for Tristan Thompson"},{"d":"2020-11-21","k":"sign","p":"Isaac Okoro","t":"Signed Isaac Okoro to a multi-year deal","big":1},{"d":"2020-11-18","k":"draft","p":"Isaac Okoro","t":"Drafted Isaac Okoro, No. 5 overall (1st round)"},{"d":"2020-11-17","k":"option","p":"Andre Drummond","t":"Andre Drummond picked up his player option"},{"d":"2020-06-29","k":"sign","p":"Jordan Bell","t":"Signed Jordan Bell to a multi-year deal","big":1},{"d":"2020-06-29","k":"sign","p":"Dean Wade","t":"Signed Dean Wade to a multi-year deal","big":1},{"d":"2020-06-29","k":"twoway","p":"Dean Wade","t":"Ended Dean Wade’s two-way deal"},{"d":"2020-03-08","k":"sign","p":"Sheldon Mac","t":"Signed Sheldon Mac"},{"d":"2020-03-04","k":"sign","p":"Dom Pointer","t":"Signed Dom Pointer"},{"d":"2020-02-14","k":"waive","p":"J.P. Macura","t":"Ended J.P. Macura’s 10-day contract"},{"d":"2020-02-09","k":"sign","p":"Malik Newman","t":"Signed Malik Newman"},{"d":"2020-02-09","k":"sign","p":"J.P. Macura","t":"Signed J.P. Macura"},{"d":"2020-02-08","k":"sign","p":"Alfonzo McKinnie","t":"Signed Alfonzo McKinnie to a multi-year deal","big":1},{"d":"2020-02-06","k":"trade","got":["Andre Drummond"],"sent":["John Henson","Brandon Knight","2023 2nd (least favorable)","Trade exception"],"note":"Trade deadline","w":["DET"]},{"d":"2020-01-30","k":"sign","p":"Marques Bolden","t":"Signed Marques Bolden"},{"d":"2020-01-23","k":"sign","p":"Alfonzo McKinnie","t":"Signed Alfonzo McKinnie"},{"d":"2020-01-20","k":"sign","p":"Tyler Cook","t":"Signed Tyler Cook"},{"d":"2020-01-15","k":"twoway","p":"Matt Mooney","t":"Signed Matt Mooney to a two-way deal"},{"d":"2020-01-12","k":"twoway","p":"Levi Randolph","t":"Ended Levi Randolph’s two-way deal"},{"d":"2020-01-09","k":"sign","p":"Tyler Cook","t":"Signed Tyler Cook"},{"d":"2020-01-09","k":"sign","p":"Alfonzo McKinnie","t":"Signed Alfonzo McKinnie"},{"d":"2020-01-06","k":"twoway","p":"Levi Randolph","t":"Signed Levi Randolph to a two-way deal"},{"d":"2020-01-06","k":"waive","p":"Alfonzo McKinnie","t":"Waived Alfonzo McKinnie"},{"d":"2020-01-06","k":"waive","p":"Tyler Cook","t":"Waived Tyler Cook"},{"d":"2020-01-03","k":"sign","p":"Tyler Cook","t":"Signed Tyler Cook"},{"d":"2020-01-03","k":"twoway","p":"Tyler Cook","t":"Ended Tyler Cook’s two-way deal"},{"d":"2019-12-23","k":"trade","got":["Dante Exum","2022 2nd (SAS)","2023 2nd (GSW)","Trade exception"],"sent":["Jordan Clarkson"],"w":["UTA"]},{"d":"2019-10-29","k":"option","p":"Collin Sexton","t":"Picked up Collin Sexton’s team option"},{"d":"2019-10-25","k":"ext","p":"Cedi Osman","t":"Signed Cedi Osman to a veteran extension"},{"d":"2019-10-21","k":"sign","p":"Alfonzo McKinnie","t":"Claimed Alfonzo McKinnie off waivers"},{"d":"2019-10-19","k":"waive","p":"Jarell Martin","t":"Waived Jarell Martin"},{"d":"2019-10-19","k":"waive","p":"Marques Bolden","t":"Waived Marques Bolden"},{"d":"2019-10-18","k":"sign","p":"Tyler Cook","t":"Claimed Tyler Cook off waivers"},{"d":"2019-10-16","k":"waive","p":"Sindarius Thornwell","t":"Waived Sindarius Thornwell"},{"d":"2019-10-16","k":"waive","p":"J.P. Macura","t":"Waived J.P. Macura"},{"d":"2019-10-16","k":"waive","p":"Timothe Luwawu-Cabarrot","t":"Waived Timothe Luwawu-Cabarrot"},{"d":"2019-10-16","k":"waive","p":"Daniel Hamilton","t":"Waived Daniel Hamilton"},{"d":"2019-10-04","k":"waive","p":"Dom Pointer","t":"Waived Dom Pointer"},{"d":"2019-10-04","k":"sign","p":"Dom Pointer","t":"Signed Dom Pointer"},{"d":"2019-09-23","k":"sign","p":"Timothe Luwawu-Cabarrot","t":"Signed Timothe Luwawu-Cabarrot"},{"d":"2019-09-23","k":"waive","p":"Alex Robinson","t":"Waived Alex Robinson"},{"d":"2019-09-03","k":"sign","p":"Daniel Hamilton","t":"Signed Daniel Hamilton"},{"d":"2019-09-03","k":"waive","p":"Levi Randolph","t":"Waived Levi Randolph"},{"d":"2019-09-03","k":"sign","p":"Marques Bolden","t":"Signed Marques Bolden"},{"d":"2019-09-03","k":"waive","p":"Malik Newman","t":"Waived Malik Newman"},{"d":"2019-09-03","k":"sign","p":"J.P. Macura","t":"Signed J.P. Macura"},{"d":"2019-09-03","k":"sign","p":"Sindarius Thornwell","t":"Signed Sindarius Thornwell"},{"d":"2019-08-19","k":"sign","p":"Alex Robinson","t":"Signed Alex Robinson"},{"d":"2019-08-16","k":"sign","p":"Jarell Martin","t":"Signed Jarell Martin"},{"d":"2019-08-05","k":"sign","p":"Levi Randolph","t":"Signed Levi Randolph"},{"d":"2019-08-05","k":"sign","p":"Malik Newman","t":"Signed Malik Newman"},{"d":"2019-07-17","k":"fa","p":"J.R. Smith","t":"J.R. Smith became a free agent"},{"d":"2019-07-15","k":"waive","p":"J.R. Smith","t":"Waived J.R. Smith"},{"d":"2019-07-03","k":"sign","p":"Kevin Porter Jr.","t":"Signed Kevin Porter Jr. to a multi-year deal","big":1},{"d":"2019-07-01","k":"sign","p":"Dylan Windler","t":"Signed Dylan Windler to a multi-year deal","big":1},{"d":"2019-07-01","k":"sign","p":"Darius Garland","t":"Signed Darius Garland to a multi-year deal","big":1},{"d":"2019-07-01","k":"twoway","p":"Dean Wade","t":"Signed Dean Wade to a two-way deal"},{"d":"2019-07-01","k":"fa","p":"Deng Adel","t":"Deng Adel became a free agent"},{"d":"2019-07-01","k":"fa","p":"Jaron Blossomgame","t":"Jaron Blossomgame became a free agent"},{"d":"2019-07-01","k":"fa","p":"Marquese Chriss","t":"Marquese Chriss became a free agent"},{"d":"2019-07-01","k":"fa","p":"Channing Frye","t":"Channing Frye became a free agent"},{"d":"2019-07-01","k":"fa","p":"David Nwaba","t":"David Nwaba became a free agent"},{"d":"2019-07-01","k":"fa","p":"Nik Stauskas","t":"Nik Stauskas became a free agent"},{"d":"2019-06-26","k":"trade","got":["Rights to Kevin Porter Jr."],"sent":["2024 2nd (MIA), protected","2020 2nd (UTA)","2021 2nd (POR)","2023 2nd (POR)","Cash"],"w":["DET"]},{"d":"2019-06-20","k":"draft","p":"Darius Garland","t":"Drafted Darius Garland, No. 5 overall (1st round)"},{"d":"2019-06-20","k":"draft","p":"Dylan Windler","t":"Drafted Dylan Windler, No. 26 overall (1st round)"},{"d":"2019-02-11","k":"sign","p":"Nik Stauskas","t":"Signed Nik Stauskas"},{"d":"2019-02-07","k":"trade","got":["Marquese Chriss","Brandon Knight","2019 1st (HOU), protected","2022 2nd (HOU)","Trade exceptions"],"sent":["Wade Baldwin IV","Alec Burks","Nik Stauskas","2021 2nd (MIL)","Trade exception"],"note":"Trade deadline","w":["SAC","HOU"]},{"d":"2019-02-07","k":"other","p":"Deron Williams","t":"Renounced cap hold for Deron Williams"},{"d":"2019-02-07","k":"other","p":"Dahntay Jones","t":"Renounced cap hold for Dahntay Jones"},{"d":"2019-02-04","k":"trade","got":["Wade Baldwin IV","Nik Stauskas","2021 2nd (POR)","2023 2nd (POR)","Trade exception"],"sent":["Rodney Hood"],"w":["POR"]},{"d":"2019-02-04","k":"waive","p":"Kobi Simmons","t":"Ended Kobi Simmons’s 10-day contract"},{"d":"2019-01-27","k":"sign","p":"Kobi Simmons","t":"Signed Kobi Simmons"},{"d":"2019-01-16","k":"sign","p":"Cameron Payne","t":"Signed Cameron Payne"},{"d":"2019-01-15","k":"twoway","p":"Deng Adel","t":"Signed Deng Adel to a two-way deal"},{"d":"2019-01-15","k":"twoway","p":"Jalen Jones","t":"Ended Jalen Jones’s two-way deal"},{"d":"2019-01-06","k":"sign","p":"Cameron Payne","t":"Signed Cameron Payne"},{"d":"2019-01-06","k":"waive","p":"Patrick McCaw","t":"Waived Patrick McCaw"},{"d":"2018-12-31","k":"sign","p":"Patrick McCaw","t":"Signed Patrick McCaw to a multi-year deal","big":1},{"d":"2018-12-28","k":"sign","p":"Patrick McCaw","t":"Signed Patrick McCaw to an offer sheet (restricted free agent)","big":1},{"d":"2018-12-07","k":"trade","got":["Matt Dellavedova","John Henson","2021 2nd (MIL)","2022 1st (MIL), protected","2022 2nd (WAS)","Trade exception"],"sent":["Sam Dekker","George Hill","2021 2nd (WAS)"],"w":["WAS","MIL"]},{"d":"2018-12-02","k":"twoway","p":"Jalen Jones","t":"Signed Jalen Jones to a two-way deal"},{"d":"2018-12-02","k":"twoway","p":"Jaron Blossomgame","t":"Signed Jaron Blossomgame to a two-way deal"},{"d":"2018-12-02","k":"twoway","p":"Billy Preston","t":"Ended Billy Preston’s two-way deal"},{"d":"2018-12-02","k":"twoway","p":"Andrew Harrison","t":"Ended Andrew Harrison’s two-way deal"},{"d":"2018-11-29","k":"trade","got":["Alec Burks","2020 2nd (UTA)","2021 2nd (WAS)"],"sent":["Kyle Korver","Trade exception"],"w":["UTA"]},{"d":"2018-11-29","k":"other","p":"Shawn Marion","t":"Renounced cap hold for Shawn Marion"},{"d":"2018-11-29","k":"other","p":"James Jones","t":"Renounced cap hold for James Jones"},{"d":"2018-11-09","k":"twoway","p":"Andrew Harrison","t":"Signed Andrew Harrison to a two-way deal"},{"d":"2018-11-09","k":"twoway","p":"John Holland","t":"Ended John Holland’s two-way deal"},{"d":"2018-10-29","k":"option","p":"Ante Zizic","t":"Picked up Ante Zizic’s team option"},{"d":"2018-10-15","k":"ext","p":"Larry Nance Jr.","t":"Signed Larry Nance Jr. to a rookie scale extension"},{"d":"2018-10-13","k":"waive","p":"Emanuel Terry","t":"Waived Emanuel Terry"},{"d":"2018-10-13","k":"waive","p":"Isaiah Taylor","t":"Waived Isaiah Taylor"},{"d":"2018-10-13","k":"waive","p":"Kobi Simmons","t":"Waived Kobi Simmons"},{"d":"2018-10-13","k":"waive","p":"Bonzie Colson Jr.","t":"Waived Bonzie Colson Jr."},{"d":"2018-10-11","k":"sign","p":"Emanuel Terry","t":"Signed Emanuel Terry"},{"d":"2018-10-10","k":"waive","p":"Levi Randolph","t":"Waived Levi Randolph"},{"d":"2018-09-19","k":"sign","p":"Kobi Simmons","t":"Signed Kobi Simmons"},{"d":"2018-09-19","k":"waive","p":"Jacorey Williams","t":"Waived Jacorey Williams"},{"d":"2018-09-14","k":"sign","p":"Levi Randolph","t":"Signed Levi Randolph"},{"d":"2018-09-14","k":"sign","p":"Bonzie Colson Jr.","t":"Signed Bonzie Colson Jr."},{"d":"2018-09-14","k":"waive","p":"Scoochie Smith","t":"Waived Scoochie Smith"},{"d":"2018-09-14","k":"waive","p":"Isaac Hamilton","t":"Waived Isaac Hamilton"},{"d":"2018-09-13","k":"sign","p":"Jacorey Williams","t":"Signed Jacorey Williams"},{"d":"2018-09-10","k":"sign","p":"Scoochie Smith","t":"Signed Scoochie Smith"},{"d":"2018-09-10","k":"sign","p":"Isaac Hamilton","t":"Signed Isaac Hamilton"},{"d":"2018-09-09","k":"sign","p":"Rodney Hood","t":"Signed Rodney Hood"},{"d":"2018-09-08","k":"sign","p":"David Nwaba","t":"Signed David Nwaba"},{"d":"2018-08-16","k":"sign","p":"Isaiah Taylor","t":"Signed Isaiah Taylor"},{"d":"2018-08-07","k":"trade","got":["Sam Dekker","Rights to Renaldas Seibutis","Cash"],"sent":["Rights to Vladimir Veremeenko","Trade exception"],"w":["LAC"]},{"d":"2018-08-07","k":"fa","p":"Okaro White","t":"Okaro White became a free agent"},{"d":"2018-08-05","k":"waive","p":"Okaro White","t":"Waived Okaro White"},{"d":"2018-07-24","k":"ext","p":"Kevin Love","t":"Signed Kevin Love to a veteran extension"},{"d":"2018-07-19","k":"sign","p":"Channing Frye","t":"Signed Channing Frye"},{"d":"2018-07-19","k":"fa","p":"Kendrick Perkins","t":"Kendrick Perkins became a free agent"},{"d":"2018-07-17","k":"waive","p":"Kendrick Perkins","t":"Waived Kendrick Perkins"},{"d":"2018-07-06","k":"twoway","p":"Billy Preston","t":"Signed Billy Preston to a two-way deal"},{"d":"2018-07-04","k":"sign","p":"Collin Sexton","t":"Signed Collin Sexton to a multi-year deal","big":1},{"d":"2018-07-01","k":"fa","p":"Jose Calderon","t":"Jose Calderon became a free agent"},{"d":"2018-07-01","k":"fa","p":"Jeff Green","t":"Jeff Green became a free agent"},{"d":"2018-07-01","k":"fa","p":"Rodney Hood","t":"Rodney Hood became a free agent"},{"d":"2018-07-01","k":"fa","p":"LeBron James","t":"LeBron James became a free agent"},{"d":"2018-06-27","k":"option","p":"Kendrick Perkins","t":"Picked up Kendrick Perkins’s team option"},{"d":"2018-06-27","k":"option","p":"Rodney Hood","t":"Extended a qualifying offer to Rodney Hood (restricted free agent)"},{"d":"2018-06-21","k":"draft","p":"Collin Sexton","t":"Drafted Collin Sexton, No. 8 overall (1st round)"},{"d":"2018-06-12","k":"twoway","p":"London Perrantes","t":"Ended London Perrantes’s two-way deal"},{"d":"2018-04-11","k":"sign","p":"Kendrick Perkins","t":"Signed Kendrick Perkins to a multi-year deal","big":1},{"d":"2018-04-07","k":"sign","p":"Okaro White","t":"Signed Okaro White to a multi-year deal","big":1},{"d":"2018-03-18","k":"sign","p":"Okaro White","t":"Signed Okaro White"},{"d":"2018-02-22","k":"sign","p":"Marcus Thornton","t":"Signed Marcus Thornton"},{"d":"2018-02-08","k":"trade","got":["George Hill","Rodney Hood","Rights to Arturas Gudaitis"],"sent":["Jae Crowder","Derrick Rose","Iman Shumpert","Rights to Dimitrios Agravanis","2020 2nd (MIA)","2024 2nd round swap","Cash"],"note":"Trade deadline","w":["UTA","SAC"]},{"d":"2018-02-08","k":"trade","got":["2024 2nd (MIA), protected","Trade exception"],"sent":["Dwyane Wade"],"note":"Trade deadline","w":["MIA"]},{"d":"2018-02-08","k":"trade","got":["Jordan Clarkson","Larry Nance Jr."],"sent":["Channing Frye","Isaiah Thomas","2018 1st (own), protected","Trade exception"],"note":"Trade deadline","w":["LAL"]},{"d":"2017-10-18","k":"twoway","p":"London Perrantes","t":"Signed London Perrantes to a two-way deal"},{"d":"2017-10-14","k":"waive","p":"Kendrick Perkins","t":"Waived Kendrick Perkins"},{"d":"2017-10-14","k":"waive","p":"Isaac Hamilton","t":"Waived Isaac Hamilton"},{"d":"2017-10-14","k":"trade","got":["Rights to Dimitrios Agravanis","Rights to Sergii Gladyr","Trade exceptions"],"sent":["Kay Felder","Richard Jefferson","2020 2nd (POR), protected","2019 2nd (least favorable)","Cash"],"w":["ATL"]},{"d":"2017-10-11","k":"sign","p":"Isaac Hamilton","t":"Signed Isaac Hamilton"},{"d":"2017-10-11","k":"waive","p":"Edy Tavares","t":"Waived Edy Tavares"},{"d":"2017-09-27","k":"sign","p":"Dwyane Wade","t":"Signed Dwyane Wade"},{"d":"2017-09-27","k":"waive","p":"Jacorey Williams","t":"Waived Jacorey Williams"},{"d":"2017-09-26","k":"sign","p":"Jacorey Williams","t":"Signed Jacorey Williams"},{"d":"2017-09-25","k":"sign","p":"Kendrick Perkins","t":"Signed Kendrick Perkins"},{"d":"2017-09-07","k":"twoway","p":"John Holland","t":"Signed John Holland to a two-way deal"},{"d":"2017-08-22","k":"trade","got":["Jae Crowder","Isaiah Thomas","Ante Zizic","2018 1st (BKN)","2020 2nd (MIA)","Trade exception"],"sent":["Kyrie Irving"],"w":["BOS"]},{"d":"2017-07-25","k":"sign","p":"Derrick Rose","t":"Signed Derrick Rose"},{"d":"2017-07-18","k":"sign","p":"Cedi Osman","t":"Signed Cedi Osman to a multi-year deal","big":1},{"d":"2017-07-12","k":"sign","p":"Kyle Korver","t":"Signed Kyle Korver to a multi-year deal","big":1},{"d":"2017-07-11","k":"sign","p":"Jeff Green","t":"Signed Jeff Green"},{"d":"2017-07-10","k":"sign","p":"Jose Calderon","t":"Signed Jose Calderon"},{"d":"2017-07-01","k":"fa","p":"Dahntay Jones","t":"Dahntay Jones became a free agent"},{"d":"2017-07-01","k":"fa","p":"James Jones","t":"James Jones became a free agent"},{"d":"2017-07-01","k":"fa","p":"Kyle Korver","t":"Kyle Korver became a free agent"},{"d":"2017-07-01","k":"fa","p":"Deron Williams","t":"Deron Williams became a free agent"},{"d":"2017-07-01","k":"fa","p":"Derrick Williams","t":"Derrick Williams became a free agent"}];
+const TX=[{"d": "2026-10-17", "k": "waive", "p": "Rashaun Agee", "t": "Waived Rashaun Agee"},{"d": "2026-10-17", "k": "waive", "p": "Zack Austin", "t": "Waived Zack Austin"},{"d": "2026-10-17", "k": "waive", "p": "Tre'Von Spillers", "t": "Waived Tre'Von Spillers"},{"d": "2026-10-17", "k": "waive", "p": "Noam Yaacov", "t": "Waived Noam Yaacov"},{"d": "2026-10-16", "k": "sign", "p": "Tre'Von Spillers", "t": "Signed Tre'Von Spillers"},{"d":"2026-10-14","k":"waive","p":"Jaxson Robinson","t":"Waived Jaxson Robinson"},{"d":"2026-10-09","k":"sign","p":"Jaxson Robinson","t":"Signed Jaxson Robinson"},{"d":"2026-10-09","k":"sign","p":"Noam Yaacov","t":"Signed Noam Yaacov"},{"d":"2026-10-09","k":"waive","p":"Kadary Richmond","t":"Waived Kadary Richmond"},{"d":"2026-10-09","k":"waive","p":"Curtis Jones","t":"Waived Curtis Jones"},{"d":"2026-09-23","k":"sign","p":"Rashaun Agee","t":"Signed Rashaun Agee"},{"d":"2026-09-23","k":"sign","p":"Zack Austin","t":"Signed Zack Austin"},{"d":"2026-09-23","k":"sign","p":"Curtis Jones","t":"Signed Curtis Jones"},{"d":"2026-09-23","k":"sign","p":"Kadary Richmond","t":"Signed Kadary Richmond"},{"d":"2026-09-17","k":"waive","p":"Sean McNeil","t":"Waived Sean McNeil"},{"d":"2026-09-15","k":"sign","p":"Sean McNeil","t":"Signed Sean McNeil"},{"d":"2026-09-08","k":"sign","p":"James Harden","t":"Signed James Harden to a multi-year deal","big":1},{"d":"2026-09-02","k":"sign","p":"Khalifa Diop","t":"Signed Khalifa Diop to a multi-year deal","big":1},{"d":"2026-08-30","k":"fa","p":"Cam Whitmore","t":"Cam Whitmore became a free agent"},{"d":"2026-08-28","k":"waive","p":"Cam Whitmore","t":"Waived Cam Whitmore"},{"d":"2026-08-20","k":"trade","got":["Peyton Watson","Cam Whitmore","Rights to Ismael Kamagate","Trade exception"],"sent":["Dennis Schroder","Max Strus","2031 1st (own)","2032 2nd (SAC)","Cash","Trade exception"],"w":["LAC","DEN","CHA","WAS"]},{"d":"2026-08-20","k":"sign","p":"Peyton Watson","t":"Peyton Watson signed with DEN as part of a sign-and-trade to Cleveland"},{"d":"2026-07-31","k":"sign","p":"Mario Hezonja","t":"Signed Mario Hezonja"},{"d":"2026-07-08","k":"ext","p":"Donovan Mitchell","t":"Signed Donovan Mitchell to a veteran extension"},{"d":"2026-07-07","k":"sign","p":"Thomas Bryant","t":"Signed Thomas Bryant"},{"d":"2026-07-01","k":"twoway","p":"Ernest Udeh Jr.","t":"Signed Ernest Udeh Jr. to a two-way deal"},{"d":"2026-07-01","k":"sign","p":"Meleek Thomas","t":"Signed Meleek Thomas to a multi-year deal","big":1},{"d":"2026-07-01","k":"fa","p":"Thomas Bryant","t":"Thomas Bryant became a free agent"},{"d":"2026-07-01","k":"fa","p":"Keon Ellis","t":"Keon Ellis became a free agent"},{"d":"2026-07-01","k":"fa","p":"James Harden","t":"James Harden became a free agent"},{"d":"2026-07-01","k":"fa","p":"Larry Nance Jr.","t":"Larry Nance Jr. became a free agent"},{"d":"2026-07-01","k":"fa","p":"Olivier Sarr","t":"Olivier Sarr became a free agent"},{"d":"2026-07-01","k":"fa","p":"Dean Wade","t":"Dean Wade became a free agent"},{"d":"2026-06-24","k":"draft","p":"Meleek Thomas","t":"Drafted Meleek Thomas, No. 34 overall (2nd round)"},{"d":"2026-06-24","k":"trade","got":["2026 2nd (SAC), No. 34","2032 2nd (SAC)"],"sent":["2026 1st, No. 29"],"w":["SAC"],"note":"Draft night"},{"d":"2026-06-22","k":"option","p":"Craig Porter, Jr","t":"Picked up Craig Porter Jr.’s team option"},{"d":"2026-03-03","k":"twoway","p":"Olivier Sarr","t":"Signed Olivier Sarr to a two-way deal"},{"d":"2026-03-03","k":"twoway","p":"Darius Brown II","t":"Ended Darius Brown II’s two-way deal"},{"d":"2026-02-20","k":"twoway","p":"Darius Brown II","t":"Signed Darius Brown II to a two-way deal"},{"d":"2026-02-19","k":"twoway","p":"Emanuel Miller","t":"Ended Emanuel Miller’s two-way deal"},{"d":"2026-02-13","k":"twoway","p":"Riley Minix","t":"Signed Riley Minix to a two-way deal"},{"d":"2026-02-11","k":"sign","p":"Nae'Qwan Tomlin","t":"Signed Nae'Qwan Tomlin to a multi-year deal","big":1},{"d":"2026-02-11","k":"twoway","p":"Nae'Qwan Tomlin","t":"Ended Nae'Qwan Tomlin’s two-way deal"},{"d":"2026-02-05","k":"trade","got":["Cash","Trade exception"],"sent":["Lonzo Ball","2028 2nd (own)","2032 2nd (own)"],"note":"Trade deadline","w":["UTA"]},{"d":"2026-02-04","k":"trade","got":["James Harden"],"sent":["Darius Garland","2026 2nd (own)"],"w":["LAC"]},{"d":"2026-02-01","k":"trade","got":["Keon Ellis","Dennis Schroder","Trade exception"],"sent":["De'Andre Hunter","2027 2nd (DEN)"],"w":["SAC","CHI"]},{"d":"2026-02-01","k":"twoway","p":"Luke Travers","t":"Ended Luke Travers’s two-way deal"},{"d":"2026-01-28","k":"twoway","p":"Tristan Enaruna","t":"Signed Tristan Enaruna to a two-way deal"},{"d":"2026-01-27","k":"twoway","p":"Chris Livingston","t":"Ended Chris Livingston’s two-way deal"},{"d":"2025-10-31","k":"twoway","p":"Chris Livingston","t":"Signed Chris Livingston to a two-way deal"},{"d":"2025-10-22","k":"option","p":"Jaylon Tyson","t":"Picked up Jaylon Tyson’s team option"},{"d":"2025-10-18","k":"waive","p":"Zeke Mayo","t":"Waived Zeke Mayo"},{"d":"2025-10-17","k":"sign","p":"Zeke Mayo","t":"Signed Zeke Mayo"},{"d":"2025-10-16","k":"waive","p":"Darius Brown II","t":"Waived Darius Brown II"},{"d":"2025-10-15","k":"waive","p":"Norchad Omier","t":"Waived Norchad Omier"},{"d":"2025-10-15","k":"waive","p":"Killian Hayes","t":"Waived Killian Hayes"},{"d":"2025-10-15","k":"waive","p":"Tristan Enaruna","t":"Waived Tristan Enaruna"},{"d":"2025-10-13","k":"sign","p":"Darius Brown II","t":"Signed Darius Brown II"},{"d":"2025-10-13","k":"waive","p":"Chaney Johnson","t":"Waived Chaney Johnson"},{"d":"2025-10-13","k":"waive","p":"Miller Kopp","t":"Waived Miller Kopp"},{"d":"2025-09-26","k":"sign","p":"Tristan Enaruna","t":"Signed Tristan Enaruna"},{"d":"2025-09-26","k":"sign","p":"Miller Kopp","t":"Signed Miller Kopp"},{"d":"2025-09-26","k":"sign","p":"Killian Hayes","t":"Signed Killian Hayes"},{"d":"2025-09-26","k":"sign","p":"Norchad Omier","t":"Signed Norchad Omier"},{"d":"2025-09-26","k":"sign","p":"Chaney Johnson","t":"Signed Chaney Johnson"},{"d":"2025-09-26","k":"waive","p":"Jaxson Robinson","t":"Waived Jaxson Robinson"},{"d":"2025-09-26","k":"waive","p":"Warith Alatishe","t":"Waived Warith Alatishe"},{"d":"2025-09-25","k":"sign","p":"Warith Alatishe","t":"Signed Warith Alatishe"},{"d":"2025-09-25","k":"sign","p":"Jaxson Robinson","t":"Signed Jaxson Robinson"},{"d":"2025-09-25","k":"sign","p":"Thomas Bryant","t":"Signed Thomas Bryant"},{"d":"2025-07-06","k":"sign","p":"Larry Nance Jr.","t":"Signed Larry Nance Jr."},{"d":"2025-07-06","k":"sign","p":"Sam Merrill","t":"Signed Sam Merrill to a multi-year deal","big":1},{"d":"2025-07-06","k":"trade","got":["Lonzo Ball","Trade exception"],"sent":["Isaac Okoro"],"w":["CHI"]},{"d":"2025-07-01","k":"twoway","p":"Luke Travers","t":"Signed Luke Travers to a two-way deal"},{"d":"2025-07-01","k":"sign","p":"Tyrese Proctor","t":"Signed Tyrese Proctor to a multi-year deal","big":1},{"d":"2025-07-01","k":"fa","p":"Emoni Bates","t":"Emoni Bates became a free agent"},{"d":"2025-07-01","k":"fa","p":"Javonte Green","t":"Javonte Green became a free agent"},{"d":"2025-07-01","k":"fa","p":"Ty Jerome","t":"Ty Jerome became a free agent"},{"d":"2025-07-01","k":"fa","p":"Sam Merrill","t":"Sam Merrill became a free agent"},{"d":"2025-07-01","k":"fa","p":"Chuma Okeke","t":"Chuma Okeke became a free agent"},{"d":"2025-07-01","k":"fa","p":"Tristan Thompson","t":"Tristan Thompson became a free agent"},{"d":"2025-07-01","k":"fa","p":"Luke Travers","t":"Luke Travers became a free agent"},{"d":"2025-06-28","k":"option","p":"Luke Travers","t":"Extended a qualifying offer to Luke Travers (restricted free agent)"},{"d":"2025-06-26","k":"draft","p":"Tyrese Proctor","t":"Drafted Tyrese Proctor, No. 49 overall (2nd round)"},{"d":"2025-06-26","k":"draft","p":"Saliou Niang","t":"Drafted Saliou Niang, No. 58 overall (2nd round)"},{"d":"2025-04-05","k":"sign","p":"Chuma Okeke","t":"Signed Chuma Okeke to a multi-year deal","big":1},{"d":"2025-03-02","k":"twoway","p":"Nae'Qwan Tomlin","t":"Signed Nae'Qwan Tomlin to a two-way deal"},{"d":"2025-03-01","k":"twoway","p":"J.T. Thor","t":"Ended J.T. Thor’s two-way deal"},{"d":"2025-02-23","k":"sign","p":"Javonte Green","t":"Signed Javonte Green"},{"d":"2025-02-20","k":"sign","p":"Nae'Qwan Tomlin","t":"Signed Nae'Qwan Tomlin"},{"d":"2025-02-06","k":"trade","got":["De'Andre Hunter","Trade exception"],"sent":["Caris LeVert","Georges Niang","2026 1st round swap","2027 2nd (own)","2028 1st round swap","2029 2nd (own)","2031 2nd (own)"],"note":"Trade deadline","w":["ATL"]},{"d":"2024-10-19","k":"waive","p":"Pete Nance","t":"Waived Pete Nance"},{"d":"2024-10-19","k":"waive","p":"Jules Bernard","t":"Waived Jules Bernard"},{"d":"2024-10-18","k":"waive","p":"Elijah Hughes","t":"Waived Elijah Hughes"},{"d":"2024-10-18","k":"waive","p":"Darius Brown II","t":"Waived Darius Brown II"},{"d":"2024-10-16","k":"sign","p":"Elijah Hughes","t":"Signed Elijah Hughes"},{"d":"2024-10-15","k":"waive","p":"Zhaire Smith","t":"Waived Zhaire Smith"},{"d":"2024-10-14","k":"sign","p":"Darius Brown II","t":"Signed Darius Brown II"},{"d":"2024-10-14","k":"waive","p":"Jacob Gilyard","t":"Waived Jacob Gilyard"},{"d":"2024-09-24","k":"sign","p":"Jacob Gilyard","t":"Signed Jacob Gilyard"},{"d":"2024-09-24","k":"sign","p":"Zhaire Smith","t":"Signed Zhaire Smith"},{"d":"2024-09-24","k":"waive","p":"Nae'Qwan Tomlin","t":"Waived Nae'Qwan Tomlin"},{"d":"2024-09-24","k":"waive","p":"Gabe Osabuohien","t":"Waived Gabe Osabuohien"},{"d":"2024-09-23","k":"sign","p":"Nae'Qwan Tomlin","t":"Signed Nae'Qwan Tomlin"},{"d":"2024-09-23","k":"sign","p":"Gabe Osabuohien","t":"Signed Gabe Osabuohien"},{"d":"2024-09-23","k":"sign","p":"Jules Bernard","t":"Signed Jules Bernard"},{"d":"2024-09-23","k":"sign","p":"Pete Nance","t":"Signed Pete Nance"},{"d":"2024-09-17","k":"sign","p":"Isaac Okoro","t":"Signed Isaac Okoro to a multi-year deal","big":1},{"d":"2024-09-08","k":"sign","p":"Tristan Thompson","t":"Signed Tristan Thompson"},{"d":"2024-09-08","k":"twoway","p":"J.T. Thor","t":"Signed J.T. Thor to a two-way deal"},{"d":"2024-08-28","k":"twoway","p":"Luke Travers","t":"Signed Luke Travers to a two-way deal"},{"d":"2024-08-20","k":"twoway","p":"Emoni Bates","t":"Signed Emoni Bates to a two-way deal"},{"d":"2024-08-02","k":"ext","p":"Jarrett Allen","t":"Signed Jarrett Allen to a veteran extension"},{"d":"2024-07-22","k":"ext","p":"Evan Mobley","t":"Signed Evan Mobley to a rookie scale extension"},{"d":"2024-07-07","k":"ext","p":"Donovan Mitchell","t":"Signed Donovan Mitchell to a veteran extension"},{"d":"2024-07-02","k":"sign","p":"Jaylon Tyson","t":"Signed Jaylon Tyson to a multi-year deal","big":1},{"d":"2024-07-01","k":"fa","p":"Emoni Bates","t":"Emoni Bates became a free agent"},{"d":"2024-07-01","k":"fa","p":"Damian Jones","t":"Damian Jones became a free agent"},{"d":"2024-07-01","k":"fa","p":"Isaiah Mobley","t":"Isaiah Mobley became a free agent"},{"d":"2024-07-01","k":"fa","p":"Marcus Morris","t":"Marcus Morris became a free agent"},{"d":"2024-07-01","k":"fa","p":"Pete Nance","t":"Pete Nance became a free agent"},{"d":"2024-07-01","k":"fa","p":"Isaac Okoro","t":"Isaac Okoro became a free agent"},{"d":"2024-07-01","k":"fa","p":"Tristan Thompson","t":"Tristan Thompson became a free agent"},{"d":"2024-06-29","k":"option","p":"Isaac Okoro","t":"Extended a qualifying offer to Isaac Okoro (restricted free agent)"},{"d":"2024-06-29","k":"option","p":"Emoni Bates","t":"Extended a qualifying offer to Emoni Bates (restricted free agent)"},{"d":"2024-06-26","k":"draft","p":"Jaylon Tyson","t":"Drafted Jaylon Tyson, No. 20 overall (1st round)"},{"d":"2024-03-29","k":"sign","p":"Marcus Morris","t":"Signed Marcus Morris"},{"d":"2024-03-18","k":"sign","p":"Marcus Morris","t":"Signed Marcus Morris"},{"d":"2024-02-26","k":"sign","p":"Sharife Cooper","t":"Signed Sharife Cooper"},{"d":"2024-02-19","k":"twoway","p":"Pete Nance","t":"Signed Pete Nance to a two-way deal"},{"d":"2024-02-14","k":"sign","p":"Craig Porter Jr.","t":"Signed Craig Porter Jr. to a multi-year deal","big":1},{"d":"2024-02-14","k":"twoway","p":"Craig Porter Jr.","t":"Ended Craig Porter Jr.’s two-way deal"},{"d":"2024-02-11","k":"sign","p":"Zhaire Smith","t":"Signed Zhaire Smith"},{"d":"2024-01-18","k":"sign","p":"Pete Nance","t":"Signed Pete Nance"},{"d":"2024-01-04","k":"waive","p":"Ricky Rubio","t":"Waived Ricky Rubio"},{"d":"2023-10-21","k":"waive","p":"Devontae Shuler","t":"Waived Devontae Shuler"},{"d":"2023-10-21","k":"waive","p":"Aleem Ford","t":"Waived Aleem Ford"},{"d":"2023-10-21","k":"waive","p":"Rob Edwards","t":"Waived Rob Edwards"},{"d":"2023-10-20","k":"sign","p":"Devontae Shuler","t":"Signed Devontae Shuler"},{"d":"2023-10-20","k":"sign","p":"Aleem Ford","t":"Signed Aleem Ford"},{"d":"2023-10-20","k":"sign","p":"Rob Edwards","t":"Signed Rob Edwards"},{"d":"2023-10-20","k":"waive","p":"Zhaire Smith","t":"Waived Zhaire Smith"},{"d":"2023-10-20","k":"waive","p":"Justin Powell","t":"Waived Justin Powell"},{"d":"2023-10-20","k":"waive","p":"Pete Nance","t":"Waived Pete Nance"},{"d":"2023-10-20","k":"waive","p":"Sharife Cooper","t":"Waived Sharife Cooper"},{"d":"2023-10-19","k":"option","p":"Evan Mobley","t":"Picked up Evan Mobley’s team option"},{"d":"2023-09-14","k":"sign","p":"Zhaire Smith","t":"Signed Zhaire Smith"},{"d":"2023-09-12","k":"sign","p":"Justin Powell","t":"Signed Justin Powell"},{"d":"2023-09-12","k":"sign","p":"Pete Nance","t":"Signed Pete Nance"},{"d":"2023-09-12","k":"sign","p":"Sharife Cooper","t":"Signed Sharife Cooper"},{"d":"2023-09-12","k":"sign","p":"Tristan Thompson","t":"Signed Tristan Thompson"},{"d":"2023-07-08","k":"trade","got":["Damian Jones"],"sent":["Cash","Trade exception"],"w":["UTA"]},{"d":"2023-07-07","k":"twoway","p":"Emoni Bates","t":"Signed Emoni Bates to a two-way deal"},{"d":"2023-07-06","k":"sign","p":"Ty Jerome","t":"Signed Ty Jerome to a multi-year deal","big":1},{"d":"2023-07-06","k":"sign","p":"Georges Niang","t":"Signed Georges Niang to a multi-year deal","big":1},{"d":"2023-07-06","k":"trade","got":["Max Strus"],"sent":["Cedi Osman","Lamar Stevens","2026 2nd (LAL)","2030 2nd (own)","Cash"],"w":["MIA","SAS"]},{"d":"2023-07-06","k":"sign","p":"Caris LeVert","t":"Signed Caris LeVert to a multi-year deal","big":1},{"d":"2023-07-03","k":"twoway","p":"Craig Porter Jr.","t":"Signed Craig Porter Jr. to a two-way deal"},{"d":"2023-07-03","k":"twoway","p":"Isaiah Mobley","t":"Signed Isaiah Mobley to a two-way deal"},{"d":"2023-07-01","k":"fa","p":"Mamadi Diakite","t":"Mamadi Diakite became a free agent"},{"d":"2023-07-01","k":"fa","p":"Danny Green","t":"Danny Green became a free agent"},{"d":"2023-07-01","k":"fa","p":"Caris LeVert","t":"Caris LeVert became a free agent"},{"d":"2023-07-01","k":"fa","p":"Robin Lopez","t":"Robin Lopez became a free agent"},{"d":"2023-07-01","k":"fa","p":"Isaiah Mobley","t":"Isaiah Mobley became a free agent"},{"d":"2023-07-01","k":"fa","p":"Raulzinho Neto","t":"Raulzinho Neto became a free agent"},{"d":"2023-07-01","k":"fa","p":"Dylan Windler","t":"Dylan Windler became a free agent"},{"d":"2023-06-28","k":"option","p":"Isaiah Mobley","t":"Extended a qualifying offer to Isaiah Mobley (restricted free agent)"},{"d":"2023-06-23","k":"option","p":"Lamar Stevens","t":"Picked up Lamar Stevens’s team option"},{"d":"2023-06-22","k":"draft","p":"Emoni Bates","t":"Drafted Emoni Bates, No. 49 overall (2nd round)"},{"d":"2023-03-14","k":"sign","p":"Sam Merrill","t":"Signed Sam Merrill to a multi-year deal","big":1},{"d":"2023-03-03","k":"sign","p":"Sam Merrill","t":"Signed Sam Merrill"},{"d":"2023-02-18","k":"waive","p":"Kevin Love","t":"Waived Kevin Love"},{"d":"2023-02-14","k":"sign","p":"Danny Green","t":"Signed Danny Green"},{"d":"2022-10-17","k":"twoway","p":"Mamadi Diakite","t":"Signed Mamadi Diakite to a two-way deal"},{"d":"2022-10-17","k":"twoway","p":"Didi Louzada","t":"Ended Didi Louzada’s two-way deal"},{"d":"2022-10-17","k":"twoway","p":"Didi Louzada","t":"Signed Didi Louzada to a two-way deal"},{"d":"2022-10-15","k":"waive","p":"Jamorko Pickett","t":"Waived Jamorko Pickett"},{"d":"2022-10-15","k":"twoway","p":"R.J. Nembhard","t":"Ended R.J. Nembhard’s two-way deal"},{"d":"2022-10-15","k":"waive","p":"Nathaniel Hinton","t":"Waived Nathaniel Hinton"},{"d":"2022-10-15","k":"waive","p":"Mamadi Diakite","t":"Waived Mamadi Diakite"},{"d":"2022-10-15","k":"waive","p":"Sharife Cooper","t":"Waived Sharife Cooper"},{"d":"2022-10-15","k":"option","p":"Isaac Okoro","t":"Picked up Isaac Okoro’s team option"},{"d":"2022-10-15","k":"option","p":"Evan Mobley","t":"Picked up Evan Mobley’s team option"},{"d":"2022-09-27","k":"ext","p":"Dean Wade","t":"Signed Dean Wade to a veteran extension"},{"d":"2022-09-20","k":"sign","p":"Sharife Cooper","t":"Signed Sharife Cooper"},{"d":"2022-09-20","k":"waive","p":"Chandler Vaudrin","t":"Waived Chandler Vaudrin"},{"d":"2022-09-19","k":"sign","p":"Mamadi Diakite","t":"Signed Mamadi Diakite"},{"d":"2022-09-19","k":"sign","p":"Nathaniel Hinton","t":"Signed Nathaniel Hinton"},{"d":"2022-09-08","k":"sign","p":"Chandler Vaudrin","t":"Signed Chandler Vaudrin"},{"d":"2022-09-08","k":"sign","p":"Jamorko Pickett","t":"Signed Jamorko Pickett"},{"d":"2022-09-03","k":"trade","got":["Donovan Mitchell","Trade exception"],"sent":["Ochai Agbaji","Lauri Markkanen","Collin Sexton","2025 1st (own)","2026 1st round swap","2027 1st (own)","2028 1st round swap","2029 1st (own)"],"w":["UTA"]},{"d":"2022-07-08","k":"ext","p":"Darius Garland","t":"Signed Darius Garland to a rookie scale extension"},{"d":"2022-07-07","k":"sign","p":"Ricky Rubio","t":"Signed Ricky Rubio to a multi-year deal","big":1},{"d":"2022-07-07","k":"sign","p":"Raulzinho Neto","t":"Signed Raulzinho Neto"},{"d":"2022-07-07","k":"sign","p":"Robin Lopez","t":"Signed Robin Lopez"},{"d":"2022-07-02","k":"twoway","p":"R.J. Nembhard","t":"Signed R.J. Nembhard to a two-way deal"},{"d":"2022-07-02","k":"twoway","p":"Isaiah Mobley","t":"Signed Isaiah Mobley to a two-way deal"},{"d":"2022-07-02","k":"sign","p":"Ochai Agbaji","t":"Signed Ochai Agbaji to a multi-year deal","big":1},{"d":"2022-07-01","k":"fa","p":"Moses Brown","t":"Moses Brown became a free agent"},{"d":"2022-07-01","k":"fa","p":"Ed Davis","t":"Ed Davis became a free agent"},{"d":"2022-07-01","k":"fa","p":"Brandon Goodwin","t":"Brandon Goodwin became a free agent"},{"d":"2022-07-01","k":"fa","p":"R.J. Nembhard","t":"R.J. Nembhard became a free agent"},{"d":"2022-07-01","k":"fa","p":"Rajon Rondo","t":"Rajon Rondo became a free agent"},{"d":"2022-07-01","k":"fa","p":"Collin Sexton","t":"Collin Sexton became a free agent"},{"d":"2022-06-28","k":"option","p":"R.J. Nembhard","t":"Extended a qualifying offer to R.J. Nembhard (restricted free agent)"},{"d":"2022-06-28","k":"option","p":"Collin Sexton","t":"Extended a qualifying offer to Collin Sexton (restricted free agent)"},{"d":"2022-06-23","k":"draft","p":"Ochai Agbaji","t":"Drafted Ochai Agbaji, No. 14 overall (1st round)"},{"d":"2022-06-23","k":"draft","p":"Khalifa Diop","t":"Drafted Khalifa Diop, No. 39 overall (2nd round)"},{"d":"2022-06-23","k":"draft","p":"Isaiah Mobley","t":"Drafted Isaiah Mobley, No. 49 overall (2nd round)"},{"d":"2022-06-23","k":"draft","p":"Luke Travers","t":"Drafted Luke Travers, No. 56 overall (2nd round)"},{"d":"2022-06-22","k":"option","p":"Dean Wade","t":"Picked up Dean Wade’s team option"},{"d":"2022-04-10","k":"twoway","p":"R.J. Nembhard","t":"Signed R.J. Nembhard to a two-way deal"},{"d":"2022-04-09","k":"sign","p":"Moses Brown","t":"Signed Moses Brown"},{"d":"2022-04-09","k":"twoway","p":"Moses Brown","t":"Ended Moses Brown’s two-way deal"},{"d":"2022-04-07","k":"waive","p":"R.J. Nembhard","t":"Waived R.J. Nembhard"},{"d":"2022-03-31","k":"twoway","p":"Moses Brown","t":"Signed Moses Brown to a two-way deal"},{"d":"2022-03-31","k":"sign","p":"R.J. Nembhard","t":"Signed R.J. Nembhard"},{"d":"2022-03-31","k":"twoway","p":"R.J. Nembhard","t":"Ended R.J. Nembhard’s two-way deal"},{"d":"2022-03-21","k":"sign","p":"Moses Brown","t":"Signed Moses Brown"},{"d":"2022-03-10","k":"sign","p":"Moses Brown","t":"Signed Moses Brown"},{"d":"2022-02-26","k":"sign","p":"Tim Frazier","t":"Signed Tim Frazier"},{"d":"2022-02-19","k":"waive","p":"Kevin Pangos","t":"Waived Kevin Pangos"},{"d":"2022-02-07","k":"trade","got":["Caris LeVert","2022 2nd (MIA)","Trade exception"],"sent":["Ricky Rubio","2022 2nd (HOU)","2022 1st (own), protected","2027 2nd (UTA)"],"w":["IND"]},{"d":"2022-01-09","k":"twoway","p":"Brandon Goodwin","t":"Signed Brandon Goodwin to a two-way deal"},{"d":"2022-01-09","k":"waive","p":"Brandon Goodwin","t":"Ended Brandon Goodwin’s 10-day contract"},{"d":"2022-01-09","k":"twoway","p":"Tacko Fall","t":"Ended Tacko Fall’s two-way deal"},{"d":"2022-01-03","k":"trade","got":["Rajon Rondo","Trade exception"],"sent":["Denzel Valentine"],"w":["LAL","NYK"]},{"d":"2021-12-31","k":"sign","p":"Brandon Goodwin","t":"Signed Brandon Goodwin"},{"d":"2021-12-31","k":"waive","p":"Tre Scott","t":"Ended Tre Scott’s 10-day contract"},{"d":"2021-12-29","k":"sign","p":"Malik Newman","t":"Signed Malik Newman"},{"d":"2021-12-22","k":"sign","p":"Tre Scott","t":"Signed Tre Scott"},{"d":"2021-12-21","k":"sign","p":"Luke Kornet","t":"Signed Luke Kornet"},{"d":"2021-12-21","k":"sign","p":"Justin Anderson","t":"Signed Justin Anderson"},{"d":"2021-10-29","k":"option","p":"Dylan Windler","t":"Picked up Dylan Windler’s team option"},{"d":"2021-10-29","k":"option","p":"Darius Garland","t":"Picked up Darius Garland’s team option"},{"d":"2021-10-29","k":"option","p":"Isaac Okoro","t":"Picked up Isaac Okoro’s team option"},{"d":"2021-10-16","k":"waive","p":"Justin James","t":"Waived Justin James"},{"d":"2021-10-16","k":"waive","p":"Kyle Guy","t":"Waived Kyle Guy"},{"d":"2021-10-16","k":"waive","p":"Mitch Ballock","t":"Waived Mitch Ballock"},{"d":"2021-10-16","k":"twoway","p":"R.J. Nembhard","t":"Converted R.J. Nembhard to a two-way deal"},{"d":"2021-10-16","k":"twoway","p":"Tacko Fall","t":"Converted Tacko Fall to a two-way deal"},{"d":"2021-10-13","k":"sign","p":"Ed Davis","t":"Signed Ed Davis"},{"d":"2021-10-12","k":"sign","p":"Justin James","t":"Signed Justin James"},{"d":"2021-10-12","k":"twoway","p":"Brodric Thomas","t":"Ended Brodric Thomas’s two-way deal"},{"d":"2021-10-12","k":"waive","p":"Mfiondu Kabengele","t":"Waived Mfiondu Kabengele"},{"d":"2021-09-25","k":"sign","p":"Kyle Guy","t":"Signed Kyle Guy"},{"d":"2021-09-22","k":"sign","p":"Denzel Valentine","t":"Signed Denzel Valentine to a multi-year deal","big":1},{"d":"2021-09-17","k":"sign","p":"Kevin Pangos","t":"Signed Kevin Pangos to a multi-year deal","big":1},{"d":"2021-09-15","k":"twoway","p":"Brodric Thomas","t":"Signed Brodric Thomas to a two-way deal"},{"d":"2021-09-15","k":"waive","p":"Tre Scott","t":"Waived Tre Scott"},{"d":"2021-09-10","k":"waive","p":"Damyean Dotson","t":"Waived Damyean Dotson"},{"d":"2021-09-08","k":"sign","p":"R.J. Nembhard","t":"Signed R.J. Nembhard"},{"d":"2021-09-08","k":"sign","p":"Mitch Ballock","t":"Signed Mitch Ballock"},{"d":"2021-09-08","k":"sign","p":"Tacko Fall","t":"Signed Tacko Fall"},{"d":"2021-09-06","k":"sign","p":"Tre Scott","t":"Signed Tre Scott"},{"d":"2021-08-28","k":"trade","got":["Lauri Markkanen"],"sent":["Larry Nance Jr.","2023 2nd (DEN), protected"],"w":["POR","CHI"]},{"d":"2021-08-28","k":"other","p":"Jeremiah Martin","t":"Renounced cap hold for Jeremiah Martin"},{"d":"2021-08-06","k":"sign","p":"Jarrett Allen","t":"Signed Jarrett Allen to a multi-year deal","big":1},{"d":"2021-08-03","k":"sign","p":"Evan Mobley","t":"Signed Evan Mobley to a multi-year deal","big":1},{"d":"2021-08-03","k":"fa","p":"Jarrett Allen","t":"Jarrett Allen became a free agent"},{"d":"2021-08-03","k":"fa","p":"Matt Dellavedova","t":"Matt Dellavedova became a free agent"},{"d":"2021-08-03","k":"fa","p":"Isaiah Hartenstein","t":"Isaiah Hartenstein became a free agent"},{"d":"2021-08-03","k":"fa","p":"Jeremiah Martin","t":"Jeremiah Martin became a free agent"},{"d":"2021-08-03","k":"fa","p":"Brodric Thomas","t":"Brodric Thomas became a free agent"},{"d":"2021-08-02","k":"trade","got":["Ricky Rubio"],"sent":["Taurean Prince","2022 2nd (WAS)","Cash","Trade exception"],"w":["MIN"]},{"d":"2021-07-30","k":"option","p":"Brodric Thomas","t":"Extended a qualifying offer to Brodric Thomas (restricted free agent)"},{"d":"2021-07-29","k":"draft","p":"Evan Mobley","t":"Drafted Evan Mobley, No. 3 overall (1st round)"},{"d":"2021-07-23","k":"option","p":"Jarrett Allen","t":"Extended a qualifying offer to Jarrett Allen (restricted free agent)"},{"d":"2021-05-14","k":"sign","p":"Anderson Varejao","t":"Signed Anderson Varejao"},{"d":"2021-05-04","k":"sign","p":"Anderson Varejao","t":"Signed Anderson Varejao"},{"d":"2021-05-01","k":"sign","p":"Mfiondu Kabengele","t":"Signed Mfiondu Kabengele to a multi-year deal","big":1},{"d":"2021-04-28","k":"twoway","p":"Jeremiah Martin","t":"Signed Jeremiah Martin to a two-way deal"},{"d":"2021-04-21","k":"sign","p":"Mfiondu Kabengele","t":"Signed Mfiondu Kabengele"},{"d":"2021-04-14","k":"sign","p":"Lamar Stevens","t":"Signed Lamar Stevens to a multi-year deal","big":1},{"d":"2021-04-14","k":"twoway","p":"Lamar Stevens","t":"Ended Lamar Stevens’s two-way deal"},{"d":"2021-04-10","k":"sign","p":"Mfiondu Kabengele","t":"Signed Mfiondu Kabengele"},{"d":"2021-03-26","k":"waive","p":"Andre Drummond","t":"Waived Andre Drummond"},{"d":"2021-03-25","k":"trade","got":["Isaiah Hartenstein","2023 2nd (DEN), protected","2027 2nd (DEN)","Trade exception"],"sent":["JaVale McGee","Trade exception"],"note":"Trade deadline","w":["DEN"]},{"d":"2021-03-22","k":"sign","p":"Quinn Cook","t":"Signed Quinn Cook"},{"d":"2021-03-12","k":"sign","p":"Quinn Cook","t":"Signed Quinn Cook"},{"d":"2021-02-24","k":"twoway","p":"Brodric Thomas","t":"Signed Brodric Thomas to a two-way deal"},{"d":"2021-02-24","k":"twoway","p":"Marques Bolden","t":"Ended Marques Bolden’s two-way deal"},{"d":"2021-01-22","k":"trade","got":["2024 2nd (GSW)","Trade exception"],"sent":["Kevin Porter Jr."],"w":["HOU"]},{"d":"2021-01-16","k":"trade","got":["Jarrett Allen","Taurean Prince","Rights to Sasha Vezenkov","2024 2nd round swap"],"sent":["Dante Exum","2022 1st (MIL), protected","Trade exception"],"w":["BKN","IND","HOU"]},{"d":"2021-01-14","k":"other","p":"Ante Zizic","t":"Renounced cap hold for Ante Zizic"},{"d":"2021-01-14","k":"other","p":"Channing Frye","t":"Renounced cap hold for Channing Frye"},{"d":"2021-01-14","k":"waive","p":"Thon Maker","t":"Waived Thon Maker"},{"d":"2021-01-14","k":"waive","p":"Yogi Ferrell","t":"Ended Yogi Ferrell’s 10-day contract"},{"d":"2021-01-11","k":"sign","p":"Yogi Ferrell","t":"Signed Yogi Ferrell"},{"d":"2020-12-23","k":"option","p":"Darius Garland","t":"Picked up Darius Garland’s team option"},{"d":"2020-12-23","k":"option","p":"Kevin Porter, Jr","t":"Picked up Kevin Porter Jr.’s team option"},{"d":"2020-12-23","k":"option","p":"Dylan Windler","t":"Picked up Dylan Windler’s team option"},{"d":"2020-12-23","k":"option","p":"Collin Sexton","t":"Picked up Collin Sexton’s team option"},{"d":"2020-12-19","k":"waive","p":"Levi Randolph","t":"Waived Levi Randolph"},{"d":"2020-12-19","k":"waive","p":"Norvel Pelle","t":"Waived Norvel Pelle"},{"d":"2020-12-19","k":"waive","p":"Charles Matthews","t":"Waived Charles Matthews"},{"d":"2020-12-19","k":"sign","p":"Norvel Pelle","t":"Signed Norvel Pelle"},{"d":"2020-12-19","k":"twoway","p":"Marques Bolden","t":"Converted Marques Bolden to a two-way deal"},{"d":"2020-12-19","k":"twoway","p":"Matt Mooney","t":"Ended Matt Mooney’s two-way deal"},{"d":"2020-12-01","k":"sign","p":"Levi Randolph","t":"Signed Levi Randolph"},{"d":"2020-11-28","k":"waive","p":"Rayjon Tucker","t":"Waived Rayjon Tucker"},{"d":"2020-11-28","k":"sign","p":"Thon Maker","t":"Signed Thon Maker"},{"d":"2020-11-28","k":"sign","p":"Marques Bolden","t":"Signed Marques Bolden"},{"d":"2020-11-28","k":"twoway","p":"Lamar Stevens","t":"Signed Lamar Stevens to a two-way deal"},{"d":"2020-11-27","k":"sign","p":"Charles Matthews","t":"Signed Charles Matthews"},{"d":"2020-11-27","k":"trade","got":["Rayjon Tucker","2027 2nd (UTA)"],"sent":["Cash","Trade exception"],"w":["UTA"]},{"d":"2020-11-24","k":"sign","p":"Damyean Dotson","t":"Signed Damyean Dotson to a multi-year deal","big":1},{"d":"2020-11-24","k":"sign","p":"Matt Dellavedova","t":"Signed Matt Dellavedova"},{"d":"2020-11-23","k":"trade","got":["JaVale McGee","2026 2nd (LAL)"],"sent":["Jordan Bell","Alfonzo McKinnie","Trade exception"],"w":["LAL"]},{"d":"2020-11-23","k":"other","p":"Matt Dellavedova","t":"Renounced cap hold for Matt Dellavedova"},{"d":"2020-11-23","k":"other","p":"Tristan Thompson","t":"Renounced cap hold for Tristan Thompson"},{"d":"2020-11-21","k":"sign","p":"Isaac Okoro","t":"Signed Isaac Okoro to a multi-year deal","big":1},{"d":"2020-11-18","k":"draft","p":"Isaac Okoro","t":"Drafted Isaac Okoro, No. 5 overall (1st round)"},{"d":"2020-11-17","k":"option","p":"Andre Drummond","t":"Andre Drummond picked up his player option"},{"d":"2020-06-29","k":"sign","p":"Jordan Bell","t":"Signed Jordan Bell to a multi-year deal","big":1},{"d":"2020-06-29","k":"sign","p":"Dean Wade","t":"Signed Dean Wade to a multi-year deal","big":1},{"d":"2020-06-29","k":"twoway","p":"Dean Wade","t":"Ended Dean Wade’s two-way deal"},{"d":"2020-03-08","k":"sign","p":"Sheldon Mac","t":"Signed Sheldon Mac"},{"d":"2020-03-04","k":"sign","p":"Dom Pointer","t":"Signed Dom Pointer"},{"d":"2020-02-14","k":"waive","p":"J.P. Macura","t":"Ended J.P. Macura’s 10-day contract"},{"d":"2020-02-09","k":"sign","p":"Malik Newman","t":"Signed Malik Newman"},{"d":"2020-02-09","k":"sign","p":"J.P. Macura","t":"Signed J.P. Macura"},{"d":"2020-02-08","k":"sign","p":"Alfonzo McKinnie","t":"Signed Alfonzo McKinnie to a multi-year deal","big":1},{"d":"2020-02-06","k":"trade","got":["Andre Drummond"],"sent":["John Henson","Brandon Knight","2023 2nd (least favorable)","Trade exception"],"note":"Trade deadline","w":["DET"]},{"d":"2020-01-30","k":"sign","p":"Marques Bolden","t":"Signed Marques Bolden"},{"d":"2020-01-23","k":"sign","p":"Alfonzo McKinnie","t":"Signed Alfonzo McKinnie"},{"d":"2020-01-20","k":"sign","p":"Tyler Cook","t":"Signed Tyler Cook"},{"d":"2020-01-15","k":"twoway","p":"Matt Mooney","t":"Signed Matt Mooney to a two-way deal"},{"d":"2020-01-12","k":"twoway","p":"Levi Randolph","t":"Ended Levi Randolph’s two-way deal"},{"d":"2020-01-09","k":"sign","p":"Tyler Cook","t":"Signed Tyler Cook"},{"d":"2020-01-09","k":"sign","p":"Alfonzo McKinnie","t":"Signed Alfonzo McKinnie"},{"d":"2020-01-06","k":"twoway","p":"Levi Randolph","t":"Signed Levi Randolph to a two-way deal"},{"d":"2020-01-06","k":"waive","p":"Alfonzo McKinnie","t":"Waived Alfonzo McKinnie"},{"d":"2020-01-06","k":"waive","p":"Tyler Cook","t":"Waived Tyler Cook"},{"d":"2020-01-03","k":"sign","p":"Tyler Cook","t":"Signed Tyler Cook"},{"d":"2020-01-03","k":"twoway","p":"Tyler Cook","t":"Ended Tyler Cook’s two-way deal"},{"d":"2019-12-23","k":"trade","got":["Dante Exum","2022 2nd (SAS)","2023 2nd (GSW)","Trade exception"],"sent":["Jordan Clarkson"],"w":["UTA"]},{"d":"2019-10-29","k":"option","p":"Collin Sexton","t":"Picked up Collin Sexton’s team option"},{"d":"2019-10-25","k":"ext","p":"Cedi Osman","t":"Signed Cedi Osman to a veteran extension"},{"d":"2019-10-21","k":"sign","p":"Alfonzo McKinnie","t":"Claimed Alfonzo McKinnie off waivers"},{"d":"2019-10-19","k":"waive","p":"Jarell Martin","t":"Waived Jarell Martin"},{"d":"2019-10-19","k":"waive","p":"Marques Bolden","t":"Waived Marques Bolden"},{"d":"2019-10-18","k":"sign","p":"Tyler Cook","t":"Claimed Tyler Cook off waivers"},{"d":"2019-10-16","k":"waive","p":"Sindarius Thornwell","t":"Waived Sindarius Thornwell"},{"d":"2019-10-16","k":"waive","p":"J.P. Macura","t":"Waived J.P. Macura"},{"d":"2019-10-16","k":"waive","p":"Timothe Luwawu-Cabarrot","t":"Waived Timothe Luwawu-Cabarrot"},{"d":"2019-10-16","k":"waive","p":"Daniel Hamilton","t":"Waived Daniel Hamilton"},{"d":"2019-10-04","k":"waive","p":"Dom Pointer","t":"Waived Dom Pointer"},{"d":"2019-10-04","k":"sign","p":"Dom Pointer","t":"Signed Dom Pointer"},{"d":"2019-09-23","k":"sign","p":"Timothe Luwawu-Cabarrot","t":"Signed Timothe Luwawu-Cabarrot"},{"d":"2019-09-23","k":"waive","p":"Alex Robinson","t":"Waived Alex Robinson"},{"d":"2019-09-03","k":"sign","p":"Daniel Hamilton","t":"Signed Daniel Hamilton"},{"d":"2019-09-03","k":"waive","p":"Levi Randolph","t":"Waived Levi Randolph"},{"d":"2019-09-03","k":"sign","p":"Marques Bolden","t":"Signed Marques Bolden"},{"d":"2019-09-03","k":"waive","p":"Malik Newman","t":"Waived Malik Newman"},{"d":"2019-09-03","k":"sign","p":"J.P. Macura","t":"Signed J.P. Macura"},{"d":"2019-09-03","k":"sign","p":"Sindarius Thornwell","t":"Signed Sindarius Thornwell"},{"d":"2019-08-19","k":"sign","p":"Alex Robinson","t":"Signed Alex Robinson"},{"d":"2019-08-16","k":"sign","p":"Jarell Martin","t":"Signed Jarell Martin"},{"d":"2019-08-05","k":"sign","p":"Levi Randolph","t":"Signed Levi Randolph"},{"d":"2019-08-05","k":"sign","p":"Malik Newman","t":"Signed Malik Newman"},{"d":"2019-07-17","k":"fa","p":"J.R. Smith","t":"J.R. Smith became a free agent"},{"d":"2019-07-15","k":"waive","p":"J.R. Smith","t":"Waived J.R. Smith"},{"d":"2019-07-03","k":"sign","p":"Kevin Porter Jr.","t":"Signed Kevin Porter Jr. to a multi-year deal","big":1},{"d":"2019-07-01","k":"sign","p":"Dylan Windler","t":"Signed Dylan Windler to a multi-year deal","big":1},{"d":"2019-07-01","k":"sign","p":"Darius Garland","t":"Signed Darius Garland to a multi-year deal","big":1},{"d":"2019-07-01","k":"twoway","p":"Dean Wade","t":"Signed Dean Wade to a two-way deal"},{"d":"2019-07-01","k":"fa","p":"Deng Adel","t":"Deng Adel became a free agent"},{"d":"2019-07-01","k":"fa","p":"Jaron Blossomgame","t":"Jaron Blossomgame became a free agent"},{"d":"2019-07-01","k":"fa","p":"Marquese Chriss","t":"Marquese Chriss became a free agent"},{"d":"2019-07-01","k":"fa","p":"Channing Frye","t":"Channing Frye became a free agent"},{"d":"2019-07-01","k":"fa","p":"David Nwaba","t":"David Nwaba became a free agent"},{"d":"2019-07-01","k":"fa","p":"Nik Stauskas","t":"Nik Stauskas became a free agent"},{"d":"2019-06-26","k":"trade","got":["Rights to Kevin Porter Jr."],"sent":["2024 2nd (MIA), protected","2020 2nd (UTA)","2021 2nd (POR)","2023 2nd (POR)","Cash"],"w":["DET"]},{"d":"2019-06-20","k":"draft","p":"Darius Garland","t":"Drafted Darius Garland, No. 5 overall (1st round)"},{"d":"2019-06-20","k":"draft","p":"Dylan Windler","t":"Drafted Dylan Windler, No. 26 overall (1st round)"},{"d":"2019-02-11","k":"sign","p":"Nik Stauskas","t":"Signed Nik Stauskas"},{"d":"2019-02-07","k":"trade","got":["Marquese Chriss","Brandon Knight","2019 1st (HOU), protected","2022 2nd (HOU)","Trade exceptions"],"sent":["Wade Baldwin IV","Alec Burks","Nik Stauskas","2021 2nd (MIL)","Trade exception"],"note":"Trade deadline","w":["SAC","HOU"]},{"d":"2019-02-07","k":"other","p":"Deron Williams","t":"Renounced cap hold for Deron Williams"},{"d":"2019-02-07","k":"other","p":"Dahntay Jones","t":"Renounced cap hold for Dahntay Jones"},{"d":"2019-02-04","k":"trade","got":["Wade Baldwin IV","Nik Stauskas","2021 2nd (POR)","2023 2nd (POR)","Trade exception"],"sent":["Rodney Hood"],"w":["POR"]},{"d":"2019-02-04","k":"waive","p":"Kobi Simmons","t":"Ended Kobi Simmons’s 10-day contract"},{"d":"2019-01-27","k":"sign","p":"Kobi Simmons","t":"Signed Kobi Simmons"},{"d":"2019-01-16","k":"sign","p":"Cameron Payne","t":"Signed Cameron Payne"},{"d":"2019-01-15","k":"twoway","p":"Deng Adel","t":"Signed Deng Adel to a two-way deal"},{"d":"2019-01-15","k":"twoway","p":"Jalen Jones","t":"Ended Jalen Jones’s two-way deal"},{"d":"2019-01-06","k":"sign","p":"Cameron Payne","t":"Signed Cameron Payne"},{"d":"2019-01-06","k":"waive","p":"Patrick McCaw","t":"Waived Patrick McCaw"},{"d":"2018-12-31","k":"sign","p":"Patrick McCaw","t":"Signed Patrick McCaw to a multi-year deal","big":1},{"d":"2018-12-28","k":"sign","p":"Patrick McCaw","t":"Signed Patrick McCaw to an offer sheet (restricted free agent)","big":1},{"d":"2018-12-07","k":"trade","got":["Matt Dellavedova","John Henson","2021 2nd (MIL)","2022 1st (MIL), protected","2022 2nd (WAS)","Trade exception"],"sent":["Sam Dekker","George Hill","2021 2nd (WAS)"],"w":["WAS","MIL"]},{"d":"2018-12-02","k":"twoway","p":"Jalen Jones","t":"Signed Jalen Jones to a two-way deal"},{"d":"2018-12-02","k":"twoway","p":"Jaron Blossomgame","t":"Signed Jaron Blossomgame to a two-way deal"},{"d":"2018-12-02","k":"twoway","p":"Billy Preston","t":"Ended Billy Preston’s two-way deal"},{"d":"2018-12-02","k":"twoway","p":"Andrew Harrison","t":"Ended Andrew Harrison’s two-way deal"},{"d":"2018-11-29","k":"trade","got":["Alec Burks","2020 2nd (UTA)","2021 2nd (WAS)"],"sent":["Kyle Korver","Trade exception"],"w":["UTA"]},{"d":"2018-11-29","k":"other","p":"Shawn Marion","t":"Renounced cap hold for Shawn Marion"},{"d":"2018-11-29","k":"other","p":"James Jones","t":"Renounced cap hold for James Jones"},{"d":"2018-11-09","k":"twoway","p":"Andrew Harrison","t":"Signed Andrew Harrison to a two-way deal"},{"d":"2018-11-09","k":"twoway","p":"John Holland","t":"Ended John Holland’s two-way deal"},{"d":"2018-10-29","k":"option","p":"Ante Zizic","t":"Picked up Ante Zizic’s team option"},{"d":"2018-10-15","k":"ext","p":"Larry Nance Jr.","t":"Signed Larry Nance Jr. to a rookie scale extension"},{"d":"2018-10-13","k":"waive","p":"Emanuel Terry","t":"Waived Emanuel Terry"},{"d":"2018-10-13","k":"waive","p":"Isaiah Taylor","t":"Waived Isaiah Taylor"},{"d":"2018-10-13","k":"waive","p":"Kobi Simmons","t":"Waived Kobi Simmons"},{"d":"2018-10-13","k":"waive","p":"Bonzie Colson Jr.","t":"Waived Bonzie Colson Jr."},{"d":"2018-10-11","k":"sign","p":"Emanuel Terry","t":"Signed Emanuel Terry"},{"d":"2018-10-10","k":"waive","p":"Levi Randolph","t":"Waived Levi Randolph"},{"d":"2018-09-19","k":"sign","p":"Kobi Simmons","t":"Signed Kobi Simmons"},{"d":"2018-09-19","k":"waive","p":"Jacorey Williams","t":"Waived Jacorey Williams"},{"d":"2018-09-14","k":"sign","p":"Levi Randolph","t":"Signed Levi Randolph"},{"d":"2018-09-14","k":"sign","p":"Bonzie Colson Jr.","t":"Signed Bonzie Colson Jr."},{"d":"2018-09-14","k":"waive","p":"Scoochie Smith","t":"Waived Scoochie Smith"},{"d":"2018-09-14","k":"waive","p":"Isaac Hamilton","t":"Waived Isaac Hamilton"},{"d":"2018-09-13","k":"sign","p":"Jacorey Williams","t":"Signed Jacorey Williams"},{"d":"2018-09-10","k":"sign","p":"Scoochie Smith","t":"Signed Scoochie Smith"},{"d":"2018-09-10","k":"sign","p":"Isaac Hamilton","t":"Signed Isaac Hamilton"},{"d":"2018-09-09","k":"sign","p":"Rodney Hood","t":"Signed Rodney Hood"},{"d":"2018-09-08","k":"sign","p":"David Nwaba","t":"Signed David Nwaba"},{"d":"2018-08-16","k":"sign","p":"Isaiah Taylor","t":"Signed Isaiah Taylor"},{"d":"2018-08-07","k":"trade","got":["Sam Dekker","Rights to Renaldas Seibutis","Cash"],"sent":["Rights to Vladimir Veremeenko","Trade exception"],"w":["LAC"]},{"d":"2018-08-07","k":"fa","p":"Okaro White","t":"Okaro White became a free agent"},{"d":"2018-08-05","k":"waive","p":"Okaro White","t":"Waived Okaro White"},{"d":"2018-07-24","k":"ext","p":"Kevin Love","t":"Signed Kevin Love to a veteran extension"},{"d":"2018-07-19","k":"sign","p":"Channing Frye","t":"Signed Channing Frye"},{"d":"2018-07-19","k":"fa","p":"Kendrick Perkins","t":"Kendrick Perkins became a free agent"},{"d":"2018-07-17","k":"waive","p":"Kendrick Perkins","t":"Waived Kendrick Perkins"},{"d":"2018-07-06","k":"twoway","p":"Billy Preston","t":"Signed Billy Preston to a two-way deal"},{"d":"2018-07-04","k":"sign","p":"Collin Sexton","t":"Signed Collin Sexton to a multi-year deal","big":1},{"d":"2018-07-01","k":"fa","p":"Jose Calderon","t":"Jose Calderon became a free agent"},{"d":"2018-07-01","k":"fa","p":"Jeff Green","t":"Jeff Green became a free agent"},{"d":"2018-07-01","k":"fa","p":"Rodney Hood","t":"Rodney Hood became a free agent"},{"d":"2018-07-01","k":"fa","p":"LeBron James","t":"LeBron James became a free agent"},{"d":"2018-06-27","k":"option","p":"Kendrick Perkins","t":"Picked up Kendrick Perkins’s team option"},{"d":"2018-06-27","k":"option","p":"Rodney Hood","t":"Extended a qualifying offer to Rodney Hood (restricted free agent)"},{"d":"2018-06-21","k":"draft","p":"Collin Sexton","t":"Drafted Collin Sexton, No. 8 overall (1st round)"},{"d":"2018-06-12","k":"twoway","p":"London Perrantes","t":"Ended London Perrantes’s two-way deal"},{"d":"2018-04-11","k":"sign","p":"Kendrick Perkins","t":"Signed Kendrick Perkins to a multi-year deal","big":1},{"d":"2018-04-07","k":"sign","p":"Okaro White","t":"Signed Okaro White to a multi-year deal","big":1},{"d":"2018-03-18","k":"sign","p":"Okaro White","t":"Signed Okaro White"},{"d":"2018-02-22","k":"sign","p":"Marcus Thornton","t":"Signed Marcus Thornton"},{"d":"2018-02-08","k":"trade","got":["George Hill","Rodney Hood","Rights to Arturas Gudaitis"],"sent":["Jae Crowder","Derrick Rose","Iman Shumpert","Rights to Dimitrios Agravanis","2020 2nd (MIA)","2024 2nd round swap","Cash"],"note":"Trade deadline","w":["UTA","SAC"]},{"d":"2018-02-08","k":"trade","got":["2024 2nd (MIA), protected","Trade exception"],"sent":["Dwyane Wade"],"note":"Trade deadline","w":["MIA"]},{"d":"2018-02-08","k":"trade","got":["Jordan Clarkson","Larry Nance Jr."],"sent":["Channing Frye","Isaiah Thomas","2018 1st (own), protected","Trade exception"],"note":"Trade deadline","w":["LAL"]},{"d":"2017-10-18","k":"twoway","p":"London Perrantes","t":"Signed London Perrantes to a two-way deal"},{"d":"2017-10-14","k":"waive","p":"Kendrick Perkins","t":"Waived Kendrick Perkins"},{"d":"2017-10-14","k":"waive","p":"Isaac Hamilton","t":"Waived Isaac Hamilton"},{"d":"2017-10-14","k":"trade","got":["Rights to Dimitrios Agravanis","Rights to Sergii Gladyr","Trade exceptions"],"sent":["Kay Felder","Richard Jefferson","2020 2nd (POR), protected","2019 2nd (least favorable)","Cash"],"w":["ATL"]},{"d":"2017-10-11","k":"sign","p":"Isaac Hamilton","t":"Signed Isaac Hamilton"},{"d":"2017-10-11","k":"waive","p":"Edy Tavares","t":"Waived Edy Tavares"},{"d":"2017-09-27","k":"sign","p":"Dwyane Wade","t":"Signed Dwyane Wade"},{"d":"2017-09-27","k":"waive","p":"Jacorey Williams","t":"Waived Jacorey Williams"},{"d":"2017-09-26","k":"sign","p":"Jacorey Williams","t":"Signed Jacorey Williams"},{"d":"2017-09-25","k":"sign","p":"Kendrick Perkins","t":"Signed Kendrick Perkins"},{"d":"2017-09-07","k":"twoway","p":"John Holland","t":"Signed John Holland to a two-way deal"},{"d":"2017-08-22","k":"trade","got":["Jae Crowder","Isaiah Thomas","Ante Zizic","2018 1st (BKN)","2020 2nd (MIA)","Trade exception"],"sent":["Kyrie Irving"],"w":["BOS"]},{"d":"2017-07-25","k":"sign","p":"Derrick Rose","t":"Signed Derrick Rose"},{"d":"2017-07-18","k":"sign","p":"Cedi Osman","t":"Signed Cedi Osman to a multi-year deal","big":1},{"d":"2017-07-12","k":"sign","p":"Kyle Korver","t":"Signed Kyle Korver to a multi-year deal","big":1},{"d":"2017-07-11","k":"sign","p":"Jeff Green","t":"Signed Jeff Green"},{"d":"2017-07-10","k":"sign","p":"Jose Calderon","t":"Signed Jose Calderon"},{"d":"2017-07-01","k":"fa","p":"Dahntay Jones","t":"Dahntay Jones became a free agent"},{"d":"2017-07-01","k":"fa","p":"James Jones","t":"James Jones became a free agent"},{"d":"2017-07-01","k":"fa","p":"Kyle Korver","t":"Kyle Korver became a free agent"},{"d":"2017-07-01","k":"fa","p":"Deron Williams","t":"Deron Williams became a free agent"},{"d":"2017-07-01","k":"fa","p":"Derrick Williams","t":"Derrick Williams became a free agent"}];
 /* extra transaction details, keyed 'YYYY-MM-DD|first player': trade release link, cash and trade-exception amounts, contract values */
 const TX_X={"2026-08-20|Peyton Watson":{"url":"https://www.nba.com/cavaliers/news/releases-peyton-watson-260821","te_got":[["Max Strus",16660836]],"value":"4 yrs, $88.0M","cash_sent":"$4.35M to CHA · undisclosed to WAS"},"2026-02-05|Cash":{"url":"https://www.nba.com/news/lonzo-ball-jazz-hawks-cavs-trade","te_got":[["Lonzo Ball",10000000]]},"2026-02-04|James Harden":{"url":"https://www.nba.com/cavaliers/news/releases-james-harden-260204"},"2026-02-01|Keon Ellis":{"url":"https://www.nba.com/cavaliers/news/releases-dennis-schroder-keon-ellis-260201","te_got":[["De'Andre Hunter",6897984]]},"2025-07-06|Lonzo Ball":{"url":"https://www.nba.com/cavaliers/news/releases-lonzo-ball-250706","te_got":[["Isaac Okoro",1000000]]},"2025-02-06|De'Andre Hunter":{"url":"https://www.nba.com/cavaliers/news/releases-deandre-hunter-250207","te_got":[["Georges Niang",8500000]]},"2023-07-08|Damian Jones":{"url":"https://www.nba.com/cavaliers/news/releases-damian-jones-230708"},"2023-07-06|Max Strus":{"url":"https://www.nba.com/cavaliers/news/releases-strus-acquisition-230706"},"2022-09-03|Donovan Mitchell":{"url":"https://www.nba.com/cavaliers/news/releases-mitchell-trade-220903","te_got":[["Ochai Agbaji",3918360]]},"2022-02-07|Caris LeVert":{"url":"https://www.nba.com/cavaliers/releases/levert-acquisition-220207","te_got":[["Ricky Rubio",300000]]},"2022-01-03|Rajon Rondo":{"url":"https://www.nba.com/cavaliers/releases/rondo-trade-220103","te_got":[["Denzel Valentine",858218]]},"2021-08-28|Lauri Markkanen":{"url":"https://www.nba.com/news/cavs-acquire-lauri-markkanen-from-bulls-in-3-team-trade"},"2021-08-02|Ricky Rubio":{"url":"https://www.nba.com/cavaliers/releases/rubio-trade-210803"},"2021-03-25|Isaiah Hartenstein":{"url":"https://www.nba.com/cavaliers/releases/hartenstein-trade-210326"},"2021-01-22|2024 2nd (GSW)":{"url":"https://www.nba.com/cavaliers/releases/porter-jr-trade-210122","te_got":[["Kevin Porter Jr.",1717981]]},"2021-01-16|Jarrett Allen":{"url":"https://www.nba.com/cavaliers/releases/allen-prince-trade-210114"},"2020-11-27|Rayjon Tucker":{"url":"https://www.nba.com/cavaliers/releases/utah-trade-201127"},"2020-11-23|JaVale McGee":{"url":"https://www.nba.com/cavaliers/releases/mcgee-trade-201123"},"2020-02-06|Andre Drummond":{"url":"https://www.nba.com/cavaliers/releases/drummond-trade-200206"},"2019-12-23|Dante Exum":{"url":"https://www.nba.com/cavaliers/releases/exum-trade-191224","te_got":[["Jordan Clarkson",3837500]]},"2019-06-26|Rights to Kevin Porter Jr.":{"url":"https://www.nba.com/cavaliers/releases/porter-jr-trade-190626","cash_sent":5000000},"2019-02-07|Marquese Chriss":{"url":"https://www.nba.com/cavaliers/releases/knight-chriss-trade-190207","te_sent":[["Rodney Hood",3472887]]},"2019-02-04|Wade Baldwin IV":{"url":"https://www.nba.com/cavaliers/releases/stauskas-baldwin-trade-190204","te_got":[["Rodney Hood",3472887]]},"2018-12-07|Matt Dellavedova":{"url":"https://www.nba.com/cavaliers/releases/dellavedova-henson-trade-181207"},"2018-11-29|Alec Burks":{"url":"https://www.nba.com/cavaliers/releases/burks-trade-181129"},"2018-08-07|Sam Dekker":{"url":"https://www.nba.com/cavaliers/releases/dekker-trade-180807","cash_got":1247494,"te_sent":[["Kyrie Irving",5811114]]},"2018-02-08|George Hill":{"url":"https://www.nba.com/cavaliers/releases/rhood-ghill-trade-180208","cash_sent":2100000},"2018-02-08|2024 2nd (MIA), protected":{"url":"https://www.nba.com/cavaliers/releases/miami-trade-180208"},"2018-02-08|Jordan Clarkson":{"url":"https://www.nba.com/cavaliers/releases/clarkson-lnance-trade-180208"},"2017-10-14|Rights to Dimitrios Agravanis":{"url":"https://www.nba.com/cavaliers/releases/trade-171014","cash_sent":3000000,"te_got":[["Richard Jefferson",2500000],["Kay Felder",1312611]]},"2017-08-22|Jae Crowder":{"url":"https://www.nba.com/cavaliers/releases/boston-trade-170822","te_got":[["Kyrie Irving",5811114]]},"2026-10-09|Jaxson Robinson":{"value":"1 yr, minimum (Exhibit 10)"},"2026-10-09|Noam Yaacov":{"value":"1 yr, minimum (Exhibit 10)"},"2026-09-23|Rashaun Agee":{"value":"1 yr, minimum (Exhibit 10)"},"2026-09-23|Zack Austin":{"value":"1 yr, minimum (Exhibit 10)"},"2026-09-23|Curtis Jones":{"value":"1 yr, minimum (Exhibit 10)"},"2026-09-23|Kadary Richmond":{"value":"1 yr, minimum (Exhibit 10)"},"2026-09-15|Sean McNeil":{"value":"1 yr, minimum (Exhibit 10)"},"2026-09-08|James Harden":{"value":"3 yrs, $96.5M"},"2026-09-02|Khalifa Diop":{"value":"4 yrs, $9.3M (second round)"},"2026-07-31|Mario Hezonja":{"value":"1 yr, minimum (non-guaranteed)"},"2026-07-08|Donovan Mitchell":{"value":"4 yrs, $284.5M"},"2026-07-07|Thomas Bryant":{"value":"1 yr, minimum"},"2026-07-01|Meleek Thomas":{"value":"4 yrs, $9.3M (second round)"},"2026-06-22|Craig Porter, Jr":{"value":"$2.4M team option"},"2026-02-11|Nae'Qwan Tomlin":{"value":"Converted to standard: 2 yrs, minimum"},"2025-10-22|Jaylon Tyson":{"value":"$3.7M team option"},"2025-10-17|Zeke Mayo":{"value":"1 yr, minimum (Exhibit 10)"},"2025-10-13|Darius Brown II":{"value":"1 yr, minimum (Exhibit 10)"},"2025-09-26|Tristan Enaruna":{"value":"1 yr, minimum (Exhibit 10)"},"2025-09-26|Miller Kopp":{"value":"1 yr, minimum (Exhibit 10)"},"2025-09-26|Killian Hayes":{"value":"1 yr, minimum (Exhibit 10)"},"2025-09-26|Norchad Omier":{"value":"1 yr, minimum (Exhibit 10)"},"2025-09-26|Chaney Johnson":{"value":"1 yr, minimum (Exhibit 10)"},"2025-09-25|Warith Alatishe":{"value":"1 yr, minimum (Exhibit 10)"},"2025-09-25|Jaxson Robinson":{"value":"1 yr, minimum (Exhibit 10)"},"2025-09-25|Thomas Bryant":{"value":"1 yr, minimum"},"2025-07-06|Larry Nance Jr.":{"value":"1 yr, minimum"},"2025-07-06|Sam Merrill":{"value":"4 yrs, $38.0M"},"2025-07-01|Tyrese Proctor":{"value":"4 yrs, $8.7M (second round)"},"2025-06-28|Luke Travers":{"value":"$636K qualifying offer (two-way)"},"2025-04-05|Chuma Okeke":{"value":"2 yrs, minimum (2025-26 team option)"},"2025-02-23|Javonte Green":{"value":"1 yr, minimum"},"2025-02-20|Nae'Qwan Tomlin":{"value":"10-day contract"},"2024-10-16|Elijah Hughes":{"value":"1 yr, minimum (Exhibit 10)"},"2024-10-14|Darius Brown II":{"value":"1 yr, minimum (Exhibit 10)"},"2024-09-24|Jacob Gilyard":{"value":"1 yr, minimum (Exhibit 10)"},"2024-09-24|Zhaire Smith":{"value":"1 yr, minimum (Exhibit 10)"},"2024-09-23|Nae'Qwan Tomlin":{"value":"1 yr, minimum (Exhibit 10)"},"2024-09-23|Gabe Osabuohien":{"value":"1 yr, minimum (Exhibit 10)"},"2024-09-23|Jules Bernard":{"value":"1 yr, minimum (Exhibit 10)"},"2024-09-23|Pete Nance":{"value":"1 yr, minimum (Exhibit 10)"},"2024-09-17|Isaac Okoro":{"value":"3 yrs, $38.0M"},"2024-09-08|Tristan Thompson":{"value":"1 yr, minimum"},"2024-08-02|Jarrett Allen":{"value":"3 yrs, $90.7M"},"2024-07-22|Evan Mobley":{"value":"5 yrs, $224M (up to $269M)"},"2024-07-07|Donovan Mitchell":{"value":"3 yrs, $150.3M"},"2024-07-02|Jaylon Tyson":{"value":"4 yrs, $16.1M (rookie scale)"},"2024-06-29|Isaac Okoro":{"value":"$11.8M qualifying offer"},"2024-06-29|Emoni Bates":{"value":"$580K qualifying offer (two-way)"},"2024-03-29|Marcus Morris":{"value":"1 yr, minimum (rest of season)"},"2024-03-18|Marcus Morris":{"value":"10-day contract"},"2024-02-26|Sharife Cooper":{"value":"10-day contract"},"2024-02-14|Craig Porter Jr.":{"value":"Converted to standard: 4 yrs, $8.0M (partially guaranteed)"},"2024-02-11|Zhaire Smith":{"value":"10-day contract"},"2024-01-18|Pete Nance":{"value":"10-day contract"},"2023-10-20|Devontae Shuler":{"value":"1 yr, minimum (non-guaranteed)"},"2023-10-20|Aleem Ford":{"value":"1 yr, minimum (Exhibit 10)"},"2023-10-20|Rob Edwards":{"value":"1 yr, minimum (Exhibit 10)"},"2023-10-19|Evan Mobley":{"value":"$11.2M team option"},"2023-09-14|Zhaire Smith":{"value":"1 yr, minimum (Exhibit 10)"},"2023-09-12|Justin Powell":{"value":"1 yr, minimum (Exhibit 10)"},"2023-09-12|Pete Nance":{"value":"1 yr, minimum (Exhibit 10)"},"2023-09-12|Sharife Cooper":{"value":"1 yr, minimum (Exhibit 10)"},"2023-09-12|Tristan Thompson":{"value":"1 yr, minimum (partially guaranteed)"},"2023-07-06|Ty Jerome":{"value":"2 yrs, $5.0M"},"2023-07-06|Georges Niang":{"value":"3 yrs, $25.5M"},"2023-07-06|Caris LeVert":{"value":"2 yrs, $32.0M"},"2023-06-28|Isaiah Mobley":{"value":"$560K qualifying offer (two-way)"},"2023-06-23|Lamar Stevens":{"value":"$1.9M team option"},"2023-03-14|Sam Merrill":{"value":"3 yrs, minimum (partially guaranteed)"},"2023-03-03|Sam Merrill":{"value":"10-day contract"},"2023-02-14|Danny Green":{"value":"1 yr, $2.0M (rest of season)"},"2022-10-15|Isaac Okoro":{"value":"$8.9M team option"},"2022-10-15|Evan Mobley":{"value":"$8.9M team option"},"2022-09-27|Dean Wade":{"value":"3 yrs, $18.5M"},"2022-09-20|Sharife Cooper":{"value":"1 yr, minimum (Exhibit 10)"},"2022-09-19|Mamadi Diakite":{"value":"1 yr, minimum (Exhibit 9)"},"2022-09-19|Nathaniel Hinton":{"value":"1 yr, minimum (Exhibit 10)"},"2022-09-08|Chandler Vaudrin":{"value":"1 yr, minimum (Exhibit 10)"},"2022-09-08|Jamorko Pickett":{"value":"1 yr, minimum (Exhibit 10)"},"2022-07-08|Darius Garland":{"value":"5 yrs, $197.2M (rookie scale extension)"},"2022-07-07|Ricky Rubio":{"value":"3 yrs, $18.4M"},"2022-07-07|Raulzinho Neto":{"value":"1 yr, minimum"},"2022-07-07|Robin Lopez":{"value":"1 yr, minimum"},"2022-07-02|Ochai Agbaji":{"value":"4 yrs, $18.7M (rookie scale)"},"2022-06-28|R.J. Nembhard":{"value":"Two-way qualifying offer"},"2022-06-28|Collin Sexton":{"value":"$7.2M qualifying offer"},"2022-06-22|Dean Wade":{"value":"$1.9M team option"},"2022-04-09|Moses Brown":{"value":"1 yr (rest of season)"},"2022-03-31|R.J. Nembhard":{"value":"1 yr (rest of season)"},"2022-03-21|Moses Brown":{"value":"10-day"},"2022-03-10|Moses Brown":{"value":"10-day"},"2022-02-26|Tim Frazier":{"value":"10-day"},"2021-12-31|Brandon Goodwin":{"value":"10-day"},"2021-12-29|Malik Newman":{"value":"10-day"},"2021-12-22|Tre Scott":{"value":"10-day"},"2021-12-21|Luke Kornet":{"value":"10-day"},"2021-12-21|Justin Anderson":{"value":"10-day"},"2021-10-29|Dylan Windler":{"value":"$4.0M team option"},"2021-10-29|Darius Garland":{"value":"$8.9M team option"},"2021-10-29|Isaac Okoro":{"value":"$7.0M team option"},"2021-10-13|Ed Davis":{"value":"1 yr, minimum (non-guaranteed)"},"2021-10-12|Justin James":{"value":"1 yr, minimum (Exhibit 10)"},"2021-09-25|Kyle Guy":{"value":"1 yr, minimum (Exhibit 10)"},"2021-09-22|Denzel Valentine":{"value":"2 yrs, minimum (partially guaranteed)"},"2021-09-17|Kevin Pangos":{"value":"2 yrs, $3.4M (2nd yr non-guaranteed)"},"2021-09-08|R.J. Nembhard":{"value":"1 yr, minimum (Exhibit 10)"},"2021-09-08|Mitch Ballock":{"value":"1 yr, minimum (Exhibit 10)"},"2021-09-08|Tacko Fall":{"value":"1 yr, minimum (Exhibit 10)"},"2021-09-06|Tre Scott":{"value":"1 yr, minimum (Exhibit 10)"},"2021-08-06|Jarrett Allen":{"value":"5 yrs, $100M"},"2021-08-03|Evan Mobley":{"value":"4 yrs, $36.7M (rookie scale)"},"2021-07-30|Brodric Thomas":{"value":"Two-way qualifying offer"},"2021-07-23|Jarrett Allen":{"value":"$7.7M qualifying offer"},"2021-05-14|Anderson Varejao":{"value":"1 yr (rest of season)"},"2021-05-04|Anderson Varejao":{"value":"10-day"},"2021-05-01|Mfiondu Kabengele":{"value":"3 yrs (final 2 yrs non-guaranteed)"},"2021-04-21|Mfiondu Kabengele":{"value":"10-day"},"2021-04-14|Lamar Stevens":{"value":"4 yrs (non-guaranteed after 2020-21; 4th-yr team option)"},"2021-04-10|Mfiondu Kabengele":{"value":"10-day"},"2021-03-22|Quinn Cook":{"value":"10-day"},"2021-03-12|Quinn Cook":{"value":"10-day"},"2021-01-11|Yogi Ferrell":{"value":"10-day"},"2020-12-23|Darius Garland":{"value":"$7.0M team option"},"2020-12-23|Kevin Porter, Jr":{"value":"$1.8M team option"},"2020-12-23|Dylan Windler":{"value":"$2.2M team option"},"2020-12-23|Collin Sexton":{"value":"$6.3M team option"},"2020-12-19|Norvel Pelle":{"value":"1 yr, minimum (Exhibit 10)"},"2020-12-01|Levi Randolph":{"value":"1 yr, minimum (Exhibit 10)"},"2020-11-28|Thon Maker":{"value":"Non-guaranteed camp deal"},"2020-11-28|Marques Bolden":{"value":"1 yr, minimum (Exhibit 10)"},"2020-11-27|Charles Matthews":{"value":"1 yr, minimum (Exhibit 10)"},"2020-11-24|Damyean Dotson":{"value":"2 yrs, $4.0M (2nd yr non-guaranteed)"},"2020-11-24|Matt Dellavedova":{"value":"1 yr, minimum"},"2020-11-21|Isaac Okoro":{"value":"4 yrs, $29.1M (rookie scale)"},"2020-11-17|Andre Drummond":{"value":"$28.8M player option (exercised)"},"2020-06-29|Jordan Bell":{"value":"2 yrs"},"2020-06-29|Dean Wade":{"value":"4 yrs, $5.6M (non-guaranteed after 2019-20)"},"2020-03-08|Sheldon Mac":{"value":"10-day"},"2020-03-04|Dom Pointer":{"value":"10-day"},"2020-02-09|Malik Newman":{"value":"10-day"},"2020-02-09|J.P. Macura":{"value":"10-day"},"2020-02-08|Alfonzo McKinnie":{"value":"4 yrs, $7.2M (non-guaranteed after 2019-20)"},"2020-01-30|Marques Bolden":{"value":"10-day"},"2020-01-23|Alfonzo McKinnie":{"value":"10-day"},"2020-01-20|Tyler Cook":{"value":"10-day"},"2020-01-09|Tyler Cook":{"value":"10-day"},"2020-01-09|Alfonzo McKinnie":{"value":"10-day"},"2020-01-03|Tyler Cook":{"value":"1 yr (non-guaranteed)"},"2019-10-29|Collin Sexton":{"value":"$5.0M team option"},"2019-10-25|Cedi Osman":{"value":"4 yrs, $31.1M"},"2019-10-21|Alfonzo McKinnie":{"value":"1 yr, minimum (non-guaranteed)"},"2019-09-23|Timothe Luwawu-Cabarrot":{"value":"Non-guaranteed camp deal"},"2019-09-03|Daniel Hamilton":{"value":"1 yr, minimum (Exhibit 10)"},"2019-09-03|Marques Bolden":{"value":"1 yr, minimum (Exhibit 10)"},"2019-09-03|J.P. Macura":{"value":"1 yr, minimum (Exhibit 10)"},"2019-09-03|Sindarius Thornwell":{"value":"1 yr, minimum (Exhibit 10)"},"2019-08-19|Alex Robinson":{"value":"1 yr, minimum (Exhibit 10)"},"2019-08-16|Jarell Martin":{"value":"1 yr, minimum (Exhibit 10)"},"2019-08-05|Levi Randolph":{"value":"1 yr, minimum (Exhibit 10)"},"2019-08-05|Malik Newman":{"value":"1 yr, minimum (Exhibit 10)"},"2019-07-03|Kevin Porter Jr.":{"value":"4 yrs, $8.0M (rookie scale)"},"2019-07-01|Dylan Windler":{"value":"4 yrs, $10.4M (rookie scale)"},"2019-07-01|Darius Garland":{"value":"4 yrs, $29.1M (rookie scale)"},"2019-02-11|Nik Stauskas":{"value":"1 yr, minimum (rest of season)"},"2019-01-27|Kobi Simmons":{"value":"10-day"},"2019-01-16|Cameron Payne":{"value":"10-day"},"2019-01-06|Cameron Payne":{"value":"10-day"},"2018-12-31|Patrick McCaw":{"value":"2 yrs, $6.0M (non-guaranteed)"},"2018-12-28|Patrick McCaw":{"value":"2 yrs, $6.0M (non-guaranteed offer sheet)"},"2018-10-29|Ante Zizic":{"value":"$2.3M team option"},"2018-10-15|Larry Nance Jr.":{"value":"4 yrs, $44.8M"},"2018-10-11|Emanuel Terry":{"value":"1 yr, minimum (non-guaranteed camp deal)"},"2018-09-19|Kobi Simmons":{"value":"1 yr, minimum (Exhibit 10)"},"2018-09-14|Levi Randolph":{"value":"1 yr, minimum (non-guaranteed)"},"2018-09-14|Bonzie Colson Jr.":{"value":"1 yr, minimum (non-guaranteed)"},"2018-09-13|Jacorey Williams":{"value":"1 yr, minimum (non-guaranteed)"},"2018-09-10|Scoochie Smith":{"value":"1 yr, minimum (Exhibit 10)"},"2018-09-10|Isaac Hamilton":{"value":"1 yr, minimum (Exhibit 10)"},"2018-09-09|Rodney Hood":{"value":"1 yr, $3.5M (accepted qualifying offer)"},"2018-09-08|David Nwaba":{"value":"1 yr, minimum"},"2018-08-16|Isaiah Taylor":{"value":"1 yr, minimum (non-guaranteed)"},"2018-07-24|Kevin Love":{"value":"4 yrs, $120.4M"},"2018-07-19|Channing Frye":{"value":"1 yr, minimum"},"2018-07-04|Collin Sexton":{"value":"4 yrs, $20.2M (rookie scale)"},"2018-06-27|Kendrick Perkins":{"value":"Minimum-salary team option"},"2018-06-27|Rodney Hood":{"value":"$3.5M qualifying offer"},"2018-04-11|Kendrick Perkins":{"value":"2 yrs, minimum (2nd-yr team option)"},"2018-04-07|Okaro White":{"value":"2 yrs, minimum (partially guaranteed)"},"2018-03-18|Okaro White":{"value":"10-day"},"2018-02-22|Marcus Thornton":{"value":"10-day"},"2017-09-27|Dwyane Wade":{"value":"1 yr, minimum"},"2017-09-26|Jacorey Williams":{"value":"1 yr, minimum (non-guaranteed)"},"2017-09-25|Kendrick Perkins":{"value":"1 yr, minimum (non-guaranteed)"},"2017-07-25|Derrick Rose":{"value":"1 yr, minimum"},"2017-07-18|Cedi Osman":{"value":"3 yrs, $8.3M"},"2017-07-12|Kyle Korver":{"value":"3 yrs, $22.1M (partially guaranteed final yr)"},"2017-07-11|Jeff Green":{"value":"1 yr, minimum"},"2017-07-10|Jose Calderon":{"value":"1 yr, minimum"}};
 (function(){const L=document.getElementById('tx-list');if(!L)return;
@@ -3724,6 +2195,10 @@ const TX_X={"2026-08-20|Peyton Watson":{"url":"https://www.nba.com/cavaliers/new
   const tt=document.getElementById('tx-types');KINDS.forEach(([k,l])=>{const b=el('button','chipf',l);b.type='button';b.dataset.k=k;b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>{types.has(k)?types.delete(k):types.add(k);b.setAttribute('aria-pressed',types.has(k)?'true':'false');render()});tt.appendChild(b)});
   document.querySelectorAll('[data-txv]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.txv;document.querySelectorAll('[data-txv]').forEach(x=>x.setAttribute('aria-selected',x===b?'true':'false'));render()}));
   const qi=document.getElementById('txq');qi.addEventListener('input',()=>{q=fold(qi.value.trim());render()});
+  /* deep links: /moves?q=Name, or any link with data-txq, opens the list filtered to that search */
+  const txJump=v=>{qi.value=v;q=fold(v);render();setTimeout(()=>{const m=L.querySelector('.tx');if(m){m.scrollIntoView({block:'center'});m.classList.add('tx-hit')}},180)};
+  document.addEventListener('click',e=>{const a=e.target.closest('[data-txq]');if(a)txJump(a.dataset.txq)});
+  {const v=new URLSearchParams(location.search).get('q');if(v&&/^\/moves/.test(location.pathname))setTimeout(()=>txJump(v),0)}
   const TN=Object.assign({},TEAMS);
   function render(){L.textContent='';let cur='',sec,list,n=0;
     TX.forEach(r=>{if(view==='key'&&!KEY(r))return;if(types.size&&!types.has(r.k))return;
@@ -3750,7 +2225,7 @@ TX.filter(r=>r.k==='trade').forEach(r=>add('Trade · '+(r.got||[]).slice(0,2).jo
 /* number roll-in: digits in the chosen elements scramble for a moment, then settle (once per page view) */
 (function(){
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;const DIG='0123456789';const done=new Set();
-  const SEL={home:'#payroll, .hcap-h span',cap:'.cap td.cur, .cap td.fut, .cap tfoot td',assets:'#exc summary > b',moves:'.txs b',roster:'.ros td.m, .ros td.num'};
+  const SEL={home:'#payroll, .hcap-h span',cap:'.cap td.cur, .cap td.fut, .cap tfoot td',assets:'#exc summary > b, .cash-c > b',moves:'.txs b',roster:'.ros td.m, .ros td.num'};
   function rollText(node,delay){const fin=node.nodeValue;if(!/[0-9]/.test(fin))return;let k=0;const steps=9;
     setTimeout(()=>{const iv=setInterval(()=>{k++;node.nodeValue=[...fin].map((c,i)=>/[0-9]/.test(c)&&k<steps+(i%6)?DIG[(Math.random()*10)|0]:c).join('');if(k>=steps+6){node.nodeValue=fin;clearInterval(iv)}},50)},delay)}
   window.scrambleView=function(id){if(reduce||done.has(id)||!SEL[id])return;done.add(id);
@@ -3766,8 +2241,7 @@ const CH_TEAM_URL={"Grand Rapids Gold": "https://grandrapids.gleague.nba.com/", 
    [name, games, minutes, points, rebounds, assists, steals, blocks, FGM, FGA, 3PM, 3PA, PER] */
 const CH_STATS=[];
 const CH_ROSTER=[
-  ['Two-way contracts (Cavs)',[['Tristan Enaruna','F','Two-way','Also on the Cavs roster'],['Riley Minix','F','Two-way','Also on the Cavs roster'],['Ernest Udeh Jr.','C','Two-way','Also on the Cavs roster']]],
-  ['Cavs Exhibit 10 (training camp)',[['Rashaun Agee','F','Exhibit 10','In Cavs camp'],['Zack Austin','F','Exhibit 10','In Cavs camp'],['Noam Yaacov','G','Exhibit 10','In Cavs camp']]]
+  ['Two-way contracts (Cavs)',[['Tristan Enaruna','F','Two-way','Also on the Cavs roster'],['Riley Minix','F','Two-way','Also on the Cavs roster'],['Ernest Udeh Jr.','C','Two-way','Also on the Cavs roster']]]
 ];
 /* staff bios: Charge releases and front office page, university athletics bios, EuroLeague/Eurohoops, Wikipedia */
 const CH_BIOS={"Eli Kell-Abrams": {"img": "/img/s/eli-kell-abrams.jpg", "facts": [["High school", "Westtown School (Pa.)"], ["College", "Emerson College (2011–12 to 2014–15)"], ["Playing", "Guard at Emerson (Division III); point guard as a freshman in 2011–12, senior in 2014–15"], ["Experience", "College coaching since 2015; NBA staff experience with Miami, Philadelphia and Portland"], ["With the Charge", "2nd season (hired Aug. 25, 2025)"]], "path": [["2011–15", "Player, Emerson College"], ["2015–17", "Graduate assistant, University of Miami"], ["2017–18", "Assistant coach, St. Thomas Aquinas College"], ["—", "Video intern, then assistant video coordinator, Miami Heat"], ["—", "Head video coordinator, Philadelphia 76ers (two seasons)"], ["2023–25", "Head video coordinator, Portland Trail Blazers"], ["2025–", "Head coach, Cleveland Charge"]], "note": "First head coaching job. Charge release says he had been an assistant with the 76ers and Heat; SI describes those roles as video jobs."}, "Doron Perkins": {"img": "https://images.eurohoops.net/2021/08/e8c222f3-doron-perkins-maccabi-euroleague.jpg", "facts": [["Born", "May 6, 1983, Anchorage, Alaska"], ["High school", "Bartlett High School (Anchorage)"], ["College", "Southwestern Oregon CC (2001–03); Santa Clara (2003–05)"], ["Playing", "Two-time All-WCC First Team at Santa Clara (2004, 2005). Undrafted in 2005; pro career 2005–2018 in Japan, Germany, Belgium, Israel, Italy, Ukraine, China, Greece, Turkey, Spain, Iran and South Korea"], ["Experience", "NBA/G League staff since 2019"], ["With the Charge", "4th season (joined 2023–24)"]], "path": [["2005–06", "Player, Toyota Alvark (Japan)"], ["2006–07", "Player, EWE Baskets Oldenburg (Germany)"], ["2007–08", "Player, Euphony Bree (Belgium)"], ["2008–09", "Player, Maccabi Haifa (Israel)"], ["2009–11", "Player, Maccabi Tel Aviv (Israel)"], ["2012", "Player, Cantù (Italy); Donetsk (Ukraine)"], ["2013", "Player, Foshan (China); Olympiacos (Greece)"], ["2013–14", "Player, Beşiktaş (Turkey)"], ["2014", "Player, Laboral Kutxa/Baskonia (Spain)"], ["2015–16", "Player, Yeşilgiresun Belediye (Turkey)"], ["2016–17", "Player, Sanat Naft Abadan (Iran)"], ["2017–18", "Player, Goyang Orions (South Korea)"], ["2019–21", "Assistant coach/video, Brooklyn Nets & Long Island Nets"], ["2021–23", "Assistant coach, Maccabi Tel Aviv"], ["2023–", "Assistant coach, Cleveland Charge"]], "note": "Honors: Japan league champion and MVP (2006); Israeli Super League MVP (2009); Israeli DPOY (2010, 2011); EuroLeague champion with Olympiacos (2013). Played one 2009 NBA Summer League game for the Cavaliers."}, "Willie Williams": {"img": null, "facts": [["College", "Cleveland State"], ["Experience", "Cavaliers organization since roughly 2013 (nine seasons with the Cavs before joining the Charge in 2022)"], ["With the Charge", "5th season (joined 2022–23)"]], "path": [["~2013–22", "Cavaliers basketball operations: game-night team attendant, rising to assistant equipment manager (travel and logistics)"], ["2022–25", "Video coordinator, Cleveland Charge"], ["2025–", "Assistant coach/director of video, Cleveland Charge"]], "note": null}, "Sam Hershberger": {"img": "https://dxbhsrqyrr690.cloudfront.net/sidearm.nextgen.sites/brownuni.sidearmsports.com/images/2024/10/9/00_Hershberger_1.jpg", "facts": [["College", "Elon University, B.A. Psychology (2016); University of Florida, M.S. Applied Physiology & Kinesiology (2019)"], ["Playing", "Non-recruited walk-on at Elon; four-year letterman and senior captain; 2016 Coach’s Award and Browne Memorial Award"], ["Experience", "College coaching since 2017"], ["With the Charge", "2nd season (joined 2025–26)"]], "path": [["2012–16", "Player, Elon"], ["2017–19", "Graduate assistant, Florida"], ["2019–23", "Director of basketball operations / operations coordinator, Brown"], ["2023–25", "Assistant coach, Brown"], ["2025–", "Assistant coach, Cleveland Charge"]], "note": "Selected for the 2025 TopConnect Basketball Symposium."}, "Daniel Sokolovsky": {"img": "https://countiessportshub.co.nz/wp-content/uploads/2023/11/sokolovsky.jpg", "facts": [["College", "Columbia University (studied; men’s basketball graduate manager 2016–17); Charge camp roster lists Hunter College"], ["Experience", "Pro coaching since about 2017"], ["With the Charge", "2nd season (joined 2025–26)"]], "path": [["2016–17", "Graduate manager, Columbia men’s basketball"], ["—", "Assistant coach, Parma Perm (Russia, VTB United League), two years"], ["—", "Stints in China (CBA), Israel (Premier League), Germany (BBL)"], ["~2021–22", "Head coach, BKM Lučenec (Slovakia); reached the Finals"], ["2022–25", "Assistant, then lead/associate head coach, NZ Breakers (NBL)"], ["2023", "Head coach, Franklin Bulls (NZ NBL); 12-6, first finals berth, club’s winningest coach"], ["—", "Assistant coach, New Zealand national team"], ["2025–", "Assistant coach, Cleveland Charge"]], "note": "Recruited to the Breakers by Mody Maor. Described as 29 in a Dec. 2022 Breakers story and 30 in an Aug. 2024 one."}, "Mickell Gladness": {"img": null, "facts": [["Born", "July 26, 1986, Jasper, Alabama"], ["Hometown", "Sylacauga, Alabama"], ["High school", "Sylacauga High School"], ["College", "Lawson State CC (2004–05); Alabama A&M (2005–08), business management"], ["Playing", "Led NCAA Division I in blocks in 2006–07 (6.3 bpg); set the D-I single-game record with 16 blocks vs. Texas Southern (Feb. 24, 2007); two-time SWAC DPOY. Undrafted in 2008; played 26 NBA games in 2011–12 (Miami, Golden State); pro career through 2020"], ["With the Charge", "2nd season (joined 2025–26)"]], "path": [["2008–09", "Player, Matrixx Magixx (Netherlands)"], ["2009–11", "Player, Rio Grande Valley Vipers (D-League)"], ["2011", "Player, Dakota Wizards (D-League)"], ["2011–12", "Player, Miami Heat & Golden State Warriors (NBA)"], ["2012–13", "Player, Santa Cruz Warriors (D-League)"], ["2013–14", "Player, Reno Bighorns (D-League)"], ["2014–16", "Player, Jiangxi (China), Townsville (Australia), Canterbury (NZ), Maccabi Ashdod (Israel)"], ["2016–20", "Player, San Lorenzo (Argentina), Kalev/Cramo (Estonia), Bilbao (Spain), Nes Ziona (Israel), Pistoia (Italy), Benfica (Portugal), San-en NeoPhoenix (Japan), Arka Gdynia (Poland)"], ["2025–", "NBA Coaching Development Program assistant, Cleveland Charge"]], "note": "2010 D-League champion; two-time D-League All-Defensive Third Team (2013, 2014). The NBA program places aspiring coaches and front-office staff with G League teams."}, "Takuya Kikuchi": {"img": null, "facts": [["College", "Oregon State"], ["With the Charge", "5th season (joined 2022–23)"]], "path": [["2022–", "Head athletic trainer, Cleveland Charge"]], "note": "First listed on the 2022 training camp staff; not on the 2021–22 staff."}, "Myles Thornton": {"img": "https://dxbhsrqyrr690.cloudfront.net/sidearm.nextgen.sites/smumustangs.com/images/2024/10/22/MylesThornton_SuitHS.jpg", "facts": [["Hometown", "San Antonio, Texas"], ["College", "University of the Incarnate Word (graduated 2019; master’s in exercise science, 2021)"], ["Experience", "Basketball athletic training since 2020"], ["With the Charge", "2nd season (joined 2025–26)"]], "path": [["—", "Strength & conditioning intern, Dallas Mavericks"], ["2020–25", "Athletic trainer, SMU men’s basketball"], ["2025–", "Cleveland Clinic athletic trainer, Cleveland Charge"]], "note": "NASM Performance Enhancement Specialist."}, "Raphael Whittingham": {"img": "https://d30gg31prq37yp.cloudfront.net/coach/raphael-whittingham_big.png", "facts": [["Hometown", "Brooklyn, N.Y."], ["College", "Delaware State, B.S. Exercise Science (2015); Long Island University, M.S. Exercise Science"], ["With the Charge", "3rd season (joined 2024–25)"]], "path": [["—", "Interned with Georgia State, Manhattan College, New York Jets"], ["—", "Graduate assistant, LIU"], ["—", "Assistant strength coach, Delaware (basketball, volleyball)"], ["—", "Sports performance intern/staff, Dallas Mavericks"], ["—", "Sports performance coach, Utah Valley men’s basketball"], ["2024–", "Strength & conditioning coach, Cleveland Charge"]], "note": "NSCA CSCS. Pre-Charge background is from a SportsEdTV coach bio; it matches the Charge listing (Delaware State)."}, "Liron Fanan": {"img": "/img/s/liron-fanan.jpg", "facts": [["College", "New York University, B.S. Sports Marketing & Sports Management (2005)"], ["Experience", "Pro basketball front office since 2005; Cavaliers/Charge since 2018"], ["With the Charge", "9th season in the organization (joined 2018–19)"]], "path": [["1997–99", "IDF intelligence liaison (counterterrorism)"], ["2005", "Assistant to the chairman, Maccabi Games organizing committee"], ["2005–09", "Assistant GM, Maccabi Tel Aviv (EuroLeague)"], ["2015–16", "Mission director, Omri Casspi Foundation"], ["—", "Co-founder, 2Talent Sports Management (agency)"], ["2018–20", "Director of G League player development, Cavaliers/Canton Charge"], ["2020–23", "Assistant GM, Charge"], ["2023–26", "General manager, Cleveland Charge"], ["Current", "President of G League Operations, Cavaliers (per Charge front-office page)"]], "note": "First woman to serve as Charge GM (fourth in the G League) and first woman to win G League Basketball Executive of the Year (2025–26). The Charge went 31-19 that season, tying the franchise record for wins. Her father Moni was Maccabi Tel Aviv vice chairman. She managed Omri Casspi’s off-court affairs for about a decade."}, "Luis Gonzalez Infante": {"img": null, "facts": [["Hometown", "Puerto Rico"], ["Experience", "Florida State GA 2017–19; Cavaliers scout"], ["With the Charge", "4th season as AGM (promoted 2023–24)"]], "path": [["2017–19", "Graduate assistant, Florida State (under Leonard Hamilton)"], ["—", "Scout, Cleveland Cavaliers (college scouting)"], ["2023–", "Assistant general manager, Cleveland Charge"]], "note": "Was at FSU for its 2018 Elite Eight run. Still does college draft scouting for the Cavs alongside the AGM role."}, "Max Weisberg": {"img": null, "facts": [["With the Charge", "4th season as AGM (promoted 2023–24)"]], "path": [["—", "Charge basketball operations staff"], ["2023–", "Assistant general manager, Cleveland Charge"]], "note": null}, "Brandon Halupnik": {"img": null, "facts": [["With the Charge", "On staff since at least 2023–24"]], "path": [["—", "Charge basketball operations staff"], ["2023–25", "Manager of operations/player development, Cleveland Charge"], ["2025–", "Director of basketball operations & player personnel (front-office page: Director, Scouting and Player Personnel)"]], "note": null}, "Max Brandt": {"img": "https://dxbhsrqyrr690.cloudfront.net/sidearm.nextgen.sites/utamavs.com/images/2023/9/8/Brandt_Web_23.png", "facts": [["College", "SMU (worked three seasons with men’s basketball, two as head manager)"], ["With the Charge", "Promoted to coaching analytics director for 2025–26"]], "path": [["~2020–23", "Student manager/head manager, SMU men’s basketball"], ["2023–24", "Video & analytics coordinator, UT Arlington"], ["—", "Charge staff (promoted 2025–26)"], ["2025–", "Director of coaching analytics, Cleveland Charge"]], "note": "Has NCAA compliance experience. Not listed on the current Charge front-office page."}};
@@ -3860,10 +2334,7 @@ const PLAYERS=[
  ['45','Donovan Mitchell','G','6-2',228,'1996-09-07',30,'9','Louisville','USA',[2017,1,13],'',1628378],
  ['12','Riley Minix','F','6-7',230,'2000-09-22',26,'2','Morehead State','USA',null,'TW',1642434],
  ['21','Tristan Enaruna','F','6-7',220,'2001-06-26',25,'1','Cleveland State','Netherlands',null,'TW',1642400],
- ['88','Ernest Udeh Jr.','C','6-9',266,'2004-01-08',22,'R','Miami','USA',null,'TW',1643640],
- ['','Rashaun Agee','F','—',null,'2000-11-02',25,'R','—','—',null,'Camp',1643772],
- ['','Zack Austin','F','6-5',216,'2001-08-11',25,'R','Pittsburgh','USA',null,'Camp',1643113],
- ['','Noam Yaacov','G','6-1',null,'2004-10-20',21,'R','Oostende (Belgium)','Israel',null,'Camp',1643037]
+ ['88','Ernest Udeh Jr.','C','6-9',266,'2004-01-08',22,'R','Miami','USA',null,'TW',1643640]
 ];
 /* combine anthro: name -> [year, ht no shoes, ht shoes, wingspan, reach, wt, body fat %, hand L, hand W, source]. Inches. */
 /* how acquired — NBA.com roster feed. name -> [how, date] */
@@ -3995,6 +2466,7 @@ const COMBINE={
         mc.forEach(([nm2,tm,id,yr,h,w,rch,wt2])=>{const r=el('tr');const t1=el('td');const a=el('a','dlink',nm2);a.href='https://www.nba.com/player/'+id;a.target='_blank';a.rel='noopener';t1.append(a,' ',el('small',null,tm+' · '+yr));r.append(t1,el('td','m',ftin(h)),el('td','m',ftin(w)),el('td','m',ftin(rch)),el('td','r m',Math.round(wt2)+' lb'));bd.appendChild(r)});
         tb.appendChild(bd);box.appendChild(tb);
         box.appendChild(el('p','mcnote',(c&&c[9]==='NBA combine'?'Compared with his '+c[0]+' combine numbers. ':'He wasn’t measured at a combine, so this uses his listed height and weight and his CraftedNBA wingspan. ')+'Closest active players by height without shoes, wingspan, standing reach and weight, from NBA.com combine records since 2000. Year = their combine.'));
+        {const kids=[...box.children];const k=kids.findIndex(x=>x.tagName==='H4'&&/^Similar/.test(x.textContent));if(k>0){const A=el('div','mc-a'),B=el('div','mc-b');kids.forEach((x,i)=>(i<k?A:B).appendChild(x));box.append(A,B)}}
         dt.appendChild(box);dr.appendChild(dt);mb.appendChild(dr);mr._d=dr;
         bt.onclick=()=>{const o=bt.getAttribute('aria-expanded')!=='true';bt.setAttribute('aria-expanded',String(o));dr.hidden=!o}}
     });
@@ -4050,13 +2522,15 @@ function loadRcf(){if(rcfLoaded)return;rcfLoaded=true;
   fetch((location.protocol==='file:'?'':'/')+'rcf.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(d=>{if(d)render(d);else box.appendChild(el('p','dim','Articles couldn’t load. Visit RealCavsFans.com.'))}).catch(()=>box.appendChild(el('p','dim','Articles couldn’t load. Visit RealCavsFans.com.')));
 }
 
-/* feedback prompt: shows once after ~2 minutes on the site or 15 clicks; "Not now" waits 30 days; sending stops it for good.
+/* feedback prompt: only for regulars. Shows once someone has visited on 2+ different days AND spent 12+ minutes on the site in total (or clicked 50 times in one visit); "Not now" waits 30 days; sending stops it for good.
    Sends through FormSubmit to the editor's inbox (the first submission triggers a one-time activation email). */
 (function(){const F=document.getElementById('fb');if(!F)return;const K='cdb-fb';
   const get=()=>{try{return JSON.parse(localStorage.getItem(K)||'{}')}catch(e){return {}}},put=o=>{try{localStorage.setItem(K,JSON.stringify(o))}catch(e){}};
   const st=get();const quiet=st.sent||(st.snooze&&Date.now()<st.snooze);
   if(/preview=feedback/.test(location.search)){setTimeout(()=>{if(matchMedia('(max-width:520px)').matches)F.classList.add('mini');F.hidden=false},400)}
   let clicks=0,shown=false,active=st.t||0,last=Date.now();
+  {const today=new Date().toISOString().slice(0,10),d=(st.d||[]).filter(x=>x!==today).concat(today).slice(-5);put({...get(),d});st.d=d}
+  const regular=()=>(st.d||[]).length>=2;
   let idle=0;const arm=()=>{clearTimeout(idle);idle=setTimeout(()=>{if(!F.hidden&&!F.contains(document.activeElement)&&!document.getElementById('fb-t').value.trim())close(7)},60000)};
   ['pointerdown','focusin','input','keydown'].forEach(ev=>F.addEventListener(ev,()=>{clearTimeout(idle);if(ev!=='focusin')arm()}));
   const open=()=>{if(quiet||shown||document.getElementById('cel'))return;shown=true;if(matchMedia('(max-width:520px)').matches)F.classList.add('mini');F.hidden=false;arm()};
@@ -4066,8 +2540,8 @@ function loadRcf(){if(rcfLoaded)return;rcfLoaded=true;
     const ad=['rcfwriter','gmail.com'].join('@');const pp=F.querySelector('#fb-ask p');pp.textContent='Questions, corrections or ideas. It goes straight to the site’s editor at ';const a=document.createElement('a');a.href='mailto:'+ad;a.textContent=ad;pp.append(a,'.');
     document.getElementById('fb-t').placeholder='Your message…';F.hidden=false;shown=true;setTimeout(()=>document.getElementById('fb-t').focus(),50)};
   document.getElementById('fb-o').onclick=()=>{F.classList.remove('mini');document.getElementById('fb-t').focus()};
-  document.addEventListener('click',e=>{if(F.contains(e.target))return;clicks++;if(clicks>=15)open()});
-  setInterval(()=>{if(document.hidden)return;active+=5;put({...get(),t:active});if(active>=120)open()},5000);
+  document.addEventListener('click',e=>{if(F.contains(e.target))return;clicks++;if(clicks>=50&&regular())open()});
+  setInterval(()=>{if(document.hidden)return;active+=5;put({...get(),t:active});if(active>=720&&regular())open()},5000);
   const close=snooze=>{F.hidden=true;put({...get(),snooze:Date.now()+(snooze||30)*864e5})};
   document.getElementById('fb-x').onclick=()=>close(30);document.getElementById('fb-l').onclick=()=>close(30);
   document.getElementById('fb-f').addEventListener('submit',async e=>{e.preventDefault();const t=document.getElementById('fb-t').value.trim();if(!t||document.getElementById('fb-hp').value)return;
@@ -4087,6 +2561,7 @@ const PAGE_META={
  'roster-tree':['How the Cavs Roster Was Built: Trade Trees 2026–27 | cavs_db','Every Cavs player by how he arrived, plus the trade trees behind Donovan Mitchell, Jarrett Allen, James Harden and Peyton Watson, back to the 2017 Kyrie Irving trade.'],
  'moves':['Cavs Transactions & Trade History Since 2017 | cavs_db','Every Cavs trade, signing, extension, draft pick and waiver since 2017, with what moved in each deal.'],
  'charge':['Cleveland Charge Schedule, Roster & Stats 2026–27 (G League) | cavs_db','The Cavs’ G League affiliate: full schedule with results, player stats and leaders, two-way and affiliate players, and coach and front office bios.'],
+ 'history':['Cavs History: Every Season, Retired Numbers, Leaders & Draft Picks | cavs_db','Every Cleveland Cavaliers season since 1970: records, playoff results, coaches and leaders, plus retired numbers, all-time leaders, who wore each number, every draft pick and every head coach.'],
  'media':['Cavs Press Conferences, Highlights & Articles | cavs_db','The latest Cavs press conferences and highlights from the team’s YouTube channel, plus articles and recaps from RealCavsFans.com.'],
  'resources':['Best Cavs & NBA Stats, Salary Cap and Draft Sites | cavs_db','cavs_db approved sites for NBA and Cavs knowledge.']
 };
@@ -4132,7 +2607,7 @@ window.renderPlayer=function(s){
   v.innerHTML='';const w=el('div','wrap page ppx');v.appendChild(w);
   {const bc=el('div','dim');bc.style.fontSize='13px';const a1=el('a',null,'Home');a1.href='/';a1.dataset.go='home';const a2=el('a',null,'Roster');a2.href='/roster';a2.dataset.go='roster';bc.append(a1,' / ',a2,' / '+n);w.appendChild(bc)}
   const body=el('div','ppx-body');w.appendChild(body);
-  body.appendChild(el('p','dim','Loading…'));
+  {const sk=el('div','skel-wrap');sk.setAttribute('aria-label','Loading');sk.innerHTML='<div class="skel skel-band"></div><div class="skel-row"><div class="skel skel-b"></div><div class="skel skel-b"></div></div><div class="skel skel-card"></div><div class="skel skel-card"></div>';body.appendChild(sk)}
   ppLoad().then(()=>{body.innerHTML='';try{ppBuild(p,body)}catch(e){console.error(e);body.appendChild(el('p','dim','Something went wrong loading this page.'))}
     /* links like /players/evan-mobley#ch-his open that chapter */
     const h=location.hash;if(/^#ch-[a-z]+$/.test(h)){const d=document.querySelector(h);if(d){d.open=true;setTimeout(()=>d.scrollIntoView({block:'start'}),150)}}});
@@ -4144,7 +2619,7 @@ function ppBuild(p,root){
   const f1=v=>v==null||isNaN(v)?'—':(+v).toFixed(1),f3=v=>v==null||isNaN(v)?'—':(+v).toFixed(3).replace(/^0/,''),pc=v=>Math.max(0,Math.min(100,v));
   const ext=(t,u)=>{const a=el('a',null,t+' ↗');a.href=u;a.target='_blank';a.rel='noopener';return a};
   const ilink=(t,route,hash)=>{const a=el('a',null,t);a.href='/'+route+(hash?'#'+hash:'');a.dataset.go=route;if(hash)a.addEventListener('click',()=>setTimeout(()=>{const e=document.getElementById(hash);if(e)e.scrollIntoView({block:'center'})},350));return a};
-  const tip=(label,key)=>{const w2=el('span','ppx-tl');w2.append(label);const t=X.TIPS[key||label];if(!t)return w2;const b=el('button','ppx-tip','?');b.type='button';b.setAttribute('aria-label','What is '+label+'?');const pop=el('span','ppx-pop',t);pop.hidden=true;b.addEventListener('click',e=>{e.stopPropagation();pop.hidden=!pop.hidden});w2.append(b,pop);return w2};
+  const tip=(label,key)=>{const w2=el('span','ppx-tl');w2.append(label);const t=X.TIPS[key||label];if(t)w2.title=t;return w2;const b=el('button','ppx-tip','?');b.type='button';b.setAttribute('aria-label','What is '+label+'?');const pop=el('span','ppx-pop',t);pop.hidden=true;b.addEventListener('click',e=>{e.stopPropagation();pop.hidden=!pop.hidden});w2.append(b,pop);return w2};
   const card=(title,tipKey,why)=>{const c=el('section','ppx-c');const h=el('div','ppx-ch');const h2=el('h2');h2.append(tipKey?tip(title,tipKey):title);h.appendChild(h2);c.appendChild(h);if(why){const pw=el('p','ppx-why');pw.innerHTML=why;c.appendChild(pw)}return c};
   const ctx=(t)=>{const d=el('div','ppx-ctx');d.appendChild(el('b',null,'In context'));d.append(t);return d};
   const note=t=>el('p','ppx-note',t);
@@ -4180,7 +2655,7 @@ function ppBuild(p,root){
   const meL=LP.find(x=>x.n===n&&x.t==='CLE');
   const per=(x,k)=>x[k]/x.g;
   const rankIn=(val,arr,hi=true)=>{if(val==null||!arr.length)return null;const better=arr.filter(v2=>hi?v2>val:v2<val).length;return {r:better+1,of:arr.length+(arr.includes(val)?0:1),pct:Math.round(100*(arr.filter(v2=>hi?v2<val:v2>val).length)/Math.max(1,arr.length))}};
-  const lgOK=meL&&meL.g>=5&&pool.length>=20;
+  const lgOK=meL&&meL.g>=5&&meL.min/meL.g>=12&&pool.length>=20;  /* rank only players who would qualify for the pool themselves */
   const lgRank=(k,fn)=>{if(!lgOK)return null;const f=fn||(x=>per(x,k));const arr=pool.filter(x=>x!==meL).map(f);return rankIn(f(meL),arr)};
   // Cavs rank this season (players with 3+ games)
   const cavsRank=(fn)=>{if(!gp)return null;const by={};games.forEach(g=>(BX[g.d].box||[]).forEach(r=>{(by[r[0]]=by[r[0]]||[]).push(r)}));
@@ -4416,7 +2891,7 @@ function ppBuild(p,root){
   root.appendChild(el('p','ppx-foot','Stats: our Cavs box scores (ESPN) and a nightly ESPN league feed; earlier seasons from Wikipedia and Basketball Reference. Contract data from the cap page. Updated after every game.'));
 }
 
-const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge','player','roster-tree','game'];
+const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge','player','roster-tree','game','history','season'];
 /* page titles and descriptions per route (search engines and browser tabs) */
 const ROUTE_ALIAS={video:'media',rcf:'media/rcf'}; /* media/rcf now opens Media scrolled to the articles */
 function routeOf(){let r=location.pathname.replace(/^\/+|\/+$/g,'').toLowerCase();if(/index\.html$/.test(r)||location.protocol==='file:')r='';const h=location.hash.slice(1);if(!r&&h&&(SECTIONS.some(x=>x[0]===h)||ROUTE_ALIAS[h]))r=h;const AL={video:'media',rcf:'media/rcf'};return AL[r]||r||'home'}
@@ -4425,9 +2900,10 @@ function show(route){
   if(window.cdbAttachX)setTimeout(window.cdbAttachX,60);
   {const cur=document.querySelector('.wm-term s');if(cur&&!matchMedia('(prefers-reduced-motion: reduce)').matches){cur.style.animation='none';void cur.offsetWidth;cur.style.animation=''}}
   let id=route.split('/')[0];const toArt=route==='media/rcf';if(toArt)route='media';if(id==='media')id='video';
+  if(id==='history'&&route.split('/')[1]){id='season';window.renderSeason&&renderSeason(route.split('/')[1])}
   if(id==='games'){id='game';if(!window.renderGame||!renderGame(route.split('/')[1]||'')){id='home';route='home'}}
   if(id==='players'){id='player';if(!PP_VIS||!window.renderPlayer||!renderPlayer(route.split('/')[1]||'')){id='home';route='home'}}
-  const sec=id==='video'?'media':id==='player'?'roster':id==='roster-tree'?'moves':id==='game'?'schedule':id;
+  const sec=id==='video'?'media':id==='player'?'roster':id==='roster-tree'?'moves':id==='game'?'schedule':id==='season'?'history':id;
   if(!SECTIONS.some(s=>s[0]===sec)){id='home';route='home'}
   BUILT.forEach(v=>{document.getElementById('view-'+v).hidden=id!==v});
   const stub=document.getElementById('view-stub');stub.hidden=BUILT.includes(id);
@@ -4438,8 +2914,196 @@ function show(route){
   if(window.scrambleView)scrambleView(id);
   if(id==='video'){loadRcf();if(toArt){try{history.replaceState({p:'media'},'','/media')}catch(_){}}if(toArt)setTimeout(()=>{const a=document.getElementById('articles');if(a)a.scrollIntoView({block:'start'})},60)}
   if(id==='roster-tree'&&window.rtDraw)setTimeout(rtDraw,30);
+  if(id==='history'&&window.hxLoad)hxLoad();
+  if(id==='resources'&&window.loadCovers)loadCovers();
   if(id==='home'&&window.resetCal){resetCal();const c=document.getElementById('dcal');if(c&&c.getBoundingClientRect().top<innerHeight){c.dataset.done=1;setTimeout(()=>c.classList.add('rip'),500)}}
 }
+/* History tab: seasons, playoff runs, retired numbers, leaders, who wore it, draft and coaches. Data in /pdata/history.json (loaded on first visit). */
+(function(){let H=null,MS=null,busy=false;
+const LV={title:['Champions','hx-l6'],finals:['Lost in the Finals','hx-l5'],conf:['Conference finals','hx-l4'],round2:['Second round','hx-l3'],round1:['First round','hx-l2'],playin:['Play-in','hx-l1'],missed:['Missed playoffs','hx-l0']};
+const yrs=s=>s.split('–'),num=s=>+String(s).split('–')[0];
+const bbS=n=>'https://www.basketball-reference.com/search/search.fcgi?search='+encodeURIComponent(n),bbA=(n,cls,id)=>{const a=el('a',cls||'dlink',n);a.href=id?'https://www.basketball-reference.com/players/'+id[0]+'/'+id+'.html':bbS(n);a.target='_blank';a.rel='noopener';a.title=n+' on Basketball Reference';return a};
+
+function draw(){const $=id=>document.getElementById(id);
+  const S=H.seasons;
+  /* stat strip */
+  {const st=$('hx-stats');st.textContent='';const W=S.reduce((a,x)=>a+x.w,0),L=S.reduce((a,x)=>a+x.l,0);
+   [[W+'–'+L,'All-time record'],[S.filter(x=>!['missed','playin'].includes(x.poLevel)).length,'Playoff trips'],[S.filter(x=>['finals','title'].includes(x.poLevel)).length,'NBA Finals'],['2016','Champions'],[H.retired.length,'Retired numbers']].forEach(([v,l])=>{const d=el('div','txs');d.append(el('b','num-sc',String(v)),el('span',null,l));st.appendChild(d)})}
+  /* season grid */
+  {const lg=$('hx-leg');lg.textContent='';['title','finals','conf','round2','round1','playin','missed'].forEach(k=>{const s=el('span');s.append(el('i',LV[k][1]),LV[k][0]);lg.appendChild(s)});
+   const g=$('hx-grid');g.textContent='';const det=$('hx-det');
+   const open=(x,b)=>{g.querySelectorAll('button').forEach(z=>z.setAttribute('aria-pressed',z===b?'true':'false'));det.hidden=false;det.textContent='';
+     const h=el('div','hx-dh');h.append(el('b',null,x.s),el('span',LV[x.poLevel][1]+' hx-tag',LV[x.poLevel][0]));det.appendChild(h);
+     const pct=(x.w/(x.w+x.l)).toFixed(3).replace(/^0/,'');
+     const rows=[['Record',x.w+'–'+x.l+' ('+pct+') · '+x.div+(x.seed?' · No. '+x.seed+' seed':'')],['Playoffs',x.po],['Coach',x.coach.map(c=>c[0]+(x.coach.length>1?' ('+c[1]+')':'')).join(', ')],
+       ['Leaders',[['pts','pts'],['reb','reb'],['ast','ast']].map(([k,l])=>x.lead[k]?x.lead[k][0]+' '+x.lead[k][1]+' '+l:'').filter(Boolean).join(' · ')],['All-Stars',(x.allstar||[]).join(', ')||'None']];
+     const dl=el('dl','hx-dl');rows.forEach(([k,v])=>{dl.append(el('dt',null,k),el('dd',null,v))});det.appendChild(dl);
+     if(x.note)det.appendChild(el('p','hx-note',x.note));
+     {const sl=x.s.replace('–','-');const a=el('a','hx-full','Full '+x.s+' season page →');a.href='/history/'+sl;a.dataset.go='history/'+sl;det.appendChild(a)}};
+   let dec=null,row;S.forEach(x=>{const d=Math.floor(num(x.s)/10)*10;if(d!==dec){dec=d;g.appendChild(el('div','hx-dec',d+'s'));row=el('div','hx-row');g.appendChild(row)}
+     const b=el('button','hx-s '+LV[x.poLevel][1]);b.type='button';b.setAttribute('aria-pressed','false');b.title=x.s+': '+x.w+'–'+x.l+', '+x.po;
+     b.append(el('span',null,"'"+String(num(x.s)+1).slice(2)),el('b',null,x.w+'–'+x.l));if(x.poLevel==='title')b.appendChild(el('i',null,'★'));b.onclick=()=>open(x,b);row.appendChild(b)});
+   const t=S.find(x=>x.poLevel==='title');open(t,[...g.querySelectorAll('button')][S.indexOf(t)])}
+
+  /* playoff history */
+  {const SE=H.series||[],V=H.vsOpp||{},box=$('hx-opp'),tb=$('hx-po-b');let f='',more=false;box.textContent='';const mb=$('hx-po-more');mb.onclick=()=>{more=true;render()};
+   const RS=r=>/Play-in/.test(r)?'Play-in':/Finals/.test(r)&&/NBA/.test(r)?'NBA Finals':/Conference Finals|Division Finals/.test(r)?'East finals':/Semifinals/.test(r)?'East semis':/First Round/.test(r)?'First round':r;
+   const won=SE.filter(x=>x.won&&!/Play-in/.test(x.round)).length,lost=SE.filter(x=>!x.won&&!/Play-in/.test(x.round)).length;$('hx-po-n').textContent='Series record '+won+'–'+lost;
+   const all=el('button','hx-oc');all.type='button';all.dataset.o='';all.append(el('b',null,'All'),el('span',null,won+'–'+lost));{const i=el('i');i.style.setProperty('--w',(won/(won+lost)*100).toFixed(0)+'%');all.appendChild(i)}box.appendChild(all);
+   Object.entries(V).sort((a,b)=>(b[1][0]+b[1][1])-(a[1][0]+a[1][1])||b[1][0]-a[1][0]).forEach(([o,[w,l]])=>{const b=el('button','hx-oc');b.type='button';b.dataset.o=o;b.append(el('b',null,o),el('span',null,w+'–'+l));{const i=el('i');i.style.setProperty('--w',(w/(w+l)*100).toFixed(0)+'%');b.appendChild(i)}b.title=(TEAMS[o]||o)+': '+w+'–'+l+' in playoff series';box.appendChild(b)});
+   const render=()=>{box.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.o===f?'true':'false'));tb.textContent='';
+     const rows=SE.filter(x=>!f||x.oppAbbr===f).slice().reverse();const lim=f||more?rows:rows.slice(0,12);lim.forEach(x=>{const tr=el('tr',x.won?'hx-w':'hx-l');const o=el('td');o.append(x.opp);if(x.note)o.appendChild(el('small',null,x.note));
+       const r=el('td','r m');const a=el('a','dlink',(x.won?'W ':'L ')+x.score);a.style.whiteSpace='nowrap';a.href=x.src;a.target='_blank';a.rel='noopener';a.title='Series page on Basketball Reference';r.appendChild(a);
+       tr.append(el('td','m',x.s),el('td',null,RS(x.round)),o,r);tb.appendChild(tr)});mb.hidden=!!(f||more)||rows.length<=12;mb.textContent='Show all '+rows.length+' series'};
+   box.onclick=e=>{const b=e.target.closest('button');if(b){f=b.dataset.o;render()}};render()}
+  /* honors */
+  {const A=H.awards||{},aw=$('hx-aw');aw.textContent='';Object.entries(A).forEach(([k,v])=>{const d=el('div','hx-ac');d.appendChild(el('h4',null,k));const ul=el('ul');v.forEach(([n,y])=>{const li=el('li');li.append(el('b',null,y),' '+n);ul.appendChild(li)});d.appendChild(ul);aw.appendChild(d)});
+   const tm=$('hx-teams');tm.textContent='';const grp=(h,list,lab)=>{const by={};(list||[]).forEach(([n,y,t])=>{(by[n]=by[n]||[]).push(y+(t?' ('+t+')':''))});const d=el('section');d.appendChild(el('h4','hx-th',h));const ul=el('ul','kv');
+     Object.entries(by).sort((a,b)=>b[1].length-a[1].length||a[0].localeCompare(b[0])).forEach(([n,ys])=>{const li=el('li');const sp=el('span',null,n);sp.appendChild(el('small',null,ys.join(' · ')));li.append(sp,el('b',null,'×'+ys.length));ul.appendChild(li)});d.appendChild(ul);return d};
+   tm.append(grp('All-NBA',H.allNBA),grp('All-Defensive',H.allDefense));{const d=el('section');d.appendChild(el('h4','hx-th','All-Rookie'));const g=el('div','hx-ar');(H.allRookie||[]).slice().sort((a,b)=>num(a[1])-num(b[1])).forEach(([n,y,t])=>{const x=el('div');x.append(el('b',null,y),n);x.title=t+' Team';g.appendChild(x)});d.appendChild(g);tm.appendChild(d)}
+   const hf=el('section');hf.appendChild(el('h4','hx-th','Hall of Fame'));const ul=el('ul','kv');(H.hof||[]).forEach(([n,y,r,c])=>{const li=el('li');const sp=el('span',null,n);sp.appendChild(el('small',null,r.charAt(0).toUpperCase()+r.slice(1)+' · Cavs '+c));li.append(sp,el('b',null,y));ul.appendChild(li)});hf.appendChild(ul);tm.appendChild(hf)}
+  /* records */
+  {const RC=H.records||{},T=$('hx-rec-t'),L=$('hx-rec-l');T.textContent='';const K=[['game','Single game'],['season','Season'],['playoffs','Playoffs']];
+   const pick=k=>{T.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k?'true':'false'));L.textContent='';
+     (RC[k]||[]).forEach(r=>{const li=el('li');let lab,who,val,when,u;if(k==='season'){[lab,val,when,u]=r;who=''}else{[lab,who,val,when,u]=r}
+       li.append(el('b','hx-rv',val));const d=el('div');d.appendChild(el('span','hx-rlab',lab));const sm=el('small',null,[who&&who!=='Cavaliers'?who:'',when].filter(Boolean).join(' · '));const bx=(H.recBox||{})[k+'|'+lab];if(bx){const bl=el('span','hx-bxl');bx.forEach(([w,u2],i)=>{const a=el('a','dlink',(w?w+' box score':'Box score')+' ↗');a.href=u2;a.target='_blank';a.rel='noopener';if(i)bl.append(' · ');bl.appendChild(a)});sm.appendChild(bl)}d.appendChild(sm);li.appendChild(d);L.appendChild(li)})};
+   K.forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('role','tab');b.dataset.k=k;b.onclick=()=>pick(k);T.appendChild(b)});pick('game')}
+  /* homes */
+  {const tl=$('hx-tl');tl.textContent='';[['1970–74','Cleveland Arena','East 36th and Euclid Avenue, Cleveland. Home for the first four seasons.'],['1974–94','Richfield Coliseum','Richfield Township, between Cleveland and Akron. Site of the 1976 "Miracle of Richfield."'],['1994–2005','Gund Arena','Downtown at Gateway, next to the ballpark. Same building ever since.'],['2005–19','Quicken Loans Arena','Renamed in 2005; "The Q." Home of the 2016 title team.'],['2019–25','Rocket Mortgage FieldHouse','Renamed after a major renovation.'],['2025–','Rocket Arena','Current name. One Center Court.']].forEach(([y,n,d],i)=>{const li=el('li',i>=2?'hx-dt':null);li.append(el('b',null,y));const sp=el('div');sp.append(el('span',null,n),el('small',null,d));li.appendChild(sp);tl.appendChild(li)})}
+  /* Joe Tait's opener, through every building he called games in */
+  {const b=$('hx-arena');if(b&&!b.dataset.on){b.dataset.on=1;const A=['Cleveland Arena','Richfield Coliseum','Gund Arena','Quicken Loans Arena'];let i=0;if(!matchMedia('(prefers-reduced-motion: reduce)').matches)setInterval(()=>{i=(i+1)%A.length;b.classList.add('out');setTimeout(()=>{b.textContent=A[i];b.classList.remove('out')},260)},2600)}}
+  /* retired numbers */
+  {const b=$('hx-ban');b.textContent='';H.retired.slice().sort((a,c)=>+a[0]-+c[0]).forEach(([n,p,y])=>{const d=el('div','hx-bn');d.append(el('b',null,n),el('span',null,p),el('small',null,y?'Retired '+y:''));b.appendChild(d)})}
+  /* leaders */
+  {const F=(MS&&MS.franchise)||{};const T=$('hx-lead-t'),L=$('hx-lead-l');T.textContent='';const K=[['PTS','Points'],['REB','Rebounds'],['AST','Assists'],['GP','Games']];
+   const pick=k=>{T.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k?'true':'false'));L.textContent='';(F[k]||[]).slice(0,20).forEach(([n,v],i)=>{const li=el('li');const nm=onRoster(n)&&PP_ON?(()=>{const a=el('a',null,n);a.href='/players/'+slug(n);a.dataset.go='players/'+slug(n);return a})():bbA(n,'hx-bb',(H.bbl||{})[n]);li.append(el('i',null,String(i+1)),nm,el('b',null,v.toLocaleString()));if(onRoster(n))li.classList.add('hx-now');L.appendChild(li)})};
+   K.forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('role','tab');b.dataset.k=k;b.onclick=()=>pick(k);T.appendChild(b)});pick('PTS');
+   if(MS&&MS.through)$('hx-lead-n').textContent='Regular season · through '+MS.through.replace('-','–');}
+  /* who wore it */
+  {const N=H.numbers,keys=Object.keys(N).sort((a,b)=>(+a-+b)||(a.length-b.length)),R=new Set(H.retired.map(r=>r[0]));const box=$('hx-nums'),out=$('hx-wore'),q=$('hx-q');box.textContent='';
+   const showN=k=>{box.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.n===k?'true':'false'));out.textContent='';
+     const cur=PLAYERS.filter(p=>p[0]===k).map(p=>p[1]);cur.forEach(n=>{const li=el('li','hx-now');li.append(el('span',null,n),el('b',null,'Now'));out.appendChild(li)});
+     (N[k]||[]).slice().sort((a,b)=>num(b[1])-num(a[1])).forEach(([n,y])=>{if(cur.includes(n))return;const li=el('li');li.append(el('span',null,n),el('b',null,y));out.appendChild(li)});
+     if(R.has(k)){const r=H.retired.find(x=>x[0]===k);const li=el('li','hx-retl');li.append(el('span',null,'Retired for '+r[1]),el('b',null,r[2]||''));out.prepend(li)}};
+   keys.forEach(k=>{const b=el('button',R.has(k)?'hx-rn':null,'#'+k);b.type='button';b.dataset.n=k;b.setAttribute('aria-pressed','false');b.onclick=()=>{q.value='';showN(k)};box.appendChild(b)});
+   q.oninput=()=>{const v=q.value.trim();if(!v)return;if(/^\d{1,2}$/.test(v)){if(N[v]||PLAYERS.some(p=>p[0]===v))showN(v);return}const f=fold(v);out.textContent='';box.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed','false'));
+     keys.forEach(k=>N[k].forEach(([n,y])=>{if(fold(n).includes(f)){const li=el('li');li.append(el('span',null,n),el('b',null,'#'+k+' · '+y));out.appendChild(li)}}));if(!out.children.length)out.appendChild(el('li','dim','No match'))};
+   showN('23')}
+  /* draft */
+  {const D=H.draft,sel=$('hx-dec'),r1=$('hx-r1'),pl=$('hx-pl'),tb=$('hx-draft-b');sel.textContent='';sel.appendChild(new Option('Every year','all'));
+   [...new Set(D.map(d=>Math.floor(d[0]/10)*10))].sort((a,b)=>b-a).forEach(d=>sel.appendChild(new Option(d+'s',String(d))));r1.checked=true;
+   const ord=n=>n+(['th','st','nd','rd'][(n%100-20)%10]||['th','st','nd','rd'][n%100]||'th');
+   const render=()=>{tb.textContent='';const rows=D.filter(d=>(sel.value==='all'||Math.floor(d[0]/10)*10===+sel.value)&&(!r1.checked||d[1]===1)&&(!pl.checked||d[5])).sort((a,b)=>b[0]-a[0]||a[2]-b[2]);
+     rows.forEach(([y,r,p,n,sch,cle])=>{const tr=el('tr',cle?'hx-pl':null);const td=el('td');{const id=(H.bbd||{})[y+'|'+p+'|'+n];if(id===null)td.append(n);else td.appendChild(bbA(n,'hx-bb',id))}const ty=el('td','m');const ya=el('a','dlink',String(y));ya.href='https://www.basketball-reference.com/draft/NBA_'+y+'.html';ya.target='_blank';ya.rel='noopener';ya.title='Full '+y+' draft on Basketball Reference';ty.appendChild(ya);tr.append(ty,el('td','m',ord(r)+' · No. '+p),td,el('td','dim',sch||'—'));tb.appendChild(tr)});
+     $('hx-draft-n').textContent=rows.length+' picks shown · '+D.length+' since 1970'};
+   [sel,r1,pl].forEach(e=>e.onchange=render);render()}
+  /* coaches */
+  {const tb=$('hx-coach-b');const wl=r=>{const m=String(r||'').match(/(\d+)\D+(\d+)/);return m?[+m[1],+m[2]]:[0,0]};
+   const KEY=[c=>c[0].split(' ').slice(-1)[0]+c[0],c=>num(c[1]),c=>{const [w,l]=wl(c[2]);return w+l?w/(w+l):0},c=>wl(c[3])[0]];let sk=1,dir=1;
+   const render=()=>{tb.textContent='';H.coaches.slice().sort((a,b)=>{const x=KEY[sk](a),y=KEY[sk](b);return (x<y?-1:x>y?1:0)*dir||num(a[1])-num(b[1])}).forEach(([n,y,rec,po,nt])=>{const tr=el('tr');const td=el('td');const cid=(H.bbc||{})[n];if(cid){const a=el('a','hx-bb',n);a.href='https://www.basketball-reference.com/coaches/'+cid+'.html';a.target='_blank';a.rel='noopener';a.title=n+' on Basketball Reference';td.appendChild(a)}else td.append(n);if(nt)td.appendChild(el('small','hx-cn-m',nt));const [w,l]=wl(rec);const rt=el('td','r m',rec);if(w+l)rt.title=(w/(w+l)).toFixed(3).replace(/^0/,'')+' win pct';tr.append(td,el('td','m',y),rt,el('td','r m',po||'—'),el('td','hx-cn dim',nt||''));tb.appendChild(tr)});
+     $('hx-coach-h').querySelectorAll('th').forEach(th=>{th.dataset.dir=+th.dataset.k===sk?(dir>0?'asc':'desc'):''})};
+   $('hx-coach-h').querySelectorAll('th').forEach(th=>th.onclick=()=>{const k=+th.dataset.k;if(k===sk)dir=-dir;else{sk=k;dir=k>=2?-1:1}render()});render();
+   $('hx-coach-n').textContent=new Set(H.coaches.map(c=>c[0])).size+' coaches · tap a column to sort'}
+}
+let loadP=null;const getH=()=>loadP||(loadP=Promise.all([fetch('/pdata/history.json').then(r=>r.json()),fetch('/pdata/milestones.json').then(r=>r.json()).catch(()=>null)]).then(([a,b])=>{H=a;MS=b}).catch(e=>{loadP=null;throw e}));
+window.hxLoad=async function(){if(busy)return;busy=true;try{await getH();draw()}catch(e){busy=false}};
+/* season pages: /history/2015-16 */
+window.renderSeason=function(sl){const v=document.getElementById('view-season');v.innerHTML='';const w=el('div','wrap page sp');v.appendChild(w);
+  const bc=el('div','dim');bc.style.fontSize='13px';const a1=el('a',null,'Home');a1.href='/';a1.dataset.go='home';const a2=el('a',null,'History');a2.href='/history';a2.dataset.go='history';bc.append(a1,' / ',a2,' / '+sl.replace('-','–'));w.appendChild(bc);
+  const body=el('div');body.innerHTML='<div class="skel-wrap"><div class="skel skel-band"></div><div class="skel skel-card"></div><div class="skel skel-card"></div></div>';w.appendChild(body);
+  getH().then(()=>{body.textContent='';const S=H.seasons,i=S.findIndex(x=>x.s===sl.replace('-','–'));if(i<0){body.appendChild(el('p','dim','No season found.'));return}
+   const x=S[i],LVc=LV[x.poLevel];const pct=(x.w/(x.w+x.l)).toFixed(3).replace(/^0/,'');document.title=x.s+' Cleveland Cavaliers: Record, Playoffs, Roster & Leaders | cavs_db';
+   const band=el('section','sp-band');band.append(el('div','sp-k','Season '+(i+1)+' of '+S.length+' · '+LVc[0]),el('h1',null,x.s+' Cavaliers'),el('div','sp-m',x.w+'–'+x.l+' · '+x.div+(x.seed?' · No. '+x.seed+' seed in the East':'')));
+   const nav=el('div','sp-nav');[[S[i-1],'← '],[S[i+1],'']].forEach(([y,pre],k)=>{if(!y){nav.appendChild(el('span'));return}const a=el('a',null,k?y.s+' →':pre+y.s);const q=y.s.replace('–','-');a.href='/history/'+q;a.dataset.go='history/'+q;nav.appendChild(a)});band.appendChild(nav);body.appendChild(band);
+   const SE=(H.series||[]).filter(r=>r.s===x.s&&!/Play-in/.test(r.round)),pw=SE.reduce((t,r)=>t+(+r.score.split('–')[0]),0),pl=SE.reduce((t,r)=>t+(+r.score.split('–')[1]),0);
+   const wr=1+S.filter(y=>y.w>x.w).length,tie=S.filter(y=>y.w===x.w).length>1;
+   const tiles=el('div','sp-tiles');[[x.w+'–'+x.l,'Record · '+pct],[(tie?'T-':'')+ord(wr),'Most wins of '+S.length+' seasons'],[SE.length?pw+'–'+pl:'—',SE.length?'Playoff record':'Playoffs: '+(x.poLevel==='playin'?'play-in':'missed')],[String(x.coach.length),x.coach.length>1?'Coaches':'Coach']].forEach(([b,t])=>{const d=el('div');d.append(el('b',null,b),el('span',null,t));tiles.appendChild(d)});body.appendChild(tiles);
+   const sec=(h,sub)=>{const d=el('section','sp-sec');const bh=el('div','block-h');bh.append(el('h2',null,h),el('span',null,sub||''));d.appendChild(bh);body.appendChild(d);return d};
+   const RS=r=>/Finals/.test(r)&&/NBA/.test(r)?'NBA Finals':/Conference Finals|Division Finals/.test(r)?'East finals':/Semifinals/.test(r)?'East semis':/First Round/.test(r)?'First round':r;
+   {const all=(H.series||[]).filter(r=>r.s===x.s);if(all.length){const d=sec('The playoff run',SE.length?pw+'–'+pl:'');const ol=el('ol','sp-run');all.forEach(r=>{const li=el('li',(r.won?'':'l ')+(x.poLevel==='title'&&/NBA Finals/.test(r.round)?'t':''));const a=el('a','dlink',(r.won?'W ':'L ')+r.score);a.href=r.src;a.target='_blank';a.rel='noopener';li.append(el('span','rd',/Play-in/.test(r.round)?'Play-in':RS(r.round)),el('b',null,r.opp),a);if(r.note)li.appendChild(el('small',null,r.note));ol.appendChild(li)});d.appendChild(ol)}
+    else{const d=sec('Playoffs');d.appendChild(el('p','dim',x.po))}}
+   const kv=(d,rows)=>{const ul=el('ul','kv');rows.forEach(([a,b,c,href])=>{const li=el('li');const sp=el('span');if(href){const l=el('a','hx-bb',a);l.href=href;l.target='_blank';l.rel='noopener';sp.appendChild(l)}else sp.append(a);if(b)sp.appendChild(el('small',null,b));li.append(sp,el('b',null,c||''));ul.appendChild(li)});d.appendChild(ul)};
+   const two=el('div','sp-two');body.appendChild(two);
+   {const d=el('section','sp-sec');const bh=el('div','block-h');bh.append(el('h2',null,'Leaders'),el('span',null,'Per game'));d.appendChild(bh);kv(d,[['Points',x.lead.pts],['Rebounds',x.lead.reb],['Assists',x.lead.ast]].filter(r=>r[1]).map(([k,v])=>[k,v[0],(+v[1]).toFixed(1)]));two.appendChild(d)}
+   {const hon=[];Object.entries(H.awards||{}).forEach(([k,v])=>v.forEach(([n,y])=>{if(y===x.s)hon.push([k,n])}));[['allNBA','All-NBA'],['allDefense','All-Defensive'],['allRookie','All-Rookie']].forEach(([k,l])=>(H[k]||[]).forEach(([n,y,t])=>{if(y===x.s)hon.push([l+(t?' '+t+' Team':''),n])}));(x.allstar||[]).forEach(n=>hon.push(['All-Star',n]));
+    const d=el('section','sp-sec');const bh=el('div','block-h');bh.append(el('h2',null,'Honors'),el('span'));d.appendChild(bh);if(hon.length)kv(d,hon.map(([a,n])=>[a,n,'★']));else d.appendChild(el('p','dim','None this season.'));two.appendChild(d)}
+   {const d=sec(x.coach.length>1?'Coaches':'Coach');kv(d,x.coach.map(([n,r])=>[n,'',r,(H.bbc||{})[n]?'https://www.basketball-reference.com/coaches/'+H.bbc[n]+'.html':null]))}
+   {const y0=+x.s.slice(0,4);let mv=[];if(y0>=2017&&typeof TX!=='undefined'){const a=y0+'-06-15',b=(y0+1)+'-06-14';const KEYK=['trade','draft','ext','sign'];mv=TX.filter(t=>t.d>=a&&t.d<=b&&KEYK.includes(t.k)&&(t.k!=='sign'||/multi-year|max|extension/i.test(t.t||''))).map(t=>{const mo=new Date(t.d+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'});
+       if(t.k==='trade')return['Trade with '+(t.w||[]).map(z=>TEAMS[z]||z).join(', '),'Got '+(t.got||[]).join(', ')+' · sent '+(t.sent||[]).join(', '),mo];return[t.t,'',mo]}).reverse()}
+     else mv=((H.moves||{})[x.s]||[]).map(([h,dd,when])=>[h,dd,when]);
+     if(mv.length){const d=sec('Key moves',y0>=2017?'From the Transactions page':'');kv(d,mv)}}
+   {const R=(H.rosters||{})[x.s];if(R&&R.length){const d=sec('Roster',R.length+' players · games played');const g=el('div','sp-ros');R.forEach(([n,id,gp])=>{const c=el('div');const a=PP_ON&&onRoster(n)&&y0now(x.s)?(()=>{const l=el('a','hx-bb',n);l.href='/players/'+slug(n);l.dataset.go='players/'+slug(n);return l})():!id?el('span',null,n):(()=>{const l=el('a','hx-bb',n);l.href='https://www.basketball-reference.com/players/'+id[0]+'/'+id+'.html';l.target='_blank';l.rel='noopener';return l})();c.append(a,el('b',null,String(gp)));g.appendChild(c)});d.appendChild(g)}}
+   if(x.note){const d=sec('In one line');d.appendChild(el('p','sp-note',x.note))}
+  }).catch(()=>{body.textContent='';body.appendChild(el('p','dim','Could not load this season.'))});
+  return true};
+const y0now=s=>s===SEASONS[0];
+})();
+
+
+/* Media: who covers the Cavs, newest item from each outlet in news.json */
+(function(){let done=false;const HOME={'cleveland.com':['https://www.cleveland.com/cavs/','Beat writers at every game'],'Cavaliers on SI':['https://www.si.com/nba/cavaliers','Sports Illustrated team site'],'Fear The Sword':['https://www.fearthesword.com','SB Nation team site'],'Hoops Rumors':['https://www.hoopsrumors.com/cleveland-cavaliers','Transactions and rumors'],'RealCavsFans':['https://realcavsfans.com/index.php?forums/FrontPage/','Fan forum, recaps and analysis']};
+ window.loadCovers=()=>{if(done)return;done=true;Promise.all([fetch('/news.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null),fetch('/rcf.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null)]).then(([N,RC])=>{if(!N)return;if(RC&&RC.items&&RC.items.length)N.articles=(N.articles||[]).concat(RC.items.slice(0,3).map(x=>({src:'RealCavsFans',title:x.title,link:x.link,date:x.date})));
+  const md=d=>new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'America/New_York'});
+  const fill=(id,items,kind)=>{const ul=document.getElementById(id);if(!ul)return;ul.textContent='';const by={};items.forEach(x=>{if(!by[x.src]||x.date>by[x.src].date)by[x.src]=x});
+   Object.values(by).sort((a,b)=>b.date.localeCompare(a.date)).forEach(x=>{const li=el('li');const sp=el('span');const h=HOME[x.src];const nm=el('a',null,x.src);nm.href=h?h[0]:x.link;nm.target='_blank';nm.rel='noopener';
+    const t=el('a','cov-t',(()=>{const ta=document.createElement('textarea');ta.innerHTML=x.title;return ta.value})());t.href=x.link;t.target='_blank';t.rel='noopener';const sm=el('small');sm.append(h?h[1]+' · ':(kind||'')+' · ',t);sp.append(nm,sm);li.append(sp,el('b','cov-d',md(x.date)));ul.appendChild(li)})};
+  fill('cov-a',N.articles||[]);fill('cov-p',[...(N.podcasts||[]).map(x=>Object.assign({},x)),...(N.videos||[])],'Latest');
+  document.querySelectorAll('#cov-p small').forEach(s2=>{s2.firstChild.textContent=s2.firstChild.textContent.replace('Latest · ','')})})};})();
+
+/* Cap: next summer's cap position, built from ROSTER and THRESH (index 1 = next season) */
+(function(){const B=document.getElementById('sm-b');if(!B)return;const I=1,NY=SEASONS[I],yr=NY.slice(0,4);
+  document.getElementById('sm-h').textContent='Summer '+yr;document.getElementById('sm-sub').textContent=NY+' · projected · updates as deals change';
+  const sal=y=>typeof y==='number'?y:Array.isArray(y)?y[0]:null;let gu=0,opt=0,n=0;const opts=[],fas=[];
+  ROSTER.forEach(([nm,p,yrs,bird,fa,t])=>{const y=yrs[I];if(typeof y==='number'){gu+=y;if(t!=='Dead money')n++}else if(Array.isArray(y)){if(y[1]==='T'){opt+=y[0];opts.push([nm,y[0],t])}else{gu+=y[0];n++}}else if(typeof y==='string')fas.push([nm,y,bird,sal(yrs[I-1])])});
+  const T=k=>THRESH.find(x=>x[0]===k)[1][I],cap=T('Salary cap'),tax=T('Luxury tax'),a1=T('First apron'),a2=T('Second apron'),tot=gu+opt;
+  const over=tot-cap,where=tot>a2?'over the second apron':tot>a1?'over the first apron':tot>tax?'over the tax line':tot>cap?'over the cap':'under the cap';
+  const big=el('p','sm-big');if(over>0){big.append('No cap space. ');big.appendChild(el('em',null,usdM(over)+' over'));big.append(' the cap')}else{big.append('About ');big.appendChild(el('em',null,usdM(-over)));big.append(' in cap space')}
+  B.appendChild(big);
+  B.appendChild(el('p','sm-sub2',n+' players plus dead money already add up to '+usdM(gu)+' for '+NY+'.'+(opts.length?' With '+opts.map(o=>o[0]+'’s team option').join(' and ')+' picked up, Cleveland starts the summer '+where+', before filling the roster.':' Cleveland starts the summer '+where+'.')));
+  /* meter */
+  const mn=Math.floor(cap*0.9/1e7)*1e7,mx=Math.max(a2,tot)*1.03,pc=v=>((v-mn)/(mx-mn)*100).toFixed(2)+'%',pw=v=>(v/(mx-mn)*100).toFixed(2)+'%';
+  const m=el('div','sm-meter');m.innerHTML='<div class="f" style="width:'+pc(gu)+'"></div>'+(opt?'<div class="o" style="left:'+pc(gu)+';width:'+pw(opt)+'"></div>':'');
+  const mS=v=>'$'+Math.round(v/1e6)+'M';[['Cap',cap],['Tax',tax],['1st apron',a1],['2nd apron',a2]].forEach(([l,v],i)=>{const d=el('div','ln l');d.style.left=pc(v);d.appendChild(el(i%2?'i':'b',null,l.replace(' apron','')));m.appendChild(d)});
+  B.appendChild(m);const lg=el('div','sm-leg');lg.innerHTML='<span><i></i>Committed '+usdM(gu)+'</span>'+(opt?'<span><i class="o"></i>Team options '+usdM(opt)+'</span>':'')+'<span class="sm-th">Cap '+mS(cap)+' · Tax '+mS(tax)+' · 1st apron '+mS(a1)+' · 2nd apron '+mS(a2)+'</span>';B.appendChild(lg);
+  /* stat tiles */
+  const st=el('div','sm-stats');[[usdM(tot),'Committed, with options'],[String(n+opts.length),'Players signed for '+NY],[tot<a2?usdM(a2-tot):'—','Under the second apron, before filling the roster'],[fas.length+' + '+TWOWAY.length,'Free agents (standard + two-way)']].forEach(([v,l])=>{const d=el('div');d.append(el('b',null,v),el('span',null,l));st.appendChild(d)});B.appendChild(st);
+  /* lists */
+  const cols=el('div','sm-cols');const col=(h,rows)=>{const d=el('div');d.appendChild(el('h4',null,h));const ul=el('ul','kv');rows.forEach(([a,sm,b,cls])=>{const li=el('li');const sp=el('span',null,a);sp.appendChild(el('small',null,sm));li.append(sp,el('b',cls||null,b));ul.appendChild(li)});d.appendChild(ul);return d};
+  const BW={'Full Bird':'Full Bird','Early Bird':'Early Bird','Non-Bird':'Non-Bird'};
+  const c1=col('Coming off the books',fas.map(([nm,y,bird,v])=>[nm,y+' · '+(BW[bird]||bird)+(y==='RFA'?' · Cavs can match offers':''),v?usdM(v):'—']).concat(TWOWAY.length?[[TWOWAY.map(t=>t[0].replace(/ Jr\.$/,'').split(' ').slice(-1)[0]).join(', '),'Two-way · '+TWOWAY[0][2].split(' ')[1],'—']]:[]));
+  const ext=Object.entries(EXT).filter(([k,v])=>v===I).map(([k])=>k.split(' ').slice(-1)[0]);
+  const tools=[['Bird rights','Re-sign their own free agents over the cap','Yes','sm-y'],['Taxpayer mid-level','Using it hard-caps them at the second apron',tot<a2?'Tight':'No',tot<a2?'sm-y':'sm-n'],['Minimum contracts','Always available','Yes','sm-y'],['Cap space signings',over>0?'Payroll is above the cap':'Room under the cap',over>0?'No':'Yes',over>0?'sm-n':'sm-y']];
+  const dec=opts.map(([nm,v,t])=>[nm+' team option',NY+(t?' · '+t.replace('Team option decision due','due'):''),usdM(v)]).concat(ext.length?[['Extension window opens',ext.join(', ')+' become eligible','July '+yr]]:[]);
+  const c2=col('How they can add players',tools);cols.append(c1,c2);if(dec.length)cols.appendChild(col('Decisions before then',dec));B.appendChild(cols);
+})();
+
+/* Resources: X accounts worth following (handles checked against search results before adding) */
+(function(){const box=document.getElementById('xf');if(!box)return;
+  [['Cavaliers','cavs','Official team account'],['cleveland.com Cavs','PDcavsinsider','cleveland.com coverage'],['Chris Fedor','chrisfedor','Beat writer'],['Ethan Sands','EjElite1','Beat writer, cleveland.com'],['Tony Pesta','Tony_Pesta','Cavs writer and podcaster'],['Mack Perry','DevaronPerry','Cavaliers on SI'],['Fear the \u2019Fro','FeartheFroPod','Cavs podcast'],['Fear The Sword','FearTheSword','SB Nation team site'],['Jackson Flickinger','JacksFlickinger','Fear the Sword writer'],['RealCavsFans','realcavsfans','Recaps and analytics']]
+  .forEach(([n,h,d])=>{const a=el('a','xfc');a.href='https://x.com/'+h;a.target='_blank';a.rel='noopener';a.append(el('b',null,n),el('span',null,'@'+h),el('small',null,d));box.appendChild(a)})})();
+
+/* Home: Chasing history. Cavs career totals (pdata/milestones.json, through last season) plus this season's regular-season box scores;
+   shows the three closest milestones on the points, rebounds and assists lists, and calls out a name passed in the latest game. */
+(function(){const box=document.getElementById('chase');if(!box)return;
+  Promise.all([fetch('/pdata/milestones.json').then(r=>r.json()),fetch('/box.json',{cache:'no-cache'}).then(r=>r.json()).catch(()=>({}))]).then(([M,BX])=>{
+    const F=M.franchise||{},P=M.players||{},K=[['PTS','Points',2],['REB','Rebounds',3],['AST','Assists',4]];
+    const reg=new Set(SCHEDULE.map(g=>g[0]));const days=Object.keys(BX).filter(d=>reg.has(d)&&BX[d].status==='final'&&(BX[d].box||[]).length).sort();const last=days[days.length-1];
+    const add={},addPrev={},gp={};days.forEach(d=>BX[d].box.forEach(r=>{const n=r[0];if(!(parseFloat(r[1])>0))return;gp[n]=(gp[n]||0)+1;K.forEach(([k,,i])=>{add[n]=add[n]||{};add[n][k]=(add[n][k]||0)+(+r[i]||0);if(d!==last){addPrev[n]=addPrev[n]||{};addPrev[n][k]=(addPrev[n][k]||0)+(+r[i]||0)}})}));
+    const now=n=>k=>((P[n]&&P[n].cavs&&P[n].cavs[k])||0)+((add[n]||{})[k]||0),prev=n=>k=>((P[n]&&P[n].cavs&&P[n].cavs[k])||0)+((addPrev[n]||{})[k]||0);
+    const cur=PLAYERS.map(p=>p[1]).filter(n=>P[n]);const rows=[],passed=[];
+    const fresh=last&&(Date.now()-Date.parse(last+'T12:00:00-05:00'))<36*36e5;
+    K.forEach(([k,lab])=>{const list=(F[k]||[]).map(([n,v])=>[n,P[n]&&cur.includes(n)?now(n)(k):v]);
+      cur.forEach(n=>{const v=now(n)(k),pv=prev(n)(k),g=((P[n].cavs||{}).GP||0)+(gp[n]||0);if(!v||!g)return;const others=list.filter(x=>x[0]!==n);
+        if(fresh)others.forEach(([o,ov])=>{if(pv<=ov&&v>ov)passed.push({n,o,lab,k})});
+        const above=others.filter(x=>x[1]>=v);if(!above.length)return;const tgt=above.reduce((a,b)=>b[1]<a[1]?b:a);const rank=above.length+1;
+        const need=tgt[1]-v+1,pace=v/g;if(rank>21)return;rows.push({n,lab,rank,tgt:tgt[0],need,games:Math.max(1,Math.ceil(need/pace))})})});
+    rows.sort((a,b)=>a.games-b.games||a.need-b.need);const ul=document.getElementById('chase-l');ul.textContent='';
+    passed.slice(0,2).forEach(x=>{const li=el('li','chc-pass');const w=el('div','chc-who');w.append(el('b',null,x.n),el('span',null,x.lab));li.append(w,el('div','chc-n',null));li.lastChild.innerHTML='<b>Passed</b> '+x.o+'<small>in the last game</small>';ul.appendChild(li)});
+    rows.slice(0,3).forEach(x=>{const li=el('li');const w=el('div','chc-who');const a=PP_ON&&onRoster(x.n)?(()=>{const a=el('a',null,x.n);a.href='/players/'+slug(x.n);a.dataset.go='players/'+slug(x.n);return a})():el('b',null,x.n);w.append(a,el('span',null,x.lab+' · '+ord(x.rank)+' all-time'));
+      const r=el('div','chc-n');r.append(el('b',null,x.need.toLocaleString()),' to pass '+x.tgt);r.appendChild(el('small',null,'about '+x.games+(x.games===1?' game':' games')+' at his pace'));li.append(w,r);ul.appendChild(li)});
+    if(ul.children.length){box.hidden=false;document.getElementById('chase-sub').textContent=days.length?'Through the last game':'Through '+String(M.through||'').replace('-','–')}
+  }).catch(()=>{})})();
+{const c=document.getElementById('cap-upd');if(c)c.textContent='Updated '+relDay(SITE_UPDATED)}
 /* real page addresses: /cap, /roster, /media/rcf … Old #links still work and are rewritten to the new address. */
 function go(route){route=ROUTE_ALIAS[route]||route;const path=route==='home'?'/':'/'+route;if(location.protocol!=='file:'&&location.pathname!==path){try{history.pushState({p:route},'',path+location.search)}catch(_){}}show(route)}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-go]');if(!t||e.metaKey||e.ctrlKey||e.shiftKey)return;e.preventDefault();go(t.dataset.go)});
@@ -4486,116 +3150,3 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
   if(!reduce&&'IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const k=+e.target.dataset.fi||0;scramble(e.target,80+k*60)}),{threshold:.6});
     ['#captop .ct-nums b','#ab-tiles .ab-tile b','#exc .num-sc'].forEach(q=>document.querySelectorAll(q).forEach((x,i)=>{x.dataset.fi=i;io.observe(x)}))}
 })();
-</script>
-
-<script>
-(function(){const R=document.documentElement,B=document.getElementById('thm'),T=document.getElementById('btt'),F=document.getElementById('fb');
- const dark=()=>R.dataset.theme?R.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
- const B2=document.getElementById('thm2');const lab=()=>{if(B)B.setAttribute('aria-label',dark()?'Switch to light mode':'Switch to dark mode');if(B2)B2.querySelector('span').textContent=dark()?'Light mode':'Dark mode'};lab();
- const flip=()=>{const t=dark()?'light':'dark';R.dataset.theme=t;try{localStorage.setItem('cdb-theme',t)}catch(e){}lab()};if(B)B.onclick=flip;if(B2)B2.onclick=flip;
- const top=()=>scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
- if(T)T.onclick=top;
- const bar=document.querySelector('.gbar');if(bar)bar.addEventListener('click',e=>{if(e.target.closest('a,button,input,form,nav [role=tab],.sres'))return;top()});
- let tk=0;const upd=()=>{tk=0;if(!T)return;T.classList.toggle('on',scrollY>innerHeight*0.9);const fv=F&&!F.hidden&&F.offsetHeight;T.style.bottom=fv?(F.getBoundingClientRect().height+(innerWidth<=520?20:26))+'px':''};
- addEventListener('scroll',()=>{if(!tk){tk=1;requestAnimationFrame(upd)}},{passive:true});addEventListener('resize',upd);
- if(F)new MutationObserver(upd).observe(F,{attributes:true,attributeFilter:['hidden','class']});upd();
-})();
-</script>
-
-<script>
-/* share links + save-as-image. Images are drawn in the browser by modern-screenshot (MIT, vendor/), loaded only on first use. */
-(function(){
- const $=id=>document.getElementById(id);
- const hOf=id=>{let p=$(id);p=p&&p.previousElementSibling;while(p&&!p.classList.contains('block-h'))p=p.previousElementSibling;return p};
- const par=el=>el&&el.closest('.block-h');
- const T=[
-  ['cap-position','home',()=>par($('cap-h')),()=>[document.querySelector('section.o-cap')],'Cap position'],
-  ['this-day','home',()=>par($('otd-h')),()=>[document.querySelector('section.o-otd')],'This day in Cavs history','br'],
-  ['cap-summary','cap',()=>$('captop'),()=>[$('captop')],'Cap position 2026–27','tr'],
-  ['cap-sheet','cap',()=>$('cs-x'),()=>[document.querySelector('table.cap')],'Cap sheet'],
-  ['aprons','cap',()=>par($('ap-h')),()=>[document.querySelector('section.aprons')],'What each apron allows'],
-  ['draft-picks','assets',()=>hOf('board'),()=>[hOf('board'),$('board'),$('board-leg')],'Cavs draft picks'],
-  ['exceptions','assets',()=>hOf('exc'),()=>[hOf('exc'),$('exc')],'Trade exceptions'],
-  ['drafted-players','assets',()=>hOf('rights'),()=>[hOf('rights'),$('rights')],'Drafted players'],
-  ['depth-chart','roster',()=>document.querySelector('.dsheet .ds-hdr'),()=>[document.querySelector('.dsheet')],'Depth chart'],
-  ['standings','schedule',()=>document.querySelector('#sp-std>.block-h'),()=>[$('sp-std')],'East standings']];
- const I_L='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>';
- const I_C='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
- const coarse=()=>matchMedia('(pointer: coarse)').matches;
- let tt=0;const toast=(msg,btn,fn)=>{let t=$('xtoast');if(!t){t=document.createElement('div');t.id='xtoast';t.className='xtoast';t.setAttribute('role','status');document.body.appendChild(t)}
-  t.innerHTML='';const i=document.createElement('i');i.textContent='✓';t.append(i,msg);if(btn){const b=document.createElement('button');b.type='button';b.textContent=btn;b.onclick=()=>{t.classList.remove('on');fn()};t.appendChild(b)}
-  t.classList.add('on');clearTimeout(tt);if(msg.endsWith('…'))return;tt=setTimeout(()=>t.classList.remove('on'),btn?6000:2200)};
- const pageUrl=(route,id)=>'https://cavsdatabase.com'+(route==='home'?'/':'/'+route)+'#'+id;
- function share(route,id,label){const url=pageUrl(route,id),title=label+' | cavs_db';
-  if(navigator.share&&coarse()){navigator.share({title,url}).catch(()=>{});return}
-  const done=()=>toast('Link copied');
-  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url).then(done,()=>fallback(url,done));else fallback(url,done)}
- function fallback(url,done){const ta=document.createElement('textarea');ta.value=url;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){toast(url)}ta.remove()}
- let lib=null;const load=()=>lib||(lib=new Promise((res,rej)=>{if(window.modernScreenshot)return res(window.modernScreenshot);const sc=document.createElement('script');sc.src='/vendor/modern-screenshot-4.6.0.js';sc.onload=()=>res(window.modernScreenshot);sc.onerror=()=>{lib=null;rej(new Error('load'))};document.head.appendChild(sc)}));
- const toData=b=>new Promise(r=>{const f=new FileReader();f.onload=()=>r(f.result);f.onerror=()=>r(false);f.readAsDataURL(b)});
- const HSRE=/headshots\/nba\/latest\/260x190\/(\d+)\.png/,HSC=new Map();
- const local=id=>HSC.get(id)||(HSC.set(id,fetch('/img/h/'+id+'.png').then(r=>r.ok?r.blob().then(toData):false).catch(()=>false)),HSC.get(id));
- let XMAP=null;const xmap=()=>XMAP||(XMAP=fetch('/img/x/map.json').then(r=>r.ok?r.json():{}).catch(()=>({})));const XC=new Map();
- const fetchFn=async url=>{const m=HSRE.exec(url);if(m)return await local(m[1]);if(url.startsWith(location.origin)||url.startsWith('data:'))return false;
-  const p=(await xmap())[url];if(!p)return false;if(!XC.has(p))XC.set(p,fetch(p).then(r=>r.ok?r.blob().then(toData):false).catch(()=>false));return await XC.get(p)};
- const warm=root=>Promise.all([...root.querySelectorAll('img')].map(i=>fetchFn(i.currentSrc||i.src||'')));
- const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
- const LOGO='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#860038" stroke-width="2" fill="none"/></svg>';
- const img=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
- /* multi-part images are drawn a little tall, then the empty space at the bottom is cut off */
- function trim(cv,keep){const g=cv.getContext('2d'),w=cv.width,h=cv.height;const d=g.getImageData(0,0,w,h).data;const bg=[d[(h-1)*w*4],d[(h-1)*w*4+1],d[(h-1)*w*4+2]];
-  let y=h-1;outer:for(;y>0;y--){const o=y*w*4;for(let x=0;x<w;x+=2){const i=o+x*4;if(Math.abs(d[i]-bg[0])+Math.abs(d[i+1]-bg[1])+Math.abs(d[i+2]-bg[2])>24)break outer}}
-  const nh=Math.min(h,Math.ceil(y+1+keep));if(nh>=h)return;const t=document.createElement('canvas');t.width=w;t.height=nh;t.getContext('2d').drawImage(cv,0,0);cv.width=w;cv.height=nh;cv.getContext('2d').drawImage(t,0,0)}
- async function capture(route,id,label,boxes,btn){
-  btn.disabled=true;toast('Making the image…');let capEl=null;
-  try{const ms=await load();let el=boxes[0];
-   let keep=null,parent=null,hgt=null;if(boxes.length>1){parent=boxes[0].parentElement;keep=new Set(boxes);el=parent;boxes[0].setAttribute('data-capfirst','1');
-    const pc=getComputedStyle(parent);hgt=parseFloat(pc.paddingTop)+parseFloat(pc.paddingBottom)+parseFloat(pc.borderTopWidth)+parseFloat(pc.borderBottomWidth);boxes.forEach((b,i)=>{const bc=getComputedStyle(b);hgt+=b.offsetHeight+(i?parseFloat(bc.marginTop):0)+(i<boxes.length-1?parseFloat(bc.marginBottom):0)});hgt=Math.ceil(hgt)+240}
-   el.classList.add('capmode');capEl=el;
-   let bg=getComputedStyle(el).backgroundColor;if(!bg||bg==='rgba(0, 0, 0, 0)'||bg==='transparent'){let a=el.closest('section')||el.parentElement;while(a){const b=getComputedStyle(a).backgroundColor;if(b&&b!=='rgba(0, 0, 0, 0)'&&b!=='transparent'){bg=b;break}a=a.parentElement}if(!a)bg=getComputedStyle(document.body).backgroundColor}
-   const S=2,pad=16;
-   /* lazy photos that haven't loaded yet make the drawing wait; load them now (max 3s) */
-   const lz=[];boxes.forEach(b=>b.querySelectorAll('img').forEach(i=>{if(i.loading==='lazy')i.loading='eager';if(!i.complete)lz.push(new Promise(r=>{i.addEventListener('load',r,{once:true});i.addEventListener('error',r,{once:true})}))}));
-   await Promise.race([Promise.all(lz),new Promise(r=>setTimeout(r,3000))]);
-   await Promise.all(boxes.map(warm));const opts={scale:S,backgroundColor:bg,fetchFn,timeout:6000,style:hgt?{margin:'0',height:hgt+'px',minHeight:'0'}:{margin:'0'},...(hgt?{height:hgt}:{}),
-     filter:n=>{if(n.nodeType!==1)return true;if(n.classList.contains('xact'))return false;if(n.classList.contains('dc-pg')&&n.classList.contains('top'))return false;if(keep&&n.parentElement===parent&&!keep.has(n))return false;return true},
-     onCloneNode:c=>{if(c.nodeType!==1)return;if(c.tagName==='IMG')c.removeAttribute('loading');if(c.getAttribute('data-capfirst')){c.style.marginTop='0';c.removeAttribute('data-capfirst')}}};
-   /* the browser can drop photos on the very first drawing; a quick small draw first fixes it */
-   try{await ms.domToCanvas(el,{...opts,scale:.3})}catch(e){}
-   const shot=await ms.domToCanvas(el,opts);
-   boxes[0].removeAttribute('data-capfirst');
-   if(hgt)trim(shot,Math.max(parseFloat(getComputedStyle(parent).paddingBottom)||0,14)*S);
-   const W=Math.max(shot.width+pad*2*S,380*S),HH=58*S,GOLD=5*S,FT=40*S;const H=HH+GOLD+pad*S+shot.height+FT;
-   const cv=document.createElement('canvas');cv.width=W;cv.height=H;const g=cv.getContext('2d');
-   g.fillStyle=css('--page')||'#EEF0F2';g.fillRect(0,0,W,H);g.fillStyle='#860038';g.fillRect(0,0,W,HH);g.fillStyle='#F2B231';g.fillRect(0,HH,W,GOLD);
-   const lg=await img('data:image/svg+xml;charset=utf-8,'+encodeURIComponent(LOGO));if(lg)g.drawImage(lg,pad*S,13*S,32*S,32*S);
-   const mono=css('--mono')||'monospace',sans=css('--sans')||'sans-serif';
-   g.textBaseline='middle';g.font='700 '+(22*S)+'px '+mono;g.fillStyle='#fff';g.fillText('cavs',(pad+40)*S,HH/2);const w1=g.measureText('cavs').width;g.fillStyle='#F2B231';g.fillText('_db',(pad+40)*S+w1,HH/2);
-   g.textAlign='right';g.font='800 '+(11*S)+'px '+sans;g.fillStyle='#F4D6DD';if('letterSpacing' in g)g.letterSpacing=(1.4*S)+'px';
-   let lab=label.toUpperCase();const maxw=W-(pad+150)*S;while(g.measureText(lab).width>maxw&&lab.length>4)lab=lab.slice(0,-2)+'…';g.fillText(lab,W-pad*S,HH/2);if('letterSpacing' in g)g.letterSpacing='0px';
-   g.drawImage(shot,Math.round((W-shot.width)/2),HH+GOLD+pad*S);
-   const fy=H-FT/2;g.textAlign='left';g.font='700 '+(12*S)+'px '+mono;g.fillStyle=css('--wine-ink')||'#860038';g.fillText('cavsdatabase.com'+(route==='home'?'':'/'+route),pad*S,fy);
-   g.textAlign='right';g.font='600 '+(12*S)+'px '+mono;g.fillStyle=css('--muted')||'#5D646C';const now=new Date();g.fillText(now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),W-pad*S,fy);
-   const blob=await new Promise(r=>cv.toBlob(r,'image/png'));const name='cavsdb-'+id+'-'+now.toISOString().slice(0,10)+'.png';
-   const file=new File([blob],name,{type:'image/png'});
-   const save=()=>{if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:label+' | cavs_db'}).catch(e=>{if(e&&e.name==='NotAllowedError')toast('Image ready','Save',save)})}else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Image saved')}};
-   if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]}))toast('Image ready','Save or share',save);else save();
-  }catch(e){toast('Couldn’t make the image. Try again.')}
-  finally{boxes[0].removeAttribute('data-capfirst');if(capEl)capEl.classList.remove('capmode');btn.disabled=false}}
- function attach(){document.querySelectorAll('.xact button:empty').forEach(b=>{b.innerHTML=b.title==='Share link'?I_L:I_C});T.forEach(([id,route,hdr,boxes,label])=>{const h=hdr();if(!h||h.dataset.anchor)return;h.dataset.anchor=id;h.classList.add('hasx');
-  const w=document.createElement('span');w.className='xact';
-  const b1=document.createElement('button');b1.type='button';b1.innerHTML=I_L;b1.title='Share link';b1.setAttribute('aria-label','Share a link to '+label);b1.onclick=()=>share(route,id,label);
-  const b2=document.createElement('button');b2.type='button';b2.innerHTML=I_C;b2.title='Save as image';b2.setAttribute('aria-label','Save '+label+' as an image');b2.onclick=()=>{const bx=boxes().filter(Boolean);if(bx.length)capture(route,id,label,bx,b2)};
-  w.append(b1,b2);const pl=T.find(x=>x[0]===id)[5];if(pl){w.classList.add('xact-'+pl);const bx=boxes()[0];if(bx){bx.classList.add('xhost');bx.appendChild(w)}}else h.appendChild(w)})}
- window.cdbAttachX=attach;window.cdbCap=capture;window.cdbShare=share;window.cdbIcons=[I_L,I_C];
- /* deep links: /assets#picks-owed, /roster#donovan-mitchell, /cap#donovan-mitchell */
- function jump(){const h=decodeURIComponent(location.hash.slice(1));if(!h)return;attach();
-  const t=document.querySelector('[data-anchor="'+h.replace(/"/g,'')+'"]')||document.getElementById(h)||document.getElementById('r-'+h)||document.getElementById('p-'+h)||document.getElementById('s-'+h)||document.getElementById('d-'+h)||document.getElementById('g-'+h);
-  if(!t||t.closest('[hidden]'))return;const dt=t.querySelector&&t.querySelector('details');if(dt)dt.open=true;const b=t.querySelector&&t.querySelector('.pbtn');if(b&&b.getAttribute('aria-expanded')!=='true')b.click();
-  t.scrollIntoView({block:t.dataset.anchor?'start':'center'});if(!t.dataset.anchor){t.classList.remove('flash');void t.offsetWidth;t.classList.add('flash')}}
- const run=()=>{attach();setTimeout(attach,600)};run();setTimeout(jump,450);
- addEventListener('popstate',()=>setTimeout(attach,50));addEventListener('hashchange',()=>setTimeout(jump,50));
-})();
-</script>
-</body>
-</html>

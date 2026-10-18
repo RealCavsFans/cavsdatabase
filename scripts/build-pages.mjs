@@ -67,7 +67,7 @@ for (const [route, [title, desc]] of Object.entries(META)) {
   if (route.startsWith('history/') && await exists(new URL('og/h/' + route.slice(8) + '.jpg', root))) img = 'og/h/' + route.slice(8) + '.jpg';  // season cards (scripts/og-seasons.mjs)
   if (route.startsWith('games/') && await exists(new URL('og/g/' + route.slice(6) + '.jpg', root))) img = 'og/g/' + route.slice(6) + '.jpg';  // finished games get their own score card (scripts/og-games.mjs)
   if (await exists(new URL(img, root))) {
-    const u = 'https://cavsdatabase.com/' + img + '?v=2';
+    const u = 'https://cavsdatabase.com/' + img + '?v=3';
     out = out.replace(/<meta property="og:image" content="[^"]*">/, `<meta property="og:image" content="${u}">`)
       .replace(/<meta name="twitter:image" content="[^"]*">/, `<meta name="twitter:image" content="${u}">`)
       .replace(/<meta property="og:image:alt" content="[^"]*">/, `<meta property="og:image:alt" content="${esc(title)}">`);

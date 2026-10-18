@@ -3,7 +3,7 @@
  "short_name": "cavs_db",
  "start_url": "/",
  "display": "standalone",
- "background_color": "#7A1F33",
+ "background_color": "#860038",
  "theme_color": "#860038",
  "icons": [
   {
