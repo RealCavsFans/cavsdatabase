@@ -1271,3 +1271,4 @@ tr.hx-w td:first-child{box-shadow:inset 3px 0 0 #860038}tr.hx-l td:first-child{b
 @media (max-width:720px){.hx-top .hx-ban{grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}.hx-top .hx-bn{padding:10px 2px 14px}.hx-top .hx-bn b{font-size:22px}.hx-top .hx-bn span{font-size:8.5px;line-height:1.15}.hx-top .hx-bn small{display:none}}
 @media (max-width:720px){.rc2-strip{grid-auto-flow:row;grid-template-columns:repeat(5,minmax(0,1fr))}}
 .rcf-cols{grid-template-columns:minmax(0,1fr)!important}
+@media (max-width:520px){.ppx-t{font-size:11px}.ppx-t th,.ppx-t td{padding-left:3px!important;padding-right:3px!important}.ppx-t td:first-child,.ppx-t th:first-child{max-width:88px}}
