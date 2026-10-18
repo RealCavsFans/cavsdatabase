@@ -496,7 +496,7 @@ function celebrate(){
   if(document.readyState==='complete')go();else addEventListener('load',go)}
 function confetti(){const c=document.createElement('canvas');c.id='confetti';document.body.appendChild(c);const x=c.getContext('2d');
   const fit=()=>{c.width=innerWidth*devicePixelRatio;c.height=innerHeight*devicePixelRatio};fit();addEventListener('resize',fit);
-  const C=['#860038','#F2B231','#7A1F33','#FFFFFF','#D99A12'];const N=Math.min(220,Math.round(innerWidth/5));const t0=performance.now();
+  const C=['#860038','#F2B231','#860038','#FFFFFF','#D99A12'];const N=Math.min(220,Math.round(innerWidth/5));const t0=performance.now();
   const P=Array.from({length:N},()=>({x:Math.random()*c.width,y:-Math.random()*c.height,w:(6+Math.random()*6)*devicePixelRatio,h:(9+Math.random()*8)*devicePixelRatio,vy:(1.4+Math.random()*2.2)*devicePixelRatio,vx:(Math.random()-.5)*1.2*devicePixelRatio,r:Math.random()*6.3,vr:(Math.random()-.5)*.2,c:C[Math.random()*C.length|0],sw:Math.random()*6.3}));
   const loop=t=>{const el2=t-t0;x.clearRect(0,0,c.width,c.height);let live=0;
     P.forEach(p=>{p.sw+=.03;p.x+=p.vx+Math.sin(p.sw)*.6*devicePixelRatio;p.y+=p.vy;p.r+=p.vr;
@@ -1743,7 +1743,7 @@ const TREES=[
   ['',[['pw','c12','now','Peyton Watson','Aug 20, 2026 · Strus, Schröder, a 2031 1st, a 2032 2nd and cash, four-team sign-and-trade']]]],
   [['lv','dh'],['dh','ds'],['ds','pw',1],['st','pw',1]],'The Watson trade also brought back Cam Whitmore and the draft rights to Ismael Kamagate.']];
 setTimeout(function(){const lanes=document.getElementById('rt-lanes');if(!lanes)return;
-  const G=[['Drafted','#7A1F33',[]],['Trade','#B34766',[]],['Free agent','#F2B231',[]],['Two-way','#9AA1A9',[]],['Camp','#D8DCE0',[]]];
+  const G=[['Drafted','#860038',[]],['Trade','#B34766',[]],['Free agent','#F2B231',[]],['Two-way','#9AA1A9',[]],['Camp','#D8DCE0',[]]];
   PLAYERS.forEach(p=>{const n=p[1],q=ACQ[n]||['',''],yr=(q[1]||'').slice(0,4);let k=p[11]==='TW'?3:p[11]==='Camp'?4:/^Draft/.test(q[0])?0:/trade/i.test(q[0])?1:2;
     let sub=k===0?(q[0].match(/\((\d{4})\)/)||[,yr])[1]+' · '+((q[0].match(/No\. \d+/)||[''])[0])+(/signed/.test(q[0])?', signed '+yr:''):k>=3?(k===3?'Two-way':'Training camp')+(yr?' · '+yr:''):yr+' · '+q[0].replace(/^Trade from /,'from ').replace(/ \(re-signed.*\)/,'').replace(/^Sign-and-trade from /,'sign-and-trade, ').replace(/^Undrafted free agent$/,'undrafted').replace(/^Free agent$/,'free agent');
     G[k][2].push([n,p[12],sub])});

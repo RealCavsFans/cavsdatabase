@@ -96,8 +96,7 @@ const wrapOpen = bg => `${fontLink}<table role="presentation" width="100%" cellp
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:${bg}">
 <tr><td><a href="${SITE}"><img src="${SITE}/nl/header.png" width="600" alt="Cavs &amp; Coffee · freshly brewed after every game · presented by cavs_db" style="display:block;width:100%;max-width:600px;height:auto;border:0"></a></td></tr>`;
 const footer = (rule) => `<tr><td style="padding:30px 28px 26px;text-align:center;font:12px/1.7 ${F.sans};color:#5D646C">${rule || ''}
-<a href="${SITE}"><img src="${SITE}/nl/logo.png" width="130" alt="cavs_db" style="display:inline-block;width:130px;height:auto;border:0;margin-bottom:6px"></a><br>
-<a href="${SITE}" style="color:#7A1F33;font-weight:700;text-decoration:none">cavsdatabase.com</a> &nbsp;·&nbsp; <a href="https://www.buymeacoffee.com/cavsdb" style="color:#7A1F33;font-weight:700;text-decoration:none">&#9749; Buy cavs_db a coffee</a><br>
+<a href="https://www.buymeacoffee.com/cavsdb" style="color:#860038;font-weight:700;text-decoration:none">&#9749; Buy cavs_db a coffee</a><br>
 Independent fan reference, not affiliated with the Cavaliers or the NBA.</td></tr></table></td></tr></table>`;
 const T = (inner, attrs = '') => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" ${attrs}>${inner}</table>`;
 
@@ -137,7 +136,7 @@ function coffeeBox(x, P, cell) {
 /* ========== Sports Page: old school newspaper, double rules, condensed heads, boxed linescore ========== */
 function renderSports(x) {
   const P = { bg: '#F7F3EC', dot: '#B9B2A8', wine: '#860038', ink: '#101419', fg2: '#2F363E', muted: '#5D646C' };
-  const K = (t, link, sz) => `<tr><td style="padding:24px 24px 0">${T(`<tr><td style="font:800 ${sz || 21}px/1 ${F.cond};text-transform:uppercase;color:${P.ink};padding-bottom:6px;border-bottom:3px solid ${P.ink}">${t}</td><td align="right" valign="bottom" style="padding-bottom:6px;border-bottom:3px solid ${P.ink};font:700 12px ${F.sans};white-space:nowrap">${link ? `<a href="${link[1]}" style="color:#7A1F33;text-decoration:none">${link[0]} &rarr;</a>` : ''}</td></tr>`)}</td></tr>`;
+  const K = (t, link, sz) => `<tr><td style="padding:24px 24px 0">${T(`<tr><td style="font:800 ${sz || 21}px/1 ${F.cond};text-transform:uppercase;color:${P.ink};padding-bottom:6px;border-bottom:3px solid ${P.ink}">${t}</td><td align="right" valign="bottom" style="padding-bottom:6px;border-bottom:3px solid ${P.ink};font:700 12px ${F.sans};white-space:nowrap">${link ? `<a href="${link[1]}" style="color:#860038;text-decoration:none">${link[0]} &rarr;</a>` : ''}</td></tr>`)}</td></tr>`;
   const B = inner => `<tr><td style="padding:8px 24px 0">${inner}</td></tr>`;
   const li = (main, o = {}) => T(`<tr>${o.left ? `<td width="${o.lw || 86}" valign="top" style="padding:9px 8px 9px 0;font:700 11.5px ${F.mono};color:${P.muted};white-space:nowrap">${o.left}</td>` : ''}<td valign="top" style="padding:8px 0;font:14px/1.45 ${F.sans};color:${P.ink}">${main}${o.meta ? `<div style="font:12px ${F.sans};color:${P.muted};margin-top:2px">${o.meta}</div>` : ''}</td></tr>`, `style="border-bottom:1px dotted ${P.dot}"`);
   const a = (h, t) => `<a href="${esc(h)}" style="color:${P.ink};font-weight:700;text-decoration:none">${t}</a>`;
@@ -168,9 +167,9 @@ ${x.tn ? `<div style="font:16px/1.55 ${F.serif};color:${P.fg2};margin-top:10px">
   if (x.moves.length) s.push(K('Transactions'), B(x.moves.map(([d, t]) => li(esc(t), { left: esc(d), lw: 60 })).join('')));
   if (x.week.length) s.push(K('This week'), B(x.week.map(([wd, d, t]) => li(esc(t), { left: `${esc(wd)} ${esc(d)}`, lw: 96 })).join('')));
   if (x.tq) s.push(`<tr><td style="padding:18px 24px 0;text-align:center;font:12.5px ${F.sans};color:${P.muted}"><b style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine}">TRIVIA ANSWER</b>&nbsp; ${String.fromCharCode(65 + x.tq.a)}. ${esc(x.tq.c[x.tq.a])}</td></tr>`);
-  s.push(`<tr><td style="padding:24px 24px 0;text-align:center"><div style="font:800 15px ${F.cond};text-transform:uppercase;color:${P.ink};margin-bottom:4px">More on cavsdatabase.com</div><div style="font:700 13px/2 ${F.sans}">${[['Roster', 'roster'], ['Cap sheet', 'cap'], ['Draft picks', 'assets'], ['Injuries', '#inj'], ['Staff', 'staff']].map(([t, r]) => `<a href="${SITE}/${r}" style="color:#7A1F33;text-decoration:none">${t}</a>`).join(' &nbsp;·&nbsp; ')}</div></td></tr>`);
   /* sign-off, in Joe Tait's words */
-  s.push(`<tr><td style="padding:30px 24px 0;text-align:center"><img src="${SITE}/nl/mic.png" width="40" height="40" alt="" style="display:inline-block;width:40px;height:40px;border:0"><div style="font:italic 20px/1.3 ${F.serif};color:${P.ink};margin-top:6px">Have a good night, everybody.</div><div style="font:700 10px ${F.sans};letter-spacing:1.4px;text-transform:uppercase;color:${P.muted};margin-top:6px">In the words of Joe Tait</div></td></tr>`);
+  s.push(`<tr><td style="padding:26px 24px 0;text-align:center"><img src="${SITE}/nl/mic.png" width="28" height="28" alt="" style="display:inline-block;width:28px;height:28px;border:0"><div style="font:italic 16px/1.3 ${F.serif};color:${P.ink};margin-top:4px">Have a good night, everybody.</div><div style="font:700 9px ${F.sans};letter-spacing:1.3px;text-transform:uppercase;color:${P.muted};margin-top:4px">In the words of Joe Tait</div></td></tr>`);
+  s.push(`<tr><td style="padding:24px 24px 0;text-align:center"><div style="font:800 15px ${F.cond};text-transform:uppercase;color:${P.ink};margin-bottom:4px">More on cavsdatabase.com</div><div style="font:700 13px/2 ${F.sans}">${[['Roster', 'roster'], ['Cap sheet', 'cap'], ['Draft picks', 'assets'], ['Injuries', '#inj'], ['Staff', 'staff']].map(([t, r]) => `<a href="${SITE}/${r}" style="color:#860038;text-decoration:none">${t}</a>`).join(' &nbsp;·&nbsp; ')}</div></td></tr>`);
   return wrapOpen(P.bg) + s.join('\n') + footer(`<div style="border-top:4px double #F2B231;margin:0 0 18px;font-size:0;line-height:0">&nbsp;</div>`);
 }
 
