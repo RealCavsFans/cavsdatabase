@@ -1,7 +1,8 @@
 name: Push alerts (OneSignal)
 on:
-  schedule:
-    - cron: '*/10 * * * *'   # tip-off, final score, and the once a day transactions/injuries alert
+  # paused: put the schedule back to turn alerts on
+  # schedule:
+  #   - cron: '*/10 * * * *'   # tip-off, final score, and the once a day transactions/injuries alert
   workflow_dispatch:
 permissions:
   contents: write
