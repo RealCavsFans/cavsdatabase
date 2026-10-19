@@ -3303,22 +3303,22 @@ function ppBuild(p,root){
   else waiting.push('Game by game heat map and recent form');
   // rested vs tired
   {const b2b=mine.filter(g=>{const i=reg.indexOf(g.d);if(i<1)return false;return (new Date(g.d)-new Date(reg[i-1]))/864e5===1}),rest=mine.filter(g=>!b2b.includes(g));
-    if(b2b.length>=2&&rest.length>=3){const c=card('Rested vs tired','Rest','How he plays on the second night of a back to back compared with a normal night’s rest. Tells you which nights to expect a dip.');
+    if(false&&b2b.length>=2&&rest.length>=3){const c=card('Rested vs tired','Rest','How he plays on the second night of a back to back compared with a normal night’s rest. Tells you which nights to expect a dip.');
       const av=(a,k)=>a.reduce((t,g)=>t+g.me[k],0)/a.length;const big=el('div','ppx-big2');[[f1(av(rest,'pts')),'Points with rest ('+rest.length+' games)'],[f1(av(b2b,'pts')),'Points on a back to back ('+b2b.length+')'],[f1(av(rest,'min')),'Minutes with rest'],[f1(av(b2b,'min')),'Minutes on a back to back']].forEach(([a,b])=>{const d2=el('div');d2.appendChild(el('b',null,a));d2.appendChild(el('span',null,b));big.appendChild(d2)});c.appendChild(big);ov.appendChild(c)}
-    else waiting.push('Rested vs tired (after his first back to backs)')}
+    /* rested vs tired: off (Oct 19) */}
   if(waiting.length){const c=el('section','ppx-wait');c.appendChild(el('b',null,'Fills in as the season goes'));c.appendChild(el('span',null,waiting.join(' · ')));ov.appendChild(c)}
 
   /* ===== 2 · offense ===== */
   const offHead=cur?f1(cur.pts)+' pts'+(cur.fg!=null?' · '+f3(cur.fg)+' FG':''):'';
   const of=chap('off','Offense',offHead);
-  if(cur){const c=card('Shooting',null,lgOK?`His percentages against the average NBA ${GN.slice(0,-1)} (black line).`:'His percentages'+(cur.src==='2026–27'?' this season.':' from '+(cur.base==='pre'?'last season at '+pre.team:'2025–26')+'.'));
+  if(false&&cur){const c=card('Shooting',null,lgOK?`His percentages against the average NBA ${GN.slice(0,-1)} (black line).`:'His percentages'+(cur.src==='2026–27'?' this season.':' from '+(cur.base==='pre'?'last season at '+pre.team:'2025–26')+'.'));
     const rows=[['FG%',cur.fg,x=>x.fga?x.fgm/x.fga:null],['3P%',cur.tp,x=>x.tpa?x.tpm/x.tpa:null],['FT%',cur.ft,x=>x.fta?x.ftm/x.fta:null]];if(cur.pps!=null)rows.push(['Pts/shot',cur.pps,x=>x.fga?x.pts/x.fga:null]);
     const sh=el('div','ppx-share');rows.forEach(([lab,val,fn])=>{if(val==null)return;const r2=el('div');r2.appendChild(el('span',null)).appendChild(tip(lab));const t2=el('span','t');const sc=lab==='Pts/shot'?val/2:val;const i2=el('i');i2.style.width=pc(sc*100)+'%';t2.appendChild(i2);
       if(lgOK){const tot2=pool.reduce((a,x)=>{const k=lab==='3P%'?['tpm','tpa']:lab==='FT%'?['ftm','fta']:lab==='FG%'?['fgm','fga']:['pts','fga'];a[0]+=x[k[0]];a[1]+=x[k[1]];return a},[0,0]);const la=tot2[1]?tot2[0]/tot2[1]:null;if(la!=null){const u=el('u');u.style.left=pc((lab==='Pts/shot'?la/2:la)*100)+'%';u.title='NBA '+GN+' average: '+(lab==='Pts/shot'?la.toFixed(2):f3(la));t2.appendChild(u)}}
       r2.appendChild(t2);r2.appendChild(el('b',null,lab==='Pts/shot'?val.toFixed(2):f3(val)));sh.appendChild(r2)});c.appendChild(sh);
     if(cur.base==='nba'&&rs.length>=2){const prev=rs.filter(x=>x[0]==='2024–25');const pv=prev.find(x=>x[1]==='TOT')||prev[prev.length-1];if(pv&&pv[12]!=null&&cur.tp!=null&&Math.abs(cur.tp-pv[12])>=0.03)c.appendChild(ctx(`Three point shooting went from ${f3(pv[12])} in 2024–25 to ${f3(cur.tp)} in 2025–26.`))}
     of.appendChild(c)}
-  if(gp>=3){const c=card('Share of the offense','Share','His slice of the Cavs’ scoring, passing and shots in the games he played. The black line is an even share (20%).');
+  if(false&&gp>=3){const c=card('Share of the offense','Share','His slice of the Cavs’ scoring, passing and shots in the games he played. The black line is an even share (20%).');
     const tm=k=>mine.reduce((t,g)=>t+g.team[k],0);const sh=el('div','ppx-share');[['Points',tot('pts')/tm('pts')],['Assists',tot('ast')/Math.max(1,tm('ast'))],['Shots',tot('fga')/Math.max(1,tm('fga'))]].forEach(([l,v2])=>{const r2=el('div');r2.appendChild(el('span',null,l));const t2=el('span','t');const i2=el('i');i2.style.width=pc(v2*100)+'%';const u=el('u');u.style.left='20%';t2.append(i2,u);r2.appendChild(t2);r2.appendChild(el('b',null,Math.round(v2*100)+'%'));sh.appendChild(r2)});c.appendChild(sh);of.appendChild(c)}
   // signature meter: double-doubles for bigs, 20 point nights (or 10) for guards, 3+ threes for wings who shoot
   if(gp>=3){const ppg=avg('pts'),tpa=tot('tpa')/gp;const M=G==='B'?['Double-double meter',m=>[m.pts,m.reb,m.ast,m.stl,m.blk].filter(x=>x>=10).length>=2,'double-doubles']:G==='W'&&tpa>=3?['Three point nights',m=>m.tpm>=3,'games with 3+ threes']:ppg>=15?['20 point nights',m=>m.pts>=20,'20 point games']:['Double figure nights',m=>m.pts>=10,'games with 10+ points'];
@@ -3334,7 +3334,7 @@ function ppBuild(p,root){
     c.appendChild(note(`${f1(cur.stl)} steals and ${f1(cur.blk)} blocks a game${cur.src==='2026–27'?'':' ('+(cur.base==='pre'?pre.team+', '+pre.season:cur.src)+')'}.`));
     if(gp>=3){const tm=k=>mine.reduce((t,g)=>t+g.team[k],0);const sh=el('div','ppx-share');sh.style.marginTop='12px';[['Blocks',tot('blk')/Math.max(1,tm('blk'))],['Steals',tot('stl')/Math.max(1,tm('stl'))],['Rebounds',tot('reb')/Math.max(1,tm('reb'))]].forEach(([l,v2])=>{const r2=el('div');r2.appendChild(el('span',null,l));const t2=el('span','t');const i2=el('i');i2.style.width=pc(v2*100)+'%';const u=el('u');u.style.left='20%';t2.append(i2,u);r2.appendChild(t2);r2.appendChild(el('b',null,Math.round(v2*100)+'%'));sh.appendChild(r2)});c.appendChild(sh);c.appendChild(note('Share of the Cavs’ totals in games he played.'))}
     df.appendChild(c)}
-  if(G==='B'&&WPCT[n]){const wp=WPCT[n];const c=card('Length',null,`Built for defense: his measurements as percentiles among ${WGRP[wp[0]][1]} ${WGRP[wp[0]][0]} measured at the combine since 2000.`);[['Wingspan',wp[1]],['Standing reach',wp[2]],['Height',wp[4]]].forEach(([l,v2])=>{if(v2==null)return;const rr=el('div','ppx-rr');rr.appendChild(el('span',null,l));rr.appendChild(el('b',null,ord(v2)+' pct'));const pb=el('div','pct');const i2=el('i');i2.style.width=v2+'%';pb.appendChild(i2);rr.appendChild(pb);c.appendChild(rr)});df.appendChild(c)}
+  if(false&&G==='B'&&WPCT[n]){const wp=WPCT[n];const c=card('Length',null,`Built for defense: his measurements as percentiles among ${WGRP[wp[0]][1]} ${WGRP[wp[0]][0]} measured at the combine since 2000.`);[['Wingspan',wp[1]],['Standing reach',wp[2]],['Height',wp[4]]].forEach(([l,v2])=>{if(v2==null)return;const rr=el('div','ppx-rr');rr.appendChild(el('span',null,l));rr.appendChild(el('b',null,ord(v2)+' pct'));const pb=el('div','pct');const i2=el('i');i2.style.width=v2+'%';pb.appendChild(i2);rr.appendChild(pb);c.appendChild(rr)});df.appendChild(c)}
 
   /* ===== 4 · value to the Cavs ===== */
   const sal=R?(v2=>typeof v2==='number'?v2:Array.isArray(v2)?v2[0]:0)(R[2][0]):0;
@@ -3379,10 +3379,10 @@ function ppBuild(p,root){
   else if(stt==='Camp'){const E=EX10.find(x=>x[0]===n);const c=card('Contract',null,'Exhibit 10 deals are one year, non-guaranteed minimum contracts for training camp. If he’s waived and joins the Charge, he can earn a bonus.');if(E)c.appendChild(note('Signed '+E[2]+'.'));va.appendChild(c)}
 
   /* ===== 5 · history ===== */
-  const hs=chap('his','History in the making','',false,'History');const hsH=[];
+  const hs=chap('his','In the news','',false,'News');const hsH=[];
   // ladder
   {const F=(PPD.ms||{}).franchise||{};const cats=[['PTS','Points','pts'],['REB','Rebounds','reb'],['AST','Assists','ast'],['GP','Games','gp']].filter(([k])=>(F[k]||[]).some(x=>x[0]===n));
-    if(cats.length){const c=card('The ladder','Ladder','His spot on the Cavs all-time list, the names right above him, and when he’s likely to pass each one at his current pace.');
+    if(false&&cats.length){const c=card('The ladder','Ladder','His spot on the Cavs all-time list, the names right above him, and when he’s likely to pass each one at his current pace.');
       const tabs=el('div','ppx-tabs');const box=el('div');c.append(tabs,box);
       const perG=k=>k==='gp'?1:gp>=5?avg(k):cur&&cur.base==='nba'?cur[k]:null;
       const left=reg.filter(d=>!games.some(g=>g.d===d));
@@ -3397,7 +3397,7 @@ function ppBuild(p,root){
       cats.forEach(cat=>{const b=el('button',null,cat[1]);b.type='button';b.dataset.k=cat[0];b.addEventListener('click',()=>show(cat));tabs.appendChild(b)});show(cats[0]);
       if(cats.length<2)tabs.hidden=true;hs.appendChild(c);hsH.push(cats.map(c2=>{const l2=F[c2[0]];return ord(l2.findIndex(x=>x[0]===n)+1)+' in '+c2[1].toLowerCase()}).slice(0,2).join(' · '))}}
   // on pace for
-  if(gp>=5){const share=gp/teamGames,proj=k=>Math.round(avg(k)*82*share);const c=card('On pace for','Pace','His season totals if he keeps this pace, next to his best NBA season.');
+  if(false&&gp>=5){const share=gp/teamGames,proj=k=>Math.round(avg(k)*82*share);const c=card('On pace for','Pace','His season totals if he keeps this pace, next to his best NBA season.');
     const best=k=>rs.filter(r=>r[1]!=='TOT'||true).reduce((m,r)=>{const i={pts:5,reb:6,ast:7,blk:9,stl:8}[k];const v2=r[2]*(r[i]||0);return v2>m[0]?[v2,r[0]]:m},[0,'']);
     const ks=G==='B'?[['pts','Points'],['reb','Rebounds'],['blk','Blocks']]:G==='G'?[['pts','Points'],['ast','Assists'],['stl','Steals']]:[['pts','Points'],['reb','Rebounds'],['ast','Assists']];
     ks.forEach(([k,l])=>{const pj=proj(k),b=best(k);const rr=el('div','ppx-rr');rr.appendChild(el('span',null,l));rr.appendChild(el('b',null,pj.toLocaleString()));if(b[0])rr.appendChild(el('small',null,pj>Math.round(b[0])?'Would be his best season (previous: '+Math.round(b[0]).toLocaleString()+' in '+b[1]+')':'Best season: '+Math.round(b[0]).toLocaleString()+' in '+b[1]));c.appendChild(rr)});hs.appendChild(c)}
