@@ -26,7 +26,7 @@ if (!xml) { warn('RCF feed did not answer; keeping existing rcf.json'); process.
 const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].slice(0, KEEP).map(([, it]) => {
   const html = pick(it, 'content:encoded').replace(/<!\[CDATA\[|\]\]>/g, '');
   const img = (html.match(/<img[^>]+src="([^"]+)"/) || [])[1] || null;
-  const text = ent(html.replace(/<a[^>]*>Read more<\/a>/i, '').replace(/<[^>]+>/g, ' ')).replace(/[​]/g, '').replace(/\s+/g, ' ').trim();
+  const text = ent(html.replace(/<a[^>]*>Read more<\/a>/i, '').replace(/<[^>]+>/g, ' ')).replace(/[​]/g, '').replace(/\s+/g, ' ').replace(/\s+([,.;:!?)’”])/g, '$1').replace(/([(“‘])\s+/g, '$1').trim();
   return {
     title: ent(pick(it, 'title')).trim(),
     link: ent(pick(it, 'link')).trim(),
