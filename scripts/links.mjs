@@ -10,8 +10,12 @@ const histTxt = await readFile(new URL('pdata/history.json', root), 'utf8');
 const H = JSON.parse(histTxt);
 const SKIP = ['cdn.nba.com', 'fonts.g', 'schema.org', 'w3.org', 'youtube-nocookie', 'cavsdatabase.com', 'x.com/', 'twitter.com', 'instagram.com', 'buymeacoffee.com'];
 const urls = new Set();
-for (const m of (html + histTxt).matchAll(/https?:\/\/[^\s'"<>)\\`]+/g)) {
-  const u = m[0].replace(/[.,;]+$/, '');
+const src = html + histTxt;
+for (const m of src.matchAll(/https?:\/\/[^\s'"<>\\`]+/g)) {
+  let u = m[0].replace(/[.,;]+$/, '');
+  while (u.endsWith(')') && (u.split('(').length < u.split(')').length)) u = u.slice(0, -1);  // keep wiki "(basketball)" but drop a closing paren from the code around it
+  const after = src.slice(m.index + m[0].length, m.index + m[0].length + 3);
+  if (/^['"`]\s*\+/.test(after)) continue;  // a URL prefix the page completes in code (…/players/' + id)
   if (SKIP.some(s => u.includes(s)) || u.includes('+') || u.includes('${') || /[=?&]$/.test(u)) continue;
   urls.add(u);
 }
