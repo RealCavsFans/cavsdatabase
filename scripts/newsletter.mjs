@@ -97,7 +97,8 @@ const wrapOpen = bg => `${fontLink}<table role="presentation" width="100%" cellp
 <tr><td><a href="${SITE}"><img src="${SITE}/nl/header.png" width="600" alt="Cavs &amp; Coffee · freshly brewed after every game · presented by cavs_db" style="display:block;width:100%;max-width:600px;height:auto;border:0"></a></td></tr>`;
 const footer = (rule) => `<tr><td style="padding:30px 28px 26px;text-align:center;font:12px/1.7 ${F.sans};color:#5D646C">${rule || ''}
 <a href="https://www.buymeacoffee.com/cavsdb" style="color:#860038;font-weight:700;text-decoration:none">&#9749; Buy cavs_db a coffee</a><br>
-Independent fan reference, not affiliated with the Cavaliers or the NBA.</td></tr></table></td></tr></table>`;
+Independent fan reference, not affiliated with the Cavaliers or the NBA.<br>
+Cavs Database · P.O. Box 151 · West Jefferson, OH 43162</td></tr></table></td></tr></table>`;
 const T = (inner, attrs = '') => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" ${attrs}>${inner}</table>`;
 
 /* quarter-by-quarter line score, newspaper style */
