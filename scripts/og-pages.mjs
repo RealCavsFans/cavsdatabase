@@ -1,4 +1,4 @@
-// Share images for the main pages: og.jpg (site-wide) and og/<route>.jpg (1200x630). Run by hand when a page title or the brand changes.
+// Share images for the main pages (cap, schedule, assets and transactions are drawn live by og-live.mjs): og.jpg (site-wide) and og/<route>.jpg (1200x630). Run by hand when a page title or the brand changes.
 import { writeFile, unlink, readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
@@ -8,15 +8,11 @@ const root = new URL('../', import.meta.url);
 const mark = (await readFile(new URL('logos/cavs_db-mark.svg', root), 'utf8'));
 const PAGES = [
   ['og.jpg', null, 'Everything Cavaliers.', 'Everything you need.', 'cavsdatabase.com'],
-  ['og/assets.jpg', 'Draft Picks & Exceptions', 'Every pick, swap, exception and draft-rights player', '', 'assets'],
-  ['og/cap.jpg', 'Salary Cap', 'Every contract, the aprons, the tax and the trade rules', '', 'cap'],
   ['og/charge.jpg', 'Cleveland Charge', 'Schedule, roster and staff of the Cavs’ G League team', '', 'charge'],
   ['og/media.jpg', 'Media', 'Press conferences, highlights and RealCavsFans articles', '', 'media'],
-  ['og/moves.jpg', 'Transactions', 'Every Cavs move since 2017', '', 'moves'],
   ['og/resources.jpg', 'Resources', 'cavs_db approved sites for NBA and Cavs knowledge', '', 'resources'],
   ['og/roster-tree.jpg', 'How the Roster Was Built', 'Every player by how he arrived, and the trade trees back to 2017', '', 'roster-tree'],
   ['og/roster.jpg', 'Roster & Depth Chart', 'Bios, measurements, the depth chart and player comps', '', 'roster'],
-  ['og/schedule.jpg', '2026–27 Schedule', 'All 82 games, TV and radio, standings and game previews', '', 'schedule'],
   ['og/staff.jpg', 'Coaches & Front Office', 'Bios, records and career paths', '', 'staff'],
 ];
 const esc = t => t.replace(/&/g, '&amp;');

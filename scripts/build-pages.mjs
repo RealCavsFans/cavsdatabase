@@ -15,7 +15,7 @@ const html = await readFile(new URL('index.html', root), 'utf8');
 const PRE = process.argv.includes('--prerender');
 const HASHF = new URL('data/prerender-hash.txt', root);
 const h = createHash('sha1');
-for (const f of ['index.html', 'videos.json', 'box.json', 'rcf.json', 'pdata/history.json', 'scripts/build-pages.mjs', 'scripts/prerender.mjs']) { try { h.update(await readFile(new URL(f, root))); } catch {} }
+for (const f of ['index.html', 'videos.json', 'box.json', 'rcf.json', 'pdata/history.json', 'og/live.json', 'scripts/build-pages.mjs', 'scripts/prerender.mjs']) { try { h.update(await readFile(new URL(f, root))); } catch {} }
 try { const { readdir } = await import('node:fs/promises'); h.update((await readdir(new URL('og/g/', root))).sort().join()); } catch {}
 try { const { readdir } = await import('node:fs/promises'); h.update((await readdir(new URL('og/h/', root))).sort().join()); } catch {}  // a new game share image means the page copies need the new image tag
 const hash = h.digest('hex');
@@ -38,6 +38,7 @@ try { const HJ = JSON.parse(await readFile(new URL('pdata/history.json', root), 
     S.forEach((g, i) => { const [d, o, ha] = g; const dl = new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }); const nk = NK[o] || o, sc = SC[d];
       META['games/' + d + '-' + o.toLowerCase()] = (R[i] && sc) ? ['Cavs ' + sc.split('-')[0] + ', ' + nk + ' ' + sc.split('-')[1] + ' (' + dl + '): Box Score & Recap | cavs_db', 'Final: Cavaliers ' + sc.split('-')[0] + ', ' + CITY[o] + ' ' + nk + ' ' + sc.split('-')[1] + ' on ' + dl + '. Box score, top performers, postgame video and recap.']
         : ['Cavs ' + (ha === 'H' ? 'vs ' : 'at ') + nk + ', ' + dl + ': How to Watch, Preview & Injuries | cavs_db', 'Cavaliers ' + (ha === 'H' ? 'vs ' : 'at ') + CITY[o] + ' ' + nk + ' on ' + dl + ': tip time, TV and radio, tale of the tape, injuries and the season series.']; }); } }
+let LIVE = {}; try { LIVE = JSON.parse(await readFile(new URL('og/live.json', root), 'utf8')); } catch {}
 const esc = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 // Speed: the site's big stylesheet and main script move into two shared files (a/app.<hash>.css/.js) that the browser
 // caches once and reuses on every page, instead of re-downloading ~770 KB inline with each page. index.html stays the editable source.
@@ -71,9 +72,11 @@ for (const [route, [title, desc]] of Object.entries(META)) {
   // each page has its own share image in og/<route>.jpg (media/rcf -> og/media-rcf.jpg); fall back to the site-wide one
   let img = 'og/' + (route.startsWith('players/') ? 'roster' : route.startsWith('games/') ? 'schedule' : route.replace(/\//g, '-')) + '.jpg';
   if (route.startsWith('history/') && await exists(new URL('og/h/' + route.slice(8) + '.jpg', root))) img = 'og/h/' + route.slice(8) + '.jpg';  // season cards (scripts/og-seasons.mjs)
+  if (route.startsWith('games/') && await exists(new URL('og/gp/' + route.slice(6) + '.jpg', root))) img = 'og/gp/' + route.slice(6) + '.jpg';  // upcoming games: preview card (scripts/og-live.mjs)
   if (route.startsWith('games/') && await exists(new URL('og/g/' + route.slice(6) + '.jpg', root))) img = 'og/g/' + route.slice(6) + '.jpg';  // finished games get their own score card (scripts/og-games.mjs)
+  if (route.startsWith('players/') && await exists(new URL('og/p/' + route.slice(8) + '.jpg', root))) img = 'og/p/' + route.slice(8) + '.jpg';  // player cards (scripts/og-live.mjs)
   if (await exists(new URL(img, root))) {
-    const u = 'https://cavsdatabase.com/' + img + '?v=3';
+    const u = 'https://cavsdatabase.com/' + img + '?v=' + (LIVE[img] || '3');  // live cards carry their fingerprint, so link previews refresh when the card changes
     out = out.replace(/<meta property="og:image" content="[^"]*">/, `<meta property="og:image" content="${u}">`)
       .replace(/<meta name="twitter:image" content="[^"]*">/, `<meta name="twitter:image" content="${u}">`)
       .replace(/<meta property="og:image:alt" content="[^"]*">/, `<meta property="og:image:alt" content="${esc(title)}">`);
