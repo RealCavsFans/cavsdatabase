@@ -47,9 +47,15 @@ let shell = html;
   if (PRE && sm && jm && jm[1].length > 100000) {  // only in the Action (--prerender), which also commits a/; plain builds (the daily task) stay inline so nothing points at an uncommitted file
     const hc = ch('sha1').update(sm[1]).digest('hex').slice(0, 10), hj = ch('sha1').update(jm[1]).digest('hex').slice(0, 10);
     await mkdir(new URL('a/', root), { recursive: true });
-    await writeFile(new URL(`a/app.${hc}.css`, root), sm[1]); await writeFile(new URL(`a/app.${hj}.js`, root), jm[1]);
+    // minify the shared files when esbuild is installed (the Action installs it); the hashes come from the source, so names only change when the source does
+    let cssOut = sm[1], jsOut = jm[1];
+    try { const { transform } = await import('esbuild');
+      jsOut = (await transform(jm[1], { loader: 'js', minify: true, target: 'es2020', legalComments: 'none' })).code;
+      cssOut = (await transform(sm[1], { loader: 'css', minify: true })).code;
+    } catch (e) { if (!/Cannot find (package|module)/.test(e.message)) console.warn('minify skipped:', e.message.split('\n')[0]); }
+    await writeFile(new URL(`a/app.${hc}.css`, root), cssOut); await writeFile(new URL(`a/app.${hj}.js`, root), jsOut);
     for (const f of await readdir(new URL('a/', root))) if (/^app\.[0-9a-f]{10}\.(css|js)$/.test(f) && f !== `app.${hc}.css` && f !== `app.${hj}.js`) await unlink(new URL('a/' + f, root));
-    shell = html.replace(sm[0], () => `<link rel="stylesheet" href="/a/app.${hc}.css">`).replace(jm[0], () => `<script src="/a/app.${hj}.js"></script>`);
+    shell = html.replace(sm[0], () => `<link rel="stylesheet" href="/a/app.${hc}.css"><link rel="preload" href="/a/app.${hj}.js" as="script">`).replace(jm[0], () => `<script src="/a/app.${hj}.js"></script>`);
   } }
 await writeFile(new URL('home.html', root), shell); // front page copy (served at / via _redirects)
 for (const [route, [title, desc]] of Object.entries(META)) {

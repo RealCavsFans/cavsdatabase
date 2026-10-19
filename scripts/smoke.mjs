@@ -1,6 +1,6 @@
 // Safety check: opens the main pages in headless Chrome from the files on disk and fails (exit 1) if any page throws a
 // script error or comes up empty. Run before publishing: the 30-minute Action runs it after the build and skips the commit
-// if it fails, so a broken edit never goes live. Needs playwright or playwright-core + Chrome (CHROME_PATH); skips if missing.
+// if it fails, so a broken edit never goes live. With --source it checks index.html itself (no build needed). Needs playwright or playwright-core + Chrome (CHROME_PATH); skips if missing.
 import { readFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { createRequire } from 'node:module';
@@ -10,9 +10,11 @@ const pw = (() => { for (const m of ['playwright', 'playwright-core']) { try { r
 if (!pw) { console.log('smoke: playwright not available, skipped'); process.exit(0); }
 const root = new URL('../', import.meta.url);
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.css': 'text/css', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.webp': 'image/webp' };
+// --source: test the editable index.html for every page (what the daily task and hand edits change) instead of the built copies
+const SRC = process.argv.includes('--source');
 const server = createServer(async (req, res) => {
   let p = decodeURIComponent(req.url.split('?')[0]); if (p === '/') p = '/home';
-  const tries = extname(p) ? [p] : [p + '.html', p + '/index.html'];
+  const tries = extname(p) ? [p] : SRC ? ['/index.html'] : [p + '.html', p + '/index.html'];
   for (const t of tries) { try { const b = await readFile(new URL('.' + t, root)); res.writeHead(200, { 'content-type': TYPES[extname(t)] || 'application/octet-stream' }); return res.end(b); } catch {} }
   res.writeHead(404); res.end();
 });
@@ -40,4 +42,4 @@ for (const r of ROUTES) {
 }
 await browser.close(); server.close();
 if (bad.length) { console.log('::error::Safety check failed, not publishing:\n' + bad.join('\n')); process.exit(1); }
-console.log('smoke: ' + ROUTES.length + ' pages OK');
+console.log('smoke: ' + ROUTES.length + ' pages OK' + (SRC ? ' (source)' : ''));
