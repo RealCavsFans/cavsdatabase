@@ -1,0 +1,33 @@
+name: Push alerts (OneSignal)
+on:
+  schedule:
+    - cron: '*/10 * * * *'   # tip-off, final score, and the once a day transactions/injuries alert
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: push
+  cancel-in-progress: false
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Send any due alerts (dry run unless PUSH_LIVE is "true")
+        run: node scripts/push.mjs
+        env:
+          ONESIGNAL_API_KEY: ${{ secrets.ONESIGNAL_API_KEY }}
+          PUSH_LIVE: ${{ vars.PUSH_LIVE }}
+      - name: Remember what went out
+        if: always()
+        run: |
+          git config user.name "cavsdatabase-bot"
+          git config user.email "bot@cavsdatabase.com"
+          git add data/push-state.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Push alerts state"
+          for i in 1 2 3; do git pull --rebase origin main && git push && exit 0; sleep $((i*10)); done
+          exit 1

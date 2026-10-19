@@ -1672,6 +1672,69 @@ const NL_ON=false;
   if(prev){setTimeout(pop,1200);return}
   window.cdbNlView=()=>{views++;if(views>=3&&Date.now()-t0>20000)setTimeout(pop,1500+Math.random()*4000)};
   setTimeout(()=>{if(views>=2)pop();else window.cdbNlView=()=>{views++;if(views>=2)setTimeout(pop,1500)}},wait)})();
+/* push alerts (OneSignal): "Get game alerts" in the next game box opens a sheet to pick tip-off, final score, transactions and injuries.
+   Choices are saved as OneSignal tags (tip/final/tx/inj = '1' or '0'); scripts/push.mjs sends to them. A small invite card shows only for regulars
+   (2+ days visited, 3+ pages this visit, a game within 3 days), never in the same visit as the newsletter card, and "Not now" waits 30 days.
+   ?alerts=sheet / ?alerts=invite / ?alerts=ios preview it. */
+(function(){const B=document.getElementById('galb');if(!B||window.CDB_EMBED)return;
+  const pv=(/[?&]alerts=(sheet|invite|ios)/.exec(location.search)||[])[1];
+  const BELL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>';
+  const ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+  const can='Notification' in window&&'serviceWorker' in navigator&&'PushManager' in window;
+  const needHome=(ios&&!standalone)||pv==='ios';
+  if(!can&&!needHome&&!pv)return;
+  const K='cdb-al',get=()=>{try{return JSON.parse(localStorage.getItem(K)||'{}')}catch(_){return {}}},put=o=>{try{localStorage.setItem(K,JSON.stringify({...get(),...o}))}catch(_){}};
+  const KINDS=[['tip','Tip-off reminder','30 minutes before every game',1],['final','Final score','Minutes after the final buzzer',1],['tx','Transactions','Signings, trades and waivers · once a day at most',0],['inj','Injury report','When a player’s status changes · once a day at most',0]];
+  const OS=()=>new Promise(r=>{if(!window.OneSignalDeferred)return r(null);const t=setTimeout(()=>r(null),8000);OneSignalDeferred.push(os=>{clearTimeout(t);r(os)})});
+  const paint=()=>{const on=get().on;B.classList.toggle('on',!!on);B.innerHTML=BELL+(on?'Alerts on <i>✓</i>':'Get game alerts');B.setAttribute('aria-label',on?'Game alerts are on. Change them':'Get game alerts');B.hidden=false};
+  paint();
+  if(get().on&&can&&Notification.permission!=='granted'){put({on:0});paint()}
+  let S=null;const close=()=>{if(!S)return;const s=S;S=null;s.classList.remove('on');setTimeout(()=>s.remove(),220);document.removeEventListener('keydown',esc)};
+  const esc=e=>{if(e.key==='Escape')close()};
+  function sheet(){close();const st=get(),on=!!st.on,sel={};KINDS.forEach(([k,,,d])=>sel[k]=st.t&&k in st.t?st.t[k]:d);
+    const w=el('div','gsh');w.setAttribute('role','dialog');w.setAttribute('aria-modal','true');w.setAttribute('aria-label','Cavs game alerts');
+    const c=el('div','gsh-c');w.appendChild(c);const x=el('button','gsh-x','×');x.type='button';x.setAttribute('aria-label','Close');x.onclick=close;c.appendChild(x);
+    c.appendChild(el('h3',null,'Cavs game alerts'));c.appendChild(el('p',null,'A notification on this device. Free, no email, no account. Turn it off anytime.'));
+    const denied=can&&Notification.permission==='denied'&&!pv;
+    if(needHome){const m=el('div','gsh-m');m.innerHTML='<b>On iPhone and iPad, add cavs_db to your Home Screen first</b><ol><li>Tap the Share button in Safari</li><li>Choose <b>Add to Home Screen</b></li><li>Open cavs_db from your Home Screen and tap <b>Get game alerts</b></li></ol>';c.appendChild(m);
+      const g=el('button','gsh-go','Got it');g.type='button';g.onclick=close;c.appendChild(g)}
+    else if(denied){const m=el('div','gsh-m');m.textContent='Notifications are blocked for cavsdatabase.com in this browser. Allow them in your browser’s site settings, then come back and tap Get game alerts.';c.appendChild(m);const g=el('button','gsh-go','OK');g.type='button';g.onclick=close;c.appendChild(g)}
+    else{const ul=el('ul','gsh-l');KINDS.forEach(([k,t,sub])=>{const li=el('li');const d=el('div');d.appendChild(el('b',null,t));d.appendChild(el('small',null,sub));li.appendChild(d);
+        const sw=el('button','gsw');sw.type='button';sw.setAttribute('role','switch');sw.setAttribute('aria-label',t);sw.setAttribute('aria-checked',String(!!sel[k]));sw.onclick=()=>{sel[k]=sel[k]?0:1;sw.setAttribute('aria-checked',String(!!sel[k]))};li.appendChild(sw);ul.appendChild(li)});c.appendChild(ul);
+      const g=el('button','gsh-go',on?'Save':'Turn on alerts');g.type='button';c.appendChild(g);
+      const note=el('small','gsh-n',on?'':'Your browser will ask to allow notifications.');c.appendChild(note);
+      const tags=()=>Object.fromEntries(KINDS.map(([k])=>[k,sel[k]?'1':'0']));
+      g.onclick=async()=>{if(!KINDS.some(([k])=>sel[k])){note.textContent='Pick at least one alert.';return}
+        g.disabled=true;g.textContent='One moment…';const os=await OS();
+        if(!os){g.disabled=false;g.textContent=on?'Save':'Turn on alerts';note.textContent=pv?'Preview only: alerts turn on at cavsdatabase.com.':'Alerts couldn’t load. Check your connection and try again.';return}
+        try{if(!on){await os.Notifications.requestPermission();if(!os.Notifications.permission){g.disabled=false;g.textContent='Turn on alerts';note.textContent='Notifications weren’t allowed. You can allow them in your browser’s site settings.';return}await os.User.PushSubscription.optIn()}
+          await os.User.addTags(tags());put({on:1,t:{...sel}});paint();c.querySelectorAll('ul,.gsh-off').forEach(e=>e.remove());g.remove();note.remove();
+          c.appendChild(el('p',null,on?'Saved.':'You’re set. Your first alert comes before the next tip-off.'));setTimeout(close,2200)}
+        catch(_){g.disabled=false;g.textContent=on?'Save':'Turn on alerts';note.textContent='Something went wrong. Please try again.'}};
+      if(on){const off=el('button','gsh-off','Turn off all alerts');off.type='button';c.appendChild(off);
+        off.onclick=async()=>{const os=await OS();try{if(os)await os.User.PushSubscription.optOut()}catch(_){}put({on:0});paint();close()}}}
+    w.addEventListener('click',e=>{if(e.target===w)close()});document.body.appendChild(w);S=w;requestAnimationFrame(()=>w.classList.add('on'));document.addEventListener('keydown',esc);
+    setTimeout(()=>(c.querySelector('.gsw,.gsh-go')||x).focus(),60)}
+  B.onclick=sheet;window.cdbAlerts=sheet;
+  /* invite card for regulars */
+  function invite(){if(document.querySelector('.alpop,.nlpop,.gsh')||!document.getElementById('fb')?.hidden)return;try{sessionStorage.setItem('cdb-al-seen','1')}catch(_){}
+    const c=el('aside','alpop');c.setAttribute('aria-label','Cavs game alerts');
+    c.innerHTML='<button type="button" class="gsh-x" aria-label="Close">×</button><div class="alpop-h">'+BELL+'Cavs game alerts</div><p>A heads up before tip-off and the final score after. Free, no email.</p><div class="alpop-b"><button type="button" class="y">Turn on</button><button type="button" class="n">Not now</button></div>';
+    document.body.appendChild(c);requestAnimationFrame(()=>c.classList.add('on'));
+    const shut=no=>{if(no)put({no:Date.now()});c.classList.remove('on');setTimeout(()=>c.remove(),300)};
+    c.querySelector('.gsh-x').onclick=()=>shut(1);c.querySelector('.n').onclick=()=>shut(1);c.querySelector('.y').onclick=()=>{shut(0);put({no:Date.now()});sheet()}}
+  if(pv==='sheet'||pv==='ios'){setTimeout(sheet,600);return}
+  if(pv==='invite'){setTimeout(invite,800);return}
+  const st=get();if(st.on||needHome||!can||Notification.permission==='denied'||(st.no&&Date.now()-st.no<30*864e5))return;
+  try{if(sessionStorage.getItem('cdb-al-seen'))return}catch(_){}
+  let days=[];try{days=JSON.parse(localStorage.getItem('cdb-fb')||'{}').d||[]}catch(_){}
+  if(days.length<2)return;
+  const todayET=new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(new Date());
+  const next=SCHEDULE.find(g=>g[0]>=todayET);if(!next||(Date.parse(next[0])-Date.parse(todayET))/864e5>3)return;
+  let views=0;const t0=Date.now();
+  window.cdbAlView=()=>{views++;let nl=false;try{nl=!!sessionStorage.getItem('cdb-nl-seen')}catch(_){}
+    if(views>=3&&Date.now()-t0>45000&&!nl){window.cdbAlView=null;setTimeout(invite,2000+Math.random()*3000)}}})();
 if('serviceWorker' in navigator&&location.hostname.endsWith('cavsdatabase.com'))addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
 /* birthdays: a little cake next to any player, coach or exec whose birthday is today (Eastern time). ?bday=MM-DD to preview */
 setTimeout(function(){const ov=(/[?&]bday=(\d\d-\d\d)/.exec(location.search)||[])[1];
@@ -2932,6 +2995,7 @@ const ROUTE_ALIAS={video:'media',rcf:'media/rcf'}; /* media/rcf now opens Media 
 function routeOf(){let r=location.pathname.replace(/^\/+|\/+$/g,'').toLowerCase();if(/index\.html$/.test(r)||location.protocol==='file:')r='';const h=location.hash.slice(1);if(!r&&h&&(SECTIONS.some(x=>x[0]===h)||ROUTE_ALIAS[h]))r=h;const AL={video:'media',rcf:'media/rcf'};return AL[r]||r||'home'}
 function show(route){
   if(window.cdbNlView)window.cdbNlView();
+  if(window.cdbAlView)window.cdbAlView();
   if(window.cdbAttachX)setTimeout(window.cdbAttachX,60);
   {const cur=document.querySelector('.wm-term s');if(cur&&!matchMedia('(prefers-reduced-motion: reduce)').matches){cur.style.animation='none';void cur.offsetWidth;cur.style.animation=''}}
   let id=route.split('/')[0];const toArt=route==='media/rcf';if(toArt)route='media';if(id==='media')id='video';
