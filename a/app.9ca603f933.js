@@ -3156,20 +3156,34 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
     else{j--;q.placeholder=j?h.slice(0,j):'Search';if(j===0){del=false;i++;if(i>=3){q.placeholder='Search';return}setTimeout(tick,500);return}}
     setTimeout(tick,del?25:60)};setTimeout(tick,1200)}
 
-/* first-visit intro: home page only, once per browser, skipped for reduced motion and on June 19 */
+/* first-visit intro: home page only, once per browser, skipped for reduced motion and on June 19.
+   INTRO_V 'tour': fan questions that spin into the page that answers them. 'tait': Joe Tait's opener cycling through every Cavs home. ?preview=intro&iv=tour|tait previews either. */
+const INTRO_V='tait';
 (function(){const I=document.getElementById('ci');if(!I)return;let seen=false;try{seen=!!localStorage.getItem('cdb-intro')}catch(e){seen=true}
-  const force=/preview=intro/.test(location.search);
+  const force=/preview=intro/.test(location.search);const V=(location.search.match(/[?&]iv=(tour|tait)/)||[])[1]||INTRO_V;
   /* only for people who typed the address or used a bookmark: anyone arriving from Google, X or a shared link goes straight to the page */
   let ext=false;try{ext=!!document.referrer&&new URL(document.referrer).host!==location.host}catch(e){}
   if(!force&&(seen||ext||location.search||location.hash||routeOf()!=='home'||matchMedia('(prefers-reduced-motion: reduce)').matches||document.getElementById('cel'))){startHints();return}
   try{localStorage.setItem('cdb-intro','1')}catch(e){}
-  const T=document.getElementById('ci-t'),B=document.getElementById('ci-br'),G=document.getElementById('ci-tg');let stop=false;
-  const done=()=>{stop=true;startHints();I.classList.add('out');document.documentElement.style.overflow='';setTimeout(()=>I.remove(),700)};
-  I.hidden=false;I.removeAttribute('aria-hidden');document.documentElement.style.overflow='hidden';document.getElementById('ci-skip').onclick=done;
+  const $=id=>document.getElementById(id);const T=$('ci-t'),B=$('ci-br'),G=$('ci-tg'),GO=$('ci-go'),P=$('ci-pill'),BY=$('ci-by');let stop=false;
+  const done=(to)=>{if(stop&&!to)return;stop=true;I.classList.remove('peek','spin-out','spin-in');if(routeOf()!=='home'||to)show(to||'home');scrollTo(0,0);startHints();I.classList.add('out');document.documentElement.style.overflow='';setTimeout(()=>I.remove(),700)};
+  I.hidden=false;I.removeAttribute('aria-hidden');document.documentElement.style.overflow='hidden';$('ci-skip').onclick=()=>done();$('ci-btn').onclick=()=>done();
+  GO.querySelectorAll('a[data-ci]').forEach(a=>a.onclick=e=>{e.preventDefault();stop=true;const r=a.dataset.ci;done(r);go(r)});
   const sl=ms=>new Promise(r=>setTimeout(r,ms));
-  (async()=>{const Q=['how much cap space do the cavs have?','who does the 2027 first go to?','when is the trade deadline?'];await sl(300);
-    for(const q of Q){for(const c of q){if(stop)return;T.textContent+=c;await sl(30)}await sl(380);while(T.textContent.length){if(stop)return;T.textContent=T.textContent.slice(0,-1);await sl(9)}await sl(100)}
-    if(stop)return;B.classList.add('on');await sl(70);B.classList.remove('on');await sl(70);B.classList.add('on');await sl(300);G.classList.add('on');await sl(1400);if(!stop)done()})()})();
+  const type=async(txt,ms=34)=>{for(const c of txt){if(stop)return;T.textContent+=c;await sl(ms)}};
+  const erase=async(n,ms=12)=>{for(let k=0;k<n&&T.textContent.length;k++){if(stop)return;T.textContent=T.textContent.slice(0,-1);await sl(ms)}};
+  const brand=async()=>{if(stop)return;B.classList.add('on');await sl(70);B.classList.remove('on');await sl(70);B.classList.add('on');await sl(320);G.classList.add('on');await sl(600);GO.classList.add('on');await sl(4200);if(!stop)done()};
+  if(V==='tait'){I.classList.add('tait');(async()=>{await sl(350);await type("it's basketball time at ",40);T.insertAdjacentHTML('beforeend','<br><span class="ci-gold"></span>');const g=T.lastChild;BY.classList.add('on');
+      for(const a of ['Cleveland Arena','Richfield Coliseum','Gund Arena','Quicken Loans Arena']){for(const c of a){if(stop)return;g.textContent+=c;await sl(42)}await sl(420);while(g.textContent){if(stop)return;g.textContent=g.textContent.slice(0,-1);await sl(14)}await sl(90)}
+      for(const c of 'cavsdatabase.com'){if(stop)return;g.textContent+=c;await sl(46)}await sl(900);BY.classList.remove('on');await sl(400);await brand()})();return}
+  /* tour: each question spins into the page that answers it */
+  fetch('/pdata/history.json').catch(()=>{});
+  const Q=[["how is mitchell playing?",'players/donovan-mitchell',null,'players/donovan-mitchell'],["which firsts do the cavs own?",'assets','#board','assets'],["are the cavs over the tax?",'cap','#captop','cap'],["who's chasing cavs history?",'history','#chase','history']];
+  const peek=async([q,route,sel,path])=>{await type(q);await sl(380);if(stop)return;I.classList.add('spin-out');await sl(320);if(stop)return;
+    show(route);await sl(60);const t=sel&&document.querySelector(sel);const hb=(document.querySelector('header.gbar')||{offsetHeight:0}).offsetHeight;scrollTo(0,t?Math.max(0,t.getBoundingClientRect().top+scrollY-hb-12):0);
+    I.classList.remove('spin-out');I.classList.add('peek');P.innerHTML='<b>&gt;</b> cavsdatabase.com/'+path;P.classList.add('on');await sl(1500);if(stop)return;
+    P.classList.remove('on');I.classList.remove('peek');T.textContent='';I.classList.add('spin-in');await sl(340);I.classList.remove('spin-in')};
+  (async()=>{await sl(300);for(const q of Q){if(stop)return;await peek(q)}if(stop)return;show('home');scrollTo(0,0);await sl(120);await brand()})()})();
 
 /* split-flap: record tiles flip into place on load; splits and the last score scramble in */
 (function(){
