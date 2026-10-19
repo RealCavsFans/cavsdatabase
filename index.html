@@ -1880,7 +1880,7 @@ SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
       ROWS.forEach(([lab,i,hi,f])=>{const a=val(TS.CLE,i),b=val(TS[o],i);if(i===-3&&(a==null||b==null)){tape.append(el('span','gtv',a==null?'—':f(a)),el('span','gtl',lab),el('span','gtv r',b==null?'—':f(b)));return}const rr=v=>1+(i===-3?l14.filter(x=>x>v).length:all.filter(t=>val(t,i)>v).length);const ra=i<0?rr(a):rk(a,i,hi),rb=i<0?rr(b):rk(b,i,hi);const fmt=(t,v)=>f?f(v):t[0]+'–'+t[1];
         const better=lab==='Pace'?0:(hi?a>b:a<b)?1:(hi?b>a:b<a)?2:0;
         const L=el('span','gtv'+(better===1?' up':''));L.append(fmt(TS.CLE,a),el('small',null,' '+ord(ra)));const Rr=el('span','gtv r'+(better===2?' up':''));Rr.append(el('small',null,ord(rb)+' '),fmt(TS[o],b));tape.append(L,el('span','gtl',lab),Rr)});
-      tapeRows(tape);teams.appendChild(tape);teams.appendChild(el('span','gp-note','Bold = better · league rank'+(cur?'':' · 2025–26 stats until 5 games played')))}
+      tapeRows(tape);teams.appendChild(tape);teams.appendChild(el('span','gp-note',cur?'Ranks are out of 30':'2025–26 stats until 5 games played · ranks out of 30'))}
     w.appendChild(teams);
     const facts=el('div','gp-f');
     [['Season series',met.length?'Cavs '+mw+'–'+(met.length-mw)+(left-met.length>0?' · '+(left-met.length)+' left':''):left+' meeting'+(left===1?'':'s')+' this season'],
