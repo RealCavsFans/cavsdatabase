@@ -3181,7 +3181,7 @@ const INTRO_V='tait';
   const Q=[["how is mitchell playing?",'players/donovan-mitchell',null,'players/donovan-mitchell'],["which firsts do the cavs own?",'assets','#board','assets'],["are the cavs over the tax?",'cap','#captop','cap'],["who's chasing cavs history?",'history','#chase','history']];
   const peek=async([q,route,sel,path])=>{await type(q);await sl(380);if(stop)return;I.classList.add('spin-out');await sl(320);if(stop)return;
     show(route);await sl(60);const t=sel&&document.querySelector(sel);const hb=(document.querySelector('header.gbar')||{offsetHeight:0}).offsetHeight;scrollTo(0,t?Math.max(0,t.getBoundingClientRect().top+scrollY-hb-12):0);
-    I.classList.remove('spin-out');I.classList.add('peek');P.innerHTML='<b>&gt;</b> cavsdatabase.com/'+path;P.classList.add('on');await sl(1500);if(stop)return;
+    I.classList.remove('spin-out');I.classList.add('peek');P.innerHTML='<b>&gt;</b> cavsdatabase.com/'+path;P.classList.add('on');await sl(+(location.search.match(/[?&]hold=(\d+)/)||[])[1]||1500);if(stop)return;
     P.classList.remove('on');I.classList.remove('peek');T.textContent='';I.classList.add('spin-in');await sl(340);I.classList.remove('spin-in')};
   (async()=>{await sl(300);for(const q of Q){if(stop)return;await peek(q)}if(stop)return;show('home');scrollTo(0,0);await sl(120);await brand()})()})();
 
