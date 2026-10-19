@@ -58,7 +58,7 @@
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
 <script>/* OneSignal web push for alerts: loads only on the live site, never prompts on its own */
-if(location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async function(OneSignal){await OneSignal.init({appId:"3db75ca9-d797-40c7-8c53-c0711b41e956",serviceWorkerPath:"sw.js",serviceWorkerParam:{scope:"/"},notifyButton:{enable:false},promptOptions:{slidedown:{prompts:[]}}})});const s=document.createElement('script');s.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';s.defer=true;document.head.appendChild(s)}</script>
+/* OneSignal paused with game alerts (Oct 19): the SDK isn't loaded, so no subscribe prompts appear. Set PUSH_SDK to true when alerts go live. */var PUSH_SDK=false;if(PUSH_SDK&&location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async function(OneSignal){await OneSignal.init({appId:"3db75ca9-d797-40c7-8c53-c0711b41e956",serviceWorkerPath:"sw.js",serviceWorkerParam:{scope:"/"},notifyButton:{enable:false},promptOptions:{slidedown:{prompts:[]}}})});const s=document.createElement('script');s.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';s.defer=true;document.head.appendChild(s)}</script>
 </head>
 <body>
 <a class="skip" href="#" id="skip">Skip to content</a>
@@ -2066,7 +2066,7 @@ const GALERT_ON=true;
   document.addEventListener('click',e=>{if(!m.hidden&&!m.contains(e.target))set(false)});
   document.getElementById('calcopy').onclick=async()=>{try{await navigator.clipboard.writeText('https://cavsdatabase.com/cavs.ics');document.getElementById('calcopy').textContent='Copied ✓'}catch(_){prompt('Copy this link','https://cavsdatabase.com/cavs.ics')}}})();
 /* Cavs & Coffee sign-up boxes (Home under the record card, Resources). NL_ON shows them to everyone; ?nl=preview shows them now */
-const NL_ON=false;
+const NL_ON=false; /* paused Oct 19: the "subscribe" card stays off until turned back on */
 (function(){const show=NL_ON||/[?&]nl=preview/.test(location.search);
   document.querySelectorAll('.nlsu').forEach(sec=>{if(!show)return;sec.hidden=false;
     const box=sec.querySelector('.su'),mug=sec.querySelector('.sumug'),P=sec.querySelector('.supath'),B=sec.querySelector('.suball');
@@ -3693,6 +3693,8 @@ const INTRO_V='tait';
   const force=/preview=intro/.test(location.search);const V=(location.search.match(/[?&]iv=(tour|tait)/)||[])[1]||INTRO_V;
   /* only for people who typed the address or used a bookmark: anyone arriving from Google, X or a shared link goes straight to the page */
   let ext=false;try{ext=!!document.referrer&&new URL(document.referrer).host!==location.host}catch(e){}
+  /* some browsers and the Google app hide where a visit came from; a tab that already has history (a search results page, another site) also skips it */
+  if(!ext&&(history.length>1||/\bGSA\/|FBAN|FBAV|Instagram|Twitter|LinkedInApp/.test(navigator.userAgent)))ext=true;
   if(!force&&(seen||ext||location.search||location.hash||routeOf()!=='home'||matchMedia('(prefers-reduced-motion: reduce)').matches||document.getElementById('cel'))){startHints();return}
   try{localStorage.setItem('cdb-intro','1')}catch(e){}
   const $=id=>document.getElementById(id);const T=$('ci-t'),B=$('ci-br'),G=$('ci-tg'),GO=$('ci-go'),P=$('ci-pill'),BY=$('ci-by');let stop=false;
