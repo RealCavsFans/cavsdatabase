@@ -3338,14 +3338,14 @@ function ppBuild(p,root){
 
   /* ===== 4 · value to the Cavs ===== */
   const sal=R?(v2=>typeof v2==='number'?v2:Array.isArray(v2)?v2[0]:0)(R[2][0]):0;
-  const va=chap('val','Value to the Cavs',sal?usdM(sal)+' this season':stt==='TW'?'Two-way':stt==='Camp'?'Exhibit 10':'',false,'Value');
+  const va=chap('val','Role and value',stt==='TW'?'Two-way':stt==='Camp'?'Exhibit 10':'',false,'Role');
   const teamGames=games.length;
   if(gp>=3){const withG=games.filter(g=>g.me&&g.me.min>0),without=games.filter(g=>!(g.me&&g.me.min>0));const rec=a=>a.filter(g=>g.res==='W').length+'–'+a.filter(g=>g.res==='L').length;
     const thr=avg('pts')>=15?20:10;const bigF=G==='B'?[m=>m.pts>=thr||[m.pts,m.reb,m.ast,m.stl,m.blk].filter(x=>x>=10).length>=2,'With '+thr+'+ points or a double-double']:[m=>m.pts>=thr,'When he scores '+thr+'+'];
     const c=card('Win connection',null,'Cavs results with and without him, and when he has a big night.');const big=el('div','ppx-big2');
     const pmA=mine.reduce((t,g)=>t+g.me.pm,0)/gp;const pmR=cavsRank(a=>a.reduce((t,r)=>t+(parseFloat(r[5])||0),0)/a.length);
     [[rec(withG),'Cavs with him'],[without.length?rec(without):'—','Without him'],[rec(withG.filter(g=>bigF[0](g.me))),bigF[1]],[(pmA>=0?'+':'')+pmA.toFixed(1),'Average +/− a game'+(pmR?', '+ord(pmR.r)+' on the team':'')]].forEach(([a,b])=>{const d2=el('div');d2.appendChild(el('b',null,a));d2.appendChild(el('span',null,b));big.appendChild(d2)});c.appendChild(big);va.appendChild(c)}
-  if(T&&T[0]==='Starters'&&stt!=='TW'){const q=mine.filter(g=>g.me.min>=20).length,missed=teamGames-q,canMiss=17-missed;
+  if(false&&T&&T[0]==='Starters'&&stt!=='TW'){/* awards watch: off (Oct 19) */const q=mine.filter(g=>g.me.min>=20).length,missed=teamGames-q,canMiss=17-missed;
     const c=card('Awards watch','Awards','Players need <b>65 games</b> to qualify for MVP, DPOY, All-NBA and All-Defensive. Missing too many can cost an award, and for some contracts, a raise.');
     const bar=el('div','ppx-elig');const i2=el('i');i2.style.width=(q/82*100)+'%';const b2=el('b');b2.style.left=(65/82*100)+'%';bar.append(i2,b2);c.appendChild(bar);
     const rr1=el('div','ppx-rr');rr1.appendChild(el('span',null,'Qualifying games'));rr1.appendChild(el('b',null,teamGames?q+' of '+teamGames:'Starts Oct 22'));const rr2=el('div','ppx-rr');rr2.appendChild(el('span',null,'Can still miss'));rr2.appendChild(el('b',null,canMiss>=0?canMiss+' games':'Out of the running'));c.append(rr1,rr2);
@@ -3363,7 +3363,7 @@ function ppBuild(p,root){
       svg+='</svg>';const sv=el('div','ppx-svg');sv.innerHTML=svg;c.appendChild(sv)}else c.appendChild(note(MPG_PREV[n]!=null?`Last season: ${MPG_PREV[n].toFixed(1)} minutes a game. Bars start after his first game.`:'Bars start after his first game.'));
     va.appendChild(c)}
   // contract
-  if(R||C){const c=card('What his contract buys',null,'Salary in terms fans feel, and next to the players paid most like him.');
+  if(false&&(R||C)){/* contract card: off, the cap page covers it (Oct 19) */const c=card('What his contract buys',null,'Salary in terms fans feel, and next to the players paid most like him.');
     if(sal){const cap=164961000;const m=el('div','ppx-meter');const i2=el('i');i2.style.width=pc(sal/cap*100)+'%';m.appendChild(i2);c.appendChild(m);
       const pp=el('p','ppx-p');pp.innerHTML=`<b>${usdM(sal)}</b> this season, ${Math.round(sal/cap*100)}% of the cap. <b>${usdS(sal/82)}</b> a game across 82.`;c.appendChild(pp);
       if(teamGames){const big=el('div','ppx-big2');const cells=[[usdS(sal/82*teamGames),'Estimated earnings so far ('+teamGames+' of 82 Cavs games)']];if(gp>=5&&avg('pts')>=15)cells.push([usdS(sal/82*teamGames/Math.max(1,tot('pts'))),'Per point scored, estimated']);cells.forEach(([a,b])=>{const d2=el('div');d2.appendChild(el('b',null,a));d2.appendChild(el('span',null,b));big.appendChild(d2)});if(cells.length===1)big.style.gridTemplateColumns='1fr';c.appendChild(big);c.appendChild(note('Players are paid on a semi-monthly schedule, so this is an estimate based on games played, not his actual paychecks.'))}}
@@ -3402,7 +3402,7 @@ function ppBuild(p,root){
     const ks=G==='B'?[['pts','Points'],['reb','Rebounds'],['blk','Blocks']]:G==='G'?[['pts','Points'],['ast','Assists'],['stl','Steals']]:[['pts','Points'],['reb','Rebounds'],['ast','Assists']];
     ks.forEach(([k,l])=>{const pj=proj(k),b=best(k);const rr=el('div','ppx-rr');rr.appendChild(el('span',null,l));rr.appendChild(el('b',null,pj.toLocaleString()));if(b[0])rr.appendChild(el('small',null,pj>Math.round(b[0])?'Would be his best season (previous: '+Math.round(b[0]).toLocaleString()+' in '+b[1]+')':'Best season: '+Math.round(b[0]).toLocaleString()+' in '+b[1]));c.appendChild(rr)});hs.appendChild(c)}
   // age curve: players whose NBA career has been all with the Cavs
-  if(allCle&&rs.length>=2&&PPD.greats&&Object.keys(PPD.greats).length){const ageAt=s2=>{const y=+s2.slice(0,4)+1;const b=new Date(bd+'T12:00:00');let a=y-b.getFullYear();if(b.getMonth()>1||(b.getMonth()===1&&b.getDate()>1))a--;return a};
+  if(false&&allCle&&rs.length>=2&&PPD.greats&&Object.keys(PPD.greats).length){const ageAt=s2=>{const y=+s2.slice(0,4)+1;const b=new Date(bd+'T12:00:00');let a=y-b.getFullYear();if(b.getMonth()>1||(b.getMonth()===1&&b.getDate()>1))a--;return a};
     const myAge=ageAt(rs[rs.length-1][0]);const mine2=rs.filter(r=>r[1]==='CLE');const sumMe=[mine2.reduce((t,r)=>t+r[2],0),Math.round(mine2.reduce((t,r)=>t+r[2]*r[5],0)),Math.round(mine2.reduce((t,r)=>t+r[2]*r[6],0)),Math.round(mine2.reduce((t,r)=>t+r[2]*r[7],0))];
     if((PPD.ms||{}).players&&PPD.ms.players[n]){const cv=PPD.ms.players[n].cavs;if(cv){sumMe[0]=cv.GP;sumMe[1]=cv.PTS;sumMe[2]=cv.REB;sumMe[3]=cv.AST}}
     const c=card('Age curve','Age',`His Cavs career through age ${myAge} against franchise greats at the same age.`);const tb=el('table','ppx-t');tb.innerHTML=`<thead><tr><th>Through age ${myAge}</th><th>GP</th><th>PTS</th><th>REB</th><th>AST</th><th>All-Star</th></tr></thead>`;const tbd=el('tbody');
@@ -3428,7 +3428,7 @@ function ppBuild(p,root){
     (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(draw);c.appendChild(cv);
     const b=el('button','ppx-btn','Save image');b.type='button';b.addEventListener('click',()=>{draw();cv.toBlob(bl=>{if(!bl)return;const file=new File([bl],slug(n)+'-cavs-db.png',{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:n+' · cavs_db'}).catch(()=>{})}else{const a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download=file.name;document.body.appendChild(a);a.click();a.remove()}},'image/png')});c.appendChild(b);root.appendChild(c)}
   root.querySelectorAll('.ppx-ch1').forEach(d=>{if(!d.querySelector('.ppx-cb').children.length){const a2=[...nav.children].find(x=>x.getAttribute('href')==='#'+d.id);if(a2)a2.remove();d.remove()}});
-  root.appendChild(el('p','ppx-foot','Stats: our Cavs box scores (ESPN) and a nightly ESPN league feed; earlier seasons from Wikipedia and Basketball Reference. Contract data from the cap page. Updated after every game.'));
+  root.appendChild(el('p','ppx-foot','Stats: our Cavs box scores (ESPN) and a nightly ESPN league feed; earlier seasons from Wikipedia and Basketball Reference. Updated after every game.'));
 }
 
 const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge','player','roster-tree','game','history','season'];
