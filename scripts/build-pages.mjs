@@ -76,9 +76,9 @@ for (const [route, [title, desc]] of Object.entries(META)) {
   await mkdir(new URL('./', file), { recursive: true });
   await writeFile(file, out);
 }
-// embeddable widgets: /embed/cap and /embed/schedule (kept out of search; the main pages are canonical)
+// embeddable widgets: /embed/cap, schedule, record, standings and chase (kept out of search; the main pages are canonical)
 await mkdir(new URL('embed/', root), { recursive: true });
-for (const [k, r] of [['cap', 'cap'], ['schedule', 'schedule']]) {
+for (const [k, r] of [['cap', 'cap'], ['schedule', 'schedule'], ['record', ''], ['standings', 'schedule'], ['chase', 'history']]) {
   const e = shell.replace('<head>', `<head>\n<script>window.CDB_EMBED='${k}'</script>\n<meta name="robots" content="noindex">`)
     .replace(/<link rel="canonical" href="[^"]*">/, `<link rel="canonical" href="https://cavsdatabase.com/${r}">`);
   await writeFile(new URL('embed/' + k + '.html', root), e);
