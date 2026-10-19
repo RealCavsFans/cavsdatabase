@@ -269,9 +269,11 @@ const sgn=v=>(v>0?'+':v<0?'\u2212':'')+Math.abs(v).toFixed(1);
 const ord=n=>{const x=['th','st','nd','rd'],v=n%100;return n+(x[(v-20)%10]||x[v]||x[0])};
 const nr=NRTG.CLE?sgn(NRTG.CLE[0])+' ('+ord(1+Object.values(NRTG).filter(v=>v[0]>NRTG.CLE[0]).length)+')':'—';
 const nr14=L14.CLE?sgn(L14.CLE[0]):'—';
-[['East rank',SEASON.eastRank],['Central rank',SEASON.centralRank||'—'],['Home',rec('H')],['Road',rec('A')],['Last 10',last10.length?last10.filter(x=>x==='W').length+'–'+last10.filter(x=>x==='L').length:'—'],['Streak',streak],['Net rating',nr],['Net, 2 wks',nr14]]
-  .forEach(([k,v])=>{const d=el('div');d.append(el('dt',null,k),el('dd',null,v));sp.appendChild(d)});
-{const a=el('a','home-std','Standings →');a.href='/schedule';a.dataset.go='schedule';document.querySelector('.grec .gbig').appendChild(a)}
+[['Home',rec('H')],['Road',rec('A')],['Last 10',last10.length?last10.filter(x=>x==='W').length+'–'+last10.filter(x=>x==='L').length:'—'],['Streak',streak],['Net rtg',nr],['Net 2 wk',nr14]]
+  .forEach(([k,v])=>{const d=el('div');const dd=el('dd');const m=String(v).match(/^(.*?) (\(.*\))$/);if(m)dd.append(m[1],el('small',null,' '+m[2]));else dd.textContent=v;d.append(el('dt',null,k),dd);sp.appendChild(d)});
+/* conference and division rank sit beside the record tiles, with the standings link under them */
+{const box=el('div','rkbox');[['East rank',SEASON.eastRank,15],['Central rank',SEASON.centralRank,5]].forEach(([k,v,n])=>{const dl=el('dl','rk');const dd=el('dd',null,v&&v!=='—'?v:'—');if(v&&v!=='—')dd.appendChild(el('small',null,'of '+n));dl.append(el('dt',null,k),dd);box.appendChild(dl)});
+ const a=el('a','home-std','Standings →');a.href='/schedule';a.dataset.go='schedule';box.appendChild(a);document.querySelector('.grec .gbig').appendChild(box)}
 const strip=document.getElementById('strip');for(let i=0;i<82;i++)strip.appendChild(el('span',res[i]==='W'?'w':res[i]==='L'?'l':null));
 /* season pace: games over/under .500 as a line over the tracker, dashed out to game 82 at the current pace (from game 5 on) */
 if(res.length>=5){const wins=res.filter(x=>x==='W').length,pace=Math.round(wins/res.length*82);let d=0;const pts=[[0,0]];res.forEach((x,i)=>{d+=x==='W'?1:-1;pts.push([i+1,d])});
