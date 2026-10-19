@@ -304,10 +304,11 @@ if(ng){
   document.getElementById('nx-label').textContent=(ni===0?'Season opener':ni===firstHome?'Home opener':'Game '+(ni+1));
   const t=document.getElementById('nx-title');t.textContent='';t.append((ng[2]==='H'?'vs ':'at ')+TEAMS[ng[1]]);
   {const tv=tvFor(ng[0]);document.getElementById('nx-meta').textContent=dayFmt.format(tipOf(ng)).replace(/^(\w{3})\w*,/,'$1,')+' · '+tipTime(ng,tipOf(ng),true)+(tv.nat?' · '+tv.nat:'')+(tv.loc?' · '+tv.loc:'')}
-  {const m=document.getElementById('nx-meta');const gp=el('a','nx-gp','Preview →');gp.href='/games/'+gslug(ng);gp.dataset.go='games/'+gslug(ng);m.after(gp);m.parentElement.classList.add('nx-row')}
+  {const m=document.getElementById('nx-meta');const gp=el('a','nx-gp','Preview →');gp.href='/games/'+gslug(ng);gp.dataset.go='games/'+gslug(ng);m.after(gp);m.parentElement.classList.add('nx-row');
+   const hr=document.querySelector('#next-h-row');const g2=el('a','nx-gp2','Game preview');g2.href=gp.href;g2.dataset.go=gp.dataset.go;const lk=hr.querySelector('a[data-go="schedule"]');if(lk){const w=el('span','nx-lks');lk.before(w);w.append(g2,el('span','nx-dot','·'),lk)}}
   const th=document.getElementById('nx-then');th.textContent='';if(nx){const a=el('a',null,TEAMS[nx[1]]);a.href=bbTeam(nx[1]);a.target='_blank';a.rel='noopener';a.className='opp';th.append(el('b',null,'After that '),shortFmt.format(tipOf(nx))+(nx[2]==='H'?' vs ':' at '),a,' · '+nx[3]+' PM')}
   (function(){const T=tipOf(ng).getTime(),p=n=>String(n).padStart(2,'0'),$=id=>document.getElementById(id);
-    function tick(){let ms=T-Date.now();if(ms<=0){document.querySelector('#cd small').textContent='Tip-off';['d','h','m','s'].forEach(k=>$('cd-'+k).textContent='00');return false}
+    function tick(){let ms=T-Date.now();if(ms<=0){const c=$('cd');c.classList.add('live');c.querySelector('small').textContent='Underway';const w=c.querySelector('.cdw');if(w&&!c.querySelector('.cd-live')){const a=el('a','cd-live','Follow live ↗');a.href=(typeof gameUrl==='function'&&gameUrl(ng[0]))||'https://www.nba.com/cavaliers/schedule';a.target='_blank';a.rel='noopener';w.replaceWith(a)}return false}
       const t=Math.floor(ms/1e3);$('cd-d').textContent=p(Math.floor(t/86400));$('cd-h').textContent=p(Math.floor(t%86400/3600));$('cd-m').textContent=p(Math.floor(t%3600/60));$('cd-s').textContent=p(t%60);return true}
     if(tick()){const iv=setInterval(()=>{if(!tick())clearInterval(iv)},1000)}})();
 }
