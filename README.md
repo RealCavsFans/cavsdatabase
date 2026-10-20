@@ -6,4 +6,6 @@ Independent Cleveland Cavaliers reference site. Static, no build step.
 - `videos.json` — latest videos from the official Cavs YouTube channel, written by `scripts/fetch-videos.mjs`.
 - `.github/workflows/videos.yml` — runs the video job every 30 minutes.
 
+If the daily update isn't running, see `MANUAL.md` for how to keep the site current by hand.
+
 Not affiliated with the Cleveland Cavaliers or the NBA.
