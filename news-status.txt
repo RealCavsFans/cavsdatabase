@@ -1,8 +1,8 @@
-2026-10-20T03:01:56.694Z
+2026-10-20T03:19:17.718Z
 NBA highlights: 1 new (YouTube API)
-Hoops Rumors: 9 from https://www.hoopsrumors.com/cleveland-cavaliers/feed
+Hoops Rumors: 8 from https://www.hoopsrumors.com/cleveland-cavaliers/feed
 Cavaliers on SI: 15 from https://news.google.com/rss/search?q=site%3Asi.com%2Fnba%2Fcavaliers&hl=en-US&gl=US&ceid=US:en
-cleveland.com: 10 from https://news.google.com/rss/search?q=site%3Acleveland.com%2Fcavs&hl=en-US&gl=US&ceid=US:en
+cleveland.com: 6 from https://news.google.com/rss/search?q=site%3Acleveland.com%2Fcavs&hl=en-US&gl=US&ceid=US:en
 Fear The Sword: 10 from https://www.fearthesword.com/rss/current.xml
 Wine and Gold Talk: 2 from https://feeds.megaphone.fm/wineandgoldtalk
 The Block The Shot The Stop: 0 from https://www.spreaker.com/show/6772702/episodes/feed
