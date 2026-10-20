@@ -1,0 +1,37 @@
+name: Site health check
+# Runs scripts/health.mjs every morning without Claude. If something is stale or broken it opens a GitHub issue
+# titled "Site health" (GitHub emails the repo owner); later problems add a comment; it closes the issue once healthy again.
+on:
+  schedule:
+    - cron: '20 15 * * *'   # ~11:20 a.m. Eastern
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 200
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Check
+        id: chk
+        run: |
+          set +e
+          node scripts/health.mjs > /tmp/health.txt 2>&1; echo "code=$?" >> "$GITHUB_OUTPUT"
+          cat /tmp/health.txt
+      - name: Open, update or close the issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          N=$(gh issue list --state open --search 'in:title "Site health"' --json number -q '.[0].number')
+          if [ "${{ steps.chk.outputs.code }}" != "0" ]; then
+            { echo "The daily health check found a problem on $(TZ=America/New_York date '+%b %-d, %Y'):"; echo; echo '```'; cat /tmp/health.txt; echo '```'; echo; echo "See MANUAL.md for what to do, or ask Claude to look."; } > /tmp/body.md
+            if [ -n "$N" ]; then gh issue comment "$N" --body-file /tmp/body.md; else gh issue create --title "Site health: something needs attention" --body-file /tmp/body.md; fi
+          elif [ -n "$N" ]; then
+            gh issue close "$N" --comment "Healthy again as of $(TZ=America/New_York date '+%b %-d, %Y')."
+          fi

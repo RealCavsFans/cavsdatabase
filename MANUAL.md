@@ -63,4 +63,4 @@ Every job that reads ESPN keeps the last good data when a fetch fails, so pages 
 
 ## Health check
 
-A daily check (`scripts/health.mjs`) flags anything stale: no box scores after a game, team stats behind, or a failing job. It runs as a Claude scheduled task. It can also run as a free GitHub job that opens a GitHub issue, which GitHub emails you about, so the warning still reaches you if Claude is down.
+A daily check (`scripts/health.mjs`) flags anything stale: no box scores after a game, team stats behind, or a failing job. It runs twice: as a Claude scheduled task, and as a free GitHub job (`.github/workflows/health.yml`) that opens a GitHub issue called "Site health" when something is wrong. GitHub emails you about the issue, so the warning reaches you even if Claude is down. The issue closes itself once things are healthy again.
