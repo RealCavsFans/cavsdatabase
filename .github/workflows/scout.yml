@@ -1,0 +1,40 @@
+name: Scouting report for the next opponent
+on:
+  schedule:
+    - cron: '35 10 * * *'   # 6:35 a.m. Eastern, after last night's games are final
+    - cron: '35 17 * * *'   # 1:35 p.m. Eastern, picks up a new opponent the day after a game
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: scout
+  cancel-in-progress: false
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          sparse-checkout: |
+            scripts/scout.mjs
+            live-core.js
+            live-base.json
+            data/scout.json
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: node scripts/scout.mjs
+      - name: Commit if changed
+        run: |
+          [ -f data/scout.json ] || exit 0
+          git config user.name "cavsdatabase-bot"
+          git config user.email "bot@cavsdatabase.com"
+          git add data/scout.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Update scouting report"
+          for i in 1 2 3; do
+            if git pull --rebase origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true; sleep 20
+          done
+          exit 1

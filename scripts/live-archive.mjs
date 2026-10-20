@@ -1,4 +1,5 @@
 // Game archive for the live game page.
+// Saves every finished Cavs game (index.json also carries each game's labeled recap for the site's game pages)
 // Saves every finished Cavs game of a season (a trimmed copy of ESPN's game summary, plus a numbers-only recap)
 // to live-archive/<season>/<espn id>.json, then rebuilds live-archive/<season>/season.json: season totals for
 // players, lineups (5-, 3- and 2-man), on/off, shots, assists and possessions, and each player's shooting by zone
@@ -70,7 +71,8 @@ for (const f of files) {
   if (D.focus.id !== '5') continue;
   const gi = games.length;
   const opp = D.other;
-  games.push({ id: f.slice(0, -5), date: D.date, opp: opp.abbr, ha: D.focus.ha, cle: D.focus.ha === 'home' ? R.hs : R.as, os: D.focus.ha === 'home' ? R.as : R.hs, recap: s.recap || [] });
+  const etd = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(D.date));
+  games.push({ id: f.slice(0, -5), date: D.date, et: etd, opp: opp.abbr, ha: D.focus.ha, cle: D.focus.ha === 'home' ? R.hs : R.as, os: D.focus.ha === 'home' ? R.as : R.hs, recap: s.recap || [], rc: C.recapL ? C.recapL(D, R) : [] });
   for (const id of D.roster['5']) {
     const p = D.P[id], b = R.B[id];
     P[id] = { name: p.name, short: p.short, last: p.last, pos: p.pos };
@@ -98,7 +100,7 @@ const remap = {}; order.forEach((old, ni) => remap[old] = ni);
 const gs = order.map(i => games[i]);
 shots.forEach(s => s[8] = remap[s[8]]); asts.forEach(a => a[3] = remap[a[3]]);
 const pz2 = {}; for (const [id, z] of Object.entries(pz)) { pz2[id] = {}; for (const [g, v] of Object.entries(z)) pz2[id][remap[g]] = v; }
-const out = { season: SEASON, updated: new Date().toISOString(), games: gs.map(({ recap, ...g }) => g), P, B, gp, L, shots, asts, pz: pz2, T, pc };
+const out = { season: SEASON, updated: new Date().toISOString(), games: gs.map(({ recap, rc, ...g }) => g), P, B, gp, L, shots, asts, pz: pz2, T, pc };
 fs.writeFileSync(path.join(DIR, 'season.json'), JSON.stringify(out));
-fs.writeFileSync(path.join(DIR, 'index.json'), JSON.stringify(gs.map(g => ({ id: g.id, date: g.date, opp: g.opp, ha: g.ha, cle: g.cle, os: g.os }))));
+fs.writeFileSync(path.join(DIR, 'index.json'), JSON.stringify(gs.map(g => ({ id: g.id, date: g.date, et: g.et, opp: g.opp, ha: g.ha, cle: g.cle, os: g.os, rc: g.rc }))));
 console.log(`season.json: ${gs.length} games, ${shots.length} shots, ${Object.keys(L[5]).length} five-man lineups`);

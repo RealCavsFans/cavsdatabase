@@ -171,4 +171,20 @@ function recap(D,R){
   out.push(`Bench points: ${F.abbr} ${A.bnPts}, ${O.abbr} ${B.bnPts}. Points in the paint: ${A.paint}–${B.paint}. Second-chance points: ${A.second}–${B.second}.`);
   return out;
 }
-if(typeof module!=='undefined')Object.assign(module.exports,{slimSummary,recap});
+
+/* the recap as labeled lines for the site's game page: [[label, text], ...] */
+function recapL(D,R){
+  const F=D.focus,O=D.other,fs=F.ha==='home'?R.hs:R.as,os=F.ha==='home'?R.as:R.hs,won=fs>os;const out=[];const per=R.lp?R.lp.per:4;
+  out.push(['Result',`${F.name} ${won?'beat':'lost to'} the ${O.name} ${Math.max(fs,os)}–${Math.min(fs,os)}${per>4?' in '+(per===5?'overtime':(per-4)+' overtimes'):''}.`]);
+  const top=t=>D.roster[t.id].filter(id=>R.B[id].min>0).sort((a,b)=>R.B[b].pts-R.B[a].pts)[0];
+  [[F,'Cavs high'],[O,'Their high']].forEach(([t,l])=>{const id=top(t);if(id){const b=R.B[id];out.push([l,`${D.P[id].name}: ${b.pts} pts (${b.fgm}-${b.fga} FG${b.tpa?', '+b.tpm+'-'+b.tpa+' 3PT':''}), ${b.oreb+b.dreb} reb, ${b.ast} ast.`])}});
+  const A=R.T[F.id],B=R.T[O.id],fa=factors(A,B),fb=factors(B,A);const wonF=FF.filter(([k,,,hib])=>fa[k]!=null&&fb[k]!=null&&fa[k]!==fb[k]&&((fa[k]>fb[k])===hib)).map(x=>x[1].toLowerCase());
+  out.push(['Four factors',`Cavs won ${wonF.length} of 4${wonF.length?': '+wonF.join(', '):''}. Effective FG% ${(fa.efg*100).toFixed(1)} to ${(fb.efg*100).toFixed(1)}.`]);
+  const big=t=>R.runs.filter(r=>r.t===t.id).sort((a,b)=>b.pts-a.pts)[0];const rs=[];
+  [[F,'Cavs'],[O,O.name]].forEach(([t,n])=>{const r=big(t);if(r)rs.push(`${n==='Cavs'?'Best Cavs run':n+' best run'} ${r.pts}–0 (${pname(r.start.per)}${r.end.per!==r.start.per?' to '+pname(r.end.per):''})`)});
+  if(rs.length)out.push(['Runs',rs.join('. ')+'.']);
+  const L5=Object.values(R.L[F.id][5]).filter(l=>l.sec>=240).sort((a,b)=>(b.pf-b.pa)-(a.pf-a.pa))[0];if(L5)out.push(['Best lineup',`${L5.ids.map(id=>D.P[id].last).join(', ')}: ${L5.pf-L5.pa>0?'+':''}${L5.pf-L5.pa} in ${fmtMin(L5.sec)}.`]);
+  out.push(['Edges',`Bench ${A.bnPts}–${B.bnPts} · Paint ${A.paint}–${B.paint} · Second chance ${A.second}–${B.second}`]);
+  return out;
+}
+if(typeof module!=='undefined')Object.assign(module.exports,{slimSummary,recap,recapL});
