@@ -77,12 +77,14 @@ function deriveCore(D,plays,F){
   const newPoss=(t,tt,how,inF)=>{ps[t]={t:tt,how};if(inF)pc[t][how].n++};
   const margin=[[0,0]];let lc=0,ties=0,prevSign=0;const lead={};tid.forEach(t=>lead[t]=0);
   const shots=[],asts=[];const lastFG={},lastPt={},dr=[];let lastMade=null;
-  const addTime=t1=>{const dt=t1-last;if(dt>0){const inF=inFx(curPer);tid.forEach(t=>{const q=tq(curPer,t);q.sec+=dt;on[t].forEach(id=>{if(D.P[id].starter)q.stSec+=dt;else q.bnSec+=dt});if(inF){T[t].sec+=dt;on[t].forEach(id=>{B[id].min+=dt;if(D.P[id].starter)T[t].stSec+=dt;else T[t].bnSec+=dt});lu(t,on[t],o=>o.sec+=dt)}})}last=Math.max(last,t1)};
+  /* segments: every stretch with the same ten players on the floor (for player-vs-opponent on/off) */
+  const segs=[];let seg=null;const newSeg=()=>{seg={a:{},sec:0,pts:{},pp:{},o:{}};tid.forEach(t=>{seg.a[t]=[...on[t]];seg.pts[t]=0;seg.o[t]={fga:0,oreb:0,to:0,fta:0}});segs.push(seg)};
+  const addTime=t1=>{const dt=t1-last;if(dt>0){const inF=inFx(curPer);if(inF&&seg)seg.sec+=dt;tid.forEach(t=>{const q=tq(curPer,t);q.sec+=dt;on[t].forEach(id=>{if(D.P[id].starter)q.stSec+=dt;else q.bnSec+=dt});if(inF){T[t].sec+=dt;on[t].forEach(id=>{B[id].min+=dt;if(D.P[id].starter)T[t].stSec+=dt;else T[t].bnSec+=dt});lu(t,on[t],o=>o.sec+=dt)}})}last=Math.max(last,t1)};
   const leave=(id,t1)=>{if(enter[id]!=null){(stints[id]=stints[id]||[]).push([enter[id][0],t1,pmAll[id]-enter[id][1]]);delete enter[id]}};
   const join=(id,t1)=>{enter[id]=[t1,pmAll[id]]};
   plays.forEach(p=>{
     if(p.per!==curPer){if(curPer){addTime(pstart(curPer)+plen(curPer));tid.forEach(t=>on[t].forEach(id=>leave(id,pstart(curPer)+plen(curPer))))}
-      curPer=p.per;last=pstart(p.per);tid.forEach(t=>{on[t]=new Set(startFive[p.per][t]||[]);on[t].forEach(id=>{B[id].played=true;join(id,last)});src[t]='';ps[t]={t:last,how:'start'}})}
+      curPer=p.per;last=pstart(p.per);tid.forEach(t=>{on[t]=new Set(startFive[p.per][t]||[]);on[t].forEach(id=>{B[id].played=true;join(id,last)});src[t]='';ps[t]={t:last,how:'start'}});newSeg()}
     clutchNow=p.per>=4&&(p.per>4||p.t>=2580)&&Math.abs(mgNow)<=5;
     addTime(p.t);
     const inF=inFx(p.per);const ty=p.type,a=p.ids[0],b=p.ids[1];
@@ -90,8 +92,8 @@ function deriveCore(D,plays,F){
     if(/Timeout/.test(ty)&&!/Official/.test(ty)&&T[p.team])to[p.team]++;
     if(ty==='Challenge'&&T[p.team])ch[p.team].used++;if(/Challenge \((Overturned|Successful)/i.test(ty)&&T[p.team])ch[p.team].won++;
     const TT=t=>inF?[T[t],tq(p.per,t)]:[tq(p.per,t)];
-    const offStat=(t,k,ON)=>{if(!inF)return;lu(t,(ON||on)[t],o=>o.o[k]++);lu(opp(t),(ON||on)[opp(t)],o=>o.d[k]++)};
-    if(ty==='Substitution'){if(a&&b){const t=teamOf(a);if(t){on[t].delete(b);on[t].add(a);B[a].played=true;leave(b,p.t);join(a,p.t)}}return}
+    const offStat=(t,k,ON)=>{if(!inF)return;if(seg)seg.o[t][k]++;lu(t,(ON||on)[t],o=>o.o[k]++);lu(opp(t),(ON||on)[opp(t)],o=>o.d[k]++)};
+    if(ty==='Substitution'){if(a&&b){const t=teamOf(a);if(t){on[t].delete(b);on[t].add(a);B[a].played=true;leave(b,p.t);join(a,p.t);newSeg()}}return}
     const isFT=/^Free Throw/.test(ty);
     if(/Foul/.test(ty)&&!/Offensive|Technical/.test(ty)){snap={t:p.t,per:p.per,on:{}};tid.forEach(x=>snap.on[x]=new Set(on[x]))}
     const ftSnap=isFT&&!/Technical/.test(ty)&&snap&&snap.t===p.t&&snap.per===p.per;const ON=ftSnap?snap.on:on;
@@ -107,7 +109,7 @@ function deriveCore(D,plays,F){
         if(inF){const st=ps[t],dt=p.t-st.t;const pt=/Putback|Tip/.test(ty)||(st.how==='oreb'&&dt<=3)?0:((st.how==='dreb'||st.how==='to'||st.how==='stl')&&dt<=7)?1:/Cutting|Alley Oop/.test(ty)?2:/Driving/.test(ty)?3:/Hook|Turnaround|Fade Away|Post/.test(ty)?4:/Pullup|Step Back/.test(ty)?5:/Jump Shot/.test(ty)?6:7;
           shots.push({t,id:a,x:p.x,y:p.y,hasXY:p.x!=null,m:!!p.sc,three,zi,pt,ast:!!(p.sc&&b&&/assists/.test(p.text)),per:p.per,clock:p.clock,text:p.text})}}}
     if(p.sc&&p.val>0){const t=p.team&&T[p.team]?p.team:teamOf(a);if(t){
-      if(inF&&a&&B[a])B[a].pts+=p.val;if(inF)pc[t][ps[t].how].pts+=p.val;lineAt[p.id]={[t]:[...ON[t]],[opp(t)]:[...ON[opp(t)]]};TT(t).forEach(x=>{x.pts+=p.val;if(a&&D.P[a]){if(D.P[a].starter)x.stPts+=p.val;else x.bnPts+=p.val}if(src[t].includes('2nd'))x.second+=p.val;if(src[t].includes('to'))x.offto+=p.val});
+      if(inF&&a&&B[a])B[a].pts+=p.val;if(inF&&seg){seg.pts[t]+=p.val;if(a)seg.pp[a]=(seg.pp[a]||0)+p.val}if(inF)pc[t][ps[t].how].pts+=p.val;lineAt[p.id]={[t]:[...ON[t]],[opp(t)]:[...ON[opp(t)]]};TT(t).forEach(x=>{x.pts+=p.val;if(a&&D.P[a]){if(D.P[a].starter)x.stPts+=p.val;else x.bnPts+=p.val}if(src[t].includes('2nd'))x.second+=p.val;if(src[t].includes('to'))x.offto+=p.val});
       const o=opp(t);ON[t].forEach(id=>{pmAll[id]+=p.val;if(inF)B[id].pm+=p.val});ON[o].forEach(id=>{pmAll[id]-=p.val;if(inF)B[id].pm-=p.val});
       if(inF){lu(t,ON[t],x=>x.pf+=p.val);lu(o,ON[o],x=>x.pa+=p.val)}
       if(!isFT||/(\d) of \1/.test(ty)){src[o]='';newPoss(o,p.t,'made',inF)}}}
@@ -131,7 +133,7 @@ function deriveCore(D,plays,F){
   plays.forEach(p=>{if(!(p.sc&&p.val>0))return;const t=p.team&&T[p.team]?p.team:teamOf(p.ids[0]);if(!t)return;
     if(run&&run.t===t){run.pts+=p.val;run.end=p}else{if(run&&run.pts>=8)runs.push(run);run={t,pts:p.val,start:p,end:p}}});
   if(run&&run.pts>=8)runs.push(Object.assign(run,{open:true}));
-  return {curStint,dr,pmAll,pc,tf,to,ch,pfAll,wpS,lineAt,asts,plays,B,T,TQ,L,on,margin,runs,shots,stints,hs:lp?lp.hs:0,as:lp?lp.as:0,lp,lead,lc,ties,wp:lp&&D.wp[lp.id]!=null?D.wp[lp.id]:null,maxPer:lp?Math.max(4,lp.per):4};
+  return {segs,curStint,dr,pmAll,pc,tf,to,ch,pfAll,wpS,lineAt,asts,plays,B,T,TQ,L,on,margin,runs,shots,stints,hs:lp?lp.hs:0,as:lp?lp.as:0,lp,lead,lc,ties,wp:lp&&D.wp[lp.id]!=null?D.wp[lp.id]:null,maxPer:lp?Math.max(4,lp.per):4};
 }
 
 function factors(a,b){const pa=poss({fga:a.fga,oreb:a.oreb+a.toreb,to:a.to,fta:a.fta});
