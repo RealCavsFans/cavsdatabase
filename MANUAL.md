@@ -57,7 +57,8 @@ All keys live in GitHub → Settings → Secrets and variables → Actions. Neve
 
 Every job that reads ESPN keeps the last good data when a fetch fails, so pages freeze instead of breaking. The live page shows "Could not load the game". Possible replacement sources:
 
-- **Next-day stats** (team stats, lineups, possessions, archive): pbpstats.com. The site already uses it for live-page baselines.
+- **Season team stats** (standings, records, ratings, four factors): already backed up. `scripts/backup-pbpstats.mjs` runs with the overnight team-stats job and fills in any game ESPN hasn't delivered within a day, from pbpstats.com. Nothing to switch on.
+- **Lineups, possessions and the game archive**: pbpstats.com has these too; the live archive would need pointing at it if ESPN stays down.
 - **Box scores and scores** (next day): Basketball Reference. Use it sparingly; it rate-limits heavy use.
 - **Live in-game data**: the only other dependable live feed is the NBA's own. It's off-limits under the site's data rule, so live stats would pause until ESPN's feed is fixed or replaced.
 
