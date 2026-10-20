@@ -136,6 +136,11 @@ svg{display:block;width:100%;height:auto}
 .chips button.in{background:var(--cf);border-color:var(--cf);color:#fff}
 .chips button.out{text-decoration:line-through;color:var(--muted);background:var(--sub)}
 .chips button.clr{border:0;background:none;color:var(--wt);text-decoration:underline}
+.agrid th{font-size:0.625rem;white-space:nowrap}.agrid td,.agrid th{padding:6px 5px}
+.agrid td:first-child,.agrid th:first-child{position:sticky;left:0;background:var(--card);white-space:nowrap}
+/* scrollable rows fade at the edge so it's clear there's more to the right */
+.seg.more,.per.more{-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);mask-image:linear-gradient(90deg,#000 82%,transparent)}
+.more-btn{position:absolute;right:4px;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--wt);font:800 1.375rem/1 var(--sans);cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.12);padding:0}
 .runs{list-style:none;margin:0;padding:0}
 .runs li{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:baseline;padding:8px 0;border-top:1px solid var(--line2);font-size:0.875rem}
 .runs li:first-child{border-top:0}
@@ -288,7 +293,7 @@ const $=id=>document.getElementById(id);
 const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const S={data:null,ev:null,replay:false,cur:Infinity,tab:'team',per:'all',playing:false,speed:30,fetched:0,timer:null,poll:null,state:'pre',sort:{},
-  f:{plTeam:null,luTeam:null,luSize:5,luMin:2,shTeam:null,shPl:'all',shType:'all',shView:'zones',plays:'all',rotTeam:null,astTeam:null,astView:'pairs',ooTeam:null,ooA:null,ooB:null,plView:'box',card:null}};
+  f:{plTeam:null,luTeam:null,luSize:5,luMin:2,shTeam:null,shPl:'all',shType:'all',shView:'zones',plays:'all',rotTeam:null,astTeam:null,astView:'grid',astFoc:null,ooTeam:null,ooA:null,ooB:null,plView:'box',card:null}};
 try{const t=localStorage.getItem('cdb-live-tab2');if(t)S.tab=t}catch(e){}
 
 /* ---------- loading ---------- */
@@ -313,7 +318,7 @@ async function choose(v,push){
   if(v.startsWith('s')){S.season=v.slice(1);S.replay=false}
   else if(v.startsWith('a')){const[se,id]=v.slice(1).split(':');S.src=se;S.ev=id;S.replay=true}
   else{S.replay=v.startsWith('r');S.ev=v.replace(/^r/,'');if(S.replay&&(ARCH['2025-26']||[]).some(g=>g.id===S.ev))S.src='2025-26'}
-  Object.assign(S.f,{luPick:{},ooTeam:null,ooA:null,ooB:null,card:null,astTeam:null,plTeam:null,luTeam:null,shTeam:null,shPl:'all',shType:'all',rotTeam:null});
+  Object.assign(S.f,{astFoc:null,luPick:{},ooTeam:null,ooA:null,ooB:null,card:null,astTeam:null,plTeam:null,luTeam:null,shTeam:null,shPl:'all',shType:'all',rotTeam:null});
   $('gsel').value=v;
   if(push){const u=new URL(location.href);u.searchParams.set('g',v);history.replaceState(null,'',u)}
   $('sb').innerHTML='<div class="empty">Loading…</div>';$('view').innerHTML='';$('rpw').innerHTML='';$('rpw').hidden=true;
@@ -369,7 +374,9 @@ function startReplay(){clearInterval(S.timer);const D=S.data;S.timer=setInterval
 function updLine(){const u=$('upd');u.innerHTML='';if(S.season){u.textContent='Season totals from the game archive';return}if(!S.data)return;if(S.replay){u.textContent='Replay mode · '+(S.playing?'playing':'paused');return}
   const s=Math.round((Date.now()-S.fetched)/1000);u.append(S.state==='in'?'Updated '+(s<5?'just now':s+'s ago')+' · refreshes every 15 seconds · ':S.state==='pre'?'Live stats start at tip-off · ':'Final · ');
   const b=el('button',null,'Refresh now');b.type='button';b.onclick=async()=>{await fetchGame();render()};u.appendChild(b)}
-function renderNav(R){
+function moreHint(){['seg','per'].forEach(id=>{const e=$(id);if(!e)return;let h=document.getElementById(id+'-more');if(!h){h=el('button','more-btn','›');h.type='button';h.id=id+'-more';h.setAttribute('aria-label','Scroll for more');h.onclick=()=>e.scrollBy({left:180,behavior:'smooth'});e.parentNode.appendChild(h)}
+  const upd=()=>{const m=e.scrollWidth-e.scrollLeft-e.clientWidth>8&&e.offsetParent!==null;e.classList.toggle('more',m);h.hidden=!m;h.style.top=(e.offsetTop+e.offsetHeight/2-16)+'px'};if(!e.dataset.h){e.dataset.h=1;e.addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd)}upd()})}
+function renderNav(R){setTimeout(moreHint,0);
   if(!S.season&&S.tab==='ff')S.tab='team';
   const sg=$('seg');if(!sg.childElementCount)TABS.forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('role','tab');b.dataset.t=k;b.onclick=()=>{S.tab=k;try{localStorage.setItem('cdb-live-tab2',k)}catch(e){}renderNav(S.R);renderView()};sg.appendChild(b)});
   if(S.season&&!SEASON_TABS.includes(S.tab))S.tab='players';
@@ -446,6 +453,7 @@ function vTeam(v,D,R){
   row('Points per 100 possessions',pa?a.pts/pa*100:0,pb?b.pts/pb*100:0,x=>x.toFixed(0),x=>x.toFixed(0));
   c.appendChild(tb);v.appendChild(c);
   {const ff=el('div');vFF(ff,D,R);ff.firstChild.classList.add('sec');v.appendChild(ff.firstChild)}
+  v.appendChild(paceCard(D,R));
   /* margin chart with filtered periods highlighted */
   const f=el('div','card sec');head(f,'Score margin',S.per==='all'?'Whole game':'Whole game, with '+perLow(S.per)+' highlighted');
   const T=pstart(R.maxPer)+plen(R.maxPer),W=640,H=190,pad=26;let mx=10;R.margin.forEach(m=>mx=Math.max(mx,Math.abs(m[1])));mx=Math.ceil(mx/5)*5;
@@ -457,7 +465,7 @@ function vTeam(v,D,R){
   const rr=R.runs.filter(r=>inPer(S.per,r.start.per)||inPer(S.per,r.end.per));
   f.appendChild(el('h3',null,'Runs of 8–0 or more'));
   if(!rr.length)f.appendChild(el('p','empty','None in this stretch.'));else{const ul=el('ul','runs');rr.slice().reverse().forEach(r=>{const t=D.teams.find(x=>x.id===r.t);const li=el('li');const sw=el('span');sw.innerHTML=`<i class="chip" style="background:${t.c}"></i>`;const mid=el('span');mid.append(el('span',null,t.abbr+' '+r.pts+'–0'+(r.open?' (still going)':'')));const dd=el('div','note',runDetail(D,R,r));dd.style.margin='2px 0 0';mid.appendChild(dd);li.append(sw,mid,el('small',null,pname(r.start.per)+' '+r.start.clock+'–'+(r.end.per!==r.start.per?pname(r.end.per)+' ':'')+r.end.clock));ul.appendChild(li)});f.appendChild(ul)}
-  v.appendChild(f);v.appendChild(paceCard(D,R));v.appendChild(benchCard(D,R));v.appendChild(ftCard(D,R));v.appendChild(wpCard(D,R));v.appendChild(possCard(D,R));
+  v.appendChild(f);v.appendChild(wpCard(D,R));v.appendChild(benchCard(D,R));v.appendChild(possCard(D,R));
 }
 
 
@@ -964,9 +972,9 @@ function vShots(v,D,R){
   const pc=x=>x==null?'–':Math.round(x*100)+'%';
   right.appendChild(dtable('pt',[{h:'Type',k:'l',f:r=>{const b=el('button',null,r.l);b.type='button';b.style.cssText='all:unset;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line)';b.onclick=()=>{S.f.shType=S.f.shType===String(r.i)?'all':String(r.i);renderView()};return b}},
     {h:'FG',k:'a',f:r=>r.m+'-'+r.a},{h:'FREQ',k:'fr',f:r=>pc(r.fr),title:'Share of his field-goal attempts'},{h:'FG%',k:'fg',f:r=>pc(r.fg)},{h:'PTS/SHOT',k:'pps',f:r=>r.pps==null?'–':r.pps.toFixed(2),title:'Points per shot'},{h:'AST',k:'as',f:r=>pc(r.as),title:'Share of makes that were assisted'}],rows,{def:'a',empty:'No shots yet.'}));
-  right.appendChild(el('p','note','Tap a type to filter the court. Transition = shot within 7 seconds after a defensive rebound or turnover. Putbacks = tips, putbacks and shots within 3 seconds of an offensive rebound. Types come from ESPN’s play descriptions.'));
+  right.appendChild(el('p','note','FREQ = share of all field-goal attempts. Tap a type to filter the court. Transition = shot within 7 seconds after a defensive rebound or turnover. Putbacks = tips, putbacks and shots within 3 seconds of an offensive rebound. Types come from ESPN’s play descriptions.'));
   right.appendChild(el('h3',null,who+typeLab+' · by zone'));
-  const zt=el('table','zt');zt.innerHTML=`<tr><th>Zone</th><th>FG</th><th>FG%</th><th title="${esc(baseLab)}">${S.f.shPl==='all'?esc(t.abbr):'His'} ’${SL.slice(-2)}</th><th>Share</th></tr>`;
+  const zt=el('table','zt');zt.innerHTML=`<tr><th>Zone</th><th>FG</th><th>FG%</th><th title="${esc(baseLab)}">${S.f.shPl==='all'?esc(t.abbr):'His'} ’${SL.slice(-2)}</th><th>% of shots</th></tr>`;
   ZN.forEach(([k,n,dsc],i)=>{const[m,a]=Z[i];const tr=el('tr');const nn=el('td');nn.append(n);if(dsc)nn.appendChild(el('span','pos',dsc));
     const dfc=a?(m/a-av(i)):0;const fg=el('td',null,a?pct(m,a):'–');if(a>=3)fg.style.color=dfc>0.02?'var(--pos)':dfc<-0.02?'var(--neg)':'';fg.style.fontWeight='700';
     tr.append(nn,el('td',null,m+'-'+a),fg,el('td',null,(av(i)*100).toFixed(0)+'%'),el('td',null,xy.length?Math.round(a/xy.length*100)+'%':'–'));zt.appendChild(tr)});
@@ -1022,16 +1030,20 @@ function vAst(v,D,R){
   const W=460,H=340,cx=W/2,cy=H/2,rad=118;const pos={};ids.forEach((id,i)=>{const a=-Math.PI/2+i*2*Math.PI/ids.length;pos[id]=[cx+rad*1.25*Math.cos(a),cy+rad*Math.sin(a)]});
   const col=t===D.focus?'var(--cf)':'var(--co)';const mx=Math.max(...Object.values(pairs).map(q=>q.n));const mxa=Math.max(1,...Object.values(pl).map(q=>q.ast));
   let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Assist network"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="${col}"/></marker></defs>`;
-  const rOf=id=>7+9*Math.sqrt(pl[id].ast/mxa);
+  const rOf=id=>7+9*Math.sqrt(pl[id].ast/mxa);const foc=S.f.astFoc&&pl[S.f.astFoc]?S.f.astFoc:null;
   Object.values(pairs).sort((a,b)=>a.n-b.n).forEach(q=>{const[a1,b1]=pos[q.p],[a2,b2]=pos[q.s];const dx=a2-a1,dy=b2-b1,Ln=Math.hypot(dx,dy)||1;const r2=rOf(q.s)+3;
     const mx2=(a1+a2)/2-dy*.12,my2=(b1+b2)/2+dx*.12;const ex=a2-dx/Ln*r2,ey=b2-dy/Ln*r2;
-    s+=`<path d="M${a1},${b1} Q${mx2},${my2} ${ex},${ey}" fill="none" stroke="${col}" stroke-opacity="${.22+.65*q.n/mx}" stroke-width="${1.2+3.5*q.n/mx}" marker-end="url(#ah)"><title>${esc(D.P[q.p].last)} to ${esc(D.P[q.s].last)}: ${q.n} assist${q.n>1?'s':''}, ${q.pts} points</title></path>`});
+    const on=!foc||q.p===foc||q.s===foc;const ec=foc&&q.s===foc&&q.p!==foc?'var(--gold)':col;s+=`<path d="M${a1},${b1} Q${mx2},${my2} ${ex},${ey}" fill="none" stroke="${ec}" stroke-opacity="${on?(foc?.95:.22+.65*q.n/mx):.06}" stroke-width="${1.2+3.5*q.n/mx}" marker-end="url(#ah)"><title>${esc(D.P[q.p].last)} to ${esc(D.P[q.s].last)}: ${q.n} assist${q.n>1?'s':''}, ${q.pts} points</title></path>`});
   ids.forEach(id=>{const[x,y]=pos[id];const r=rOf(id);const right=x>cx+5,left=x<cx-5;const lx=left?x-r-6:right?x+r+6:x,ly=Math.abs(x-cx)<=5?(y<cy?y-r-6:y+r+14):y+4;
-    s+=`<circle cx="${x}" cy="${y}" r="${r}" fill="var(--card)" stroke="${col}" stroke-width="2"/><text x="${x}" y="${y+4}" text-anchor="middle" font-size="11" font-weight="700" font-family="var(--mono)" fill="${col}">${pl[id].ast||''}</text><text x="${lx}" y="${ly}" text-anchor="${left?'end':right?'start':'middle'}" font-size="12" font-weight="600" font-family="var(--sans)" fill="var(--fg)">${esc(D.P[id].last)}</text>`});
-  const g=el('div','grid2');const nw=el('div');nw.innerHTML=s+'</svg>';nw.appendChild(el('p','note','Arrows run passer → scorer; thicker = more assists. The number in each circle is his assists.'));
+    s+=`<g data-p="${id}" style="cursor:pointer;opacity:${!foc||foc===id||pairs[foc+'>'+id]||pairs[id+'>'+foc]?1:.3}"><circle cx="${x}" cy="${y}" r="${Math.max(r,14)}" fill="transparent"/><circle cx="${x}" cy="${y}" r="${r}" fill="${foc===id?col:'var(--card)'}" stroke="${col}" stroke-width="2"/><text x="${x}" y="${y+4}" text-anchor="middle" font-size="11" font-weight="700" font-family="var(--mono)" fill="${col}">${pl[id].ast||''}</text><text x="${lx}" y="${ly}" text-anchor="${left?'end':right?'start':'middle'}" font-size="12" font-weight="600" font-family="var(--sans)" fill="var(--fg)">${esc(D.P[id].last)}</text></g>`});
+  const g=el('div','grid2');const nw=el('div');nw.innerHTML=s+'</svg>';nw.querySelectorAll('g[data-p]').forEach(n=>n.onclick=()=>{S.f.astFoc=S.f.astFoc===n.dataset.p?null:n.dataset.p;renderView()});nw.appendChild(el('p','note',foc?`Showing ${D.P[foc].last}: his passes in ${t===D.focus?'wine':'gray'}, passes to him in gold. Tap him again to see everyone.`:'Tap a player to see only his assists. Arrows run passer → scorer; thicker = more. The number in each circle is his assists.'));
   /* tables */
-  const right=el('div');const fl=el('div','fl');[['pairs','Passer → scorer'],['players','By player']].forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',S.f.astView===k);b.onclick=()=>{S.f.astView=k;renderView()};fl.appendChild(b)});right.appendChild(fl);
-  if(S.f.astView==='pairs')right.appendChild(dtable('astp',[{h:'Passer → scorer',k:'p',f:q=>D.P[q.p].last+' → '+D.P[q.s].last},{h:'AST',k:'n'},{h:'PTS',k:'pts',title:'Points from those assists'},{h:'3PT',k:'th',title:'Assisted threes'}],Object.values(pairs),{def:'n'}));
+  const right=el('div');const fl=el('div','fl');[['grid','Grid'],['pairs','Passer → scorer'],['players','By player']].forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',S.f.astView===k);b.onclick=()=>{S.f.astView=k;renderView()};fl.appendChild(b)});right.appendChild(fl);
+  if(S.f.astView==='grid'){const ps=ids.filter(id=>pl[id].ast).sort((a,b)=>pl[b].ast-pl[a].ast),ss=ids.filter(id=>pl[id].rec).sort((a,b)=>pl[b].rec-pl[a].rec);const mxn=Math.max(...Object.values(pairs).map(q=>q.n));
+    const tb=el('table','zt agrid');let h='<tr><th>Passer ↓ · Scorer →</th>'+ss.map(id=>`<th>${esc(D.P[id].last)}</th>`).join('')+'<th>Total</th></tr>';
+    ps.forEach(p=>{h+=`<tr><td>${esc(D.P[p].last)}</td>`+ss.map(q=>{const x=pairs[p+'>'+q];return x?`<td style="background:color-mix(in srgb,${col} ${Math.round(15+70*x.n/mxn)}%,var(--card));color:${x.n/mxn>.5?'#fff':'var(--fg)'};font-weight:700;text-align:center">${x.n}</td>`:'<td style="text-align:center;color:var(--line)">·</td>'}).join('')+`<td><b>${pl[p].ast}</b></td></tr>`});
+    tb.innerHTML=h;const w=el('div','tw');w.appendChild(tb);right.appendChild(w);right.appendChild(el('p','note','Read across: who each passer set up. Darker = more assists.'))}
+  else if(S.f.astView==='pairs')right.appendChild(dtable('astp',[{h:'Passer → scorer',k:'p',f:q=>D.P[q.p].last+' → '+D.P[q.s].last},{h:'AST',k:'n'},{h:'PTS',k:'pts',title:'Points from those assists'},{h:'3PT',k:'th',title:'Assisted threes'}],Object.values(pairs),{def:'n'}));
   else right.appendChild(dtable('astl',[{h:'Player',k:'id',f:q=>D.P[q.id].short},{h:'AST',k:'ast'},{h:'PTS CREATED',k:'cr',title:'Points scored off his passes'},{h:'3PT AST',k:'th'},{h:'ASSISTED',k:'rec',title:'His made shots that were assisted'}],Object.values(pl),{def:'ast'}));
   right.appendChild(el('p','note',`${A.length} assists on ${R.T[t.id].fgm} made field goals (${pct(A.length,R.T[t.id].fgm)} assisted).`));
   g.append(nw,right);c.appendChild(g);v.appendChild(c);
