@@ -204,10 +204,10 @@
 /* mobile bottom tab bar (built by the nav script; desktop keeps the top row) */
 .mbar,.msub{display:none}
 @media (max-width:760px){
-:root{--bnh:calc(50px + env(safe-area-inset-bottom,0px))}
+:root{--sab:max(2px,calc(env(safe-area-inset-bottom,0px) - 20px));--bnh:calc(48px + var(--sab))}
 #tabs{display:none!important}
 body{padding-bottom:var(--bnh)}
-.mbar{display:grid;position:fixed;left:0;right:0;bottom:0;z-index:95;grid-template-columns:repeat(5,1fr);background:var(--card,#fff);border-top:1px solid var(--line);padding:4px 0 calc(3px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 16px rgba(0,0,0,.06)}
+.mbar{display:grid;position:fixed;left:0;right:0;bottom:0;z-index:95;grid-template-columns:repeat(5,1fr);background:var(--card,#fff);border-top:1px solid var(--line);padding:5px 0 var(--sab);box-shadow:0 -4px 16px rgba(0,0,0,.06)}
 .mbar a{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);font:700 0.625rem var(--sans);text-decoration:none;-webkit-tap-highlight-color:transparent}
 .mbar a svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .mbar a.on{color:var(--wine-ink)}
