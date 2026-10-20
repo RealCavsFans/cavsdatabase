@@ -73,7 +73,7 @@ async function draw(){
   const ld=st==='pre'?'':`<div class="ld">${[D.focus,D.other].map(t=>`<div><b>${esc(t.loc)}</b>${[lead(t,'pts','PTS'),lead(t,'reb','REB'),lead(t,'ast','AST')].filter(Boolean).join(' · ')}</div>`).join('')}</div>`;
   const lp=live&&R.lp?`<div class="lp">${esc(pname(R.lp.per)+' '+R.lp.clock+' · '+R.lp.text)}</div>`:'';
   const link='https://cavsdatabase.com/live.html?g='+(ev.src?'a'+ev.src+':':'')+ev.id;
-  W.innerHTML=`<div class="hd"><a href="https://cavsdatabase.com/" target="_blank" rel="noopener">Cavs <b>Database</b></a><span class="st${live?' live':''}">${live?'Live':fin?'Final':'Next game'}</span></div><div class="sc">${side(D.away,false)}<div class="mid">${mid}</div>${side(D.home,true)}</div>${ls}${ld}${lp}<div class="ft"><a href="${link}" target="_blank" rel="noopener">Full live stats →</a><span>${live?'Updates every 15 seconds':'Data: ESPN'}</span></div>`;
+  W.innerHTML=`<div class="hd"><a href="https://cavsdatabase.com/" target="_blank" rel="noopener">Cavs <b>Database</b></a><span class="st${live?' live':''}">${live?'Live':fin?'Final':'Next game'}</span></div><div class="sc">${side(D.away,false)}<div class="mid">${mid}</div>${side(D.home,true)}</div>${ls}${ld}${lp}<div class="ft"><a href="${link}" target="_blank" rel="noopener">Full live stats →</a><span>${live?'Updates every 15 seconds':''}</span></div>`;
   clearTimeout(timer);if(live)timer=setTimeout(draw,15000);else if(st==='pre')timer=setTimeout(draw,60000);
 }
 (async()=>{ev=await pick();if(!ev){document.querySelector('.e').textContent='No Cavs game found.';return}draw()})();

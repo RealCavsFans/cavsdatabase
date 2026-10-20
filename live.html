@@ -305,11 +305,11 @@ table.dt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
  <div class="pick"><label for="gsel">Game</label><select id="gsel"></select></div>
  <section class="card sb" id="sb" aria-live="polite"><div class="empty">Loading…</div></section>
  <div class="card rpw" id="rpw" hidden></div>
- <div class="meta"><span id="upd"></span><span>Data: ESPN</span></div>
+ <div class="meta"><span id="upd"></span></div>
  <div class="stick"><nav class="seg" role="tablist" id="seg" aria-label="Sections"></nav><div class="per" id="per" role="group" aria-label="Period"></div></div>
  <div id="view"></div>
 </main>
-<div class="foot">Test page, not linked from the site. All stats are built from ESPN’s play-by-play. Lineups, minutes and possessions are reconstructed from substitutions and may differ slightly from official numbers.</div>
+<div class="foot">Test page, not linked from the site. Lineups, minutes and possessions are reconstructed from substitutions and may differ slightly from official numbers.</div>
 <script src="/live-core.js?v=dee5cd2b23"></script>
 <script>
 'use strict';
@@ -361,7 +361,7 @@ async function choose(v,push){
   if(S.replay&&S.data){S.cur=S.data.plays.length;S.playing=false}
   render();if(!S.replay)startPoll();
 }
-async function fetchGame(){try{const d=await getJSON(S.src?'/live-archive/'+S.src+'/'+S.ev+'.json':ESPN+'summary?event='+S.ev);S.data=prep(d);S.data.focus.c='var(--cf)';S.data.other.c='var(--co)';S.fetched=Date.now();S.err=null}catch(e){S.err='Could not reach ESPN. Retrying.'}}
+async function fetchGame(){try{const d=await getJSON(S.src?'/live-archive/'+S.src+'/'+S.ev+'.json':ESPN+'summary?event='+S.ev);S.data=prep(d);S.data.focus.c='var(--cf)';S.data.other.c='var(--co)';S.fetched=Date.now();S.err=null}catch(e){S.err='Could not load the game. Retrying.'}}
 function startPoll(){clearInterval(S.poll);S.poll=setInterval(async()=>{if(document.hidden||S.replay)return;if(S.state==='post')return;if(S.state!=='in'&&Date.now()-S.fetched<60000)return;await fetchGame();render()},POLL)}
 setInterval(()=>{if(!S.replay)updLine()},1000);
 document.addEventListener('visibilitychange',async()=>{if(!document.hidden&&!S.replay&&S.state==='in'&&Date.now()-S.fetched>POLL){await fetchGame();render()}});
@@ -437,7 +437,7 @@ function renderNav(R){setTimeout(moreHint,0);
 }
 function renderView(){
   const v=$('view'),D=S.data,R=S.R;v.innerHTML='';
-  if(S.state==='pre'&&!R.plays.length){const c=el('div','card');c.append(el('h2',null,D.away.abbr+' at '+D.home.abbr),el('p',null,'Tip-off '+new Date(D.date).toLocaleString([],{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+(D.venue?' · '+D.venue:'')+(D.bc.length?' · '+D.bc.join(', '):'')+'.'),el('p','empty','Team and player stats, lineups, shots, four factors and rotations fill in once the game starts. The page checks ESPN every 15 seconds during the game.'));v.appendChild(c);
+  if(S.state==='pre'&&!R.plays.length){const c=el('div','card');c.append(el('h2',null,D.away.abbr+' at '+D.home.abbr),el('p',null,'Tip-off '+new Date(D.date).toLocaleString([],{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+(D.venue?' · '+D.venue:'')+(D.bc.length?' · '+D.bc.join(', '):'')+'.'),el('p','empty','Team and player stats, lineups, shots, four factors and rotations fill in once the game starts. The page refreshes every 15 seconds during the game.'));v.appendChild(c);
     const opp=D.other;const holder=el('div');holder.appendChild(el('p','note','Loading the scouting report…'));v.appendChild(holder);scoutData(opp.id).then(X=>{if(S.data!==D)return;holder.innerHTML='';holder.appendChild(scoutCard(D,X,opp))});return}
   ({share:vShare,onoff:vOnOff,ast:vAst,team:vTeam,players:vPlayers,lineups:vLineups,shots:vShots,ff:vFF,rot:vRot,plays:vPlays})[S.tab](v,D,R);
 }
@@ -604,7 +604,7 @@ async function scoutData(tid){
   })();
 }
 function scoutCard(D,X,team){
-  const c=el('div','card sec');const n=X.games.length;head(c,'Scouting the '+team.name,n?`Their last ${n} game${n>1?'s':''}, from ESPN play-by-play`:'No recent games to scout yet.');if(!n)return c;
+  const c=el('div','card sec');const n=X.games.length;head(c,'Scouting the '+team.name,n?`Their last ${n} game${n>1?'s':''}`:'No recent games to scout yet.');if(!n)return c;
   const res=el('div','chips');X.games.forEach(({G,R:RR})=>{const me=G.focus,op=G.other;const a=me.ha==='home'?RR.hs:RR.as,b=me.ha==='home'?RR.as:RR.hs;const d=new Date(G.date);const sp=el('span','',`${d.getMonth()+1}/${d.getDate()} ${me.ha==='home'?'vs':'@'} ${op.abbr} ${a>b?'W':'L'} ${a}–${b}`);sp.style.cssText='padding:5px 10px;border-radius:999px;font:600 0.8125rem var(--sans);background:'+(a>b?'color-mix(in srgb,var(--pos) 15%,var(--card))':'var(--sub)');res.appendChild(sp)});c.appendChild(res);
   /* pace and four factors */
   const T=X.T,O=X.O;const P2=t=>poss({fga:t.fga,oreb:(t.oreb||0)+(t.toreb||0),to:t.to,fta:t.fta});const pace=(P2(T)+P2(O))/2/(T.sec||1)*2880;const fa=factors(T,O);
@@ -699,7 +699,7 @@ function droughtCard(D,R){
 /* ---------- win probability with the biggest swings ---------- */
 function wpCard(D,R){
   const f=el('div','card sec');head(f,'Win probability','Whole game, with the plays that moved it most');
-  if(R.wpS.length<2){f.appendChild(el('p','empty','ESPN win probability fills in once the game is under way.'));return f}
+  if(R.wpS.length<2){f.appendChild(el('p','empty','Win probability fills in once the game is under way.'));return f}
   const fh=D.focus===D.home;const T=pstart(R.maxPer)+plen(R.maxPer),W=900,H=130,pad=26;const X=t=>pad+(W-pad*2)*t/T,Y=v=>10+(H-30)*(1-v);
   let d='',g='';R.wpS.forEach(([t,v],i)=>{const fv=fh?v:1-v;d+=(i?' L':'M')+X(t).toFixed(1)+','+Y(fv).toFixed(1)});
   for(let p=1;p<=R.maxPer;p++){const x0=X(pstart(p));g+=`<line x1="${x0}" x2="${x0}" y1="8" y2="${H-18}" stroke="var(--line)"/><text x="${X(pstart(p)+plen(p)/2)}" y="${H-4}" text-anchor="middle" font-size="10" fill="var(--muted)" font-family="var(--mono)">${pname(p)}</text>`}
@@ -709,7 +709,7 @@ function wpCard(D,R){
   f.insertAdjacentHTML('beforeend',`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(D.focus.abbr)} win probability"><path d="${d}" fill="none" stroke="${D.focus.c}" stroke-width="2.2"/>${g}</svg>`);
   const ul=el('ul','sw');top.forEach(([,dv,[t,v,p]],i)=>{const li=el('li');li.append(el('b',null,String(i+1)),el('span',null,p.text),el('small',null,pname(p.per)+' '+p.clock+' · '+D.focus.abbr+' '+(dv>0?'+':'−')+Math.abs(Math.round(dv*100))+' pts'));ul.appendChild(li)});
   f.appendChild(el('h3',null,'Biggest swings for '+D.focus.abbr));f.appendChild(ul);
-  f.appendChild(el('p','note','Line = '+D.focus.abbr+'’s chance to win, from ESPN.'));return f;
+  f.appendChild(el('p','note','Line = '+D.focus.abbr+'’s chance to win.'));return f;
 }
 /* ---------- points per possession by how it started ---------- */
 function possCard(D,R){
@@ -747,7 +747,7 @@ function advView(c,D,R,t){
     {h:'ORB%',k:'orb',f:p1('orb')},{h:'DRB%',k:'drb',f:p1('drb')},{h:'TRB%',k:'trb',f:p1('trb')},{h:'AST%',k:'ast',f:p1('ast'),title:'Share of teammates’ baskets he assisted while on the floor'},
     {h:'STL%',k:'stl',f:p1('stl')},{h:'BLK%',k:'blk',f:p1('blk')},{h:'TOV%',k:'tov',f:p1('tov'),asc:true},{h:'USG%',k:'usg',f:p1('usg'),title:'Share of team plays he used while on the floor'},
     {h:'ON ORTG',k:'ortg',f:p0('ortg'),title:'Team points per 100 possessions with him on'},{h:'ON DRTG',k:'drtg',f:p0('drtg'),asc:true,title:'Opponent points per 100 possessions with him on'},{h:'ON NET',k:'net',f:r=>r.net==null?'–':sgn(Math.round(r.net)),cls:r=>r.net==null?'':pmCls(r.net)}],rows,{def:'mp',minW:980}));
-  c.appendChild(el('p','note','Rate stats use Basketball-Reference’s formulas with tonight’s team and opponent totals. ON ORTG/DRTG are the team’s ratings with him on the floor (no individual BPM; it needs season data). Small samples swing hard.'));
+  c.appendChild(el('p','note','Rate stats use tonight’s team and opponent totals. ON ORTG/DRTG are the team’s ratings with him on the floor (no individual BPM; it needs season data). Small samples swing hard.'));
 }
 /* ---------- a Cavs player vs a specific opponent, on and off the floor together ---------- */
 function vsOpp(c,D,R,t){
@@ -763,7 +763,7 @@ function vsOpp(c,D,R,t){
   split.forEach(([l,fn])=>{const G=R.segs.filter(fn);const sec=G.reduce((a,g)=>a+g.sec,0),pf=G.reduce((a,g)=>a+g.pts[t.id],0),pa=G.reduce((a,g)=>a+g.pts[o.id],0),pp=G.reduce((a,g)=>a+(g.pp[A]||0),0);
     const so=k=>G.reduce((a,g)=>a+g.o[t.id][k],0),sd=k=>G.reduce((a,g)=>a+g.o[o.id][k],0);let po=poss({fga:so('fga'),oreb:so('oreb'),to:so('to'),fta:so('fta')}),pd=poss({fga:sd('fga'),oreb:sd('oreb'),to:sd('to'),fta:sd('fta')});{const _a=(po+pd)/2;po=pd=_a}const net=po>=1&&pd>=1?pf/po*100-pa/pd*100:null;
     const tr=el('tr');tr.append(el('td',null,l),el('td',null,fmtMin(sec)),el('td',null,l.startsWith(D.P[A].last+' off')?'–':String(pp)),el('td',null,String(pf)),el('td',null,String(pa)),el('td',pmCls(pf-pa),sgn(pf-pa)),el('td',net==null?'':pmCls(net),net==null?'–':sgn(Math.round(net))));tb.appendChild(tr)});
-  const w=el('div','tw');w.appendChild(tb);c.appendChild(w);c.appendChild(el('p','note','Built from every stretch with the same ten players on the floor. It shows who was on the court together, not who guarded whom (ESPN doesn’t publish matchups).'));
+  const w=el('div','tw');w.appendChild(tb);c.appendChild(w);c.appendChild(el('p','note','Built from every stretch with the same ten players on the floor. It shows who was on the court together, not who guarded whom.'));
 }
 
 /* ---------- On/off ---------- */
@@ -1034,7 +1034,7 @@ function seasonView(c,D,R,t){
     const ts=b.fga+b.fta?b.pts/(2*(b.fga+0.44*b.fta)):null;rows.push({id,min:b.min/60,pts:b.pts,reb:b.oreb+b.dreb,ast:b.ast,tpm:b.tpm,stl:b.stl,blk:b.blk,ts,sv,dpts:sv?b.pts-sv[2]:null})});
   const cell=(k,i,dec)=>r=>{const s=el('span',null,String(dec?(r[k]==null?'–':(r[k]*100).toFixed(0)+'%'):Math.round(r[k])));if(r.sv){const avg=r.sv[i];const d=r[k]==null?null:(dec?r[k]-avg:r[k]-avg);if(d!=null){const big=dec?Math.abs(d)>=.08:Math.abs(d)>=Math.max(2,avg*.4);const n=el('span','vsn',(d>0?'+':d<0?'−':'±')+(dec?Math.abs(d*100).toFixed(0):Math.abs(d).toFixed(1)));n.style.color=big?(d>0?'var(--pos)':'var(--neg)'):'var(--muted)';s.appendChild(n)}}return s};
   c.appendChild(dtable('sv',[{h:'Player',k:'id',f:r=>{const s=el('span',null,D.P[r.id].short);if(!r.sv)s.appendChild(el('span','pos','no NBA season'));return s}},{h:'MIN',k:'min',f:cell('min',1)},{h:'PTS',k:'pts',f:cell('pts',2)},{h:'REB',k:'reb',f:cell('reb',3)},{h:'AST',k:'ast',f:cell('ast',4)},{h:'STL',k:'stl',f:cell('stl',5)},{h:'BLK',k:'blk',f:cell('blk',6)},{h:'3PM',k:'tpm',f:cell('tpm',8)},{h:'TS%',k:'ts',f:cell('ts',9,true)},{h:'PTS VS AVG',k:'dpts',f:r=>r.dpts==null?'–':(r.dpts>0?'+':r.dpts<0?'−':'')+Math.abs(r.dpts).toFixed(1),cls:r=>r.dpts==null?'':pmCls(r.dpts)}],rows,{def:'dpts',minW:660}));
-  c.appendChild(el('p','note','Small number = difference from his '+seasonLab(curBase())+' per-game average (pbpstats). Green or red = well above or below. '+(S.per==='all'?'':'Compared with full-game averages, so a single quarter or half will read low.')));
+  c.appendChild(el('p','note','Small number = difference from his '+seasonLab(curBase())+' per-game average. Green or red = well above or below. '+(S.per==='all'?'':'Compared with full-game averages, so a single quarter or half will read low.')));
 }
 
 /* ---------- Lineups ---------- */
@@ -1060,7 +1060,7 @@ function vLineups(v,D,R){
   const cols=[{h:'Lineup',k:'ids',f:names},{h:'MIN',k:'sec',f:r=>fmtMin(r.sec)},{h:'PTS',k:'pf'},{h:'OPP',k:'pa',asc:true},{h:'+/-',k:'pm',f:r=>sgn(r.pm),cls:r=>pmCls(r.pm)},
     {h:'POSS',k:'poss',f:r=>Math.round(r.poss),title:'Estimated possessions'},{h:'OFF',k:'ortg',f:r=>f1(r.ortg),title:'Points scored per 100 possessions'},{h:'DEF',k:'drtg',f:r=>f1(r.drtg),asc:true,title:'Points allowed per 100 possessions'},{h:'NET',k:'net',f:r=>r.net==null?'–':sgn(Math.round(r.net)),cls:r=>r.net==null?'':pmCls(r.net)}];
   c.appendChild(dtable('lu'+S.f.luSize,cols,rows,{def:'sec',minW:620,empty:'No lineups meet the filter yet.'}));
-  c.appendChild(el('p','note','OFF, DEF and NET are per 100 possessions; small samples swing hard. Gold edge = on the floor now. Lineups are rebuilt from ESPN substitutions; who starts each quarter is inferred from the first plays of the quarter.'));
+  c.appendChild(el('p','note','OFF, DEF and NET are per 100 possessions; small samples swing hard. Gold edge = on the floor now. Lineups are rebuilt from substitutions.'));
   v.appendChild(c);
 }
 
@@ -1135,14 +1135,14 @@ function vShots(v,D,R){
   const pc=x=>x==null?'–':Math.round(x*100)+'%';
   right.appendChild(dtable('pt',[{h:'Type',k:'l',f:r=>{const b=el('button',null,r.l);b.type='button';b.style.cssText='all:unset;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line)';b.onclick=()=>{S.f.shType=S.f.shType===String(r.i)?'all':String(r.i);renderView()};return b}},
     {h:'FG',k:'a',f:r=>r.m+'-'+r.a},{h:'FREQ',k:'fr',f:r=>pc(r.fr),title:'Share of his field-goal attempts'},{h:'FG%',k:'fg',f:r=>pc(r.fg)},{h:'PTS/SHOT',k:'pps',f:r=>r.pps==null?'–':r.pps.toFixed(2),title:'Points per shot'},{h:'AST',k:'as',f:r=>pc(r.as),title:'Share of makes that were assisted'}],rows,{def:'a',empty:'No shots yet.'}));
-  right.appendChild(el('p','note','FREQ = share of all field-goal attempts. Tap a type to filter the court. Transition = shot within 7 seconds after a defensive rebound or turnover. Putbacks = tips, putbacks and shots within 3 seconds of an offensive rebound. Types come from ESPN’s play descriptions.'));
+  right.appendChild(el('p','note','FREQ = share of all field-goal attempts. Tap a type to filter the court. Transition = shot within 7 seconds after a defensive rebound or turnover. Putbacks = tips, putbacks and shots within 3 seconds of an offensive rebound.'));
   right.appendChild(el('h3',null,who+typeLab+' · by zone'));
   const zt=el('table','zt');zt.innerHTML=`<tr><th>Zone</th><th>FG</th><th>FG%</th><th title="${esc(baseLab)}">${S.f.shPl==='all'?esc(t.abbr):'His'} ’${SL.slice(-2)}</th><th>% of shots</th></tr>`;
   ZN.forEach(([k,n,dsc],i)=>{const[m,a]=Z[i];const tr=el('tr');const nn=el('td');nn.append(n);if(dsc)nn.appendChild(el('span','pos',dsc));
     const dfc=a?(m/a-av(i)):0;const fg=el('td',null,a?pct(m,a):'–');if(a>=3)fg.style.color=dfc>0.02?'var(--pos)':dfc<-0.02?'var(--neg)':'';fg.style.fontWeight='700';
     tr.append(nn,el('td',null,m+'-'+a),fg,el('td',null,(av(i)*100).toFixed(0)+'%'),el('td',null,xy.length?Math.round(a/xy.length*100)+'%':'–'));zt.appendChild(tr)});
   right.appendChild(zt);
-  const pts=Z.reduce((s,[m],i)=>s+m*(i>=3?3:2),0);right.appendChild(el('p','note',`${pts} points on ${xy.length} shots (${xy.length?(pts/xy.length).toFixed(2):'–'} per shot). Compared with ${baseLab} shooting in each zone (pbpstats).`));
+  const pts=Z.reduce((s,[m],i)=>s+m*(i>=3?3:2),0);right.appendChild(el('p','note',`${pts} points on ${xy.length} shots (${xy.length?(pts/xy.length).toFixed(2):'–'} per shot). Compared with ${baseLab} shooting in each zone.`));
   g.append(left,right);c.appendChild(g);if(S.season&&S.f.shPl!=='all')gameByGame(D,R,S.f.shPl,c);v.appendChild(c);
 }
 
