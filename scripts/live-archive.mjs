@@ -59,7 +59,7 @@ console.log(`${added} game file(s) written`);
 /* 3) season totals from every archived game */
 const files = fs.readdirSync(DIR).filter(f => /^\d+\.json$/.test(f));
 const games = [];
-const P = {}, B = {}, gp = {}, L = { 2: {}, 3: {}, 5: {} }, shots = [], asts = [], pz = {};
+const P = {}, B = {}, gp = {}, L = { 2: {}, 3: {}, 4: {}, 5: {} }, shots = [], asts = [], pz = {};
 const T = { cle: null, opp: null }, pc = {};
 const addObj = (a, b) => { for (const k in b) { if (typeof b[k] === 'number') a[k] = (a[k] || 0) + b[k]; } };
 const zT = () => ({ z: C.ZN.map(() => [0, 0]) });
@@ -78,7 +78,7 @@ for (const f of files) {
     gp[id] = (gp[id] || 0) + 1; B[id] = B[id] || {}; addObj(B[id], { min: b.min, pts: b.pts, fgm: b.fgm, fga: b.fga, tpm: b.tpm, tpa: b.tpa, ftm: b.ftm, fta: b.fta, oreb: b.oreb, dreb: b.dreb, ast: b.ast, stl: b.stl, blk: b.blk, to: b.to, pf: b.pf, pm: b.pm });
     if (p.starter) B[id].gs = (B[id].gs || 0) + 1;
   }
-  for (const n of [2, 3, 5]) for (const [k, l] of Object.entries(R.L['5'][n])) {
+  for (const n of [2, 3, 4, 5]) for (const [k, l] of Object.entries(R.L['5'][n])) {
     const o = L[n][k] = L[n][k] || { ids: l.ids, sec: 0, pf: 0, pa: 0, o: { fga: 0, oreb: 0, to: 0, fta: 0 }, d: { fga: 0, oreb: 0, to: 0, fta: 0 }, g: 0 };
     o.sec += l.sec; o.pf += l.pf; o.pa += l.pa; o.g++; for (const x of ['fga', 'oreb', 'to', 'fta']) { o.o[x] += l.o[x]; o.d[x] += l.d[x]; }
   }

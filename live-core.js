@@ -66,9 +66,9 @@ function deriveCore(D,plays,F){
     const on=new Set(five);byPer[per].forEach(p=>{if(p.type==='Substitution'&&p.ids[0]&&p.ids[1]&&teamOf(p.ids[0])===t){on.delete(p.ids[1]);on.add(p.ids[0])}});prevEnd[t]=[...on]})});
   /* walk */
   const on={};tid.forEach(t=>on[t]=new Set());
-  const L={};tid.forEach(t=>L[t]={2:{},3:{},5:{}});
+  const L={};tid.forEach(t=>L[t]={2:{},3:{},4:{},5:{}});
   const lkCache={};
-  const lineKeys=(t,set)=>{const ids=[...set].sort();const k=t+'|'+ids.join(',');if(lkCache[k])return lkCache[k];const out=[];[2,3,5].forEach(n=>{if(ids.length>=n)combos(ids,n).forEach(c=>out.push([n,c.join(','),c]))});return lkCache[k]=out};
+  const lineKeys=(t,set)=>{const ids=[...set].sort();const k=t+'|'+ids.join(',');if(lkCache[k])return lkCache[k];const out=[];[2,3,4,5].forEach(n=>{if(ids.length>=n)combos(ids,n).forEach(c=>out.push([n,c.join(','),c]))});return lkCache[k]=out};
   const lu=(t,set,fn)=>lineKeys(t,set).forEach(([n,k,c])=>{const o=L[t][n][k]=L[t][n][k]||zL(c);fn(o)});
   const stints={},enter={},pmAll={};Object.keys(D.P).forEach(id=>pmAll[id]=0);
   let last=0,curPer=0,snap=null;const src={},ps={},pc={},tf={},to={},ch={},pfAll={};let clutchNow=false,mgNow=0;const wpS=[],lineAt={};
