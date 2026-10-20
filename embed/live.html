@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Cavs live score · Cavs Database</title>
+<link rel="canonical" href="https://cavsdatabase.com/live.html">
+<style>
+@font-face{font-family:'Archivo';font-display:swap;font-weight:100 900;font-stretch:62% 125%;src:url(/fonts/archivo-latin-wdth-normal.woff2) format('woff2')}
+@font-face{font-family:'Geist Mono';font-display:swap;font-weight:100 900;src:url(/fonts/geist-mono-latin-wght-normal.woff2) format('woff2')}
+@font-face{font-family:'Saira Condensed';font-display:swap;font-weight:800;src:url(/fonts/saira-condensed-latin-800-normal.woff2) format('woff2')}
+:root{--bg:#fff;--fg:#101419;--muted:#6b7078;--line:#e6e2dc;--sub:#f6f3ef;--wine:#860038;--wt:#860038;--gold:#F2B231;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#161a21;--fg:#e8eaee;--muted:#8d939d;--line:#2b313b;--sub:#1d222b;--wt:#ff7aa2;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 14px/1.4 'Archivo',system-ui,sans-serif}
+.w{border:1px solid var(--line);border-top:3px solid var(--wine);max-width:760px;margin:0 auto}
+.hd{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#101419;color:#fff}
+.hd a{color:#fff;text-decoration:none;font:800 15px 'Saira Condensed',sans-serif;letter-spacing:.05em;text-transform:uppercase}
+.hd a b{color:var(--gold)}
+.st{font:700 11px 'Archivo';letter-spacing:.08em;text-transform:uppercase;color:#c9ccd1}
+.st.live{color:#fff}.st.live::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gold);margin-right:6px;animation:p 1.4s infinite}
+@keyframes p{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.st.live::before{animation:none}}
+.sc{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding:14px 12px 8px}
+.tm{display:flex;align-items:center;gap:8px;min-width:0}.tm.h{flex-direction:row-reverse}
+.tm img{width:34px;height:34px}
+.tm b{font:800 18px 'Saira Condensed';letter-spacing:.04em}
+.tm .n{font:700 34px 'Geist Mono';margin-left:auto}.tm.h .n{margin-left:0;margin-right:auto}
+.tm.lose .n{color:var(--muted)}
+.mid{text-align:center;font:800 15px 'Saira Condensed';letter-spacing:.06em;text-transform:uppercase}
+.mid span{display:block;font:600 16px 'Geist Mono';letter-spacing:0;text-transform:none}
+table{width:calc(100% - 24px);margin:0 12px;border-collapse:collapse;font:500 12px 'Geist Mono'}
+th,td{padding:4px 4px;text-align:center;border-top:1px solid var(--line)}
+th{font:800 11px 'Saira Condensed';letter-spacing:.08em;color:var(--muted)}
+td:first-child,th:first-child{text-align:left}td:last-child{font-weight:700}
+.ld{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;padding:10px 12px}
+.ld div{font-size:12.5px}.ld b{font:800 12px 'Saira Condensed';letter-spacing:.06em;display:block;color:var(--muted);text-transform:uppercase}
+.lp{padding:8px 12px;border-top:1px solid var(--line);background:var(--sub);font-size:12.5px}
+.ft{display:flex;justify-content:space-between;padding:8px 12px;border-top:1px solid var(--line);font-size:12px}
+.ft a{color:var(--wt);font-weight:700;text-decoration:none}
+.ft span{color:var(--muted)}
+.e{padding:24px 12px;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<div class="w" id="w"><div class="hd"><a href="https://cavsdatabase.com/" target="_blank" rel="noopener">Cavs <b>Database</b></a><span class="st" id="st"></span></div><div class="e">Loading…</div></div>
+<script src="/live-core.js"></script>
+<script>
+'use strict';
+const ESPN='https://site.api.espn.com/apis/site/v2/sports/basketball/nba/';
+const j=async u=>{const r=await fetch(u,{cache:'no-store'});if(!r.ok)throw new Error(r.status);return r.json()};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let ev=null,timer=null;
+async function pick(){
+  const q=new URLSearchParams(location.search).get('g');if(q)return {id:q};
+  try{const sb=await j(ESPN+'scoreboard');const e=(sb.events||[]).find(e=>e.competitions[0].competitors.some(c=>c.id==='5'));if(e)return {id:e.id}}catch(e){}
+  for(const se of ['2026-27','2025-26']){try{const ix=await j('/live-archive/'+se+'/index.json');if(ix.length)return {id:ix[ix.length-1].id,src:se}}catch(e){}}
+  return null;
+}
+async function draw(){
+  const W=document.getElementById('w');let d;
+  try{d=await j(ev.src?'/live-archive/'+ev.src+'/'+ev.id+'.json':ESPN+'summary?event='+ev.id)}catch(e){return}
+  const D=prep(d),R=deriveCore(D,D.plays,'all');const st=(D.status.type||{}).state,fin=st==='post',live=st==='in';
+  const sc=t=>st==='pre'?'':(t.ha==='home'?R.hs:R.as);
+  const side=(t,h)=>`<div class="tm${h?' h':''}${fin&&sc(t)<sc(t===D.home?D.away:D.home)?' lose':''}"><img src="${esc(t.logo)}" alt=""><b>${esc(t.abbr)}</b><span class="n">${sc(t)}</span></div>`;
+  const per=R.lp?R.lp.per:0;const endP=R.lp&&R.lp.type==='End Period';
+  const mid=st==='pre'?`Tip-off<span>${new Date(D.date).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})}</span>`:fin?'Final'+(per>4?'/'+pname(per):''):(endP?(per===2?'Half':'End '+pname(per)):pname(per))+`<span>${endP?'':esc(R.lp.clock)}</span>`;
+  let ls='';if(st!=='pre'){const q={};[D.away,D.home].forEach(t=>q[t.id]=[]);let pa=0,ph=0;const ends={};R.plays.forEach(p=>ends[p.per]=[p.as,p.hs]);const mp=Math.max(4,per);
+    for(let i=1;i<=mp;i++){if(ends[i]){q[D.away.id].push(ends[i][0]-pa);q[D.home.id].push(ends[i][1]-ph);pa=ends[i][0];ph=ends[i][1]}else{q[D.away.id].push('–');q[D.home.id].push('–')}}
+    ls=`<table><tr><th></th>${Array.from({length:mp},(_,i)=>`<th>${pname(i+1).replace('Q','')}</th>`).join('')}<th>T</th></tr>`+[D.away,D.home].map(t=>`<tr><td>${esc(t.abbr)}</td>${q[t.id].map(v=>`<td>${v}</td>`).join('')}<td>${sc(t)}</td></tr>`).join('')+'</table>'}
+  const lead=(t,k,lab)=>{const id=D.roster[t.id].filter(id=>R.B[id].min>0).sort((a,b)=>(k==='reb'?(R.B[b].oreb+R.B[b].dreb)-(R.B[a].oreb+R.B[a].dreb):R.B[b][k]-R.B[a][k]))[0];if(!id)return'';const b=R.B[id];const v=k==='reb'?b.oreb+b.dreb:b[k];return `${esc(D.P[id].last)} ${v} ${lab}`};
+  const ld=st==='pre'?'':`<div class="ld">${[D.focus,D.other].map(t=>`<div><b>${esc(t.loc)}</b>${[lead(t,'pts','PTS'),lead(t,'reb','REB'),lead(t,'ast','AST')].filter(Boolean).join(' · ')}</div>`).join('')}</div>`;
+  const lp=live&&R.lp?`<div class="lp">${esc(pname(R.lp.per)+' '+R.lp.clock+' · '+R.lp.text)}</div>`:'';
+  const link='https://cavsdatabase.com/live.html?g='+(ev.src?'a'+ev.src+':':'')+ev.id;
+  W.innerHTML=`<div class="hd"><a href="https://cavsdatabase.com/" target="_blank" rel="noopener">Cavs <b>Database</b></a><span class="st${live?' live':''}">${live?'Live':fin?'Final':'Next game'}</span></div><div class="sc">${side(D.away,false)}<div class="mid">${mid}</div>${side(D.home,true)}</div>${ls}${ld}${lp}<div class="ft"><a href="${link}" target="_blank" rel="noopener">Full live stats →</a><span>${live?'Updates every 15 seconds':'Data: ESPN'}</span></div>`;
+  clearTimeout(timer);if(live)timer=setTimeout(draw,15000);else if(st==='pre')timer=setTimeout(draw,60000);
+}
+(async()=>{ev=await pick();if(!ev){document.querySelector('.e').textContent='No Cavs game found.';return}draw()})();
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&ev)draw()});
+</script>
+</body>
+</html>
