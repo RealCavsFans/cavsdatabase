@@ -1,0 +1,40 @@
+name: Live page game archive
+on:
+  schedule:
+    - cron: '*/30 0-6 * * *'   # every 30 minutes, 8 p.m.–2:30 a.m. Eastern, so finished games land soon after the buzzer
+    - cron: '40 14 * * *'      # daytime catch-up
+  workflow_dispatch:
+    inputs:
+      season:
+        description: 'Season to archive (default 2026-27)'
+        required: false
+        default: '2026-27'
+permissions:
+  contents: write
+concurrency:
+  group: live-archive
+  cancel-in-progress: false
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: node scripts/live-archive.mjs
+        env:
+          SEASON: ${{ github.event.inputs.season || '2026-27' }}
+      - name: Commit if changed
+        run: |
+          [ -d live-archive ] || exit 0
+          git config user.name "cavsdatabase-bot"
+          git config user.email "bot@cavsdatabase.com"
+          git add live-archive
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Update live game archive"
+          for i in 1 2 3; do
+            if git pull --rebase origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true; sleep 20
+          done
+          exit 1
