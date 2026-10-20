@@ -1,6 +1,6 @@
-2026-10-20T17:11:24.082Z
+2026-10-20T17:37:08.397Z
 NBA highlights: 1 new (YouTube API)
-Hoops Rumors: 9 from https://www.hoopsrumors.com/cleveland-cavaliers/feed
+Hoops Rumors: 10 from https://www.hoopsrumors.com/cleveland-cavaliers/feed
 Cavaliers on SI: 15 from https://news.google.com/rss/search?q=site%3Asi.com%2Fnba%2Fcavaliers&hl=en-US&gl=US&ceid=US:en
 cleveland.com: 15 from https://news.google.com/rss/search?q=site%3Acleveland.com%2Fcavs&hl=en-US&gl=US&ceid=US:en
 Fear The Sword: 10 from https://www.fearthesword.com/rss/current.xml
