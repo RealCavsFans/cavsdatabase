@@ -220,6 +220,13 @@ body{padding-bottom:var(--bnh)}
 .btt,.fb,.galert,.nlpop,.alpop{bottom:calc(16px + var(--bnh))!important}
 .xtoast,.nltoast,.offn{bottom:calc(20px + var(--bnh))!important}
 }
+
+@media (min-width:761px){
+.gph-meta:has(.lvt){grid-template-columns:repeat(4,minmax(0,1fr))}
+.gp-tape .gth{font-size:0.875rem;letter-spacing:.1em}
+.ros td.pl .hs{width:60px;height:44px;margin-right:12px}
+.ros td.pl{font-size:1rem}.ros td.pl .plink{font-size:1.0625rem}
+}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
@@ -2575,9 +2582,9 @@ window.renderGame=function(sl){const i=SCHEDULE.findIndex(g=>gslug(g)===sl);if(i
     const lp=H2H_PREV[o]||[];if(lp.length){const w=lp.filter(x=>x[2]>x[3]).length;s2.appendChild(el('h3','gp-sh','Last season · Cavs '+w+'–'+(lp.length-w)));const ul2=el('ul','gp-ser gp-ser-prev');lp.forEach(([d0,ha,cs2,os2])=>{const li=el('li');li.append(el('span','d',new Date(d0+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})),el('span',null,(ha==='H'?'vs ':'at ')+o),el('b',cs2>os2?'w':'l',(cs2>os2?'W ':'L ')+cs2+'–'+os2));ul2.appendChild(li)});s2.appendChild(ul2)}
     Rr.insertBefore(s2,Rr.firstChild)}
   /* injuries (before) */
-  if(!fin){const oi=OPP_INJ[o],fresh=oi&&oi.rows&&oi.d>=new Date(Date.now()-3*864e5).toISOString().slice(0,10);if(INJURIES.length||fresh){const c=card('Injury report');
+  if(!fin){const oi=OPP_INJ[o],fresh=oi&&oi.rows&&oi.d>=new Date(Date.now()-3*864e5).toISOString().slice(0,10);if(INJURIES.length||fresh){const c=card('Injury report','Updated '+INJ_UPDATED);
     const grp=(t,sub,rows)=>{c.appendChild(el('h3','gp-sh',t+(sub?' · '+sub:'')));const d=el('div','gp-inj');if(!rows.length){const x=el('div');x.append('None reported');d.appendChild(x)}rows.forEach(([n,inj,st])=>{const x=el('div');x.append(n+' · '+String(inj).toLowerCase(),el('span',/out/i.test(st)?'out':null,st));d.appendChild(x)});c.appendChild(d)};
-    grp('Cavs','updated '+INJ_UPDATED,INJURIES.map(([n,,j,st])=>[n,j,st]));if(fresh)grp(GNICK[o]||TEAMS[o],'',oi.rows);
+    grp('Cavs','',INJURIES.map(([n,,j,st])=>[n,j,st]));if(fresh)grp(GNICK[o]||TEAMS[o],'',oi.rows);
     const a=el('a','gp-btn gp-inj-b','Official NBA injury report ↗');a.href='https://official.nba.com/nba-injury-report-2026-27-season/';a.target='_blank';a.rel='noopener';c.appendChild(a);Rr.appendChild(c)}}
   /* officials: the NBA posts crew assignments around 9 AM ET on game day; box.json carries them once posted */
   if(!fin){const c=card('Officials');const d=el('div','gp-inj gp-ref');c.appendChild(d);Rr.appendChild(c);
@@ -4049,7 +4056,7 @@ const INTRO_V='tait';
   const ls=document.querySelector('#last .ls');if(ls)scramble(ls,300);
   /* cap top numbers, asset tiles and exception amounts scramble in the first time each comes into view */
   if(!reduce&&'IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const k=+e.target.dataset.fi||0;scramble(e.target,80+k*60)}),{threshold:.6});
-    ['#captop .ct-nums b','#ab-tiles .ab-tile b','#exc .num-sc'].forEach(q=>document.querySelectorAll(q).forEach((x,i)=>{x.dataset.fi=i;io.observe(x)}))}
+    ['#captop .ct-nums b','#ab-tiles .ab-tile b','#exc .num-sc','#cashtr .cash-c>b'].forEach(q=>document.querySelectorAll(q).forEach((x,i)=>{x.dataset.fi=i;io.observe(x)}))}
 })();
 </script>
 
