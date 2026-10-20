@@ -2,7 +2,6 @@ name: Live page season baselines
 on:
   schedule:
     - cron: '20 10 * * *'   # 6:20 a.m. Eastern, after pbpstats has last night's games
-    - cron: '20 16 * * *'   # midday refresh in case the morning run was early
   workflow_dispatch:
     inputs:
       season:
@@ -19,6 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          sparse-checkout: |
+            scripts/fetch-live-base.mjs
+            live-base.json
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-node@v5
         with:
           node-version: 22

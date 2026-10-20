@@ -18,14 +18,33 @@ jobs:
   archive:
     runs-on: ubuntu-latest
     steps:
+      # Gate: on scheduled runs, stop in a couple of seconds unless a Cavs game finished in the last 36 hours.
+      - name: Any Cavs game to archive?
+        id: gate
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then echo "go=1" >> $GITHUB_OUTPUT; exit 0; fi
+          Y=$(date -u +%Y); M=$(date -u +%m); [ "$M" -ge 8 ] && Y=$((Y+1))
+          N=$(curl -s -m 20 "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/5/schedule?season=$Y" | jq --arg c "$(date -u -d '36 hours ago' +%Y-%m-%dT%H:%MZ)" '[.events[]? | select(.competitions[0].status.type.completed and .date >= $c)] | length' 2>/dev/null || echo 1)
+          echo "recent finals: $N"; [ "${N:-1}" -gt 0 ] && echo "go=1" >> $GITHUB_OUTPUT || true
+      # Only the files this job needs (not the whole site, images or history).
       - uses: actions/checkout@v5
+        if: steps.gate.outputs.go == '1'
+        with:
+          sparse-checkout: |
+            scripts/live-archive.mjs
+            live-core.js
+            live-archive
+          sparse-checkout-cone-mode: false
       - uses: actions/setup-node@v5
+        if: steps.gate.outputs.go == '1'
         with:
           node-version: 22
       - run: node scripts/live-archive.mjs
+        if: steps.gate.outputs.go == '1'
         env:
           SEASON: ${{ github.event.inputs.season || '2026-27' }}
       - name: Commit if changed
+        if: steps.gate.outputs.go == '1'
         run: |
           [ -d live-archive ] || exit 0
           git config user.name "cavsdatabase-bot"
