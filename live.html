@@ -108,6 +108,16 @@ svg{display:block;width:100%;height:auto}
 .mb{display:flex;height:6px;background:var(--track)}
 .mb.r{flex-direction:row-reverse}
 .mb i{display:block;height:100%}
+.cmp2 .gh{padding:14px 0 4px;font:700 0.6875rem var(--cond);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.cr{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:baseline;gap:2px 10px;padding:8px 0 9px;border-top:1px solid var(--line2)}
+.cr .v{font:500 0.9375rem var(--mono);white-space:nowrap}
+.cr .v small{display:block;font-size:0.75rem;color:var(--muted)}
+.cr .v.r{text-align:right}
+.cr .v.w{font-weight:800}
+.cr .l{font:600 0.75rem var(--sans);color:var(--muted);text-align:center}
+.sb2{grid-column:1/-1;display:flex;gap:2px;height:5px;margin-top:4px}
+.sb2 i{display:block;height:100%}
+.grid2>*{min-width:0}
 .runs{list-style:none;margin:0;padding:0}
 .runs li{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:baseline;padding:8px 0;border-top:1px solid var(--line2);font-size:0.875rem}
 .runs li:first-child{border-top:0}
@@ -140,7 +150,7 @@ table.dt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
 .leg i{display:inline-block;width:10px;height:10px;margin-right:5px;vertical-align:-1px}
 .zt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
 .zt th{font:700 0.6875rem var(--cond);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right;padding:5px 4px;border-bottom:1px solid var(--line)}
-.zt td{text-align:right;padding:7px 4px;border-top:1px solid var(--line2)}
+.zt td{text-align:right;padding:7px 4px;border-top:1px solid var(--line2);white-space:nowrap}
 .zt th:first-child,.zt td:first-child{text-align:left;font-family:var(--sans)}
 /* four factors */
 .ff{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
@@ -195,6 +205,19 @@ table.dt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
 .fl .btn{background:var(--wine);color:#fff;border-color:var(--wine)}
 .btn.ghost{background:var(--card);color:var(--wine);border:1px solid var(--wine)}
 @media (max-width:760px){.gs{grid-template-columns:1fr}.cardout{grid-template-columns:1fr}}
+@media (max-width:560px){
+ .sb{grid-template-columns:1fr auto 1fr;gap:8px}
+ .tm,.tm.h{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:8px;align-items:center}
+ .tm img{grid-row:1/3;width:30px;height:30px}
+ .tm .sc{grid-column:1/-1;grid-row:3;margin:2px 0 0!important;font-size:2.25rem;line-height:1}
+ .tm.h{grid-template-columns:1fr auto;text-align:right}.tm.h img{grid-column:2}.tm.h>div:nth-child(2){grid-column:1;grid-row:1/3}
+ .tm .rc{display:block}
+ .mid{min-width:0}
+ .gs{font-size:0.75rem}
+}
+.gs .tt{display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:4px 10px;align-items:baseline}
+.gs .tt span{white-space:nowrap}
+.gs .ft span{white-space:nowrap}
 .foot{font-size:0.75rem;color:var(--muted);text-align:center;padding:20px 16px 40px}
 @media (max-width:760px){
  .grid2{grid-template-columns:1fr}
@@ -221,7 +244,7 @@ table.dt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
  <div id="view"></div>
 </main>
 <div class="foot">Test page, not linked from the site. All stats are built from ESPN’s play-by-play. Lineups, minutes and possessions are reconstructed from substitutions and may differ slightly from official numbers.</div>
-<script src="/live-core.js?v=9874a9d8fb"></script>
+<script src="/live-core.js?v=4e3a574594"></script>
 <script>
 'use strict';
 const REPLAYS=[["401811042","2026-04-12","WSH","vs","W 130–117"],["401811028","2026-04-10","ATL","@","L 102–124"],["401811013","2026-04-08","ATL","vs","W 122–116"],["401811000","2026-04-06","MEM","@","W 142–126"],["401810991","2026-04-05","IND","vs","W 117–108"],["401810972","2026-04-02","GS","@","W 118–111"],["401810958","2026-03-31","LAL","@","L 113–127"],["401810951","2026-03-30","UTAH","@","W 122–113"],["401810923","2026-03-27","MIA","vs","W 149–128"],["401810910","2026-03-25","MIA","vs","L 103–120"],["401810904","2026-03-24","ORL","vs","W 136–131"],["401810880","2026-03-21","NO","@","W 111–106"],["401810866","2026-03-19","CHI","@","W 115–110"],["401810850","2026-03-17","MIL","@","W 123–116"],["401810832","2026-03-15","DAL","vs","L 120–130"],["401810820","2026-03-13","DAL","@","W 138–105"],["401810802","2026-03-11","ORL","@","L 122–128"],["401810786","2026-03-09","PHI","vs","W 115–101"],["401810776","2026-03-08","BOS","vs","L 98–109"],["401810739","2026-03-03","DET","vs","W 113–109"],["401810724","2026-03-01","BKN","@","W 106–102"],["401810713","2026-02-27","DET","@","L 119–122"],["401810701","2026-02-25","MIL","@","L 116–118"],["401810690","2026-02-24","NY","vs","W 109–94"],["401810672","2026-02-22","OKC","@","L 113–121"],["401810657","2026-02-20","CHA","@","W 118–113"],["401810648","2026-02-19","BKN","vs","W 112–84"],["401810631","2026-02-11","WSH","vs","W 138–113"],["401810622","2026-02-09","DEN","@","W 119–117"],["401810611","2026-02-07","SAC","@","W 132–126"],["401810587","2026-02-04","LAC","@","W 124–91"],["401810565","2026-02-01","POR","@","W 130–111"],["401810548","2026-01-30","PHX","@","L 113–126"],["401810526","2026-01-28","LAL","vs","W 129–99"],["401810513","2026-01-26","ORL","vs","W 114–98"],["401810501","2026-01-24","ORL","@","W 119–105"],["401810493","2026-01-23","SAC","vs","W 123–118"],["401810475","2026-01-21","CHA","@","W 94–87"],["401809248","2026-01-19","OKC","vs","L 104–136"],["401810444","2026-01-16","PHI","@","W 117–115"],["401810427","2026-01-14","PHI","@","W 133–107"],["401810413","2026-01-12","UTAH","vs","L 112–123"],["401810397","2026-01-10","MIN","vs","W 146–134"],["401810385","2026-01-08","MIN","@","L 122–131"],["401810365","2026-01-06","IND","@","W 120–116"],["401810349","2026-01-04","DET","vs","L 110–114"],["401810333","2026-01-02","DEN","vs","W 113–108"],["401810320","2025-12-31","PHX","vs","W 129–113"],["401810311","2025-12-29","SA","@","W 113–101"],["401810293","2025-12-27","HOU","@","L 100–117"],["401809238","2025-12-25","NY","@","L 124–126"],["401810267","2025-12-23","NO","vs","W 141–118"],["401810257","2025-12-22","CHA","vs","W 139–132"],["401810239","2025-12-19","CHI","vs","L 125–136"],["401810222","2025-12-17","CHI","@","L 111–127"],["401836799","2025-12-14","CHA","vs","L 111–119"],["401836753","2025-12-12","WSH","@","W 130–126"],["401810207","2025-12-06","GS","vs","L 94–99"],["401810196","2025-12-05","SA","vs","W 130–117"],["401810179","2025-12-03","POR","vs","L 110–122"],["401810165","2025-12-01","IND","@","W 135–119"],["401810157","2025-11-30","BOS","vs","L 115–117"],["401809811","2025-11-28","ATL","@","L 123–130"],["401810139","2025-11-24","TOR","@","L 99–110"],["401810133","2025-11-23","LAC","vs","W 120–105"],["401809790","2025-11-21","IND","vs","W 120–109"],["401810110","2025-11-19","HOU","vs","L 104–114"],["401810096","2025-11-17","MIL","vs","W 118–106"],["401810083","2025-11-15","MEM","vs","W 108–100"],["401810080","2025-11-13","TOR","vs","L 113–126"],["401810072","2025-11-12","MIA","@","W 130–116"],["401810056","2025-11-10","MIA","@","L 138–140"],["401810041","2025-11-08","CHI","vs","W 128–122"],["401809511","2025-11-07","WSH","@","W 148–115"],["401810026","2025-11-05","PHI","vs","W 132–121"],["401810006","2025-11-02","ATL","vs","W 117–109"],["401809504","2025-10-31","TOR","vs","L 101–112"],["401809983","2025-10-29","BOS","@","L 105–125"],["401809245","2025-10-27","DET","@","W 116–95"],["401809962","2025-10-26","MIL","vs","W 118–113"],["401809944","2025-10-24","BKN","@","W 131–124"],["401809234","2025-10-22","NY","@","L 111–119"]];
@@ -267,6 +290,7 @@ function startPoll(){clearInterval(S.poll);S.poll=setInterval(async()=>{if(docum
 setInterval(()=>{if(!S.replay)updLine()},1000);
 document.addEventListener('visibilitychange',async()=>{if(!document.hidden&&!S.replay&&S.state==='in'&&Date.now()-S.fetched>POLL){await fetchGame();render()}});
 
+const perLow=f=>{const l=perLabel(f);return /Q\d|OT/.test(l)?l:l.toLowerCase()};
 const derive=()=>deriveCore(S.data,S.replay?S.data.plays.slice(0,S.cur):S.data.plays,S.per);
 /* ---------- render shell ---------- */
 const TABS=[['team','Team'],['players','Players'],['onoff','On/off'],['lineups','Lineups'],['shots','Shots'],['ast','Assists'],['ff','Four factors'],['rot','Rotations'],['plays','Plays'],['share','Share']];
@@ -304,9 +328,18 @@ function renderNav(R){
   const sg=$('seg');if(!sg.childElementCount)TABS.forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('role','tab');b.dataset.t=k;b.onclick=()=>{S.tab=k;try{localStorage.setItem('cdb-live-tab2',k)}catch(e){}renderNav(S.R);renderView()};sg.appendChild(b)});
   [...sg.children].forEach(b=>b.setAttribute('aria-selected',b.dataset.t===S.tab));
   const pr=$('per');pr.innerHTML='';pr.appendChild(el('span',null,'Show'));
-  const have=R.lp?R.lp.per:0;
-  PERS.forEach(x=>{if(!x){pr.appendChild(el('i'));return}const[k,l]=x;if(k==='ot'&&R.maxPer<=4)return;const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',S.per===k);
-    const first=k==='all'||k==='h1'?1:k==='h2'?3:k==='ot'?5:k==='clutch'?4:+k;b.disabled=have<first;b.onclick=()=>{S.per=k;rerender()};pr.appendChild(b)});
+  const have=R.lp?R.lp.per:0;const avail=[1,2,3,4].concat(R.maxPer>4?[5]:[]);
+  const sel=S.per==='all'?avail:Array.isArray(S.per)?S.per:[];
+  const set=v=>{if(Array.isArray(v)){v=[...new Set(v)].filter(p=>avail.includes(p)).sort();if(!v.length||eqSet(v,avail))v='all'}S.per=v;rerender()};
+  const btn=(l,pressed,dis,fn,title)=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',pressed);b.disabled=dis;b.onclick=fn;if(title)b.title=title;pr.appendChild(b)};
+  const second=avail.filter(p=>p>=3);
+  btn('Game',S.per==='all',have<1,()=>set('all'));
+  btn('1st half',Array.isArray(S.per)&&eqSet(S.per,[1,2]),have<1,()=>set([1,2]));
+  btn('2nd half',Array.isArray(S.per)&&eqSet(S.per,second),have<3,()=>set(second));
+  pr.appendChild(el('i'));
+  avail.forEach(p=>btn(p===5?'OT':'Q'+p,S.per!=='all'&&S.per!=='clutch'&&sel.includes(p),have<p,()=>{if(!Array.isArray(S.per))return set([p]);set(sel.includes(p)?sel.filter(x=>x!==p):sel.concat(p))},'Tap more than one to combine quarters'));
+  pr.appendChild(el('i'));
+  btn('Clutch',S.per==='clutch',have<4,()=>set(S.per==='clutch'?'all':'clutch'),'Last 5 minutes, score within 5');
   pr.style.display=S.tab==='rot'||S.tab==='plays'?'none':'';
 }
 function renderView(){
@@ -335,12 +368,14 @@ function vTeam(v,D,R){
   if(MOCK){v.appendChild(el('p','note','Mockups below (fatigue watch, lineup alert, droughts) only show with ?mock=1.'));v.appendChild(fatigueCard(D,R));v.appendChild(alertCard(D,R));v.appendChild(droughtCard(D,R))}
   const a=R.T[D.focus.id],b=R.T[D.other.id];
   const c=el('div','card');head(c,'Team stats',perLabel(S.per));
-  const vs=el('div','vs');vs.innerHTML=`<div><div class="t">${esc(D.focus.abbr)}</div><div class="big">${a.pts}</div></div><div class="c">${S.per==='all'?'Score':'Scored in '+esc(perLabel(S.per).toLowerCase())}</div><div><div class="t r">${esc(D.other.abbr)}</div><div class="big" style="text-align:right">${b.pts}</div></div>`;c.appendChild(vs);
-  const tb=el('table','cmp');
-  const grp=n=>{const r=el('tr','gh');const td=el('td',null,n);td.colSpan=5;r.appendChild(td);tb.appendChild(r)};
-  const row=(lab,x,y,fx,fy,hib=true)=>{const r=el('tr');const xa=el('td',null,fx?fx(x):String(x)),ya=el('td',null,fy?fy(y):String(y));if(Math.abs(x-y)>1e-9)((x>y)===hib?xa:ya).classList.add('w');
-    const tot=Math.abs(x)+Math.abs(y)||1;const bl=el('td','b'),br=el('td','b');const m1=el('div','mb r'),m2=el('div','mb');const i1=el('i'),i2=el('i');i1.style.width=(Math.abs(x)/tot*100)+'%';i2.style.width=(Math.abs(y)/tot*100)+'%';i1.style.background=D.focus.c;i2.style.background=D.other.c;m1.appendChild(i1);m2.appendChild(i2);bl.appendChild(m1);br.appendChild(m2);
-    r.append(xa,bl,el('td','l',lab),br,ya);tb.appendChild(r)};
+  const vs=el('div','vs');vs.innerHTML=`<div><div class="t">${esc(D.focus.abbr)}</div><div class="big">${a.pts}</div></div><div class="c">${S.per==='all'?'Score':'Scored in '+esc(perLow(S.per))}</div><div><div class="t r">${esc(D.other.abbr)}</div><div class="big" style="text-align:right">${b.pts}</div></div>`;c.appendChild(vs);
+  const tb=el('div','cmp2');
+  const key=el('div','key');key.style.margin='0 0 6px';key.innerHTML=`<span><i style="background:${D.focus.c}"></i>${esc(D.focus.abbr)}</span><span><i style="background:${D.other.c}"></i>${esc(D.other.abbr)}</span><span>Each bar splits the stat between the two teams. Bold = better.</span>`;tb.appendChild(key);
+  const grp=n=>tb.appendChild(el('div','gh',n));
+  const row=(lab,x,y,fx,fy,hib=true)=>{const r=el('div','cr');const sv=t=>{const p=String(t).split(' · ');const d=el('span','v',p[0]);if(p[1])d.appendChild(el('small',null,p[1]));return d};
+    const xa=sv(fx?fx(x):String(x)),ya=sv(fy?fy(y):String(y));ya.classList.add('r');if(Math.abs(x-y)>1e-9)((x>y)===hib?xa:ya).classList.add('w');
+    const tot=Math.abs(x)+Math.abs(y);const bar=el('div','sb2');const i1=el('i'),i2=el('i');i1.style.width=(tot?Math.abs(x)/tot*100:50)+'%';i2.style.width=(tot?Math.abs(y)/tot*100:50)+'%';i1.style.background=D.focus.c;i2.style.background=D.other.c;bar.append(i1,i2);
+    r.append(xa,el('span','l',lab),ya,bar);tb.appendChild(r)};
   const P=t=>poss({fga:t.fga,oreb:t.oreb+t.toreb,to:t.to,fta:t.fta});
   const pa=P(a),pb=P(b);
   grp('Shooting');
@@ -361,7 +396,7 @@ function vTeam(v,D,R){
   row('Points per 100 possessions',pa?a.pts/pa*100:0,pb?b.pts/pb*100:0,x=>x.toFixed(1),x=>x.toFixed(1));
   c.appendChild(tb);v.appendChild(c);
   /* margin chart with filtered periods highlighted */
-  const f=el('div','card sec');head(f,'Score margin',S.per==='all'?'Whole game':'Whole game, with '+perLabel(S.per).toLowerCase()+' highlighted');
+  const f=el('div','card sec');head(f,'Score margin',S.per==='all'?'Whole game':'Whole game, with '+perLow(S.per)+' highlighted');
   const T=pstart(R.maxPer)+plen(R.maxPer),W=640,H=190,pad=26;let mx=10;R.margin.forEach(m=>mx=Math.max(mx,Math.abs(m[1])));mx=Math.ceil(mx/5)*5;
   const X=t=>pad+(W-pad*2)*t/T,Y=m=>H/2-(H/2-16)*m/mx;let d='M'+X(0)+','+Y(0),pv=0;R.margin.forEach(([t,m])=>{d+=` L${X(t).toFixed(1)},${Y(pv).toFixed(1)} L${X(t).toFixed(1)},${Y(m).toFixed(1)}`;pv=m});const eT=R.lp?R.lp.t:0;d+=` L${X(eT)},${Y(pv)}`;
   let g='';for(let p=1;p<=R.maxPer;p++){const x0=X(pstart(p)),x1=X(pstart(p)+plen(p));if(S.per!=='all'&&inPer(S.per,p))g+=`<rect x="${x0}" y="6" width="${x1-x0}" height="${H-22}" fill="#F2B231" opacity=".13"/>`;g+=`<line x1="${x0}" x2="${x0}" y1="6" y2="${H-16}" stroke="var(--line)"/><text x="${(x0+x1)/2}" y="${H-3}" text-anchor="middle" font-size="10" fill="var(--muted)" font-family="var(--mono)">${pname(p)}</text>`}
@@ -380,10 +415,10 @@ function gameState(D,R){
   const w=el('div','gs');const per=R.lp.per;const endT=pstart(per)+plen(per);const left=endT-R.lp.t;
   [D.away,D.home].forEach(t=>{const q=(R.tf[per]&&R.tf[per][t.id])||{n:0,l2:0};const bonus=q.n>=(per<=4?5:4)||(left<=120&&q.l2>=2);
     const tl=Math.max(0,7-R.to[t.id]);const c=R.ch[t.id];const chl=c.used===0?1:(c.used===1&&c.won>=1?1:0);
-    const d=el('div','tt');d.innerHTML=`<b>${esc(t.abbr)}</b><span>Team fouls <em>${q.n}</em>${bonus?' <span class="bonus">Bonus</span>':''}</span><span>Timeouts left <em>${tl}</em></span><span>Challenge <em>${chl?'available':'used'}</em></span>`;w.appendChild(d)});
+    const d=el('div','tt');d.innerHTML=`<b>${esc(t.abbr)}</b><span>Fouls <em>${q.n}</em>${bonus?' <span class="bonus">Bonus</span>':''}</span><span>Timeouts <em>${tl}</em></span><span>Challenge <em>${chl?'yes':'used'}</em></span>`;w.appendChild(d)});
   /* foul trouble: 2 in Q1, 3 by half, 4 in Q3, 5 any time */
   const lim=per===1?2:per===2?3:per===3?4:5;const tr=Object.entries(R.pfAll).filter(([id,n])=>n>=lim&&D.P[id]).sort((a,b)=>b[1]-a[1]);
-  if(tr.length){const ft=el('div','ft');ft.innerHTML='Foul trouble: '+tr.map(([id,n])=>`<span>${esc(D.P[id].short)} (${esc(D.teams.find(t=>t.id===D.P[id].team).abbr)}) <i>${n} PF</i></span>`).join('');w.appendChild(ft)}
+  if(tr.length){const ft=el('div','ft');ft.innerHTML='<b>Foul trouble</b> '+tr.map(([id,n])=>`<span>${esc(D.P[id].short)} (${esc(D.teams.find(t=>t.id===D.P[id].team).abbr)}) <i>${n} PF</i></span>`).join('');w.appendChild(ft)}
   return w;
 }
 
@@ -403,20 +438,17 @@ function paceCard(D,R){
   if(S.state==='in'&&S.per==='all'&&R.lp){const el2=R.lp.t,left=Math.max(0,2880-el2);
     if(el2>=360&&left>0){const pf=Math.round(R.T[D.focus.id].pts+R.T[D.focus.id].pts/el2*left),po=Math.round(R.T[D.other.id].pts+R.T[D.other.id].pts/el2*left);
       const p=el('p',null,'');p.innerHTML=`<b>On pace for:</b> ${esc(D.focus.abbr)} ${pf}, ${esc(D.other.abbr)} ${po} <span class="note">(scoring rate so far × ${fmtMin(left)} left in regulation)</span>`;p.style.margin='12px 0 0';f.appendChild(p)}}
-  /* by quarter */
-  const qs=Object.keys(R.TQ).map(Number).sort((x,y)=>x-y);if(qs.length){const tb=el('table','zt');tb.innerHTML='<tr><th>Quarter</th>'+qs.map(q=>`<th>${pname(q)}</th>`).join('')+'</tr>';
-    const tr=el('tr');tr.appendChild(el('td',null,'Pace'));qs.forEach(q=>{const x=R.TQ[q][D.focus.id],y=R.TQ[q][D.other.id];const pp=x&&y?(P(x)+P(y))/2:0;tr.appendChild(el('td',null,x&&x.sec>=60?(pp/x.sec*2880).toFixed(0):'–'))});tb.appendChild(tr);
-    const w=el('div','tw');w.appendChild(tb);f.appendChild(el('h3',null,'By quarter'));f.appendChild(w)}
+
   return f;
 }
 /* ---------- starters vs bench ---------- */
 function benchCard(D,R){
   const f=el('div','card sec');head(f,'Starters vs bench',perLabel(S.per));
   const qs=Object.keys(R.TQ).map(Number).sort((x,y)=>x-y);
-  const tb=el('table','zt');tb.innerHTML='<tr><th>Unit</th><th>PTS</th><th>Share</th><th>MIN</th>'+qs.map(q=>`<th>${pname(q)}</th>`).join('')+'</tr>';
+  const tb=el('table','zt');tb.innerHTML='<tr><th>Unit</th><th>PTS</th><th>Share</th><th>MIN</th></tr>';
   [D.focus,D.other].forEach(t=>{const T=R.T[t.id];[['Starters','st'],['Bench','bn']].forEach(([l,k],i)=>{const tr=el('tr');const nm=el('td');nm.innerHTML=`<i class="chip" style="background:${t.c}"></i>${esc(t.abbr)} ${l.toLowerCase()}`;
     const pts=T[k+'Pts'];tr.append(nm,el('td',null,String(pts)),el('td',null,T.pts?Math.round(pts/T.pts*100)+'%':'–'),el('td',null,fmtMin(T[k+'Sec'])));
-    qs.forEach(q=>{const x=R.TQ[q][t.id];tr.appendChild(el('td',null,x?String(x[k+'Pts']):'–'))});if(i)tr.style.borderBottom='1px solid var(--line)';tb.appendChild(tr)})});
+    if(i)tr.style.borderBottom='1px solid var(--line)';tb.appendChild(tr)})});
   const w=el('div','tw');w.appendChild(tb);f.appendChild(w);f.appendChild(el('p','note','Starters = the five who started the game. Minutes are player-minutes (five players at a time).'));return f;
 }
 /* ---------- free throws ---------- */
@@ -571,7 +603,7 @@ function vShare(v,D,R){
     const acts=el('div','acts');const fn=('cavsdb-'+S.f.card+'-'+D.away.abbr+'-'+D.home.abbr).toLowerCase().replace(/[^a-z0-9-]/g,'')+'.png';
     const dl=el('a','btn','Download image');dl.href=url;dl.download=fn;acts.appendChild(dl);
     try{const file=new File([blob],fn,{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[file]})){const sh=el('button','btn ghost','Share');sh.type='button';sh.onclick=()=>navigator.share({files:[file]}).catch(()=>{});acts.appendChild(sh)}}catch(e){}
-    acts.appendChild(el('p','note','Uses the stretch picked above ('+perLabel(S.per).toLowerCase()+').'));out.append(img,acts)};
+    acts.appendChild(el('p','note','Uses the stretch picked above ('+perLow(S.per)+').'));out.append(img,acts)};
   if(!S.playing)go.click();v.appendChild(c);
 }
 
@@ -591,10 +623,10 @@ function vPlayers(v,D,R){
     r._cls=R.B[id].on&&S.state==='in'?'':'';rows.push(r)});
   const nm=r=>{const s=el('span');const dot=el('span','oc'+(R.B[r.name.id].on&&S.state==='in'?'':' off'));s.append(dot,r.name.short||r.name.name);if(r.name.starter)s.appendChild(el('span','pos',r.name.pos||''));return s};
   const d=x=>r=>r.dnp?'':x(r);
-  const cols=[{h:'Player',k:'name',f:nm},{h:'MIN',k:'min',f:d(r=>fmtMin(r.min))},{h:'PTS',k:'pts',f:d(r=>r.pts),cls:()=>'k'},{h:'REB',k:'reb',f:d(r=>r.reb)},{h:'AST',k:'ast',f:d(r=>r.ast)},
+  const cols=[{h:'Player',k:'name',f:nm},{h:'MIN',k:'min',f:d(r=>fmtMin(r.min))},{h:'PTS',k:'pts',f:d(r=>r.pts),cls:()=>'k'},
     {h:'FG',k:'fgm',f:d(r=>r.fgm+'-'+r.fga)},{h:'3PT',k:'tpm',f:d(r=>r.tpm+'-'+r.tpa)},{h:'FT',k:'ftm',f:d(r=>r.ftm+'-'+r.fta)},{h:'TS%',k:'ts',f:d(r=>r.ts==null?'–':(r.ts*100).toFixed(0)+'%'),title:'True shooting'},
-    {h:'OREB',k:'oreb',f:d(r=>r.oreb)},{h:'STL',k:'stl',f:d(r=>r.stl)},{h:'BLK',k:'blk',f:d(r=>r.blk)},{h:'TO',k:'to',f:d(r=>r.to),asc:true},{h:'PF',k:'pf',f:d(r=>r.pf),asc:true},{h:'+/-',k:'pm',f:d(r=>sgn(r.pm)),cls:r=>r.dnp?'':pmCls(r.pm)}];
-  const foot=el('tr','tot');foot.appendChild(el('td',null,'Team'));['',TT.pts,TT.oreb+TT.dreb,TT.ast,TT.fgm+'-'+TT.fga,TT.tpm+'-'+TT.tpa,TT.ftm+'-'+TT.fta,TT.fga+TT.fta?(TT.pts/(2*(TT.fga+0.44*TT.fta))*100).toFixed(0)+'%':'–',TT.oreb,TT.stl,TT.blk,TT.to,TT.pf,''].forEach(x=>foot.appendChild(el('td',null,String(x))));
+    {h:'REB',k:'reb',f:d(r=>r.reb)},{h:'OREB',k:'oreb',f:d(r=>r.oreb)},{h:'AST',k:'ast',f:d(r=>r.ast)},{h:'TO',k:'to',f:d(r=>r.to),asc:true},{h:'STL',k:'stl',f:d(r=>r.stl)},{h:'BLK',k:'blk',f:d(r=>r.blk)},{h:'PF',k:'pf',f:d(r=>r.pf),asc:true},{h:'+/-',k:'pm',f:d(r=>sgn(r.pm)),cls:r=>r.dnp?'':pmCls(r.pm)}];
+  const foot=el('tr','tot');foot.appendChild(el('td',null,'Team'));['',TT.pts,TT.fgm+'-'+TT.fga,TT.tpm+'-'+TT.tpa,TT.ftm+'-'+TT.fta,TT.fga+TT.fta?(TT.pts/(2*(TT.fga+0.44*TT.fta))*100).toFixed(0)+'%':'–',TT.oreb+TT.dreb,TT.oreb,TT.ast,TT.to,TT.stl,TT.blk,TT.pf,''].forEach(x=>foot.appendChild(el('td',null,String(x))));
   rows.forEach(r=>{if(r.dnp)r.pts=-1});
   c.appendChild(dtable('pl',cols,rows,{def:'min',minW:720,foot}));
   if(S.state==='in')c.appendChild(el('p','note','Gold dot = on the floor now.'));
@@ -730,16 +762,7 @@ function vFF(v,D,R){
     if(x!=null&&y!=null){const better=(x>y)===hib?D.focus:D.other;const e=el('div','edge',x===y?'Even':better.abbr+' edge');e.style.color=better.c;box.appendChild(e)}
     box.appendChild(el('p','note',full));g.appendChild(box)});
   c.appendChild(g);
-  /* who won each factor, quarter by quarter */
-  c.appendChild(el('h3',null,'Quarter by quarter'));
-  const qs=Object.keys(R.TQ).map(Number).sort((a,b)=>a-b);
-  const tb=el('table','zt ffq');const hr=el('tr');hr.appendChild(el('th',null,'Factor'));qs.forEach(q=>hr.appendChild(el('th',null,pname(q))));hr.appendChild(el('th',null,S.per==='all'?'Game':perLabel(S.per)));tb.appendChild(hr);
-  FF.forEach(([k,n,full,hib])=>{[D.focus,D.other].forEach((t,ti)=>{const tr=el('tr');const nm=el('td');nm.innerHTML=`<i class="chip" style="background:${t.c}"></i>${ti?'':esc(n)+' · '}${esc(t.abbr)}`;tr.appendChild(nm);
-    const cell=(mine,theirs)=>{const td=el('td',null,mine==null?'–':(mine*100).toFixed(0)+'%');if(mine!=null&&theirs!=null&&mine!==theirs&&((mine>theirs)===hib)){td.classList.add('e');td.style.color=t.c}return td};
-    qs.forEach(q=>{const me=R.TQ[q][t.id],th=R.TQ[q][t===D.focus?D.other.id:D.focus.id];if(!me||!th){tr.appendChild(el('td',null,'–'));return}tr.appendChild(cell(factors(me,th)[k],factors(th,me)[k]))});
-    tr.appendChild(cell((t===D.focus?fa:fb)[k],(t===D.focus?fb:fa)[k]));if(ti===1)tr.style.borderBottom='1px solid var(--line)';tb.appendChild(tr)})});
-  const w=el('div','tw');w.appendChild(tb);c.appendChild(w);
-  c.appendChild(el('p','note','Bold = won that factor in that stretch. Turnover rate = turnovers per estimated possession. Offensive rebound rate counts team rebounds.'));
+  c.appendChild(el('p','note','Turnover rate = turnovers per estimated possession. Offensive rebound rate counts team rebounds. Use the quarter buttons above to compare any stretch.'));
   v.appendChild(c);
 }
 

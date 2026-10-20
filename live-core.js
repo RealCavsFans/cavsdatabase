@@ -17,8 +17,9 @@ const fmtMin=s=>{s=Math.round(s);return Math.floor(s/60)+':'+String(s%60).padSta
 const pct=(m,a,d=0)=>a?(m/a*100).toFixed(d)+'%':'–';
 const sgn=v=>(v>0?'+':v<0?'−':'')+Math.abs(v);
 const PERS=[['all','Game'],['h1','1st half'],['h2','2nd half'],null,['1','Q1'],['2','Q2'],['3','Q3'],['4','Q4'],['ot','OT'],null,['clutch','Clutch']];
-const inPer=(f,p)=>f==='all'||(f==='h1'&&p<=2)||(f==='h2'&&p>=3)||(f==='ot'&&p>4)||String(p)===f;
-const perLabel=f=>({all:'Full game',h1:'1st half',h2:'2nd half (incl. OT)',ot:'Overtime',clutch:'Clutch: last 5 minutes, score within 5'})[f]||'Quarter '+f;
+const eqSet=(a,b)=>a.length===b.length&&a.every(x=>b.includes(x));
+const inPer=(f,p)=>Array.isArray(f)?f.includes(Math.min(p,5)):f==='all'||(f==='h1'&&p<=2)||(f==='h2'&&p>=3)||(f==='ot'&&p>4)||String(p)===f;
+const perLabel=f=>Array.isArray(f)?(eqSet(f,[1,2])?'1st half':eqSet(f,[3,4,5])||eqSet(f,[3,4])?'2nd half':f.length===1?(f[0]===5?'Overtime':'Quarter '+f[0]):f.slice().sort().map(p=>p===5?'OT':'Q'+p).join(' + ')):({all:'Full game',h1:'1st half',h2:'2nd half (incl. OT)',ot:'Overtime',clutch:'Clutch: last 5 minutes, score within 5'})[f]||'Quarter '+f;
 
 /* ---------- prepare ---------- */
 function lastName(n){const p=n.replace(/ (Jr\.|Sr\.|II|III|IV)$/,'').split(' ');return p.length>1?p.slice(1).join(' '):n}
@@ -138,3 +139,33 @@ function factors(a,b){const pa=poss({fga:a.fga,oreb:a.oreb+a.toreb,to:a.to,fta:a
 const FF=[['efg','Shooting','Effective FG%',true],['tov','Ball security','Turnover rate',false],['orb','Second chances','Offensive rebound rate',true],['ftr','Getting to the line','Free throws made per FGA',true]];
 const CLE='5',C3=Math.sqrt(23.75**2-22**2);
 if(typeof module!=='undefined')module.exports={prep,deriveCore,factors,poss,ZN,PT,LG,normName,pname,fmtMin,inPer,pstart,plen};
+
+/* ---------- archive helpers (used by the nightly job and the page) ---------- */
+function slimSummary(d){
+  const c=d.header.competitions[0];
+  const P=x=>x==null?undefined:x;
+  return {header:{competitions:[{date:c.date,status:c.status,broadcasts:(c.broadcasts||[]).map(b=>({media:{shortName:b.media&&b.media.shortName}})),
+      competitors:c.competitors.map(x=>({id:x.id,homeAway:x.homeAway,winner:x.winner,score:x.score,linescores:(x.linescores||[]).map(l=>({displayValue:l.displayValue})),record:(x.record||[]).slice(0,1).map(r=>({summary:r.summary})),
+        team:{id:x.team.id,abbreviation:x.team.abbreviation,shortDisplayName:x.team.shortDisplayName,name:x.team.name,location:x.team.location,logos:(x.team.logos||[]).slice(0,1).map(l=>({href:l.href}))}}))}]},
+    gameInfo:{venue:{fullName:d.gameInfo&&d.gameInfo.venue&&d.gameInfo.venue.fullName}},
+    boxscore:{teams:((d.boxscore&&d.boxscore.teams)||[]).map(t=>({team:{id:t.team.id},statistics:(t.statistics||[]).map(s=>({name:s.name,displayValue:s.displayValue}))})),
+      players:((d.boxscore&&d.boxscore.players)||[]).map(t=>({team:{id:t.team.id},statistics:[{names:(t.statistics[0]||{}).names,athletes:((t.statistics[0]||{}).athletes||[]).map(a=>({athlete:{id:a.athlete.id,displayName:a.athlete.displayName,shortName:a.athlete.shortName,position:{abbreviation:a.athlete.position&&a.athlete.position.abbreviation},jersey:a.athlete.jersey},starter:a.starter,didNotPlay:a.didNotPlay,reason:a.reason,stats:a.stats}))}]}))},
+    plays:(d.plays||[]).map(q=>({id:q.id,type:{text:q.type.text},text:q.text,period:{number:q.period.number},clock:{displayValue:q.clock.displayValue},team:q.team?{id:q.team.id}:undefined,participants:q.participants?q.participants.map(p=>({athlete:{id:p.athlete.id}})):undefined,homeScore:q.homeScore,awayScore:q.awayScore,scoringPlay:q.scoringPlay,scoreValue:q.scoreValue,shootingPlay:q.shootingPlay,pointsAttempted:q.pointsAttempted,coordinate:q.coordinate&&q.coordinate.x>-100?{x:q.coordinate.x,y:q.coordinate.y}:undefined})),
+    winprobability:(d.winprobability||[]).map(w=>({playId:w.playId,homeWinPercentage:w.homeWinPercentage}))};
+}
+/* numbers-only recap for a finished game, focus team first */
+function recap(D,R){
+  const F=D.focus,O=D.other,fs=F.ha==='home'?R.hs:R.as,os=F.ha==='home'?R.as:R.hs,won=fs>os;const out=[];
+  const per=R.lp?R.lp.per:4;out.push(`${F.name} ${won?'beat':'lost to'} the ${O.name} ${Math.max(fs,os)}–${Math.min(fs,os)}${per>4?' in '+(per===5?'overtime':(per-4)+' overtimes'):''}.`);
+  const top=t=>D.roster[t.id].filter(id=>R.B[id].min>0).sort((a,b)=>R.B[b].pts-R.B[a].pts)[0];
+  [F,O].forEach(t=>{const id=top(t);if(id){const b=R.B[id];out.push(`${D.P[id].name} led the ${t.name} with ${b.pts} points (${b.fgm}-${b.fga} FG${b.tpa?', '+b.tpm+'-'+b.tpa+' 3PT':''}), ${b.oreb+b.dreb} rebounds and ${b.ast} assists.`)}});
+  const A=R.T[F.id],B=R.T[O.id],fa=factors(A,B),fb=factors(B,A);const wonF=FF.filter(([k,,,hib])=>fa[k]!=null&&fb[k]!=null&&fa[k]!==fb[k]&&((fa[k]>fb[k])===hib)).map(x=>x[1].toLowerCase());
+  out.push(`${F.abbr} won ${wonF.length} of 4 factors${wonF.length?': '+wonF.join(', '):''}. Effective FG% ${(fa.efg*100).toFixed(1)} to ${(fb.efg*100).toFixed(1)}.`);
+  const big=t=>R.runs.filter(r=>r.t===t.id).sort((a,b)=>b.pts-a.pts)[0];[F,O].forEach(t=>{const r=big(t);if(r)out.push(`Biggest ${t.abbr} run: ${r.pts}–0 (${pname(r.start.per)} ${r.start.clock} to ${r.end.per!==r.start.per?pname(r.end.per)+' ':''}${r.end.clock}).`)});
+  if(R.wpS&&R.wpS.length>2){const fh=F===D.home;let best=null;for(let i=1;i<R.wpS.length;i++){const dv=(R.wpS[i][1]-R.wpS[i-1][1])*(fh?1:-1);if(!best||Math.abs(dv)>Math.abs(best[0]))best=[dv,R.wpS[i][2]]}
+    if(best)out.push(`Biggest swing: ${best[1].text} (${pname(best[1].per)} ${best[1].clock}), ${best[0]>0?'+':'−'}${Math.abs(Math.round(best[0]*100))} points of ${F.abbr} win probability.`)}
+  const L5=Object.values(R.L[F.id][5]).filter(l=>l.sec>=240).sort((a,b)=>(b.pf-b.pa)-(a.pf-a.pa))[0];if(L5)out.push(`Best ${F.abbr} lineup (4+ minutes): ${L5.ids.map(id=>D.P[id].last).join(', ')}, ${L5.pf-L5.pa>0?'+':''}${L5.pf-L5.pa} in ${fmtMin(L5.sec)}.`);
+  out.push(`Bench points: ${F.abbr} ${A.bnPts}, ${O.abbr} ${B.bnPts}. Points in the paint: ${A.paint}–${B.paint}. Second-chance points: ${A.second}–${B.second}.`);
+  return out;
+}
+if(typeof module!=='undefined')Object.assign(module.exports,{slimSummary,recap});
