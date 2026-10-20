@@ -29,6 +29,14 @@ if (missing.length) problems.push(`Box scores missing for ${missing.length} fini
 // 4. league feed (players' league-wide ranks)
 const L = await J('pdata/league.json');
 if (inSeason && S.some(g => days(g[0], today) >= 2)) { if (!L || !L.updated) problems.push('League feed (pdata/league.json) has never updated.'); else if ((now - Date.parse(L.updated)) / 36e5 > 30) problems.push(`League feed last updated ${L.updated.slice(0, 16)}.`); else notes.push(`league feed ${L.games.length} games`); }
+// 4b. team stats job (scripts/team-stats.mjs): once games are in the league feed, the Cavs scores and standings should follow within a day
+if (L && L.tg && Object.keys(L.tg).length) {
+  const played = Object.values(L.tg).filter(g => (g.t || []).some(t => t.ab === 'CLE') && days(g.d, today) >= 1).length;
+  const scores = (html.match(/const SCORES=(\{[^\n]*?\});/) || [])[1] || '{}';
+  const have = (scores.match(/'\d{4}-|"\d{4}-/g) || []).length;
+  if (played > have) problems.push(`Team stats job is behind: ${played} Cavs games in the league feed but ${have} scores on the site. Check the "Team stats" GitHub job.`);
+  else notes.push(`team stats ${have} games`);
+}
 // 5. news feed
 const N = await J('news.json');
 const newest = N ? [...(N.articles || []), ...(N.videos || []), ...(N.podcasts || [])].map(x => x.date).sort().pop() : null;
