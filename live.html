@@ -329,17 +329,17 @@ table.dt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
 .tsh{font:700 1.0625rem var(--sans);margin:2px 0 6px}
 .tsq{display:flex;gap:3px;margin-bottom:10px}.tsq i{flex:1;height:14px;max-width:26px}.tsq b{width:8px}
 .tse{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}.tse span{font:600 0.75rem var(--sans);padding:4px 8px}.tse b{font-family:var(--mono)}
-.tsc{column-count:3;column-gap:28px}
-.tsg{padding-top:12px;break-inside:avoid}
+.tsc{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;align-items:start}
+.tsg{padding-top:12px}
 .tsgh{display:flex;justify-content:space-between;font:800 0.75rem var(--cond);letter-spacing:.1em;text-transform:uppercase;border-top:2px solid var(--fg);padding-top:6px}
 .tsgh span:first-child{color:var(--wt)}.tsgh span:last-child{color:var(--muted)}
-.tsr2{display:grid;grid-template-columns:minmax(0,1fr) 3rem 5.5rem 3rem;gap:0 8px;align-items:center;padding:6px 0;border-top:1px solid var(--line2)}
+.tsr2{display:grid;grid-template-columns:minmax(6.5rem,9rem) 3.2rem minmax(5.5rem,1fr) 3.2rem;gap:0 8px;align-items:center;padding:6px 0;border-top:1px solid var(--line2)}
 .tsr2.hd{border:0;padding:4px 0 0;font:800 0.6875rem var(--cond);letter-spacing:.08em}.tsr2.hd b{text-align:right}.tsr2.hd b:last-child{text-align:left}
 .tsr2 .n{font-size:0.8125rem}
 .tsr2 b{font:600 0.8125rem var(--mono);text-align:right}.tsr2 b:last-child{text-align:left}.tsr2 b.w{font-weight:800}
 .tsr2 .eb{position:relative;height:12px}.tsr2 .eb::after{content:'';position:absolute;left:50%;top:-4px;bottom:-4px;width:1px;background:var(--fg)}
 .tsr2 .eb i{position:absolute;top:2px;bottom:2px}
-@media (max-width:900px){.tsc{column-count:1}}
+@media (max-width:760px){.tsc{grid-template-columns:1fr}}
 
 a.plk{color:inherit;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--wt) 45%,transparent);text-underline-offset:3px}
 a.plk:hover{color:var(--wt)}
@@ -423,7 +423,7 @@ document.addEventListener('visibilitychange',async()=>{if(!document.hidden&&!S.r
 const perLow=f=>{const l=perLabel(f);return /Q\d|OT/.test(l)?l:l.toLowerCase()};
 const derive=()=>deriveCore(S.data,S.replay?S.data.plays.slice(0,S.cur):S.data.plays,S.per);
 /* ---------- render shell ---------- */
-const TABS=[['team','Team'],['players','Players'],['lineups','Lineups'],['shots','Shots'],['ast','Assists'],['ff','Four factors'],['plays','Plays'],['share','Share']];
+const TABS=[['team','Team'],['players','Players'],['lineups','Lineups'],['shots','Shots'],['flow','Flow'],['ast','Assists'],['ff','Four factors'],['plays','Plays'],['share','Share']];
 /* On/off and Rotations live inside the Lineups tab now; old saved tabs land there */
 if(S.tab==='onoff'||S.tab==='rot'){S.lu=S.tab;S.tab='lineups'}
 try{const l=localStorage.getItem('cdb-live-lu');if(l)S.lu=S.lu||l}catch(e){}
@@ -502,7 +502,7 @@ function renderView(){
   const v=$('view'),D=S.data,R=S.R;v.innerHTML='';
   if(S.state==='pre'&&!R.plays.length){const c=el('div','card');c.append(el('h2',null,D.away.abbr+' at '+D.home.abbr),el('p',null,'Tip-off '+new Date(D.date).toLocaleString([],{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+(D.venue?' · '+D.venue:'')+(D.bc.length?' · '+D.bc.join(', '):'')+'.'),el('p','empty','Team and player stats, lineups, shots, four factors and rotations fill in once the game starts. The page refreshes every 15 seconds during the game.'));v.appendChild(c);
     const opp=D.other;const holder=el('div');holder.appendChild(el('p','note','Loading the scouting report…'));v.appendChild(holder);scoutData(opp.id).then(X=>{if(S.data!==D)return;holder.innerHTML='';holder.appendChild(scoutCard(D,X,opp))});return}
-  ({share:vShare,ast:vAst,team:vTeam,players:vPlayers,lineups:vLuHub,shots:vShots,ff:vFF,plays:vPlays})[S.tab](v,D,R);
+  ({share:vShare,ast:vAst,team:vTeam,players:vPlayers,lineups:vLuHub,shots:vShots,flow:vFlow,ff:vFF,plays:vPlays})[S.tab](v,D,R);
 }
 const teamBtns=(D,key,cb)=>{const _tb=teamBtns0(D,key,cb);_tb.querySelectorAll('button[data-tid]').forEach(b=>{const t=D.teams.find(x=>x.id===b.dataset.tid);const on=b.getAttribute('aria-pressed')==='true';b.style.borderColor=t.c;if(on){b.style.background=t.c;b.style.color='#fff'}else{b.style.color=t.c;b.style.background='var(--card)'}});return _tb};
 const teamBtns0=(D,key,cb)=>{if(key==='luTeam'){const cb0=cb;cb=()=>{S.f.luPick={};cb0&&cb0()}}const f=el('div','fl');if(S.season)return f;[D.focus,D.other].forEach(t=>{const b=el('button',null,t.abbr);b.dataset.tid=t.id;b.type='button';b.setAttribute('aria-pressed',S.f[key]===t.id);b.onclick=()=>{S.f[key]=t.id;cb&&cb();renderView()};f.appendChild(b)});return f};
@@ -576,6 +576,22 @@ function teamStatsBody(D,ROWS){
     cols.appendChild(box)});
   w.appendChild(cols);return w;
 }
+
+/* ---------- Flow: score margin, runs and win probability ---------- */
+function vFlow(v,D,R){
+  /* margin chart with filtered periods highlighted */
+  const f=el('div','card sec');head(f,'Score margin',S.per==='all'?'Whole game':'Whole game, with '+perLow(S.per)+' highlighted');
+  const T=pstart(R.maxPer)+plen(R.maxPer),W=900,H=150,pad=26;let mx=10;R.margin.forEach(m=>mx=Math.max(mx,Math.abs(m[1])));mx=Math.ceil(mx/5)*5;
+  const X=t=>pad+(W-pad*2)*t/T,Y=m=>H/2-(H/2-16)*m/mx;let d='M'+X(0)+','+Y(0),pv=0;R.margin.forEach(([t,m])=>{d+=` L${X(t).toFixed(1)},${Y(pv).toFixed(1)} L${X(t).toFixed(1)},${Y(m).toFixed(1)}`;pv=m});const eT=R.lp?R.lp.t:0;d+=` L${X(eT)},${Y(pv)}`;
+  let g='';for(let p=1;p<=R.maxPer;p++){const x0=X(pstart(p)),x1=X(pstart(p)+plen(p));if(S.per!=='all'&&inPer(S.per,p))g+=`<rect x="${x0}" y="6" width="${x1-x0}" height="${H-22}" fill="#F2B231" opacity=".13"/>`;g+=`<line x1="${x0}" x2="${x0}" y1="6" y2="${H-16}" stroke="var(--line)"/><text x="${(x0+x1)/2}" y="${H-3}" text-anchor="middle" font-size="10" fill="var(--muted)" font-family="var(--mono)">${pname(p)}</text>`}
+  g+=`<line x1="${pad}" x2="${W-pad}" y1="${H/2}" y2="${H/2}" stroke="var(--fg2)"/><text x="${pad-4}" y="${Y(mx)+4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="var(--mono)">+${mx}</text><text x="${pad-4}" y="${Y(-mx)+4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="var(--mono)">−${mx}</text>`;
+  f.insertAdjacentHTML('beforeend',`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Score margin"><defs><clipPath id="up"><rect width="${W}" height="${H/2}"/></clipPath><clipPath id="dn"><rect y="${H/2}" width="${W}" height="${H/2}"/></clipPath></defs>${g}<path d="${d} L${X(eT)},${H/2} Z" fill="${D.focus.c}" opacity=".85" clip-path="url(#up)"/><path d="${d} L${X(eT)},${H/2} Z" fill="${D.other.c}" opacity=".75" clip-path="url(#dn)"/></svg>`);
+  const k=el('div','key');k.innerHTML=`<span><i style="background:${D.focus.c}"></i>${esc(D.focus.abbr)} ahead</span><span><i style="background:${D.other.c}"></i>${esc(D.other.abbr)} ahead</span><span>Lead changes ${R.lc} · Ties ${R.ties} · Largest lead ${esc(D.focus.abbr)} ${R.lead[D.focus.id]}, ${esc(D.other.abbr)} ${R.lead[D.other.id]}</span>`;f.appendChild(k);
+  const rr=R.runs.filter(r=>inPer(S.per,r.start.per)||inPer(S.per,r.end.per));
+  f.appendChild(el('h3',null,'Runs of 8–0 or more'));
+  if(!rr.length)f.appendChild(el('p','empty','None in this stretch.'));else{const ul=el('ul','runs');rr.slice().reverse().forEach(r=>{const t=D.teams.find(x=>x.id===r.t);const li=el('li');const sw=el('span');sw.innerHTML=`<i class="chip" style="background:${t.c}"></i>`;const mid=el('span');mid.append(el('span',null,t.abbr+' '+r.pts+'–0'+(r.open?' (still going)':'')));const dd=el('div','note',runDetail(D,R,r));dd.style.margin='2px 0 0';mid.appendChild(dd);li.append(sw,mid,el('small',null,pname(r.start.per)+' '+r.start.clock+'–'+(r.end.per!==r.start.per?pname(r.end.per)+' ':'')+r.end.clock));ul.appendChild(li)});f.appendChild(ul)}
+  v.appendChild(f);v.appendChild(wpCard(D,R));
+}
 /* ---------- Team ---------- */
 function vTeam(v,D,R){
   if(!S.season&&S.state!=='pre'){const mc=milestoneCard(D,R);if(mc)v.appendChild(mc)}
@@ -583,9 +599,9 @@ function vTeam(v,D,R){
   if(MOCK){v.appendChild(el('p','note','The fatigue watch mockup below only shows with ?mock=1.'));v.appendChild(fatigueCard(D,R))}
   const a=R.T[D.focus.id],b=R.T[D.other.id];
   const c=el('div','card');head(c,'Team stats',perLabel(S.per));
-  const ROWS=[];let G0=null;
+  const ROWS=[];let G0=null;const SHORT={'Offensive rebounds':'Off. rebounds','Second-chance points':'Second chance','Points from threes':'From threes','Points from free throws':'From free throws','Points in the paint':'In the paint','Points off turnovers':'Off turnovers','Pace (possessions per 48)':'Pace','Possessions (est.)':'Possessions','Points per 100 possessions':'Points per 100','Free throws made':'FT made','True shot attempts':'True shot att.'};
   const grp=n=>{G0=n==='Where the points came from'?'Scoring':n};
-  const row=(lab,x,y,fx,fy,hib=true)=>ROWS.push({g:G0,lab,x,y,fx,fy,hib,better:hib===null||Math.abs(x-y)<1e-9?-1:((x>y)===hib?0:1)});
+  const row=(lab,x,y,fx,fy,hib=true)=>ROWS.push({g:G0,lab:SHORT[lab]||lab,x,y,fx,fy,hib,better:hib===null||Math.abs(x-y)<1e-9?-1:((x>y)===hib?0:1)});
   const P=t=>poss({fga:t.fga,oreb:t.oreb+t.toreb,to:t.to,fta:t.fta});
   const pa=P(a),pb=P(b);
   grp('Shooting');
@@ -614,18 +630,6 @@ function vTeam(v,D,R){
   c.appendChild(el('p','note','Bold = better. The bar points to the team that won the stat and grows with the gap. Stop % = share of the other team’s possessions that ended with no points. True shot attempts = FGA + 0.44 × FTA.'));v.appendChild(c);v.appendChild(oppCard(D,R));
   {const ff=el('div');vFF(ff,D,R);ff.firstChild.classList.add('sec');v.appendChild(ff.firstChild)}
   v.appendChild(contextCard(D,R));
-  /* margin chart with filtered periods highlighted */
-  const f=el('div','card sec');head(f,'Score margin',S.per==='all'?'Whole game':'Whole game, with '+perLow(S.per)+' highlighted');
-  const T=pstart(R.maxPer)+plen(R.maxPer),W=900,H=150,pad=26;let mx=10;R.margin.forEach(m=>mx=Math.max(mx,Math.abs(m[1])));mx=Math.ceil(mx/5)*5;
-  const X=t=>pad+(W-pad*2)*t/T,Y=m=>H/2-(H/2-16)*m/mx;let d='M'+X(0)+','+Y(0),pv=0;R.margin.forEach(([t,m])=>{d+=` L${X(t).toFixed(1)},${Y(pv).toFixed(1)} L${X(t).toFixed(1)},${Y(m).toFixed(1)}`;pv=m});const eT=R.lp?R.lp.t:0;d+=` L${X(eT)},${Y(pv)}`;
-  let g='';for(let p=1;p<=R.maxPer;p++){const x0=X(pstart(p)),x1=X(pstart(p)+plen(p));if(S.per!=='all'&&inPer(S.per,p))g+=`<rect x="${x0}" y="6" width="${x1-x0}" height="${H-22}" fill="#F2B231" opacity=".13"/>`;g+=`<line x1="${x0}" x2="${x0}" y1="6" y2="${H-16}" stroke="var(--line)"/><text x="${(x0+x1)/2}" y="${H-3}" text-anchor="middle" font-size="10" fill="var(--muted)" font-family="var(--mono)">${pname(p)}</text>`}
-  g+=`<line x1="${pad}" x2="${W-pad}" y1="${H/2}" y2="${H/2}" stroke="var(--fg2)"/><text x="${pad-4}" y="${Y(mx)+4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="var(--mono)">+${mx}</text><text x="${pad-4}" y="${Y(-mx)+4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="var(--mono)">−${mx}</text>`;
-  f.insertAdjacentHTML('beforeend',`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Score margin"><defs><clipPath id="up"><rect width="${W}" height="${H/2}"/></clipPath><clipPath id="dn"><rect y="${H/2}" width="${W}" height="${H/2}"/></clipPath></defs>${g}<path d="${d} L${X(eT)},${H/2} Z" fill="${D.focus.c}" opacity=".85" clip-path="url(#up)"/><path d="${d} L${X(eT)},${H/2} Z" fill="${D.other.c}" opacity=".75" clip-path="url(#dn)"/></svg>`);
-  const k=el('div','key');k.innerHTML=`<span><i style="background:${D.focus.c}"></i>${esc(D.focus.abbr)} ahead</span><span><i style="background:${D.other.c}"></i>${esc(D.other.abbr)} ahead</span><span>Lead changes ${R.lc} · Ties ${R.ties} · Largest lead ${esc(D.focus.abbr)} ${R.lead[D.focus.id]}, ${esc(D.other.abbr)} ${R.lead[D.other.id]}</span>`;f.appendChild(k);
-  const rr=R.runs.filter(r=>inPer(S.per,r.start.per)||inPer(S.per,r.end.per));
-  f.appendChild(el('h3',null,'Runs of 8–0 or more'));
-  if(!rr.length)f.appendChild(el('p','empty','None in this stretch.'));else{const ul=el('ul','runs');rr.slice().reverse().forEach(r=>{const t=D.teams.find(x=>x.id===r.t);const li=el('li');const sw=el('span');sw.innerHTML=`<i class="chip" style="background:${t.c}"></i>`;const mid=el('span');mid.append(el('span',null,t.abbr+' '+r.pts+'–0'+(r.open?' (still going)':'')));const dd=el('div','note',runDetail(D,R,r));dd.style.margin='2px 0 0';mid.appendChild(dd);li.append(sw,mid,el('small',null,pname(r.start.per)+' '+r.start.clock+'–'+(r.end.per!==r.start.per?pname(r.end.per)+' ':'')+r.end.clock));ul.appendChild(li)});f.appendChild(ul)}
-  v.appendChild(f);v.appendChild(wpCard(D,R));
 }
 
 
