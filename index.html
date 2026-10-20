@@ -165,6 +165,23 @@
 .sm-ctl .sm-fill{border:0;padding:4px 0;font-size:0.75rem}
 .sm-bad{margin:0 0 10px;padding:8px 10px;border-left:3px solid #a3122e;background:color-mix(in srgb,#a3122e 8%,var(--card));font-size:0.8125rem}
 [data-caphide]{display:none!important}
+
+/* custom share cards (1600x900), drawn off screen */
+.scd{position:fixed;left:-99999px;top:0;width:1600px;height:900px;background:#f5f3ef;font-family:var(--sans);color:#101419;overflow:hidden;box-sizing:border-box}
+.scd *{box-sizing:border-box}
+.scd .hd{height:96px;background:#860038;display:flex;align-items:center;justify-content:space-between;padding:0 56px;border-bottom:8px solid #F2B231}
+.scd .lg{font:700 40px var(--mono);color:#fff}.scd .lg b{color:#F2B231;font-weight:700}
+.scd .kk{font:800 22px var(--cond,'Saira Condensed');letter-spacing:.14em;color:#f4d6dd;text-transform:uppercase}
+.scd .ft{position:absolute;left:0;right:0;bottom:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 56px;font:700 22px var(--mono);color:#860038;border-top:1px solid #e3e0db;background:#fff}
+.scd .ft span{color:#6b7078;font-weight:600}
+.scd .bd{position:absolute;top:96px;bottom:64px;left:0;right:0;padding:40px 56px}
+.scd h1{margin:0;font:800 66px/0.95 'Saira Condensed',sans-serif;text-transform:uppercase}
+.scd .sub{font:600 26px var(--sans);color:#3a3f46;margin-top:8px}
+.scd .k{font:800 18px 'Saira Condensed',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6b7078}
+.scd .big{font:700 64px var(--mono);letter-spacing:-1px;line-height:1.05}
+.scd .tile{background:#fff;border:1px solid #e3e0db;border-top:5px solid #860038;padding:16px 20px}
+.scd .tile b{display:block;font:700 32px var(--mono);margin-top:4px;line-height:1.1}.scd .tile small{display:block;font:500 17px var(--sans);color:#6b7078;margin-top:4px}
+.scd .ln{position:absolute;top:-44px;bottom:-44px;border-left:3px solid #101419}.scd .ln span{position:absolute;left:10px;right:auto;transform:none;margin:0;font:800 20px 'Saira Condensed',sans-serif;letter-spacing:.06em;white-space:nowrap}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
@@ -1695,7 +1712,7 @@ ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
   {const cur=salOf(yrs[0]),sub=(cur?usd(cur)+' in 2026–27':'')+(C?' · '+C.deal[0]+' yrs, '+usdM(C.deal[1]):'');
    g._mkx=()=>{const xa=el('span','xact');const b1=el('button');b1.type='button';b1.title='Share link';b1.setAttribute('aria-label','Share a link to '+n+'\u2019s contract');const b2=el('button');b2.type='button';b2.title='Save as image';b2.setAttribute('aria-label','Save '+n+'\u2019s contract card as an image');
      if(window.cdbIcons){b1.innerHTML=window.cdbIcons[0];b2.innerHTML=window.cdbIcons[1]}
-     b1.onclick=()=>window.cdbShare&&window.cdbShare('cap',slug(n),n+' contract');b2.onclick=async()=>{if(!window.cdbCap)return;const gw=el('div','gwrap'),cc=el('div','capcard');cc.style.width=Math.max(g.clientWidth+40,380)+'px';const hd=el('div','capcard-h');hd.append(el('b',null,n),el('span',null,sub));cc.append(hd,g.cloneNode(true));gw.appendChild(cc);document.body.appendChild(gw);try{await window.cdbCap('cap',slug(n),n,[cc],b2)}finally{gw.remove()}};xa.append(b1,b2);return xa};
+     b1.onclick=()=>window.cdbShare&&window.cdbShare('cap',slug(n),n+' contract');b2.onclick=async()=>{if(window.cdbCard&&await window.cdbCard('contract',n,b2))return;if(!window.cdbCap)return;const gw=el('div','gwrap'),cc=el('div','capcard');cc.style.width=Math.max(g.clientWidth+40,380)+'px';const hd=el('div','capcard-h');hd.append(el('b',null,n),el('span',null,sub));cc.append(hd,g.cloneNode(true));gw.appendChild(cc);document.body.appendChild(gw);try{await window.cdbCap('cap',slug(n),n,[cc],b2)}finally{gw.remove()}};xa.append(b1,b2);return xa};
    const dx=g._mkx();dx.classList.add('det-x');dtd.appendChild(dx)}
   dtd.appendChild(g);det.appendChild(dtd);cb.appendChild(det);
   btn.addEventListener('click',()=>{if(matchMedia('(max-width:720px)').matches){openCapSheet(n,g,dtd);return}const o=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',String(!o));det.hidden=o});
@@ -3873,6 +3890,10 @@ const y0now=s=>s===SEASONS[0];
     fas.forEach(f=>{const x=ST.fa[f[0]],o=rowsEl[f[0]];o.st.textContent=x.on?usdM(x.amt)+' · '+({bird:'Bird',ntmle:'NT-MLE',tmle:'T-MLE',min:hitOf(f)<x.amt?'Min, counts '+usdM(hitOf(f)):'Min'})[x.how]:'Let go';o.st.classList.toggle('bad',!!(bad&&hard[0]===f[0]))});
     if(bad)view.appendChild(el('p','sm-bad','Not allowed: signing '+hard[0]+' with the '+(ST.fa[hard[0]].how==='ntmle'?'non-taxpayer mid-level hard-caps the Cavs at the first apron':'taxpayer mid-level hard-caps the Cavs at the second apron')+', and this payroll is '+usdM(tot-lineFor)+' over it.'));
     view.appendChild(dec);
+    window.cdbSummer=()=>({tot,gu:gu+opt,cap,tax,a1,a2,yr,NY,where:where,changed,nSigned:n+nOpt+nRe+(ST.fill?open:0),
+      canAdd:over>0?(tot<a2?'Bird rights, taxpayer mid-level, minimums':'Bird rights, minimums'):'Cap space, Bird rights, minimums',
+      fas:fas.map(f=>{const x=ST.fa[f[0]];return [f[0],x.on?'Re-signed '+usdM(x.amt)+' · '+({bird:'Bird',ntmle:'NT-MLE',tmle:'T-MLE',min:'Min'})[x.how]:f[1]+' · '+(BW[f[2]]||f[2])]}),
+      big:ROSTER.map(r=>[r[0],sal(r[2][I])]).filter(x=>x[1]&&ROSTER.find(r=>r[0]===x[0])[5]!=='Dead money').sort((a,b)=>b[1]-a[1]).slice(0,5)});
     const cols=el('div','sm-cols');const col=(h,rows)=>{const d=el('div');d.appendChild(el('h4',null,h));const ul=el('ul','kv');rows.forEach(([a,sm,b,cls])=>{const li=el('li');const sp=el('span',null,a);sp.appendChild(el('small',null,sm));li.append(sp,el('b',cls||null,b));ul.appendChild(li)});d.appendChild(ul);return d};
     const c1=col('Two-way contracts ending',TWOWAY.length?[[TWOWAY.map(t=>t[0].replace(/ Jr\.$/,'').split(' ').slice(-1)[0]).join(', '),'Two-way · '+TWOWAY[0][2].split(' ')[1],'—']]:[]);
     const ext=Object.entries(EXT).filter(([k,v])=>v===I).map(([k])=>k.split(' ').slice(-1)[0]);
@@ -4003,7 +4024,8 @@ const INTRO_V='tait';
   ['exceptions','assets',()=>hOf('exc'),()=>[hOf('exc'),$('exc')],'Trade exceptions'],
   ['drafted-players','assets',()=>hOf('rights'),()=>[hOf('rights'),$('rights')],'Drafted players'],
   ['depth-chart','roster',()=>document.querySelector('.dsheet .ds-hdr'),()=>[document.querySelector('.dsheet')],'Depth chart'],
-  ['standings','schedule',()=>document.querySelector('#sp-std>.block-h'),()=>[$('sp-std')],'East standings']];
+  ['standings','schedule',()=>document.querySelector('#sp-std>.block-h'),()=>[$('sp-std')],'East standings'],
+  ['next-summer','cap',()=>document.querySelector('#summer>.block-h'),()=>[$('summer')],'Next summer outlook']];
  const I_L='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>';
  const I_C='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
  const coarse=()=>matchMedia('(pointer: coarse)').matches;
@@ -4099,8 +4121,58 @@ const INTRO_V='tait';
  function attach(){document.querySelectorAll('.xact button:empty').forEach(b=>{b.innerHTML=b.title==='Share link'?I_L:I_C});T.forEach(([id,route,hdr,boxes,label])=>{const h=hdr();if(!h||h.dataset.anchor)return;h.dataset.anchor=id;h.classList.add('hasx');
   const w=document.createElement('span');w.className='xact';
   const b1=document.createElement('button');b1.type='button';b1.innerHTML=I_L;b1.title='Share link';b1.setAttribute('aria-label','Share a link to '+label);b1.onclick=()=>share(route,id,label);
-  const b2=document.createElement('button');b2.type='button';b2.innerHTML=I_C;b2.title='Save as image';b2.setAttribute('aria-label','Save '+label+' as an image');b2.onclick=()=>{const bx=boxes().filter(Boolean);if(bx.length)capture(route,id,label,bx,b2)};
+  const b2=document.createElement('button');b2.type='button';b2.innerHTML=I_C;b2.title='Save as image';b2.setAttribute('aria-label','Save '+label+' as an image');b2.onclick=()=>{if(CUSTOM[id]){const nd=CUSTOM[id]();if(nd){cardShot(nd,route,id,label,b2);return}}const bx=boxes().filter(Boolean);if(bx.length)capture(route,id,label,bx,b2)};
   w.append(b1,b2);const pl=T.find(x=>x[0]===id)[5];if(pl){w.classList.add('xact-'+pl);const bx=boxes()[0];if(bx){bx.classList.add('xhost');bx.appendChild(w)}}else h.appendChild(w)})}
+
+ /* ---------- custom share cards: contract, cap position, next summer ---------- */
+ const M1=v=>'$'+(v/1e6).toFixed(1)+'M',esc2=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ const ordS=n=>{const x=['th','st','nd','rd'],v=n%100;return n+(x[(v-20)%10]||x[v]||x[0])};
+ const frame=(kicker,route,body)=>{const d=document.createElement('div');d.className='scd';const now=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  d.innerHTML=`<div class="hd"><div class="lg">cavs<b>_db</b></div><div class="kk">${esc2(kicker)}</div></div><div class="bd">${body}</div><div class="ft">cavsdatabase.com/${route}<span>${now}</span></div>`;return d};
+ const lines=(ls,X)=>ls.map(([l,v],i)=>`<div class="ln" style="left:${X(v)}%"><span style="${i%2?'bottom':'top'}:0">${({'1st apron':'1ST','2nd apron':'2ND'})[l]||l.toUpperCase()}</span></div>`).join('');
+ const lineKey=ls=>`<div style="font:600 18px var(--mono);color:#6b7078;margin:-6px 0 22px">${ls.map(([l,v])=>l+' '+M1(v)).join(' · ')}</div>`;
+ const TH=(k,i)=>THRESH.find(x=>x[0]===k)[1][i];
+ const sv=y=>typeof y==='number'?y:Array.isArray(y)?y[0]:null;
+ function cardContract(n){const r=ROSTER.find(x=>x[0]===n);if(!r)return null;const C=(typeof CONTRACTS!=='undefined'&&CONTRACTS[n])||{};const pl=PLAYERS.find(x=>x[1]===n);
+  const rows=r[2].map((y,i)=>[SEASONS[i],sv(y),Array.isArray(y)?y[1]:null,i]).filter(x=>x[1]);if(!rows.length)return null;const mx=Math.max(...rows.map(x=>x[1])),tot=rows.reduce((t,x)=>t+x[1],0);
+  const optLab={P:'PLAYER OPTION',T:'TEAM OPTION'};
+  const bars=rows.map(([se,v,o,i])=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%"><b style="font:700 26px var(--mono)">${M1(v)}</b><small style="font:600 17px var(--mono);color:#6b7078">${(v/TH('Salary cap',i)*100).toFixed(1)}% of cap</small><div style="width:100%;margin-top:8px;height:${Math.max(6,v/mx*190)}px;background:${o?'repeating-linear-gradient(135deg,#860038 0 8px,#c98aa3 8px 16px)':i?'#b5466b':'#860038'}"></div></div>`).join('');
+  const labs=rows.map(([se,v,o])=>`<div style="flex:1;text-align:center;font:700 20px var(--mono)">${se.replace(/^20/,'').replace('–20','–').replace('–','-')}${o?`<div style="font:800 15px var(--sans);color:#b26b00;letter-spacing:.06em">${optLab[o]||'OPTION'}</div>`:''}</div>`).join('');
+  const tiles=[];if(C.rank)tiles.push(['Pay rank',ordS(C.rank[1])+' of '+C.rank[2],C.rank[0]+'s by average salary']);tiles.push(['Free agency',r[4]||'—',r[3]?r[3]+' rights':'']);
+  if(C.deal)tiles.push(['Contract',C.deal[0]+' yrs, '+M1(C.deal[1]),C.deal[3]||C.deal[2]||'']);
+  const sub=[pl?pl[2]:r[1],C.yos!=null?C.yos+' years in the NBA':'',r[3]].filter(Boolean).join(' · ');
+  return frame('Contract','cap',`<div style="display:grid;grid-template-columns:420px 1fr;gap:48px;height:100%"><div><div style="height:420px;background:linear-gradient(160deg,#8e2741,#5e0027);display:flex;align-items:flex-end;justify-content:center;overflow:hidden">${pl?`<img src="/img/h/${pl[12]}.png" alt="" style="width:118%;margin-bottom:-6px">`:''}</div>
+   <h1 style="margin-top:22px">${esc2(n)}</h1><div class="sub" style="font-size:24px">${esc2(sub)}</div></div>
+   <div><div class="k">Owed from ${SEASONS[0]} on</div><div class="big">${M1(tot)}<span style="font:600 26px var(--sans);color:#6b7078;margin-left:14px">over ${rows.length} season${rows.length>1?'s':''}</span></div>
+   <div style="display:flex;align-items:flex-end;gap:22px;height:300px;margin:28px 0 8px;border-bottom:2px solid #101419">${bars}</div><div style="display:flex;gap:22px">${labs}</div>
+   <div style="display:grid;grid-template-columns:repeat(${tiles.length},1fr);gap:16px;margin-top:26px">${tiles.map(([a,b2,c])=>`<div class="tile"><span class="k">${a}</span><b>${esc2(b2)}</b><small>${esc2(c)}</small></div>`).join('')}</div></div></div>`)}
+ function cardCap(){const ct=document.querySelectorAll('#captop .ct-nums>div');const V=i=>ct[i]?ct[i].querySelector('b').textContent:'—';
+  const cap=TH('Salary cap',0),tax=TH('Luxury tax',0),a1=TH('First apron',0),a2=TH('Second apron',0);
+  const pl=ROSTER.map(r=>[r[0],sv(r[2][0])||0,r[5]]).filter(x=>x[1]).sort((a,b2)=>b2[1]-a[1]);const tot=pl.reduce((t,x)=>t+x[1],0);
+  const lk=document.querySelector('#captop .ln.lock .full');const hard=lk?lk.textContent.toLowerCase():null;const hv=hard==='first apron'?a1:hard==='second apron'?a2:null;
+  const mn=0,mx=Math.max(a2,tot)*1.04,X=v=>Math.max(0,(v-mn)/(mx-mn)*100);const cols=['#860038','#9c1d4b','#b5466b','#c46a86','#d08ea2','#d9a9b8','#e3c4ce'];
+  let cum=0,segs='';pl.forEach(([n,v],i)=>{const a=X(cum),b2=X(cum+v);if(b2>a)segs+=`<div style="position:absolute;top:0;bottom:0;left:${a}%;width:${b2-a}%;background:${cols[Math.min(i,6)]};border-right:2px solid #f5f3ef"></div>`;cum+=v});
+  const badge=hv?`<div style="display:inline-block;background:#860038;color:#fff;font:800 26px 'Saira Condensed',sans-serif;letter-spacing:.08em;padding:8px 16px">HARD-CAPPED AT THE ${hard.toUpperCase()}</div><div class="sub" style="margin-top:10px"><b style="font-family:var(--mono);color:#860038">${V(1)}</b> of room left under it</div>`:'';
+  return frame('Cap position · '+SEASONS[0],'cap',`<div style="display:flex;justify-content:space-between;align-items:flex-end"><div><div class="k">Team salary</div><div class="big" style="font-size:96px">${V(0)}</div></div><div style="text-align:right">${badge}</div></div>
+   <div style="position:relative;height:70px;margin:66px 0 62px;background:#ebe8e3">${segs}${lines([['Cap',cap],['Tax',tax],['1st apron',a1],['2nd apron',a2]],X)}</div>${lineKey([['Cap',cap],['Tax',tax],['1st apron',a1],['2nd apron',a2]])}
+   <div style="display:grid;grid-template-columns:1.25fr 1fr;gap:40px"><div><div class="k" style="margin-bottom:10px">Where the money goes</div><div style="columns:2;column-gap:28px">${pl.filter(x=>x[2]!=='Dead money').slice(0,10).map(([n,v],i)=>`<div style="display:flex;justify-content:space-between;font:600 20px var(--sans);padding:5px 0;border-bottom:1px solid #e3e0db;break-inside:avoid"><span><i style="display:inline-block;width:14px;height:14px;background:${cols[Math.min(i,6)]};margin-right:8px"></i>${esc2(n.replace(/ Jr\.$/,'').split(' ').slice(-1)[0])}</span><b style="font-family:var(--mono)">${M1(v)}</b></div>`).join('')}</div></div>
+   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-content:start"><div class="tile"><span class="k">Over the tax</span><b>${V(2)}</b><small>Line ${M1(tax)}</small></div><div class="tile"><span class="k">Tax bill</span><b>${V(3)}</b><small>Projected</small></div><div class="tile"><span class="k">Payroll rank</span><b>${V(4)}</b><small>of 30 teams</small></div><div class="tile"><span class="k">Vs 2nd apron</span><b>${M1(Math.abs(a2-tot))}</b><small>${tot<a2?'under':'over'} · line ${M1(a2)}</small></div></div></div>`)}
+ function cardSummer(){const Q=window.cdbSummer;if(!Q)return null;const {tot,gu,cap,tax,a1,a2,yr,NY,where,changed,fas,big,nSigned,canAdd}=Q();
+  const mn=Math.floor(cap*0.9/1e7)*1e7,mx=Math.max(a2,tot)*1.04,X=v=>Math.max(0,(v-mn)/(mx-mn)*100);
+  return frame('Summer '+yr+' outlook'+(changed?' · what-if':''),'cap',`<div style="display:grid;grid-template-columns:1fr 470px;gap:48px;height:100%"><div><div class="k">${NY} ${changed?'payroll with these calls':'already committed'}</div><div class="big" style="font-size:88px">${M1(tot)}</div><div class="sub">${nSigned} players under contract · starts the summer <b>${where}</b></div>
+   <div style="position:relative;height:60px;margin:70px 0 70px;background:#ebe8e3"><div style="position:absolute;left:0;top:0;bottom:0;width:${X(gu)}%;background:#860038"></div>${tot>gu?`<div style="position:absolute;top:0;bottom:0;left:${X(gu)}%;width:${X(tot)-X(gu)}%;background:#F2B231"></div>`:''}${lines([['Cap',cap],['Tax',tax],['1st apron',a1],['2nd apron',a2]],X)}</div>${lineKey([['Cap',cap],['Tax',tax],['1st apron',a1],['2nd apron',a2]])}
+   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px"><div class="tile"><span class="k">${tot<a2?'Under':'Over'} 2nd apron</span><b>${M1(Math.abs(a2-tot))}</b><small>${changed?'with these calls':'before filling the roster'}</small></div><div class="tile"><span class="k">Cap space</span><b>${tot>cap?'None':M1(cap-tot)}</b><small>${tot>cap?M1(tot-cap)+' over the cap':'under the cap'}</small></div><div class="tile"><span class="k">Can add with</span><b style="font-size:22px;font-family:var(--sans)">${esc2(canAdd)}</b></div></div></div>
+   <div><div class="k" style="margin-bottom:10px">Free agents${changed?' · the calls':''}</div>${fas.map(([n,lab])=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #e3e0db"><span style="font:700 24px var(--sans)">${esc2(n)}</span><span style="font:800 18px 'Saira Condensed',sans-serif;letter-spacing:.06em;color:#860038;text-align:right">${esc2(lab).toUpperCase()}</span></div>`).join('')}
+   <div class="k" style="margin:26px 0 10px">Biggest ${NY} salaries</div>${big.map(([n,v])=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #e3e0db;font:600 22px var(--sans)"><span>${esc2(n)}</span><b style="font-family:var(--mono)">${M1(v)}</b></div>`).join('')}</div></div>`)}
+ async function cardShot(node,route,id,label,btn){if(!node){return false}btn.disabled=true;toast('Making the image…');document.body.appendChild(node);
+  try{const ms=await load();await Promise.race([Promise.all([...node.querySelectorAll('img')].map(i=>i.complete?0:new Promise(r=>{i.onload=i.onerror=r}))),new Promise(r=>setTimeout(r,3000))]);
+   const opts={scale:1,width:1600,height:900,backgroundColor:'#f5f3ef',fetchFn,timeout:6000,style:{left:'0',top:'0',position:'static'}};try{await ms.domToCanvas(node,{...opts,scale:.2})}catch(e){}
+   const cv=await ms.domToCanvas(node,opts);const blob=await new Promise(r=>cv.toBlob(r,'image/png'));const now=new Date();const name='cavsdb-'+id+'-'+now.toISOString().slice(0,10)+'.png';const file=new File([blob],name,{type:'image/png'});
+   const save=()=>{if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:label+' | cavs_db'}).catch(e=>{if(e&&e.name==='NotAllowedError')toast('Image ready','Save',save)})}else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Image saved')}};
+   if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]}))toast('Image ready','Save or share',save);else save()}
+  catch(e){toast('Couldn’t make the image. Try again.')}finally{node.remove();btn.disabled=false}return true}
+ const CUSTOM={'cap-summary':()=>cardCap(),'cap-position':()=>cardCap(),'next-summer':()=>cardSummer()};
+ window.cdbCard=(kind,arg,btn)=>cardShot(kind==='contract'?cardContract(arg):kind==='summer'?cardSummer():cardCap(),'cap',kind==='contract'?String(arg).toLowerCase().replace(/[^a-z0-9]+/g,'-'):kind,kind==='contract'?arg:'Cap position',btn);
  window.cdbAttachX=attach;window.cdbCap=capture;window.cdbShare=share;window.cdbIcons=[I_L,I_C];
  /* deep links: /assets#picks-owed, /roster#donovan-mitchell, /cap#donovan-mitchell */
  function jump(){const h=decodeURIComponent(location.hash.slice(1));if(!h)return;attach();
