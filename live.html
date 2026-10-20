@@ -249,6 +249,19 @@ table.dt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
 }
 .rpw{border-top:0;padding-top:0;margin-top:-1px}
 .rpw .rp{border-top:1px solid var(--line2);padding-top:12px}
+.per .sh,.seg .sh{display:none}
+.per button span,.seg button span{font:inherit;color:inherit;letter-spacing:inherit;text-transform:inherit;margin:0}
+@media (max-width:560px){
+ .seg{display:grid;grid-template-columns:repeat(5,1fr);overflow:visible;-webkit-mask-image:none!important;mask-image:none!important;padding-top:2px}
+ .seg button{padding:9px 2px 7px;font-size:0.8125rem;letter-spacing:.03em;text-align:center;border-bottom-width:3px}
+ .seg button[hidden]{display:none}
+ .per{display:flex;gap:4px;overflow:visible;-webkit-mask-image:none!important;mask-image:none!important;padding:6px 0 8px}
+ .per>span,.per>i{display:none}
+ .per button{flex:1 1 0;min-width:0;padding:7px 0;font-size:0.75rem;text-align:center}
+ .per .lg,.seg .lg{display:none}.per .sh,.seg .sh{display:inline}
+ .seg button{white-space:nowrap}
+ .more-btn{display:none!important}
+}
 .foot{font-size:0.75rem;color:var(--muted);text-align:center;padding:20px 16px 40px}
 @media (max-width:760px){
  .grid2{grid-template-columns:1fr}
@@ -378,14 +391,14 @@ function moreHint(){['seg','per'].forEach(id=>{const e=$(id);if(!e)return;let h=
   const upd=()=>{const m=e.scrollWidth-e.scrollLeft-e.clientWidth>8&&e.offsetParent!==null;e.classList.toggle('more',m);h.hidden=!m;h.style.top=(e.offsetTop+e.offsetHeight/2-16)+'px'};if(!e.dataset.h){e.dataset.h=1;e.addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd)}upd()})}
 function renderNav(R){setTimeout(moreHint,0);
   if(!S.season&&S.tab==='ff')S.tab='team';
-  const sg=$('seg');if(!sg.childElementCount)TABS.forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('role','tab');b.dataset.t=k;b.onclick=()=>{S.tab=k;try{localStorage.setItem('cdb-live-tab2',k)}catch(e){}renderNav(S.R);renderView()};sg.appendChild(b)});
+  const sg=$('seg');if(!sg.childElementCount)TABS.forEach(([k,l])=>{const b=el('button');b.innerHTML=k==='ff'?'<span class="lg">Four factors</span><span class="sh">Factors</span>':l;b.type='button';b.setAttribute('role','tab');b.dataset.t=k;b.onclick=()=>{S.tab=k;try{localStorage.setItem('cdb-live-tab2',k)}catch(e){}renderNav(S.R);renderView()};sg.appendChild(b)});
   if(S.season&&!SEASON_TABS.includes(S.tab))S.tab='players';
   [...sg.children].forEach(b=>{b.setAttribute('aria-selected',b.dataset.t===S.tab);b.hidden=S.season?!SEASON_TABS.includes(b.dataset.t):b.dataset.t==='ff'});
   const pr=$('per');if(S.season){pr.style.display='none';return}pr.innerHTML='';pr.appendChild(el('span',null,'Show'));
   const have=R.lp?R.lp.per:0;const avail=[1,2,3,4].concat(R.maxPer>4?[5]:[]);
   const sel=S.per==='all'?avail:Array.isArray(S.per)?S.per:[];
   const set=v=>{if(Array.isArray(v)){v=[...new Set(v)].filter(p=>avail.includes(p)).sort();if(!v.length||eqSet(v,avail))v='all'}S.per=v;rerender()};
-  const btn=(l,pressed,dis,fn,title)=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',pressed);b.disabled=dis;b.onclick=fn;if(title)b.title=title;pr.appendChild(b)};
+  const SH={'1st half':'1H','2nd half':'2H','Clutch':'Clutch'};const btn=(l,pressed,dis,fn,title)=>{const b=el('button');b.innerHTML=SH[l]?`<span class="lg">${l}</span><span class="sh">${SH[l]}</span>`:l;b.type='button';b.setAttribute('aria-pressed',pressed);b.disabled=dis;b.onclick=fn;if(title)b.title=title;pr.appendChild(b)};
   const second=avail.filter(p=>p>=3);
   btn('Game',S.per==='all',have<1,()=>set('all'));
   btn('1st half',Array.isArray(S.per)&&eqSet(S.per,[1,2]),have<1,()=>set([1,2]));
