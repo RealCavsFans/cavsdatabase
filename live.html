@@ -143,6 +143,25 @@ svg{display:block;width:100%;height:auto}
 /* scrollable rows fade at the edge so it's clear there's more to the right */
 .seg.more,.per.more{-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);mask-image:linear-gradient(90deg,#000 82%,transparent)}
 .more-btn{position:absolute;right:4px;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--wt);font:800 1.375rem/1 var(--sans);cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.12);padding:0}
+.opp2{display:grid;grid-template-columns:1fr 1fr;gap:10px 32px}.opp2 h3{margin-top:0}
+.oppr{display:grid;grid-template-columns:2.6rem 1fr 2.8rem;align-items:center;gap:8px;margin:6px 0}
+.oppr .ab{font:800 0.875rem var(--cond);letter-spacing:.05em}.oppr b{font:700 0.9375rem var(--mono);text-align:right}
+.ob{display:flex;height:26px;background:var(--sub)}.ob i{display:flex;align-items:center;justify-content:center;font:700 0.75rem var(--mono);color:#fff;font-style:normal;overflow:hidden;white-space:nowrap}
+.ob i.tov{background:none;border:2px dashed var(--neg);color:var(--neg)}
+.ctx{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.ctxc{border:1px solid var(--line2);padding:10px}.ctxc .n{font:700 0.6875rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.ctxr{display:grid;grid-template-columns:auto 1fr;align-items:baseline;gap:0 8px;margin-top:6px}.ctxr span{font:700 0.75rem var(--sans)}.ctxr b{font:700 1.25rem var(--mono);text-align:right}.ctxr small{grid-column:1/-1;font:500 0.6875rem var(--sans);color:var(--muted);text-align:right}
+@media (max-width:760px){.opp2{grid-template-columns:1fr}.ctx{grid-template-columns:1fr 1fr}}
+/* desktop: team stats as a compact totals table; phones keep the mirrored bars */
+.tsd{display:none}
+@media (min-width:761px){.bf{display:none}.tsd{display:grid;grid-template-columns:repeat(3,1fr);gap:0 28px}
+ .tsd .gh{font:700 0.6875rem var(--cond);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:4px 0 6px;border-bottom:2px solid var(--fg);display:grid;grid-template-columns:1fr 4.2rem 4.2rem}
+ .tsd .gh span{text-align:right}
+ .tsr{display:grid;grid-template-columns:1fr 4.2rem 4.2rem;align-items:center;padding:6px 0 7px;border-bottom:1px solid var(--line2);position:relative}
+ .tsr .l{font:500 0.8125rem var(--sans);color:var(--fg2)}.tsr b{font:500 0.875rem var(--mono);text-align:right}.tsr b.w{font-weight:800}
+ .tsr .sp{position:absolute;left:0;right:0;bottom:-1px;height:3px;display:flex}.tsr .sp i{display:block;height:100%}}
+.zb{display:flex;flex-direction:column;gap:12px}.zbn{font:700 0.75rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.zbr{display:grid;grid-template-columns:2.4rem 1fr 3.6rem 2.6rem;align-items:center;gap:8px;margin:3px 0}.zbr .ab{font:800 0.8125rem var(--cond)}.zbr b{font:600 0.8125rem var(--mono);text-align:right}.zbr .pc{font:700 0.8125rem var(--mono);text-align:right}
+.zbt{display:flex;height:20px}.zbt i{display:flex;align-items:center;padding-left:4px;font:700 0.6875rem var(--mono);color:#fff;font-style:normal;white-space:nowrap;overflow:hidden}.zbt i.ms{border:2px dashed var(--muted);border-left:0;opacity:.7}
 .runs{list-style:none;margin:0;padding:0}
 .runs li{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:baseline;padding:8px 0;border-top:1px solid var(--line2);font-size:0.875rem}
 .runs li:first-child{border-top:0}
@@ -291,7 +310,7 @@ table.dt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
  <div id="view"></div>
 </main>
 <div class="foot">Test page, not linked from the site. All stats are built from ESPN’s play-by-play. Lineups, minutes and possessions are reconstructed from substitutions and may differ slightly from official numbers.</div>
-<script src="/live-core.js?v=3100db0ce8"></script>
+<script src="/live-core.js?v=dee5cd2b23"></script>
 <script>
 'use strict';
 const REPLAYS=[["401811042","2026-04-12","WSH","vs","W 130–117"],["401811028","2026-04-10","ATL","@","L 102–124"],["401811013","2026-04-08","ATL","vs","W 122–116"],["401811000","2026-04-06","MEM","@","W 142–126"],["401810991","2026-04-05","IND","vs","W 117–108"],["401810972","2026-04-02","GS","@","W 118–111"],["401810958","2026-03-31","LAL","@","L 113–127"],["401810951","2026-03-30","UTAH","@","W 122–113"],["401810923","2026-03-27","MIA","vs","W 149–128"],["401810910","2026-03-25","MIA","vs","L 103–120"],["401810904","2026-03-24","ORL","vs","W 136–131"],["401810880","2026-03-21","NO","@","W 111–106"],["401810866","2026-03-19","CHI","@","W 115–110"],["401810850","2026-03-17","MIL","@","W 123–116"],["401810832","2026-03-15","DAL","vs","L 120–130"],["401810820","2026-03-13","DAL","@","W 138–105"],["401810802","2026-03-11","ORL","@","L 122–128"],["401810786","2026-03-09","PHI","vs","W 115–101"],["401810776","2026-03-08","BOS","vs","L 98–109"],["401810739","2026-03-03","DET","vs","W 113–109"],["401810724","2026-03-01","BKN","@","W 106–102"],["401810713","2026-02-27","DET","@","L 119–122"],["401810701","2026-02-25","MIL","@","L 116–118"],["401810690","2026-02-24","NY","vs","W 109–94"],["401810672","2026-02-22","OKC","@","L 113–121"],["401810657","2026-02-20","CHA","@","W 118–113"],["401810648","2026-02-19","BKN","vs","W 112–84"],["401810631","2026-02-11","WSH","vs","W 138–113"],["401810622","2026-02-09","DEN","@","W 119–117"],["401810611","2026-02-07","SAC","@","W 132–126"],["401810587","2026-02-04","LAC","@","W 124–91"],["401810565","2026-02-01","POR","@","W 130–111"],["401810548","2026-01-30","PHX","@","L 113–126"],["401810526","2026-01-28","LAL","vs","W 129–99"],["401810513","2026-01-26","ORL","vs","W 114–98"],["401810501","2026-01-24","ORL","@","W 119–105"],["401810493","2026-01-23","SAC","vs","W 123–118"],["401810475","2026-01-21","CHA","@","W 94–87"],["401809248","2026-01-19","OKC","vs","L 104–136"],["401810444","2026-01-16","PHI","@","W 117–115"],["401810427","2026-01-14","PHI","@","W 133–107"],["401810413","2026-01-12","UTAH","vs","L 112–123"],["401810397","2026-01-10","MIN","vs","W 146–134"],["401810385","2026-01-08","MIN","@","L 122–131"],["401810365","2026-01-06","IND","@","W 120–116"],["401810349","2026-01-04","DET","vs","L 110–114"],["401810333","2026-01-02","DEN","vs","W 113–108"],["401810320","2025-12-31","PHX","vs","W 129–113"],["401810311","2025-12-29","SA","@","W 113–101"],["401810293","2025-12-27","HOU","@","L 100–117"],["401809238","2025-12-25","NY","@","L 124–126"],["401810267","2025-12-23","NO","vs","W 141–118"],["401810257","2025-12-22","CHA","vs","W 139–132"],["401810239","2025-12-19","CHI","vs","L 125–136"],["401810222","2025-12-17","CHI","@","L 111–127"],["401836799","2025-12-14","CHA","vs","L 111–119"],["401836753","2025-12-12","WSH","@","W 130–126"],["401810207","2025-12-06","GS","vs","L 94–99"],["401810196","2025-12-05","SA","vs","W 130–117"],["401810179","2025-12-03","POR","vs","L 110–122"],["401810165","2025-12-01","IND","@","W 135–119"],["401810157","2025-11-30","BOS","vs","L 115–117"],["401809811","2025-11-28","ATL","@","L 123–130"],["401810139","2025-11-24","TOR","@","L 99–110"],["401810133","2025-11-23","LAC","vs","W 120–105"],["401809790","2025-11-21","IND","vs","W 120–109"],["401810110","2025-11-19","HOU","vs","L 104–114"],["401810096","2025-11-17","MIL","vs","W 118–106"],["401810083","2025-11-15","MEM","vs","W 108–100"],["401810080","2025-11-13","TOR","vs","L 113–126"],["401810072","2025-11-12","MIA","@","W 130–116"],["401810056","2025-11-10","MIA","@","L 138–140"],["401810041","2025-11-08","CHI","vs","W 128–122"],["401809511","2025-11-07","WSH","@","W 148–115"],["401810026","2025-11-05","PHI","vs","W 132–121"],["401810006","2025-11-02","ATL","vs","W 117–109"],["401809504","2025-10-31","TOR","vs","L 101–112"],["401809983","2025-10-29","BOS","@","L 105–125"],["401809245","2025-10-27","DET","@","W 116–95"],["401809962","2025-10-26","MIL","vs","W 118–113"],["401809944","2025-10-24","BKN","@","W 131–124"],["401809234","2025-10-22","NY","@","L 111–119"]];
@@ -308,7 +327,7 @@ const $=id=>document.getElementById(id);
 const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const S={data:null,ev:null,replay:false,cur:Infinity,tab:'team',per:'all',playing:false,speed:30,fetched:0,timer:null,poll:null,state:'pre',sort:{},
-  f:{plTeam:null,luTeam:null,luSize:5,luMin:2,shTeam:null,shPl:'all',shType:'all',shView:'zones',plays:'all',rotTeam:null,astTeam:null,astView:'grid',astFoc:null,ooTeam:null,ooA:null,ooB:null,plView:'box',card:null}};
+  f:{plTeam:null,luTeam:null,luSize:5,luMin:2,shTeam:null,shPl:'all',shType:'all',shView:'bars',plays:'all',rotTeam:null,astTeam:null,astView:'grid',astFoc:null,ooTeam:null,ooA:null,ooB:null,plView:'box',card:null}};
 try{const t=localStorage.getItem('cdb-live-tab2');if(t)S.tab=t}catch(e){}
 
 /* ---------- loading ---------- */
@@ -434,6 +453,34 @@ function dtable(id,cols,rows,opt={}){
 }
 const pmCls=v=>'pm '+(v>0?'p':v<0?'n':'');
 
+
+/* ---------- possessions from the play-by-play: groups, stops, context ---------- */
+function possGroups(R,tid){const out=[];R.PL.filter(q=>q.team===tid).forEach(q=>{if(q.how==='oreb'&&out.length)out[out.length-1].push(q);else out.push([q])});return out}
+function stopPct(R,tid){const g=possGroups(R,tid);return g.length?g.filter(x=>x.reduce((a,q)=>a+q.pts,0)===0).length/g.length:null}
+const isTrans=q=>(q.how==='stl'||q.how==='dreb'||q.how==='to')&&q.first!=null&&q.first<=7;
+function ctxRows(R,tid){const P=R.PL.filter(q=>q.team===tid);const n=P.length||1;const f=(L,lab)=>({lab,n:L.length,fr:L.length/n,pp:L.length?L.reduce((a,q)=>a+q.pts,0)/L.length:null});
+  return [f(P.filter(q=>q.how!=='oreb'&&!isTrans(q)),'Halfcourt'),f(P.filter(isTrans),'All transition'),f(P.filter(q=>isTrans(q)&&q.how==='stl'),'Off steals'),f(P.filter(q=>isTrans(q)&&q.how==='dreb'),'Off live rebounds'),f(P.filter(q=>q.how==='oreb'),'Putbacks / 2nd chances')]}
+function contextCard(D,R){
+  const c=el('div','card sec');head(c,'Context: halfcourt, transition, putbacks',perLabel(S.per)+' · points per play and how often it happened');
+  const A=ctxRows(R,D.focus.id),B=ctxRows(R,D.other.id);
+  const g=el('div','ctx');A.forEach((a,i)=>{const b=B[i];const box=el('div','ctxc');box.appendChild(el('div','n',a.lab));
+    [[D.focus,a,b],[D.other,b,a]].forEach(([t,x,y])=>{const r=el('div','ctxr');const better=x.pp!=null&&y.pp!=null&&x.pp>y.pp;r.innerHTML=`<span><i class="chip" style="background:${t.c}"></i>${esc(t.abbr)}</span><b style="${better?'color:'+t.c:''}">${x.pp==null?'–':x.pp.toFixed(2)}</b><small>${x.n} plays · ${Math.round(x.fr*100)}%</small>`;box.appendChild(r)});g.appendChild(box)});
+  c.appendChild(g);c.appendChild(el('p','note','Points per play. Transition = a shot, foul or turnover within 7 seconds of a steal, dead-ball turnover or defensive rebound. Putbacks = plays after an offensive rebound. % = share of that team’s plays.'));return c;
+}
+function oppCard(D,R){
+  const c=el('div','card sec');head(c,'Scoring chances',perLabel(S.per));
+  const st=t=>{const P=R.PL.filter(q=>q.team===t.id);const pos=P.filter(q=>q.how!=='oreb').length,orb=P.length-pos,to=R.T[t.id].to;const T=R.T[t.id];const tsa=T.fga+0.44*T.fta;return {pos,orb,to,base:Math.max(0,pos-to),opp:pos-to+orb,pts:T.pts,ts:tsa?T.pts/(2*tsa):null}};
+  const a=st(D.focus),b=st(D.other);const mx=Math.max(a.base+a.orb+a.to,b.base+b.orb+b.to)||1;
+  const wrap=el('div','opp2');
+  const left=el('div');left.appendChild(el('h3',null,'Scoring opportunities'));
+  [[D.focus,a],[D.other,b]].forEach(([t,x])=>{const r=el('div','oppr');r.innerHTML=`<span class="ab">${esc(t.abbr)}</span><div class="ob"><i style="width:${x.base/mx*100}%;background:${t.c}">${x.base}</i><i style="width:${x.orb/mx*100}%;background:color-mix(in srgb,${t.c} 55%,var(--card))">+${x.orb}</i><i class="tov" style="width:${x.to/mx*100}%">−${x.to}</i></div><b>${x.opp}</b>`;left.appendChild(r)});
+  left.insertAdjacentHTML('beforeend',`<div class="key"><span><i style="background:var(--cf)"></i>Possessions that got a shot or free throws</span><span><i style="background:color-mix(in srgb,var(--cf) 55%,var(--card))"></i>Extra chances from offensive rebounds</span><span><i style="border:2px dashed var(--neg);background:none"></i>Turnovers</span></div>`);
+  const right=el('div');right.appendChild(el('h3',null,'Scoring efficiency'));const me=Math.max(a.opp?a.pts/a.opp:0,b.opp?b.pts/b.opp:0,1.4);
+  [[D.focus,a],[D.other,b]].forEach(([t,x])=>{const ppo=x.opp?x.pts/x.opp:0;const r=el('div','oppr');r.innerHTML=`<span class="ab">${esc(t.abbr)}</span><div class="ob"><i style="width:${ppo/me*100}%;background:${t.c}">${ppo.toFixed(2)}</i></div><b>${x.ts==null?'–':Math.round(x.ts*100)+'%'}</b>`;right.appendChild(r)});
+  right.insertAdjacentHTML('beforeend','<div class="key"><span>Bar = points per opportunity · right = true shooting %</span></div>');
+  wrap.append(left,right);c.appendChild(wrap);return c;
+}
+
 /* ---------- Team ---------- */
 function vTeam(v,D,R){
   if(!S.season&&S.state!=='pre'){const mc=milestoneCard(D,R);if(mc)v.appendChild(mc)}
@@ -444,18 +491,20 @@ function vTeam(v,D,R){
   const vs=el('div','vs');vs.innerHTML=`<div><div class="t">${esc(D.focus.abbr)}</div><div class="big">${a.pts}</div></div><div class="c">${S.per==='all'?'Score':'Scored in '+esc(perLow(S.per))}</div><div><div class="t r">${esc(D.other.abbr)}</div><div class="big" style="text-align:right">${b.pts}</div></div>`;c.appendChild(vs);
   const tb0=el('div','bf');const tb=el('div','bfgs');
   const key=el('div','bfk');key.innerHTML=`<span style="color:${D.focus.c}">◀ ${esc(D.focus.abbr)}</span><span>Longer bar = more · bold = better</span><span style="color:${D.other.c}">${esc(D.other.abbr)} ▶</span>`;tb0.appendChild(key);
-  let cg=null;const grp=n=>{cg=el('div','bfg');cg.appendChild(el('div','gh',n));tb.appendChild(cg)};
+  let cg=null,dg=null;const tsd=el('div','tsd');const dcols=[el('div'),el('div'),el('div')];dcols.forEach(x=>tsd.appendChild(x));let gi=-1;const COLMAP=[0,0,1,2,2];
+  const grp=n=>{cg=el('div','bfg');cg.appendChild(el('div','gh',n));tb.appendChild(cg);gi++;dg=el('div');dg.style.marginBottom='14px';const h=el('div','gh');h.innerHTML=`<span style="text-align:left">${esc(n)}</span><span style="color:${D.focus.c}">${esc(D.focus.abbr)}</span><span style="color:${D.other.c}">${esc(D.other.abbr)}</span>`;dg.appendChild(h);dcols[COLMAP[Math.min(gi,4)]].appendChild(dg)};
   const row=(lab,x,y,fx,fy,hib=true)=>{const r=el('div','bfr');const mx=Math.max(Math.abs(x),Math.abs(y))||1;const better=hib===null||Math.abs(x-y)<1e-9?-1:((x>y)===hib?0:1);
     const side=(v,f,j)=>{const w=el('div','bfs'+(j?' r':''));const tr=el('span','bt');const bar=el('i');bar.style.width=Math.max(2,Math.abs(v)/mx*100)+'%';bar.style.background=j?D.other.c:D.focus.c;if(better!==j&&better!==-1)bar.style.opacity='.38';tr.appendChild(bar);
       const val=el('b',better===j?'w':'',f?f(v):String(v));if(j)w.append(tr,val);else w.append(val,tr);return w};
-    r.append(side(x,fx,0),el('span','bfl',lab),side(y,fy,1));(cg||tb).appendChild(r)};
+    r.append(side(x,fx,0),el('span','bfl',lab),side(y,fy,1));(cg||tb).appendChild(r);
+    if(dg){const d=el('div','tsr');const tot=Math.abs(x)+Math.abs(y);d.innerHTML=`<span class="l">${esc(lab)}</span><b class="${better===0?'w':''}" style="${better===0?'color:'+D.focus.c:''}">${esc(fx?fx(x):String(x))}</b><b class="${better===1?'w':''}" style="${better===1?'color:'+D.other.c:''}">${esc(fy?fy(y):String(y))}</b><span class="sp"><i style="width:${tot?Math.abs(x)/tot*100:50}%;background:${D.focus.c};opacity:.55"></i><i style="width:${tot?Math.abs(y)/tot*100:50}%;background:${D.other.c};opacity:.35"></i></span>`;dg.appendChild(d)}};
   const P=t=>poss({fga:t.fga,oreb:t.oreb+t.toreb,to:t.to,fta:t.fta});
   const pa=P(a),pb=P(b);
   grp('Shooting');
   row('FG%',a.fgm/(a.fga||1),b.fgm/(b.fga||1),()=>pct(a.fgm,a.fga),()=>pct(b.fgm,b.fga));
   row('3PT%',a.tpm/(a.tpa||1),b.tpm/(b.tpa||1),()=>pct(a.tpm,a.tpa),()=>pct(b.tpm,b.tpa));row('Threes made',a.tpm,b.tpm);
   row('Free throws made',a.ftm,b.ftm);
-  const ts=t=>t.fga+t.fta?t.pts/(2*(t.fga+0.44*t.fta)):0;row('True shooting',ts(a),ts(b),x=>(x*100).toFixed(0)+'%',x=>(x*100).toFixed(0)+'%');
+  const ts=t=>t.fga+t.fta?t.pts/(2*(t.fga+0.44*t.fta)):0;row('True shooting',ts(a),ts(b),x=>(x*100).toFixed(0)+'%',x=>(x*100).toFixed(0)+'%');row('True shot attempts',a.fga+0.44*a.fta,b.fga+0.44*b.fta,x=>x.toFixed(1),x=>x.toFixed(1),null);
   grp('Where the points came from');
   row('Points in the paint',a.paint,b.paint);row('Second-chance points',a.second,b.second);
   const live=!S.replay&&S.per==='all'&&D.esp[D.focus.id]&&D.esp[D.other.id];
@@ -467,9 +516,10 @@ function vTeam(v,D,R){
   grp('Efficiency');
   row('Possessions (est.)',pa,pb,x=>Math.round(x),x=>Math.round(x),null);
   row('Points per 100 possessions',pa?a.pts/pa*100:0,pb?b.pts/pb*100:0,x=>x.toFixed(0),x=>x.toFixed(0));
-  tb0.appendChild(tb);c.appendChild(tb0);v.appendChild(c);
+  {const sa=stopPct(R,D.other.id),sb=stopPct(R,D.focus.id);if(sa!=null&&sb!=null)row('Stop %',sa,sb,x=>Math.round(x*100)+'%',x=>Math.round(x*100)+'%')}
+  tb0.appendChild(tb);c.appendChild(tb0);c.appendChild(tsd);c.appendChild(el('p','note','Stop % = share of the other team’s possessions that ended with no points. True shot attempts = FGA + 0.44 × FTA.'));v.insertBefore(oppCard(D,R),null);v.appendChild(c);
   {const ff=el('div');vFF(ff,D,R);ff.firstChild.classList.add('sec');v.appendChild(ff.firstChild)}
-  v.appendChild(paceCard(D,R));
+  v.appendChild(paceCard(D,R));v.appendChild(contextCard(D,R));
   /* margin chart with filtered periods highlighted */
   const f=el('div','card sec');head(f,'Score margin',S.per==='all'?'Whole game':'Whole game, with '+perLow(S.per)+' highlighted');
   const T=pstart(R.maxPer)+plen(R.maxPer),W=900,H=150,pad=26;let mx=10;R.margin.forEach(m=>mx=Math.max(mx,Math.abs(m[1])));mx=Math.ceil(mx/5)*5;
@@ -481,7 +531,7 @@ function vTeam(v,D,R){
   const rr=R.runs.filter(r=>inPer(S.per,r.start.per)||inPer(S.per,r.end.per));
   f.appendChild(el('h3',null,'Runs of 8–0 or more'));
   if(!rr.length)f.appendChild(el('p','empty','None in this stretch.'));else{const ul=el('ul','runs');rr.slice().reverse().forEach(r=>{const t=D.teams.find(x=>x.id===r.t);const li=el('li');const sw=el('span');sw.innerHTML=`<i class="chip" style="background:${t.c}"></i>`;const mid=el('span');mid.append(el('span',null,t.abbr+' '+r.pts+'–0'+(r.open?' (still going)':'')));const dd=el('div','note',runDetail(D,R,r));dd.style.margin='2px 0 0';mid.appendChild(dd);li.append(sw,mid,el('small',null,pname(r.start.per)+' '+r.start.clock+'–'+(r.end.per!==r.start.per?pname(r.end.per)+' ':'')+r.end.clock));ul.appendChild(li)});f.appendChild(ul)}
-  v.appendChild(f);v.appendChild(wpCard(D,R));v.appendChild(possCard(D,R));
+  v.appendChild(f);v.appendChild(wpCard(D,R));v.appendChild(possCard(D,R));v.appendChild(benchCard(D,R));
 }
 
 
@@ -682,13 +732,13 @@ function advView(c,D,R,t){
   const L5=Object.values(R.L[t.id][5]);
   const rows=D.roster[t.id].filter(id=>R.B[id].min>0).map(id=>{const b=R.B[id],mp=b.min/60,f=(tmMP/5)/mp;
     const onL=L5.filter(l=>l.ids.includes(id));let po=onL.reduce((s2,l)=>s2+poss(l.o),0),pd=onL.reduce((s2,l)=>s2+poss(l.d),0),pf=onL.reduce((s2,l)=>s2+l.pf,0),pa=onL.reduce((s2,l)=>s2+l.pa,0);{const _a=(po+pd)/2;po=pd=_a}
-    const tsa=b.fga+0.44*b.fta;return {id,mp,ts:tsa?b.pts/(2*tsa):null,efg:b.fga?(b.fgm+.5*b.tpm)/b.fga:null,tpar:b.fga?b.tpa/b.fga:null,ftr:b.fga?b.fta/b.fga:null,
+    const tsa=b.fga+0.44*b.fta;return {id,mp,tsa,ts:tsa?b.pts/(2*tsa):null,efg:b.fga?(b.fgm+.5*b.tpm)/b.fga:null,tpar:b.fga?b.tpa/b.fga:null,ftr:b.fga?b.fta/b.fga:null,
       orb:(tORB+oDRB)?100*b.oreb*f/(tORB+oDRB):null,drb:(tDRB+oORB)?100*b.dreb*f/(tDRB+oORB):null,trb:(tORB+tDRB+oORB+oDRB)?100*(b.oreb+b.dreb)*f/(tORB+tDRB+oORB+oDRB):null,
       ast:(mp/(tmMP/5)*T.fgm-b.fgm)>0?100*b.ast/((mp/(tmMP/5))*T.fgm-b.fgm):null,stl:oPoss?100*b.stl*f/oPoss:null,blk:(O.fga-O.tpa)?100*b.blk*f/(O.fga-O.tpa):null,
       tov:(tsa+b.to)?100*b.to/(tsa+b.to):null,usg:(T.fga+0.44*T.fta+T.to)?100*(tsa+b.to)*f/(T.fga+0.44*T.fta+T.to):null,ortg:po>=1?pf/po*100:null,drtg:pd>=1?pa/pd*100:null,net:po>=1&&pd>=1?pf/po*100-pa/pd*100:null,starter:D.P[id].starter}});
   const p3=k=>r=>r[k]==null?'–':r[k].toFixed(3).replace(/^0/,''),p1=k=>r=>r[k]==null?'–':r[k].toFixed(1),p0=k=>r=>r[k]==null?'–':r[k].toFixed(0);
   c.appendChild(dtable('adv',[{h:'Player',k:'id',f:r=>{const sp=el('span',null,D.P[r.id].short);if(r.starter)sp.appendChild(el('span','pos',D.P[r.id].pos||''));return sp}},{h:'MIN',k:'mp',f:r=>fmtMin(r.mp*60)},
-    {h:'TS%',k:'ts',f:p3('ts'),title:'True shooting'},{h:'eFG%',k:'efg',f:p3('efg')},{h:'3PAr',k:'tpar',f:p3('tpar'),title:'Share of shots from three'},{h:'FTr',k:'ftr',f:p3('ftr'),title:'Free throw attempts per shot'},
+    {h:'TSA',k:'tsa',f:r=>r.tsa.toFixed(1),title:'True shot attempts: FGA + 0.44 × FTA'},{h:'TS%',k:'ts',f:p3('ts'),title:'True shooting'},{h:'eFG%',k:'efg',f:p3('efg')},{h:'3PAr',k:'tpar',f:p3('tpar'),title:'Share of shots from three'},{h:'FTr',k:'ftr',f:p3('ftr'),title:'Free throw attempts per shot'},
     {h:'ORB%',k:'orb',f:p1('orb')},{h:'DRB%',k:'drb',f:p1('drb')},{h:'TRB%',k:'trb',f:p1('trb')},{h:'AST%',k:'ast',f:p1('ast'),title:'Share of teammates’ baskets he assisted while on the floor'},
     {h:'STL%',k:'stl',f:p1('stl')},{h:'BLK%',k:'blk',f:p1('blk')},{h:'TOV%',k:'tov',f:p1('tov'),asc:true},{h:'USG%',k:'usg',f:p1('usg'),title:'Share of team plays he used while on the floor'},
     {h:'ON ORTG',k:'ortg',f:p0('ortg'),title:'Team points per 100 possessions with him on'},{h:'ON DRTG',k:'drtg',f:p0('drtg'),asc:true,title:'Opponent points per 100 possessions with him on'},{h:'ON NET',k:'net',f:r=>r.net==null?'–':sgn(Math.round(r.net)),cls:r=>r.net==null?'':pmCls(r.net)}],rows,{def:'mp',minW:980}));
@@ -886,16 +936,6 @@ const CARDS={
     ids.forEach((id,k)=>{const y=510+k*72,b=R.B[id];if(k%2===0){x.fillStyle='#efebe5';x.fillRect(60,y-46,960,68)}x.fillStyle=INK;x.font='700 34px Archivo';x.fillText(D.P[id].last,80,y);
       cols.forEach(([h,fn],j)=>{const v=String(fn(b));x.font=(h==='PTS'?'700 ':'600 ')+'34px "Geist Mono"';x.fillStyle=h==='PTS'&&b.pts===best?WINE:h==='+/-'?(b.pm>0?'#1d6b3a':b.pm<0?'#a3122e':INK):INK;const w=x.measureText(v).width;x.fillText(v,cx[j]-w,y)})});
     const T=R.T[F.id];const y=510+ids.length*72+8;x.fillStyle=INK;x.fillRect(60,y-46,960,4);x.font='800 34px "Saira Condensed"';x.fillText('TEAM',80,y+6);x.font='700 34px "Geist Mono"';[[1,T.pts],[2,T.oreb+T.dreb],[3,T.ast],[4,T.fgm+'-'+T.fga],[5,T.tpm+'-'+T.tpa]].forEach(([j,v])=>{const w=x.measureText(String(v)).width;x.fillText(String(v),cx[j]-w,y+6)})}},
-  assists:{label:'Assist network card',async draw(x,D,R){const F=D.focus;frame(x,kick()+D.away.abbr+' at '+D.home.abbr,'Who set up whom',D,R);
-    const A=R.asts.filter(a=>a.t===F.id);const pairs={},pl={};A.forEach(a=>{const k=a.p+'>'+a.s;pairs[k]=(pairs[k]||0)+1;pl[a.p]=pl[a.p]||{a:0,r:0};pl[a.s]=pl[a.s]||{a:0,r:0};pl[a.p].a++;pl[a.s].r++});
-    const ids=Object.keys(pl).sort((a,b)=>(pl[b].a+pl[b].r)-(pl[a].a+pl[a].r));const cx=540,cy=800,rx=380,ry=300;const pos={};ids.forEach((id,i)=>{const t=-Math.PI/2+i*2*Math.PI/ids.length;pos[id]=[cx+rx*Math.cos(t),cy+ry*Math.sin(t)]});
-    const mx=Math.max(1,...Object.values(pairs)),mxa=Math.max(1,...ids.map(i=>pl[i].a));const rOf=id=>22+22*Math.sqrt(pl[id].a/mxa);
-    Object.entries(pairs).sort((a,b)=>a[1]-b[1]).forEach(([k,n])=>{const[p,q]=k.split('>');const[a1,b1]=pos[p],[a2,b2]=pos[q];const dx=a2-a1,dy=b2-b1,L=Math.hypot(dx,dy);const ex=a2-dx/L*(rOf(q)+10),ey=b2-dy/L*(rOf(q)+10);const mx2=(a1+a2)/2-dy*.12,my2=(b1+b2)/2+dx*.12;
-      x.strokeStyle=`rgba(134,0,56,${.25+.7*n/mx})`;x.lineWidth=3+9*n/mx;x.beginPath();x.moveTo(a1,b1);x.quadraticCurveTo(mx2,my2,ex,ey);x.stroke();
-      const ang=Math.atan2(ey-my2,ex-mx2);x.fillStyle=`rgba(134,0,56,${.4+.6*n/mx})`;x.beginPath();x.moveTo(ex,ey);x.lineTo(ex-22*Math.cos(ang-.45),ey-22*Math.sin(ang-.45));x.lineTo(ex-22*Math.cos(ang+.45),ey-22*Math.sin(ang+.45));x.closePath();x.fill()});
-    ids.forEach(id=>{const[a,b]=pos[id],r=rOf(id);x.fillStyle='#fff';x.strokeStyle=WINE;x.lineWidth=5;x.beginPath();x.arc(a,b,r,0,7);x.fill();x.stroke();x.fillStyle=WINE;x.font='700 30px "Geist Mono"';ctr(x,String(pl[id].a),a,b+11);
-      x.fillStyle=INK;x.font='800 30px "Saira Condensed"';const t=D.P[id].last.toUpperCase();const below=b>cy-20;ctr(x,t,a,below?b+r+34:b-r-14)});
-    const T=R.T[F.id];x.fillStyle=MUT;x.font='600 28px Archivo';x.fillText(`${A.length} assists on ${T.fgm} made baskets · number = assists · thicker = more`,72,1210)}},
   story:{label:'Game story',async draw(x,D,R){const F=D.focus,O=D.other;frame(x,D.away.abbr+' at '+D.home.abbr,'The story of the game',D,R);
     cMargin(x,R,D,72,430,936,170);
     const ev=[];const fh=F===D.home;
@@ -994,10 +1034,10 @@ function vLineups(v,D,R){
 }
 
 /* ---------- Shots ---------- */
-function zoneCourt(Z,tot,label,BZ){const av=i=>BZ[i][1]?BZ[i][0]/BZ[i][1]:LG[ZN[i][0]][0];
+function zoneCourt(Z,tot,label,BZ,TC){TC=TC||'#860038';const av=i=>BZ[i][1]?BZ[i][0]/BZ[i][1]:LG[ZN[i][0]][0];
   const Sx=8,W=50*Sx,Hh=36*Sx,x=v=>v*Sx,y=v=>(v+5.25)*Sx;
-  const col=i=>{const[m,a]=Z[i];if(a<3)return'var(--track)';const t=Math.max(-1,Math.min(1,(m/a-av(i))/.15));return t>=0?`color-mix(in srgb,#860038 ${Math.round(18+t*70)}%,var(--card))`:`color-mix(in srgb,#4B5563 ${Math.round(18-t*60)}%,var(--card))`};
-  const fcOf=i=>{const[m,a]=Z[i];return a>=3&&Math.abs(m/a-av(i))>.09?'#fff':'var(--fg)'};
+  const col=i=>{const[m,a]=Z[i];if(a<3)return'var(--track)';const t=Math.max(-1,Math.min(1,(m/a-av(i))/.15));return t>=0?`color-mix(in srgb,${TC} ${Math.round(18+t*70)}%,var(--card))`:`color-mix(in srgb,#c9a227 ${Math.round(12-t*45)}%,var(--card))`};
+  const fcOf=i=>{const[m,a]=Z[i];return a>=3&&(m/a-av(i))>.09?'#fff':'var(--fg)'};
   const lab=(i,cx,cy,small)=>{const[m,a]=Z[i];if(!a)return'';const df=(m/a-av(i))*100;const fc=fcOf(i);
     return`<g><text x="${cx}" y="${cy}" text-anchor="middle" style="fill:${fc};font:700 ${small?12:13}px var(--mono)">${m}-${a}</text><text x="${cx}" y="${cy+(small?12:14)}" text-anchor="middle" style="fill:${fc};font:500 ${small?9.5:10.5}px var(--mono)">${Math.round(m/a*100)}%${small?' ':' · '}${df>=0?'+':'−'}${Math.abs(df).toFixed(0)}</text></g>`};
   const arc=`M${x(3)} 0 V${y(C3)} A${23.75*Sx} ${23.75*Sx} 0 0 0 ${x(47)} ${y(C3)} V0 Z`;
@@ -1018,6 +1058,19 @@ function dotCourt(sh,col){const Sx=8,W=50*Sx,Hh=36*Sx,x=v=>v*Sx,y=v=>(v+5.25)*Sx
   let s=`<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Shot chart, ${sh.length} shots"><rect width="${W}" height="${Hh}" fill="var(--sub)"/><g fill="none" stroke="var(--line)" stroke-width="2"><rect x="${x(17)}" y="0" width="${16*Sx}" height="${19*Sx}"/><circle cx="${x(25)}" cy="${y(13.75)}" r="${6*Sx}"/><path d="M${x(3)} 0 V${y(C3)} A${23.75*Sx} ${23.75*Sx} 0 0 0 ${x(47)} ${y(C3)} V0"/><path d="M${x(21)} ${y(0)} A${4*Sx} ${4*Sx} 0 0 0 ${x(29)} ${y(0)}"/></g><circle cx="${x(25)}" cy="${y(0)}" r="${0.75*Sx}" fill="none" stroke="var(--muted)" stroke-width="2"/>`;
   sh.forEach(q=>{if(q.y>30.5)return;const a=Math.max(.4,Math.min(49.6,q.x)),b=Math.max(-4.5,q.y);s+=q.m?`<circle cx="${x(a)}" cy="${y(b)}" r="4" fill="${col}" opacity=".85"><title>${esc(q.text)} · ${pname(q.per)} ${q.clock}</title></circle>`:`<path d="M${x(a)-3} ${y(b)-3}l6 6M${x(a)+3} ${y(b)-3}l-6 6" stroke="var(--miss)" stroke-width="1.8"><title>${esc(q.text)} · ${pname(q.per)} ${q.clock}</title></path>`});
   return s+'</svg>'}
+
+/* zone bars: each zone scaled to points: made shots solid, misses dashed, FG% badge and the comparison mark */
+function zoneBars(D,R,t,sh,BZ,baseLab){
+  const w=el('div','zb');const both=S.f.shPl==='all'&&S.f.shType==='all';const subj=both?[t,D.teams.find(x=>x.id!==t.id)]:[t];
+  const zs=ZN.map(([k,n],i)=>[i,n]);const data=subj.map(tt=>{const q=both?R.shots.filter(x=>x.t===tt.id&&x.hasXY):sh.filter(x=>x.hasXY);return ZN.map((z,i)=>{const L=q.filter(x=>x.zi===i);const m=L.filter(x=>x.m).length;return [m,L.length]})});
+  let mxp=1;data.forEach(d=>d.forEach(([m,a],i)=>mxp=Math.max(mxp,a*(i>=3?3:2))));
+  zs.forEach(([i,n])=>{const blk=el('div','zbz');blk.appendChild(el('div','zbn',n));
+    subj.forEach((tt,j)=>{const [m,a]=data[j][i];const v=i>=3?3:2;const r=el('div','zbr');const avg=j===0?(BZ[i][1]?BZ[i][0]/BZ[i][1]:null):null;
+      r.innerHTML=`<span class="ab">${esc(tt.abbr)}</span><div class="zbt"><i class="mk" style="width:${m*v/mxp*100}%;background:${tt.c}">${m?m*v:''}</i><i class="ms" style="width:${(a-m)*v/mxp*100}%"></i></div><b>${m}-${a}</b><span class="pc" style="${a&&avg!=null?('color:'+((m/a)>=avg?'var(--pos)':'var(--neg)')):''}">${a?Math.round(m/a*100)+'%':'–'}</span>`;blk.appendChild(r)});
+    w.appendChild(blk)});
+  w.insertAdjacentHTML('beforeend',`<div class="key"><span><i style="background:${t.c}"></i>Points scored</span><span><i style="border:2px dashed var(--muted);background:none"></i>Points left on the table (misses)</span><span>Bars are scaled to point value. ${esc(t.abbr)} FG% green or red vs ${esc(baseLab)}.</span></div>`);
+  return w;
+}
 function vShots(v,D,R){
   if(!S.f.shTeam)S.f.shTeam=D.focus.id;const t=D.teams.find(x=>x.id===S.f.shTeam);
   const c=el('div','card');head(c,'Shot chart',perLabel(S.per)+' · field goals only');
@@ -1027,7 +1080,7 @@ function vShots(v,D,R){
   Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]).forEach(id=>{const o=el('option',null,D.P[id].name+' · '+cnt[id]+' FGA');o.value=id;if(S.f.shPl===id)o.selected=true;ps.appendChild(o)});
   ps.onchange=()=>{S.f.shPl=ps.value;renderView()};fl.appendChild(ps);
   const ts=el('select');ts.setAttribute('aria-label','Shot type');const t0=el('option',null,'All shot types');t0.value='all';ts.appendChild(t0);PT.forEach(([k,l],i)=>{const o=el('option',null,l);o.value=String(i);if(S.f.shType===String(i))o.selected=true;ts.appendChild(o)});ts.onchange=()=>{S.f.shType=ts.value;renderView()};fl.appendChild(ts);
-  [['zones','Zones'],['dots','Every shot']].forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',S.f.shView===k);b.onclick=()=>{S.f.shView=k;renderView()};fl.appendChild(b)});
+  [['bars','Zones'],['zones','Court'],['dots','Every shot']].forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',S.f.shView===k);b.onclick=()=>{S.f.shView=k;renderView()};fl.appendChild(b)});
   c.appendChild(fl);
   const all=R.shots.filter(s=>s.t===t.id&&(S.f.shPl==='all'||s.id===S.f.shPl));
   const sh=all.filter(s=>S.f.shType==='all'||String(s.pt)===S.f.shType);
@@ -1041,7 +1094,8 @@ function vShots(v,D,R){
   const Z=ZN.map(()=>[0,0]);xy.forEach(q=>{Z[q.zi][1]++;if(q.m)Z[q.zi][0]++});
   const g=el('div','grid2');const left=el('div','zchart');
   const who=S.f.shPl==='all'?t.abbr:D.P[S.f.shPl].name;const typeLab=S.f.shType==='all'?'':' · '+PT[+S.f.shType][1].toLowerCase();
-  if(S.f.shView==='zones'){left.innerHTML=zoneCourt(Z,xy.length,who+' shooting by zone',BZ);left.insertAdjacentHTML('beforeend',`<div class="leg"><span><i style="background:color-mix(in srgb,#860038 80%,var(--card))"></i>Better than ${esc(baseLab)}</span><span><i style="background:color-mix(in srgb,#4B5563 70%,var(--card))"></i>Worse</span><span>Each zone: makes-attempts, FG% and points above or below ${esc(baseLab)} in that zone. Fewer than 3 shots stays gray.</span></div>`)}
+  if(S.f.shView==='bars'){left.appendChild(zoneBars(D,R,t,sh,BZ,baseLab))}
+  else if(S.f.shView==='zones'){left.innerHTML=zoneCourt(Z,xy.length,who+' shooting by zone',BZ,t.c);left.insertAdjacentHTML('beforeend',`<div class="leg"><span><i style="background:${t.c}"></i>Better than ${esc(baseLab)}</span><span><i style="background:color-mix(in srgb,#c9a227 55%,var(--card))"></i>Worse</span><span>Each zone: makes-attempts, FG% and points above or below ${esc(baseLab)} in that zone. Fewer than 3 shots stays gray.</span></div>`)}
   else{left.innerHTML=dotCourt(xy,t.c);left.insertAdjacentHTML('beforeend',`<div class="leg"><span><i style="background:${t.c};border-radius:50%"></i>Made</span><span>✕ Missed</span><span>${sh.filter(q=>q.m).length}-${sh.length} FG${esc(typeLab)}</span></div>`)}
   const right=el('div');
   /* shot types: frequency and efficiency */
@@ -1163,7 +1217,6 @@ function vRot(v,D,R){
   const rows=[];ids.forEach(id=>R.stints[id].filter(([a,b])=>b-a>=1).forEach(([a,b,pm])=>rows.push({name:D.P[id].short,a,len:b-a,pm})));
   c.appendChild(dtable('st',[{h:'Player',k:'name'},{h:'IN',k:'a',f:r=>{const p=perAt(r.a);return pname(p)+' '+fmtMin(pstart(p)+plen(p)-r.a)},asc:true},{h:'LENGTH',k:'len',f:r=>fmtMin(r.len)},{h:'+/-',k:'pm',f:r=>sgn(r.pm),cls:r=>pmCls(r.pm)}],rows.slice(0,400),{def:'len',minW:300}));
   v.appendChild(c);
-  v.appendChild(benchCard(D,R));
 }
 
 /* ---------- Plays ---------- */
