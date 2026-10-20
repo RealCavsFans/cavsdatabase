@@ -1,0 +1,39 @@
+name: Team stats (from ESPN box scores)
+# Standings, team ratings, four-factor inputs, last-14-day net ratings, last-5 form, Cavs scores/results and minutes per game.
+# Built from the box scores the 30-minute job already saves (pdata/league.json), so nothing extra is fetched.
+# This replaced ~35 daily web fetches the Claude data task used to make.
+on:
+  schedule:
+    - cron: '50 5 * * *'    # ~1:50 a.m. Eastern, after the night's games
+    - cron: '20 9 * * *'    # ~5:20 a.m. Eastern, before the daily data task
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: team-stats
+  cancel-in-progress: false
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: node scripts/team-stats.mjs
+      - name: Check and commit index.html if it changed
+        run: |
+          git diff --quiet -- index.html && { echo "no changes"; exit 0; }
+          python3 -c "import re;s=open('index.html').read();m=max(re.findall(r'<script>(.*?)</script>',s,re.S),key=len);open('/tmp/m.js','w').write(m)"
+          node --check /tmp/m.js
+          npm i --no-save --no-package-lock --no-audit --no-fund playwright-core@1.56.0 >/dev/null
+          CHROME_PATH=/usr/bin/google-chrome node scripts/smoke.mjs --source
+          git config user.name "cavsdatabase-bot"
+          git config user.email "bot@cavsdatabase.com"
+          git add index.html
+          git commit -m "Team stats from ESPN box scores"
+          for i in 1 2 3; do
+            if git pull --rebase origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true; sleep 20
+          done
+          exit 1

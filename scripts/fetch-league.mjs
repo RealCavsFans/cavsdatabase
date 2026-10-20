@@ -42,13 +42,27 @@ function linesOf(sum) {
   }
   return out;
 }
+/* one game's team lines for scripts/team-stats.mjs: points, shooting, rebounds (no team rebounds), turnovers (incl. team) and periods */
+function teamsOf(sum, ev) {
+  const comp = sum.header?.competitions?.[0]; if (!comp) return null;
+  const sc = Object.fromEntries((comp.competitors || []).map(c => [c.id, +c.score]));
+  const per = Math.max(4, (comp.competitors?.[0]?.linescores || []).length);
+  const sv = (t, n) => (t.statistics || []).find(x => x.name === n)?.displayValue;
+  const ma = s => { const m = String(s || '').match(/(\d+)-(\d+)/); return m ? [+m[1], +m[2]] : [0, 0]; };
+  const t = (sum.boxscore?.teams || []).map(x => { const [fgm, fga] = ma(sv(x, 'fieldGoalsMade-fieldGoalsAttempted')), [tpm, tpa] = ma(sv(x, 'threePointFieldGoalsMade-threePointFieldGoalsAttempted')), [ftm, fta] = ma(sv(x, 'freeThrowsMade-freeThrowsAttempted'));
+    return { ab: x.team?.abbreviation, pts: sc[x.team?.id] || 0, fgm, fga, tpm, tpa, ftm, fta, orb: +sv(x, 'offensiveRebounds') || 0, drb: +sv(x, 'defensiveRebounds') || 0, tov: +(sv(x, 'totalTurnovers') ?? sv(x, 'turnovers')) || 0 }; });
+  /* the NBA Cup championship counts for nothing in the standings or season stats */
+  const c0 = ev.competitions?.[0] || {}, cupFinal = c0.type?.abbreviation === 'CC' || /Cup Championship/i.test(JSON.stringify(c0.notes || [])) ? 1 : 0;
+  return t.length === 2 ? { per, t, cupFinal } : null;
+}
 const NUM = ['g', 'gs', 'min', 'pts', 'reb', 'oreb', 'ast', 'stl', 'blk', 'tov', 'fgm', 'fga', 'tpm', 'tpa', 'ftm', 'fta', 'dd'];
 const apply = (lines, sign) => { for (const [id, x] of Object.entries(lines)) {
   const P = L.players[id] || (L.players[id] = Object.fromEntries([['n', x.n], ['t', x.t], ['p', x.p], ...NUM.map(k => [k, 0])]));
   if (sign > 0) { P.n = x.n; if (x.t) P.t = x.t; if (x.p) P.p = x.p; }
   for (const k of NUM) P[k] = Math.round((P[k] + sign * (x[k] || 0)) * 10) / 10;
 } };
-L.recent = L.recent || {};   // the last few nights' lines, kept so a stat correction can replace them
+L.recent = L.recent || {};
+L.tg = L.tg || {};   // team game lines by event id, for team-stats.mjs   // the last few nights' lines, kept so a stat correction can replace them
 
 let read = 0, failed = 0, fixed = 0;
 for (const date of dates.reverse()) {               // newest first, so a long backfill never delays last night's games
@@ -62,7 +76,8 @@ for (const date of dates.reverse()) {               // newest first, so a long b
     const seen = done.has(ev.id);
     if (seen && !(fresh && L.recent[ev.id] && Date.now() - (L.recent[ev.id].at || 0) > 4 * 36e5)) continue;  // re-check recent games every 4 hours; older ones are final for good
     let sum; try { sum = await get(`${ESPN}/summary?event=${ev.id}`); } catch { failed++; continue; }
-    const lines = linesOf(sum);
+    const tg = teamsOf(sum, ev); if (tg) L.tg[ev.id] = { d: date, ...tg };
+    const lines = tg?.cupFinal ? {} : linesOf(sum);   // the Cup final doesn't count toward season stats
     if (seen) {                                                            // re-read: swap in corrected lines if anything changed
       if (JSON.stringify(lines) !== JSON.stringify(L.recent[ev.id].lines)) { apply(L.recent[ev.id].lines, -1); apply(lines, 1); fixed++; }
     } else { apply(lines, 1); L.games.push(ev.id); done.add(ev.id); read++; }
