@@ -1,0 +1,40 @@
+name: Live page season baselines
+on:
+  schedule:
+    - cron: '20 10 * * *'   # 6:20 a.m. Eastern, after pbpstats has last night's games
+    - cron: '20 16 * * *'   # midday refresh in case the morning run was early
+  workflow_dispatch:
+    inputs:
+      season:
+        description: 'Season to fetch (default 2026-27)'
+        required: false
+        default: '2026-27'
+permissions:
+  contents: write
+concurrency:
+  group: live-base
+  cancel-in-progress: false
+jobs:
+  base:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: node scripts/fetch-live-base.mjs
+        env:
+          SEASON: ${{ github.event.inputs.season || '2026-27' }}
+      - name: Commit if changed
+        run: |
+          [ -f live-base.json ] || exit 0
+          git config user.name "cavsdatabase-bot"
+          git config user.email "bot@cavsdatabase.com"
+          git add live-base.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Update live page baselines"
+          for i in 1 2 3; do
+            if git pull --rebase origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true; sleep 20
+          done
+          exit 1
