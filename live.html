@@ -209,7 +209,7 @@ const $=id=>document.getElementById(id);
 const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const S={data:null,ev:null,replay:false,cur:Infinity,tab:'team',per:'all',playing:false,speed:30,fetched:0,timer:null,poll:null,state:'pre',sort:{},
-  f:{plTeam:null,luTeam:null,luSize:5,luMin:2,shTeam:null,shPl:'all',shView:'zones',plays:'all',rotTeam:null}};
+  f:{plTeam:null,luTeam:null,luSize:5,luMin:2,shTeam:null,shPl:'all',shView:'zones',plays:'all',rotTeam:null,astTeam:null,astView:'pairs'}};
 try{const t=localStorage.getItem('cdb-live-tab2');if(t)S.tab=t}catch(e){}
 
 /* ---------- time helpers ---------- */
@@ -241,7 +241,7 @@ async function loadScoreboard(){
 async function choose(v,push){
   clearInterval(S.poll);S.playing=false;clearInterval(S.timer);
   S.replay=v.startsWith('r');S.ev=v.replace(/^r/,'');S.data=null;S.cur=Infinity;S.vt=0;S.per='all';
-  Object.assign(S.f,{plTeam:null,luTeam:null,shTeam:null,shPl:'all',rotTeam:null});
+  Object.assign(S.f,{astTeam:null,plTeam:null,luTeam:null,shTeam:null,shPl:'all',rotTeam:null});
   $('gsel').value=v;
   if(push){const u=new URL(location.href);u.searchParams.set('g',v);history.replaceState(null,'',u)}
   $('sb').innerHTML='<div class="empty">Loading…</div>';$('view').innerHTML='';
@@ -306,7 +306,7 @@ function derive(){
   const stints={},enter={},pmAll={};Object.keys(D.P).forEach(id=>pmAll[id]=0);
   let last=0,curPer=0,snap=null;const src={};tid.forEach(t=>src[t]='');
   const margin=[[0,0]];let lc=0,ties=0,prevSign=0;const lead={};tid.forEach(t=>lead[t]=0);
-  const shots=[];
+  const shots=[],asts=[];
   const addTime=t1=>{const dt=t1-last;if(dt>0){const inF=inPer(F,curPer);tid.forEach(t=>{tq(curPer,t).sec+=dt;if(inF){T[t].sec+=dt;on[t].forEach(id=>B[id].min+=dt);lu(t,on[t],o=>o.sec+=dt)}})}last=Math.max(last,t1)};
   const leave=(id,t1)=>{if(enter[id]!=null){(stints[id]=stints[id]||[]).push([enter[id][0],t1,pmAll[id]-enter[id][1]]);delete enter[id]}};
   const join=(id,t1)=>{enter[id]=[t1,pmAll[id]]};
@@ -326,7 +326,7 @@ function derive(){
       else{const three=p.pa===3;const zi=p.x!=null?zoneOf(p.x,p.y,three):(three?4:1);const paint=!three&&p.x!=null&&Math.abs(p.x-25)<=8&&p.y<=13.75;
         if(inF){B[a].fga++;if(three)B[a].tpa++;if(p.sc){B[a].fgm++;if(three)B[a].tpm++}}
         TT(t).forEach(x=>{x.fga++;x.z[zi][1]++;if(three)x.tpa++;if(p.sc){x.fgm++;x.z[zi][0]++;if(three)x.tpm++;if(paint)x.paint+=2}});offStat(t,'fga');
-        if(p.sc&&b&&/assists/.test(p.text)&&B[b]){if(inF)B[b].ast++;TT(t).forEach(x=>x.ast++)}
+        if(p.sc&&b&&/assists/.test(p.text)&&B[b]){if(inF){B[b].ast++;asts.push({t,p:b,s:a,v:three?3:2})}TT(t).forEach(x=>x.ast++)}
         else if(!p.sc&&b&&/blocks/.test(p.text)&&B[b]){if(inF)B[b].blk++;TT(teamOf(b)).forEach(x=>x.blk++)}
         if(p.x!=null&&inF)shots.push({t,id:a,x:p.x,y:p.y,m:!!p.sc,three,zi,per:p.per,clock:p.clock,text:p.text})}}
     if(p.sc&&p.val>0){const t=p.team&&T[p.team]?p.team:teamOf(a);if(t){
@@ -351,11 +351,11 @@ function derive(){
   plays.forEach(p=>{if(!(p.sc&&p.val>0))return;const t=p.team&&T[p.team]?p.team:teamOf(p.ids[0]);if(!t)return;
     if(run&&run.t===t){run.pts+=p.val;run.end=p}else{if(run&&run.pts>=8)runs.push(run);run={t,pts:p.val,start:p,end:p}}});
   if(run&&run.pts>=8)runs.push(Object.assign(run,{open:true}));
-  return {plays,B,T,TQ,L,on,margin,runs,shots,stints,hs:lp?lp.hs:0,as:lp?lp.as:0,lp,lead,lc,ties,wp:lp&&D.wp[lp.id]!=null?D.wp[lp.id]:null,maxPer:lp?Math.max(4,lp.per):4};
+  return {asts,plays,B,T,TQ,L,on,margin,runs,shots,stints,hs:lp?lp.hs:0,as:lp?lp.as:0,lp,lead,lc,ties,wp:lp&&D.wp[lp.id]!=null?D.wp[lp.id]:null,maxPer:lp?Math.max(4,lp.per):4};
 }
 
 /* ---------- render shell ---------- */
-const TABS=[['team','Team'],['players','Players'],['lineups','Lineups'],['shots','Shots'],['ff','Four factors'],['rot','Rotations'],['plays','Plays']];
+const TABS=[['team','Team'],['players','Players'],['lineups','Lineups'],['shots','Shots'],['ast','Assists'],['ff','Four factors'],['rot','Rotations'],['plays','Plays']];
 function render(){
   if(!S.data){$('sb').innerHTML='<div class="empty">'+(S.err||'Loading…')+'</div>';return}
   const D=S.data;S.state=S.replay?(S.cur>=D.plays.length?'post':'in'):(D.status.type||{}).state;
@@ -397,7 +397,7 @@ function renderNav(R){
 function renderView(){
   const v=$('view'),D=S.data,R=S.R;v.innerHTML='';
   if(S.state==='pre'&&!R.plays.length){const c=el('div','card');c.append(el('h2',null,D.away.abbr+' at '+D.home.abbr),el('p',null,'Tip-off '+new Date(D.date).toLocaleString([],{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+(D.venue?' · '+D.venue:'')+(D.bc.length?' · '+D.bc.join(', '):'')+'.'),el('p','empty','Team and player stats, lineups, shots, four factors and rotations fill in once the game starts. The page checks ESPN every 15 seconds during the game.'));v.appendChild(c);return}
-  ({team:vTeam,players:vPlayers,lineups:vLineups,shots:vShots,ff:vFF,rot:vRot,plays:vPlays})[S.tab](v,D,R);
+  ({ast:vAst,team:vTeam,players:vPlayers,lineups:vLineups,shots:vShots,ff:vFF,rot:vRot,plays:vPlays})[S.tab](v,D,R);
 }
 const teamBtns=(D,key,cb)=>{const f=el('div','fl');[D.focus,D.other].forEach(t=>{const b=el('button',null,t.abbr);b.type='button';b.setAttribute('aria-pressed',S.f[key]===t.id);b.onclick=()=>{S.f[key]=t.id;cb&&cb();renderView()};f.appendChild(b)});return f};
 const head=(c,title,sub)=>{c.appendChild(el('h2',null,title));if(sub)c.appendChild(el('p','sub',sub))};
@@ -543,6 +543,35 @@ function vShots(v,D,R){
   right.appendChild(zt);
   const pts=Z.reduce((s,[m],i)=>s+m*(i>=3?3:2),0);right.appendChild(el('p','note',`${pts} points on ${sh.length} shots (${sh.length?(pts/sh.length).toFixed(2):'–'} per shot). NBA averages are 2025–26 league-wide by zone.`));
   g.append(left,right);c.appendChild(g);v.appendChild(c);
+}
+
+
+/* ---------- Assists ---------- */
+function vAst(v,D,R){
+  if(!S.f.astTeam)S.f.astTeam=D.focus.id;const t=D.teams.find(x=>x.id===S.f.astTeam);
+  const A=R.asts.filter(a=>a.t===t.id);
+  const c=el('div','card');head(c,t.abbr+' assist network',perLabel(S.per)+' · who set up whom');c.appendChild(teamBtns(D,'astTeam'));
+  if(!A.length){c.appendChild(el('p','empty','No assists in this stretch yet.'));v.appendChild(c);return}
+  const pairs={},pl={};A.forEach(a=>{const k=a.p+'>'+a.s;const q=pairs[k]=pairs[k]||{p:a.p,s:a.s,n:0,pts:0,th:0};q.n++;q.pts+=a.v;if(a.v===3)q.th++;
+    [a.p,a.s].forEach(id=>pl[id]=pl[id]||{id,ast:0,cr:0,rec:0,th:0});pl[a.p].ast++;pl[a.p].cr+=a.v;if(a.v===3)pl[a.p].th++;pl[a.s].rec++});
+  /* network */
+  const ids=Object.keys(pl).sort((a,b)=>(pl[b].ast+pl[b].rec)-(pl[a].ast+pl[a].rec));
+  const W=460,H=340,cx=W/2,cy=H/2,rad=118;const pos={};ids.forEach((id,i)=>{const a=-Math.PI/2+i*2*Math.PI/ids.length;pos[id]=[cx+rad*1.25*Math.cos(a),cy+rad*Math.sin(a)]});
+  const col=t===D.focus?'#860038':'#4a5360';const mx=Math.max(...Object.values(pairs).map(q=>q.n));const mxa=Math.max(1,...Object.values(pl).map(q=>q.ast));
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Assist network"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="${col}"/></marker></defs>`;
+  const rOf=id=>7+9*Math.sqrt(pl[id].ast/mxa);
+  Object.values(pairs).sort((a,b)=>a.n-b.n).forEach(q=>{const[a1,b1]=pos[q.p],[a2,b2]=pos[q.s];const dx=a2-a1,dy=b2-b1,Ln=Math.hypot(dx,dy)||1;const r2=rOf(q.s)+3;
+    const mx2=(a1+a2)/2-dy*.12,my2=(b1+b2)/2+dx*.12;const ex=a2-dx/Ln*r2,ey=b2-dy/Ln*r2;
+    s+=`<path d="M${a1},${b1} Q${mx2},${my2} ${ex},${ey}" fill="none" stroke="${col}" stroke-opacity="${.22+.65*q.n/mx}" stroke-width="${1.2+3.5*q.n/mx}" marker-end="url(#ah)"><title>${esc(D.P[q.p].last)} to ${esc(D.P[q.s].last)}: ${q.n} assist${q.n>1?'s':''}, ${q.pts} points</title></path>`});
+  ids.forEach(id=>{const[x,y]=pos[id];const r=rOf(id);const right=x>cx+5,left=x<cx-5;const lx=left?x-r-6:right?x+r+6:x,ly=Math.abs(x-cx)<=5?(y<cy?y-r-6:y+r+14):y+4;
+    s+=`<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" stroke="${col}" stroke-width="2"/><text x="${x}" y="${y+4}" text-anchor="middle" font-size="11" font-weight="700" font-family="var(--mono)" fill="${col}">${pl[id].ast||''}</text><text x="${lx}" y="${ly}" text-anchor="${left?'end':right?'start':'middle'}" font-size="12" font-weight="600" font-family="var(--sans)" fill="var(--fg)">${esc(D.P[id].last)}</text>`});
+  const g=el('div','grid2');const nw=el('div');nw.innerHTML=s+'</svg>';nw.appendChild(el('p','note','Arrows run passer → scorer; thicker = more assists. The number in each circle is his assists.'));
+  /* tables */
+  const right=el('div');const fl=el('div','fl');[['pairs','Passer → scorer'],['players','By player']].forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',S.f.astView===k);b.onclick=()=>{S.f.astView=k;renderView()};fl.appendChild(b)});right.appendChild(fl);
+  if(S.f.astView==='pairs')right.appendChild(dtable('astp',[{h:'Passer → scorer',k:'p',f:q=>D.P[q.p].last+' → '+D.P[q.s].last},{h:'AST',k:'n'},{h:'PTS',k:'pts',title:'Points from those assists'},{h:'3PT',k:'th',title:'Assisted threes'}],Object.values(pairs),{def:'n'}));
+  else right.appendChild(dtable('astl',[{h:'Player',k:'id',f:q=>D.P[q.id].short},{h:'AST',k:'ast'},{h:'PTS CREATED',k:'cr',title:'Points scored off his passes'},{h:'3PT AST',k:'th'},{h:'ASSISTED',k:'rec',title:'His made shots that were assisted'}],Object.values(pl),{def:'ast'}));
+  right.appendChild(el('p','note',`${A.length} assists on ${R.T[t.id].fgm} made field goals (${pct(A.length,R.T[t.id].fgm)} assisted).`));
+  g.append(nw,right);c.appendChild(g);v.appendChild(c);
 }
 
 /* ---------- Four factors ---------- */
