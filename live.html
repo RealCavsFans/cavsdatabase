@@ -365,7 +365,7 @@ const pmCls=v=>'pm '+(v>0?'p':v<0?'n':'');
 
 /* ---------- Team ---------- */
 function vTeam(v,D,R){
-  if(MOCK){v.appendChild(el('p','note','Mockups below (fatigue watch, lineup alert, droughts) only show with ?mock=1.'));v.appendChild(fatigueCard(D,R));v.appendChild(alertCard(D,R));v.appendChild(droughtCard(D,R))}
+  if(MOCK){v.appendChild(el('p','note','The fatigue watch mockup below only shows with ?mock=1.'));v.appendChild(fatigueCard(D,R))}
   const a=R.T[D.focus.id],b=R.T[D.other.id];
   const c=el('div','card');head(c,'Team stats',perLabel(S.per));
   const vs=el('div','vs');vs.innerHTML=`<div><div class="t">${esc(D.focus.abbr)}</div><div class="big">${a.pts}</div></div><div class="c">${S.per==='all'?'Score':'Scored in '+esc(perLow(S.per))}</div><div><div class="t r">${esc(D.other.abbr)}</div><div class="big" style="text-align:right">${b.pts}</div></div>`;c.appendChild(vs);
@@ -563,27 +563,62 @@ const lbl=(x,t,X,Y,sz=36,c='#6b7078')=>{x.fillStyle=c;x.font=`800 ${sz}px "Saira
 const num=(x,t,X,Y,sz=70,c='#101419')=>{x.fillStyle=c;x.font=`700 ${sz}px "Geist Mono"`;x.fillText(String(t),X,Y)};
 const txt=(x,t,X,Y,sz=34,c='#101419',wt=600)=>{x.fillStyle=c;x.font=`${wt} ${sz}px Archivo`;x.fillText(t,X,Y)};
 const kick=()=>S.per==='all'?'':perLabel(S.per).split(':')[0]+' · ';
+/* canvas helpers for the cards */
+function cMargin(x,R,D,X0,Y0,W,H,hl){const T=pstart(R.maxPer)+plen(R.maxPer);let mx=10;R.margin.forEach(m=>mx=Math.max(mx,Math.abs(m[1])));const X=t=>X0+W*t/T,Y=m=>Y0+H/2-(H/2-6)*m/mx;
+  if(hl){x.fillStyle='rgba(242,178,49,.25)';x.fillRect(X(hl[0]),Y0,Math.max(4,X(hl[1])-X(hl[0])),H)}
+  x.strokeStyle='#d8d3cc';x.lineWidth=2;for(let p=2;p<=R.maxPer;p++){x.beginPath();x.moveTo(X(pstart(p)),Y0);x.lineTo(X(pstart(p)),Y0+H);x.stroke()}
+  const path=()=>{x.beginPath();x.moveTo(X(0),Y(0));let pv=0;R.margin.forEach(([t,m])=>{x.lineTo(X(t),Y(pv));x.lineTo(X(t),Y(m));pv=m});x.lineTo(X(R.lp?R.lp.t:0),Y(pv));x.lineTo(X(R.lp?R.lp.t:0),Y(0));x.closePath()};
+  x.save();x.beginPath();x.rect(X0,Y0,W,H/2);x.clip();path();x.fillStyle='#860038';x.fill();x.restore();
+  x.save();x.beginPath();x.rect(X0,Y0+H/2,W,H/2);x.clip();path();x.fillStyle='#8a929c';x.fill();x.restore();
+  x.strokeStyle='#101419';x.lineWidth=2;x.beginPath();x.moveTo(X0,Y0+H/2);x.lineTo(X0+W,Y0+H/2);x.stroke();
+  x.fillStyle='#6b7078';x.font='700 24px "Geist Mono"';for(let p=1;p<=R.maxPer;p++){const t=pname(p);x.fillText(t,X(pstart(p)+plen(p)/2)-x.measureText(t).width/2,Y0+H+30)}
+  x.font='700 24px "Saira Condensed"';x.fillStyle='#860038';x.fillText(D.focus.abbr+' AHEAD',X0+6,Y0+22);x.fillStyle='#6b7078';x.fillText(D.other.abbr+' AHEAD',X0+6,Y0+H-8)}
+function cCourt(x,sh,X0,Y0,W){const s=W/50,X=v=>X0+v*s,Y=v=>Y0+(v+5.25)*s,H=34*s,c3=Math.sqrt(23.75**2-22**2);
+  x.fillStyle='#ece6dc';x.fillRect(X0,Y0,W,H);x.strokeStyle='#cfc6b8';x.lineWidth=3;x.strokeRect(X(17),Y0,16*s,19*s);
+  x.beginPath();x.moveTo(X(3),Y0);x.lineTo(X(3),Y(c3));x.arc(X(25),Y(0),23.75*s,Math.atan2(c3,-22),Math.atan2(c3,22),true);x.lineTo(X(47),Y0);x.stroke();
+  x.beginPath();x.arc(X(25),Y(0),0.75*s,0,7);x.stroke();
+  sh.forEach(q=>{if(q.y>28)return;const a=X(Math.max(.6,Math.min(49.4,q.x))),b=Y(Math.max(-4.5,q.y));if(q.m){x.fillStyle='#860038';x.beginPath();x.arc(a,b,11,0,7);x.fill();x.strokeStyle='#fff';x.lineWidth=2;x.stroke()}else{x.strokeStyle='#7b828c';x.lineWidth=4;x.beginPath();x.moveTo(a-8,b-8);x.lineTo(a+8,b+8);x.moveTo(a+8,b-8);x.lineTo(a-8,b+8);x.stroke()}})}
+function cStat(x,v,l,X0,Y0,sz=96,c='#101419'){num(x,v,X0,Y0,sz,c);lbl(x,l,X0+4,Y0+44,32)}
 const CARDS={
-  game:{label:'Game card',draw(x,D,R){const w=R.as===R.hs?null:(R.as>R.hs?D.away:D.home);frame(x,kick()+D.away.abbr+' at '+D.home.abbr,S.state==='post'&&w?w.name+' win':'Score update',D,R);
-    [D.focus,D.other].forEach((t,ti)=>{const y0=470+ti*390;lbl(x,t.loc+' '+t.name,72,y0,44,ti?'#5b6470':'#860038');
-      const top=D.roster[t.id].filter(id=>R.B[id].min>0||R.B[id].pts).sort((a,b)=>R.B[b].pts-R.B[a].pts).slice(0,3);
-      top.forEach((id,i)=>{const b=R.B[id],y=y0+80+i*95;txt(x,D.P[id].name,72,y,40,'#101419',700);txt(x,`${b.pts} PTS · ${b.oreb+b.dreb} REB · ${b.ast} AST · ${b.fgm}-${b.fga} FG`,72,y+44,30,'#3a3f46',500)})})}},
+  game:{label:'Game card',draw(x,D,R){const w=R.as===R.hs?null:(R.as>R.hs?D.away:D.home);const fin=S.state==='post';
+    frame(x,kick()+D.away.abbr+' at '+D.home.abbr,fin&&w?w.name+' win':(R.lp?pname(R.lp.per)+' '+R.lp.clock:'Score update'),D,R);
+    /* margin chart */
+    lbl(x,'HOW IT PLAYED OUT',72,450,30);cMargin(x,R,D,72,470,936,210);
+    /* top two per team, big points */
+    [D.focus,D.other].forEach((t,ti)=>{const X0=72+ti*480;lbl(x,t.name.toUpperCase(),X0,790,34,ti?'#5b6470':'#860038');
+      D.roster[t.id].filter(id=>R.B[id].min>0||R.B[id].pts).sort((a,b)=>R.B[b].pts-R.B[a].pts).slice(0,2).forEach((id,i)=>{const b=R.B[id],y=870+i*150;
+        num(x,b.pts,X0,y+30,88,ti?'#5b6470':'#860038');const nx=X0+(b.pts>=10?120:70);txt(x,D.P[id].last,nx,y-8,36,'#101419',700);txt(x,`${b.oreb+b.dreb} REB · ${b.ast} AST · ${b.fgm}-${b.fga}`,nx,y+30,26,'#3a3f46',500)})});
+    const A=R.T[D.focus.id],B=R.T[D.other.id],fa=factors(A,B),fb=factors(B,A);const wn=FF.filter(([k,,,h])=>fa[k]!=null&&fb[k]!=null&&fa[k]!==fb[k]&&((fa[k]>fb[k])===h)).length;
+    x.fillStyle='#101419';x.fillRect(72,1170,936,56);x.fillStyle='#F2B231';x.font='800 32px "Saira Condensed"';x.fillText(`FOUR FACTORS  ${D.focus.abbr} ${wn} – ${4-wn} ${D.other.abbr}`,96,1208);
+    x.fillStyle='#fff';x.font='700 26px "Geist Mono"';const e=`eFG ${(fa.efg*100).toFixed(0)}% – ${(fb.efg*100).toFixed(0)}%`;x.fillText(e,984-x.measureText(e).width,1207)}},
   player:{label:'Player card',pick:'player',draw(x,D,R,id){const p=D.P[id],b=R.B[id],t=D.teams.find(z=>z.id===p.team),o=D.teams.find(z=>z.id!==p.team);frame(x,kick()+t.abbr+' '+(t.ha==='home'?'vs':'at')+' '+o.abbr,p.name,D,R);
-    [[b.pts,'PTS'],[b.oreb+b.dreb,'REB'],[b.ast,'AST']].forEach(([v,l],i)=>{const cx=72+i*330;num(x,v,cx,640,190);lbl(x,l,cx+6,700,44)});
-    x.fillStyle='#e3e0db';x.fillRect(72,770,936,2);[['FG',b.fgm+'-'+b.fga],['3PT',b.tpm+'-'+b.tpa],['FT',b.ftm+'-'+b.fta],['STL',b.stl],['BLK',b.blk],['+/-',sgn(b.pm)]].forEach(([l,v],i)=>{const cx=72+(i%3)*312,cy=860+Math.floor(i/3)*170;lbl(x,l,cx,cy);num(x,v,cx,cy+80)})}},
+    [[b.pts,'PTS'],[b.oreb+b.dreb,'REB'],[b.ast,'AST']].forEach(([v,l],i)=>cStat(x,v,l,72+i*176,560,104));
+    const sv=curBase().s[normName(p.name)];if(sv){const d=b.pts-sv[2];x.fillStyle=d>=0?'#1d6b3a':'#a3122e';x.fillRect(72,630,330,52);x.fillStyle='#fff';x.font='700 28px "Geist Mono"';x.fillText(`${d>=0?'+':'−'}${Math.abs(d).toFixed(1)} vs his avg`,88,666)}
+    /* shot chart */
+    const sh=R.shots.filter(q=>q.id===id&&q.hasXY);cCourt(x,sh,600,430,408);lbl(x,'HIS SHOTS',600,740,28);
+    x.fillStyle='#e3e0db';x.fillRect(72,800,936,2);
+    [['FG',b.fgm+'-'+b.fga],['3PT',b.tpm+'-'+b.tpa],['FT',b.ftm+'-'+b.fta],['STL',b.stl],['BLK',b.blk],['+/-',sgn(b.pm)]].forEach(([l,v],i)=>{const cx=72+(i%3)*312,cy=880+Math.floor(i/3)*170;lbl(x,l,cx,cy);num(x,v,cx,cy+80,76)})}},
   ff:{label:'Four factors card',draw(x,D,R){const A=R.T[D.focus.id],B=R.T[D.other.id],fa=factors(A,B),fb=factors(B,A);frame(x,kick()+D.focus.abbr+' vs '+D.other.abbr,'Four factors',D,R);
     lbl(x,D.focus.abbr,600,470,40,'#860038');lbl(x,D.other.abbr,850,470,40,'#5b6470');
     FF.forEach(([k,n,full,hib],i)=>{const y=580+i*165,a=fa[k],b=fb[k];txt(x,n,72,y,42,'#101419',700);txt(x,full,72,y+44,28,'#6b7078',500);
       const win=a!=null&&b!=null&&a!==b?((a>b)===hib?0:1):-1;num(x,a==null?'–':(a*100).toFixed(1)+'%',600,y+18,56,win===0?'#860038':'#101419');num(x,b==null?'–':(b*100).toFixed(1)+'%',850,y+18,56,win===1?'#5b6470':'#101419');
       if(i<3){x.fillStyle='#e3e0db';x.fillRect(72,y+80,936,2)}})}},
-  run:{label:'Run card',pick:'run',draw(x,D,R,i){const r=R.runs[+i];if(!r)return;const t=D.teams.find(z=>z.id===r.t);frame(x,kick()+D.away.abbr+' at '+D.home.abbr,t.abbr+' '+r.pts+'–0 run',D,R);
-    txt(x,pname(r.start.per)+' '+r.start.clock+' to '+(r.end.per!==r.start.per?pname(r.end.per)+' ':'')+r.end.clock,72,480,40,'#101419',700);
-    const det=runDetail(D,R,r).split(' · ');det.forEach((d,j)=>{const parts=d.length>46?[d.slice(0,d.lastIndexOf(',',46)+1),d.slice(d.lastIndexOf(',',46)+2)]:[d];parts.forEach((p,k)=>txt(x,p,72,580+j*150+k*48,36,j?'#3a3f46':'#101419',j?500:600))});
-    const pl=R.plays.slice(R.plays.indexOf(r.start),R.plays.indexOf(r.end)+1).filter(p=>p.sc&&p.team===r.t).slice(-5);
-    pl.forEach((p,j)=>txt(x,(p.text.length>58?p.text.slice(0,56)+'…':p.text),72,900+j*62,28,'#3a3f46',500))}},
-  lineup:{label:'Lineup card',pick:'lineup',draw(x,D,R,k){const l=R.L[D.focus.id][5][k];if(!l)return;frame(x,kick()+D.focus.abbr+' lineup',sgn(l.pf-l.pa)+' in '+fmtMin(l.sec),D,R);
-    l.ids.slice().sort((a,b)=>D.P[b].starter-D.P[a].starter).forEach((id,j)=>txt(x,D.P[id].name,72,490+j*72,46,'#101419',700));
-    const po=poss(l.o),pd=poss(l.d);[['PTS',l.pf],['OPP',l.pa],['NET/100',po>=1&&pd>=1?sgn(Math.round(l.pf/po*100-l.pa/pd*100)):'–']].forEach(([lb,v],i)=>{const cx=72+i*330;lbl(x,lb,cx,930);num(x,v,cx,1030,110)})}}
+  run:{label:'Run card',pick:'run',draw(x,D,R,i){const r=R.runs[+i];if(!r)return;const t=D.teams.find(z=>z.id===r.t),o=D.teams.find(z=>z.id!==r.t);frame(x,kick()+D.away.abbr+' at '+D.home.abbr,t.name+' run',D,R);
+    num(x,r.pts+'–0',72,640,230,t===D.focus?'#860038':'#5b6470');
+    const len=r.end.t-r.start.t;txt(x,`${pname(r.start.per)} ${r.start.clock} → ${r.end.per!==r.start.per?pname(r.end.per)+' ':''}${r.end.clock}`,72,710,38,'#101419',700);txt(x,`in ${fmtMin(len)} of game time`,72,756,30,'#6b7078',500);
+    /* what the other team did */
+    const i0=R.plays.indexOf(r.start),i1=R.plays.indexOf(r.end);let fga=0,tov=0;for(let k=i0;k<=i1;k++){const p=R.plays[k];if(p.shot&&!/^Free Throw/.test(p.type)&&D.P[p.ids[0]]&&D.P[p.ids[0]].team===o.id)fga++;if(/Turnover/.test(p.type)&&p.team===o.id)tov++}
+    lbl(x,o.abbr+' DURING THE RUN',640,520,30);cStat(x,'0-'+fga,'FG',640,620,80);cStat(x,tov,'TURNOVERS',860,620,80);
+    lbl(x,'WHERE IT HAPPENED',72,850,30);cMargin(x,R,D,72,870,936,200,[r.start.t,r.end.t]);
+    const ln=R.lineAt[r.start.id];if(ln&&ln[D.focus.id])txt(x,D.focus.abbr+' on the floor: '+ln[D.focus.id].map(id=>D.P[id].last).join(', '),72,1150,28,'#3a3f46',500)}},
+  lineup:{label:'Lineup card',pick:'lineup',draw(x,D,R,k){const l=R.L[D.focus.id][5][k];if(!l)return;const po=poss(l.o),pd=poss(l.d);const net=po>=1&&pd>=1?l.pf/po*100-l.pa/pd*100:null;
+    const all=Object.values(R.L[D.focus.id][5]).filter(z=>z.sec>=180).sort((a,b)=>(b.pf-b.pa)-(a.pf-a.pa));const best=all[0]===l;
+    frame(x,kick()+D.focus.abbr+' lineup',best?'Best five tonight':'Five-man unit',D,R);
+    l.ids.slice().sort((a,b)=>D.P[b].starter-D.P[a].starter).forEach((id,j)=>{const y=440+j*86;x.fillStyle=j%2?'#efebe5':'#e7e1d8';x.fillRect(72,y,520,70);txt(x,D.P[id].name,96,y+47,38,'#101419',700)});
+    const pm=l.pf-l.pa;num(x,sgn(pm),640,600,170,pm>=0?'#1d6b3a':'#a3122e');lbl(x,'PLUS-MINUS',648,650,32);
+    cStat(x,fmtMin(l.sec),'MINUTES',640,790,64);cStat(x,l.pf+'–'+l.pa,'SCORE',640,930,64);
+    x.fillStyle='#e3e0db';x.fillRect(72,1000,936,2);
+    lbl(x,'PER 100 POSSESSIONS',72,1060,30);[['OFFENSE',po>=1?(l.pf/po*100).toFixed(0):'–'],['DEFENSE',pd>=1?(l.pa/pd*100).toFixed(0):'–'],['NET',net==null?'–':sgn(Math.round(net))]].forEach(([lb,v],i)=>cStat(x,v,lb,72+i*330,1160,72,i===2?(net>=0?'#1d6b3a':'#a3122e'):'#101419'))}}
 };
 async function renderCard(type,arg,D,R){await cardFonts();const cv=document.createElement('canvas');cv.width=1080;cv.height=1350;CARDS[type].draw(cv.getContext('2d'),D,R,arg);return new Promise(r=>cv.toBlob(r,'image/png'))}
 function vShare(v,D,R){
