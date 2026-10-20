@@ -358,7 +358,7 @@ async function choose(v,push){
   $('sb').innerHTML='<div class="empty">Loading…</div>';$('view').innerHTML='';$('rpw').innerHTML='';$('rpw').hidden=true;
   if(S.season){await loadSeason(S.season);render();return}
   await fetchGame();
-  if(S.replay&&S.data){if(v.startsWith('a')){S.cur=S.data.plays.length}else{S.cur=0;S.vt=0;S.playing=true;startReplay()}}
+  if(S.replay&&S.data){S.cur=S.data.plays.length;S.playing=false}
   render();if(!S.replay)startPoll();
 }
 async function fetchGame(){try{const d=await getJSON(S.src?'/live-archive/'+S.src+'/'+S.ev+'.json':ESPN+'summary?event='+S.ev);S.data=prep(d);S.data.focus.c='var(--cf)';S.data.other.c='var(--co)';S.fetched=Date.now();S.err=null}catch(e){S.err='Could not reach ESPN. Retrying.'}}
@@ -375,6 +375,7 @@ function render(){
   if(!S.data){$('sb').innerHTML='<div class="empty">'+(S.err||'Loading…')+'</div>';return}
   const D=S.data;S.state=S.replay?(S.cur>=D.plays.length?'post':'in'):(D.status.type||{}).state;
   const R=derive();S.R=R;renderSB(D,R);renderNav(R);renderView();updLine();
+  if(S.state==='post'&&!S.playing&&D.focus.id===CLE&&(D.focus.ha==='home'?R.hs>R.as:R.as>R.hs)&&S.cf!==S.ev&&!matchMedia('(prefers-reduced-motion: reduce)').matches){S.cf=S.ev;setTimeout(()=>cdbConfetti($('sb')),200)}
 }
 function rerender(){if(S.season){renderNav(S.R);renderView();return}S.R=derive();renderNav(S.R);renderView()}
 const scoreOf=(t,R)=>(S.replay||S.state!=='pre')?(t.ha==='home'?R.hs:R.as):t.score;
@@ -385,7 +386,7 @@ function renderSB(D,R){
   if(S.state==='pre')mid.append(el('div','st','Tip-off'),el('div','ck',new Date(D.date).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})));
   else if(fin)mid.append(el('div','st','Final'+(per>4?'/'+pname(per):'')));
   else{const endP=R.lp&&R.lp.type==='End Period';mid.append(el('div','st',endP?(per===2?'Half':'End '+pname(per)):pname(per)),el('div','ck',endP?'':(R.lp?R.lp.clock:'')))}
-  mid.appendChild(el('span','pill'+(S.state==='in'&&!S.replay?' live':''),S.replay?'Replay':S.state==='in'?'Live':fin?'Final':'Upcoming'));
+  mid.appendChild(el('span','pill'+(S.state==='in'&&!S.replay?' live':''),S.replay&&!fin?'Replay':S.state==='in'?'Live':fin?'Final':'Upcoming'));
   sb.append(tmEl(D.away,false),mid,tmEl(D.home,true));
   if(S.state!=='pre'){const tb=el('table','ls');const hr=el('tr');hr.appendChild(el('th',null,''));for(let i=1;i<=R.maxPer;i++)hr.appendChild(el('th',null,pname(i).replace('Q','')));hr.appendChild(el('th',null,'T'));tb.appendChild(hr);
     [D.away,D.home].forEach(t=>{const r=el('tr');r.appendChild(el('td',null,t.abbr));for(let i=1;i<=R.maxPer;i++){const q=R.TQ[i]&&R.TQ[i][t.id];r.appendChild(el('td',null,q?String(q.pts):'–'))}r.appendChild(el('td',null,String(scoreOf(t,R))));tb.appendChild(r)});sb.appendChild(tb)}
@@ -395,14 +396,18 @@ function renderSB(D,R){
 }
 
 /* replay controls live outside the scoreboard so they aren't rebuilt (and the speed menu doesn't close) on every tick */
+function cdbConfetti(host){const r=host.getBoundingClientRect();const cv=document.createElement('canvas');const W=r.width,H=Math.max(r.height,260);cv.width=W*2;cv.height=H*2;cv.className='cfx';cv.style.cssText=`position:absolute;left:0;top:0;width:${W}px;height:${H}px;pointer-events:none;z-index:3`;
+  if(getComputedStyle(host).position==='static')host.style.position='relative';host.appendChild(cv);const x=cv.getContext('2d');x.scale(2,2);
+  const C=['#860038','#F2B231','#ffffff','#a8134f','#ffcf5c'];const P=Array.from({length:110},()=>({x:W/2+(Math.random()-.5)*W*.3,y:H*.55,vx:(Math.random()-.5)*9,vy:-Math.random()*9-4,r:Math.random()*6.28,vr:(Math.random()-.5)*.3,w:5+Math.random()*6,h:3+Math.random()*4,c:C[Math.random()*C.length|0]}));
+  let t=0;const step=()=>{t++;x.clearRect(0,0,W,H);P.forEach(p=>{p.vy+=.22;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.globalAlpha=Math.max(0,1-t/120);x.fillStyle=p.c;x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore()});if(t<120)requestAnimationFrame(step);else cv.remove()};requestAnimationFrame(step)}
 function updRP(D,R){const box=$('rpw');if(!S.replay||!D.plays){box.hidden=true;return}box.hidden=false;
   if(!box.firstChild){const w=el('div','rp');const btn=el('button');btn.type='button';btn.id='rpb';
     btn.onclick=()=>{if(S.cur>=S.data.plays.length){S.cur=0;S.vt=0}S.playing=!S.playing;if(S.playing)startReplay();else clearInterval(S.timer);render()};
     const rg=el('input');rg.type='range';rg.min=0;rg.id='rpr';rg.setAttribute('aria-label','Replay position');rg.oninput=()=>{S.cur=+rg.value;S.vt=S.cur?S.data.plays[S.cur-1].t:0;render()};
     const sp=el('select');sp.setAttribute('aria-label','Replay speed');[[10,'10× speed'],[30,'30× speed'],[90,'90× speed'],[300,'300× speed']].forEach(([v,l])=>{const o=el('option',null,l);o.value=v;if(v===S.speed)o.selected=true;sp.appendChild(o)});sp.onchange=()=>S.speed=+sp.value;
     const lb=el('div','lbl');lb.id='rpl';w.append(btn,rg,sp,lb);box.appendChild(w)}
-  $('rpb').textContent=S.playing?'Pause':(S.cur>=D.plays.length?'Restart':'Play');const rg=$('rpr');rg.max=D.plays.length;if(document.activeElement!==rg)rg.value=Math.min(S.cur,D.plays.length);
-  $('rpl').textContent=R.lp?pname(R.lp.per)+' '+R.lp.clock+' · play '+S.cur+' of '+D.plays.length+' · plays the game back as if it were live':'Press play to start';
+  $('rpb').textContent=S.playing?'Pause':(S.cur>=D.plays.length?'▶ Replay from tip':'Resume');const rg=$('rpr');rg.max=D.plays.length;if(document.activeElement!==rg)rg.value=Math.min(S.cur,D.plays.length);
+  $('rpl').textContent=S.cur>=D.plays.length&&!S.playing?'Showing the final. Replay plays the game back as if it were live.':R.lp?pname(R.lp.per)+' '+R.lp.clock+' · play '+S.cur+' of '+D.plays.length:'Press play to start';
 }
 function startReplay(){clearInterval(S.timer);const D=S.data;S.timer=setInterval(()=>{if(!S.playing)return;S.vt+=S.speed*0.25;let n=S.cur;while(n<D.plays.length&&D.plays[n].t<=S.vt)n++;if(n>=D.plays.length){n=D.plays.length;S.playing=false;clearInterval(S.timer)}if(n!==S.cur||!S.playing){S.cur=n;render()}},250)}
 function updLine(){const u=$('upd');u.innerHTML='';if(S.season){u.textContent='Season totals from the game archive';return}if(!S.data)return;if(S.replay){u.textContent='Replay mode · '+(S.playing?'playing':'paused');return}
@@ -550,7 +555,7 @@ function gameState(D,R){
 
 /* ---------- milestone watch: career and Cavs all-time lists (pdata/milestones.json, through last season)
    plus this season's archived games plus tonight ---------- */
-let MS=null,SEAS=null;
+let MS=null,SEAS=null;const MSH=[];
 async function msLoad(){if(MS)return;try{MS=await getJSON('/pdata/milestones.json')}catch(e){}try{SEAS=await getJSON('/live-archive/2026-27/season.json')}catch(e){SEAS=null}}
 function milestoneCard(D,R){
   if(!MS||D.focus.id!=='5'||!R.lp)return null;
@@ -559,16 +564,16 @@ function milestoneCard(D,R){
   const W={PTS:'points',REB:'rebounds',AST:'assists'},LIST={PTS:'scoring',REB:'rebounding',AST:'assists'};
   const step={PTS:v=>v<10000?1000:5000,REB:v=>v<2000?500:v<5000?1000:2500,AST:v=>v<2000?500:v<5000?1000:2500},near={PTS:25,REB:10,AST:10};
   const fmt=n=>n.toLocaleString('en-US'),ord=n=>n+(n%100>=11&&n%100<=13?'th':['th','st','nd','rd'][n%10]||'th');
-  const hits=[],watch=[];
+  const hits=[],watch=[];MSH.length=0;
   D.roster['5'].forEach(id=>{const n=byName[normName(D.P[id].name)];if(!n)return;const m=MS.players[n],b=R.B[id];
     const tn={PTS:b.pts,REB:b.oreb+b.dreb,AST:b.ast};
     let sp={PTS:0,REB:0,AST:0};if(SEAS&&!preview&&SEAS.B[id]){const x=SEAS.B[id];sp={PTS:x.pts,REB:x.oreb+x.dreb,AST:x.ast};if(SEAS.games.some(g=>g.id===S.ev))for(const k in sp)sp[k]-=tn[k]}
     for(const k of ['PTS','REB','AST']){
       const c0=m.career[k]+sp[k],c1=c0+tn[k],st=step[k](c1);
-      if(Math.floor(c1/st)>Math.floor(c0/st))hits.push(`${D.P[id].name} passed ${fmt(Math.floor(c1/st)*st)} career ${W[k]} tonight.`);
+      if(Math.floor(c1/st)>Math.floor(c0/st))(MSH.push([id,'career',k,Math.floor(c1/st)*st]),hits.push(`${D.P[id].name} passed ${fmt(Math.floor(c1/st)*st)} career ${W[k]} tonight.`));
       else{const nx=(Math.floor(c1/st)+1)*st;if(nx-c1<=near[k])watch.push([nx-c1,`${D.P[id].name} is ${nx-c1} ${W[k]} from ${fmt(nx)} for his career.`])}
       const L=MS.franchise[k];if(!L)continue;const v0=m.cavs[k]+sp[k],v1=v0+tn[k];const others=L.filter(([x])=>x!==n);const rk=v=>1+others.filter(([,x])=>x>v).length;
-      if(rk(v1)<rk(v0)&&rk(v1)<=25){const passed=others.filter(([,x])=>x<=v1&&x>v0).map(([x])=>x);hits.push(`${D.P[id].name} passed ${passed.join(', ')} for ${ord(rk(v1))} on the Cavs all-time ${LIST[k]} list.`)}
+      if(rk(v1)<rk(v0)&&rk(v1)<=25){const passed=others.filter(([,x])=>x<=v1&&x>v0).map(([x])=>x);MSH.push([id,'list',k,rk(v1),passed]);hits.push(`${D.P[id].name} passed ${passed.join(', ')} for ${ord(rk(v1))} on the Cavs all-time ${LIST[k]} list.`)}
       else{const ahead=others.filter(([,x])=>x>v1).pop();if(ahead&&rk(v1)<=26&&ahead[1]-v1+1<=near[k])watch.push([ahead[1]-v1+1,`${D.P[id].name} is ${ahead[1]-v1+1} ${W[k]} from passing ${ahead[0]} for ${ord(rk(v1)-1)} on the Cavs all-time ${LIST[k]} list.`])}}});
   if(!hits.length&&!watch.length)return null;
   const c=el('div','card');c.style.borderTop='3px solid var(--gold)';c.style.marginBottom='14px';head(c,'Milestone watch',preview?'Preview: tonight’s numbers added to career totals through 2025–26':'Career and Cavs all-time totals, updated live');
@@ -783,6 +788,10 @@ function vOnOff(v,D,R){
   c.appendChild(el('p','note','NET = points scored minus allowed per 100 possessions. Built from the reconstructed lineups, so small samples swing hard.'));
   vsOpp(c,D,R,t);v.appendChild(c);
 }
+
+function recordThrough(D,R){const se=S.src||(S.replay?'2025-26':'2026-27');const ix=(ARCH[se]||[]).slice().sort((a,b)=>a.date<b.date?-1:1);
+  const cut=ix.findIndex(g=>g.id===S.ev);const prior=(cut>=0?ix.slice(0,cut):ix.filter(g=>g.date<D.date));const fs=D.focus.ha==='home'?R.hs:R.as,os=D.focus.ha==='home'?R.as:R.hs;
+  const res=prior.map(g=>g.cle>g.os?'W':'L').concat(S.state==='post'?[fs>os?'W':'L']:[]);const w=res.filter(x=>x==='W').length,l=res.length-w;let k=0;const last=res[res.length-1];for(let i=res.length-1;i>=0&&res[i]===last;i--)k++;return {w,l,last,k,res,se}}
 /* ---------- share cards ---------- */
 async function cardFonts(){try{await Promise.all([document.fonts.load('800 80px "Saira Condensed"'),document.fonts.load('700 60px "Geist Mono"'),document.fonts.load('600 30px Archivo')])}catch(e){}}
 function frame(x,kicker,title,D,R){
@@ -857,7 +866,7 @@ const CARDS={
       top(t).slice(0,2).forEach((id,i)=>{const b=R.B[id],y=850+i*170;num(x,b.pts,X0,y+56,88,ti?GREY:WINE);lbl(x,'PTS',X0+4,y+92,26);const nx=X0+150;txt(x,D.P[id].last,nx,y+20,38,INK,700);
         x.font='700 28px "Geist Mono"';x.fillStyle=INK;[[b.oreb+b.dreb,'REB'],[b.ast,'AST'],[b.fgm+'-'+b.fga,'FG']].forEach(([v,l],k)=>{const cx=nx+k*96;x.fillStyle=INK;x.font='700 30px "Geist Mono"';x.fillText(String(v),cx,y+64);lbl(x,l,cx,y+92,24)})})});
     {const wn=wonNames(D,R);x.fillStyle=INK;x.fillRect(72,1160,936,74);x.fillStyle=GOLD;x.font='800 28px "Saira Condensed"';x.fillText(`${F.abbr} WON ${wn.length} OF THE 4 FACTORS`,96,1190);x.fillStyle='#fff';x.font='600 24px Archivo';x.fillText(wn.length?wn.join(' · '):'None tonight',96,1220)}
-    x.fillStyle=INK;x.fillRect(72,1180,936,52);x.fillStyle=GOLD;x.font='800 30px "Saira Condensed"';x.fillText(`FOUR FACTORS WON  ${F.abbr} ${wn} · ${O.abbr} ${4-wn}`,96,1216)}},
+  }},
   player:{label:'Player card',pick:'player',async draw(x,D,R,id){const p=D.P[id],b=R.B[id],t=D.teams.find(z=>z.id===p.team),o=D.teams.find(z=>z.id!==p.team);const img=await loadImg(hsUrl(D,id));
     x.fillStyle=BG;x.fillRect(0,0,1080,1350);x.fillStyle=WINE;x.fillRect(0,0,1080,380);x.fillStyle=GOLD;x.fillRect(0,380,1080,10);
     head2(x,img,872,190,150,null,initials(p.name));
@@ -936,6 +945,27 @@ const CARDS={
     ids.forEach((id,k)=>{const y=510+k*72,b=R.B[id];if(k%2===0){x.fillStyle='#efebe5';x.fillRect(60,y-46,960,68)}x.fillStyle=INK;x.font='700 34px Archivo';x.fillText(D.P[id].last,80,y);
       cols.forEach(([h,fn],j)=>{const v=String(fn(b));x.font=(h==='PTS'?'700 ':'600 ')+'34px "Geist Mono"';x.fillStyle=h==='PTS'&&b.pts===best?WINE:h==='+/-'?(b.pm>0?'#1d6b3a':b.pm<0?'#a3122e':INK):INK;const w=x.measureText(v).width;x.fillText(v,cx[j]-w,y)})});
     const T=R.T[F.id];const y=510+ids.length*72+8;x.fillStyle=INK;x.fillRect(60,y-46,960,4);x.font='800 34px "Saira Condensed"';x.fillText('TEAM',80,y+6);x.font='700 34px "Geist Mono"';[[1,T.pts],[2,T.oreb+T.dreb],[3,T.ast],[4,T.fgm+'-'+T.fga],[5,T.tpm+'-'+T.tpa]].forEach(([j,v])=>{const w=x.measureText(String(v)).width;x.fillText(String(v),cx[j]-w,y+6)})}},
+  clutch:{label:'Clutch card',async draw(x,D,R){const F=D.focus,O=D.other;const C2=deriveCore(D,R.plays,'clutch');frame(x,D.away.abbr+' at '+D.home.abbr,'Clutch time',D,R);
+    const a=C2.T[F.id],b=C2.T[O.id];if(!a.sec){txt(x,'No clutch time in this game.',72,520,40,INK,700);txt(x,'Clutch = last 5 minutes with the score within 5.',72,575,30,MUT,500);return}
+    lbl(x,'LAST 5 MINUTES, WITHIN 5',72,450,32);x.fillStyle=WINE;x.font='700 170px "Geist Mono"';x.fillText(String(a.pts),72,640);x.fillStyle=MUT;x.font='700 90px "Geist Mono"';const w=x.measureText(' – ').width;x.fillText(' – ',72+x.measureText(String(a.pts)).width*1.88,610);x.fillStyle=GREY;x.font='700 170px "Geist Mono"';x.fillText(String(b.pts),72+x.measureText(String(a.pts)).width+w+20,640);
+    lbl(x,F.abbr+' IN CLUTCH TIME',72,690,30,WINE);lbl(x,O.abbr,560,690,30,GREY);
+    const ids=D.roster[F.id].filter(i=>C2.B[i].min>0).sort((p,q)=>C2.B[q].pts-C2.B[p].pts);const id=ids[0];
+    if(id){const img=await loadImg(hsUrl(D,id));head2(x,img,190,880,110,null,initials(D.P[id].name));const bb=C2.B[id];txt(x,D.P[id].name,340,850,46,INK,700);txt(x,`${bb.pts} pts · ${bb.fgm}-${bb.fga} FG · ${bb.ftm}-${bb.fta} FT`,340,900,32,'#3a3f46',500);txt(x,'in clutch time',340,945,28,MUT,500)}
+    [['FG',a.fgm+'-'+a.fga],['FT',a.ftm+'-'+a.fta],['TO',a.to],['STL',a.stl]].forEach(([l,v],j)=>{const cx=72+j*236;lbl(x,l,cx,1080);num(x,v,cx,1160,64)});footer(x)}},
+  milestone:{label:'Milestone card',async draw(x,D,R){const F=D.focus;milestoneCard(D,R);const h=MSH[0];frame(x,D.away.abbr+' at '+D.home.abbr,'Milestone night',D,R);
+    if(!h){txt(x,'No milestones passed tonight.',72,520,40,INK,700);footer(x);return}
+    const [id,kind,k,v,passed]=h;const W2={PTS:'POINTS',REB:'REBOUNDS',AST:'ASSISTS'};const img=await loadImg(hsUrl(D,id));head2(x,img,540,620,190,null,initials(D.P[id].name));
+    x.fillStyle=INK;x.font='800 64px "Saira Condensed"';ctr(x,D.P[id].name.toUpperCase(),540,880);
+    if(kind==='career'){x.fillStyle=WINE;x.font='700 130px "Geist Mono"';ctr(x,v.toLocaleString('en-US'),540,1030);x.fillStyle=MUT;x.font='800 40px "Saira Condensed"';ctr(x,'CAREER '+W2[k],540,1085)}
+    else{const o=v+(v%100>=11&&v%100<=13?'TH':['TH','ST','ND','RD'][v%10]||'TH');x.fillStyle=WINE;x.font='700 130px "Geist Mono"';ctr(x,o,540,1030);x.fillStyle=MUT;x.font='800 40px "Saira Condensed"';ctr(x,'ON THE CAVS ALL-TIME '+W2[k]+' LIST',540,1085);x.fillStyle='#3a3f46';x.font='600 30px Archivo';ctr(x,'Passed '+passed.join(', '),540,1140)}
+    footer(x)}},
+  streak:{label:'Record card',async draw(x,D,R){const F=D.focus,O=D.other;const rc=recordThrough(D,R);
+    x.fillStyle=INK;x.fillRect(0,0,1080,1350);x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText((rc.se.replace('-','–')+' · AFTER '+(D.focus.ha==='home'?'vs ':'at ')+O.abbr).toUpperCase(),72,100);
+    const hot=rc.k>=3;x.fillStyle='#fff';x.font='700 280px "Geist Mono"';x.fillText(hot?(rc.last+rc.k):rc.w+'–'+rc.l,72,380);
+    x.fillStyle=GOLD;x.font='800 54px "Saira Condensed"';x.fillText(hot?(rc.last==='W'?rc.k+'-GAME WIN STREAK':rc.k+'-GAME SKID'):'SEASON RECORD',80,460);x.fillStyle='rgba(255,255,255,.7)';x.font='600 34px Archivo';x.fillText(hot?`${rc.w}–${rc.l} on the season`:`Last ${Math.min(10,rc.res.length)}: ${rc.res.slice(-10).filter(z=>z==='W').length}–${rc.res.slice(-10).filter(z=>z==='L').length}`,80,515);
+    const L=rc.res.slice(-20);L.forEach((z,i)=>{x.fillStyle=z==='W'?WINE:'#3a3f46';x.fillRect(80+i*46,570,38,90);x.fillStyle=z==='W'?GOLD:'#8d939d';x.font='800 30px "Saira Condensed"';ctr(x,z,99+i*46,628)});
+    const ids=D.roster[F.id].filter(i=>R.B[i].min>0).sort((p,q)=>R.B[q].pts-R.B[p].pts);const id=ids[0];if(id){const img=await loadImg(hsUrl(D,id));head2(x,img,200,880,120,null,initials(D.P[id].name));const bb=R.B[id];x.fillStyle='#fff';x.font='800 50px "Saira Condensed"';x.fillText(D.P[id].name.toUpperCase(),360,860);x.font='600 34px Archivo';x.fillStyle='rgba(255,255,255,.8)';x.fillText(`${bb.pts} pts · ${bb.oreb+bb.dreb} reb · ${bb.ast} ast tonight`,360,910)}
+    const [sl,wh]=scoreLine(D,R);x.fillStyle='#fff';x.font='700 44px "Geist Mono"';x.fillText(sl+'  '+wh,80,1120);footer(x)}},
   story:{label:'Game story',async draw(x,D,R){const F=D.focus,O=D.other;frame(x,D.away.abbr+' at '+D.home.abbr,'The story of the game',D,R);
     cMargin(x,R,D,72,430,936,170);
     const ev=[];const fh=F===D.home;
@@ -953,7 +983,8 @@ async function renderCard(type,arg,D,R){await cardFonts();const cv=document.crea
 function vShare(v,D,R){
   const c=el('div','card');head(c,'Share cards',perLabel(S.per)+' · 1080 × 1350 images sized for X and Instagram');
   const fl=el('div','fl');if(!S.f.card)S.f.card='game';
-  Object.entries(CARDS).forEach(([k,o])=>{const b=el('button',null,o.label);b.type='button';b.setAttribute('aria-pressed',S.f.card===k);b.onclick=()=>{S.f.card=k;renderView()};fl.appendChild(b)});c.appendChild(fl);
+  const avail={clutch:()=>deriveCore(D,R.plays,'clutch').T[D.focus.id].sec>0,milestone:()=>(milestoneCard(D,R),MSH.length>0),streak:()=>D.focus.id===CLE&&S.state==='post'};if(S.f.card&&avail[S.f.card]&&!avail[S.f.card]())S.f.card='game';
+  Object.entries(CARDS).forEach(([k,o])=>{if(avail[k]&&!avail[k]())return;const b=el('button',null,o.label);b.type='button';b.setAttribute('aria-pressed',S.f.card===k);b.onclick=()=>{S.f.card=k;renderView()};fl.appendChild(b)});c.appendChild(fl);
   const C=CARDS[S.f.card];const f2=el('div','fl');let sel=null;
   if(C.pick){sel=el('select');sel.setAttribute('aria-label','Pick');
     const opts=C.pick==='shooter'?[['team','Whole team']].concat(Object.keys(R.B).filter(id=>D.P[id].team===D.focus.id&&R.B[id].fga).sort((a,b)=>R.B[b].fga-R.B[a].fga).map(id=>[id,D.P[id].name+' · '+R.B[id].fga+' FGA'])):C.pick==='player'?Object.keys(R.B).filter(id=>R.B[id].min>0||R.B[id].pts).sort((a,b)=>R.B[b].pts-R.B[a].pts).map(id=>[id,D.P[id].name+' · '+R.B[id].pts+' pts']):
