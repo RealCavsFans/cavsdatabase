@@ -22,9 +22,11 @@ jobs:
           node-version: 22
       - run: node scripts/backup-pbpstats.mjs   # fills games ESPN missed, from pbpstats
       - run: node scripts/team-stats.mjs
+      - run: node scripts/cle-rates.mjs
       - name: Check and commit index.html if it changed
         run: |
-          git diff --quiet -- index.html pdata/league.json && { echo "no changes"; exit 0; }
+          git add -N data/cle-rates.json 2>/dev/null || true
+          git diff --quiet -- index.html pdata/league.json data/cle-rates.json && { echo "no changes"; exit 0; }
           python3 -c "import re;s=open('index.html').read();m=max(re.findall(r'<script>(.*?)</script>',s,re.S),key=len);open('/tmp/m.js','w').write(m)"
           node --check /tmp/m.js
           npm i --no-save --no-package-lock --no-audit --no-fund playwright-core@1.56.0 >/dev/null
@@ -33,6 +35,7 @@ jobs:
           git config user.email "bot@cavsdatabase.com"
           git add index.html
           git add pdata/league.json 2>/dev/null || true
+          git add data/cle-rates.json 2>/dev/null || true
           git commit -m "Team stats from ESPN box scores"
           for i in 1 2 3; do
             if git pull --rebase origin main && git push; then exit 0; fi
