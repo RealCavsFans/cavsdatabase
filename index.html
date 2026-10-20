@@ -227,6 +227,14 @@ body{padding-bottom:var(--bnh)}
 .ros td.pl .hs{width:60px;height:44px;margin-right:12px}
 .ros td.pl{font-size:1rem}.ros td.pl .plink{font-size:1.0625rem}
 }
+
+/* desktop header: bigger tabs and search */
+@media (min-width:1100px){
+header.gbar .gnav a{font-size:1.0625rem;padding:0 7px}
+header.gbar .search{flex:0 1 280px;height:44px}
+header.gbar .search input{font-size:0.9375rem}
+}
+@media (min-width:761px) and (max-width:1099px){header.gbar .gnav a{font-size:0.9688rem}}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
@@ -3216,7 +3224,7 @@ const COMBINE={
     ps.forEach(([no,n,pos,ht,wt,b,age,exp,sch,cty,dr,stt,pid])=>{
       const tr=el('tr');tr.id='r-'+slug(n);
       const nm=el('td','pl');const pa=el('a','plink',n);if(PP_ON){pa.href='/players/'+slug(n);pa.dataset.go='players/'+slug(n);pa.title=n+': full player page'}else{pa.href=profileUrl(n,pid);pa.target='_blank';pa.rel='noopener';pa.title=RAPM[n]?'RAPM profile on nbarapm':'Profile on NBA.com'}nm.appendChild(pa);if(PRON[n]){const sb=el('button','say');sb.type='button';sb.title='Hear '+n+' say his name'+(PRON_TX[n]?' ('+PRON_TX[n]+')':'');sb.setAttribute('aria-label',sb.title);sb.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';sb.onclick=e=>{e.preventDefault();e.stopPropagation();const au=window._say||(window._say=new Audio());au.src='https://cdn.nba.com/logos/nba/playername-audio/2025-26/'+PRON[n]+'.wav';sb.classList.add('on');au.onended=au.onerror=()=>sb.classList.remove('on');au.play().catch(()=>sb.classList.remove('on'))};nm.appendChild(sb)}if(stt){nm.appendChild(el('span','tag',stt))}
-      const hs=el('img','hs');hs.src='https://cdn.nba.com/headshots/nba/latest/260x190/'+pid+'.png';hs.alt='';hs.loading='lazy';hs.onerror=()=>hs.remove();nm.prepend(hs);{const sm=el('small','pos',pos+' · '+cty);const so=socialLinks(n);if(so)sm.appendChild(so);nm.appendChild(sm)}
+      const hs=el('img','hs');hs.src='https://cdn.nba.com/headshots/nba/latest/260x190/'+pid+'.png';hs.alt='';hs.loading='lazy';hs.onerror=()=>hs.remove();nm.prepend(hs);{const sm=el('small','pos',pos+' · '+cty);nm.appendChild(sm)}
       const two=(a,b2)=>{const td=el('td','m two');td.append(a);td.appendChild(el('small',null,b2));return td};
       const L=(td,l)=>{td.dataset.l=l;return td};
       tr.append(el('td','r num',no||'—'),nm,L(two(ht==='—'?'—':ht.replace('-','′')+'″',wt?wt+' lb':'—'),'Height'),L(two(String(age),born(b)),'Age'),L(el('td','c m',exp),'Exp'),L((()=>{const td=el('td','sch');const cc=COLLEGE_BBR[sch];if(cc){const a=el('a','dlink',sch);a.href='https://www.basketball-reference.com/friv/colleges.fcgi?college='+cc;a.target='_blank';a.rel='noopener';a.title='Every NBA player from '+sch+' (Basketball Reference)';td.appendChild(a)}else td.textContent=sch;return td})(),'College / last'),
