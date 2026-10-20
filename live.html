@@ -631,7 +631,7 @@ const loadImg=src=>new Promise(r=>{if(!src)return r(null);const im=new Image();i
 const hsUrl=(D,id)=>{const p=D.P[id];const k=p&&HS[normName(p.name)];return k?'/img/h/'+k+'.png':null};
 function head2(x,img,cx,cy,r,ring='#F2B231',label){x.save();x.beginPath();x.arc(cx,cy,r,0,7);x.closePath();x.fillStyle='#e7e1d8';x.fill();x.clip();
   if(img){const ar=img.width/img.height,h=r*2.15,w=h*ar;x.drawImage(img,cx-w/2,cy-r*1.02,w,h)}else if(label){x.fillStyle='#860038';x.font=`800 ${Math.round(r*.8)}px "Saira Condensed"`;const t=label;x.fillText(t,cx-x.measureText(t).width/2,cy+r*.28)}
-  x.restore();x.lineWidth=Math.max(4,r*.06);x.strokeStyle=ring;x.beginPath();x.arc(cx,cy,r,0,7);x.stroke()}
+  x.restore()}
 const initials=n=>n.split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('');
 const ctr=(x,t,cx,y)=>x.fillText(t,cx-x.measureText(t).width/2,y);
 function wrap(x,t,X,Y,maxW,lh){const w=t.split(' ');let line='',y=Y;w.forEach(word=>{const tt=line?line+' '+word:word;if(x.measureText(tt).width>maxW&&line){x.fillText(line,X,y);line=word;y+=lh}else line=tt});if(line)x.fillText(line,X,y);return y}
@@ -646,6 +646,7 @@ const ODES=[
   (t,b,m)=>`That's a W. ${t} led the way with ${b.pts}.`,
   (t,b,m)=>`Defend the Land? Done. ${m}-point win, ${t} with ${b.pts}.`
 ];
+const wonNames=(D,R)=>{const A=R.T[D.focus.id],B=R.T[D.other.id],fa=factors(A,B),fb=factors(B,A);return FF.filter(([k,,,h])=>fa[k]!=null&&fb[k]!=null&&fa[k]!==fb[k]&&((fa[k]>fb[k])===h)).map(x=>x[1])};
 const BG='#f7f5f2',INK='#101419',WINE='#860038',GOLD='#F2B231',GREY='#5b6470',MUT='#6b7078';
 function footer(x){x.fillStyle=INK;x.fillRect(0,1250,1080,100);x.fillStyle='#fff';x.font='800 44px "Saira Condensed"';x.fillText('CAVS',72,1315);const w1=x.measureText('CAVS ').width;x.fillStyle=GOLD;x.fillText('DATABASE',72+w1,1315);x.fillStyle='#c9ccd1';x.font='600 30px Archivo';const u='cavsdatabase.com';x.fillText(u,1008-x.measureText(u).width,1312)}
 const scoreLine=(D,R)=>{const fin=S.state==='post',per=R.lp?R.lp.per:1;return [`${D.away.abbr} ${R.as}  ${D.home.abbr} ${R.hs}`,fin?'FINAL'+(per>4?'/'+pname(per):''):pname(per)+' '+(R.lp?R.lp.clock:'')]};
@@ -657,23 +658,22 @@ const CARDS={
       x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText((kick()+F.abbr+' '+(F.ha==='home'?'vs':'at')+' '+O.abbr).toUpperCase(),72,100);
       x.fillStyle='#fff';x.font='800 150px "Saira Condensed"';x.fillText('CAVS WIN',72,250);
       x.font='700 120px "Geist Mono"';x.fillText(fs+'–'+os,72,390);x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText(('vs the '+O.name+(F.rec?' · '+F.rec:'')).toUpperCase(),72,450);
-      const id=top(F)[0],b=R.B[id],seed=[...String(D.date||'')].reduce((a,c)=>a+c.charCodeAt(0),0);const ode=ODES[seed%ODES.length](D.P[id].last,b,fs-os);
-      x.fillStyle='#fff';x.font='italic 600 46px Archivo';const yE=wrap(x,'“'+ode+'”',72,560,936,58);
-      const ids=top(F).slice(0,3);const imgs=await Promise.all(ids.map(i=>loadImg(hsUrl(D,i))));
-      ids.forEach((pid,i)=>{const cx=72+120+i*312,cy=Math.max(yE+150,780),bb=R.B[pid];head2(x,imgs[i],cx,cy,110,GOLD,initials(D.P[pid].name));
-        x.fillStyle='#fff';x.font='800 40px "Saira Condensed"';ctr(x,D.P[pid].last.toUpperCase(),cx,cy+160);x.font='700 64px "Geist Mono"';ctr(x,String(bb.pts),cx,cy+232);x.fillStyle=GOLD;x.font='800 28px "Saira Condensed"';ctr(x,`PTS · ${bb.oreb+bb.dreb} REB · ${bb.ast} AST`,cx,cy+270)});
-      {const A=R.T[F.id],B2=R.T[O.id],fa=factors(A,B2),fb=factors(B2,A);const wn=FF.filter(([k,,,h])=>fa[k]!=null&&fb[k]!=null&&fa[k]!==fb[k]&&((fa[k]>fb[k])===h)).length;x.fillStyle='rgba(0,0,0,.28)';x.fillRect(72,1150,936,60);x.fillStyle=GOLD;x.font='800 32px "Saira Condensed"';x.fillText(`FOUR FACTORS WON ${wn} OF 4`,96,1191);x.fillStyle='#fff';x.font='700 28px "Geist Mono"';const e=`eFG ${(fa.efg*100).toFixed(0)}% · PAINT ${A.paint}–${B2.paint}`;x.fillText(e,984-x.measureText(e).width,1190)}
+      const yE=470;
+            const ids=top(F).slice(0,3);const imgs=await Promise.all(ids.map(i=>loadImg(hsUrl(D,i))));
+      ids.forEach((pid,i)=>{const cx=72+120+i*312,cy=yE+260,bb=R.B[pid];head2(x,imgs[i],cx,cy,130,null,initials(D.P[pid].name));
+        x.fillStyle='#fff';x.font='800 40px "Saira Condensed"';ctr(x,D.P[pid].last.toUpperCase(),cx,cy+175);x.font='700 72px "Geist Mono"';ctr(x,String(bb.pts),cx,cy+255);x.fillStyle=GOLD;x.font='800 28px "Saira Condensed"';ctr(x,'POINTS',cx,cy+290);x.fillStyle='rgba(255,255,255,.85)';x.font='600 28px Archivo';ctr(x,`${bb.oreb+bb.dreb} reb · ${bb.ast} ast`,cx,cy+332)});
+      {const wn=wonNames(D,R);x.fillStyle='rgba(0,0,0,.28)';x.fillRect(72,1140,936,80);x.fillStyle=GOLD;x.font='800 30px "Saira Condensed"';x.fillText(`WON ${wn.length} OF THE 4 FACTORS`,96,1172);x.fillStyle='#fff';x.font='600 26px Archivo';x.fillText(wn.length?wn.join(' · '):'Shooting, ball security, rebounding and free throws all went the other way',96,1206)}
       footer(x);return}
     const w=R.as===R.hs?null:(R.as>R.hs?D.away:D.home);frame(x,kick()+D.away.abbr+' at '+D.home.abbr,S.state==='post'&&w?w.name+' win':(R.lp?pname(R.lp.per)+' '+R.lp.clock:'Score update'),D,R);
     lbl(x,'HOW IT PLAYED OUT',72,450,30);cMargin(x,R,D,72,470,936,200);
     [F,O].forEach((t,ti)=>{const X0=72+ti*480;lbl(x,t.name.toUpperCase(),X0,780,34,ti?GREY:WINE);
       top(t).slice(0,2).forEach((id,i)=>{const b=R.B[id],y=850+i*170;num(x,b.pts,X0,y+56,88,ti?GREY:WINE);lbl(x,'PTS',X0+4,y+92,26);const nx=X0+150;txt(x,D.P[id].last,nx,y+20,38,INK,700);
         x.font='700 28px "Geist Mono"';x.fillStyle=INK;[[b.oreb+b.dreb,'REB'],[b.ast,'AST'],[b.fgm+'-'+b.fga,'FG']].forEach(([v,l],k)=>{const cx=nx+k*96;x.fillStyle=INK;x.font='700 30px "Geist Mono"';x.fillText(String(v),cx,y+64);lbl(x,l,cx,y+92,24)})})});
-    const A=R.T[F.id],B=R.T[O.id],fa=factors(A,B),fb=factors(B,A);const wn=FF.filter(([k,,,h])=>fa[k]!=null&&fb[k]!=null&&fa[k]!==fb[k]&&((fa[k]>fb[k])===h)).length;
+    {const wn=wonNames(D,R);x.fillStyle=INK;x.fillRect(72,1160,936,74);x.fillStyle=GOLD;x.font='800 28px "Saira Condensed"';x.fillText(`${F.abbr} WON ${wn.length} OF THE 4 FACTORS`,96,1190);x.fillStyle='#fff';x.font='600 24px Archivo';x.fillText(wn.length?wn.join(' · '):'None tonight',96,1220)}
     x.fillStyle=INK;x.fillRect(72,1180,936,52);x.fillStyle=GOLD;x.font='800 30px "Saira Condensed"';x.fillText(`FOUR FACTORS WON  ${F.abbr} ${wn} · ${O.abbr} ${4-wn}`,96,1216)}},
   player:{label:'Player card',pick:'player',async draw(x,D,R,id){const p=D.P[id],b=R.B[id],t=D.teams.find(z=>z.id===p.team),o=D.teams.find(z=>z.id!==p.team);const img=await loadImg(hsUrl(D,id));
     x.fillStyle=BG;x.fillRect(0,0,1080,1350);x.fillStyle=WINE;x.fillRect(0,0,1080,380);x.fillStyle=GOLD;x.fillRect(0,380,1080,10);
-    head2(x,img,880,250,150,GOLD,initials(p.name));
+    head2(x,img,872,190,150,null,initials(p.name));
     x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText((kick()+t.abbr+' '+(t.ha==='home'?'vs':'at')+' '+o.abbr).toUpperCase(),72,100);
     x.fillStyle='#fff';const parts=p.name.toUpperCase().split(' ');const first=parts.shift(),last=parts.join(' ');x.font='800 64px "Saira Condensed"';x.fillText(first,72,175);let fs=118;x.font=`800 ${fs}px "Saira Condensed"`;while(x.measureText(last).width>620&&fs>60){fs-=6;x.font=`800 ${fs}px "Saira Condensed"`}x.fillText(last,72,280);
     const [sl,wh]=scoreLine(D,R);x.font='700 36px "Geist Mono"';x.fillText(sl,72,345);const sw=x.measureText(sl).width;x.font='600 28px Archivo';x.fillStyle='rgba(255,255,255,.75)';x.fillText(wh,72+sw+28,345);
@@ -683,28 +683,29 @@ const CARDS={
     x.fillStyle='#e3e0db';x.fillRect(72,800,936,2);
     [['FG',b.fgm+'-'+b.fga],['3PT',b.tpm+'-'+b.tpa],['FT',b.ftm+'-'+b.fta],['STL',b.stl],['BLK',b.blk],['+/-',sgn(b.pm)]].forEach(([l,v],i)=>{const cx=72+(i%3)*312,cy=880+Math.floor(i/3)*170;lbl(x,l,cx,cy);num(x,v,cx,cy+80,76)});footer(x)}},
   ff:{label:'Four factors card',async draw(x,D,R){const A=R.T[D.focus.id],B=R.T[D.other.id],fa=factors(A,B),fb=factors(B,A);frame(x,kick()+D.focus.abbr+' vs '+D.other.abbr,'Four factors',D,R);
-    FF.forEach(([k,n,full,hib],i)=>{const y=450+i*200,a=fa[k],b=fb[k];txt(x,n,72,y,40,INK,700);txt(x,full+(hib?'':' (lower is better)'),72,y+38,26,MUT,500);
-      const win=a!=null&&b!=null&&a!==b?((a>b)===hib?0:1):-1;
-      if(win>=0){const t=win?D.other:D.focus;x.fillStyle=win?GREY:WINE;x.fillRect(808,y-36,200,46);x.fillStyle='#fff';x.font='800 28px "Saira Condensed"';ctr(x,t.abbr+' EDGE',908,y-4)}
-      const mx=Math.max(a||0,b||0)||1;[[D.focus,a,0],[D.other,b,1]].forEach(([t,v,j])=>{const yy=y+62+j*46;lbl(x,t.abbr,72,yy+26,30,j?GREY:WINE);const W=620*(v||0)/mx;x.fillStyle=win===j?(j?GREY:WINE):'#cfc8be';x.fillRect(180,yy,W,32);x.fillStyle=INK;x.font='700 34px "Geist Mono"';x.fillText(v==null?'–':(v*100).toFixed(1)+'%',180+W+16,yy+28)});
-      if(i<3){x.fillStyle='#e3e0db';x.fillRect(72,y+178,936,2)}});footer(x)}},
+    lbl(x,D.focus.abbr,600,470,40,WINE);lbl(x,D.other.abbr,850,470,40,GREY);
+    FF.forEach(([k,n,full,hib],i)=>{const y=580+i*165,a=fa[k],b=fb[k];txt(x,n,72,y,42,INK,700);txt(x,full,72,y+44,28,MUT,500);
+      const win=a!=null&&b!=null&&a!==b?((a>b)===hib?0:1):-1;num(x,a==null?'–':(a*100).toFixed(1)+'%',600,y+18,56,win===0?WINE:INK);num(x,b==null?'–':(b*100).toFixed(1)+'%',850,y+18,56,win===1?GREY:INK);
+      if(i<3){x.fillStyle='#e3e0db';x.fillRect(72,y+80,936,2)}})}},
   run:{label:'Run card',pick:'run',async draw(x,D,R,i){const r=R.runs[+i];if(!r)return;const t=D.teams.find(z=>z.id===r.t);frame(x,kick()+D.away.abbr+' at '+D.home.abbr,t.name+' run',D,R);
     num(x,r.pts+'–0',72,640,230,t===D.focus?WINE:GREY);
     txt(x,`${pname(r.start.per)} ${r.start.clock} → ${r.end.per!==r.start.per?pname(r.end.per)+' ':''}${r.end.clock}`,72,710,38,INK,700);txt(x,`in ${fmtMin(r.end.t-r.start.t)} of game time`,72,756,30,MUT,500);
     const i0=R.plays.indexOf(r.start),i1=R.plays.indexOf(r.end);const best=ptsIn(D,R,i0,i1,r.t)[0];
-    if(best){const [pid,v]=best;const img=await loadImg(hsUrl(D,pid));lbl(x,'LED THE RUN',700,470,30);head2(x,img,820,580,95,GOLD,initials(D.P[pid].name));
-      x.fillStyle=INK;x.font='800 40px "Saira Condensed"';ctr(x,D.P[pid].last.toUpperCase(),820,720);x.font='700 34px "Geist Mono"';ctr(x,`${v.pts} PTS${v.ast?' · '+v.ast+' AST':''}`,820,764)}
+    if(best){const [pid,v]=best;const img=await loadImg(hsUrl(D,pid));x.fillStyle=MUT;x.font='800 30px "Saira Condensed"';ctr(x,'LED THE RUN',830,462);head2(x,img,830,575,95,null,initials(D.P[pid].name));
+      x.fillStyle=INK;x.font='800 40px "Saira Condensed"';ctr(x,D.P[pid].last.toUpperCase(),830,712);x.font='700 34px "Geist Mono"';ctr(x,`${v.pts} PTS${v.ast?' · '+v.ast+' AST':''}`,830,756)}
     lbl(x,'WHERE IT HAPPENED',72,850,30);cMargin(x,R,D,72,870,936,200,[r.start.t,r.end.t]);
     const ln=R.lineAt[r.start.id];if(ln&&ln[r.t])txt(x,'On the floor: '+ln[r.t].map(id=>D.P[id].last).join(', '),72,1150,28,'#3a3f46',500);footer(x)}},
   lineup:{label:'Lineup card',pick:'lineup',async draw(x,D,R,k){const l=R.L[D.focus.id][5][k];if(!l)return;const po=poss(l.o),pd=poss(l.d);const net=po>=1&&pd>=1?l.pf/po*100-l.pa/pd*100:null;
     const all=Object.values(R.L[D.focus.id][5]).filter(z=>z.sec>=180).sort((a,b)=>(b.pf-b.pa)-(a.pf-a.pa));const best=all[0]===l;
     frame(x,kick()+D.focus.abbr+' lineup',best?'Best five tonight':'Five-man unit',D,R);
     const ids=l.ids.slice().sort((a,b)=>D.P[b].starter-D.P[a].starter);const imgs=await Promise.all(ids.map(i=>loadImg(hsUrl(D,i))));
-    ids.forEach((id,j)=>{const cx=72+93+j*187;head2(x,imgs[j],cx,520,80,GOLD,initials(D.P[id].name));x.fillStyle=INK;x.font='800 32px "Saira Condensed"';const nm=D.P[id].last.toUpperCase();let f2=32;while(x.measureText(nm).width>176&&f2>20){f2-=2;x.font=`800 ${f2}px "Saira Condensed"`}ctr(x,nm,cx,645)});
-    const pm=l.pf-l.pa;x.fillStyle=pm>=0?'#1d6b3a':'#a3122e';x.font='700 200px "Geist Mono"';ctr(x,sgn(pm),540,870);x.fillStyle=MUT;x.font='800 34px "Saira Condensed"';ctr(x,'PLUS-MINUS TOGETHER',540,925);
-    x.fillStyle='#e3e0db';x.fillRect(72,975,936,2);
-    const cells=[['MINUTES',fmtMin(l.sec)],['SCORE',l.pf+'–'+l.pa],['OFF/100',po>=1?(l.pf/po*100).toFixed(0):'–'],['DEF/100',pd>=1?(l.pa/pd*100).toFixed(0):'–'],['NET/100',net==null?'–':sgn(Math.round(net))]];
-    cells.forEach(([lb,v],j)=>{const cx=72+93+j*187;x.fillStyle=j===4?(net>=0?'#1d6b3a':'#a3122e'):INK;x.font='700 52px "Geist Mono"';ctr(x,v,cx,1080);x.fillStyle=MUT;x.font='800 28px "Saira Condensed"';ctr(x,lb,cx,1125)});footer(x)}},
+    ids.forEach((id,j)=>{const cx=72+93+j*187;head2(x,imgs[j],cx,530,82,null,initials(D.P[id].name));x.fillStyle=INK;x.font='800 32px "Saira Condensed"';const nm=D.P[id].last.toUpperCase();let f2=32;while(x.measureText(nm).width>176&&f2>20){f2-=2;x.font=`800 ${f2}px "Saira Condensed"`}ctr(x,nm,cx,660);x.fillStyle=MUT;x.font='600 26px Archivo';ctr(x,R.B[id].pts+' pts tonight',cx,700)});
+    x.fillStyle='#e3e0db';x.fillRect(72,770,936,2);lbl(x,'TOGETHER TONIGHT',72,830,32);
+    const pm=l.pf-l.pa;const cells=[['PLUS-MINUS',sgn(pm),pm>=0?'#1d6b3a':'#a3122e'],['MINUTES',fmtMin(l.sec),INK],['SCORE',l.pf+'–'+l.pa,INK]];
+    cells.forEach(([lb,v,c],j)=>{const cx=72+156+j*312;x.fillStyle=c;x.font='700 96px "Geist Mono"';ctr(x,v,cx,960);x.fillStyle=MUT;x.font='800 30px "Saira Condensed"';ctr(x,lb,cx,1004)});
+    x.fillStyle='#e3e0db';x.fillRect(72,1045,936,2);
+    const c2=[['OFFENSE / 100',po>=1?(l.pf/po*100).toFixed(0):'–',INK],['DEFENSE / 100',pd>=1?(l.pa/pd*100).toFixed(0):'–',INK],['NET / 100',net==null?'–':sgn(Math.round(net)),net>=0?'#1d6b3a':'#a3122e']];
+    c2.forEach(([lb,v,c],j)=>{const cx=72+156+j*312;x.fillStyle=c;x.font='700 60px "Geist Mono"';ctr(x,v,cx,1140);x.fillStyle=MUT;x.font='800 26px "Saira Condensed"';ctr(x,lb,cx,1180)});footer(x)}},
   /* ---- a second set, each with its own look ---- */
   shotmap:{label:'Shot map',pick:'shooter',async draw(x,D,R,id){const team=id==='team';const t=D.focus;const sh=R.shots.filter(q=>q.t===t.id&&q.hasXY&&(team||q.id===id));
     x.fillStyle='#0b0d11';x.fillRect(0,0,1080,1350);const s=19.2,X0=60,Y0=330,X=v=>X0+v*s,Y=v=>Y0+(v+5.25)*s,c3=Math.sqrt(23.75**2-22**2);
