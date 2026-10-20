@@ -168,6 +168,12 @@ svg{display:block;width:100%;height:auto}
 .runs small{font:500 0.75rem var(--mono);color:var(--muted)}
 /* tables */
 .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tw.more{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 44px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 44px),transparent)}
+.swh{display:flex;justify-content:flex-end;align-items:center;gap:5px;font:700 0.6875rem var(--cond);letter-spacing:.08em;text-transform:uppercase;color:var(--wt,var(--wine));margin:0 0 4px;transition:opacity .3s}
+.swh i{font-style:normal;display:inline-block;animation:swn 1.4s ease-in-out infinite}
+@keyframes swn{50%{transform:translateX(4px)}}
+@media (prefers-reduced-motion:reduce){.swh i{animation:none}}
+.swh.gone{opacity:0;pointer-events:none}
 table.dt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
 .dt th{font:700 0.6875rem var(--cond);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right;padding:6px;border-bottom:1px solid var(--line);white-space:nowrap}
 .dt th button{all:unset;cursor:pointer}
@@ -435,6 +441,11 @@ function renderNav(R){setTimeout(moreHint,0);
   btn('Clutch',S.per==='clutch',have<4,()=>set(S.per==='clutch'?'all':'clutch'),'Last 5 minutes, score within 5');
   pr.style.display=S.tab==='rot'||S.tab==='plays'?'none':'';
 }
+/* scroll hints: a table wider than the screen fades at its right edge and shows "Swipe for more"; both go away once it's scrolled to the end */
+function scrollHints(){document.querySelectorAll('#view .tw').forEach(w=>{const over=w.scrollWidth>w.clientWidth+4;let h=w.previousElementSibling;if(!(h&&h.classList.contains('swh'))){if(!over)return;h=el('div','swh');h.innerHTML='Swipe for more <i>→</i>';w.before(h);w.addEventListener('scroll',()=>{const end=w.scrollLeft+w.clientWidth>=w.scrollWidth-4;w.classList.toggle('more',!end);if(w.scrollLeft>8)h.classList.add('gone')},{passive:true})}
+  const end=w.scrollLeft+w.clientWidth>=w.scrollWidth-4;w.classList.toggle('more',over&&!end);h.style.display=over?'':'none'})}
+let _shT;new MutationObserver(()=>{clearTimeout(_shT);_shT=setTimeout(scrollHints,60)}).observe(document.getElementById('view')||document.body,{childList:true,subtree:true});
+addEventListener('resize',()=>{clearTimeout(_shT);_shT=setTimeout(scrollHints,120)});
 function renderView(){
   const v=$('view'),D=S.data,R=S.R;v.innerHTML='';
   if(S.state==='pre'&&!R.plays.length){const c=el('div','card');c.append(el('h2',null,D.away.abbr+' at '+D.home.abbr),el('p',null,'Tip-off '+new Date(D.date).toLocaleString([],{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+(D.venue?' · '+D.venue:'')+(D.bc.length?' · '+D.bc.join(', '):'')+'.'),el('p','empty','Team and player stats, lineups, shots, four factors and rotations fill in once the game starts. The page refreshes every 15 seconds during the game.'));v.appendChild(c);
