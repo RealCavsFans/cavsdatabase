@@ -128,14 +128,25 @@
 .sm-tn{margin:2px 0 6px;font-size:0.75rem;color:var(--muted)}
 .sm-tr{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
 .sm-tr b{display:block;font-size:0.875rem}.sm-tr small{display:block;font-size:0.71875rem;color:var(--muted)}
-.sm-tc{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+
 .sm-seg{display:flex;border:1px solid var(--fg);flex:none}
 .sm-seg button{background:var(--card);color:var(--fg);border:0;padding:6px 10px;font:600 0.75rem var(--sans);cursor:pointer;white-space:nowrap}
 .sm-seg button+button{border-left:1px solid var(--fg)}
 .sm-seg button[aria-pressed=true]{background:var(--wine);color:#fff}
-.sm-amt{display:flex;align-items:center;gap:3px;font:600 0.8125rem var(--mono)}.sm-amt[hidden]{display:none}
-.sm-amt input{width:4.4rem;padding:4px 6px;border:1px solid var(--line);background:var(--card);color:var(--fg);font:600 0.8125rem var(--mono);text-align:right}
+.sm-amt[hidden]{display:none}
+
 .sm-reset{margin-top:6px;background:none;border:0;padding:4px 0;color:var(--wine-ink);font:700 0.75rem var(--sans);text-decoration:underline;cursor:pointer}
+
+.sm-meter .m{position:absolute;top:0;bottom:0;background:#9aa1a9}
+.sm-leg i.m{background:#9aa1a9}
+.sm-tr{flex-wrap:wrap}.sm-tr>div:first-child{flex:1;min-width:0}
+.sm-amt{flex-basis:100%;display:block;padding:6px 0 2px}.sm-amt>b{font:700 1.125rem var(--mono)}
+.sm-rng{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;font:500 0.6875rem var(--mono);color:var(--muted)}
+.sm-rng input{width:100%;accent-color:#860038}
+.sm-amt small,.sm-dn{display:block;font-size:0.6875rem;color:var(--muted);margin-top:3px}
+.sm-dn{flex-basis:100%}
+.sm-fill{display:flex;gap:8px;align-items:flex-start;padding:9px 0 2px;border-top:1px solid var(--line);font-size:0.8125rem;cursor:pointer}
+.sm-fill input{accent-color:#860038;margin-top:2px}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
@@ -3777,41 +3788,56 @@ const y0now=s=>s===SEASONS[0];
 
 /* Cap: next summer's cap position, built from ROSTER and THRESH (index 1 = next season).
    "Make the calls": pick up or decline team options and re-sign or let go free agents; the meter, headline and tiles redraw.
-   Re-signings use the amount typed in (starting at his current salary). Nothing here is saved; it's a what-if. */
+   Re-signings use a slider bounded by what his Bird rights allow and his minimum salary. Nothing here is saved; it's a what-if. */
 (function(){const B=document.getElementById('sm-b');if(!B)return;const I=1,NY=SEASONS[I],yr=NY.slice(0,4);
   document.getElementById('sm-h').textContent='Summer '+yr;document.getElementById('sm-sub').textContent=NY+' · projected · updates as deals change';
   const sal=y=>typeof y==='number'?y:Array.isArray(y)?y[0]:null;let gu=0,n=0;const opts=[],fas=[];
   ROSTER.forEach(([nm,p,yrs,bird,fa,t])=>{const y=yrs[I];if(typeof y==='number'){gu+=y;if(t!=='Dead money')n++}else if(Array.isArray(y)){if(y[1]==='T')opts.push([nm,y[0],t]);else{gu+=y[0];n++}}else if(typeof y==='string')fas.push([nm,y,bird,sal(yrs[I-1])])});
   const T=k=>THRESH.find(x=>x[0]===k)[1][I],cap=T('Salary cap'),tax=T('Luxury tax'),a1=T('First apron'),a2=T('Second apron');
   /* what-if state: options picked up by default (the usual call), free agents not yet re-signed */
-  const ST={opt:Object.fromEntries(opts.map(o=>[o[0],true])),fa:Object.fromEntries(fas.map(f=>[f[0],{on:false,amt:f[3]||0}]))};
+  /* what each free agent can be re-signed for (2023 CBA), with next season's numbers estimated from the projected cap:
+     floor = his minimum salary by years of service; ceiling by Bird rights: Full Bird = max salary (25/30/35% of the cap by service),
+     Early Bird = greater of 175% of his salary or 105% of the average salary, Non-Bird = greater of 120% of his salary or 120% of his minimum */
+  const g=cap/THRESH.find(x=>x[0]==='Salary cap')[1][0];const MIN26=[1357763,2185100,2449421,2537526,2625632,2845902,3066173,3286444,3506714,3524171,3876529];
+  const minFor=y=>Math.round(MIN26[Math.min(10,Math.max(0,y))]*g),avg=15235500/1.05*g;
+  const yosOf=nm=>{const p=PLAYERS.find(x=>x[1]===nm);return p?(+p[7]||0)+1:3};
+  const lim=(nm,bird,prev)=>{const y=yosOf(nm),lo=minFor(y);let hi,why;
+    if(bird==='Full Bird'){hi=cap*(y>=10?.35:y>=7?.30:.25);why='Full Bird: up to a max deal ('+(y>=10?35:y>=7?30:25)+'% of the cap)'}
+    else if(bird==='Early Bird'){hi=Math.max(1.75*(prev||0),1.05*avg);why='Early Bird: up to the greater of 175% of his salary or 105% of the average salary'}
+    else{hi=Math.max(1.2*(prev||0),1.2*lo);why='Non-Bird: up to 120% of his salary'}
+    return {lo,hi:Math.max(lo,Math.floor(hi/1e5)*1e5),why,y}};
+  const ST={opt:Object.fromEntries(opts.map(o=>[o[0],true])),fa:Object.fromEntries(fas.map(f=>{const L=lim(f[0],f[2],f[3]);return [f[0],{on:false,amt:Math.min(L.hi,Math.max(L.lo,f[3]||0))}]})),fill:false};
   const BW={'Full Bird':'Full Bird','Early Bird':'Early Bird','Non-Bird':'Non-Bird'};
   const view=el('div');B.appendChild(view);
   /* the calls panel (built once, so typing in a box keeps focus) */
   const calls=el('div','sm-try');calls.appendChild(el('h4',null,'Make the calls'));calls.appendChild(el('p','sm-tn','Tap to see how each decision moves the Cavs’ '+NY+' payroll.'));
   const seg=(opts2,cur,cb)=>{const w=el('div','sm-seg');opts2.forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',k===cur);b.onclick=()=>{w.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));cb(k)};w.appendChild(b)});return w};
   opts.forEach(([nm,v,t])=>{const r=el('div','sm-tr');const a=el('div');a.append(el('b',null,nm),el('small',null,'Team option · '+usdM(v)+(t?' · '+t.replace('Team option decision due','due'):'')));
-    r.append(a,seg([['y','Pick up'],['n','Decline']],'y',k=>{ST.opt[nm]=k==='y';draw()}));calls.appendChild(r)});
+    const nt=el('small','sm-dn','Declined: he becomes an unrestricted free agent, and Cleveland can’t re-sign him for more than '+usdM(v)+' for '+NY+'.');nt.hidden=true;
+    r.append(a,seg([['y','Pick up'],['n','Decline']],'y',k=>{ST.opt[nm]=k==='y';nt.hidden=k==='y';draw()}));r.appendChild(nt);calls.appendChild(r)});
+  {const r=el('label','sm-fill');const cb=el('input');cb.type='checkbox';cb.onchange=()=>{ST.fill=cb.checked;draw()};const tx=el('span');r.append(cb,tx);calls.appendChild(r);ST.fillLabel=tx}
   fas.forEach(([nm,y,bird,v])=>{const r=el('div','sm-tr');const a=el('div');a.append(el('b',null,nm),el('small',null,y+' · '+(BW[bird]||bird)+(v?' · now '+usdM(v):'')));
-    const amt=el('label','sm-amt');amt.hidden=true;const inp=el('input');inp.type='number';inp.min='0';inp.step='0.5';inp.inputMode='decimal';inp.value=(ST.fa[nm].amt/1e6).toFixed(1);inp.setAttribute('aria-label',nm+' new salary in millions');
-    inp.oninput=()=>{ST.fa[nm].amt=Math.max(0,parseFloat(inp.value)||0)*1e6;draw()};amt.append('$',inp,'M');
-    const s2=seg([['n','Let go'],['y','Re-sign']],'n',k=>{ST.fa[nm].on=k==='y';amt.hidden=k!=='y';draw()});const right=el('div','sm-tc');right.append(s2,amt);r.append(a,right);calls.appendChild(r)});
-  const reset=el('button','sm-reset','Reset');reset.type='button';reset.onclick=()=>{opts.forEach(o=>ST.opt[o[0]]=true);fas.forEach(f=>{ST.fa[f[0]]={on:false,amt:f[3]||0}});calls.querySelectorAll('.sm-seg').forEach(w=>{const bs=w.querySelectorAll('button');bs.forEach((b,i2)=>b.setAttribute('aria-pressed',i2===0))});calls.querySelectorAll('.sm-amt').forEach(a=>{a.hidden=true;const f=fas.find(x=>a.querySelector('input').getAttribute('aria-label').startsWith(x[0]));if(f)a.querySelector('input').value=((f[3]||0)/1e6).toFixed(1)});draw()};
-  calls.appendChild(reset);
+    const L=lim(nm,bird,v);const amt=el('div','sm-amt');amt.hidden=true;const inp=el('input');inp.type='range';inp.min=String(L.lo);inp.max=String(L.hi);inp.step='100000';inp.value=String(ST.fa[nm].amt);inp.setAttribute('aria-label',nm+' first-year salary');
+    const out=el('b',null,usdM(ST.fa[nm].amt));inp.oninput=()=>{ST.fa[nm].amt=+inp.value;out.textContent=usdM(+inp.value);draw()};
+    const rng=el('div','sm-rng');rng.append(el('span',null,usdM(L.lo)),inp,el('span',null,usdM(L.hi)));amt.append(out,rng,el('small',null,L.why+'. Floor: his minimum ('+L.y+' years of service).'));
+    const s2=seg([['n','Let go'],['y','Re-sign']],'n',k=>{ST.fa[nm].on=k==='y';amt.hidden=k!=='y';draw()});r.append(a,s2);r.appendChild(amt);calls.appendChild(r)});
+  const reset=el('button','sm-reset','Reset');reset.type='button';reset.onclick=()=>{opts.forEach(o=>ST.opt[o[0]]=true);fas.forEach(f=>{const L=lim(f[0],f[2],f[3]);ST.fa[f[0]]={on:false,amt:Math.min(L.hi,Math.max(L.lo,f[3]||0))}});ST.fill=false;calls.querySelector('.sm-fill input').checked=false;calls.querySelectorAll('.sm-seg').forEach(w=>{const bs=w.querySelectorAll('button');bs.forEach((b,i2)=>b.setAttribute('aria-pressed',i2===0))});calls.querySelectorAll('.sm-amt,.sm-dn').forEach(a=>a.hidden=true);calls.querySelectorAll('.sm-amt').forEach(a=>{const i3=a.querySelector('input'),f=fas.find(x=>i3.getAttribute('aria-label').startsWith(x[0]));if(f){i3.value=ST.fa[f[0]].amt;a.querySelector('b').textContent=usdM(ST.fa[f[0]].amt)}});draw()};
+  calls.appendChild(calls.querySelector('.sm-fill'));calls.appendChild(reset);
   function draw(){view.textContent='';
     const opt=opts.reduce((t,o)=>t+(ST.opt[o[0]]?o[1]:0),0),re=fas.reduce((t,f)=>t+(ST.fa[f[0]].on?ST.fa[f[0]].amt:0),0);
-    const nOpt=opts.filter(o=>ST.opt[o[0]]).length,nRe=fas.filter(f=>ST.fa[f[0]].on).length,tot=gu+opt+re,changed=opts.some(o=>!ST.opt[o[0]])||nRe>0;
+    const nOpt=opts.filter(o=>ST.opt[o[0]]).length,nRe=fas.filter(f=>ST.fa[f[0]].on).length;const open=Math.max(0,14-(n+nOpt+nRe)),fillAmt=ST.fill?open*minFor(2):0;const tot=gu+opt+re+fillAmt,changed=opts.some(o=>!ST.opt[o[0]])||nRe>0||ST.fill;
+    ST.fillLabel.textContent='Fill the '+open+' open roster spot'+(open===1?'':'s')+' (to 14) with minimum deals: +'+usdM(open*minFor(2));
     const over=tot-cap,where=tot>a2?'over the second apron':tot>a1?'over the first apron':tot>tax?'over the tax line':tot>cap?'over the cap':'under the cap';
     const big=el('p','sm-big');if(over>0){big.append('No cap space. ');big.appendChild(el('em',null,usdM(over)+' over'));big.append(' the cap')}else{big.append('About ');big.appendChild(el('em',null,usdM(-over)));big.append(' in cap space')}
     view.appendChild(big);
     const kept=opts.filter(o=>ST.opt[o[0]]).map(o=>o[0]+'’s team option'),res=fas.filter(f=>ST.fa[f[0]].on).map(f=>f[0]);
-    view.appendChild(el('p','sm-sub2',n+' players plus dead money already add up to '+usdM(gu)+' for '+NY+'.'+(kept.length||res.length?' With '+[...kept.map(k=>k+' picked up'),...res.map(r=>r+' re-signed')].join(', ')+', Cleveland starts the summer '+where+', before filling the roster.':' Cleveland starts the summer '+where+'.')+(changed?' (Your what-if.)':'')));
+    view.appendChild(el('p','sm-sub2',(changed?'':'')+n+' players plus dead money already add up to '+usdM(gu)+' for '+NY+'.'+(kept.length||res.length?' With '+[...kept.map(k=>k+' picked up'),...res.map(r=>r+' re-signed')].join(', ')+', Cleveland starts the summer '+where+(ST.fill?', with the roster filled to 14.':', before filling the roster.'):' Cleveland starts the summer '+where+'.')+(changed?' (Your what-if.)':'')));
     /* meter */
     const mn=Math.floor(cap*0.9/1e7)*1e7,mx=Math.max(a2,tot)*1.03,pc=v=>((v-mn)/(mx-mn)*100).toFixed(2)+'%',pw=v=>(v/(mx-mn)*100).toFixed(2)+'%';
-    const m=el('div','sm-meter');m.innerHTML='<div class="f" style="width:'+pc(gu)+'"></div>'+(opt?'<div class="o" style="left:'+pc(gu)+';width:'+pw(opt)+'"></div>':'')+(re?'<div class="r" style="left:'+pc(gu+opt)+';width:'+pw(re)+'"></div>':'');
+    const m=el('div','sm-meter');m.innerHTML='<div class="f" style="width:'+pc(gu)+'"></div>'+(opt?'<div class="o" style="left:'+pc(gu)+';width:'+pw(opt)+'"></div>':'')+(re?'<div class="r" style="left:'+pc(gu+opt)+';width:'+pw(re)+'"></div>':'')+(fillAmt?'<div class="m" style="left:'+pc(gu+opt+re)+';width:'+pw(fillAmt)+'"></div>':'');
     const mS=v=>'$'+Math.round(v/1e6)+'M';[['Cap',cap],['Tax',tax],['1st apron',a1],['2nd apron',a2]].forEach(([l,v],i)=>{const d=el('div','ln l');d.style.left=pc(v);d.appendChild(el(i%2?'i':'b',null,l.replace(' apron','')));m.appendChild(d)});
-    view.appendChild(m);const lg=el('div','sm-leg');lg.innerHTML='<span><i></i>Committed '+usdM(gu)+'</span>'+(opt?'<span><i class="o"></i>Team options '+usdM(opt)+'</span>':'')+(re?'<span><i class="r"></i>Re-signed '+usdM(re)+'</span>':'')+'<span class="sm-th">Cap '+mS(cap)+' · Tax '+mS(tax)+' · 1st apron '+mS(a1)+' · 2nd apron '+mS(a2)+'</span>';view.appendChild(lg);
-    const st=el('div','sm-stats');[[usdM(tot),changed?'Payroll with your calls':'Committed, with options'],[String(n+nOpt+nRe),'Players signed for '+NY],[usdM(Math.abs(a2-tot)),(tot<a2?'Under':'Over')+' the second apron, before filling the roster'],[(fas.length-nRe)+' + '+TWOWAY.length,'Free agents (standard + two-way)']].forEach(([v,l])=>{const d=el('div');d.append(el('b',null,v),el('span',null,l));st.appendChild(d)});view.appendChild(st);
+    view.appendChild(m);const lg=el('div','sm-leg');lg.innerHTML='<span><i></i>Committed '+usdM(gu)+'</span>'+(opt?'<span><i class="o"></i>Team options '+usdM(opt)+'</span>':'')+(re?'<span><i class="r"></i>Re-signed '+usdM(re)+'</span>':'')+(fillAmt?'<span><i class="m"></i>Minimum deals '+usdM(fillAmt)+'</span>':'')+'<span class="sm-th">Cap '+mS(cap)+' · Tax '+mS(tax)+' · 1st apron '+mS(a1)+' · 2nd apron '+mS(a2)+'</span>';view.appendChild(lg);
+    const st=el('div','sm-stats');[[usdM(tot),changed?'Payroll with your calls':'Committed, with options'],[String(n+nOpt+nRe+(ST.fill?open:0)),'Players signed for '+NY],[usdM(Math.abs(a2-tot)),(tot<a2?'Under':'Over')+' the second apron'+(ST.fill?'':', before filling the roster')],[(fas.length-nRe)+' + '+TWOWAY.length,'Free agents (standard + two-way)']].forEach(([v,l])=>{const d=el('div');d.append(el('b',null,v),el('span',null,l));st.appendChild(d)});view.appendChild(st);
     view.appendChild(calls);
     const cols=el('div','sm-cols');const col=(h,rows)=>{const d=el('div');d.appendChild(el('h4',null,h));const ul=el('ul','kv');rows.forEach(([a,sm,b,cls])=>{const li=el('li');const sp=el('span',null,a);sp.appendChild(el('small',null,sm));li.append(sp,el('b',cls||null,b));ul.appendChild(li)});d.appendChild(ul);return d};
     const c1=col('Coming off the books',fas.filter(f=>!ST.fa[f[0]].on).map(([nm,y,bird,v])=>[nm,y+' · '+(BW[bird]||bird)+(y==='RFA'?' · Cavs can match offers':''),v?usdM(v):'—']).concat(TWOWAY.length?[[TWOWAY.map(t=>t[0].replace(/ Jr\.$/,'').split(' ').slice(-1)[0]).join(', '),'Two-way · '+TWOWAY[0][2].split(' ')[1],'—']]:[]));
