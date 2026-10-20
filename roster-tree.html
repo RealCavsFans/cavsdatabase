@@ -31,7 +31,7 @@
 <link rel="preload" href="/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/geist-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/saira-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/a/app.f292113f60.css"><link rel="preload" href="/a/app.da31fda5b5.js" as="script">
+<link rel="stylesheet" href="/a/app.f292113f60.css"><link rel="preload" href="/a/app.a259992165.js" as="script">
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
 <script>/* OneSignal web push for alerts: loads only on the live site, never prompts on its own */
@@ -392,7 +392,7 @@
   <button type="button" class="thm2" id="thm2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Dark mode</span></button></div>
 </div></footer>
 
-<script src="/a/app.da31fda5b5.js"></script>
+<script src="/a/app.a259992165.js"></script>
 
 <script>
 (function(){const R=document.documentElement,B=document.getElementById('thm'),T=document.getElementById('btt'),F=document.getElementById('fb');
@@ -464,6 +464,19 @@
  function trim(cv,keep){const g=cv.getContext('2d'),w=cv.width,h=cv.height;const d=g.getImageData(0,0,w,h).data;const bg=[d[(h-1)*w*4],d[(h-1)*w*4+1],d[(h-1)*w*4+2]];
   let y=h-1;outer:for(;y>0;y--){const o=y*w*4;for(let x=0;x<w;x+=2){const i=o+x*4;if(Math.abs(d[i]-bg[0])+Math.abs(d[i+1]-bg[1])+Math.abs(d[i+2]-bg[2])>24)break outer}}
   const nh=Math.min(h,Math.ceil(y+1+keep));if(nh>=h)return;const t=document.createElement('canvas');t.width=w;t.height=nh;t.getContext('2d').drawImage(cv,0,0);cv.width=w;cv.height=nh;cv.getContext('2d').drawImage(t,0,0)}
+ function wideOf(cv,S,bg){const w=cv.width,h=cv.height;if(h<w*1.5)return cv;
+  const ctx=cv.getContext('2d');let data;try{data=ctx.getImageData(0,0,w,h).data}catch(e){return cv}
+  const x0=Math.round(w*.05),x1=Math.round(w*.95);
+  const blank=y=>{const i0=(y*w+x0)*4;for(let x=x0;x<x1;x+=2){const i=(y*w+x)*4;if(Math.abs(data[i]-data[i0])>8||Math.abs(data[i+1]-data[i0+1])>8||Math.abs(data[i+2]-data[i0+2])>8)return false}return true};
+  const band=y=>{for(let d=-9*S;d<=9*S;d+=2)if(!blank(y+d))return false;return true};
+  for(let k=Math.min(3,Math.max(2,Math.round(Math.sqrt(1.7*h/w))));k>=2;k--){const cuts=[0];let ok=true;
+   for(let j=1;j<k;j++){const tg=Math.round(h*j/k);let best=null;for(let d=0;d<h*.18&&best==null;d+=2)for(const y of [tg-d,tg+d])if(y>cuts[cuts.length-1]+60*S&&y<h-60*S&&band(y)){best=y;break}if(best==null){ok=false;break}cuts.push(best)}
+   if(!ok)continue;cuts.push(h);
+   /* drop blank rows at the top of each column */
+   const segs=cuts.slice(0,-1).map((a,i)=>{let y=a;if(i){while(y<cuts[i+1]-1&&blank(y))y++;y=Math.max(a,y-24*S)}return [y,cuts[i+1]]});
+   const gap=20*S,top=0,H=Math.max(...segs.map(([a,b])=>b-a)),out=document.createElement('canvas');out.width=k*w+(k-1)*gap;out.height=H+top;const o=out.getContext('2d');
+   o.fillStyle=bg||'#fff';o.fillRect(0,0,out.width,out.height);segs.forEach(([a,b],i)=>o.drawImage(cv,0,a,w,b-a,i*(w+gap),i?top:0,w,b-a));return out}
+  return cv}
  async function capture(route,id,label,boxes,btn){
   btn.disabled=true;toast('Making the image…');let capEl=null;
   try{const ms=await load();let el=boxes[0];
@@ -480,9 +493,11 @@
      onCloneNode:c=>{if(c.nodeType!==1)return;if(c.tagName==='IMG')c.removeAttribute('loading');if(c.getAttribute('data-capfirst')){c.style.marginTop='0';c.removeAttribute('data-capfirst')}}};
    /* the browser can drop photos on the very first drawing; a quick small draw first fixes it */
    try{await ms.domToCanvas(el,{...opts,scale:.3})}catch(e){}
-   const shot=await ms.domToCanvas(el,opts);
+   let shot=await ms.domToCanvas(el,opts);
    boxes[0].removeAttribute('data-capfirst');
    if(hgt)trim(shot,Math.max(parseFloat(getComputedStyle(parent).paddingBottom)||0,14)*S);
+   /* on a phone, a tall capture is cut at blank rows into 2 or 3 columns side by side, so the image comes out wide and fits a screen */
+   if(innerWidth<700)shot=wideOf(shot,S,css('--page')||'#EEF0F2');
    const W=Math.max(shot.width+pad*2*S,380*S),HH=58*S,GOLD=5*S,FT=40*S;const H=HH+GOLD+pad*S+shot.height+FT;
    const cv=document.createElement('canvas');cv.width=W;cv.height=H;const g=cv.getContext('2d');
    g.fillStyle=css('--page')||'#EEF0F2';g.fillRect(0,0,W,H);g.fillStyle='#860038';g.fillRect(0,0,W,HH);g.fillStyle='#F2B231';g.fillRect(0,HH,W,GOLD);
