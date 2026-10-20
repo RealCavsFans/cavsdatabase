@@ -8,7 +8,9 @@ import { readFile, writeFile } from 'node:fs/promises';
 const root = new URL('../', import.meta.url);
 const html0 = await readFile(new URL('index.html', root), 'utf8');
 let L; try { L = JSON.parse(await readFile(new URL('pdata/league.json', root), 'utf8')); } catch { console.log('team stats: no league.json'); process.exit(0); }
-const games = Object.values(L.tg || {});
+/* ESPN's lines first; a pbpstats backup line (src: 'pbpstats') only counts when ESPN never delivered that game */
+const games = (() => { const all = Object.values(L.tg || {}); const key = g => g.d + '|' + (g.t || []).map(t => t.ab).sort().join('-');
+  const espn = new Set(all.filter(g => g.src !== 'pbpstats').map(key)); return all.filter(g => g.src !== 'pbpstats' || !espn.has(key(g))); })();
 if (!games.length) { console.log('team stats: no games yet'); process.exit(0); }
 
 const SITE = { NY: 'NYK', GS: 'GSW', SA: 'SAS', NO: 'NOP', UTAH: 'UTA', WSH: 'WAS' };
