@@ -3344,6 +3344,8 @@ function ppBuild(p,root){
   {const lk=el('div','ppx-links');lk.appendChild(el('span','ppx-lkh','Also on cavs_db'));
     lk.append(ilink('Bio & Measurements','roster','r-'+slug(n)));if(R||stt)lk.append(ilink('Contract','cap','p-'+slug(n)));lk.append(ilink('Depth Chart','roster'),ilink('Transactions','moves'));
     if(stt==='TW')lk.append(ilink('Charge','charge'));
+    /* season on/off and lineups: the live page's season mode, opened on him (shows once the season has a game in the archive) */
+    if(Object.keys(SCORES).length){const a2=el('a',null,'Season on/off and lineups');a2.href='/live.html?g=s2026-27&pl='+slug(n);lk.append(a2)}
     root.appendChild(lk)}
 
   /* ---------- chapters ---------- */
