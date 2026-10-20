@@ -3828,7 +3828,9 @@ const y0now=s=>s===SEASONS[0];
   const view=el('div');B.appendChild(view);
   /* exceptions he could also be signed with (next season's amounts scaled from 2026–27 by the projected cap) */
   const NTMLE=Math.round(15044000*g/1e3)*1e3,TMLE=Math.round(6064000*g/1e3)*1e3;
-  const ways=(nm,bird,prev)=>{const L=lim(nm,bird,prev);return [['bird','Bird rights',L.lo,L.hi,L.why],['ntmle','Non-taxpayer mid-level',L.lo,Math.max(L.lo,NTMLE),'Up to '+usdM(NTMLE)+'. Hard-caps the Cavs at the first apron'],['tmle','Taxpayer mid-level',L.lo,Math.max(L.lo,TMLE),'Up to '+usdM(TMLE)+'. Hard-caps the Cavs at the second apron'],['min','Minimum',L.lo,L.lo,'His minimum salary ('+L.y+' years of service). Always allowed']]};
+  const ways=(nm,bird,prev)=>{const L=lim(nm,bird,prev);return [['bird','Bird rights',L.lo,L.hi,L.why],['ntmle','Non-taxpayer mid-level',L.lo,Math.max(L.lo,NTMLE),'Up to '+usdM(NTMLE)+'. Hard-caps the Cavs at the first apron'],['tmle','Taxpayer mid-level',L.lo,Math.max(L.lo,TMLE),'Up to '+usdM(TMLE)+'. Hard-caps the Cavs at the second apron'],['min','Minimum',L.lo,L.lo,'His minimum salary ('+L.y+' years of service), always allowed'+(L.y>=2&&L.lo>minFor(2)?'. On a one-season deal the veteran minimum subsidy applies: it counts '+usdM(minFor(2))+' on the cap and tax, and the league pays the rest':'')]]};
+  /* what a re-signing counts on the cap: a one-season veteran minimum counts as the two-year minimum (the league pays the rest) */
+  const hitOf=f=>{const x=ST.fa[f[0]];if(x.how==='min'){const y=yosOf(f[0]);return y>=2?Math.min(x.amt,minFor(2)):x.amt}return x.amt};
   fas.forEach(f=>{ST.fa[f[0]].how='bird'});
   /* decisions: one row per player, tap to open the choices under his name */
   const dec=el('div','sm-dec');dec.appendChild(el('h4',null,'Decisions · tap a name to try a call'));const rowsEl={};
@@ -3851,9 +3853,9 @@ const y0now=s=>s===SEASONS[0];
     dec.querySelectorAll('.sm-seg').forEach(w=>w.querySelectorAll('button').forEach((b,i2)=>b.setAttribute('aria-pressed',i2===0)));dec.querySelectorAll('.sm-amt,.sm-dn').forEach(a=>a.hidden=true);dec.querySelectorAll('details').forEach(d=>d.open=false);draw()};
   ctl.append(fl,reset);dec.appendChild(ctl);
   function draw(){view.textContent='';
-    const opt=opts.reduce((t,o)=>t+(ST.opt[o[0]]?o[1]:0),0),re=fas.reduce((t,f)=>t+(ST.fa[f[0]].on?ST.fa[f[0]].amt:0),0);
+    const opt=opts.reduce((t,o)=>t+(ST.opt[o[0]]?o[1]:0),0),re=fas.reduce((t,f)=>t+(ST.fa[f[0]].on?hitOf(f):0),0);
     const nOpt=opts.filter(o=>ST.opt[o[0]]).length,nRe=fas.filter(f=>ST.fa[f[0]].on).length;const open=Math.max(0,14-(n+nOpt+nRe)),fillAmt=ST.fill?open*minFor(2):0;const tot=gu+opt+re+fillAmt,changed=opts.some(o=>!ST.opt[o[0]])||nRe>0||ST.fill;
-    ST.fillLabel.textContent='Fill the '+open+' open roster spot'+(open===1?'':'s')+' (to 14) with minimum deals: +'+usdM(open*minFor(2));
+    ST.fillLabel.textContent='Fill the '+open+' open roster spot'+(open===1?'':'s')+' (to 14) with minimum deals: +'+usdM(open*minFor(2))+' (veteran minimums count as a two-year minimum)';
     const over=tot-cap,where=tot>a2?'over the second apron':tot>a1?'over the first apron':tot>tax?'over the tax line':tot>cap?'over the cap':'under the cap';
     const big=el('p','sm-big');if(over>0){big.append('No cap space. ');big.appendChild(el('em',null,usdM(over)+' over'));big.append(' the cap')}else{big.append('About ');big.appendChild(el('em',null,usdM(-over)));big.append(' in cap space')}
     view.appendChild(big);
@@ -3868,7 +3870,7 @@ const y0now=s=>s===SEASONS[0];
     /* row status and rule checks */
     const hard=fas.find(f=>ST.fa[f[0]].on&&/mle/.test(ST.fa[f[0]].how));const lineFor=hard&&ST.fa[hard[0]].how==='ntmle'?a1:hard?a2:null;const bad=lineFor!=null&&tot>lineFor;
     opts.forEach(o=>{rowsEl[o[0]].st.textContent=ST.opt[o[0]]?'Picked up':'Declined'});
-    fas.forEach(f=>{const x=ST.fa[f[0]],o=rowsEl[f[0]];o.st.textContent=x.on?usdM(x.amt)+' · '+({bird:'Bird',ntmle:'NT-MLE',tmle:'T-MLE',min:'Min'})[x.how]:'Let go';o.st.classList.toggle('bad',!!(bad&&hard[0]===f[0]))});
+    fas.forEach(f=>{const x=ST.fa[f[0]],o=rowsEl[f[0]];o.st.textContent=x.on?usdM(x.amt)+' · '+({bird:'Bird',ntmle:'NT-MLE',tmle:'T-MLE',min:hitOf(f)<x.amt?'Min, counts '+usdM(hitOf(f)):'Min'})[x.how]:'Let go';o.st.classList.toggle('bad',!!(bad&&hard[0]===f[0]))});
     if(bad)view.appendChild(el('p','sm-bad','Not allowed: signing '+hard[0]+' with the '+(ST.fa[hard[0]].how==='ntmle'?'non-taxpayer mid-level hard-caps the Cavs at the first apron':'taxpayer mid-level hard-caps the Cavs at the second apron')+', and this payroll is '+usdM(tot-lineFor)+' over it.'));
     view.appendChild(dec);
     const cols=el('div','sm-cols');const col=(h,rows)=>{const d=el('div');d.appendChild(el('h4',null,h));const ul=el('ul','kv');rows.forEach(([a,sm,b,cls])=>{const li=el('li');const sp=el('span',null,a);sp.appendChild(el('small',null,sm));li.append(sp,el('b',cls||null,b));ul.appendChild(li)});d.appendChild(ul);return d};
