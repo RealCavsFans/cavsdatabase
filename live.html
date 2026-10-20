@@ -391,7 +391,8 @@ function renderNav(R){
 }
 function renderView(){
   const v=$('view'),D=S.data,R=S.R;v.innerHTML='';
-  if(S.state==='pre'&&!R.plays.length){const c=el('div','card');c.append(el('h2',null,D.away.abbr+' at '+D.home.abbr),el('p',null,'Tip-off '+new Date(D.date).toLocaleString([],{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+(D.venue?' · '+D.venue:'')+(D.bc.length?' · '+D.bc.join(', '):'')+'.'),el('p','empty','Team and player stats, lineups, shots, four factors and rotations fill in once the game starts. The page checks ESPN every 15 seconds during the game.'));v.appendChild(c);return}
+  if(S.state==='pre'&&!R.plays.length){const c=el('div','card');c.append(el('h2',null,D.away.abbr+' at '+D.home.abbr),el('p',null,'Tip-off '+new Date(D.date).toLocaleString([],{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+(D.venue?' · '+D.venue:'')+(D.bc.length?' · '+D.bc.join(', '):'')+'.'),el('p','empty','Team and player stats, lineups, shots, four factors and rotations fill in once the game starts. The page checks ESPN every 15 seconds during the game.'));v.appendChild(c);
+    const opp=D.other;const holder=el('div');holder.appendChild(el('p','note','Loading the scouting report…'));v.appendChild(holder);scoutData(opp.id).then(X=>{if(S.data!==D)return;holder.innerHTML='';holder.appendChild(scoutCard(D,X,opp))});return}
   ({share:vShare,onoff:vOnOff,ast:vAst,team:vTeam,players:vPlayers,lineups:vLineups,shots:vShots,ff:vFF,rot:vRot,plays:vPlays})[S.tab](v,D,R);
 }
 const teamBtns=(D,key,cb)=>{if(key==='luTeam'){const cb0=cb;cb=()=>{S.f.luPick={};cb0&&cb0()}}const f=el('div','fl');if(S.season)return f;[D.focus,D.other].forEach(t=>{const b=el('button',null,t.abbr);b.type='button';b.setAttribute('aria-pressed',S.f[key]===t.id);b.onclick=()=>{S.f[key]=t.id;cb&&cb();renderView()};f.appendChild(b)});return f};
@@ -412,6 +413,7 @@ const pmCls=v=>'pm '+(v>0?'p':v<0?'n':'');
 
 /* ---------- Team ---------- */
 function vTeam(v,D,R){
+  if(!S.season&&S.state!=='pre'){const mc=milestoneCard(D,R);if(mc)v.appendChild(mc)}
   if(S.state==='post'&&!S.season&&R.lp){const RA=S.per==='all'?R:deriveCore(D,D.plays,'all');const c=el('div','card');c.style.borderTop='3px solid var(--gold)';c.style.marginBottom='14px';head(c,'Recap','Numbers only, written automatically at the final buzzer');const ul=el('ul','sw');recap(D,RA).forEach((t,i)=>{const li=el('li');li.style.gridTemplateColumns='1fr';li.appendChild(el('span',null,t));if(!i)li.style.fontWeight='700';ul.appendChild(li)});c.appendChild(ul);v.appendChild(c)}
   if(MOCK){v.appendChild(el('p','note','The fatigue watch mockup below only shows with ?mock=1.'));v.appendChild(fatigueCard(D,R))}
   const a=R.T[D.focus.id],b=R.T[D.other.id];
@@ -469,6 +471,80 @@ function gameState(D,R){
   const lim=per===1?2:per===2?3:per===3?4:5;const tr=Object.entries(R.pfAll).filter(([id,n])=>n>=lim&&D.P[id]).sort((a,b)=>b[1]-a[1]);
   if(tr.length){const ft=el('div','ft');ft.innerHTML='<b>Foul trouble</b> '+tr.map(([id,n])=>`<span>${esc(D.P[id].short)} (${esc(D.teams.find(t=>t.id===D.P[id].team).abbr)}) <i>${n} PF</i></span>`).join('');w.appendChild(ft)}
   return w;
+}
+
+
+/* ---------- milestone watch: career and Cavs all-time lists (pdata/milestones.json, through last season)
+   plus this season's archived games plus tonight ---------- */
+let MS=null,SEAS=null;
+async function msLoad(){if(MS)return;try{MS=await getJSON('/pdata/milestones.json')}catch(e){}try{SEAS=await getJSON('/live-archive/2026-27/season.json')}catch(e){SEAS=null}}
+function milestoneCard(D,R){
+  if(!MS||D.focus.id!=='5'||!R.lp)return null;
+  const byName={};Object.keys(MS.players).forEach(n=>byName[normName(n)]=n);
+  const preview=S.replay&&S.src!=='2026-27';
+  const W={PTS:'points',REB:'rebounds',AST:'assists'},LIST={PTS:'scoring',REB:'rebounding',AST:'assists'};
+  const step={PTS:v=>v<10000?1000:5000,REB:v=>v<2000?500:v<5000?1000:2500,AST:v=>v<2000?500:v<5000?1000:2500},near={PTS:25,REB:10,AST:10};
+  const fmt=n=>n.toLocaleString('en-US'),ord=n=>n+(n%100>=11&&n%100<=13?'th':['th','st','nd','rd'][n%10]||'th');
+  const hits=[],watch=[];
+  D.roster['5'].forEach(id=>{const n=byName[normName(D.P[id].name)];if(!n)return;const m=MS.players[n],b=R.B[id];
+    const tn={PTS:b.pts,REB:b.oreb+b.dreb,AST:b.ast};
+    let sp={PTS:0,REB:0,AST:0};if(SEAS&&!preview&&SEAS.B[id]){const x=SEAS.B[id];sp={PTS:x.pts,REB:x.oreb+x.dreb,AST:x.ast};if(SEAS.games.some(g=>g.id===S.ev))for(const k in sp)sp[k]-=tn[k]}
+    for(const k of ['PTS','REB','AST']){
+      const c0=m.career[k]+sp[k],c1=c0+tn[k],st=step[k](c1);
+      if(Math.floor(c1/st)>Math.floor(c0/st))hits.push(`${D.P[id].name} passed ${fmt(Math.floor(c1/st)*st)} career ${W[k]} tonight.`);
+      else{const nx=(Math.floor(c1/st)+1)*st;if(nx-c1<=near[k])watch.push([nx-c1,`${D.P[id].name} is ${nx-c1} ${W[k]} from ${fmt(nx)} for his career.`])}
+      const L=MS.franchise[k];if(!L)continue;const v0=m.cavs[k]+sp[k],v1=v0+tn[k];const others=L.filter(([x])=>x!==n);const rk=v=>1+others.filter(([,x])=>x>v).length;
+      if(rk(v1)<rk(v0)&&rk(v1)<=25){const passed=others.filter(([,x])=>x<=v1&&x>v0).map(([x])=>x);hits.push(`${D.P[id].name} passed ${passed.join(', ')} for ${ord(rk(v1))} on the Cavs all-time ${LIST[k]} list.`)}
+      else{const ahead=others.filter(([,x])=>x>v1).pop();if(ahead&&rk(v1)<=26&&ahead[1]-v1+1<=near[k])watch.push([ahead[1]-v1+1,`${D.P[id].name} is ${ahead[1]-v1+1} ${W[k]} from passing ${ahead[0]} for ${ord(rk(v1)-1)} on the Cavs all-time ${LIST[k]} list.`])}}});
+  if(!hits.length&&!watch.length)return null;
+  const c=el('div','card');c.style.borderTop='3px solid var(--gold)';c.style.marginBottom='14px';head(c,'Milestone watch',preview?'Preview: tonight’s numbers added to career totals through 2025–26':'Career and Cavs all-time totals, updated live');
+  const ul=el('ul','sw');hits.forEach(t=>{const li=el('li');li.style.gridTemplateColumns='auto 1fr';li.append(el('b',null,'★'),el('span',null,t));li.firstChild.style.color='var(--gold)';ul.appendChild(li)});
+  watch.sort((a,b)=>a[0]-b[0]).slice(0,5).forEach(([,t])=>{const li=el('li');li.style.gridTemplateColumns='auto 1fr';li.append(el('b',null,'→'),el('span',null,t));ul.appendChild(li)});
+  c.appendChild(ul);return c;
+}
+
+
+/* ---------- opponent scouting (pregame): the opponent's last five games from ESPN, run through the same code ---------- */
+const SCOUT={};
+async function scoutData(tid){
+  if(SCOUT[tid])return SCOUT[tid];
+  return SCOUT[tid]=(async()=>{
+    const yr=new Date().getUTCMonth()>=7?new Date().getUTCFullYear()+1:new Date().getUTCFullYear();
+    let evs=[];for(const y of [yr,yr-1]){try{const sc=await getJSON(`${ESPN}teams/${tid}/schedule?season=${y}`);evs=(sc.events||[]).filter(e=>e.competitions&&e.competitions[0].status&&e.competitions[0].status.type.completed).map(e=>e.id)}catch(e){}if(evs.length>=3)break}
+    evs=evs.slice(-5);const games=[];
+    await Promise.all(evs.map(async id=>{try{const d=await getJSON(ESPN+'summary?event='+id);const G=prep(d);if(!G.teams.some(t=>t.id===tid))return;
+      /* treat the scouted team as the focus so lineups/shots are theirs */
+      const me=G.teams.find(t=>t.id===tid),op=G.teams.find(t=>t.id!==tid);G.focus=me;G.other=op;const RR=deriveCore(G,G.plays,'all');games.push({G,R:RR,date:G.date})}catch(e){}}));
+    games.sort((a,b)=>a.date<b.date?-1:1);
+    const T={},O={},L5={},P={},shots=[];const add=(dst,src)=>{for(const k in src)if(typeof src[k]==='number')dst[k]=(dst[k]||0)+src[k];dst.z=dst.z||ZN.map(()=>[0,0]);src.z.forEach((v,i)=>{dst.z[i][0]+=v[0];dst.z[i][1]+=v[1]})};
+    games.forEach(({G,R:RR})=>{add(T,RR.T[tid]);add(O,RR.T[G.other.id]);
+      Object.values(RR.L[tid][5]).forEach(l=>{const k=l.ids.slice().sort().join(',');const o=L5[k]=L5[k]||{ids:l.ids,names:l.ids.map(i=>G.P[i].last),sec:0,pf:0,pa:0,o:{fga:0,oreb:0,to:0,fta:0},d:{fga:0,oreb:0,to:0,fta:0},g:0};o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;o.g++;for(const x of ['fga','oreb','to','fta']){o.o[x]+=l.o[x];o.d[x]+=l.d[x]}});
+      G.roster[tid].forEach(i=>{const b=RR.B[i];if(!(b.min>0))return;const p=P[G.P[i].name]=P[G.P[i].name]||{name:G.P[i].name,short:G.P[i].short,gp:0,gs:0,min:0,pts:0,reb:0,ast:0,tpm:0,fga:0,fgm:0};p.gp++;if(G.P[i].starter)p.gs++;p.min+=b.min;p.pts+=b.pts;p.reb+=b.oreb+b.dreb;p.ast+=b.ast;p.tpm+=b.tpm;p.fga+=b.fga;p.fgm+=b.fgm});
+      RR.shots.filter(q=>q.t===tid).forEach(q=>shots.push(q))});
+    return {tid,games,T,O,L5,P,shots};
+  })();
+}
+function scoutCard(D,X,team){
+  const c=el('div','card sec');const n=X.games.length;head(c,'Scouting the '+team.name,n?`Their last ${n} game${n>1?'s':''}, from ESPN play-by-play`:'No recent games to scout yet.');if(!n)return c;
+  const res=el('div','chips');X.games.forEach(({G,R:RR})=>{const me=G.focus,op=G.other;const a=me.ha==='home'?RR.hs:RR.as,b=me.ha==='home'?RR.as:RR.hs;const d=new Date(G.date);const sp=el('span','',`${d.getMonth()+1}/${d.getDate()} ${me.ha==='home'?'vs':'@'} ${op.abbr} ${a>b?'W':'L'} ${a}–${b}`);sp.style.cssText='padding:5px 10px;border-radius:999px;font:600 0.8125rem var(--sans);background:'+(a>b?'color-mix(in srgb,var(--pos) 15%,var(--card))':'var(--sub)');res.appendChild(sp)});c.appendChild(res);
+  /* pace and four factors */
+  const T=X.T,O=X.O;const P2=t=>poss({fga:t.fga,oreb:(t.oreb||0)+(t.toreb||0),to:t.to,fta:t.fta});const pace=(P2(T)+P2(O))/2/(T.sec||1)*2880;const fa=factors(T,O);
+  const g=el('div','ff');[['Pace',pace.toFixed(1),'Possessions per 48'],['Offense',(T.pts/P2(T)*100).toFixed(1),'Points per 100'],['Defense',(O.pts/P2(O)*100).toFixed(1),'Allowed per 100'],['3PT rate',Math.round(T.tpa/T.fga*100)+'%','Share of shots from three']].forEach(([a,b,cc])=>{const x=el('div','ffc');x.append(el('div','n',a));const r=el('div','row');r.appendChild(el('b',null,b));x.appendChild(r);x.appendChild(el('p','note',cc));g.appendChild(x)});c.appendChild(g);
+  /* who to watch */
+  c.appendChild(el('h3',null,'Who to watch (per game)'));
+  const rows=Object.values(X.P).map(p=>({...p,mpg:p.min/60/p.gp,ppg:p.pts/p.gp,rpg:p.reb/p.gp,apg:p.ast/p.gp,tpg:p.tpm/p.gp,fg:p.fga?p.fgm/p.fga:null}));
+  c.appendChild(dtable('sc_p',[{h:'Player',k:'name',f:r=>r.short},{h:'GP',k:'gp'},{h:'GS',k:'gs'},{h:'MIN',k:'mpg',f:r=>r.mpg.toFixed(1)},{h:'PTS',k:'ppg',f:r=>r.ppg.toFixed(1),cls:()=>'k'},{h:'REB',k:'rpg',f:r=>r.rpg.toFixed(1)},{h:'AST',k:'apg',f:r=>r.apg.toFixed(1)},{h:'3PM',k:'tpg',f:r=>r.tpg.toFixed(1)},{h:'FG%',k:'fg',f:r=>r.fg==null?'–':Math.round(r.fg*100)+'%'}],rows,{def:'ppg',minW:520}));
+  /* lineups */
+  c.appendChild(el('h3',null,'Their most-used lineups'));
+  const lu=Object.values(X.L5).filter(l=>l.sec>=120).map(l=>{const po=poss(l.o),pd=poss(l.d);return {names:l.names.join(', '),sec:l.sec,g:l.g,pm:l.pf-l.pa,net:po>=1&&pd>=1?l.pf/po*100-l.pa/pd*100:null}});
+  c.appendChild(dtable('sc_l',[{h:'Lineup',k:'names'},{h:'GAMES',k:'g'},{h:'MIN',k:'sec',f:r=>fmtMin(r.sec)},{h:'+/-',k:'pm',f:r=>sgn(r.pm),cls:r=>pmCls(r.pm)},{h:'NET',k:'net',f:r=>r.net==null?'–':sgn(Math.round(r.net)),cls:r=>r.net==null?'':pmCls(r.net)}],lu.slice(0,10),{def:'sec',minW:520}));
+  /* where they shoot */
+  c.appendChild(el('h3',null,'Where they shoot'));const g2=el('div','grid2');const left=el('div','zchart');
+  const Z=ZN.map(()=>[0,0]);X.shots.filter(q=>q.hasXY).forEach(q=>{Z[q.zi][1]++;if(q.m)Z[q.zi][0]++});const BZ=(BLIVE&&BLIVE.lg)||ZN.map(([k])=>[LG[k][0]*1000,1000]);
+  left.innerHTML=zoneCourt(Z,0,'Opponent shooting by zone',BZ);left.insertAdjacentHTML('beforeend','<div class="leg"><span>Shaded against NBA average in each zone</span></div>');
+  const right=el('div');const all=X.shots;const pr=PT.map(([k,l],i)=>{const q=all.filter(x=>x.pt===i),m=q.filter(x=>x.m);return {l,a:q.length,fr:all.length?q.length/all.length:0,pps:q.length?m.reduce((s2,x)=>s2+(x.three?3:2),0)/q.length:null}}).filter(r=>r.a);
+  right.appendChild(dtable('sc_t',[{h:'Shot type',k:'l'},{h:'FREQ',k:'fr',f:r=>Math.round(r.fr*100)+'%'},{h:'PTS/SHOT',k:'pps',f:r=>r.pps==null?'–':r.pps.toFixed(2)}],pr,{def:'fr'}));
+  g2.append(left,right);c.appendChild(g2);return c;
 }
 
 /* ---------- pace and projected final ---------- */
@@ -1010,7 +1086,7 @@ function vPlays(v,D,R){
 }
 
 /* ---------- boot ---------- */
-(async()=>{await Promise.all(['2026-27','2025-26'].map(async se=>{try{const r=await fetch('/live-archive/'+se+'/index.json',{cache:'no-store'});if(r.ok)ARCH[se]=await r.json()}catch(e){}}));
+(async()=>{msLoad().then(()=>{if(S.data&&!S.season&&S.tab==='team')renderView()});await Promise.all(['2026-27','2025-26'].map(async se=>{try{const r=await fetch('/live-archive/'+se+'/index.json',{cache:'no-store'});if(r.ok)ARCH[se]=await r.json()}catch(e){}}));
   try{const r=await fetch('/live-base.json',{cache:'no-store'});if(r.ok){const j=await r.json();if(j&&j.t&&j.games>0&&j.season!=='2025-26')BLIVE=j}}catch(e){}
   const evs=await loadScoreboard();$('gsel').onchange=e=>choose(e.target.value,true);
   let pick=new URLSearchParams(location.search).get('g');
