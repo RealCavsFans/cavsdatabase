@@ -2113,7 +2113,7 @@ const ALERTS_ON=false; /* paused: the button and invite stay hidden until this i
   const needHome=(ios&&!standalone)||pv==='ios';
   if(!can&&!needHome&&!pv)return;
   const K='cdb-al',get=()=>{try{return JSON.parse(localStorage.getItem(K)||'{}')}catch(_){return {}}},put=o=>{try{localStorage.setItem(K,JSON.stringify({...get(),...o}))}catch(_){}};
-  const KINDS=[['tip','Tip-off reminder','30 minutes before every game',1],['final','Final score','Minutes after the final buzzer',1],['tx','Transactions','Signings, trades and waivers · once a day at most',0],['inj','Injury report','When a player’s status changes · once a day at most',0]];
+  const KINDS=[['tip','Tip-off reminder','30 minutes before every game',1],['final','Final score','Minutes after the final buzzer',1],['tx','Transactions','Signings, trades and waivers · once a day at most',0],['inj','Injury report','When a player’s status changes · once a day at most',0],['qtr','End of each quarter','Score and leaders at every break',0],['run','Big runs','When either team goes on a 10–0 run',0]];
   const OS=()=>new Promise(r=>{if(!window.OneSignalDeferred)return r(null);const t=setTimeout(()=>r(null),8000);OneSignalDeferred.push(os=>{clearTimeout(t);r(os)})});
   const paint=()=>{const on=get().on;B.classList.toggle('on',!!on);B.innerHTML=BELL+(on?'Alerts on <i>✓</i>':'Get game alerts');B.setAttribute('aria-label',on?'Game alerts are on. Change them':'Get game alerts');B.hidden=false};
   paint();

@@ -1,7 +1,9 @@
 // Push alerts through OneSignal. Run every 10 minutes by .github/workflows/push.yml.
-// Four kinds, each only to people who turned that kind on (OneSignal tags tip/final/tx/inj = '1'):
+// Six kinds, each only to people who turned that kind on (OneSignal tags tip/final/tx/inj/qtr/run = '1'):
 //   tip   30 minutes before a Cavs regular season or playoff game
-//   final the final score, minutes after the game ends (NBA.com schedule feed, the same one box.json uses)
+//   final the final score, minutes after the game ends (ESPN's Cavs schedule)
+//   qtr   end of each quarter: score and each team's leading scorer (ESPN live game data)
+//   run   a 10–0 run by either team in the current or previous quarter (ESPN live game data)
 //   tx    new Cavs transactions in index.html TX
 //   inj   changes to the Cavs injury report in index.html INJURIES
 // Transactions and injuries go out once a day at most, between 8 AM and 10 PM Eastern, in one message per person
@@ -65,31 +67,52 @@ for (const [date, opp, ha, hm] of SCHEDULE) {
   out.push([`tip:${date}`, filt(['tip', '=', '1']), `Cavs ${ha === 'H' ? 'vs' : 'at'} ${nick(opp)} · ${fmtTime(hm)}`, `Tip-off in ${Math.round(mins / 5) * 5} minutes · ${net}`, `${SITE}/games/${slug(date, opp)}`]);
 }
 
-// 2. final score, from NBA.com's schedule feed (regular season, play-in, playoffs and NBA Cup; not preseason)
+// 2. final score, from ESPN's Cavs schedule (NBA.com's feeds don't answer from GitHub's servers)
+const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/';
+const getJ = async u => { const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0 (cavsdatabase.com)' }, signal: AbortSignal.timeout(20000) }); if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + u); return r.json(); };
+const seasonYear = NOW.getUTCMonth() >= 7 ? NOW.getUTCFullYear() + 1 : NOW.getUTCFullYear();
 try {
-  const r = process.env.PUSH_FEED ? { ok: true, json: async () => JSON.parse(await readFile(process.env.PUSH_FEED, 'utf8')) } : await fetch('https://cdn.nba.com/static/json/staticData/scheduleLeagueV2.json', { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36', 'Referer': 'https://www.nba.com/', 'Origin': 'https://www.nba.com' } });
-  if (!r.ok) throw new Error('HTTP ' + r.status);
-  const games = (await r.json()).leagueSchedule.gameDates.flatMap(d => d.games)
-    .filter(g => (g.homeTeam?.teamTricode === 'CLE' || g.awayTeam?.teamTricode === 'CLE') && !String(g.gameId).startsWith('001'));
-  let w = 0, l = 0;
-  const rows = games.map(g => {
-    const d = String(g.gameCode).slice(0, 8), date = `${d.slice(0, 4)}-${d.slice(4, 6)}-${d.slice(6, 8)}`;
-    const home = g.homeTeam.teamTricode === 'CLE', cle = home ? g.homeTeam : g.awayTeam, opp = home ? g.awayTeam : g.homeTeam;
-    return { date, fin: g.gameStatus === 3, cs: cle.score, os: opp.score, opp: opp.teamTricode, reg: String(g.gameId).startsWith('002') };
-  }).sort((a, b) => a.date.localeCompare(b.date));
-  for (const g of rows) {
-    if (!g.fin) continue;
-    if (g.reg) g.cs > g.os ? w++ : l++;
-    g.rec = `${w}–${l}`;
-    const age = (NOW - Date.parse(g.date + 'T12:00:00Z')) / 864e5;
-    if (age > 1.6 || S.sent[`final:${g.date}`] || first && !S.init) continue;
-    const won = g.cs > g.os, opp = nick(g.opp);
-    out.push([`final:${g.date}`, filt(['final', '=', '1']),
-      `Final: Cavs ${g.cs}, ${opp} ${g.os}`,
-      `${won ? 'Cavs win' : 'Cavs lose'}${g.reg ? ` · ${g.rec} on the season` : ''} · Recap and box score`,
-      `${SITE}/games/${slug(g.date, g.opp)}`]);
+  const sched = await getJ(`${ESPN}teams/5/schedule?season=${seasonYear}`);
+  for (const e of sched.events || []) {
+    const c = e.competitions && e.competitions[0]; if (!c || !c.status || !c.status.type.completed) continue;
+    const age = (NOW - Date.parse(e.date)) / 864e5;
+    const date = new Date(Date.parse(e.date) - 5 * 3600e3).toISOString().slice(0, 10);
+    if (age > 1.6 || S.sent[`final:${date}`] || first && !S.init) continue;
+    const cle = c.competitors.find(x => x.id === '5'), opp = c.competitors.find(x => x.id !== '5'); if (!cle || !opp) continue;
+    const cs = +(cle.score && (cle.score.value ?? cle.score.displayValue ?? cle.score)), os = +(opp.score && (opp.score.value ?? opp.score.displayValue ?? opp.score));
+    const rec = (cle.record || []).find(r => r.type === 'total');
+    const ab = opp.team.abbreviation, tri = { NY: 'NYK', GS: 'GSW', SA: 'SAS', NO: 'NOP', UTAH: 'UTA', WSH: 'WAS' }[ab] || ab;
+    out.push([`final:${date}`, filt(['final', '=', '1']), `Final: Cavs ${cs}, ${nick(tri)} ${os}`,
+      `${cs > os ? 'Cavs win' : 'Cavs lose'}${rec ? ` · ${rec.displayValue || rec.summary} on the season` : ''} · Recap and box score`, `${SITE}/games/${slug(date, tri)}`]);
   }
-} catch (e) { console.log('final scores: feed unavailable,', e.message); }
+} catch (e) { console.log('final scores: ESPN unavailable,', e.message); }
+
+// 2b. live game: end of each quarter and big runs, built with the live page's own code (live-core.js)
+try {
+  const sb = await getJ(`${ESPN}scoreboard`);
+  const ev = (sb.events || []).find(e => e.competitions[0].competitors.some(c => c.id === '5'));
+  const st = ev && ev.status.type.state;
+  if (ev && st !== 'pre') {
+    const { createRequire } = await import('node:module');
+    const C = createRequire(import.meta.url)('../live-core.js');
+    const D = C.prep(await getJ(`${ESPN}summary?event=${ev.id}`)), R = C.deriveCore(D, D.plays, 'all');
+    const cle = D.focus, opp = D.other, sc = t => t.ha === 'home' ? R.hs : R.as;
+    const lead = (t, per) => { const q = {}; for (const p of R.plays) if (p.per <= per && p.sc && p.val > 0 && D.P[p.ids[0]] && D.P[p.ids[0]].team === t.id) q[p.ids[0]] = (q[p.ids[0]] || 0) + p.val; const b = Object.entries(q).sort((a, b) => b[1] - a[1])[0]; return b ? `${D.P[b[0]].last} ${b[1]}` : ''; };
+    const url = `${SITE}/live.html?g=${ev.id}`;
+    // quarter breaks (the final buzzer is covered by the final-score alert)
+    for (const p of R.plays) if (p.type === 'End Period' && !(p.per >= 4 && p.hs !== p.as)) {
+      const cs = cle.ha === 'home' ? p.hs : p.as, os = cle.ha === 'home' ? p.as : p.hs;
+      const name = p.per === 2 ? 'Halftime' : p.per <= 4 ? `End of the ${['1st', '2nd', '3rd', '4th'][p.per - 1]}` : `End of ${C.pname(p.per)}`;
+      out.push([`qtr:${ev.id}:${p.per}`, filt(['qtr', '=', '1']), `${name}: Cavs ${cs}, ${opp.name} ${os}`, `Leaders: ${lead(cle, p.per)} · ${lead(opp, p.per)} · Live stats`, url]);
+    }
+    // big runs, only while they're still news (this quarter or last)
+    const now = R.lp ? R.lp.per : 0;
+    for (const r of R.runs) if (r.pts >= 10 && r.end.per >= now - 1) {
+      const t = r.t === cle.id ? cle : opp;
+      out.push([`run:${ev.id}:${r.start.id}`, filt(['run', '=', '1']), `${t.id === '5' ? 'Cavs' : 'The ' + t.name} on a ${r.pts}–0 run`, `Cavs ${sc(cle)}, ${opp.name} ${sc(opp)} · ${C.pname(r.end.per)} ${r.end.clock} · Live stats`, url]);
+    }
+  }
+} catch (e) { console.log('live game alerts: unavailable,', e.message); }
 
 // 3 + 4. transactions and injury report changes
 const txKey = t => `${t.d}|${t.k}|${t.p}`;
