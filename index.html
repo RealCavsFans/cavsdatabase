@@ -120,6 +120,22 @@
 .ab-cards{gap:8px}.ab-cards summary{padding:10px 12px}#exc summary>b{font-size:1.3125rem}.ab-cards summary .ab-bar{height:6px;margin:6px 0 4px}.ab-cards summary::after{bottom:12px}
 .cash-tr{gap:8px}.cash-c{padding:10px 12px;gap:2px}.cash-c>b{font-size:1.3125rem}.cash-c .ab-bar{height:6px;margin:6px 0 4px}.cash-l{margin-top:4px;font-size:0.78rem}.cash-l li{padding:4px 0}
 }
+
+.sm-meter .r{position:absolute;top:0;bottom:0;background:#F2B231}
+.sm-leg i.r{background:#F2B231}
+.sm-try{border:1px solid var(--line);border-top:3px solid #F2B231;padding:10px 12px;margin:0 0 14px;background:var(--sub)}
+.sm-try h4{margin:0;font:800 0.75rem var(--sans);letter-spacing:.1em;text-transform:uppercase}
+.sm-tn{margin:2px 0 6px;font-size:0.75rem;color:var(--muted)}
+.sm-tr{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.sm-tr b{display:block;font-size:0.875rem}.sm-tr small{display:block;font-size:0.71875rem;color:var(--muted)}
+.sm-tc{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.sm-seg{display:flex;border:1px solid var(--fg);flex:none}
+.sm-seg button{background:var(--card);color:var(--fg);border:0;padding:6px 10px;font:600 0.75rem var(--sans);cursor:pointer;white-space:nowrap}
+.sm-seg button+button{border-left:1px solid var(--fg)}
+.sm-seg button[aria-pressed=true]{background:var(--wine);color:#fff}
+.sm-amt{display:flex;align-items:center;gap:3px;font:600 0.8125rem var(--mono)}.sm-amt[hidden]{display:none}
+.sm-amt input{width:4.4rem;padding:4px 6px;border:1px solid var(--line);background:var(--card);color:var(--fg);font:600 0.8125rem var(--mono);text-align:right}
+.sm-reset{margin-top:6px;background:none;border:0;padding:4px 0;color:var(--wine-ink);font:700 0.75rem var(--sans);text-decoration:underline;cursor:pointer}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
@@ -3759,31 +3775,51 @@ const y0now=s=>s===SEASONS[0];
     .forEach(([n,u,d])=>{if(have.has(n.replace(/[^a-z]/gi,'').toLowerCase()))return;const li=el('li');const sp=el('span');const a=el('a',null,n);a.href=u;a.target='_blank';a.rel='noopener';sp.append(a,el('small',null,d+' · no recent episode'));li.append(sp,el('b','cov-d','—'));ul.appendChild(li)})}
   document.querySelectorAll('#cov-p small').forEach(s2=>{s2.firstChild.textContent=s2.firstChild.textContent.replace('Latest · ','')})})};})();
 
-/* Cap: next summer's cap position, built from ROSTER and THRESH (index 1 = next season) */
+/* Cap: next summer's cap position, built from ROSTER and THRESH (index 1 = next season).
+   "Make the calls": pick up or decline team options and re-sign or let go free agents; the meter, headline and tiles redraw.
+   Re-signings use the amount typed in (starting at his current salary). Nothing here is saved; it's a what-if. */
 (function(){const B=document.getElementById('sm-b');if(!B)return;const I=1,NY=SEASONS[I],yr=NY.slice(0,4);
   document.getElementById('sm-h').textContent='Summer '+yr;document.getElementById('sm-sub').textContent=NY+' · projected · updates as deals change';
-  const sal=y=>typeof y==='number'?y:Array.isArray(y)?y[0]:null;let gu=0,opt=0,n=0;const opts=[],fas=[];
-  ROSTER.forEach(([nm,p,yrs,bird,fa,t])=>{const y=yrs[I];if(typeof y==='number'){gu+=y;if(t!=='Dead money')n++}else if(Array.isArray(y)){if(y[1]==='T'){opt+=y[0];opts.push([nm,y[0],t])}else{gu+=y[0];n++}}else if(typeof y==='string')fas.push([nm,y,bird,sal(yrs[I-1])])});
-  const T=k=>THRESH.find(x=>x[0]===k)[1][I],cap=T('Salary cap'),tax=T('Luxury tax'),a1=T('First apron'),a2=T('Second apron'),tot=gu+opt;
-  const over=tot-cap,where=tot>a2?'over the second apron':tot>a1?'over the first apron':tot>tax?'over the tax line':tot>cap?'over the cap':'under the cap';
-  const big=el('p','sm-big');if(over>0){big.append('No cap space. ');big.appendChild(el('em',null,usdM(over)+' over'));big.append(' the cap')}else{big.append('About ');big.appendChild(el('em',null,usdM(-over)));big.append(' in cap space')}
-  B.appendChild(big);
-  B.appendChild(el('p','sm-sub2',n+' players plus dead money already add up to '+usdM(gu)+' for '+NY+'.'+(opts.length?' With '+opts.map(o=>o[0]+'’s team option').join(' and ')+' picked up, Cleveland starts the summer '+where+', before filling the roster.':' Cleveland starts the summer '+where+'.')));
-  /* meter */
-  const mn=Math.floor(cap*0.9/1e7)*1e7,mx=Math.max(a2,tot)*1.03,pc=v=>((v-mn)/(mx-mn)*100).toFixed(2)+'%',pw=v=>(v/(mx-mn)*100).toFixed(2)+'%';
-  const m=el('div','sm-meter');m.innerHTML='<div class="f" style="width:'+pc(gu)+'"></div>'+(opt?'<div class="o" style="left:'+pc(gu)+';width:'+pw(opt)+'"></div>':'');
-  const mS=v=>'$'+Math.round(v/1e6)+'M';[['Cap',cap],['Tax',tax],['1st apron',a1],['2nd apron',a2]].forEach(([l,v],i)=>{const d=el('div','ln l');d.style.left=pc(v);d.appendChild(el(i%2?'i':'b',null,l.replace(' apron','')));m.appendChild(d)});
-  B.appendChild(m);const lg=el('div','sm-leg');lg.innerHTML='<span><i></i>Committed '+usdM(gu)+'</span>'+(opt?'<span><i class="o"></i>Team options '+usdM(opt)+'</span>':'')+'<span class="sm-th">Cap '+mS(cap)+' · Tax '+mS(tax)+' · 1st apron '+mS(a1)+' · 2nd apron '+mS(a2)+'</span>';B.appendChild(lg);
-  /* stat tiles */
-  const st=el('div','sm-stats');[[usdM(tot),'Committed, with options'],[String(n+opts.length),'Players signed for '+NY],[tot<a2?usdM(a2-tot):'—','Under the second apron, before filling the roster'],[fas.length+' + '+TWOWAY.length,'Free agents (standard + two-way)']].forEach(([v,l])=>{const d=el('div');d.append(el('b',null,v),el('span',null,l));st.appendChild(d)});B.appendChild(st);
-  /* lists */
-  const cols=el('div','sm-cols');const col=(h,rows)=>{const d=el('div');d.appendChild(el('h4',null,h));const ul=el('ul','kv');rows.forEach(([a,sm,b,cls])=>{const li=el('li');const sp=el('span',null,a);sp.appendChild(el('small',null,sm));li.append(sp,el('b',cls||null,b));ul.appendChild(li)});d.appendChild(ul);return d};
+  const sal=y=>typeof y==='number'?y:Array.isArray(y)?y[0]:null;let gu=0,n=0;const opts=[],fas=[];
+  ROSTER.forEach(([nm,p,yrs,bird,fa,t])=>{const y=yrs[I];if(typeof y==='number'){gu+=y;if(t!=='Dead money')n++}else if(Array.isArray(y)){if(y[1]==='T')opts.push([nm,y[0],t]);else{gu+=y[0];n++}}else if(typeof y==='string')fas.push([nm,y,bird,sal(yrs[I-1])])});
+  const T=k=>THRESH.find(x=>x[0]===k)[1][I],cap=T('Salary cap'),tax=T('Luxury tax'),a1=T('First apron'),a2=T('Second apron');
+  /* what-if state: options picked up by default (the usual call), free agents not yet re-signed */
+  const ST={opt:Object.fromEntries(opts.map(o=>[o[0],true])),fa:Object.fromEntries(fas.map(f=>[f[0],{on:false,amt:f[3]||0}]))};
   const BW={'Full Bird':'Full Bird','Early Bird':'Early Bird','Non-Bird':'Non-Bird'};
-  const c1=col('Coming off the books',fas.map(([nm,y,bird,v])=>[nm,y+' · '+(BW[bird]||bird)+(y==='RFA'?' · Cavs can match offers':''),v?usdM(v):'—']).concat(TWOWAY.length?[[TWOWAY.map(t=>t[0].replace(/ Jr\.$/,'').split(' ').slice(-1)[0]).join(', '),'Two-way · '+TWOWAY[0][2].split(' ')[1],'—']]:[]));
-  const ext=Object.entries(EXT).filter(([k,v])=>v===I).map(([k])=>k.split(' ').slice(-1)[0]);
-  const tools=[['Bird rights','Re-sign their own free agents over the cap','Yes','sm-y'],['Taxpayer mid-level','Using it hard-caps them at the second apron',tot<a2?'Tight':'No',tot<a2?'sm-y':'sm-n'],['Minimum contracts','Always available','Yes','sm-y'],['Cap space signings',over>0?'Payroll is above the cap':'Room under the cap',over>0?'No':'Yes',over>0?'sm-n':'sm-y']];
-  const dec=opts.map(([nm,v,t])=>[nm+' team option',NY+(t?' · '+t.replace('Team option decision due','due'):''),usdM(v)]).concat(ext.length?[['Extension window opens',ext.join(', ')+' become eligible','July '+yr]]:[]);
-  const c2=col('How they can add players',tools);cols.append(c1,c2);if(dec.length)cols.appendChild(col('Decisions before then',dec));B.appendChild(cols);
+  const view=el('div');B.appendChild(view);
+  /* the calls panel (built once, so typing in a box keeps focus) */
+  const calls=el('div','sm-try');calls.appendChild(el('h4',null,'Make the calls'));calls.appendChild(el('p','sm-tn','Tap to see how each decision moves the Cavs’ '+NY+' payroll.'));
+  const seg=(opts2,cur,cb)=>{const w=el('div','sm-seg');opts2.forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',k===cur);b.onclick=()=>{w.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));cb(k)};w.appendChild(b)});return w};
+  opts.forEach(([nm,v,t])=>{const r=el('div','sm-tr');const a=el('div');a.append(el('b',null,nm),el('small',null,'Team option · '+usdM(v)+(t?' · '+t.replace('Team option decision due','due'):'')));
+    r.append(a,seg([['y','Pick up'],['n','Decline']],'y',k=>{ST.opt[nm]=k==='y';draw()}));calls.appendChild(r)});
+  fas.forEach(([nm,y,bird,v])=>{const r=el('div','sm-tr');const a=el('div');a.append(el('b',null,nm),el('small',null,y+' · '+(BW[bird]||bird)+(v?' · now '+usdM(v):'')));
+    const amt=el('label','sm-amt');amt.hidden=true;const inp=el('input');inp.type='number';inp.min='0';inp.step='0.5';inp.inputMode='decimal';inp.value=(ST.fa[nm].amt/1e6).toFixed(1);inp.setAttribute('aria-label',nm+' new salary in millions');
+    inp.oninput=()=>{ST.fa[nm].amt=Math.max(0,parseFloat(inp.value)||0)*1e6;draw()};amt.append('$',inp,'M');
+    const s2=seg([['n','Let go'],['y','Re-sign']],'n',k=>{ST.fa[nm].on=k==='y';amt.hidden=k!=='y';draw()});const right=el('div','sm-tc');right.append(s2,amt);r.append(a,right);calls.appendChild(r)});
+  const reset=el('button','sm-reset','Reset');reset.type='button';reset.onclick=()=>{opts.forEach(o=>ST.opt[o[0]]=true);fas.forEach(f=>{ST.fa[f[0]]={on:false,amt:f[3]||0}});calls.querySelectorAll('.sm-seg').forEach(w=>{const bs=w.querySelectorAll('button');bs.forEach((b,i2)=>b.setAttribute('aria-pressed',i2===0))});calls.querySelectorAll('.sm-amt').forEach(a=>{a.hidden=true;const f=fas.find(x=>a.querySelector('input').getAttribute('aria-label').startsWith(x[0]));if(f)a.querySelector('input').value=((f[3]||0)/1e6).toFixed(1)});draw()};
+  calls.appendChild(reset);
+  function draw(){view.textContent='';
+    const opt=opts.reduce((t,o)=>t+(ST.opt[o[0]]?o[1]:0),0),re=fas.reduce((t,f)=>t+(ST.fa[f[0]].on?ST.fa[f[0]].amt:0),0);
+    const nOpt=opts.filter(o=>ST.opt[o[0]]).length,nRe=fas.filter(f=>ST.fa[f[0]].on).length,tot=gu+opt+re,changed=opts.some(o=>!ST.opt[o[0]])||nRe>0;
+    const over=tot-cap,where=tot>a2?'over the second apron':tot>a1?'over the first apron':tot>tax?'over the tax line':tot>cap?'over the cap':'under the cap';
+    const big=el('p','sm-big');if(over>0){big.append('No cap space. ');big.appendChild(el('em',null,usdM(over)+' over'));big.append(' the cap')}else{big.append('About ');big.appendChild(el('em',null,usdM(-over)));big.append(' in cap space')}
+    view.appendChild(big);
+    const kept=opts.filter(o=>ST.opt[o[0]]).map(o=>o[0]+'’s team option'),res=fas.filter(f=>ST.fa[f[0]].on).map(f=>f[0]);
+    view.appendChild(el('p','sm-sub2',n+' players plus dead money already add up to '+usdM(gu)+' for '+NY+'.'+(kept.length||res.length?' With '+[...kept.map(k=>k+' picked up'),...res.map(r=>r+' re-signed')].join(', ')+', Cleveland starts the summer '+where+', before filling the roster.':' Cleveland starts the summer '+where+'.')+(changed?' (Your what-if.)':'')));
+    /* meter */
+    const mn=Math.floor(cap*0.9/1e7)*1e7,mx=Math.max(a2,tot)*1.03,pc=v=>((v-mn)/(mx-mn)*100).toFixed(2)+'%',pw=v=>(v/(mx-mn)*100).toFixed(2)+'%';
+    const m=el('div','sm-meter');m.innerHTML='<div class="f" style="width:'+pc(gu)+'"></div>'+(opt?'<div class="o" style="left:'+pc(gu)+';width:'+pw(opt)+'"></div>':'')+(re?'<div class="r" style="left:'+pc(gu+opt)+';width:'+pw(re)+'"></div>':'');
+    const mS=v=>'$'+Math.round(v/1e6)+'M';[['Cap',cap],['Tax',tax],['1st apron',a1],['2nd apron',a2]].forEach(([l,v],i)=>{const d=el('div','ln l');d.style.left=pc(v);d.appendChild(el(i%2?'i':'b',null,l.replace(' apron','')));m.appendChild(d)});
+    view.appendChild(m);const lg=el('div','sm-leg');lg.innerHTML='<span><i></i>Committed '+usdM(gu)+'</span>'+(opt?'<span><i class="o"></i>Team options '+usdM(opt)+'</span>':'')+(re?'<span><i class="r"></i>Re-signed '+usdM(re)+'</span>':'')+'<span class="sm-th">Cap '+mS(cap)+' · Tax '+mS(tax)+' · 1st apron '+mS(a1)+' · 2nd apron '+mS(a2)+'</span>';view.appendChild(lg);
+    const st=el('div','sm-stats');[[usdM(tot),changed?'Payroll with your calls':'Committed, with options'],[String(n+nOpt+nRe),'Players signed for '+NY],[usdM(Math.abs(a2-tot)),(tot<a2?'Under':'Over')+' the second apron, before filling the roster'],[(fas.length-nRe)+' + '+TWOWAY.length,'Free agents (standard + two-way)']].forEach(([v,l])=>{const d=el('div');d.append(el('b',null,v),el('span',null,l));st.appendChild(d)});view.appendChild(st);
+    view.appendChild(calls);
+    const cols=el('div','sm-cols');const col=(h,rows)=>{const d=el('div');d.appendChild(el('h4',null,h));const ul=el('ul','kv');rows.forEach(([a,sm,b,cls])=>{const li=el('li');const sp=el('span',null,a);sp.appendChild(el('small',null,sm));li.append(sp,el('b',cls||null,b));ul.appendChild(li)});d.appendChild(ul);return d};
+    const c1=col('Coming off the books',fas.filter(f=>!ST.fa[f[0]].on).map(([nm,y,bird,v])=>[nm,y+' · '+(BW[bird]||bird)+(y==='RFA'?' · Cavs can match offers':''),v?usdM(v):'—']).concat(TWOWAY.length?[[TWOWAY.map(t=>t[0].replace(/ Jr\.$/,'').split(' ').slice(-1)[0]).join(', '),'Two-way · '+TWOWAY[0][2].split(' ')[1],'—']]:[]));
+    const ext=Object.entries(EXT).filter(([k,v])=>v===I).map(([k])=>k.split(' ').slice(-1)[0]);
+    const tools=[['Bird rights','Re-sign their own free agents over the cap','Yes','sm-y'],['Taxpayer mid-level','Using it hard-caps them at the second apron',tot<a2?'Tight':'No',tot<a2?'sm-y':'sm-n'],['Minimum contracts','Always available','Yes','sm-y'],['Cap space signings',over>0?'Payroll is above the cap':'Room under the cap',over>0?'No':'Yes',over>0?'sm-n':'sm-y']];
+    const dec=ext.length?[['Extension window opens',ext.join(', ')+' become eligible','July '+yr]]:[];
+    cols.append(c1,col('How they can add players',tools));if(dec.length)cols.appendChild(col('Also next summer',dec));view.appendChild(cols)}
+  draw();
 })();
 
 /* Resources: X accounts worth following (handles checked against search results before adding) */
