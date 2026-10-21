@@ -395,6 +395,16 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 #covers .kv li{padding-top:6px!important;padding-bottom:6px!important}#covers small{margin-top:1px;line-height:1.3}
 .xf{gap:6px}.xfc{padding:6px 10px}
 }
+
+/* phones, batch 8 (Oct 21) */
+@media (max-width:600px){
+#hcap .hbar{margin:4px 0 16px!important;padding-block:34px!important}
+.gp-f .gp-i{padding:4px 0!important;font-size:.6875rem!important}.gp-f .gp-i>b:first-child{font-size:.65625rem!important}.gp .gp-f{padding:6px 10px!important}.gp-links a,.gp-f .gp-links a{font-size:.75rem!important;padding:6px 8px!important}
+.cap td.cur{font-size:.8125rem!important}.cap td.fut{font-size:.75rem!important}
+.cap thead th{font-size:.75rem!important;color:var(--fg)!important;font-weight:800!important;letter-spacing:.04em}.cap thead th.cur small{font-size:.5625rem!important}.cap thead th:first-child{color:var(--muted)!important;font-size:.625rem!important}
+.ab-board{gap:4px!important}.ab-pk{min-height:0!important;height:auto!important;padding:5px 7px!important}.ab-ym{font-size:.875rem!important;padding:2px 0!important}.ab-pk *{font-size:.6875rem}.ab-pk b{font-size:.75rem!important}
+#covers .cov-h{font-size:.75rem!important;color:var(--fg)!important;margin:10px 0 4px!important;letter-spacing:.08em}
+}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
@@ -1150,6 +1160,8 @@ const HC_RULES=[[0,'Go over the first apron, at any time, for any reason'],[1,'U
  const ul=el('ul','hc-checks');HC_RULES.forEach(([ok,t])=>{const li=el('li',ok?'yes':'no');li.append(el('i',null,ok?'✓':'✕'),t);ul.appendChild(li)});
  const nt=el('p','hc-note');nt.append('Every ✓ has to fit within their ',el('b',null,money(HC_ROOM)),' of room under the first apron.');
  h.append(tiles,ul,nt);
+ /* phones: the cap bar sits right above the position tiles */
+ {const mq=matchMedia('(max-width:600px)'),hb=document.getElementById('hbar'),home=hb&&hb.parentNode,nx=hb&&hb.nextSibling;const place=()=>{if(!hb)return;if(mq.matches)h.insertBefore(hb,tiles);else home.insertBefore(hb,nx)};place();mq.addEventListener&&mq.addEventListener('change',place)}
  {const pr=document.getElementById('payroll');const row=el('div','pay-row');pr.parentNode.insertBefore(row,pr);row.append(pr,cap)}}
 const track=document.getElementById('track'),hbar=document.getElementById('hbar');
 const zones=[[LO,164.961,'var(--z1)'],[164.961,200.428,'var(--track)'],[200.428,209.015,'var(--z2)'],[209.015,221.686,'var(--z3)'],[221.686,HI,'var(--z4)']];
