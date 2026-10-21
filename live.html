@@ -391,6 +391,23 @@ body{padding-bottom:calc(48px + max(2px,env(safe-area-inset-bottom,0px) - 20px))
 .sh-bar a{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);font:700 .625rem var(--sans);text-decoration:none}
 .sh-bar svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.sh-bar a.on{color:var(--wine-ink,#860038)}
 }
+
+/* phones (Oct 21): denser cards, box score, lineups, shots, flow and plays */
+@media (max-width:600px){
+.card{padding:12px!important}.card h3{font-size:1rem!important;margin-bottom:2px!important}.card .sub,.card>p.dim{font-size:.75rem!important}
+.ff{grid-template-columns:1fr 1fr!important;gap:6px!important}.ffc{padding:7px 9px!important}.ffc .n{font-size:.625rem!important;letter-spacing:.06em}.ffc .row{margin-top:2px!important}.ffc .row b{font-size:.9375rem!important}.ffc .row span{font-size:.75rem!important}.ffc .edge{margin-top:3px!important;font-size:.6875rem!important}.ffc>*:last-child:not(.row):not(.bar){font-size:.625rem!important}
+p.note{font-size:.6875rem!important;line-height:1.35!important;margin-top:6px!important}
+.sc2{gap:6px!important}.oppr{grid-template-columns:2.2rem 1fr 2.6rem!important;gap:5px!important;margin:3px 0!important}.oppr .ab{font-size:.75rem!important}.sc2 [style*=height]{max-height:22px}.sc2 *{font-size:.75rem}.sc2 h3,.sc2 h4{font-size:.6875rem!important;margin:6px 0 2px!important}.sc2 small,.sc2 .key{font-size:.625rem!important}
+.fl{gap:4px!important;margin-bottom:6px!important}.fl button,.fl select{padding:4px 8px!important;font-size:.71875rem!important}.chips button{padding:3px 8px!important;font-size:.71875rem!important}
+.dt th{font-size:.625rem!important;padding:4px 3px!important}.dt td{padding:4px 3px!important;font-size:.75rem!important}.dt td:first-child{min-width:96px!important;max-width:120px!important;font-size:.75rem!important}.dt td:first-child .pos,.dt td:first-child small{font-size:.5625rem!important}
+.zt th{font-size:.625rem!important;padding:3px 3px!important}.zt td{padding:4px 3px!important;font-size:.71875rem!important}.zt td:first-child{font-size:.75rem!important;white-space:normal;line-height:1.2}
+.zb{gap:4px!important}.zbr{grid-template-columns:2rem 1fr 2.8rem!important;gap:5px!important;margin:1px 0!important}.zbt{height:13px!important}.zbr .ab{font-size:.75rem!important}.zbr *{font-size:.6875rem}.zb h4,.zb .zh,.zb>div>b:first-child{font-size:.625rem!important;margin:2px 0 0!important}
+.grid2{gap:10px!important}
+.ldt{height:22px!important;margin:2px 0!important}.ldt span{font-size:.6875rem!important}.ldt-k{font-size:.6875rem!important;margin-bottom:6px!important}.ldt-g{grid-template-columns:repeat(3,1fr)!important;gap:4px!important}.ldt-g div{padding:4px 6px!important;font-size:.6875rem!important;line-height:1.25}.ldt-g b{font-size:.8125rem!important}
+.sw li{padding:4px 0!important;gap:6px!important;font-size:.71875rem!important;line-height:1.3}.sw small,.sw b{font-size:.6875rem!important}
+.runs li{padding:4px 0!important;gap:6px!important;font-size:.71875rem!important;line-height:1.3}.runs small{font-size:.65625rem!important}.key{font-size:.625rem!important;gap:8px!important;margin-top:4px!important}
+.plays li{grid-template-columns:34px 4px 1fr auto!important;gap:6px!important;padding:3px 0!important;font-size:.71875rem!important;line-height:1.3}.plays .t{font-size:.625rem!important}.plays .s{font-size:.65625rem!important}.plays .c{min-height:12px!important;width:4px!important}.plays li.pd{padding:3px 6px!important;font-size:.625rem!important}
+}
 </style>
 </head>
 <body>

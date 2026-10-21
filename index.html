@@ -376,6 +376,14 @@ footer .wrap{padding-block:10px!important;font-size:.625rem!important;line-heigh
 .gp-teams{padding:6px 10px!important;margin-bottom:2px!important}.gp-t b{font-size:.8125rem}.gp-t span{font-size:.6875rem}
 .gp-tape+*,.gp-leg,.gp-leg *,.gp-ffn{font-size:.625rem!important;margin-top:4px!important}
 }
+
+/* phones, batch 7 (Oct 21) */
+@media (max-width:600px){
+.sm-dec summary b,.sm-dr summary b{font-size:.84375rem!important}.sm-dr summary small,.sm-dr summary span{font-size:.6875rem!important}.sm-dr summary{padding:5px 10px!important}
+#res section{margin-bottom:6px}#res .block-h h2{font-size:.9375rem}#res a.res{display:grid!important;grid-template-columns:1fr auto;column-gap:8px;padding:5px 0!important;border-bottom:1px solid var(--line2)}#res a.res b{font-size:.8125rem!important;margin:0!important}#res a.res span{grid-column:1/-1;font-size:.6875rem!important;line-height:1.3;margin:0!important;color:var(--muted)}#res a.res em{grid-column:2;grid-row:1;font-size:.625rem!important;align-self:center}#res .rtag{font-size:.5rem!important;padding:0 3px!important;margin-left:4px!important}
+.xf{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:4px!important}.xfc{padding:5px 6px!important}.xfc b{font-size:.6875rem!important;line-height:1.2}.xfc span{font-size:.59375rem!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.xfc small{display:none!important}
+#covers .kv li{padding:4px 0!important;font-size:.75rem!important}#covers .kv li b,#covers .kv li a{font-size:.78125rem!important}#covers .cov-h{font-size:.5625rem!important}
+}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
@@ -2429,7 +2437,7 @@ const NL_ON=false; /* paused Oct 19: the "subscribe" card stays off until turned
   const sp=(c,tx)=>{const e=document.createElement('span');e.className=c;e.textContent=tx;return e};
   t.querySelectorAll('thead th').forEach((th,i)=>{const n=th.firstChild;if(i===0){th.appendChild(sp('cys',' $M'));return}if(n&&n.nodeType===3){const m=n.textContent.match(/^20(\d\d)–(\d\d)$/);if(m){const f=sp('yl',n.textContent);n.replaceWith(f);f.after(sp('cys',m[1]+'–'+m[2]))}}});
   const w=document.createTreeWalker(t,NodeFilter.SHOW_TEXT);const ns=[];let n;while(n=w.nextNode())if(/\$\d+(?:\.\d+)?[MK]|\$\d{1,3}(?:,\d{3}){2,}/.test(n.textContent)&&!n.parentElement.closest('thead')&&!n.parentElement.closest('.vfull'))ns.push(n);
-  ns.forEach(n=>{const fr=document.createDocumentFragment();let last=0;const s=n.textContent;s.replace(/\$(\d+(?:\.\d+)?)M|\$(\d{1,3}(?:,\d{3}){2,})|\$(\d+)K/g,(m,v,d,k,i)=>{if(i>last)fr.append(s.slice(last,i));fr.append(sp('mf',m),sp('ms',v||(k?k+'K':(+d.replace(/,/g,'')/1e6).toFixed(1))));last=i+m.length;return m});if(last<s.length)fr.append(s.slice(last));n.replaceWith(fr)});
+  ns.forEach(n=>{const fr=document.createDocumentFragment();let last=0;const s=n.textContent;s.replace(/\$(\d+(?:\.\d+)?)M|\$(\d{1,3}(?:,\d{3}){2,})|\$(\d+)K/g,(m,v,d,k,i)=>{if(i>last)fr.append(s.slice(last,i));const dl=n.parentElement.closest('.dlt');fr.append(sp('mf',m),sp('ms',(v||(k?k+'K':(+d.replace(/,/g,'')/1e6).toFixed(1)))+(dl&&v?'M':'')));last=i+m.length;return m});if(last<s.length)fr.append(s.slice(last));n.replaceWith(fr)});
   t.querySelectorAll('.pbtn').forEach(b=>{const n=b.firstChild;if(!n||n.nodeType!==3)return;const full=n.textContent;const p=full.split(' ');if(p.length<2)return;const f=sp('nf',full);n.replaceWith(f);f.after(sp('ns',p[0][0]+'. '+p.slice(1).join(' ')))})})();
 /* Cavs & Coffee sign-up above the footer on every page: shows with NL_ON (?nl=footer previews it); hidden once someone signs up */
 (function(){const f=document.getElementById('nlft');if(!f||window.CDB_EMBED)return;let st='';try{st=localStorage.getItem('cdb-nl')||''}catch(_){}
