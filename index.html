@@ -417,6 +417,8 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 @media (min-width:761px){.cap .pbtn .nflag{margin:0 12px 0 8px}}
 
 @media (min-width:761px){.rt-p{gap:12px;padding:9px 0}.rt-av{width:46px;height:46px;font-size:.8125rem}.rt-p b{font-size:1rem}.rt-p small{font-size:.8125rem}.rt-tl{font-size:.75rem}}
+
+@media (max-width:600px){.page>div>h1{font-size:1.625rem!important;line-height:1.1}.page>div>p.dim,.page>div>p{font-size:.8125rem!important;line-height:1.4!important;margin-top:4px!important}.page>div>.dim:first-child{font-size:.75rem!important}}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
@@ -1199,6 +1201,9 @@ requestAnimationFrame(()=>{document.getElementById('fill').style.width=pct(TEAM_
 /* injuries — status: Out | Doubtful | Questionable | Probable | Game-time decision */
 const INJ_UPDATED='Oct 21';
 const INJURIES=[['Sam Merrill','SG','Elbow','Game-time decision'],['Khalifa Diop','C','Knee','Game-time decision'],["Nae'Qwan Tomlin",'PF','Back (stress reaction)','Out']];
+/* injury lists: Out first, then Doubtful, Questionable, Probable, game-time decisions */
+const INJ_RANK=st=>{const x=String(st).toLowerCase();return x.startsWith('out')?0:x.startsWith('doubt')?1:x.startsWith('quest')?2:x.startsWith('prob')?3:4};
+INJURIES.sort((a,b)=>INJ_RANK(a[3])-INJ_RANK(b[3]));
 /* injury context: history link per player (Salary Swish injury log) and prior listings at the same body part.
    typical: only filled when the team announces a specific diagnosis that a published study covers. */
 const INJ_CTX={
@@ -2791,7 +2796,7 @@ window.renderGame=function(sl){const i=SCHEDULE.findIndex(g=>gslug(g)===sl);if(i
   /* injuries (before) */
   if(!fin){const oi=OPP_INJ[o],fresh=oi&&oi.rows&&oi.d>=new Date(Date.now()-3*864e5).toISOString().slice(0,10);if(INJURIES.length||fresh){const c=card('Injury report','Updated '+INJ_UPDATED);
     const grp=(t,sub,rows)=>{c.appendChild(el('h3','gp-sh',t+(sub?' · '+sub:'')));const d=el('div','gp-inj');if(!rows.length){const x=el('div');x.append('None reported');d.appendChild(x)}rows.forEach(([n,inj,st])=>{const x=el('div');x.append(n+' · '+String(inj).toLowerCase(),el('span',/out/i.test(st)?'out':null,st));d.appendChild(x)});c.appendChild(d)};
-    grp('Cavs','',INJURIES.map(([n,,j,st])=>[n,j,st]));if(fresh)grp(GNICK[o]||TEAMS[o],'',oi.rows);
+    grp('Cavs','',INJURIES.map(([n,,j,st])=>[n,j,st]));if(fresh)grp(GNICK[o]||TEAMS[o],'',oi.rows.slice().sort((x,y)=>INJ_RANK(x[2])-INJ_RANK(y[2])));
     const a=el('a','gp-btn gp-inj-b','Official NBA injury report ↗');a.href='https://official.nba.com/nba-injury-report-2025-26-season/';a.target='_blank';a.rel='noopener';c.appendChild(a);Rr.appendChild(c)}}
   /* officials: the NBA posts crew assignments around 9 AM ET on game day; box.json carries them once posted */
   if(!fin){const c=card('Officials');const d=el('div','gp-inj gp-ref');c.appendChild(d);Rr.appendChild(c);
