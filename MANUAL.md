@@ -33,6 +33,7 @@ If a commit breaks something, the 30-minute job's safety check refuses to publis
 | What | Search for | Format of one entry |
 |---|---|---|
 | Injury report | `const INJURIES=` | `['Sam Merrill','SG','Elbow','Out'],`. Status is one of Out, Doubtful, Questionable, Probable, Game-time decision. Use `[]` for no injuries. |
+| Injury details (dropdown under each player) | `const INJ_CTX={` | Every injured player gets all four rows: Diagnosis (announced, with a plain-English gloss), Team timeline (with source and date), Typical return (`type` pointing to an `INJ_TYPICAL` entry: a peer-reviewed NBA study's sample size, average days and range, plus his own last return time), History (same body part with games missed and dates, then other past injuries). The full rules are in the comment above `INJ_CTX`. |
 | Transactions | `const TX=` | Add at the front: `{"d":"2026-10-20","k":"option","p":"Jaylon Tyson","t":"Picked up Jaylon Tyson’s 2027–28 team option"},`. `k` is one of trade, sign, waive, ext, option, twoway, draft, fa, other. |
 | Release link for a transaction | `const TX_X={` | Add at the front: `"2026-10-20\|Jaylon Tyson":{"url":"https://www.nba.com/cavaliers/news/..."},` |
 | Contracts and cap sheet | `const ROSTER=` | `['Name','Pos',[2026-27, 2027-28, ...],'Bird rights','Free agency','Note'],`. A salary is a number with no `$` or commas. A team option is `[5641500,'T']`, a player option is `[5641500,'P']`, and a free-agent year is `'UFA'` or `'RFA'`. |

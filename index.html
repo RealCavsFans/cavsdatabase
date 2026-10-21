@@ -1212,15 +1212,21 @@ const INJURIES=[['Sam Merrill','SG','Elbow','Game-time decision'],['Khalifa Diop
 /* injury lists: Out first, then Doubtful, Questionable, Probable, game-time decisions */
 const INJ_RANK=st=>{const x=String(st).toLowerCase();return x.startsWith('out')?0:x.startsWith('doubt')?1:x.startsWith('quest')?2:x.startsWith('prob')?3:4};
 INJURIES.sort((a,b)=>INJ_RANK(a[3])-INJ_RANK(b[3]));
-/* injury context: history link per player (Salary Swish injury log) and prior listings at the same body part.
-   typical: only filled when the team announces a specific diagnosis that a published study covers. */
+/* INJURY REPORT STANDARD (every injured player gets an INJ_CTX entry with these fields; each shows as a stacked row):
+   diag     Diagnosis, in the team's or a named reporter's words, plus a plain-English gloss of any medical term. Omit if none announced (page says "None announced").
+   timeline Team timeline: the announced return plan with source and date (e.g. "Re-evaluation in 3–4 weeks (Chris Fedor / Plain Dealer, Oct 20)"). Omit for GTD/no timeline (page fills a default).
+   type     Key into INJ_TYPICAL when the diagnosis matches a published study.
+   prior    History: earlier listings at the same body part with games missed and date ranges, how it ended, then one line on other past injuries (Salary Swish injury log).
+   hist     Salary Swish injury log URL.
+   INJ_TYPICAL[type] = [text, source label, url]: average time missed for that exact diagnosis from a peer-reviewed study of NBA players
+   (sample size, average, range, return rate), plus the player's own last return time for it if he had one. No study, no row. */
 const INJ_CTX={
   'Jarrett Allen':{hist:'https://www.salaryswish.com/injury/players/jarrett-allen',type:'patellar tendinopathy',diag:'Right patellar tendinopathy (tendon below the kneecap)',timeline:'Questionable for the opener at Philadelphia (Oct 22)',prior:'Same knee last season: right knee tendinitis, called severe by the team, kept him out 14 games: 10 straight from Mar 8 to Mar 25, then Mar 30, Apr 5 and the last two regular-season games (Apr 10 and 12). He returned for the playoffs and said in April he expected it to linger. Before 2026 he had no knee listings; earlier absences were finger, rib, ankle and groin.'},
   'Sam Merrill':{hist:'https://www.salaryswish.com/injury/players/sam-merrill',prior:'No prior elbow listings. Earlier listings: hamstring (5 times, Mar–May 2026), ankle, hand, hip, neck, wrist.'},
   'Khalifa Diop':{hist:'https://www.salaryswish.com/injury/players/khalifa-diop',prior:'No prior NBA injury listings (he played overseas 2023–26).'},
-  "Nae'Qwan Tomlin":{hist:'https://www.salaryswish.com/injury/players/naeqwan-tomlin',prior:'No prior back listings found.',timeline:'Re-evaluation in 3–4 weeks; no firm return date (Chris Fedor / Plain Dealer, Oct 20)'}
+  "Nae'Qwan Tomlin":{hist:'https://www.salaryswish.com/injury/players/naeqwan-tomlin',diag:'Stress reaction in his back (an early stage of bone stress, before a fracture)',prior:'No prior back listings found.',timeline:'Re-evaluation in 3–4 weeks; no firm return date (Chris Fedor / Plain Dealer, Oct 20)'}
 };
-const INJ_TYPICAL={ /* body part -> [typical time missed, source label, url] (only for diagnosed strains/sprains) */
+const INJ_TYPICAL={ /* diagnosis -> [typical return, source label, url]; see standard above */
   'patellar tendinopathy':['46 NBA cases: about 61 days on average from diagnosis to return, with a very wide range (±95 days). All 46 returned, and their efficiency was unchanged a year later. His own flare-up last March took 24 days (Mar 3 to Mar 27).','Jildeh et al., OJSM 2021','https://www.researchgate.net/publication/354350478_Impact_of_Patellar_Tendinopathy_on_Player_Performance_in_the_National_Basketball_Association'],
   hamstring:['Hamstring strains: about 10 days missed on average (NBA study covering 24 seasons)','Okoroha et al., OJSM 2019','https://pmc.ncbi.nlm.nih.gov/articles/PMC6685122']
 };
