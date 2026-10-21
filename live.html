@@ -626,7 +626,7 @@ function leadCard(D,R){const F=D.focus,O=D.other,c=el('div','card sec');head(c,'
    <div class="ldt-k"><span>${esc(F.abbr)} led ${fmtMin(lf)}</span><span>Tied ${fmtMin(tie)}</span><span>${esc(O.abbr)} led ${fmtMin(lo)}</span></div>
    <div class="ldt-g">${[['Lead changes',R.lc],['Times tied',R.ties],['Longest lead held',(hold.f>=hold.o?esc(F.abbr):esc(O.abbr))+' '+fmtMin(Math.max(hold.f,hold.o))],['Biggest lead '+esc(F.abbr),R.lead[F.id]],['Biggest lead '+esc(O.abbr),R.lead[O.id]]].map(([a,b])=>`<div><span>${a}</span><b>${b}</b></div>`).join('')}</div>`);return c}
 function vFlow(v,D,R){
-  v.appendChild(momentumCard(D,R));v.appendChild(leadCard(D,R));
+  v.appendChild(leadCard(D,R));v.appendChild(wpCard(D,R));v.appendChild(momentumCard(D,R));
   /* margin chart with filtered periods highlighted */
   const f=el('div','card sec');head(f,'Score margin',S.per==='all'?'Whole game':'Whole game, with '+perLow(S.per)+' highlighted');
   const T=pstart(R.maxPer)+plen(R.maxPer),W=900,H=150,pad=26;let mx=10;R.margin.forEach(m=>mx=Math.max(mx,Math.abs(m[1])));mx=Math.ceil(mx/5)*5;
@@ -638,7 +638,7 @@ function vFlow(v,D,R){
   const rr=R.runs.filter(r=>inPer(S.per,r.start.per)||inPer(S.per,r.end.per));
   f.appendChild(el('h3',null,'Runs of 8–0 or more'));
   if(!rr.length)f.appendChild(el('p','empty','None in this stretch.'));else{const ul=el('ul','runs');rr.slice().reverse().forEach(r=>{const t=D.teams.find(x=>x.id===r.t);const li=el('li');const sw=el('span');sw.innerHTML=`<i class="chip" style="background:${t.c}"></i>`;const mid=el('span');mid.append(el('span',null,t.abbr+' '+r.pts+'–0'+(r.open?' (still going)':'')));const dd=el('div','note',runDetail(D,R,r));dd.style.margin='2px 0 0';mid.appendChild(dd);li.append(sw,mid,el('small',null,pname(r.start.per)+' '+r.start.clock+'–'+(r.end.per!==r.start.per?pname(r.end.per)+' ':'')+r.end.clock));ul.appendChild(li)});f.appendChild(ul)}
-  v.appendChild(f);v.appendChild(wpCard(D,R));
+  v.appendChild(f);
 }
 
 /* tonight vs the season: the Cavs' rates tonight next to their season averages (this season once it has 10 games, else last season) */
