@@ -1,4 +1,4 @@
-// Backup play-by-play sources for the live page, used by functions/pbp.js (Cloudflare) when ESPN's feed fails.
+// Backup play-by-play sources for the live page, used by worker/pbp.js (Cloudflare) when ESPN's feed fails.
 // Each parser turns a public game page into the same shape as ESPN's summary feed (header, boxscore, plays),
 // so the live page works unchanged. Order: StatMuse (structured, has substitutions), CBS (every play, no locations), Yahoo (some plays missing, has locations).
 
