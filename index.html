@@ -1242,7 +1242,6 @@ INJURIES.forEach(([n,p,inj,st])=>{const li=el('li','ij');const d=document.create
   row('Typical return',ty?ty[0]:(c.diag?'':'Not enough detail released for a reliable comparison'),ty?[ty[1],ty[2]]:null);
   row('History',c.prior);
   box.appendChild(dl);const ft=el('div','ij-ft');
-  if(PP_ON){const sl=n.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');const pl=el('a','ij-hist','Player page →');pl.href='/players/'+sl;pl.dataset.go='players/'+sl;pl.style.marginRight='14px';ft.appendChild(pl)}
   if(c.hist){const l=el('a','ij-hist',"Full injury history ↗");l.href=c.hist;l.target='_blank';l.rel='noopener';ft.appendChild(l)}
   {const sv=el('button','ij-sv');sv.type='button';sv.title='Save as image';sv.setAttribute('aria-label','Save '+n+' injury card as an image');sv.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';sv.onclick=()=>window.cdbCard&&window.cdbCard('injury',n,sv);ft.appendChild(sv);box.appendChild(ft)}
   d.appendChild(box);li.appendChild(d);ij.appendChild(li)});
