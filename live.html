@@ -642,7 +642,7 @@ function vFlow(v,D,R){
 }
 
 /* tonight vs the season: the Cavs' rates tonight next to their season averages (this season once it has 10 games, else last season) */
-let SEASONT=null;const seasonTotals=()=>SEASONT||(SEASONT=getJSON('/data/cle-rates.json').catch(()=>null));
+let SEASONT=null;const seasonTotals=()=>SEASONT||(SEASONT=getJSON('/pdata/cle-rates.json').catch(()=>null));
 /* tonight in the same box-score terms as the season numbers (Basketball Reference formulas) */
 function rateRows(A,B,X){const P=t=>poss({fga:t.fga,oreb:t.oreb+(t.toreb||0),to:t.to,fta:t.fta});const pa=P(A),pb=P(B);
   const now=[A.sec?((pa+pb)/2)/A.sec*2880:null,pa?A.pts/pa*100:null,pb?B.pts/pb*100:null,A.fga?100*(A.fgm+0.5*A.tpm)/A.fga:null,100*A.to/((A.fga+0.44*A.fta+A.to)||1),(A.oreb+B.dreb)?100*A.oreb/(A.oreb+B.dreb):null,A.fga?100*A.ftm/A.fga:null,B.fga?100*(B.fgm+0.5*B.tpm)/B.fga:null];

@@ -2590,9 +2590,9 @@ window.renderGame=function(sl){const i=SCHEDULE.findIndex(g=>gslug(g)===sl);if(i
           const x=el('span','gtv'+(better===1?' up':''));x.append(a.toFixed(1),el('small',null,ord(rk(a))));const y=el('span','gtv r'+(better===2?' up':''));y.append(el('small',null,ord(rk(b))),b.toFixed(1));tp.append(x,el('span','gtl',lab),y)});
         tp._ffn=1}
       tapeRows(tp,'Cavs',GNICK[o]||TEAMS[o]);c.appendChild(tp);if(tp._ffn)c.appendChild(el('p','gp-ffn','Four factors from per-game team and opponent averages. Ranks are out of 30.'));L.appendChild(c)}}
-  /* scouting the opponent: their last 5 games from ESPN play-by-play (data/scout.json, built daily for the next game) (before) */
+  /* scouting the opponent: their last 5 games from ESPN play-by-play (pdata/scout.json, built daily for the next game) (before) */
   if(!fin){const sc=card('Scouting the '+(GNICK[o]||TEAMS[o]),'Last 5 games');sc.hidden=true;L.appendChild(sc);
-    fetch('/data/scout.json',{cache:'no-cache'}).then(x=>x.ok?x.json():null).catch(()=>null).then(X=>{if(!X||!X.game||X.game.d!==g[0]||!X.games||!X.games.length)return;
+    fetch('/pdata/scout.json',{cache:'no-cache'}).then(x=>x.ok?x.json():null).catch(()=>null).then(X=>{if(!X||!X.game||X.game.d!==g[0]||!X.games||!X.games.length)return;
       const lt=document.getElementById('gp-lvt');if(lt)lt.href='/live.html?g='+X.game.id;
       const n=X.games.length;sc.querySelector('.block-h span').textContent='Last '+n+' game'+(n>1?'s':'')+(X.from&&X.games[0].d<g[0].slice(0,4)+'-08-01'?' · '+X.from.replace('-','–'):'');
       const md=d=>(+d.slice(5,7))+'/'+(+d.slice(8,10));const ch=el('div','chp');X.games.forEach(q=>ch.appendChild(el('span',q.a>q.b?'w':'',md(q.d)+' '+(q.ha==='home'?'vs':'@')+' '+q.op+' '+(q.a>q.b?'W':'L')+' '+q.a+'–'+q.b)));sc.appendChild(ch);

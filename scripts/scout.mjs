@@ -1,13 +1,13 @@
 // Scouting report for the next Cavs opponent, shown on the site's game preview.
 // Finds the next Cavs regular-season game on ESPN, then rebuilds the opponent's last 5 finished games from
 // ESPN play-by-play with the same code as /live.html (live-core.js): results, pace, ratings, top scorers,
-// most-used five and shot locations against the NBA average. Writes data/scout.json. Exits 0 on any problem.
+// most-used five and shot locations against the NBA average. Writes pdata/scout.json. Exits 0 on any problem.
 import fs from 'fs';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const C = require('../live-core.js');
 const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/';
-const OUT = 'data/scout.json';
+const OUT = 'pdata/scout.json';
 async function get(u) {
   for (let i = 0; i < 3; i++) {
     try { const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0 (cavsdatabase.com)' }, signal: AbortSignal.timeout(30000) }); if (r.ok) return r.json(); console.log('HTTP', r.status, u); }

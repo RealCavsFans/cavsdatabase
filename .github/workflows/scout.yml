@@ -19,7 +19,7 @@ jobs:
             scripts/scout.mjs
             live-core.js
             live-base.json
-            data/scout.json
+            pdata/scout.json
           sparse-checkout-cone-mode: false
       - uses: actions/setup-node@v5
         with:
@@ -27,10 +27,10 @@ jobs:
       - run: node scripts/scout.mjs
       - name: Commit if changed
         run: |
-          [ -f data/scout.json ] || exit 0
+          [ -f pdata/scout.json ] || exit 0
           git config user.name "cavsdatabase-bot"
           git config user.email "bot@cavsdatabase.com"
-          git add data/scout.json
+          git add pdata/scout.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Update scouting report"
           for i in 1 2 3; do
