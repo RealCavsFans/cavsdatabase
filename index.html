@@ -405,6 +405,14 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 .ab-board{gap:4px!important}.ab-pk{min-height:0!important;height:auto!important;padding:5px 7px!important}.ab-ym{font-size:.875rem!important;padding:2px 0!important}.ab-pk *{font-size:.6875rem}.ab-pk b{font-size:.75rem!important}
 #covers .cov-h{font-size:.75rem!important;color:var(--fg)!important;margin:10px 0 4px!important;letter-spacing:.08em}
 }
+
+/* desktop (Oct 21): cap position spacing; active draft rights stand out */
+@media (min-width:761px){
+#hcap .hc-tiles{display:flex;align-items:flex-end;gap:8px 44px;margin-bottom:12px}#hcap .hc-tile b{font:700 1.375rem/1.15 var(--mono)!important}#hcap .hc-tile span{margin-top:2px;line-height:1.2}
+#hcap .hc-checks{grid-template-columns:repeat(3,minmax(0,1fr));gap:0 24px}#hcap .hc-checks li{padding:4px 0;line-height:1.35}
+.ab-rt>li:not(.dim){border-left-width:6px;box-shadow:0 2px 10px rgba(0,0,0,.06)}.ab-rt>li:not(.dim) summary{padding:18px 18px!important;gap:16px}.ab-rt>li:not(.dim) .ab-av{width:64px;height:64px;font-size:1.125rem}.ab-rt>li:not(.dim) summary b{font-size:1.125rem}.ab-rt>li:not(.dim) summary small{font-size:.8125rem}
+.ab-rt>li.dim summary{padding:10px 14px!important}.ab-rt>li.dim .ab-av{width:40px;height:40px}
+}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
