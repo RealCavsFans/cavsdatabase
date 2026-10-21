@@ -31,7 +31,7 @@
 <link rel="preload" href="/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/geist-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/saira-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/a/app.6ea4118498.css"><link rel="preload" href="/a/app.f28e4bbe01.js" as="script">
+<link rel="stylesheet" href="/a/app.72370cf511.css"><link rel="preload" href="/a/app.b89ea13133.js" as="script">
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
 <script>/* OneSignal web push for alerts: loads only on the live site, never prompts on its own */
@@ -393,7 +393,7 @@
   <button type="button" class="thm2" id="thm2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Dark mode</span></button></div>
 </div></footer>
 
-<script src="/a/app.f28e4bbe01.js"></script>
+<script src="/a/app.b89ea13133.js"></script>
 
 <script>
 (function(){const R=document.documentElement,B=document.getElementById('thm'),T=document.getElementById('btt'),F=document.getElementById('fb');
@@ -529,7 +529,7 @@
  const M1=v=>'$'+(v/1e6).toFixed(1)+'M',esc2=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
  const ordS=n=>{const x=['th','st','nd','rd'],v=n%100;return n+(x[(v-20)%10]||x[v]||x[0])};
  const frame=(kicker,route,body)=>{const d=document.createElement('div');d.className='scd';const now=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-  d.innerHTML=`<div class="hd"><div class="lg">cavs<b>_db</b></div><div class="kk">${esc2(kicker)}</div></div><div class="bd">${body}</div><div class="ft">cavsdatabase.com/${route}<span>${now}</span></div>`;return d};
+  d.innerHTML=`<div class="hd"><div class="lg">cavs<b>_db</b></div><div class="kk">${esc2(kicker)}</div></div><div class="bd">${body}</div><div class="ft">cavsdatabase.com${route?'/'+route:''}<span>${now}</span></div>`;return d};
  const lines=(ls,X)=>ls.map(([l,v],i)=>`<div class="ln" style="left:${X(v)}%"><span style="${i%2?'bottom':'top'}:0">${({'1st apron':'1ST','2nd apron':'2ND'})[l]||l.toUpperCase()}</span></div>`).join('');
  const lineKey=ls=>`<div style="font:600 18px var(--mono);color:#6b7078;margin:-6px 0 22px">${ls.map(([l,v])=>l+' '+M1(v)).join(' · ')}</div>`;
  const TH=(k,i)=>THRESH.find(x=>x[0]===k)[1][i];
@@ -572,8 +572,17 @@
    const save=()=>{if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:label+' | cavs_db'}).catch(e=>{if(e&&e.name==='NotAllowedError')toast('Image ready','Save',save)})}else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Image saved')}};
    if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]}))toast('Image ready','Save or share',save);else save()}
   catch(e){toast('Couldn’t make the image. Try again.')}finally{node.remove();btn.disabled=false}return true}
+ function cardInjury(n){const r=INJURIES.find(x=>x[0]===n);if(!r)return null;const [,pos,inj,st]=r;const c=INJ_CTX[n]||{};const ty=INJ_TYPICAL[(c.type||inj).toLowerCase()];const pl=PLAYERS.find(x=>x[1]===n);
+  const tl=c.timeline||(st==='Game-time decision'?'Game-time decision, expected to be close':st==='Out'?'No timeline given':'');
+  const rows=[['Diagnosis',c.diag||'None announced'],['Team timeline',tl],['Typical return',ty?ty[0]:(c.diag?'':'Not enough detail released for a reliable comparison'),ty?ty[1]:''],['History',c.prior]].filter(x=>x[1]);
+  const len=rows.reduce((t,x)=>t+x[1].length,0),fs=len>1000?18:len>800?20:len>550?22:25;
+  const out=st==='Out',pill=`<span style="display:inline-block;margin-top:18px;padding:8px 18px;font:800 26px 'Saira Condensed',sans-serif;letter-spacing:.1em;text-transform:uppercase;${out?'background:#860038;color:#fff':'background:#F2B231;color:#101419'}">${esc2(st)}</span>`;
+  const body=rows.map(([k,v,src])=>`<div style="margin-bottom:${Math.round(fs*.8)}px"><div class="k" style="color:#860038">${k}</div><div style="font:500 ${fs}px/1.4 var(--sans);margin-top:4px">${esc2(v)}${src?` <span style="font:600 ${fs-5}px var(--mono);color:#6b7078">(${esc2(src)})</span>`:''}</div></div>`).join('');
+  return frame('Injury report · '+INJ_UPDATED,'',`<div style="display:grid;grid-template-columns:360px 1fr;gap:56px;height:100%"><div><div style="height:300px;background:linear-gradient(160deg,#8e2741,#5e0027);display:flex;align-items:flex-end;justify-content:center;overflow:hidden">${pl?`<img src="/img/h/${pl[12]}.png" alt="" style="width:118%;margin-bottom:-6px">`:''}</div>
+   <h1 style="margin-top:22px;font-size:58px">${esc2(n)}</h1><div class="sub">${esc2(pl?'#'+pl[0]+' · '+pl[2]:pos)}</div>${pill}</div>
+   <div style="overflow:hidden"><div style="font:800 44px/1.05 'Saira Condensed',sans-serif;text-transform:uppercase;margin-bottom:26px;padding-bottom:18px;border-bottom:3px solid #101419">${esc2(inj)}</div>${body}</div></div>`)}
  const CUSTOM={'cap-summary':()=>cardCap(),'cap-position':()=>cardCap(),'next-summer':()=>cardSummer()};
- window.cdbCard=(kind,arg,btn)=>cardShot(kind==='contract'?cardContract(arg):kind==='summer'?cardSummer():cardCap(),'cap',kind==='contract'?String(arg).toLowerCase().replace(/[^a-z0-9]+/g,'-'):kind,kind==='contract'?arg:'Cap position',btn);
+ window.cdbCard=(kind,arg,btn)=>kind==='injury'?cardShot(cardInjury(arg),'',String(arg).toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-injury',arg+' injury',btn):cardShot(kind==='contract'?cardContract(arg):kind==='summer'?cardSummer():cardCap(),'cap',kind==='contract'?String(arg).toLowerCase().replace(/[^a-z0-9]+/g,'-'):kind,kind==='contract'?arg:'Cap position',btn);
  window.cdbAttachX=attach;window.cdbCap=capture;window.cdbShare=share;window.cdbIcons=[I_L,I_C];
  /* deep links: /assets#picks-owed, /roster#donovan-mitchell, /cap#donovan-mitchell */
  function jump(){const h=decodeURIComponent(location.hash.slice(1));if(!h)return;attach();
