@@ -292,7 +292,7 @@ tr.gprev{padding:0 8px 8px}.gp{font-size:.71875rem}.gp-teams{padding:8px 10px}.g
 #rv-meas td,#rv-meas th{padding:7px 3px!important;font-size:.6875rem}
 #rv-meas thead th{font-size:.5625rem;letter-spacing:.02em}
 #rv-meas td.pl,#rv-meas .pl{min-width:92px;font-size:.75rem}
-#rv-meas th:last-child,#rv-meas td:last-child{display:none}
+#rv-meas th:nth-child(10),#rv-meas td:nth-child(10){display:none}
 }
 
 /* phones: condensed staff lists, history, media and resources (Oct 21) */
@@ -319,6 +319,20 @@ tr.gprev{padding:0 8px 8px}.gp{font-size:.71875rem}.gp-teams{padding:8px 10px}.g
 #view-video .vcard{min-width:0}#view-video .vcard *{font-size:.6875rem}
 #view-video .vthumb svg,#view-video .vthumb .play{transform:scale(.6)}
 .tools-g{grid-template-columns:1fr 1fr!important;gap:6px}.tool{padding:8px;gap:8px;align-items:center}.tool-i{width:26px;height:26px}.tool-i svg{width:14px;height:14px}.tool-t b{font-size:.78125rem}.tool-t span,.tool-t small,.tool-t p{display:none}
+}
+
+/* phones, batch 3 (Oct 21): home top fits to the season strip; pipeline, depth chart, two-way smaller; summer meter stays in view */
+@media (max-width:600px){
+.grec{padding:10px 14px 6px}.gbig{gap:10px}.gbig .flap{font-size:38px}.gbig .flap b{font-size:38px}.rkbox dt{font-size:.625rem}.rkbox dd{font-size:1.125rem}.rkbox .rk+.rk{margin-top:2px}.home-std{padding:2px 0!important;font-size:.75rem}
+#splits.gsp{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr));gap:0 4px;padding-top:2px}#splits>div{padding:4px 0!important;border:0!important}#splits dt{font-size:.5625rem!important;white-space:nowrap}#splits dd{font-size:.8125rem!important}
+.gmu{padding:10px 14px!important}#last.fin{padding-bottom:6px!important}.gteams .tm{font-size:34px!important}.gteams .tm a.opp{font-size:34px!important}.gteams .gat{font-size:16px!important}.nx-when{font-size:.8125rem}#cd.gdays{padding:5px 10px!important}#cd .cdn{font-size:1.125rem}.ginfo.nx-then-row{padding-top:4px!important}
+.gstripbox{padding:8px 12px!important}
+.cp-r{padding:7px 0 8px!important}.cp-top{font-size:.875rem}.cp-top a{font-size:.875rem}.cp-top .ch-tag{font-size:.625rem}.cp-steps{margin-top:4px!important;gap:2px 0}.cp-steps li{font-size:.71875rem!important;padding-right:14px!important}
+.ds-grid .c1{padding:6px 10px!important}.ds-grid .c1 .av{width:40px!important;height:40px!important}.ds-grid .c1 b{font-size:.875rem!important}
+.ds-grid .c2,.ds-grid .c3,.ds-grid .c4{padding:3px 10px!important}.ds-grid .c2 .av,.ds-grid .c3 .av,.ds-grid .c4 .av{width:26px!important;height:26px!important}.ds-grid .c2 b,.ds-grid .c3 b,.ds-grid .c4 b{font-size:.78125rem!important}
+.ds-grid .pz{padding:8px 6px!important;font-size:16px!important}.ds-grid .tw{padding:2px 10px 6px!important}.ds-hdr{padding:10px 12px 8px!important}
+.twx-h{padding:8px 10px}.twx-h h2{font-size:1rem}.twx-h h2 small{font-size:.6875rem}.twx-g{padding:6px;gap:4px}.twx-g summary{padding:5px 8px}.twx-top b{font-size:.8125rem}.twx-top small{font-size:.625rem}.twx-m{font-size:.625rem}.twx-m b{font-size:.6875rem}.twx-p i{width:12px;height:5px}.twx-e{margin-top:2px}.twx-e b,.twx-more{font-size:.625rem}.twx-f{font-size:.6875rem;padding:0 10px 8px;line-height:1.35}
+.sm-pin{position:sticky;top:var(--pt,0px);z-index:9;background:var(--card);margin:0 -12px;padding:6px 12px 2px;box-shadow:0 6px 8px -6px rgba(0,0,0,.25)}
 }
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
@@ -4026,14 +4040,14 @@ const y0now=s=>s===SEASONS[0];
     ST.fillLabel.textContent='Fill the '+open+' open roster spot'+(open===1?'':'s')+' (to 14) with minimum deals: +'+usdM(open*minFor(2))+' (veteran minimums count as a two-year minimum)';
     const over=tot-cap,where=tot>a2?'over the second apron':tot>a1?'over the first apron':tot>tax?'over the tax line':tot>cap?'over the cap':'under the cap';
     const big=el('p','sm-big');if(over>0){big.append('No cap space. ');big.appendChild(el('em',null,usdM(over)+' over'));big.append(' the cap')}else{big.append('About ');big.appendChild(el('em',null,usdM(-over)));big.append(' in cap space')}
-    view.appendChild(big);
+    const pin=el('div','sm-pin');pin.appendChild(big);view.appendChild(pin);
     const kept=opts.filter(o=>ST.opt[o[0]]).map(o=>o[0]+'’s team option'),res=fas.filter(f=>ST.fa[f[0]].on).map(f=>f[0]);
     view.appendChild(el('p','sm-sub2',(changed?'':'')+n+' players plus dead money already add up to '+usdM(gu)+' for '+NY+'.'+(kept.length||res.length?' With '+[...kept.map(k=>k+' picked up'),...res.map(r=>r+' re-signed')].join(', ')+', Cleveland starts the summer '+where+(ST.fill?', with the roster filled to 14.':', before filling the roster.'):' Cleveland starts the summer '+where+'.')+(changed?' (Your what-if.)':'')));
     /* meter */
     const mn=Math.floor(cap*0.9/1e7)*1e7,mx=Math.max(a2,tot)*1.03,pc=v=>((v-mn)/(mx-mn)*100).toFixed(2)+'%',pw=v=>(v/(mx-mn)*100).toFixed(2)+'%';
     const m=el('div','sm-meter');m.innerHTML='<div class="f" style="width:'+pc(gu)+'"></div>'+(opt?'<div class="o" style="left:'+pc(gu)+';width:'+pw(opt)+'"></div>':'')+(re?'<div class="r" style="left:'+pc(gu+opt)+';width:'+pw(re)+'"></div>':'')+(fillAmt?'<div class="m" style="left:'+pc(gu+opt+re)+';width:'+pw(fillAmt)+'"></div>':'');
     const mS=v=>'$'+Math.round(v/1e6)+'M';[['Cap',cap],['Tax',tax],['1st apron',a1],['2nd apron',a2]].forEach(([l,v],i)=>{const d=el('div','ln l');d.style.left=pc(v);d.appendChild(el(i%2?'i':'b',null,l.replace(' apron','')));m.appendChild(d)});
-    view.appendChild(m);const lg=el('div','sm-leg');lg.innerHTML='<span><i></i>Committed '+usdM(gu)+'</span>'+(opt?'<span><i class="o"></i>Team options '+usdM(opt)+'</span>':'')+(re?'<span><i class="r"></i>Re-signed '+usdM(re)+'</span>':'')+(fillAmt?'<span><i class="m"></i>Minimum deals '+usdM(fillAmt)+'</span>':'')+'<span class="sm-th">Cap '+mS(cap)+' · Tax '+mS(tax)+' · 1st apron '+mS(a1)+' · 2nd apron '+mS(a2)+'</span>';view.appendChild(lg);
+    pin.appendChild(m);{const h=document.querySelector('header.gbar');pin.style.setProperty('--pt',(h?h.offsetHeight:0)+'px')}const lg=el('div','sm-leg');lg.innerHTML='<span><i></i>Committed '+usdM(gu)+'</span>'+(opt?'<span><i class="o"></i>Team options '+usdM(opt)+'</span>':'')+(re?'<span><i class="r"></i>Re-signed '+usdM(re)+'</span>':'')+(fillAmt?'<span><i class="m"></i>Minimum deals '+usdM(fillAmt)+'</span>':'')+'<span class="sm-th">Cap '+mS(cap)+' · Tax '+mS(tax)+' · 1st apron '+mS(a1)+' · 2nd apron '+mS(a2)+'</span>';view.appendChild(lg);
     const st=el('div','sm-stats');[[usdM(tot),changed?'Payroll with your calls':'Committed, with options'],[String(n+nOpt+nRe+(ST.fill?open:0)),'Players signed for '+NY],[usdM(Math.abs(a2-tot)),(tot<a2?'Under':'Over')+' the second apron'+(ST.fill?'':', before filling the roster')],[(fas.length-nRe)+' + '+TWOWAY.length,'Free agents (standard + two-way)']].forEach(([v,l])=>{const d=el('div');d.append(el('b',null,v),el('span',null,l));st.appendChild(d)});view.appendChild(st);
     /* row status and rule checks */
     const hard=fas.find(f=>ST.fa[f[0]].on&&/mle/.test(ST.fa[f[0]].how));const lineFor=hard&&ST.fa[hard[0]].how==='ntmle'?a1:hard?a2:null;const bad=lineFor!=null&&tot>lineFor;
