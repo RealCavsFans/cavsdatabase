@@ -2101,7 +2101,7 @@ SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
      const tv=tvFor(g[0]),ra=radioFor(g[0]);const wt=[tv.nat,tv.loc].filter(Boolean).join(' · ');const x=el('span','gp-i');x.append(el('b',null,'Watch: '),wt||'TBA');facts.appendChild(x);const x2=el('span','gp-i');x2.append(el('b',null,'Listen: '),(ra.cavs||'').split(' · ')[0]||'TBA');facts.appendChild(x2)}
     facts.querySelectorAll('.gp-i>b:first-child').forEach(b=>{b.textContent=b.textContent.replace(/:\s*$/,'')});
     w.appendChild(facts);
-    {const lr=el('div','gp-links');const il=el('a','gp-l gp-btn','NBA injury report ↗');il.href='https://official.nba.com/nba-injury-report-2026-27-season/';il.target='_blank';il.rel='noopener';il.title='Official NBA injury report';lr.appendChild(il);
+    {const lr=el('div','gp-links');const il=el('a','gp-l gp-btn','NBA injury report ↗');il.href='https://official.nba.com/nba-injury-report-2025-26-season/';il.target='_blank';il.rel='noopener';il.title='Official NBA injury report';lr.appendChild(il);
      {const pl=el('a','gp-l gp-btn gp-btn-p','Game preview →');pl.href='/games/'+gslug(g);pl.dataset.go='games/'+gslug(g);pl.title='Full game page';lr.appendChild(pl)}facts.appendChild(lr)}
     td.appendChild(w);pr.appendChild(td);tb.appendChild(pr)}});
 while(mk<SCHED_MARKS.length){tb.appendChild(markRow(shortFmt.format(new Date(SCHED_MARKS[mk][0]+'T12:00:00'))+' · '+SCHED_MARKS[mk][1]));mk++}
@@ -2618,7 +2618,7 @@ window.renderGame=function(sl){const i=SCHEDULE.findIndex(g=>gslug(g)===sl);if(i
   if(!fin){const oi=OPP_INJ[o],fresh=oi&&oi.rows&&oi.d>=new Date(Date.now()-3*864e5).toISOString().slice(0,10);if(INJURIES.length||fresh){const c=card('Injury report','Updated '+INJ_UPDATED);
     const grp=(t,sub,rows)=>{c.appendChild(el('h3','gp-sh',t+(sub?' · '+sub:'')));const d=el('div','gp-inj');if(!rows.length){const x=el('div');x.append('None reported');d.appendChild(x)}rows.forEach(([n,inj,st])=>{const x=el('div');x.append(n+' · '+String(inj).toLowerCase(),el('span',/out/i.test(st)?'out':null,st));d.appendChild(x)});c.appendChild(d)};
     grp('Cavs','',INJURIES.map(([n,,j,st])=>[n,j,st]));if(fresh)grp(GNICK[o]||TEAMS[o],'',oi.rows);
-    const a=el('a','gp-btn gp-inj-b','Official NBA injury report ↗');a.href='https://official.nba.com/nba-injury-report-2026-27-season/';a.target='_blank';a.rel='noopener';c.appendChild(a);Rr.appendChild(c)}}
+    const a=el('a','gp-btn gp-inj-b','Official NBA injury report ↗');a.href='https://official.nba.com/nba-injury-report-2025-26-season/';a.target='_blank';a.rel='noopener';c.appendChild(a);Rr.appendChild(c)}}
   /* officials: the NBA posts crew assignments around 9 AM ET on game day; box.json carries them once posted */
   if(!fin){const c=card('Officials');const d=el('div','gp-inj gp-ref');c.appendChild(d);Rr.appendChild(c);
     const note=()=>{const p=el('p','gp-rn');p.append('The NBA posts the crew around 9 AM ET on game day. ');const a=el('a',null,'NBA referee assignments ↗');a.href='https://official.nba.com/referee-assignments/';a.target='_blank';a.rel='noopener';p.appendChild(a);d.appendChild(p)};
