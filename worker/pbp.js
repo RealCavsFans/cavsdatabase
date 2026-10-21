@@ -2,7 +2,7 @@
 // GET /pbp?d=YYYYMMDD returns the Cavs game that day in ESPN's summary shape, from StatMuse, then CBS, then Yahoo.
 // One shared cached copy serves every visitor (15 seconds while live), so each source sees about four requests a minute.
 // Tests: &away=PHI&home=NYK picks another game; &src=statmuse|yahoo|cbs forces one source; &sm=<statmuse game slug>.
-import { fromStatMuse, fromText, yahooRows, cbsRows, teamCode } from '../scripts/pbp-sources.mjs';
+import { fromStatMuse, fromText, yahooRows, cbsRows, teamCode, shell } from '../scripts/pbp-sources.mjs';
 
 const UA = { 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36', 'accept-language': 'en-US,en;q=0.9' };
 const FULL = { ATL: 'atlanta-hawks', BOS: 'boston-celtics', BKN: 'brooklyn-nets', CHA: 'charlotte-hornets', CHI: 'chicago-bulls', CLE: 'cleveland-cavaliers', DAL: 'dallas-mavericks', DEN: 'denver-nuggets', DET: 'detroit-pistons', GSW: 'golden-state-warriors', HOU: 'houston-rockets', IND: 'indiana-pacers', LAC: 'clippers', LAL: 'lakers', MEM: 'memphis-grizzlies', MIA: 'miami-heat', MIL: 'milwaukee-bucks', MIN: 'minnesota-timberwolves', NOP: 'new-orleans-pelicans', NYK: 'new-york-knicks', OKC: 'oklahoma-city-thunder', ORL: 'orlando-magic', PHI: 'philadelphia-76ers', PHX: 'phoenix-suns', POR: 'portland-trail-blazers', SAC: 'sacramento-kings', SAS: 'san-antonio-spurs', TOR: 'toronto-raptors', UTA: 'utah-jazz', WAS: 'washington-wizards' };
@@ -18,7 +18,7 @@ async function cavsGame(ctx, d) {
   const ev = ics.split('BEGIN:VEVENT').find(b => b.includes('cavs-' + d.slice(0, 4) + '-' + d.slice(4, 6) + '-' + d.slice(6) + '@'));
   if (!ev) return null;
   const sum = (ev.match(/SUMMARY:[^\n]*?Cavs (vs|at) ([^\r\n]+)/) || []); const opp = cityCode(sum[2]);
-  const start = (ev.match(/DTSTART:(\d{8}T\d{6}Z)/) || [])[1];
+  const start = ((ev.match(/DTSTART:(\d{8}T\d{6}Z)/) || [])[1] || '').replace(/(\d{4})(\d\d)(\d\d)T(\d\d)(\d\d)(\d\d)Z/, '$1-$2-$3T$4:$5:$6Z') || null;
   return opp ? (sum[1] === 'vs' ? { home: 'CLE', away: opp, start } : { home: opp, away: 'CLE', start }) : null;
 }
 const CITY = { 'LA Clippers': 'LAC', 'L.A. Clippers': 'LAC', 'LA Lakers': 'LAL', 'L.A. Lakers': 'LAL', 'Los Angeles': 'LAL', Atlanta: 'ATL', Boston: 'BOS', Brooklyn: 'BKN', Charlotte: 'CHA', Chicago: 'CHI', Dallas: 'DAL', Denver: 'DEN', Detroit: 'DET', 'Golden State': 'GSW', Houston: 'HOU', Indiana: 'IND', Memphis: 'MEM', Miami: 'MIA', Milwaukee: 'MIL', Minnesota: 'MIN', 'New Orleans': 'NOP', 'New York': 'NYK', 'Oklahoma City': 'OKC', Orlando: 'ORL', Philadelphia: 'PHI', Phoenix: 'PHX', Portland: 'POR', Sacramento: 'SAC', 'San Antonio': 'SAS', Toronto: 'TOR', Utah: 'UTA', Washington: 'WAS' };
@@ -76,6 +76,10 @@ export async function onRequestGet(ctx) {
   for (const s of only ? [only] : ['statmuse', 'cbs', 'yahoo']) {
     try { const out = await SRC[s](g, d, q); if (!out.plays.length && out.header.competitions[0].status.type.state !== 'pre') throw new Error(s + ': empty'); out.tried = errs; const fin = out.header.competitions[0].status.type.state === 'post'; return json(out, 200, fin ? 600 : 15, key, ctx) }
     catch (e) { errs.push(String(e.message || e).slice(0, 120)) }
+  }
+  // nothing has the game yet: before tip-off, hand back the matchup from the calendar so the page can show it
+  if (!only && g.start && Date.now() < Date.parse(g.start) + 15 * 60e3) {
+    const out = shell(g.home, g.away, g.start); out.tried = errs; return json(out, 200, 60, key, ctx);
   }
   return json({ error: 'all backups failed', tried: errs }, 502, 15, key, ctx);
 }

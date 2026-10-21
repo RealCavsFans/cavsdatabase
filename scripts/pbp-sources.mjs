@@ -15,6 +15,9 @@ const short = n => { const p = String(n).split(' '); return p.length > 1 ? p[0][
 const dec = s => s.replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 const stateOf = s => /final|complete|closed/i.test(s || '') ? 'post' : /progress|half|live|end|period|in_/i.test(s || '') ? 'in' : 'pre';
 
+// before tip-off (or if every source is down): the game from the site's own calendar, with no plays yet
+export const shell = (H, A, start) => ({ src: 'schedule', header: header(H, A, 0, 0, 'pre', 1, '12:00', start), boxscore: box([{ id: String(TEAMS[H][0]), ath: [] }, { id: String(TEAMS[A][0]), ath: [] }]), plays: [], winprobability: [], gameInfo: { venue: { fullName: '' } } });
+
 /* shot names in ESPN's words: modifiers first, then the base shot */
 const SHOT_WORD = { Stepback: 'Step Back', Fadeaway: 'Fade Away', Pullup: 'Pullup', FingerRoll: 'Finger Roll', AlleyOop: 'Alley Oop' };
 export function shotName(t) {

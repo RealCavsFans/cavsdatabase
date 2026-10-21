@@ -25,7 +25,7 @@ const perLabel=f=>Array.isArray(f)?(eqSet(f,[1,2])?'1st half':eqSet(f,[3,4,5])||
 function lastName(n){const p=n.replace(/ (Jr\.|Sr\.|II|III|IV)$/,'').split(' ');return p.length>1?p.slice(1).join(' '):n}
 function prep(d){
   const comp=d.header.competitions[0];
-  const teams=comp.competitors.map(c=>({id:c.id,ha:c.homeAway,abbr:c.team.abbreviation,name:c.team.shortDisplayName||c.team.name,loc:c.team.location,logo:(c.team.logos&&c.team.logos[0]&&c.team.logos[0].href)||'',score:+(c.score||0),rec:(c.record&&c.record[0]&&c.record[0].summary)||''}));
+  const teams=comp.competitors.map(c=>({id:c.id,ha:c.homeAway,abbr:c.team.abbreviation,name:c.team.shortDisplayName||c.team.name,loc:c.team.location,logo:'/img/tl/'+String(c.team.abbreviation||'').toLowerCase()+'.png',logo2:(c.team.logos&&c.team.logos[0]&&c.team.logos[0].href)||'',score:+(c.score||0),rec:(c.record&&c.record[0]&&c.record[0].summary)||''}));
   const home=teams.find(t=>t.ha==='home'),away=teams.find(t=>t.ha==='away');
   const focus=teams.find(t=>t.id===CLE)||home,other=teams.find(t=>t!==focus);
   focus.c='#860038';other.c='#5b6470';focus.c2='color-mix(in srgb,#860038 22%,#fff)';other.c2='color-mix(in srgb,#5b6470 22%,#fff)';

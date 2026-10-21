@@ -56,3 +56,18 @@ for (const u of urls) {
 for (const k of Object.keys(map)) if (!urls.has(k)) delete map[k];
 await writeFile(mapUrl, JSON.stringify(map, null, 1) + '\n');
 console.log(`other photos: ${urls.size}, ${added} added`);
+
+// 3. team logos for the live page (img/tl/<espn abbreviation>.png), so the scoreboard keeps its logos if ESPN's image server is down
+const TL = ['atl', 'bos', 'bkn', 'cha', 'chi', 'cle', 'dal', 'den', 'det', 'gs', 'hou', 'ind', 'lac', 'lal', 'mem', 'mia', 'mil', 'min', 'no', 'ny', 'okc', 'orl', 'phi', 'phx', 'por', 'sac', 'sa', 'tor', 'utah', 'wsh'];
+await mkdir(new URL('img/tl/', root), { recursive: true });
+let tl = 0;
+for (const a of TL) {
+  const out = new URL(`img/tl/${a}.png`, root);
+  if (await have(out)) continue;
+  try {
+    const res = await fetch(`https://a.espncdn.com/combiner/i?img=/i/teamlogos/nba/500/${a}.png&h=96&w=96`, UA);
+    if (!res.ok) { warn(`logo ${a}: HTTP ${res.status}`); continue; }
+    await writeFile(out, Buffer.from(await res.arrayBuffer())); tl++;
+  } catch (e) { warn(`logo ${a}: ${e.message}`); }
+}
+console.log(`team logos: ${tl} added`);

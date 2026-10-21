@@ -61,6 +61,9 @@ Every job that reads ESPN keeps the last good data when a fetch fails, so pages 
 - **Lineups, possessions and the game archive**: pbpstats.com has these too; the live archive would need pointing at it if ESPN stays down.
 - **Box scores and scores** (next day): Basketball Reference. Use it sparingly; it rate-limits heavy use.
 - **Live in-game data**: already backed up. If ESPN's game feed misses twice in a row, the live page switches by itself to `/pbp`, a small Cloudflare Worker route (`worker/pbp.js`, parsers in `scripts/pbp-sources.mjs`). It reads the same game from StatMuse first, then CBS, then Yahoo, and the page names the feed it's using under the scoreboard. It checks ESPN again every minute and switches back once ESPN answers. StatMuse has everything ESPN has except blocks. CBS and Yahoo don't list substitutions, so on those two the page hides minutes, plus-minus and the Lineups tab. One shared copy is cached for 15 seconds, so the sources see about four requests a minute however many people are watching.
+  - Before tip-off, or if every source is down, `/pbp` still returns the matchup and tip time from the site's calendar, so the page shows the game.
+  - If ESPN never delivers a finished game, the nightly game archive saves the StatMuse copy instead (`b<date>.json`), and swaps in ESPN's copy once it exists.
+  - The daily health check replays the latest finished Cavs game through StatMuse and CBS and opens the "Site health" issue if either breaks.
   - Test it any time: `cavsdatabase.com/pbp?d=YYYYMMDD` for a Cavs game date. Add `&src=statmuse`, `&src=cbs` or `&src=yahoo` to try one source.
 
 ## Health check

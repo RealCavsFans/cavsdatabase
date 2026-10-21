@@ -1,12 +1,7 @@
 {
  "checked": "2026-10-19T11:19:45.944Z",
  "total": 803,
- "broken": [
-  [
-   "https://official.nba.com/nba-injury-report-2026-27-season/",
-   404
-  ]
- ],
+ "broken": [],
  "unsure": [
   [
    "https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Transaction_History/2018",

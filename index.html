@@ -260,6 +260,12 @@ header.gbar .search input{font-size:0.9375rem}
 .twx-e{margin-top:6px}.twx-e b{font-size:0.75rem}
 .twx-f{padding:0 14px 10px;font-size:0.75rem}
 }
+.nlft{max-width:1200px;margin:28px auto 0;padding:0 20px}.nlft>div{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;background:#101419;color:#c9ccd1;border-radius:14px;border-top:3px solid #860038;padding:18px 20px}
+.nlft b{display:flex;align-items:center;gap:10px;font:800 1.5rem/1 "Saira Condensed",var(--sans);text-transform:uppercase;color:#fff}.nlft b i{font-style:normal;color:#F2B231}.nlft b img{width:42px;height:auto}
+.nlft .t{flex:1 1 220px}.nlft p{margin:6px 0 0;font:500 .875rem/1.35 var(--sans);color:#d8dbe0}.nlft small{display:block;margin-top:3px;font:700 .625rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#F2B231}
+.nlft form{display:flex;gap:6px;flex:1 1 300px;max-width:440px;min-width:0}.nlft input{flex:1;min-width:0;height:42px;border-radius:9px;border:1px solid #333a43;background:#0b0e12;color:#fff;padding:0 12px;font:500 .9375rem var(--sans)}
+.nlft button{height:42px;border:0;border-radius:9px;background:#F2B231;color:#101419;font:800 .9375rem "Saira Condensed",var(--sans);text-transform:uppercase;letter-spacing:.04em;padding:0 16px;white-space:nowrap;cursor:pointer}
+.nlft *{box-sizing:border-box}@media(max-width:600px){.nlft form{max-width:none;flex-basis:100%}.nlft button{padding:0 12px}}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 </style>
@@ -604,6 +610,7 @@ header.gbar .search input{font-size:0.9375rem}
  <button class="ci-skip" id="ci-skip" type="button">Skip</button></div>
 <noscript><nav aria-label="Pages" style="padding:16px"><a href="/">Home</a> · <a href="/schedule">Cavaliers schedule</a> · <a href="/roster">Cavaliers roster</a> · <a href="/staff">Coaches &amp; front office</a> · <a href="/cap">Cavaliers salary cap</a> · <a href="/assets">Draft picks &amp; exceptions</a> · <a href="/moves">Transactions</a> · <a href="/charge">Cleveland Charge</a> · <a href="/media">Media</a> · <a href="/resources">Resources</a></nav></noscript>
 <button type="button" class="btt" id="btt" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg></button>
+<section class="nlft" id="nlft" hidden aria-label="Cavs &amp; Coffee newsletter"><div><div class="t"><b><img src="/nl/icon-mug.png" alt="" width="42" height="32">Cavs <i>&amp;</i> Coffee</b><p>Your Cavs news, served unfiltered.</p><small>Free · No ads · All Cavs</small></div><form action="https://buttondown.com/api/emails/embed-subscribe/cavscoffee" method="post"><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email"><input type="hidden" name="embed" value="1"><button type="submit">Pour me a cup</button></form></div></section>
 <footer><div class="wrap">
   <span>cavsdatabase.com · Independent fan reference. Not affiliated with the Cleveland Cavaliers or the NBA.<br><a class="f-rcf" href="https://realcavsfans.com" target="_blank" rel="noopener">Started on RealCavsFans. Thanks for the floor.</a></span>
   <div class="fright"><button type="button" class="ftip fapp" id="appbtn">Get the app</button><a class="ftip" href="https://www.buymeacoffee.com/cavsdb" target="_blank" rel="noopener">☕ Tip jar</a><button type="button" class="fcontact" onclick="window.cdbFeedback&&window.cdbFeedback()">Contact &amp; Feedback</button>
@@ -2305,6 +2312,9 @@ const NL_ON=false; /* paused Oct 19: the "subscribe" card stays off until turned
   /* after Buttondown sends people back */
   const q=location.search;const msg=/[?&]subscribe=check/.test(q)?'Almost there: check your email to confirm your Cavs & Coffee sign-up.':/[?&]subscribed=1/.test(q)?'You’re in ☕ The first issue lands the morning after the next Cavs game.':'';
   if(msg){const t=el('div','nltoast');t.setAttribute('role','status');t.append(msg);const x=el('button',null,'×');x.type='button';x.setAttribute('aria-label','Close');x.onclick=()=>t.remove();t.appendChild(x);document.body.appendChild(t);setTimeout(()=>t.remove(),9000);try{history.replaceState(history.state,'',location.pathname)}catch(_){}}})();
+/* Cavs & Coffee sign-up above the footer on every page: shows with NL_ON (?nl=footer previews it); hidden once someone signs up */
+(function(){const f=document.getElementById('nlft');if(!f||window.CDB_EMBED)return;let st='';try{st=localStorage.getItem('cdb-nl')||''}catch(_){}
+  if((NL_ON||/[?&]nl=footer/.test(location.search))&&st!=='sub')f.hidden=false;f.querySelector('form').addEventListener('submit',()=>{try{localStorage.setItem('cdb-nl','sub')}catch(_){}})})();
 /* Cavs & Coffee nudge: a small card in the corner, at most once a visit, never on someone's first page,
    gone for 30 days after "No thanks" and for good after signing up. NL_ON shows it; ?nl=popup previews it now. */
 (function(){const prev=/[?&]nl=popup/.test(location.search);if((!NL_ON&&!prev)||window.CDB_EMBED)return;
