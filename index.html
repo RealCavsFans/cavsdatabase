@@ -283,16 +283,41 @@ tr.gprev{padding:0 8px 8px}.gp{font-size:.71875rem}.gp-teams{padding:8px 10px}.g
 @media (max-width:600px){.cap .mf,.cap .yl,.cap .nf{display:none}.cap .ms,.cap .ys,.cap .ns{display:inline}.cap th .ys:first-child{display:inline}.cap thead th:first-child .ys{font-size:.5rem;color:var(--muted);letter-spacing:.04em}}
 /* phones: cap sheet and measurements fit more on screen (Oct 21) */
 @media (max-width:600px){
-.cap td,table.cap th{padding:7px 3px!important}
-.cap thead th{font-size:.5625rem;letter-spacing:.02em}.cap th.cur small{font-size:.5rem;letter-spacing:.06em}
-.cap th:first-child,.cap td:first-child{min-width:86px;max-width:96px}
-.cap td.pcell{font-size:.75rem;line-height:1.2}
-.cap td.cur{font-size:.75rem}.cap td.fut{font-size:.6875rem}.cap .fa{font-size:.5625rem;letter-spacing:.03em}
+.cap td,table.cap th{padding:9px 6px!important}
+.cap thead th{font-size:.625rem;letter-spacing:.03em}.cap th.cur small{font-size:.5rem;letter-spacing:.06em}
+.cap th:first-child,.cap td:first-child{min-width:100px;max-width:112px}
+.cap td.pcell{font-size:.875rem;line-height:1.25}
+.cap td.cur{font-size:.9375rem}.cap td.fut{font-size:.875rem}.cap .fa{font-size:.625rem;letter-spacing:.04em}
 .cap .vmb,.cap .extb,.cap td sup{font-size:.5rem}
 #rv-meas td,#rv-meas th{padding:7px 3px!important;font-size:.6875rem}
 #rv-meas thead th{font-size:.5625rem;letter-spacing:.02em}
 #rv-meas td.pl,#rv-meas .pl{min-width:92px;font-size:.75rem}
 #rv-meas th:last-child,#rv-meas td:last-child{display:none}
+}
+
+/* phones: condensed staff lists, history, media and resources (Oct 21) */
+@media (max-width:600px){
+.xl summary{padding:6px 0;gap:8px;font-size:.8125rem}
+.xl summary>span:first-child{display:grid;grid-template-columns:auto 1fr;column-gap:8px;align-items:center}
+.xl summary>span:first-child>b,.xl summary>span:first-child>small{grid-column:1/-1}
+.xl summary small{font-size:.6875rem;line-height:1.3}
+.xl summary .tnb{width:80px;height:4px;margin-top:3px}.xl summary .tnl{margin-top:2px;font-size:.625rem}
+.xl summary>b{font-size:.75rem}
+.org-d{gap:6px}.org-d a{padding:6px 4px}.org-d b{font-size:1.0625rem}.org-d span{font-size:.5625rem}
+#view-history .hx-row{gap:3px}#view-history .hx-row>*{padding-top:3px!important;padding-bottom:3px!important}
+#hx-stats{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}#hx-stats .txs{padding:6px 8px;min-width:0}#hx-stats .txs:first-child{grid-column:1/-1}#hx-stats .txs b{font-size:1.125rem}#hx-stats .txs span{font-size:.5625rem;letter-spacing:.04em;line-height:1.25;display:block}
+.hx-opp{gap:4px!important}.hx-oc{padding:4px 3px 7px}.hx-oc b{font-size:.875rem}.hx-oc span{font-size:.625rem}
+#view-history table.hx-t td,#view-history table.hx-t th{padding:6px 4px!important;font-size:.75rem;line-height:1.3}
+#view-history .kv li{padding:5px 0;font-size:.8125rem;line-height:1.3}#view-history .kv li small{font-size:.6875rem}
+#view-history .hx-teams{gap:10px}
+.hx-rl{gap:5px}.hx-rl li{padding:7px 9px;gap:8px}.hx-rlab{font-size:.78125rem}.hx-rl small{font-size:.6875rem;line-height:1.3}
+#view-history .hx-ol li{padding-top:4px!important;padding-bottom:4px!important}
+.hx-tl li{padding-top:4px!important;padding-bottom:4px!important}
+#view-video .vgrid{grid-template-columns:1fr 1fr!important;gap:8px!important}
+#view-video .vthumb{height:auto!important;aspect-ratio:16/9}
+#view-video .vcard{min-width:0}#view-video .vcard *{font-size:.6875rem}
+#view-video .vthumb svg,#view-video .vthumb .play{transform:scale(.6)}
+.tools-g{grid-template-columns:1fr 1fr!important;gap:6px}.tool{padding:8px;gap:8px;align-items:center}.tool-i{width:26px;height:26px}.tool-i svg{width:14px;height:14px}.tool-t b{font-size:.78125rem}.tool-t span,.tool-t small,.tool-t p{display:none}
 }
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
@@ -2463,7 +2488,7 @@ setTimeout(function(){const ov=(/[?&]bday=(\d\d-\d\d)/.exec(location.search)||[]
     steps.forEach(([k,v])=>{const li=el('li');li.append(el('b',null,k),el('span',null,v));ol.appendChild(li)});
     pn.append(hd,el('p','app-lede','cavs_db opens full screen from your home screen, like an app. No app store, nothing to update.'),ol);w.append(bg,pn);document.body.appendChild(w);x.focus()}})();
 /* jump-to chips: a sticky row of section links on long pages; highlights the section you're in */
-setTimeout(function(){const J={'view-cap':[['Cap sheet','#captop'],['Two-way','#twsec'],['Next summer','#summer'],['Apron rules','#ap-h'],['Glossary','#glossary']],'view-assets':[['Draft picks','#board'],['Exceptions','#exc'],['Cash','#cash-sec'],['Drafted players','#rights']],'view-history':[['Rafters','#hx-ret'],['Chasing','#chase'],['Seasons','#hx-sea'],['Playoffs','#hx-po'],['Honors','#hx-hon'],['Leaders','#hx-lead'],['Records','#hx-rec'],['Numbers','#hx-num'],['Draft','#hx-draft'],['Coaches','#hx-coach'],['Arenas','#hx-home']]};
+setTimeout(function(){const J={'view-cap':[['Cap sheet','#captop'],['Two-way','#twsec'],['Next summer','#summer'],['Apron rules','#ap-h'],['Glossary','#glossary']],'view-assets':[['Draft picks','#board'],['Exceptions','#exc'],['Cash','#cash-sec'],['Drafted players','#rights']],'view-resources':[['Tools','#tools'],['Who covers','#covers'],['Follow on X','#xfollow'],['Stats','#res>section:nth-of-type(1)'],['Cap','#res>section:nth-of-type(2)'],['Draft','#res>section:nth-of-type(3)'],['Trades','#res>section:nth-of-type(4)']],'view-history':[['Rafters','#hx-ret'],['Chasing','#chase'],['Seasons','#hx-sea'],['Playoffs','#hx-po'],['Honors','#hx-hon'],['Leaders','#hx-lead'],['Records','#hx-rec'],['Numbers','#hx-num'],['Draft','#hx-draft'],['Coaches','#hx-coach'],['Arenas','#hx-home']]};
   const hdr=()=>(document.querySelector('header.gbar')||{offsetHeight:0}).offsetHeight;
   Object.entries(J).forEach(([vid,items])=>{const v=document.getElementById(vid);if(!v)return;const head=v.querySelector('.page>div');if(!head)return;
     const secs=items.map(([l,q])=>{const t=document.querySelector(q);return t?[l,t.closest('section')||t]:null}).filter(Boolean);if(secs.length<2)return;
