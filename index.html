@@ -1126,7 +1126,9 @@ const DATES=[
 ];
 const fmt=new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric'});
 const today=new Date();today.setHours(0,0,0,0);
-const upcoming=DATES.filter(([d])=>new Date(d+'T00:00:00')>=today);
+/* only through the end of the current league year (June 30) */
+const LY_END=(today.getMonth()>=6?today.getFullYear()+1:today.getFullYear())+'-06-30';
+const upcoming=DATES.filter(([d])=>new Date(d+'T00:00:00')>=today&&d<=LY_END);
 const list=document.getElementById('dates');
 {const mon=new Intl.DateTimeFormat('en-US',{month:'short'});
 upcoming.forEach(([d,t,c],i)=>{const dt=new Date(d+'T00:00:00');const days=Math.round((dt-today)/864e5);const li=el('li','kd'+(c?' cav':'')+(i===0?' first':''));li.id='d-'+i;
