@@ -1206,13 +1206,14 @@ requestAnimationFrame(()=>{document.getElementById('fill').style.width=pct(TEAM_
 
 /* injuries — status: Out | Doubtful | Questionable | Probable | Game-time decision */
 const INJ_UPDATED='Oct 21';
-const INJURIES=[['Sam Merrill','SG','Elbow','Game-time decision'],['Khalifa Diop','C','Knee','Game-time decision'],['Jarrett Allen','C','Knee','Questionable'],["Nae'Qwan Tomlin",'PF','Back (stress reaction)','Out']];
+const INJURIES=[['Sam Merrill','SG','Elbow','Game-time decision'],['Khalifa Diop','C','Knee','Game-time decision'],['Jarrett Allen','C','Right knee (patellar tendinopathy)','Questionable'],["Nae'Qwan Tomlin",'PF','Back (stress reaction)','Out']];
 /* injury lists: Out first, then Doubtful, Questionable, Probable, game-time decisions */
 const INJ_RANK=st=>{const x=String(st).toLowerCase();return x.startsWith('out')?0:x.startsWith('doubt')?1:x.startsWith('quest')?2:x.startsWith('prob')?3:4};
 INJURIES.sort((a,b)=>INJ_RANK(a[3])-INJ_RANK(b[3]));
 /* injury context: history link per player (Salary Swish injury log) and prior listings at the same body part.
    typical: only filled when the team announces a specific diagnosis that a published study covers. */
 const INJ_CTX={
+  'Jarrett Allen':{hist:'https://www.salaryswish.com/injury/players/jarrett-allen',type:'knee',diag:'Right patellar tendinopathy (tendon below the kneecap)',timeline:'Questionable for the opener at Philadelphia (Oct 22)',prior:'Same knee last season: right knee tendinitis, called severe by the team, kept him out 14 games: 10 straight from Mar 8 to Mar 25, then Mar 30, Apr 5 and the last two regular-season games (Apr 10 and 12). He returned for the playoffs and said in April he expected it to linger. Before 2026 he had no knee listings; earlier absences were finger, rib, ankle and groin.'},
   'Sam Merrill':{hist:'https://www.salaryswish.com/injury/players/sam-merrill',prior:'No prior elbow listings. Earlier listings: hamstring (5 times, Mar–May 2026), ankle, hand, hip, neck, wrist.'},
   'Khalifa Diop':{hist:'https://www.salaryswish.com/injury/players/khalifa-diop',prior:'No prior NBA injury listings (he played overseas 2023–26).'},
   "Nae'Qwan Tomlin":{hist:'https://www.salaryswish.com/injury/players/naeqwan-tomlin',prior:'No prior back listings found.',timeline:'Re-evaluation in 3–4 weeks; no firm return date (Chris Fedor / Plain Dealer, Oct 20)'}
