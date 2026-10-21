@@ -356,6 +356,18 @@ a.plk:hover{color:var(--wt)}
 .tvs{display:grid;grid-template-columns:minmax(0,1fr) 4rem 4rem 4rem;gap:0 8px;align-items:center;padding:7px 0;border-top:1px solid var(--line2);font-size:0.8125rem}
 .tvs b{font:700 0.8125rem var(--mono);text-align:right}.tvs span.s{font:500 0.8125rem var(--mono);text-align:right;color:var(--muted)}.tvs i{font:700 0.75rem var(--mono);font-style:normal;text-align:right}
 .tvs.h{font:800 0.6875rem var(--cond);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:0}.tvs.h span{text-align:right}
+
+@media (min-width:900px){
+.tsgh{font-size:0.875rem}
+.ffc .row span{font-size:1rem}
+.zt th,.dt th{font-size:0.8125rem}
+.dt th button{font-size:inherit}
+.zbr .ab{font-size:1rem}
+h3{font-size:0.875rem}
+.grid2.dots{grid-template-columns:1.35fr 1fr}
+.grid2.dots .zchart{max-width:none;width:100%;margin:0}
+.grid2.dots .zchart svg{width:100%;height:auto}
+}
 </style>
 </head>
 <body>
@@ -403,7 +415,7 @@ const rank=e=>({in:0,pre:1,post:2})[e.status.type.state];
 async function loadScoreboard(){
   const sel=$('gsel');let sb=null;try{sb=await getJSON(ESPN+'scoreboard')}catch(e){}
   sel.innerHTML='';const evs=(sb&&sb.events)||[];evs.sort((a,b)=>(isCavs(b)-isCavs(a))||(rank(a)-rank(b)));
-  if(evs.length){const g=el('optgroup');g.label='Today';evs.forEach(e=>{const st=e.status.type;const o=el('option',null,e.shortName+' · '+(st.state==='in'?'LIVE '+e.status.displayClock+' '+pname(e.status.period):st.shortDetail));o.value=e.id;g.appendChild(o)});sel.appendChild(g)}
+  {const ce=evs.filter(isCavs);if(ce.length){const g=el('optgroup');g.label='Today';ce.forEach(e=>{const st=e.status.type;const o=el('option',null,e.shortName+' · '+(st.state==='in'?'LIVE '+e.status.displayClock+' '+pname(e.status.period):st.shortDetail));o.value=e.id;g.appendChild(o)});sel.appendChild(g)}}
   const gl=g=>{const d=new Date(g.date);const w=g.cle>g.os?'W':'L';return (d.getMonth()+1)+'/'+d.getDate()+' '+(g.ha==='home'?'vs':'@')+' '+g.opp+' · '+w+' '+Math.max(g.cle,g.os)+'–'+Math.min(g.cle,g.os)};
   const cur=ARCH['2026-27']||[];if(cur.length){const g=el('optgroup');g.label='2026–27 Cavs games';cur.slice().reverse().forEach(x=>{const o=el('option',null,gl(x));o.value='a2026-27:'+x.id;g.appendChild(o)});sel.appendChild(g)}
   const sg=el('optgroup');sg.label='Season totals';[['2026-27',cur.length],['2025-26',(ARCH['2025-26']||[]).length]].forEach(([se,n])=>{if(!n)return;const o=el('option',null,se.replace('-','–')+' season · '+n+' games');o.value='s'+se;sg.appendChild(o)});if(sg.children.length)sel.appendChild(sg);
@@ -1158,8 +1170,8 @@ function vPlayers(v,D,R){
   const TT=R.T[t.id];const rows=[];
   D.roster[t.id].forEach(id=>{const p=D.P[id],b=R.B[id];let r;
     if(useEspn&&p.espn&&p.espn.MIN!=null){const e=p.espn,sp=x=>String(x||'0-0').split('-').map(Number);const[fgm,fga]=sp(e.FG),[tpm,tpa]=sp(e['3PT']),[ftm,fta]=sp(e.FT);
-      r={min:+e.MIN*60,pts:+e.PTS,reb:+e.REB,oreb:+e.OREB,ast:+e.AST,stl:+e.STL,blk:+e.BLK,to:+e.TO,pf:+e.PF,pm:+e['+/-'],fgm,fga,tpm,tpa,ftm,fta}}
-    else if(b.min>0||b.fga||b.fta||b.pts){r={min:b.min,pts:b.pts,reb:b.oreb+b.dreb,oreb:b.oreb,ast:b.ast,stl:b.stl,blk:b.blk,to:b.to,pf:b.pf,pm:b.pm,fgm:b.fgm,fga:b.fga,tpm:b.tpm,tpa:b.tpa,ftm:b.ftm,fta:b.fta}}
+      r={min:+e.MIN*60,pts:+e.PTS,reb:+e.REB,oreb:+e.OREB,dreb:+e.DREB,ast:+e.AST,stl:+e.STL,blk:+e.BLK,to:+e.TO,pf:+e.PF,pm:+e['+/-'],fgm,fga,tpm,tpa,ftm,fta}}
+    else if(b.min>0||b.fga||b.fta||b.pts){r={min:b.min,pts:b.pts,reb:b.oreb+b.dreb,oreb:b.oreb,dreb:b.dreb,ast:b.ast,stl:b.stl,blk:b.blk,to:b.to,pf:b.pf,pm:b.pm,fgm:b.fgm,fga:b.fga,tpm:b.tpm,tpa:b.tpa,ftm:b.ftm,fta:b.fta}}
     if(!r){rows.push({name:p,_cls:'dnp',min:-1,dnp:true});return}
     r.name=p;r.ts=r.fga+r.fta?r.pts/(2*(r.fga+0.44*r.fta)):null;r.usg=null;
     {/* on-court net rating: points per 100 possessions scored minus allowed with him on (same count as the Advanced view) */
@@ -1168,11 +1180,13 @@ function vPlayers(v,D,R){
   const nm=r=>{const s=el('span');const dot=el('span','oc'+(R.B[r.name.id].on&&S.state==='in'?'':' off'));s.append(dot,plink(D,r.name.id,r.name.short||r.name.name));if(r.name.starter)s.appendChild(el('span','pos',r.name.pos||''));return s};
   const d=x=>r=>r.dnp?'':x(r);
   const cols=[{h:'Player',k:'name',f:nm},{h:'MIN',k:'min',f:d(r=>fmtMin(r.min))},{h:'PTS',k:'pts',f:d(r=>r.pts),cls:()=>'k'},
-    {h:'FG',k:'fgm',f:d(r=>r.fgm+'-'+r.fga)},{h:'3PT',k:'tpm',f:d(r=>r.tpm+'-'+r.tpa)},{h:'FT',k:'ftm',f:d(r=>r.ftm+'-'+r.fta)},{h:'TS%',k:'ts',f:d(r=>r.ts==null?'–':(r.ts*100).toFixed(0)+'%'),title:'True shooting'},
-    {h:'REB',k:'reb',f:d(r=>r.reb)},{h:'OREB',k:'oreb',f:d(r=>r.oreb)},{h:'AST',k:'ast',f:d(r=>r.ast)},{h:'TO',k:'to',f:d(r=>r.to),asc:true},{h:'STL',k:'stl',f:d(r=>r.stl)},{h:'BLK',k:'blk',f:d(r=>r.blk)},{h:'PF',k:'pf',f:d(r=>r.pf),asc:true},{h:'+/-',k:'pm',f:d(r=>sgn(r.pm)),cls:r=>r.dnp?'':pmCls(r.pm)},{h:'NET',k:'net',f:d(r=>r.net==null?'–':sgn(Math.round(r.net))),cls:r=>r.dnp||r.net==null?'':pmCls(r.net),title:'Net rating: points per 100 possessions, scored minus allowed, with him on the floor'}];
-  const foot=el('tr','tot');foot.appendChild(el('td',null,'Team'));['',TT.pts,TT.fgm+'-'+TT.fga,TT.tpm+'-'+TT.tpa,TT.ftm+'-'+TT.fta,TT.fga+TT.fta?(TT.pts/(2*(TT.fga+0.44*TT.fta))*100).toFixed(0)+'%':'–',TT.oreb+TT.dreb,TT.oreb,TT.ast,TT.to,TT.stl,TT.blk,TT.pf,'',''].forEach(x=>foot.appendChild(el('td',null,String(x))));
+    {h:'FG',k:'fgm',f:d(r=>r.fgm+'-'+r.fga)},{h:'2P',k:'twm',sv:r=>r.dnp?null:r.fgm-r.tpm,f:d(r=>(r.fgm-r.tpm)+'-'+(r.fga-r.tpa))},{h:'3PT',k:'tpm',f:d(r=>r.tpm+'-'+r.tpa)},{h:'FT',k:'ftm',f:d(r=>r.ftm+'-'+r.fta)},{h:'TS%',k:'ts',f:d(r=>r.ts==null?'–':(r.ts*100).toFixed(0)+'%'),title:'True shooting'},
+    {h:'REB',k:'reb',f:d(r=>r.reb)},{h:'OREB',k:'oreb',f:d(r=>r.oreb)},{h:'DREB',k:'dreb',f:d(r=>r.dreb==null||isNaN(r.dreb)?r.reb-r.oreb:r.dreb)},{h:'AST',k:'ast',f:d(r=>r.ast)},{h:'TO',k:'to',f:d(r=>r.to),asc:true},{h:'STL',k:'stl',f:d(r=>r.stl)},{h:'BLK',k:'blk',f:d(r=>r.blk)},{h:'PF',k:'pf',f:d(r=>r.pf),asc:true},{h:'+/-',k:'pm',f:d(r=>sgn(r.pm)),cls:r=>r.dnp?'':pmCls(r.pm)},{h:'NET',k:'net',f:d(r=>r.net==null?'–':sgn(Math.round(r.net))),cls:r=>r.dnp||r.net==null?'':pmCls(r.net),title:'Net rating: points per 100 possessions, scored minus allowed, with him on the floor'}];
+  const foot=el('tr','tot');foot.appendChild(el('td',null,'Team'));['',TT.pts,TT.fgm+'-'+TT.fga,(TT.fgm-TT.tpm)+'-'+(TT.fga-TT.tpa),TT.tpm+'-'+TT.tpa,TT.ftm+'-'+TT.fta,TT.fga+TT.fta?(TT.pts/(2*(TT.fga+0.44*TT.fta))*100).toFixed(0)+'%':'–',TT.oreb+TT.dreb,TT.oreb,TT.dreb,TT.ast,TT.to,TT.stl,TT.blk,TT.pf,'',''].forEach(x=>foot.appendChild(el('td',null,String(x))));
   rows.forEach(r=>{if(r.dnp)r.pts=-1});
-  c.appendChild(dtable('pl',cols,rows,{def:'min',minW:720,foot}));
+  /* default order: while the game is on, the five on the floor first; otherwise the starters first; then by minutes */
+  {const live=S.state==='in';const rank=r=>r.dnp?2:(live?(R.B[r.name.id]&&R.B[r.name.id].on?0:1):(r.name.starter?0:1));rows.sort((a,b)=>rank(a)-rank(b)||(b.min||0)-(a.min||0))}
+  c.appendChild(dtable('pl',cols,rows,{def:null,minW:820,foot}));
   if(S.state==='in')c.appendChild(el('p','note','Gold dot = on the floor now.'));
   v.appendChild(c);
 }
@@ -1279,7 +1293,7 @@ function vShots(v,D,R){
   const av=i=>BZ[i][1]?BZ[i][0]/BZ[i][1]:LG[ZN[i][0]][0];
   const xy=sh.filter(q=>q.hasXY);
   const Z=ZN.map(()=>[0,0]);xy.forEach(q=>{Z[q.zi][1]++;if(q.m)Z[q.zi][0]++});
-  const g=el('div','grid2');const left=el('div','zchart');
+  const g=el('div','grid2'+(S.f.shView==='dots'?' dots':''));const left=el('div','zchart');
   const who=S.f.shPl==='all'?t.abbr:D.P[S.f.shPl].name;const typeLab=S.f.shType==='all'?'':' · '+PT[+S.f.shType][1].toLowerCase();
   if(S.f.shView==='bars'){left.appendChild(zoneBars(D,R,t,sh,BZ,baseLab))}
   else if(S.f.shView==='zones'){left.innerHTML=zoneCourt(Z,xy.length,who+' shooting by zone',BZ,t.c);left.insertAdjacentHTML('beforeend',`<div class="leg"><span><i style="background:${t.c}"></i>Better than ${esc(baseLab)}</span><span><i style="background:color-mix(in srgb,#c9a227 55%,var(--card))"></i>Worse</span><span>Each zone: makes-attempts, FG% and points above or below ${esc(baseLab)} in that zone. Fewer than 3 shots stays gray.</span></div>`)}
@@ -1421,7 +1435,7 @@ function vPlays(v,D,R){
   try{const r=await fetch('/live-base.json',{cache:'no-store'});if(r.ok){const j=await r.json();if(j&&j.t&&j.games>0&&j.season!=='2025-26')BLIVE=j}}catch(e){}
   const evs=await loadScoreboard();$('gsel').onchange=e=>choose(e.target.value,true);
   let pick=new URLSearchParams(location.search).get('g');
-  if(!pick){const cav=evs.find(isCavs),live=evs.find(e=>e.status.type.state==='in');pick=cav?cav.id:live?live.id:'r'+REPLAYS[0][0]}
+  if(!pick){const cav=evs.find(isCavs);pick=cav?cav.id:'r'+REPLAYS[0][0]}
   choose(pick,false).then(()=>{
     /* ?pl=<player slug> (from a player page): open season mode on him, lineups he was in and his on/off */
     const pl=new URLSearchParams(location.search).get('pl');if(!pl||!S.data)return;const id=Object.keys(S.data.P).find(k=>PP[ppKey(S.data.P[k].name)]===pl);if(!id)return;
