@@ -429,6 +429,9 @@ p.note{font-size:.6875rem!important;line-height:1.35!important;margin-top:6px!im
 .agrid th.agv{vertical-align:bottom;padding:4px 1px!important;height:64px}.agrid th.agv span{writing-mode:vertical-rl;transform:rotate(180deg);display:inline-block;font-size:.625rem;letter-spacing:.03em;white-space:nowrap}
 .agrid th.agc{font-size:.5625rem!important;line-height:1.25;white-space:nowrap;vertical-align:bottom}.agrid td{padding:6px 2px!important;min-width:26px}.agrid td:first-child{font-size:.75rem!important;padding-right:6px!important}
 }
+
+/* desktop assist grid: size to its content so passer and scorer columns sit together */
+@media (min-width:761px){table.agrid{width:auto;min-width:0}.agrid td:not(:first-child),.agrid th:not(:first-child){min-width:64px}.agrid td:first-child,.agrid th:first-child{padding-right:18px!important}}
 </style>
 </head>
 <body>
