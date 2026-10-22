@@ -19,7 +19,24 @@
  },
  "2026-10-22": {
   "url": "https://www.nba.com/game/cle-vs-phi-0022600006/box-score",
-  "status": "scheduled"
+  "status": "scheduled",
+  "refs": [
+   [
+    "Crew chief",
+    "Curtis Blair",
+    "74"
+   ],
+   [
+    "Referee",
+    "Aaron Smith",
+    "51"
+   ],
+   [
+    "Umpire",
+    "CJ Washington",
+    "12"
+   ]
+  ]
  },
  "2026-10-24": {
   "url": "https://www.nba.com/game/bkn-vs-cle-0022600105/box-score",
