@@ -2,9 +2,21 @@
  "articles": [
   {
    "src": "Hoops Rumors",
+   "title": "Central Notes: Collins, Giddey, Pistons, Niang, Pacers",
+   "link": "https://www.hoopsrumors.com/2026/10/central-notes-collins-giddey-pistons-niang-pacers.html",
+   "date": "2026-10-22T03:54:36.000Z"
+  },
+  {
+   "src": "Hoops Rumors",
    "title": "Cavs' Mitchell: 'I Don't Ever Want To Wear Another Uniform'",
    "link": "https://www.hoopsrumors.com/2026/10/cavs-mitchell-i-dont-ever-want-to-wear-another-uniform.html",
    "date": "2026-10-21T23:07:43.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Cavs at 76ers: How to watch, odds, and injury report",
+   "link": "https://www.fearthesword.com/cavs-injury-report/53319/cavs-at-76ers-how-to-watch-odds-and-injury-report",
+   "date": "2026-10-21T23:00:00.000Z"
   },
   {
    "src": "cleveland.com",
@@ -271,12 +283,6 @@
    "date": "2026-10-14T11:00:04.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "Cavalier superlatives: Meleek Thomas shines in an otherwise disappointing performance vs. Magic",
-   "link": "https://www.fearthesword.com/cavs-analysis/53119/cavs-superlatives-orlando-magic-cleveland-cavaliers-meleek-thomas-jaylon-tyson-evan-mobley-paolo-banchero-franz-wagner",
-   "date": "2026-10-14T03:01:38.000Z"
-  },
-  {
    "src": "Cavaliers on SI",
    "title": "Counting Down the Cavs: Breaking Down the History of the Number 9 in Cleveland",
    "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNNUhUNlBTQnNKZENzdFhRTzhzb0F1UG96ZG9KY1VsLTNJVGhobXR0dG5lblZ4YTRZREl4TlNMSFcxRnVWQTdoai1qYklCMzlmS1BJVXpsR2k0cmplQTBrbnB6V0lxTXpPaHZUMHBmZGYzQnhWM1VKMmczQ2JVcnBnYWpOU0U1WnRydzJvay1LNzVVSGdWeHBQQ0swczRESG12VXU3SWZ4OGhNRV82SVg2akIwa3g1b0U3eTJhTWVyUUdMYTlwZWJv?oc=5",
@@ -344,6 +350,20 @@
   }
  ],
  "videos": [
+  {
+   "src": "It's Cavalier Podcast",
+   "title": "Anthony Edwards Dropped 45 Points on the Miami Heat. #timberwolves #minnesotatimberwolves #nba",
+   "link": "https://www.youtube.com/watch?v=cvtsrPhmI38",
+   "date": "2026-10-22T03:46:46.000Z",
+   "id": "cvtsrPhmI38"
+  },
+  {
+   "src": "It's Cavalier Podcast",
+   "title": "Ty Jerome dropped 45 Points on the Utah Jazz. #grizzlies #memphisgrizzlies #nba",
+   "link": "https://www.youtube.com/watch?v=dV_j4-tgqLA",
+   "date": "2026-10-22T03:24:20.000Z",
+   "id": "dV_j4-tgqLA"
+  },
   {
    "src": "Locked On Cavs",
    "title": "UPDATE: Jarrett Allen QUESTIONABLE For Cleveland Cavaliers Season Opener! | Plus a Sixers Preview!",
@@ -457,13 +477,6 @@
    "id": "XzxZlL5ItYs"
   },
   {
-   "src": "It's Cavalier Podcast",
-   "title": "The Truth About Khalifa Diop’s Rookie Year - Season Preview",
-   "link": "https://www.youtube.com/watch?v=e_mc4aDTf74",
-   "date": "2026-10-16T00:52:20.000Z",
-   "id": "e_mc4aDTf74"
-  },
-  {
    "src": "Locked On Cavs",
    "title": "Mario Hezonja Can Be a GAME CHANGER For the Cleveland Cavaliers #cavs #clevelandcavaliers",
    "link": "https://www.youtube.com/watch?v=00lgIkBbu10",
@@ -476,13 +489,6 @@
    "link": "https://www.youtube.com/watch?v=1guKDMYj9eY",
    "date": "2026-10-15T11:15:08.000Z",
    "id": "1guKDMYj9eY"
-  },
-  {
-   "src": "It's Cavalier Podcast",
-   "title": "Jaylon Tyson was quite productive this preseason. #cavs # #clevelandcavaliers #cavaliers",
-   "link": "https://www.youtube.com/watch?v=sP_k4k1AYOk",
-   "date": "2026-10-14T22:06:12.000Z",
-   "id": "sP_k4k1AYOk"
   },
   {
    "src": "The Chase Down Podcast",
