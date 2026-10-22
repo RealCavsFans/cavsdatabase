@@ -431,7 +431,10 @@ p.note{font-size:.6875rem!important;line-height:1.35!important;margin-top:6px!im
 }
 
 /* desktop assist grid: size to its content so passer and scorer columns sit together */
-@media (min-width:761px){table.agrid{width:auto;min-width:0}.agrid td:not(:first-child),.agrid th:not(:first-child){min-width:64px}.agrid td:first-child,.agrid th:first-child{padding-right:18px!important}}
+@media (min-width:761px){table.agrid{width:auto;min-width:0}.agrid td:not(:first-child),.agrid th:not(:first-child){min-width:40px}.agrid td:first-child,.agrid th:first-child{padding-right:18px!important}}
+
+/* section image button */
+.card.xh{position:relative}.card.capmode .swh{display:none!important}.card.capmode *{overflow:visible!important;max-height:none!important;-webkit-mask-image:none!important;mask-image:none!important}.secx{position:absolute;top:10px;right:10px;width:30px;height:30px;padding:6px;border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer;opacity:.75}.secx:hover,.secx:focus-visible{opacity:1;color:#860038;border-color:#860038}.secx svg{width:16px;height:16px;display:block}.secx:disabled{opacity:.3}.card.xh>h2{padding-right:40px}.shtoast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,20px);background:#101419;color:#fff;font:600 0.8125rem var(--sans);padding:8px 14px;border-radius:999px;opacity:0;pointer-events:none;transition:.2s;z-index:99}.shtoast.on{opacity:1;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -617,7 +620,31 @@ function renderView(){
 }
 const teamBtns=(D,key,cb)=>{const _tb=teamBtns0(D,key,cb);_tb.querySelectorAll('button[data-tid]').forEach(b=>{const t=D.teams.find(x=>x.id===b.dataset.tid);const on=b.getAttribute('aria-pressed')==='true';b.style.borderColor=t.c;if(on){b.style.background=t.c;b.style.color='#fff'}else{b.style.color=t.c;b.style.background='var(--card)'}});return _tb};
 const teamBtns0=(D,key,cb)=>{if(key==='luTeam'){const cb0=cb;cb=()=>{S.f.luPick={};cb0&&cb0()}}const f=el('div','fl');if(S.season)return f;[D.focus,D.other].forEach(t=>{const b=el('button',null,t.abbr);b.dataset.tid=t.id;b.type='button';b.setAttribute('aria-pressed',S.f[key]===t.id);b.onclick=()=>{S.f[key]=t.id;cb&&cb();renderView()};f.appendChild(b)});return f};
-const head=(c,title,sub)=>{c.appendChild(el('h2',null,title));if(sub&&S.season)sub=sub.replace(/^Full game/,'Season, '+S.data.games.length+' games');if(sub)c.appendChild(el('p','sub',sub))};
+
+const SECX_ON=new URLSearchParams(location.search).has('secx'); /* save-as-image buttons: off until approved; ?secx previews them */
+/* save any section as an image: a small camera in the corner of each card, drawn by modern-screenshot (vendor/) with the site's header and footer */
+(function(){let lib=null;const load=()=>lib||(lib=new Promise((res,rej)=>{if(window.modernScreenshot)return res(window.modernScreenshot);const sc=document.createElement('script');sc.src='/vendor/modern-screenshot-4.6.0.js';sc.onload=()=>res(window.modernScreenshot);sc.onerror=()=>{lib=null;rej(0)};document.head.appendChild(sc)}));
+ const IC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
+ const coarse=()=>matchMedia('(pointer: coarse)').matches;
+ const toast=m=>{let t=document.getElementById('shtoast');if(!t){t=document.createElement('div');t.id='shtoast';t.className='shtoast';t.setAttribute('role','status');document.body.appendChild(t)}t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2200)};
+ const img=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
+ const LOGO='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#860038" stroke-width="2" fill="none"/></svg>';
+ const scoreTxt=()=>{const D=S.data;if(!D)return '';const a=D.away,h=D.home;const st=D.status&&D.status.type||{};const tag=st.completed?'Final':st.state==='in'?(st.shortDetail||'Live'):'';return a.abbr+' '+a.score+' · '+h.abbr+' '+h.score+(tag?' · '+tag:'')};
+ async function shot(card,title,btn){btn.disabled=true;toast('Making the image…');card.classList.add('capmode');
+  try{const ms=await load();const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();const bg=getComputedStyle(card).backgroundColor||'#fff';const S2=2,pad=16;
+   const cw=Math.max(card.offsetWidth,...[...card.querySelectorAll('table,svg')].map(x=>x.scrollWidth+x.getBoundingClientRect().left-card.getBoundingClientRect().left+16));const opts={scale:S2,backgroundColor:bg,timeout:6000,width:Math.ceil(cw),style:{width:Math.ceil(cw)+'px'},filter:n=>!(n.nodeType===1&&n.classList&&n.classList.contains('secx'))};try{await ms.domToCanvas(card,{...opts,scale:.3})}catch(e){}
+   const sh=await ms.domToCanvas(card,opts);const W=Math.max(sh.width+pad*2*S2,420*S2),HH=58*S2,GOLD=5*S2,FT=40*S2,H=HH+GOLD+pad*S2+sh.height+pad*S2+FT;
+   const cv=document.createElement('canvas');cv.width=W;cv.height=H;const g=cv.getContext('2d');g.fillStyle=css('--bg')||'#EEF0F2';g.fillRect(0,0,W,H);g.fillStyle='#860038';g.fillRect(0,0,W,HH);g.fillStyle='#F2B231';g.fillRect(0,HH,W,GOLD);
+   const lg=await img('data:image/svg+xml;charset=utf-8,'+encodeURIComponent(LOGO));if(lg)g.drawImage(lg,pad*S2,13*S2,32*S2,32*S2);
+   const mono=css('--mono')||'monospace',sans=css('--sans')||'sans-serif';g.textBaseline='middle';g.font='700 '+(22*S2)+'px '+mono;g.fillStyle='#fff';g.fillText('cavs',(pad+40)*S2,HH/2);const w1=g.measureText('cavs').width;g.fillStyle='#F2B231';g.fillText('_db',(pad+40)*S2+w1,HH/2);
+   g.textAlign='right';g.font='800 '+(12*S2)+'px '+sans;g.fillStyle='#F4D6DD';g.fillText(scoreTxt().toUpperCase(),W-pad*S2,HH/2);
+   g.drawImage(sh,Math.round((W-sh.width)/2),HH+GOLD+pad*S2);
+   const fy=H-FT/2;g.textAlign='left';g.font='700 '+(12*S2)+'px '+mono;g.fillStyle='#860038';g.fillText('cavsdatabase.com/live',pad*S2,fy);g.textAlign='right';g.font='600 '+(12*S2)+'px '+mono;g.fillStyle='#5D646C';const D=S.data;g.fillText(new Date(D&&D.date||Date.now()).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),W-pad*S2,fy);
+   const blob=await new Promise(r=>cv.toBlob(r,'image/png'));const name='cavsdb-'+title.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.png';const file=new File([blob],name,{type:'image/png'});
+   if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:title+' | cavs_db'}).catch(()=>{})}else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Image saved')}}
+  catch(e){toast('Couldn’t make the image. Try again.')}finally{card.classList.remove('capmode');btn.disabled=false}}
+ window.secShot=(c,title)=>{if(c.querySelector(':scope>.secx'))return;c.classList.add('xh');const b=document.createElement('button');b.type='button';b.className='secx';b.innerHTML=IC;b.title='Save as image';b.setAttribute('aria-label','Save '+title+' as an image');b.onclick=()=>shot(c,title,b);c.appendChild(b)}})();
+const head=(c,title,sub)=>{c.appendChild(el('h2',null,title));if(SECX_ON&&window.secShot&&!S.season)secShot(c,title);if(sub&&S.season)sub=sub.replace(/^Full game/,'Season, '+S.data.games.length+' games');if(sub)c.appendChild(el('p','sub',sub))};
 
 /* sortable table */
 function dtable(id,cols,rows,opt={}){
