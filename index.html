@@ -2388,7 +2388,7 @@ const GALERT_ON=true;
   const vs=g=>(g[2]==='H'?'Cavs vs ':'Cavs at ')+TEAMS[g[1]];
   const mins=ms=>{const m=Math.round(ms/6e4);return m>=60?'1 hour':m+' min'};
   const cavsPre=(g,t)=>{const tv=tvFor(g[0]),ra=radioFor(g[0]);const w=[tv.nat,tv.loc].filter(Boolean).join(' · ');const left=t-now();
-    return {live:true,kick:left>0?'Tip-off in '+mins(left):'On now',title:vs(g)+' · '+tipTime(g,tipOf(g),true),sub:'Watch: '+(w||'TBA')+' · Listen: '+(ra.cavs||'').split(' · ')[0],link:['Game preview','/schedule#g-'+g[0],'schedule']}};
+    return {live:true,kick:left>0?'Tip-off in '+mins(left):'On now',title:vs(g)+' · '+tipTime(g,tipOf(g),true),sub:'Watch: '+(w||'TBA')+' · Listen: '+(ra.cavs||'').split(' · ')[0],link:['Game preview','/games/'+gslug(g),'games/'+gslug(g)]}};
   const cavsFin=(g,b)=>{const [c,o]=(b.score||SCORES[g[0]]||'').split('-');const rec=(SEASON.results||'').replace(/[^WL]/g,'');const w=(rec.match(/W/g)||[]).length,l=rec.length-w;
     return {fin:true,kick:'Final',title:'Cavs '+c+', '+TEAMS[g[1]]+' '+o,sub:b.top||(rec.length?'Cavs are '+w+'–'+l:''),link:['Box score',b.url||boxUrl(g[0])]}};
   const NI=(INTL_NEXT['Saliou Niang']||{g:[]});const nOn=!/pending/i.test(NI.team||'');
@@ -2428,7 +2428,7 @@ const perName=p=>p<=4?'Q'+p:(p===5?'OT':'OT'+(p-4));
   const card=(cls,k,a)=>{const c=el('div','gdm-c'+(cls?' '+cls:''));const h=el('div','gdm-k');h.appendChild(k instanceof Node?k:el('span',null,k));if(a){const l=el('a',null,a[0]+' →');l.href=a[1];if(a[2])l.dataset.go=a[2];else{l.target='_blank';l.rel='noopener'}h.appendChild(l)}c.appendChild(h);return c};
 
   /* during the game the game-day block becomes one live card (score, clock, win chance, leaders, last play) */
-  function liveCard(g,Lv,first){const kk=el('span','gdm-live');kk.append(el('i'),(Lv.fin?'Final':'Live')+(first?' · season opener':''));const c=card('gdm-day',kk,['Preview','/schedule#g-'+g[0],'schedule']);
+  function liveCard(g,Lv,first){const kk=el('span','gdm-live');kk.append(el('i'),(Lv.fin?'Final':'Live')+(first?' · season opener':''));const c=card('gdm-day',kk,['Preview','/games/'+gslug(g),'games/'+gslug(g)]);
     const sb=el('div','lvsb');sb.append(el('span','tm c','CLE'),el('span','n',String(Lv.cs)));const ck=el('span','clk');if(Lv.fin)ck.textContent='Final';else ck.append(perName(Lv.per),el('br'),Lv.clock);sb.append(ck,el('span','n o',String(Lv.os)),el('span','tm',g[1]));c.appendChild(sb);
     const d=Lv.cs-Lv.os;c.appendChild(el('div','lvst',Lv.fin?(d>0?'Cavs win by '+d:'Cavs lose by '+(-d)):d>0?'Cavs lead by '+d:d<0?'Cavs trail by '+(-d):'Tied'));
     if(Lv.wp!=null&&!Lv.fin){const w=el('div','wpb'),bar=el('div','bar'),fill=el('i'),pc=Math.round(Lv.wp*100);fill.style.width=pc+'%';bar.appendChild(fill);const lb=el('div','lb');lb.append(el('span',null,'Win chance CLE '+pc+'%'),el('span',null,g[1]+' '+(100-pc)+'%'));w.append(bar,lb);c.appendChild(w)}
@@ -2437,7 +2437,7 @@ const perName=p=>p<=4?'Q'+p:(p===5?'OT':'OT'+(p-4));
     const a=el('a','lvgo');a.href='/live.html?g='+Lv.id;a.append(el('span',null,Lv.fin?'Game stats':'Live stats'),el('small',null,'Shots, lineups, on/off →'));c.appendChild(a);
     const h=el('div','lvhw');if(!Lv.fin){const tv=tvFor(g[0]),ra=radioFor(g[0]);h.append('Watch ',el('b',null,[tv.nat,tv.loc].filter(Boolean)[0]||'TBA'),' · Listen ',el('b',null,(ra.cavs||'').split(' · ')[0]))}c.appendChild(h);return c}
   function day(g){const t=tipOf(g).getTime(),tv=tvFor(g[0]),ra=radioFor(g[0]);const first=g===SCHEDULE[0];
-    const kk=el('span','gdm-live');kk.append(el('i'),'Game day'+(first?' · season opener':''));const c=card('gdm-day',kk,['Preview','/schedule#g-'+g[0],'schedule']);
+    const kk=el('span','gdm-live');kk.append(el('i'),'Game day'+(first?' · season opener':''));const c=card('gdm-day',kk,['Preview','/games/'+gslug(g),'games/'+gslug(g)]);
     const mu=el('div','gdm-mu');mu.append(el('span','c','CLE'),el('small',null,g[2]==='H'?'vs':'at'),g[1]);c.appendChild(mu);
     const tt=el('div','gdm-t');tt.append('Tonight · ',el('em',null,tipTime(g,tipOf(g),true)),' · '+(g[2]==='H'?'Rocket Arena':'at '+TEAMS[g[1]]));c.appendChild(tt);
     const cd=el('div','gdm-cd');c.appendChild(cd);
@@ -2446,7 +2446,7 @@ const perName=p=>p<=4?'Q'+p:(p===5?'OT':'OT'+(p-4));
     {const u=el('div','gdm-upd');u.appendChild(el('i'));const ut=el('span');u.appendChild(ut);const ago=()=>{const m=Math.floor((Date.now()-LAST)/6e4);ut.textContent='Live data · updated '+(m<1?'just now':m+' min ago')};ago();clearInterval(utk);utk=setInterval(ago,30000);c.appendChild(u)}
     box.appendChild(c);
     const cur=TSTATS.CLE&&TSTATS[g[1]]&&TSTATS.CLE[0]+TSTATS.CLE[1]>=5,TS=cur?TSTATS:TSTATS_PREV;
-    if(TS.CLE&&TS[g[1]]){const c2=card('','Tale of the tape · '+(cur?'2026–27':'2025–26'),['Full preview','/schedule#g-'+g[0],'schedule']);const tp=el('div','gdm-tape');
+    if(TS.CLE&&TS[g[1]]){const c2=card('','Tale of the tape · '+(cur?'2026–27':'2025–26'),['Full preview','/games/'+gslug(g),'games/'+gslug(g)]);const tp=el('div','gdm-tape');
       const a=TS.CLE,b=TS[g[1]],net=x=>x[4]-x[5],f1=v=>(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1);
       [['Record',a[0]+'–'+a[1],b[0]+'–'+b[1],a[0]/(a[0]+a[1]||1)>b[0]/(b[0]+b[1]||1)],['Net rating',f1(net(a)),f1(net(b)),net(a)>net(b)],['Off rating',a[4].toFixed(1),b[4].toFixed(1),a[4]>b[4]],['Def rating',a[5].toFixed(1),b[5].toFixed(1),a[5]<b[5]]].forEach(([k,x,y,cw])=>{const l=el('span','l');if(cw)l.appendChild(el('b',null,x));else l.textContent=x;const r=el('span','r');if(!cw)r.appendChild(el('b',null,y));else r.textContent=y;tp.append(l,el('span','m',k),r)});
       c2.appendChild(tp);box.appendChild(c2)}
