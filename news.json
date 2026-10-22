@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "cleveland.com",
+   "title": "Cavs’ Jarrett Allen provides update on knee injury, reveals playing status for season opener",
+   "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPejNmeE9EQUpZbm1VNmtTd2stOC1sNC1CR0hNRXhZdEIxemtPcl9Jb05NU0hZOG5kMDlNX1BMZkh1WlhOQUltWDhxSW51SWg3V2d2UVZ6V253OVJpdk44bjhUOWVvLTl1N0dhZGFSaWpTQ1NBbmlwaDhTSjFDQjBPMmtWV2pyTGZZMEZ5STZQYjBNYU1CZXdHcGJmSEJWTm5hRWRNZlctcmk5VmJpbUlqTmpUQ2k2MHhDRng5M09kMm5zUTB0RTZJenlkc3lZdTQ?oc=5",
+   "date": "2026-10-22T16:31:00.000Z"
+  },
+  {
    "src": "Fear The Sword",
    "title": "Donovan Mitchell wants to be in Cleveland ‘forever’",
    "link": "https://www.fearthesword.com/cavs-news/53327/donovan-mitchell-wants-to-be-in-cleveland-forever",
@@ -25,12 +31,6 @@
    "date": "2026-10-22T10:00:00.000Z"
   },
   {
-   "src": "cleveland.com",
-   "title": "Cavs vs. 76ers: preview, odds, injury report, TV",
-   "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNU294bkthbkk5SkJlUzZrTC1JdFpjenhFV09hWlhxQzZmMUtRNUdwa0RMN1hnZUlsTU5wUW5qZXdpcUF2Q2M4ZzZlenl1QkNGVnpEZlJhUGhTa2FfX3lSamdlOGlBbWhxb0xrUVRTQWhKeXNDMExuRDZZMmd2Y29SbVgwOHdoM192Rmp6TDM3MGg?oc=5",
-   "date": "2026-10-22T09:00:00.000Z"
-  },
-  {
    "src": "Hoops Rumors",
    "title": "Central Notes: Collins, Giddey, Pistons, Niang, Pacers",
    "link": "https://www.hoopsrumors.com/2026/10/central-notes-collins-giddey-pistons-niang-pacers.html",
@@ -49,6 +49,12 @@
    "date": "2026-10-21T23:00:00.000Z"
   },
   {
+   "src": "cleveland.com",
+   "title": "Cavs could be without key big man in season opener against 76ers",
+   "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPUnVHY0Nhem8xdW9pNV9qWkluejN1bGtnRlUxdTd2VkVtNjZfTXZXV0xJNkV5dERWamNzWEExbGRWS1B1NGxGd1JuUlZVMzhXTTZfQjNmQ2pTdEdUMlhKdWNWMDhfQjZ2MXRDR0lwY1liTUpYU3h5YTNYWlAxOU45cU9fMEt1QS14a3FvOEVKN19UQ1lKaWtLN3BxVjZ2X2dVZlpkZ09rbENlblBO?oc=5",
+   "date": "2026-10-21T22:56:00.000Z"
+  },
+  {
    "src": "Fear The Sword",
    "title": "Cavs add key starter to injury report ahead of season-opener against 76ers",
    "link": "https://www.fearthesword.com/cavs-injury-report/53307/cavs-injury-jarrett-allen-sam-merrill-philadelphia-76ers-sixrs-cleveland-cavaliers-nba",
@@ -65,12 +71,6 @@
    "title": "Cavs rank last in local broadcast accessibility report",
    "link": "https://www.fearthesword.com/cavs-news/53293/cavs-local-tv-cleveland-cavaliers-dazn-nba-league-pass",
    "date": "2026-10-21T17:00:50.000Z"
-  },
-  {
-   "src": "cleveland.com",
-   "title": "Cavs season prediction: A crowded East and another playoff proving ground — Ethan Sands",
-   "link": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPdVJSaTZEZ25ZQU13dm1pdjhab1QtV0RRdmtaN0hOQXoxanlMZ3VlOWdSRkxVTnl5U0ltUXhBQlRwTDlQNlIxSkQybFl1VDJheDhpVTM2MFVRaC1RSW5neW1ROU1jVmFrY19iTjNIRXdEd1BPS0t0c2lSS2NvRlJSTUt0WGZ2dHR6ZnJHaE9xbFFHNnE2MXZSRDhjdnhxTVVXdkpLQndjaU1mV3BHS3hhVDFyc1Y2TW9pMU9tTUpSUDZsM3ZpUWpPRExLY2Q3bjRNNHc?oc=5",
-   "date": "2026-10-21T16:30:00.000Z"
   },
   {
    "src": "Fear The Sword",
@@ -359,6 +359,13 @@
  "videos": [
   {
    "src": "It's Cavalier Podcast",
+   "title": "Donovan Mitchell Will Win MVP in 2026-27?! HOT TAKE SZN (Part 2)",
+   "link": "https://www.youtube.com/watch?v=oeTJGfMaygY",
+   "date": "2026-10-22T17:50:07.000Z",
+   "id": "oeTJGfMaygY"
+  },
+  {
+   "src": "It's Cavalier Podcast",
    "title": "Anthony Edwards Dropped 45 Points on the Miami Heat. #timberwolves #minnesotatimberwolves #nba",
    "link": "https://www.youtube.com/watch?v=cvtsrPhmI38",
    "date": "2026-10-22T03:46:46.000Z",
@@ -461,13 +468,6 @@
    "link": "https://www.youtube.com/watch?v=wPzu5FiLBGA",
    "date": "2026-10-16T20:16:37.000Z",
    "id": "wPzu5FiLBGA"
-  },
-  {
-   "src": "It's Cavalier Podcast",
-   "title": "Mario Hezonja - Preseason Highlights #clevelandcavaliers #cavaliers #cavs",
-   "link": "https://www.youtube.com/watch?v=-S8-anQcy30",
-   "date": "2026-10-16T19:27:12.000Z",
-   "id": "-S8-anQcy30"
   },
   {
    "src": "Fear The Fro",
