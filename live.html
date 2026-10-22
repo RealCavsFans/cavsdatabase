@@ -1255,7 +1255,7 @@ function vPlayers(v,D,R){
   D.roster[t.id].forEach(id=>{const p=D.P[id],b=R.B[id];let r;
     if(useEspn&&p.espn&&p.espn.MIN!=null&&p.espn.MIN!==""&&isFinite(+p.espn.MIN)&&isFinite(+p.espn.PTS)){const e=p.espn,sp=x=>String(x||'0-0').split('-').map(Number);const[fgm,fga]=sp(e.FG),[tpm,tpa]=sp(e['3PT']),[ftm,fta]=sp(e.FT);
       r={min:+e.MIN*60,pts:+e.PTS,reb:+e.REB,oreb:+e.OREB,dreb:+e.DREB,ast:+e.AST,stl:+e.STL,blk:+e.BLK,to:+e.TO,pf:+e.PF,pm:+e['+/-'],fgm,fga,tpm,tpa,ftm,fta}}
-    else if(b.min>0||b.fga||b.fta||b.pts){r={min:b.min,pts:b.pts,reb:b.oreb+b.dreb,oreb:b.oreb,dreb:b.dreb,ast:b.ast,stl:b.stl,blk:b.blk,to:b.to,pf:b.pf,pm:b.pm,fgm:b.fgm,fga:b.fga,tpm:b.tpm,tpa:b.tpa,ftm:b.ftm,fta:b.fta}}
+    else if(b.min>0||b.on||b.played||b.fga||b.fta||b.pts){r={min:b.min||0,pts:b.pts,reb:b.oreb+b.dreb,oreb:b.oreb,dreb:b.dreb,ast:b.ast,stl:b.stl,blk:b.blk,to:b.to,pf:b.pf,pm:b.pm,fgm:b.fgm,fga:b.fga,tpm:b.tpm,tpa:b.tpa,ftm:b.ftm,fta:b.fta}}
     if(!r){rows.push({name:p,_cls:'dnp',min:-1,dnp:true});return}
     r.name=p;r.ts=r.fga+r.fta?r.pts/(2*(r.fga+0.44*r.fta)):null;r.usg=null;
     {/* on-court net rating: points per 100 possessions scored minus allowed with him on (same count as the Advanced view) */
