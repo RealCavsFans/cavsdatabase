@@ -436,6 +436,14 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 @media (max-width:720px){.side>[aria-labelledby="chg-h"]{order:100}.side>.o-otd,.o-otd{order:4}.o-dates{order:5}.o-cap{order:8}.side>.o-vid,.o-vid{order:9}}
 /* desktop game day, Oct 22: watch/listen move beside the matchup so the red card isn't half empty; cards keep their own height */
 @media (min-width:761px){.gdm-day{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,300px);column-gap:24px;grid-template-areas:"k k" "mu how" "t how" "cd how" "upd how"}.gdm-day>.gdm-k{grid-area:k}.gdm-day>.gdm-mu{grid-area:mu}.gdm-day>.gdm-t{grid-area:t}.gdm-day>.gdm-cd{grid-area:cd}.gdm-day>.gdm-upd{grid-area:upd;margin-top:6px}.gdm-day>.gdm-how{grid-area:how;grid-template-columns:1fr;align-self:center;padding:8px 16px 8px 0}.gdm-row.two{align-items:start}.in-gdm #inj li{padding:6px 0}}
+/* phone game day tale of the tape: bars by league rank */
+.gdm-bars{display:none}
+@media (max-width:760px){.gdm-tb .gdm-tape{display:none}.gdm-bars{display:block;padding:10px 14px 14px}.gb-h{display:flex;justify-content:space-between;font:800 0.6875rem var(--sans);letter-spacing:.1em;color:var(--muted);padding-bottom:6px;border-bottom:2px solid var(--fg)}
+.gb-r{display:grid;grid-template-columns:64px 1fr 1fr 64px;grid-template-areas:"a l l b" "a bl br b";column-gap:2px;row-gap:3px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line2)}.gb-r:last-child{border-bottom:0;padding-bottom:0}
+.gb-v{grid-area:a;padding-right:8px}.gb-v.r{grid-area:b;text-align:right;padding:0 0 0 8px}.gb-v b{display:block;font:600 0.875rem var(--mono);color:var(--fg2)}.gb-v.up b{font-weight:700;color:var(--fg)}.gb-v small{font:500 0.625rem var(--sans);color:var(--muted)}
+.gb-l{grid-area:l;text-align:center;font:700 0.625rem var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.gb-b{grid-area:br;height:8px;background:var(--line2);display:flex}.gb-b.l{grid-area:bl;justify-content:flex-end}.gb-b i{display:block;height:100%;width:0;background:#b9bcc0;transition:width .8s cubic-bezier(.2,.8,.3,1)}.gb-b i.c{background:#860038}.gb-b i.o{background:var(--fg)}.gdm-bars.go .gb-b i{width:var(--w)}
+@media (prefers-reduced-motion:reduce){.gb-b i{transition:none}}}
 </style>
 <script>/* OneSignal web push for alerts: loads only on the live site, never prompts on its own */
 /* OneSignal paused with game alerts (Oct 19): the SDK isn't loaded, so no subscribe prompts appear. Set PUSH_SDK to true when alerts go live. */var PUSH_SDK=false;if(PUSH_SDK&&location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async function(OneSignal){await OneSignal.init({appId:"3db75ca9-d797-40c7-8c53-c0711b41e956",serviceWorkerPath:"sw.js",serviceWorkerParam:{scope:"/"},notifyButton:{enable:false},promptOptions:{slidedown:{prompts:[]}}})});const s=document.createElement('script');s.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';s.defer=true;document.head.appendChild(s)}</script>
@@ -2455,12 +2463,23 @@ const perName=p=>p<=4?'Q'+p:(p===5?'OT':'OT'+(p-4));
       const a=TS.CLE,b=TS[g[1]],net=x=>x[4]-x[5],f1=v=>(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1);
       [['Record',a[0]+'–'+a[1],b[0]+'–'+b[1],a[0]/(a[0]+a[1]||1)>b[0]/(b[0]+b[1]||1)],['Net rating',f1(net(a)),f1(net(b)),net(a)>net(b)],['Off rating',a[4].toFixed(1),b[4].toFixed(1),a[4]>b[4]],['Def rating',a[5].toFixed(1),b[5].toFixed(1),a[5]<b[5]]].forEach(([k,x,y,cw])=>{const l=el('span','l');if(cw)l.appendChild(el('b',null,x));else l.textContent=x;const r=el('span','r');if(cw===false)r.appendChild(el('b',null,y));else r.textContent=y;tp.append(l,el('span','m',k),r)});
       {const hd=el('div','gdm-tape-h');hd.append(el('span','l','CLE'),el('span','m'),el('span','r',g[1]));tp.prepend(...hd.childNodes)}
+      /* phones: the same four stats as bars by league rank (longer bar = better rank), like the game preview page */
+      const bars=el('div','gdm-bars');{const all=Object.values(TS),rk=(f,hi)=>v=>1+all.filter(x=>hi?f(x)>v:f(x)<v).length;
+        const wp=x=>x[0]/((x[0]+x[1])||1);const ns=n=>n+(['th','st','nd','rd'][(n%100-20)%10]||['th','st','nd','rd'][n%100]||'th');
+        const hdr=el('div','gb-h');hdr.append(el('b',null,'CLE'),el('b',null,g[1]));bars.appendChild(hdr);
+        [['Record',wp,true,x=>x[0]+'–'+x[1]],['Net rating',x=>x[4]-x[5],true,x=>f1(x[4]-x[5])],['Off rating',x=>x[4],true,x=>x[4].toFixed(1)],['Def rating',x=>x[5],false,x=>x[5].toFixed(1)]].forEach(([k,f,hi,fmt])=>{
+          const ra=rk(f,hi)(f(a)),rb=rk(f,hi)(f(b));const cw=ra<rb,ow=rb<ra;const r=el('div','gb-r');
+          const va=el('div','gb-v'+(cw?' up':''));va.append(el('b',null,fmt(a)),el('small',null,ns(ra)));const vb=el('div','gb-v r'+(ow?' up':''));vb.append(el('b',null,fmt(b)),el('small',null,ns(rb)));
+          const bl=el('div','gb-b l');const il=el('i',cw?'c':'');il.style.setProperty('--w',((31-ra)/30*100).toFixed(0)+'%');bl.appendChild(il);
+          const br=el('div','gb-b');const ir=el('i',ow?'o':'');ir.style.setProperty('--w',((31-rb)/30*100).toFixed(0)+'%');br.appendChild(ir);
+          r.append(va,el('span','gb-l',k),bl,br,vb);bars.appendChild(r)});
+        const io2='IntersectionObserver' in window?new IntersectionObserver(es=>{if(es.some(x=>x.isIntersecting)){io2.disconnect();bars.classList.add('go')}},{threshold:.3}):null;if(io2)io2.observe(bars);else bars.classList.add('go')}
       /* season series next to the tape: this season's meetings (results as they come in) and last season's */
       {const o=g[1],rs=SEASON.results.split('').filter(Boolean);const ms=SCHEDULE.map((x,k)=>[x,k]).filter(([x])=>x[1]===o);const fd=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});
         const ser=el('div','gdm-ser');const won=ms.filter(([,k])=>rs[k]==='W').length,lost=ms.filter(([,k])=>rs[k]==='L').length;
         const hd=el('div','gs-k');hd.append('Season series',el('b',null,won+lost?(won>lost?'Cavs lead ':won<lost?'Cavs trail ':'Tied ')+Math.max(won,lost)+'–'+Math.min(won,lost):ms.length+' meeting'+(ms.length===1?'':'s')));ser.appendChild(hd);
         const ul=el('ul');ms.forEach(([x,k])=>{const li=el('li');const rr=rs[k],sc=SCORES[x[0]];li.append(el('span','d',fd(x[0])),el('span',null,(x[2]==='H'?'vs ':'at ')+o));li.appendChild(x[0]===g[0]?el('b','nw','Tonight'):rr&&sc?el('b',rr==='W'?'w':'l',rr+' '+sc.replace('-','–')):el('span','u','—'));ul.appendChild(li)});ser.appendChild(ul);
-        const bd=el('div','gdm-tb');bd.append(tp,ser);c2.appendChild(bd);row.appendChild(c2)}
+        const bd=el('div','gdm-tb');bd.append(tp,bars,ser);c2.appendChild(bd);row.appendChild(c2)}
       /* numbers count up the first time the tape scrolls into view */
       if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window){const els=[...tp.querySelectorAll('.l,.r')].filter(x=>/\d/.test(x.textContent)).map(x=>{const n=x.querySelector('b')||x;return [n,n.textContent]});
         const run=()=>{const t0=performance.now();const step=now=>{const k=Math.min(1,(now-t0)/900),e=1-Math.pow(1-k,3);els.forEach(([n,f])=>{n.textContent=k<1?f.replace(/\d+(\.\d+)?/g,v=>{const d=(v.split('.')[1]||'').length;return (parseFloat(v)*e).toFixed(d)}):f});if(k<1)requestAnimationFrame(step)};requestAnimationFrame(step)};
