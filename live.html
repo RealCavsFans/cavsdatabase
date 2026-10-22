@@ -1253,7 +1253,7 @@ function vPlayers(v,D,R){
   const useEspn=!S.replay&&S.per==='all'&&S.state!=='pre';
   const TT=R.T[t.id];const rows=[];
   D.roster[t.id].forEach(id=>{const p=D.P[id],b=R.B[id];let r;
-    if(useEspn&&p.espn&&p.espn.MIN!=null){const e=p.espn,sp=x=>String(x||'0-0').split('-').map(Number);const[fgm,fga]=sp(e.FG),[tpm,tpa]=sp(e['3PT']),[ftm,fta]=sp(e.FT);
+    if(useEspn&&p.espn&&p.espn.MIN!=null&&p.espn.MIN!==""&&isFinite(+p.espn.MIN)&&isFinite(+p.espn.PTS)){const e=p.espn,sp=x=>String(x||'0-0').split('-').map(Number);const[fgm,fga]=sp(e.FG),[tpm,tpa]=sp(e['3PT']),[ftm,fta]=sp(e.FT);
       r={min:+e.MIN*60,pts:+e.PTS,reb:+e.REB,oreb:+e.OREB,dreb:+e.DREB,ast:+e.AST,stl:+e.STL,blk:+e.BLK,to:+e.TO,pf:+e.PF,pm:+e['+/-'],fgm,fga,tpm,tpa,ftm,fta}}
     else if(b.min>0||b.fga||b.fta||b.pts){r={min:b.min,pts:b.pts,reb:b.oreb+b.dreb,oreb:b.oreb,dreb:b.dreb,ast:b.ast,stl:b.stl,blk:b.blk,to:b.to,pf:b.pf,pm:b.pm,fgm:b.fgm,fga:b.fga,tpm:b.tpm,tpa:b.tpa,ftm:b.ftm,fta:b.fta}}
     if(!r){rows.push({name:p,_cls:'dnp',min:-1,dnp:true});return}
