@@ -621,7 +621,7 @@ function renderView(){
 const teamBtns=(D,key,cb)=>{const _tb=teamBtns0(D,key,cb);_tb.querySelectorAll('button[data-tid]').forEach(b=>{const t=D.teams.find(x=>x.id===b.dataset.tid);const on=b.getAttribute('aria-pressed')==='true';b.style.borderColor=t.c;if(on){b.style.background=t.c;b.style.color='#fff'}else{b.style.color=t.c;b.style.background='var(--card)'}});return _tb};
 const teamBtns0=(D,key,cb)=>{if(key==='luTeam'){const cb0=cb;cb=()=>{S.f.luPick={};cb0&&cb0()}}const f=el('div','fl');if(S.season)return f;[D.focus,D.other].forEach(t=>{const b=el('button',null,t.abbr);b.dataset.tid=t.id;b.type='button';b.setAttribute('aria-pressed',S.f[key]===t.id);b.onclick=()=>{S.f[key]=t.id;cb&&cb();renderView()};f.appendChild(b)});return f};
 
-const SECX_ON=new URLSearchParams(location.search).has('secx'); /* save-as-image buttons: off until approved; ?secx previews them */
+const SECX_ON=true; /* save-as-image buttons on every live section (approved Oct 22) */
 /* save any section as an image: a small camera in the corner of each card, drawn by modern-screenshot (vendor/) with the site's header and footer */
 (function(){let lib=null;const load=()=>lib||(lib=new Promise((res,rej)=>{if(window.modernScreenshot)return res(window.modernScreenshot);const sc=document.createElement('script');sc.src='/vendor/modern-screenshot-4.6.0.js';sc.onload=()=>res(window.modernScreenshot);sc.onerror=()=>{lib=null;rej(0)};document.head.appendChild(sc)}));
  const IC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
@@ -644,7 +644,7 @@ const SECX_ON=new URLSearchParams(location.search).has('secx'); /* save-as-image
    if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:title+' | cavs_db'}).catch(()=>{})}else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Image saved')}}
   catch(e){toast('Couldn’t make the image. Try again.')}finally{card.classList.remove('capmode');btn.disabled=false}}
  window.secShot=(c,title)=>{if(c.querySelector(':scope>.secx'))return;c.classList.add('xh');const b=document.createElement('button');b.type='button';b.className='secx';b.innerHTML=IC;b.title='Save as image';b.setAttribute('aria-label','Save '+title+' as an image');b.onclick=()=>shot(c,title,b);c.appendChild(b)}})();
-const head=(c,title,sub)=>{c.appendChild(el('h2',null,title));if(SECX_ON&&window.secShot&&!S.season)secShot(c,title);if(sub&&S.season)sub=sub.replace(/^Full game/,'Season, '+S.data.games.length+' games');if(sub)c.appendChild(el('p','sub',sub))};
+const head=(c,title,sub)=>{c.appendChild(el('h2',null,title));if(SECX_ON&&window.secShot&&!S.season&&title!=='Share cards')secShot(c,title);if(sub&&S.season)sub=sub.replace(/^Full game/,'Season, '+S.data.games.length+' games');if(sub)c.appendChild(el('p','sub',sub))};
 
 /* sortable table */
 function dtable(id,cols,rows,opt={}){
@@ -1262,10 +1262,10 @@ function vShare(v,D,R){
       C.pick==='run'?R.runs.map((r,i)=>[String(i),D.teams.find(t=>t.id===r.t).abbr+' '+r.pts+'–0 · '+pname(r.start.per)+' '+r.start.clock]).reverse():
       Object.entries(R.L[D.focus.id][5]).filter(([k,l])=>l.sec>=60).sort((a,b)=>b[1].sec-a[1].sec).map(([k,l])=>[k,l.ids.map(id=>D.P[id].last).join(', ')+' · '+fmtMin(l.sec)]);
     if(!opts.length){c.appendChild(el('p','empty','Nothing to make a card from yet.'));v.appendChild(c);return}
-    opts.forEach(([val,l])=>{const o=el('option',null,l);o.value=val;sel.appendChild(o)});f2.appendChild(sel)}
+    S.f.pk=S.f.pk||{};const keep=S.f.pk[S.f.card];opts.forEach(([val,l])=>{const o=el('option',null,l);o.value=val;if(val===keep)o.selected=true;sel.appendChild(o)});sel.onchange=()=>{S.f.pk[S.f.card]=sel.value;go.click()};f2.appendChild(sel)}
   const go=el('button','btn','Make card');go.type='button';f2.appendChild(go);c.appendChild(f2);
   const out=el('div','cardout');c.appendChild(out);
-  go.onclick=async()=>{const arg=sel?sel.value:null;const blob=await renderCard(S.f.card,arg,D,R);const url=URL.createObjectURL(blob);out.innerHTML='';const img=el('img');img.src=url;img.alt=C.label;
+  go.onclick=async()=>{const arg=sel?sel.value:null;if(sel){S.f.pk=S.f.pk||{};S.f.pk[S.f.card]=arg}const blob=await renderCard(S.f.card,arg,D,R);const url=URL.createObjectURL(blob);out.innerHTML='';const img=el('img');img.src=url;img.alt=C.label;
     const acts=el('div','acts');const fn=('cavsdb-'+S.f.card+'-'+D.away.abbr+'-'+D.home.abbr).toLowerCase().replace(/[^a-z0-9-]/g,'')+'.png';
     const dl=el('a','btn','Download image');dl.href=url;dl.download=fn;acts.appendChild(dl);
     try{const file=new File([blob],fn,{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[file]})){const sh=el('button','btn ghost','Share');sh.type='button';sh.onclick=()=>navigator.share({files:[file]}).catch(()=>{});acts.appendChild(sh)}}catch(e){}
