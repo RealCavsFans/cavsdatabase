@@ -31,7 +31,7 @@
 <link rel="preload" href="/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/geist-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/saira-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/a/app.8877ac4951.css"><link rel="preload" href="/a/app.8cf6fc90c7.js" as="script">
+<link rel="stylesheet" href="/a/app.8877ac4951.css"><link rel="preload" href="/a/app.7eb44c62ac.js" as="script">
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
 @media (max-width:720px){.side>.o-inj{order:3}.side>.o-otd,.o-otd{order:99}}
@@ -48,6 +48,12 @@
 .gb-l{grid-area:l;text-align:center;font:700 0.625rem var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .gb-b{grid-area:br;height:8px;background:var(--line2);display:flex}.gb-b.l{grid-area:bl;justify-content:flex-end}.gb-b i{display:block;height:100%;width:0;background:#b9bcc0;transition:width .8s cubic-bezier(.2,.8,.3,1)}.gb-b i.c{background:#860038}.gb-b i.o{background:var(--fg)}.gdm-bars.go .gb-b i{width:var(--w)}
 @media (prefers-reduced-motion:reduce){.gb-b i{transition:none}}}
+/* player page: season shots and passing */
+.ppx-spg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}.ppx-court svg{width:100%;height:auto;display:block;background:var(--card)}.ppx-court .ppx-leg i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.ppx-z td.up{color:var(--wine-ink);font-weight:700}.ppx-z td.dn{color:var(--muted)}.ppx-aws{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.ppx-aw h3{font:800 0.6875rem var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.ppx-ar{display:grid;grid-template-columns:72px 1fr 22px;gap:6px;align-items:center;font-size:0.8125rem;padding:2px 0}.ppx-ar .b{height:8px;background:var(--line2)}.ppx-ar .b i{display:block;height:100%;background:var(--wine)}.ppx-ar b{text-align:right;font-family:var(--mono)}
+.ppx-segs{margin-bottom:10px}.ppx-more{margin:12px 0 0;font-size:0.8125rem}.ppx-more a{color:var(--wine-ink);font-weight:700}
+@media (max-width:760px){.ppx-spg{grid-template-columns:1fr}}
 </style>
 <script>/* OneSignal web push for alerts: loads only on the live site, never prompts on its own */
 /* OneSignal paused with game alerts (Oct 19): the SDK isn't loaded, so no subscribe prompts appear. Set PUSH_SDK to true when alerts go live. */var PUSH_SDK=false;if(PUSH_SDK&&location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async function(OneSignal){await OneSignal.init({appId:"3db75ca9-d797-40c7-8c53-c0711b41e956",serviceWorkerPath:"sw.js",serviceWorkerParam:{scope:"/"},notifyButton:{enable:false},promptOptions:{slidedown:{prompts:[]}}})});const s=document.createElement('script');s.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';s.defer=true;document.head.appendChild(s)}</script>
@@ -82,10 +88,10 @@
         </div>
         <div class="gmu">
           <a class="fin" id="last" target="_blank" rel="noopener" href="https://www.basketball-reference.com/boxscores/202610220PHI.html" title="Box score" hidden=""><span class="cap-label">Final</span><span class="lr l">L</span><span class="ls">106–114 ↗</span><span class="lo">at PHI · <span class="hide-sm">Thu, </span>Oct 22</span></a>
-          <div class="gk" id="next-h-row"><span class="upnext"><b>Up next</b><span id="nx-label">Home opener</span></span><span class="nx-lks"><a class="nx-gp2" href="http://127.0.0.1:39771/games/2026-10-24-bkn" data-go="games/2026-10-24-bkn">Game preview</a><span class="nx-dot">·</span><a href="/schedule" data-go="schedule"><span class="hide-sm">Full s</span><span class="show-sm">S</span>chedule →</a></span></div>
+          <div class="gk" id="next-h-row"><span class="upnext"><b>Up next</b><span id="nx-label">Home opener</span></span><span class="nx-lks"><a class="nx-gp2" href="http://127.0.0.1:35369/games/2026-10-24-bkn" data-go="games/2026-10-24-bkn">Game preview</a><span class="nx-dot">·</span><a href="/schedule" data-go="schedule"><span class="hide-sm">Full s</span><span class="show-sm">S</span>chedule →</a></span></div>
           <h3 class="sr" id="nx-title">vs Brooklyn</h3><span class="sr" id="next-h">Last result &amp; next game</span>
           <div class="nxrow"><div class="gteams"><span class="tm cle" aria-hidden="true">CLE</span><span class="gat" id="nx-at" aria-hidden="true">vs</span><span class="tm" id="nx-opp"><a class="opp" href="https://www.basketball-reference.com/teams/BRK/2027.html" target="_blank" rel="noopener" title="Brooklyn on Basketball Reference">BKN</a></span></div>
-          <span class="gdays" id="cd" role="timer" aria-label="Countdown to tip-off"><small>Tip-off in</small><span class="cdw"><span class="cdn"><b id="cd-d">01</b><b id="cd-h">18</b><b id="cd-m">20</b><b id="cd-s">55</b></span><span class="cdl"><i>Days</i><i>Hrs</i><i>Min</i><i>Sec</i></span></span></span></div>
+          <span class="gdays" id="cd" role="timer" aria-label="Countdown to tip-off"><small>Tip-off in</small><span class="cdw"><span class="cdn"><b id="cd-d">01</b><b id="cd-h">17</b><b id="cd-m">41</b><b id="cd-s">14</b></span><span class="cdl"><i>Days</i><i>Hrs</i><i>Min</i><i>Sec</i></span></span></span></div>
           <div class="nx-when nx-row"><span id="nx-meta">Sat, Oct 24 · 7:30 PM ET · DAZN</span><a class="nx-gp" href="/games/2026-10-24-bkn" data-go="games/2026-10-24-bkn">Preview →</a></div>
           <div class="ginfo nx-then-row"><span id="nx-then"><b>After that </b>Mon, Oct 26 vs <a href="https://www.basketball-reference.com/teams/MIN/2027.html" target="_blank" rel="noopener" class="opp">Minnesota</a> · 7:00 PM</span><button type="button" class="galb" id="galb" hidden=""></button></div>
         </div>
@@ -484,7 +490,7 @@
   <button type="button" class="thm2" id="thm2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Dark mode</span></button></div>
 </div></footer>
 
-<script src="/a/app.8cf6fc90c7.js"></script>
+<script src="/a/app.7eb44c62ac.js"></script>
 
 <script>
 (function(){const R=document.documentElement,B=document.getElementById('thm'),T=document.getElementById('btt'),F=document.getElementById('fb');
