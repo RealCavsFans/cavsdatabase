@@ -458,6 +458,12 @@ p.note{font-size:.6875rem!important;line-height:1.35!important;margin-top:6px!im
 .ssp td,.ssp th{text-align:right}.ssp td:first-child,.ssp th:first-child{text-align:left;font-family:var(--sans);font-weight:700}.ssp td.up{color:var(--wine-ink,#860038);font-weight:700}.ssp td.dn{color:var(--muted)}
 .stwo{display:grid;grid-template-columns:1fr 1fr;gap:14px}.stwo>*{min-width:0}@media (max-width:760px){.stwo{grid-template-columns:1fr}}
 .slc{display:grid;grid-template-columns:1fr 1fr;gap:10px}.slc .lc{border:1px solid var(--line);padding:10px 12px}.slc .lc span{display:block;font:800 .625rem var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.slc .lc b{font:700 1.5rem var(--mono)}.slc .lc small{display:block;font-size:.6875rem;color:var(--muted)}.slc .lc em{font:700 .75rem var(--mono);font-style:normal;color:var(--wine-ink,#860038)}.slc .lb{position:relative;height:8px;background:var(--line2);margin-top:8px}.slc .lb i{position:absolute;top:-3px;width:3px;height:14px}.slc .lb .avg{background:#9aa0a8}.slc .lb .me{background:#860038;width:5px}
+
+/* lineup detail row */
+tr.xr{cursor:pointer}tr.xr:hover td{background:var(--sub)}tr.xr[aria-expanded=true] td{background:var(--sub);font-weight:700}tr.xd>td{padding:10px 8px 14px!important;background:var(--sub)}.lsp-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;margin-bottom:8px}.lsp-h span{font:600 .75rem var(--mono);color:var(--muted)}.lsp-t{max-width:520px}.lsp-t td,.lsp-t th{text-align:right}.lsp-t td:first-child,.lsp-t th:first-child{text-align:left}.lsp-t td.up{font-weight:800;color:var(--wine-ink,#860038)}
+
+/* season filter bar */
+.sfb{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0 0}.sfb .lab{font:800 .6875rem var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.sfb select{font:600 .8125rem var(--sans);padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--fg)}.sfb .sfn{font:600 .75rem var(--mono);color:var(--wine-ink,#860038)}.sfb .sfn.dim{color:var(--muted);font-family:var(--sans);flex-basis:100%}.sfb .clr{font:700 .75rem var(--sans);border:0;background:none;color:var(--muted);text-decoration:underline;cursor:pointer}.sfb.busy{opacity:.5;pointer-events:none}
 </style>
 </head>
 <body>
@@ -677,7 +683,9 @@ function dtable(id,cols,rows,opt={}){
   const hr=el('tr');cols.forEach((c,i)=>{const th=el('th');if(i===0||c.ns){th.textContent=c.h}else{const b=el('button',null,c.h);b.onclick=()=>{if(st.k===c.k)st.asc=!st.asc;else{st.k=c.k;st.asc=!!c.asc}renderView()};th.appendChild(b);if(st.k===c.k){th.classList.add('on');if(st.asc)th.classList.add('asc')}}
     if(c.title)th.title=c.title;hr.appendChild(th)});tb.appendChild(hr);
   let rs=rows.slice();if(st.k){const c=cols.find(x=>x.k===st.k);if(c){rs.sort((a,b)=>{const va=c.sv?c.sv(a):a[c.k],vb=c.sv?c.sv(b):b[c.k];const d=(va==null?-1e9:va)-(vb==null?-1e9:vb);return st.asc?d:-d})}}
-  rs.forEach(r=>{const tr=el('tr',r._cls||'');cols.forEach(c=>{const td=el('td',c.cls?c.cls(r):null);const v=c.f?c.f(r):r[c.k];if(v instanceof Node)td.appendChild(v);else td.textContent=v==null?'':String(v);tr.appendChild(td)});tb.appendChild(tr)});
+  rs.forEach(r=>{const tr=el('tr',r._cls||'');cols.forEach(c=>{const td=el('td',c.cls?c.cls(r):null);const v=c.f?c.f(r):r[c.k];if(v instanceof Node)td.appendChild(v);else td.textContent=v==null?'':String(v);tr.appendChild(td)});tb.appendChild(tr);
+    /* optional: tap a row to open a detail row under it */
+    if(opt.expand){tr.classList.add('xr');tr.tabIndex=0;tr.setAttribute('aria-expanded',!!r._open);const go=()=>{opt.toggle(r)};tr.onclick=e=>{if(e.target.closest('a,button'))return;go()};tr.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}};if(r._open){const dr=el('tr','xd');const td=el('td');td.colSpan=cols.length;td.appendChild(opt.expand(r));dr.appendChild(td);tb.appendChild(dr)}}});
   if(opt.foot)tb.appendChild(opt.foot);if(!rs.length){const tr=el('tr');const td=el('td','empty',opt.empty||'Nothing yet.');td.colSpan=cols.length;tr.appendChild(td);tb.appendChild(tr)}
   w.appendChild(tb);return w;
 }
@@ -1368,6 +1376,17 @@ function vLuHub(v,D,R){
   v.appendChild(sg);
   ({groups:vLineups,onoff:vOnOff,rot:vRot})[S.lu](v,D,R);
 }
+/* the full advanced spread for one lineup: the group's numbers next to their opponents' while it was on the floor */
+function luSpread(D,t,l){const w=el('div','lsp');const o=l.o,d=l.d;if(o.fgm==null){w.appendChild(el('p','note','Full numbers fill in for games played after Oct 23.'));return w}
+  const po=(poss(o)+poss(d))/2,pct=(a,b)=>b?(a/b*100).toFixed(1)+'%':'–',f1=x=>x==null||!isFinite(x)?'–':x.toFixed(1);const opp=t.id===D.focus.id?D.other.abbr:D.focus.abbr;
+  const head2=el('div','lsp-h');head2.append(el('b',null,l.ids.map(id=>D.P[id].last).join(', ')),el('span',null,fmtMin(l.sec)+' · '+Math.round(po)+' possessions'+(l.g?' · '+l.g+' game'+(l.g===1?'':'s'):'')));w.appendChild(head2);
+  const rows=[['Points per 100',f1(l.pf/po*100),f1(l.pa/po*100),1],['Net per 100',(l.pf-l.pa>=0?'+':'−')+Math.abs((l.pf-l.pa)/po*100).toFixed(1),'',null],['Pace (per 48)',f1(po/(l.sec/2880)),'',null],
+    ['Effective FG%',pct(o.fgm+.5*o.tpm,o.fga),pct(d.fgm+.5*d.tpm,d.fga),1],['True shooting',pct(l.pf,2*(o.fga+.44*o.fta)),pct(l.pa,2*(d.fga+.44*d.fta)),1],['3P%',pct(o.tpm,o.tpa),pct(d.tpm,d.tpa),1],['3PA rate',pct(o.tpa,o.fga),pct(d.tpa,d.fga),null],
+    ['Turnovers per 100',f1(o.to/po*100),f1(d.to/po*100),0],['Off. rebound %',pct(o.oreb,o.oreb+d.dreb),pct(d.oreb,d.oreb+o.dreb),1],['Free throw rate',pct(o.ftm,o.fga),pct(d.ftm,d.fga),1],['Assisted baskets',pct(o.ast,o.fgm),pct(d.ast,d.fgm),null],
+    ['FG',o.fgm+'-'+o.fga,d.fgm+'-'+d.fga,null],['3PT',o.tpm+'-'+o.tpa,d.tpm+'-'+d.tpa,null],['FT',o.ftm+'-'+o.fta,d.ftm+'-'+d.fta,null]];
+  const tb=el('table','zt lsp-t');tb.innerHTML=`<tr><th></th><th>${esc(t.abbr)} lineup</th><th>${esc(opp)}</th></tr>`;
+  rows.forEach(([k,a,b,hi])=>{const tr=el('tr');const na=parseFloat(String(a).replace('−','-')),nb=parseFloat(b);const win=hi==null||b===''||isNaN(na)||isNaN(nb)||na===nb?null:hi?na>nb:na<nb;tr.append(el('td',null,k),el('td',win===true?'up':null,a),el('td',win===false?'up':null,b));tb.appendChild(tr)});
+  w.appendChild(tb);w.appendChild(el('p','note','Bold = better side. Rebound % uses both sides’ boards while this group played.'));return w}
 function vLineups(v,D,R){
   if(!S.f.luTeam)S.f.luTeam=D.focus.id;const t=D.teams.find(x=>x.id===S.f.luTeam);
   const c=el('div','card');head(c,t.abbr+' lineups',perLabel(S.per)+' · every combination the coach used, tap a column to sort');
@@ -1384,12 +1403,13 @@ function vLineups(v,D,R){
   if(S.state==='in'){c.appendChild(el('h3',null,'On the floor now'));const f=el('div','five');[...R.on[t.id]].forEach(id=>f.appendChild(el('span',null,D.P[id].short)));c.appendChild(f);c.appendChild(el('h3',null,'All '+S.f.luSize+'-man groups'))}
   const nowSet=new Set(R.on[t.id]);
   const rows=Object.values(R.L[t.id][S.f.luSize]).filter(l=>l.sec>=S.f.luMin*60&&(l.sec>0||l.pf||l.pa)&&Object.entries(pk).every(([id,v])=>v===1?l.ids.includes(id):!l.ids.includes(id))).map(l=>{let po=poss(l.o),pd=poss(l.d);{const _a=(po+pd)/2;po=pd=_a}const pp=(po+pd)/2;
-    return {ids:l.ids,sec:l.sec,pf:l.pf,pa:l.pa,pm:l.pf-l.pa,ortg:po>=1?l.pf/po*100:null,drtg:pd>=1?l.pa/pd*100:null,net:po>=1&&pd>=1?l.pf/po*100-l.pa/pd*100:null,poss:pp,_cls:S.state==='in'&&l.ids.every(id=>nowSet.has(id))?'now':''}});
+    return {l,key:l.ids.slice().sort().join(','),_open:SEASONTAB_ON&&S.f.luOpen===l.ids.slice().sort().join(','),ids:l.ids,sec:l.sec,pf:l.pf,pa:l.pa,pm:l.pf-l.pa,ortg:po>=1?l.pf/po*100:null,drtg:pd>=1?l.pa/pd*100:null,net:po>=1&&pd>=1?l.pf/po*100-l.pa/pd*100:null,poss:pp,_cls:S.state==='in'&&l.ids.every(id=>nowSet.has(id))?'now':''}});
   const names=r=>r.ids.slice().sort((a,b)=>(D.P[b].starter-D.P[a].starter)).map(id=>D.P[id].last).join(', ');
   const f1=x=>x==null?'–':x.toFixed(0);
   const cols=[{h:'Lineup',k:'ids',f:names},{h:'MIN',k:'sec',f:r=>fmtMin(r.sec)},{h:'PTS',k:'pf'},{h:'OPP',k:'pa',asc:true},{h:'+/-',k:'pm',f:r=>sgn(r.pm),cls:r=>pmCls(r.pm)},
     {h:'POSS',k:'poss',f:r=>Math.round(r.poss),title:'Estimated possessions'},{h:'OFF',k:'ortg',f:r=>f1(r.ortg),title:'Points scored per 100 possessions'},{h:'DEF',k:'drtg',f:r=>f1(r.drtg),asc:true,title:'Points allowed per 100 possessions'},{h:'NET',k:'net',f:r=>r.net==null?'–':sgn(Math.round(r.net)),cls:r=>r.net==null?'':pmCls(r.net)}];
-  c.appendChild(dtable('lu'+S.f.luSize,cols,rows,{def:'sec',minW:620,empty:'No lineups meet the filter yet.'}));
+  c.appendChild(dtable('lu'+S.f.luSize,cols,rows,Object.assign({def:'sec',minW:620,empty:'No lineups meet the filter yet.'},SEASONTAB_ON?{toggle:r=>{S.f.luOpen=S.f.luOpen===r.key?null:r.key;renderView()},expand:r=>luSpread(D,t,r.l)}:{})));
+  if(SEASONTAB_ON)c.appendChild(el('p','note','Tap a lineup for its full advanced numbers.'));
   c.appendChild(el('p','note','OFF, DEF and NET are per 100 possessions; small samples swing hard. Gold edge = on the floor now. Lineups are rebuilt from substitutions.'));
   v.appendChild(c);
 }
@@ -1533,7 +1553,7 @@ function vSeason(v,D,R){
       c.appendChild(el('p','note',rows.length+' teams, '+Object.keys(L.tg).length+' games so far. Gray tick = league average, wine = Cavs, bar = league range.'))}).catch(e=>{console.error(e);c.appendChild(el('p','empty','League numbers aren’t available right now.'))})}}
   /* 4 · this season vs last (team, or a player on the floor) */
   {const c=el('div','card sec');const prev=(+D.season.slice(0,4)-1)+'-'+String(+D.season.slice(5)-1).padStart(2,'0');head(c,'This season vs last',D.season.replace('-','–')+' next to '+prev.replace('-','–'));two.appendChild(c);
-    const hold=el('p','note','Loading last season…');c.appendChild(hold);getJSON('/live-archive/'+prev+'/season.json').then(J=>{hold.remove();const PG=(J.games||[]).filter(g=>g.t);if(!PG.length){c.appendChild(el('p','empty','No archive for '+prev.replace('-','–')+'.'));return}
+    const hold=el('p','note','Loading last season…');c.appendChild(hold);getJSON('/live-archive/'+prev+'/season.json').then(async J=>{const sf=S.sf||{};const NRp=sf.tier?await netRanks(prev):null;hold.remove();const PG=(J.games||[]).filter(g=>g.t&&(!sf.opp||g.opp===sf.opp)&&(!sf.tier||inTier(NRp.rk[g.opp],NRp.n,sf.tier)));if(sf.opp||sf.tier)c.appendChild(el('p','note','Same filter applied to both seasons'+(sf.tier?' (each season’s own opponent ranks)':'')+'.'));if(!PG.length){c.appendChild(el('p','empty','No archive for '+prev.replace('-','–')+'.'));return}
       const fl=el('div','fl');S.f.svk=S.f.svk||'team';const tb=el('button',null,'Team');tb.type='button';tb.setAttribute('aria-pressed',S.f.svk==='team');tb.onclick=()=>{S.f.svk='team';renderView()};fl.appendChild(tb);
       const nm=x=>normName(x);const both=D.roster['5'].filter(id=>R.B[id]&&R.B[id].min>0&&Object.keys(J.P).some(k=>nm(J.P[k].name)===nm(D.P[id].name)));const ps=el('select');ps.setAttribute('aria-label','Player');ps.appendChild(Object.assign(el('option',null,both.length?'A player…':'No returning players yet'),{value:''}));both.forEach(id=>{const o=el('option',null,D.P[id].name);o.value=id;if(S.f.svk===id)o.selected=true;ps.appendChild(o)});ps.onchange=()=>{if(ps.value){S.f.svk=ps.value;renderView()}};fl.appendChild(ps);c.appendChild(fl);
       const t=el('table','zt ssp');t.innerHTML=`<tr><th></th><th>${esc(D.season.replace('-','–'))}</th><th>${esc(prev.replace('-','–'))}</th><th>Change</th></tr>`;
@@ -1542,8 +1562,39 @@ function vSeason(v,D,R){
       rows.forEach(r=>{const tr=el('tr');if(r.length===4){r.forEach(x=>tr.appendChild(el('td',null,x)))}else{const [lab,k2,pc]=r;const a=A[k2],b=B2[k2];const better=k2==='d'||k2==='tov'?a<b:k2==='pace'||k2==='tpar'?null:a>b;tr.append(el('td',null,lab),el('td',null,f1(a)+(pc||'')),el('td',null,f1(b)+(pc||'')));const ch=el('td',better==null?null:better?'up':'dn',sg1(a-b));tr.appendChild(ch)}t.appendChild(tr)});
       const w=el('div','tw');w.appendChild(t);c.appendChild(w);if(G.length<10)c.appendChild(el('p','note','Only '+G.length+' game'+(G.length===1?'':'s')+' this season, so expect big swings early.'))}).catch(()=>{hold.textContent='No archive for '+prev.replace('-','–')+'.'})}
 }
+/* ---------- season filter: by opponent, or by opponent strength (net rating rank) ----------
+   With a filter on, the season is rebuilt in the browser from the archived game files, the same way
+   scripts/live-archive.mjs builds season.json, so every tab (players, lineups, shots, assists, four factors, Season) follows it. */
+const ARCHF={},NETR={};
+async function netRanks(se){if(NETR[se])return NETR[se];let net={};
+  try{if(se===CUR_SEASON){const L=await getJSON('/pdata/league.json');const tm={};const P2=t=>t.fga-t.orb+t.tov+.44*t.fta;Object.values(L.tg||{}).forEach(g=>{if(!g.t||g.t.length!==2)return;const p=(P2(g.t[0])+P2(g.t[1]))/2;g.t.forEach((t,i)=>{const x=tm[t.ab]=tm[t.ab]||{p:0,pf:0,pa:0};x.p+=p;x.pf+=t.pts;x.pa+=g.t[1-i].pts})});for(const [ab,x] of Object.entries(tm))net[ab]=(x.pf-x.pa)/x.p*100}
+    else{const j=await getJSON('/pdata/net-'+se+'.json');net=j.net||{}}}catch(e){}
+  const order=Object.keys(net).filter(a=>a!=='CLE').sort((a,b)=>net[b]-net[a]);const rk={};order.forEach((a,i)=>rk[a]=i+1);return NETR[se]={net,rk,n:order.length}}
+const TIERS=[['','All opponents'],['t5','Top 5 net rating'],['t10','Top 10 net rating'],['t15','Top 15 net rating'],['b10','Bottom 10 net rating']];
+function inTier(rk,n,tier){if(!tier)return true;if(rk==null)return false;return tier==='t5'?rk<=5:tier==='t10'?rk<=10:tier==='t15'?rk<=15:rk>n-10}
+function seasonFrom(se,files,games){
+  const P={},B={},gp={},L={2:{},3:{},4:{},5:{}},shots=[],asts=[],pz={},pc={},gs=[];const zT=()=>({z:ZN.map(()=>[0,0])});const T={cle:zT(),opp:zT()};
+  files.forEach((s,fi)=>{const D=prep(s),R=deriveCore(D,D.plays,'all');if(D.focus.id!=='5')return;const gi=gs.length;const g0=games[fi];gs.push(g0);
+    for(const id of D.roster['5']){const p=D.P[id],b=R.B[id];P[id]={name:p.name,short:p.short,last:p.last,pos:p.pos};if(!(b.min>0))continue;gp[id]=(gp[id]||0)+1;const x=B[id]=B[id]||{};['min','pts','fgm','fga','tpm','tpa','ftm','fta','oreb','dreb','ast','stl','blk','to','pf','pm'].forEach(k=>x[k]=(x[k]||0)+b[k]);if(p.starter)x.gs=(x.gs||0)+1}
+    for(const n of [2,3,4,5])for(const [k,l] of Object.entries(R.L['5'][n])){const o=L[n][k]=L[n][k]||{ids:l.ids,sec:0,pf:0,pa:0,o:{},d:{},g:0};o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;o.g++;for(const x in l.o){o.o[x]=(o.o[x]||0)+l.o[x];o.d[x]=(o.d[x]||0)+(l.d[x]||0)}}
+    for(const q of R.shots)if(q.t==='5'){shots.push([q.id,q.hasXY?q.x:null,q.hasXY?q.y:null,q.m?1:0,q.three?1:0,q.zi,q.pt,q.ast?1:0,gi]);if(q.hasXY){const z=(pz[q.id]=pz[q.id]||{});const g=(z[gi]=z[gi]||ZN.map(()=>[0,0]));g[q.zi][1]++;if(q.m)g[q.zi][0]++}}
+    for(const a of R.asts)if(a.t==='5')asts.push([a.p,a.s,a.v,gi]);
+    const tc=R.T['5'],to=R.T[D.other.id];for(const [dst,src] of [[T.cle,tc],[T.opp,to]]){for(const k in src)if(typeof src[k]==='number')dst[k]=(dst[k]||0)+src[k];src.z.forEach((v,i)=>{dst.z[i][0]+=v[0];dst.z[i][1]+=v[1]})}
+    for(const [h,v] of Object.entries(R.pc['5'])){pc[h]=pc[h]||{n:0,pts:0};pc[h].n+=v.n;pc[h].pts+=v.pts}});
+  return {season:se,games:gs,P,B,gp,L,shots,asts,pz,T,pc}}
+async function seasonFiltered(se,full){const f=S.sf||{};if(!f.opp&&!f.tier)return full;const NR=await netRanks(se);
+  const games=full.games.filter(g=>(!f.opp||g.opp===f.opp)&&inTier(NR.rk[g.opp],NR.n,f.tier));S.sfN=games.length;if(!games.length)return Object.assign({},full,{games:[],P:full.P,B:{},gp:{},L:{2:{},3:{},4:{},5:{}},shots:[],asts:[],pz:{},T:{cle:{z:ZN.map(()=>[0,0])},opp:{z:ZN.map(()=>[0,0])}},pc:{}});
+  const files=await Promise.all(games.map(g=>ARCHF[g.id]||(ARCHF[g.id]=getJSON('/live-archive/'+se+'/'+g.id+'.json'))));return seasonFrom(se,files,games)}
+/* the filter bar under the season scoreboard */
+function seasonFilterBar(){const D=S.data;const f=S.sf=S.sf||{};const w=el('div','sfb');w.appendChild(el('span','lab','Filter'));
+  const opps=[...new Set((S.sfull&&S.sfull.games||[]).map(g=>g.opp))].sort();const os=el('select');os.setAttribute('aria-label','Opponent');os.appendChild(Object.assign(el('option',null,'All opponents'),{value:''}));opps.forEach(a=>{const o=el('option',null,a);o.value=a;if(f.opp===a)o.selected=true;os.appendChild(o)});
+  const ts=el('select');ts.setAttribute('aria-label','Opponent strength');TIERS.forEach(([k,l])=>{const o=el('option',null,l);o.value=k;if((f.tier||'')===k)o.selected=true;ts.appendChild(o)});
+  const go=async()=>{f.opp=os.value;f.tier=ts.value;w.classList.add('busy');await loadSeason(S.season);render()};os.onchange=go;ts.onchange=go;w.append(os,ts);
+  if(f.opp||f.tier){const n=(D.games||[]).length;w.appendChild(el('span','sfn',n+' game'+(n===1?'':'s')+(f.tier?' vs '+TIERS.find(x=>x[0]===f.tier)[1].toLowerCase().replace(' net rating',''):'')));const x=el('button','clr','Clear');x.type='button';x.onclick=async()=>{S.sf={};await loadSeason(S.season);render()};w.appendChild(x)}
+  if(f.tier)w.appendChild(el('span','sfn dim','Strength = '+(S.season===CUR_SEASON?'net rating so far this season, from the league box scores':'final '+S.season.replace('-','–')+' net rating (Basketball Reference)')));
+  return w}
 async function loadSeason(se){
-  let j;try{j=await getJSON('/live-archive/'+se+'/season.json')}catch(e){S.err='Could not load the season archive.';return}
+  let j;try{if(!S.sfull||S.sfull.season!==se){S.sfull=await getJSON('/live-archive/'+se+'/season.json');if(!SEASONTAB_ON)S.sf={}}j=SEASONTAB_ON?await seasonFiltered(se,S.sfull):S.sfull}catch(e){S.err='Could not load the season archive.';return}
   const focus={id:'5',ha:'home',abbr:'CLE',name:'Cavaliers',loc:'Cleveland',c:'var(--cf)',rec:''},other={id:'opp',ha:'away',abbr:'OPP',name:'Opponents',loc:'',c:'var(--co)',rec:''};
   const P={};Object.entries(j.P).forEach(([id,p])=>P[id]=Object.assign({id,team:'5',starter:false},p));
   const ids=Object.keys(j.B).sort((a,b)=>j.B[b].min-j.B[a].min);
@@ -1555,7 +1606,7 @@ async function loadSeason(se){
   S.data=D;S.R=R;S.state='post';S.err=null;
 }
 function renderSeasonSB(){const D=S.data,g=D.games;const w=g.filter(x=>x.cle>x.os).length;const pf=g.reduce((s,x)=>s+x.cle,0)/(g.length||1),pa=g.reduce((s,x)=>s+x.os,0)/(g.length||1);
-  $('sb').innerHTML=`<div style="grid-column:1/-1"><div class="t" style="font:800 1.25rem var(--cond);letter-spacing:.04em;text-transform:uppercase">Cleveland Cavaliers · ${esc(D.season.replace('-','–'))}</div><div class="note" style="font-size:.875rem;margin-top:4px">${g.length} games in the archive · ${w}–${g.length-w} · ${pf.toFixed(1)} scored, ${pa.toFixed(1)} allowed per game</div></div>`}
+  $('sb').innerHTML=`<div style="grid-column:1/-1"><div class="t" style="font:800 1.25rem var(--cond);letter-spacing:.04em;text-transform:uppercase">Cleveland Cavaliers · ${esc(D.season.replace('-','–'))}</div><div class="note" style="font-size:.875rem;margin-top:4px">${g.length} game${g.length===1?'':'s'}${S.sf&&(S.sf.opp||S.sf.tier)?' in this filter':' in the archive'} · ${w}–${g.length-w} · ${pf.toFixed(1)} scored, ${pa.toFixed(1)} allowed per game</div></div>`;if(SEASONTAB_ON){const d=el('div');d.style.gridColumn='1/-1';d.appendChild(seasonFilterBar());$('sb').appendChild(d)}}
 function seasonPlayers(v,D,R){
   const c=el('div','card');head(c,'Cavaliers per game',D.season.replace('-','–')+' · '+D.games.length+' games archived · tap a column to sort');
   const rows=D.roster['5'].map(id=>{const b=R.B[id],g=b.gp||1;return {id,gp:b.gp,gs:b.gs||0,min:b.min/60/g,pts:b.pts/g,reb:(b.oreb+b.dreb)/g,oreb:b.oreb/g,ast:b.ast/g,to:b.to/g,stl:b.stl/g,blk:b.blk/g,fg:b.fga?b.fgm/b.fga:null,tpm:b.tpm/g,tp:b.tpa?b.tpm/b.tpa:null,ft:b.fta?b.ftm/b.fta:null,ts:b.fga+b.fta?b.pts/(2*(b.fga+0.44*b.fta)):null,pmg:b.pm/g,pm:b.pm}}).filter(r=>r.gp);

@@ -43,7 +43,7 @@ function prep(d){
 /* ---------- derive: one pass over the revealed plays ---------- */
 const zT=()=>({pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,oreb:0,dreb:0,toreb:0,tdreb:0,ast:0,stl:0,blk:0,to:0,pf:0,paint:0,second:0,offto:0,sec:0,stPts:0,bnPts:0,stSec:0,bnSec:0,and1:0,ftTrips:0,z:ZN.map(()=>[0,0])});
 const zP=()=>({min:0,pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,oreb:0,dreb:0,ast:0,stl:0,blk:0,to:0,pf:0,pm:0,played:false,on:false});
-const zL=ids=>({ids,sec:0,pf:0,pa:0,o:{fga:0,oreb:0,to:0,fta:0},d:{fga:0,oreb:0,to:0,fta:0}});
+const zS=()=>({fga:0,oreb:0,to:0,fta:0,fgm:0,tpa:0,tpm:0,ftm:0,ast:0,dreb:0});const zL=ids=>({ids,sec:0,pf:0,pa:0,o:zS(),d:zS()});
 const poss=o=>o.fga-o.oreb+o.to+0.44*o.fta;
 function zoneOf(x,y,three){const d=Math.hypot(x-25,y);if(three)return y<=C3?3:4;if(d<4)return 0;if(d<14)return 1;return 2}
 function combos(a,k){const r=[];const f=(s,c)=>{if(c.length===k){r.push(c.slice());return}for(let i=s;i<a.length;i++){c.push(a[i]);f(i+1,c);c.pop()}};f(0,[]);return r}
@@ -93,6 +93,8 @@ function deriveCore(D,plays,F){
     if(ty==='Challenge'&&T[p.team])ch[p.team].used++;if(/Challenge \((Overturned|Successful)/i.test(ty)&&T[p.team])ch[p.team].won++;
     const TT=t=>inF?[T[t],tq(p.per,t)]:[tq(p.per,t)];
     const offStat=(t,k,ON)=>{if(!inF)return;if(seg)seg.o[t][k]++;lu(t,(ON||on)[t],o=>o.o[k]++);lu(opp(t),(ON||on)[opp(t)],o=>o.d[k]++)};
+    /* lineup-only counts for the full advanced spread (makes, threes, assists, defensive boards) */
+    const luStat=(t,k,ON)=>{if(!inF||!t)return;lu(t,(ON||on)[t],o=>o.o[k]=(o.o[k]||0)+1);lu(opp(t),(ON||on)[opp(t)],o=>o.d[k]=(o.d[k]||0)+1)};
     if(ty==='Substitution'){if(a&&b){const t=teamOf(a);if(t){on[t].delete(b);on[t].add(a);B[a].played=true;leave(b,p.t);join(a,p.t);newSeg()}}return}
     const isFT=/^Free Throw/.test(ty);{const tt=p.team&&T[p.team]?p.team:teamOf(a);if(tt&&ps[tt]&&ps[tt].first==null&&(p.shot||/Turnover|Foul/.test(ty)))ps[tt].first=p.t-ps[tt].t}
     if(/Foul/.test(ty)&&!/Offensive|Technical/.test(ty)){snap={t:p.t,per:p.per,on:{}};tid.forEach(x=>snap.on[x]=new Set(on[x]))}
@@ -100,10 +102,10 @@ function deriveCore(D,plays,F){
     if(p.shot&&a&&B[a]&&!/Heave/.test(ty)){const t=teamOf(a);
       if(isFT&&/ 1 of /.test(ty)&&inF)TT(t).forEach(x=>{x.ftTrips++;if(/1 of 1/.test(ty)&&lastMade&&lastMade.id===a&&lastMade.t===p.t)x.and1++});
       if(!isFT&&p.sc){lastMade={id:a,t:p.t};const g=p.t-(lastFG[t]!=null?lastFG[t]:pstart(1));if(g>=180)dr.push({t,kind:'fg',from:lastFG[t]!=null?lastFG[t]:0,to:p.t});lastFG[t]=p.t}
-      if(isFT){if(inF){B[a].fta++;if(p.sc)B[a].ftm++}TT(t).forEach(x=>{x.fta++;if(p.sc)x.ftm++});offStat(t,'fta',ON)}
+      if(isFT){if(inF){B[a].fta++;if(p.sc)B[a].ftm++}TT(t).forEach(x=>{x.fta++;if(p.sc)x.ftm++});offStat(t,'fta',ON);if(p.sc)luStat(t,'ftm',ON)}
       else{const three=p.pa===3;const zi=p.x!=null?zoneOf(p.x,p.y,three):(three?4:1);const paint=!three&&p.x!=null&&Math.abs(p.x-25)<=8&&p.y<=13.75;
         if(inF){B[a].fga++;if(three)B[a].tpa++;if(p.sc){B[a].fgm++;if(three)B[a].tpm++}}
-        TT(t).forEach(x=>{x.fga++;x.z[zi][1]++;if(three)x.tpa++;if(p.sc){x.fgm++;x.z[zi][0]++;if(three)x.tpm++;if(paint)x.paint+=2}});offStat(t,'fga');
+        TT(t).forEach(x=>{x.fga++;x.z[zi][1]++;if(three)x.tpa++;if(p.sc){x.fgm++;x.z[zi][0]++;if(three)x.tpm++;if(paint)x.paint+=2}});offStat(t,'fga');if(three)luStat(t,'tpa');if(p.sc){luStat(t,'fgm');if(three)luStat(t,'tpm');if(b&&/assists/.test(p.text))luStat(t,'ast')}
         if(p.sc&&b&&/assists/.test(p.text)&&B[b]){if(inF){B[b].ast++;asts.push({t,p:b,s:a,v:three?3:2})}TT(t).forEach(x=>x.ast++)}
         else if(!p.sc&&b&&/blocks/.test(p.text)&&B[b]){if(inF)B[b].blk++;TT(teamOf(b)).forEach(x=>x.blk++)}
         if(inF){const st=ps[t],dt=p.t-st.t;const pt=/Putback|Tip/.test(ty)||(st.how==='oreb'&&dt<=3)?0:((st.how==='dreb'||st.how==='to'||st.how==='stl')&&dt<=7)?1:/Cutting|Alley Oop/.test(ty)?2:/Driving/.test(ty)?3:/Hook|Turnaround|Fade Away|Post/.test(ty)?4:/Pullup|Step Back/.test(ty)?5:/Jump Shot/.test(ty)?6:7;
@@ -115,7 +117,7 @@ function deriveCore(D,plays,F){
       if(!isFT||/(\d) of \1/.test(ty)){src[o]='';newPoss(o,p.t,'made',inF)}}}
     if(/Rebound/.test(ty)){const off=/Offensive/.test(ty);const t=a&&B[a]?teamOf(a):p.team;
       if(t&&T[t]){if(a&&B[a]){if(inF)B[a][off?'oreb':'dreb']++;TT(t).forEach(x=>x[off?'oreb':'dreb']++)}else TT(t).forEach(x=>x[off?'toreb':'tdreb']++);
-        if(off){offStat(t,'oreb');src[t]=(src[t].includes('to')?'to':'')+'2nd';newPoss(t,p.t,'oreb',inF)}else{src[t]='';newPoss(t,p.t,'dreb',inF)}}}
+        if(off){offStat(t,'oreb');src[t]=(src[t].includes('to')?'to':'')+'2nd';newPoss(t,p.t,'oreb',inF)}else{luStat(t,'dreb');src[t]='';newPoss(t,p.t,'dreb',inF)}}}
     if(/Turnover|^Traveling|Double Dribble|Discontinued? Dribble|Offensive Goaltending|Palming|Backcourt|3-Second Violation$|Inbound/.test(ty)&&!/Kicked|Defensive/.test(ty)){
       const t=p.team||teamOf(a);if(T[t]){TT(t).forEach(x=>x.to++);if(inF&&a&&B[a]&&teamOf(a)===t)B[a].to++;offStat(t,'to');src[opp(t)]='to';newPoss(opp(t),p.t,b&&/steals/.test(p.text)?'stl':'to',inF)}
       if(b&&/steals/.test(p.text)&&B[b]){if(inF)B[b].stl++;TT(teamOf(b)).forEach(x=>x.stl++)}}
