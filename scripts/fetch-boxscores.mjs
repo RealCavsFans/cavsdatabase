@@ -49,7 +49,7 @@ try {
       if (!g.out || (recent && !g.out.length)) { const o = new Set((st.athletes || []).filter(a => (a.didNotPlay || a.active === false) && a.reason && !/coach/i.test(a.reason)).map(a => a.athlete.displayName));
         const ij = (sum.injuries || []).find(x => x.team?.abbreviation === 'CLE'); (ij?.injuries || []).filter(i => /^out$/i.test(i.status || '')).forEach(i => { const nm = i.athlete?.displayName; if (nm && !(st.athletes || []).some(a => a.athlete?.displayName === nm && !a.didNotPlay && a.active !== false)) o.add(nm); });
         // ESPN often leaves inactive players out of the box score entirely: anyone on our injury report that night who never appeared counts as out
-        if (recent) for (const nm of injuredNow) if (!(st.athletes || []).some(a => a.athlete?.displayName === nm && !a.didNotPlay && a.active !== false)) o.add(nm);
+        if (recent) for (const nm of injuredNow) if (!(st.athletes || []).some(a => a.athlete?.displayName === nm && !a.didNotPlay)) o.add(nm);
         g.out = [...o]; }
       const keys = (st.names || st.labels || []).map(x => String(x).toUpperCase());
       const n = (a, k) => parseFloat(a.stats[keys.indexOf(k)]) || 0;
