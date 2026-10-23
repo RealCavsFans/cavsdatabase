@@ -1127,6 +1127,10 @@ function frame(x,kicker,title,D,R){
 }
 const lbl=(x,t,X,Y,sz=36,c='#6b7078')=>{x.fillStyle=c;x.font=`800 ${sz}px "Saira Condensed"`;x.fillText(t,X,Y)};
 const num=(x,t,X,Y,sz=70,c='#101419')=>{x.fillStyle=c;x.font=`700 ${sz}px "Geist Mono"`;x.fillText(String(t),X,Y)};
+/* team colors for share cards (primary, readable on the light card) */
+const TCOL={ATL:'#C8102E',BOS:'#007A33',BKN:'#000000',CHA:'#1D1160',CHI:'#CE1141',CLE:'#860038',DAL:'#00538C',DEN:'#0E2240',DET:'#C8102E',GS:'#1D428A',HOU:'#CE1141',IND:'#002D62',LAC:'#C8102E',LAL:'#552583',MEM:'#5D76A9',MIA:'#98002E',MIL:'#00471B',MIN:'#0C2340',NO:'#0C2340',NY:'#006BB6',OKC:'#007AC1',ORL:'#0077C0',PHI:'#006BB6',PHX:'#1D1160',POR:'#E03A3E',SAC:'#5A2D81',SA:'#000000',TOR:'#CE1141',UTAH:'#002B5C',WSH:'#002B5C'};
+const tcol=t=>TCOL[t.abbr]||(t.abbr==='CLE'?'#860038':'#5b6470');
+const numW=(x,t,X,Y,sz,c,bold)=>{x.fillStyle=c;x.font=`${bold?800:400} ${sz}px "Geist Mono"`;x.fillText(String(t),X,Y)};
 const txt=(x,t,X,Y,sz=34,c='#101419',wt=600)=>{x.fillStyle=c;x.font=`${wt} ${sz}px Archivo`;x.fillText(t,X,Y)};
 const kick=()=>S.per==='all'?'':perLabel(S.per).split(':')[0]+' · ';
 /* canvas helpers for the cards */
@@ -1201,9 +1205,10 @@ const CARDS={
     x.fillStyle='#e3e0db';x.fillRect(72,800,936,2);
     [['FG',b.fgm+'-'+b.fga],['3PT',b.tpm+'-'+b.tpa],['FT',b.ftm+'-'+b.fta],['STL',b.stl],['BLK',b.blk],['+/-',sgn(b.pm)]].forEach(([l,v],i)=>{const cx=72+(i%3)*312,cy=880+Math.floor(i/3)*170;lbl(x,l,cx,cy);num(x,v,cx,cy+80,76)});footer(x)}},
   ff:{label:'Four factors card',async draw(x,D,R){const A=R.T[D.focus.id],B=R.T[D.other.id],fa=factors(A,B),fb=factors(B,A);frame(x,kick()+D.focus.abbr+' vs '+D.other.abbr,'Four factors',D,R);
-    lbl(x,D.focus.abbr,600,470,40,WINE);lbl(x,D.other.abbr,850,470,40,GREY);
+    const cF=tcol(D.focus),cO=tcol(D.other);lbl(x,D.focus.abbr,600,470,40,cF);lbl(x,D.other.abbr,850,470,40,cO);
+    /* each side in its team color; the side that won the factor is bold, the other is regular weight and muted */
     FF.forEach(([k,n,full,hib],i)=>{const y=580+i*165,a=fa[k],b=fb[k];txt(x,n,72,y,42,INK,700);txt(x,full,72,y+44,28,MUT,500);
-      const win=a!=null&&b!=null&&a!==b?((a>b)===hib?0:1):-1;num(x,a==null?'–':(a*100).toFixed(1)+'%',600,y+18,56,win===0?WINE:INK);num(x,b==null?'–':(b*100).toFixed(1)+'%',850,y+18,56,win===1?GREY:INK);
+      const win=a!=null&&b!=null&&a!==b?((a>b)===hib?0:1):-1;numW(x,a==null?'–':(a*100).toFixed(1)+'%',600,y+18,56,win===0?cF:MUT,win===0);numW(x,b==null?'–':(b*100).toFixed(1)+'%',850,y+18,56,win===1?cO:MUT,win===1);
       if(i<3){x.fillStyle='#e3e0db';x.fillRect(72,y+80,936,2)}})}},
   run:{label:'Run card',pick:'run',async draw(x,D,R,i){const r=R.runs[+i];if(!r)return;const t=D.teams.find(z=>z.id===r.t);frame(x,kick()+D.away.abbr+' at '+D.home.abbr,t.name+' run',D,R);
     num(x,r.pts+'–0',72,640,230,t===D.focus?WINE:GREY);
