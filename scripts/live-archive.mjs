@@ -65,7 +65,7 @@ if (SEASON === '2026-27' && !process.env.SKIP_FETCH) {
   const have = new Set(), byName = {};
   for (const f of espnFiles) { const g = JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8')); have.add(etOf(g.header.competitions[0].date));
     for (const tb of (g.boxscore && g.boxscore.players) || []) for (const a of tb.statistics[0].athletes) byName[C.normName(a.athlete.displayName)] = a.athlete.id; }
-  const ics = fs.readFileSync('cavs.ics', 'utf8');
+  let ics = ''; try { ics = fs.readFileSync('cavs.ics', 'utf8'); } catch { console.log('no cavs.ics; skipping the backup check'); }
   const past = [...ics.matchAll(/UID:cavs-(\d{4}-\d\d-\d\d)@[\s\S]*?DTSTART:(\d{8}T\d{6}Z)/g)].filter(m => Date.now() - Date.parse(m[2].replace(/(\d{4})(\d\d)(\d\d)T(\d\d)(\d\d)(\d\d)Z/, '$1-$2-$3T$4:$5:$6Z')) > 4 * 36e5 && etOf(m[2].replace(/(\d{4})(\d\d)(\d\d)T(\d\d)(\d\d)(\d\d)Z/, '$1-$2-$3T$4:$5:$6Z')) >= SEASON.slice(0, 4) + '-10-01').map(m => m[1]);
   for (const d of past) {
     const bf = path.join(DIR, 'b' + d.replace(/-/g, '') + '.json');
