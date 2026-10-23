@@ -450,6 +450,9 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 .ppx-ar{display:grid;grid-template-columns:72px 1fr 22px;gap:6px;align-items:center;font-size:0.8125rem;padding:2px 0}.ppx-ar .b{height:8px;background:var(--line2)}.ppx-ar .b i{display:block;height:100%;background:var(--wine)}.ppx-ar b{text-align:right;font-family:var(--mono)}
 .ppx-segs{margin-bottom:10px}.ppx-more{margin:12px 0 0;font-size:0.8125rem}.ppx-more a{color:var(--wine-ink);font-weight:700}
 @media (max-width:760px){.ppx-spg{grid-template-columns:1fr}}
+/* Oct 23: RCF recap link sits right on the final card; phones drop the Standings and Schedule links on home (the tab bar has Schedule) */
+.gdm-links{justify-content:flex-end}
+@media (max-width:600px){.home-std,#next-h-row a[data-go="schedule"]{display:none!important}}
 </style>
 <script>/* OneSignal web push for alerts: loads only on the live site, never prompts on its own */
 /* OneSignal paused with game alerts (Oct 19): the SDK isn't loaded, so no subscribe prompts appear. Set PUSH_SDK to true when alerts go live. */var PUSH_SDK=false;if(PUSH_SDK&&location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async function(OneSignal){await OneSignal.init({appId:"3db75ca9-d797-40c7-8c53-c0711b41e956",serviceWorkerPath:"sw.js",serviceWorkerParam:{scope:"/"},notifyButton:{enable:false},promptOptions:{slidedown:{prompts:[]}}})});const s=document.createElement('script');s.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';s.defer=true;document.head.appendChild(s)}</script>
@@ -1135,8 +1138,8 @@ if(ng){document.getElementById('nx-at').textContent=ng[2]==='H'?'vs':'at';const 
   else if(PRESEASON.length){const g=PRESEASON[PRESEASON.length-1];L={d:g[0],o:g[1],ha:g[2],r:g[3],sc:g[4],lbl:'Preseason final'}}
   if(L){const a=document.getElementById('last');document.getElementById('next-h').textContent='Last result & next game';
     const dt=new Date(L.d+'T19:00:00-04:00');
-    a.hidden=false;a.href=boxUrl(L.d);a.title='Box score';
-    a.append((()=>{const c=el('span','cap-label');if(L.lbl==='Preseason final')c.append('Preseason',el('span','hide-sm',' final'));else c.append(L.lbl);return c})(),el('span','lr '+(L.r==='W'?'w':'l'),L.r),el('span','ls',L.sc.replace('-','–')+' ↗'),
+    a.hidden=false;{const gg=SCHEDULE.find(x=>x[0]===L.d);if(gg){a.href='/games/'+gslug(gg);a.dataset.go='games/'+gslug(gg);a.removeAttribute('target')}else a.href=boxUrl(L.d)}a.title='Box score';
+    a.append((()=>{const c=el('span','cap-label');if(L.lbl==='Preseason final')c.append('Preseason',el('span','hide-sm',' final'));else c.append(L.lbl);return c})(),el('span','lr '+(L.r==='W'?'w':'l'),L.r),el('span','ls',L.sc.replace('-','–')+' →'),
       (()=>{const lo=el('span','lo',(L.ha==='H'?'vs ':'at ')+L.o+' · ');const f=shortFmt.format(dt),k=f.indexOf(', ');if(k>0){lo.append(el('span','hide-sm',f.slice(0,k+2)),f.slice(k+2))}else lo.append(f);return lo})())}}
 
 /* key dates */
@@ -2404,7 +2407,7 @@ const GALERT_ON=true;
   const cavsPre=(g,t)=>{const tv=tvFor(g[0]),ra=radioFor(g[0]);const w=[tv.nat,tv.loc].filter(Boolean).join(' · ');const left=t-now();
     return {live:true,kick:left>0?'Tip-off in '+mins(left):'On now',title:vs(g)+' · '+tipTime(g,tipOf(g),true),sub:'Watch: '+(w||'TBA')+' · Listen: '+(ra.cavs||'').split(' · ')[0],link:['Game preview','/games/'+gslug(g),'games/'+gslug(g)]}};
   const cavsFin=(g,b)=>{const [c,o]=(b.score||SCORES[g[0]]||'').split('-');const rec=(SEASON.results||'').replace(/[^WL]/g,'');const w=(rec.match(/W/g)||[]).length,l=rec.length-w;
-    return {fin:true,kick:'Final',title:'Cavs '+c+', '+TEAMS[g[1]]+' '+o,sub:b.top||(rec.length?'Cavs are '+w+'–'+l:''),link:['Box score',b.url||boxUrl(g[0])]}};
+    return {fin:true,kick:'Final',title:'Cavs '+c+', '+TEAMS[g[1]]+' '+o,sub:b.top||(rec.length?'Cavs are '+w+'–'+l:''),link:['Box score','/games/'+gslug(g),'games/'+gslug(g)]}};
   const NI=(INTL_NEXT['Saliou Niang']||{g:[]});const nOn=!/pending/i.test(NI.team||'');
   const nTip=g=>{const m=(g[4]||'').match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);if(!m)return null;let h=+m[1]%12+(/pm/i.test(m[3])?12:0);const off=(g[0]<'2026-11-01'||g[0]>='2027-03-14')?'-04:00':'-05:00';return Date.parse(g[0]+'T'+String(h).padStart(2,'0')+':'+m[2]+':00'+off)};
   const nPre=(g,t)=>{const left=t-now();const tv=(g[4]||'').split('·').slice(1).join('·').trim();return {live:true,kick:'Saliou Niang · LSU · '+(left>0?'starts in '+mins(left):'on now'),title:'LSU '+(g[2]==='H'?'vs ':g[2]==='A'?'at ':'vs ')+g[1]+' · '+(g[4]||'').split('·')[0].trim(),sub:tv?'Watch: '+tv:'',link:['His draft-rights card','/assets#saliou-niang','assets']}};

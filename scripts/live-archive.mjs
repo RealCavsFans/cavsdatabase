@@ -114,6 +114,10 @@ for (const f of files) {
   }
   for (const a of R.asts) if (a.t === '5') asts.push([a.p, a.s, a.v, gi]);
   const tc = R.T['5'], to = R.T[opp.id];
+  /* per-game rows for the Season tab (trends and splits): team box totals for both sides, and every 5-man unit's minutes and possessions */
+  const tr = t => [t.pts, t.fgm, t.fga, t.tpm, t.tpa, t.ftm, t.fta, t.oreb, t.toreb || 0, t.dreb, t.to, Math.round(t.sec || 0)];
+  games[gi].t = tr(tc); games[gi].u = tr(to);
+  games[gi].l5 = Object.entries(R.L['5'][5]).filter(([, l]) => l.sec >= 1).map(([k, l]) => [k, Math.round(l.sec), l.pf, l.pa, l.o.fga, l.o.oreb, l.o.to, l.o.fta, l.d.fga, l.d.oreb, l.d.to, l.d.fta]);
   for (const [dst, src] of [[T.cle, tc], [T.opp, to]]) { for (const k in src) if (typeof src[k] === 'number') dst[k] = (dst[k] || 0) + src[k]; src.z.forEach((v, i) => { dst.z[i][0] += v[0]; dst.z[i][1] += v[1]; }); }
   for (const [h, v] of Object.entries(R.pc['5'])) { pc[h] = pc[h] || { n: 0, pts: 0 }; pc[h].n += v.n; pc[h].pts += v.pts; }
 }
