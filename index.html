@@ -2251,7 +2251,7 @@ SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
   const tvc=el('td','tvc');if(tv.nat)tvc.appendChild(el('b',null,tv.nat));if(tv.loc)tvc.appendChild(el('span',null,tv.loc));if(tv.opp)tvc.appendChild(el('small',null,TEAMS[g[1]]+': '+tv.opp));if(!tv.nat&&!tv.loc)tvc.appendChild(el('span','dim','TBA'));
   const rac=el('td','tvc');rac.appendChild(el('span',null,ra.cavs));rac.appendChild(el('small',null,ra.nat));if(ra.opp)rac.appendChild(el('small',null,TEAMS[g[1]]+': '+ra.opp));
   const pv=r?null:gameUrl(g[0]);const lnk=(t,href,title,cls)=>{const a=el('a',cls,t);a.href=href;a.target='_blank';a.rel='noopener';a.title=title;return a};
-  const rtd=el('td','r mono');if(r)rtd.appendChild(lnk(r+(SCORES[g[0]]?' '+SCORES[g[0]].replace('-','–'):'')+' ↗',boxUrl(g[0]),'Box score · '+boxSrc(g[0]),'reslink'));
+  const rtd=el('td','r mono');if(r){const ra=el('a','reslink',r+(SCORES[g[0]]?' '+SCORES[g[0]].replace('-','–'):'')+' →');ra.href='/games/'+gslug(g);ra.dataset.go='games/'+gslug(g);ra.title='Game page: box score and recap';rtd.appendChild(ra)}
   const dtd=el('td','mono'),ttd=el('td','mono dim');dtd.textContent=shortFmt.format(tipOf(g));{const ga=el('a','glink',tipTime(g,tipOf(g)));ga.href='/games/'+gslug(g);ga.dataset.go='games/'+gslug(g);ga.title='Game page';ttd.appendChild(ga)}
   if(r&&SCORES[g[0]]){const xa=el('span','xact gsave');const b2=el('button');b2.type='button';b2.title='Save final score as an image';b2.setAttribute('aria-label','Save the final score as an image');
     b2.onclick=async()=>{if(!window.cdbCap)return;const card=gameCard(i),gw=el('div','gwrap');gw.appendChild(card);document.body.appendChild(gw);try{await window.cdbCap('schedule','g-'+g[0],'Final score',[card],b2)}finally{gw.remove()}};xa.appendChild(b2);rtd.appendChild(xa)}
