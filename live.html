@@ -1206,9 +1206,9 @@ const CARDS={
     [['FG',b.fgm+'-'+b.fga],['3PT',b.tpm+'-'+b.tpa],['FT',b.ftm+'-'+b.fta],['STL',b.stl],['BLK',b.blk],['+/-',sgn(b.pm)]].forEach(([l,v],i)=>{const cx=72+(i%3)*312,cy=880+Math.floor(i/3)*170;lbl(x,l,cx,cy);num(x,v,cx,cy+80,76)});footer(x)}},
   ff:{label:'Four factors card',async draw(x,D,R){const A=R.T[D.focus.id],B=R.T[D.other.id],fa=factors(A,B),fb=factors(B,A);frame(x,kick()+D.focus.abbr+' vs '+D.other.abbr,'Four factors',D,R);
     const cF=tcol(D.focus),cO=tcol(D.other);lbl(x,D.focus.abbr,600,470,40,cF);lbl(x,D.other.abbr,850,470,40,cO);
-    /* each side in its team color; the side that won the factor is bold, the other is regular weight and muted */
+    /* team colors on the column labels; the side that won each factor is bold black, the other regular and muted */
     FF.forEach(([k,n,full,hib],i)=>{const y=580+i*165,a=fa[k],b=fb[k];txt(x,n,72,y,42,INK,700);txt(x,full,72,y+44,28,MUT,500);
-      const win=a!=null&&b!=null&&a!==b?((a>b)===hib?0:1):-1;numW(x,a==null?'–':(a*100).toFixed(1)+'%',600,y+18,56,win===0?cF:MUT,win===0);numW(x,b==null?'–':(b*100).toFixed(1)+'%',850,y+18,56,win===1?cO:MUT,win===1);
+      const win=a!=null&&b!=null&&a!==b?((a>b)===hib?0:1):-1;numW(x,a==null?'–':(a*100).toFixed(1)+'%',600,y+18,56,win===0?INK:MUT,win===0);numW(x,b==null?'–':(b*100).toFixed(1)+'%',850,y+18,56,win===1?INK:MUT,win===1);
       if(i<3){x.fillStyle='#e3e0db';x.fillRect(72,y+80,936,2)}})}},
   run:{label:'Run card',pick:'run',async draw(x,D,R,i){const r=R.runs[+i];if(!r)return;const t=D.teams.find(z=>z.id===r.t);frame(x,kick()+D.away.abbr+' at '+D.home.abbr,t.name+' run',D,R);
     num(x,r.pts+'–0',72,640,230,t===D.focus?WINE:GREY);
