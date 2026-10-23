@@ -444,6 +444,12 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 .gb-l{grid-area:l;text-align:center;font:700 0.625rem var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .gb-b{grid-area:br;height:8px;background:var(--line2);display:flex}.gb-b.l{grid-area:bl;justify-content:flex-end}.gb-b i{display:block;height:100%;width:0;background:#b9bcc0;transition:width .8s cubic-bezier(.2,.8,.3,1)}.gb-b i.c{background:#860038}.gb-b i.o{background:var(--fg)}.gdm-bars.go .gb-b i{width:var(--w)}
 @media (prefers-reduced-motion:reduce){.gb-b i{transition:none}}}
+/* player page: season shots and passing */
+.ppx-spg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}.ppx-court svg{width:100%;height:auto;display:block;background:var(--card)}.ppx-court .ppx-leg i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.ppx-z td.up{color:var(--wine-ink);font-weight:700}.ppx-z td.dn{color:var(--muted)}.ppx-aws{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.ppx-aw h3{font:800 0.6875rem var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.ppx-ar{display:grid;grid-template-columns:72px 1fr 22px;gap:6px;align-items:center;font-size:0.8125rem;padding:2px 0}.ppx-ar .b{height:8px;background:var(--line2)}.ppx-ar .b i{display:block;height:100%;background:var(--wine)}.ppx-ar b{text-align:right;font-family:var(--mono)}
+.ppx-segs{margin-bottom:10px}.ppx-more{margin:12px 0 0;font-size:0.8125rem}.ppx-more a{color:var(--wine-ink);font-weight:700}
+@media (max-width:760px){.ppx-spg{grid-template-columns:1fr}}
 </style>
 <script>/* OneSignal web push for alerts: loads only on the live site, never prompts on its own */
 /* OneSignal paused with game alerts (Oct 19): the SDK isn't loaded, so no subscribe prompts appear. Set PUSH_SDK to true when alerts go live. */var PUSH_SDK=false;if(PUSH_SDK&&location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async function(OneSignal){await OneSignal.init({appId:"3db75ca9-d797-40c7-8c53-c0711b41e956",serviceWorkerPath:"sw.js",serviceWorkerParam:{scope:"/"},notifyButton:{enable:false},promptOptions:{slidedown:{prompts:[]}}})});const s=document.createElement('script');s.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';s.defer=true;document.head.appendChild(s)}</script>
@@ -3820,6 +3826,34 @@ function ppBuild(p,root){
     if(false&&b2b.length>=2&&rest.length>=3){const c=card('Rested vs tired','Rest','How he plays on the second night of a back to back compared with a normal night’s rest. Tells you which nights to expect a dip.');
       const av=(a,k)=>a.reduce((t,g)=>t+g.me[k],0)/a.length;const big=el('div','ppx-big2');[[f1(av(rest,'pts')),'Points with rest ('+rest.length+' games)'],[f1(av(b2b,'pts')),'Points on a back to back ('+b2b.length+')'],[f1(av(rest,'min')),'Minutes with rest'],[f1(av(b2b,'min')),'Minutes on a back to back']].forEach(([a,b])=>{const d2=el('div');d2.appendChild(el('b',null,a));d2.appendChild(el('span',null,b));big.appendChild(d2)});c.appendChild(big);ov.appendChild(c)}
     /* rested vs tired: off (Oct 19) */}
+  /* season shot chart and passing web, from the live game archive (live-archive/<season>/season.json); season toggle when he has more than one */
+  {const c=card('Shots and passing','','Every shot he took, where it came from, and who he set up and who set him up. From our game archive, updated after every game.');const box=el('div','ppx-sp');box.appendChild(el('p','dim','Loading…'));c.appendChild(box);ov.appendChild(c);
+    const nrm=x=>x.normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');const SEAS=['2026-27','2025-26'];
+    PPD.arch=PPD.arch||{};Promise.all(SEAS.map(se=>PPD.arch[se]?0:fetch('/live-archive/'+se+'/season.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(j=>{PPD.arch[se]=j||{}}))).then(()=>{
+      const have=SEAS.filter(se=>{const A=PPD.arch[se];const id=A.P&&Object.keys(A.P).find(k=>nrm(A.P[k].name)===nrm(n));return id&&(A.shots||[]).some(x=>x[0]===id)});
+      if(!have.length){c.remove();return}let cur=have[0];
+      const draw=()=>{box.innerHTML='';const A=PPD.arch[cur];const id=Object.keys(A.P).find(k=>nrm(A.P[k].name)===nrm(n));const gp=(A.gp||{})[id]||0;
+        if(have.length>1){const sg=el('div','segs ppx-segs');have.forEach(se=>{const b=el('button',null,se.replace('-','–'));b.type='button';b.setAttribute('aria-selected',se===cur);b.onclick=()=>{cur=se;draw()};sg.appendChild(b)});box.appendChild(sg)}
+        const SH=A.shots.filter(x=>x[0]===id),xy=SH.filter(x=>x[1]!=null);const mk=SH.filter(x=>x[3]).length;
+        const g=el('div','ppx-spg');
+        /* court: 10 px per foot, baseline at the top */
+        let sv='<svg viewBox="0 0 500 360" role="img" aria-label="'+n.replace(/["<>&]/g,'')+' shot chart"><g fill="none" stroke="var(--line)" stroke-width="2"><rect x="1" y="1" width="498" height="358"/><rect x="170" y="1" width="160" height="190"/><circle cx="250" cy="190" r="60"/><path d="M30 1V140A237.5 237.5 0 0 0 470 140V1"/><path d="M210 52.5A40 40 0 0 0 290 52.5"/><line x1="220" y1="40" x2="280" y2="40"/><circle cx="250" cy="52.5" r="7.5"/></g>';
+        /* one dot per 2-foot spot: size = attempts there, wine = at or above the league FG% for that zone, gray = below */
+        {const cell={};xy.forEach(x=>{if(x[2]>35)return;const k=Math.round(x[1]/2)+','+Math.round(x[2]/2);const c0=cell[k]||(cell[k]={x:0,y:0,n:0,m:0,z:x[5]});c0.x+=x[1];c0.y+=x[2];c0.n++;c0.m+=x[3]});const ZL=[.673,.444,.412,.387,.345];
+          Object.values(cell).sort((a,b)=>b.n-a.n).forEach(c0=>{const r=Math.min(13,3+3*Math.sqrt(c0.n)),hot=c0.m/c0.n>=(ZL[c0.z]||.45);sv+='<circle cx="'+(c0.x/c0.n*10).toFixed(0)+'" cy="'+(c0.y/c0.n*10).toFixed(0)+'" r="'+r.toFixed(1)+'" fill="'+(hot?'var(--wine)':'#9aa0a8')+'" fill-opacity="'+(hot?.85:.55)+'" stroke="var(--card)" stroke-width="1"><title>'+c0.m+' of '+c0.n+'</title></circle>'})}
+        sv+='</svg>';const ct=el('div','ppx-court');ct.innerHTML=sv;const lg=el('div','ppx-leg');lg.innerHTML='<span><i style="background:var(--wine)"></i>League average or better there</span><span><i style="background:#9aa0a8"></i>Below league average</span><span>Bigger dot = more shots · '+mk+' of '+SH.length+' · '+gp+' game'+(gp===1?'':'s')+'</span>';ct.appendChild(lg);g.appendChild(ct);
+        /* by zone vs league */
+        const ZN=[['At the rim',.673],['Short midrange',.444],['Long midrange',.412],['Corner 3',.387],['Above-the-break 3',.345]];const side=el('div');
+        const tb=el('table','ppx-t ppx-z');tb.innerHTML='<thead><tr><th>Zone</th><th>FG</th><th>FG%</th><th>League</th><th>Share</th></tr></thead>';const bd=el('tbody');
+        ZN.forEach(([lab,lgp],zi)=>{const z=SH.filter(x=>x[5]===zi),m=z.filter(x=>x[3]).length;if(!z.length)return;const pct=m/z.length;const tr=el('tr');tr.append(el('td',null,lab),el('td',null,m+'-'+z.length),el('td',pct>lgp?'up':pct<lgp?'dn':null,(pct*100).toFixed(0)+'%'),el('td','dim',(lgp*100).toFixed(0)+'%'),el('td',null,Math.round(z.length/SH.length*100)+'%'));bd.appendChild(tr)});tb.appendChild(bd);side.appendChild(tb);
+        /* passing web: who he set up, who set him up */
+        const AS=A.asts||[];const cnt=(arr,k)=>{const o={};arr.forEach(a=>{o[a[k]]=(o[a[k]]||0)+1});return Object.entries(o).sort((a,b)=>b[1]-a[1]).slice(0,5)};
+        const gave=cnt(AS.filter(a=>a[0]===id),1),got=cnt(AS.filter(a=>a[1]===id),0);const nm=k=>(A.P[k]&&A.P[k].last)||'—';
+        const list=(title,rows,tot)=>{const d=el('div','ppx-aw');d.appendChild(el('h3',null,title+' · '+tot));if(!rows.length){d.appendChild(el('p','dim','None yet.'));return d}const mx=rows[0][1];rows.forEach(([k,v])=>{const r=el('div','ppx-ar');const bar=el('i');bar.style.width=(v/mx*100)+'%';r.append(el('span',null,nm(k)),el('span','b',''),el('b',null,String(v)));r.children[1].appendChild(bar);d.appendChild(r)});return d};
+        const aw=el('div','ppx-aws');aw.append(list('He set up',gave,AS.filter(a=>a[0]===id).length+' assists'),list('Set him up',got,AS.filter(a=>a[1]===id).length+' assisted baskets'));side.appendChild(aw);
+        g.appendChild(side);box.appendChild(g);
+        const lk=el('a',null,'Lineups, on/off and his full season breakdown →');lk.href='/live.html?g=s'+cur+'&pl='+slug(n);box.appendChild(el('p','ppx-more')).appendChild(lk)};
+      draw()})}
   if(waiting.length){const c=el('section','ppx-wait');c.appendChild(el('b',null,'Fills in as the season goes'));c.appendChild(el('span',null,waiting.join(' · ')));ov.appendChild(c)}
 
   /* ===== 2 · offense ===== */
