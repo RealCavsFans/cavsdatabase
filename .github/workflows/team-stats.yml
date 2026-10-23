@@ -6,6 +6,7 @@ on:
   schedule:
     - cron: '50 5 * * *'    # ~1:50 a.m. Eastern, after the night's games
     - cron: '20 9 * * *'    # ~5:20 a.m. Eastern, before the daily data task
+    - cron: '15,45 3,4,5 * * *'  # every 30 min, ~11 p.m.–1:45 a.m. Eastern, so the record updates soon after the buzzer
   workflow_dispatch:
 permissions:
   contents: write
