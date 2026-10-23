@@ -24,6 +24,8 @@ const TSTATS = grab('TSTATS'), TSTATS_PREV = grab('TSTATS_PREV'), H2H_PREV = gra
 const TEAM_SALARY = grab('TEAM_SALARY'), TAX_BILL = grab('TAX_BILL'), LINES = grab('LINES'), HARDCAP = grab('HARDCAP');
 const EXC = grab('EXC'), PICKS = grab('PICKS'), TX = grab('TX'), SCORES = grab('SCORES'), SEASON = grab('SEASON'), TEAMS = grab('TEAMS'), GNICK = grab('GNICK');
 let PJ = {}; try { PJ = JSON.parse(await readFile(new URL('pdata/players.json', root), 'utf8')); } catch {}
+let LG = {}; try { LG = JSON.parse(await readFile(new URL('pdata/league.json', root), 'utf8')); } catch {}
+const LGP = Object.values(LG.players || {});   // this season, from the 30-minute ESPN box score job (updated right after each game)
 let state = {}; try { state = JSON.parse(await readFile(new URL('og/live.json', root), 'utf8')); } catch {}
 
 const slug = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -58,7 +60,10 @@ for (const P of PLAYERS) {
   const rs = (PJ[name] && PJ[name].rs) || [];
   const cur = rs.filter(r => r[0] === '2026–27').reduce((a, r) => (!a || r[2] > a[2] ? r : a), null);
   const prev = rs.filter(r => r[0] === '2025–26').reduce((a, r) => (!a || r[2] > a[2] ? r : a), null);
-  const row = cur && cur[2] >= 5 ? cur : prev, season = row && row[0];
+  /* this season's averages as soon as he has played a game (league feed), else last season */
+  const lp = LGP.find(x => x.n === name && x.t === 'CLE' && x.g > 0);
+  const now = lp ? ['2026–27', 'CLE', lp.g, 0, 0, lp.pts / lp.g, lp.reb / lp.g, lp.ast / lp.g] : null;
+  const row = now || (cur && cur[2] >= 1 ? cur : prev), season = row && row[0];
   const R = ROSTER.find(x => x[0] === name), y = R ? R[2] : null;
   const sal = y ? (Array.isArray(y[0]) ? y[0][0] : y[0]) : null;
   let last = -1; if (y) y.forEach((v, i) => { if (typeof v === 'number' || Array.isArray(v)) last = i; });
