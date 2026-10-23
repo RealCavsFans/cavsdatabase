@@ -25,6 +25,9 @@ try {
       out[date] = { url, status: fin ? 'final' : 'scheduled', ...(fin ? { score: `${cle}-${opp}`, result: cle > opp ? 'W' : 'L' } : {}), ...(fin && prev[date]?.top ? { top: prev[date].top } : {}), ...(fin && prev[date]?.out ? { out: prev[date].out } : {}), ...(fin && prev[date]?.box ? { box: prev[date].box } : {}), ...(fin && prev[date]?.qs ? { qs: prev[date].qs } : {}), ...(prev[date]?.refs ? { refs: prev[date].refs } : {}) };
     }
   }
+  // the site's injury report (index.html INJURIES): names listed Out, Doubtful, Questionable or Game-time decision
+  let injuredNow = [];
+  try { const html = await readFile('index.html', 'utf8'); const m = html.match(/\nconst INJURIES=(\[[\s\S]*?\]);/); if (m) injuredNow = Function('return ' + m[1])().map(r => r[0]); } catch {}
   // best Cavs stat line for finals in the last 3 days (ESPN box score)
   const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba';
   for (const [date, g] of Object.entries(out)) {
@@ -43,8 +46,10 @@ try {
       const t = (sum.boxscore?.players || []).find(p => p.team?.abbreviation === 'CLE');
       const st = t?.statistics?.[0]; if (!st) continue;
       // players out for injury or illness: inactive / did not play for any reason other than a coach's decision, plus anyone listed Out on ESPN's injury report for that game
-      if (!g.out) { const o = new Set((st.athletes || []).filter(a => (a.didNotPlay || a.active === false) && a.reason && !/coach/i.test(a.reason)).map(a => a.athlete.displayName));
+      if (!g.out || (recent && !g.out.length)) { const o = new Set((st.athletes || []).filter(a => (a.didNotPlay || a.active === false) && a.reason && !/coach/i.test(a.reason)).map(a => a.athlete.displayName));
         const ij = (sum.injuries || []).find(x => x.team?.abbreviation === 'CLE'); (ij?.injuries || []).filter(i => /^out$/i.test(i.status || '')).forEach(i => { const nm = i.athlete?.displayName; if (nm && !(st.athletes || []).some(a => a.athlete?.displayName === nm && !a.didNotPlay && a.active !== false)) o.add(nm); });
+        // ESPN often leaves inactive players out of the box score entirely: anyone on our injury report that night who never appeared counts as out
+        if (recent) for (const nm of injuredNow) if (!(st.athletes || []).some(a => a.athlete?.displayName === nm && !a.didNotPlay && a.active !== false)) o.add(nm);
         g.out = [...o]; }
       const keys = (st.names || st.labels || []).map(x => String(x).toUpperCase());
       const n = (a, k) => parseFloat(a.stats[keys.indexOf(k)]) || 0;
