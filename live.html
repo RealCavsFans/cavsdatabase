@@ -799,9 +799,9 @@ function vTeam(v,D,R){
   const pa=P(a),pb=P(b);
   grp('Shooting');
   row('Points',a.pts,b.pts);
-  row('FG made',a.fgm,b.fgm);row('FG attempts',a.fga,b.fga,null,null,null);
   row('FG%',a.fgm/(a.fga||1),b.fgm/(b.fga||1),()=>pct(a.fgm,a.fga),()=>pct(b.fgm,b.fga));
-  row('2PT attempts',a.fga-a.tpa,b.fga-b.tpa,null,null,null);row('3PT attempts',a.tpa,b.tpa,null,null,null);row('Threes made',a.tpm,b.tpm);
+  {const m2=t=>t.fgm-t.tpm,a2=t=>t.fga-t.tpa;row('Twos made',m2(a),m2(b));row('2PT attempts',a2(a),a2(b),null,null,null);row('2PT%',m2(a)/(a2(a)||1),m2(b)/(a2(b)||1),()=>pct(m2(a),a2(a)),()=>pct(m2(b),a2(b)))}
+  row('Threes made',a.tpm,b.tpm);row('3PT attempts',a.tpa,b.tpa,null,null,null);
   row('3PT%',a.tpm/(a.tpa||1),b.tpm/(b.tpa||1),()=>pct(a.tpm,a.tpa),()=>pct(b.tpm,b.tpa));
   row('Free throws made',a.ftm,b.ftm);
   grp('Where the points came from');
