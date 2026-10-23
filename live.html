@@ -804,6 +804,7 @@ function vTeam(v,D,R){
   row('Threes made',a.tpm,b.tpm);row('3PT attempts',a.tpa,b.tpa,null,null,null);
   row('3PT%',a.tpm/(a.tpa||1),b.tpm/(b.tpa||1),()=>pct(a.tpm,a.tpa),()=>pct(b.tpm,b.tpa));
   row('Free throws made',a.ftm,b.ftm);
+  row('FT%',a.ftm/(a.fta||1),b.ftm/(b.fta||1),()=>pct(a.ftm,a.fta),()=>pct(b.ftm,b.fta));
   grp('Where the points came from');
   row('Points in the paint',a.paint,b.paint);row('Second-chance points',a.second,b.second);
   const live=!S.replay&&S.per==='all'&&D.esp[D.focus.id]&&D.esp[D.other.id];
