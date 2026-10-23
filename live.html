@@ -12,12 +12,12 @@
 <meta property="og:url" content="https://cavsdatabase.com/live">
 <meta property="og:title" content="Live game · Cavs Database">
 <meta property="og:description" content="Live Cavaliers box score, shot chart, lineups, assists, four factors and win probability, updated every 30 seconds.">
-<meta property="og:image" content="https://cavsdatabase.com/og.jpg?v=5">
+<meta property="og:image" content="https://cavsdatabase.com/og/live.jpg?v=1">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="cavs_db: every Cavaliers fact in one place">
+<meta property="og:image:alt" content="cavs_db live game tracker: box score, shot chart, lineups, assists and win probability">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cavsdatabase.com/og.jpg?v=5">
+<meta name="twitter:image" content="https://cavsdatabase.com/og/live.jpg?v=1">
 <meta name="twitter:site" content="@realcavsfans">
 
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -799,22 +799,24 @@ function vTeam(v,D,R){
   const pa=P(a),pb=P(b);
   grp('Shooting');
   row('Points',a.pts,b.pts);
+  row('FG made',a.fgm,b.fgm);row('FG attempts',a.fga,b.fga,null,null,null);
   row('FG%',a.fgm/(a.fga||1),b.fgm/(b.fga||1),()=>pct(a.fgm,a.fga),()=>pct(b.fgm,b.fga));
-  row('3PT%',a.tpm/(a.tpa||1),b.tpm/(b.tpa||1),()=>pct(a.tpm,a.tpa),()=>pct(b.tpm,b.tpa));row('Threes made',a.tpm,b.tpm);
+  row('2PT attempts',a.fga-a.tpa,b.fga-b.tpa,null,null,null);row('3PT attempts',a.tpa,b.tpa,null,null,null);row('Threes made',a.tpm,b.tpm);
+  row('3PT%',a.tpm/(a.tpa||1),b.tpm/(b.tpa||1),()=>pct(a.tpm,a.tpa),()=>pct(b.tpm,b.tpa));
   row('Free throws made',a.ftm,b.ftm);
-  const ts=t=>t.fga+t.fta?t.pts/(2*(t.fga+0.44*t.fta)):0;row('True shooting',ts(a),ts(b),x=>(x*100).toFixed(0)+'%',x=>(x*100).toFixed(0)+'%');row('True shot attempts',a.fga+0.44*a.fta,b.fga+0.44*b.fta,x=>x.toFixed(1),x=>x.toFixed(1),null);
   grp('Where the points came from');
   row('Points in the paint',a.paint,b.paint);row('Second-chance points',a.second,b.second);
   const live=!S.replay&&S.per==='all'&&D.esp[D.focus.id]&&D.esp[D.other.id];
   /* ESPN's turnoverPoints is what a team gave up off its own turnovers, so each side reads the other's number */
   const pa2=live&&D.esp[D.other.id].pot!=null?D.esp[D.other.id].pot:a.offto,pb2=live&&D.esp[D.focus.id].pot!=null?D.esp[D.focus.id].pot:b.offto;row('Points off turnovers',pa2,pb2);
-  if(live&&D.esp[D.focus.id].fb!=null&&D.esp[D.other.id].fb!=null)row('Fast-break points',D.esp[D.focus.id].fb,D.esp[D.other.id].fb);row('Points from threes',a.tpm*3,b.tpm*3);row('Points from free throws',a.ftm,b.ftm);row('Bench points',a.bnPts,b.bnPts);row('Starters points',a.stPts,b.stPts);
+  if(live&&D.esp[D.focus.id].fb!=null&&D.esp[D.other.id].fb!=null)row('Fast-break points',D.esp[D.focus.id].fb,D.esp[D.other.id].fb);row('Bench points',a.bnPts,b.bnPts);row('Starters points',a.stPts,b.stPts);
   grp('Possessions');
   row('Rebounds',a.oreb+a.dreb,b.oreb+b.dreb);row('Offensive rebounds',a.oreb,b.oreb);row('Assists',a.ast,b.ast);row('Turnovers',a.to,b.to,null,null,false);row('Steals',a.stl,b.stl);row('Blocks',a.blk,b.blk);row('Fouls',a.pf,b.pf,null,null,false);
   grp('Efficiency');
   {const sec=a.sec||1;const pc=((pa+pb)/2)/sec*2880;row('Pace (possessions per 48)',pc,pc,x=>a.sec?x.toFixed(1):'–',x=>a.sec?x.toFixed(1):'–',null)}
   row('Possessions (est.)',pa,pb,x=>Math.round(x),x=>Math.round(x),null);
   row('Points per 100 possessions',pa?a.pts/pa*100:0,pb?b.pts/pb*100:0,x=>x.toFixed(0),x=>x.toFixed(0));
+  {const ts=t=>t.fga+t.fta?t.pts/(2*(t.fga+0.44*t.fta)):0;row('True shooting',ts(a),ts(b),x=>(x*100).toFixed(0)+'%',x=>(x*100).toFixed(0)+'%');row('True shot attempts',a.fga+0.44*a.fta,b.fga+0.44*b.fta,x=>x.toFixed(1),x=>x.toFixed(1),null)}
   {const sa=stopPct(R,D.other.id),sb=stopPct(R,D.focus.id);if(sa!=null&&sb!=null)row('Stop %',sa,sb,x=>Math.round(x*100)+'%',x=>Math.round(x*100)+'%')}
   c.appendChild(teamStatsBody(D,ROWS));
   /* projected final: each team's scoring rate so far, applied to the time left in regulation */
