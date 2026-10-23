@@ -2453,7 +2453,7 @@ const perName=p=>p<=4?'Q'+p:(p===5?'OT':'OT'+(p-4));
     if(Lv.lp&&!Lv.fin){const p=el('div','lvlp');p.append(el('b',null,Lv.clock),Lv.lp);c.appendChild(p)}
     const a=el('a','lvgo');a.href='/live.html?g='+Lv.id;a.append(el('span',null,Lv.fin?'Game stats':'Live stats'),el('small',null,'Shots, lineups, on/off →'));c.appendChild(a);
     /* after the buzzer: recap link once RCF posts one */
-    if(Lv.fin){const rc=RC&&RC.items&&RC.items.find(x=>/recap/i.test(x.title)&&x.date&&x.date.slice(0,10)>=g[0]);if(rc){const lk=el('div','gdm-links lvlk');const r=el('a',null,'Recap on RCF →');r.href=rc.link;r.target='_blank';r.rel='noopener';lk.appendChild(r);c.appendChild(lk)}}
+    if(Lv.fin){const rc=RC&&RC.items&&RC.items.find(x=>/recap/i.test(x.title)&&x.date&&x.date.slice(0,10)>=g[0]);if(rc){const lk=el('div','gdm-links lvlk');const r=el('a',null,'RCF Recap →');r.href=rc.link;r.target='_blank';r.rel='noopener';lk.appendChild(r);c.appendChild(lk)}}
     const h=el('div','lvhw');if(!Lv.fin){const tv=tvFor(g[0]),ra=radioFor(g[0]);h.append('Watch ',el('b',null,[tv.nat,tv.loc].filter(Boolean)[0]||'TBA'),' · Listen ',el('b',null,(ra.cavs||'').split(' · ')[0]))}c.appendChild(h);return c}
   function day(g){const t=tipOf(g).getTime(),tv=tvFor(g[0]),ra=radioFor(g[0]);const first=g===SCHEDULE[0];
     const kk=el('span','gdm-live');kk.append(el('i'),'Game day'+(first?' · season opener':''));const c=card('gdm-day',kk,['Preview','/games/'+gslug(g),'games/'+gslug(g)]);
@@ -2505,7 +2505,7 @@ const perName=p=>p<=4?'Q'+p:(p===5?'OT':'OT'+(p-4));
     {const bl=c.querySelector('.gdm-k a');bl.removeAttribute('target');bl.removeAttribute('rel');cavsLive(g[0]).then(L=>{if(L&&L.id)bl.href='/live.html?g='+L.id}).catch(()=>{})}
     const sb=el('div','gdm-sb');sb.append(el('span','tm c','CLE'),el('span','gdm-tl',String(cs)),el('span','gdm-dash'),el('span','gdm-tl o',String(os)),el('span','tm',g[1]),el('span','gdm-wl'+(cs>os?'':' l'),cs>os?'W':'L'));c.appendChild(sb);
     if(top){const [nm,ln]=top.split(': ');const p=PLAYERS.find(x=>x[1]===nm);const t=el('div','gdm-top');if(p){const hs=el('div','gdm-hs');const im=el('img');im.src='https://cdn.nba.com/headshots/nba/latest/260x190/'+p[12]+'.png';im.alt='';im.onerror=()=>im.remove();hs.appendChild(im);t.appendChild(hs)}const tx=el('div');tx.append(el('small',null,'TOP LINE'),el('b',null,nm),el('div','gdm-ln',(ln||'').toUpperCase().replace(/, /g,' · ')));t.appendChild(tx);c.appendChild(t)}
-    const lk=el('div','gdm-links');const rc=RC&&RC.items&&RC.items.find(x=>/recap/i.test(x.title)&&x.date&&x.date.slice(0,10)>=g[0]);if(rc){const a=el('a',null,'Recap on RCF →');a.href=rc.link;a.target='_blank';a.rel='noopener';lk.appendChild(a)}
+    const lk=el('div','gdm-links');const rc=RC&&RC.items&&RC.items.find(x=>/recap/i.test(x.title)&&x.date&&x.date.slice(0,10)>=g[0]);if(rc){const a=el('a',null,'RCF Recap →');a.href=rc.link;a.target='_blank';a.rel='noopener';lk.appendChild(a)}
     if(lk.childNodes.length)c.appendChild(lk);box.appendChild(c);if(rec)rec.hidden=false}
   function render(){clearInterval(tick);clearInterval(lvt);if(window.cdbInjBack)window.cdbInjBack();box.textContent='';box.hidden=true;if(rec)rec.hidden=false;const today=etDay(),now=Date.now();
     const isFin=d=>(B[d]&&B[d].status==='final')||!!SCORES[d];
