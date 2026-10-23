@@ -1073,7 +1073,7 @@ const last10=res.slice(-10);let streak='—';if(res.length){const k=res[res.leng
 const sp=document.getElementById('splits');
 const sgn=v=>(v>0?'+':v<0?'\u2212':'')+Math.abs(v).toFixed(1);
 const ord=n=>{const x=['th','st','nd','rd'],v=n%100;return n+(x[(v-20)%10]||x[v]||x[0])};
-const nr=NRTG.CLE?sgn(NRTG.CLE[0])+' ('+ord(1+Object.values(NRTG).filter(v=>v[0]>NRTG.CLE[0]).length)+')':'—';
+const nr=NRTG.CLE?sgn(NRTG.CLE[0]):'—';
 const nr14=L14.CLE?sgn(L14.CLE[0]):'—';
 [['Home',rec('H')],['Road',rec('A')],['Last 10',last10.length?last10.filter(x=>x==='W').length+'–'+last10.filter(x=>x==='L').length:'—'],['Streak',streak],['Net rtg',nr],['Net 2 wk',nr14]]
   .forEach(([k,v])=>{const d=el('div');const dd=el('dd');const m=String(v).match(/^(.*?) (\(.*\))$/);if(m)dd.append(m[1],el('small',null,' '+m[2]));else dd.textContent=v;d.append(el('dt',null,k),dd);sp.appendChild(d)});
@@ -2444,10 +2444,8 @@ const perName=p=>p<=4?'Q'+p:(p===5?'OT':'OT'+(p-4));
     const ld=el('div','lvld');[['CLE',Lv.ld[0]],[g[1],Lv.ld[1]]].forEach(([ab,x])=>{if(!x.pts)return;const dv=el('div');dv.append(el('span',null,ab+' LEADER'),el('b',null,x.pts.n),el('small',null,x.pts.v+' pts'+(x.reb&&x.reb.n===x.pts.n?' · '+x.reb.v+' reb':'')+(x.ast&&x.ast.n===x.pts.n?' · '+x.ast.v+' ast':'')));ld.appendChild(dv)});if(ld.childNodes.length)c.appendChild(ld);
     if(Lv.lp&&!Lv.fin){const p=el('div','lvlp');p.append(el('b',null,Lv.clock),Lv.lp);c.appendChild(p)}
     const a=el('a','lvgo');a.href='/live.html?g='+Lv.id;a.append(el('span',null,Lv.fin?'Game stats':'Live stats'),el('small',null,'Shots, lineups, on/off →'));c.appendChild(a);
-    /* after the buzzer: recap and postgame video links (the newest non-Short Cavs video posted after tip-off, else the Media page) */
-    if(Lv.fin){const lk=el('div','gdm-links lvlk');const rc=RC&&RC.items&&RC.items.find(x=>/recap/i.test(x.title)&&x.date&&x.date.slice(0,10)>=g[0]);if(rc){const r=el('a',null,'Recap on RCF →');r.href=rc.link;r.target='_blank';r.rel='noopener';lk.appendChild(r)}
-      const v=el('a',null,'Postgame video →');v.href='/media';v.dataset.go='media';lk.appendChild(v);c.appendChild(lk);
-      fetch('/videos.json',{cache:'no-cache'}).then(r=>r.ok?r.json():[]).then(V=>{const t0=tipOf(g).getTime();const pv=(V||[]).filter(x=>Date.parse(x.published)>t0&&!/#shorts/i.test(x.title)).sort((a,b)=>Date.parse(b.published)-Date.parse(a.published))[0];if(pv){v.href='https://www.youtube.com/watch?v='+pv.id;v.target='_blank';v.rel='noopener';delete v.dataset.go;v.title=pv.title}}).catch(()=>{})}
+    /* after the buzzer: recap link once RCF posts one */
+    if(Lv.fin){const rc=RC&&RC.items&&RC.items.find(x=>/recap/i.test(x.title)&&x.date&&x.date.slice(0,10)>=g[0]);if(rc){const lk=el('div','gdm-links lvlk');const r=el('a',null,'Recap on RCF →');r.href=rc.link;r.target='_blank';r.rel='noopener';lk.appendChild(r);c.appendChild(lk)}}
     const h=el('div','lvhw');if(!Lv.fin){const tv=tvFor(g[0]),ra=radioFor(g[0]);h.append('Watch ',el('b',null,[tv.nat,tv.loc].filter(Boolean)[0]||'TBA'),' · Listen ',el('b',null,(ra.cavs||'').split(' · ')[0]))}c.appendChild(h);return c}
   function day(g){const t=tipOf(g).getTime(),tv=tvFor(g[0]),ra=radioFor(g[0]);const first=g===SCHEDULE[0];
     const kk=el('span','gdm-live');kk.append(el('i'),'Game day'+(first?' · season opener':''));const c=card('gdm-day',kk,['Preview','/games/'+gslug(g),'games/'+gslug(g)]);
@@ -2498,7 +2496,7 @@ const perName=p=>p<=4?'Q'+p:(p===5?'OT':'OT'+(p-4));
     const sb=el('div','gdm-sb');sb.append(el('span','tm c','CLE'),el('span','gdm-tl',String(cs)),el('span','gdm-dash'),el('span','gdm-tl o',String(os)),el('span','tm',g[1]),el('span','gdm-wl'+(cs>os?'':' l'),cs>os?'W':'L'));c.appendChild(sb);
     if(top){const [nm,ln]=top.split(': ');const p=PLAYERS.find(x=>x[1]===nm);const t=el('div','gdm-top');if(p){const hs=el('div','gdm-hs');const im=el('img');im.src='https://cdn.nba.com/headshots/nba/latest/260x190/'+p[12]+'.png';im.alt='';im.onerror=()=>im.remove();hs.appendChild(im);t.appendChild(hs)}const tx=el('div');tx.append(el('small',null,'TOP LINE'),el('b',null,nm),el('div','gdm-ln',(ln||'').toUpperCase().replace(/, /g,' · ')));t.appendChild(tx);c.appendChild(t)}
     const lk=el('div','gdm-links');const rc=RC&&RC.items&&RC.items.find(x=>/recap/i.test(x.title)&&x.date&&x.date.slice(0,10)>=g[0]);if(rc){const a=el('a',null,'Recap on RCF →');a.href=rc.link;a.target='_blank';a.rel='noopener';lk.appendChild(a)}
-    const v=el('a',null,'Postgame video →');v.href='/media';v.dataset.go='media';lk.appendChild(v);c.appendChild(lk);box.appendChild(c);if(rec)rec.hidden=false}
+    if(lk.childNodes.length)c.appendChild(lk);box.appendChild(c);if(rec)rec.hidden=false}
   function render(){clearInterval(tick);clearInterval(lvt);if(window.cdbInjBack)window.cdbInjBack();box.textContent='';box.hidden=true;if(rec)rec.hidden=false;const today=etDay(),now=Date.now();
     const isFin=d=>(B[d]&&B[d].status==='final')||!!SCORES[d];
     if(PV==='day'){const g=SCHEDULE.find(x=>tipOf(x).getTime()>now)||SCHEDULE[0];day(g);box.hidden=false;return}
