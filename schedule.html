@@ -31,7 +31,7 @@
 <link rel="preload" href="/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/geist-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/saira-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/a/app.8877ac4951.css"><link rel="preload" href="/a/app.7eb44c62ac.js" as="script">
+<link rel="stylesheet" href="/a/app.8877ac4951.css"><link rel="preload" href="/a/app.682de018a6.js" as="script">
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
 @media (max-width:720px){.side>.o-inj{order:3}.side>.o-otd,.o-otd{order:99}}
@@ -54,6 +54,9 @@
 .ppx-ar{display:grid;grid-template-columns:72px 1fr 22px;gap:6px;align-items:center;font-size:0.8125rem;padding:2px 0}.ppx-ar .b{height:8px;background:var(--line2)}.ppx-ar .b i{display:block;height:100%;background:var(--wine)}.ppx-ar b{text-align:right;font-family:var(--mono)}
 .ppx-segs{margin-bottom:10px}.ppx-more{margin:12px 0 0;font-size:0.8125rem}.ppx-more a{color:var(--wine-ink);font-weight:700}
 @media (max-width:760px){.ppx-spg{grid-template-columns:1fr}}
+/* Oct 23: RCF recap link sits right on the final card; phones drop the Standings and Schedule links on home (the tab bar has Schedule) */
+.gdm-links{justify-content:flex-end}
+@media (max-width:600px){.home-std,#next-h-row a[data-go="schedule"]{display:none!important}}
 </style>
 <script>/* OneSignal web push for alerts: loads only on the live site, never prompts on its own */
 /* OneSignal paused with game alerts (Oct 19): the SDK isn't loaded, so no subscribe prompts appear. Set PUSH_SDK to true when alerts go live. */var PUSH_SDK=false;if(PUSH_SDK&&location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async function(OneSignal){await OneSignal.init({appId:"3db75ca9-d797-40c7-8c53-c0711b41e956",serviceWorkerPath:"sw.js",serviceWorkerParam:{scope:"/"},notifyButton:{enable:false},promptOptions:{slidedown:{prompts:[]}}})});const s=document.createElement('script');s.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';s.defer=true;document.head.appendChild(s)}</script>
@@ -417,7 +420,7 @@
   <button type="button" class="thm2" id="thm2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Dark mode</span></button></div>
 </div></footer>
 
-<script src="/a/app.7eb44c62ac.js"></script>
+<script src="/a/app.682de018a6.js"></script>
 
 <script>
 (function(){const R=document.documentElement,B=document.getElementById('thm'),T=document.getElementById('btt'),F=document.getElementById('fb');
