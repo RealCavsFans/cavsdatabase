@@ -680,17 +680,17 @@ const pmCls=v=>'pm '+(v>0?'p':v<0?'n':'');
 function possGroups(R,tid){const out=[];R.PL.filter(q=>q.team===tid).forEach(q=>{if(q.how==='oreb'&&out.length)out[out.length-1].push(q);else out.push([q])});return out}
 function stopPct(R,tid){const g=possGroups(R,tid);return g.length?g.filter(x=>x.reduce((a,q)=>a+q.pts,0)===0).length/g.length:null}
 const isTrans=q=>(q.how==='stl'||q.how==='dreb'||q.how==='to')&&q.first!=null&&q.first<=7;
-function ctxRows(R,tid){const P=R.PL.filter(q=>q.team===tid);const n=P.length||1;const f=(L,lab)=>({lab,n:L.length,fr:L.length/n,pp:L.length?L.reduce((a,q)=>a+q.pts,0)/L.length:null});
+function ctxRows(R,tid){const P=R.PL.filter(q=>q.team===tid);const n=P.length||1;const f=(L,lab)=>({lab,n:L.length,pts:L.reduce((a,q)=>a+q.pts,0),fr:L.length/n,pp:L.length?L.reduce((a,q)=>a+q.pts,0)/L.length:null});
   return [f(P.filter(q=>q.how!=='oreb'&&!isTrans(q)),'Halfcourt'),f(P.filter(isTrans),'All transition'),f(P.filter(q=>isTrans(q)&&q.how==='stl'),'Off steals'),f(P.filter(q=>isTrans(q)&&q.how==='dreb'),'Off live rebounds'),f(P.filter(q=>q.how==='oreb'),'Putbacks / 2nd chances')]}
 function contextCard(D,R){
-  const c=el('div','card sec');head(c,'How possessions started',perLabel(S.per)+' · how many, and points per possession');
+  const c=el('div','card sec');head(c,'How possessions started',perLabel(S.per)+' · how many, total points and points per possession');
   const L=[['stl','After a steal'],['dreb','After a defensive rebound'],['to','After a dead-ball turnover'],['made','After an opponent score'],['oreb','Second chances']];
   const cell=(x,y,t)=>{const td=el('td',null,x==null?'–':x.toFixed(2));if(x!=null&&y!=null&&x>y){td.style.fontWeight='800';td.style.color=t.c}return td};
-  const tb=el('table','zt hps');tb.innerHTML=`<tr><th></th><th>${esc(D.focus.abbr)}</th><th>Pts per</th><th>${esc(D.other.abbr)}</th><th>Pts per</th></tr>`;
-  L.forEach(([k,l])=>{const a=R.pc[D.focus.id][k],b=R.pc[D.other.id][k];const pa=a.n?a.pts/a.n:null,pb=b.n?b.pts/b.n:null;const tr=el('tr');tr.append(el('td',null,l),el('td',null,String(a.n)),cell(pa,pb,D.focus),el('td',null,String(b.n)),cell(pb,pa,D.other));tb.appendChild(tr)});
+  const tb=el('table','zt hps');tb.innerHTML=`<tr><th></th><th>${esc(D.focus.abbr)}</th><th>Pts</th><th>Per</th><th>${esc(D.other.abbr)}</th><th>Pts</th><th>Per</th></tr>`;
+  L.forEach(([k,l])=>{const a=R.pc[D.focus.id][k],b=R.pc[D.other.id][k];const pa=a.n?a.pts/a.n:null,pb=b.n?b.pts/b.n:null;const tr=el('tr');tr.append(el('td',null,l),el('td',null,String(a.n)),el('td',null,String(a.pts)),cell(pa,pb,D.focus),el('td',null,String(b.n)),el('td',null,String(b.pts)),cell(pb,pa,D.other));tb.appendChild(tr)});
   const A=ctxRows(R,D.focus.id),B=ctxRows(R,D.other.id);
-  {const h=el('tr','sep');const td=el('td','hgh','Transition or halfcourt');td.colSpan=5;h.appendChild(td);tb.appendChild(h)}
-  [[1,'Transition'],[0,'Halfcourt']].forEach(([i,l])=>{const a=A[i],b=B[i];const tr=el('tr');tr.append(el('td',null,l),el('td',null,String(a.n)),cell(a.pp,b.pp,D.focus),el('td',null,String(b.n)),cell(b.pp,a.pp,D.other));tb.appendChild(tr)});
+  {const h=el('tr','sep');const td=el('td','hgh','Transition or halfcourt');td.colSpan=7;h.appendChild(td);tb.appendChild(h)}
+  [[1,'Transition'],[0,'Halfcourt']].forEach(([i,l])=>{const a=A[i],b=B[i];const tr=el('tr');tr.append(el('td',null,l),el('td',null,String(a.n)),el('td',null,String(a.pts)),cell(a.pp,b.pp,D.focus),el('td',null,String(b.n)),el('td',null,String(b.pts)),cell(b.pp,a.pp,D.other));tb.appendChild(tr)});
   const w=el('div','tw');w.appendChild(tb);c.appendChild(w);
   c.appendChild(el('p','note','Counted from rebounds, turnovers and made baskets. Transition = a shot, foul or turnover within 7 seconds of a steal, dead-ball turnover or defensive rebound. Second chances count each offensive rebound.'));return c;
 }
