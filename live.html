@@ -450,6 +450,9 @@ p.note{font-size:.6875rem!important;line-height:1.35!important;margin-top:6px!im
 
 /* section image button */
 .card.xh{position:relative}.card.capmode .swh{display:none!important}.card.capmode *{overflow:visible!important;max-height:none!important;-webkit-mask-image:none!important;mask-image:none!important}.secx{position:absolute;top:10px;right:10px;width:30px;height:30px;padding:6px;border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer;opacity:.75}.secx:hover,.secx:focus-visible{opacity:1;color:#860038;border-color:#860038}.secx svg{width:16px;height:16px;display:block}.secx:disabled{opacity:.3}.card.xh>h2{padding-right:40px}.shtoast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,20px);background:#101419;color:#fff;font:600 0.8125rem var(--sans);padding:8px 14px;border-radius:999px;opacity:0;pointer-events:none;transition:.2s;z-index:99}.shtoast.on{opacity:1;transform:translate(-50%,0)}
+
+/* flow chart scrubber box */
+.scrub{position:absolute;z-index:5;pointer-events:none;background:var(--ink,#101419);color:#fff;padding:6px 9px;font:600 0.75rem var(--sans);line-height:1.35;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.25)}.scrub b{display:block;font:700 0.75rem var(--mono);color:#F2B231}.scrub span{display:block}
 </style>
 </head>
 <body>
@@ -734,6 +737,19 @@ function teamStatsBody(D,ROWS){
 /* ---------- Flow: score margin, runs and win probability ---------- */
 
 /* momentum: net points over the trailing 3 minutes at every moment (whole game) */
+/* hover/drag scrubber for the flow charts: a line follows the pointer and a box shows the game clock, the score and the chart's value at that moment */
+function scrub(card,D,R,W,pad,T,val){const svg=card.querySelector('svg[role=img]');if(!svg||!R.lp)return;const NS='http://www.w3.org/2000/svg';
+  const ln=document.createElementNS(NS,'line');ln.setAttribute('y1','4');ln.setAttribute('y2',svg.viewBox.baseVal.height-14);ln.setAttribute('stroke','var(--fg)');ln.setAttribute('stroke-width','1');ln.setAttribute('stroke-dasharray','2 2');ln.style.display='none';svg.appendChild(ln);
+  const tip=el('div','scrub');tip.hidden=true;card.style.position='relative';card.appendChild(tip);svg.style.touchAction='pan-y';svg.style.cursor='crosshair';
+  const P=D.plays.filter(q=>q.t<=R.lp.t),fh=D.focus===D.home;
+  const at=t=>{let lo=0,hi=P.length-1,k=-1;while(lo<=hi){const m=(lo+hi)>>1;if(P[m].t<=t){k=m;lo=m+1}else hi=m-1}return k<0?null:P[k]};
+  const clk=t=>{const p=perAt(Math.min(t,T-1)),r=Math.max(0,plen(p)-(t-pstart(p)));return pname(p)+' '+Math.floor(r/60)+':'+String(Math.round(r%60)).padStart(2,'0')};
+  const move=e=>{const b=svg.getBoundingClientRect();const x=(e.clientX-b.left)/b.width*W;let t=(x-pad)/(W-2*pad)*T;if(t<0||t>R.lp.t+1){hide();return}t=Math.max(0,Math.min(R.lp.t,t));
+    const xx=pad+(W-2*pad)*t/T;ln.setAttribute('x1',xx);ln.setAttribute('x2',xx);ln.style.display='';
+    const q=at(t),fs=q?(fh?q.hs:q.as):0,os=q?(fh?q.as:q.hs):0;tip.innerHTML='';tip.append(el('b',null,clk(t)),el('span',null,D.focus.abbr+' '+fs+' · '+D.other.abbr+' '+os));const v=val(t);if(v)tip.appendChild(el('span',null,v));
+    tip.hidden=false;const cb=card.getBoundingClientRect();const px=b.left-cb.left+xx/W*b.width,py=b.top-cb.top;const tw=tip.offsetWidth;tip.style.left=Math.max(4,Math.min(cb.width-tw-4,px-tw/2))+'px';tip.style.top=Math.max(0,py-tip.offsetHeight-6)+'px'};
+  const hide=()=>{ln.style.display='none';tip.hidden=true};
+  svg.addEventListener('pointermove',move);svg.addEventListener('pointerdown',move);svg.addEventListener('pointerleave',hide)}
 function momentumCard(D,R){const F=D.focus,O=D.other,c=el('div','card sec');head(c,'Momentum','Net points over the last 3 minutes, at every moment of the game');
   if(!R.lp){c.appendChild(el('p','empty','Starts at tip-off.'));return c}
   const T=pstart(R.maxPer)+plen(R.maxPer),W=(innerWidth<600?420:900),H=150,pad=26,X=t=>pad+(W-2*pad)*t/T;const fh=F===D.home;
@@ -744,7 +760,8 @@ function momentumCard(D,R){const F=D.focus,O=D.other,c=el('div','card sec');head
   g+=`<text x="${pad-4}" y="${Y(mx)+4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="var(--mono)">+${mx}</text><text x="${pad-4}" y="${Y(-mx)+4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="var(--mono)">−${mx}</text>`;
   const best=pts.reduce((a,q)=>q[1]>a[1]?q:a,[0,0]),worst=pts.reduce((a,q)=>q[1]<a[1]?q:a,[0,0]);
   c.insertAdjacentHTML('beforeend',`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Momentum"><defs><clipPath id="mmu"><rect width="${W}" height="${H/2}"/></clipPath><clipPath id="mmd"><rect y="${H/2}" width="${W}" height="${H/2}"/></clipPath></defs>${g}<line x1="${pad}" x2="${W-pad}" y1="${H/2}" y2="${H/2}" stroke="var(--fg2)"/><path d="${d}" fill="${F.c}" clip-path="url(#mmu)"/><path d="${d}" fill="${O.c}" opacity=".8" clip-path="url(#mmd)"/></svg>`);
-  const k=el('div','key');k.innerHTML=`<span><i style="background:${F.c}"></i>${esc(F.abbr)} on top</span><span><i style="background:${O.c}"></i>${esc(O.abbr)} on top</span>`+(best[1]>0?`<span>Best ${esc(F.abbr)} stretch +${best[1]} (${pname(perAt(Math.max(0,best[0]-1)))})</span>`:'')+(worst[1]<0?`<span>Best ${esc(O.abbr)} stretch +${-worst[1]} (${pname(perAt(Math.max(0,worst[0]-1)))})</span>`:'');c.appendChild(k);return c}
+  const k=el('div','key');k.innerHTML=`<span><i style="background:${F.c}"></i>${esc(F.abbr)} on top</span><span><i style="background:${O.c}"></i>${esc(O.abbr)} on top</span>`+(best[1]>0?`<span>Best ${esc(F.abbr)} stretch +${best[1]} (${pname(perAt(Math.max(0,best[0]-1)))})</span>`:'')+(worst[1]<0?`<span>Best ${esc(O.abbr)} stretch +${-worst[1]} (${pname(perAt(Math.max(0,worst[0]-1)))})</span>`:'');c.appendChild(k);
+  scrub(c,D,R,W,pad,T,t=>{const m=at(t)-at(Math.max(0,t-180));return 'Last 3 min: '+(m>0?F.abbr+' +'+m:m<0?O.abbr+' +'+(-m):'even')});return c}
 /* lead tracker: time each team led, time tied, lead changes, longest stretch in front */
 function leadCard(D,R){const F=D.focus,O=D.other,c=el('div','card sec');head(c,'Who led, and for how long','Whole game');
   if(!R.lp){c.appendChild(el('p','empty','Starts at tip-off.'));return c}
@@ -764,6 +781,7 @@ function vFlow(v,D,R){
   let g='';for(let p=1;p<=R.maxPer;p++){const x0=X(pstart(p)),x1=X(pstart(p)+plen(p));if(S.per!=='all'&&inPer(S.per,p))g+=`<rect x="${x0}" y="6" width="${x1-x0}" height="${H-22}" fill="#F2B231" opacity=".13"/>`;g+=`<line x1="${x0}" x2="${x0}" y1="6" y2="${H-16}" stroke="var(--line)"/><text x="${(x0+x1)/2}" y="${H-3}" text-anchor="middle" font-size="10" fill="var(--muted)" font-family="var(--mono)">${pname(p)}</text>`}
   g+=`<line x1="${pad}" x2="${W-pad}" y1="${H/2}" y2="${H/2}" stroke="var(--fg2)"/><text x="${pad-4}" y="${Y(mx)+4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="var(--mono)">+${mx}</text><text x="${pad-4}" y="${Y(-mx)+4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="var(--mono)">−${mx}</text>`;
   f.insertAdjacentHTML('beforeend',`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Score margin"><defs><clipPath id="up"><rect width="${W}" height="${H/2}"/></clipPath><clipPath id="dn"><rect y="${H/2}" width="${W}" height="${H/2}"/></clipPath></defs>${g}<path d="${d} L${X(eT)},${H/2} Z" fill="${D.focus.c}" opacity=".85" clip-path="url(#up)"/><path d="${d} L${X(eT)},${H/2} Z" fill="${D.other.c}" opacity=".75" clip-path="url(#dn)"/></svg>`);
+  scrub(f,D,R,W,pad,T,t=>{let m=0;for(const [tt,mm] of R.margin){if(tt>t)break;m=mm}return m>0?D.focus.abbr+' by '+m:m<0?D.other.abbr+' by '+(-m):'Tied'});
   const k=el('div','key');k.innerHTML=`<span><i style="background:${D.focus.c}"></i>${esc(D.focus.abbr)} ahead</span><span><i style="background:${D.other.c}"></i>${esc(D.other.abbr)} ahead</span><span>Lead changes ${R.lc} · Ties ${R.ties} · Largest lead ${esc(D.focus.abbr)} ${R.lead[D.focus.id]}, ${esc(D.other.abbr)} ${R.lead[D.other.id]}</span>`;f.appendChild(k);
   const rr=R.runs.filter(r=>inPer(S.per,r.start.per)||inPer(S.per,r.end.per));
   f.appendChild(el('h3',null,'Runs of 8–0 or more'));
@@ -997,6 +1015,7 @@ function wpCard(D,R){
   const sw=[];for(let i=1;i<R.wpS.length;i++){const dv=(R.wpS[i][1]-R.wpS[i-1][1])*(fh?1:-1);sw.push([Math.abs(dv),dv,R.wpS[i]])}sw.sort((a,b)=>b[0]-a[0]);const top=sw.slice(0,5);
   top.forEach(([,dv,[t,v]],i)=>{const fv=fh?v:1-v;g+=`<circle cx="${X(t)}" cy="${Y(fv)}" r="7" fill="var(--gold)" stroke="#fff" stroke-width="1.5"/><text x="${X(t)}" y="${Y(fv)+3.5}" text-anchor="middle" font-size="9" font-weight="700" font-family="var(--mono)" fill="var(--ink)">${i+1}</text>`});
   f.insertAdjacentHTML('beforeend',`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(D.focus.abbr)} win probability"><path d="${d}" fill="none" stroke="${D.focus.c}" stroke-width="2.2"/>${g}</svg>`);
+  scrub(f,D,R,W,pad,T,t=>{let v=null;for(const [tt,vv] of R.wpS){if(tt>t)break;v=vv}return v==null?'':D.focus.abbr+' win chance '+Math.round((fh?v:1-v)*100)+'%'});
   const ul=el('ul','sw');top.forEach(([,dv,[t,v,p]],i)=>{const li=el('li');li.append(el('b',null,String(i+1)),el('span',null,p.text),el('small',null,pname(p.per)+' '+p.clock+' · '+D.focus.abbr+' '+(dv>0?'+':'−')+Math.abs(Math.round(dv*100))+' pts'));ul.appendChild(li)});
   f.appendChild(el('h3',null,'Biggest swings for '+D.focus.abbr));f.appendChild(ul);
   f.appendChild(el('p','note','Line = '+D.focus.abbr+'’s chance to win.'));return f;
