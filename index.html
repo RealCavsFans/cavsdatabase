@@ -2253,8 +2253,7 @@ SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
   const pv=r?null:gameUrl(g[0]);const lnk=(t,href,title,cls)=>{const a=el('a',cls,t);a.href=href;a.target='_blank';a.rel='noopener';a.title=title;return a};
   const rtd=el('td','r mono');if(r){const ra=el('a','reslink',r+(SCORES[g[0]]?' '+SCORES[g[0]].replace('-','–'):'')+' →');ra.href='/games/'+gslug(g);ra.dataset.go='games/'+gslug(g);ra.title='Game page: box score and recap';rtd.appendChild(ra)}
   const dtd=el('td','mono'),ttd=el('td','mono dim');dtd.textContent=shortFmt.format(tipOf(g));{const ga=el('a','glink',tipTime(g,tipOf(g)));ga.href='/games/'+gslug(g);ga.dataset.go='games/'+gslug(g);ga.title='Game page';ttd.appendChild(ga)}
-  if(r&&SCORES[g[0]]){const xa=el('span','xact gsave');const b2=el('button');b2.type='button';b2.title='Save final score as an image';b2.setAttribute('aria-label','Save the final score as an image');
-    b2.onclick=async()=>{if(!window.cdbCap)return;const card=gameCard(i),gw=el('div','gwrap');gw.appendChild(card);document.body.appendChild(gw);try{await window.cdbCap('schedule','g-'+g[0],'Final score',[card],b2)}finally{gw.remove()}};xa.appendChild(b2);rtd.appendChild(xa)}
+  /* (share card for a result left out for now) */
   tr.append(dtd,op,ttd,tvc,rac,rtd);if(mtag)tr.appendChild(mtag);
   if(i===ni)tr.classList.add('nextg');tb.appendChild(tr);
   if(i===ni){const pr=el('tr','gprev');const td=el('td');td.colSpan=6;const o=g[1];
@@ -2266,7 +2265,7 @@ SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
     const met=SCHEDULE.slice(0,res.length).map((x,k)=>[x,res[k]]).filter(([x])=>x[1]===o);const mw=met.filter(m=>m[1]==='W').length;
     const left=SCHEDULE.filter(x=>x[1]===o).length;
     const w=el('div','gp');
-    const cur=(TSTATS.CLE&&TSTATS[o]&&TSTATS.CLE[0]+TSTATS.CLE[1]>=5&&TSTATS[o][0]+TSTATS[o][1]>=5),TS=cur?TSTATS:TSTATS_PREV;
+    const cur=(TSTATS.CLE&&TSTATS[o]&&TSTATS.CLE[0]+TSTATS.CLE[1]>=1&&TSTATS[o][0]+TSTATS[o][1]>=1),TS=cur?TSTATS:TSTATS_PREV;
     const team=(nm,a)=>{const x=el('div','gp-t');const t=TS[a];x.append(el('b',null,nm),el('span',null,cur?(seed(a)||''):'Last season'));return x};
     const teams=el('div','gp-teams');teams.append(team('Cavs','CLE'),el('i','gp-vs',g[2]==='H'?'vs':'at'),team(TEAMS[o],o));
     /* tale of the tape: each stat with its league rank, better side in bold */
@@ -2459,7 +2458,7 @@ const perName=p=>p<=4?'Q'+p:(p===5?'OT':'OT'+(p-4));
     const how=el('div','gdm-how');const w1=el('div');w1.append(el('span',null,'WATCH'),el('b',null,[tv.nat,tv.loc].filter(Boolean)[0]||'TBA'));const w2=el('div');w2.append(el('span',null,'LISTEN'),el('b',null,(ra.cavs||'').split(' · ')[0]));how.append(w1,w2);c.appendChild(how);
     {const u=el('div','gdm-upd');u.appendChild(el('i'));const ut=el('span');u.appendChild(ut);const ago=()=>{const m=Math.floor((Date.now()-LAST)/6e4);ut.textContent='Live data · updated '+(m<1?'just now':m+' min ago')};ago();clearInterval(utk);utk=setInterval(ago,30000);c.appendChild(u)}
     box.appendChild(c);
-    const cur=TSTATS.CLE&&TSTATS[g[1]]&&TSTATS.CLE[0]+TSTATS.CLE[1]>=5,TS=cur?TSTATS:TSTATS_PREV;
+    const cur=TSTATS.CLE&&TSTATS[g[1]]&&TSTATS.CLE[0]+TSTATS.CLE[1]>=1,TS=cur?TSTATS:TSTATS_PREV;
     const row=el('div','gdm-row');
     if(TS.CLE&&TS[g[1]]){const c2=card('','Tale of the tape');const tp=el('div','gdm-tape');
       const a=TS.CLE,b=TS[g[1]],net=x=>x[4]-x[5],f1=v=>(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1);
@@ -2810,7 +2809,7 @@ window.renderGame=function(sl){const i=SCHEDULE.findIndex(g=>gslug(g)===sl);if(i
         if(full){const sum=k=>b.box.reduce((a,r)=>a+(+r[k]||0),0);const ma=k=>{let m=0,a=0;b.box.forEach(r=>{const x=String(r[k]||'').split('-');m+=+x[0]||0;a+=+x[1]||0});return m+'-'+a};const tr=el('tr','tot');[ 'Team', '', String(sum(2)), String(sum(3)), String(sum(4)), String(sum(10)), String(sum(11)), ma(7), ma(8), ma(9), String(sum(12)), '' ].forEach(v=>tr.appendChild(el('td',null,v)));bd.appendChild(tr)}
         tb.appendChild(bd);const wrp=el('div','tablebox');wrp.appendChild(tb);bx.appendChild(wrp);bx.hidden=false}})}
   /* tale of the tape (before) */
-  if(!fin){const cur=TSTATS.CLE&&TSTATS[o]&&TSTATS.CLE[0]+TSTATS.CLE[1]>=5&&TSTATS[o][0]+TSTATS[o][1]>=5,TS=cur?TSTATS:TSTATS_PREV;
+  if(!fin){const cur=TSTATS.CLE&&TSTATS[o]&&TSTATS.CLE[0]+TSTATS.CLE[1]>=1&&TSTATS[o][0]+TSTATS[o][1]>=1,TS=cur?TSTATS:TSTATS_PREV;
     if(TS.CLE&&TS[o]){const c=card('Tale of the tape',(cur?'2026–27':'2025–26')+' · league rank');const tp=el('div','gp-tape');const all=Object.values(TS);
       const ROWS=[['Record',t=>t[0]/Math.max(1,t[0]+t[1]),1,t=>t[0]+'–'+t[1]],['Off rating',t=>t[4],1,t=>t[4].toFixed(1)],['Def rating',t=>t[5],0,t=>t[5].toFixed(1)],['Net rating',t=>t[4]-t[5],1,t=>{const x=t[4]-t[5];return (x>0?'+':x<0?'−':'')+Math.abs(x).toFixed(1)}],['Pace',t=>t[6],1,t=>t[6].toFixed(1)]];
       ROWS.forEach(([lab,f,hi,fm])=>{const a=TS.CLE,b=TS[o];const rk=t=>1+all.filter(u=>hi?f(u)>f(t):f(u)<f(t)).length;const better=lab==='Pace'?0:(hi?f(a)>f(b):f(a)<f(b))?1:(hi?f(b)>f(a):f(b)<f(a))?2:0;
