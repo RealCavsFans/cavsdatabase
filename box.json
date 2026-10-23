@@ -22,37 +22,7 @@
   "status": "final",
   "score": "106-114",
   "result": "L",
-  "refs": [
-   [
-    "Crew chief",
-    "Curtis Blair",
-    "74"
-   ],
-   [
-    "Referee",
-    "Aaron Smith",
-    "51"
-   ],
-   [
-    "Umpire",
-    "CJ Washington",
-    "12"
-   ]
-  ],
-  "qs": {
-   "cle": [
-    35,
-    34,
-    21,
-    16
-   ],
-   "opp": [
-    18,
-    27,
-    37,
-    32
-   ]
-  },
+  "top": "Donovan Mitchell: 32 pts, 10 reb, 3 ast",
   "out": [],
   "box": [
    [
@@ -206,7 +176,37 @@
     "0"
    ]
   ],
-  "top": "Donovan Mitchell: 32 pts, 10 reb, 3 ast"
+  "qs": {
+   "cle": [
+    35,
+    34,
+    21,
+    16
+   ],
+   "opp": [
+    18,
+    27,
+    37,
+    32
+   ]
+  },
+  "refs": [
+   [
+    "Crew chief",
+    "Curtis Blair",
+    "74"
+   ],
+   [
+    "Referee",
+    "Aaron Smith",
+    "51"
+   ],
+   [
+    "Umpire",
+    "CJ Washington",
+    "12"
+   ]
+  ]
  },
  "2026-10-24": {
   "url": "https://www.nba.com/game/bkn-vs-cle-0022600105/box-score",
