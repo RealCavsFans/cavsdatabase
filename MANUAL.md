@@ -70,3 +70,5 @@ Every job that reads ESPN keeps the last good data when a fetch fails, so pages 
 ## Health check
 
 A daily check (`scripts/health.mjs`) flags anything stale: no box scores after a game, team stats behind, or a failing job. It runs twice: as a Claude scheduled task, and as a free GitHub job (`.github/workflows/health.yml`) that opens a GitHub issue called "Site health" when something is wrong. GitHub emails you about the issue, so the warning reaches you even if Claude is down. The issue closes itself once things are healthy again.
+
+**Injury "Typical return" fallback.** When no peer-reviewed NBA study fits, the injury dropdown and share card use Hashtag Basketball's NBA injury log (hashtagbasketball.com/nba-injury) by injury type, labeled "not a peer-reviewed study". The type is matched from the injury text (e.g. "Ankle (sprain)" → sprained ankle); set `hb:'<type>'` in INJ_CTX to force one.
