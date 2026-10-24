@@ -4056,7 +4056,7 @@ const BUILT=['home','roster','cap','assets','moves','resources','schedule','staf
 /* page titles and descriptions per route (search engines and browser tabs) */
 const ROUTE_ALIAS={video:'media',rcf:'media/rcf'}; /* media/rcf now opens Media scrolled to the articles */
 function routeOf(){let r=location.pathname.replace(/^\/+|\/+$/g,'').toLowerCase();if(/index\.html$/.test(r)||location.protocol==='file:')r='';const h=location.hash.slice(1);if(!r&&h&&(SECTIONS.some(x=>x[0]===h)||ROUTE_ALIAS[h]))r=h;const AL={video:'media',rcf:'media/rcf'};return AL[r]||r||'home'}
-function show(route){
+function show(route){setTimeout(()=>window.cdbBarsReset&&cdbBarsReset(),0);
   if(window.cdbNlView)window.cdbNlView();
   if(window.cdbAlView)window.cdbAlView();
   if(window.cdbAttachX)setTimeout(window.cdbAttachX,60);
@@ -4638,6 +4638,16 @@ const INTRO_V='tait';
  const run=()=>{attach();setTimeout(attach,600)};run();setTimeout(jump,450);
  addEventListener('popstate',()=>setTimeout(attach,50));addEventListener('hashchange',()=>setTimeout(jump,50));
 })();
+</script>
+<script>/* stat bars grow in: any bar sized by an inline % width (or height) fills from zero the first time it scrolls into view on each page; off for reduced motion */
+(function(){if(!('IntersectionObserver' in window)||!Element.prototype.animate)return;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  let seen=new WeakSet();const io=new IntersectionObserver(es=>{es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const t=e.target,v=t.dataset.bgv;
+    t.animate(v?[{transform:'scaleY(0)'},{transform:'scaleY(1)'}]:[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{duration:750,easing:'cubic-bezier(.2,.75,.25,1)',delay:Math.min(240,(+t.dataset.bgi||0)*40),fill:'backwards'})})},{threshold:.2});
+  const scan=()=>{let k=0;document.querySelectorAll('[style*="width"],[style*="height"]').forEach(x=>{if(seen.has(x))return;const s=x.style;const w=/%$/.test(s.width),h=/%$/.test(s.height)&&!w;if(!w&&!h)return;
+    if(x.closest('[hidden],.cap-stage,.shot-stage')||x.textContent.trim().length>6)return;const r=x.getBoundingClientRect();if(!r.width&&!r.height)return;if(w&&r.height>28)return;if(h&&r.width>60)return;
+    seen.add(x);x.style.transformOrigin=h?'bottom':'left';if(h)x.dataset.bgv=1;x.dataset.bgi=k++%8;io.observe(x)})};
+  let tm=0;const later=()=>{if(tm)return;tm=setTimeout(()=>{tm=0;scan()},120)};new MutationObserver(later).observe(document.body,{childList:true,subtree:true});
+  addEventListener('popstate',()=>{seen=new WeakSet();later()});window.cdbBarsReset=()=>{seen=new WeakSet();later()};later()})();
 </script>
 </body>
 </html>
