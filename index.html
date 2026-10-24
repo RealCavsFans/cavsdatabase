@@ -4327,11 +4327,11 @@ const y0now=s=>s===SEASONS[0];
     K.forEach(([k,lab])=>{const list=(F[k]||[]).map(([n,v])=>[n,P[n]&&cur.includes(n)?now(n)(k):v]);
       cur.forEach(n=>{const v=now(n)(k),pv=prev(n)(k),g=((P[n].cavs||{}).GP||0)+(gp[n]||0);if(!v||!g)return;const others=list.filter(x=>x[0]!==n);
         if(fresh)others.forEach(([o,ov])=>{if(pv<=ov&&v>ov)passed.push({n,o,lab,k})});
-        const above=others.filter(x=>x[1]>=v);if(!above.length)return;const tgt=above.reduce((a,b)=>b[1]<a[1]?b:a);const rank=above.length+1;
-        const need=tgt[1]-v+1,pace=v/g;if(rank>21)return;rows.push({n,lab,rank,tgt:tgt[0],need,games:Math.max(1,Math.ceil(need/pace))})})});
+        const above=others.filter(x=>x[1]>=v);if(!above.length)return;const tgt=above.reduce((a,b)=>b[1]<a[1]?b:a);const rank=others.filter(x=>x[1]>v).length+1,tie=others.some(x=>x[1]===v);
+        const need=tgt[1]-v+1,pace=v/g;if(rank>21)return;rows.push({n,lab,rank,tie,tgt:tgt[0],need,games:Math.max(1,Math.ceil(need/pace))})})});
     rows.sort((a,b)=>a.games-b.games||a.need-b.need);const ul=document.getElementById('chase-l');ul.textContent='';
     passed.slice(0,2).forEach(x=>{const li=el('li','chc-pass');const w=el('div','chc-who');w.append(el('b',null,x.n),el('span',null,x.lab));li.append(w,el('div','chc-n',null));li.lastChild.innerHTML='<b>Passed</b> '+x.o+'<small>in the last game</small>';ul.appendChild(li)});
-    rows.slice(0,3).forEach(x=>{const li=el('li');const w=el('div','chc-who');const a=PP_ON&&onRoster(x.n)?(()=>{const a=el('a',null,x.n);a.href='/players/'+slug(x.n);a.dataset.go='players/'+slug(x.n);return a})():el('b',null,x.n);w.append(a,el('span',null,x.lab+' · '+ord(x.rank)+' all-time'));
+    rows.slice(0,3).forEach(x=>{const li=el('li');const w=el('div','chc-who');const a=PP_ON&&onRoster(x.n)?(()=>{const a=el('a',null,x.n);a.href='/players/'+slug(x.n);a.dataset.go='players/'+slug(x.n);return a})():el('b',null,x.n);w.append(a,el('span',null,x.lab+' · '+(x.tie?'tied for ':'')+ord(x.rank)+' all-time'));
       const r=el('div','chc-n');r.append(el('b',null,x.need.toLocaleString()),' to pass '+x.tgt);r.appendChild(el('small',null,'about '+x.games+(x.games===1?' game':' games')+' at his pace'));li.append(w,r);ul.appendChild(li)});
     if(ul.children.length){box.hidden=false;document.getElementById('chase-sub').textContent=days.length?'Through the last game':'Through '+String(M.through||'').replace('-','–')}
   }).catch(()=>{})})();
