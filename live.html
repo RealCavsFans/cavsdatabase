@@ -700,7 +700,7 @@ const isTrans=q=>(q.how==='stl'||q.how==='dreb'||q.how==='to')&&q.first!=null&&q
 function ctxRows(R,tid){const P=R.PL.filter(q=>q.team===tid);const n=P.length||1;const f=(L,lab)=>({lab,n:L.length,pts:L.reduce((a,q)=>a+q.pts,0),fr:L.length/n,pp:L.length?L.reduce((a,q)=>a+q.pts,0)/L.length:null});
   return [f(P.filter(q=>q.how!=='oreb'&&!isTrans(q)),'Halfcourt'),f(P.filter(isTrans),'All transition'),f(P.filter(q=>isTrans(q)&&q.how==='stl'),'Off steals'),f(P.filter(q=>isTrans(q)&&q.how==='dreb'),'Off live rebounds'),f(P.filter(q=>q.how==='oreb'),'Putbacks / 2nd chances')]}
 function contextCard(D,R){
-  const c=el('div','card sec');head(c,'How possessions started',perLabel(S.per)+' · how many, total points and points per possession');
+  const c=el('div','card sec');head(c,'How possessions started',perLabel(S.per)+' · possessions tracked, total points and points per possession');
   const L=[['stl','After a steal'],['dreb','After a defensive rebound'],['to','After a dead-ball turnover'],['made','After an opponent score'],['oreb','Second chances']];
   const cell=(x,y,t)=>{const td=el('td',null,x==null?'–':x.toFixed(2));if(x!=null&&y!=null&&x>y){td.style.fontWeight='800';td.style.color=t.c}return td};
   const tb=el('table','zt hps');tb.innerHTML=`<tr><th></th><th>${esc(D.focus.abbr)}</th><th>Pts</th><th>Per</th><th>${esc(D.other.abbr)}</th><th>Pts</th><th>Per</th></tr>`;
@@ -709,7 +709,7 @@ function contextCard(D,R){
   {const h=el('tr','sep');const td=el('td','hgh','Transition or halfcourt');td.colSpan=7;h.appendChild(td);tb.appendChild(h)}
   [[1,'Transition'],[0,'Halfcourt']].forEach(([i,l])=>{const a=A[i],b=B[i];const tr=el('tr');tr.append(el('td',null,l),el('td',null,String(a.n)),el('td',null,String(a.pts)),cell(a.pp,b.pp,D.focus),el('td',null,String(b.n)),el('td',null,String(b.pts)),cell(b.pp,a.pp,D.other));tb.appendChild(tr)});
   const w=el('div','tw');w.appendChild(tb);c.appendChild(w);
-  c.appendChild(el('p','note','Counted from rebounds, turnovers and made baskets. Transition = a shot, foul or turnover within 7 seconds of a steal, dead-ball turnover or defensive rebound. Second chances count each offensive rebound.'));return c;
+  c.appendChild(el('p','note','Counted from rebounds, turnovers and made baskets. Transition = a shot, foul or turnover within 7 seconds of a steal, dead-ball turnover or defensive rebound. Second chances count each offensive rebound. These possessions are counted play by play, so totals can differ by a few from the box score estimate used for pace and ratings.'));return c;
 }
 function oppCard(D,R){
   const c=el('div','card sec');head(c,'Scoring chances',perLabel(S.per)+' · every possession, minus turnovers, plus second chances');
