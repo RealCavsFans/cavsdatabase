@@ -213,7 +213,24 @@
  },
  "2026-10-24": {
   "url": "https://www.nba.com/game/bkn-vs-cle-0022600105/box-score",
-  "status": "scheduled"
+  "status": "scheduled",
+  "refs": [
+   [
+    "Crew chief",
+    "Courtney Kirkland",
+    "61"
+   ],
+   [
+    "Referee",
+    "Eric Dalen",
+    "37"
+   ],
+   [
+    "Umpire",
+    "Suyash Mehta",
+    "47"
+   ]
+  ]
  },
  "2026-10-26": {
   "url": "https://www.nba.com/game/min-vs-cle-0022600120/box-score",
