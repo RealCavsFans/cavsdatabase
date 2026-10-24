@@ -1295,7 +1295,7 @@ INJURIES.forEach(([n,p,inj,st])=>{const li=el('li','ij');const d=document.create
   window.cdbInjBack=()=>{if(sec.parentNode!==home){home.insertBefore(sec,nx&&nx.parentNode===home?nx:null);sec.classList.remove('in-gdm')}}}
 /* games missed this season: Cavs players out of a regular-season game for injury or illness (from each final box score), and the salary paid for those games (2026–27 salary ÷ 82) */
 setTimeout(()=>{fetch('/box.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(B=>{if(!B)return;const reg=new Set(SCHEDULE.map(g=>g[0]));const fin=Object.entries(B).filter(([d,g])=>reg.has(d)&&g.status==='final');if(!fin.length)return;
-  const M={};fin.forEach(([,g])=>(g.out||[]).forEach(n=>{M[n]=(M[n]||0)+1}));
+  const M={};fin.forEach(([,g])=>(g.out||[]).forEach(n=>{if(!TWOWAY.some(t=>t[0]===n))M[n]=(M[n]||0)+1}));  /* two-way players don't count */
   const sal=n=>{const r=ROSTER.find(x=>x[0]===n);if(!r)return 0;const v=r[2][0];return typeof v==='number'?v:Array.isArray(v)?v[0]:0};
   const rows=Object.entries(M).map(([n,g])=>[n,g,sal(n)/82*g]).sort((a,b)=>b[1]-a[1]||b[2]-a[2]);const tg=rows.reduce((a,r)=>a+r[1],0),tc=rows.reduce((a,r)=>a+r[2],0);
   const fm=v=>v>=1e6?'$'+(v/1e6).toFixed(2)+'M':v>=1e3?'$'+Math.round(v/1e3)+'K':v?'$'+Math.round(v):'$0';
@@ -1304,10 +1304,18 @@ setTimeout(()=>{fetch('/box.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null
   /* league rank: games missed to injury by every team (pdata/league-injuries.json, ESPN injury lists); salary of games missed once league salaries are saved (pdata/league-salaries.json) */
   Promise.all(['/pdata/league-injuries.json','/pdata/league-salaries.json'].map(u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null))).then(([LI,LS])=>{const T=LI&&LI.teams;if(!T||!T.CLE)return;const ord2=n=>n+(n%100>=11&&n%100<=13?'th':['th','st','nd','rd'][n%10]||'th');
     const rk=(vals,me)=>{const hi=vals.filter(v=>v>me).length,tie=vals.filter(v=>v===me).length>1;return (tie?'T-':'')+ord2(hi+1)};const tiles=dl.querySelectorAll('.gm-tile');const n=Object.keys(T).length;
-    tiles[0].appendChild(el('small','gm-rk',rk(Object.values(T).map(x=>x.missed),T.CLE.missed)+' most of '+n));
-    if(LS&&LS.teams){const nz=x=>x.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');const lost={};
-      for(const [ab,x] of Object.entries(T)){const S2=LS.teams[ab]||{};const m={};Object.entries(S2).forEach(([nm,v])=>m[nz(nm)]=v);lost[ab]=Object.entries(x.players).reduce((a,[nm,g])=>a+(m[nz(nm)]||0)/82*g,0)}
-      tiles[1].appendChild(el('small','gm-rk',rk(Object.values(lost),lost.CLE)+' most of '+n))}
+    /* with league salaries saved, a team's games and salary count only players on that team's salary sheet: two-way players
+       (no salary shown) and players ESPN lists under the wrong team are left out. Names match exactly, or else by first
+       initial plus a last name at most one letter off (Nic/Nicolas Claxton, Carlson/Carlsen), if only one player fits */
+    const LT=LS&&LS.teams;const games={},lost={};
+    const tk=x=>x.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z\s]/g,'').split(/\s+/).filter(w=>w&&!/^(jr|sr|ii|iii|iv)$/.test(w));
+    const ed1=(a,b)=>{if(a===b)return true;if(Math.abs(a.length-b.length)>1)return false;let i=0;while(i<a.length&&a[i]===b[i])i++;return a.slice(i+1)===b.slice(i+1)||a.slice(i)===b.slice(i+1)||a.slice(i+1)===b.slice(i)};
+    const sv=(S2,nm)=>{const t=tk(nm);if(!t.length)return null;const k=t.join('');const ex=S2.find(s=>s[0].join('')===k);if(ex)return ex[1];
+      const f=S2.filter(([u])=>u.length&&u[0][0]===t[0][0]&&ed1(u[u.length-1],t[t.length-1]));return f.length===1?f[0][1]:null};
+    for(const [ab,x] of Object.entries(T)){if(!LT||!LT[ab]){games[ab]=x.missed;lost[ab]=0;continue}const S2=Object.entries(LT[ab]).map(([nm,v])=>[tk(nm),v]);let g0=0,c0=0;
+      for(const [nm,g] of Object.entries(x.players)){const v=sv(S2,nm);if(v==null)continue;g0+=g;c0+=v/82*g}games[ab]=g0;lost[ab]=c0}
+    tiles[0].appendChild(el('small','gm-rk',rk(Object.values(games),games.CLE)+' most of '+n));
+    if(LT)tiles[1].appendChild(el('small','gm-rk',rk(Object.values(lost),lost.CLE)+' most of '+n));
     w.appendChild(el('p','gm-note','League ranks from ESPN’s daily injury lists'+(LS&&LS.teams?' and Capsheets salaries':'')+'.'))});
 
   if(rows.length){const det=document.createElement('details');det.className='gm-d';const sm=document.createElement('summary');sm.textContent='By player';det.appendChild(sm);const ul=el('ul','gm-l');const gmax=rows[0][1];rows.forEach(([n,g,c])=>{const li=el('li');const nm=el('span','n');nm.append(n);const mb=el('i','mb');mb.style.width=(g/gmax*100)+'%';nm.appendChild(mb);li.append(nm,el('span','g',g+' game'+(g===1?'':'s')),el('b',null,c?fm(c):'—'));ul.appendChild(li)});det.appendChild(ul);w.appendChild(det)}
