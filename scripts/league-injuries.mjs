@@ -69,5 +69,5 @@ const firstSnap = Object.keys(J.snaps).sort()[0];
 J.note = firstSnap ? `Daily injury lists saved from ${firstSnap}; earlier games from each game's ESPN summary.` : 'Games from each game’s ESPN summary.';
 // keep only the last 10 days of raw lists
 for (const k of Object.keys(J.snaps)) if (k < etDay(Date.now() - 10 * 864e5)) delete J.snaps[k];
-fs.writeFileSync(OUT, JSON.stringify(J));
+fs.mkdirSync('pdata', { recursive: true }); fs.writeFileSync(OUT, JSON.stringify(J));
 console.log('games counted', Object.keys(J.games).length, 'teams', Object.keys(T).length, 'CLE', JSON.stringify(T.CLE || {}));
