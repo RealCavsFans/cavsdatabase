@@ -1509,8 +1509,8 @@ function vShots(v,D,R){
 /* ---------- season mode: totals from the game archive ---------- */
 /* ---------- Season tab (season mode): game by game trends, splits, against the league, this season vs last ----------
    Built from the per-game rows in live-archive/<season>/season.json (games[].t / .u team totals, .l5 five-man units).
-   Off until approved: shown with ?seasontab (SEASONTAB_ON). */
-const SEASONTAB_ON=new URLSearchParams(location.search).has('seasontab');
+   On since Oct 24 (SEASONTAB_ON). */
+const SEASONTAB_ON=true;/* live for everyone since Oct 24 */
 const CUR_SEASON='2026-27';
 const sRow=a=>({pts:a[0],fgm:a[1],fga:a[2],tpm:a[3],tpa:a[4],ftm:a[5],fta:a[6],oreb:a[7],toreb:a[8],dreb:a[9],to:a[10],sec:a[11]});
 const sPoss=t=>poss({fga:t.fga,oreb:t.oreb+t.toreb,to:t.to,fta:t.fta});
