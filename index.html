@@ -1070,7 +1070,7 @@ const MPG={"James Harden":33.0,"Mario Hezonja":19.0,"Donovan Mitchell":35.0,"Jar
 const MPG_PREV={"James Harden":34.8,"Thomas Bryant":12.2,"Evan Mobley":31.9,"Sam Merrill":26.5,"Peyton Watson":29.6,"Craig Porter Jr.":17.9,"Jaylon Tyson":26.9,"Tyrese Proctor":10.9,"Jarrett Allen":27.1,"Nae'Qwan Tomlin":15.7,"Donovan Mitchell":33.5,"Riley Minix":6.4,"Tristan Enaruna":9.4};
 /* 'Updated today' / 'Updated yesterday' / 'Updated Oct 16' for data stamps */
 const relDay=d=>{const et=x=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(x);const t=et(new Date()),y=et(new Date(Date.now()-864e5));return d===t?'today':d===y?'yesterday':new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})};
-const SITE_UPDATED='2026-10-23';
+const SITE_UPDATED='2026-10-24';
 /* ===== end daily data ===== */
 
 const COLORS={ATL:'#C8102E',BOS:'#007A33',BKN:'#000000',CHA:'#1D1160',CHI:'#CE1141',CLE:'#860038',DAL:'#00538C',DEN:'#0E2240',DET:'#C8102E',GSW:'#1D428A',HOU:'#CE1141',IND:'#002D62',LAC:'#C8102E',LAL:'#552583',MEM:'#5D76A9',MIA:'#98002E',MIL:'#00471B',MIN:'#0C2340',NOP:'#0C2340',NYK:'#006BB6',OKC:'#007AC1',ORL:'#0077C0',PHI:'#006BB6',PHX:'#1D1160',POR:'#C8102E',SAC:'#5A2D81',SAS:'#000000',TOR:'#CE1141',UTA:'#002B5C',WAS:'#002B5C'};
@@ -1234,8 +1234,8 @@ requestAnimationFrame(()=>{document.getElementById('fill').style.width=pct(TEAM_
  const h=document.querySelector('#apt thead th.cav');if(h)h.insertAdjacentHTML('beforeend','<span class="apt-cav">Cavs</span>')}
 
 /* injuries — status: Out | Doubtful | Questionable | Probable | Game-time decision */
-const INJ_UPDATED='Oct 23';
-const INJURIES=[["Nae'Qwan Tomlin",'PF','Back (stress reaction)','Out'],['Jarrett Allen','C','Right knee (patellar tendinopathy)','Game-time decision'],['Khalifa Diop','C','Knee','Out']];
+const INJ_UPDATED='Oct 24';
+const INJURIES=[["Nae'Qwan Tomlin",'PF','Back (stress reaction)','Out'],['Khalifa Diop','C','Knee','Out']];
 /* injury lists: Out first, then Doubtful, Questionable, Probable, game-time decisions */
 const INJ_RANK=st=>{const x=String(st).toLowerCase();return x.startsWith('out')?0:x.startsWith('doubt')?1:x.startsWith('quest')?2:x.startsWith('prob')?3:4};
 INJURIES.sort((a,b)=>INJ_RANK(a[3])-INJ_RANK(b[3]));
@@ -1248,8 +1248,7 @@ INJURIES.sort((a,b)=>INJ_RANK(a[3])-INJ_RANK(b[3]));
    INJ_TYPICAL[type] = [text, source label, url]: average time missed for that exact diagnosis from a peer-reviewed study of NBA players
    (sample size, average, range, return rate), plus the player's own last return time for it if he had one. No study, no row. */
 const INJ_CTX={
-  'Jarrett Allen':{hist:'https://www.salaryswish.com/injury/players/jarrett-allen',type:'patellar tendinopathy',diag:'Right patellar tendinopathy (tendon below the kneecap)',timeline:'Game-time decision for the opener at Philadelphia (CBS Sports, Oct 21)',prior:'Same knee last season: right knee tendinitis, called severe by the team, kept him out 14 games: 10 straight from Mar 8 to Mar 25, then Mar 30, Apr 5 and the last two regular-season games (Apr 10 and 12). He returned for the playoffs and said in April he expected it to linger. Before 2026 he had no knee listings; earlier absences were finger, rib, ankle and groin.'},
-  'Khalifa Diop':{hist:'https://www.salaryswish.com/injury/players/khalifa-diop',timeline:'Expected to be out until at least Oct 24 (CBS Sports, Oct 21)',prior:'No prior NBA injury listings (he played overseas 2023–26).'},
+  'Khalifa Diop':{hist:'https://www.salaryswish.com/injury/players/khalifa-diop',timeline:'Expected to be out until at least Oct 26 (CBS Sports, Oct 23)',prior:'No prior NBA injury listings (he played overseas 2023–26).'},
   "Nae'Qwan Tomlin":{hist:'https://www.salaryswish.com/injury/players/naeqwan-tomlin',diag:'Stress reaction in his back (an early stage of bone stress, before a fracture)',prior:'No prior back listings found.',timeline:'Expected to be out until at least Nov 16 (Chris Fedor / Plain Dealer, Oct 20; CBS Sports)'}
 };
 const INJ_TYPICAL={ /* diagnosis -> [typical return, source label, url]; see standard above */
