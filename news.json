@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "Cavaliers on SI",
+   "title": "Mario Hezonja Waived Off Donovan Mitchell—Then Explained Why",
+   "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQMmluM0VlUWh2ZWpxOGM4Uy1uT1F3X0xEdFhUTjlvSGxheEZiRXYwMnZ4YU9LZTRBVGxaOWZRTHpMZ3RHb29lS0dDcnNEUVFKS19Sd1ViNzVJZzB6SG4yQmZMYjRGY3VreTZSaGFpYmZxNXQyRmhJTHJOVXpMX2ZSV3VFZWN4TGF0RmJRRTJDMzE5WktxeEdUTjdrWFlJY3J2WU9ybUVaZl9rVi1sUG9XMg?oc=5",
+   "date": "2026-10-24T23:05:30.000Z"
+  },
+  {
    "src": "Hoops Rumors",
    "title": "2026 NBA G League Draft Results",
    "link": "https://www.hoopsrumors.com/2026/10/2026-nba-g-league-draft-results.html",
@@ -163,12 +169,6 @@
    "date": "2026-10-21T21:49:49.000Z"
   },
   {
-   "src": "Cavaliers on SI",
-   "title": "Counting Down the Cavs: Breaking Down the History of Number 1 in Cleveland",
-   "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPaFQ1ZWhfblQyMG1XRnFqY2hnb0tYVzAwUjl1YjIwa0VFMkNwUTRNb2RBajB2S25QQ1NZYzdsTC1XS2FGclUyMmRlQklia2JRZnhKRlhUOE0xb3FvU1JyRkxPTnBPMEM2TlNSU0lTcHdwWFZBa3VYNENseVlHcVJSeDRMMmN1cHJvay1pYzFtdEZ1dlF5R3NOM2Z0WnRKZzBBQm9FNU1GdWVtcmVRNkV2NlgxVlpqVzlYNUs4NHhaR3J0UQ?oc=5",
-   "date": "2026-10-21T18:00:03.000Z"
-  },
-  {
    "src": "Fear The Sword",
    "title": "Cavs rank last in local broadcast accessibility report",
    "link": "https://www.fearthesword.com/cavs-news/53293/cavs-local-tv-cleveland-cavaliers-dazn-nba-league-pass",
@@ -317,12 +317,6 @@
    "title": "Cleveland Cavaliers News, Stats & Schedule",
    "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE1lcjlJdVdqTDk5Q0ROVm1QWGpoaThmTDJLZGxXOXFsSFktakFMUFhyQVdsV2dueGZZSjhwYVk1dnM4OTVEZ01RNDRESXNnWko3ckw0N3QwVlkxY3FjaVE?oc=5",
    "date": "2026-10-15T19:30:33.000Z"
-  },
-  {
-   "src": "Hoops Rumors",
-   "title": "Minor Moves: Spurs, Hawks, Jazz, Cavs, Lakers, Clippers, Nuggets",
-   "link": "https://www.hoopsrumors.com/2026/10/minor-moves-spurs-bezhanishvili-moore-robinson-swider-williams-crowl.html",
-   "date": "2026-10-14T23:02:46.000Z"
   }
  ],
  "podcasts": [
@@ -363,6 +357,13 @@
   }
  ],
  "videos": [
+  {
+   "src": "Locked On Cavs",
+   "title": "CAVS POSTCAST: The Cleveland Cavaliers Play Home Opener vs the Brooklyn Nets",
+   "link": "https://www.youtube.com/watch?v=fGvT05FvyU4",
+   "date": "2026-10-24T22:58:34.000Z",
+   "id": "fGvT05FvyU4"
+  },
   {
    "src": "It's Cavalier Podcast",
    "title": "Mario Hezonja Waived Off Donovan Mitchell—Then Explained Why",
@@ -509,13 +510,6 @@
    "link": "https://www.youtube.com/watch?v=VOoVxF0R8rs",
    "date": "2026-10-19T11:15:09.000Z",
    "id": "VOoVxF0R8rs"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "REACTION: Evan Mobley And Peyton Watson STAND OUT In Cleveland Cavaliers Wine & Gold Scrimmage!",
-   "link": "https://www.youtube.com/watch?v=e9Mfaj-TUAU",
-   "date": "2026-10-17T20:00:07.000Z",
-   "id": "e9Mfaj-TUAU"
   },
   {
    "src": "Fear The Fro",
