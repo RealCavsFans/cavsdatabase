@@ -30,7 +30,7 @@ if (inj && Array.isArray(inj.injuries)) {
     const ab = list[0]?.athlete?.team?.abbreviation || t.abbreviation || t.team?.abbreviation || t.displayName;
     for (const x of list) {
       const nm = x.athlete?.displayName; const ta = x.athlete?.team?.abbreviation || ab; if (!nm || !ta) continue;
-      (snap[ta] = snap[ta] || []).push([nm, x.status || x.type?.description || '']);
+      (snap[ta] = snap[ta] || []).push([nm, x.status || x.type?.description || '', (x.date || '').slice(0, 10)]);
     }
   }
   if (Object.keys(snap).length) { J.snaps[today] = snap; console.log('snapshot', today, Object.keys(snap).length, 'teams'); }
@@ -41,7 +41,8 @@ for (let d = new Date(START + 'T12:00:00Z'); etDay(d) <= today; d = new Date(d.g
   const day = etDay(d);
   const sb = await get(`${ESPN}scoreboard?dates=${day.replace(/-/g, '')}&seasontype=2`); if (!sb) continue;
   for (const e of sb.events || []) {
-    const c = e.competitions?.[0]; if (!c?.status?.type?.completed || J.games[e.id]) continue;
+    const c = e.competitions?.[0]; if (!c?.status?.type?.completed || (J.games[e.id] && J.games[e.id].src === 'list')) continue;
+    if (J.games[e.id] && J.games[e.id].pl) continue;   // backfilled games are re-scored below without refetching
     const teams = c.competitors.map(x => x.team.abbreviation);
     const sum = await get(`${ESPN}summary?event=${e.id}`); if (!sum) continue;
     const played = {};   // team -> names who played
@@ -58,9 +59,17 @@ for (let d = new Date(START + 'T12:00:00Z'); etDay(d) <= today; d = new Date(d.g
       else { const ij = (sum.injuries || []).find(x => x.team?.abbreviation === ab); (ij?.injuries || []).filter(i => /^out$/i.test(i.status || '')).forEach(i => { const nm = i.athlete?.displayName; if (nm && !played[ab]?.has(nm)) o.add(nm); }); }
       out[ab] = [...o];
     }
-    J.games[e.id] = { d: day, t: teams, out, src: snap ? 'list' : 'summary' };
+    J.games[e.id] = { d: day, t: teams, out, src: snap ? 'list' : 'summary', pl: snap ? undefined : Object.fromEntries(teams.map(ab => [ab, [...(played[ab] || [])]])), dn: snap ? undefined : Object.fromEntries(teams.map(ab => [ab, [...(dnp[ab] || [])]])) };
   }
 }
+/* 2b) backfilled games (before we saved lists): add anyone on the earliest saved list as Out whose injury was logged on or before
+   that game day and who didn't play it; the Cavs come from the site's own box scores (box.json), which use our injury report */
+const first = Object.keys(J.snaps).sort()[0]; let BX = {}; try { BX = JSON.parse(fs.readFileSync('box.json', 'utf8')); } catch {}
+for (const g of Object.values(J.games)) { if (g.src !== 'summary' || !g.pl) continue;
+  for (const ab of g.t) { const o = new Set([...(g.dn?.[ab] || []), ...(g.out[ab] || [])]);
+    if (first) (J.snaps[first][ab] || []).filter(([, s, since]) => /^out$/i.test(s) && since && since <= g.d).forEach(([nm]) => { if (!g.pl[ab].includes(nm)) o.add(nm); });
+    if (ab === 'CLE' && BX[g.d]?.out) BX[g.d].out.forEach(nm => o.add(nm));
+    g.out[ab] = [...o]; } }
 /* 3) totals per team */
 const T = {};
 for (const g of Object.values(J.games)) for (const ab of g.t) { const x = T[ab] = T[ab] || { gp: 0, missed: 0, players: {} }; x.gp++; for (const nm of g.out[ab] || []) { x.missed++; x.players[nm] = (x.players[nm] || 0) + 1; } }

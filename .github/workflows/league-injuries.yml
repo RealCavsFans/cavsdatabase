@@ -18,6 +18,7 @@ jobs:
           sparse-checkout: |
             scripts/league-injuries.mjs
             pdata/league-injuries.json
+            box.json
           sparse-checkout-cone-mode: false
       - uses: actions/setup-node@v5
         with:
