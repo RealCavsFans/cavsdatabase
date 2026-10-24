@@ -1,12 +1,6 @@
 {
  "articles": [
   {
-   "src": "cleveland.com",
-   "title": "Donovan Mitchell opens up about therapy, mental growth as new Cavs season begins",
-   "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNenhnQU5XRHBGalBqNng5bWNjLWl0SEZFanZEMlNiZ3BFUzVPdTdlYU9DaHN4RlFURlBRUElvNmh2MkYzR2swZnFSRWkwT1RCelVJUXJNVkc2bjJ0TEhJdHpCQVI3Tm0xUDRIQjk1N2l6dVhXM2V5a3c5WER0STBnTUVNSndtNFVLaV9YUEt4Q3o5bVhVTVc4aXpVQTN4aDZDT3VLZFVqVm1DZW9Ic05ObHRwT2Fpd2NaQUxMT2VGc08?oc=5",
-   "date": "2026-10-24T09:00:00.000Z"
-  },
-  {
    "src": "Fear The Sword",
    "title": "Cavs vs. Nets: How to watch, odds, and injury report",
    "link": "https://www.fearthesword.com/cavs-injury-report/53389/cavs-vs-nets-how-to-watch-odds-and-injury-report",
@@ -104,6 +98,12 @@
   },
   {
    "src": "Cavaliers on SI",
+   "title": "The Cleveland Cavaliers Player I'm Watching Closest Against The Philadelphia 76ers",
+   "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPR0o4eFF5LVlMdkdDdEhCLVpEV1g4LWNVRUpTWmtCbDczcngxSEEtM2NneDF2RVJOMk1yNDFPam1wSG15dkg5MHFZdzNfT1Y3RExveVZiU2MzbnVDaEpTYk1RWGJDQmJucE9hOVcwdlFPUUZ1dU5SMTNHQ1ZBUkllcVVnam1NMVBIR2I4RDNHVTVLRktEcWtvX2ZFNUpBYUw0UFZ1MFB4bzRhRDg3amxQaWYtYzUxNEN4emJ2bWNZZ1pWYk85TXBrTm9lU2dTZw?oc=5",
+   "date": "2026-10-22T16:00:02.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
    "title": "What Cavs' Meleek Thomas Can Learn From Yaxel Lendeborg After Controversial Debut",
    "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOMkR0TlRLR28wS3RiY016YnBsaGlOZllOaDlGV2kyOWQ1eFpUdDhsMzJGUUlZVTFER25La1dMcldQbXVXeTRjSHJaYVBoeGFrSEhTSVFRMm9oMGlVelV1QkUtZ1BGRXpsSHJOMzIwWHFmTE9CYzhPMlVMNDlWR1ZxQzY1WGZwTGNGdjFSVkRON2ZuQVJtUkdjOURzdHdJYkJuRENKNnJGRkF0d2N6ZWZoVnZTM3h4VGVBRkk1NGtPYzlOZEZScnQtbTQ0Yw?oc=5",
    "date": "2026-10-22T12:39:28.000Z"
@@ -131,6 +131,12 @@
    "title": "Cavs' Mitchell: 'I Don't Ever Want To Wear Another Uniform'",
    "link": "https://www.hoopsrumors.com/2026/10/cavs-mitchell-i-dont-ever-want-to-wear-another-uniform.html",
    "date": "2026-10-21T23:07:43.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "Two Reasons Cavs Are Playing With A Little Extra Fuel On Opening Night",
+   "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxOWWY1ODNjZEpQc1E1QjMzMEpmTEpmaTZBcmNRRUdMMEVMYUIwVUo5dDJOSmpBcXVHSU1sR3FiT0FsMkZsbUNNZWhmWHhSZm0wOE8yZnF2ZmhLT215bHcxcFMwaHlvQVdaNUlrNWVtM0lEcXNHbHVjazlLSGloS25wS2psZU0zbkh1d09UQlE1S3hqeGlWSEJObjVhOGpsbVNOTkZ3U1JDTEF1OGUtbWZ3U3NGUkxZT1NGTWdCNFB3?oc=5",
+   "date": "2026-10-21T23:00:00.000Z"
   },
   {
    "src": "Fear The Sword",
@@ -187,6 +193,12 @@
    "date": "2026-10-21T00:07:29.000Z"
   },
   {
+   "src": "Cavaliers on SI",
+   "title": "The Cavs Exercise Fourth-Year Team Option on Promising Winger",
+   "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQdlE3MW85dHItRzcxdmJOWHRuRVZCZ0V2NWF2bW9Yb2w5Z19YSWtzN1VLRkNUYjNGeUNsUzBJbE9sY2FHVWZMd19uclNqcmJXUG5BclN4M3N2MzdEVWtBdTB0M3pJSWZDb3UtVXpGdEpqUjVPRC11cXRnY3lxeVE5RGpPd3J5M0JKUTEzRXFHeGZhNU9IeVRGRHoybXc3eXQ0dG1vUUxSSGFFbTJwTGJTbFZ3?oc=5",
+   "date": "2026-10-20T18:42:08.000Z"
+  },
+  {
    "src": "Hoops Rumors",
    "title": "Cavs Pick Up Jaylon Tyson's Fourth-Year Option",
    "link": "https://www.hoopsrumors.com/2026/10/cavs-pick-up-jaylon-tysons-fourth-year-option.html",
@@ -236,12 +248,6 @@
   },
   {
    "src": "Cavaliers on SI",
-   "title": "Does Craig Porter Jr. Have a Future With Cavs Beyond This Season?",
-   "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOMW81ZjZfZ3ZIZDlleEM3aldaSElpZGhTVEtVLWtBeEZSTWFwVmtsUE13UUdKOGszOXF3LXk4RjRIWDhhbnB5NjhvWlE5S2p3U3dtSmNFUlJYckZSM3NVdktIU2FqVExRQktrZzI0UFEya250Vk5WdDBBS0M5ZmdBb2gyVDZOSlMzakhXOEVxbXI5VzJfWGd1U1oyZGhVeEc1OHQ5eUZCMDlxYVVOMVZUbVlmT0s?oc=5",
-   "date": "2026-10-20T00:00:00.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
    "title": "Could Meleek Thomas Earn Meaningful Minutes as a Rookie?",
    "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNLXFZcTNtSUQtYWlYdDdHVUFqN19EZVdRX0JBSjVZaEp6YnM4eVBCQ2xualpRaTNMbDZFeFlvVlRTTVVsajAtZVdCT25yOHBCN09VNktCczN0S1BWR18yeV90QXpuSHR0SnpmZjJnUThoQ3ZkREE5Q1BKejFQN2R4Wms1eTZ6ZTFVV0VrWC1QaWhvMXRBVFM3UmQ0aGxURE5TX3FkZGVSQjZpZw?oc=5",
    "date": "2026-10-19T22:00:00.000Z"
@@ -253,6 +259,12 @@
    "date": "2026-10-19T21:00:02.000Z"
   },
   {
+   "src": "Cavaliers on SI",
+   "title": "3 Important Things to Watch for In Cavs Opener",
+   "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxPSGhBdVZIYXlRc2Q5OWNTelBTd2E4WGRIMjJ2QjhaSEpqcXBPWldpQW5abzllbmVGUmhRNXNRUERlTVRoUVZyNkhzSmZxUmNmYXdJQlB6WGtQRHNWYTY3d3Z6b0dTZWlnTU9FenZ5YnBWQUlyd3ZQcE40c0t6U3pKNTVqZW9SX0U1Sm1sbm9iWEVTUGJ6eFZkZVBXSHdGZw?oc=5",
+   "date": "2026-10-19T20:15:00.000Z"
+  },
+  {
    "src": "cleveland.com",
    "title": "Cavs open game week with multiple injuries to monitor",
    "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxOU0ZFT1kyLUVweGpqUUh2OUt1SUNXNGc1LVROOVVxRTR3Y3l3d3hTQ0hVeXp1dkJWSXlINlJkSm1WbzVTTml3aDdDOGQycHB2YXdvRUh5VktYMUNfdGJERVNub0J1bGxFZ2xsY0tlYU51MlpVTjlnX3RSdTFYOUQ4bWxibEk2cmFhYjlVaUNTZVNvZ1drU1RuS0FPeG9xdw?oc=5",
@@ -260,9 +272,9 @@
   },
   {
    "src": "Cavaliers on SI",
-   "title": "Counting Down the Cavs: Breaking Down the Number 3 in Cleveland's History",
-   "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQTlhRTzIzd3JFMXJEdU1Xel9vUVUtQnVVUnZWOXJPZTc2WW5OeHU1NloyM1JRVzVrS0VDcVlkMzJ5VmRIQVR6NllLeXh5MEF6cnk5aUtacWVxOVFMOTNuUUplb0JZMWFpemIwX2ttQ2RDOC1NMHVtMUhvZVA2ZHdadHlUVzQ4ZW54cmVKSkV6X2xmX0FuMFM5RG0yeGpMRXBqcmlhYUFNWm82Y29mWG11WTA2U01zZUN1QTJBTzE4bEs?oc=5",
-   "date": "2026-10-19T18:00:00.000Z"
+   "title": "Cleveland Cavaliers Jersey Schedule: Every Uniform They'll Wear This Season",
+   "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPNzh4Q1J4VGczLW45YmlUanN6VUJ1Vkh1dThxeW5EY2RhXzJ4VFBYdkdtNDY1a1l4RHlDNTlYTUtmcTNJdm5pbzRJdW1UTWlPWDNmdGpwYlhGNThhdnJMaWI1UVhEMXhZYk1leVRqZ1R1WUVqQUI5X0Uwa25NbGZiRUtQR2h4ZkZsLU4wcTRXNU9wVDFpbUptczBaWFM3N0xybXcxQVJ5TXhNczdER2FKR3lMY3RVTi1ocWZYOEcwcVcxUHM?oc=5",
+   "date": "2026-10-19T19:30:00.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -271,28 +283,10 @@
    "date": "2026-10-19T03:01:14.000Z"
   },
   {
-   "src": "Cavaliers on SI",
-   "title": "Counting Down the Cavs: Breaking Down the History of Number 4 in Cleveland",
-   "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOYzFQa3NRR2Q2eURfcGotT3o1RUdydGtMd3VlRVo3OVVzM3JtN0t6aHliaS0xRjBjT1RaN0Z0Mm5iVC14WmlvYm50ZnhIUGp3U1JZRDBCUmV1ZWFHNTNXZHFiSWQ0ZUxBUUh6S0dXY01Mc2JlNmprenlOdWdMRnRlc2RyaTBMOGhpVEFSZW90eWpwVVpXbEl4RmROMDFuX2RNd2hZZ2UtVFBsVlN0TWFWSEtJZ0NDS0k2X0VGaTFVWlpKZw?oc=5",
-   "date": "2026-10-18T15:45:30.000Z"
-  },
-  {
    "src": "Hoops Rumors",
    "title": "Cavs, Nuggets, Pistons Waive Exhibit 10 Players",
    "link": "https://www.hoopsrumors.com/2026/10/cavs-nuggets-pistons-waive-exhibit-10-players.html",
    "date": "2026-10-17T22:34:25.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Cavs Coach Kenny Atkinson Shows Off Incredible Three-Point Range",
-   "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPVTlYUWxGX3VvdnA3YUFBOXM3OEdfVXR4bkJJSHZfMlNxQk5jeUtXZGhlSWcyaUR5OTZXdzNZOF9OR0R5aGtMYzlJX0lxdVB3NUl6Ml9TellVRHZBcFFqXy1ZRUd3XzJ2WUxnbE5VSTF1WGlONnh4ejJhOFh4VjdBSldKSGhlaEJEYVFYMFRWakZENlB6ejV4Um5KdHp3M1NHTUZHcmxKOVI0c25CeUF5UVhOVG0wUQ?oc=5",
-   "date": "2026-10-17T21:32:52.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Cleveland Big Man Gives His Personal All-Time Starting Five",
-   "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxONHozVldIMkpCVnVUM19vei1GQjlKMV9rTG1ZTkZXYWJPNzB3RGdaRWV2MElRVGRqSmJwMFhMZXpGcDFWZ2pjemhKb0dGUEhQVURsRTV0RkVfYmNhTkVob2NhcGhydWhBdUNmcnVUU3FZNl9TVHA5WWM4UldhVy1UMzZac04zQWxVTU5qSUQtYmI1cVlXRjVyWVFodXRVQXhSc0FVOVFhc3ZRbVJsVkxr?oc=5",
-   "date": "2026-10-17T16:00:02.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -301,16 +295,22 @@
    "date": "2026-10-17T01:31:38.000Z"
   },
   {
+   "src": "Cavaliers on SI",
+   "title": "One Cavaliers Player Has Who Has Earned More Minutes and One Who Hasn't",
+   "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQdHRSS3RFbFc0d2JpeWRWRldlVmcyZk9tUFkydy1DUmNKcklYc0JRQVlESFhtMVdDdDF3OTRqSjVYT0JMTEZxOWFZNEN2RW5sSUQzeUVBSEF2WVA3VkhsNHdjdzhTcWc1bjc2OWkweDlsYnNfVVJMQXd0TDQtLVRYeHJCeHhVLVlZVlQwaExmWEExRnVybW0wRDJIV1FvZm4yaGY2STVESGR4LTQtazhwMFFRWThMSFpjSWFQZkhCUQ?oc=5",
+   "date": "2026-10-16T19:00:01.000Z"
+  },
+  {
+   "src": "cleveland.com",
+   "title": "Donovan Mitchell fiercely defends Evan Mobley after latest snub",
+   "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPalZFbDROdFFHSTJLV0x1Zks1UXE3MWtEd1RULWRqWGxZVUlobmVHXzdzM0N6WnRRQ0h5TUI2VlNyaWl4WWx1MWxEbHo2M3AwTDBxVkFuVmhuQ0w4VkZiZXcwNEtuLUlzcDJYdFpBTjZ1aDI3dXVpbDBUWXNlUG1IOVJiRnI3MDYxWThGVU44OEdwMHR1NjVzNFFwdU9aYXVMdWNmRUt5bDd1Yk0?oc=5",
+   "date": "2026-10-16T07:00:00.000Z"
+  },
+  {
    "src": "Hoops Rumors",
    "title": "NBA GMs High On Sixers' Offseason Moves, Wembanyama's Impact",
    "link": "https://www.hoopsrumors.com/2026/10/nba-gms-high-on-sixers-offseason-moves-wembanyamas-impact.html",
    "date": "2026-10-15T21:48:05.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Cleveland Cavaliers News, Stats & Schedule",
-   "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE1lcjlJdVdqTDk5Q0ROVm1QWGpoaThmTDJLZGxXOXFsSFktakFMUFhyQVdsV2dueGZZSjhwYVk1dnM4OTVEZ01RNDRESXNnWko3ckw0N3QwVlkxY3FjaVE?oc=5",
-   "date": "2026-10-15T19:30:33.000Z"
   },
   {
    "src": "Hoops Rumors",
