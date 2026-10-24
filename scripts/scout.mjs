@@ -32,13 +32,13 @@ if (!next) { console.log('scout: no upcoming Cavs game'); process.exit(0); }
 const opp = next.competitions[0].competitors.find(c => c.team.id !== '5').team;
 console.log('next game', next.id, etDay(next.date), 'vs', opp.abbreviation);
 
-/* 2) their last 5 finished regular-season games (this season, else last season) */
+/* 2) their last 5 finished regular-season games: this season as soon as they've played once, else last season */
 let ids = [], from = '';
 for (const y of [YR, YR - 1]) {
   const s = await get(`${ESPN}teams/${opp.id}/schedule?season=${y}&seasontype=2`);
   ids = (s?.events || []).filter(done).sort((a, b) => Date.parse(a.date) - Date.parse(b.date)).map(e => e.id);
   from = (y - 1) + '-' + String(y).slice(2);
-  if (ids.length >= 3) break;
+  if (ids.length >= 1) break;   // once the season has started, this season's games only (Luka, Oct 23)
 }
 ids = ids.slice(-5);
 const games = [], T = {}, O = {}, P = {}, L5 = {}, Z = C.ZN.map(() => [0, 0]);
