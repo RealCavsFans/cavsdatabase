@@ -4342,9 +4342,12 @@ const y0now=s=>s===SEASONS[0];
   }).catch(()=>{})})();
 {const c=document.getElementById('cap-upd');if(c)c.textContent='Updated '+relDay(SITE_UPDATED)}
 /* real page addresses: /cap, /roster, /media/rcf … Old #links still work and are rewritten to the new address. */
-function go(route){route=ROUTE_ALIAS[route]||route;const path=route==='home'?'/':'/'+route;if(location.protocol!=='file:'&&location.pathname!==path){try{history.pushState({p:route},'',path+location.search)}catch(_){}}show(route)}
+function go(route){route=ROUTE_ALIAS[route]||route;const path=route==='home'?'/':'/'+route;if(location.protocol!=='file:'&&location.pathname!==path){try{history.replaceState(Object.assign({},history.state,{y:scrollY}),'')}catch(_){}try{history.pushState({p:route},'',path+location.search)}catch(_){}}show(route)}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-go]');if(!t||e.metaKey||e.ctrlKey||e.shiftKey)return;e.preventDefault();go(t.dataset.go)});
-window.addEventListener('popstate',()=>show(routeOf()));
+/* back/forward keep your place: each history entry remembers how far down you were; a new page still starts at the top */
+try{history.scrollRestoration='manual'}catch(_){}
+{let tm;addEventListener('scroll',()=>{clearTimeout(tm);tm=setTimeout(()=>{try{history.replaceState(Object.assign({},history.state,{y:scrollY}),'')}catch(_){}},150)},{passive:true})}
+window.addEventListener('popstate',e=>{const y=e.state&&e.state.y;show(routeOf());if(y>0){/* sections fill in as data loads, so try again until the page is tall enough */let n=0;const to=()=>{scrollTo(0,y);if(Math.abs(scrollY-y)>2&&++n<12)setTimeout(to,120)};requestAnimationFrame(to)}});
 window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(SECTIONS.some(x=>x[0]===h)||ROUTE_ALIAS[h])go(ROUTE_ALIAS[h]||h)});
 {const r=routeOf();if(location.protocol!=='file:'&&location.hash&&(SECTIONS.some(x=>x[0]===location.hash.slice(1))||ROUTE_ALIAS[location.hash.slice(1)])){try{history.replaceState({p:r},'',(r==='home'?'/':'/'+r)+location.search)}catch(_){}}show(r)}
 
