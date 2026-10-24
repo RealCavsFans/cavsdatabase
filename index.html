@@ -2435,7 +2435,7 @@ const GALERT_ON=true;
   let card=null;const clear=()=>{if(card)card.remove();card=null;document.body.classList.remove('ga-on')};
   const show=(key,o)=>{clear();card=el('div','galert'+(o.fin?' ga-fin':''));card.setAttribute('role','status');const k=el('div','ga-k');if(o.live)k.appendChild(el('i'));k.append(o.kick);card.appendChild(k);
     const t=el('div','ga-t');if(o.fin)t.appendChild(el('span','ga-sc',o.title));else t.textContent=o.title;card.appendChild(t);if(o.sub)card.appendChild(el('div','ga-s',o.sub));
-    if(o.link){const a=el('a',null,o.link[0]+' →');a.href=o.link[1];if(/^https?:/.test(o.link[1])){a.target='_blank';a.rel='noopener'}else if(o.link[2]){a.dataset.go=o.link[2]}card.appendChild(a)}
+    if(o.link){const a=el('a',null,o.link[0]+' →');a.href=o.link[1];if(/^https?:/.test(o.link[1])){a.target='_blank';a.rel='noopener'}else if(o.link[2]&&o.link[1].includes('#')){const h=o.link[1].split('#')[1];a.onclick=e=>{if(e.metaKey||e.ctrlKey||e.shiftKey)return;e.preventDefault();go(o.link[2]);setTimeout(()=>{if(location.hash==='#'+h)window.dispatchEvent(new HashChangeEvent('hashchange'));else location.hash=h},80)}}else if(o.link[2]){a.dataset.go=o.link[2]}card.appendChild(a)}
     const x=el('button','ga-x','×');x.type='button';x.setAttribute('aria-label','Dismiss');x.onclick=()=>{if(!PREVIEW)hide(key);clear()};card.appendChild(x);document.body.appendChild(card);document.body.classList.add('ga-on')};
   const vs=g=>(g[2]==='H'?'Cavs vs ':'Cavs at ')+TEAMS[g[1]];
   const mins=ms=>{const m=Math.round(ms/6e4);return m>=60?'1 hour':m+' min'};
