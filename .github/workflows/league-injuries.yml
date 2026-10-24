@@ -1,0 +1,38 @@
+name: League games missed to injury
+on:
+  schedule:
+    - cron: '50 10 * * *'   # 6:50 a.m. Eastern: count last night's games
+    - cron: '10 22 * * *'   # 6:10 p.m. Eastern: save the day's injury list before tip-offs
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: league-injuries
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          sparse-checkout: |
+            scripts/league-injuries.mjs
+            pdata/league-injuries.json
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: node scripts/league-injuries.mjs
+      - name: Commit if changed
+        run: |
+          [ -f pdata/league-injuries.json ] || exit 0
+          git config user.name "cavsdatabase-bot"
+          git config user.email "bot@cavsdatabase.com"
+          git add pdata/league-injuries.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "League games missed to injury"
+          for i in 1 2 3; do
+            if git pull --rebase origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true; sleep 20
+          done
+          exit 1
