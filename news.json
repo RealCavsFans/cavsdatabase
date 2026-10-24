@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "Fear The Sword",
+   "title": "Cavs vs. Nets: How to watch, odds, and injury report",
+   "link": "https://www.fearthesword.com/cavs-injury-report/53389/cavs-vs-nets-how-to-watch-odds-and-injury-report",
+   "date": "2026-10-23T23:30:51.000Z"
+  },
+  {
    "src": "Cavaliers on SI",
    "title": "The Player That Played Like the Cavs MVP In the Season Opener Was...",
    "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOaG9aS3BKSnVtQ0V3SGV3b2JJNk9IdEdYdWN2SEZjQk1YRUpRcVhyei1XZjNpX01wZUMzN2UyTlNfcFBSblE4TkdCZFlmb2h2NHVqdG4zXy1RaVpCNXA1VGRfTVlub3JIQ0l4U3YyaGxnRFRmQzg5UXp2XzZlMVJxSjdjbzhtc0J4OXdfNERNTTBvQkFwaEJNVXExWTlaXzRPY3BkUjkxY2swQWMzeWczQVFlN1Z6S28?oc=5",
@@ -143,12 +149,6 @@
    "title": "Cavs rank last in local broadcast accessibility report",
    "link": "https://www.fearthesword.com/cavs-news/53293/cavs-local-tv-cleveland-cavaliers-dazn-nba-league-pass",
    "date": "2026-10-21T17:00:50.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Former Bulls, Knicks head coach visits Cavs’ practice",
-   "link": "https://www.fearthesword.com/cavs-news/53282/cavs-kenny-atkinson-tom-thibodeau-cleveland-caavliers-new-york-knicks-chicago-bulls",
-   "date": "2026-10-21T15:12:03.000Z"
   },
   {
    "src": "cleveland.com",
@@ -352,6 +352,13 @@
  ],
  "videos": [
   {
+   "src": "It's Cavalier Podcast",
+   "title": "Mario Hezonja Was A Bright Spot in the Cavs’ Embarrassing Loss",
+   "link": "https://www.youtube.com/watch?v=VqK0l80h_xk",
+   "date": "2026-10-24T03:35:06.000Z",
+   "id": "VqK0l80h_xk"
+  },
+  {
    "src": "Locked On Cavs",
    "title": "PREVIEW: Can the Cleveland Cavaliers GET RIGHT Against the Brooklyn Nets?!",
    "link": "https://www.youtube.com/watch?v=0umOniVINzc",
@@ -483,13 +490,6 @@
    "link": "https://www.youtube.com/watch?v=fR7qFIM2uwA",
    "date": "2026-10-20T11:15:08.000Z",
    "id": "fR7qFIM2uwA"
-  },
-  {
-   "src": "It's Cavalier Podcast",
-   "title": "Kenny Atkinson Isn't Announcing His Rotation Yet",
-   "link": "https://www.youtube.com/watch?v=dIXWWqs4Qe4",
-   "date": "2026-10-20T00:54:38.000Z",
-   "id": "dIXWWqs4Qe4"
   },
   {
    "src": "Locked On Cavs",
