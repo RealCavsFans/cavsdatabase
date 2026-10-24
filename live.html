@@ -391,6 +391,7 @@ h3{font-size:0.875rem}
 .nlft button{height:42px;border:0;border-radius:9px;background:#F2B231;color:#101419;font:800 .9375rem "Saira Condensed",var(--sans);text-transform:uppercase;letter-spacing:.04em;padding:0 16px;white-space:nowrap;cursor:pointer}
 .nlft *{box-sizing:border-box}@media(max-width:600px){.nlft form{max-width:none;flex-basis:100%}.nlft button{padding:0 12px}}
 .sh{background:#860038;color:#fff}
+.per .sh,.seg .sh{background:none;color:inherit}
 .sh-in{max-width:1180px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:18px}
 .sh-b{display:flex;align-items:center;gap:8px;color:#fff;text-decoration:none;flex:none}.sh-b svg{width:30px;height:30px}.sh-b span{font:700 1.375rem/1 'Geist Mono',monospace;letter-spacing:-.02em}.sh-b i{font-style:normal;color:#F2B231}
 .sh-n{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none}.sh-n::-webkit-scrollbar{display:none}
@@ -894,8 +895,11 @@ function milestoneCard(D,R){
       if(Math.floor(c1/st)>Math.floor(c0/st))(MSH.push([id,'career',k,Math.floor(c1/st)*st]),hits.push(`${D.P[id].name} passed ${fmt(Math.floor(c1/st)*st)} career ${W[k]} tonight.`));
       else{const nx=(Math.floor(c1/st)+1)*st;if(nx-c1<=near[k])watch.push([nx-c1,`${D.P[id].name} is ${nx-c1} ${W[k]} from ${fmt(nx)} for his career.`])}
       const L=MS.franchise[k];if(!L)continue;const v0=m.cavs[k]+sp[k],v1=v0+tn[k];const others=L.filter(([x])=>x!==n);const rk=v=>1+others.filter(([,x])=>x>v).length;
-      if(rk(v1)<rk(v0)&&rk(v1)<=25){const passed=others.filter(([,x])=>x<=v1&&x>v0).map(([x])=>x);MSH.push([id,'list',k,rk(v1),passed]);hits.push(`${D.P[id].name} passed ${passed.join(', ')} for ${ord(rk(v1))} on the Cavs all-time ${LIST[k]} list.`)}
-      else{const ahead=others.filter(([,x])=>x>v1).pop();if(ahead&&rk(v1)<=26&&ahead[1]-v1+1<=near[k])watch.push([ahead[1]-v1+1,`${D.P[id].name} is ${ahead[1]-v1+1} ${W[k]} from passing ${ahead[0]} for ${ord(rk(v1)-1)} on the Cavs all-time ${LIST[k]} list.`])}}});
+      /* passing means strictly more; drawing level is a tie, not a pass */
+      const passed=others.filter(([,x])=>x<v1&&x>=v0).map(([x])=>x),tied=others.filter(([,x])=>x===v1&&x>v0).map(([x])=>x);
+      if(passed.length&&rk(v1)<=25){MSH.push([id,'list',k,rk(v1),passed]);hits.push(`${D.P[id].name} passed ${passed.join(', ')} for ${ord(rk(v1))} on the Cavs all-time ${LIST[k]} list.`)}
+      if(tied.length&&rk(v1)<=25)hits.push(`${D.P[id].name} tied ${tied.join(', ')} for ${ord(rk(v1))} on the Cavs all-time ${LIST[k]} list.`);
+      if(!passed.length||tied.length){const ahead=others.filter(([,x])=>x>=v1).pop();if(ahead&&rk(v1)<=26&&ahead[1]-v1+1<=near[k])watch.push([ahead[1]-v1+1,`${D.P[id].name} is ${ahead[1]-v1+1} ${W[k]} from passing ${ahead[0]} for ${ord(rk(ahead[1]+1))} on the Cavs all-time ${LIST[k]} list.`])}}});
   if(!hits.length&&!watch.length)return null;
   const c=el('div','card');c.style.borderTop='3px solid var(--gold)';c.style.marginBottom='14px';head(c,'Milestone watch',preview?'Preview: tonight’s numbers added to career totals through 2025–26':'Career and Cavs all-time totals, updated live');
   const ul=el('ul','sw');hits.forEach(t=>{const li=el('li');li.style.gridTemplateColumns='auto 1fr';li.append(el('b',null,'★'),el('span',null,t));li.firstChild.style.color='var(--gold)';ul.appendChild(li)});
