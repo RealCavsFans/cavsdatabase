@@ -457,6 +457,7 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 .gp-notl{display:none!important}.gpg>.o-bx{grid-column:1/-1}
 @media (max-width:760px){.gpg:has(.o-bx){display:flex;flex-direction:column}.gpg:has(.o-bx)>.gpg-l,.gpg:has(.o-bx)>.gpg-r{display:contents}.gpg:has(.o-bx)>*,.gpg:has(.o-bx) .gpg-l>*,.gpg:has(.o-bx) .gpg-r>*{order:9}.gpg .gph,.gpg .gp-under{order:0!important}.gpg .o-hl{order:1!important}.gpg .o-q{order:2!important}.gpg .o-bx{order:3!important}.gpg .o-num{order:4!important}.gpg .o-ser{order:5!important}}
 .gdm-kl{display:flex;gap:18px;align-items:center}@media (max-width:760px){.gdm-rcf{display:none}}@media (min-width:761px){.gdm-lk-sm{display:none}}
+.gm-rk{display:block;font:700 .6875rem var(--mono);color:var(--muted);margin-top:4px;text-transform:none;letter-spacing:0}.gm-note{font-size:.6875rem;color:var(--muted);margin:6px 0 0}
 </style>
 <script>/* OneSignal web push for alerts: loads only on the live site, never prompts on its own */
 /* OneSignal paused with game alerts (Oct 19): the SDK isn't loaded, so no subscribe prompts appear. Set PUSH_SDK to true when alerts go live. */var PUSH_SDK=false;if(PUSH_SDK&&location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async function(OneSignal){await OneSignal.init({appId:"3db75ca9-d797-40c7-8c53-c0711b41e956",serviceWorkerPath:"sw.js",serviceWorkerParam:{scope:"/"},notifyButton:{enable:false},promptOptions:{slidedown:{prompts:[]}}})});const s=document.createElement('script');s.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';s.defer=true;document.head.appendChild(s)}</script>
@@ -1285,6 +1286,14 @@ setTimeout(()=>{fetch('/box.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null
   const fm=v=>v>=1e6?'$'+(v/1e6).toFixed(2)+'M':v>=1e3?'$'+Math.round(v/1e3)+'K':v?'$'+Math.round(v):'$0';
   const card=document.getElementById('inj').closest('section');const w=el('div','gmw');w.appendChild(el('div','gm-k','Season to date · '+fin.length+' game'+(fin.length===1?'':'s')));
   const dl=el('div','gm-tiles');[['Games missed',String(tg),'g2'],['Salary of games missed',fm(tc),'g2']].forEach(([k,v,c])=>{const d=el('div','gm-tile '+c);d.append(el('b',null,v),el('span',null,k));dl.appendChild(d)});w.appendChild(dl);
+  /* league rank: games missed to injury by every team (pdata/league-injuries.json, ESPN injury lists); salary of games missed once league salaries are saved (pdata/league-salaries.json) */
+  Promise.all(['/pdata/league-injuries.json','/pdata/league-salaries.json'].map(u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null))).then(([LI,LS])=>{const T=LI&&LI.teams;if(!T||!T.CLE)return;const ord2=n=>n+(n%100>=11&&n%100<=13?'th':['th','st','nd','rd'][n%10]||'th');
+    const rk=(vals,me)=>{const hi=vals.filter(v=>v>me).length,tie=vals.filter(v=>v===me).length>1;return (tie?'T-':'')+ord2(hi+1)};const tiles=dl.querySelectorAll('.gm-tile');const n=Object.keys(T).length;
+    tiles[0].appendChild(el('small','gm-rk',rk(Object.values(T).map(x=>x.missed),T.CLE.missed)+' most of '+n));
+    if(LS&&LS.teams){const nz=x=>x.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');const lost={};
+      for(const [ab,x] of Object.entries(T)){const S2=LS.teams[ab]||{};const m={};Object.entries(S2).forEach(([nm,v])=>m[nz(nm)]=v);lost[ab]=Object.entries(x.players).reduce((a,[nm,g])=>a+(m[nz(nm)]||0)/82*g,0)}
+      tiles[1].appendChild(el('small','gm-rk',rk(Object.values(lost),lost.CLE)+' most of '+n))}
+    w.appendChild(el('p','gm-note','League ranks from ESPN’s daily injury lists'+(LS&&LS.teams?' and Capsheets salaries':'')+'.'))});
 
   if(rows.length){const det=document.createElement('details');det.className='gm-d';const sm=document.createElement('summary');sm.textContent='By player';det.appendChild(sm);const ul=el('ul','gm-l');const gmax=rows[0][1];rows.forEach(([n,g,c])=>{const li=el('li');const nm=el('span','n');nm.append(n);const mb=el('i','mb');mb.style.width=(g/gmax*100)+'%';nm.appendChild(mb);li.append(nm,el('span','g',g+' game'+(g===1?'':'s')),el('b',null,c?fm(c):'—'));ul.appendChild(li)});det.appendChild(ul);w.appendChild(det)}
   card.appendChild(w)})},0);
