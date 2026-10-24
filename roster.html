@@ -31,7 +31,7 @@
 <link rel="preload" href="/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/geist-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/saira-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/a/app.5b11548dcd.css"><link rel="preload" href="/a/app.dde845b9fe.js" as="script">
+<link rel="stylesheet" href="/a/app.5b11548dcd.css"><link rel="preload" href="/a/app.bf6b4cca24.js" as="script">
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
 @media (max-width:720px){.side>.o-inj{order:3}.side>.o-otd,.o-otd{order:99}}
@@ -64,6 +64,8 @@
 .gm-rk{display:block;font:700 .6875rem var(--mono);color:var(--muted);margin-top:4px;text-transform:none;letter-spacing:0}.gm-note{font-size:.6875rem;color:var(--muted);margin:6px 0 0}
 /* game day: when the injury report sits in the game-day card, the season-to-date games-missed box stays hidden */
 .in-gdm .gmw{display:none}
+/* history: all-time record tile centered on phones */
+@media (max-width:760px){#hx-stats .txs:first-child{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}#hx-stats .txs:first-child b{font-size:2.25rem}}
 /* cap tab two-way dropdowns: smaller text on phones */
 @media (max-width:760px){.tw3 .tw-t span{font-size:.5938rem}.tw3 .tw-t b,.tw3 .tw-t.ag b{font-size:.8125rem}.tw3 .tw-m{font-size:.7812rem}.tw3 .tw-m small{font-size:.6875rem}.tw3 .tw-bl{font-size:.8125rem;line-height:1.45}.tw3 .tw-f{font-size:.7188rem}}
 /* game page box score: team toggle, scrolls sideways inside the card */
@@ -446,7 +448,7 @@
   <button type="button" class="thm2" id="thm2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Dark mode</span></button></div>
 </div></footer>
 
-<script src="/a/app.dde845b9fe.js"></script>
+<script src="/a/app.bf6b4cca24.js"></script>
 
 <script>
 (function(){const R=document.documentElement,B=document.getElementById('thm'),T=document.getElementById('btt'),F=document.getElementById('fb');
@@ -645,6 +647,16 @@
  const run=()=>{attach();setTimeout(attach,600)};run();setTimeout(jump,450);
  addEventListener('popstate',()=>setTimeout(attach,50));addEventListener('hashchange',()=>setTimeout(jump,50));
 })();
+</script>
+<script>/* stat bars grow in: any bar sized by an inline % width (or height) fills from zero the first time it scrolls into view on each page; off for reduced motion */
+(function(){if(!('IntersectionObserver' in window)||!Element.prototype.animate)return;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  let seen=new WeakSet();const io=new IntersectionObserver(es=>{es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const t=e.target,v=t.dataset.bgv;
+    t.animate(v?[{transform:'scaleY(0)'},{transform:'scaleY(1)'}]:[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{duration:750,easing:'cubic-bezier(.2,.75,.25,1)',delay:Math.min(240,(+t.dataset.bgi||0)*40),fill:'backwards'})})},{threshold:.2});
+  const scan=()=>{let k=0;document.querySelectorAll('[style*="width"],[style*="height"]').forEach(x=>{if(seen.has(x))return;const s=x.style;const w=/%$/.test(s.width),h=/%$/.test(s.height)&&!w;if(!w&&!h)return;
+    if(x.closest('[hidden],.cap-stage,.shot-stage')||x.textContent.trim().length>6)return;const r=x.getBoundingClientRect();if(!r.width&&!r.height)return;if(w&&r.height>28)return;if(h&&r.width>60)return;
+    seen.add(x);x.style.transformOrigin=h?'bottom':'left';if(h)x.dataset.bgv=1;x.dataset.bgi=k++%8;io.observe(x)})};
+  let tm=0;const later=()=>{if(tm)return;tm=setTimeout(()=>{tm=0;scan()},120)};new MutationObserver(later).observe(document.body,{childList:true,subtree:true});
+  addEventListener('popstate',()=>{seen=new WeakSet();later()});window.cdbBarsReset=()=>{seen=new WeakSet();later()};later()})();
 </script>
 </body>
 </html>
