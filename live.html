@@ -914,7 +914,7 @@ async function scoutData(tid){
   if(SCOUT[tid])return SCOUT[tid];
   return SCOUT[tid]=(async()=>{
     const yr=new Date().getUTCMonth()>=7?new Date().getUTCFullYear()+1:new Date().getUTCFullYear();
-    let evs=[];for(const y of [yr,yr-1]){try{const sc=await getJSON(`${ESPN}teams/${tid}/schedule?season=${y}`);evs=(sc.events||[]).filter(e=>e.competitions&&e.competitions[0].status&&e.competitions[0].status.type.completed).map(e=>e.id)}catch(e){}if(evs.length>=3)break}
+    let evs=[],used=yr;for(const y of [yr,yr-1]){used=y;try{const sc=await getJSON(`${ESPN}teams/${tid}/schedule?season=${y}`);evs=(sc.events||[]).filter(e=>e.competitions&&e.competitions[0].status&&e.competitions[0].status.type.completed).map(e=>e.id)}catch(e){}if(evs.length>=1)break}/* this season once they have played a game; last season only before that */
     evs=evs.slice(-5);const games=[];
     await Promise.all(evs.map(async id=>{try{const d=await getJSON(ESPN+'summary?event='+id);const G=prep(d);if(!G.teams.some(t=>t.id===tid))return;
       /* treat the scouted team as the focus so lineups/shots are theirs */
@@ -925,11 +925,11 @@ async function scoutData(tid){
       Object.values(RR.L[tid][5]).forEach(l=>{const k=l.ids.slice().sort().join(',');const o=L5[k]=L5[k]||{ids:l.ids,names:l.ids.map(i=>G.P[i].last),sec:0,pf:0,pa:0,o:{fga:0,oreb:0,to:0,fta:0},d:{fga:0,oreb:0,to:0,fta:0},g:0};o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;o.g++;for(const x of ['fga','oreb','to','fta']){o.o[x]+=l.o[x];o.d[x]+=l.d[x]}});
       G.roster[tid].forEach(i=>{const b=RR.B[i];if(!(b.min>0))return;const p=P[G.P[i].name]=P[G.P[i].name]||{name:G.P[i].name,short:G.P[i].short,gp:0,gs:0,min:0,pts:0,reb:0,ast:0,tpm:0,fga:0,fgm:0};p.gp++;if(G.P[i].starter)p.gs++;p.min+=b.min;p.pts+=b.pts;p.reb+=b.oreb+b.dreb;p.ast+=b.ast;p.tpm+=b.tpm;p.fga+=b.fga;p.fgm+=b.fgm});
       RR.shots.filter(q=>q.t===tid).forEach(q=>shots.push(q))});
-    return {tid,games,T,O,L5,P,shots};
+    return {tid,games,T,O,L5,P,shots,last:used!==yr};
   })();
 }
 function scoutCard(D,X,team){
-  const c=el('div','card sec');const n=X.games.length;head(c,'Scouting the '+team.name,n?`Their last ${n} game${n>1?'s':''}`:'No recent games to scout yet.');if(!n)return c;
+  const c=el('div','card sec');const n=X.games.length;head(c,'Scouting the '+team.name,n?(n>1?`Their last ${n} games`:'Their only game')+(X.last?' of 2025–26':' this season'):'No recent games to scout yet.');if(!n)return c;
   const res=el('div','chips');X.games.forEach(({G,R:RR})=>{const me=G.focus,op=G.other;const a=me.ha==='home'?RR.hs:RR.as,b=me.ha==='home'?RR.as:RR.hs;const d=new Date(G.date);const sp=el('span','',`${d.getMonth()+1}/${d.getDate()} ${me.ha==='home'?'vs':'@'} ${op.abbr} ${a>b?'W':'L'} ${a}–${b}`);sp.style.cssText='padding:5px 10px;border-radius:999px;font:600 0.8125rem var(--sans);background:'+(a>b?'color-mix(in srgb,var(--pos) 15%,var(--card))':'var(--sub)');res.appendChild(sp)});c.appendChild(res);
   /* pace and four factors */
   const T=X.T,O=X.O;const P2=t=>poss({fga:t.fga,oreb:(t.oreb||0)+(t.toreb||0),to:t.to,fta:t.fta});const pace=(P2(T)+P2(O))/2/(T.sec||1)*2880;const fa=factors(T,O);
