@@ -17,7 +17,8 @@ async function cavsGame(ctx, d) {
   const ics = await (await ctx.env.ASSETS.fetch(new URL('/cavs.ics', ctx.request.url))).text();
   const ev = ics.split('BEGIN:VEVENT').find(b => b.includes('cavs-' + d.slice(0, 4) + '-' + d.slice(4, 6) + '-' + d.slice(6) + '@'));
   if (!ev) return null;
-  const sum = (ev.match(/SUMMARY:[^\n]*?Cavs (vs|at) ([^\r\n]+)/) || []); const opp = cityCode(sum[2]);
+  // upcoming games read "Cavs vs X"; finished ones read "W 114–106 vs X" (see scripts/prerender.mjs)
+  const sum = (ev.match(/SUMMARY:[^\n]*?(?:Cavs|\d+[–-]\d+) (vs|at) ([^\r\n]+)/) || []); const opp = cityCode(sum[2]);
   const start = ((ev.match(/DTSTART:(\d{8}T\d{6}Z)/) || [])[1] || '').replace(/(\d{4})(\d\d)(\d\d)T(\d\d)(\d\d)(\d\d)Z/, '$1-$2-$3T$4:$5:$6Z') || null;
   return opp ? (sum[1] === 'vs' ? { home: 'CLE', away: opp, start } : { home: opp, away: 'CLE', start }) : null;
 }
