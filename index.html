@@ -2576,7 +2576,7 @@ const perName=p=>p<=4?'Q'+p:(p===5?'OT':'OT'+(p-4));
   document.addEventListener('click',e=>{if(!m.hidden&&!m.contains(e.target))set(false)});
   document.getElementById('calcopy').onclick=async()=>{try{await navigator.clipboard.writeText('https://cavsdatabase.com/cavs.ics');document.getElementById('calcopy').textContent='Copied ✓'}catch(_){prompt('Copy this link','https://cavsdatabase.com/cavs.ics')}}})();
 /* Cavs & Coffee sign-up boxes (Home under the record card, Resources). NL_ON shows them to everyone; ?nl=preview shows them now */
-const NL_ON=false; /* paused Oct 19: the "subscribe" card stays off until turned back on */
+const NL_ON=true; /* on since Oct 24: sign-ups collect on Buttondown; nothing is sent until NEWSLETTER_LIVE is true */
 (function(){const show=NL_ON||/[?&]nl=preview/.test(location.search);
   document.querySelectorAll('.nlsu').forEach(sec=>{if(!show)return;sec.hidden=false;
     const box=sec.querySelector('.su'),mug=sec.querySelector('.sumug'),P=sec.querySelector('.supath'),B=sec.querySelector('.suball');
