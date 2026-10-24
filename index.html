@@ -460,6 +460,8 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 .gm-rk{display:block;font:700 .6875rem var(--mono);color:var(--muted);margin-top:4px;text-transform:none;letter-spacing:0}.gm-note{font-size:.6875rem;color:var(--muted);margin:6px 0 0}
 /* game day: when the injury report sits in the game-day card, the season-to-date games-missed box stays hidden */
 .in-gdm .gmw{display:none}
+/* cap tab two-way dropdowns: smaller text on phones */
+@media (max-width:760px){.tw3 .tw-t span{font-size:.5938rem}.tw3 .tw-t b,.tw3 .tw-t.ag b{font-size:.8125rem}.tw3 .tw-m{font-size:.7812rem}.tw3 .tw-m small{font-size:.6875rem}.tw3 .tw-bl{font-size:.8125rem;line-height:1.45}.tw3 .tw-f{font-size:.7188rem}}
 /* game page box score: team toggle, scrolls sideways inside the card */
 .gp-bxt{display:flex;gap:4px}.gp-bxt button{font:700 .75rem var(--mono);padding:5px 10px;border:1px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer}.gp-bxt button[aria-pressed=true]{background:var(--ink,#101419);color:#fff;border-color:var(--ink,#101419)}
 .gpc.o-bx{min-width:0;max-width:100%}.gpc.o-bx .gp-bxw{display:block!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch;max-width:100%}.gpc.o-bx .gp-box.full{min-width:640px!important}
