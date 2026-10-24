@@ -460,6 +460,8 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 .gm-rk{display:block;font:700 .6875rem var(--mono);color:var(--muted);margin-top:4px;text-transform:none;letter-spacing:0}.gm-note{font-size:.6875rem;color:var(--muted);margin:6px 0 0}
 /* game day: when the injury report sits in the game-day card, the season-to-date games-missed box stays hidden */
 .in-gdm .gmw{display:none}
+/* cap sheet on phones: option and extension tags sit in a strip under the numbers, so every salary in a row stays on one line */
+@media (max-width:760px){.cap td.r{position:relative}.cap tr:has(.extb,.ov,.vmb)>td{vertical-align:top}.cap tr:has(.extb,.ov,.vmb)>td.r{padding-bottom:22px!important}.cap .ov{display:inline;position:static}.cap .ov::after{position:absolute;bottom:5px;right:6px;font-size:.5rem!important;padding:2px 3px 1px!important}.cap td .extb,.cap td .vmb{position:absolute;right:6px;bottom:5px;margin:0!important;display:block}.cap td:has(.ov) .extb{right:30px}.cap td:has(.extb) .vmb{right:34px}}
 /* history: all-time record tile centered on phones */
 @media (max-width:760px){#hx-stats .txs:first-child{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}#hx-stats .txs:first-child b{font-size:2.25rem}}
 /* cap tab two-way dropdowns: smaller text on phones */
