@@ -741,8 +741,8 @@ const lgPoss=t=>poss({fga:t.fga,oreb:t.orb,to:t.tov,fta:t.fta});
 /* the same numbers the Team stats card shows, per game, from league sums (A = the team, O = its opponents) */
 const LGM={'FG%':(A)=>A.fga?A.fgm/A.fga:null,'Twos made':(A,O,n)=>(A.fgm-A.tpm)/n,'2PT attempts':(A,O,n)=>(A.fga-A.tpa)/n,'2PT%':A=>(A.fga-A.tpa)?(A.fgm-A.tpm)/(A.fga-A.tpa):null,
   'Threes made':(A,O,n)=>A.tpm/n,'3PT attempts':(A,O,n)=>A.tpa/n,'3PT%':A=>A.tpa?A.tpm/A.tpa:null,'FT made':(A,O,n)=>A.ftm/n,'FT attempts':(A,O,n)=>A.fta/n,'FT%':A=>A.fta?A.ftm/A.fta:null,
-  'In the paint':(A,O,n)=>A.ex?A.paint/n:null,'Off turnovers':(A,O,n)=>O.ex?O.pot/n:null,'Rebounds':(A,O,n)=>(A.orb+A.drb)/n,'Off. rebounds':(A,O,n)=>A.orb/n,'Assists':(A,O,n)=>A.ex?A.ast/n:null,
-  'Turnovers':(A,O,n)=>A.tov/n,'Steals':(A,O,n)=>A.ex?A.stl/n:null,'Blocks':(A,O,n)=>A.ex?A.blk/n:null,'Fouls':(A,O,n)=>A.ex?A.pf/n:null,
+  'In the paint':(A)=>A.ex?A.paint/A.ex:null,'Off turnovers':(A,O)=>O.ex?O.pot/O.ex:null,'Rebounds':(A,O,n)=>(A.orb+A.drb)/n,'Off. rebounds':(A,O,n)=>A.orb/n,'Assists':(A)=>A.ex?A.ast/A.ex:null,
+  'Turnovers':(A,O,n)=>A.tov/n,'Steals':(A)=>A.ex?A.stl/A.ex:null,'Blocks':(A)=>A.ex?A.blk/A.ex:null,'Fouls':(A)=>A.ex?A.pf/A.ex:null,
   'Pace':(A,O,n,sec)=>sec?((lgPoss(A)+lgPoss(O))/2)/sec*2880:null,'Possessions':(A,O,n)=>lgPoss(A)/n,'Points per 100':A=>{const p=lgPoss(A);return p?A.pts/p*100:null},
   'True shooting':A=>A.fga+A.fta?A.pts/(2*(A.fga+.44*A.fta)):null,'True shot att.':(A,O,n)=>(A.fga+.44*A.fta)/n};
 /* rank of a value among the other 29 teams: dir 1 = higher is better, -1 = lower is better, 0 = neutral (ranked by most) */
