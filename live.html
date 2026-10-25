@@ -654,7 +654,7 @@ function renderView(){
   ({season:vSeason,share:vShare,ast:vAst,team:vTeam,players:vPlayers,lineups:vLuHub,shots:vShots,flow:vFlow,ff:vFF,plays:vPlays})[S.tab](v,D,R);
 }
 const teamBtns=(D,key,cb)=>{const _tb=teamBtns0(D,key,cb);_tb.querySelectorAll('button[data-tid]').forEach(b=>{const t=D.teams.find(x=>x.id===b.dataset.tid);const on=b.getAttribute('aria-pressed')==='true';b.style.borderColor=t.c;if(on){b.style.background=t.c;b.style.color='#fff'}else{b.style.color=t.c;b.style.background='var(--card)'}});return _tb};
-const teamBtns0=(D,key,cb)=>{if(key==='luTeam'){const cb0=cb;cb=()=>{S.f.luPick={};cb0&&cb0()}}const f=el('div','fl');if(S.season)return f;[D.focus,D.other].forEach(t=>{const b=el('button',null,t.abbr);b.dataset.tid=t.id;b.type='button';b.setAttribute('aria-pressed',S.f[key]===t.id);b.onclick=()=>{S.f[key]=t.id;cb&&cb();renderView()};f.appendChild(b)});return f};
+const teamBtns0=(D,key,cb)=>{if(key==='luTeam'){const cb0=cb;cb=()=>{S.f.luPick={};cb0&&cb0()}}const f=el('div','fl');if(S.season&&key!=='shTeam')return f;/* season: only Shots has an opponents view */[D.focus,D.other].forEach(t=>{const b=el('button',null,t.abbr);b.dataset.tid=t.id;b.type='button';b.setAttribute('aria-pressed',S.f[key]===t.id);b.onclick=()=>{S.f[key]=t.id;cb&&cb();renderView()};f.appendChild(b)});return f};
 
 const SECX_ON=true; /* save-as-image buttons on every live section (approved Oct 22) */
 /* save any section as an image: a small camera in the corner of each card, drawn by modern-screenshot (vendor/) with the site's header and footer */
@@ -1532,7 +1532,7 @@ function vShots(v,D,R){
   const c=el('div','card');head(c,'Shot chart',perLabel(S.per)+' · field goals only');
   const fl=teamBtns(D,'shTeam',()=>{S.f.shPl='all';S.f.shType='all'});
   const ps=el('select');ps.setAttribute('aria-label','Player');const o0=el('option',null,'Whole team');o0.value='all';ps.appendChild(o0);
-  const cnt={};R.shots.filter(s=>s.t===t.id).forEach(s=>cnt[s.id]=(cnt[s.id]||0)+1);
+  const cnt={};R.shots.filter(s=>s.t===t.id&&s.id&&D.P[s.id]).forEach(s=>cnt[s.id]=(cnt[s.id]||0)+1);
   Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]).forEach(id=>{const o=el('option',null,D.P[id].name+' · '+cnt[id]+' FGA');o.value=id;if(S.f.shPl===id)o.selected=true;ps.appendChild(o)});
   ps.onchange=()=>{S.f.shPl=ps.value;renderView()};fl.appendChild(ps);
   const ts=el('select');ts.setAttribute('aria-label','Shot type');const t0=el('option',null,'All shot types');t0.value='all';ts.appendChild(t0);PT.forEach(([k,l],i)=>{const o=el('option',null,l);o.value=String(i);if(S.f.shType===String(i))o.selected=true;ts.appendChild(o)});ts.onchange=()=>{S.f.shType=ts.value;renderView()};fl.appendChild(ts);
@@ -1648,17 +1648,18 @@ async function netRanks(se){if(NETR[se])return NETR[se];let net={};
 const TIERS=[['','Any opponent strength'],['t5','Top 5 net rating'],['t10','Top 10 net rating'],['t15','Top 15 net rating'],['b10','Bottom 10 net rating']];
 function inTier(rk,n,tier){if(!tier)return true;if(rk==null)return false;return tier==='t5'?rk<=5:tier==='t10'?rk<=10:tier==='t15'?rk<=15:rk>n-10}
 function seasonFrom(se,files,games,per='all'){
-  const P={},B={},gp={},L={2:{},3:{},4:{},5:{}},shots=[],asts=[],pz={},pc={},pcO={},cx={cle:{t:[0,0],h:[0,0]},opp:{t:[0,0],h:[0,0]}},gs=[];const zT=()=>({z:ZN.map(()=>[0,0])});const T={cle:zT(),opp:zT()};
+  const P={},B={},gp={},L={2:{},3:{},4:{},5:{}},shots=[],oshots=[],asts=[],pz={},pc={},pcO={},cx={cle:{t:[0,0],h:[0,0]},opp:{t:[0,0],h:[0,0]}},gs=[];const zT=()=>({z:ZN.map(()=>[0,0])});const T={cle:zT(),opp:zT()};
   files.forEach((s,fi)=>{const D=prep(s),R=deriveCore(D,D.plays,per);if(D.focus.id!=='5')return;const gi=gs.length;const g0=games[fi];gs.push(g0);
     for(const id of D.roster['5']){const p=D.P[id],b=R.B[id];P[id]={name:p.name,short:p.short,last:p.last,pos:p.pos};if(!(b.min>0))continue;gp[id]=(gp[id]||0)+1;const x=B[id]=B[id]||{};['min','pts','fgm','fga','tpm','tpa','ftm','fta','oreb','dreb','ast','stl','blk','to','pf','pm'].forEach(k=>x[k]=(x[k]||0)+b[k]);if(p.starter)x.gs=(x.gs||0)+1}
     for(const n of [2,3,4,5])for(const [k,l] of Object.entries(R.L['5'][n])){const o=L[n][k]=L[n][k]||{ids:l.ids,sec:0,pf:0,pa:0,o:{},d:{},g:0};o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;o.g++;for(const x in l.o){o.o[x]=(o.o[x]||0)+l.o[x];o.d[x]=(o.d[x]||0)+(l.d[x]||0)}}
+    for(const q of R.shots)if(q.t!=='5')oshots.push([q.hasXY?q.x:null,q.hasXY?q.y:null,q.m?1:0,q.three?1:0,q.zi,q.pt,q.ast?1:0,gi]);
     for(const q of R.shots)if(q.t==='5'){shots.push([q.id,q.hasXY?q.x:null,q.hasXY?q.y:null,q.m?1:0,q.three?1:0,q.zi,q.pt,q.ast?1:0,gi]);if(q.hasXY){const z=(pz[q.id]=pz[q.id]||{});const g=(z[gi]=z[gi]||ZN.map(()=>[0,0]));g[q.zi][1]++;if(q.m)g[q.zi][0]++}}
     for(const a of R.asts)if(a.t==='5')asts.push([a.p,a.s,a.v,gi,a.z]);
     const tc=R.T['5'],to=R.T[D.other.id];for(const [dst,src] of [[T.cle,tc],[T.opp,to]]){for(const k in src)if(typeof src[k]==='number')dst[k]=(dst[k]||0)+src[k];src.z.forEach((v,i)=>{dst.z[i][0]+=v[0];dst.z[i][1]+=v[1]})}
     for(const [h,v] of Object.entries(R.pc['5'])){pc[h]=pc[h]||{n:0,pts:0};pc[h].n+=v.n;pc[h].pts+=v.pts}
     for(const [h,v] of Object.entries(R.pc[D.other.id]||{})){pcO[h]=pcO[h]||{n:0,pts:0};pcO[h].n+=v.n;pcO[h].pts+=v.pts}
     for(const [key,tid] of [['cle','5'],['opp',D.other.id]])for(const q of (R.PL||[]).filter(q=>q.team===tid)){const k=isTrans(q)?'t':q.how!=='oreb'?'h':null;if(k){cx[key][k][0]++;cx[key][k][1]+=q.pts}}});
-  return {season:se,games:gs,P,B,gp,L,shots,asts,pz,T,pc,pcO,cx}}
+  return {season:se,games:gs,P,B,gp,L,shots,oshots,asts,pz,T,pc,pcO,cx}}
 async function seasonFiltered(se,full){const f=S.sf||{};const gsel=f.games&&f.games.length?new Set(f.games):null;const per=S.per||'all';if(!gsel&&!f.tier){if(per==='all')return full;const key=perKey(per);if(key){try{return await getJSON('/live-archive/'+se+'/season-p-'+key+'.json')}catch(e){}}}const NR=await netRanks(se);
   const games=full.games.filter(g=>(!gsel||gsel.has(g.id))&&inTier(NR.rk[g.opp],NR.n,f.tier));S.sfN=games.length;if(!games.length)return Object.assign({},full,{games:[],P:full.P,B:{},gp:{},L:{2:{},3:{},4:{},5:{}},shots:[],asts:[],pz:{},T:{cle:{z:ZN.map(()=>[0,0])},opp:{z:ZN.map(()=>[0,0])}},pc:{}});
   const files=await Promise.all(games.map(g=>ARCHF[g.id]||(ARCHF[g.id]=getJSON('/live-archive/'+se+'/'+g.id+'.json'))));return seasonFrom(se,files,games,per)}
@@ -1683,7 +1684,7 @@ async function loadSeason(se){
   const D={season:se,teams:[focus,other],focus,other,home:focus,away:other,P,roster:{'5':ids,opp:[]},plays:[],wp:{},esp:{},games:j.games};
   const B={};Object.keys(P).forEach(id=>B[id]=Object.assign({min:0,pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,oreb:0,dreb:0,ast:0,stl:0,blk:0,to:0,pf:0,pm:0,gs:0},j.B[id]||{},{gp:j.gp[id]||0}));
   const fill=t=>Object.assign({pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,oreb:0,dreb:0,toreb:0,tdreb:0,ast:0,stl:0,blk:0,to:0,pf:0,sec:0},t);
-  const shots=j.shots.map(([id,x,y,m,th,zi,pt,ast,gi])=>({t:'5',id,x,y,hasXY:x!=null,m:!!m,three:!!th,zi,pt,ast:!!ast,gi,per:0,clock:'',text:''}));
+  const shots=j.shots.map(([id,x,y,m,th,zi,pt,ast,gi])=>({t:'5',id,x,y,hasXY:x!=null,m:!!m,three:!!th,zi,pt,ast:!!ast,gi,per:0,clock:'',text:''})).concat((j.oshots||[]).map(([x,y,m,th,zi,pt,ast,gi])=>({t:'opp',id:null,x,y,hasXY:x!=null,m:!!m,three:!!th,zi,pt,ast:!!ast,gi,per:0,clock:'',text:''})));
   const R={B,L:{'5':j.L,opp:{2:{},3:{},4:{},5:{}}},T:{'5':fill(j.T.cle),opp:fill(j.T.opp)},shots,asts:j.asts.map(([p,s2,v,gi,z])=>({t:'5',p,s:s2,v,gi,z})),on:{'5':new Set(),opp:new Set()},plays:[],runs:[],pc:{'5':j.pc,opp:j.pcO||null},cx:j.cx?(()=>{const mk=c=>[{n:c.h[0],pts:c.h[1],pp:c.h[0]?c.h[1]/c.h[0]:null},{n:c.t[0],pts:c.t[1],pp:c.t[0]?c.t[1]/c.t[0]:null}];return {'5':mk(j.cx.cle),opp:mk(j.cx.opp)}})():null,pz:j.pz,lp:null,maxPer:4};
   S.data=D;S.R=R;S.state='post';S.err=null;
 }

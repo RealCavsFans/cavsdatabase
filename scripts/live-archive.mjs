@@ -86,7 +86,7 @@ const files = fs.readdirSync(DIR).filter(f => /^(\d+|b\d{8})\.json$/.test(f));
 /* season files: the whole game (season.json) plus one per period, so the live page's quarter, half and clutch buttons load one small file */
 function build(per, file) {
   const games = [];
-  const P = {}, B = {}, gp = {}, L = { 2: {}, 3: {}, 4: {}, 5: {} }, shots = [], asts = [], pz = {};
+  const P = {}, B = {}, gp = {}, L = { 2: {}, 3: {}, 4: {}, 5: {} }, shots = [], oshots = [], asts = [], pz = {};
   const T = { cle: null, opp: null }, pc = {}, pcO = {}, cx = { cle: { t: [0, 0], h: [0, 0] }, opp: { t: [0, 0], h: [0, 0] } };
   const isT = q => (q.how === 'stl' || q.how === 'dreb' || q.how === 'to') && q.first != null && q.first <= 7;
   const addObj = (a, b) => { for (const k in b) { if (typeof b[k] === 'number') a[k] = (a[k] || 0) + b[k]; } };
@@ -111,6 +111,8 @@ function build(per, file) {
       const o = L[n][k] = L[n][k] || { ids: l.ids, sec: 0, pf: 0, pa: 0, o: {}, d: {}, g: 0 };
       o.sec += l.sec; o.pf += l.pf; o.pa += l.pa; o.g++; for (const x in l.o) { o.o[x] = (o.o[x] || 0) + l.o[x]; o.d[x] = (o.d[x] || 0) + (l.d[x] || 0); }
     }
+    /* opponents' shots too, so the season Shots tab can show what the Cavs allow */
+    for (const q of R.shots) if (q.t !== '5') oshots.push([q.hasXY ? q.x : null, q.hasXY ? q.y : null, q.m ? 1 : 0, q.three ? 1 : 0, q.zi, q.pt, q.ast ? 1 : 0, gi]);
     for (const q of R.shots) if (q.t === '5') {
       shots.push([q.id, q.hasXY ? q.x : null, q.hasXY ? q.y : null, q.m ? 1 : 0, q.three ? 1 : 0, q.zi, q.pt, q.ast ? 1 : 0, gi]);
       if (q.hasXY) { const z = (pz[q.id] = pz[q.id] || {}); const g = (z[gi] = z[gi] || C.ZN.map(() => [0, 0])); g[q.zi][1]++; if (q.m) g[q.zi][0]++; }
@@ -132,9 +134,9 @@ function build(per, file) {
   const order = games.map((g, i) => [g.date, i]).sort().map(x => x[1]);
   const remap = {}; order.forEach((old, ni) => remap[old] = ni);
   const gs = order.map(i => games[i]);
-  shots.forEach(s => s[8] = remap[s[8]]); asts.forEach(a => a[3] = remap[a[3]]);
+  shots.forEach(s => s[8] = remap[s[8]]); oshots.forEach(s => s[7] = remap[s[7]]); asts.forEach(a => a[3] = remap[a[3]]);
   const pz2 = {}; for (const [id, z] of Object.entries(pz)) { pz2[id] = {}; for (const [g, v] of Object.entries(z)) pz2[id][remap[g]] = v; }
-  const out = { season: SEASON, per, updated: new Date().toISOString(), games: gs.map(({ recap, rc, ...g }) => g), P, B, gp, L, shots, asts, pz: pz2, T, pc, pcO, cx };
+  const out = { season: SEASON, per, updated: new Date().toISOString(), games: gs.map(({ recap, rc, ...g }) => g), P, B, gp, L, shots, oshots, asts, pz: pz2, T, pc, pcO, cx };
   fs.writeFileSync(path.join(DIR, file), JSON.stringify(out));
   if (per === 'all') fs.writeFileSync(path.join(DIR, 'index.json'), JSON.stringify(gs.map(g => ({ id: g.id, date: g.date, et: g.et, opp: g.opp, ha: g.ha, cle: g.cle, os: g.os, rc: g.rc }))));
   console.log(`${file}: ${gs.length} games, ${shots.length} shots, ${Object.keys(L[5]).length} five-man lineups`);
