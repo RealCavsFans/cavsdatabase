@@ -112,7 +112,7 @@ for (const f of files) {
     shots.push([q.id, q.hasXY ? q.x : null, q.hasXY ? q.y : null, q.m ? 1 : 0, q.three ? 1 : 0, q.zi, q.pt, q.ast ? 1 : 0, gi]);
     if (q.hasXY) { const z = (pz[q.id] = pz[q.id] || {}); const g = (z[gi] = z[gi] || C.ZN.map(() => [0, 0])); g[q.zi][1]++; if (q.m) g[q.zi][0]++; }
   }
-  for (const a of R.asts) if (a.t === '5') asts.push([a.p, a.s, a.v, gi]);
+  for (const a of R.asts) if (a.t === '5') asts.push([a.p, a.s, a.v, gi, a.z]);
   const tc = R.T['5'], to = R.T[opp.id];
   /* per-game rows for the Season tab (trends and splits): team box totals for both sides, and every 5-man unit's minutes and possessions */
   const tr = t => [t.pts, t.fgm, t.fga, t.tpm, t.tpa, t.ftm, t.fta, t.oreb, t.toreb || 0, t.dreb, t.to, Math.round(t.sec || 0)];

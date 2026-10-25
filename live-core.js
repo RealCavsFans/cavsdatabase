@@ -106,7 +106,7 @@ function deriveCore(D,plays,F){
       else{const three=p.pa===3;const zi=p.x!=null?zoneOf(p.x,p.y,three):(three?4:1);const paint=!three&&p.x!=null&&Math.abs(p.x-25)<=8&&p.y<=13.75;
         if(inF){B[a].fga++;if(three)B[a].tpa++;if(p.sc){B[a].fgm++;if(three)B[a].tpm++}}
         TT(t).forEach(x=>{x.fga++;x.z[zi][1]++;if(three)x.tpa++;if(p.sc){x.fgm++;x.z[zi][0]++;if(three)x.tpm++;if(paint)x.paint+=2}});offStat(t,'fga');if(three)luStat(t,'tpa');if(p.sc){luStat(t,'fgm');if(three)luStat(t,'tpm');if(b&&/assists/.test(p.text))luStat(t,'ast')}
-        if(p.sc&&b&&/assists/.test(p.text)&&B[b]){if(inF){B[b].ast++;asts.push({t,p:b,s:a,v:three?3:2})}TT(t).forEach(x=>x.ast++)}
+        if(p.sc&&b&&/assists/.test(p.text)&&B[b]){if(inF){B[b].ast++;asts.push({t,p:b,s:a,v:three?3:2,z:zi})}TT(t).forEach(x=>x.ast++)}
         else if(!p.sc&&b&&/blocks/.test(p.text)&&B[b]){if(inF)B[b].blk++;TT(teamOf(b)).forEach(x=>x.blk++)}
         if(inF){const st=ps[t],dt=p.t-st.t;const pt=/Putback|Tip/.test(ty)||(st.how==='oreb'&&dt<=3)?0:((st.how==='dreb'||st.how==='to'||st.how==='stl')&&dt<=7)?1:/Cutting|Alley Oop/.test(ty)?2:/Driving/.test(ty)?3:/Hook|Turnaround|Fade Away|Post/.test(ty)?4:/Pullup|Step Back/.test(ty)?5:/Jump Shot/.test(ty)?6:7;
           shots.push({t,id:a,x:p.x,y:p.y,hasXY:p.x!=null,m:!!p.sc,three,zi,pt,ast:!!(p.sc&&b&&/assists/.test(p.text)),per:p.per,clock:p.clock,text:p.text})}}}
