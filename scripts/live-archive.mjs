@@ -85,7 +85,8 @@ if (SEASON === '2026-27' && !process.env.SKIP_FETCH) {
 const files = fs.readdirSync(DIR).filter(f => /^(\d+|b\d{8})\.json$/.test(f));
 const games = [];
 const P = {}, B = {}, gp = {}, L = { 2: {}, 3: {}, 4: {}, 5: {} }, shots = [], asts = [], pz = {};
-const T = { cle: null, opp: null }, pc = {};
+const T = { cle: null, opp: null }, pc = {}, pcO = {}, cx = { cle: { t: [0, 0], h: [0, 0] }, opp: { t: [0, 0], h: [0, 0] } };
+const isT = q => (q.how === 'stl' || q.how === 'dreb' || q.how === 'to') && q.first != null && q.first <= 7;
 const addObj = (a, b) => { for (const k in b) { if (typeof b[k] === 'number') a[k] = (a[k] || 0) + b[k]; } };
 const zT = () => ({ z: C.ZN.map(() => [0, 0]) });
 T.cle = zT(); T.opp = zT();
@@ -120,6 +121,9 @@ for (const f of files) {
   games[gi].l5 = Object.entries(R.L['5'][5]).filter(([, l]) => l.sec >= 1).map(([k, l]) => [k, Math.round(l.sec), l.pf, l.pa, l.o.fga, l.o.oreb, l.o.to, l.o.fta, l.d.fga, l.d.oreb, l.d.to, l.d.fta]);
   for (const [dst, src] of [[T.cle, tc], [T.opp, to]]) { for (const k in src) if (typeof src[k] === 'number') dst[k] = (dst[k] || 0) + src[k]; src.z.forEach((v, i) => { dst.z[i][0] += v[0]; dst.z[i][1] += v[1]; }); }
   for (const [h, v] of Object.entries(R.pc['5'])) { pc[h] = pc[h] || { n: 0, pts: 0 }; pc[h].n += v.n; pc[h].pts += v.pts; }
+  /* how possessions started, for the opponents too, plus transition vs halfcourt for both sides */
+  for (const [h, v] of Object.entries(R.pc[opp.id] || {})) { pcO[h] = pcO[h] || { n: 0, pts: 0 }; pcO[h].n += v.n; pcO[h].pts += v.pts; }
+  for (const [key, tid] of [['cle', '5'], ['opp', opp.id]]) for (const q of (R.PL || []).filter(q => q.team === tid)) { const k = isT(q) ? 't' : q.how !== 'oreb' ? 'h' : null; if (k) { cx[key][k][0]++; cx[key][k][1] += q.pts; } }
 }
 games.forEach(g => { g.d = g.date; });
 // keep game order by date
@@ -128,7 +132,7 @@ const remap = {}; order.forEach((old, ni) => remap[old] = ni);
 const gs = order.map(i => games[i]);
 shots.forEach(s => s[8] = remap[s[8]]); asts.forEach(a => a[3] = remap[a[3]]);
 const pz2 = {}; for (const [id, z] of Object.entries(pz)) { pz2[id] = {}; for (const [g, v] of Object.entries(z)) pz2[id][remap[g]] = v; }
-const out = { season: SEASON, updated: new Date().toISOString(), games: gs.map(({ recap, rc, ...g }) => g), P, B, gp, L, shots, asts, pz: pz2, T, pc };
+const out = { season: SEASON, updated: new Date().toISOString(), games: gs.map(({ recap, rc, ...g }) => g), P, B, gp, L, shots, asts, pz: pz2, T, pc, pcO, cx };
 fs.writeFileSync(path.join(DIR, 'season.json'), JSON.stringify(out));
 fs.writeFileSync(path.join(DIR, 'index.json'), JSON.stringify(gs.map(g => ({ id: g.id, date: g.date, et: g.et, opp: g.opp, ha: g.ha, cle: g.cle, os: g.os, rc: g.rc }))));
 console.log(`season.json: ${gs.length} games, ${shots.length} shots, ${Object.keys(L[5]).length} five-man lineups`);
