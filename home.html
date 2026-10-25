@@ -64,6 +64,9 @@
 .gm-rk{display:block;font:700 .6875rem var(--mono);color:var(--muted);margin-top:4px;text-transform:none;letter-spacing:0}.gm-note{font-size:.6875rem;color:var(--muted);margin:6px 0 0}
 /* game day: when the injury report sits in the game-day card, the season-to-date games-missed box stays hidden */
 .in-gdm .gmw{display:none}
+/* phones: season-to-date injury tiles and the Cavs & Coffee banner a size smaller */
+@media (max-width:760px){.gm-k{font-size:.625rem;margin-bottom:4px}.gm-tile{padding:7px 9px}.gm-tile b{font-size:1.25rem}.gm-tile span{font-size:.5625rem;margin-top:3px}.gm-rk{font-size:.625rem!important;margin-top:2px!important}.gm-d summary{font-size:.75rem}
+ .nlft{margin-top:18px}.nlft>div{border:0;border-top:1px solid var(--line);background:none;padding:10px 0;gap:8px}.nlft b{font-size:1rem;gap:8px}.nlft b img{width:24px}.nlft p{display:none}.nlft input,.nlft button{height:34px;font-size:.8125rem}.nlft button{padding:0 14px}}
 /* Cavs & Coffee sign-up: a quiet banner at the bottom of Home; a small line at the very bottom of every other page */
 .nlft{max-width:1200px;margin:28px auto 0;padding:0 20px}.nlft *{box-sizing:border-box}
 .nlft>div{display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px;background:var(--card);border:1px solid var(--line);border-left:3px solid #F2B231;padding:16px 20px}
@@ -127,10 +130,10 @@
         </div>
         <div class="gmu">
           <a class="fin" id="last" rel="noopener" href="/games/2026-10-24-bkn" data-go="games/2026-10-24-bkn" title="Box score" hidden=""><span class="cap-label">Final</span><span class="lr w">W</span><span class="ls">125–121 →</span><span class="lo">vs BKN · <span class="hide-sm">Sat, </span>Oct 24</span></a>
-          <div class="gk" id="next-h-row"><span class="upnext"><b>Up next</b><span id="nx-label">Game 3</span></span><span class="nx-lks"><a class="nx-gp2" href="http://127.0.0.1:46467/games/2026-10-26-min" data-go="games/2026-10-26-min">Game preview</a><span class="nx-dot">·</span><a href="/schedule" data-go="schedule"><span class="hide-sm">Full s</span><span class="show-sm">S</span>chedule →</a></span></div>
+          <div class="gk" id="next-h-row"><span class="upnext"><b>Up next</b><span id="nx-label">Game 3</span></span><span class="nx-lks"><a class="nx-gp2" href="http://127.0.0.1:37637/games/2026-10-26-min" data-go="games/2026-10-26-min">Game preview</a><span class="nx-dot">·</span><a href="/schedule" data-go="schedule"><span class="hide-sm">Full s</span><span class="show-sm">S</span>chedule →</a></span></div>
           <h3 class="sr" id="nx-title">vs Minnesota</h3><span class="sr" id="next-h">Last result &amp; next game</span>
           <div class="nxrow"><div class="gteams"><span class="tm cle" aria-hidden="true">CLE</span><span class="gat" id="nx-at" aria-hidden="true">vs</span><span class="tm" id="nx-opp"><a class="opp" href="https://www.basketball-reference.com/teams/MIN/2027.html" target="_blank" rel="noopener" title="Minnesota on Basketball Reference">MIN</a></span></div>
-          <span class="gdays" id="cd" role="timer" aria-label="Countdown to tip-off"><small>Tip-off in</small><span class="cdw"><span class="cdn"><b id="cd-d">01</b><b id="cd-h">17</b><b id="cd-m">04</b><b id="cd-s">49</b></span><span class="cdl"><i>Days</i><i>Hrs</i><i>Min</i><i>Sec</i></span></span></span></div>
+          <span class="gdays" id="cd" role="timer" aria-label="Countdown to tip-off"><small>Tip-off in</small><span class="cdw"><span class="cdn"><b id="cd-d">01</b><b id="cd-h">16</b><b id="cd-m">52</b><b id="cd-s">49</b></span><span class="cdl"><i>Days</i><i>Hrs</i><i>Min</i><i>Sec</i></span></span></span></div>
           <div class="nx-when nx-row"><span id="nx-meta">Mon, Oct 26 · 7:00 PM ET · DAZN · WUAB 43</span><a class="nx-gp" href="/games/2026-10-26-min" data-go="games/2026-10-26-min">Preview →</a></div>
           <div class="ginfo nx-then-row"><span id="nx-then"><b>After that </b>Wed, Oct 28 vs <a href="https://www.basketball-reference.com/teams/WAS/2027.html" target="_blank" rel="noopener" class="opp">Washington</a> · 7:00 PM</span><button type="button" class="galb" id="galb" hidden=""></button></div>
         </div>
