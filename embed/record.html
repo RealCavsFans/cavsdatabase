@@ -33,7 +33,7 @@
 <link rel="preload" href="/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/geist-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/saira-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/a/app.5b11548dcd.css"><link rel="preload" href="/a/app.40ae93eda9.js" as="script">
+<link rel="stylesheet" href="/a/app.c6bf32a6fd.css"><link rel="preload" href="/a/app.90d13ebe11.js" as="script">
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
 @media (max-width:720px){.side>.o-inj{order:3}.side>.o-otd,.o-otd{order:99}}
@@ -66,6 +66,18 @@
 .gm-rk{display:block;font:700 .6875rem var(--mono);color:var(--muted);margin-top:4px;text-transform:none;letter-spacing:0}.gm-note{font-size:.6875rem;color:var(--muted);margin:6px 0 0}
 /* game day: when the injury report sits in the game-day card, the season-to-date games-missed box stays hidden */
 .in-gdm .gmw{display:none}
+/* Cavs & Coffee sign-up: a quiet banner at the bottom of Home; a small line at the very bottom of every other page */
+.nlft{max-width:1200px;margin:28px auto 0;padding:0 20px}.nlft *{box-sizing:border-box}
+.nlft>div{display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px;background:var(--card);border:1px solid var(--line);border-left:3px solid #F2B231;padding:16px 20px}
+.nlft .t{flex:1 1 320px;min-width:0}.nlft b{display:flex;align-items:center;gap:10px;font:800 1.375rem/1 "Saira Condensed",var(--sans);text-transform:uppercase;color:var(--fg)}.nlft b i{font-style:normal;color:#860038}.nlft b img{width:38px;height:auto}
+.nlft p{margin:6px 0 0;font:500 .875rem/1.4 var(--sans);color:var(--muted)}
+.nlft form{display:flex;gap:8px;flex:1 1 340px;max-width:520px;min-width:0}
+.nlft input{flex:1;min-width:0;height:40px;border:1px solid var(--line);background:var(--bg,#fff);color:var(--fg);padding:0 12px;font:500 .9375rem var(--sans);border-radius:6px}
+.nlft button{height:40px;border:0;border-radius:999px;background:#860038;color:#fff;font:700 .875rem var(--sans);padding:0 18px;white-space:nowrap;cursor:pointer}
+.nlft.mini{margin-top:18px}.nlft.mini>div{border:0;border-top:1px solid var(--line);background:none;padding:12px 0;gap:8px 16px}
+.nlft.mini .t{flex:1 1 220px}.nlft.mini b{font-size:1rem;gap:8px}.nlft.mini b img{width:24px}.nlft.mini p{display:none}
+.nlft.mini form{flex:0 1 380px}.nlft.mini input,.nlft.mini button{height:34px;font-size:.8125rem}
+@media (max-width:760px){.nlft form{flex-basis:100%;max-width:none}}
 /* cap sheet on phones: option and extension tags sit in a strip under the numbers, so every salary in a row stays on one line */
 @media (max-width:760px){.cap td.r{position:relative}.cap tr:has(.extb,.ov,.vmb)>td{vertical-align:top}.cap tr:has(.extb,.ov,.vmb)>td.r{padding-bottom:22px!important}.cap .ov{display:inline;position:static}.cap .ov::after{position:absolute;bottom:5px;right:6px;font-size:.5rem!important;padding:2px 3px 1px!important}.cap td .extb,.cap td .vmb{position:absolute;right:6px;bottom:5px;margin:0!important;display:block}.cap td:has(.ov) .extb{right:30px}.cap td:has(.extb) .vmb{right:34px}}
 /* history: all-time record tile centered on phones */
@@ -425,14 +437,14 @@
  <button class="ci-skip" id="ci-skip" type="button">Skip</button></div>
 <noscript><nav aria-label="Pages" style="padding:16px"><a href="/">Home</a> · <a href="/schedule">Cavaliers schedule</a> · <a href="/roster">Cavaliers roster</a> · <a href="/staff">Coaches &amp; front office</a> · <a href="/cap">Cavaliers salary cap</a> · <a href="/assets">Draft picks &amp; exceptions</a> · <a href="/moves">Transactions</a> · <a href="/charge">Cleveland Charge</a> · <a href="/media">Media</a> · <a href="/resources">Resources</a></nav></noscript>
 <button type="button" class="btt" id="btt" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg></button>
-<section class="nlft" id="nlft" hidden aria-label="Cavs &amp; Coffee newsletter"><div><div class="t"><b><img src="/nl/icon-mug.png" alt="" width="42" height="32">Cavs <i>&amp;</i> Coffee</b><p>Your Cavs news, served unfiltered.</p><small>Free · No ads · All Cavs</small></div><form action="https://buttondown.com/api/emails/embed-subscribe/cavscoffee" method="post"><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email"><input type="hidden" name="embed" value="1"><button type="submit">Pour me a cup</button></form></div></section>
+<section class="nlft" id="nlft" hidden aria-label="Cavs &amp; Coffee newsletter"><div><div class="t"><b><img src="/nl/icon-mug.png" alt="" width="42" height="32">Cavs <i>&amp;</i> Coffee</b><p>The box score, the top line, injuries and the news, freshly brewed in your inbox after every game. Free.</p></div><form action="https://buttondown.com/api/emails/embed-subscribe/cavscoffee" method="post"><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email"><input type="hidden" name="embed" value="1"><button type="submit">Sign me up</button></form></div></section>
 <footer><div class="wrap">
   <span>cavsdatabase.com · Independent fan reference. Not affiliated with the Cleveland Cavaliers or the NBA.<br><a class="f-rcf" href="https://realcavsfans.com" target="_blank" rel="noopener">Started on RealCavsFans. Thanks for the floor.</a></span>
   <div class="fright"><button type="button" class="ftip fapp" id="appbtn">Get the app</button><a class="ftip" href="https://www.buymeacoffee.com/cavsdb" target="_blank" rel="noopener">☕ Tip jar</a><button type="button" class="fcontact" onclick="window.cdbFeedback&&window.cdbFeedback()">Contact &amp; Feedback</button>
   <button type="button" class="thm2" id="thm2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Dark mode</span></button></div>
 </div></footer>
 
-<script src="/a/app.40ae93eda9.js"></script>
+<script src="/a/app.90d13ebe11.js"></script>
 
 <script>
 (function(){const R=document.documentElement,B=document.getElementById('thm'),T=document.getElementById('btt'),F=document.getElementById('fb');
