@@ -7,6 +7,12 @@
    "date": "2026-10-25T02:50:21.000Z"
   },
   {
+   "src": "cleveland.com",
+   "title": "Cavs nearly blow big lead again, escape with 125-121 win over Brooklyn Nets",
+   "link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQa0dLNzlXM3Y0ZUJlb1ZfWGktbDMyS1lBekM4UTZONGxycXFyQmE2SnUxQWxuckdQWURzU2ZKUVJ1VHlJUDRQdTd6bWNPVWE3aG8yelRmb0dGZkwwVDFsVnBmRFhOWTZNeDlmaXQ2WTZvWnZYRXl2eERCNVljRWpIbG44ZTZZR0JJVDdFRHUyQVBuOURIRl8tUks1b19BNi16VlQ1cEpJZU9kQWxkS2FXd3NxZ3F3bGhQQWc?oc=5",
+   "date": "2026-10-25T02:41:00.000Z"
+  },
+  {
    "src": "Fear The Sword",
    "title": "Cavs nearly blow another lead, hold on in 125-121 win over Nets",
    "link": "https://www.fearthesword.com/cavs-scores-results/53421/cavs-blow-another-lead-barely-hold-on-in-125-121-win-over-nets",
@@ -211,12 +217,6 @@
    "date": "2026-10-20T17:19:56.000Z"
   },
   {
-   "src": "cleveland.com",
-   "title": "Cavs pick up fourth-year team option on Jaylon Tyson",
-   "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQUGlsWE53NG4zcG9aNGNoV19CZGxucE14M2ZBS2o1eHdORDhlV0FoYU5acm90OGZMelZlaTJLbHI4TjBrSmpzWnpGVTVXYnBoOUREZFFFcVBJNHRvU1Rqd1dYOUpfd0dGUGtDdkR2Zk1pX3VvSUdFZUZfVEN3dDJlT1pJNmp0T0F0d1pGaHQwOUdodXdKRFc4bTRzYlI?oc=5",
-   "date": "2026-10-20T16:52:00.000Z"
-  },
-  {
    "src": "Hoops Rumors",
    "title": "Cavs' Nae'Qwan Tomlin (Back) Out At Least 3-4 Weeks",
    "link": "https://www.hoopsrumors.com/2026/10/cavs-naeqwan-tomlin-back-out-at-least-3-4-weeks.html",
@@ -358,18 +358,25 @@
  ],
  "videos": [
   {
+   "src": "It's Cavalier Podcast",
+   "title": "REACTION: Cavs vs. Nets - Home Opener!",
+   "link": "https://www.youtube.com/watch?v=If1_CL8zBOw",
+   "date": "2026-10-25T03:36:15.000Z",
+   "id": "If1_CL8zBOw"
+  },
+  {
+   "src": "Locked On Cavs",
+   "title": "Jarrett Allen has HUGE Impact On The #clevelandcavaliers Success",
+   "link": "https://www.youtube.com/watch?v=sO-d8868OW4",
+   "date": "2026-10-25T03:14:29.000Z",
+   "id": "sO-d8868OW4"
+  },
+  {
    "src": "Locked On Cavs",
    "title": "CAVS POSTCAST: Cleveland Cavaliers Blow Lead but SURVIVE as Donovan Mitchell, Jarrett Allen Deliver",
    "link": "https://www.youtube.com/watch?v=fGvT05FvyU4",
    "date": "2026-10-25T02:51:34.000Z",
    "id": "fGvT05FvyU4"
-  },
-  {
-   "src": "It's Cavalier Podcast",
-   "title": "REACTION: Cavs vs. Nets - Home Opener!",
-   "link": "https://www.youtube.com/watch?v=If1_CL8zBOw",
-   "date": "2026-10-25T02:27:54.000Z",
-   "id": "If1_CL8zBOw"
   },
   {
    "src": "It's Cavalier Podcast",
@@ -505,13 +512,6 @@
    "id": "fR7qFIM2uwA"
   },
   {
-   "src": "Locked On Cavs",
-   "title": "BOLD Predictions for the Cleveland Cavaliers This Season! | What Would be a SUCCESS?",
-   "link": "https://www.youtube.com/watch?v=VOoVxF0R8rs",
-   "date": "2026-10-19T11:15:09.000Z",
-   "id": "VOoVxF0R8rs"
-  },
-  {
    "src": "Fear The Fro",
    "title": "The 2026 Cavs Agenda Draft",
    "link": "https://www.youtube.com/watch?v=Zs_JF-41_U4",
@@ -520,6 +520,13 @@
   }
  ],
  "highlights": [
+  {
+   "src": "NBA",
+   "title": "NETS at CAVALIERS | FULL GAME HIGHLIGHTS | October 24, 2026",
+   "link": "https://www.youtube.com/watch?v=jmxhqhQIUyY",
+   "date": "2026-10-25T03:00:57.000Z",
+   "id": "jmxhqhQIUyY"
+  },
   {
    "src": "NBA",
    "title": "CAVALIERS at 76ERS | FULL GAME HIGHLIGHTS | October 22, 2026",
