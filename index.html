@@ -2476,7 +2476,7 @@ const GALERT_ON=true;
   let box={},nia=null;
   const check=()=>{if(PREVIEW)return;const t0=now();
     for(const g of SCHEDULE){const t=tipOf(g).getTime();const b=box[g[0]]||{};const fin=b.status==='final'||!!SCORES[g[0]];
-      if(fin&&t0>t&&t0<t+16*H&&!seen('f'+g[0])){show('f'+g[0],cavsFin(g,b));return}
+      if(fin&&t0>t&&t0<t+16*H&&!seen('f'+g[0])){if(routeOf()==='home')continue;/* home already shows the final */show('f'+g[0],cavsFin(g,b));return}
       if(!fin&&t0>t-H&&t0<t+H&&!seen('p'+g[0])){show('p'+g[0],cavsPre(g,t));return}}
     if(nOn&&nia&&nia.date&&t0<Date.parse(nia.date+'T12:00:00Z')+30*H&&!seen('nf'+nia.date)){show('nf'+nia.date,nFin(nia));return}
     if(nOn)for(const g of NI.g){const t=nTip(g);if(t&&t0>t-H&&t0<t+H&&!seen('np'+g[0])){show('np'+g[0],nPre(g,t));return}}};
@@ -4069,7 +4069,7 @@ const BUILT=['home','roster','cap','assets','moves','resources','schedule','staf
 /* page titles and descriptions per route (search engines and browser tabs) */
 const ROUTE_ALIAS={video:'media',rcf:'media/rcf'}; /* media/rcf now opens Media scrolled to the articles */
 function routeOf(){let r=location.pathname.replace(/^\/+|\/+$/g,'').toLowerCase();if(/index\.html$/.test(r)||location.protocol==='file:')r='';const h=location.hash.slice(1);if(!r&&h&&(SECTIONS.some(x=>x[0]===h)||ROUTE_ALIAS[h]))r=h;const AL={video:'media',rcf:'media/rcf'};return AL[r]||r||'home'}
-function show(route){{const nf=document.getElementById('nlft');if(nf)nf.classList.toggle('mini',route!=='home')}setTimeout(()=>window.cdbBarsReset&&cdbBarsReset(),0);
+function show(route){{const nf=document.getElementById('nlft');if(nf)nf.classList.toggle('mini',route!=='home')}if(route==='home'){const fa=document.querySelector('.galert.ga-fin');if(fa&&!/Niang/.test(fa.textContent))fa.remove()}setTimeout(()=>window.cdbBarsReset&&cdbBarsReset(),0);
   if(window.cdbNlView)window.cdbNlView();
   if(window.cdbAlView)window.cdbAlView();
   if(window.cdbAttachX)setTimeout(window.cdbAttachX,60);
