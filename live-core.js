@@ -74,7 +74,7 @@ function deriveCore(D,plays,F){
   let last=0,curPer=0,snap=null;const src={},ps={},pc={},tf={},to={},ch={},pfAll={};let clutchNow=false,mgNow=0;const wpS=[],lineAt={};
   const HOW=['stl','to','dreb','made','oreb','start'];tid.forEach(t=>{src[t]='';ps[t]={t:0,how:'start'};pc[t]={};HOW.forEach(h=>pc[t][h]={n:0,pts:0});to[t]=0;ch[t]={used:0,won:0}});
   const inFx=per=>F==='clutch'?clutchNow:inPer(F,per);
-  const PL=[];const newPoss=(t,tt,how,inF)=>{if(ps[t]&&ps[t].t===tt&&ps[t].how===how&&how!=='oreb')return;ps[t]={t:tt,how,pts:0,first:null,inF};if(inF){pc[t][how].n++;PL.push(Object.assign(ps[t],{team:t}))}};
+  const PL=[];const newPoss=(t,tt,how,inF)=>{if(ps[t]&&ps[t].t===tt&&ps[t].how===how&&how!=='oreb')return;ps[t]={t:tt,how,pts:0,first:null,inF,on:on[t]?[...on[t]].sort().join(','):'',od:on[opp(t)]?[...on[opp(t)]].sort().join(','):''};if(inF){pc[t][how].n++;PL.push(Object.assign(ps[t],{team:t}))}};
   const margin=[[0,0]];let lc=0,ties=0,prevSign=0;const lead={};tid.forEach(t=>lead[t]=0);
   const shots=[],asts=[];const lastFG={},lastPt={},dr=[];let lastMade=null;
   /* segments: every stretch with the same ten players on the floor (for player-vs-opponent on/off) */
@@ -109,7 +109,7 @@ function deriveCore(D,plays,F){
         if(p.sc&&b&&/assists/.test(p.text)&&B[b]){if(inF){B[b].ast++;asts.push({t,p:b,s:a,v:three?3:2,z:zi})}TT(t).forEach(x=>x.ast++)}
         else if(!p.sc&&b&&/blocks/.test(p.text)&&B[b]){if(inF)B[b].blk++;TT(teamOf(b)).forEach(x=>x.blk++)}
         if(inF){const st=ps[t],dt=p.t-st.t;const pt=/Putback|Tip/.test(ty)||(st.how==='oreb'&&dt<=3)?0:((st.how==='dreb'||st.how==='to'||st.how==='stl')&&dt<=7)?1:/Cutting|Alley Oop/.test(ty)?2:/Driving/.test(ty)?3:/Hook|Turnaround|Fade Away|Post/.test(ty)?4:/Pullup|Step Back/.test(ty)?5:/Jump Shot/.test(ty)?6:7;
-          shots.push({t,id:a,x:p.x,y:p.y,hasXY:p.x!=null,m:!!p.sc,three,zi,pt,ast:!!(p.sc&&b&&/assists/.test(p.text)),per:p.per,clock:p.clock,text:p.text})}}}
+          shots.push({t,on:[...on[t]].sort().join(','),od:[...on[opp(t)]].sort().join(','),id:a,x:p.x,y:p.y,hasXY:p.x!=null,m:!!p.sc,three,zi,pt,ast:!!(p.sc&&b&&/assists/.test(p.text)),per:p.per,clock:p.clock,text:p.text})}}}
     if(p.sc&&p.val>0){const t=p.team&&T[p.team]?p.team:teamOf(a);if(t){
       if(inF&&a&&B[a])B[a].pts+=p.val;if(inF&&seg){seg.pts[t]+=p.val;if(a)seg.pp[a]=(seg.pp[a]||0)+p.val}if(inF)pc[t][ps[t].how].pts+=p.val;if(ps[t])ps[t].pts+=p.val;lineAt[p.id]={[t]:[...ON[t]],[opp(t)]:[...ON[opp(t)]]};TT(t).forEach(x=>{x.pts+=p.val;if(a&&D.P[a]){if(D.P[a].starter)x.stPts+=p.val;else x.bnPts+=p.val}if(src[t].includes('2nd'))x.second+=p.val;if(src[t].includes('to'))x.offto+=p.val});
       const o=opp(t);ON[t].forEach(id=>{pmAll[id]+=p.val;if(inF)B[id].pm+=p.val});ON[o].forEach(id=>{pmAll[id]-=p.val;if(inF)B[id].pm-=p.val});
