@@ -50,7 +50,9 @@ function teamsOf(sum, ev) {
   const sv = (t, n) => (t.statistics || []).find(x => x.name === n)?.displayValue;
   const ma = s => { const m = String(s || '').match(/(\d+)-(\d+)/); return m ? [+m[1], +m[2]] : [0, 0]; };
   const t = (sum.boxscore?.teams || []).map(x => { const [fgm, fga] = ma(sv(x, 'fieldGoalsMade-fieldGoalsAttempted')), [tpm, tpa] = ma(sv(x, 'threePointFieldGoalsMade-threePointFieldGoalsAttempted')), [ftm, fta] = ma(sv(x, 'freeThrowsMade-freeThrowsAttempted'));
-    return { ab: x.team?.abbreviation, pts: sc[x.team?.id] || 0, fgm, fga, tpm, tpa, ftm, fta, orb: +sv(x, 'offensiveRebounds') || 0, drb: +sv(x, 'defensiveRebounds') || 0, tov: +(sv(x, 'totalTurnovers') ?? sv(x, 'turnovers')) || 0 }; });
+    return { ab: x.team?.abbreviation, pts: sc[x.team?.id] || 0, fgm, fga, tpm, tpa, ftm, fta, orb: +sv(x, 'offensiveRebounds') || 0, drb: +sv(x, 'defensiveRebounds') || 0, tov: +(sv(x, 'totalTurnovers') ?? sv(x, 'turnovers')) || 0,
+      /* for the live page's NBA ranks: passing, defense, fouls and where points came from (pot = points the other team scored off this team's turnovers) */
+      ast: +sv(x, 'assists') || 0, stl: +sv(x, 'steals') || 0, blk: +sv(x, 'blocks') || 0, pf: +sv(x, 'fouls') || 0, paint: +sv(x, 'pointsInPaint') || 0, pot: +sv(x, 'turnoverPoints') || 0, fb: +sv(x, 'fastBreakPoints') || 0 }; });
   /* the NBA Cup championship counts for nothing in the standings or season stats */
   const c0 = ev.competitions?.[0] || {}, cupFinal = c0.type?.abbreviation === 'CC' || /Cup Championship/i.test(JSON.stringify(c0.notes || [])) ? 1 : 0;
   return t.length === 2 ? { per, t, cupFinal } : null;
@@ -74,10 +76,12 @@ for (const date of dates.reverse()) {               // newest first, so a long b
     if (ev.season && ev.season.type !== 2) continue;                       // regular season only
     if (!ev.status?.type?.completed) continue;
     const seen = done.has(ev.id);
-    if (seen && !(fresh && L.recent[ev.id] && Date.now() - (L.recent[ev.id].at || 0) > 4 * 36e5)) continue;  // re-check recent games every 4 hours; older ones are final for good
+    const oldTg = seen && L.tg[ev.id] && L.tg[ev.id].t && L.tg[ev.id].t[0] && L.tg[ev.id].t[0].ast == null;   // saved before Oct 25: re-read once for the extra team stats
+    if (seen && !oldTg && !(fresh && L.recent[ev.id] && Date.now() - (L.recent[ev.id].at || 0) > 4 * 36e5)) continue;  // re-check recent games every 4 hours; older ones are final for good
     let sum; try { sum = await get(`${ESPN}/summary?event=${ev.id}`); } catch { failed++; continue; }
     const tg = teamsOf(sum, ev); if (tg) L.tg[ev.id] = { d: date, ...tg };
     const lines = tg?.cupFinal ? {} : linesOf(sum);   // the Cup final doesn't count toward season stats
+    if (seen && oldTg && !L.recent[ev.id]) continue;                       // team lines refreshed; player lines were already counted
     if (seen) {                                                            // re-read: swap in corrected lines if anything changed
       if (JSON.stringify(lines) !== JSON.stringify(L.recent[ev.id].lines)) { apply(L.recent[ev.id].lines, -1); apply(lines, 1); fixed++; }
     } else { apply(lines, 1); L.games.push(ev.id); done.add(ev.id); read++; }
