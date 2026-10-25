@@ -626,10 +626,10 @@ function renderNav(R){setTimeout(moreHint,0);
   const sg=$('seg');if(!sg.childElementCount)TABS.forEach(([k,l])=>{const b=el('button');b.innerHTML=k==='ff'?'<span class="lg">Four factors</span><span class="sh">Factors</span>':l;b.type='button';b.setAttribute('role','tab');b.dataset.t=k;b.onclick=()=>{S.tab=k;try{localStorage.setItem('cdb-live-tab2',k)}catch(e){}renderNav(S.R);renderView()};sg.appendChild(b)});
   if(S.season&&!SEASON_TABS.includes(S.tab))S.tab=SEASON_TABS[0];if(!S.season&&S.tab==='season')S.tab='team';
   [...sg.children].forEach(b=>{b.setAttribute('aria-selected',b.dataset.t===S.tab);b.hidden=S.season?!SEASON_TABS.includes(b.dataset.t):(b.dataset.t==='ff'||b.dataset.t==='season')});
-  const pr=$('per');if(S.season){pr.style.display='none';return}pr.innerHTML='';pr.appendChild(el('span',null,'Show'));
-  const have=R.lp?R.lp.per:0;const avail=[1,2,3,4].concat(R.maxPer>4?[5]:[]);
+  const pr=$('per');pr.innerHTML='';pr.appendChild(el('span',null,'Show'));
+  const have=S.season?4:R.lp?R.lp.per:0;const avail=[1,2,3,4].concat(R.maxPer>4?[5]:[]);
   const sel=S.per==='all'?avail:Array.isArray(S.per)?S.per:[];
-  const set=v=>{if(Array.isArray(v)){v=[...new Set(v)].filter(p=>avail.includes(p)).sort();if(!v.length||eqSet(v,avail))v='all'}S.per=v;rerender()};
+  const set=v=>{if(Array.isArray(v)){v=[...new Set(v)].filter(p=>avail.includes(p)).sort();if(!v.length||eqSet(v,avail))v='all'}S.per=v;if(S.season){(async()=>{$('view').classList.add('busy');await loadSeason(S.season);$('view').classList.remove('busy');render()})();return}rerender()};
   const SH={'1st half':'1H','2nd half':'2H','Clutch':'Clutch'};const btn=(l,pressed,dis,fn,title)=>{const b=el('button');b.innerHTML=SH[l]?`<span class="lg">${l}</span><span class="sh">${SH[l]}</span>`:l;b.type='button';b.setAttribute('aria-pressed',pressed);b.disabled=dis;b.onclick=fn;if(title)b.title=title;pr.appendChild(b)};
   const second=avail.filter(p=>p>=3);
   btn('Game',S.per==='all',have<1,()=>set('all'));
@@ -639,7 +639,7 @@ function renderNav(R){setTimeout(moreHint,0);
   avail.forEach(p=>btn(p===5?'OT':'Q'+p,S.per!=='all'&&S.per!=='clutch'&&sel.includes(p),have<p,()=>{if(!Array.isArray(S.per))return set([p]);set(sel.includes(p)?sel.filter(x=>x!==p):sel.concat(p))},'Tap more than one to combine quarters'));
   pr.appendChild(el('i'));
   btn('Clutch',S.per==='clutch',have<4,()=>set(S.per==='clutch'?'all':'clutch'),'Last 5 minutes, score within 5');
-  pr.style.display=(S.tab==='lineups'&&S.lu==='rot')||S.tab==='plays'?'none':'';
+  pr.style.display=(S.tab==='lineups'&&S.lu==='rot')||S.tab==='plays'||(S.season&&S.tab==='season')?'none':'';
 }
 /* scroll hints: a table wider than the screen fades at its right edge and shows "Swipe for more"; both go away once it's scrolled to the end */
 function scrollHints(){document.querySelectorAll('#view .tw').forEach(w=>{const over=w.scrollWidth>w.clientWidth+4;let h=w.previousElementSibling;if(!(h&&h.classList.contains('swh'))){if(!over)return;h=el('div','swh');h.innerHTML='Swipe for more <i>→</i>';w.before(h);w.addEventListener('scroll',()=>{const end=w.scrollLeft+w.clientWidth>=w.scrollWidth-4;w.classList.toggle('more',!end);if(w.scrollLeft>8)h.classList.add('gone')},{passive:true})}
@@ -828,7 +828,7 @@ function vTeam(v,D,R){
   if(S.state==='post'&&!S.season&&R.lp){const RA=S.per==='all'?R:deriveCore(D,D.plays,'all');const c=el('div','card');c.style.borderTop='3px solid var(--gold)';c.style.marginBottom='14px';head(c,'Recap','Numbers only, written automatically at the final buzzer');const ul=el('ul','sw');recap(D,RA).forEach((t,i)=>{const li=el('li');li.style.gridTemplateColumns='1fr';li.appendChild(el('span',null,t));if(!i)li.style.fontWeight='700';ul.appendChild(li)});c.appendChild(ul);v.appendChild(c)}
   if(MOCK){v.appendChild(el('p','note','The fatigue watch mockup below only shows with ?mock=1.'));v.appendChild(fatigueCard(D,R))}
   const a=R.T[D.focus.id],b=R.T[D.other.id];
-  const c=el('div','card');head(c,'Team stats',S.season?'Per game · '+((D.games||[]).length)+' game'+((D.games||[]).length===1?'':'s'):perLabel(S.per));
+  const c=el('div','card');head(c,'Team stats',S.season?(S.per!=='all'?perLabel(S.per)+' · ':'')+'Per game · '+((D.games||[]).length)+' game'+((D.games||[]).length===1?'':'s'):perLabel(S.per));
   const ROWS=[];let G0=null;const SHORT={'Offensive rebounds':'Off. rebounds','Second-chance points':'Second chance','Points from threes':'From threes','Points from free throws':'From free throws','Points in the paint':'In the paint','Points off turnovers':'Off turnovers','Pace (possessions per 48)':'Pace','Possessions (est.)':'Possessions','Points per 100 possessions':'Points per 100','Free throws made':'FT made','True shot attempts':'True shot att.'};
   const grp=n=>{G0=n==='Where the points came from'?'Scoring':n};
   const row=(lab,x,y,fx,fy,hib=true)=>ROWS.push({g:G0,lab:SHORT[lab]||lab,x,y,fx,fy,hib,better:hib===null||Math.abs(x-y)<1e-9?-1:((x>y)===hib?0:1)});
@@ -1130,7 +1130,7 @@ function frame(x,kicker,title,D,R){
   x.fillStyle='#F2B231';x.font='800 40px "Saira Condensed"';x.fillText(kicker.toUpperCase(),72,100);
   x.fillStyle='#fff';let fs=112;x.font=`800 ${fs}px "Saira Condensed"`;const T=title.toUpperCase();while(x.measureText(T).width>936&&fs>56){fs-=6;x.font=`800 ${fs}px "Saira Condensed"`}x.fillText(T,72,215);
   const fin=S.state==='post',per=R.lp?R.lp.per:1;const when=fin?'FINAL'+(per>4?'/'+pname(per):''):pname(per)+' '+(R.lp?R.lp.clock:'');
-  x.font='700 46px "Geist Mono"';const sc=`${D.away.abbr} ${R.as}  ${D.home.abbr} ${R.hs}`;x.fillText(sc,72,315);const w=x.measureText(sc).width;x.font='600 32px Archivo';x.fillStyle='rgba(255,255,255,.75)';x.fillText(when,72+w+34,315);
+  if(S.season){const [sl,wh]=scoreLine(D,R);x.font='700 46px "Geist Mono"';x.fillText(sl,72,315);const w=x.measureText(sl).width;x.font='600 32px Archivo';x.fillStyle='rgba(255,255,255,.75)';x.fillText(wh+(S.per!=='all'?' · '+perLabel(S.per).toUpperCase():''),72+w+34,315)}else{x.font='700 46px "Geist Mono"';const sc=`${D.away.abbr} ${R.as}  ${D.home.abbr} ${R.hs}`;x.fillText(sc,72,315);const w=x.measureText(sc).width;x.font='600 32px Archivo';x.fillStyle='rgba(255,255,255,.75)';x.fillText(when,72+w+34,315);}
   x.fillStyle='#101419';x.fillRect(0,1250,1080,100);x.fillStyle='#fff';x.font='800 44px "Saira Condensed"';x.fillText('CAVS',72,1315);const w1=x.measureText('CAVS ').width;x.fillStyle='#F2B231';x.fillText('DATABASE',72+w1,1315);
   x.fillStyle='#c9ccd1';x.font='600 30px Archivo';const u='cavsdatabase.com';x.fillText(u,1008-x.measureText(u).width,1312);
 }
@@ -1180,7 +1180,8 @@ const ODES=[
 const wonNames=(D,R)=>{const A=R.T[D.focus.id],B=R.T[D.other.id],fa=factors(A,B),fb=factors(B,A);return FF.filter(([k,,,h])=>fa[k]!=null&&fb[k]!=null&&fa[k]!==fb[k]&&((fa[k]>fb[k])===h)).map(x=>x[1])};
 const BG='#f7f5f2',INK='#101419',WINE='#860038',GOLD='#F2B231',GREY='#5b6470',MUT='#6b7078';
 function footer(x){x.fillStyle=INK;x.fillRect(0,1250,1080,100);x.fillStyle='#fff';x.font='800 44px "Saira Condensed"';x.fillText('CAVS',72,1315);const w1=x.measureText('CAVS ').width;x.fillStyle=GOLD;x.fillText('DATABASE',72+w1,1315);x.fillStyle='#c9ccd1';x.font='600 30px Archivo';const u='cavsdatabase.com';x.fillText(u,1008-x.measureText(u).width,1312)}
-const scoreLine=(D,R)=>{const fin=S.state==='post',per=R.lp?R.lp.per:1;return [`${D.away.abbr} ${R.as}  ${D.home.abbr} ${R.hs}`,fin?'FINAL'+(per>4?'/'+pname(per):''):pname(per)+' '+(R.lp?R.lp.clock:'')]};
+const scoreLine=(D,R)=>{if(S.season){const g=D.games||[],w=g.filter(x=>x.cle>x.os).length;return [`CLE ${w}–${g.length-w}`,(D.season||'').replace('-','–')+' · '+g.length+' GAMES']}const fin=S.state==='post',per=R.lp?R.lp.per:1;return [`${D.away.abbr} ${R.as}  ${D.home.abbr} ${R.hs}`,fin?'FINAL'+(per>4?'/'+pname(per):''):pname(per)+' '+(R.lp?R.lp.clock:'')]};
+const atLbl=D=>S.season?(D.season||'').replace('-','–')+' Cavs':D.away.abbr+' at '+D.home.abbr;
 const CARDS={
   game:{label:'Game card',async draw(x,D,R){const F=D.focus,O=D.other,fs=F.ha==='home'?R.hs:R.as,os=F.ha==='home'?R.as:R.hs;const cavsWin=S.state==='post'&&F.id==='5'&&fs>os;
     const top=t=>D.roster[t.id].filter(id=>R.B[id].min>0||R.B[id].pts).sort((a,b)=>R.B[b].pts-R.B[a].pts);
@@ -1195,7 +1196,7 @@ const CARDS={
         x.fillStyle='#fff';x.font='800 40px "Saira Condensed"';ctr(x,D.P[pid].last.toUpperCase(),cx,cy+175);x.font='700 72px "Geist Mono"';ctr(x,String(bb.pts),cx,cy+255);x.fillStyle=GOLD;x.font='800 28px "Saira Condensed"';ctr(x,'POINTS',cx,cy+290);x.fillStyle='rgba(255,255,255,.85)';x.font='600 28px Archivo';ctr(x,`${bb.oreb+bb.dreb} reb · ${bb.ast} ast`,cx,cy+332)});
       {const wn=wonNames(D,R);x.fillStyle='rgba(0,0,0,.28)';x.fillRect(72,1140,936,80);x.fillStyle=GOLD;x.font='800 30px "Saira Condensed"';x.fillText(`WON ${wn.length} OF THE 4 FACTORS`,96,1172);x.fillStyle='#fff';x.font='600 26px Archivo';x.fillText(wn.length?wn.join(' · '):'Shooting, ball security, rebounding and free throws all went the other way',96,1206)}
       footer(x);return}
-    const w=R.as===R.hs?null:(R.as>R.hs?D.away:D.home);frame(x,kick()+D.away.abbr+' at '+D.home.abbr,S.state==='post'&&w?w.name+' win':(R.lp?pname(R.lp.per)+' '+R.lp.clock:'Score update'),D,R);
+    const w=R.as===R.hs?null:(R.as>R.hs?D.away:D.home);frame(x,kick()+atLbl(D),S.state==='post'&&w?w.name+' win':(R.lp?pname(R.lp.per)+' '+R.lp.clock:'Score update'),D,R);
     lbl(x,'HOW IT PLAYED OUT',72,450,30);cMargin(x,R,D,72,470,936,200);
     [F,O].forEach((t,ti)=>{const X0=72+ti*480;lbl(x,t.name.toUpperCase(),X0,780,34,ti?GREY:WINE);
       top(t).slice(0,2).forEach((id,i)=>{const b=R.B[id],y=850+i*170;num(x,b.pts,X0,y+56,88,ti?GREY:WINE);lbl(x,'PTS',X0+4,y+92,26);const nx=X0+150;txt(x,D.P[id].last,nx,y+20,38,INK,700);
@@ -1219,7 +1220,7 @@ const CARDS={
     FF.forEach(([k,n,full,hib],i)=>{const y=580+i*165,a=fa[k],b=fb[k];txt(x,n,72,y,42,INK,700);txt(x,full,72,y+44,28,MUT,500);
       const win=a!=null&&b!=null&&a!==b?((a>b)===hib?0:1):-1;numW(x,a==null?'–':(a*100).toFixed(1)+'%',600,y+18,56,win===0?INK:MUT,win===0);numW(x,b==null?'–':(b*100).toFixed(1)+'%',850,y+18,56,win===1?INK:MUT,win===1);
       if(i<3){x.fillStyle='#e3e0db';x.fillRect(72,y+80,936,2)}})}},
-  run:{label:'Run card',pick:'run',async draw(x,D,R,i){const r=R.runs[+i];if(!r)return;const t=D.teams.find(z=>z.id===r.t);frame(x,kick()+D.away.abbr+' at '+D.home.abbr,t.name+' run',D,R);
+  run:{label:'Run card',pick:'run',async draw(x,D,R,i){const r=R.runs[+i];if(!r)return;const t=D.teams.find(z=>z.id===r.t);frame(x,kick()+atLbl(D),t.name+' run',D,R);
     num(x,r.pts+'–0',72,640,230,t===D.focus?WINE:GREY);
     txt(x,`${pname(r.start.per)} ${r.start.clock} → ${r.end.per!==r.start.per?pname(r.end.per)+' ':''}${r.end.clock}`,72,710,38,INK,700);txt(x,`in ${fmtMin(r.end.t-r.start.t)} of game time`,72,756,30,MUT,500);
     const i0=R.plays.indexOf(r.start),i1=R.plays.indexOf(r.end);const best=ptsIn(D,R,i0,i1,r.t)[0];
@@ -1229,10 +1230,10 @@ const CARDS={
     const ln=R.lineAt[r.start.id];if(ln&&ln[r.t])txt(x,'On the floor: '+ln[r.t].map(id=>D.P[id].last).join(', '),72,1150,28,'#3a3f46',500);footer(x)}},
   lineup:{label:'Lineup card',pick:'lineup',async draw(x,D,R,k){const l=R.L[D.focus.id][5][k];if(!l)return;let po=poss(l.o),pd=poss(l.d);{const _a=(po+pd)/2;po=pd=_a}const net=po>=1&&pd>=1?l.pf/po*100-l.pa/pd*100:null;
     const all=Object.values(R.L[D.focus.id][5]).filter(z=>z.sec>=180).sort((a,b)=>(b.pf-b.pa)-(a.pf-a.pa));const best=all[0]===l;
-    frame(x,kick()+D.focus.abbr+' lineup',best?'Best five tonight':'Five-man unit',D,R);
+    frame(x,kick()+D.focus.abbr+' lineup',best?(S.season?'Best five this season':'Best five tonight'):'Five-man unit',D,R);
     const ids=l.ids.slice().sort((a,b)=>D.P[b].starter-D.P[a].starter);const imgs=await Promise.all(ids.map(i=>loadImg(hsUrl(D,i))));
-    ids.forEach((id,j)=>{const cx=72+93+j*187;head2(x,imgs[j],cx,530,82,null,initials(D.P[id].name));x.fillStyle=INK;x.font='800 32px "Saira Condensed"';const nm=D.P[id].last.toUpperCase();let f2=32;while(x.measureText(nm).width>176&&f2>20){f2-=2;x.font=`800 ${f2}px "Saira Condensed"`}ctr(x,nm,cx,660);x.fillStyle=MUT;x.font='600 26px Archivo';ctr(x,R.B[id].pts+' pts tonight',cx,700)});
-    x.fillStyle='#e3e0db';x.fillRect(72,770,936,2);lbl(x,'TOGETHER TONIGHT',72,830,32);
+    ids.forEach((id,j)=>{const cx=72+93+j*187;head2(x,imgs[j],cx,530,82,null,initials(D.P[id].name));x.fillStyle=INK;x.font='800 32px "Saira Condensed"';const nm=D.P[id].last.toUpperCase();let f2=32;while(x.measureText(nm).width>176&&f2>20){f2-=2;x.font=`800 ${f2}px "Saira Condensed"`}ctr(x,nm,cx,660);x.fillStyle=MUT;x.font='600 26px Archivo';ctr(x,(S.season?(R.B[id].pts/(R.B[id].gp||1)).toFixed(1)+' ppg':R.B[id].pts+' pts tonight'),cx,700)});
+    x.fillStyle='#e3e0db';x.fillRect(72,770,936,2);lbl(x,S.season?'TOGETHER THIS SEASON':'TOGETHER TONIGHT',72,830,32);
     const pm=l.pf-l.pa;const cells=[['PLUS-MINUS',sgn(pm),pm>=0?'#1d6b3a':'#a3122e'],['MINUTES',fmtMin(l.sec),INK],['SCORE',l.pf+'–'+l.pa,INK]];
     cells.forEach(([lb,v,c],j)=>{const cx=72+156+j*312;x.fillStyle=c;x.font='700 96px "Geist Mono"';ctr(x,v,cx,960);x.fillStyle=MUT;x.font='800 30px "Saira Condensed"';ctr(x,lb,cx,1004)});
     x.fillStyle='#e3e0db';x.fillRect(72,1045,936,2);
@@ -1245,14 +1246,14 @@ const CARDS={
     x.beginPath();x.moveTo(X(3),Y0);x.lineTo(X(3),Y(c3));x.arc(X(25),Y(0),23.75*s,Math.atan2(c3,-22),Math.atan2(c3,22),true);x.lineTo(X(47),Y0);x.stroke();x.beginPath();x.arc(X(25),Y(0),.75*s,0,7);x.stroke();
     sh.filter(q=>!q.m).forEach(q=>{if(q.y>28.5)return;const a=X(Math.max(.5,Math.min(49.5,q.x))),b=Y(Math.max(-4.5,q.y));x.strokeStyle='rgba(160,168,180,.55)';x.lineWidth=4;x.beginPath();x.moveTo(a-9,b-9);x.lineTo(a+9,b+9);x.moveTo(a+9,b-9);x.lineTo(a-9,b+9);x.stroke()});
     sh.filter(q=>q.m).forEach(q=>{if(q.y>28.5)return;const a=X(Math.max(.5,Math.min(49.5,q.x))),b=Y(Math.max(-4.5,q.y));const g=x.createRadialGradient(a,b,0,a,b,30);g.addColorStop(0,q.three?'rgba(242,178,49,.95)':'rgba(214,40,100,.95)');g.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=g;x.beginPath();x.arc(a,b,30,0,7);x.fill();x.fillStyle=q.three?GOLD:'#ff4f8b';x.beginPath();x.arc(a,b,8,0,7);x.fill()});
-    x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText((kick()+D.away.abbr+' at '+D.home.abbr).toUpperCase(),60,100);
+    x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText((kick()+atLbl(D)).toUpperCase(),60,100);
     x.fillStyle='#fff';x.font='800 120px "Saira Condensed"';x.fillText(team?'EVERY CAVS SHOT':D.P[id].last.toUpperCase()+"'S SHOTS",60,220);
     const m=sh.filter(q=>q.m).length,th=sh.filter(q=>q.three),thm=th.filter(q=>q.m).length;const pts=sh.filter(q=>q.m).reduce((a,q)=>a+(q.three?3:2),0);
     [['FG',m+'-'+sh.length],['3PT',thm+'-'+th.length],['PTS/SHOT',sh.length?(pts/sh.length).toFixed(2):'–']].forEach(([l,v],i)=>{const cx=60+i*330;x.fillStyle='#fff';x.font='700 70px "Geist Mono"';x.fillText(v,cx,1060);x.fillStyle='#8d939d';x.font='800 30px "Saira Condensed"';x.fillText(l,cx+4,1100)});
     x.font='800 28px "Saira Condensed"';x.fillStyle='#ff4f8b';x.fillText('● MADE 2',60,1170);x.fillStyle=GOLD;x.fillText('● MADE 3',230,1170);x.fillStyle='#a0a8b4';x.fillText('✕ MISSED',400,1170);
     footer(x)}},
   quarters:{label:'Quarter by quarter',async draw(x,D,R){const F=D.focus,O=D.other;const qs=Object.keys(R.TQ).map(Number).sort((a,b)=>a-b);
-    frame(x,D.away.abbr+' at '+D.home.abbr,'Quarter by quarter',D,R);
+    frame(x,atLbl(D),'Quarter by quarter',D,R);
     const won=qs.filter(q=>R.TQ[q][F.id]&&R.TQ[q][O.id]&&R.TQ[q][F.id].pts>R.TQ[q][O.id].pts).length;lbl(x,`${F.abbr} WON ${won} OF ${qs.length}`,72,460,40,WINE);
     const n=qs.length,cols=n>4?3:2,W=(936-(cols-1)*24)/cols,H=n>4?230:330;
     qs.forEach((q,i)=>{const c=i%cols,r=Math.floor(i/cols),X0=72+c*(W+24),Y0=500+r*(H+24);const a=R.TQ[q][F.id]||{pts:0},b=R.TQ[q][O.id]||{pts:0};const w=a.pts>b.pts,tie=a.pts===b.pts;
@@ -1266,14 +1267,14 @@ const CARDS={
     const lead=k=>ids.slice().sort((a,b)=>(k==='reb'?(R.B[b].oreb+R.B[b].dreb)-(R.B[a].oreb+R.B[a].dreb):R.B[b][k]-R.B[a][k]))[0];
     const L=[['pts','POINTS'],['reb','REBOUNDS'],['ast','ASSISTS']].map(([k,l])=>{const id=lead(k);const b=R.B[id];return {id,l,v:k==='reb'?b.oreb+b.dreb:b[k]}});
     x.fillStyle='#101419';x.fillRect(0,0,1080,1350);const g=x.createLinearGradient(0,0,0,1350);g.addColorStop(0,'#2a0012');g.addColorStop(1,'#101419');x.fillStyle=g;x.fillRect(0,0,1080,1350);
-    x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText((kick()+D.away.abbr+' at '+D.home.abbr).toUpperCase(),72,100);x.fillStyle='#fff';x.font='800 120px "Saira Condensed"';x.fillText('CAVS LEADERS',72,220);
+    x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText((kick()+atLbl(D)).toUpperCase(),72,100);x.fillStyle='#fff';x.font='800 120px "Saira Condensed"';x.fillText('CAVS LEADERS',72,220);
     const [sl,wh]=scoreLine(D,R);x.font='700 40px "Geist Mono"';x.fillStyle='rgba(255,255,255,.8)';x.fillText(sl+'  '+wh,72,290);
     const order=[1,0,2],hts=[330,420,260];const imgs=await Promise.all(L.map(o=>loadImg(hsUrl(D,o.id))));
     order.forEach((li,pos)=>{const o=L[li],cx=72+150+pos*318,base=1180,h=hts[pos];
       x.fillStyle=li===0?GOLD:'#3a2030';x.fillRect(cx-140,base-h,280,h);x.fillStyle=li===0?INK:'#fff';x.font='700 96px "Geist Mono"';ctr(x,String(o.v),cx,base-h+110);x.font='800 30px "Saira Condensed"';x.fillStyle=li===0?INK:GOLD;ctr(x,o.l,cx,base-h+150);
       head2(x,imgs[li],cx,base-h-120,100,li===0?GOLD:'#ffffff',initials(D.P[o.id].name));x.fillStyle='#fff';x.font='800 36px "Saira Condensed"';ctr(x,D.P[o.id].last.toUpperCase(),cx,base-h-238)});
     footer(x)}},
-  box:{label:'Box score card',async draw(x,D,R){const F=D.focus;frame(x,kick()+D.away.abbr+' at '+D.home.abbr,F.name+' box score',D,R);
+  box:{label:'Box score card',async draw(x,D,R){const F=D.focus;frame(x,kick()+atLbl(D),F.name+(S.season?' season totals':' box score'),D,R);
     const ids=D.roster[F.id].filter(i=>R.B[i].min>0).sort((a,b)=>R.B[b].min-R.B[a].min).slice(0,10);
     const cols=[['MIN',b=>Math.round(b.min/60)],['PTS',b=>b.pts],['REB',b=>b.oreb+b.dreb],['AST',b=>b.ast],['FG',b=>b.fgm+'-'+b.fga],['3PT',b=>b.tpm+'-'+b.tpa],['+/-',b=>sgn(b.pm)]];const cx=[370,450,530,605,745,875,1000];
     cols.forEach(([h],j)=>{x.fillStyle=MUT;x.font='800 28px "Saira Condensed"';const w=x.measureText(h).width;x.fillText(h,cx[j]-w,450)});
@@ -1281,14 +1282,14 @@ const CARDS={
     ids.forEach((id,k)=>{const y=510+k*72,b=R.B[id];if(k%2===0){x.fillStyle='#efebe5';x.fillRect(60,y-46,960,68)}x.fillStyle=INK;x.font='700 34px Archivo';x.fillText(D.P[id].last,80,y);
       cols.forEach(([h,fn],j)=>{const v=String(fn(b));x.font=(h==='PTS'?'700 ':'600 ')+'34px "Geist Mono"';x.fillStyle=h==='PTS'&&b.pts===best?WINE:h==='+/-'?(b.pm>0?'#1d6b3a':b.pm<0?'#a3122e':INK):INK;const w=x.measureText(v).width;x.fillText(v,cx[j]-w,y)})});
     const T=R.T[F.id];const y=510+ids.length*72+8;x.fillStyle=INK;x.fillRect(60,y-46,960,4);x.font='800 34px "Saira Condensed"';x.fillText('TEAM',80,y+6);x.font='700 34px "Geist Mono"';[[1,T.pts],[2,T.oreb+T.dreb],[3,T.ast],[4,T.fgm+'-'+T.fga],[5,T.tpm+'-'+T.tpa]].forEach(([j,v])=>{const w=x.measureText(String(v)).width;x.fillText(String(v),cx[j]-w,y+6)})}},
-  clutch:{label:'Clutch card',async draw(x,D,R){const F=D.focus,O=D.other;const C2=deriveCore(D,R.plays,'clutch');frame(x,D.away.abbr+' at '+D.home.abbr,'Clutch time',D,R);
+  clutch:{label:'Clutch card',async draw(x,D,R){const F=D.focus,O=D.other;const C2=deriveCore(D,R.plays,'clutch');frame(x,atLbl(D),'Clutch time',D,R);
     const a=C2.T[F.id],b=C2.T[O.id];if(!a.sec){txt(x,'No clutch time in this game.',72,520,40,INK,700);txt(x,'Clutch = last 5 minutes with the score within 5.',72,575,30,MUT,500);return}
     lbl(x,'LAST 5 MINUTES, WITHIN 5',72,450,32);x.fillStyle=WINE;x.font='700 170px "Geist Mono"';x.fillText(String(a.pts),72,640);x.fillStyle=MUT;x.font='700 90px "Geist Mono"';const w=x.measureText(' – ').width;x.fillText(' – ',72+x.measureText(String(a.pts)).width*1.88,610);x.fillStyle=GREY;x.font='700 170px "Geist Mono"';x.fillText(String(b.pts),72+x.measureText(String(a.pts)).width+w+20,640);
     lbl(x,F.abbr+' IN CLUTCH TIME',72,690,30,WINE);lbl(x,O.abbr,560,690,30,GREY);
     const ids=D.roster[F.id].filter(i=>C2.B[i].min>0).sort((p,q)=>C2.B[q].pts-C2.B[p].pts);const id=ids[0];
     if(id){const img=await loadImg(hsUrl(D,id));head2(x,img,190,880,110,null,initials(D.P[id].name));const bb=C2.B[id];txt(x,D.P[id].name,340,850,46,INK,700);txt(x,`${bb.pts} pts · ${bb.fgm}-${bb.fga} FG · ${bb.ftm}-${bb.fta} FT`,340,900,32,'#3a3f46',500);txt(x,'in clutch time',340,945,28,MUT,500)}
     [['FG',a.fgm+'-'+a.fga],['FT',a.ftm+'-'+a.fta],['TO',a.to],['STL',a.stl]].forEach(([l,v],j)=>{const cx=72+j*236;lbl(x,l,cx,1080);num(x,v,cx,1160,64)});footer(x)}},
-  milestone:{label:'Milestone card',async draw(x,D,R){const F=D.focus;milestoneCard(D,R);const h=MSH[0];frame(x,D.away.abbr+' at '+D.home.abbr,'Milestone night',D,R);
+  milestone:{label:'Milestone card',async draw(x,D,R){const F=D.focus;milestoneCard(D,R);const h=MSH[0];frame(x,atLbl(D),'Milestone night',D,R);
     if(!h){txt(x,'No milestones passed tonight.',72,520,40,INK,700);footer(x);return}
     const [id,kind,k,v,passed]=h;const W2={PTS:'POINTS',REB:'REBOUNDS',AST:'ASSISTS'};const img=await loadImg(hsUrl(D,id));head2(x,img,540,620,190,null,initials(D.P[id].name));
     x.fillStyle=INK;x.font='800 64px "Saira Condensed"';ctr(x,D.P[id].name.toUpperCase(),540,880);
@@ -1302,7 +1303,7 @@ const CARDS={
     const L=rc.res.slice(-20);L.forEach((z,i)=>{x.fillStyle=z==='W'?WINE:'#3a3f46';x.fillRect(80+i*46,570,38,90);x.fillStyle=z==='W'?GOLD:'#8d939d';x.font='800 30px "Saira Condensed"';ctr(x,z,99+i*46,628)});
     const ids=D.roster[F.id].filter(i=>R.B[i].min>0).sort((p,q)=>R.B[q].pts-R.B[p].pts);const id=ids[0];if(id){const img=await loadImg(hsUrl(D,id));head2(x,img,200,880,120,null,initials(D.P[id].name));const bb=R.B[id];x.fillStyle='#fff';x.font='800 50px "Saira Condensed"';x.fillText(D.P[id].name.toUpperCase(),360,860);x.font='600 34px Archivo';x.fillStyle='rgba(255,255,255,.8)';x.fillText(`${bb.pts} pts · ${bb.oreb+bb.dreb} reb · ${bb.ast} ast tonight`,360,910)}
     const [sl,wh]=scoreLine(D,R);x.fillStyle='#fff';x.font='700 44px "Geist Mono"';x.fillText(sl+'  '+wh,80,1120);footer(x)}},
-  story:{label:'Game story',async draw(x,D,R){const F=D.focus,O=D.other;frame(x,D.away.abbr+' at '+D.home.abbr,'The story of the game',D,R);
+  story:{label:'Game story',async draw(x,D,R){const F=D.focus,O=D.other;frame(x,atLbl(D),'The story of the game',D,R);
     cMargin(x,R,D,72,430,936,170);
     const ev=[];const fh=F===D.home;
     const fr=R.runs.filter(r=>r.t===F.id).sort((a,b)=>b.pts-a.pts)[0],or=R.runs.filter(r=>r.t===O.id).sort((a,b)=>b.pts-a.pts)[0];
@@ -1319,7 +1320,7 @@ const CARDS={
 const sGames=D=>D.games||[];const sRec=D=>{const g=sGames(D);const w=g.filter(x=>x.cle>x.os).length;return [w,g.length-w]};
 const sSea=D=>(D.season||'').replace('-','–');const pg=(v,n)=>n?(v/n).toFixed(1):'–';const pc1=(m,a)=>a?(m/a*100).toFixed(1)+'%':'–';
 function sHead(x,D,title,sub,maxW=936){x.fillStyle=BG;x.fillRect(0,0,1080,1350);x.fillStyle=WINE;x.fillRect(0,0,1080,300);x.fillStyle=GOLD;x.fillRect(0,300,1080,10);
-  const n=sGames(D).length,[w,l]=sRec(D);x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText((sSea(D)+' CAVS · '+n+' GAME'+(n===1?'':'S')+' · '+w+'–'+l).toUpperCase(),72,100);
+  const n=sGames(D).length,[w,l]=sRec(D);x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText((kick()+sSea(D)+' CAVS · '+n+' GAME'+(n===1?'':'S')+' · '+w+'–'+l).toUpperCase(),72,100);
   x.fillStyle='#fff';let fs=120;x.font=`800 ${fs}px "Saira Condensed"`;while(x.measureText(title).width>maxW&&fs>56){fs-=6;x.font=`800 ${fs}px "Saira Condensed"`}x.fillText(title,72,220);
   if(sub){x.fillStyle='rgba(255,255,255,.8)';x.font='600 30px Archivo';x.fillText(sub,72,272)}}
 const SCARDS={
@@ -1343,9 +1344,11 @@ const SCARDS={
     const cats=[['POINTS',b=>b.pts],['REBOUNDS',b=>b.oreb+b.dreb],['ASSISTS',b=>b.ast],['THREES MADE',b=>b.tpm],['STEALS',b=>b.stl],['BLOCKS',b=>b.blk]];
     cats.forEach(([lab,f],ci)=>{const X0=72+(ci%2)*480,Y0=380+Math.floor(ci/2)*280;lbl(x,lab,X0,Y0,34,WINE);q.slice().sort((a,b)=>f(R.B[b])/R.B[b].gp-f(R.B[a])/R.B[a].gp).slice(0,3).forEach((id,i)=>{const b=R.B[id],y=Y0+64+i*62;x.fillStyle=i?GREY:INK;x.font=(i?'600 ':'800 ')+'36px Archivo';x.fillText(D.P[id].last,X0,y);x.font='700 38px "Geist Mono"';const v=pg(f(b),b.gp);x.fillText(v,X0+420-x.measureText(v).width,y)})});
     x.fillStyle=MUT;x.font='600 26px Archivo';{const mn=Math.max(1,Math.ceil(mg*.5));x.fillText('Min. '+mn+' game'+(mn===1?'':'s')+' played',72,1215)}footer(x)}}};
-async function renderCard(type,arg,D,R){await cardFonts();const cv=document.createElement('canvas');cv.width=1080;cv.height=1350;await (S.season?SCARDS:CARDS)[type].draw(cv.getContext('2d'),D,R,arg);return new Promise(r=>cv.toBlob(r,'image/png'))}
+/* season mode: the season cards plus the game cards that work on season totals */
+const shareCards=()=>S.season?Object.assign({},SCARDS,{ff:CARDS.ff,lineup:CARDS.lineup,shotmap:CARDS.shotmap,box:CARDS.box}):CARDS;
+async function renderCard(type,arg,D,R){await cardFonts();const cv=document.createElement('canvas');cv.width=1080;cv.height=1350;await shareCards()[type].draw(cv.getContext('2d'),D,R,arg);return new Promise(r=>cv.toBlob(r,'image/png'))}
 function vShare(v,D,R){
-  const CARDS0=S.season?SCARDS:CARDS;const c=el('div','card');head(c,'Share cards',(S.season?'Season so far':perLabel(S.per))+' · 1080 × 1350 images sized for X and Instagram');
+  const CARDS0=shareCards();const c=el('div','card');head(c,'Share cards',(S.season?'Season so far':perLabel(S.per))+' · 1080 × 1350 images sized for X and Instagram');
   const fl=el('div','fl');if(!S.f.card||!CARDS0[S.f.card])S.f.card=S.season?'season':'game';
   const avail={clutch:()=>deriveCore(D,R.plays,'clutch').T[D.focus.id].sec>0,milestone:()=>(milestoneCard(D,R),MSH.length>0),streak:()=>D.focus.id===CLE&&S.state==='post'};if(S.f.card&&avail[S.f.card]&&!avail[S.f.card]())S.f.card='game';
   Object.entries(CARDS0).forEach(([k,o])=>{if(!S.season&&avail[k]&&!avail[k]())return;const b=el('button',null,o.label);b.type='button';b.setAttribute('aria-pressed',S.f.card===k);b.onclick=()=>{S.f.card=k;renderView()};fl.appendChild(b)});c.appendChild(fl);
@@ -1618,9 +1621,9 @@ async function netRanks(se){if(NETR[se])return NETR[se];let net={};
   const order=Object.keys(net).filter(a=>a!=='CLE').sort((a,b)=>net[b]-net[a]);const rk={};order.forEach((a,i)=>rk[a]=i+1);return NETR[se]={net,rk,n:order.length}}
 const TIERS=[['','Any opponent strength'],['t5','Top 5 net rating'],['t10','Top 10 net rating'],['t15','Top 15 net rating'],['b10','Bottom 10 net rating']];
 function inTier(rk,n,tier){if(!tier)return true;if(rk==null)return false;return tier==='t5'?rk<=5:tier==='t10'?rk<=10:tier==='t15'?rk<=15:rk>n-10}
-function seasonFrom(se,files,games){
+function seasonFrom(se,files,games,per='all'){
   const P={},B={},gp={},L={2:{},3:{},4:{},5:{}},shots=[],asts=[],pz={},pc={},pcO={},cx={cle:{t:[0,0],h:[0,0]},opp:{t:[0,0],h:[0,0]}},gs=[];const zT=()=>({z:ZN.map(()=>[0,0])});const T={cle:zT(),opp:zT()};
-  files.forEach((s,fi)=>{const D=prep(s),R=deriveCore(D,D.plays,'all');if(D.focus.id!=='5')return;const gi=gs.length;const g0=games[fi];gs.push(g0);
+  files.forEach((s,fi)=>{const D=prep(s),R=deriveCore(D,D.plays,per);if(D.focus.id!=='5')return;const gi=gs.length;const g0=games[fi];gs.push(g0);
     for(const id of D.roster['5']){const p=D.P[id],b=R.B[id];P[id]={name:p.name,short:p.short,last:p.last,pos:p.pos};if(!(b.min>0))continue;gp[id]=(gp[id]||0)+1;const x=B[id]=B[id]||{};['min','pts','fgm','fga','tpm','tpa','ftm','fta','oreb','dreb','ast','stl','blk','to','pf','pm'].forEach(k=>x[k]=(x[k]||0)+b[k]);if(p.starter)x.gs=(x.gs||0)+1}
     for(const n of [2,3,4,5])for(const [k,l] of Object.entries(R.L['5'][n])){const o=L[n][k]=L[n][k]||{ids:l.ids,sec:0,pf:0,pa:0,o:{},d:{},g:0};o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;o.g++;for(const x in l.o){o.o[x]=(o.o[x]||0)+l.o[x];o.d[x]=(o.d[x]||0)+(l.d[x]||0)}}
     for(const q of R.shots)if(q.t==='5'){shots.push([q.id,q.hasXY?q.x:null,q.hasXY?q.y:null,q.m?1:0,q.three?1:0,q.zi,q.pt,q.ast?1:0,gi]);if(q.hasXY){const z=(pz[q.id]=pz[q.id]||{});const g=(z[gi]=z[gi]||ZN.map(()=>[0,0]));g[q.zi][1]++;if(q.m)g[q.zi][0]++}}
@@ -1630,9 +1633,11 @@ function seasonFrom(se,files,games){
     for(const [h,v] of Object.entries(R.pc[D.other.id]||{})){pcO[h]=pcO[h]||{n:0,pts:0};pcO[h].n+=v.n;pcO[h].pts+=v.pts}
     for(const [key,tid] of [['cle','5'],['opp',D.other.id]])for(const q of (R.PL||[]).filter(q=>q.team===tid)){const k=isTrans(q)?'t':q.how!=='oreb'?'h':null;if(k){cx[key][k][0]++;cx[key][k][1]+=q.pts}}});
   return {season:se,games:gs,P,B,gp,L,shots,asts,pz,T,pc,pcO,cx}}
-async function seasonFiltered(se,full){const f=S.sf||{};const gsel=f.games&&f.games.length?new Set(f.games):null;if(!gsel&&!f.tier)return full;const NR=await netRanks(se);
+async function seasonFiltered(se,full){const f=S.sf||{};const gsel=f.games&&f.games.length?new Set(f.games):null;const per=S.per||'all';if(!gsel&&!f.tier){if(per==='all')return full;const key=perKey(per);if(key){try{return await getJSON('/live-archive/'+se+'/season-p-'+key+'.json')}catch(e){}}}const NR=await netRanks(se);
   const games=full.games.filter(g=>(!gsel||gsel.has(g.id))&&inTier(NR.rk[g.opp],NR.n,f.tier));S.sfN=games.length;if(!games.length)return Object.assign({},full,{games:[],P:full.P,B:{},gp:{},L:{2:{},3:{},4:{},5:{}},shots:[],asts:[],pz:{},T:{cle:{z:ZN.map(()=>[0,0])},opp:{z:ZN.map(()=>[0,0])}},pc:{}});
-  const files=await Promise.all(games.map(g=>ARCHF[g.id]||(ARCHF[g.id]=getJSON('/live-archive/'+se+'/'+g.id+'.json'))));return seasonFrom(se,files,games)}
+  const files=await Promise.all(games.map(g=>ARCHF[g.id]||(ARCHF[g.id]=getJSON('/live-archive/'+se+'/'+g.id+'.json'))));return seasonFrom(se,files,games,per)}
+/* the ready-made season file for a period (live-archive/<season>/season-p-<key>.json); combinations without one are built from the game files */
+const perKey=p=>p==='clutch'?'clutch':Array.isArray(p)?(eqSet(p,[1,2])?'h1':eqSet(p,[3,4])?'h2':p.length===1&&p[0]<=4?'q'+p[0]:null):null;
 /* the filter bar under the season scoreboard */
 function seasonFilterBar(){const D=S.data;const f=S.sf=S.sf||{};const w=el('div','sfb');w.appendChild(el('span','lab','Filter'));
   /* games: pick any combination (a checklist in a dropdown); nothing picked = every game */

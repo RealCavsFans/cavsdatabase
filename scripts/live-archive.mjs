@@ -83,56 +83,61 @@ if (SEASON === '2026-27' && !process.env.SKIP_FETCH) {
 
 /* 3) season totals from every archived game */
 const files = fs.readdirSync(DIR).filter(f => /^(\d+|b\d{8})\.json$/.test(f));
-const games = [];
-const P = {}, B = {}, gp = {}, L = { 2: {}, 3: {}, 4: {}, 5: {} }, shots = [], asts = [], pz = {};
-const T = { cle: null, opp: null }, pc = {}, pcO = {}, cx = { cle: { t: [0, 0], h: [0, 0] }, opp: { t: [0, 0], h: [0, 0] } };
-const isT = q => (q.how === 'stl' || q.how === 'dreb' || q.how === 'to') && q.first != null && q.first <= 7;
-const addObj = (a, b) => { for (const k in b) { if (typeof b[k] === 'number') a[k] = (a[k] || 0) + b[k]; } };
-const zT = () => ({ z: C.ZN.map(() => [0, 0]) });
-T.cle = zT(); T.opp = zT();
-for (const f of files) {
-  const s = JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8'));
-  const D = C.prep(s); const R = C.deriveCore(D, D.plays, 'all');
-  if (D.focus.id !== '5') continue;
-  const gi = games.length;
-  const opp = D.other;
-  const etd = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(D.date));
-  games.push({ id: f.slice(0, -5), date: D.date, et: etd, opp: opp.abbr, ha: D.focus.ha, cle: D.focus.ha === 'home' ? R.hs : R.as, os: D.focus.ha === 'home' ? R.as : R.hs, recap: s.recap || [], rc: C.recapL ? C.recapL(D, R) : [] });
-  for (const id of D.roster['5']) {
-    const p = D.P[id], b = R.B[id];
-    P[id] = { name: p.name, short: p.short, last: p.last, pos: p.pos };
-    if (!(b.min > 0)) continue;
-    gp[id] = (gp[id] || 0) + 1; B[id] = B[id] || {}; addObj(B[id], { min: b.min, pts: b.pts, fgm: b.fgm, fga: b.fga, tpm: b.tpm, tpa: b.tpa, ftm: b.ftm, fta: b.fta, oreb: b.oreb, dreb: b.dreb, ast: b.ast, stl: b.stl, blk: b.blk, to: b.to, pf: b.pf, pm: b.pm });
-    if (p.starter) B[id].gs = (B[id].gs || 0) + 1;
+/* season files: the whole game (season.json) plus one per period, so the live page's quarter, half and clutch buttons load one small file */
+function build(per, file) {
+  const games = [];
+  const P = {}, B = {}, gp = {}, L = { 2: {}, 3: {}, 4: {}, 5: {} }, shots = [], asts = [], pz = {};
+  const T = { cle: null, opp: null }, pc = {}, pcO = {}, cx = { cle: { t: [0, 0], h: [0, 0] }, opp: { t: [0, 0], h: [0, 0] } };
+  const isT = q => (q.how === 'stl' || q.how === 'dreb' || q.how === 'to') && q.first != null && q.first <= 7;
+  const addObj = (a, b) => { for (const k in b) { if (typeof b[k] === 'number') a[k] = (a[k] || 0) + b[k]; } };
+  const zT = () => ({ z: C.ZN.map(() => [0, 0]) });
+  T.cle = zT(); T.opp = zT();
+  for (const f of files) {
+    const s = JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8'));
+    const D = C.prep(s); const R0 = C.deriveCore(D, D.plays, 'all'); const R = per === 'all' ? R0 : C.deriveCore(D, D.plays, per);
+    if (D.focus.id !== '5') continue;
+    const gi = games.length;
+    const opp = D.other;
+    const etd = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(D.date));
+    games.push({ id: f.slice(0, -5), date: D.date, et: etd, opp: opp.abbr, ha: D.focus.ha, cle: D.focus.ha === 'home' ? R0.hs : R0.as, os: D.focus.ha === 'home' ? R0.as : R0.hs, recap: s.recap || [], rc: C.recapL ? C.recapL(D, R0) : [] });
+    for (const id of D.roster['5']) {
+      const p = D.P[id], b = R.B[id];
+      P[id] = { name: p.name, short: p.short, last: p.last, pos: p.pos };
+      if (!(b.min > 0)) continue;
+      gp[id] = (gp[id] || 0) + 1; B[id] = B[id] || {}; addObj(B[id], { min: b.min, pts: b.pts, fgm: b.fgm, fga: b.fga, tpm: b.tpm, tpa: b.tpa, ftm: b.ftm, fta: b.fta, oreb: b.oreb, dreb: b.dreb, ast: b.ast, stl: b.stl, blk: b.blk, to: b.to, pf: b.pf, pm: b.pm });
+      if (p.starter) B[id].gs = (B[id].gs || 0) + 1;
+    }
+    for (const n of [2, 3, 4, 5]) for (const [k, l] of Object.entries(R.L['5'][n])) {
+      const o = L[n][k] = L[n][k] || { ids: l.ids, sec: 0, pf: 0, pa: 0, o: {}, d: {}, g: 0 };
+      o.sec += l.sec; o.pf += l.pf; o.pa += l.pa; o.g++; for (const x in l.o) { o.o[x] = (o.o[x] || 0) + l.o[x]; o.d[x] = (o.d[x] || 0) + (l.d[x] || 0); }
+    }
+    for (const q of R.shots) if (q.t === '5') {
+      shots.push([q.id, q.hasXY ? q.x : null, q.hasXY ? q.y : null, q.m ? 1 : 0, q.three ? 1 : 0, q.zi, q.pt, q.ast ? 1 : 0, gi]);
+      if (q.hasXY) { const z = (pz[q.id] = pz[q.id] || {}); const g = (z[gi] = z[gi] || C.ZN.map(() => [0, 0])); g[q.zi][1]++; if (q.m) g[q.zi][0]++; }
+    }
+    for (const a of R.asts) if (a.t === '5') asts.push([a.p, a.s, a.v, gi, a.z]);
+    const tc = R.T['5'], to = R.T[opp.id];
+    /* per-game rows for the Season tab (trends and splits): team box totals for both sides, and every 5-man unit's minutes and possessions */
+    const tr = t => [t.pts, t.fgm, t.fga, t.tpm, t.tpa, t.ftm, t.fta, t.oreb, t.toreb || 0, t.dreb, t.to, Math.round(t.sec || 0)];
+    games[gi].t = tr(tc); games[gi].u = tr(to);
+    games[gi].l5 = Object.entries(R.L['5'][5]).filter(([, l]) => l.sec >= 1).map(([k, l]) => [k, Math.round(l.sec), l.pf, l.pa, l.o.fga, l.o.oreb, l.o.to, l.o.fta, l.d.fga, l.d.oreb, l.d.to, l.d.fta]);
+    for (const [dst, src] of [[T.cle, tc], [T.opp, to]]) { for (const k in src) if (typeof src[k] === 'number') dst[k] = (dst[k] || 0) + src[k]; src.z.forEach((v, i) => { dst.z[i][0] += v[0]; dst.z[i][1] += v[1]; }); }
+    for (const [h, v] of Object.entries(R.pc['5'])) { pc[h] = pc[h] || { n: 0, pts: 0 }; pc[h].n += v.n; pc[h].pts += v.pts; }
+    /* how possessions started, for the opponents too, plus transition vs halfcourt for both sides */
+    for (const [h, v] of Object.entries(R.pc[opp.id] || {})) { pcO[h] = pcO[h] || { n: 0, pts: 0 }; pcO[h].n += v.n; pcO[h].pts += v.pts; }
+    for (const [key, tid] of [['cle', '5'], ['opp', opp.id]]) for (const q of (R.PL || []).filter(q => q.team === tid)) { const k = isT(q) ? 't' : q.how !== 'oreb' ? 'h' : null; if (k) { cx[key][k][0]++; cx[key][k][1] += q.pts; } }
   }
-  for (const n of [2, 3, 4, 5]) for (const [k, l] of Object.entries(R.L['5'][n])) {
-    const o = L[n][k] = L[n][k] || { ids: l.ids, sec: 0, pf: 0, pa: 0, o: {}, d: {}, g: 0 };
-    o.sec += l.sec; o.pf += l.pf; o.pa += l.pa; o.g++; for (const x in l.o) { o.o[x] = (o.o[x] || 0) + l.o[x]; o.d[x] = (o.d[x] || 0) + (l.d[x] || 0); }
-  }
-  for (const q of R.shots) if (q.t === '5') {
-    shots.push([q.id, q.hasXY ? q.x : null, q.hasXY ? q.y : null, q.m ? 1 : 0, q.three ? 1 : 0, q.zi, q.pt, q.ast ? 1 : 0, gi]);
-    if (q.hasXY) { const z = (pz[q.id] = pz[q.id] || {}); const g = (z[gi] = z[gi] || C.ZN.map(() => [0, 0])); g[q.zi][1]++; if (q.m) g[q.zi][0]++; }
-  }
-  for (const a of R.asts) if (a.t === '5') asts.push([a.p, a.s, a.v, gi, a.z]);
-  const tc = R.T['5'], to = R.T[opp.id];
-  /* per-game rows for the Season tab (trends and splits): team box totals for both sides, and every 5-man unit's minutes and possessions */
-  const tr = t => [t.pts, t.fgm, t.fga, t.tpm, t.tpa, t.ftm, t.fta, t.oreb, t.toreb || 0, t.dreb, t.to, Math.round(t.sec || 0)];
-  games[gi].t = tr(tc); games[gi].u = tr(to);
-  games[gi].l5 = Object.entries(R.L['5'][5]).filter(([, l]) => l.sec >= 1).map(([k, l]) => [k, Math.round(l.sec), l.pf, l.pa, l.o.fga, l.o.oreb, l.o.to, l.o.fta, l.d.fga, l.d.oreb, l.d.to, l.d.fta]);
-  for (const [dst, src] of [[T.cle, tc], [T.opp, to]]) { for (const k in src) if (typeof src[k] === 'number') dst[k] = (dst[k] || 0) + src[k]; src.z.forEach((v, i) => { dst.z[i][0] += v[0]; dst.z[i][1] += v[1]; }); }
-  for (const [h, v] of Object.entries(R.pc['5'])) { pc[h] = pc[h] || { n: 0, pts: 0 }; pc[h].n += v.n; pc[h].pts += v.pts; }
-  /* how possessions started, for the opponents too, plus transition vs halfcourt for both sides */
-  for (const [h, v] of Object.entries(R.pc[opp.id] || {})) { pcO[h] = pcO[h] || { n: 0, pts: 0 }; pcO[h].n += v.n; pcO[h].pts += v.pts; }
-  for (const [key, tid] of [['cle', '5'], ['opp', opp.id]]) for (const q of (R.PL || []).filter(q => q.team === tid)) { const k = isT(q) ? 't' : q.how !== 'oreb' ? 'h' : null; if (k) { cx[key][k][0]++; cx[key][k][1] += q.pts; } }
+  games.forEach(g => { g.d = g.date; });
+  // keep game order by date
+  const order = games.map((g, i) => [g.date, i]).sort().map(x => x[1]);
+  const remap = {}; order.forEach((old, ni) => remap[old] = ni);
+  const gs = order.map(i => games[i]);
+  shots.forEach(s => s[8] = remap[s[8]]); asts.forEach(a => a[3] = remap[a[3]]);
+  const pz2 = {}; for (const [id, z] of Object.entries(pz)) { pz2[id] = {}; for (const [g, v] of Object.entries(z)) pz2[id][remap[g]] = v; }
+  const out = { season: SEASON, per, updated: new Date().toISOString(), games: gs.map(({ recap, rc, ...g }) => g), P, B, gp, L, shots, asts, pz: pz2, T, pc, pcO, cx };
+  fs.writeFileSync(path.join(DIR, file), JSON.stringify(out));
+  if (per === 'all') fs.writeFileSync(path.join(DIR, 'index.json'), JSON.stringify(gs.map(g => ({ id: g.id, date: g.date, et: g.et, opp: g.opp, ha: g.ha, cle: g.cle, os: g.os, rc: g.rc }))));
+  console.log(`${file}: ${gs.length} games, ${shots.length} shots, ${Object.keys(L[5]).length} five-man lineups`);
 }
-games.forEach(g => { g.d = g.date; });
-// keep game order by date
-const order = games.map((g, i) => [g.date, i]).sort().map(x => x[1]);
-const remap = {}; order.forEach((old, ni) => remap[old] = ni);
-const gs = order.map(i => games[i]);
-shots.forEach(s => s[8] = remap[s[8]]); asts.forEach(a => a[3] = remap[a[3]]);
-const pz2 = {}; for (const [id, z] of Object.entries(pz)) { pz2[id] = {}; for (const [g, v] of Object.entries(z)) pz2[id][remap[g]] = v; }
-const out = { season: SEASON, updated: new Date().toISOString(), games: gs.map(({ recap, rc, ...g }) => g), P, B, gp, L, shots, asts, pz: pz2, T, pc, pcO, cx };
-fs.writeFileSync(path.join(DIR, 'season.json'), JSON.stringify(out));
-fs.writeFileSync(path.join(DIR, 'index.json'), JSON.stringify(gs.map(g => ({ id: g.id, date: g.date, et: g.et, opp: g.opp, ha: g.ha, cle: g.cle, os: g.os, rc: g.rc }))));
-console.log(`season.json: ${gs.length} games, ${shots.length} shots, ${Object.keys(L[5]).length} five-man lineups`);
+build('all', 'season.json');
+for (const [key, per] of [['h1', [1, 2]], ['h2', [3, 4]], ['q1', [1]], ['q2', [2]], ['q3', [3]], ['q4', [4]], ['clutch', 'clutch']]) build(per, 'season-p-' + key + '.json');
