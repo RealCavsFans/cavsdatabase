@@ -260,12 +260,11 @@ header.gbar .search input{font-size:0.9375rem}
 .twx-e{margin-top:6px}.twx-e b{font-size:0.75rem}
 .twx-f{padding:0 14px 10px;font-size:0.75rem}
 }
-.nlft{max-width:1200px;margin:28px auto 0;padding:0 20px}.nlft>div{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;background:#101419;color:#c9ccd1;border-radius:14px;border-top:3px solid #860038;padding:18px 20px}
-.nlft b{display:flex;align-items:center;gap:10px;font:800 1.5rem/1 "Saira Condensed",var(--sans);text-transform:uppercase;color:#fff}.nlft b i{font-style:normal;color:#F2B231}.nlft b img{width:42px;height:auto}
-.nlft .t{flex:1 1 220px}.nlft p{margin:6px 0 0;font:500 .875rem/1.35 var(--sans);color:#d8dbe0}.nlft small{display:block;margin-top:3px;font:700 .625rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#F2B231}
-.nlft form{display:flex;gap:6px;flex:1 1 300px;max-width:440px;min-width:0}.nlft input{flex:1;min-width:0;height:42px;border-radius:9px;border:1px solid #333a43;background:#0b0e12;color:#fff;padding:0 12px;font:500 .9375rem var(--sans)}
-.nlft button{height:42px;border:0;border-radius:9px;background:#F2B231;color:#101419;font:800 .9375rem "Saira Condensed",var(--sans);text-transform:uppercase;letter-spacing:.04em;padding:0 16px;white-space:nowrap;cursor:pointer}
-.nlft *{box-sizing:border-box}@media(max-width:600px){.nlft form{max-width:none;flex-basis:100%}.nlft button{padding:0 12px}}
+
+
+
+
+@media(max-width:600px){.nlft form{max-width:none;flex-basis:100%}}
 
 /* phone tightening, Oct 21: Charge leaders, two-way, next summer, schedule load, game preview, key dates, cap and measurement tables */
 @media (max-width:600px){
@@ -460,6 +459,18 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 .gm-rk{display:block;font:700 .6875rem var(--mono);color:var(--muted);margin-top:4px;text-transform:none;letter-spacing:0}.gm-note{font-size:.6875rem;color:var(--muted);margin:6px 0 0}
 /* game day: when the injury report sits in the game-day card, the season-to-date games-missed box stays hidden */
 .in-gdm .gmw{display:none}
+/* Cavs & Coffee sign-up: a quiet banner at the bottom of Home; a small line at the very bottom of every other page */
+.nlft{max-width:1200px;margin:28px auto 0;padding:0 20px}.nlft *{box-sizing:border-box}
+.nlft>div{display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px;background:var(--card);border:1px solid var(--line);border-left:3px solid #F2B231;padding:16px 20px}
+.nlft .t{flex:1 1 320px;min-width:0}.nlft b{display:flex;align-items:center;gap:10px;font:800 1.375rem/1 "Saira Condensed",var(--sans);text-transform:uppercase;color:var(--fg)}.nlft b i{font-style:normal;color:#860038}.nlft b img{width:38px;height:auto}
+.nlft p{margin:6px 0 0;font:500 .875rem/1.4 var(--sans);color:var(--muted)}
+.nlft form{display:flex;gap:8px;flex:1 1 340px;max-width:520px;min-width:0}
+.nlft input{flex:1;min-width:0;height:40px;border:1px solid var(--line);background:var(--bg,#fff);color:var(--fg);padding:0 12px;font:500 .9375rem var(--sans);border-radius:6px}
+.nlft button{height:40px;border:0;border-radius:999px;background:#860038;color:#fff;font:700 .875rem var(--sans);padding:0 18px;white-space:nowrap;cursor:pointer}
+.nlft.mini{margin-top:18px}.nlft.mini>div{border:0;border-top:1px solid var(--line);background:none;padding:12px 0;gap:8px 16px}
+.nlft.mini .t{flex:1 1 220px}.nlft.mini b{font-size:1rem;gap:8px}.nlft.mini b img{width:24px}.nlft.mini p{display:none}
+.nlft.mini form{flex:0 1 380px}.nlft.mini input,.nlft.mini button{height:34px;font-size:.8125rem}
+@media (max-width:760px){.nlft form{flex-basis:100%;max-width:none}}
 /* cap sheet on phones: option and extension tags sit in a strip under the numbers, so every salary in a row stays on one line */
 @media (max-width:760px){.cap td.r{position:relative}.cap tr:has(.extb,.ov,.vmb)>td{vertical-align:top}.cap tr:has(.extb,.ov,.vmb)>td.r{padding-bottom:22px!important}.cap .ov{display:inline;position:static}.cap .ov::after{position:absolute;bottom:5px;right:6px;font-size:.5rem!important;padding:2px 3px 1px!important}.cap td .extb,.cap td .vmb{position:absolute;right:6px;bottom:5px;margin:0!important;display:block}.cap td:has(.ov) .extb{right:30px}.cap td:has(.extb) .vmb{right:34px}}
 /* history: all-time record tile centered on phones */
@@ -819,7 +830,7 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
  <button class="ci-skip" id="ci-skip" type="button">Skip</button></div>
 <noscript><nav aria-label="Pages" style="padding:16px"><a href="/">Home</a> · <a href="/schedule">Cavaliers schedule</a> · <a href="/roster">Cavaliers roster</a> · <a href="/staff">Coaches &amp; front office</a> · <a href="/cap">Cavaliers salary cap</a> · <a href="/assets">Draft picks &amp; exceptions</a> · <a href="/moves">Transactions</a> · <a href="/charge">Cleveland Charge</a> · <a href="/media">Media</a> · <a href="/resources">Resources</a></nav></noscript>
 <button type="button" class="btt" id="btt" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg></button>
-<section class="nlft" id="nlft" hidden aria-label="Cavs &amp; Coffee newsletter"><div><div class="t"><b><img src="/nl/icon-mug.png" alt="" width="42" height="32">Cavs <i>&amp;</i> Coffee</b><p>Your Cavs news, served unfiltered.</p><small>Free · No ads · All Cavs</small></div><form action="https://buttondown.com/api/emails/embed-subscribe/cavscoffee" method="post"><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email"><input type="hidden" name="embed" value="1"><button type="submit">Pour me a cup</button></form></div></section>
+<section class="nlft" id="nlft" hidden aria-label="Cavs &amp; Coffee newsletter"><div><div class="t"><b><img src="/nl/icon-mug.png" alt="" width="42" height="32">Cavs <i>&amp;</i> Coffee</b><p>The box score, the top line, injuries and the news, freshly brewed in your inbox after every game. Free.</p></div><form action="https://buttondown.com/api/emails/embed-subscribe/cavscoffee" method="post"><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email"><input type="hidden" name="embed" value="1"><button type="submit">Sign me up</button></form></div></section>
 <footer><div class="wrap">
   <span>cavsdatabase.com · Independent fan reference. Not affiliated with the Cleveland Cavaliers or the NBA.<br><a class="f-rcf" href="https://realcavsfans.com" target="_blank" rel="noopener">Started on RealCavsFans. Thanks for the floor.</a></span>
   <div class="fright"><button type="button" class="ftip fapp" id="appbtn">Get the app</button><a class="ftip" href="https://www.buymeacoffee.com/cavsdb" target="_blank" rel="noopener">☕ Tip jar</a><button type="button" class="fcontact" onclick="window.cdbFeedback&&window.cdbFeedback()">Contact &amp; Feedback</button>
@@ -1331,7 +1342,7 @@ setTimeout(()=>{fetch('/box.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null
       for(const [nm,g] of Object.entries(x.players)){const v=sv(S2,nm);if(v==null)continue;g0+=g;c0+=v/82*g}games[ab]=g0;lost[ab]=c0}
     tiles[0].appendChild(el('small','gm-rk',rk(Object.values(games),games.CLE)+' most of '+n));
     if(LT)tiles[1].appendChild(el('small','gm-rk',rk(Object.values(lost),lost.CLE)+' most of '+n));
-    w.appendChild(el('p','gm-note','League ranks from ESPN’s daily injury lists'+(LS&&LS.teams?' and Capsheets salaries':'')+'.'))});
+    });
 
   if(rows.length){const det=document.createElement('details');det.className='gm-d';const sm=document.createElement('summary');sm.textContent='By player';det.appendChild(sm);const ul=el('ul','gm-l');const gmax=rows[0][1];rows.forEach(([n,g,c])=>{const li=el('li');const nm=el('span','n');nm.append(n);const mb=el('i','mb');mb.style.width=(g/gmax*100)+'%';nm.appendChild(mb);li.append(nm,el('span','g',g+' game'+(g===1?'':'s')),el('b',null,c?fm(c):'—'));ul.appendChild(li)});det.appendChild(ul);w.appendChild(det)}
   card.appendChild(w)})},0);
@@ -2578,7 +2589,7 @@ const perName=p=>p<=4?'Q'+p:(p===5?'OT':'OT'+(p-4));
 /* Cavs & Coffee sign-up boxes (Home under the record card, Resources). NL_ON shows them to everyone; ?nl=preview shows them now */
 const NL_ON=true; /* on since Oct 24: sign-ups collect on Buttondown; nothing is sent until NEWSLETTER_LIVE is true */
 (function(){const show=NL_ON||/[?&]nl=preview/.test(location.search);
-  document.querySelectorAll('.nlsu').forEach(sec=>{if(!show)return;sec.hidden=false;
+  document.querySelectorAll('.nlsu-r').forEach(sec=>{if(!show)return;/* home's middle box retired Oct 25: home uses the banner at the bottom */sec.hidden=false;
     const box=sec.querySelector('.su'),mug=sec.querySelector('.sumug'),P=sec.querySelector('.supath'),B=sec.querySelector('.suball');
     const ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;let L=0;
     const geo=()=>{const br=box.getBoundingClientRect(),mr=mug.getBoundingClientRect();const W=br.width,H=br.height;const mx=mr.left-br.left+mr.width*.6,my=mr.top-br.top+mr.height*.36;const bx=W*.82,by=H-12;P.setAttribute('d',`M${W+14} ${H*.3} Q${W-6} ${H*.6} ${bx} ${by} Q${(bx+mx)/2} ${-H*.55} ${mx} ${my}`);L=P.getTotalLength()};
@@ -2607,7 +2618,7 @@ const NL_ON=true; /* on since Oct 24: sign-ups collect on Buttondown; nothing is
   if(/[?&](subscribe=check|subscribed=1)/.test(location.search))put('sub');
   const st=get();if(!prev&&(st==='sub'||(/^no:/.test(st)&&Date.now()-+st.slice(3)<30*864e5)))return;
   let shown=false,views=0,t0=Date.now();try{if(sessionStorage.getItem('cdb-nl-seen'))return}catch(_){}
-  const wait=40000+Math.random()*50000;
+  const wait=120000+Math.random()*150000;/* tripled Oct 25 */
   function pop(){if(shown||document.querySelector('dialog[open]'))return;shown=true;try{sessionStorage.setItem('cdb-nl-seen','1')}catch(_){}
     const c=el('aside','nlpop');c.setAttribute('aria-label','Cavs & Coffee newsletter');
     c.innerHTML='<button type="button" class="nlpop-x" aria-label="Close">×</button><div class="nlpop-h"><img src="/nl/icon-mug.png" alt="" width="54" height="41"><b>Cavs <i>&amp;</i> Coffee</b></div><p class="nlpop-p">Your Cavs news, served unfiltered.</p><p class="nlpop-tags">Free · No ads · All Cavs</p><form class="nlpop-f" action="https://buttondown.com/api/emails/embed-subscribe/cavscoffee" method="post"><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email"><input type="hidden" name="embed" value="1"><button type="submit">Pour me a cup</button></form><button type="button" class="nlpop-no">No thanks</button>';
@@ -4058,7 +4069,7 @@ const BUILT=['home','roster','cap','assets','moves','resources','schedule','staf
 /* page titles and descriptions per route (search engines and browser tabs) */
 const ROUTE_ALIAS={video:'media',rcf:'media/rcf'}; /* media/rcf now opens Media scrolled to the articles */
 function routeOf(){let r=location.pathname.replace(/^\/+|\/+$/g,'').toLowerCase();if(/index\.html$/.test(r)||location.protocol==='file:')r='';const h=location.hash.slice(1);if(!r&&h&&(SECTIONS.some(x=>x[0]===h)||ROUTE_ALIAS[h]))r=h;const AL={video:'media',rcf:'media/rcf'};return AL[r]||r||'home'}
-function show(route){setTimeout(()=>window.cdbBarsReset&&cdbBarsReset(),0);
+function show(route){{const nf=document.getElementById('nlft');if(nf)nf.classList.toggle('mini',route!=='home')}setTimeout(()=>window.cdbBarsReset&&cdbBarsReset(),0);
   if(window.cdbNlView)window.cdbNlView();
   if(window.cdbAlView)window.cdbAlView();
   if(window.cdbAttachX)setTimeout(window.cdbAttachX,60);
