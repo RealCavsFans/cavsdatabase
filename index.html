@@ -4050,7 +4050,7 @@ function ppBuild(p,root){
   /* ===== 4 · value to the Cavs ===== */
   const sal=R?(v2=>typeof v2==='number'?v2:Array.isArray(v2)?v2[0]:0)(R[2][0]):0;
   /* deeper season numbers from the game archive (live-archive/<season>/season.json): on/off, lineups, how he scores, defense and boards with him on vs off. Preview: ?ppx=1 */
-  if(/[?&]ppx=1/.test(location.search)){const SE='2026-27';const nrm=x=>x.normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');
+  {/* on for everyone since Oct 26 */const SE='2026-27';const nrm=x=>x.normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');
     PPD.arch=PPD.arch||{};const go=A=>{const id=A&&A.P&&Object.keys(A.P).find(k=>nrm(A.P[k].name)===nrm(n));if(!id||!A.B||!A.B[id])return;const b=A.B[id],gp=(A.gp||{})[id]||0;
       const add=(x,y)=>{for(const k in y)if(typeof y[k]==='number')x[k]=(x[k]||0)+y[k];return x};const on={sec:0,pf:0,pa:0,o:{},d:{}};const L5=Object.values((A.L||{})[5]||{});
       L5.filter(l=>l.ids.includes(id)).forEach(l=>{on.sec+=l.sec;on.pf+=l.pf;on.pa+=l.pa;add(on.o,l.o);add(on.d,l.d)});
