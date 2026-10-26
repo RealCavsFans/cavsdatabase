@@ -1,6 +1,6 @@
 {
  "season": "2026-27",
- "updated": "2026-10-24",
+ "updated": "2026-10-26",
  "source": "Capsheets",
  "teams": {
   "ATL": {
@@ -15,8 +15,8 @@
    "Corey Kispert": 13975000,
    "Aaron Wiggins": 8831776,
    "Kingston Flemings": 7348680,
-   "Zuby Ejiofor": 3453360,
    "Asa Newell": 3399880,
+   "Zuby Ejiofor": 3453360,
    "Mouhamed Gueye": 2406205,
    "Henri Veesaar": 1357763
   },
@@ -65,13 +65,13 @@
    "Tidjane Salaün": 8237880,
    "Hannes Steinbach": 5227200,
    "Christian Anderson": 4257480,
-   "Pat Connaughton": 3815861,
    "Liam McNeeley": 2902080,
    "Moussa Diabaté": 2461462,
    "Sion James": 2411090,
    "Ryan Kalbrenner": 2411090,
    "Rob Dillingham": 6889320,
-   "Ryan Nembhard": 2150917
+   "Ryan Nembhard": 2150917,
+   "Pat Connaughton": 3815861
   },
   "CHI": {
    "Josh Giddey": 25000000,
@@ -219,7 +219,6 @@
    "Jordan Miller": 5300000,
    "Yanic Konan Niederhäuser": 2880960,
    "Kobe Sanders": 2622139,
-   "Cam Christie": 2296271,
    "Baba Miller": 1705630
   },
   "LAL": {
@@ -249,14 +248,12 @@
    "Zach Edey": 6332760,
    "Cedric Coward": 6001080,
    "Kris Murray": 5315004,
-   "Walter Clayton Jr.": 4190520,
    "Karim Lopez": 3746760,
    "Olivier-Maxence Prosper": 2497812,
    "Scotty Pippen Jr.": 2461462,
    "Cam Spencer": 2411090,
    "GG Jackson": 2406205,
-   "Jaylen Wells": 2296271,
-   "Micah Peavy": 2150917
+   "Jaylen Wells": 2296271
   },
   "MIA": {
    "Giannis Antetokounmpo": 58456566,
@@ -418,7 +415,7 @@
    "Micah Potter": 2801346,
    "Vít Krejčí": 2667944,
    "Sidy Cissoko": 2497812,
-   "Branden Carlson": 2449421
+   "Branden Carlsen": 2449421
   },
   "SAC": {
    "Zach LaVine": 48967380,
@@ -482,7 +479,8 @@
    "Svi Mykhailiuk": 3850000,
    "Mo Bamba": 3506659,
    "Kyle Filipowski": 3000000,
-   "Isaiah Collier": 2763960
+   "Isaiah Collier": 2763960,
+   "Tony Bradley": 2449421
   },
   "WSH": {
    "Anthony Davis": 58456566,
