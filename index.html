@@ -459,6 +459,11 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 .gm-rk{display:block;font:700 .6875rem var(--mono);color:var(--muted);margin-top:4px;text-transform:none;letter-spacing:0}.gm-note{font-size:.6875rem;color:var(--muted);margin:6px 0 0}
 /* game day: when the injury report sits in the game-day card, the season-to-date games-missed box stays hidden */
 .in-gdm .gmw{display:none}
+.nav-stats{position:relative}.nav-stats .dot,.mbar a .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#e23b3b;margin-right:5px;vertical-align:1px}
+.mbar.six{grid-template-columns:repeat(6,1fr)}.mbar.six a{font-size:.5625rem}.mbar.six a svg{width:20px;height:20px}
+.hss{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}.hss .k{font:700 .75rem "Saira Condensed",var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.hss .i{display:inline-flex;align-items:baseline;gap:5px}.hss small{font:700 .6875rem "Saira Condensed",var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.hss b{font:700 .9375rem var(--mono)}.hss em{font:700 .625rem var(--mono);font-style:normal;color:var(--muted)}.hss-go{margin-left:auto;font:700 .8125rem var(--sans);color:var(--wine-ink)}
+@media(max-width:760px){.hss{gap:6px 12px}.hss .k{flex-basis:100%}.hss-go{margin-left:0;flex-basis:100%}}
 #ch-sched:not(.all) tr.chx{display:none}.ch-more{display:block;width:100%;margin-top:8px;padding:10px;border:1px solid var(--line);background:var(--card);color:var(--wine-ink);font:700 .8125rem var(--sans);cursor:pointer}
 @media (max-width:760px){
  .chros{font-size:.8125rem}.chros th,.chros td{padding-top:7px!important;padding-bottom:7px!important}.chros td.pn a,.chros td.pn b{font-size:.8125rem}.ch2w{font-size:.5rem;padding:0 4px;margin-left:5px}}
@@ -967,8 +972,13 @@ const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt
   T.forEach(([ic,t,d,f])=>{const b=el('button','tool');b.type='button';b.innerHTML='<span class="tool-i">'+ic+'</span>';const tx=el('span','tool-t');tx.append(el('b',null,t),el('small',null,d));b.appendChild(tx);b.onclick=f;g.appendChild(b)})}}
 /* nav + index */
 const tabs=document.getElementById('tabs');
+/* Stats in the menus (preview: ?stats=1). On a Cavs game night the button becomes Live (with a red dot) and opens the game; after the final it goes back to season stats. */
+const STATS_ON=/[?&]stats=1/.test(location.search);
+const statsLive=()=>{try{const t=Date.now();return SCHEDULE.some(g=>{const tp=tipOf(g).getTime();return t>=tp-30*6e4&&t<=tp+3.2*36e5})}catch(_){return false}};
+const statsHref=()=>statsLive()?'/live.html':'/live.html?g=s2026-27';
 const SHORT={cap:'Cap',staff:'Staff',charge:'Charge',media:'Media',resources:'Resources',moves:'Transactions'};
-SECTIONS.forEach(([id,l])=>{const b=el('a',null,SHORT[id]||l);b.title=l;b.href=id==='home'?'/':'/'+id;b.dataset.go=id;tabs.appendChild(b)});
+SECTIONS.forEach(([id,l])=>{const b=el('a',null,SHORT[id]||l);b.title=l;b.href=id==='home'?'/':'/'+id;b.dataset.go=id;tabs.appendChild(b);
+  if(STATS_ON&&id==='schedule'){const lv=statsLive();const a=el('a','nav-stats'+(lv?' lv':''));if(lv)a.appendChild(el('i','dot'));a.append(lv?'Live':'Stats');a.href=statsHref();a.title=lv?'Live game stats':'Season stats: team, players, lineups, shots';tabs.appendChild(a)}});
 const idx=document.getElementById('index');
 SECTIONS.slice(1).forEach(([id,l,c,d])=>{const b=el('button');b.type='button';b.dataset.go=id;b.append(el('span','code',c),el('b',null,l),el('span',null,d));idx.appendChild(b)});
 
@@ -1145,6 +1155,11 @@ const nr=NRTG.CLE?sgn(NRTG.CLE[0]):'—';
 const nr14=L14.CLE?sgn(L14.CLE[0]):'—';
 [['Home',rec('H')],['Road',rec('A')],['Last 10',last10.length?last10.filter(x=>x==='W').length+'–'+last10.filter(x=>x==='L').length:'—'],['Streak',streak],['Net rtg',nr],['Net 2 wk',nr14]]
   .forEach(([k,v])=>{const d=el('div');const dd=el('dd');const m=String(v).match(/^(.*?) (\(.*\))$/);if(m)dd.append(m[1],el('small',null,' '+m[2]));else dd.textContent=v;d.append(el('dt',null,k),dd);sp.appendChild(d)});
+/* Home: one slim season-stats line under the record box, linking to the full season stats (preview: ?stats=1) */
+if(STATS_ON)setTimeout(()=>{const T=(typeof TSTATS!=='undefined'&&TSTATS.CLE&&TSTATS.CLE[0]+TSTATS.CLE[1]>=1)?TSTATS:null;if(!T)return;const all=Object.values(T);const c=T.CLE;const rk=(f,hi)=>1+all.filter(u=>hi?f(u)>f(c):f(u)<f(c)).length;
+  const w=el('div','hss');w.appendChild(el('span','k','Season stats'));const item=(lab,v,r)=>{const d=el('span','i');d.append(el('small',null,lab),el('b',null,v),el('em',null,ord(r)));w.appendChild(d)};
+  item('Off rtg',c[4].toFixed(1),rk(t=>t[4],1));item('Def rtg',c[5].toFixed(1),rk(t=>t[5],0));item('Net rtg',sgn(c[4]-c[5]),rk(t=>t[4]-t[5],1));item('Pace',c[6].toFixed(1),rk(t=>t[6],1));
+  const a=el('a','hss-go','Full season stats →');a.href='/live.html?g=s2026-27';w.appendChild(a);sp.after(w)},0);
 /* conference and division rank sit beside the record tiles, with the standings link under them */
 {const box=el('div','rkbox');[['East rank',SEASON.eastRank,15],['Central rank',SEASON.centralRank,5]].forEach(([k,v,n])=>{const dl=el('dl','rk');const dd=el('dd',null,v&&v!=='—'?v:'—');if(v&&v!=='—')dd.appendChild(el('small',null,'of '+n));dl.append(el('dt',null,k),dd);box.appendChild(dl)});
  const a=el('a','home-std','Standings →');a.href='/schedule';a.dataset.go='schedule';box.appendChild(a);document.querySelector('.grec .gbig').appendChild(box)}
@@ -4415,13 +4430,15 @@ const y0now=s=>s===SEASONS[0];
   const route=()=>{const r=location.pathname.replace(/^\/|\.html$|\/$/g,'');return r||'home'};
   const grpOf=r=>{if(r==='home')return 'home';if(/^games\//.test(r))return 'schedule';if(/^players\//.test(r))return 'team';if(/^history\//.test(r))return 'more';for(const [g,L] of Object.entries(G))if(L.some(([k])=>k===r))return g;return 'home'};
   const bar=el('nav','mbar');bar.setAttribute('aria-label','Sections');
-  [['home','Home'],['schedule','Schedule'],['team','Team'],['cap','Cap'],['more','More']].forEach(([k,l])=>{const a=el('a');const g2=k==='home'?'home':FIRST[k];a.href=k==='home'?'/':'/'+g2;a.dataset.go=g2;a.dataset.g=k;a.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+I[k]+'</svg>';a.append(l);bar.appendChild(a)});
+  [['home','Home'],['schedule','Schedule']].concat(STATS_ON?[['stats','Stats']]:[],[['team','Team'],['cap','Cap'],['more','More']]).forEach(([k,l])=>{const a=el('a');
+    if(k==='stats'){const lv=statsLive();a.href=statsHref();a.dataset.g='stats';a.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>';a.append(lv?'Live':l);if(lv)a.appendChild(el('i','dot'));bar.appendChild(a);return}
+    const g2=k==='home'?'home':FIRST[k];a.href=k==='home'?'/':'/'+g2;a.dataset.go=g2;a.dataset.g=k;a.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+I[k]+'</svg>';a.append(l);bar.appendChild(a)});if(STATS_ON)bar.classList.add('six');
   document.body.appendChild(bar);
   const sub=el('nav','msub');sub.setAttribute('aria-label','Pages');hdr.after(sub);
   /* red dot: a Cavs game is on (from 10 minutes before tip to about three hours after) */
   const liveNow=()=>{try{const t=Date.now();return SCHEDULE.some(g=>{const tp=tipOf(g).getTime();return t>=tp-10*6e4&&t<=tp+3.2*36e5})}catch(_){return false}};
   let last=null;const paint=()=>{const r=route();const g=grpOf(r);const lv=liveNow();const key=r+'|'+lv;if(key===last)return;last=key;
-    bar.querySelectorAll('a').forEach(a=>{const on=a.dataset.g===g;a.classList.toggle('on',on);if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');let d=a.querySelector('.dot');if(a.dataset.g==='schedule'&&lv){if(!d)a.appendChild(el('i','dot'))}else if(d)d.remove()});
+    bar.querySelectorAll('a').forEach(a=>{const on=a.dataset.g===g;a.classList.toggle('on',on);if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');let d=a.querySelector('.dot');if(a.dataset.g===(STATS_ON?'stats':'schedule')&&lv){if(!d)a.appendChild(el('i','dot'))}else if(d)d.remove()});
     if(g==='home'){sub.hidden=true;return}sub.hidden=false;sub.textContent='';
     G[g].forEach(([k,l])=>{const a=el('a');if(k==='live'){a.href='/live.html';if(lv)a.appendChild(el('i','lv'))}else{a.href='/'+k;a.dataset.go=k}a.append(l);if(k===r||(k==='roster'&&/^players\//.test(r))||(k==='schedule'&&/^games\//.test(r))||(k==='history'&&/^history\//.test(r)))a.classList.add('on');sub.appendChild(a)})};
   const ps=history.pushState,rs=history.replaceState;history.pushState=function(){const x=ps.apply(this,arguments);setTimeout(paint,0);return x};history.replaceState=function(){const x=rs.apply(this,arguments);setTimeout(paint,0);return x};
