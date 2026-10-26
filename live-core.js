@@ -23,7 +23,11 @@ const perLabel=f=>Array.isArray(f)?(eqSet(f,[1,2])?'1st half':eqSet(f,[3,4,5])||
 
 /* ---------- prepare ---------- */
 function lastName(n){const p=n.replace(/ (Jr\.|Sr\.|II|III|IV)$/,'').split(' ');return p.length>1?p.slice(1).join(' '):n}
-function prep(d){
+/* archived games store plays and win probability as compact rows (pv:2, from slimSummary); turn them back into ESPN's shape */
+function unpackSlim(d){if(!d||d.pv!==2)return d;const o=Object.assign({},d);delete o.pv;
+  o.plays=(d.plays||[]).map(r=>({id:r[0],type:{text:r[1]},text:r[2],period:{number:r[3]},clock:{displayValue:r[4]},team:r[5]?{id:r[5]}:undefined,participants:r[6]?r[6].split(',').map(i=>({athlete:{id:i}})):undefined,homeScore:r[7],awayScore:r[8],scoringPlay:!!(r[9]&1),shootingPlay:!!(r[9]&2),scoreValue:r[10],pointsAttempted:r[11]==null?undefined:r[11],coordinate:r[12]==null?undefined:{x:r[12],y:r[13]}}));
+  o.winprobability=(d.winprobability||[]).map(r=>({playId:r[0],homeWinPercentage:r[1]}));return o}
+function prep(d){d=unpackSlim(d);
   const comp=d.header.competitions[0];
   const teams=comp.competitors.map(c=>({id:c.id,ha:c.homeAway,abbr:c.team.abbreviation,name:c.team.shortDisplayName||c.team.name,loc:c.team.location,logo:'/img/tl/'+String(c.team.abbreviation||'').toLowerCase()+'.png',logo2:(c.team.logos&&c.team.logos[0]&&c.team.logos[0].href)||'',score:+(c.score||0),rec:(c.record&&c.record[0]&&c.record[0].summary)||''}));
   const home=teams.find(t=>t.ha==='home'),away=teams.find(t=>t.ha==='away');
@@ -143,7 +147,7 @@ function factors(a,b){const pa=poss({fga:a.fga,oreb:a.oreb+a.toreb,to:a.to,fta:a
   return {efg:a.fga?(a.fgm+0.5*a.tpm)/a.fga:null,tov:pa?a.to/pa:null,orb:(a.oreb+a.toreb+b.dreb+b.tdreb)?(a.oreb+a.toreb)/(a.oreb+a.toreb+b.dreb+b.tdreb):null,ftr:a.fga?a.ftm/a.fga:null}}
 const FF=[['efg','Shooting','Effective FG%',true],['tov','Ball security','Turnover rate',false],['orb','Second chances','Offensive rebound rate',true],['ftr','Getting to the line','Free throws made per FGA',true]];
 const CLE='5',C3=Math.sqrt(23.75**2-22**2);
-if(typeof module!=='undefined')module.exports={prep,deriveCore,factors,poss,ZN,PT,LG,normName,pname,fmtMin,inPer,pstart,plen};
+if(typeof module!=='undefined')module.exports={unpackSlim,prep,deriveCore,factors,poss,ZN,PT,LG,normName,pname,fmtMin,inPer,pstart,plen};
 
 /* ---------- archive helpers (used by the nightly job and the page) ---------- */
 function slimSummary(d){
@@ -155,8 +159,9 @@ function slimSummary(d){
     gameInfo:{venue:{fullName:d.gameInfo&&d.gameInfo.venue&&d.gameInfo.venue.fullName}},
     boxscore:{teams:((d.boxscore&&d.boxscore.teams)||[]).map(t=>({team:{id:t.team.id},statistics:(t.statistics||[]).map(s=>({name:s.name,displayValue:s.displayValue}))})),
       players:((d.boxscore&&d.boxscore.players)||[]).map(t=>({team:{id:t.team.id},statistics:[{names:(t.statistics[0]||{}).names,athletes:((t.statistics[0]||{}).athletes||[]).map(a=>({athlete:{id:a.athlete.id,displayName:a.athlete.displayName,shortName:a.athlete.shortName,position:{abbreviation:a.athlete.position&&a.athlete.position.abbreviation},jersey:a.athlete.jersey},starter:a.starter,didNotPlay:a.didNotPlay,reason:a.reason,stats:a.stats}))}]}))},
-    plays:(d.plays||[]).map(q=>({id:q.id,type:{text:q.type.text},text:q.text,period:{number:q.period.number},clock:{displayValue:q.clock.displayValue},team:q.team?{id:q.team.id}:undefined,participants:q.participants?q.participants.map(p=>({athlete:{id:p.athlete.id}})):undefined,homeScore:q.homeScore,awayScore:q.awayScore,scoringPlay:q.scoringPlay,scoreValue:q.scoreValue,shootingPlay:q.shootingPlay,pointsAttempted:q.pointsAttempted,coordinate:q.coordinate&&q.coordinate.x>-100?{x:q.coordinate.x,y:q.coordinate.y}:undefined})),
-    winprobability:(d.winprobability||[]).map(w=>({playId:w.playId,homeWinPercentage:w.homeWinPercentage}))};
+    /* compact rows (pv:2): [id, type, text, period, clock, team, player ids, home, away, flags (1 scoring, 2 shooting), value, attempted, x, y]; prep() unpacks them */
+    pv:2,plays:(unpackSlim(d).plays||[]).map(q=>{const c=q.coordinate&&q.coordinate.x>-100?q.coordinate:null;return [q.id,q.type.text,q.text,q.period.number,q.clock.displayValue,q.team?q.team.id:0,q.participants?q.participants.map(p=>p.athlete.id).join(','):'',q.homeScore,q.awayScore,(q.scoringPlay?1:0)|(q.shootingPlay?2:0),q.scoreValue,q.pointsAttempted==null?null:q.pointsAttempted,c?c.x:null,c?c.y:null]}),
+    winprobability:(unpackSlim(d).winprobability||[]).map(w=>[w.playId,w.homeWinPercentage])};
 }
 /* numbers-only recap for a finished game, focus team first */
 function recap(D,R){
