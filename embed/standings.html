@@ -33,7 +33,7 @@
 <link rel="preload" href="/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/geist-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/saira-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/a/app.5f35eec4be.css"><link rel="preload" href="/a/app.420246088c.js" as="script">
+<link rel="stylesheet" href="/a/app.5f35eec4be.css"><link rel="preload" href="/a/app.045b599ebc.js" as="script">
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
 @media (max-width:720px){.side>.o-inj{order:3}.side>.o-otd,.o-otd{order:99}}
@@ -473,7 +473,7 @@
   <button type="button" class="thm2" id="thm2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Dark mode</span></button></div>
 </div></footer>
 
-<script src="/a/app.420246088c.js"></script>
+<script src="/a/app.045b599ebc.js"></script>
 
 <script>
 (function(){const R=document.documentElement,B=document.getElementById('thm'),T=document.getElementById('btt'),F=document.getElementById('fb');
@@ -666,7 +666,7 @@
  window.cdbAttachX=attach;window.cdbCap=capture;window.cdbShare=share;window.cdbIcons=[I_L,I_C];
  /* deep links: /assets#picks-owed, /roster#donovan-mitchell, /cap#donovan-mitchell */
  function jump(){const h=decodeURIComponent(location.hash.slice(1));if(!h)return;attach();
-  const t=document.querySelector('[data-anchor="'+h.replace(/"/g,'')+'"]')||document.getElementById(h)||document.getElementById('r-'+h)||document.getElementById('p-'+h)||document.getElementById('s-'+h)||document.getElementById('d-'+h)||document.getElementById('g-'+h);
+  const t=document.querySelector('[data-anchor="'+(window.CSS&&CSS.escape?CSS.escape(h):h.replace(/["\\]/g,''))+'"]')||document.getElementById(h)||document.getElementById('r-'+h)||document.getElementById('p-'+h)||document.getElementById('s-'+h)||document.getElementById('d-'+h)||document.getElementById('g-'+h);
   if(!t||t.closest('[hidden]'))return;const dt=t.querySelector&&t.querySelector('details');if(dt)dt.open=true;const b=t.querySelector&&t.querySelector('.pbtn');if(b&&b.getAttribute('aria-expanded')!=='true')b.click();
   t.scrollIntoView({block:t.dataset.anchor?'start':'center'});if(!t.dataset.anchor){t.classList.remove('flash');void t.offsetWidth;t.classList.add('flash')}}
  const run=()=>{attach();setTimeout(attach,600)};run();setTimeout(jump,450);
