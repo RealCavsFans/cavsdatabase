@@ -59,6 +59,7 @@ let shell = html;
     shell = html.replace(sm[0], () => `<link rel="stylesheet" href="/a/app.${hc}.css"><link rel="preload" href="/a/app.${hj}.js" as="script">`).replace(jm[0], () => `<script src="/a/app.${hj}.js"></script>`);
   } }
 await writeFile(new URL('home.html', root), shell); // front page copy (served at / via _redirects)
+{ const { buildLive } = await import('./build-live.mjs'); console.log(await buildLive(root)); }   // /live.html from live.src.html, its script and styles cached in a/
 for (const [route, [title, desc]] of Object.entries(META)) {
   if (route === 'home') continue;
   const url = 'https://cavsdatabase.com/' + route;

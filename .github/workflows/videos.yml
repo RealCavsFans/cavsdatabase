@@ -7,7 +7,7 @@ on:
   # This job is the only thing that builds pages; every other job and hand edit commits index.html alone.
   push:
     branches: [main]
-    paths: ['index.html', 'pdata/history.json', 'scripts/build-pages.mjs', 'scripts/prerender.mjs', 'scripts/og-live.mjs']
+    paths: ['index.html', 'live.src.html', 'live-core.js', 'pdata/history.json', 'scripts/build-pages.mjs', 'scripts/build-live.mjs', 'scripts/prerender.mjs', 'scripts/og-live.mjs']
 permissions:
   contents: write
 concurrency:
