@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <title>Live game · Cavs Database</title>
 <meta name="description" content="Live Cavaliers box score, shot chart, lineups, assists, four factors and win probability, updated every 30 seconds.">
@@ -402,8 +402,8 @@ h3{font-size:0.875rem}
 .sh-n{display:none}.sh-in{padding:10px 16px}.sh-b svg{width:34px;height:34px}.sh-b span{font-size:1.625rem}
 .sh-sub{display:flex;gap:6px;padding:8px 16px;background:var(--card);border-bottom:1px solid var(--line)}
 .sh-sub a{flex:none;padding:6px 11px;border:1px solid var(--line);font:700 .8125rem var(--sans);color:var(--fg2);text-decoration:none}.sh-sub a.on{background:#860038;border-color:#860038;color:#fff}
-body{padding-bottom:calc(48px + max(2px,env(safe-area-inset-bottom,0px) - 20px))}
-.sh-bar{display:grid;position:fixed;left:0;right:0;bottom:0;z-index:95;grid-template-columns:repeat(5,1fr);background:var(--card);border-top:1px solid var(--line);padding:5px 0 max(2px,calc(env(safe-area-inset-bottom,0px) - 20px));box-shadow:0 -4px 16px rgba(0,0,0,.06)}
+body{padding-bottom:calc(56px + max(10px,env(safe-area-inset-bottom,0px) - 8px))}
+.sh-bar{display:grid;position:fixed;left:0;right:0;bottom:0;z-index:95;grid-template-columns:repeat(5,1fr);background:var(--card);border-top:1px solid var(--line);padding:7px 0 max(10px,calc(env(safe-area-inset-bottom,0px) - 8px));box-shadow:0 -4px 16px rgba(0,0,0,.06)}
 .sh-bar a{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);font:700 .625rem var(--sans);text-decoration:none}
 .sh-bar svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.sh-bar a.on{color:var(--wine-ink,#860038)}
 }
@@ -470,6 +470,7 @@ tr.lutot td{font-weight:800;border-top:2px solid var(--fg)}
 .sgp-l{position:absolute;z-index:30;top:calc(100% + 4px);left:0;min-width:240px;max-height:320px;overflow:auto;background:var(--card);border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.15);padding:8px}.sgp-l label{display:flex;gap:8px;align-items:center;padding:5px 4px;font:500 .8125rem var(--sans);cursor:pointer}.sgp-a{display:flex;gap:10px;align-items:center;padding-top:8px;border-top:1px solid var(--line);margin-top:6px}
 .lud{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}.lud-h{font:800 .875rem var(--cond);letter-spacing:.06em;text-transform:uppercase;margin:12px 0 6px}.lud-t td small{color:var(--muted);font-size:.75em;margin-left:4px}.lud-courts{display:grid;grid-template-columns:repeat(2,minmax(0,340px));gap:18px;margin-top:10px}@media(max-width:640px){.lud-courts{grid-template-columns:minmax(0,230px);justify-content:center;gap:10px}.lud-courts .note{font-size:.6875rem}}.lud-small{color:#9a6a00}
 .rk{display:block;font:700 .625rem var(--mono);letter-spacing:0;margin-top:1px;color:var(--muted)}.rk.g{color:#1d6b3a}.rk.b{color:#a3122e}.lgp td span.rk{display:inline;font-size:.75rem}.lgp td{text-align:center}.lgp td:first-child{text-align:left}.ffc .row b .rk{display:inline;margin-left:6px}
+@media(max-width:640px){#sb.fin .sc{font-size:1.75rem!important;line-height:32px!important}#sb.fin .th img{width:28px;height:28px}#sb.fin .st{font-size:1.125rem}#sb.fin{padding-top:10px;padding-bottom:10px}}
 </style>
 </head>
 <body>
@@ -584,7 +585,7 @@ function render(){
 function rerender(){if(S.season){renderNav(S.R);renderView();return}S.R=derive();renderNav(S.R);renderView()}
 const scoreOf=(t,R)=>(S.replay||S.state!=='pre')?(t.ha==='home'?R.hs:R.as):t.score;
 function renderSB(D,R){
-  const sb=$('sb');sb.innerHTML='';const fin=S.state==='post',per=R.lp?R.lp.per:0;
+  const sb=$('sb');sb.innerHTML='';const fin=S.state==='post',per=R.lp?R.lp.per:0;sb.classList.toggle('fin',fin);
   const tmEl=(t,h)=>{const o=t===D.home?D.away:D.home;const d=el('div','tm'+(h?' h':'')+(fin&&scoreOf(t,R)<scoreOf(o,R)?' lose':''));const th=el('div','th');const img=el('img');img.src=t.logo;img.onerror=()=>{img.onerror=null;if(t.logo2)img.src=t.logo2};img.alt='';img.width=44;img.height=44;const nm=el('div');nm.append(el('div','nm',t.abbr),el('div','rc',t.rec));th.append(img,nm);d.append(th,el('div','sc',S.state==='pre'?'':String(scoreOf(t,R))));return d};
   const mid=el('div','mid');
   if(S.state==='pre')mid.append(el('div','st','Tip-off'),el('div','ck',new Date(D.date).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})));
@@ -598,7 +599,7 @@ function renderSB(D,R){
   if(S.state!=='pre'){const tb=el('table','ls');const hr=el('tr');hr.appendChild(el('th',null,''));for(let i=1;i<=R.maxPer;i++)hr.appendChild(el('th',null,pname(i).replace('Q','')));hr.appendChild(el('th',null,'T'));tb.appendChild(hr);
     [D.away,D.home].forEach(t=>{const r=el('tr');r.appendChild(el('td',null,t.abbr));for(let i=1;i<=R.maxPer;i++){const q=R.TQ[i]&&R.TQ[i][t.id];r.appendChild(el('td',null,q?String(q.pts):'–'))}r.appendChild(el('td',null,String(scoreOf(t,R))));tb.appendChild(r)});sb.appendChild(tb)}
   if(R.wp!=null&&S.state!=='pre'){const fp=Math.round((D.focus===D.home?R.wp:1-R.wp)*100);const w=el('div','wp');const h=el('div','wp-h');h.innerHTML='<span>Win probability</span><span>'+esc(D.focus.abbr)+' <b>'+fp+'%</b></span>';const bar=el('div','wp-bar');const a=el('i');a.style.width=fp+'%';a.style.background=D.focus.c;const b=el('i');b.style.width=(100-fp)+'%';b.style.background='var(--track)';bar.append(a,b);w.append(h,bar);sb.appendChild(w)}
-  if(S.state!=='pre'&&R.lp)sb.appendChild(gameState(D,R));
+  if(S.state==='in'&&R.lp)sb.appendChild(gameState(D,R));/* fouls, timeouts and challenges only matter while it's being played */
   updRP(D,R);
 }
 
