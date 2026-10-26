@@ -4049,6 +4049,37 @@ function ppBuild(p,root){
 
   /* ===== 4 · value to the Cavs ===== */
   const sal=R?(v2=>typeof v2==='number'?v2:Array.isArray(v2)?v2[0]:0)(R[2][0]):0;
+  /* deeper season numbers from the game archive (live-archive/<season>/season.json): on/off, lineups, how he scores, defense and boards with him on vs off. Preview: ?ppx=1 */
+  if(/[?&]ppx=1/.test(location.search)){const SE='2026-27';const nrm=x=>x.normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');
+    PPD.arch=PPD.arch||{};const go=A=>{const id=A&&A.P&&Object.keys(A.P).find(k=>nrm(A.P[k].name)===nrm(n));if(!id||!A.B||!A.B[id])return;const b=A.B[id],gp=(A.gp||{})[id]||0;
+      const add=(x,y)=>{for(const k in y)if(typeof y[k]==='number')x[k]=(x[k]||0)+y[k];return x};const on={sec:0,pf:0,pa:0,o:{},d:{}};const L5=Object.values((A.L||{})[5]||{});
+      L5.filter(l=>l.ids.includes(id)).forEach(l=>{on.sec+=l.sec;on.pf+=l.pf;on.pa+=l.pa;add(on.o,l.o);add(on.d,l.d)});
+      const off={sec:0,pf:0,pa:0,o:{},d:{}};L5.filter(l=>!l.ids.includes(id)).forEach(l=>{off.sec+=l.sec;off.pf+=l.pf;off.pa+=l.pa;add(off.o,l.o);add(off.d,l.d)});/* both sides from the same five-man rows, so they add up */
+      const P=x=>(poss({fga:x.o.fga||0,oreb:x.o.oreb||0,to:x.o.to||0,fta:x.o.fta||0})+poss({fga:x.d.fga||0,oreb:x.d.oreb||0,to:x.d.to||0,fta:x.d.fta||0}))/2;
+      const rt=x=>{const p=P(x);return p>=1?{o:x.pf/p*100,d:x.pa/p*100,n:(x.pf-x.pa)/p*100,p}:null};const R1=rt(on),R0=rt(off);
+      const f1=v=>v==null||!isFinite(v)?'–':v.toFixed(1),pc=(m,a)=>a?(m/a*100).toFixed(1)+'%':'–',sg=v=>v==null?'–':(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1);
+      const tbl=(rows,h)=>{const t=el('table','ppx-t ppx-oo');t.innerHTML='<thead><tr><th></th>'+h.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead>';const bd=el('tbody');rows.forEach(r=>{const tr=el('tr');tr.innerHTML='<td>'+r[0]+'</td>'+r.slice(1).map(v=>'<td>'+v+'</td>').join('');bd.appendChild(tr)});t.appendChild(bd);const w=el('div','tablebox');w.appendChild(t);return w};
+      const efg=o=>o.fga?((o.fgm||0)+.5*(o.tpm||0))/o.fga*100:null,tov=o=>{const q=(o.fga||0)+.44*(o.fta||0)+(o.to||0);return q?(o.to||0)/q*100:null},orb=(a,z)=>(a.oreb||0)+(z.dreb||0)?(a.oreb||0)/((a.oreb||0)+(z.dreb||0))*100:null;
+      const note=gp+' game'+(gp===1?'':'s')+' · '+fmtMinS(on.sec)+' on the floor · small samples swing hard';
+      /* 1 · on/off (overview) */
+      if(R1&&R0){const c=card('On/off',null,'The Cavs with him on the floor and with him on the bench, per 100 possessions. '+note+'.');
+        c.appendChild(tbl([['Offense',f1(R1.o),f1(R0.o),sg(R1.o-R0.o)],['Defense',f1(R1.d),f1(R0.d),sg(R0.d-R1.d)],['Net',sg(R1.n),sg(R0.n),sg(R1.n-R0.n)],['Possessions',Math.round(R1.p),Math.round(R0.p),'']],['On','Off','Diff']));
+        c.appendChild(el('p','ppx-why','Diff is in the Cavs’ favor when positive (for defense, fewer points allowed with him on).'));ov.appendChild(c)}
+      /* 2 · lineups (overview) */
+      {const rows=L5.filter(l=>l.ids.includes(id)&&l.sec>=60).sort((a,b)=>b.sec-a.sec).slice(0,6);if(rows.length){const c=card('His most-used lineups',null,'Five-man groups he played in this season, by minutes.');
+        c.appendChild(tbl(rows.map(l=>{const r=rt(l);return [l.ids.filter(x=>x!==id).map(x=>(A.P[x]||{}).last||'').join(', '),fmtMinS(l.sec),sg(l.pf-l.pa),r?sg(r.n):'–']}),['Min','+/-','Net']));c.querySelector('thead th').textContent='With';ov.appendChild(c)}}
+      /* 3 · how he scores (offense) */
+      {const SH=(A.shots||[]).filter(x=>x[0]===id);const usage=(b.fga+.44*b.fta+b.to)/Math.max(1,(on.o.fga||0)+.44*(on.o.fta||0)+(on.o.to||0))*100;const ts=b.fga+b.fta?b.pts/(2*(b.fga+.44*b.fta))*100:null;
+        const mk=SH.filter(x=>x[3]),asd=mk.filter(x=>x[7]).length,tr=SH.filter(x=>x[6]===1);const c=card('How he scores',null,'Usage and efficiency this season, and where his makes come from.');
+        const g=el('div','ppx-big2');[[f1(usage)+'%','Usage (share of plays he finishes)'],[ts==null?'–':f1(ts)+'%','True shooting'],[mk.length?Math.round(asd/mk.length*100)+'%':'–','Of his makes assisted'],[tr.length+' · '+pc(tr.filter(x=>x[3]).length,tr.length),'Transition shots · FG%'],[f1(b.ast/Math.max(1,gp))+' / '+f1(b.to/Math.max(1,gp)),'Assists / turnovers a game']].forEach(([v,l])=>{const d=el('div');d.append(el('b',null,v),el('span',null,l));g.appendChild(d)});c.appendChild(g);of.appendChild(c)}
+      /* 4 · defense and boards with him on vs off */
+      if(R1&&R0){const c=card('Defense and boards, on vs off',null,'What opponents did with him on the floor and off it, and his share of the rebounds. '+note+'.');
+        const hisO=(on.o.oreb||0)+(on.d.dreb||0),hisD=(on.o.dreb||0)+(on.d.oreb||0);
+        c.appendChild(tbl([['Opp. effective FG%',f1(efg(on.d))+'%',f1(efg(off.d))+'%'],['Opp. 3PA rate',pc(on.d.tpa||0,on.d.fga||0),pc(off.d.tpa||0,off.d.fga||0)],['Opp. turnover rate',f1(tov(on.d))+'%',f1(tov(off.d))+'%'],['Cavs off. rebound %',f1(orb(on.o,on.d))+'%',f1(orb(off.o,off.d))+'%'],['Cavs def. rebound %',f1(100-orb(on.d,on.o))+'%',f1(100-orb(off.d,off.o))+'%']],['On','Off']));
+        const g=el('div','ppx-big2');[[hisO?pc(b.oreb,hisO):'–','His off. rebound %'],[hisD?pc(b.dreb,hisD):'–','His def. rebound %'],[f1((b.stl+b.blk)/Math.max(1,gp)),'Steals + blocks a game'],[f1(b.pf/Math.max(1,gp)),'Fouls a game']].forEach(([v,l])=>{const d=el('div');d.append(el('b',null,v),el('span',null,l));g.appendChild(d)});c.appendChild(g);df.appendChild(c)}};
+    const fmtMinS=s=>Math.floor(s/60)+':'+String(Math.round(s%60)).padStart(2,'0');
+    const poss=t=>t.fga-t.oreb+t.to+0.44*t.fta;
+    if(PPD.arch[SE])go(PPD.arch[SE]);else fetch('/live-archive/'+SE+'/season.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(j=>{PPD.arch[SE]=j||{};go(PPD.arch[SE])})}
   const va=chap('val','Role and value',stt==='TW'?'Two-way':stt==='Camp'?'Exhibit 10':'',false,'Role');
   const teamGames=games.length;
   if(gp>=3){const withG=games.filter(g=>g.me&&g.me.min>0),without=games.filter(g=>!(g.me&&g.me.min>0));const rec=a=>a.filter(g=>g.res==='W').length+'–'+a.filter(g=>g.res==='L').length;
