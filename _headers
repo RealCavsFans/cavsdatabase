@@ -12,3 +12,25 @@
   Cache-Control: public, max-age=31536000, immutable
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
+
+# data files: Google may fetch them to render pages, but they shouldn't show up in search
+/pdata/*
+  X-Robots-Tag: noindex
+/live-archive/*
+  X-Robots-Tag: noindex
+/data/*
+  X-Robots-Tag: noindex
+/box.json
+  X-Robots-Tag: noindex
+/news.json
+  X-Robots-Tag: noindex
+/videos.json
+  X-Robots-Tag: noindex
+/rcf.json
+  X-Robots-Tag: noindex
+/niang.json
+  X-Robots-Tag: noindex
+/live-base.json
+  X-Robots-Tag: noindex
+/links-status.json
+  X-Robots-Tag: noindex
