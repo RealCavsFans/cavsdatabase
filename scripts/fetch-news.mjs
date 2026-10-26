@@ -84,7 +84,7 @@ for (const s of cfg.sources || []) {
     const items = xml.includes('<item') ? xml.split(/<item[\s>]/i).slice(1) : xml.split(/<entry[\s>]/i).slice(1);
     const re = s.filter ? new RegExp(s.filter, 'i') : null;
     const got = items.map(x => ({ src: s.name, title: used.includes('news.google.com') ? un(tag(x, 'title')).replace(/\s+-\s+[^-]+$/, '') : un(tag(x, 'title')), link: un(tag(x, 'link')) || attr(x, 'link', 'href') || attr(x, 'enclosure', 'url'), date: new Date(un(tag(x, 'pubDate')) || un(tag(x, 'published')) || un(tag(x, 'updated')) || un(tag(x, 'dc:date'))).toISOString(), ...(bucket === 'podcasts' ? { dur: dur(tag(x, 'itunes:duration')) } : {}) }))
-      .filter(x => x.title && x.link && Date.parse(x.date) > cutoff && (!re || re.test(x.title))).slice(0, 15);
+      .filter(x => x.title && /^https?:\/\//i.test(x.link || '') && Date.parse(x.date) > cutoff && (!re || re.test(x.title))).slice(0, 15);
     out[bucket].push(...got); console.log(s.name + ':', got.length, 'from', used); status.push(`${s.name}: ${got.length} from ${used}`);
   } catch (e) { console.log(`::warning::${s.name}: ${e.message}, keeping last run`); status.push(`${s.name}: FAILED ${e.message}`); out[bucket].push(...old); }
 }

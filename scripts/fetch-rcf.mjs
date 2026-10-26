@@ -25,11 +25,11 @@ if (!xml) { warn('RCF feed did not answer; keeping existing rcf.json'); process.
 
 const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].slice(0, KEEP).map(([, it]) => {
   const html = pick(it, 'content:encoded').replace(/<!\[CDATA\[|\]\]>/g, '');
-  const img = (html.match(/<img[^>]+src="([^"]+)"/) || [])[1] || null;
+  const img = ((html.match(/<img[^>]+src="([^"]+)"/) || [])[1] || '').match(/^https:\/\//i) ? (html.match(/<img[^>]+src="([^"]+)"/) || [])[1] : null;
   const text = ent(html.replace(/<a[^>]*>Read more<\/a>/i, '').replace(/<[^>]+>/g, ' ')).replace(/[​]/g, '').replace(/\s+/g, ' ').replace(/\s+([,.;:!?)’”])/g, '$1').replace(/([(“‘])\s+/g, '$1').trim();
   return {
     title: ent(pick(it, 'title')).trim(),
-    link: ent(pick(it, 'link')).trim(),
+    link: (l => /^https?:\/\//i.test(l) ? l : 'https://realcavsfans.com/')(ent(pick(it, 'link')).trim()),   // feed links must be http(s)
     date: new Date(pick(it, 'pubDate')).toISOString(),
     author: ent(pick(it, 'dc:creator')).trim(),
     img: img ? ent(img) : null,

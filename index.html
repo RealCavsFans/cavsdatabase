@@ -971,6 +971,9 @@ const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt
     [I('<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>'),'Search everything','Players, staff, seasons, picks and terms. Press / on a keyboard.',()=>{const q=document.getElementById('q');if(q){scrollTo({top:0,behavior:'smooth'});setTimeout(()=>q.focus(),250)}}]];
   T.forEach(([ic,t,d,f])=>{const b=el('button','tool');b.type='button';b.innerHTML='<span class="tool-i">'+ic+'</span>';const tx=el('span','tool-t');tx.append(el('b',null,t),el('small',null,d));b.appendChild(tx);b.onclick=f;g.appendChild(b)})}}
 /* nav + index */
+/* safety: escape outside text before it goes into HTML; only allow http(s) links from feeds */
+const escH=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+const safeUrl=u=>/^https?:\/\//i.test(String(u||''))?u:'#';
 const tabs=document.getElementById('tabs');
 /* Stats in the menus (preview: ?stats=1). On a Cavs game night the button becomes Live (with a red dot) and opens the game; after the final it goes back to season stats. */
 const STATS_ON=true;/* on for everyone since Oct 26 */
@@ -1926,7 +1929,7 @@ function renderHistory(){
   const a=document.getElementById('otd-src');a.href=f.u;a.textContent='Learn more ↗';
   const also=document.getElementById('otd-also');const rest=[];
   if(rest.length){also.hidden=false;also.appendChild(el('li','dim','Also on '+new Date(2000,m-1,d).toLocaleDateString('en-US',{month:'long',day:'numeric'})+':'));
-    rest.forEach(x=>{const li=el('li');li.append(el('b',null,String(x.y)),x.t+' ');const s2=el('a',null,'↗');s2.href=x.u;s2.target='_blank';s2.rel='noopener';s2.title=x.src;li.appendChild(s2);also.appendChild(li)})}
+    rest.forEach(x=>{const li=el('li');li.append(el('b',null,String(x.y)),x.t+' ');const s2=el('a',null,'↗');s2.href=safeUrl(x.u);s2.target='_blank';s2.rel='noopener';s2.title=x.src;li.appendChild(s2);also.appendChild(li)})}
   if((md==='06-19'||/preview=june19/.test(location.search))&&(routeOf()==='home'))celebrate();
 }
 
@@ -2564,7 +2567,7 @@ const perName=p=>p<=4?'Q'+p:(p===5?'OT':'OT'+(p-4));
     if(Lv.lp&&!Lv.fin){const p=el('div','lvlp');p.append(el('b',null,Lv.clock),Lv.lp);c.appendChild(p)}
     const a=el('a','lvgo');a.href='/live.html?g='+Lv.id;a.append(el('span',null,Lv.fin?'Game stats':'Live stats'),el('small',null,'Shots, lineups, on/off →'));c.appendChild(a);
     /* after the buzzer: recap link once RCF posts one */
-    if(Lv.fin){const rc=RC&&RC.items&&RC.items.find(x=>/recap/i.test(x.title)&&x.date&&x.date.slice(0,10)>=g[0]);if(rc){const lk=el('div','gdm-links lvlk');const r=el('a',null,'RCF Recap →');r.href=rc.link;r.target='_blank';r.rel='noopener';lk.appendChild(r);c.appendChild(lk)}}
+    if(Lv.fin){const rc=RC&&RC.items&&RC.items.find(x=>/recap/i.test(x.title)&&x.date&&x.date.slice(0,10)>=g[0]);if(rc){const lk=el('div','gdm-links lvlk');const r=el('a',null,'RCF Recap →');r.href=safeUrl(rc.link);r.target='_blank';r.rel='noopener';lk.appendChild(r);c.appendChild(lk)}}
     const h=el('div','lvhw');if(!Lv.fin){const tv=tvFor(g[0]),ra=radioFor(g[0]);h.append('Watch ',el('b',null,[tv.nat,tv.loc].filter(Boolean)[0]||'TBA'),' · Listen ',el('b',null,(ra.cavs||'').split(' · ')[0]))}c.appendChild(h);return c}
   function day(g){const t=tipOf(g).getTime(),tv=tvFor(g[0]),ra=radioFor(g[0]);const first=g===SCHEDULE[0];
     const kk=el('span','gdm-live');kk.append(el('i'),'Game day'+(first?' · season opener':''));const c=card('gdm-day',kk,['Preview','/games/'+gslug(g),'games/'+gslug(g)]);
@@ -2616,7 +2619,7 @@ const perName=p=>p<=4?'Q'+p:(p===5?'OT':'OT'+(p-4));
     {const bl=c.querySelector('.gdm-k a');bl.removeAttribute('target');bl.removeAttribute('rel');cavsLive(g[0]).then(L=>{if(L&&L.id)bl.href='/live.html?g='+L.id}).catch(()=>{})}
     const sb=el('div','gdm-sb');sb.append(el('span','tm c','CLE'),el('span','gdm-tl',String(cs)),el('span','gdm-dash'),el('span','gdm-tl o',String(os)),el('span','tm',g[1]),el('span','gdm-wl'+(cs>os?'':' l'),cs>os?'W':'L'));c.appendChild(sb);
     if(top){const [nm,ln]=top.split(': ');const p=PLAYERS.find(x=>x[1]===nm);const t=el('div','gdm-top');if(p){const hs=el('div','gdm-hs');const im=el('img');im.src='https://cdn.nba.com/headshots/nba/latest/260x190/'+p[12]+'.png';im.alt='';im.onerror=()=>im.remove();hs.appendChild(im);t.appendChild(hs)}const tx=el('div');tx.append(el('small',null,'TOP LINE'),el('b',null,nm),el('div','gdm-ln',(ln||'').toUpperCase().replace(/, /g,' · ')));t.appendChild(tx);c.appendChild(t)}
-    const lk=el('div','gdm-links');const rc=RC&&RC.items&&RC.items.find(x=>/recap/i.test(x.title)&&x.date&&x.date.slice(0,10)>=g[0]);if(rc){const a=el('a',null,'RCF Recap →');a.href=rc.link;a.target='_blank';a.rel='noopener';lk.appendChild(a);
+    const lk=el('div','gdm-links');const rc=RC&&RC.items&&RC.items.find(x=>/recap/i.test(x.title)&&x.date&&x.date.slice(0,10)>=g[0]);if(rc){const a=el('a',null,'RCF Recap →');a.href=safeUrl(rc.link);a.target='_blank';a.rel='noopener';lk.appendChild(a);
       /* desktop: the recap link sits in the header next to Box score, so the card has no extra row */
       const hk=c.querySelector('.gdm-k a');if(hk){const a2=a.cloneNode(true);a2.classList.add('gdm-rcf');const w=el('span','gdm-kl');hk.before(w);w.append(a2,hk);lk.classList.add('gdm-lk-sm')}}
     if(lk.childNodes.length)c.appendChild(lk);box.appendChild(c);if(rec)rec.hidden=false}
@@ -3073,9 +3076,9 @@ const linkList=items=>{const ul=el('ul','vlinks');items.forEach(([t,d,u])=>{cons
 const vDate=new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric'});
 function vCard(v){
   const c=el('div','vcard');const th=el('div','vthumb');
-  const img=el('img');img.src='https://i.ytimg.com/vi/'+v.id+'/hqdefault.jpg';img.alt='';img.loading='lazy';
+  const img=el('img');img.src='https://i.ytimg.com/vi/'+encodeURIComponent(v.id)+'/hqdefault.jpg';img.alt='';img.loading='lazy';
   const b=el('button','vplay');b.type='button';b.setAttribute('aria-label','Play: '+v.title);b.appendChild(el('span'));
-  b.addEventListener('click',()=>{const f=el('iframe');f.src='https://www.youtube-nocookie.com/embed/'+v.id+'?autoplay=1&rel=0';f.title=v.title;f.allow='autoplay; encrypted-media; picture-in-picture';f.allowFullscreen=true;th.textContent='';th.appendChild(f)});
+  b.addEventListener('click',()=>{const f=el('iframe');f.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(v.id)+'?autoplay=1&rel=0';f.title=v.title;f.allow='autoplay; encrypted-media; picture-in-picture';f.allowFullscreen=true;th.textContent='';th.appendChild(f)});
   th.append(img,b);c.append(th,el('b',null,v.title),el('small',null,vDate.format(new Date(v.published))));return c}
 function renderVideo(list){
   const home=document.getElementById('vid-home'),page=document.getElementById('vid-page');home.textContent='';page.textContent='';
@@ -3723,7 +3726,7 @@ PLAYERS.forEach(p=>add(p[1],[p[2],'age '+p[6],p[8],p[9]].filter(Boolean).join(' 
 let rcfLoaded=false;
 function loadRcf(){if(rcfLoaded)return;rcfLoaded=true;
   const box=document.getElementById('rcf-list');
-  const render=d=>{box.textContent='';const mo=el('a','rcf-more','More on RealCavsFans.com →');mo.href='https://realcavsfans.com/index.php?forums/FrontPage/';mo.target='_blank';mo.rel='noopener';box.after(mo);(d.items||[]).forEach(x=>{const a=el('a','rcf-card');a.href=x.link;a.target='_blank';a.rel='noopener';
+  const render=d=>{box.textContent='';const mo=el('a','rcf-more','More on RealCavsFans.com →');mo.href='https://realcavsfans.com/index.php?forums/FrontPage/';mo.target='_blank';mo.rel='noopener';box.after(mo);(d.items||[]).forEach(x=>{const a=el('a','rcf-card');a.href=safeUrl(x.link);a.target='_blank';a.rel='noopener';
       if(x.img){const im=el('img');im.src=x.img;im.alt=x.title;im.loading='lazy';im.onerror=()=>{im.remove();a.classList.add('noimg')};a.appendChild(im)}else a.classList.add('noimg');
       const t=el('div','rcf-t');t.append(el('b',null,x.title),el('span','rcf-m',new Date(x.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+(x.author?' · '+x.author:'')),el('p',null,x.excerpt||''));a.appendChild(t);box.appendChild(a)})};
   fetch((location.protocol==='file:'?'':'/')+'rcf.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(d=>{if(d)render(d);else box.appendChild(el('p','dim','Articles couldn’t load. Visit RealCavsFans.com.'))}).catch(()=>box.appendChild(el('p','dim','Articles couldn’t load. Visit RealCavsFans.com.')));
@@ -3917,7 +3920,7 @@ function ppBuild(p,root){
   {const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3P%','tp'],['FG%','fg'],['MIN','min']],W:[['PTS','pts'],['REB','reb'],['AST','ast'],['3P%','tp'],['STL','stl'],['MIN','min']],B:[['PTS','pts'],['REB','reb'],['AST','ast'],['BLK','blk'],['FG%','fg'],['MIN','min']]};
     const lkey={pts:'pts',reb:'reb',ast:'ast',stl:'stl',blk:'blk',min:'min'};
     const head=!cur?'Season line':cur.src==='2026–27'?'Season line · 2026–27':cur.base==='pre'?'Last season · '+(pre.team||''):'Last season · 2025–26';
-    const why=!cur?'':cur.src==='2026–27'?`His averages this season. Under each: where he ranks ${lgOK?'among NBA '+GN+' (bar = percentile)':'on the Cavs'}.`:cur.base==='pre'?`His numbers ${pre.league?'in '+pre.league:''} last season, the baseline until he plays for the Cavs.`:`His 2025–26 averages, shown until his first game this season${career?', next to his career average':''}.`;
+    const why=!cur?'':cur.src==='2026–27'?`His averages this season. Under each: where he ranks ${lgOK?'among NBA '+GN+' (bar = percentile)':'on the Cavs'}.`:cur.base==='pre'?`His numbers ${pre.league?'in '+escH(pre.league):''} last season, the baseline until he plays for the Cavs.`:`His 2025–26 averages, shown until his first game this season${career?', next to his career average':''}.`;
     const c=card(head,null,why);
     if(!cur){c.appendChild(note('No stats on record yet.'))}else{const g6=el('div','ppx-g6');
       sets[G].forEach(([lab,k])=>{const val=cur[k];const cell=el('div','ppx-cell');cell.appendChild(el('div','k')).appendChild(tip(lab));cell.appendChild(el('div','v',/%/.test(lab)?f3(val):f1(val)));
@@ -4022,7 +4025,7 @@ function ppBuild(p,root){
   /* ===== 2 · offense ===== */
   const offHead=cur?f1(cur.pts)+' pts'+(cur.fg!=null?' · '+f3(cur.fg)+' FG':''):'';
   const of=chap('off','Offense',offHead);
-  if(cur){const c=card('Shooting',null,lgOK?`His percentages against the average NBA ${GN.slice(0,-1)} (black line).`:'His percentages'+(cur.src==='2026–27'?' this season.':' from '+(cur.base==='pre'?'last season at '+pre.team:'2025–26')+'.'));
+  if(cur){const c=card('Shooting',null,lgOK?`His percentages against the average NBA ${GN.slice(0,-1)} (black line).`:'His percentages'+(cur.src==='2026–27'?' this season.':' from '+(cur.base==='pre'?'last season at '+escH(pre.team):'2025–26')+'.'));
     const rows=[['FG%',cur.fg,x=>x.fga?x.fgm/x.fga:null],['3P%',cur.tp,x=>x.tpa?x.tpm/x.tpa:null],['FT%',cur.ft,x=>x.fta?x.ftm/x.fta:null]];if(cur.pps!=null)rows.push(['Pts/shot',cur.pps,x=>x.fga?x.pts/x.fga:null]);
     const sh=el('div','ppx-share');rows.forEach(([lab,val,fn])=>{if(val==null)return;const r2=el('div');r2.appendChild(el('span',null)).appendChild(tip(lab));const t2=el('span','t');const sc=lab==='Pts/shot'?val/2:val;const i2=el('i');i2.style.width=pc(sc*100)+'%';t2.appendChild(i2);
       if(lgOK){const tot2=pool.reduce((a,x)=>{const k=lab==='3P%'?['tpm','tpa']:lab==='FT%'?['ftm','fta']:lab==='FG%'?['fgm','fga']:['pts','fga'];a[0]+=x[k[0]];a[1]+=x[k[1]];return a},[0,0]);const la=tot2[1]?tot2[0]/tot2[1]:null;if(la!=null){const u=el('u');u.style.left=pc((lab==='Pts/shot'?la/2:la)*100)+'%';u.title='NBA '+GN+' average: '+(lab==='Pts/shot'?la.toFixed(2):f3(la));t2.appendChild(u)}}
@@ -4058,7 +4061,7 @@ function ppBuild(p,root){
       const P=x=>(poss({fga:x.o.fga||0,oreb:x.o.oreb||0,to:x.o.to||0,fta:x.o.fta||0})+poss({fga:x.d.fga||0,oreb:x.d.oreb||0,to:x.d.to||0,fta:x.d.fta||0}))/2;
       const rt=x=>{const p=P(x);return p>=1?{o:x.pf/p*100,d:x.pa/p*100,n:(x.pf-x.pa)/p*100,p}:null};const R1=rt(on),R0=rt(off);
       const f1=v=>v==null||!isFinite(v)?'–':v.toFixed(1),pc=(m,a)=>a?(m/a*100).toFixed(1)+'%':'–',sg=v=>v==null?'–':(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1);
-      const tbl=(rows,h)=>{const t=el('table','ppx-t ppx-oo');t.innerHTML='<thead><tr><th></th>'+h.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead>';const bd=el('tbody');rows.forEach(r=>{const tr=el('tr');tr.innerHTML='<td>'+r[0]+'</td>'+r.slice(1).map(v=>'<td>'+v+'</td>').join('');bd.appendChild(tr)});t.appendChild(bd);const w=el('div','tablebox');w.appendChild(t);return w};
+      const tbl=(rows,h)=>{const t=el('table','ppx-t ppx-oo');t.innerHTML='<thead><tr><th></th>'+h.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead>';const bd=el('tbody');rows.forEach(r=>{const tr=el('tr');r.forEach(v=>tr.appendChild(el('td',null,String(v))));bd.appendChild(tr);return;tr.innerHTML='<td>'+r[0]+'</td>'+r.slice(1).map(v=>'<td>'+v+'</td>').join('');bd.appendChild(tr)});t.appendChild(bd);const w=el('div','tablebox');w.appendChild(t);return w};
       const efg=o=>o.fga?((o.fgm||0)+.5*(o.tpm||0))/o.fga*100:null,tov=o=>{const q=(o.fga||0)+.44*(o.fta||0)+(o.to||0);return q?(o.to||0)/q*100:null},orb=(a,z)=>(a.oreb||0)+(z.dreb||0)?(a.oreb||0)/((a.oreb||0)+(z.dreb||0))*100:null;
       const note=gp+' game'+(gp===1?'':'s')+' · '+fmtMinS(on.sec)+' on the floor · small samples swing hard';
       /* 1 · on/off (overview) */
@@ -4155,7 +4158,7 @@ function ppBuild(p,root){
   {const NW=PPD.news||{};const last=n.split(' ').slice(-1)[0];const uniq=PLAYERS.filter(x=>x[1].split(' ').slice(-1)[0]===last).length===1&&last.length>4;
     const re=new RegExp('\\b('+n.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+(uniq?'|'+last:'')+')\\b','i');
     const items=[...(NW.articles||[]),...(NW.videos||[]),...(NW.podcasts||[])].filter(x=>re.test(x.title||'')).sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,4);
-    if(items.length){const c=card('In the news',null,'Stories and videos that mention him, from the feeds the site pulls every 30 minutes.');const ul=el('ul','ppx-news');items.forEach(x=>{const li=el('li');const a=el('a',null,(x.title||'').replace(/&#0?38;|&amp;/g,'&'));a.href=x.link;a.target='_blank';a.rel='noopener';li.appendChild(a);li.appendChild(el('small',null,x.src+(x.id?' · video':'')));ul.appendChild(li)});c.appendChild(ul);hs.appendChild(c)}}
+    if(items.length){const c=card('In the news',null,'Stories and videos that mention him, from the feeds the site pulls every 30 minutes.');const ul=el('ul','ppx-news');items.forEach(x=>{const li=el('li');const a=el('a',null,(x.title||'').replace(/&#0?38;|&amp;/g,'&'));a.href=safeUrl(x.link);a.target='_blank';a.rel='noopener';li.appendChild(a);li.appendChild(el('small',null,x.src+(x.id?' · video':'')));ul.appendChild(li)});c.appendChild(ul);hs.appendChild(c)}}
   if(!hs.children.length){hs.parentNode.remove();nav.lastChild.remove()}else if(hsH.length)hs.parentNode.querySelector('.ppx-hd')?.remove(),hs.parentNode.querySelector('summary').appendChild(el('span','ppx-hd',hsH[0]));
 
   /* ===== share card ===== */
@@ -4357,8 +4360,8 @@ const y0now=s=>s===SEASONS[0];
  window.loadCovers=()=>{if(done)return;done=true;Promise.all([fetch('/news.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null),fetch('/rcf.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null)]).then(([N,RC])=>{if(!N)return;if(RC&&RC.items&&RC.items.length)N.articles=(N.articles||[]).concat(RC.items.slice(0,3).map(x=>({src:'RealCavsFans',title:x.title,link:x.link,date:x.date})));
   const md=d=>new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'America/New_York'});
   const fill=(id,items,kind)=>{const ul=document.getElementById(id);if(!ul)return;ul.textContent='';const by={};items.forEach(x=>{if(!by[x.src]||x.date>by[x.src].date)by[x.src]=x});
-   Object.values(by).sort((a,b)=>b.date.localeCompare(a.date)).forEach(x=>{const li=el('li');const sp=el('span');const h=HOME[x.src];const nm=el('a',null,x.src);nm.href=h?h[0]:x.link;nm.target='_blank';nm.rel='noopener';
-    const t=el('a','cov-t',(()=>{const ta=document.createElement('textarea');ta.innerHTML=x.title;return ta.value})());t.href=x.link;t.target='_blank';t.rel='noopener';const sm=el('small');sm.append(h?h[1]+' · ':(kind||'')+' · ',t);sp.append(nm,sm);li.append(sp,el('b','cov-d',md(x.date)));ul.appendChild(li)})};
+   Object.values(by).sort((a,b)=>b.date.localeCompare(a.date)).forEach(x=>{const li=el('li');const sp=el('span');const h=HOME[x.src];const nm=el('a',null,x.src);nm.href=h?h[0]:safeUrl(x.link);nm.target='_blank';nm.rel='noopener';
+    const t=el('a','cov-t',(()=>{const ta=document.createElement('textarea');ta.innerHTML=x.title;return ta.value})());t.href=safeUrl(x.link);t.target='_blank';t.rel='noopener';const sm=el('small');sm.append(h?h[1]+' · ':(kind||'')+' · ',t);sp.append(nm,sm);li.append(sp,el('b','cov-d',md(x.date)));ul.appendChild(li)})};
   fill('cov-a',N.articles||[]);fill('cov-p',[...(N.podcasts||[]).map(x=>Object.assign({},x)),...(N.videos||[])],'Latest');
   {const ul=document.getElementById('cov-p');const have=new Set([...ul.querySelectorAll('li>span>a:first-child')].map(a=>a.textContent.replace(/[^a-z]/gi,'').toLowerCase()));
    [['Wine and Gold Talk','https://podcasts.apple.com/us/podcast/id1339173433','Podcast'],['The Block, The Shot, The Stop','https://www.youtube.com/@TheBlockTheShotTheStop','Podcast and YouTube show'],['Locked On Cavs','https://www.youtube.com/@LockedOnCavs','Daily podcast'],['It\u2019s Cavalier Podcast','https://www.youtube.com/@itscavalierpodcast1410','Podcast'],['The Chase Down Podcast','https://www.youtube.com/channel/UCOdS-I1sYkKWhtTjMUWP_TA','Podcast'],['Fear The Fro','https://www.youtube.com/@fearthefropod','Podcast'],['Ultimate Cavaliers','https://www.youtube.com/playlist?list=PLXIPdVacO1d4sx24tHEl8PTmpQyYMnfE1','YouTube show']]
@@ -4491,7 +4494,7 @@ const y0now=s=>s===SEASONS[0];
         const above=others.filter(x=>x[1]>=v);if(!above.length)return;const tgt=above.reduce((a,b)=>b[1]<a[1]?b:a);const rank=others.filter(x=>x[1]>v).length+1,tie=others.some(x=>x[1]===v);
         const need=tgt[1]-v+1,pace=v/g;if(rank>21)return;rows.push({n,lab,rank,tie,tgt:tgt[0],need,games:Math.max(1,Math.ceil(need/pace))})})});
     rows.sort((a,b)=>a.games-b.games||a.need-b.need);const ul=document.getElementById('chase-l');ul.textContent='';
-    passed.slice(0,2).forEach(x=>{const li=el('li','chc-pass');const w=el('div','chc-who');w.append(el('b',null,x.n),el('span',null,x.lab));li.append(w,el('div','chc-n',null));li.lastChild.innerHTML='<b>Passed</b> '+x.o+'<small>in the last game</small>';ul.appendChild(li)});
+    passed.slice(0,2).forEach(x=>{const li=el('li','chc-pass');const w=el('div','chc-who');w.append(el('b',null,x.n),el('span',null,x.lab));li.append(w,el('div','chc-n',null));li.lastChild.append(el('b',null,'Passed'),' '+x.o,el('small',null,'in the last game'));ul.appendChild(li)});
     rows.slice(0,3).forEach(x=>{const li=el('li');const w=el('div','chc-who');const a=PP_ON&&onRoster(x.n)?(()=>{const a=el('a',null,x.n);a.href='/players/'+slug(x.n);a.dataset.go='players/'+slug(x.n);return a})():el('b',null,x.n);w.append(a,el('span',null,x.lab+' · '+(x.tie?'tied for ':'')+ord(x.rank)+' all-time'));
       const r=el('div','chc-n');r.append(el('b',null,x.need.toLocaleString()),' to pass '+x.tgt);r.appendChild(el('small',null,'about '+x.games+(x.games===1?' game':' games')+' at his pace'));li.append(w,r);ul.appendChild(li)});
     if(ul.children.length){box.hidden=false;document.getElementById('chase-sub').textContent=days.length?'Through the last game':'Through '+String(M.through||'').replace('-','–')}
@@ -4755,7 +4758,7 @@ const INTRO_V='tait';
  window.cdbAttachX=attach;window.cdbCap=capture;window.cdbShare=share;window.cdbIcons=[I_L,I_C];
  /* deep links: /assets#picks-owed, /roster#donovan-mitchell, /cap#donovan-mitchell */
  function jump(){const h=decodeURIComponent(location.hash.slice(1));if(!h)return;attach();
-  const t=document.querySelector('[data-anchor="'+h.replace(/"/g,'')+'"]')||document.getElementById(h)||document.getElementById('r-'+h)||document.getElementById('p-'+h)||document.getElementById('s-'+h)||document.getElementById('d-'+h)||document.getElementById('g-'+h);
+  const t=document.querySelector('[data-anchor="'+(window.CSS&&CSS.escape?CSS.escape(h):h.replace(/["\\]/g,''))+'"]')||document.getElementById(h)||document.getElementById('r-'+h)||document.getElementById('p-'+h)||document.getElementById('s-'+h)||document.getElementById('d-'+h)||document.getElementById('g-'+h);
   if(!t||t.closest('[hidden]'))return;const dt=t.querySelector&&t.querySelector('details');if(dt)dt.open=true;const b=t.querySelector&&t.querySelector('.pbtn');if(b&&b.getAttribute('aria-expanded')!=='true')b.click();
   t.scrollIntoView({block:t.dataset.anchor?'start':'center'});if(!t.dataset.anchor){t.classList.remove('flash');void t.offsetWidth;t.classList.add('flash')}}
  const run=()=>{attach();setTimeout(attach,600)};run();setTimeout(jump,450);

@@ -68,7 +68,7 @@ export async function onRequestGet(ctx) {
   const d = q.get('d') || ''; if (!/^\d{8}$/.test(d)) return json({ error: 'd=YYYYMMDD' }, 400);
   for (const k of ['away', 'home']) if (q.get(k) && !teamCode(q.get(k))) return json({ error: 'team' }, 400);
   if (q.get('sm') && !/^[a-z0-9-]{10,80}$/.test(q.get('sm'))) return json({ error: 'sm' }, 400);
-  const only = q.get('src'); if (only && !SRC[only]) return json({ error: 'src' }, 400);
+  const only = q.get('src'); if (only && !(Object.hasOwn(SRC,only)?SRC[only]:undefined)) return json({ error: 'src' }, 400);
   const key = new Request(u.origin + '/pbp?' + ['d', 'away', 'home', 'src', 'sm'].map(k => k + '=' + (q.get(k) || '')).join('&'));
   const cache = caches.default; const hit = await cache.match(key); if (hit) return hit;
   let g = q.get('home') && q.get('away') ? { home: teamCode(q.get('home')), away: teamCode(q.get('away')) } : await cavsGame(ctx, d).catch(() => null);
