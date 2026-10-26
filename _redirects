@@ -9,3 +9,4 @@
 /box-status.txt / 302
 /media/rcf /media 301
 /.claude/* / 302
+/live.src.html /live.html 301
