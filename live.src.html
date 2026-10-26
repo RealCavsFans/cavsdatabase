@@ -471,6 +471,7 @@ tr.lutot td{font-weight:800;border-top:2px solid var(--fg)}
 .lud{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}.lud-h{font:800 .875rem var(--cond);letter-spacing:.06em;text-transform:uppercase;margin:12px 0 6px}.lud-t td small{color:var(--muted);font-size:.75em;margin-left:4px}.lud-courts{display:grid;grid-template-columns:repeat(2,minmax(0,340px));gap:18px;margin-top:10px}@media(max-width:640px){.lud-courts{grid-template-columns:minmax(0,230px);justify-content:center;gap:10px}.lud-courts .note{font-size:.6875rem}}.lud-small{color:#9a6a00}
 .rk{display:block;font:700 .625rem var(--mono);letter-spacing:0;margin-top:1px;color:var(--muted)}.rk.g{color:#1d6b3a}.rk.b{color:#a3122e}.lgp td span.rk{display:inline;font-size:.75rem}.lgp td{text-align:center}.lgp td:first-child{text-align:left}.ffc .row b .rk{display:inline;margin-left:6px}
 @media(max-width:640px){#sb.fin .sc{font-size:1.75rem!important;line-height:32px!important}#sb.fin .th img{width:28px;height:28px}#sb.fin .st{font-size:1.125rem}#sb.fin{padding-top:10px;padding-bottom:10px}}
+.prevpk{display:flex;gap:8px;flex-wrap:wrap;margin:-6px 0 12px}.prevpk select{flex:1 1 160px;min-width:0;font:600 .875rem var(--sans);padding:8px 10px;border:1px solid var(--line);background:var(--card);color:var(--fg)}
 </style>
 </head>
 <body>
@@ -533,10 +534,11 @@ evs.sort((a,b)=>(isCavs(b)-isCavs(a))||(rank(a)-rank(b)));
   const gl=g=>{const d=new Date(g.date);const w=g.cle>g.os?'W':'L';return (d.getMonth()+1)+'/'+d.getDate()+' '+(g.ha==='home'?'vs':'@')+' '+g.opp+' · '+w+' '+Math.max(g.cle,g.os)+'–'+Math.min(g.cle,g.os)};
   const cur=ARCH['2026-27']||[];if(cur.length){const g=el('optgroup');g.label='2026–27 Cavs games';cur.slice().reverse().forEach(x=>{const o=el('option',null,gl(x));o.value='a2026-27:'+x.id;g.appendChild(o)});sel.appendChild(g)}
   const sg=el('optgroup');sg.label='Season totals';[['2026-27',cur.length],['2025-26',(ARCH['2025-26']||[]).length]].forEach(([se,n])=>{if(!n)return;const o=el('option',null,se.replace('-','–')+' season · '+n+' games');o.value='s'+se;sg.appendChild(o)});if(sg.children.length)sel.appendChild(sg);
-  const rg=el('optgroup');rg.label='Replay a 2025–26 Cavs game';
-  if((ARCH['2025-26']||[]).length)ARCH['2025-26'].slice().reverse().forEach(x=>{const o=el('option',null,'Replay · '+gl(x));o.value='r'+x.id;rg.appendChild(o)});
-  else REPLAYS.forEach(([id,d,o,ha,r])=>{const[y,m,dd]=d.split('-');const op=el('option',null,'Replay · '+(+m)+'/'+(+dd)+' '+ha+' '+o+' · '+r);op.value='r'+id;rg.appendChild(op)});
-  sel.appendChild(rg);return evs;
+  /* 2025–26 replays: one entry here; picking it opens a month and game picker next to the menu, so the list stays short */
+  {const rg=el('optgroup');rg.label='2025–26 replays';const o=el('option',null,'Replay a 2025–26 game…');o.value='pickprev';rg.appendChild(o);
+   if(S.ev&&String(S.ev).length&&(ARCH['2025-26']||[]).some(x=>x.id===String(S.ev))&&S.replay){const x=ARCH['2025-26'].find(x=>x.id===String(S.ev));const c=el('option',null,'Replay · '+gl(x));c.value='r'+x.id;rg.insertBefore(c,o)}
+   sel.appendChild(rg)}
+  return evs;
 }
 async function choose(v,push){
   clearInterval(S.poll);S.playing=false;clearInterval(S.timer);
@@ -1824,7 +1826,14 @@ function vPlays(v,D,R){
 /* ---------- boot ---------- */
 (async()=>{msLoad().then(()=>{if(S.data&&!S.season&&S.tab==='team')renderView()});await Promise.all(['2026-27','2025-26'].map(async se=>{try{const r=await fetch('/live-archive/'+se+'/index.json',{cache:'no-store'});if(r.ok)ARCH[se]=await r.json()}catch(e){}}));
   try{const r=await fetch('/live-base.json',{cache:'no-store'});if(r.ok){const j=await r.json();if(j&&j.t&&j.games>0&&j.season!=='2025-26')BLIVE=j}}catch(e){}
-  const evs=await loadScoreboard();$('gsel').onchange=e=>choose(e.target.value,true);
+  const evs=await loadScoreboard();$('gsel').onchange=e=>{if(e.target.value==='pickprev'){prevPicker();return}const pp=document.getElementById('prevpk');if(pp)pp.remove();choose(e.target.value,true)};
+/* month, then game, for last season's replays */
+function prevPicker(){let w=document.getElementById('prevpk');if(w){w.remove()}w=el('div','prevpk');w.id='prevpk';const L=(ARCH['2025-26']||[]).slice();
+  const gl=g=>{const d=new Date(g.date);const r=g.cle>g.os?'W':'L';return (d.getMonth()+1)+'/'+d.getDate()+' '+(g.ha==='home'?'vs':'@')+' '+g.opp+' · '+r+' '+Math.max(g.cle,g.os)+'–'+Math.min(g.cle,g.os)};
+  const mk=g=>{const d=new Date(g.date);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')};const months=[...new Set(L.map(mk))];
+  const ms=el('select');ms.setAttribute('aria-label','Month');months.forEach(m=>{const o=el('option',null,new Date(m+'-15').toLocaleDateString('en-US',{month:'long',year:'numeric'}));o.value=m;ms.appendChild(o)});ms.value=months[months.length-1];
+  const gs=el('select');gs.setAttribute('aria-label','Game');const fill=()=>{gs.textContent='';const o0=el('option',null,'Pick a game');o0.value='';gs.appendChild(o0);L.filter(g=>mk(g)===ms.value).forEach(g=>{const o=el('option',null,gl(g));o.value='r'+g.id;gs.appendChild(o)})};fill();
+  ms.onchange=fill;gs.onchange=()=>{if(gs.value)choose(gs.value,true)};w.append(ms,gs);$('gsel').closest('.pick').after(w)}
   let pick=new URLSearchParams(location.search).get('g');
   if(!pick){const cav=evs.find(isCavs);pick=cav?cav.id:S.bkOpt||'r'+REPLAYS[0][0]}
   choose(pick,false).then(()=>{
