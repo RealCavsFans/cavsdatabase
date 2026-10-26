@@ -67,6 +67,8 @@ jobs:
               -d "{\"host\":\"cavsdatabase.com\",\"key\":\"$K\",\"keyLocation\":\"https://cavsdatabase.com/$K.txt\",\"urlList\":[\"https://cavsdatabase.com/\",\"https://cavsdatabase.com/schedule\",\"https://cavsdatabase.com/roster-tree\",\"https://cavsdatabase.com/roster\",\"https://cavsdatabase.com/staff\",\"https://cavsdatabase.com/cap\",\"https://cavsdatabase.com/assets\",\"https://cavsdatabase.com/moves\",\"https://cavsdatabase.com/charge\",\"https://cavsdatabase.com/media\",\"https://cavsdatabase.com/resources\"]}" || true; fi; }
           add
           if git diff --cached --quiet; then exit 0; fi
+          # scheduled runs: skip commits that are only timestamps and rebuilt page copies (scripts/changed.mjs)
+          if [ "${{ github.event_name }}" = "schedule" ] && ! node scripts/changed.mjs; then exit 0; fi
           git commit -m "Update videos"
           # main can move while this runs (site edits, the daily data task). If the rebase or push
           # fails, keep this run's fresh data files, rebuild the page copies on top of the latest main and retry.
