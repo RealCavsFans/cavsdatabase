@@ -1106,7 +1106,7 @@ function advView(c,D,R,t){
     {h:'ORB%',k:'orb',f:p1('orb')},{h:'DRB%',k:'drb',f:p1('drb')},{h:'TRB%',k:'trb',f:p1('trb')},{h:'AST%',k:'ast',f:p1('ast'),title:'Share of teammates’ baskets he assisted while on the floor'},
     {h:'STL%',k:'stl',f:p1('stl')},{h:'BLK%',k:'blk',f:p1('blk')},{h:'TOV%',k:'tov',f:p1('tov'),asc:true},{h:'USG%',k:'usg',f:p1('usg'),title:'Share of team plays he used while on the floor'},
     {h:'ON ORTG',k:'ortg',f:p0('ortg'),title:'Team points per 100 possessions with him on'},{h:'ON DRTG',k:'drtg',f:p0('drtg'),asc:true,title:'Opponent points per 100 possessions with him on'},{h:'ON NET',k:'net',f:r=>r.net==null?'–':sgn(Math.round(r.net)),cls:r=>r.net==null?'':pmCls(r.net)}],rows,{def:'mp',minW:980}));
-  c.appendChild(el('p','note','Rate stats use tonight’s team and opponent totals. ON ORTG/DRTG are the team’s ratings with him on the floor (no individual BPM; it needs season data). Small samples swing hard.'));
+  c.appendChild(el('p','note',(S.season?'Rate stats use the season’s team and opponent totals; MIN is his season total.':'Rate stats use tonight’s team and opponent totals.')+' ON ORTG/DRTG are the team’s ratings with him on the floor (no individual BPM; it needs season data). Small samples swing hard.'));
 }
 /* ---------- a Cavs player vs a specific opponent, on and off the floor together ---------- */
 function vsOpp(c,D,R,t){
@@ -1277,7 +1277,8 @@ const CARDS={
     x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText((kick()+atLbl(D)).toUpperCase(),60,100);
     x.fillStyle='#fff';x.font='800 120px "Saira Condensed"';x.fillText(team?'EVERY CAVS SHOT':D.P[id].last.toUpperCase()+"'S SHOTS",60,220);
     const m=sh.filter(q=>q.m).length,th=sh.filter(q=>q.three),thm=th.filter(q=>q.m).length;const pts=sh.filter(q=>q.m).reduce((a,q)=>a+(q.three?3:2),0);
-    [['FG',m+'-'+sh.length],['3PT',thm+'-'+th.length],['PTS/SHOT',sh.length?(pts/sh.length).toFixed(2):'–']].forEach(([l,v],i)=>{const cx=60+i*330;x.fillStyle='#fff';x.font='700 70px "Geist Mono"';x.fillText(v,cx,1060);x.fillStyle='#8d939d';x.font='800 30px "Saira Condensed"';x.fillText(l,cx+4,1100)});
+    const dist=sh.length?sh.reduce((a,q)=>a+Math.hypot(q.x-25,q.y),0)/sh.length:null;
+    [['FG',m+'-'+sh.length],['3PT',thm+'-'+th.length],['PTS/SHOT',sh.length?(pts/sh.length).toFixed(2):'–'],['AVG DISTANCE',dist==null?'–':dist.toFixed(1)+' ft']].forEach(([l,v],i)=>{const cx=60+i*250;x.fillStyle='#fff';x.font='700 54px "Geist Mono"';x.fillText(v,cx,1060);x.fillStyle='#8d939d';x.font='800 30px "Saira Condensed"';x.fillText(l,cx+4,1100)});
     x.font='800 28px "Saira Condensed"';x.fillStyle='#ff4f8b';x.fillText('● MADE 2',60,1170);x.fillStyle=GOLD;x.fillText('● MADE 3',230,1170);x.fillStyle='#a0a8b4';x.fillText('✕ MISSED',400,1170);
     footer(x)}},
   quarters:{label:'Quarter by quarter',async draw(x,D,R){const F=D.focus,O=D.other;const qs=Object.keys(R.TQ).map(Number).sort((a,b)=>a-b);
@@ -1664,6 +1665,8 @@ function vSeason(v,D,R){
       else{const id=S.f.svk,oid=Object.keys(J.P).find(k=>nm(J.P[k].name)===nm(D.P[id].name));A=sUnit(G,k2=>k2.split(',').includes(id));B2=sUnit(PG,k2=>k2.split(',').includes(oid));if(!A||!B2){c.appendChild(el('p','empty','Not enough minutes yet.'));return}rows=[['Games',String(A.g),String(B2.g),''],['Minutes per game',(A.sec/60/A.g).toFixed(1),(B2.sec/60/B2.g).toFixed(1),''],['Off rating (on)','o'],['Def rating (on)','d'],['Net rating (on)','n'],['Pace (on)','pace']]}
       rows.forEach(r=>{const tr=el('tr');if(r.length===4){r.forEach(x=>tr.appendChild(el('td',null,x)))}else{const [lab,k2,pc]=r;const a=A[k2],b=B2[k2];const better=k2==='d'||k2==='tov'?a<b:k2==='pace'||k2==='tpar'?null:a>b;tr.append(el('td',null,lab),el('td',null,f1(a)+(pc||'')),el('td',null,f1(b)+(pc||'')));const ch=el('td',better==null?null:better?'up':'dn',sg1(a-b));tr.appendChild(ch)}t.appendChild(tr)});
       const w=el('div','tw');w.appendChild(t);c.appendChild(w);if(G.length<10)c.appendChild(el('p','note','Only '+G.length+' game'+(G.length===1?'':'s')+' this season, so expect big swings early.'))}).catch(()=>{hold.textContent='No archive for '+prev.replace('-','–')+'.'})}
+  /* four factors for the season, with NBA ranks */
+  {const ff=el('div');vFF(ff,D,R);if(ff.firstChild){ff.firstChild.classList.add('sec');v.appendChild(ff.firstChild)}}
 }
 /* ---------- season filter: by opponent, or by opponent strength (net rating rank) ----------
    With a filter on, the season is rebuilt in the browser from the archived game files, the same way
@@ -1720,6 +1723,9 @@ function renderSeasonSB(){const D=S.data,g=D.games;const w=g.filter(x=>x.cle>x.o
   $('sb').innerHTML=`<div style="grid-column:1/-1"><div class="t" style="font:800 1.25rem var(--cond);letter-spacing:.04em;text-transform:uppercase">Cleveland Cavaliers · ${esc(D.season.replace('-','–'))}</div><div class="note" style="font-size:.875rem;margin-top:4px">${g.length} game${g.length===1?'':'s'}${S.sf&&((S.sf.games&&S.sf.games.length)||S.sf.tier)?' in this filter':' in the archive'} · ${w}–${g.length-w} · ${pf.toFixed(1)} scored, ${pa.toFixed(1)} allowed per game</div></div>`;if(SEASONTAB_ON){const d=el('div');d.style.gridColumn='1/-1';d.appendChild(seasonFilterBar());$('sb').appendChild(d)}}
 function seasonPlayers(v,D,R){
   const c=el('div','card');head(c,'Cavaliers per game',D.season.replace('-','–')+' · '+D.games.length+' games archived · tap a column to sort');
+  /* Box score (per game) or Advanced (rates over the whole season), like a single game */
+  {const fl=el('div','fl');S.f.splView=S.f.splView||'box';[['box','Box score'],['adv','Advanced']].forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',S.f.splView===k);b.onclick=()=>{S.f.splView=k;renderView()};fl.appendChild(b)});c.appendChild(fl);
+   if(S.f.splView==='adv'){c.querySelector('h2')&&(c.querySelector('h2').textContent='Cavaliers advanced');c.querySelector('.sub')&&(c.querySelector('.sub').textContent=D.season.replace('-','–')+' · '+D.games.length+' games · rates over the whole season, tap a column to sort');advView(c,D,R,D.focus);v.appendChild(c);return}}
   const rows=D.roster['5'].map(id=>{const b=R.B[id],g=b.gp||1;return {id,gp:b.gp,gs:b.gs||0,min:b.min/60/g,pts:b.pts/g,reb:(b.oreb+b.dreb)/g,oreb:b.oreb/g,ast:b.ast/g,to:b.to/g,stl:b.stl/g,blk:b.blk/g,fg:b.fga?b.fgm/b.fga:null,tpm:b.tpm/g,tp:b.tpa?b.tpm/b.tpa:null,ft:b.fta?b.ftm/b.fta:null,ts:b.fga+b.fta?b.pts/(2*(b.fga+0.44*b.fta)):null,pmg:b.pm/g,pm:b.pm}}).filter(r=>r.gp);
   const f1=k=>r=>r[k].toFixed(1),pc=k=>r=>r[k]==null?'–':Math.round(r[k]*100)+'%';
   c.appendChild(dtable('sp',[{h:'Player',k:'id',f:r=>{const sp=el('span');sp.appendChild(plink(D,r.id,D.P[r.id].short));return sp}},{h:'GP',k:'gp'},{h:'GS',k:'gs'},{h:'MIN',k:'min',f:f1('min')},{h:'PTS',k:'pts',f:f1('pts'),cls:()=>'k'},{h:'FG%',k:'fg',f:pc('fg')},{h:'3PM',k:'tpm',f:f1('tpm')},{h:'3P%',k:'tp',f:pc('tp')},{h:'FT%',k:'ft',f:pc('ft')},{h:'TS%',k:'ts',f:pc('ts')},
