@@ -31,7 +31,7 @@
 <link rel="preload" href="/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/geist-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/saira-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/a/app.5f35eec4be.css"><link rel="preload" href="/a/app.5a2c5e728b.js" as="script">
+<link rel="stylesheet" href="/a/app.5f35eec4be.css"><link rel="preload" href="/a/app.20ec43af20.js" as="script">
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
 @media (max-width:720px){.side>.o-inj{order:3}.side>.o-otd,.o-otd{order:99}}
@@ -64,6 +64,10 @@
 .gm-rk{display:block;font:700 .6875rem var(--mono);color:var(--muted);margin-top:4px;text-transform:none;letter-spacing:0}.gm-note{font-size:.6875rem;color:var(--muted);margin:6px 0 0}
 /* game day: when the injury report sits in the game-day card, the season-to-date games-missed box stays hidden */
 .in-gdm .gmw{display:none}
+@media(max-width:760px){.cap tr.deadrow td{font-size:.75rem!important;line-height:1.25}.cap tr.deadrow td.pcell{font-size:.75rem!important}.cap tr.deadrow td.pcell *{font-size:inherit!important}.cap tr.deadrow td.pcell small{display:block;font-size:.625rem!important}}
+.ppx-lls{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:6px}.ppx-lls>div{display:flex;flex-direction:column}.ppx-lls b{font:700 1.25rem var(--mono)}.ppx-lls span{font:800 .625rem var(--sans);letter-spacing:.08em;color:var(--muted)}
+.ppx-big2>div:last-child:nth-child(odd){grid-column:1/-1}.ppx-big2 b{font-size:1.125rem}.ppx-big2>div{padding:8px 10px}.ppx-big2 span{font-size:.75rem;line-height:1.35;display:block;margin-top:2px}
+@media(max-width:760px){.ppx-big2 b{font-size:1rem}.ppx-lls{gap:6px 14px}.ppx-lls b{font-size:1.0625rem}}
 .hjump{display:none}@media(max-width:760px){.hjump{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;position:sticky;top:var(--hdh,64px);z-index:20;background:var(--bg);padding:8px 16px;margin:0 -16px 6px;border-bottom:1px solid var(--line)}.hjump::-webkit-scrollbar{display:none}.hjump button{flex:none;font:700 .75rem var(--sans);padding:6px 11px;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;cursor:pointer}}
 .nav-stats{position:relative}.nav-stats .dot,.mbar a .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#e23b3b;margin-right:5px;vertical-align:1px}
 .mbar.six{grid-template-columns:repeat(6,1fr)}.mbar.six a{font-size:.5625rem}.mbar.six a svg{width:20px;height:20px}
@@ -79,7 +83,7 @@
 /* game preview on phones: injuries, then tale of the tape, then the season series */
 @media (max-width:760px){.gpg:has(.o-tape){display:flex;flex-direction:column}.gpg:has(.o-tape)>.gpg-l,.gpg:has(.o-tape)>.gpg-r{display:contents}.gpg:has(.o-tape) .gpg-l>*,.gpg:has(.o-tape) .gpg-r>*{order:9}
  .gpg:has(.o-tape) .gph,.gpg:has(.o-tape) .gp-under{order:0!important}.gpg:has(.o-tape) .o-inj{order:1!important}.gpg:has(.o-tape) .o-tape{order:2!important}.gpg:has(.o-tape) .o-ser{order:3!important}.gpg:has(.o-tape) .o-side{order:4!important}.gpg:has(.o-tape) .o-sc{order:5!important}.gpg:has(.o-tape) .o-ref{order:6!important}.gpg:has(.o-tape) .gp-lk{order:7!important}
- .gpg:has(.o-tape)>*>*{min-width:0}
+ .gpg:has(.o-tape)>*>*{min-width:0}.gpg:has(.o-tape) .gpg-l>*,.gpg:has(.o-tape) .gpg-r>*{align-self:stretch;width:auto;max-width:none;box-sizing:border-box;margin-left:0;margin-right:0}
  /* season to date (injuries): smaller still */
  .gm-k{font-size:.5625rem}.gm-tile{padding:5px 8px}.gm-tile b{font-size:1rem}.gm-tile span{font-size:.5rem}.gm-rk{font-size:.5625rem!important}
  /* Cavs & Coffee: a quiet one-liner */
@@ -503,7 +507,7 @@
   <button type="button" class="thm2" id="thm2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Dark mode</span></button></div>
 </div></footer>
 
-<script src="/a/app.5a2c5e728b.js"></script>
+<script src="/a/app.20ec43af20.js"></script>
 
 <script>
 (function(){const R=document.documentElement,B=document.getElementById('thm'),T=document.getElementById('btt'),F=document.getElementById('fb');
