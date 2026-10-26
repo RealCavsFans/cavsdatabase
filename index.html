@@ -459,6 +459,9 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 .gm-rk{display:block;font:700 .6875rem var(--mono);color:var(--muted);margin-top:4px;text-transform:none;letter-spacing:0}.gm-note{font-size:.6875rem;color:var(--muted);margin:6px 0 0}
 /* game day: when the injury report sits in the game-day card, the season-to-date games-missed box stays hidden */
 .in-gdm .gmw{display:none}
+.ppx-lls{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:6px}.ppx-lls>div{display:flex;flex-direction:column}.ppx-lls b{font:700 1.25rem var(--mono)}.ppx-lls span{font:800 .625rem var(--sans);letter-spacing:.08em;color:var(--muted)}
+.ppx-big2>div:last-child:nth-child(odd){grid-column:1/-1}.ppx-big2 b{font-size:1.125rem}.ppx-big2>div{padding:8px 10px}.ppx-big2 span{font-size:.75rem;line-height:1.35;display:block;margin-top:2px}
+@media(max-width:760px){.ppx-big2 b{font-size:1rem}.ppx-lls{gap:6px 14px}.ppx-lls b{font-size:1.0625rem}}
 .hjump{display:none}@media(max-width:760px){.hjump{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;position:sticky;top:var(--hdh,64px);z-index:20;background:var(--bg);padding:8px 16px;margin:0 -16px 6px;border-bottom:1px solid var(--line)}.hjump::-webkit-scrollbar{display:none}.hjump button{flex:none;font:700 .75rem var(--sans);padding:6px 11px;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;cursor:pointer}}
 .nav-stats{position:relative}.nav-stats .dot,.mbar a .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#e23b3b;margin-right:5px;vertical-align:1px}
 .mbar.six{grid-template-columns:repeat(6,1fr)}.mbar.six a{font-size:.5625rem}.mbar.six a svg{width:20px;height:20px}
@@ -3923,7 +3926,7 @@ function ppBuild(p,root){
   // last game + stat of the night
   {const lg=[...games].reverse().find(g=>g.me);if(lg&&gp>=1){const m=lg.me;const c=card('Last game',null,null);
       const line=`${new Date(lg.d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})} ${lg.ha==='H'?'vs':'at'} ${lg.opp} · ${lg.res} ${lg.score?lg.score.replace('-','–'):''}`;
-      const ln=el('div','ppx-last');ln.appendChild(el('div','ppx-lg',line));ln.appendChild(el('div','ppx-ll',`${m.pts} pts · ${m.reb} reb · ${m.ast} ast${m.blk?' · '+m.blk+' blk':''}${m.stl?' · '+m.stl+' stl':''} · ${m.fgm}–${m.fga} FG`));c.appendChild(ln);
+      const ln=el('div','ppx-last');ln.appendChild(el('div','ppx-lg',line));{const st=el('div','ppx-lls');[[m.pts,'PTS'],[m.reb,'REB'],[m.ast,'AST']].concat(m.blk?[[m.blk,'BLK']]:[],m.stl?[[m.stl,'STL']]:[],[[m.fgm+'–'+m.fga,'FG']]).forEach(([v,l])=>{const d=el('div');d.append(el('b',null,String(v)),el('span',null,l));st.appendChild(d)});ln.appendChild(st)}c.appendChild(ln);
       if(gp>=3){const ks=[['pts','points'],['reb','rebounds'],['ast','assists'],['blk','blocks'],['stl','steals'],['tpm','threes']];const sc=ks.map(([k,l])=>{const a=avg(k);return [l,m[k],a,(m[k]-a)/Math.max(a*0.5,1)]}).sort((x,y)=>y[3]-x[3])[0];
         if(sc&&sc[3]>0.9)c.appendChild(ctx(`Stat of the night: ${sc[1]} ${sc[0]}, ${f1(sc[1]-sc[2])} more than his average.`))}
       const a=el('a','ppx-more','Full box score →');a.href='/games/'+gslug(SCHEDULE.find(g=>g[0]===lg.d));a.dataset.go=a.getAttribute('href').slice(1);c.appendChild(a);ov.appendChild(c)}}
@@ -4085,7 +4088,7 @@ function ppBuild(p,root){
       /* 3 · how he scores (offense) */
       {const SH=(A.shots||[]).filter(x=>x[0]===id);const usage=(b.fga+.44*b.fta+b.to)/Math.max(1,(on.o.fga||0)+.44*(on.o.fta||0)+(on.o.to||0))*100;const ts=b.fga+b.fta?b.pts/(2*(b.fga+.44*b.fta))*100:null;
         const mk=SH.filter(x=>x[3]),asd=mk.filter(x=>x[7]).length,tr=SH.filter(x=>x[6]===1);const c=card('How he scores',null,'Usage and efficiency this season, and where his makes come from.');
-        const g=el('div','ppx-big2');[[f1(usage)+'%','Usage (share of plays he finishes)'],[ts==null?'–':f1(ts)+'%','True shooting'],[mk.length?Math.round(asd/mk.length*100)+'%':'–','Of his makes assisted'],[tr.length+' · '+pc(tr.filter(x=>x[3]).length,tr.length),'Transition shots · FG%'],[f1(b.ast/Math.max(1,gp))+' / '+f1(b.to/Math.max(1,gp)),'Assists / turnovers a game']].forEach(([v,l])=>{const d=el('div');d.append(el('b',null,v),el('span',null,l));g.appendChild(d)});c.appendChild(g);of.appendChild(c)}
+        const g=el('div','ppx-big2');[[f1(usage)+'%','Usage rate'],[ts==null?'–':f1(ts)+'%','True shooting'],[mk.length?Math.round(asd/mk.length*100)+'%':'–','Of his makes assisted'],[tr.length?tr.filter(x=>x[3]).length+' of '+tr.length:'0','Transition makes'],[f1(b.ast/Math.max(1,gp))+' / '+f1(b.to/Math.max(1,gp)),'Assists / turnovers per game']].forEach(([v,l])=>{const d=el('div');d.append(el('b',null,v),el('span',null,l));g.appendChild(d)});c.appendChild(g);of.appendChild(c)}
       /* 4 · defense and boards with him on vs off */
       if(R1&&R0){const c=card('Defense and boards, on vs off',null,'What opponents did with him on the floor and off it, and his share of the rebounds. '+note+'.');
         const hisO=(on.o.oreb||0)+(on.d.dreb||0),hisD=(on.o.dreb||0)+(on.d.oreb||0);
