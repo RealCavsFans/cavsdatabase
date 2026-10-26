@@ -1,3 +1,14 @@
+# security headers on every page: no framing by other sites (embeds excepted below), no MIME sniffing, HTTPS only, no camera/mic/location
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
+/embed/*
+  ! X-Frame-Options
+
 /img/*
   Cache-Control: public, max-age=604800
 /og/*
