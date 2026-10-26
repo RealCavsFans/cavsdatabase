@@ -407,7 +407,24 @@
  },
  "2026-10-26": {
   "url": "https://www.nba.com/game/min-vs-cle-0022600120/box-score",
-  "status": "scheduled"
+  "status": "scheduled",
+  "refs": [
+   [
+    "Crew chief",
+    "Sean Wright",
+    "4"
+   ],
+   [
+    "Referee",
+    "Bill Kennedy",
+    "55"
+   ],
+   [
+    "Umpire",
+    "Tyler Ricks",
+    "95"
+   ]
+  ]
  },
  "2026-10-28": {
   "url": "https://www.nba.com/game/was-vs-cle-0022600133/box-score",
