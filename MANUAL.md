@@ -78,3 +78,5 @@ A daily check (`scripts/health.mjs`) flags anything stale: no box scores after a
 **Game archive format.** Archived games store plays and win probability as compact rows (`pv: 2`); `prep()` in live-core.js unpacks them, so every reader goes through `prep`.
 
 **Commits from the 30-minute job.** `scripts/changed.mjs` skips a scheduled commit when only timestamps or rebuilt page copies changed; pages still refresh at least every 6 hours.
+
+**Security.** GitHub Actions are pinned to exact commits (checkout v5.1.0, setup-node v5.0.0); to update, swap in the new tag's commit from `git ls-remote https://github.com/actions/<name> refs/tags/<tag>`. The daily health check also runs `scripts/site-check.mjs`, which compares the live front page and live game page (and the script files they load) with the repo and flags scripts from unexpected sites; a mismatch opens the "Site health" issue. Security headers are in `_headers`.

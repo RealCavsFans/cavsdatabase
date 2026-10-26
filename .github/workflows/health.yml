@@ -12,17 +12,19 @@ jobs:
   health:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
         with:
           fetch-depth: 200
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
         with:
           node-version: 22
       - name: Check
         id: chk
         run: |
           set +e
-          node scripts/health.mjs > /tmp/health.txt 2>&1; echo "code=$?" >> "$GITHUB_OUTPUT"
+          node scripts/health.mjs > /tmp/health.txt 2>&1; c1=$?
+          node scripts/site-check.mjs >> /tmp/health.txt 2>&1; c2=$?
+          echo "code=$((c1|c2))" >> "$GITHUB_OUTPUT"
           cat /tmp/health.txt
       - name: Open, update or close the issue
         env:

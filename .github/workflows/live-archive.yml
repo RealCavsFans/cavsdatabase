@@ -27,7 +27,7 @@ jobs:
           N=$(curl -s -m 20 "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/5/schedule?season=$Y" | jq --arg c "$(date -u -d '36 hours ago' +%Y-%m-%dT%H:%MZ)" '[.events[]? | select(.competitions[0].status.type.completed and .date >= $c)] | length' 2>/dev/null || echo 1)
           echo "recent finals: $N"; [ "${N:-1}" -gt 0 ] && echo "go=1" >> $GITHUB_OUTPUT || true
       # Only the files this job needs (not the whole site, images or history).
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
         if: steps.gate.outputs.go == '1'
         with:
           sparse-checkout: |
@@ -36,7 +36,7 @@ jobs:
             live-archive
             cavs.ics
           sparse-checkout-cone-mode: false
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
         if: steps.gate.outputs.go == '1'
         with:
           node-version: 22
