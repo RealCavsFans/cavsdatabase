@@ -459,6 +459,7 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 .gm-rk{display:block;font:700 .6875rem var(--mono);color:var(--muted);margin-top:4px;text-transform:none;letter-spacing:0}.gm-note{font-size:.6875rem;color:var(--muted);margin:6px 0 0}
 /* game day: when the injury report sits in the game-day card, the season-to-date games-missed box stays hidden */
 .in-gdm .gmw{display:none}
+.hjump{display:none}@media(max-width:760px){.hjump{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;position:sticky;top:var(--hdh,64px);z-index:20;background:var(--bg);padding:8px 16px;margin:0 -16px 6px;border-bottom:1px solid var(--line)}.hjump::-webkit-scrollbar{display:none}.hjump button{flex:none;font:700 .75rem var(--sans);padding:6px 11px;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;cursor:pointer}}
 .nav-stats{position:relative}.nav-stats .dot,.mbar a .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#e23b3b;margin-right:5px;vertical-align:1px}
 .mbar.six{grid-template-columns:repeat(6,1fr)}.mbar.six a{font-size:.5625rem}.mbar.six a svg{width:20px;height:20px}
 .hss{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}.hss .k{font:700 .75rem "Saira Condensed",var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
@@ -2654,6 +2655,13 @@ const NL_ON=true; /* on since Oct 24: sign-ups collect on Buttondown; nothing is
   /* after Buttondown sends people back */
   const q=location.search;const msg=/[?&]subscribe=check/.test(q)?'Almost there: check your email to confirm your Cavs & Coffee sign-up.':/[?&]subscribed=1/.test(q)?'You’re in ☕ The first issue lands the morning after the next Cavs game.':'';
   if(msg){const t=el('div','nltoast');t.setAttribute('role','status');t.append(msg);const x=el('button',null,'×');x.type='button';x.setAttribute('aria-label','Close');x.onclick=()=>t.remove();t.appendChild(x);document.body.appendChild(t);setTimeout(()=>t.remove(),9000);try{history.replaceState(history.state,'',location.pathname)}catch(_){}}})();
+
+/* phones: a row of shortcuts at the top of Home that jumps to each card (preview: ?jump=1) */
+if(/[?&]jump=1/.test(location.search))setTimeout(()=>{const home=document.getElementById('view-home');if(!home)return;
+  const T=[['.o-rec','Next game'],['.o-inj','Injuries'],['.o-otd','This day'],['.o-dates','Key dates'],['.o-cap','Cap'],['#chase','Chasing history'],['.o-vid','Video'],['#chg-h','Charge'],['#index','Browse']];
+  const items=T.map(([q,l])=>{let e=home.querySelector(q);if(e&&q==='#chg-h')e=e.closest('section');return e&&!e.closest('[hidden]')?[e,l]:null}).filter(Boolean);
+  const bar=el('nav','hjump');bar.setAttribute('aria-label','Jump to');items.sort((a,b)=>a[0].getBoundingClientRect().top-b[0].getBoundingClientRect().top).forEach(([e,l])=>{const b=el('button',null,l);b.type='button';b.onclick=()=>{const hb=(document.querySelector('header.gbar')||{offsetHeight:0}).offsetHeight+bar.offsetHeight+8;scrollTo({top:e.getBoundingClientRect().top+scrollY-hb,behavior:'smooth'})};bar.appendChild(b)});
+  home.insertBefore(bar,home.firstChild);const hd=document.querySelector('header.gbar');const fit=()=>{bar.style.top=(hd?hd.offsetHeight:0)+'px'};fit();addEventListener('resize',fit)},600);
 /* phones: compact cap sheet — "61.6" instead of "$61.6M" ($M in the header), "J. Harden", "26–27". Both forms are in the page; CSS picks one by screen width. */
 (function(){const cb=document.getElementById('capbody');const t=cb&&cb.closest('table');if(!t)return;
   const sp=(c,tx)=>{const e=document.createElement('span');e.className=c;e.textContent=tx;return e};
