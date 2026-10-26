@@ -31,7 +31,7 @@
 <link rel="preload" href="/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/geist-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/saira-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/a/app.5f35eec4be.css"><link rel="preload" href="/a/app.d4e3e4b60d.js" as="script">
+<link rel="stylesheet" href="/a/app.5f35eec4be.css"><link rel="preload" href="/a/app.2efabf2f95.js" as="script">
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
 @media (max-width:720px){.side>.o-inj{order:3}.side>.o-otd,.o-otd{order:99}}
@@ -64,8 +64,13 @@
 .gm-rk{display:block;font:700 .6875rem var(--mono);color:var(--muted);margin-top:4px;text-transform:none;letter-spacing:0}.gm-note{font-size:.6875rem;color:var(--muted);margin:6px 0 0}
 /* game day: when the injury report sits in the game-day card, the season-to-date games-missed box stays hidden */
 .in-gdm .gmw{display:none}
-.ch-more{display:none}
-@media (max-width:760px){#ch-sched:not(.all) tr.chx{display:none}.ch-more{display:block;width:100%;margin-top:8px;padding:10px;border:1px solid var(--line);background:var(--card);color:var(--wine-ink);font:700 .8125rem var(--sans);cursor:pointer}
+.nav-stats{position:relative}.nav-stats .dot,.mbar a .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#e23b3b;margin-right:5px;vertical-align:1px}
+.mbar.six{grid-template-columns:repeat(6,1fr)}.mbar.six a{font-size:.5625rem}.mbar.six a svg{width:20px;height:20px}
+.hss{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}.hss .k{font:700 .75rem "Saira Condensed",var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.hss .i{display:inline-flex;align-items:baseline;gap:5px}.hss small{font:700 .6875rem "Saira Condensed",var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.hss b{font:700 .9375rem var(--mono)}.hss em{font:700 .625rem var(--mono);font-style:normal;color:var(--muted)}.hss-go{margin-left:auto;font:700 .8125rem var(--sans);color:var(--wine-ink)}
+@media(max-width:760px){.hss{gap:6px 12px}.hss .k{flex-basis:100%}.hss-go{margin-left:0;flex-basis:100%}}
+#ch-sched:not(.all) tr.chx{display:none}.ch-more{display:block;width:100%;margin-top:8px;padding:10px;border:1px solid var(--line);background:var(--card);color:var(--wine-ink);font:700 .8125rem var(--sans);cursor:pointer}
+@media (max-width:760px){
  .chros{font-size:.8125rem}.chros th,.chros td{padding-top:7px!important;padding-bottom:7px!important}.chros td.pn a,.chros td.pn b{font-size:.8125rem}.ch2w{font-size:.5rem;padding:0 4px;margin-left:5px}}
 /* one kicker style across Home cards: condensed caps like UP NEXT and EAST RANK (was a mix of wide and condensed) */
 #view-home .gdm-k,.otd-when,#cd>small,#nx-then>b,.gdm-top small,.gm-k,#played{font-family:"Saira Condensed",var(--sans)!important;font-stretch:100%!important;font-weight:700!important;letter-spacing:.12em!important;text-transform:uppercase}
@@ -483,7 +488,7 @@
   <button type="button" class="thm2" id="thm2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Dark mode</span></button></div>
 </div></footer>
 
-<script src="/a/app.d4e3e4b60d.js"></script>
+<script src="/a/app.2efabf2f95.js"></script>
 
 <script>
 (function(){const R=document.documentElement,B=document.getElementById('thm'),T=document.getElementById('btt'),F=document.getElementById('fb');
