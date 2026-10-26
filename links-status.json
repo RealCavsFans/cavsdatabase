@@ -1,6 +1,6 @@
 {
- "checked": "2026-10-19T11:19:45.944Z",
- "total": 803,
+ "checked": "2026-10-26T11:26:01.704Z",
+ "total": 811,
  "broken": [],
  "unsure": [
   [
@@ -28,6 +28,10 @@
    403
   ],
   [
+   "https://basketball.realgm.com/player/wd/Summary/26545",
+   403
+  ],
+  [
    "https://basketball.realgm.com/player/wd/Summary/121",
    403
   ],
@@ -36,16 +40,8 @@
    403
   ],
   [
-   "https://basketball.realgm.com/player/wd/Summary/26545",
-   403
-  ],
-  [
    "https://dailycaller.com/2010/05/02/lebron-james-wins-mvp-award-in-landslide-vote",
    403
-  ],
-  [
-   "https://en.wikipedia.org/wiki/Shawn_Kemp",
-   429
   ],
   [
    "https://en.wikipedia.org/wiki/Stan_Albeck",
@@ -68,11 +64,11 @@
    429
   ],
   [
-   "https://en.wikipedia.org/wiki/Tristan_Thompson",
+   "https://en.wikipedia.org/wiki/Walt_Wesley",
    429
   ],
   [
-   "https://en.wikipedia.org/wiki/Walt_Wesley",
+   "https://en.wikipedia.org/wiki/Tyronn_Lue",
    429
   ],
   [
@@ -100,15 +96,19 @@
    403
   ],
   [
-   "https://www.nbadraft.net/players/ismael-kamagate/",
-   403
-  ],
-  [
    "https://www.nbadraft.net/players/arturas-gudaitis/",
    403
   ],
   [
+   "https://www.nbadraft.net/players/ismael-kamagate/",
+   403
+  ],
+  [
    "https://www.nbadraft.net/players/renaldas-seibutis/",
+   403
+  ],
+  [
+   "https://www.researchgate.net/publication/354350478_Impact_of_Patellar_Tendinopathy_on_Player_Performance_in_the_National_Basketball_Association",
    403
   ],
   [
