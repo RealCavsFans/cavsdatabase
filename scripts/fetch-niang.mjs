@@ -9,7 +9,7 @@ try {
   const sch = await get(`${BASE}/teams/${LSU}/schedule`);
   const done = (sch.events || []).filter(e => e.competitions?.[0]?.status?.type?.completed);
   const ev = done.sort((a, b) => a.date < b.date ? 1 : -1)[0];
-  if (!ev || Date.now() - Date.parse(ev.date) > 3 * 864e5) { console.log('niang: no recent completed LSU game'); process.exit(0); }
+  if (!ev) { console.log('niang: no completed LSU game yet'); process.exit(0); }
   const comp = ev.competitions[0];
   const side = c => [c.team.location || c.team.shortDisplayName || c.team.displayName, c.score?.displayValue ?? c.score];
   const [us, them] = [comp.competitors.find(c => +c.team.id === LSU), comp.competitors.find(c => +c.team.id !== LSU)].map(side);
@@ -25,5 +25,25 @@ try {
   }
   const day = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(ev.date));
   const out = { date: day, score: `${us[0]} ${us[1]}, ${them[0]} ${them[1]}`, line, url: `https://www.espn.com/mens-college-basketball/game/_/gameId/${ev.id}` };
+  /* season totals: every completed LSU game he played (exhibitions left out), for his draft-rights card. Each game's line is kept in
+     pdata/niang-games.json so a finished game is read once. */
+  const G = await readFile('pdata/niang-games.json', 'utf8').then(JSON.parse).catch(() => ({}));
+  for (const e of done) {
+    if (G[e.id]) continue;
+    const st = e.seasonType?.type ?? e.season?.type; if (st != null && +st !== 2 && +st !== 3) continue;   // regular season and postseason only
+    let su; try { su = await get(`${BASE}/summary?event=${e.id}`); } catch { continue; }
+    let g = { d: new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(e.date)), opp: (e.competitions[0].competitors.find(c => +c.team.id !== LSU)?.team?.abbreviation) || '', dnp: true };
+    for (const t of su.boxscore?.players || []) for (const s2 of t.statistics || []) {
+      const keys = (s2.labels || s2.names || []).map(x => String(x).toUpperCase());
+      const a = (s2.athletes || []).find(x => /niang/i.test(x.athlete?.displayName || '')); if (!a || a.didNotPlay || !a.stats?.length) continue;
+      const v = k => a.stats[keys.indexOf(k)], n = k => +v(k) || 0, ma = k => String(v(k) || '0-0').split('-').map(Number);
+      const [fgm, fga] = ma('FG'), [tpm, tpa] = ma('3PT'), [ftm, fta] = ma('FT');
+      g = { ...g, dnp: false, min: n('MIN'), pts: n('PTS'), reb: n('REB'), ast: n('AST'), stl: n('STL'), blk: n('BLK'), to: n('TO'), fgm, fga, tpm, tpa, ftm, fta };
+    }
+    G[e.id] = g;
+  }
+  await writeFile('pdata/niang-games.json', JSON.stringify(G) + '\n');
+  const pl = Object.values(G).filter(g => !g.dnp); const sum2 = k => pl.reduce((s3, g) => s3 + (g[k] || 0), 0);
+  if (pl.length) out.season = { season: '2026–27', gp: pl.length, ...Object.fromEntries(['min', 'pts', 'reb', 'ast', 'stl', 'blk', 'to', 'fgm', 'fga', 'tpm', 'tpa', 'ftm', 'fta'].map(k => [k, sum2(k)])) };
   if (JSON.stringify(out) !== JSON.stringify(prev)) { await writeFile('niang.json', JSON.stringify(out, null, 1) + '\n'); console.log('niang.json:', out); }
 } catch (e) { console.warn('Niang feed unavailable, keeping existing niang.json:', e.message); }
