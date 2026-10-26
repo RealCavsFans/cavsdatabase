@@ -1,4 +1,4 @@
-2026-10-26T20:27:27.386Z
+2026-10-26T22:02:23.651Z
 NBA highlights: 1 new (YouTube API)
 Hoops Rumors: 12 from https://www.hoopsrumors.com/cleveland-cavaliers/feed
 Cavaliers on SI: 15 from https://news.google.com/rss/search?q=site%3Asi.com%2Fnba%2Fcavaliers&hl=en-US&gl=US&ceid=US:en
@@ -10,5 +10,5 @@ Locked On Cavs: 10 (YouTube API)
 The Chase Down Podcast: 1 (YouTube API)
 It's Cavalier Podcast: 10 (YouTube API)
 The Block, The Shot, The Stop: 0 (YouTube API)
-Fear The Fro: 1 (YouTube API)
+Fear The Fro: FAILED HTTP 500 https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=UUsTcoW70Xdt2c1G11dTbDfQ&key=AIzaSyAq7e5blmN4KU0jgm6UCYgIF4NRc7Ooixk
 Ultimate Cavaliers: 0 (YouTube API)

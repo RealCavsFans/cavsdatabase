@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "Fear The Sword",
+   "title": "Timberwolves could be without star guard in matchup with Cavs",
+   "link": "https://www.fearthesword.com/cavs-injury-report/53511/cavs-anthony-edwards-minnesota-timberwolves-wolves-cleveland-cavaliers-nba-injury",
+   "date": "2026-10-26T21:15:00.000Z"
+  },
+  {
    "src": "Cavaliers on SI",
    "title": "Marquee Matchup To Watch In Cavs vs. Timberwolves",
    "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQVllyNW5QWF80anRsSXp0OFNNUWMxbjdEOF9URkx5am1oQ2xxZG9DVFo4R1g4ekthRV9tMHNKYk5Mc05fdlhHOWk0NTdJdEdlSDVuX1ZYQV91X01ld0o2TkpNSEhHQU5SREIyV0pHTkdFbjI2ZzhzNm5nbUwzdW1jdmkxV2FCRVhyVEdGZXNPNXo0NHNIWEZEX1NqcEVUcUZQ?oc=5",
@@ -8,7 +14,7 @@
   },
   {
    "src": "cleveland.com",
-   "title": "Mario Hezonja thought his basketball career was over. Then he found himself, and a new inner peace, in Cleveland",
+   "title": "Mario Hezonja left the NBA searching for himself. After winning a Liga MVP in Spain, he's back — and he says he's a 'brand new, better version.'",
    "link": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxOTTRnRThSanI5cEdhWjhkSkhxM1I4NDZyWk5QZDhGNlZhLWVYRV8tbnpNMFF6em0zY1Z6QjFMd3lBSHgzblRWYlpQNzdDV29GZHV6WlRmdU1VR2FfVTkxUlN1S0xzRFBiemdIWWwzZExlUzN1T3cxVDBvdkRQa0pEanhCam1sRzZZdXFnZk02eURaWGNxVVRabFBzbHBuMklVclVEMEJtNjl4NXRrYXM3MnRwWk8teDNVN0RVYVlIMXVvNllPc2VOTHJJQ2tldm9zMVZjSjRIbjQ4UnYtSVpBcGY1akdhbzVG?oc=5",
    "date": "2026-10-26T09:00:00.000Z"
   },
@@ -169,12 +175,6 @@
    "date": "2026-10-23T04:00:00.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "Diving deeper into Cavs opening-night collapse against 76ers",
-   "link": "https://www.fearthesword.com/cavs-analysis/53341/cavs-opening-night-philadelphia-76ers-sixers-cleveland-cavaliers-james-harden-lebron-james-donovan-mitchell-evan-mobley",
-   "date": "2026-10-23T03:00:00.000Z"
-  },
-  {
    "src": "cleveland.com",
    "title": "Cavs’ ugly collapse vs. 76ers reminds fans not to take them seriously as contenders this season: Jimmy Watkins",
    "link": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxOSXpsalBnenozc3g5SkVHcVNEc3g5Y0xMZENaTXdnakZUTEFQY19RV29QejRSdllyUzlKbTdyazd1UnBCcDM5SDZ2TUplSm45N0t2NDRxOHRTOXVRU2xfVVpGOFE3Q2J4dEJvNDJKYXd2SG5YZDR3LVlLNldqQ1NLRmJkR083cVVvN1VoSExzRHlROEhBb1RWZDNlYmY0ZU1rV3dZdlZfZVA3Yk1fQlNVbFNFaG51b011YmRodDB3emFhWE4tUVVzRk52QTdqLXZ2cmV2ZXM1SUU2enlDcS1FaTFZQXFxZ2poNUNKWThn?oc=5",
@@ -211,12 +211,6 @@
    "date": "2026-10-22T09:05:00.000Z"
   },
   {
-   "src": "cleveland.com",
-   "title": "My prediction as the 2026-27 Cavs are considered yesterday’s news – Terry Pluto",
-   "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxObmt6UkZKZ1p5WXFrckxpd2FiaVJ2aEFtNTFzb0NsZ3FvZkJQNEV0TDZUblVacDVCcDh0LXVjM3h3X0Fkamo0T19KQWhsdk9hWlRiRHJIa3Q3YmZBZFd0aWRrNFZjQm5uLTMyZzd4b2ZvMGdRQ3RVSXdFdkNaLUZNRGFZZmM3TXhDZ2YydjhXS2lIUlU2SVBOdkl1SEdycTRSMXlod0VhWQ?oc=5",
-   "date": "2026-10-22T09:01:00.000Z"
-  },
-  {
    "src": "Hoops Rumors",
    "title": "Central Notes: Collins, Giddey, Pistons, Niang, Pacers",
    "link": "https://www.hoopsrumors.com/2026/10/central-notes-collins-giddey-pistons-niang-pacers.html",
@@ -233,6 +227,12 @@
    "title": "Cavs could be without key big man in season opener against 76ers",
    "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPUnVHY0Nhem8xdW9pNV9qWkluejN1bGtnRlUxdTd2VkVtNjZfTXZXV0xJNkV5dERWamNzWEExbGRWS1B1NGxGd1JuUlZVMzhXTTZfQjNmQ2pTdEdUMlhKdWNWMDhfQjZ2MXRDR0lwY1liTUpYU3h5YTNYWlAxOU45cU9fMEt1QS14a3FvOEVKN19UQ1lKaWtLN3BxVjZ2X2dVZlpkZ09rbENlblBO?oc=5",
    "date": "2026-10-21T22:56:00.000Z"
+  },
+  {
+   "src": "cleveland.com",
+   "title": "‘I don’t ever want to wear another uniform’: Donovan Mitchell’s journey — from Knicks rumors to playoff breakthroughs to finding his home",
+   "link": "https://news.google.com/rss/articles/CBMihAJBVV95cUxNbVQ4MzZJTlJjUEZsV2NQLTR2Y085UF90TDNtMzZpMkNIMWxFT1c1TzJRd2U4YkRwTlJHdnJINW4zb3dZRGU1SU5WR1k2QXRuOWhwS0E2aTl6LVNEb1FqWVZHTGxaMEtvLUwwdDBnSVhLRGFwNWNGRUdicFFqU2Z5Xy1FSjhWSEZWV1pOWE93Q1QyVm91SE56ODRqTjAwdkp0MWFjclAwVnpOWXp2VHRTR245U0QwbkFnZFRndGlQcmZOaUxibGFqU1lsemowalZLaFl1SjJleV95NU0tVTVtd0p4c3pQMzBQZU1sRGk4Q29tejNCLS1yeXNldFdCbGtwUU9rOA?oc=5",
+   "date": "2026-10-21T15:05:00.000Z"
   },
   {
    "src": "Hoops Rumors",
