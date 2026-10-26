@@ -973,7 +973,7 @@ const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt
 /* nav + index */
 const tabs=document.getElementById('tabs');
 /* Stats in the menus (preview: ?stats=1). On a Cavs game night the button becomes Live (with a red dot) and opens the game; after the final it goes back to season stats. */
-const STATS_ON=/[?&]stats=1/.test(location.search);
+const STATS_ON=true;/* on for everyone since Oct 26 */
 const statsLive=()=>{try{const t=Date.now();return SCHEDULE.some(g=>{const tp=tipOf(g).getTime();return t>=tp-30*6e4&&t<=tp+3.2*36e5})}catch(_){return false}};
 const statsHref=()=>statsLive()?'/live.html':'/live.html?g=s2026-27';
 const SHORT={cap:'Cap',staff:'Staff',charge:'Charge',media:'Media',resources:'Resources',moves:'Transactions'};
@@ -1155,11 +1155,6 @@ const nr=NRTG.CLE?sgn(NRTG.CLE[0]):'—';
 const nr14=L14.CLE?sgn(L14.CLE[0]):'—';
 [['Home',rec('H')],['Road',rec('A')],['Last 10',last10.length?last10.filter(x=>x==='W').length+'–'+last10.filter(x=>x==='L').length:'—'],['Streak',streak],['Net rtg',nr],['Net 2 wk',nr14]]
   .forEach(([k,v])=>{const d=el('div');const dd=el('dd');const m=String(v).match(/^(.*?) (\(.*\))$/);if(m)dd.append(m[1],el('small',null,' '+m[2]));else dd.textContent=v;d.append(el('dt',null,k),dd);sp.appendChild(d)});
-/* Home: one slim season-stats line under the record box, linking to the full season stats (preview: ?stats=1) */
-if(STATS_ON)setTimeout(()=>{const T=(typeof TSTATS!=='undefined'&&TSTATS.CLE&&TSTATS.CLE[0]+TSTATS.CLE[1]>=1)?TSTATS:null;if(!T)return;const all=Object.values(T);const c=T.CLE;const rk=(f,hi)=>1+all.filter(u=>hi?f(u)>f(c):f(u)<f(c)).length;
-  const w=el('div','hss');w.appendChild(el('span','k','Season stats'));const item=(lab,v,r)=>{const d=el('span','i');d.append(el('small',null,lab),el('b',null,v),el('em',null,ord(r)));w.appendChild(d)};
-  item('Off rtg',c[4].toFixed(1),rk(t=>t[4],1));item('Def rtg',c[5].toFixed(1),rk(t=>t[5],0));item('Net rtg',sgn(c[4]-c[5]),rk(t=>t[4]-t[5],1));item('Pace',c[6].toFixed(1),rk(t=>t[6],1));
-  const a=el('a','hss-go','Full season stats →');a.href='/live.html?g=s2026-27';w.appendChild(a);sp.after(w)},0);
 /* conference and division rank sit beside the record tiles, with the standings link under them */
 {const box=el('div','rkbox');[['East rank',SEASON.eastRank,15],['Central rank',SEASON.centralRank,5]].forEach(([k,v,n])=>{const dl=el('dl','rk');const dd=el('dd',null,v&&v!=='—'?v:'—');if(v&&v!=='—')dd.appendChild(el('small',null,'of '+n));dl.append(el('dt',null,k),dd);box.appendChild(dl)});
  const a=el('a','home-std','Standings →');a.href='/schedule';a.dataset.go='schedule';box.appendChild(a);document.querySelector('.grec .gbig').appendChild(box)}
