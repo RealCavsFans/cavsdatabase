@@ -459,8 +459,8 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 .gm-rk{display:block;font:700 .6875rem var(--mono);color:var(--muted);margin-top:4px;text-transform:none;letter-spacing:0}.gm-note{font-size:.6875rem;color:var(--muted);margin:6px 0 0}
 /* game day: when the injury report sits in the game-day card, the season-to-date games-missed box stays hidden */
 .in-gdm .gmw{display:none}
-.ch-more{display:none}
-@media (max-width:760px){#ch-sched:not(.all) tr.chx{display:none}.ch-more{display:block;width:100%;margin-top:8px;padding:10px;border:1px solid var(--line);background:var(--card);color:var(--wine-ink);font:700 .8125rem var(--sans);cursor:pointer}
+#ch-sched:not(.all) tr.chx{display:none}.ch-more{display:block;width:100%;margin-top:8px;padding:10px;border:1px solid var(--line);background:var(--card);color:var(--wine-ink);font:700 .8125rem var(--sans);cursor:pointer}
+@media (max-width:760px){
  .chros{font-size:.8125rem}.chros th,.chros td{padding-top:7px!important;padding-bottom:7px!important}.chros td.pn a,.chros td.pn b{font-size:.8125rem}.ch2w{font-size:.5rem;padding:0 4px;margin-left:5px}}
 /* one kicker style across Home cards: condensed caps like UP NEXT and EAST RANK (was a mix of wide and condensed) */
 #view-home .gdm-k,.otd-when,#cd>small,#nx-then>b,.gdm-top small,.gm-k,#played{font-family:"Saira Condensed",var(--sans)!important;font-stretch:100%!important;font-weight:700!important;letter-spacing:.12em!important;text-transform:uppercase}
@@ -3432,8 +3432,8 @@ const CH_STAFF=[
   const now=new Date(Date.now()-3*3600e3);const tip=chTip;
   const nxt=CHARGE.games.find(g=>!g[4]&&tip(g)>now);
   CHARGE.games.forEach(g=>{const tr=el('tr');if(g===nxt)tr.classList.add('nextg');const dtd=el('td','mono chd');const dt0=new Date(g[0]+'T12:00:00');dtd.append(el('span','dw',dt0.toLocaleDateString('en-US',{weekday:'short'})),' ',el('span','dd',dt0.toLocaleDateString('en-US',{month:'short',day:'numeric'})));const otd=el('td','opp');otd.append(g[2]==='H'?'vs ':'at ');if(CH_TEAM_URL[g[1]]){const oa=el('a',null,g[1]);oa.href=CH_TEAM_URL[g[1]];oa.target='_blank';oa.rel='noopener';otd.appendChild(oa)}else otd.append(g[1]);tr.append(dtd,otd,el('td','mono dim',chTime(g)),el('td','dim',g[5]||(g[2]==='H'?CH_ARENA.H:(CH_ARENA[g[1]]||''))),(()=>{const td=el('td','r mono');if(g[4]){const d=g[0].replace(/-/g,'');const a=el('a','reslink',g[4]+' ↗');a.href=g[6]||(g[2]==='H'?'https://www.basketball-reference.com/gleague/boxscores/'+d+'0CLC.html':'https://www.basketball-reference.com/gleague/boxscores/?month='+(+g[0].slice(5,7))+'&day='+(+g[0].slice(8))+'&year='+g[0].slice(0,4));a.target='_blank';a.rel='noopener';a.title='Box score';td.appendChild(a)}return td})());tb.appendChild(tr)});
-  /* phones: 10 games at a time (the last two results, then what's next); "Show all" rolls out the rest */
-  {const rows=[...tb.children],ni=Math.max(0,nxt?CHARGE.games.indexOf(nxt):CHARGE.games.length),st=Math.max(0,Math.min(ni-2,rows.length-10));rows.forEach((r,i)=>{if(i<st||i>=st+10)r.classList.add('chx')});
+  /* 10 games at a time on every screen (the last game played, then what's next); "Show all" rolls out the rest */
+  {const rows=[...tb.children],ni=Math.max(0,nxt?CHARGE.games.indexOf(nxt):CHARGE.games.length),st=Math.max(0,Math.min(ni-1,rows.length-10));rows.forEach((r,i)=>{if(i<st||i>=st+10)r.classList.add('chx')});
    if(rows.length>10){const b=el('button','ch-more','Show all '+rows.length+' games');b.type='button';b.onclick=()=>{const on=tb.classList.toggle('all');b.textContent=on?'Show fewer':'Show all '+rows.length+' games';if(!on)tb.closest('section').scrollIntoView({block:'start'})};tb.closest('.tablebox').after(b)}}
   /* leaders: top 3 in each category once the season starts */
   if(CH_STATS.length){const box=document.getElementById('ch-lead');document.getElementById('ch-lead-sec').hidden=false;
