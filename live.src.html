@@ -472,6 +472,7 @@ tr.lutot td{font-weight:800;border-top:2px solid var(--fg)}
 .rk{display:block;font:700 .625rem var(--mono);letter-spacing:0;margin-top:1px;color:var(--muted)}.rk.g{color:#1d6b3a}.rk.b{color:#a3122e}.lgp td span.rk{display:inline;font-size:.75rem}.lgp td{text-align:center}.lgp td:first-child{text-align:left}.ffc .row b .rk{display:inline;margin-left:6px}
 @media(max-width:640px){#sb.fin .sc{font-size:1.75rem!important;line-height:32px!important}#sb.fin .th img{width:28px;height:28px}#sb.fin .st{font-size:1.125rem}#sb.fin{padding-top:10px;padding-bottom:10px}}
 .prevpk{display:flex;gap:8px;flex-wrap:wrap;margin:-6px 0 12px}.prevpk select{flex:1 1 160px;min-width:0;font:600 .875rem var(--sans);padding:8px 10px;border:1px solid var(--line);background:var(--card);color:var(--fg)}
+.atl-note{background:var(--sub,#f5f4f1);border-left:3px solid #F2B231;padding:6px 10px;margin:6px 0 10px}
 </style>
 </head>
 <body>
@@ -1644,7 +1645,8 @@ function vSeason(v,D,R){
   /* 3 + 4 side by side on desktop */
   const two=el('div','stwo');v.appendChild(two);
   /* 3 · against the league (current season, from the league box score feed, same possession formula for every team) */
-  {const c=el('div','card sec');head(c,'Against the league',D.season===CUR_SEASON?'Every team counted the same way from the league box scores, with the Cavs’ rank':'');two.appendChild(c);
+  {const c=el('div','card sec');head(c,'Against the league',D.season===CUR_SEASON?'Whole team, all games. Every NBA team counted the same way from the league box scores, with the Cavs’ rank':'');two.appendChild(c);
+    {const sk=S.f.sk||'team',flt=(S.sf&&((S.sf.games&&S.sf.games.length)||S.sf.tier))||(S.per&&S.per!=='all');if(sk!=='team'||flt){const n=el('p','note atl-note');n.textContent='This card always shows the whole team over every game. It doesn’t change with the player, lineup, game or period you picked'+(sk!=='team'?' in Splits':'')+'. Its numbers come from box scores, so they differ a little from our play-by-play counts in Splits.';c.appendChild(n)}}
     if(D.season!==CUR_SEASON){c.appendChild(el('p','empty','The league comparison is kept for the current season.'))}
     else{const hold=el('p','note','Loading the league…');c.appendChild(hold);fetch('/pdata/league.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(L=>{hold.remove();if(!L||!L.tg){c.appendChild(el('p','empty','League numbers aren’t available right now.'));return}
       const tm={};const P2=t=>t.fga-t.orb+t.tov+.44*t.fta;Object.values(L.tg).forEach(g=>{if(!g.t||g.t.length!==2)return;const p=(P2(g.t[0])+P2(g.t[1]))/2,mins=48+5*Math.max(0,(g.per||4)-4);g.t.forEach((t,i)=>{const o=g.t[1-i];const x=tm[t.ab]=tm[t.ab]||{g:0,p:0,pf:0,pa:0,min:0,fga:0,tpa:0,fta:0,pts:0};x.g++;x.p+=p;x.pf+=t.pts;x.pa+=o.pts;x.min+=mins;x.fga+=t.fga;x.tpa+=t.tpa;x.fta+=t.fta;x.pts+=t.pts})});
