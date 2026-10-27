@@ -439,6 +439,16 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 
 /* desktop 1100–1439px: nav text one notch smaller so all twelve sections fit next to the search box */@media (min-width:1100px) and (max-width:1439px){.gbar .gnav a,.gbar .gnav button{font-size:1rem!important;padding:0 4px!important}}
 /* audit Oct 27: video poster titles a notch smaller and the play button nudged up, so a two-line title never runs into it */.poster .ptitle{font-size:.9375rem!important;line-height:1.15}.poster .vplay{transform:translateY(-14px)}
+.oo2{background:var(--card,#fff);border:1px solid var(--line);margin:4px 0}.oo2-top{display:grid;grid-template-columns:1fr 1fr;background:#860038;color:#fff;position:relative}.oo2-top>div{text-align:center;padding:14px 6px 12px}.oo2-top>div.off{background:#5e0a2c}
+.oo2-av{width:72px;height:56px;margin:0 auto;overflow:hidden;font:800 1.5rem/56px var(--cond);color:#F2B231}.oo2-av img{width:100%;height:100%;object-fit:cover;object-position:top}.oo2-top .off .oo2-av{filter:grayscale(1);opacity:.6}
+.oo2-top b{display:block;font:800 .75rem var(--cond);letter-spacing:.14em;text-transform:uppercase;color:#F2B231;margin-top:6px}.oo2-top .off b{color:#f4d6dd}.oo2-top big{display:block;font:800 1.75rem/1.05 var(--cond)}.oo2-top small{display:block;font:600 .6875rem var(--sans);color:#f4d6dd;margin-top:2px}
+.oo2-vs{position:absolute;left:50%;top:30px;transform:translateX(-50%);width:28px;height:28px;border-radius:50%;background:#F2B231;color:#860038;font:800 .75rem/28px var(--cond);text-align:center}
+.oo2-nm{padding:10px 12px 2px}.oo2-nm h3{margin:0;font:800 1rem var(--cond);letter-spacing:.04em;text-transform:uppercase;color:var(--fg)}.oo2-nm p{margin:2px 0 0;font-size:.75rem;color:var(--muted)}
+.oo2-tg{display:flex;margin:8px 12px 2px;border:1px solid var(--line)}.oo2-tg button{flex:1;background:none;border:0;padding:7px;font:700 .75rem var(--sans);color:var(--fg2);cursor:pointer}.oo2-tg button[aria-pressed=true]{background:var(--fg);color:var(--card,#fff)}
+.oo2-t{width:100%;min-width:0!important;border-collapse:collapse;font-size:inherit}.oo2-t th{font:600 .8125rem var(--sans)!important;text-transform:none!important;letter-spacing:0!important;color:var(--fg)!important;background:none!important;position:static!important}.oo2-t th,.oo2-t td{padding:6px 4px;border-top:1px solid var(--line2);font:500 .8125rem var(--mono)}.oo2-t th{text-align:left;font:600 .78rem var(--sans);padding-left:12px;white-space:nowrap}.oo2-hr th{font:800 .625rem var(--cond)!important;letter-spacing:.1em!important;text-transform:uppercase!important;color:var(--muted)!important;text-align:right;border:0}.oo2-hr th:first-child{text-align:left}
+.oo2-t td.on{text-align:right;font-weight:700}.oo2-t td.off{text-align:right;color:var(--muted)}.oo2-t td.df{text-align:right;font-weight:800}.oo2-t td.df.g{color:var(--pos,#1d6b3a)}.oo2-t td.df.r{color:var(--neg,#a3122e)}.oo2-t td.df.n{color:var(--muted);font-weight:500}
+.oo2-t td.bc{width:48px;padding-right:12px}.oo2-bar{display:block;position:relative;height:8px;background:var(--sub,#f1eee9)}.oo2-bar:after{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--muted)}.oo2-bar i{position:absolute;top:0;bottom:0}.oo2-bar i.g{background:#2e9e5b}.oo2-bar i.r{background:#d64b5c}.oo2-bar i.n{background:#b8b3ab}
+.oo2-s td{font:800 .6875rem var(--cond)!important;letter-spacing:.12em;text-transform:uppercase;color:var(--wine-ink,#860038);padding:12px 12px 4px!important;border-top:0!important}.oo2-more{all:unset;cursor:pointer;display:block;margin:8px 12px 0;font:700 .8125rem var(--sans);color:var(--wine-ink,#860038)}.oo2-n{font-size:.6875rem;color:var(--muted);padding:8px 12px 12px;margin:0}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
@@ -982,6 +992,27 @@ const RES=[
   ]]
 ];
 const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e};
+/* on vs off box (shared look on the live page and player pages): split header with his photo on the floor vs on the bench,
+   a Cavs / Opponents switch, grouped rows with a swing bar. o={name,img,ab,oab,a,b,sub,note,fewer}; a/b = metrics with him on / off */
+function ooBox(o){const a=o.a,b=o.b,w=el('div','oo2');const pct=new Set(['efg','ts','tpar','tp','tov','orb','drb','ftr','ast','oefg','otov','otpar','oftr','otp']);
+  const ini=o.name.split(' ').filter(Boolean).slice(0,2).map(x=>x[0]).join('');const fmin=s=>Math.floor(s/60)+':'+String(Math.round(s%60)).padStart(2,'0');const sg=v=>(v>0?'+':v<0?'−':'')+Math.abs(v);
+  const top=el('div','oo2-top');[[a,'On the floor',''],[b,'On the bench','off']].forEach(([m,lab,cls])=>{const h=el('div',cls);const av=el('div','oo2-av');if(o.img){const im=el('img');im.src=o.img;im.alt='';im.onerror=()=>{im.remove();av.textContent=ini};av.appendChild(im)}else av.textContent=ini;
+    h.append(av,el('b',null,lab),el('big',null,Math.round(m.sec/60)+' min'),el('small',null,Math.round(m.poss||0)+' possessions · '+sg(m.pm)));top.appendChild(h)});top.appendChild(el('span','oo2-vs','VS'));w.appendChild(top);
+  const nm=el('div','oo2-nm');nm.append(el('h3',null,o.name+' · on vs off'),el('p',null,o.sub||''));w.appendChild(nm);
+  const fm=(k,v)=>v==null||!isFinite(v)?'–':(k==='net'?(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1):v.toFixed(1)+(pct.has(k)?'%':''));
+  const mk=G=>{const t=el('table','oo2-t');const hr=el('tr','oo2-hr');['','On','Off','Diff',''].forEach(x=>hr.appendChild(el('th',null,x)));t.appendChild(hr);
+    G.forEach(([sec,rows])=>{const s=el('tr','oo2-s');const td=el('td',null,sec);td.colSpan=5;s.appendChild(td);t.appendChild(s);
+      rows.forEach(([lab,k,hi])=>{const x=a[k],y=b[k];if(x==null&&y==null)return;const df=x==null||y==null||!isFinite(x)||!isFinite(y)?null:x-y;const cls=hi==null||df==null||Math.abs(df)<.05?'n':((df>0)===!!hi?'g':'r');
+        const tr=el('tr');tr.append(el('th',null,lab),el('td','on',fm(k,x)),el('td','off',fm(k,y)),el('td','df '+cls,df==null?'–':(df>0?'+':df<0?'−':'')+Math.abs(df).toFixed(1)));
+        const bc=el('td','bc'),bar=el('span','oo2-bar');if(df!=null){const i=el('i',cls);const wd=Math.min(50,Math.abs(df)*(k==='ortg'||k==='drtg'||k==='net'?1.2:2.2));i.style.width=wd+'%';if(df>0)i.style.left='50%';else i.style.right='50%';bar.appendChild(i)}bc.appendChild(bar);tr.appendChild(bc);t.appendChild(tr)})});return t};
+  const cav=mk([['Scoring',[['Points per 100','ortg',1],['Allowed per 100','drtg',0],['Net per 100','net',1],['Pace','pace',null]]],['Shooting',[['Effective FG%','efg',1],['True shooting','ts',1],['3P%','tp',1],['3PA rate','tpar',null],['FT rate','ftr',1]]],['Possessions',[['Turnover rate','tov',0],['Off. rebound %','orb',1],['Def. rebound %','drb',1],['Assisted baskets','ast',null]]]]);
+  const opp=mk([['What '+(o.oab||'opponents')+' did',[['Opp. effective FG%','oefg',0],['Opp. 3P%','otp',0],['Opp. 3PA rate','otpar',null],['Opp. turnover rate','otov',1],['Opp. FT rate','oftr',0]]]]);opp.hidden=true;
+  const tg=el('div','oo2-tg');[[o.ab||'Team',cav],['Opponents',opp]].forEach(([l,tb],i)=>{const btn=el('button',null,l);btn.type='button';btn.setAttribute('aria-pressed',i===0);btn.onclick=()=>{cav.hidden=tb!==cav;opp.hidden=tb!==opp;tg.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===btn))};tg.appendChild(btn)});
+  w.append(tg,cav,opp);
+  if(o.fewer){/* player pages: the Scoring rows show, the rest open with a button */const rest=[...cav.querySelectorAll('tr')].slice(6);rest.forEach(r=>r.hidden=true);const mb=el('button','oo2-more','Show every advanced number ▾');mb.type='button';
+    mb.onclick=()=>{const op=mb.getAttribute('aria-expanded')!=='true';rest.forEach(r=>r.hidden=!op);mb.setAttribute('aria-expanded',String(op));mb.textContent=op?'Show fewer ▴':'Show every advanced number ▾'};w.appendChild(mb)}
+  w.appendChild(el('p','oo2-n',o.note||''));return w}
+
 
 /* Resources: the site's own tools, each a button that takes you straight to it */
 {const g=document.getElementById('tools-g');if(g){const I=p=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+p+'</svg>';
@@ -4106,17 +4137,8 @@ function ppBuild(p,root){
         const M=x=>{const o=x.o,d=x.d,g=(y,k)=>y[k]||0,q=(a,b2)=>b2?a/b2*100:null,p=P(x);return {ortg:p>=1?x.pf/p*100:null,drtg:p>=1?x.pa/p*100:null,net:p>=1?(x.pf-x.pa)/p*100:null,poss:p,pace:x.sec?p/(x.sec/2880):null,
           efg:efg(o),ts:q(x.pf,2*(g(o,'fga')+.44*g(o,'fta'))),tpar:q(g(o,'tpa'),g(o,'fga')),tp:q(g(o,'tpm'),g(o,'tpa')),tov:tov(o),orb:orb(o,d),drb:q(g(o,'dreb'),g(o,'dreb')+g(d,'oreb')),ftr:q(g(o,'ftm'),g(o,'fga')),ast:q(g(o,'ast'),g(o,'fgm')),
           oefg:efg(d),otov:tov(d),otpar:q(g(d,'tpa'),g(d,'fga')),oftr:q(g(d,'ftm'),g(d,'fga')),otp:q(g(d,'tpm'),g(d,'tpa'))}};
-        const a=M(on),z=M(off),PCT=new Set(['efg','ts','tpar','tp','tov','orb','drb','ftr','ast','oefg','otov','otpar','oftr','otp']);
-        const RW=[['Offense','ortg',1],['Defense','drtg',0],['Net','net',1],['Possessions','poss','n'],['h','Cavs'],['Pace','pace',null],['Effective FG%','efg',1],['True shooting','ts',1],['3PA rate','tpar',null],['3P%','tp',1],['Turnover rate','tov',0],['Off. rebound %','orb',1],['Def. rebound %','drb',1],['FT rate','ftr',1],['Assisted baskets','ast',null],
-          ['h','Opponents'],['Opp. effective FG%','oefg',0],['Opp. 3P%','otp',0],['Opp. 3PA rate','otpar',null],['Opp. turnover rate','otov',1],['Opp. FT rate','oftr',0]];
-        const t=el('table','ppx-t ppx-oo');t.innerHTML='<thead><tr><th></th><th>On</th><th>Off</th><th>Diff</th></tr></thead>';const bd=el('tbody');const extra=[];
-        RW.forEach(([lab,k,hi],i)=>{const tr=el('tr');if(lab==='h'){const td=el('td','ppx-ooh',k);td.colSpan=4;tr.appendChild(td)}else{const x=a[k],y=z[k];
-          const fm=v=>v==null||!isFinite(v)?'–':k==='poss'?String(Math.round(v)):k==='net'?sg(v):v.toFixed(1)+(PCT.has(k)?'%':'');const df=hi==='n'||x==null||y==null||!isFinite(x)||!isFinite(y)?null:x-y;
-          const good=hi==null||hi==='n'||df==null||Math.abs(df)<.05?null:(df>0)===!!hi;tr.append(el('td',null,lab),el('td',null,fm(x)),el('td',null,fm(y)),el('td',good==null?null:good?'up':'dn',df==null?'':sg(df)))}
-          if(i>3){tr.hidden=true;extra.push(tr)}bd.appendChild(tr)});t.appendChild(bd);const w=el('div','tablebox');w.appendChild(t);c.appendChild(w);
-        const btn=el('button','ppx-more ppx-oob','Show every advanced number ▾');btn.type='button';btn.setAttribute('aria-expanded','false');
-        btn.onclick=()=>{const op=btn.getAttribute('aria-expanded')!=='true';extra.forEach(r=>r.hidden=!op);btn.setAttribute('aria-expanded',String(op));btn.textContent=op?'Show fewer ▴':'Show every advanced number ▾'};c.appendChild(btn);
-        c.appendChild(el('p','ppx-why','Diff is on minus off. Green is better for the Cavs with him on, red is worse.'));ov.appendChild(c)}
+        const a=M(on),z=M(off);a.sec=on.sec;a.pm=on.pf-on.pa;z.sec=off.sec;z.pm=off.pf-off.pa;
+        c.appendChild(ooBox({name:n,img:(()=>{const pp=PLAYERS.find(x=>x[1]===n);return pp&&pp[12]?'/img/h/'+pp[12]+'.png':null})(),ab:'Cavs',oab:'opponents',a,b:z,sub:gp+' game'+(gp===1?'':'s')+' this season · small samples swing hard',fewer:true,note:'Diff is on minus off. Green is better for the Cavs with him on, red is worse. Possessions are counted play by play, so ratings can differ a little from NBA.com.'}));ov.appendChild(c)}
       /* 2 · lineups (overview) */
       {const rows=L5.filter(l=>l.ids.includes(id)&&l.sec>=60).sort((a,b)=>b.sec-a.sec).slice(0,6);if(rows.length){const c=card('His most-used lineups',null,'Five-man groups he played in this season, by minutes.');
         c.appendChild(tbl(rows.map(l=>{const r=rt(l);return [l.ids.filter(x=>x!==id).map(x=>(A.P[x]||{}).last||'').join(', '),fmtMinS(l.sec),sg(l.pf-l.pa),r?sg(r.n):'–']}),['Min','+/-','Net']));c.querySelector('thead th').textContent='With';ov.appendChild(c)}}
