@@ -1761,6 +1761,34 @@ function vSeason(v,D,R){
     {const h=el('tr','sep');const td=el('td','hgh','Factors won in the game');td.colSpan=3;h.appendChild(td);t.appendChild(h)}
     [['3 or 4',0],['2',1],['0 or 1',2]].forEach(([l,i])=>{const tr=el('tr');const td=el('td',null,rs(byN[i]));td.colSpan=2;tr.append(el('td',null,l),td);t.appendChild(tr)});
     const w=el('div','tw');w.appendChild(t);c.appendChild(w);c.appendChild(el('p','note','Records are wins–losses. Turnovers: winning it means a lower turnover rate. Ties don’t count either way.'));v.appendChild(c)}}
+  seasonExtras(v,D,R);
+}
+/* Season tab: quarter by quarter, clutch, starters vs bench, best and worst lineups */
+function seasonExtras(v,D,R){const J=S.sfull;const filt=!!((S.sf&&((S.sf.games&&S.sf.games.length)||S.sf.tier))||S.per!=='all');const G=(D.games||[]).length||1;
+  const sgnf=x=>(x>0?'+':x<0?'−':'')+Math.abs(x).toFixed(1),r100=(a,p)=>p?a/p*100:null,n0=x=>x==null?'–':String(Math.round(x));
+  const noteF=c=>c.appendChild(el('p','note','Whole season only: clear the filters above to see this.'));
+  /* quarter by quarter */
+  {const c=el('div','card sec');head(c,'Quarter by quarter',(J?J.games.length:0)+' games · per game, and points per 100 possessions');
+    if(filt||!J||!J.tq)noteF(c);else{const n=J.games.length||1;const t=el('table','zt');t.innerHTML='<tr><th></th><th>Score</th><th>+/-</th><th>Off</th><th>Def</th><th>Net</th></tr>';
+      [['1st','q1'],['2nd','q2'],['3rd','q3'],['4th','q4']].forEach(([l,k])=>{const q=J.tq[k];if(!q)return;const o=r100(q.pf,q.po),d=r100(q.pa,q.pd),nt=o!=null&&d!=null?o-d:null;const tr=el('tr');
+        tr.append(el('td',null,l),el('td',null,(q.pf/n).toFixed(1)+'–'+(q.pa/n).toFixed(1)),el('td',pmCls(q.pf-q.pa),sgnf((q.pf-q.pa)/n)),el('td',null,n0(o)),el('td',null,n0(d)),el('td',nt==null?null:pmCls(nt),nt==null?'–':sgn(Math.round(nt))));t.appendChild(tr)});
+      const w=el('div','tw');w.appendChild(t);c.appendChild(w);c.appendChild(el('p','note','Overtime isn’t included. Possessions are counted from the play-by-play.'))}v.appendChild(c)}
+  /* clutch */
+  {const c=el('div','card sec');head(c,'Clutch','Last 5 minutes of the 4th quarter or overtime, score within 5');
+    if(filt||!J||!J.cg)noteF(c);else if(!J.cg.length)c.appendChild(el('p','note','No clutch minutes yet.'));else{const q=J.tq.clutch;const w=J.cg.filter(([i])=>J.games[i]&&J.games[i].cle>J.games[i].os).length,l=J.cg.length-w;const o=r100(q.pf,q.po),d=r100(q.pa,q.pd);
+      const g=el('div','tiles');[[w+'–'+l,'Record in games with clutch minutes'],[q.pf+'–'+q.pa,'Clutch score ('+fmtMin(q.sec)+' played)'],[o==null||d==null?'–':sgn(Math.round(o-d)),'Clutch net per 100'],[n0(o)+' / '+n0(d),'Points scored / allowed per 100']].forEach(([a,b])=>{const x=el('div');x.append(el('b',null,a),el('span',null,b));g.appendChild(x)});c.appendChild(g);
+      const P=Object.entries(J.pq||{}).filter(([,x])=>x.clutch&&x.clutch[0]>0).map(([id,x])=>({id,s:x.clutch})).sort((a,b)=>b.s[1]-a.s[1]||b.s[0]-a.s[0]).slice(0,6);
+      if(P.length){const t=el('table','zt');t.style.marginTop='12px';t.innerHTML='<tr><th>Player</th><th>Min</th><th>Pts</th><th>FG</th><th>3PT</th><th>+/-</th></tr>';P.forEach(({id,s:x})=>{const tr=el('tr');tr.append(el('td',null,(J.P[id]||{}).short||id),el('td',null,fmtMin(x[0])),el('td',null,String(x[1])),el('td',null,x[2]+'-'+x[3]),el('td',null,x[4]+'-'+x[5]),el('td',pmCls(x[6]),sgn(x[6])));t.appendChild(tr)});const ww=el('div','tw');ww.appendChild(t);c.appendChild(ww)}}
+    v.appendChild(c)}
+  /* starters vs bench */
+  {const T=R.T[D.focus.id];if(T&&(T.stSec||T.bnSec)){const c=el('div','card sec');head(c,'Starters vs bench',G+' game'+(G===1?'':'s')+' · per game');const tot=(T.stPts||0)+(T.bnPts||0)||1;
+    const t=el('table','zt');t.innerHTML='<tr><th></th><th>Points</th><th>Share</th><th>Minutes</th></tr>';[['Starters',T.stPts||0,T.stSec||0],['Bench',T.bnPts||0,T.bnSec||0]].forEach(([l,p,sc])=>{const tr=el('tr');tr.append(el('td',null,l),el('td',null,(p/G).toFixed(1)),el('td',null,Math.round(p/tot*100)+'%'),el('td',null,(sc/60/G).toFixed(1)));t.appendChild(tr)});
+    const w=el('div','tw');w.appendChild(t);c.appendChild(w);c.appendChild(el('p','note','Minutes are player minutes (five players on the floor = 240 a game). Starters = the five who started each game.'));v.appendChild(c)}}
+  /* best and worst lineups */
+  {const L=Object.values((R.L[D.focus.id]||{})[5]||{});const minM=Math.min(30,Math.max(8,G*2));const Q=L.filter(l=>l.sec>=minM*60).map(l=>{const p=(poss(l.o)+poss(l.d))/2;return {l,net:p>=1?(l.pf-l.pa)/p*100:null,p}}).filter(x=>x.net!=null).sort((a,b)=>b.net-a.net);
+    if(Q.length>=2){const c=el('div','card sec');head(c,'Best and worst lineups','Five-man units with '+minM+'+ minutes · net points per 100 possessions');const nm=l=>l.ids.map(id=>(D.P[id]||{}).last||'').join(', ');
+      const mk=(lab,arr)=>{const t=el('table','zt');t.innerHTML=`<tr><th>${lab}</th><th>Min</th><th>+/-</th><th>Net</th></tr>`;arr.forEach(({l,net})=>{const tr=el('tr');tr.append(el('td',null,nm(l)),el('td',null,fmtMin(l.sec)),el('td',pmCls(l.pf-l.pa),sgn(l.pf-l.pa)),el('td',pmCls(net),sgn(Math.round(net))));t.appendChild(tr)});const w=el('div','tw');w.appendChild(t);return w};
+      const k=Math.min(5,Math.floor(Q.length/2));c.appendChild(mk('Best',Q.slice(0,k)));c.appendChild(mk('Worst',Q.slice(-k).reverse()));c.appendChild(el('p','note','Small samples swing hard. The full list is in Lineups.'));v.appendChild(c)}}
 }
 /* ---------- season filter: by opponent, or by opponent strength (net rating rank) ----------
    With a filter on, the season is rebuilt in the browser from the archived game files, the same way
