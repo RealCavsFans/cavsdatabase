@@ -144,4 +144,4 @@ function build(per, file) {
   console.log(`${file}: ${gs.length} games, ${shots.length} shots, ${Object.keys(L[5]).length} five-man lineups`);
 }
 build('all', 'season.json');
-for (const [key, per] of [['h1', [1, 2]], ['h2', [3, 4]], ['q1', [1]], ['q2', [2]], ['q3', [3]], ['q4', [4]], ['clutch', 'clutch']]) build(per, 'season-p-' + key + '.json');
+for (const [key, per] of [['h1', [1, 2]], ['h2', [3, 4]], ['q1', [1]], ['q2', [2]], ['q3', [3]], ['q4', [4]], ['clutch', 'clutch'], ['nogt', 'nogt']]) build(per, 'season-p-' + key + '.json');

@@ -18,8 +18,8 @@ const pct=(m,a,d=0)=>a?(m/a*100).toFixed(d)+'%':'–';
 const sgn=v=>(v>0?'+':v<0?'−':'')+Math.abs(v);
 const PERS=[['all','Game'],['h1','1st half'],['h2','2nd half'],null,['1','Q1'],['2','Q2'],['3','Q3'],['4','Q4'],['ot','OT'],null,['clutch','Clutch']];
 const eqSet=(a,b)=>a.length===b.length&&a.every(x=>b.includes(x));
-const inPer=(f,p)=>Array.isArray(f)?f.includes(Math.min(p,5)):f==='all'||(f==='h1'&&p<=2)||(f==='h2'&&p>=3)||(f==='ot'&&p>4)||String(p)===f;
-const perLabel=f=>Array.isArray(f)?(eqSet(f,[1,2])?'1st half':eqSet(f,[3,4,5])||eqSet(f,[3,4])?'2nd half':f.length===1?(f[0]===5?'Overtime':'Quarter '+f[0]):f.slice().sort().map(p=>p===5?'OT':'Q'+p).join(' + ')):({all:'Full game',h1:'1st half',h2:'2nd half (incl. OT)',ot:'Overtime',clutch:'Clutch: last 5 minutes, score within 5'})[f]||'Quarter '+f;
+const inPer=(f,p)=>Array.isArray(f)?f.includes(Math.min(p,5)):f==='all'||f==='nogt'||(f==='h1'&&p<=2)||(f==='h2'&&p>=3)||(f==='ot'&&p>4)||String(p)===f;
+const perLabel=f=>Array.isArray(f)?(eqSet(f,[1,2])?'1st half':eqSet(f,[3,4,5])||eqSet(f,[3,4])?'2nd half':f.length===1?(f[0]===5?'Overtime':'Quarter '+f[0]):f.slice().sort().map(p=>p===5?'OT':'Q'+p).join(' + ')):({all:'Full game',h1:'1st half',h2:'2nd half (incl. OT)',ot:'Overtime',clutch:'Clutch: last 5 minutes, score within 5',nogt:'Without garbage time'})[f]||'Quarter '+f;
 
 /* ---------- prepare ---------- */
 function lastName(n){const p=n.replace(/ (Jr\.|Sr\.|II|III|IV)$/,'').split(' ');return p.length>1?p.slice(1).join(' '):n}
@@ -82,7 +82,9 @@ function deriveCore(D,plays,F){
   const stints={},enter={},pmAll={};Object.keys(D.P).forEach(id=>pmAll[id]=0);
   let last=0,curPer=0,snap=null;const src={},ps={},pc={},tf={},to={},ch={},pfAll={};let clutchNow=false,mgNow=0;const wpS=[],lineAt={};
   const HOW=['stl','to','dreb','made','oreb','start'];tid.forEach(t=>{src[t]='';ps[t]={t:0,how:'start'};pc[t]={};HOW.forEach(h=>pc[t][h]={n:0,pts:0});to[t]=0;ch[t]={used:0,won:0}});
-  const inFx=per=>F==='clutch'?clutchNow:inPer(F,per);
+  /* garbage time (published rule): 4th quarter, a lead of 25+ with 9–12 minutes left, 20+ with 6–9 left, or 15+ with under 6 left; overtime never counts */
+  let gtNow=false;const isGT=(per,t,m)=>{if(per!==4)return false;const left=2880-t,a=Math.abs(m);return left>540?a>=25:left>360?a>=20:a>=15};
+  const inFx=per=>F==='clutch'?clutchNow:F==='nogt'?!gtNow:inPer(F,per);
   let hold=null;const endPoss=(t,inF)=>{if(!inF||!t)return;if(seg)seg.o[t].np++;lu(t,on[t],o=>o.o.np++);lu(opp(t),on[opp(t)],o=>o.d.np++)};
   const PL=[];const newPoss=(t,tt,how,inF)=>{if(ps[t]&&ps[t].t===tt&&ps[t].how===how&&how!=='oreb')return;if(how!=='start'){if(how!=='oreb'&&hold===opp(t))endPoss(opp(t),inF);hold=t}ps[t]={t:tt,how,pts:0,first:null,inF,on:on[t]?[...on[t]].sort().join(','):'',od:on[opp(t)]?[...on[opp(t)]].sort().join(','):''};if(inF){pc[t][how].n++;PL.push(Object.assign(ps[t],{team:t}))}};
   const margin=[[0,0]];let lc=0,ties=0,prevSign=0;const lead={};tid.forEach(t=>lead[t]=0);
@@ -95,7 +97,7 @@ function deriveCore(D,plays,F){
   plays.forEach(p=>{
     if(p.per!==curPer){if(curPer){addTime(pstart(curPer)+plen(curPer));endPoss(hold,inFx(curPer));hold=null;tid.forEach(t=>on[t].forEach(id=>leave(id,pstart(curPer)+plen(curPer))))}
       curPer=p.per;last=pstart(p.per);tid.forEach(t=>{on[t]=new Set(startFive[p.per][t]||[]);on[t].forEach(id=>{B[id].played=true;join(id,last)});src[t]='';newPoss(t,last,'start',inFx(p.per))});newSeg()}
-    clutchNow=p.per>=4&&(p.per>4||p.t>=2580)&&Math.abs(mgNow)<=5;
+    clutchNow=p.per>=4&&(p.per>4||p.t>=2580)&&Math.abs(mgNow)<=5;gtNow=isGT(p.per,p.t,mgNow);
     addTime(p.t);
     const inF=inFx(p.per);const ty=p.type,a=p.ids[0],b=p.ids[1];
     if(D.wp[p.id]!=null)wpS.push([p.t,D.wp[p.id],p]);
