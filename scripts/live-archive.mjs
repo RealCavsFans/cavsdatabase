@@ -123,6 +123,7 @@ function build(per, file) {
     /* per-game rows for the Season tab (trends and splits): team box totals for both sides, and every 5-man unit's minutes and possessions */
     const tr = t => [t.pts, t.fgm, t.fga, t.tpm, t.tpa, t.ftm, t.fta, t.oreb, t.toreb || 0, t.dreb, t.to, Math.round(t.sec || 0)];
     games[gi].t = tr(tc); games[gi].u = tr(to);
+    if (per === 'all') { const qm = {}; for (const p of D.plays) qm[p.per] = D.focus.ha === 'home' ? p.hs - p.as : p.as - p.hs; games[gi].qm = [1, 2, 3].map(q => qm[q] ?? null); }   // Cavs margin at the end of the 1st, half and 3rd
     games[gi].ps = Math.round(tc.sec || 0); games[gi].pp = [tc.pts, to.pts];   // this period's seconds and points (period files)
     /* possession timing, after timeouts, quarter starts (full game, both sides: [cle, opp]) */
     { const X = C.extras(D, R0); games[gi].x = { tim: [X.tim['5'], X.tim[opp.id]], ato: [X.ato['5'], X.ato[opp.id]], qs: [X.qs['5'], X.qs[opp.id]] }; }

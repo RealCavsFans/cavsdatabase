@@ -1820,6 +1820,15 @@ function seasonExtras(v,D,R){const J=S.sfull;const filt=!!((S.sf&&((S.sf.games&&
       const P=Object.entries(J.pq||{}).filter(([,x])=>x.clutch&&x.clutch[0]>0).map(([id,x])=>({id,s:x.clutch})).sort((a,b)=>b.s[1]-a.s[1]||b.s[0]-a.s[0]).slice(0,6);
       if(P.length){const t=el('table','zt');t.style.marginTop='12px';t.innerHTML='<tr><th>Player</th><th>Min</th><th>Pts</th><th>FG</th><th>3PT</th><th>+/-</th></tr>';P.forEach(({id,s:x})=>{const tr=el('tr');tr.append(el('td',null,(J.P[id]||{}).short||id),el('td',null,fmtMin(x[0])),el('td',null,String(x[1])),el('td',null,x[2]+'-'+x[3]),el('td',null,x[4]+'-'+x[5]),el('td',pmCls(x[6]),sgn(x[6])));t.appendChild(tr)});const ww=el('div','tw');ww.appendChild(t);c.appendChild(ww)}}
     v.appendChild(c)}
+  /* home vs road (follows the filters) */
+  {const GG=(D.games||[]).filter(g=>g.t&&g.u);if(GG.length){const c=el('div','card sec');head(c,'Home vs road',GG.length+' game'+(GG.length===1?'':'s'));const t=el('table','zt');t.innerHTML='<tr><th></th><th>Record</th><th>Score</th><th>Off</th><th>Def</th><th>Net</th></tr>';
+    [['Home','home'],['Road','away']].forEach(([l,k])=>{const G2=GG.filter(g=>g.ha===k);if(!G2.length)return;const n=G2.length,w=G2.filter(g=>g.cle>g.os).length;let pf=0,pa=0,po=0;G2.forEach(g=>{pf+=g.cle;pa+=g.os;po+=(sPoss(sRow(g.t))+sPoss(sRow(g.u)))/2});const o=pf/po*100,d=pa/po*100;
+      const tr=el('tr');tr.append(el('td',null,l),el('td',null,w+'–'+(n-w)),el('td',null,(pf/n).toFixed(1)+'–'+(pa/n).toFixed(1)),el('td',null,o.toFixed(1)),el('td',null,d.toFixed(1)),el('td',pmCls(o-d),sgnf(o-d)));t.appendChild(tr)});
+    const w=el('div','tw');w.appendChild(t);c.appendChild(w);v.appendChild(c)}}
+  /* record by the score after each quarter */
+  {const GG=(D.games||[]).filter(g=>Array.isArray(g.qm));if(GG.length){const c=el('div','card sec');head(c,'After each quarter',GG.length+' game'+(GG.length===1?'':'s')+' · record by the score at each break');const t=el('table','zt');t.innerHTML='<tr><th></th><th>Leading</th><th>Trailing</th><th>Tied</th></tr>';
+    [['After the 1st',0],['Halftime',1],['After the 3rd',2]].forEach(([l,i])=>{const r={lead:[0,0],trail:[0,0],tie:[0,0]};GG.forEach(g=>{const m=g.qm[i];if(m==null)return;r[m>0?'lead':m<0?'trail':'tie'][g.cle>g.os?0:1]++});const tr=el('tr');tr.appendChild(el('td',null,l));['lead','trail','tie'].forEach(k=>tr.appendChild(el('td',null,r[k][0]+r[k][1]?r[k][0]+'–'+r[k][1]:'–')));t.appendChild(tr)});
+    const w=el('div','tw');w.appendChild(t);c.appendChild(w);c.appendChild(el('p','note','Wins–losses. Overtime games count by the final result.'));v.appendChild(c)}}
   /* starters vs bench */
   {const T=R.T[D.focus.id];if(T&&(T.stSec||T.bnSec)){const c=el('div','card sec');head(c,'Starters vs bench',G+' game'+(G===1?'':'s')+' · per game');const tot=(T.stPts||0)+(T.bnPts||0)||1;
     const t=el('table','zt');t.innerHTML='<tr><th></th><th>Points</th><th>Share</th><th>Minutes</th></tr>';[['Starters',T.stPts||0,T.stSec||0],['Bench',T.bnPts||0,T.bnSec||0]].forEach(([l,p,sc])=>{const tr=el('tr');tr.append(el('td',null,l),el('td',null,(p/G).toFixed(1)),el('td',null,Math.round(p/tot*100)+'%'),el('td',null,(sc/60/G).toFixed(1)));t.appendChild(tr)});
@@ -1896,7 +1905,7 @@ function seasonPlayers(v,D,R){
   const f1=k=>r=>r[k].toFixed(1),pc=k=>r=>r[k]==null?'–':Math.round(r[k]*100)+'%';
   c.appendChild(dtable('sp',[{h:'Player',k:'id',f:r=>{const sp=el('span');sp.appendChild(plink(D,r.id,D.P[r.id].short));return sp}},{h:'GP',k:'gp'},{h:'GS',k:'gs'},{h:'MIN',k:'min',f:f1('min')},{h:'PTS',k:'pts',f:f1('pts'),cls:()=>'k'},{h:'FG%',k:'fg',f:pc('fg')},{h:'3PM',k:'tpm',f:f1('tpm')},{h:'3P%',k:'tp',f:pc('tp')},{h:'FT%',k:'ft',f:pc('ft')},{h:'TS%',k:'ts',f:pc('ts')},
     {h:'REB',k:'reb',f:f1('reb')},{h:'OREB',k:'oreb',f:f1('oreb')},{h:'AST',k:'ast',f:f1('ast')},{h:'TO',k:'to',f:f1('to'),asc:true},{h:'STL',k:'stl',f:f1('stl')},{h:'BLK',k:'blk',f:f1('blk')},{h:'+/- PER G',k:'pmg',f:r=>sgn(Math.round(r.pmg*10)/10),cls:r=>pmCls(r.pmg)},{h:'+/- TOTAL',k:'pm',f:r=>sgn(r.pm),cls:r=>pmCls(r.pm)}],rows,{def:'min',minW:900}));
-  c.appendChild(el('p','note','Built from the play-by-play of every archived game, so it covers only games in the archive.'));v.appendChild(c);
+  c.appendChild(el('p','note','Built from the play-by-play of every archived game, so it covers only games in the archive.'));v.appendChild(c);{const sc=selfCard(D,R);if(sc)v.appendChild(sc)}
   /* where each Cavalier ranks among NBA players this season, per game (league box scores, refreshed daily) */
   if(S.season===CUR_SEASON){if(!LGS&&!LGP)lgLoad().then(x=>{if(x&&S.season&&S.tab==='players')renderView()});if(LGS){const P=Object.values(LGS.P).filter(p=>p.g>0);const mg=Math.max(1,...P.map(p=>p.g));const minG=Math.max(1,Math.ceil(mg*.5));
     const Q=P.filter(p=>p.g>=minG&&p.min/p.g>=12);const ST=[['PTS',p=>p.pts/p.g],['REB',p=>p.reb/p.g],['AST',p=>p.ast/p.g],['STL',p=>p.stl/p.g],['BLK',p=>p.blk/p.g],['3PM',p=>p.tpm/p.g],['FG%',p=>p.fga/p.g>=5?p.fgm/p.fga:null],['TS%',p=>(p.fga+p.fta)/p.g>=5?p.pts/(2*(p.fga+.44*p.fta)):null],['TO',p=>p.tov/p.g,-1]];
@@ -1905,6 +1914,12 @@ function seasonPlayers(v,D,R){
       cav.sort((a,b)=>b.pts/b.g-a.pts/a.g).forEach(p=>{const tr=el('tr');let h=`<td>${esc(p.n)}</td>`;ST.forEach(([,f,dir])=>{const v=f(p);const k=v==null?null:lgRank(v,Q.filter(q=>q!==p).map(f),dir||1);h+=`<td>${k?rkEl(k).replace('<small','<span').replace('</small>','</span>'):'–'}</td>`});tr.innerHTML=h;tb.appendChild(tr)});
       const w=el('div','tw');w.appendChild(tb);c2.appendChild(w);c2.appendChild(el('p','note','Green = top 10%, red = bottom 10% of qualified players. FG% and TS% need 5+ shots a game. TO: 1st = fewest. From every NBA box score this season.'));v.appendChild(c2)}}}
 }
+/* season Players tab: who creates his own shot (made field goals with no assist) */
+function selfCard(D,R){const P={};(R.shots||[]).forEach(q=>{if(q.t!==D.focus.id||!q.m||!q.id)return;const o=P[q.id]=P[q.id]||[0,0,0,0];const v=q.three?3:2;if(q.ast){o[0]++;o[1]+=v}else{o[2]++;o[3]+=v}});
+  const rows=Object.entries(P).filter(([,v])=>v[0]+v[2]>=5).map(([id,v])=>({id,ua:v[2],sh:v[2]/(v[0]+v[2]),pu:v[3],pa:v[1]}));if(!rows.length)return null;
+  const c=el('div','card sec');head(c,'Who creates his own shot','Made field goals with no assist · '+(D.games||[]).length+' games');
+  c.appendChild(dtable('selfc',[{h:'Player',k:'id',f:r=>{const sp=el('span');sp.appendChild(plink(D,r.id,D.P[r.id].short));return sp}},{h:'UNAST.',k:'ua',title:'Made field goals with no assist'},{h:'SHARE',k:'sh',f:r=>Math.round(r.sh*100)+'%',title:'Share of his makes that were unassisted'},{h:'PTS UNAST.',k:'pu',title:'Points on unassisted makes'},{h:'PTS AST.',k:'pa',title:'Points on assisted makes'}],rows,{def:'pu'}));
+  c.appendChild(el('p','note','Free throws aren’t included. Players with 5+ makes.'));return c}
 function gameByGame(D,R,pid,c){
   const pz=R.pz[pid];if(!pz)return;const tot=ZN.map(()=>[0,0]);Object.values(pz).forEach(z=>z.forEach((v,i)=>{tot[i][0]+=v[0];tot[i][1]+=v[1]}));
   c.appendChild(el('h3',null,D.P[pid].name+' · game by game'));
