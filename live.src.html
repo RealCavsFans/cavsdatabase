@@ -500,6 +500,9 @@ tr.xr{cursor:pointer}
 .oo2-t td.on{text-align:right;font-weight:700}.oo2-t td.off{text-align:right;color:var(--muted)}.oo2-t td.df{text-align:right;font-weight:800}.oo2-t td.df.g{color:var(--pos,#1d6b3a)}.oo2-t td.df.r{color:var(--neg,#a3122e)}.oo2-t td.df.n{color:var(--muted);font-weight:500}
 .oo2-t td.bc{width:48px;padding-right:12px}.oo2-bar{display:block;position:relative;height:8px;background:var(--sub,#f1eee9)}.oo2-bar:after{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--muted)}.oo2-bar i{position:absolute;top:0;bottom:0}.oo2-bar i.g{background:#2e9e5b}.oo2-bar i.r{background:#d64b5c}.oo2-bar i.n{background:#b8b3ab}
 .oo2-s td{font:800 .6875rem var(--cond)!important;letter-spacing:.12em;text-transform:uppercase;color:var(--wine-ink,#860038);padding:12px 12px 4px!important;border-top:0!important}.oo2-more{all:unset;cursor:pointer;display:block;margin:8px 12px 0;font:700 .8125rem var(--sans);color:var(--wine-ink,#860038)}.oo2-n{font-size:.6875rem;color:var(--muted);padding:8px 12px 12px;margin:0}
+.wf-rows{display:grid;gap:10px;margin-top:6px}.wf-r{display:grid;grid-template-columns:minmax(120px,1.2fr) 1fr 1fr;gap:14px;align-items:center;padding:10px 0;border-top:1px solid var(--line2)}.wf-r:first-child{border-top:0}.wf-n b{display:block;font:800 1rem var(--cond);letter-spacing:.02em}.wf-n small{font:500 .75rem var(--sans);color:var(--muted)}.wf-c small{display:block;font:800 .625rem var(--cond);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.wf-c b{font:800 1.5rem/1.1 var(--cond)}.wf-c em{font:600 .75rem var(--mono);font-style:normal;color:var(--muted);margin-left:6px}.wf-bar{height:8px;background:var(--sub,#f1eee9);margin-top:4px}.wf-bar i{display:block;height:100%;background:#860038}.wf-bar i.l{background:#8a929c}
+.wf-n3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0 4px}.wf-n3 div{background:var(--sub,#f1eee9);padding:12px;text-align:center}.wf-n3 small{display:block;font:800 .6875rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.wf-n3 b{display:block;font:800 1.75rem/1.1 var(--cond);margin-top:4px}.wf-n3 em{font:600 .75rem var(--mono);font-style:normal;color:var(--muted)}
+.wfc{display:grid;grid-template-columns:1fr 1fr;gap:14px 22px;margin-top:16px}@media(max-width:640px){.wfc{grid-template-columns:1fr}.wf-r{grid-template-columns:1fr 1fr}.wf-n{grid-column:1/-1}}.wfc h4{margin:0 0 6px;font:800 .75rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.wfc-r{display:grid;grid-template-columns:1fr 70px 34px;gap:8px;align-items:center;padding:4px 0;font:600 .8125rem var(--sans)}.wfc-r b{font:700 .8125rem var(--mono);text-align:right}
 .tap-hint{font:600 11px/1.3 'Geist Mono',monospace;color:var(--wine,#860038);margin:6px 0 4px}tr.xr:hover td{background:var(--sub)}tr.xr[aria-expanded=true] td{background:var(--sub);font-weight:700}tr.xd>td{padding:10px 8px 14px!important;background:var(--sub)}.lsp-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;margin-bottom:8px}.lsp-h span{font:600 .75rem var(--mono);color:var(--muted)}.lsp-t{max-width:520px}.lsp-t td,.lsp-t th{text-align:right}.lsp-t td:first-child,.lsp-t th:first-child{text-align:left}.lsp-t td.up{font-weight:800;color:var(--wine-ink,#860038)}
 
 /* season filter bar */
@@ -523,8 +526,11 @@ tr.lutot td{font-weight:800;border-top:2px solid var(--fg)}
  .sh-s input{flex:1;min-width:0;border:0;background:none;color:#fff;font:500 .875rem var(--sans);outline:none}.sh-s input::placeholder{color:#f4d6dd}.sh-s:focus-within{border-color:#f2b231}
  .sh .tt{margin-left:0}.sh-b svg{width:42px!important;height:42px!important}.sh-b span{font-size:1.5625rem!important}.sh-s svg{width:15px!important;height:15px!important;flex:none}
  .sh-n a{font-size:.9688rem}}
-@media (min-width:1100px){.sh-n a{font-size:1.125rem!important;padding:0 5px!important}}
+@media (min-width:1100px){.sh-n a{font-size:1.0625rem!important;padding:0 4px!important}}
 @media (min-width:1100px) and (max-width:1439px){.sh-n a{font-size:1rem!important;padding:0 4px!important}}
+/* keep all 12 links on one line: tighter type and a narrower search box as the window narrows */
+@media (min-width:761px) and (max-width:1279px){.sh-n a{font-size:.9375rem!important;padding:0 3px!important}.sh-s{flex:0 1 150px;min-width:110px}.sh-in{gap:0 10px}}
+@media (min-width:761px) and (max-width:1099px){.sh-n a{font-size:.8125rem!important;padding:0 2px!important}.sh-s{display:none!important}.sh-b span{font-size:1.25rem!important}.sh-b svg{width:34px!important;height:34px!important}}
 </style>
 </head>
 <body>
@@ -1570,7 +1576,7 @@ async function lHero(x,D,id){const img=await loadImg(hsUrl(D,id));head2(x,img,21
 function lPanel(x,X,Y,W,H,top){x.fillStyle='#fff';x.fillRect(X,Y,W,H);x.strokeStyle='#e3e0db';x.lineWidth=2;x.strokeRect(X,Y,W,H);x.fillStyle=top;x.fillRect(X,Y,W,8)}
 /* panel head: title and small label on the left, one big number on the right */
 function lHeadline(x,X,W,Y,title,sub,val,tone){lbl(x,title,X+36,Y+86,44,INK);x.fillStyle=MUT;x.font='700 24px Archivo';x.fillText(sub,X+36,Y+128);
-  x.fillStyle=tone==null?INK:tone?LGR:LRD;x.font='800 120px "Saira Condensed"';x.fillText(val,X+W-36-x.measureText(val).width,Y+132);x.fillStyle='#e3e0db';x.fillRect(X+36,Y+170,W-72,2)}
+  x.font='700 24px Archivo';const lw=Math.max(x.measureText(sub).width,(()=>{x.font='800 44px "Saira Condensed"';return x.measureText(title).width})());x.fillStyle=tone==null?INK:tone?LGR:LRD;let vf=120;x.font=`800 ${vf}px "Saira Condensed"`;while(x.measureText(val).width>W-72-lw-24&&vf>56){vf-=6;x.font=`800 ${vf}px "Saira Condensed"`}x.fillText(val,X+W-36-x.measureText(val).width,Y+132);x.fillStyle='#e3e0db';x.fillRect(X+36,Y+170,W-72,2)}
 /* 2 rows of 4 box-score cells: [label, value, small line under] */
 function lBox(x,X,W,Y,cells){const cw=(W-72)/4;cells.forEach(([lab,val,sub],i)=>{const cx=X+36+cw*(i%4)+cw/2,y=Y+Math.floor(i/4)*118;x.fillStyle=MUT;x.font='800 22px "Saira Condensed"';ctr(x,lab,cx,y+34);x.fillStyle=INK;x.font='800 52px "Saira Condensed"';ctr(x,String(val),cx,y+86);if(sub){x.fillStyle=MUT;x.font='600 22px Archivo';ctr(x,sub,cx,y+114)}})}
 const lZ3=sh=>{const z=[[0,0],[0,0],[0,0]];sh.forEach(q=>{if(q.zi==null)return;const i=q.zi===0?0:q.zi<3?1:2;z[i][1]++;if(q.m)z[i][0]++});return z};
@@ -1581,7 +1587,7 @@ function lZones(x,X,W,Y,cap,zs,avg,col,hi,avgLab){lbl(x,cap,X+36,Y,26,MUT);const
     x.fillStyle=tn==null?INK:tn?LGR:LRD;x.font='800 44px "Saira Condensed"';const pw=x.measureText(pc).width;x.fillText(pc,X+W-36-pw,y+32);
     if(av!=null){const at='avg '+Math.round(av)+'%';x.font='600 24px Archivo';x.fillStyle=MUT;x.fillText(at,X+W-36-pw-18-x.measureText(at).width,y+30)}
     const sh=tot?a/tot:0,L=bw*sh;x.fillStyle='#eeebe7';x.fillRect(X+36,y+48,bw,28);x.globalAlpha=.35;x.fillStyle=col;x.fillRect(X+36,y+48,L,28);x.globalAlpha=1;x.fillRect(X+36,y+48,a?L*m/a:0,28);
-    x.font='700 20px Archivo';x.fillStyle=MUT;x.fillText(Math.round(sh*100)+'% OF SHOTS · '+m+' OF '+a+' MADE',X+36+L+12,y+70)})}
+    x.font='700 20px Archivo';const zt=Math.round(sh*100)+'% OF SHOTS · '+m+' OF '+a+' MADE',zw=x.measureText(zt).width;if(X+36+L+12+zw<=X+W-36){x.fillStyle=MUT;x.fillText(zt,X+36+L+12,y+70)}else{x.fillStyle='rgba(255,255,255,.88)';x.fillRect(X+44,y+52,zw+12,22);x.fillStyle=INK;x.fillText(zt,X+50,y+70)}})}
 function lNote(x,t){x.font='600 26px Archivo';x.fillStyle=MUT;ctr(x,t,LW/2,1290)}
 /* wine call-out box with a big number, a label, an optional white chip and a line */
 function lMid(x,X,Y,W,H,big,lab,chip,chipGood,line){const cx=X+W/2;x.fillStyle=WINE;x.fillRect(X,Y,W,H);x.fillStyle='#fff';x.font='800 150px "Saira Condensed"';ctr(x,big,cx,Y+190);x.fillStyle='#f4d6dd';x.font='800 30px "Saira Condensed"';ctr(x,lab,cx,Y+250);
@@ -1961,15 +1967,17 @@ function dotCourt(sh,col){const Sx=8,W=50*Sx,Hh=36*Sx,x=v=>v*Sx,y=v=>(v+5.25)*Sx
 /* zone bars: each zone scaled to points: made shots solid, misses dashed, FG% badge and the comparison mark */
 /* season comparison data for the single-game Shots tab: the game's season archive (other games only) and the opponent's net rating tier */
 const SHC={};
-function shCmp(D,t){if(S.season)return null;const se=S.src||CUR_SEASON;const key=se;
+function shCmp(D,t){const se=S.season||S.src||CUR_SEASON;const key=se;
   if(!SHC[key]){SHC[key]={loading:true};(async()=>{try{const J=await getJSON('/live-archive/'+se+'/season.json');const prev=se==='2026-27'?'2025-26':null;const useCur=!(se===CUR_SEASON&&(J.games||[]).length<15&&prev);
       const NR=await netRanks(useCur?se:prev);SHC[key]={J,NR,rkLab:useCur?(se.replace('-','–')+' net rating'):('last season’s net rating, until 15 games in')}}catch(e){SHC[key]={err:true}}renderView()})()}
   const c=SHC[key];if(c.loading||c.err)return c;
-  const et=new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(new Date(D.date));const other=new Set();(c.J.games||[]).forEach((g,i)=>{if(g.et!==et)other.add(i)});
+  const et=S.season?null:new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(new Date(D.date));const other=new Set();(c.J.games||[]).forEach((g,i)=>{if(S.season||g.et!==et)other.add(i)});
+  /* season mode: split the season by wins and losses, and games vs top-10 teams */
+  const winG=new Set([...other].filter(i=>c.J.games[i].cle>c.J.games[i].os)),lossG=new Set([...other].filter(i=>c.J.games[i].cle<c.J.games[i].os)),top10=new Set([...other].filter(i=>{const r=c.NR.rk[c.J.games[i].opp];return r!=null&&r<=10}));
   const opp=D.focus.abbr==='CLE'?D.other.abbr:D.focus.abbr;const rk=c.NR.rk,n=c.NR.n||29;const tierOf=r=>r==null?null:r<=5?0:r<=10?1:r<=20?2:3;const TL=['top-5 teams','6th–10th teams','11th–20th teams','bottom-9 teams'];
   const my=tierOf(rk[opp]);const tierG=new Set([...other].filter(i=>my!=null&&tierOf(rk[c.J.games[i].opp])===my));
   const idOf=pid=>{const nm=normName(D.P[pid].name);return Object.keys(c.J.P||{}).find(k=>normName(c.J.P[k].name)===nm)};
-  return {ok:true,J:c.J,other,tierG,tierLab:my==null?'similar teams':TL[my],rkLab:c.rkLab,idOf}}
+  return {ok:true,J:c.J,other,winG,lossG,top10,tierG,tierLab:my==null?'similar teams':TL[my],rkLab:c.rkLab,idOf}}
 function zoneBars(D,R,t,sh,BZ,baseLab){
   const w=el('div','zb');const both=S.f.shPl==='all'&&S.f.shType==='all';const subj=both?[t,D.teams.find(x=>x.id!==t.id)]:[t];
   const zs=ZN.map(([k,n],i)=>[i,n]);const data=subj.map(tt=>{const q=both?R.shots.filter(x=>x.t===tt.id&&x.hasXY):sh.filter(x=>x.hasXY);return ZN.map((z,i)=>{const L=q.filter(x=>x.zi===i);const m=L.filter(x=>x.m).length;return [m,L.length]})});
@@ -2017,6 +2025,7 @@ function vShots(v,D,R){
     const line=(lab,gs)=>{const q=base.filter(x=>gs.has(x.gi)),h=q.filter(pick),mk=h.filter(x=>x.m),n=gs.size;const pts=mk.reduce((a,x)=>a+(x.three?3:2),0);
       return {lab:lab+' ('+n+' g)',n,m:n?mk.length/n:0,a:n?h.length/n:0,fr:q.length?h.length/q.length:null,fg:h.length?mk.length/h.length:null,pps:h.length?pts/h.length:null,as:mk.length?mk.filter(x=>x.ast).length/mk.length:null}};
     /* the other team: what Cavs opponents average on these shots (the Cavs defense), not a tier split */
+    if(S.season)return isCle?[line('In wins',SC.winG),line('In losses',SC.lossG),line('Vs top-10 teams',SC.top10)]:[line('In Cavs wins',SC.winG),line('In Cavs losses',SC.lossG)];
     return isCle?[line('Season avg',SC.other),line('Vs '+SC.tierLab,SC.tierG)]:[line('Cavs defense avg',SC.other)]};
   const miniT=(tonight,lines,cols)=>{const w=el('div');if(lines==='pl'){w.appendChild(el('p','note','Season comparisons are for the Cavs’ side only when a player is picked.'));return w}
     if(!lines){w.appendChild(el('p','note',SC&&SC.err?'Season numbers aren’t available for this game.':'Loading the season…'));return w}
@@ -2027,14 +2036,14 @@ function vShots(v,D,R){
       if(i>0&&!r.n){tr.innerHTML='';tr.appendChild(el('td',null,r.lab.replace(/ \(0 g\)/,'')));const td=el('td',null,'no other games yet');td.colSpan=cols.length;tr.appendChild(td)}tb.appendChild(tr)});
     w.appendChild(tb);return w};
   right.appendChild(el('h3',null,who+' · how the shots came'));
-  right.appendChild(el('p','tap-hint',isCle?'▸ Tap a row to compare with the season and with games vs similar teams':'▸ Tap a row to compare with what Cavs opponents average'));
+  right.appendChild(el('p','tap-hint',S.season?'▸ Tap a row to split it by wins and losses'+(isCle?' and games vs top-10 teams':''):isCle?'▸ Tap a row to compare with the season and with games vs similar teams':'▸ Tap a row to compare with what Cavs opponents average'));
   const rows=PT.map(([k,l],i)=>{const q=all.filter(x=>x.pt===i);const m=q.filter(x=>x.m);const pts=m.reduce((s,x)=>s+(x.three?3:2),0);return {i,l,a:q.length,m:m.length,fr:all.length?q.length/all.length:0,fg:q.length?m.length/q.length:null,pps:q.length?pts/q.length:null,as:m.length?m.filter(x=>x.ast).length/m.length:null,_cls:S.f.shType===String(i)?'now':'',_open:S.f.shOpen===i}}).filter(r=>r.a);
   const pc=x=>x==null?'–':Math.round(x*100)+'%';
   right.appendChild(dtable('pt',[{h:'Type',k:'l',f:r=>{const b=el('button',null,r.l);b.type='button';b.style.cssText='all:unset;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line);display:inline-block;max-width:calc(100% - 18px);vertical-align:top';b.onclick=()=>{S.f.shType=S.f.shType===String(r.i)?'all':String(r.i);renderView()};return b}},
-    {h:'FG',k:'a',f:r=>r.m+'-'+r.a},{h:'FREQ',k:'fr',f:r=>pc(r.fr),title:'Share of his field-goal attempts'},{h:'FG%',k:'fg',f:r=>pc(r.fg)},{h:'PTS/SHOT',k:'pps',f:r=>r.pps==null?'–':r.pps.toFixed(2),title:'Points per shot'},{h:'AST',k:'as',f:r=>pc(r.as),title:'Share of makes that were assisted'}],rows,{def:'a',empty:'No shots yet.',toggle:r=>{S.f.shOpen=S.f.shOpen===r.i?null:r.i;renderView()},expand:r=>miniT({lab:'Tonight',m:r.m,a:r.a,fr:r.fr,fg:r.fg,pps:r.pps,as:r.as},cmpRows(x=>x.pt===r.i,false),['ma','fr','fg','pps','as'])}));
+    {h:'FG',k:'a',f:r=>r.m+'-'+r.a},{h:'FREQ',k:'fr',f:r=>pc(r.fr),title:'Share of his field-goal attempts'},{h:'FG%',k:'fg',f:r=>pc(r.fg)},{h:'PTS/SHOT',k:'pps',f:r=>r.pps==null?'–':r.pps.toFixed(2),title:'Points per shot'},{h:'AST',k:'as',f:r=>pc(r.as),title:'Share of makes that were assisted'}],rows,{def:'a',empty:'No shots yet.',toggle:r=>{S.f.shOpen=S.f.shOpen===r.i?null:r.i;renderView()},expand:r=>miniT({lab:S.season?'Season':'Tonight',m:r.m,a:r.a,fr:r.fr,fg:r.fg,pps:r.pps,as:r.as},cmpRows(x=>x.pt===r.i,false),['ma','fr','fg','pps','as'])}));
   right.appendChild(el('p','note','FREQ = share of all field-goal attempts. Tap a type’s name to filter the court; tap the rest of the row to compare with the season. Transition = shot within 7 seconds after a defensive rebound or turnover. Putbacks = tips, putbacks and shots within 3 seconds of an offensive rebound.'));
   right.appendChild(el('h3',null,who+typeLab+' · by zone'));
-  right.appendChild(el('p','tap-hint',isCle?'▸ Tap a row to compare with the season and with games vs similar teams':'▸ Tap a row to compare with what Cavs opponents average'));
+  right.appendChild(el('p','tap-hint',S.season?'▸ Tap a row to split it by wins and losses'+(isCle?' and games vs top-10 teams':''):isCle?'▸ Tap a row to compare with the season and with games vs similar teams':'▸ Tap a row to compare with what Cavs opponents average'));
   /* shot quality: what an average NBA shooter would score on these same shots (league FG% in each zone) */
   const LZ=(()=>{const se=S.season||S.src||CUR_SEASON;const b=BLIVE&&BLIVE.lg&&BLIVE.season===se?BLIVE.lg:null;return ZN.map(([k],i)=>b&&b[i][1]?b[i][0]/b[i][1]:LG[k][0])})();
   const zv=i=>i>=3?3:2,exp=xy.reduce((a,q)=>a+LZ[q.zi]*zv(q.zi),0),act=xy.reduce((a,q)=>a+(q.m?zv(q.zi):0),0);
@@ -2044,7 +2053,7 @@ function vShots(v,D,R){
     const dfc=a?(m/a-av(i)):0;const fg=el('td',null,a?pct(m,a):'–');if(a>=3)fg.style.color=dfc>0.02?'var(--pos)':dfc<-0.02?'var(--neg)':'';fg.style.fontWeight='700';
     const dz=m*zv(i)-a*LZ[i]*zv(i);tr.append(nn,el('td',null,m+'-'+a),fg,el('td',null,xy.length?Math.round(a/xy.length*100)+'%':'–'),el('td',a&&Math.abs(dz)>=1?(dz>0?'up':'dn'):null,a?(dz>=0?'+':'−')+Math.abs(dz).toFixed(1):'–'));
     tr.className='xr';tr.tabIndex=0;const op=S.f.zOpen===i;tr.setAttribute('aria-expanded',op);const go=()=>{S.f.zOpen=op?null:i;renderView()};tr.onclick=go;tr.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}};zt.appendChild(tr);
-    if(op){const dr=el('tr','xd');const td=el('td');td.colSpan=5;const ln=cmpRows(x=>x.zi===i,true);const lz=Array.isArray(ln)?ln.map(r=>Object.assign({},r,{fr:r.fr})):ln;td.appendChild(miniT({lab:'Tonight',m,a,fg:a?m/a:null,fr:xy.length?a/xy.length:null},lz,['ma','fg','fr']));dr.appendChild(td);zt.appendChild(dr)}});
+    if(op){const dr=el('tr','xd');const td=el('td');td.colSpan=5;const ln=cmpRows(x=>x.zi===i,true);const lz=Array.isArray(ln)?ln.map(r=>Object.assign({},r,{fr:r.fr})):ln;td.appendChild(miniT({lab:S.season?'Season':'Tonight',m,a,fg:a?m/a:null,fr:xy.length?a/xy.length:null},lz,['ma','fg','fr']));dr.appendChild(td);zt.appendChild(dr)}});
   right.appendChild(zt);
   const pts=Z.reduce((s,[m],i)=>s+m*(i>=3?3:2),0);right.appendChild(el('p','note',`${pts} points on ${xy.length} shots (${xy.length?(pts/xy.length).toFixed(2):'–'} per shot). FG% colored against ${baseLab} shooting in each zone. Vs avg = points above or below what an average NBA shooter scores on the same shots.${SC&&SC.ok?' Season rows: per game, other games only. Similar teams = the opponent’s net rating tier (top 5, 6–10, 11–20, bottom 9) by '+SC.rkLab+'.':''}`));
   g.append(left,right);c.appendChild(g);if(S.season&&S.f.shPl!=='all')gameByGame(D,R,S.f.shPl,c);v.appendChild(c);
@@ -2119,15 +2128,7 @@ function vSeason(v,D,R){
   /* four factors for the season, with NBA ranks */
   {const ff=el('div');vFF(ff,D,R);if(ff.firstChild){ff.firstChild.classList.add('sec');v.appendChild(ff.firstChild)}}
   /* record when the Cavs win (or lose) each factor */
-  {const G=(D.games||[]).filter(g=>g.t&&g.u);if(G.length){const z=x=>Object.assign({tdreb:0},sRow(x));const K=[['efg','Shooting (eFG%)',1],['tov','Turnovers',0],['orb','Off. rebounding',1],['ftr','Free throw rate',1]];
-    const rec={};K.forEach(([k])=>rec[k]=[[0,0],[0,0]]);const byN=[[0,0],[0,0],[0,0]];
-    G.forEach(g=>{const a=z(g.t),b=z(g.u),fa=factors(a,b),fb=factors(b,a),w=g.cle>g.os?0:1;let n=0;K.forEach(([k,,hi])=>{if(fa[k]==null||fb[k]==null||fa[k]===fb[k])return;const won=hi?fa[k]>fb[k]:fa[k]<fb[k];if(won)n++;rec[k][won?0:1][w]++});byN[n>=3?0:n===2?1:2][w]++});
-    const c=el('div','card sec');head(c,'Win the factor, win the game?',G.length+' game'+(G.length===1?'':'s')+' · Cavs record when they beat the opponent in each factor, and when they don’t');
-    const t=el('table','zt');t.innerHTML='<tr><th></th><th>Won it</th><th>Lost it</th></tr>';const rs=x=>x[0]+'–'+x[1];
-    K.forEach(([k,l])=>{const tr=el('tr');const a=el('td',null,rs(rec[k][0])),b=el('td',null,rs(rec[k][1]));tr.append(el('td',null,l),a,b);t.appendChild(tr)});
-    {const h=el('tr','sep');const td=el('td','hgh','Factors won in the game');td.colSpan=3;h.appendChild(td);t.appendChild(h)}
-    [['3 or 4',0],['2',1],['0 or 1',2]].forEach(([l,i])=>{const tr=el('tr');const td=el('td',null,rs(byN[i]));td.colSpan=2;tr.append(el('td',null,l),td);t.appendChild(tr)});
-    const w=el('div','tw');w.appendChild(t);c.appendChild(w);c.appendChild(el('p','note','Records are wins–losses. Turnovers: winning it means a lower turnover rate. Ties don’t count either way.'));v.appendChild(c)}}
+
   seasonExtras(v,D,R);
 }
 /* Season tab: quarter by quarter, clutch, starters vs bench, best and worst lineups */
@@ -2289,6 +2290,21 @@ function vAst(v,D,R){
   g.append(nw,right);c.appendChild(g);v.appendChild(c);
 }
 
+
+/* Four factors tab, season mode: the Cavs' record when they win or lose each factor, by how many they won, and which combinations show up in wins and losses */
+function wfCard(v,D){const G=(D.games||[]).filter(g=>g.t&&g.u);if(!G.length)return;const z=x=>Object.assign({tdreb:0},sRow(x));
+  const K=[['efg','Shooting','Effective FG%',1],['tov','Ball security','Turnover rate (lower wins)',0],['orb','Second chances','Offensive rebound rate',1],['ftr','Getting to the line','Free throws made per FGA',1]];const SN={efg:'Shooting',tov:'Ball security',orb:'Boards',ftr:'Free throws'};
+  const rec={};K.forEach(([k])=>rec[k]=[[0,0],[0,0]]);const byN=[[0,0],[0,0],[0,0]],combo=[{},{}];
+  G.forEach(g=>{const a=z(g.t),b=z(g.u),fa=factors(a,b),fb=factors(b,a),w=g.cle>g.os?0:1;let n=0;const wk=[];K.forEach(([k,,,hi])=>{if(fa[k]==null||fb[k]==null||fa[k]===fb[k])return;const won=hi?fa[k]>fb[k]:fa[k]<fb[k];if(won){n++;wk.push(SN[k])}rec[k][won?0:1][w]++});byN[n>=3?0:n===2?1:2][w]++;const ck=wk.length?wk.join(' + '):'None';combo[w][ck]=(combo[w][ck]||0)+1});
+  const c=el('div','card sec');head(c,'Win the factor, win the game?',G.length+' game'+(G.length===1?'':'s')+' · the Cavs’ record when they beat the opponent in each factor, and when they don’t');
+  const rs=x=>x[0]+'–'+x[1],wp=x=>x[0]+x[1]?x[0]/(x[0]+x[1]):null;const rows=el('div','wf-rows');
+  K.forEach(([k,n,full])=>{const r=el('div','wf-r');const nn=el('div','wf-n');nn.append(el('b',null,n),el('small',null,full));r.appendChild(nn);
+    [[rec[k][0],'Won it',''],[rec[k][1],'Lost it','l']].forEach(([x2,lab,cl])=>{const d=el('div','wf-c');d.appendChild(el('small',null,lab));const bb=el('b',null,rs(x2));d.appendChild(bb);const p=wp(x2);d.appendChild(el('em',null,p==null?'no games':Math.round(p*100)+'% wins'));const bar=el('div','wf-bar');const i2=el('i',cl);i2.style.width=(p==null?0:p*100)+'%';bar.appendChild(i2);d.appendChild(bar);r.appendChild(d)});rows.appendChild(r)});
+  c.appendChild(rows);
+  const n3=el('div','wf-n3');[['Won 3 or 4',0],['Won 2',1],['Won 0 or 1',2]].forEach(([l,i])=>{const d=el('div');d.append(el('small',null,l),el('b',null,rs(byN[i])));const p=wp(byN[i]);d.appendChild(el('em',null,p==null?'no games':Math.round(p*100)+'% wins'));n3.appendChild(d)});c.appendChild(n3);
+  const g2=el('div','wfc');[[0,'Most common in wins'],[1,'Most common in losses']].forEach(([i,h])=>{const d=el('div');d.appendChild(el('h4',null,h));const L=Object.entries(combo[i]).sort((a2,b2)=>b2[1]-a2[1]).slice(0,5);if(!L.length)d.appendChild(el('p','note','No games yet.'));
+    const mx=Math.max(1,...L.map(x2=>x2[1]));L.forEach(([k,n2])=>{const r=el('div','wfc-r');r.appendChild(el('span',null,k));const bw=el('span','wf-bar');const bi=el('i',i?'l':'');bi.style.width=Math.round(n2/mx*100)+'%';bw.appendChild(bi);r.appendChild(bw);r.appendChild(el('b',null,n2+' g'));d.appendChild(r)});g2.appendChild(d)});c.appendChild(g2);
+  c.appendChild(el('p','note','Records are wins–losses. The combinations list the factors the Cavs beat the opponent in, game by game. Ties don’t count either way.'));v.appendChild(c)}
 /* ---------- Four factors ---------- */
 function vFF(v,D,R){
   const A=R.T[D.focus.id],B=R.T[D.other.id];const fa=factors(A,B),fb=factors(B,A);
@@ -2303,7 +2319,7 @@ function vFF(v,D,R){
     box.appendChild(el('p','note',full));g.appendChild(box)});
   c.appendChild(g);
   c.appendChild(el('p','note','Turnover rate = turnovers per estimated possession. Offensive rebound rate counts team rebounds. Use the quarter buttons above to compare any stretch.'+(LF?' Small numbers = NBA rank among 30 teams (for OPP, 1st = the toughest on opponents).':'')));
-  v.appendChild(c);
+  v.appendChild(c);if(S.season)wfCard(v,D);
 }
 
 /* ---------- Rotations ---------- */
