@@ -1,7 +1,7 @@
 // Basketball Reference player IDs for every NBA player this season and last, so the live page can link
 // opponents straight to their Basketball Reference page instead of a search.
 // Reads the two league per-game pages (2 requests) and writes pdata/bbr-ids.json: { normalized name: id }.
-// Run daily by .github/workflows/bbr-ids.yml.
+// Run daily by .github/workflows/morning.yml (by hand: bbr-ids.yml).
 import { readFile, writeFile } from 'node:fs/promises';
 const root = new URL('../', import.meta.url);
 const norm = n => n.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g, '').replace(/[^a-z]/g, '');
