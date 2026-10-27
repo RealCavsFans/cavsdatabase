@@ -60,6 +60,11 @@
   },
   {
    "name": "Fear The Fro",
+   "type": "podcast",
+   "url": "https://feeds.transistor.fm/fear-the-fro-with-bob-schmidt-a-cavs-podcast"
+  },
+  {
+   "name": "Fear The Fro",
    "type": "video",
    "handle": "@fearthefropod",
    "channel": "UCsTcoW70Xdt2c1G11dTbDfQ"
