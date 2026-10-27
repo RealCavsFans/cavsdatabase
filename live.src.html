@@ -471,7 +471,7 @@ tr.xr{cursor:pointer}
 .shmini td{font-size:.75rem;padding:4px 3px!important;border-top:0!important}
 .shmini td:first-child{color:var(--muted)}
 .zt td.up{color:var(--pos);font-weight:700}.zt td.dn{color:var(--neg);font-weight:700}
-.plq{margin-top:-4px}
+.plq{margin-top:-4px}.plb{margin:2px 0 8px!important}
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}.tiles div{background:var(--sub);padding:10px}.tiles b{display:block;font:800 1.375rem var(--cond)}.tiles span{font-size:.75rem;color:var(--muted)}
 .zt tr.sep td.hgh{font:800 .6875rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:12px}
 .lsp-k{font:800 .6875rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:10px 0 4px}.lsp-sw{margin:0 0 4px}
@@ -2013,6 +2013,11 @@ function vPlays(v,D,R){
   /* one quarter at a time (the latest by default), or the whole game */
   const pers=[...new Set(R.plays.map(p=>p.per))].sort((a,b)=>a-b);const lastP=pers[pers.length-1];const q=S.f.plQ==='all'?'all':pers.includes(S.f.plQ)?S.f.plQ:lastP;
   const qf=el('div','fl plq');pers.concat(['all']).forEach(k=>{const b=el('button',null,k==='all'?'All':k<=4?'Q'+k:k===5?'OT':pname(k));b.type='button';b.setAttribute('aria-pressed',q===k);b.onclick=()=>{S.f.plQ=k;renderView()};qf.appendChild(b)});if(pers.length)c.appendChild(qf);
+  /* team fouls and the bonus for the quarter on screen (5th team foul; 4th in overtime; or the 2nd in the last 2 minutes) */
+  if(q!=='all'){const end=pstart(q)+plen(q),lim=q>4?4:5;const st={};D.teams.forEach(t=>st[t.id]={n:0,l2:0,at:null});
+    R.plays.filter(p=>p.per===q&&/Foul/.test(p.type)&&!/Offensive|Technical|Double|Flagrant Type|Away from Play/.test(p.type)).forEach(p=>{const t=(D.P[p.ids[0]]||{}).team||p.team;const x=st[t];if(!x)return;x.n++;if(end-p.t<=120)x.l2++;if(!x.at&&(x.n>=lim||x.l2>=2))x.at=p.clock});
+    const [A2,B2]=[D.focus,D.other];const bon=(t,o)=>st[o.id].at?t.abbr+' in the bonus with '+st[o.id].at+' left':null;
+    const line=el('p','note plb');line.textContent='Team fouls: '+A2.abbr+' '+st[A2.id].n+' · '+B2.abbr+' '+st[B2.id].n+[bon(A2,B2),bon(B2,A2)].filter(Boolean).map(x=>' · '+x).join('');c.appendChild(line)}
   const list=R.plays.slice().reverse().filter(p=>q==='all'||p.per===q).filter(p=>S.f.plays==='sc'?p.sc:S.f.plays==='focus'?p.team===D.focus.id:S.f.plays==='sub'?p.type==='Substitution':true);
   const ul=el('ul','plays');let lp=null;list.forEach(p=>{if(p.per!==lp){lp=p.per;ul.appendChild(el('li','pd',p.per<=4?['1st','2nd','3rd','4th'][p.per-1]+' quarter':pname(p.per)))}
     const li=el('li',p.sc?'sc':'');const t=D.teams.find(x=>x.id===p.team);const cb=el('span','c');cb.style.background=t?t.c:'transparent';li.append(el('span','t',p.clock),cb,el('span','x',p.text),el('span','s',p.as+'–'+p.hs));ul.appendChild(li)});
