@@ -484,6 +484,7 @@ tr.xr{cursor:pointer}
 .pgc-ln{display:flex;align-items:center;margin-top:6px}.pgc-ll{width:42px;flex:none;font:800 .625rem var(--cond);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.pgc-tr{position:relative;flex:1;height:16px;background:var(--sub)}.pgc-tr i{position:absolute;top:-3px;bottom:-3px;border-left:1px solid var(--line)}
 .pgc-tr b{position:absolute;top:2px;height:12px}.pgc-tr b.p{background:#2e9e5b}.pgc-tr b.n{background:#d64b5c}.pgc-tr b.z{background:#b8b3ab}.pgc-tr em{position:absolute;top:0;height:16px;font:700 .5625rem/16px var(--mono);font-style:normal;color:#fff;text-align:center;overflow:hidden;white-space:nowrap}.pgc-tr em.f{background:#860038}.pgc-tr em.o{background:#5b6470}
 .pgc-n{padding:2px 14px 0}.pgc-big{display:flex;align-items:flex-end;gap:12px;padding:12px 14px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:8px;flex-wrap:wrap}.pgc-big b{display:block;font:800 2rem/1 var(--cond)}.pgc-big span{font:800 .625rem var(--cond);letter-spacing:.08em;color:var(--muted)}.pgc-big>i{font-style:normal;color:var(--muted);padding-bottom:12px}.pgc-big .up b{color:var(--pos)}.pgc-big .dn b{color:var(--neg)}
+.pgc-rt{display:grid;grid-template-columns:repeat(3,1fr);gap:4px 16px;padding:10px 14px 14px;border-top:1px solid var(--line)}.pgc-rh{grid-column:1/-1;font:800 .6875rem var(--cond);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.pgc-rt small{display:block;font:600 .6875rem var(--sans);color:var(--muted)}.pgc-rt b{display:block;font:800 1.5rem/1.1 var(--cond)}.pgc-rt b.up{color:var(--pos,#1d6b3a)}.pgc-rt b.dn{color:var(--neg,#a3122e)}.pgc-rt span{display:block;font:600 .6875rem var(--sans);color:var(--muted)}
 .pgc-sh{display:grid;grid-template-columns:repeat(4,1fr);gap:12px 16px;padding:12px 14px}@media(max-width:600px){.pgc-sh{grid-template-columns:1fr 1fr}}.pgc-sh b{font:800 1.5rem/1 var(--cond)}.pgc-sh small{display:block;font:600 .6875rem var(--sans);margin-top:4px}.pgc-sh small span{color:var(--muted);font-weight:500}
 .pgc-bar{display:block;position:relative;height:6px;background:var(--track,#ebe8e3);margin-top:6px}.pgc-bar i{position:absolute;left:0;top:0;bottom:0;background:#860038}.pgc-bar u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--fg)}
 .pgc-pl{border-top:1px solid var(--line);padding-bottom:6px}.pgc-k{font:800 .6875rem var(--cond);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:10px 14px 4px}
@@ -1399,6 +1400,7 @@ const CARDS={
     x.fillStyle=BG;x.fillRect(0,0,W,H);x.fillStyle=WINE;x.fillRect(0,0,W,340);x.fillStyle=GOLD;x.fillRect(0,340,W,10);
     const ids=l.ids.slice().sort((a,b)=>D.P[b].starter-D.P[a].starter);const imgs=await Promise.all(ids.map(i=>loadImg(hsUrl(D,i))));
     ids.forEach((id,j)=>{const cx=60+78+j*128;head2(x,imgs[j],cx,175,78,null,initials(D.P[id].name));x.strokeStyle=WINE;x.lineWidth=6;x.beginPath();x.arc(cx,175,80,0,7);x.stroke()});
+    ids.forEach((id,j)=>{const cx=60+78+j*128,pp=((l.pb||{})[id]||{}).pts||0;const t1=String(pp),t2=' PTS';x.font='800 40px "Saira Condensed"';const w1=x.measureText(t1).width;x.font='800 24px "Saira Condensed"';const w2=x.measureText(t2).width;const X=cx-(w1+w2)/2;x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText(t1,X,300);x.fillStyle='#f4d6dd';x.font='800 24px "Saira Condensed"';x.fillText(t2,X+w1,300)});
     const TX=60+156+4*128+56,TW=W-TX-60;const starters=!S.season&&ids.every(i=>D.P[i].starter);
     const all=Object.values(L5).filter(z=>z.sec>=180).sort((a,b)=>(b.pf-b.pa)-(a.pf-a.pa));const best=all[0]===l&&all.length>1;
     const what=starters?'STARTING FIVE':best?'BEST FIVE':'FIVE-MAN UNIT';
@@ -1422,22 +1424,17 @@ const CARDS={
         const cell=(i,r,lab,val,sub)=>{const cx=X0+36+cw*i+cw/2,y=Y0+176+r*118;x.fillStyle=MUT;x.font='800 22px "Saira Condensed"';ctr(x,lab,cx,y+34);x.fillStyle=INK;x.font='800 52px "Saira Condensed"';ctr(x,val,cx,y+86);if(sub){x.fillStyle=MUT;x.font='600 22px Archivo';ctr(x,sub,cx,y+114)}};
         cell(0,0,'PTS',String(B.pts));cell(1,0,'2P',B.p2[0]+'–'+B.p2[1],pc(B.p2));cell(2,0,'3P',B.p3[0]+'–'+B.p3[1],pc(B.p3));cell(3,0,'FT',B.ft[0]+'–'+B.ft[1],pc(B.ft));
         cell(0,1,'REB',String(B.reb));cell(1,1,'BLK',String(B.blk));cell(2,1,'STL',String(B.stl));cell(3,1,'TO',String(B.to))}
-      const cy=Y0+176+236+64;x.fillStyle='#e3e0db';x.fillRect(X0+36,cy-48,SW-72,2);lbl(x,cap,X0+36,cy,26,MUT);
-      const tot=zs.reduce((t,z)=>t+z[1],0),bw=SW-72;[['At the rim',zs[0]],['Midrange',zs[1]],['3-pointers',zs[2]]].forEach(([lab,[m,a]],i)=>{const y=cy+36+i*124;
-        txt(x,lab,X0+36,y+30,30,INK,600);const v=a?m/a*100:null,av=avg[i][1]?avg[i][0]/avg[i][1]*100:null;const pc=v==null?'–':Math.round(v)+'%';const tn=v==null||av==null||a<3||Math.abs(v-av)<1?null:(v>av)===hiZ;
-        x.fillStyle=tn==null?INK:tn?GRN:RED;x.font='800 44px "Saira Condensed"';const pw=x.measureText(pc).width;x.fillText(pc,X0+SW-36-pw,y+32);
-        if(av!=null){const at='avg '+Math.round(av)+'%';x.font='600 24px Archivo';x.fillStyle=MUT;x.fillText(at,X0+SW-36-pw-18-x.measureText(at).width,y+30)}
-        const sh=tot?a/tot:0;x.fillStyle='#eeebe7';x.fillRect(X0+36,y+48,bw,28);x.fillStyle=col;x.fillRect(X0+36,y+48,Math.max(sh?6:0,bw*sh),28);
-        x.font='700 20px Archivo';const fl=Math.round(sh*100)+'% OF SHOTS';const inside=bw*sh>x.measureText(fl).width+28;x.fillStyle=inside?'#fff':MUT;x.fillText(fl,inside?X0+50:X0+36+bw*sh+12,y+70)});
-      const ht='FG% · gray = team '+(S.season?'season':'game')+' avg';x.fillStyle=MUT;x.font='600 22px Archivo';x.fillText(ht,X0+SW-36-x.measureText(ht).width,cy)};
+      const cy=Y0+176+236+64;x.fillStyle='#e3e0db';x.fillRect(X0+36,cy-48,SW-72,2);
+      lZones(x,X0,SW,cy,cap,zs,avg,col,hiZ,'team '+(S.season?'season':'game')+' avg')};
     const own=q=>q.t===F&&q.on===k,opp=q=>q.t!==F&&q.od===k;
     side(X1,WINE,'OFFENSE',A.ortg,'POINTS PER 100',tone(A.ortg,Z.ortg,true),bx('o',true),'WHERE THEY SHOT',zones(own),WINE,zones(q=>q.t===F),true);
     side(X2,GOLD,'DEFENSE',A.drtg,'ALLOWED PER 100',tone(A.drtg,Z.drtg,false),bx('d',false),'SHOTS ALLOWED',zones(opp),'#5b6470',zones(q=>q.t!==F),false);
     /* the middle: net, then plus-minus */
     {const cx=XM+MW/2;x.fillStyle=WINE;x.fillRect(XM,Y0,MW,500);x.fillStyle='#fff';x.font='800 150px "Saira Condensed"';ctr(x,A.net==null?'–':sg1(A.net),cx,Y0+190);
       x.fillStyle='#f4d6dd';x.font='800 30px "Saira Condensed"';ctr(x,'NET PER 100',cx,Y0+250);
-      if(A.net!=null&&Z.net!=null&&cmp){const d=A.net-Z.net;x.fillStyle='#fff';x.fillRect(cx-100,Y0+300,200,64);x.fillStyle=d>=0?GRN:RED;x.font='700 36px "Geist Mono"';ctr(x,sg1(d),cx,Y0+345);
-        x.fillStyle='#f4d6dd';x.font='600 26px Archivo';ctr(x,'vs '+(S.season?'every other lineup':'the rest of the game'),cx,Y0+420)}
+      if(A.net!=null&&Z.net!=null&&cmp){const d=A.net-Z.net;x.fillStyle='#fff';x.fillRect(cx-100,Y0+272,200,64);x.fillStyle=d>=0?GRN:RED;x.font='700 36px "Geist Mono"';ctr(x,sg1(d),cx,Y0+317);
+        x.fillStyle='#f4d6dd';x.font='600 26px Archivo';ctr(x,'vs '+(S.season?'every other lineup':'the rest of the game'),cx,Y0+376)}
+      {const all=lRt(lSum(Object.values(L5),()=>true));lGauge(x,XM+40,Y0+428,MW-80,A.net,all.net,'team '+lsg(all.net))}
       const y2=Y0+520;x.fillStyle='#fff';x.fillRect(XM,y2,MW,BH-520);x.strokeStyle='#e3e0db';x.lineWidth=2;x.strokeRect(XM,y2,MW,BH-520);const pm=l.pf-l.pa;
       x.fillStyle=pm>0?GRN:pm<0?RED:INK;x.font='800 150px "Saira Condensed"';ctr(x,(pm>0?'+':pm<0?'−':'')+Math.abs(pm),cx,y2+200);x.fillStyle=MUT;x.font='800 30px "Saira Condensed"';ctr(x,'PLUS-MINUS',cx,y2+262)}
     {const nt='Ratings in green = better than '+D.focus.abbr+'’s other lineups combined'+(S.season?' this season':' in this game')+' · shot avg = whole team '+(S.season?'this season':'this game');x.font='600 26px Archivo';x.fillStyle=MUT;ctr(x,nt,W/2,1290)}
@@ -1556,6 +1553,121 @@ const SCARDS={
     const cats=[['POINTS',b=>b.pts],['REBOUNDS',b=>b.oreb+b.dreb],['ASSISTS',b=>b.ast],['THREES MADE',b=>b.tpm],['STEALS',b=>b.stl],['BLOCKS',b=>b.blk]];
     cats.forEach(([lab,f],ci)=>{const X0=72+(ci%2)*480,Y0=380+Math.floor(ci/2)*280;lbl(x,lab,X0,Y0,34,WINE);q.slice().sort((a,b)=>f(R.B[b])/R.B[b].gp-f(R.B[a])/R.B[a].gp).slice(0,3).forEach((id,i)=>{const b=R.B[id],y=Y0+64+i*62;x.fillStyle=i?GREY:INK;x.font=(i?'600 ':'800 ')+'36px Archivo';x.fillText(D.P[id].last,X0,y);x.font='700 38px "Geist Mono"';const v=pg(f(b),b.gp);x.fillText(v,X0+420-x.measureText(v).width,y)})});
     x.fillStyle=MUT;x.font='600 26px Archivo';{const mn=Math.max(1,Math.ceil(mg*.5));x.fillText('Min. '+mn+' game'+(mn===1?'':'s')+' played',72,1215)}footer(x)}}};
+/* ---------- landscape cards (Oct 27): the lineup card's look for on/off, four factors, player, clutch and quarters ---------- */
+const LW=1920,LH=1440,LGR='#1d6b3a',LRD='#a3122e';
+const lf1=v=>v==null||!isFinite(v)?'–':v.toFixed(1),lsg=v=>v==null||!isFinite(v)?'–':(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1),lsgi=v=>(v>0?'+':v<0?'−':'')+Math.abs(v),lpc=(m,a)=>a?Math.round(m/a*100)+'%':'–';
+function lFrame(x){x.fillStyle=BG;x.fillRect(0,0,LW,LH);x.fillStyle=WINE;x.fillRect(0,0,LW,340);x.fillStyle=GOLD;x.fillRect(0,340,LW,10)}
+/* kicker, title and a score-style line in the header, starting at TX */
+function lTitle(x,TX,kick,title,line){const TW=LW-TX-60;x.fillStyle=GOLD;x.font='800 34px "Saira Condensed"';x.fillText(kick.toUpperCase(),TX,108);
+  const T=title.toUpperCase();let fs=96;x.fillStyle='#fff';x.font=`800 ${fs}px "Saira Condensed"`;while(x.measureText(T).width>TW&&fs>48){fs-=4;x.font=`800 ${fs}px "Saira Condensed"`}x.fillText(T,TX,108+fs*.95+6);
+  let X=TX;(line||[]).forEach(([t,f,c])=>{x.font=f;x.fillStyle=c;x.fillText(t,X,290);X+=x.measureText(t).width})}
+async function lHero(x,D,id){const img=await loadImg(hsUrl(D,id));head2(x,img,210,172,138,null,initials(D.P[id].name));x.strokeStyle=WINE;x.lineWidth=6;x.beginPath();x.arc(210,172,140,0,7);x.stroke();return 410}
+function lPanel(x,X,Y,W,H,top){x.fillStyle='#fff';x.fillRect(X,Y,W,H);x.strokeStyle='#e3e0db';x.lineWidth=2;x.strokeRect(X,Y,W,H);x.fillStyle=top;x.fillRect(X,Y,W,8)}
+/* panel head: title and small label on the left, one big number on the right */
+function lHeadline(x,X,W,Y,title,sub,val,tone){lbl(x,title,X+36,Y+86,44,INK);x.fillStyle=MUT;x.font='700 24px Archivo';x.fillText(sub,X+36,Y+128);
+  x.fillStyle=tone==null?INK:tone?LGR:LRD;x.font='800 120px "Saira Condensed"';x.fillText(val,X+W-36-x.measureText(val).width,Y+132);x.fillStyle='#e3e0db';x.fillRect(X+36,Y+170,W-72,2)}
+/* 2 rows of 4 box-score cells: [label, value, small line under] */
+function lBox(x,X,W,Y,cells){const cw=(W-72)/4;cells.forEach(([lab,val,sub],i)=>{const cx=X+36+cw*(i%4)+cw/2,y=Y+Math.floor(i/4)*118;x.fillStyle=MUT;x.font='800 22px "Saira Condensed"';ctr(x,lab,cx,y+34);x.fillStyle=INK;x.font='800 52px "Saira Condensed"';ctr(x,String(val),cx,y+86);if(sub){x.fillStyle=MUT;x.font='600 22px Archivo';ctr(x,sub,cx,y+114)}})}
+const lZ3=sh=>{const z=[[0,0],[0,0],[0,0]];sh.forEach(q=>{if(q.zi==null)return;const i=q.zi===0?0:q.zi<3?1:2;z[i][1]++;if(q.m)z[i][0]++});return z};
+/* where the shots came from: bar length = share of shots, the solid part = makes; FG% at right next to an average */
+function lZones(x,X,W,Y,cap,zs,avg,col,hi,avgLab){lbl(x,cap,X+36,Y,26,MUT);const ht='FG% · gray = '+avgLab;x.fillStyle=MUT;x.font='600 22px Archivo';x.fillText(ht,X+W-36-x.measureText(ht).width,Y);
+  const tot=zs.reduce((t,z)=>t+z[1],0),bw=W-72;[['At the rim',zs[0]],['Midrange',zs[1]],['3-pointers',zs[2]]].forEach(([lab,[m,a]],i)=>{const y=Y+36+i*124;
+    txt(x,lab,X+36,y+30,30,INK,600);const v=a?m/a*100:null,av=avg&&avg[i][1]?avg[i][0]/avg[i][1]*100:null;const pc=v==null?'–':Math.round(v)+'%';const tn=v==null||av==null||a<3||Math.abs(v-av)<1?null:(v>av)===hi;
+    x.fillStyle=tn==null?INK:tn?LGR:LRD;x.font='800 44px "Saira Condensed"';const pw=x.measureText(pc).width;x.fillText(pc,X+W-36-pw,y+32);
+    if(av!=null){const at='avg '+Math.round(av)+'%';x.font='600 24px Archivo';x.fillStyle=MUT;x.fillText(at,X+W-36-pw-18-x.measureText(at).width,y+30)}
+    const sh=tot?a/tot:0,L=bw*sh;x.fillStyle='#eeebe7';x.fillRect(X+36,y+48,bw,28);x.globalAlpha=.35;x.fillStyle=col;x.fillRect(X+36,y+48,L,28);x.globalAlpha=1;x.fillRect(X+36,y+48,a?L*m/a:0,28);
+    x.font='700 20px Archivo';x.fillStyle=MUT;x.fillText(Math.round(sh*100)+'% OF SHOTS · '+m+' OF '+a+' MADE',X+36+L+12,y+70)})}
+function lNote(x,t){x.font='600 26px Archivo';x.fillStyle=MUT;ctr(x,t,LW/2,1290)}
+/* wine call-out box with a big number, a label, an optional white chip and a line */
+function lMid(x,X,Y,W,H,big,lab,chip,chipGood,line){const cx=X+W/2;x.fillStyle=WINE;x.fillRect(X,Y,W,H);x.fillStyle='#fff';x.font='800 150px "Saira Condensed"';ctr(x,big,cx,Y+190);x.fillStyle='#f4d6dd';x.font='800 30px "Saira Condensed"';ctr(x,lab,cx,Y+250);
+  if(chip!=null){x.fillStyle='#fff';x.fillRect(cx-110,Y+300,220,64);x.fillStyle=chipGood==null?INK:chipGood?LGR:LRD;x.font='700 36px "Geist Mono"';ctr(x,chip,cx,Y+345)}if(line){x.fillStyle='#f4d6dd';x.font='600 26px Archivo';ctr(x,line,cx,Y+420)}}
+function lWhite(x,X,Y,W,H,big,col,lab,lines){const cx=X+W/2;x.fillStyle='#fff';x.fillRect(X,Y,W,H);x.strokeStyle='#e3e0db';x.lineWidth=2;x.strokeRect(X,Y,W,H);x.fillStyle=col;let fz=150;x.font=`800 ${fz}px "Saira Condensed"`;while(x.measureText(big).width>W-50&&fz>60){fz-=8;x.font=`800 ${fz}px "Saira Condensed"`}ctr(x,big,cx,Y+200);x.fillStyle=MUT;x.font='800 30px "Saira Condensed"';ctr(x,lab,cx,Y+262);
+  (lines||[]).forEach((l,i)=>{x.fillStyle=i?MUT:INK;x.font='600 28px Archivo';ctr(x,l,cx,Y+322+i*40)})}
+/* net gauge: -30 to +30 with a marker and a tick for a reference value */
+function lGauge(x,X,Y,W,v,ref,refLab){const lo=-30,hi=30,P=z=>X+(Math.max(lo,Math.min(hi,z))-lo)/(hi-lo)*W;x.fillStyle='rgba(255,255,255,.18)';x.fillRect(X,Y,W,14);x.fillStyle='rgba(255,255,255,.5)';x.fillRect(P(0)-1,Y-6,2,26);
+  if(ref!=null){x.fillStyle=GOLD;x.fillRect(P(ref)-2,Y-10,4,34);x.font='700 20px Archivo';x.fillStyle=GOLD;ctr(x,refLab,P(ref),Y+50)}if(v!=null){x.fillStyle='#fff';x.beginPath();x.arc(P(v),Y+7,15,0,7);x.fill()}
+  x.font='600 18px Archivo';x.fillStyle='rgba(255,255,255,.6)';x.fillText('−30',X,Y-14);const t='+30';x.fillText(t,X+W-x.measureText(t).width,Y-14)}
+const LX1=40,LSW=682,LMW=420,LXM=LX1+LSW+28,LX2=LXM+LMW+28,LY0=390,LBH=850;
+const lKick=D=>S.season?D.focus.abbr+' · '+(S.season||'').replace('-','–')+' SEASON':(D.focus.ha==='home'?D.focus.abbr+' VS '+D.other.abbr:D.focus.abbr+' AT '+D.other.abbr)+' · '+new Date(D.date).toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase();
+const lScore=D=>{const R=S.R;if(S.season){const [sl,wh]=scoreLine(D,R);return [[sl+'  ','800 60px "Saira Condensed"','#fff'],[wh,'600 30px Archivo','#f4d6dd']]}const F=D.focus,fs=F.ha==='home'?R.hs:R.as,os=F.ha==='home'?R.as:R.hs;
+  return [[F.abbr+' ','800 44px "Saira Condensed"','#fff'],[String(fs),'800 104px "Saira Condensed"','#fff'],[' – ','800 60px "Saira Condensed"','#fff'],[String(os),'800 104px "Saira Condensed"','#f4d6dd'],[' '+D.other.abbr,'800 44px "Saira Condensed"','#fff']]};
+const lSum=(L5,f)=>{const o={sec:0,pf:0,pa:0,o:{},d:{}};L5.filter(f).forEach(l=>{o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;['o','d'].forEach(s=>{for(const k in l[s])o[s][k]=(o[s][k]||0)+l[s][k]})});return o};
+const lRt=X=>{const p=(poss(X.o)+poss(X.d))/2,ok=p>=1;return {p,ortg:ok?X.pf/p*100:null,drtg:ok?X.pa/p*100:null,net:ok?(X.pf-X.pa)/p*100:null}};
+let LGF=null;async function lgFF(){if(LGF)return LGF;try{const L=await getJSON('/pdata/league.json');const t={fgm:0,fga:0,tpm:0,ftm:0,fta:0,orb:0,drb:0,tov:0,odrb:0};Object.values(L.tg||{}).forEach(g=>{const z=g.t||[];if(z.length!==2)return;z.forEach((a,i)=>{const b=z[1-i];['fgm','fga','tpm','ftm','fta','orb','tov'].forEach(k=>t[k]+=a[k]||0);t.odrb+=b.drb||0})});
+  if(t.fga<1000)return null;LGF={efg:(t.fgm+.5*t.tpm)/t.fga,tov:t.tov/(t.fga-t.orb+t.tov+.44*t.fta),orb:t.orb/(t.orb+t.odrb),ftr:t.ftm/t.fga};return LGF}catch(e){return null}}
+Object.assign(CARDS,{
+  onoff:{label:'On/off card',pick:'player',w:LW,h:LH,async draw(x,D,R,id){const p=D.P[id];if(!p)return;const F=D.focus.id,L5=Object.values(R.L[F][5]||{});const has=l=>l.ids.includes(id);
+    const A=lSum(L5,has),B=lSum(L5,l=>!has(l)),a=lRt(A),b=lRt(B);const SS=S.season?await seasonShots(D).catch(()=>({shots:[],PL:[]})):{shots:R.shots,PL:R.PL||[]};
+    const onS=q=>q.on&&q.on.split(',').includes(id),onD=q=>q.od&&q.od.split(',').includes(id);
+    const bx=(X,on)=>{const g=k=>X.o[k]||0;const stl=SS.PL.filter(q=>q.how==='stl'&&q.team===F&&(on?onS(q):!onS(q))).length;return [['PTS',X.pf],['2P',(g('fgm')-g('tpm'))+'–'+(g('fga')-g('tpa')),lpc(g('fgm')-g('tpm'),g('fga')-g('tpa'))],['3P',g('tpm')+'–'+g('tpa'),lpc(g('tpm'),g('tpa'))],['FT',g('ftm')+'–'+g('fta'),lpc(g('ftm'),g('fta'))],['REB',g('oreb')+g('dreb')],['AST',g('ast')],['STL',stl],['TO',g('to')]]};
+    lFrame(x);const TX=await lHero(x,D,id);const pm=A.pf-A.pa,pmo=B.pf-B.pa;
+    lTitle(x,TX,kick()+'On/off · '+lKick(D),p.name,[[D.focus.abbr+' ','800 44px "Saira Condensed"','#fff'],[lsgi(pm),'800 104px "Saira Condensed"','#fff'],[' with him on   ','800 44px "Saira Condensed"','#fff'],[lsgi(pmo)+' without','800 44px "Saira Condensed"','#f4d6dd']]);
+    const side=(X,top,title,r,Xs,on)=>{lPanel(x,X,LY0,LSW,LBH,top);lHeadline(x,X,LSW,LY0,title,fmtMin(Xs.sec)+' · net per 100',lsg(r.net),r.net==null?null:r.net>=0);lBox(x,X,LSW,LY0+176,bx(Xs,on));
+      const sh=SS.shots.filter(q=>q.t===F&&(on?onS(q):!onS(q)));lZones(x,X,LSW,LY0+476,D.focus.abbr+' SHOTS',lZ3(sh),lZ3(SS.shots.filter(q=>q.t===F)),on?WINE:'#5b6470',true,S.season?'team season avg':'team game avg')};
+    side(LX1,WINE,'ON THE FLOOR',a,A,true);side(LX2,GOLD,'ON THE BENCH',b,B,false);
+    const sw=a.net!=null&&b.net!=null?a.net-b.net:null;lMid(x,LXM,LY0,LMW,500,lsg(sw),'NET SWING PER 100',null,null,'on minus off');
+    if(sw!=null){x.fillStyle='#f4d6dd';x.font='600 26px Archivo';ctr(x,'Off '+lf1(a.ortg)+' · Def '+lf1(a.drtg)+' on',LXM+LMW/2,LY0+460)}
+    lWhite(x,LXM,LY0+520,LMW,LBH-520,lsgi(pm),pm>0?LGR:pm<0?LRD:INK,'PLUS-MINUS ON',[lsgi(pmo)+' with him off']);
+    lNote(x,'Possessions counted play by play · shot avg = whole team '+(S.season?'this season':'this game'));brandBar(x,LW,LH)}},
+  ff:{label:'Four factors card',w:LW,h:LH,async draw(x,D,R){const Fo=D.focus,Ot=D.other,A=R.T[Fo.id],B=R.T[Ot.id],fa=factors(A,B),fb=factors(B,A);const lg=await lgFF();
+    lFrame(x);const won=FF.filter(([k,,,h])=>fa[k]!=null&&fb[k]!=null&&fa[k]!==fb[k]&&((fa[k]>fb[k])===h)).length,lost=FF.filter(([k,,,h])=>fa[k]!=null&&fb[k]!=null&&fa[k]!==fb[k]&&((fa[k]>fb[k])!==h)).length;
+    lTitle(x,60,kick()+'Four factors · '+lKick(D),'The four factors',lScore(D));
+    const side=(X,top,t,f,o,us)=>{lPanel(x,X,LY0,LSW,LBH,top);lbl(x,(S.season&&!us?'OPPONENTS':t.abbr),X+36,LY0+86,44,INK);x.fillStyle=MUT;x.font='700 24px Archivo';const n=us?won:lost;const s2='won '+n+' of 4';x.fillText(s2,X+LSW-36-x.measureText(s2).width,LY0+82);x.fillStyle='#e3e0db';x.fillRect(X+36,LY0+116,LSW-72,2);
+      FF.forEach(([k,n2,full,h],i)=>{const y=LY0+150+i*172,v=f[k],w=o[k];const win=v!=null&&w!=null&&v!==w?((v>w)===h):null;txt(x,n2,X+36,y+34,34,INK,700);x.fillStyle=MUT;x.font='600 22px Archivo';x.fillText(full,X+36,y+66);
+        const vs=v==null?'–':(v*100).toFixed(1)+'%';x.fillStyle=win==null?INK:win?LGR:LRD;x.font='800 64px "Saira Condensed"';x.fillText(vs,X+LSW-36-x.measureText(vs).width,y+56);
+        const mx=k==='efg'?.7:k==='orb'?.5:k==='ftr'?.4:.25,bw=LSW-72,P=z=>X+36+Math.min(1,z/mx)*bw;x.fillStyle='#eeebe7';x.fillRect(X+36,y+92,bw,22);if(v!=null){x.fillStyle=us?WINE:'#5b6470';x.fillRect(X+36,y+92,P(v)-X-36,22)}
+        if(lg&&lg[k]!=null){x.fillStyle=INK;x.fillRect(P(lg[k])-2,y+84,4,38);x.font='600 20px Archivo';x.fillStyle=MUT;const t2='NBA avg '+(lg[k]*100).toFixed(1)+'%';x.fillText(t2,Math.min(P(lg[k])+8,X+LSW-36-x.measureText(t2).width),y+140)}})};
+    side(LX1,WINE,Fo,fa,fb,true);side(LX2,GOLD,Ot,fb,fa,false);
+    lMid(x,LXM,LY0,LMW,500,won+'–'+lost,Fo.abbr+' FACTORS WON',null,null,won>lost?'won the factor battle':won<lost?'lost the factor battle':'split the factors');
+    const pf=S.season?null:(Fo.ha==='home'?R.hs:R.as),pa=S.season?null:(Fo.ha==='home'?R.as:R.hs);
+    if(S.season){const [w,l]=sRec(D);lWhite(x,LXM,LY0+520,LMW,LBH-520,w+'–'+l,INK,'RECORD',[])}else lWhite(x,LXM,LY0+520,LMW,LBH-520,lsgi(pf-pa),pf>pa?LGR:pf<pa?LRD:INK,'FINAL MARGIN',[]);
+    lNote(x,'Green = won that factor · tick = NBA average this season · longer bar = higher rate');brandBar(x,LW,LH)}},
+  player:{label:'Player card',pick:'player',w:LW,h:LH,async draw(x,D,R,id){const p=D.P[id],b=R.B[id];if(!p||!b)return;const t=D.teams.find(z=>z.id===p.team);
+    lFrame(x);const TX=await lHero(x,D,id);const mn=Math.round((b.min||0)/60);
+    lTitle(x,TX,kick()+[t.abbr,p.pos,p.starter?'STARTER':'BENCH'].filter(Boolean).join(' · ')+' · '+lKick(D).replace(/^[A-Z]+ /,''),p.name,[[String(b.pts),'800 104px "Saira Condensed"','#fff'],[' PTS  ','800 44px "Saira Condensed"','#fff'],[String(b.oreb+b.dreb),'800 104px "Saira Condensed"','#fff'],[' REB  ','800 44px "Saira Condensed"','#fff'],[String(b.ast),'800 104px "Saira Condensed"','#fff'],[' AST  ','800 44px "Saira Condensed"','#fff'],['in '+mn+' min','600 32px Archivo','#f4d6dd']]);
+    const SS=await seasonShots(D.season?D:Object.assign({},D,{season:S.src||CUR_SEASON,games:(ARCH[S.src||CUR_SEASON]||[])})).catch(()=>({shots:[],PL:[]}));
+    const ts=b.fga+b.fta?b.pts/(2*(b.fga+.44*b.fta))*100:null,lg=lgAvg();
+    lPanel(x,LX1,LY0,LSW,LBH,WINE);lHeadline(x,LX1,LSW,LY0,'SCORING','TRUE SHOOTING'+(lg?' · NBA avg '+Math.round(lg.ts*100)+'%':''),ts==null?'–':Math.round(ts)+'%',ts==null||!lg?null:ts>=lg.ts*100);
+    lBox(x,LX1,LSW,LY0+176,[['PTS',b.pts],['2P',(b.fgm-b.tpm)+'–'+(b.fga-b.tpa),lpc(b.fgm-b.tpm,b.fga-b.tpa)],['3P',b.tpm+'–'+b.tpa,lpc(b.tpm,b.tpa)],['FT',b.ftm+'–'+b.fta,lpc(b.ftm,b.fta)],['REB',b.oreb+b.dreb,b.oreb+' off'],['STL',b.stl],['BLK',b.blk],['TO',b.to]]);
+    const mine=R.shots.filter(q=>q.id===id),seas=SS.shots.filter(q=>q.id===id);lZones(x,LX1,LSW,LY0+476,'HIS SHOTS',lZ3(mine),seas.length>mine.length?lZ3(seas):null,WINE,true,'his season avg');
+    /* playmaking */
+    lPanel(x,LX2,LY0,LSW,LBH,GOLD);const gave=(R.asts||[]).filter(a=>a.p===id),got=(R.asts||[]).filter(a=>a.s===id);lHeadline(x,LX2,LSW,LY0,'PLAYMAKING','ASSISTS · '+gave.reduce((s,a)=>s+a.v,0)+' points created',String(b.ast),null);
+    const top=(arr,k)=>{const m={};arr.forEach(a=>m[a[k]]=(m[a[k]]||0)+1);return Object.entries(m).sort((u,v)=>v[1]-u[1]).slice(0,3)};
+    const list=(Y,cap,rows,col)=>{lbl(x,cap,LX2+36,Y,26,MUT);const mx=Math.max(1,...rows.map(r=>r[1]));if(!rows.length){txt(x,'None',LX2+36,Y+50,28,MUT,600);return}rows.forEach(([pid,n],i)=>{const y=Y+28+i*62;txt(x,(D.P[pid]||{}).name||'',LX2+36,y+30,28,INK,600);const bw=220,L=bw*n/mx;x.fillStyle=col;x.fillRect(LX2+LSW-36-bw-60,y+8,L,26);x.fillStyle=INK;x.font='800 36px "Saira Condensed"';const s=String(n);x.fillText(s,LX2+LSW-36-x.measureText(s).width,y+33)})};
+    list(LY0+224,'HE SET UP',top(gave,'s'),WINE);list(LY0+460,'SET HIM UP',top(got,'p'),'#5b6470');
+    {const mk=b.fgm,as=got.length,Y=LY0+700;lbl(x,'HIS MAKES',LX2+36,Y,26,MUT);const bw=LSW-72;x.fillStyle='#eeebe7';x.fillRect(LX2+36,Y+22,bw,28);if(mk){x.fillStyle=WINE;x.fillRect(LX2+36,Y+22,bw*(mk-as)/mk,28)}x.font='700 22px Archivo';x.fillStyle=MUT;x.fillText((mk-as)+' unassisted · '+as+' assisted',LX2+36,Y+84)}
+    lMid(x,LXM,LY0,LMW,500,lsgi(b.pm),'PLUS-MINUS',null,null,mn+' minutes');
+    {const F=D.focus.id,L5=Object.values(R.L[p.team]&&R.L[p.team][5]||{});const on=lRt(lSum(L5,l=>l.ids.includes(id))),off=lRt(lSum(L5,l=>!l.ids.includes(id)));const X=LXM,Y=LY0+520,W=LMW,H=LBH-520;
+      x.fillStyle='#fff';x.fillRect(X,Y,W,H);x.strokeStyle='#e3e0db';x.lineWidth=2;x.strokeRect(X,Y,W,H);lbl(x,'PER 100 POSSESSIONS',X+30,Y+52,24,MUT);const c1=X+W-170,c2=X+W-36;
+      x.fillStyle=MUT;x.font='800 24px "Saira Condensed"';[['ON',c1],['OFF',c2]].forEach(([h,cx])=>x.fillText(h,cx-x.measureText(h).width,Y+96));
+      [['Off. rating','ortg',true],['Def. rating','drtg',false],['Net','net',true]].forEach(([lab,k,hi],i)=>{const y=Y+150+i*62;txt(x,lab,X+30,y,28,INK,600);const v=on[k],w=off[k];const good=v==null||w==null||Math.abs(v-w)<.05?null:(v>w)===hi;
+        x.font='800 44px "Saira Condensed"';x.fillStyle=good==null?INK:good?LGR:LRD;const s1=k==='net'?lsg(v):lf1(v);x.fillText(s1,c1-x.measureText(s1).width,y+4);x.fillStyle=MUT;const s2=k==='net'?lsg(w):lf1(w);x.fillText(s2,c2-x.measureText(s2).width,y+4)})}
+    lNote(x,'Gray avg = his own season so far · ratings: team per 100 possessions with him on vs off the floor');brandBar(x,LW,LH)}},
+  clutch:{label:'Clutch card',w:LW,h:LH,async draw(x,D,R){const Fo=D.focus,Ot=D.other;const C2=deriveCore(D,R.plays,'clutch');const a=C2.T[Fo.id],b=C2.T[Ot.id];
+    lFrame(x);lTitle(x,60,kick()+'Clutch time · '+lKick(D),'Clutch time',a.sec?[[Fo.abbr+' ','800 44px "Saira Condensed"','#fff'],[String(a.pts),'800 104px "Saira Condensed"','#fff'],[' – ','800 60px "Saira Condensed"','#fff'],[String(b.pts),'800 104px "Saira Condensed"','#f4d6dd'],[' '+Ot.abbr+'   ','800 44px "Saira Condensed"','#fff'],['last 5 minutes, score within 5','600 32px Archivo','#f4d6dd']]:[]);
+    if(!a.sec){txt(x,'No clutch time in this game.',60,520,48,INK,700);txt(x,'Clutch = the last 5 minutes with the score within 5.',60,580,32,MUT,500);brandBar(x,LW,LH);return}
+    const side=(X,top,t,T,us)=>{lPanel(x,X,LY0,LSW,LBH,top);lHeadline(x,X,LSW,LY0,t.abbr,'POINTS IN CLUTCH TIME',String(T.pts),null);
+      lBox(x,X,LSW,LY0+176,[['FG',T.fgm+'–'+T.fga,lpc(T.fgm,T.fga)],['3P',T.tpm+'–'+T.tpa,lpc(T.tpm,T.tpa)],['FT',T.ftm+'–'+T.fta,lpc(T.ftm,T.fta)],['REB',T.oreb+T.dreb],['AST',T.ast],['STL',T.stl],['BLK',T.blk],['TO',T.to]]);
+      const ids=D.roster[t.id].filter(i=>C2.B[i]&&C2.B[i].pts>0).sort((p,q)=>C2.B[q].pts-C2.B[p].pts).slice(0,3);lbl(x,'CLUTCH SCORERS',X+36,LY0+500,26,MUT);const mx=Math.max(1,...ids.map(i=>C2.B[i].pts));
+      if(!ids.length)txt(x,'No points',X+36,LY0+550,28,MUT,600);ids.forEach((i,j)=>{const bb=C2.B[i],y=LY0+528+j*96;txt(x,D.P[i].name,X+36,y+30,30,INK,700);x.fillStyle=MUT;x.font='600 22px Archivo';x.fillText(bb.fgm+'–'+bb.fga+' FG · '+bb.ftm+'–'+bb.fta+' FT',X+36,y+62);
+        const bw=200;x.fillStyle=us?WINE:'#5b6470';x.fillRect(X+LSW-36-bw-70,y+12,bw*bb.pts/mx,28);x.fillStyle=INK;x.font='800 44px "Saira Condensed"';const s=String(bb.pts);x.fillText(s,X+LSW-36-x.measureText(s).width,y+42)})};
+    side(LX1,WINE,Fo,a,true);side(LX2,GOLD,Ot,b,false);const m=a.pts-b.pts;
+    lMid(x,LXM,LY0,LMW,500,lsgi(m),'CLUTCH MARGIN',null,null,fmtMin(a.sec)+' of clutch time');
+    const fs=Fo.ha==='home'?R.hs:R.as,os=Fo.ha==='home'?R.as:R.hs;lWhite(x,LXM,LY0+520,LMW,LBH-520,fs+'–'+os,INK,S.state==='post'?(fs>os?'WON':'LOST'):'SCORE',[]);
+    lNote(x,'Clutch time = the last 5 minutes of the 4th quarter or overtime with the score within 5');brandBar(x,LW,LH)}},
+  quarters:{label:'Quarter by quarter',w:LW,h:LH,async draw(x,D,R){const Fo=D.focus,Ot=D.other;const qs=Object.keys(R.TQ).map(Number).sort((a,b)=>a-b);
+    lFrame(x);const won=qs.filter(q=>R.TQ[q][Fo.id]&&R.TQ[q][Ot.id]&&R.TQ[q][Fo.id].pts>R.TQ[q][Ot.id].pts).length;lTitle(x,60,kick()+'Quarter by quarter · '+lKick(D),Fo.abbr+' won '+won+' of '+qs.length,lScore(D));
+    const n=qs.length,gap=24,W=(LW-80-gap*(n-1))/n,H=560;
+    qs.forEach((q,i)=>{const X=40+i*(W+gap);const a=R.TQ[q][Fo.id]||{pts:0,fgm:0,fga:0,tpm:0,tpa:0},b=R.TQ[q][Ot.id]||{pts:0};const m=a.pts-b.pts;lPanel(x,X,LY0,W,H,m>0?WINE:m<0?'#5b6470':GOLD);
+      lbl(x,q<=4?['1ST QUARTER','2ND QUARTER','3RD QUARTER','4TH QUARTER'][q-1]:pname(q),X+30,LY0+70,32,MUT);x.fillStyle=INK;x.font='800 110px "Saira Condensed"';x.fillText(a.pts+'–'+b.pts,X+30,LY0+190);
+      x.fillStyle=m>0?LGR:m<0?LRD:MUT;x.font='800 44px "Saira Condensed"';x.fillText(m?(m>0?'+':'−')+Math.abs(m):'Even',X+30,LY0+250);
+      const bw=W-60,c=X+30+bw/2;x.fillStyle='#eeebe7';x.fillRect(X+30,LY0+275,bw,20);x.fillStyle=m>=0?WINE:'#5b6470';const L=Math.min(bw/2,Math.abs(m)/12*bw/2);x.fillRect(m>=0?c:c-L,LY0+275,L,20);x.fillStyle=INK;x.fillRect(c-1,LY0+268,2,34);
+      x.fillStyle=MUT;x.font='600 24px Archivo';x.fillText(Fo.abbr+' '+a.fgm+'–'+a.fga+' FG · '+a.tpm+'–'+a.tpa+' 3P',X+30,LY0+350);
+      const i0=R.plays.findIndex(p=>p.per===q),i1=R.plays.length-1-R.plays.slice().reverse().findIndex(p=>p.per===q);const top=i0>=0?ptsIn(D,R,i0,i1,Fo.id).sort((u,v)=>v[1].pts-u[1].pts).slice(0,2):[];
+      lbl(x,'LED BY',X+30,LY0+420,22,MUT);top.forEach(([pid,v],j)=>{txt(x,D.P[pid].last,X+30,LY0+462+j*44,30,INK,700);x.fillStyle=INK;x.font='800 34px "Saira Condensed"';const s=v.pts+' pts';x.fillText(s,X+W-30-x.measureText(s).width,LY0+462+j*44)})});
+    lPanel(x,40,LY0+H+24,LW-80,LBH-H-24,GOLD);lbl(x,'THE MARGIN, MINUTE BY MINUTE',72,LY0+H+80,26,MUT);cMargin(x,R,D,72,LY0+H+100,LW-144,LBH-H-24-130);
+    lNote(x,'Wine = '+Fo.abbr+' ahead · gray = '+Ot.abbr+' ahead');brandBar(x,LW,LH)}}
+});
 /* season mode: the season cards plus the game cards that work on season totals */
 const shareCards=()=>S.season?Object.assign({},SCARDS,{ff:CARDS.ff,onoff:CARDS.onoff,lineup:CARDS.lineup,shotmap:CARDS.shotmap,box:CARDS.box}):CARDS;
 async function renderCard(type,arg,D,R){await cardFonts();const C=shareCards()[type];const cv=document.createElement('canvas');cv.width=C.w||1080;cv.height=C.h||1350;await C.draw(cv.getContext('2d'),D,R,arg);return new Promise(r=>cv.toBlob(r,'image/png'))}
@@ -1566,7 +1678,7 @@ function vShare(v,D,R){
   Object.entries(CARDS0).forEach(([k,o])=>{if(!S.season&&avail[k]&&!avail[k]())return;const b=el('button',null,o.label);b.type='button';b.setAttribute('aria-pressed',S.f.card===k);b.onclick=()=>{S.f.card=k;renderView()};fl.appendChild(b)});c.appendChild(fl);
   const C=CARDS0[S.f.card];const f2=el('div','fl');let sel=null;
   if(C.pick){sel=el('select');sel.setAttribute('aria-label','Pick');
-    const opts=C.pick==='shooter'?[['team','Whole team']].concat(Object.keys(R.B).filter(id=>D.P[id].team===D.focus.id&&R.B[id].fga).sort((a,b)=>R.B[b].fga-R.B[a].fga).map(id=>[id,D.P[id].name+' · '+R.B[id].fga+' FGA'])):C.pick==='player'?(S.season?Object.keys(R.B).filter(id=>R.B[id].gp).sort((a,b)=>R.B[b].pts/R.B[b].gp-R.B[a].pts/R.B[a].gp).map(id=>[id,D.P[id].name+' · '+(R.B[id].pts/R.B[id].gp).toFixed(1)+' ppg']):Object.keys(R.B).filter(id=>(R.B[id].min>0||R.B[id].pts)&&(S.f.card!=='onoff'||D.P[id].team===D.focus.id)).sort((a,b)=>R.B[b].pts-R.B[a].pts).map(id=>[id,D.P[id].name+' · '+R.B[id].pts+' pts'])):
+    const opts=C.pick==='shooter'?[['team','Whole team']].concat(Object.keys(R.B).filter(id=>D.P[id].team===D.focus.id&&R.B[id].fga).sort((a,b)=>R.B[b].fga-R.B[a].fga).map(id=>[id,D.P[id].name+' · '+R.B[id].fga+' FGA'])):C.pick==='player'?(S.season?Object.keys(R.B).filter(id=>R.B[id].gp).sort((a,b)=>R.B[b].pts/R.B[b].gp-R.B[a].pts/R.B[a].gp).map(id=>[id,D.P[id].name+' · '+(R.B[id].pts/R.B[id].gp).toFixed(1)+' ppg']):Object.keys(R.B).filter(id=>(R.B[id].min>0||R.B[id].pts)&&(S.f.card!=='onoff'||D.P[id].team===D.focus.id)).sort((a,b)=>(D.P[a].team===D.focus.id?0:1)-(D.P[b].team===D.focus.id?0:1)||R.B[b].pts-R.B[a].pts).map(id=>[id,D.P[id].name+' · '+R.B[id].pts+' pts'])):
       C.pick==='run'?R.runs.map((r,i)=>[String(i),D.teams.find(t=>t.id===r.t).abbr+' '+r.pts+'–0 · '+pname(r.start.per)+' '+r.start.clock]).reverse():
       Object.entries(R.L[D.focus.id][5]).filter(([k,l])=>l.sec>=60).sort((a,b)=>b[1].sec-a[1].sec).map(([k,l])=>[k,l.ids.map(id=>D.P[id].last).join(', ')+' · '+fmtMin(l.sec)]);
     if(!opts.length){c.appendChild(el('p','empty','Nothing to make a card from yet.'));v.appendChild(c);return}
@@ -1614,6 +1726,11 @@ function pgCard(D,R,id){const p=D.P[id],b=R.B[id];if(!p||!b)return null;const t=
     [['FG',b.fgm,b.fga,A&&A.fg],['3PT',b.tpm,b.tpa,A&&A.tp],['FT',b.ftm,b.fta,A&&A.ft],['TS%',null,null,A&&A.ts,ts]].forEach(([l,m,a,avg,v])=>{const d=el('div');const val=l==='TS%'?(v==null?'–':Math.round(v*100)+'%'):m+'/'+a;const pv=l==='TS%'?v:(a?m/a:null);
       d.appendChild(el('b',null,val));const br=el('span','pgc-bar');const f=el('i');f.style.width=pv==null?'0':Math.min(100,pv*100)+'%';br.appendChild(f);if(avg){const u=el('u');u.style.left=(avg*100)+'%';br.appendChild(u)}d.appendChild(br);
       const sm=el('small',null,l+(l!=='TS%'&&a?' · '+Math.round(m/a*100)+'%':''));if(avg)sm.appendChild(el('span',null,' (NBA '+Math.round(avg*100)+'%)'));d.appendChild(sm);g.appendChild(d)});w.appendChild(g)}
+  /* team ratings with him on and off the floor */
+  {const L5=Object.values((R.L[p.team]||{})[5]||{});if(L5.length){const sm=f=>{const o={sec:0,pf:0,pa:0,o:{},d:{}};L5.filter(f).forEach(l=>{o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;['o','d'].forEach(k=>{for(const q in l[k])o[k][q]=(o[k][q]||0)+l[k][q]})});return o};
+    const rt=X=>{const pp=(poss(X.o)+poss(X.d))/2;return pp>=1?{o:X.pf/pp*100,d:X.pa/pp*100,n:(X.pf-X.pa)/pp*100}:null};const on=rt(sm(l=>l.ids.includes(id))),off=rt(sm(l=>!l.ids.includes(id)));
+    if(on){const g=el('div','pgc-rt');g.appendChild(el('div','pgc-rh',t.abbr+' per 100 possessions with him on'));const f1=v=>v==null?'–':v.toFixed(1),sg=v=>v==null?'–':(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1);
+      [['Off. rating','o',true],['Def. rating','d',false],['Net','n',true]].forEach(([lab,k,hi])=>{const a=on[k],z=off?off[k]:null;const good=z==null||Math.abs(a-z)<.05?null:(a>z)===hi;const c=el('div');c.append(el('small',null,lab),el('b',good==null?null:good?'up':'dn',k==='n'?sg(a):f1(a)),el('span',null,'with him off: '+(k==='n'?sg(z):f1(z))));g.appendChild(c)});w.appendChild(g)}}}
   /* his plays */
   {const all=R.plays.filter(q=>q.ids[0]===id&&q.type!=='Substitution').slice().reverse();if(all.length){const box=el('div','pgc-pl');const hh=el('div','pgc-k');hh.textContent='His plays · newest first';box.appendChild(hh);
     const show=S.f.pgAll?all:all.slice(0,6);show.forEach(q=>{const r=el('div','pgc-r');r.appendChild(el('span','t',pname(q.per)+'\n'+q.clock));const bd=el('span','bd');if(q.sc&&q.val>0){bd.textContent='+'+q.val;bd.classList.add('on')}r.appendChild(bd);
