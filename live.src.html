@@ -1712,14 +1712,18 @@ function vShots(v,D,R){
   right.appendChild(el('p','note','FREQ = share of all field-goal attempts. Tap a type’s name to filter the court; tap the rest of the row to compare with the season. Transition = shot within 7 seconds after a defensive rebound or turnover. Putbacks = tips, putbacks and shots within 3 seconds of an offensive rebound.'));
   right.appendChild(el('h3',null,who+typeLab+' · by zone'));
   right.appendChild(el('p','tap-hint','▸ Tap a row to compare with the season and with games vs similar teams'));
-  const zt=el('table','zt');zt.innerHTML=`<tr><th>Zone</th><th>FG</th><th>FG%</th><th>% of shots</th></tr>`;
+  /* shot quality: what an average NBA shooter would score on these same shots (league FG% in each zone) */
+  const LZ=(()=>{const se=S.season||S.src||CUR_SEASON;const b=BLIVE&&BLIVE.lg&&BLIVE.season===se?BLIVE.lg:null;return ZN.map(([k],i)=>b&&b[i][1]?b[i][0]/b[i][1]:LG[k][0])})();
+  const zv=i=>i>=3?3:2,exp=xy.reduce((a,q)=>a+LZ[q.zi]*zv(q.zi),0),act=xy.reduce((a,q)=>a+(q.m?zv(q.zi):0),0);
+  if(xy.length>=5){const g2=el('div','tiles');g2.style.margin='4px 0 10px';[[(exp/xy.length).toFixed(2),'Expected points per shot ('+xy.length+' shots) · shot selection'],[(act-exp>=0?'+':'−')+Math.abs(act-exp).toFixed(1),'Shot making: '+act+' points vs '+exp.toFixed(1)+' expected']].forEach(([a,b],i)=>{const d=el('div');const bb=el('b',null,a);if(i===1&&Math.abs(act-exp)>=1)bb.style.color=act>exp?'var(--pos)':'var(--neg)';d.append(bb,el('span',null,b));g2.appendChild(d)});right.insertBefore(g2,right.lastChild)}
+  const zt=el('table','zt');zt.innerHTML=`<tr><th>Zone</th><th>FG</th><th>FG%</th><th>% of shots</th><th title="Points above or below what an average NBA shooter scores on these shots">Vs avg</th></tr>`;
   ZN.forEach(([k,n,dsc],i)=>{const[m,a]=Z[i];const tr=el('tr');const nn=el('td');nn.append(n);if(dsc)nn.appendChild(el('span','pos',dsc));
     const dfc=a?(m/a-av(i)):0;const fg=el('td',null,a?pct(m,a):'–');if(a>=3)fg.style.color=dfc>0.02?'var(--pos)':dfc<-0.02?'var(--neg)':'';fg.style.fontWeight='700';
-    tr.append(nn,el('td',null,m+'-'+a),fg,el('td',null,xy.length?Math.round(a/xy.length*100)+'%':'–'));
+    const dz=m*zv(i)-a*LZ[i]*zv(i);tr.append(nn,el('td',null,m+'-'+a),fg,el('td',null,xy.length?Math.round(a/xy.length*100)+'%':'–'),el('td',a&&Math.abs(dz)>=1?(dz>0?'up':'dn'):null,a?(dz>=0?'+':'−')+Math.abs(dz).toFixed(1):'–'));
     tr.className='xr';tr.tabIndex=0;const op=S.f.zOpen===i;tr.setAttribute('aria-expanded',op);const go=()=>{S.f.zOpen=op?null:i;renderView()};tr.onclick=go;tr.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}};zt.appendChild(tr);
-    if(op){const dr=el('tr','xd');const td=el('td');td.colSpan=4;const ln=cmpRows(x=>x.zi===i,true);const lz=Array.isArray(ln)?ln.map(r=>Object.assign({},r,{fr:r.fr})):ln;td.appendChild(miniT({lab:'Tonight',m,a,fg:a?m/a:null,fr:xy.length?a/xy.length:null},lz,['ma','fg','fr']));dr.appendChild(td);zt.appendChild(dr)}});
+    if(op){const dr=el('tr','xd');const td=el('td');td.colSpan=5;const ln=cmpRows(x=>x.zi===i,true);const lz=Array.isArray(ln)?ln.map(r=>Object.assign({},r,{fr:r.fr})):ln;td.appendChild(miniT({lab:'Tonight',m,a,fg:a?m/a:null,fr:xy.length?a/xy.length:null},lz,['ma','fg','fr']));dr.appendChild(td);zt.appendChild(dr)}});
   right.appendChild(zt);
-  const pts=Z.reduce((s,[m],i)=>s+m*(i>=3?3:2),0);right.appendChild(el('p','note',`${pts} points on ${xy.length} shots (${xy.length?(pts/xy.length).toFixed(2):'–'} per shot). FG% colored against ${baseLab} shooting in each zone.${SC&&SC.ok?' Season rows: per game, other games only. Similar teams = the opponent’s net rating tier (top 5, 6–10, 11–20, bottom 9) by '+SC.rkLab+'.':''}`));
+  const pts=Z.reduce((s,[m],i)=>s+m*(i>=3?3:2),0);right.appendChild(el('p','note',`${pts} points on ${xy.length} shots (${xy.length?(pts/xy.length).toFixed(2):'–'} per shot). FG% colored against ${baseLab} shooting in each zone. Vs avg = points above or below what an average NBA shooter scores on the same shots.${SC&&SC.ok?' Season rows: per game, other games only. Similar teams = the opponent’s net rating tier (top 5, 6–10, 11–20, bottom 9) by '+SC.rkLab+'.':''}`));
   g.append(left,right);c.appendChild(g);if(S.season&&S.f.shPl!=='all')gameByGame(D,R,S.f.shPl,c);v.appendChild(c);
 }
 
