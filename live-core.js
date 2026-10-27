@@ -39,6 +39,10 @@ function prep(d){d=unpackSlim(d);
     P[a.athlete.id]={id:a.athlete.id,name:a.athlete.displayName,short:a.athlete.shortName,last:lastName(a.athlete.displayName),pos:a.athlete.position&&a.athlete.position.abbreviation,team:tb.team.id,starter:!!a.starter,dnp:!!a.didNotPlay,reason:a.reason,espn:s};
     roster[tb.team.id].push(a.athlete.id)})});
   const plays=(d.plays||[]).map(q=>({id:q.id,type:q.type.text.replace(/\n/g,' '),text:q.text,per:q.period.number,clock:q.clock.displayValue,t:gt(q.period.number,q.clock.displayValue),team:q.team&&q.team.id,ids:(q.participants||[]).map(x=>x.athlete.id),hs:q.homeScore,as:q.awayScore,sc:q.scoringPlay,val:q.scoreValue,shot:q.shootingPlay,pa:q.pointsAttempted,x:q.coordinate&&q.coordinate.x>-100?q.coordinate.x:null,y:q.coordinate&&q.coordinate.y>-100?q.coordinate.y:null}));
+  /* ESPN's running score on each play sometimes drifts (Oct 26 vs MIN: it ended 125-124 MIN, the real final was 127-125 CLE).
+     Keep our own running tally from the scoring plays, and use it whenever it lands on the scoreboard's score. */
+  {let h=0,a=0;const run=plays.map(p=>{if(p.sc&&p.val>0){const t=p.team||(P[p.ids[0]]||{}).team;if(t===home.id)h+=p.val;else if(t===away.id)a+=p.val}return [h,a]});
+    const lp=plays[plays.length-1];if(lp&&h===home.score&&a===away.score&&(lp.hs!==h||lp.as!==a))plays.forEach((p,i)=>{p.hs=run[i][0];p.as=run[i][1]})}
   const wp={};(d.winprobability||[]).forEach(w=>wp[w.playId]=w.homeWinPercentage);
   const esp={};((d.boxscore&&d.boxscore.teams)||[]).forEach(tb=>{const g=n=>{const x=(tb.statistics||[]).find(y=>y.name===n);return x&&x.displayValue!==''&&!isNaN(+x.displayValue)?+x.displayValue:null};esp[tb.team.id]={pot:g('turnoverPoints'),fb:g('fastBreakPoints'),pip:g('pointsInPaint')}});
   return {esp,teams,home,away,focus,other,P,roster,plays,wp,status:comp.status||{},date:comp.date,venue:d.gameInfo&&d.gameInfo.venue&&d.gameInfo.venue.fullName,bc:(comp.broadcasts||[]).map(b=>b.media&&b.media.shortName).filter(Boolean)};
