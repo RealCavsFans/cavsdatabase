@@ -456,7 +456,7 @@ p.note{font-size:.6875rem!important;line-height:1.35!important;margin-top:6px!im
 .card.xh{position:relative}.card.capmode .swh{display:none!important}.card.capmode *{overflow:visible!important;max-height:none!important;-webkit-mask-image:none!important;mask-image:none!important}.secx{position:absolute;top:10px;right:10px;width:30px;height:30px;padding:6px;border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer;opacity:.75}.secx:hover,.secx:focus-visible{opacity:1;color:#860038;border-color:#860038}.secx svg{width:16px;height:16px;display:block}.secx:disabled{opacity:.3}.card.xh>h2{padding-right:40px}.shtoast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,20px);background:#101419;color:#fff;font:600 0.8125rem var(--sans);padding:8px 14px;border-radius:999px;opacity:0;pointer-events:none;transition:.2s;z-index:99}.shtoast.on{opacity:1;transform:translate(-50%,0)}
 
 /* flow chart scrubber box */
-.scrub{position:absolute;z-index:5;pointer-events:none;background:var(--ink,#101419);color:#fff;padding:6px 9px;font:600 0.75rem var(--sans);line-height:1.35;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.25)}.scrub b{display:block;font:700 0.75rem var(--mono);color:#F2B231}.scrub span{display:block}
+.scrub{position:absolute;z-index:5;pointer-events:none;background:var(--ink,#101419);color:#fff;padding:6px 9px;font:600 0.75rem var(--sans);line-height:1.35;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.25)}.scrub.pin{outline:2px solid #F2B231}.scrub b{display:block;font:700 0.75rem var(--mono);color:#F2B231}.scrub span{display:block}
 
 /* Season tab */
 .ssp td,.ssp th{text-align:right}.ssp td:first-child,.ssp th:first-child{text-align:left;font-family:var(--sans);font-weight:700}.ssp td.up{color:var(--wine-ink,#860038);font-weight:700}.ssp td.dn{color:var(--muted)}
@@ -721,7 +721,10 @@ const SECX_ON=true; /* save-as-image buttons on every live section (approved Oct
  const img=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
  const LOGO='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#860038" stroke-width="2" fill="none"/></svg>';
  const scoreTxt=()=>{const D=S.data;if(!D)return '';const a=D.away,h=D.home;const st=D.status&&D.status.type||{};const tag=st.completed?'Final':st.state==='in'?(st.shortDetail||'Live'):'';return a.abbr+' '+a.score+' · '+h.abbr+' '+h.score+(tag?' · '+tag:'')};
- async function shot(card,title,btn){btn.disabled=true;toast('Making the image…');card.classList.add('capmode');
+ async function shot(card0,title,btn){btn.disabled=true;toast('Making the image…');
+  /* an open row panel (a lineup, a player, a shot type) is what gets saved; otherwise the whole card */
+  const xd=card0.querySelector('tr.xd>td>*');let card=card0;if(xd){card=xd;const r=xd.closest('tr.xd').previousElementSibling;const c0=r&&r.cells&&r.cells[0];const e0=c0&&(c0.querySelector('.nmf')||c0.querySelector('a,b,span')||c0);const nm=e0?e0.textContent.replace(/^[▸▾►▼\s]+/,'').trim():'';if(nm)title=title+' · '+nm}
+  card.classList.add('capmode');card0.classList.add('capmode');
   try{const ms=await load();const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();const bg=getComputedStyle(card).backgroundColor||'#fff';const S2=2,pad=16;
    const cw=Math.max(card.offsetWidth,...[...card.querySelectorAll('table,svg')].map(x=>x.scrollWidth+x.getBoundingClientRect().left-card.getBoundingClientRect().left+16));const opts={scale:S2,backgroundColor:bg,timeout:6000,width:Math.ceil(cw),style:{width:Math.ceil(cw)+'px'},filter:n=>!(n.nodeType===1&&n.classList&&n.classList.contains('secx'))};try{await ms.domToCanvas(card,{...opts,scale:.3})}catch(e){}
    const sh=await ms.domToCanvas(card,opts);const W=Math.max(sh.width+pad*2*S2,420*S2),HH=58*S2,GOLD=5*S2,FT=40*S2,H=HH+GOLD+pad*S2+sh.height+pad*S2+FT;
@@ -733,7 +736,7 @@ const SECX_ON=true; /* save-as-image buttons on every live section (approved Oct
    const fy=H-FT/2;g.textAlign='left';g.font='700 '+(12*S2)+'px '+mono;g.fillStyle='#860038';g.fillText('cavsdatabase.com/live',pad*S2,fy);g.textAlign='right';g.font='600 '+(12*S2)+'px '+mono;g.fillStyle='#5D646C';const D=S.data;g.fillText(new Date(D&&D.date||Date.now()).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),W-pad*S2,fy);
    const blob=await new Promise(r=>cv.toBlob(r,'image/png'));const name='cavsdb-'+title.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.png';const file=new File([blob],name,{type:'image/png'});
    if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:title+' | cavs_db'}).catch(()=>{})}else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Image saved')}}
-  catch(e){toast('Couldn’t make the image. Try again.')}finally{card.classList.remove('capmode');btn.disabled=false}}
+  catch(e){toast('Couldn’t make the image. Try again.')}finally{card.classList.remove('capmode');card0.classList.remove('capmode');btn.disabled=false}}
  window.secShot=(c,title)=>{if(c.querySelector(':scope>.secx'))return;c.classList.add('xh');const b=document.createElement('button');b.type='button';b.className='secx';b.innerHTML=IC;b.title='Save as image';b.setAttribute('aria-label','Save '+title+' as an image');b.onclick=()=>shot(c,title,b);c.appendChild(b)}})();
 const head=(c,title,sub)=>{c.appendChild(el('h2',null,title));if(SECX_ON&&window.secShot&&!S.season&&title!=='Share cards')secShot(c,title);if(sub&&S.season)sub=sub.replace(/^Full game/,'Season, '+S.data.games.length+' games');if(sub)c.appendChild(el('p','sub',sub))};
 
@@ -869,8 +872,10 @@ function scrub(card,D,R,W,pad,T,val){const svg=card.querySelector('svg[role=img]
     const xx=pad+(W-2*pad)*t/T;ln.setAttribute('x1',xx);ln.setAttribute('x2',xx);ln.style.display='';
     const q=at(t),fs=q?(fh?q.hs:q.as):0,os=q?(fh?q.as:q.hs):0;tip.innerHTML='';tip.append(el('b',null,clk(t)),el('span',null,D.focus.abbr+' '+fs+' · '+D.other.abbr+' '+os));const v=val(t);if(v)tip.appendChild(el('span',null,v));
     tip.hidden=false;const cb=card.getBoundingClientRect();const px=b.left-cb.left+xx/W*b.width,py=b.top-cb.top;const tw=tip.offsetWidth;tip.style.left=Math.max(4,Math.min(cb.width-tw-4,px-tw/2))+'px';tip.style.top=Math.max(0,py-tip.offsetHeight-6)+'px'};
-  const hide=()=>{ln.style.display='none';tip.hidden=true};
-  svg.addEventListener('pointermove',move);svg.addEventListener('pointerdown',move);svg.addEventListener('pointerleave',hide)}
+  let pin=false;const hide=()=>{if(pin)return;ln.style.display='none';tip.hidden=true};
+  /* a tap pins the line and the box (so the camera can save that moment); another tap lets it go */
+  svg.addEventListener('pointermove',e=>{if(pin&&e.pointerType==='mouse'&&!e.buttons)return;move(e)});svg.addEventListener('pointerdown',move);svg.addEventListener('pointerleave',hide);
+  svg.addEventListener('click',e=>{pin=!pin;tip.classList.toggle('pin',pin);if(pin)move(e);else{ln.style.display='none';tip.hidden=true}})}
 function momentumCard(D,R){const F=D.focus,O=D.other,c=el('div','card sec');head(c,'Momentum','Net points over the last 3 minutes, at every moment of the game');
   if(!R.lp){c.appendChild(el('p','empty','Starts at tip-off.'));return c}
   const T=pstart(R.maxPer)+plen(R.maxPer),W=(innerWidth<600?420:900),H=150,pad=26,X=t=>pad+(W-2*pad)*t/T;const fh=F===D.home;
