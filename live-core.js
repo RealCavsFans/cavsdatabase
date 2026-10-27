@@ -47,8 +47,9 @@ function prep(d){d=unpackSlim(d);
 /* ---------- derive: one pass over the revealed plays ---------- */
 const zT=()=>({pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,oreb:0,dreb:0,toreb:0,tdreb:0,ast:0,stl:0,blk:0,to:0,pf:0,paint:0,second:0,offto:0,sec:0,stPts:0,bnPts:0,stSec:0,bnSec:0,and1:0,ftTrips:0,z:ZN.map(()=>[0,0])});
 const zP=()=>({min:0,pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,oreb:0,dreb:0,ast:0,stl:0,blk:0,to:0,pf:0,pm:0,played:false,on:false});
-const zS=()=>({fga:0,oreb:0,to:0,fta:0,fgm:0,tpa:0,tpm:0,ftm:0,ast:0,dreb:0});const zL=ids=>({ids,sec:0,pf:0,pa:0,o:zS(),d:zS()});
-const poss=o=>o.fga-o.oreb+o.to+0.44*o.fta;
+/* np = counted possessions (each ends when the other team gets the ball or the period ends); poss() uses it when present, the estimate formula otherwise */
+const zS=()=>({fga:0,oreb:0,to:0,fta:0,fgm:0,tpa:0,tpm:0,ftm:0,ast:0,dreb:0,np:0});const zL=ids=>({ids,sec:0,pf:0,pa:0,o:zS(),d:zS()});
+const poss=o=>o.np!=null&&o.np>0?o.np:o.fga-o.oreb+o.to+0.44*o.fta;
 function zoneOf(x,y,three){const d=Math.hypot(x-25,y);if(three)return y<=C3?3:4;if(d<4)return 0;if(d<14)return 1;return 2}
 function combos(a,k){const r=[];const f=(s,c)=>{if(c.length===k){r.push(c.slice());return}for(let i=s;i<a.length;i++){c.push(a[i]);f(i+1,c);c.pop()}};f(0,[]);return r}
 function deriveCore(D,plays,F){
@@ -78,16 +79,17 @@ function deriveCore(D,plays,F){
   let last=0,curPer=0,snap=null;const src={},ps={},pc={},tf={},to={},ch={},pfAll={};let clutchNow=false,mgNow=0;const wpS=[],lineAt={};
   const HOW=['stl','to','dreb','made','oreb','start'];tid.forEach(t=>{src[t]='';ps[t]={t:0,how:'start'};pc[t]={};HOW.forEach(h=>pc[t][h]={n:0,pts:0});to[t]=0;ch[t]={used:0,won:0}});
   const inFx=per=>F==='clutch'?clutchNow:inPer(F,per);
-  const PL=[];const newPoss=(t,tt,how,inF)=>{if(ps[t]&&ps[t].t===tt&&ps[t].how===how&&how!=='oreb')return;ps[t]={t:tt,how,pts:0,first:null,inF,on:on[t]?[...on[t]].sort().join(','):'',od:on[opp(t)]?[...on[opp(t)]].sort().join(','):''};if(inF){pc[t][how].n++;PL.push(Object.assign(ps[t],{team:t}))}};
+  let hold=null;const endPoss=(t,inF)=>{if(!inF||!t)return;if(seg)seg.o[t].np++;lu(t,on[t],o=>o.o.np++);lu(opp(t),on[opp(t)],o=>o.d.np++)};
+  const PL=[];const newPoss=(t,tt,how,inF)=>{if(ps[t]&&ps[t].t===tt&&ps[t].how===how&&how!=='oreb')return;if(how!=='start'){if(how!=='oreb'&&hold===opp(t))endPoss(opp(t),inF);hold=t}ps[t]={t:tt,how,pts:0,first:null,inF,on:on[t]?[...on[t]].sort().join(','):'',od:on[opp(t)]?[...on[opp(t)]].sort().join(','):''};if(inF){pc[t][how].n++;PL.push(Object.assign(ps[t],{team:t}))}};
   const margin=[[0,0]];let lc=0,ties=0,prevSign=0;const lead={};tid.forEach(t=>lead[t]=0);
   const shots=[],asts=[];const lastFG={},lastPt={},dr=[];let lastMade=null;
   /* segments: every stretch with the same ten players on the floor (for player-vs-opponent on/off) */
-  const segs=[];let seg=null;const newSeg=()=>{seg={a:{},sec:0,pts:{},pp:{},o:{}};tid.forEach(t=>{seg.a[t]=[...on[t]];seg.pts[t]=0;seg.o[t]={fga:0,oreb:0,to:0,fta:0}});segs.push(seg)};
+  const segs=[];let seg=null;const newSeg=()=>{seg={a:{},sec:0,pts:{},pp:{},o:{}};tid.forEach(t=>{seg.a[t]=[...on[t]];seg.pts[t]=0;seg.o[t]={fga:0,oreb:0,to:0,fta:0,np:0}});segs.push(seg)};
   const addTime=t1=>{const dt=t1-last;if(dt>0){const inF=inFx(curPer);if(inF&&seg)seg.sec+=dt;tid.forEach(t=>{const q=tq(curPer,t);q.sec+=dt;on[t].forEach(id=>{if(D.P[id].starter)q.stSec+=dt;else q.bnSec+=dt});if(inF){T[t].sec+=dt;on[t].forEach(id=>{B[id].min+=dt;if(D.P[id].starter)T[t].stSec+=dt;else T[t].bnSec+=dt});lu(t,on[t],o=>o.sec+=dt)}})}last=Math.max(last,t1)};
   const leave=(id,t1)=>{if(enter[id]!=null){(stints[id]=stints[id]||[]).push([enter[id][0],t1,pmAll[id]-enter[id][1]]);delete enter[id]}};
   const join=(id,t1)=>{enter[id]=[t1,pmAll[id]]};
   plays.forEach(p=>{
-    if(p.per!==curPer){if(curPer){addTime(pstart(curPer)+plen(curPer));tid.forEach(t=>on[t].forEach(id=>leave(id,pstart(curPer)+plen(curPer))))}
+    if(p.per!==curPer){if(curPer){addTime(pstart(curPer)+plen(curPer));endPoss(hold,inFx(curPer));hold=null;tid.forEach(t=>on[t].forEach(id=>leave(id,pstart(curPer)+plen(curPer))))}
       curPer=p.per;last=pstart(p.per);tid.forEach(t=>{on[t]=new Set(startFive[p.per][t]||[]);on[t].forEach(id=>{B[id].played=true;join(id,last)});src[t]='';newPoss(t,last,'start',inFx(p.per))});newSeg()}
     clutchNow=p.per>=4&&(p.per>4||p.t>=2580)&&Math.abs(mgNow)<=5;
     addTime(p.t);
@@ -133,7 +135,7 @@ function deriveCore(D,plays,F){
   const lp=plays[plays.length-1];
   const curStint={};if(lp)tid.forEach(t=>on[t].forEach(id=>{if(enter[id]){let from=enter[id][0],pm=pmAll[id]-enter[id][1];const st=stints[id]||[];for(let i=st.length-1;i>=0&&st[i][1]===from;i--){from=st[i][0];pm+=st[i][2]}curStint[id]={from,sec:lp.t-from,pm}}}));
   if(lp)tid.forEach(t=>{const g=lp.t-(lastFG[t]!=null?lastFG[t]:0);if(g>=180)dr.push({t,kind:'fg',from:lastFG[t]!=null?lastFG[t]:0,to:lp.t,open:true})});
-  if(lp){addTime(lp.t);const endT=lp.type==='End Period'||lp.type==='End Game'?pstart(lp.per)+plen(lp.per):lp.t;tid.forEach(t=>on[t].forEach(id=>{B[id].on=true;leave(id,endT)}));tid.forEach(t=>on[t].forEach(id=>{}))}
+  if(lp){addTime(lp.t);if(lp.type==='End Period'||lp.type==='End Game')endPoss(hold,inFx(lp.per));const endT=lp.type==='End Period'||lp.type==='End Game'?pstart(lp.per)+plen(lp.per):lp.t;tid.forEach(t=>on[t].forEach(id=>{B[id].on=true;leave(id,endT)}));tid.forEach(t=>on[t].forEach(id=>{}))}
   /* runs */
   const runs=[];let run=null;
   plays.forEach(p=>{if(!(p.sc&&p.val>0))return;const t=p.team&&T[p.team]?p.team:teamOf(p.ids[0]);if(!t)return;
