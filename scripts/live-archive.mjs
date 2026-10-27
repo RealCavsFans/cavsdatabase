@@ -122,6 +122,7 @@ function build(per, file) {
     /* per-game rows for the Season tab (trends and splits): team box totals for both sides, and every 5-man unit's minutes and possessions */
     const tr = t => [t.pts, t.fgm, t.fga, t.tpm, t.tpa, t.ftm, t.fta, t.oreb, t.toreb || 0, t.dreb, t.to, Math.round(t.sec || 0)];
     games[gi].t = tr(tc); games[gi].u = tr(to);
+    games[gi].ps = Math.round(tc.sec || 0); games[gi].pp = [tc.pts, to.pts];   // this period's seconds and points (period files)
     /* possession timing, after timeouts, quarter starts (full game, both sides: [cle, opp]) */
     { const X = C.extras(D, R0); games[gi].x = { tim: [X.tim['5'], X.tim[opp.id]], ato: [X.ato['5'], X.ato[opp.id]], qs: [X.qs['5'], X.qs[opp.id]] }; }
     games[gi].l5 = Object.entries(R.L['5'][5]).filter(([, l]) => l.sec >= 1).map(([k, l]) => [k, Math.round(l.sec), l.pf, l.pa, l.o.fga, l.o.oreb, l.o.to, l.o.fta, l.d.fga, l.d.oreb, l.d.to, l.d.fta, l.o.np || 0, l.d.np || 0]);
@@ -142,6 +143,23 @@ function build(per, file) {
   fs.writeFileSync(path.join(DIR, file), JSON.stringify(out));
   if (per === 'all') fs.writeFileSync(path.join(DIR, 'index.json'), JSON.stringify(gs.map(g => ({ id: g.id, date: g.date, et: g.et, opp: g.opp, ha: g.ha, cle: g.cle, os: g.os, rc: g.rc }))));
   console.log(`${file}: ${gs.length} games, ${shots.length} shots, ${Object.keys(L[5]).length} five-man lineups`);
+  return out;
 }
-build('all', 'season.json');
-for (const [key, per] of [['h1', [1, 2]], ['h2', [3, 4]], ['q1', [1]], ['q2', [2]], ['q3', [3]], ['q4', [4]], ['clutch', 'clutch'], ['nogt', 'nogt']]) build(per, 'season-p-' + key + '.json');
+const ALL = build('all', 'season.json'), OUT = {};
+for (const [key, per] of [['h1', [1, 2]], ['h2', [3, 4]], ['q1', [1]], ['q2', [2]], ['q3', [3]], ['q4', [4]], ['clutch', 'clutch'], ['nogt', 'nogt']]) OUT[key] = build(per, 'season-p-' + key + '.json');
+/* small summaries in season.json, so player pages and the Season tab don't need the period files:
+   pq  each player by quarter and in the clutch: [seconds, pts, fgm, fga, tpm, tpa, +/-, games]
+   tq  the team by quarter and in the clutch: points for and against, counted possessions, seconds
+   cg  games with clutch minutes: [game index, clutch points for, against] */
+{
+  const pq = {}, tq = {};
+  for (const key of ['q1', 'q2', 'q3', 'q4', 'clutch']) {
+    const o = OUT[key];
+    for (const [id, b] of Object.entries(o.B)) (pq[id] = pq[id] || {})[key] = [Math.round(b.min), b.pts, b.fgm, b.fga, b.tpm, b.tpa, b.pm, o.gp[id] || 0];
+    const L5 = Object.values(o.L[5]);
+    tq[key] = { pf: o.T.cle.pts || 0, pa: o.T.opp.pts || 0, po: L5.reduce((a, l) => a + (l.o.np || 0), 0), pd: L5.reduce((a, l) => a + (l.d.np || 0), 0), sec: Math.round(o.T.cle.sec || 0) };
+  }
+  const cg = OUT.clutch.games.map((g, i) => g.ps > 0 ? [i, g.pp[0], g.pp[1]] : null).filter(Boolean);
+  Object.assign(ALL, { pq, tq, cg });
+  fs.writeFileSync(path.join(DIR, 'season.json'), JSON.stringify(ALL));
+}
