@@ -164,4 +164,21 @@ for (const [key, per] of [['h1', [1, 2]], ['h2', [3, 4]], ['q1', [1]], ['q2', [2
   const cg = OUT.clutch.games.map((g, i) => g.ps > 0 ? [i, g.pp[0], g.pp[1]] : null).filter(Boolean);
   Object.assign(ALL, { pq, tq, cg });
   fs.writeFileSync(path.join(DIR, 'season.json'), JSON.stringify(ALL));
+
+  /* one small file per Cavs player for his player page: live-archive/<season>/p/<name key>.json (the page used to download the whole season.json).
+     Same shape as season.json, trimmed to him: all his five-man units plus one row for every minute he sat (so on/off still adds up), his 2-man units, shots and assists. */
+  const PD = path.join(DIR, 'p'); fs.mkdirSync(PD, { recursive: true });
+  const nk = x => x.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g, '').replace(/[^a-z]/g, '');
+  const keep = new Set();
+  for (const [id, p] of Object.entries(ALL.P)) {
+    if (!ALL.B[id]) continue;
+    const L5 = Object.values(ALL.L[5] || {}), on = L5.filter(l => l.ids.includes(id)).map(({ pb, ...l }) => l);
+    const off = { ids: [], sec: 0, pf: 0, pa: 0, o: {}, d: {}, g: 0 };
+    for (const l of L5) if (!l.ids.includes(id)) { off.sec += l.sec; off.pf += l.pf; off.pa += l.pa; for (const k in l.o) off.o[k] = (off.o[k] || 0) + l.o[k]; for (const k in l.d) off.d[k] = (off.d[k] || 0) + (l.d[k] || 0); }
+    const L2 = Object.fromEntries(Object.entries(ALL.L[2] || {}).filter(([, l]) => l.ids.includes(id)));
+    const L5o = Object.fromEntries(on.map(l => [l.ids.join(','), l])); if (off.sec) L5o['_off'] = off;
+    const out = { season: ALL.season, updated: ALL.updated, player: id, P: ALL.P, B: { [id]: ALL.B[id] }, gp: { [id]: ALL.gp[id] || 0 }, L: { 2: L2, 5: L5o }, shots: ALL.shots.filter(x => x[0] === id), asts: ALL.asts.filter(a => a[0] === id || a[1] === id), pq: { [id]: (ALL.pq || {})[id] } };
+    const f = nk(p.name) + '.json'; keep.add(f); fs.writeFileSync(path.join(PD, f), JSON.stringify(out));
+  }
+  for (const f of fs.readdirSync(PD)) if (!keep.has(f)) fs.unlinkSync(path.join(PD, f));
 }

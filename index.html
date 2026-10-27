@@ -4024,10 +4024,11 @@ function ppBuild(p,root){
   /* season shot chart and passing web, from the live game archive (live-archive/<season>/season.json); season toggle when he has more than one */
   {const c=card('Shots and passing','','Every shot he took, where it came from, and who he set up and who set him up. From our game archive, updated after every game.');const box=el('div','ppx-sp');box.appendChild(el('p','dim','Loading…'));c.appendChild(box);ov.appendChild(c);
     const nrm=x=>x.normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');const SEAS=['2026-27','2025-26'];
-    PPD.arch=PPD.arch||{};Promise.all(SEAS.map(se=>PPD.arch[se]?0:fetch('/live-archive/'+se+'/season.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(j=>{PPD.arch[se]=j||{}}))).then(()=>{
-      const have=SEAS.filter(se=>{const A=PPD.arch[se];const id=A.P&&Object.keys(A.P).find(k=>nrm(A.P[k].name)===nrm(n));return id&&(A.shots||[]).some(x=>x[0]===id)});
+    PPD.arch=PPD.arch||{};const gj=u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);/* his own small file per season; the whole season.json only if that's missing */
+    Promise.all(SEAS.map(se=>PPD.arch[se+'|'+nrm(n)]?0:gj('/live-archive/'+se+'/p/'+nrm(n)+'.json').then(j=>j||gj('/live-archive/'+se+'/season.json')).then(j=>{PPD.arch[se+'|'+nrm(n)]=j||{}}))).then(()=>{
+      const have=SEAS.filter(se=>{const A=PPD.arch[se+'|'+nrm(n)];const id=A.P&&Object.keys(A.P).find(k=>nrm(A.P[k].name)===nrm(n));return id&&(A.shots||[]).some(x=>x[0]===id)});
       if(!have.length){c.remove();return}let cur=have[0];
-      const draw=()=>{box.innerHTML='';const A=PPD.arch[cur];const id=Object.keys(A.P).find(k=>nrm(A.P[k].name)===nrm(n));const gp=(A.gp||{})[id]||0;
+      const draw=()=>{box.innerHTML='';const A=PPD.arch[cur+'|'+nrm(n)];const id=Object.keys(A.P).find(k=>nrm(A.P[k].name)===nrm(n));const gp=(A.gp||{})[id]||0;
         if(have.length>1){const sg=el('div','segs ppx-segs');have.forEach(se=>{const b=el('button',null,se.replace('-','–'));b.type='button';b.setAttribute('aria-selected',se===cur);b.onclick=()=>{cur=se;draw()};sg.appendChild(b)});box.appendChild(sg)}
         const SH=A.shots.filter(x=>x[0]===id),xy=SH.filter(x=>x[1]!=null);const mk=SH.filter(x=>x[3]).length;
         const g=el('div','ppx-spg');
@@ -4146,7 +4147,8 @@ function ppBuild(p,root){
         const g=el('div','ppx-big2');[[hisO?pc(b.oreb,hisO):'–','His off. rebound %'],[hisD?pc(b.dreb,hisD):'–','His def. rebound %'],[f1((b.stl+b.blk)/Math.max(1,gp)),'Steals + blocks a game'],[f1(b.pf/Math.max(1,gp)),'Fouls a game']].forEach(([v,l])=>{const d=el('div');d.append(el('b',null,v),el('span',null,l));g.appendChild(d)});c.appendChild(g);df.appendChild(c)}};
     const fmtMinS=s=>Math.floor(s/60)+':'+String(Math.round(s%60)).padStart(2,'0');
     const poss=t=>t.np>0?t.np:t.fga-t.oreb+t.to+0.44*t.fta;/* counted possessions when the archive has them */
-    if(PPD.arch[SE])go(PPD.arch[SE]);else fetch('/live-archive/'+SE+'/season.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(j=>{PPD.arch[SE]=j||{};go(PPD.arch[SE])})}
+    /* his own small file (live-archive/<season>/p/<name>.json); the whole season.json only if that's missing */
+    {const K=SE+'|'+nrm(n);if(PPD.arch[K])go(PPD.arch[K]);else{const gj=u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);gj('/live-archive/'+SE+'/p/'+nrm(n)+'.json').then(j=>j||gj('/live-archive/'+SE+'/season.json')).then(j=>{PPD.arch[K]=j||{};go(PPD.arch[K])})}}}
   const va=chap('val','Role and value',stt==='TW'?'Two-way':stt==='Camp'?'Exhibit 10':'',false,'Role');
   const teamGames=games.length;
   if(gp>=3){const withG=games.filter(g=>g.me&&g.me.min>0),without=games.filter(g=>!(g.me&&g.me.min>0));const rec=a=>a.filter(g=>g.res==='W').length+'–'+a.filter(g=>g.res==='L').length;
