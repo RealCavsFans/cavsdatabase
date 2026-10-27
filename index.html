@@ -3940,7 +3940,9 @@ function ppBuild(p,root){
       const ln=el('div','ppx-last');ln.appendChild(el('div','ppx-lg',line));{const st=el('div','ppx-lls');[[m.pts,'PTS'],[m.reb,'REB'],[m.ast,'AST']].concat(m.blk?[[m.blk,'BLK']]:[],m.stl?[[m.stl,'STL']]:[],[[m.fgm+'–'+m.fga,'FG']]).forEach(([v,l])=>{const d=el('div');d.append(el('b',null,String(v)),el('span',null,l));st.appendChild(d)});ln.appendChild(st)}c.appendChild(ln);
       if(gp>=3){const ks=[['pts','points'],['reb','rebounds'],['ast','assists'],['blk','blocks'],['stl','steals'],['tpm','threes']];const sc=ks.map(([k,l])=>{const a=avg(k);return [l,m[k],a,(m[k]-a)/Math.max(a*0.5,1)]}).sort((x,y)=>y[3]-x[3])[0];
         /* stat of the night vs his average: removed Oct 27 (Luka) */}
-      const a=el('a','ppx-more','Full box score →');a.href='/games/'+gslug(SCHEDULE.find(g=>g[0]===lg.d));a.dataset.go=a.getAttribute('href').slice(1);c.appendChild(a);ov.appendChild(c)}}
+      const a=el('a','ppx-more','Full box score →');a.href='/games/'+gslug(SCHEDULE.find(g=>g[0]===lg.d));a.dataset.go=a.getAttribute('href').slice(1);c.appendChild(a);
+      /* his game card on the live page (stints, runs, shooting, his plays) */
+      {const se0=+lg.d.slice(5,7)>=8?lg.d.slice(0,4)+'-'+String(+lg.d.slice(0,4)+1).slice(2):(+lg.d.slice(0,4)-1)+'-'+lg.d.slice(2,4);fetch('/live-archive/'+se0+'/index.json').then(r=>r.ok?r.json():null).catch(()=>null).then(ix=>{const e=ix&&ix.find(x=>x.et===lg.d);if(!e)return;const g2=el('a','ppx-more','His game card →');g2.href='/live.html?g='+encodeURIComponent('a'+se0+':'+e.id)+'&pc='+encodeURIComponent(slug(n));g2.style.marginLeft='16px';a.after(g2)})}ov.appendChild(c)}}
   /* game log: his last 10 games */
   {const L=games.slice(-10);if(L.length>=2){const c=card('Game log',null,'His last '+L.length+' games, newest first. The bar is points.');const mx=Math.max(10,...L.map(g=>g.me?g.me.pts:0));
     const t=el('table','ppx-t ppx-gl');t.innerHTML='<thead><tr><th>Game</th><th>Min</th><th>Pts</th><th></th><th>Reb</th><th>Ast</th><th>FG</th><th>+/-</th></tr></thead>';const bd=el('tbody');
