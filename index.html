@@ -466,7 +466,6 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 .ppx-lls{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:6px}.ppx-lls>div{display:flex;flex-direction:column}.ppx-lls b{font:700 1.25rem var(--mono)}.ppx-lls span{font:800 .625rem var(--sans);letter-spacing:.08em;color:var(--muted)}
 .ppx-big2>div:last-child:nth-child(odd){grid-column:1/-1}.ppx-big2 b{font-size:1.125rem}.ppx-big2>div{padding:8px 10px}.ppx-big2 span{font-size:.75rem;line-height:1.35;display:block;margin-top:2px}
 @media(max-width:760px){.ppx-big2 b{font-size:1rem}.ppx-lls{gap:6px 14px}.ppx-lls b{font-size:1.0625rem}}
-.hjump{display:none}@media(max-width:760px){.hjump{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;position:sticky;top:var(--hdh,64px);z-index:20;background:var(--bg);padding:8px 16px;margin:0 -16px 6px;border-bottom:1px solid var(--line)}.hjump::-webkit-scrollbar{display:none}.hjump button{flex:none;font:700 .75rem var(--sans);padding:6px 11px;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;cursor:pointer}}
 .nav-stats{position:relative}.nav-stats .dot,.mbar a .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#e23b3b;margin-right:5px;vertical-align:1px}
 .mbar.six{grid-template-columns:repeat(6,1fr)}.mbar.six a{font-size:.5625rem}.mbar.six a svg{width:20px;height:20px}
 .hss{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}.hss .k{font:700 .75rem "Saira Condensed",var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
@@ -530,7 +529,7 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
  .nlft .t,.nlft.mini .t{display:block;min-width:0}.nlft p,.nlft.mini p{display:block;font-size:.75rem;margin:3px 0 0;white-space:nowrap}.f-long{display:none}.f-short{display:inline}}
 </style>
 <script>/* OneSignal web push for alerts: loads only on the live site, never prompts on its own */
-/* OneSignal paused with game alerts (Oct 19): the SDK isn't loaded, so no subscribe prompts appear. Set PUSH_SDK to true when alerts go live. */var PUSH_SDK=false;if(PUSH_SDK&&location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async function(OneSignal){await OneSignal.init({appId:"3db75ca9-d797-40c7-8c53-c0711b41e956",serviceWorkerPath:"sw.js",serviceWorkerParam:{scope:"/"},notifyButton:{enable:false},promptOptions:{slidedown:{prompts:[]}}})});const s=document.createElement('script');s.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';s.defer=true;document.head.appendChild(s)}</script>
+/* OneSignal: game alerts live since Oct 27. Set PUSH_SDK to false to stop loading it. */var PUSH_SDK=true;if(PUSH_SDK&&location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async function(OneSignal){await OneSignal.init({appId:"3db75ca9-d797-40c7-8c53-c0711b41e956",serviceWorkerPath:"sw.js",serviceWorkerParam:{scope:"/"},notifyButton:{enable:false},promptOptions:{slidedown:{prompts:[]}}})});const s=document.createElement('script');s.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';s.defer=true;document.head.appendChild(s)}</script>
 </head>
 <body>
 <a class="skip" href="#" id="skip">Skip to content</a>
@@ -2668,12 +2667,6 @@ const NL_ON=true; /* on since Oct 24: sign-ups collect on Buttondown; nothing is
   const q=location.search;const msg=/[?&]subscribe=check/.test(q)?'Almost there: check your email to confirm your Cavs & Coffee sign-up.':/[?&]subscribed=1/.test(q)?'You’re in ☕ The first issue lands the morning after the next Cavs game.':'';
   if(msg){const t=el('div','nltoast');t.setAttribute('role','status');t.append(msg);const x=el('button',null,'×');x.type='button';x.setAttribute('aria-label','Close');x.onclick=()=>t.remove();t.appendChild(x);document.body.appendChild(t);setTimeout(()=>t.remove(),9000);try{history.replaceState(history.state,'',location.pathname)}catch(_){}}})();
 
-/* phones: a row of shortcuts at the top of Home that jumps to each card (preview: ?jump=1) */
-if(/[?&]jump=1/.test(location.search))setTimeout(()=>{const home=document.getElementById('view-home');if(!home)return;
-  const T=[['.o-rec','Next game'],['.o-inj','Injuries'],['.o-otd','This day'],['.o-dates','Key dates'],['.o-cap','Cap'],['#chase','Chasing history'],['.o-vid','Video'],['#chg-h','Charge'],['#index','Browse']];
-  const items=T.map(([q,l])=>{let e=home.querySelector(q);if(e&&q==='#chg-h')e=e.closest('section');return e&&!e.closest('[hidden]')?[e,l]:null}).filter(Boolean);
-  const bar=el('nav','hjump');bar.setAttribute('aria-label','Jump to');items.sort((a,b)=>a[0].getBoundingClientRect().top-b[0].getBoundingClientRect().top).forEach(([e,l])=>{const b=el('button',null,l);b.type='button';b.onclick=()=>{const hb=(document.querySelector('header.gbar')||{offsetHeight:0}).offsetHeight+bar.offsetHeight+8;scrollTo({top:e.getBoundingClientRect().top+scrollY-hb,behavior:'smooth'})};bar.appendChild(b)});
-  home.insertBefore(bar,home.firstChild);const hd=document.querySelector('header.gbar');const fit=()=>{bar.style.top=(hd?hd.offsetHeight:0)+'px'};fit();addEventListener('resize',fit)},600);
 /* phones: compact cap sheet — "61.6" instead of "$61.6M" ($M in the header), "J. Harden", "26–27". Both forms are in the page; CSS picks one by screen width. */
 (function(){const cb=document.getElementById('capbody');const t=cb&&cb.closest('table');if(!t)return;
   const sp=(c,tx)=>{const e=document.createElement('span');e.className=c;e.textContent=tx;return e};
@@ -2707,7 +2700,7 @@ if(/[?&]jump=1/.test(location.search))setTimeout(()=>{const home=document.getEle
    Choices are saved as OneSignal tags (tip/final/tx/inj = '1' or '0'); scripts/push.mjs sends to them. A small invite card shows only for regulars
    (2+ days visited, 3+ pages this visit, a game within 3 days), never in the same visit as the newsletter card, and "Not now" waits 30 days.
    ?alerts=sheet / ?alerts=invite / ?alerts=ios preview it. */
-const ALERTS_ON=false; /* paused: the button and invite stay hidden until this is true (previews still work) */
+const ALERTS_ON=true; /* live since Oct 27; false hides the alerts button and invite */
 (function(){const B=document.getElementById('galb');if(!B||window.CDB_EMBED)return;
   const pv=(/[?&]alerts=(sheet|invite|ios)/.exec(location.search)||[])[1];if(!ALERTS_ON&&!pv)return;
   const BELL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>';

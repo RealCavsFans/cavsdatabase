@@ -1,9 +1,9 @@
 name: Push alerts (OneSignal)
 on:
-  # paused: put the schedule back to turn alerts on
-  # schedule:
-  #   - cron: '*/10 * * * *'   # tip-off, final score, and the once a day transactions/injuries alert
-  #   - cron: '*/5 23,0-4 * * *'   # every 5 minutes in the evening, for end-of-quarter and big-run alerts
+  # live since Oct 27 (Luka's OK). To pause again, comment out these schedule lines.
+  schedule:
+    - cron: '*/10 * * * *'   # tip-off, final score, and the once a day transactions/injuries alert
+    - cron: '*/5 23,0-4 * * *'   # every 5 minutes in the evening, for end-of-quarter and big-run alerts
   workflow_dispatch:
 permissions:
   contents: write

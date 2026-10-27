@@ -52,7 +52,7 @@ Don't hand-edit these. The automatic jobs own them and would overwrite you: `TST
 All keys live in GitHub → Settings → Secrets and variables → Actions. Never paste a key anywhere else.
 
 - `NEWSLETTER_LIVE`: set to `true` to send to subscribers.
-- Game alerts are paused by commented-out schedule lines in `.github/workflows/push.yml`. To turn them on, remove the `#` in front of those lines.
+- Game alerts went live Oct 27. To pause them, comment out the schedule lines in `.github/workflows/push.yml` (or set the repository variable PUSH_LIVE to anything but "true", which turns every run into a dry run).
 
 ## If ESPN changes or blocks its feed
 
