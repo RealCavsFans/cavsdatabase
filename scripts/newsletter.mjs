@@ -1,5 +1,5 @@
 // Cavs & Coffee: builds the freshly brewed email from the site's own data and hands it to Buttondown.
-//   node scripts/newsletter.mjs auto   (the 7 AM run: only if the Cavs played yesterday and it hasn't gone out)
+//   node scripts/newsletter.mjs auto   (the morning run: sends at 6:19 AM ET, only if the Cavs played yesterday and it hasn't gone out)
 //   node scripts/newsletter.mjs test   (latest final, or the preseason finale before the opener; test copy to the owner only)
 // Nothing reaches subscribers unless the repo variable NEWSLETTER_LIVE is "true". Until then every issue is a
 // Buttondown draft plus a test copy to the newsletter owner. Needs BUTTONDOWN_API_KEY, and Playwright/Chrome to read the site's data.
@@ -191,7 +191,9 @@ let sent = {}; try { sent = JSON.parse(await readFile(sentFile, 'utf8')); } catc
 const DRY = process.env.NL_DRY === '1';
 if (!KEY && !DRY) { console.log('::warning::BUTTONDOWN_API_KEY missing, nothing to do'); process.exit(0); }
 const today = process.env.NL_TODAY || etDate(); // NL_TODAY: preview a given morning (dry runs)
-if (MODE === 'auto' && etHour() !== 7) { console.log('not 7 AM ET, skipping'); process.exit(0); }
+/* Issues go out at 6:19 AM ET, for June 19, 2016. Runs start between 5 and 8 AM ET; an early run builds the issue, then waits for 6:19 to send. */
+if (MODE === 'auto' && (etHour() < 5 || etHour() > 7)) { console.log('outside the 5–8 AM ET window, skipping'); process.exit(0); }
+const msTo619 = () => { const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false }).formatToParts(new Date()).map(x => [x.type, +x.value])); return ((6 * 60 + 19) * 60 - (p.hour * 3600 + p.minute * 60 + p.second)) * 1000; };
 
 const D = await siteData();
 let box = {}; try { box = JSON.parse(await readFile(new URL('box.json', root), 'utf8')); } catch {}
@@ -275,6 +277,7 @@ if (DRY) { console.log('dry run:', subj); process.exit(0); }
 const email = await bd('/emails', 'POST', { subject: subj, body: html, status: 'draft' });
 console.log('draft created', email.id);
 if (LIVE && MODE === 'auto') {
+  const wait = msTo619(); if (wait > 0) { console.log('waiting ' + Math.round(wait / 60000) + ' min for 6:19 AM ET'); await new Promise(r => setTimeout(r, wait)); }
   await bd('/emails/' + email.id, 'PATCH', { status: 'about_to_send' });
   console.log('sent to subscribers');
 } else {

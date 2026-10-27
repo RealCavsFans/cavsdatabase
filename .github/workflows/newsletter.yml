@@ -1,8 +1,9 @@
 name: Cavs & Coffee newsletter
 on:
   schedule:
-    - cron: '7 11 * * *'   # 7:07 AM EDT
-    - cron: '7 12 * * *'   # 7:07 AM EST (the script only acts during the 7 AM ET hour)
+    - cron: '37 9 * * *'   # 5:37 AM EDT / 4:37 EST: builds the issue, then waits to send at 6:19 AM ET (June 19, 2016)
+    - cron: '37 10 * * *'  # 5:37 AM EST / 6:37 EDT: backup if the first run was late or skipped
+    - cron: '7 11 * * *'   # last backup; the script only acts 5–8 AM ET and never sends an issue twice
   workflow_dispatch:
     inputs:
       mode:
@@ -24,7 +25,7 @@ jobs:
         with:
           node-version: 22
       - run: npm i --no-save --no-package-lock --no-audit --no-fund playwright-core@1.56.0
-      - name: Build and hand to Buttondown
+      - name: Build and hand to Buttondown (waits for 6:19 AM ET)
         run: node scripts/newsletter.mjs ${{ github.event.inputs.mode || 'auto' }}
         env:
           CHROME_PATH: /usr/bin/google-chrome
