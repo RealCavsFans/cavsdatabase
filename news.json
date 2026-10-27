@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "Fear The Sword",
+   "title": "The NBA’s regular season still means ‘everything’ to the Cavs",
+   "link": "https://www.fearthesword.com/cavs-analysis/53600/the-nbas-regular-season-still-means-everything-to-the-cavs",
+   "date": "2026-10-27T17:06:41.000Z"
+  },
+  {
    "src": "Cavaliers on SI",
    "title": "3 Major Takeaways from Cavs vs. Timberwolves",
    "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxORHZidkxnVTJMU3g2bUdkZFhlODh1Y3VxbW1qUnh3anl3M25RNW9aVXZyM0hWVS03TE5IczBWYU1IVnBabU43Sy1CclZFem9kZmg1WUhmTFZiNmFDRTZwUXZvUWZieW1XNkNENDRRdnBNZlVtcG5IOHVEYnJwMTV5eXlKMkN5ZUVHQkZMb2pnTU56cVNKQVl6cDJn?oc=5",
@@ -113,12 +119,6 @@
    "title": "Diving deeper into Cavs narrow 125-121 victory over the Nets",
    "link": "https://www.fearthesword.com/cavs-analysis/53438/diving-deeper-into-cavs-narrow-125-121-victory-over-the-nets",
    "date": "2026-10-25T04:08:24.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Player Grades: Cavs vs Nets – Jarrett Allen plays the unsung hero",
-   "link": "https://www.fearthesword.com/cavs-analysis/53420/player-grades-cavs-vs-nets-jarrett-allen-plays-the-unsung-hero",
-   "date": "2026-10-25T02:50:21.000Z"
   },
   {
    "src": "cleveland.com",
@@ -353,6 +353,13 @@
  ],
  "videos": [
   {
+   "src": "It's Cavalier Podcast",
+   "title": "Meleek Thomas Just Made His Case! Cavs Rookie Drops 16 in NBA Debut 🔥",
+   "link": "https://www.youtube.com/watch?v=OcpCv5YLBZE",
+   "date": "2026-10-27T16:31:04.000Z",
+   "id": "OcpCv5YLBZE"
+  },
+  {
    "src": "Locked On Cavs",
    "title": "Meleek Thomas Gave Cavs a HUGE Spark! #clevelandcavaliers #nba #cavs",
    "link": "https://www.youtube.com/watch?v=T3ZyIW2ZS0M",
@@ -484,13 +491,6 @@
    "link": "https://www.youtube.com/watch?v=2DPKiiBAqtY",
    "date": "2026-10-23T17:14:54.000Z",
    "id": "2DPKiiBAqtY"
-  },
-  {
-   "src": "It's Cavalier Podcast",
-   "title": "Cavs vs. LeBron & the 76ers: Peyton Watson’s Cleveland Debut!",
-   "link": "https://www.youtube.com/watch?v=FF-LMXN6uDg",
-   "date": "2026-10-23T03:28:07.000Z",
-   "id": "FF-LMXN6uDg"
   },
   {
    "src": "The Chase Down Podcast",
