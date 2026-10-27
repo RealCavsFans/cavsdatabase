@@ -525,7 +525,7 @@ const ESPN='https://site.api.espn.com/apis/site/v2/sports/basketball/nba/';
   const ap=()=>{if(m==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.setAttribute('data-theme',m);const x=b();if(x)x.textContent=m==='auto'?'Auto':m==='dark'?'Dark':'Light'};ap();
   addEventListener('DOMContentLoaded',()=>{ap();b().onclick=()=>{m=m==='auto'?'dark':m==='dark'?'light':'auto';try{localStorage.setItem('cdb-theme',m)}catch(e){}ap()}})})();
 const ARCH={},SEASON_TABS=['season','team','players','lineups','shots','ast','ff','share'];
-const POLL=15000,MOCK=new URLSearchParams(location.search).has('mock');
+const POLL=15000;
 const $=id=>document.getElementById(id);
 const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -893,7 +893,6 @@ function vTeam(v,D,R){
   if(S.season){const n=Math.max(1,(D.games||[]).length||1);const pg=t=>{const x={};for(const k in t)x[k]=typeof t[k]==='number'?t[k]/n:t[k];return x};R=Object.assign({},R,{T:{[D.focus.id]:pg(R.T[D.focus.id]),[D.other.id]:pg(R.T[D.other.id])}})}
   if(!S.season&&S.state!=='pre'){const mc=milestoneCard(D,R);if(mc)v.appendChild(mc)}
   if(S.state==='post'&&!S.season&&R.lp){const RA=S.per==='all'?R:deriveCore(D,D.plays,'all');const c=el('div','card');c.style.borderTop='3px solid var(--gold)';c.style.marginBottom='14px';head(c,'Recap','Numbers only, written automatically at the final buzzer');const ul=el('ul','sw');recap(D,RA).forEach((t,i)=>{const li=el('li');li.style.gridTemplateColumns='1fr';li.appendChild(el('span',null,t));if(!i)li.style.fontWeight='700';ul.appendChild(li)});c.appendChild(ul);v.appendChild(c)}
-  if(MOCK){v.appendChild(el('p','note','The fatigue watch mockup below only shows with ?mock=1.'));v.appendChild(fatigueCard(D,R))}
   const a=R.T[D.focus.id],b=R.T[D.other.id];
   const c=el('div','card');head(c,'Team stats',S.season?(S.per!=='all'?perLabel(S.per)+' · ':'')+'Per game · '+((D.games||[]).length)+' game'+((D.games||[]).length===1?'':'s'):perLabel(S.per));
   const ROWS=[];let G0=null;const SHORT={'Offensive rebounds':'Off. rebounds','Second-chance points':'Second chance','Points from threes':'From threes','Points from free throws':'From free throws','Points in the paint':'In the paint','Points off turnovers':'Off turnovers','Pace (possessions per 48)':'Pace','Possessions (est.)':'Possessions','Points per 100 possessions':'Points per 100','Free throws made':'FT made','True shot attempts':'True shot att.'};
@@ -1067,12 +1066,6 @@ function ftCard(D,R){
   f.appendChild(el('p','note','ESPN’s play-by-play doesn’t name who drew each foul, so trips to the line stand in for fouls drawn.'));return f;
 }
 /* ---------- mockups: fatigue, lineup alert, droughts ---------- */
-function fatigueCard(D,R){
-  const f=el('div','card sec');f.style.borderTop='3px solid var(--gold)';head(f,'Fatigue watch · mockup','Who has been on the floor longest right now');
-  const rows=Object.entries(R.curStint).map(([id,c])=>({id,sec:c.sec,pm:c.pm,min:R.B[id].min,team:D.P[id].team,avg:(curBase().s[normName(D.P[id].name)]||[])[1]})).sort((a,b)=>b.sec-a.sec);
-  f.appendChild(dtable('fat',[{h:'Player',k:'id',f:r=>{const s=el('span');s.innerHTML=`<i class="chip" style="background:${D.teams.find(t=>t.id===r.team).c}"></i>`;s.append(nmEl(D.P[r.id]));return s}},{h:'THIS STINT',k:'sec',f:r=>{const s=el('span',null,fmtMin(r.sec));if(r.sec>=480){const b=el('span','vsn',' long');b.style.color='var(--neg)';s.appendChild(b)}return s}},{h:'STINT +/-',k:'pm',f:r=>sgn(r.pm),cls:r=>pmCls(r.pm)},{h:'TONIGHT',k:'min',f:r=>fmtMin(r.min)},{h:'SEASON AVG',k:'avg',f:r=>r.avg?r.avg.toFixed(1)+' min':'–'}],rows,{def:'sec'}));
-  f.appendChild(el('p','note','Flags any stint over 8 minutes. Could also flag a second night of a back-to-back from the schedule.'));return f;
-}
 function alertCard(D,R){
   const f=el('div','card sec');f.style.borderTop='3px solid var(--gold)';head(f,'Lineup alert · mockup','The five on the floor for '+D.focus.abbr+' right now');
   const ids=[...R.on[D.focus.id]].sort();const k=ids.join(',');const l=R.L[D.focus.id][5][k];
