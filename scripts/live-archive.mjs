@@ -110,6 +110,7 @@ function build(per, file) {
     for (const n of [2, 3, 4, 5]) for (const [k, l] of Object.entries(R.L['5'][n])) {
       const o = L[n][k] = L[n][k] || { ids: l.ids, sec: 0, pf: 0, pa: 0, o: {}, d: {}, g: 0 };
       o.sec += l.sec; o.pf += l.pf; o.pa += l.pa; o.g++; for (const x in l.o) { o.o[x] = (o.o[x] || 0) + l.o[x]; o.d[x] = (o.d[x] || 0) + (l.d[x] || 0); }
+      if (l.pb && per === 'all') { o.pb = o.pb || {}; for (const [id, q] of Object.entries(l.pb)) { const z = o.pb[id] = o.pb[id] || {}; for (const k in q) z[k] = (z[k] || 0) + q[k]; } }   // players' own numbers inside 2- and 5-man units (full-game file only)
     }
     /* opponents' shots too, so the season Shots tab can show what the Cavs allow */
     for (const q of R.shots) if (q.t !== '5') oshots.push([q.hasXY ? q.x : null, q.hasXY ? q.y : null, q.m ? 1 : 0, q.three ? 1 : 0, q.zi, q.pt, q.ast ? 1 : 0, gi]);
