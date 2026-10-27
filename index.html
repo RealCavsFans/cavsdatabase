@@ -449,7 +449,7 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 .oo2-t td.on{text-align:right;font-weight:700}.oo2-t td.off{text-align:right;color:var(--muted)}.oo2-t td.df{text-align:right;font-weight:800}.oo2-t td.df.g{color:var(--pos,#1d6b3a)}.oo2-t td.df.r{color:var(--neg,#a3122e)}.oo2-t td.df.n{color:var(--muted);font-weight:500}
 .oo2-t td.bc{width:48px;padding-right:12px}.oo2-bar{display:block;position:relative;height:8px;background:var(--sub,#f1eee9)}.oo2-bar:after{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--muted)}.oo2-bar i{position:absolute;top:0;bottom:0}.oo2-bar i.g{background:#2e9e5b}.oo2-bar i.r{background:#d64b5c}.oo2-bar i.n{background:#b8b3ab}
 .oo2-s td{font:800 .6875rem var(--cond)!important;letter-spacing:.12em;text-transform:uppercase;color:var(--wine-ink,#860038);padding:12px 12px 4px!important;border-top:0!important}.oo2-more{all:unset;cursor:pointer;display:block;margin:8px 12px 0;font:700 .8125rem var(--sans);color:var(--wine-ink,#860038)}.oo2-n{font-size:.6875rem;color:var(--muted);padding:8px 12px 12px;margin:0}
-.ppx-share .ppx-shs{display:block;font:500 .6875rem var(--mono);color:var(--muted);margin:-4px 0 6px;text-align:right}</style>
+.ppx-share .ppx-shs{display:block;font:500 .6875rem var(--mono);color:var(--muted);margin:-4px 0 6px;text-align:right}.ppx-h4{margin:16px 0 8px;font:800 .75rem var(--cond);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.ppx-nb{display:block;height:5px;background:var(--line2);margin-top:3px}.ppx-nb i{display:block;height:100%;background:#860038}.ppx-nb i.n{background:#8a929c}</style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
 @media (max-width:720px){.side>.o-inj{order:3}.side>.o-otd,.o-otd{order:99}}
@@ -4119,7 +4119,7 @@ function ppBuild(p,root){
     const g6=el('div','ppx-g6');rows.forEach(([lab,k,v])=>{if(v==null)return;const cell=el('div','ppx-cell');cell.appendChild(el('div','k')).appendChild(tip(lab));cell.appendChild(el('div','v',f1(v)));
       const rk=lgOK?rankIn(fnOf(k)(meL),pool.filter(x=>x!==meL).map(fnOf(k))):null;if(rk){cell.appendChild(el('div','r',ord(rk.r)+' of '+rk.of+' '+GN));const pb=el('div','pct');const i2=el('i');i2.style.width=pc(rk.pct)+'%';pb.appendChild(i2);cell.appendChild(pb)}g6.appendChild(cell)});c.appendChild(g6);
     if(gp>=3){const tm=k=>mine.reduce((t,g)=>t+g.team[k],0);const sh=el('div','ppx-share');sh.style.marginTop='12px';[['Rebounds',tot('reb')/Math.max(1,tm('reb'))],['Blocks',tot('blk')/Math.max(1,tm('blk'))],['Steals',tot('stl')/Math.max(1,tm('stl'))]].forEach(([l,v2])=>{const r2=el('div');r2.appendChild(el('span',null,l));const t2=el('span','t');const i2=el('i');i2.style.width=pc(v2*100)+'%';const u=el('u');u.style.left='20%';t2.append(i2,u);r2.appendChild(t2);r2.appendChild(el('b',null,Math.round(v2*100)+'%'));sh.appendChild(r2)});c.appendChild(sh);c.appendChild(note('His share of the Cavs’ totals in games he played. The black line is an even share (20%).'))}
-    df.appendChild(c)}
+    c.id='ppx-db';df.appendChild(c)}
 
   /* ===== 4 · value to the Cavs ===== */
   const sal=R?(v2=>typeof v2==='number'?v2:Array.isArray(v2)?v2[0]:0)(R[2][0]):0;
@@ -4145,7 +4145,9 @@ function ppBuild(p,root){
         c.appendChild(ooBox({name:n,img:(()=>{const pp=PLAYERS.find(x=>x[1]===n);return pp&&pp[12]?'/img/h/'+pp[12]+'.png':null})(),ab:'Cavs',oab:'opponents',a,b:z,sub:gp+' game'+(gp===1?'':'s')+' this season · small samples swing hard',fewer:true,note:'Diff is on minus off. Green is better for the Cavs with him on, red is worse. Possessions are counted play by play, so ratings can differ a little from NBA.com.'}));ov.appendChild(c)}
       /* 2 · lineups (overview) */
       {const rows=L5.filter(l=>l.ids.includes(id)&&l.sec>=60).sort((a,b)=>b.sec-a.sec).slice(0,6);if(rows.length){const c=card('His most-used lineups',null,'Five-man groups he played in this season, by minutes. Off, Def and Net are points scored and allowed per 100 possessions.');
-        c.appendChild(tbl(rows.map(l=>{const r=rt(l);return [l.ids.filter(x=>x!==id).map(x=>(A.P[x]||{}).last||'').join(', '),fmtMinS(l.sec),(l.pf-l.pa>0?'+':l.pf-l.pa<0?'−':'')+Math.abs(l.pf-l.pa),r?f1(r.o):'–',r?f1(r.d):'–',r?sg(r.n):'–']}),['Min','+/-','Off','Def','Net']));c.querySelector('thead th').textContent='With';ov.appendChild(c)}}
+        c.appendChild(tbl(rows.map(l=>{const r=rt(l);return [l.ids.filter(x=>x!==id).map(x=>(A.P[x]||{}).last||'').join(', '),fmtMinS(l.sec),(l.pf-l.pa>0?'+':l.pf-l.pa<0?'−':'')+Math.abs(l.pf-l.pa),r?f1(r.o):'–',r?f1(r.d):'–',r?sg(r.n):'–']}),['Min','+/-','Off','Def','Net']));c.querySelector('thead th').textContent='With';
+        /* net as a small bar: wine above zero, gray below */
+        c.querySelectorAll('tbody tr').forEach(tr=>{const td=tr.lastElementChild;const v=parseFloat(td.textContent.replace('−','-').replace('+',''));if(isNaN(v))return;const bar=el('span','ppx-nb');const i2=el('i',v<0?'n':null);i2.style.width=Math.min(100,Math.abs(v)/40*100)+'%';bar.appendChild(i2);td.appendChild(bar)});ov.appendChild(c)}}
       /* with and without a teammate (overview): his own numbers per 36, from the 2-man units */
       {const L2=Object.values((A.L||{})[2]||{}).filter(l=>l.ids.includes(id)&&l.pb&&l.sec>=300);if(L2.length&&b.min>0){L2.sort((x,y)=>y.sec-x.sec);const c=card('With and without',null,'His own numbers per 36 minutes with a teammate on the floor and without him. Pick a teammate.');
         const sel=document.createElement('select');sel.className='ppx-sel';sel.setAttribute('aria-label','Teammate');L2.forEach(l=>{const m=l.ids.find(x=>x!==id);const o=document.createElement('option');o.value=m;o.textContent=(A.P[m]||{}).name+' · '+fmtMinS(l.sec)+' together';sel.appendChild(o)});c.appendChild(sel);
@@ -4169,9 +4171,13 @@ function ppBuild(p,root){
       {const SH=(A.shots||[]).filter(x=>x[0]===id);const usage=(b.fga+.44*b.fta+b.to)/Math.max(1,(on.o.fga||0)+.44*(on.o.fta||0)+(on.o.to||0))*100;const ts=b.fga+b.fta?b.pts/(2*(b.fga+.44*b.fta))*100:null;
 }
       /* 4 · defense and boards with him on vs off */
-      {const c=card('Boards and stops',null,'His share of the rebounds while he was on the floor, and his steals, blocks and fouls per 36 minutes. '+note+'.');
-        const hisO=(on.o.oreb||0)+(on.d.dreb||0),hisD=(on.o.dreb||0)+(on.d.oreb||0);
-        const m36=k=>b.min>0?f1((b[k]||0)/b.min*2160):'–';const g=el('div','ppx-big2');[[hisO?pc(b.oreb,hisO):'–','His off. rebound %'],[hisD?pc(b.dreb,hisD):'–','His def. rebound %'],[m36('stl'),'Steals per 36'],[m36('blk'),'Blocks per 36'],[m36('pf'),'Fouls per 36']].forEach(([v,l])=>{const d=el('div');d.append(el('b',null,v),el('span',null,l));g.appendChild(d)});c.appendChild(g);df.appendChild(c)}};
+      {/* rebound shares and per-36 defense: added to the Defense and boards card (one box), drawn as bars */
+        const hisO=(on.o.oreb||0)+(on.d.dreb||0),hisD=(on.o.dreb||0)+(on.d.oreb||0);const host=df.querySelector('#ppx-db');const c=host||card('Defense and boards',null,'');
+        const bars=(title,rows)=>{c.appendChild(el('h4','ppx-h4',title));const sh=el('div','ppx-share');rows.forEach(([lab,v,mx,tick,txt])=>{const r2=el('div');r2.appendChild(el('span',null,lab));const t2=el('span','t');const i2=el('i');i2.style.width=(v==null?0:Math.min(100,v/mx*100))+'%';t2.appendChild(i2);if(tick!=null){const u=el('u');u.style.left=Math.min(100,tick/mx*100)+'%';t2.appendChild(u)}r2.appendChild(t2);r2.appendChild(el('b',null,txt));sh.appendChild(r2)});c.appendChild(sh)};
+        const oP=hisO?b.oreb/hisO*100:null,dP=hisD?b.dreb/hisD*100:null;
+        bars('Share of the rebounds with him on',[['Offensive',oP,40,20,oP==null?'–':oP.toFixed(1)+'%'],['Defensive',dP,40,20,dP==null?'–':dP.toFixed(1)+'%']]);
+        const p36=k=>b.min>0?(b[k]||0)/b.min*2160:null;bars('Per 36 minutes',[['Steals',p36('stl'),3,null,p36('stl')==null?'–':p36('stl').toFixed(1)],['Blocks',p36('blk'),4,null,p36('blk')==null?'–':p36('blk').toFixed(1)],['Fouls',p36('pf'),6,null,p36('pf')==null?'–':p36('pf').toFixed(1)]]);
+        {const p2=el('p','ppx-why','Rebound share = his rebounds out of every one available while he played; the black line is an even share for five players (20%). '+note+'.');c.appendChild(p2)}if(!host)df.appendChild(c)}};
     const fmtMinS=s=>Math.floor(s/60)+':'+String(Math.round(s%60)).padStart(2,'0');
     const poss=t=>t.np>0?t.np:t.fga-t.oreb+t.to+0.44*t.fta;/* counted possessions when the archive has them */
     /* his own small file (live-archive/<season>/p/<name>.json); the whole season.json only if that's missing */
