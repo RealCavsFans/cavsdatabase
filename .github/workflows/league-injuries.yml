@@ -1,7 +1,7 @@
 name: League games missed to injury
 on:
   schedule:
-    - cron: '50 10 * * *'   # 6:50 a.m. Eastern: count last night's games
+    # the morning count moved into morning.yml (Oct 27)
     - cron: '10 22 * * *'   # 6:10 p.m. Eastern: save the day's injury list before tip-offs
   workflow_dispatch:
 permissions:

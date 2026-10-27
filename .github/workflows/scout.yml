@@ -1,7 +1,7 @@
 name: Scouting report for the next opponent
 on:
   schedule:
-    - cron: '35 10 * * *'   # 6:35 a.m. Eastern, after last night's games are final
+    # the morning run moved into morning.yml (Oct 27)
     - cron: '35 17 * * *'   # 1:35 p.m. Eastern, picks up a new opponent the day after a game
   workflow_dispatch:
 permissions:

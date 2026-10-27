@@ -1,7 +1,6 @@
 name: Basketball Reference player IDs
 on:
-  schedule:
-    - cron: '41 10 * * *'   # daily, early morning ET
+  # daily run moved into morning.yml (Oct 27); this one is for running by hand
   workflow_dispatch:
 permissions:
   contents: write

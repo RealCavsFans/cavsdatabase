@@ -1,7 +1,6 @@
 name: Live page season baselines
 on:
-  schedule:
-    - cron: '20 10 * * *'   # 6:20 a.m. Eastern, after pbpstats has last night's games
+  # daily run moved into morning.yml (Oct 27); this one is for running by hand (any season)
   workflow_dispatch:
     inputs:
       season:

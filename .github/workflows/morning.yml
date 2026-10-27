@@ -1,0 +1,50 @@
+name: Morning data (baselines, scouting, BBR ids, injuries)
+# One morning run instead of four: live page baselines, the next opponent's scouting report,
+# Basketball Reference player ids and last night's games missed to injury. Each step runs even if an
+# earlier one fails, and everything that changed goes out in one commit.
+# scout.yml (1:35 p.m.) and league-injuries.yml (6:10 p.m.) keep their afternoon runs; live-base.yml and
+# bbr-ids.yml can still be run by hand.
+on:
+  schedule:
+    - cron: '45 10 * * *'   # 6:45 a.m. Eastern (5:45 in winter), after last night's games are final
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: morning
+  cancel-in-progress: false
+jobs:
+  morning:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
+        with:
+          node-version: 22
+      - name: Live page season baselines
+        run: node scripts/fetch-live-base.mjs
+        env:
+          SEASON: '2026-27'
+        continue-on-error: true
+      - name: Scouting report for the next opponent
+        run: node scripts/scout.mjs
+        continue-on-error: true
+      - name: Basketball Reference player ids
+        run: node scripts/bbr-ids.mjs
+        continue-on-error: true
+      - name: League games missed to injury
+        run: node scripts/league-injuries.mjs
+        continue-on-error: true
+      - name: Commit if changed
+        run: |
+          git config user.name "cavsdatabase-bot"
+          git config user.email "bot@cavsdatabase.com"
+          for f in live-base.json pdata/scout.json pdata/bbr-ids.json pdata/league-injuries.json; do [ -f "$f" ] && git add "$f"; done
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Morning data: baselines, scouting, player ids, injuries"
+          for i in 1 2 3; do
+            if git pull --rebase origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true; sleep 20
+          done
+          exit 1
