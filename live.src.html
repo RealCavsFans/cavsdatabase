@@ -1811,7 +1811,7 @@ function vAst(v,D,R){
   const A=R.asts.filter(a=>a.t===t.id);
   const c=el('div','card');head(c,t.abbr+' assist network',perLabel(S.per)+' · who set up whom');c.appendChild(teamBtns(D,'astTeam'));
   if(!A.length){c.appendChild(el('p','empty','No assists in this stretch yet.'));v.appendChild(c);return}
-  const pairs={},pl={};A.forEach(a=>{const k=a.p+'>'+a.s;const q=pairs[k]=pairs[k]||{p:a.p,s:a.s,n:0,pts:0,th:0};q.n++;q.pts+=a.v;if(a.v===3)q.th++;
+  const pairs={},pl={};A.forEach(a=>{const k=a.p+'>'+a.s;const q=pairs[k]=pairs[k]||{p:a.p,s:a.s,n:0,pts:0,th:0,rim:0,mid:0,zk:true};q.n++;q.pts+=a.v;if(a.v===3)q.th++;else if(a.z==null)q.zk=false;else if(a.z===0)q.rim++;else q.mid++;
     [a.p,a.s].forEach(id=>pl[id]=pl[id]||{id,ast:0,cr:0,rec:0,th:0,rim:0,mid:0,zk:0});pl[a.p].ast++;pl[a.p].cr+=a.v;if(a.v===3)pl[a.p].th++;if(a.z!=null){pl[a.p].zk++;if(a.z===0)pl[a.p].rim++;else if(a.z===1||a.z===2)pl[a.p].mid++}pl[a.s].rec++});
   /* network */
   const ids=Object.keys(pl).sort((a,b)=>(pl[b].ast+pl[b].rec)-(pl[a].ast+pl[a].rec));
@@ -1831,7 +1831,7 @@ function vAst(v,D,R){
     const tb=el('table','zt agrid');let h='<tr><th class="agc"><span class="nmf">Passer ↓ · Scorer →</span><span class="nms">Pass ↓<br>Score →</span></th>'+ss.map(id=>`<th class="agv"><span>${esc(D.P[id].last)}</span></th>`).join('')+'<th class="agv"><span>Total</span></th></tr>';
     ps.forEach(p=>{h+=`<tr><td>${esc(D.P[p].last)}</td>`+ss.map(q=>{const x=pairs[p+'>'+q];return x?`<td style="background:color-mix(in srgb,${col} ${Math.round(15+70*x.n/mxn)}%,var(--card));color:${x.n/mxn>.5?'#fff':'var(--fg)'};font-weight:700;text-align:center">${x.n}</td>`:'<td style="text-align:center;color:var(--line)">·</td>'}).join('')+`<td><b>${pl[p].ast}</b></td></tr>`});
     tb.innerHTML=h;const w=el('div','tw');w.appendChild(tb);right.appendChild(w);right.appendChild(el('p','note','Read across: who each passer set up. Darker = more assists.'))}
-  else if(S.f.astView==='pairs')right.appendChild(dtable('astp',[{h:'Passer → scorer',k:'p',f:q=>D.P[q.p].last+' → '+D.P[q.s].last},{h:'AST',k:'n'},{h:'PTS',k:'pts',title:'Points from those assists'},{h:'3PT',k:'th',title:'Assisted threes'}],Object.values(pairs),{def:'n'}));
+  else if(S.f.astView==='pairs')right.appendChild(dtable('astp',[{h:'Passer → scorer',k:'p',f:q=>D.P[q.p].last+' → '+D.P[q.s].last},{h:'AST',k:'n'},{h:'PTS',k:'pts',title:'Points from those assists'},{h:'RIM',k:'rim',f:q=>q.zk?String(q.rim):'–',title:'Assisted makes at the rim (inside 4 feet)'},{h:'MID',k:'mid',f:q=>q.zk?String(q.mid):'–',title:'Assisted midrange twos (4 feet to the arc)'},{h:'3PT',k:'th',title:'Assisted threes'}],Object.values(pairs),{def:'n'}));
   else right.appendChild(dtable('astl',[{h:'Player',k:'id',f:q=>nmEl(D.P[q.id])},{h:'AST',k:'ast'},{h:'PTS CREATED',k:'cr',title:'Points scored off his passes'},{h:'RIM AST',k:'rim',f:q=>q.zk||!q.ast?String(q.rim):'–',title:'Assists on shots at the rim (inside 4 feet)'},{h:'MID AST',k:'mid',f:q=>q.zk||!q.ast?String(q.mid):'–',title:'Assists on midrange twos (4 feet to the arc)'},{h:'3PT AST',k:'th',title:'Assists on threes'},{h:'ASSISTED',k:'rec',title:'Received: his own made shots that a teammate assisted'}],Object.values(pl),{def:'ast'}));
   right.appendChild(el('p','note',`${A.length} assists on ${R.T[t.id].fgm} made field goals (${pct(A.length,R.T[t.id].fgm)} assisted).`));
   g.append(nw,right);c.appendChild(g);v.appendChild(c);
