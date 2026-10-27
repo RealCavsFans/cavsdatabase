@@ -468,6 +468,7 @@ tr.xr{cursor:pointer}
 .shmini td{font-size:.75rem;padding:4px 3px!important;border-top:0!important}
 .shmini td:first-child{color:var(--muted)}
 .zt td.up{color:var(--pos);font-weight:700}.zt td.dn{color:var(--neg);font-weight:700}
+.plq{margin-top:-4px}
 .tap-hint{font:600 11px/1.3 'Geist Mono',monospace;color:var(--wine,#860038);margin:6px 0 4px}tr.xr:hover td{background:var(--sub)}tr.xr[aria-expanded=true] td{background:var(--sub);font-weight:700}tr.xd>td{padding:10px 8px 14px!important;background:var(--sub)}.lsp-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;margin-bottom:8px}.lsp-h span{font:600 .75rem var(--mono);color:var(--muted)}.lsp-t{max-width:520px}.lsp-t td,.lsp-t th{text-align:right}.lsp-t td:first-child,.lsp-t th:first-child{text-align:left}.lsp-t td.up{font-weight:800;color:var(--wine-ink,#860038)}
 
 /* season filter bar */
@@ -556,7 +557,7 @@ async function choose(v,push){
   else if(v.startsWith('b')){S.bk=v.slice(1);S.ev='b';S.replay=false}
   else if(v.startsWith('a')){const[se,id]=v.slice(1).split(':');S.src=se;S.ev=id;S.replay=true}
   else{S.replay=v.startsWith('r');S.ev=v.replace(/^r/,'');if(S.replay&&(ARCH['2025-26']||[]).some(g=>g.id===S.ev))S.src='2025-26'}
-  Object.assign(S.f,{voA:null,voB:null,astFoc:null,luPick:{},ooTeam:null,ooA:null,ooB:null,card:null,astTeam:null,plTeam:null,luTeam:null,shTeam:null,shPl:'all',shType:'all',rotTeam:null});
+  Object.assign(S.f,{plQ:null,voA:null,voB:null,astFoc:null,luPick:{},ooTeam:null,ooA:null,ooB:null,card:null,astTeam:null,plTeam:null,luTeam:null,shTeam:null,shPl:'all',shType:'all',rotTeam:null});
   $('gsel').value=v;
   if(push){const u=new URL(location.href);u.searchParams.set('g',v);history.replaceState(null,'',u)}
   $('sb').innerHTML='<div class="empty">Loading…</div>';$('view').innerHTML='';$('rpw').innerHTML='';$('rpw').hidden=true;
@@ -1263,7 +1264,6 @@ const CARDS={
     x.fillStyle='#fff';const parts=p.name.toUpperCase().split(' ');const first=parts.shift(),last=parts.join(' ');x.font='800 64px "Saira Condensed"';x.fillText(first,72,175);let fs=118;x.font=`800 ${fs}px "Saira Condensed"`;while(x.measureText(last).width>620&&fs>60){fs-=6;x.font=`800 ${fs}px "Saira Condensed"`}x.fillText(last,72,280);
     const [sl,wh]=scoreLine(D,R);x.font='700 36px "Geist Mono"';x.fillText(sl,72,345);const sw=x.measureText(sl).width;x.font='600 28px Archivo';x.fillStyle='rgba(255,255,255,.75)';x.fillText(wh,72+sw+28,345);
     [[b.pts,'PTS'],[b.oreb+b.dreb,'REB'],[b.ast,'AST']].forEach(([v,l],i)=>cStat(x,v,l,72+i*176,560,104));
-    const sv=curBase().s[normName(p.name)];if(sv){const d=b.pts-sv[2];x.fillStyle=d>=0?'#1d6b3a':'#a3122e';x.fillRect(72,630,360,52);x.fillStyle='#fff';x.font='700 28px "Geist Mono"';x.fillText(`${d>=0?'+':'−'}${Math.abs(d).toFixed(1)} pts vs his avg`,88,666)}
     const sh=R.shots.filter(q=>q.id===id&&q.hasXY);cCourt(x,sh,620,440,388);lbl(x,'HIS SHOTS',620,740,28);
     x.fillStyle='#e3e0db';x.fillRect(72,800,936,2);
     [['FG',b.fgm+'-'+b.fga],['3PT',b.tpm+'-'+b.tpa],['FT',b.ftm+'-'+b.fta],['STL',b.stl],['BLK',b.blk],['+/-',sgn(b.pm)]].forEach(([l,v],i)=>{const cx=72+(i%3)*312,cy=880+Math.floor(i/3)*170;lbl(x,l,cx,cy);num(x,v,cx,cy+80,76)});footer(x)}},
@@ -1881,7 +1881,10 @@ function vRot(v,D,R){
 function vPlays(v,D,R){
   const c=el('div','card');head(c,'Play-by-play','Newest first · score shown '+D.away.abbr+'–'+D.home.abbr);
   const fl=el('div','fl');[['all','All'],['sc','Scoring'],['focus',D.focus.abbr+' only'],['sub','Substitutions']].forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',S.f.plays===k);b.onclick=()=>{S.f.plays=k;renderView()};fl.appendChild(b)});c.appendChild(fl);
-  const list=R.plays.slice().reverse().filter(p=>S.f.plays==='sc'?p.sc:S.f.plays==='focus'?p.team===D.focus.id:S.f.plays==='sub'?p.type==='Substitution':true);
+  /* one quarter at a time (the latest by default), or the whole game */
+  const pers=[...new Set(R.plays.map(p=>p.per))].sort((a,b)=>a-b);const lastP=pers[pers.length-1];const q=S.f.plQ==='all'?'all':pers.includes(S.f.plQ)?S.f.plQ:lastP;
+  const qf=el('div','fl plq');pers.concat(['all']).forEach(k=>{const b=el('button',null,k==='all'?'All':k<=4?'Q'+k:k===5?'OT':pname(k));b.type='button';b.setAttribute('aria-pressed',q===k);b.onclick=()=>{S.f.plQ=k;renderView()};qf.appendChild(b)});if(pers.length)c.appendChild(qf);
+  const list=R.plays.slice().reverse().filter(p=>q==='all'||p.per===q).filter(p=>S.f.plays==='sc'?p.sc:S.f.plays==='focus'?p.team===D.focus.id:S.f.plays==='sub'?p.type==='Substitution':true);
   const ul=el('ul','plays');let lp=null;list.forEach(p=>{if(p.per!==lp){lp=p.per;ul.appendChild(el('li','pd',p.per<=4?['1st','2nd','3rd','4th'][p.per-1]+' quarter':pname(p.per)))}
     const li=el('li',p.sc?'sc':'');const t=D.teams.find(x=>x.id===p.team);const cb=el('span','c');cb.style.background=t?t.c:'transparent';li.append(el('span','t',p.clock),cb,el('span','x',p.text),el('span','s',p.as+'–'+p.hs));ul.appendChild(li)});
   if(!list.length)ul.appendChild(el('li','empty','No plays yet.'));c.appendChild(ul);c.appendChild(el('p','note',list.length+' plays.'));v.appendChild(c);

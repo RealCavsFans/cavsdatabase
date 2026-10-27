@@ -3932,7 +3932,7 @@ function ppBuild(p,root){
       const line=`${new Date(lg.d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})} ${lg.ha==='H'?'vs':'at'} ${lg.opp} · ${lg.res} ${lg.score?lg.score.replace('-','–'):''}`;
       const ln=el('div','ppx-last');ln.appendChild(el('div','ppx-lg',line));{const st=el('div','ppx-lls');[[m.pts,'PTS'],[m.reb,'REB'],[m.ast,'AST']].concat(m.blk?[[m.blk,'BLK']]:[],m.stl?[[m.stl,'STL']]:[],[[m.fgm+'–'+m.fga,'FG']]).forEach(([v,l])=>{const d=el('div');d.append(el('b',null,String(v)),el('span',null,l));st.appendChild(d)});ln.appendChild(st)}c.appendChild(ln);
       if(gp>=3){const ks=[['pts','points'],['reb','rebounds'],['ast','assists'],['blk','blocks'],['stl','steals'],['tpm','threes']];const sc=ks.map(([k,l])=>{const a=avg(k);return [l,m[k],a,(m[k]-a)/Math.max(a*0.5,1)]}).sort((x,y)=>y[3]-x[3])[0];
-        if(sc&&sc[3]>0.9)c.appendChild(ctx(`Stat of the night: ${sc[1]} ${sc[0]}, ${f1(sc[1]-sc[2])} more than his average.`))}
+        /* stat of the night vs his average: removed Oct 27 (Luka) */}
       const a=el('a','ppx-more','Full box score →');a.href='/games/'+gslug(SCHEDULE.find(g=>g[0]===lg.d));a.dataset.go=a.getAttribute('href').slice(1);c.appendChild(a);ov.appendChild(c)}}
   // season line
   {const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3P%','tp'],['FG%','fg'],['MIN','min']],W:[['PTS','pts'],['REB','reb'],['AST','ast'],['3P%','tp'],['STL','stl'],['MIN','min']],B:[['PTS','pts'],['REB','reb'],['AST','ast'],['BLK','blk'],['FG%','fg'],['MIN','min']]};
