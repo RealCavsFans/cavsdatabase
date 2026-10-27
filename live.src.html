@@ -2150,7 +2150,7 @@ function vRot(v,D,R){
 
 /* ---------- Plays ---------- */
 function vPlays(v,D,R){
-  const c=el('div','card');head(c,'Play-by-play','Newest first · score shown '+D.away.abbr+'–'+D.home.abbr);
+  const c=el('div','card');head(c,'Play-by-play','In order from the start of each quarter · score shown '+D.away.abbr+'–'+D.home.abbr);
   const fl=el('div','fl');[['all','All'],['sc','Scoring'],['focus',D.focus.abbr+' only'],['sub','Substitutions']].forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',S.f.plays===k);b.onclick=()=>{S.f.plays=k;renderView()};fl.appendChild(b)});c.appendChild(fl);
   /* one quarter at a time (the latest by default), or the whole game */
   const pers=[...new Set(R.plays.map(p=>p.per))].sort((a,b)=>a-b);const lastP=pers[pers.length-1];const q=S.f.plQ==='all'?'all':pers.includes(S.f.plQ)?S.f.plQ:lastP;
@@ -2160,7 +2160,7 @@ function vPlays(v,D,R){
     R.plays.filter(p=>p.per===q&&/Foul/.test(p.type)&&!/Offensive|Technical|Double|Flagrant Type|Away from Play/.test(p.type)).forEach(p=>{const t=(D.P[p.ids[0]]||{}).team||p.team;const x=st[t];if(!x)return;x.n++;if(end-p.t<=120)x.l2++;if(!x.at&&(x.n>=lim||x.l2>=2))x.at=p.clock});
     const [A2,B2]=[D.focus,D.other];const bon=(t,o)=>st[o.id].at?t.abbr+' in the bonus with '+st[o.id].at+' left':null;
     const line=el('p','note plb');line.textContent='Team fouls: '+A2.abbr+' '+st[A2.id].n+' · '+B2.abbr+' '+st[B2.id].n+[bon(A2,B2),bon(B2,A2)].filter(Boolean).map(x=>' · '+x).join('');c.appendChild(line)}
-  const list=R.plays.slice().reverse().filter(p=>q==='all'||p.per===q).filter(p=>S.f.plays==='sc'?p.sc:S.f.plays==='focus'?p.team===D.focus.id:S.f.plays==='sub'?p.type==='Substitution':true);
+  const list=R.plays.slice().filter(p=>q==='all'||p.per===q).filter(p=>S.f.plays==='sc'?p.sc:S.f.plays==='focus'?p.team===D.focus.id:S.f.plays==='sub'?p.type==='Substitution':true);
   const ul=el('ul','plays');let lp=null;list.forEach(p=>{if(p.per!==lp){lp=p.per;ul.appendChild(el('li','pd',p.per<=4?['1st','2nd','3rd','4th'][p.per-1]+' quarter':pname(p.per)))}
     const li=el('li',p.sc?'sc':'');const t=D.teams.find(x=>x.id===p.team);const cb=el('span','c');cb.style.background=t?t.c:'transparent';li.append(el('span','t',p.clock),cb,el('span','x',p.text),el('span','s',p.as+'–'+p.hs));ul.appendChild(li)});
   if(!list.length)ul.appendChild(el('li','empty','No plays yet.'));c.appendChild(ul);c.appendChild(el('p','note',list.length+' plays.'));v.appendChild(c);
