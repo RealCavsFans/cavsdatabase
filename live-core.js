@@ -215,4 +215,8 @@ function extras(D,R){const tid=[D.home.id,D.away.id],out={tim:{},ato:{},qs:{}};
   [1,2,3,4].forEach(per=>{const st=pstart(per),en=st+180;(R.plays||[]).forEach(p=>{if(p.per!==per||!(p.sc&&p.val>0)||p.t>en)return;const t=p.team&&out.qs[p.team]?p.team:(D.P[p.ids[0]]||{}).team;if(out.qs[t])out.qs[t][per-1][0]+=p.val});
     starts.forEach(q=>{if(q.t>=st&&q.t<en&&out.qs[q.team])out.qs[q.team][per-1][1]++})});
   return out}
-if(typeof module!=='undefined')Object.assign(module.exports,{slimSummary,recap,recapL,extras});
+/* extras for one stretch of the game: only that stretch's plays (quarters/halves by period; clutch and no-garbage-time keep the timeouts followed by a counted possession) */
+function extrasFor(D,R,per){if(!per||per==='all')return extras(D,R);let plays=R.plays||[];
+  if(per==='clutch'||per==='nogt'){const st=(R.PL||[]).map(q=>q.t);plays=plays.filter(p=>st.some(t=>t>=p.t&&t-p.t<=24))}else plays=plays.filter(p=>inPer(per,p.per));
+  return extras(D,Object.assign({},R,{plays}))}
+if(typeof module!=='undefined')Object.assign(module.exports,{slimSummary,recap,recapL,extras,extrasFor});

@@ -125,8 +125,8 @@ function build(per, file) {
     games[gi].t = tr(tc); games[gi].u = tr(to);
     if (per === 'all') { const qm = {}; for (const p of D.plays) qm[p.per] = D.focus.ha === 'home' ? p.hs - p.as : p.as - p.hs; games[gi].qm = [1, 2, 3].map(q => qm[q] ?? null); }   // Cavs margin at the end of the 1st, half and 3rd
     games[gi].ps = Math.round(tc.sec || 0); games[gi].pp = [tc.pts, to.pts];   // this period's seconds and points (period files)
-    /* possession timing, after timeouts, quarter starts (full game, both sides: [cle, opp]) */
-    { const X = C.extras(D, R0); games[gi].x = { tim: [X.tim['5'], X.tim[opp.id]], ato: [X.ato['5'], X.ato[opp.id]], qs: [X.qs['5'], X.qs[opp.id]] }; }
+    /* possession timing, after timeouts, quarter starts (this file's stretch of each game, both sides: [cle, opp]) */
+    { const X = C.extrasFor(D, R, per); games[gi].x = { tim: [X.tim['5'], X.tim[opp.id]], ato: [X.ato['5'], X.ato[opp.id]], qs: [X.qs['5'], X.qs[opp.id]] }; }
     games[gi].l5 = Object.entries(R.L['5'][5]).filter(([, l]) => l.sec >= 1).map(([k, l]) => [k, Math.round(l.sec), l.pf, l.pa, l.o.fga, l.o.oreb, l.o.to, l.o.fta, l.d.fga, l.d.oreb, l.d.to, l.d.fta, l.o.np || 0, l.d.np || 0]);
     for (const [dst, src] of [[T.cle, tc], [T.opp, to]]) { for (const k in src) if (typeof src[k] === 'number') dst[k] = (dst[k] || 0) + src[k]; src.z.forEach((v, i) => { dst.z[i][0] += v[0]; dst.z[i][1] += v[1]; }); }
     for (const [h, v] of Object.entries(R.pc['5'])) { pc[h] = pc[h] || { n: 0, pts: 0 }; pc[h].n += v.n; pc[h].pts += v.pts; }
