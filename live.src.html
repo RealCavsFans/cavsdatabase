@@ -465,6 +465,9 @@ tr.xr{cursor:pointer}
 .xr>td:first-child::before{content:'▸';display:inline-block;width:12px;margin-right:4px;color:var(--wine,#860038);font-size:11px;transition:transform .15s}
 .xr[aria-expanded=true]>td:first-child::before{transform:rotate(90deg)}
 .xd .lsp{position:sticky;left:0;max-width:calc(100vw - 80px);box-sizing:border-box}
+.shmini td{font-size:.75rem;padding:4px 3px!important;border-top:0!important}
+.shmini td:first-child{color:var(--muted)}
+.zt td.up{color:var(--pos);font-weight:700}.zt td.dn{color:var(--neg);font-weight:700}
 .tap-hint{font:600 11px/1.3 'Geist Mono',monospace;color:var(--wine,#860038);margin:6px 0 4px}tr.xr:hover td{background:var(--sub)}tr.xr[aria-expanded=true] td{background:var(--sub);font-weight:700}tr.xd>td{padding:10px 8px 14px!important;background:var(--sub)}.lsp-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;margin-bottom:8px}.lsp-h span{font:600 .75rem var(--mono);color:var(--muted)}.lsp-t{max-width:520px}.lsp-t td,.lsp-t th{text-align:right}.lsp-t td:first-child,.lsp-t th:first-child{text-align:left}.lsp-t td.up{font-weight:800;color:var(--wine-ink,#860038)}
 
 /* season filter bar */
@@ -1566,6 +1569,17 @@ function dotCourt(sh,col){const Sx=8,W=50*Sx,Hh=36*Sx,x=v=>v*Sx,y=v=>(v+5.25)*Sx
   return s+'</svg>'}
 
 /* zone bars: each zone scaled to points: made shots solid, misses dashed, FG% badge and the comparison mark */
+/* season comparison data for the single-game Shots tab: the game's season archive (other games only) and the opponent's net rating tier */
+const SHC={};
+function shCmp(D,t){if(S.season)return null;const se=S.src||CUR_SEASON;const key=se;
+  if(!SHC[key]){SHC[key]={loading:true};(async()=>{try{const J=await getJSON('/live-archive/'+se+'/season.json');const prev=se==='2026-27'?'2025-26':null;const useCur=!(se===CUR_SEASON&&(J.games||[]).length<15&&prev);
+      const NR=await netRanks(useCur?se:prev);SHC[key]={J,NR,rkLab:useCur?(se.replace('-','–')+' net rating'):('last season’s net rating, until 15 games in')}}catch(e){SHC[key]={err:true}}renderView()})()}
+  const c=SHC[key];if(c.loading||c.err)return c;
+  const et=new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(new Date(D.date));const other=new Set();(c.J.games||[]).forEach((g,i)=>{if(g.et!==et)other.add(i)});
+  const opp=D.focus.abbr==='CLE'?D.other.abbr:D.focus.abbr;const rk=c.NR.rk,n=c.NR.n||29;const tierOf=r=>r==null?null:r<=5?0:r<=10?1:r<=20?2:3;const TL=['top-5 teams','6th–10th teams','11th–20th teams','bottom-9 teams'];
+  const my=tierOf(rk[opp]);const tierG=new Set([...other].filter(i=>my!=null&&tierOf(rk[c.J.games[i].opp])===my));
+  const idOf=pid=>{const nm=normName(D.P[pid].name);return Object.keys(c.J.P||{}).find(k=>normName(c.J.P[k].name)===nm)};
+  return {ok:true,J:c.J,other,tierG,tierLab:my==null?'similar teams':TL[my],rkLab:c.rkLab,idOf}}
 function zoneBars(D,R,t,sh,BZ,baseLab){
   const w=el('div','zb');const both=S.f.shPl==='all'&&S.f.shType==='all';const subj=both?[t,D.teams.find(x=>x.id!==t.id)]:[t];
   const zs=ZN.map(([k,n],i)=>[i,n]);const data=subj.map(tt=>{const q=both?R.shots.filter(x=>x.t===tt.id&&x.hasXY):sh.filter(x=>x.hasXY);return ZN.map((z,i)=>{const L=q.filter(x=>x.zi===i);const m=L.filter(x=>x.m).length;return [m,L.length]})});
@@ -1605,19 +1619,39 @@ function vShots(v,D,R){
   else{left.innerHTML=dotCourt(xy,t.c);left.insertAdjacentHTML('beforeend',`<div class="leg"><span><i style="background:${t.c};border-radius:50%"></i>Made</span><span>✕ Missed</span><span>${sh.filter(q=>q.m).length}-${sh.length} FG${esc(typeLab)}</span></div>`)}
   const right=el('div');
   /* shot types: frequency and efficiency */
+  /* tap a row: tonight next to the season (other games) and games vs teams in the same net rating tier */
+  const SC=shCmp(D,t),isCle=t.id===D.focus.id&&D.focus.abbr==='CLE';
+  const cmpRows=(pick,zoneOnly)=>{if(!SC||!SC.ok)return null;const pl=S.f.shPl;if(pl!=='all'&&!isCle)return 'pl';
+    const src=isCle?SC.J.shots.map(r=>({id:r[0],xy:r[1]!=null,m:r[3],three:r[4],zi:r[5],pt:r[6],ast:r[7],gi:r[8]})):SC.J.oshots.map(r=>({xy:r[0]!=null,m:r[2],three:r[3],zi:r[4],pt:r[5],ast:r[6],gi:r[7]}));
+    const base=src.filter(q=>SC.other.has(q.gi)&&(pl==='all'||(D.P[pl]&&q.id===SC.idOf(pl)))&&(!zoneOnly||q.xy)&&(!zoneOnly||S.f.shType==='all'||String(q.pt)===S.f.shType));
+    const line=(lab,gs)=>{const q=base.filter(x=>gs.has(x.gi)),h=q.filter(pick),mk=h.filter(x=>x.m),n=gs.size;const pts=mk.reduce((a,x)=>a+(x.three?3:2),0);
+      return {lab:lab+' ('+n+' g)',n,m:n?mk.length/n:0,a:n?h.length/n:0,fr:q.length?h.length/q.length:null,fg:h.length?mk.length/h.length:null,pps:h.length?pts/h.length:null,as:mk.length?mk.filter(x=>x.ast).length/mk.length:null}};
+    return [line('Season avg',SC.other),line('Vs '+SC.tierLab,SC.tierG)]};
+  const miniT=(tonight,lines,cols)=>{const w=el('div');if(lines==='pl'){w.appendChild(el('p','note','Season comparisons are for the Cavs’ side only when a player is picked.'));return w}
+    if(!lines){w.appendChild(el('p','note',SC&&SC.err?'Season numbers aren’t available for this game.':'Loading the season…'));return w}
+    const tb=el('table','zt shmini');const f0=x=>Math.round(x);const pc0=x=>x==null?'–':Math.round(x*100)+'%';
+    const cell={fg:r=>pc0(r.fg),fr:r=>pc0(r.fr),pps:r=>r.pps==null?'–':r.pps.toFixed(2),as:r=>pc0(r.as),ma:r=>r.n==null?r.m+'-'+r.a:f0(r.m)+'-'+f0(r.a)};
+    [tonight].concat(lines).forEach((r,i)=>{const tr=el('tr');tr.appendChild(el('td',null,r.lab));cols.forEach(k=>{const td=el('td',null,cell[k](r));
+      if(i===0&&lines[0]&&lines[0].n&&r.a>=3&&(k==='fg'||k==='pps')&&r[k]!=null&&lines[0][k]!=null){const d=r[k]-lines[0][k],lim=k==='fg'?.05:.1;if(Math.abs(d)>=lim)td.className=d>0?'up':'dn'}tr.appendChild(td)});
+      if(i>0&&!r.n){tr.innerHTML='';tr.appendChild(el('td',null,r.lab.replace(/ \(0 g\)/,'')));const td=el('td',null,'no other games yet');td.colSpan=cols.length;tr.appendChild(td)}tb.appendChild(tr)});
+    w.appendChild(tb);return w};
   right.appendChild(el('h3',null,who+' · how the shots came'));
-  const rows=PT.map(([k,l],i)=>{const q=all.filter(x=>x.pt===i);const m=q.filter(x=>x.m);const pts=m.reduce((s,x)=>s+(x.three?3:2),0);return {i,l,a:q.length,m:m.length,fr:all.length?q.length/all.length:0,fg:q.length?m.length/q.length:null,pps:q.length?pts/q.length:null,as:m.length?m.filter(x=>x.ast).length/m.length:null,_cls:S.f.shType===String(i)?'now':''}}).filter(r=>r.a);
+  right.appendChild(el('p','tap-hint','▸ Tap a row to compare with the season and with games vs similar teams'));
+  const rows=PT.map(([k,l],i)=>{const q=all.filter(x=>x.pt===i);const m=q.filter(x=>x.m);const pts=m.reduce((s,x)=>s+(x.three?3:2),0);return {i,l,a:q.length,m:m.length,fr:all.length?q.length/all.length:0,fg:q.length?m.length/q.length:null,pps:q.length?pts/q.length:null,as:m.length?m.filter(x=>x.ast).length/m.length:null,_cls:S.f.shType===String(i)?'now':'',_open:S.f.shOpen===i}}).filter(r=>r.a);
   const pc=x=>x==null?'–':Math.round(x*100)+'%';
-  right.appendChild(dtable('pt',[{h:'Type',k:'l',f:r=>{const b=el('button',null,r.l);b.type='button';b.style.cssText='all:unset;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line)';b.onclick=()=>{S.f.shType=S.f.shType===String(r.i)?'all':String(r.i);renderView()};return b}},
-    {h:'FG',k:'a',f:r=>r.m+'-'+r.a},{h:'FREQ',k:'fr',f:r=>pc(r.fr),title:'Share of his field-goal attempts'},{h:'FG%',k:'fg',f:r=>pc(r.fg)},{h:'PTS/SHOT',k:'pps',f:r=>r.pps==null?'–':r.pps.toFixed(2),title:'Points per shot'},{h:'AST',k:'as',f:r=>pc(r.as),title:'Share of makes that were assisted'}],rows,{def:'a',empty:'No shots yet.'}));
-  right.appendChild(el('p','note','FREQ = share of all field-goal attempts. Tap a type to filter the court. Transition = shot within 7 seconds after a defensive rebound or turnover. Putbacks = tips, putbacks and shots within 3 seconds of an offensive rebound.'));
+  right.appendChild(dtable('pt',[{h:'Type',k:'l',f:r=>{const b=el('button',null,r.l);b.type='button';b.style.cssText='all:unset;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line);display:inline-block;max-width:calc(100% - 18px);vertical-align:top';b.onclick=()=>{S.f.shType=S.f.shType===String(r.i)?'all':String(r.i);renderView()};return b}},
+    {h:'FG',k:'a',f:r=>r.m+'-'+r.a},{h:'FREQ',k:'fr',f:r=>pc(r.fr),title:'Share of his field-goal attempts'},{h:'FG%',k:'fg',f:r=>pc(r.fg)},{h:'PTS/SHOT',k:'pps',f:r=>r.pps==null?'–':r.pps.toFixed(2),title:'Points per shot'},{h:'AST',k:'as',f:r=>pc(r.as),title:'Share of makes that were assisted'}],rows,{def:'a',empty:'No shots yet.',toggle:r=>{S.f.shOpen=S.f.shOpen===r.i?null:r.i;renderView()},expand:r=>miniT({lab:'Tonight',m:r.m,a:r.a,fr:r.fr,fg:r.fg,pps:r.pps,as:r.as},cmpRows(x=>x.pt===r.i,false),['ma','fr','fg','pps','as'])}));
+  right.appendChild(el('p','note','FREQ = share of all field-goal attempts. Tap a type’s name to filter the court; tap the rest of the row to compare with the season. Transition = shot within 7 seconds after a defensive rebound or turnover. Putbacks = tips, putbacks and shots within 3 seconds of an offensive rebound.'));
   right.appendChild(el('h3',null,who+typeLab+' · by zone'));
-  const zt=el('table','zt');zt.innerHTML=`<tr><th>Zone</th><th>FG</th><th>FG%</th><th title="${esc(baseLab)}">${S.f.shPl==='all'?esc(t.abbr):'His'} ’${SL.slice(-2)}</th><th>% of shots</th></tr>`;
+  right.appendChild(el('p','tap-hint','▸ Tap a row to compare with the season and with games vs similar teams'));
+  const zt=el('table','zt');zt.innerHTML=`<tr><th>Zone</th><th>FG</th><th>FG%</th><th>% of shots</th></tr>`;
   ZN.forEach(([k,n,dsc],i)=>{const[m,a]=Z[i];const tr=el('tr');const nn=el('td');nn.append(n);if(dsc)nn.appendChild(el('span','pos',dsc));
     const dfc=a?(m/a-av(i)):0;const fg=el('td',null,a?pct(m,a):'–');if(a>=3)fg.style.color=dfc>0.02?'var(--pos)':dfc<-0.02?'var(--neg)':'';fg.style.fontWeight='700';
-    tr.append(nn,el('td',null,m+'-'+a),fg,el('td',null,(av(i)*100).toFixed(0)+'%'),el('td',null,xy.length?Math.round(a/xy.length*100)+'%':'–'));zt.appendChild(tr)});
+    tr.append(nn,el('td',null,m+'-'+a),fg,el('td',null,xy.length?Math.round(a/xy.length*100)+'%':'–'));
+    tr.className='xr';tr.tabIndex=0;const op=S.f.zOpen===i;tr.setAttribute('aria-expanded',op);const go=()=>{S.f.zOpen=op?null:i;renderView()};tr.onclick=go;tr.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}};zt.appendChild(tr);
+    if(op){const dr=el('tr','xd');const td=el('td');td.colSpan=4;const ln=cmpRows(x=>x.zi===i,true);const lz=Array.isArray(ln)?ln.map(r=>Object.assign({},r,{fr:r.fr})):ln;td.appendChild(miniT({lab:'Tonight',m,a,fg:a?m/a:null,fr:xy.length?a/xy.length:null},lz,['ma','fg','fr']));dr.appendChild(td);zt.appendChild(dr)}});
   right.appendChild(zt);
-  const pts=Z.reduce((s,[m],i)=>s+m*(i>=3?3:2),0);right.appendChild(el('p','note',`${pts} points on ${xy.length} shots (${xy.length?(pts/xy.length).toFixed(2):'–'} per shot). Compared with ${baseLab} shooting in each zone.`));
+  const pts=Z.reduce((s,[m],i)=>s+m*(i>=3?3:2),0);right.appendChild(el('p','note',`${pts} points on ${xy.length} shots (${xy.length?(pts/xy.length).toFixed(2):'–'} per shot). FG% colored against ${baseLab} shooting in each zone.${SC&&SC.ok?' Season rows: per game, other games only. Similar teams = the opponent’s net rating tier (top 5, 6–10, 11–20, bottom 9) by '+SC.rkLab+'.':''}`));
   g.append(left,right);c.appendChild(g);if(S.season&&S.f.shPl!=='all')gameByGame(D,R,S.f.shPl,c);v.appendChild(c);
 }
 
