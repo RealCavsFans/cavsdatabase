@@ -526,8 +526,11 @@ tr.lutot td{font-weight:800;border-top:2px solid var(--fg)}
  .sh-s input{flex:1;min-width:0;border:0;background:none;color:#fff;font:500 .875rem var(--sans);outline:none}.sh-s input::placeholder{color:#f4d6dd}.sh-s:focus-within{border-color:#f2b231}
  .sh .tt{margin-left:0}.sh-b svg{width:42px!important;height:42px!important}.sh-b span{font-size:1.5625rem!important}.sh-s svg{width:15px!important;height:15px!important;flex:none}
  .sh-n a{font-size:.9688rem}}
-@media (min-width:1100px){.sh-n a{font-size:1.125rem!important;padding:0 5px!important}}
+@media (min-width:1100px){.sh-n a{font-size:1.0625rem!important;padding:0 4px!important}}
 @media (min-width:1100px) and (max-width:1439px){.sh-n a{font-size:1rem!important;padding:0 4px!important}}
+/* keep all 12 links on one line: tighter type and a narrower search box as the window narrows */
+@media (min-width:761px) and (max-width:1279px){.sh-n a{font-size:.9375rem!important;padding:0 3px!important}.sh-s{flex:0 1 150px;min-width:110px}.sh-in{gap:0 10px}}
+@media (min-width:761px) and (max-width:1099px){.sh-n a{font-size:.8125rem!important;padding:0 2px!important}.sh-s{display:none!important}.sh-b span{font-size:1.25rem!important}.sh-b svg{width:34px!important;height:34px!important}}
 </style>
 </head>
 <body>
