@@ -777,7 +777,7 @@ function possXCards(D,R){const F=D.focus.id,O=D.other.id;let X,n=1;
     G.forEach(g=>[0,1].forEach(i=>{g.x.tim[i].forEach((v,b)=>{A[i].tim[b][0]+=v[0];A[i].tim[b][1]+=v[1]});g.x.ato[i].forEach((v,k)=>A[i].ato[k]+=v);g.x.qs[i].forEach((v,q)=>{A[i].qs[q][0]+=v[0];A[i].qs[q][1]+=v[1]})}));
     X={tim:{[F]:A[0].tim,[O]:A[1].tim},ato:{[F]:A[0].ato,[O]:A[1].ato},qs:{[F]:A[0].qs,[O]:A[1].qs}}}
   else{if(!R.PL||!R.lp)return [];X=extras(D,R)}
-  const sub=S.season?n+' game'+(n===1?'':'s'):'This game';const pp=(p,c)=>c?(p/c).toFixed(2):'–';const fa=D.focus.abbr,oa=D.other.abbr;const out=[];
+  const sub=S.season?n+' game'+(n===1?'':'s'):(S.per==='all'?'This game':perLabel(S.per));const pp=(p,c)=>c?(p/c).toFixed(2):'–';const fa=D.focus.abbr,oa=D.other.abbr;const out=[];
   /* 1 · when they score */
   {const c=el('div','card sec');head(c,'When they score',sub+' · points per possession by how fast the first shot, turnover or foul came');
     const a=X.tim[F],b=X.tim[O];const tot=t=>t.reduce((s,v)=>[s[0]+v[0],s[1]+v[1]],[0,0]);const ta=tot(a),tb2=tot(b);
@@ -988,7 +988,8 @@ function vTeam(v,D,R){
   c.appendChild(el('p','note','Bold = better. The bar points to the team that won the stat and grows with the gap. Stop % = share of the other team’s possessions that ended with no points. True shot attempts = FGA + 0.44 × FTA.'));v.appendChild(c);if(S.season){if(R.pc&&R.pc[D.other.id]&&R.cx)v.appendChild(contextCard(D,R));if(S.per==='all')possXCards(D,R).forEach(x=>v.appendChild(x));return}v.appendChild(oppCard(D,R));
   {const ff=el('div');vFF(ff,D,R);ff.firstChild.classList.add('sec');v.appendChild(ff.firstChild)}
   v.appendChild(contextCard(D,R));
-  if(S.per==='all')possXCards(D,R).forEach(x=>v.appendChild(x));
+  /* game view: also for a half, a quarter or OT (only that stretch's plays); the season view only has whole-game rows */
+  if(S.per==='all'||(!S.season&&S.per!=='clutch'&&S.per!=='nogt'))possXCards(D,S.per==='all'?R:Object.assign({},R,{plays:(R.plays||[]).filter(p=>inPer(S.per,p.per))})).forEach(x=>v.appendChild(x));
   {const tv=tvsCard(D,R);if(tv)v.appendChild(tv)}
 }
 
