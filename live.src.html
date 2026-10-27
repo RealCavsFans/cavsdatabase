@@ -1576,7 +1576,7 @@ async function lHero(x,D,id){const img=await loadImg(hsUrl(D,id));head2(x,img,21
 function lPanel(x,X,Y,W,H,top){x.fillStyle='#fff';x.fillRect(X,Y,W,H);x.strokeStyle='#e3e0db';x.lineWidth=2;x.strokeRect(X,Y,W,H);x.fillStyle=top;x.fillRect(X,Y,W,8)}
 /* panel head: title and small label on the left, one big number on the right */
 function lHeadline(x,X,W,Y,title,sub,val,tone){lbl(x,title,X+36,Y+86,44,INK);x.fillStyle=MUT;x.font='700 24px Archivo';x.fillText(sub,X+36,Y+128);
-  x.fillStyle=tone==null?INK:tone?LGR:LRD;x.font='800 120px "Saira Condensed"';x.fillText(val,X+W-36-x.measureText(val).width,Y+132);x.fillStyle='#e3e0db';x.fillRect(X+36,Y+170,W-72,2)}
+  x.font='700 24px Archivo';const lw=Math.max(x.measureText(sub).width,(()=>{x.font='800 44px "Saira Condensed"';return x.measureText(title).width})());x.fillStyle=tone==null?INK:tone?LGR:LRD;let vf=120;x.font=`800 ${vf}px "Saira Condensed"`;while(x.measureText(val).width>W-72-lw-24&&vf>56){vf-=6;x.font=`800 ${vf}px "Saira Condensed"`}x.fillText(val,X+W-36-x.measureText(val).width,Y+132);x.fillStyle='#e3e0db';x.fillRect(X+36,Y+170,W-72,2)}
 /* 2 rows of 4 box-score cells: [label, value, small line under] */
 function lBox(x,X,W,Y,cells){const cw=(W-72)/4;cells.forEach(([lab,val,sub],i)=>{const cx=X+36+cw*(i%4)+cw/2,y=Y+Math.floor(i/4)*118;x.fillStyle=MUT;x.font='800 22px "Saira Condensed"';ctr(x,lab,cx,y+34);x.fillStyle=INK;x.font='800 52px "Saira Condensed"';ctr(x,String(val),cx,y+86);if(sub){x.fillStyle=MUT;x.font='600 22px Archivo';ctr(x,sub,cx,y+114)}})}
 const lZ3=sh=>{const z=[[0,0],[0,0],[0,0]];sh.forEach(q=>{if(q.zi==null)return;const i=q.zi===0?0:q.zi<3?1:2;z[i][1]++;if(q.m)z[i][0]++});return z};
