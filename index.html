@@ -2739,12 +2739,18 @@ const ALERTS_ON=true; /* live since Oct 27; false hides the alerts button and in
       const note=el('small','gsh-n',on?'':'Your browser will ask to allow notifications.');c.appendChild(note);
       const tags=()=>Object.fromEntries(KINDS.map(([k])=>[k,sel[k]?'1':'0']));
       g.onclick=async()=>{if(!KINDS.some(([k])=>sel[k])){note.textContent='Pick at least one alert.';return}
-        g.disabled=true;g.textContent='One moment…';const os=await OS();
-        if(!os){g.disabled=false;g.textContent=on?'Save':'Turn on alerts';note.textContent=pv?'Preview only: alerts turn on at cavsdatabase.com.':'Alerts couldn’t load. Check your connection and try again.';return}
-        try{if(!on){await os.Notifications.requestPermission();if(!os.Notifications.permission){g.disabled=false;g.textContent='Turn on alerts';note.textContent='Notifications weren’t allowed. You can allow them in your browser’s site settings.';return}await os.User.PushSubscription.optIn()}
-          await os.User.addTags(tags());put({on:1,t:{...sel}});paint();c.querySelectorAll('ul,.gsh-off').forEach(e=>e.remove());g.remove();note.remove();
+        /* iPhone only shows the allow prompt if it's asked right in the tap, before anything else waits, so ask first */
+        const perm=!on&&'Notification' in window&&Notification.permission==='default'?Notification.requestPermission().catch(()=>'default'):null;
+        g.disabled=true;g.textContent='One moment…';const reset=m=>{g.disabled=false;g.textContent=on?'Save':'Turn on alerts';note.textContent=m};
+        const lim=(pr,ms)=>Promise.race([pr,new Promise((_,rj)=>setTimeout(()=>rj(new Error('timeout')),ms))]);
+        if(perm){const r=await perm;if(r!=='granted'){reset(r==='denied'?'Notifications weren’t allowed. You can allow them in your phone’s or browser’s settings for cavsdatabase.com.':'Tap Turn on alerts again and choose Allow.');return}}
+        else if(!on&&'Notification' in window&&Notification.permission==='denied'){reset('Notifications are blocked for cavsdatabase.com. Allow them in your phone’s or browser’s settings, then try again.');return}
+        const os=await OS();
+        if(!os){reset(pv?'Preview only: alerts turn on at cavsdatabase.com.':'Alerts couldn’t load. Check your connection and try again.');return}
+        try{if(!on)await lim(os.User.PushSubscription.optIn(),20000);
+          await lim(os.User.addTags(tags()),15000);put({on:1,t:{...sel}});paint();c.querySelectorAll('ul,.gsh-off').forEach(e=>e.remove());g.remove();note.remove();
           c.appendChild(el('p',null,on?'Saved.':'You’re set. Your first alert comes before the next tip-off.'));setTimeout(close,2200)}
-        catch(_){g.disabled=false;g.textContent=on?'Save':'Turn on alerts';note.textContent='Something went wrong. Please try again.'}};
+        catch(e){reset(e&&e.message==='timeout'?'That took too long. Check your connection and try again.':'Something went wrong. Please try again.')}};
       if(on){const off=el('button','gsh-off','Turn off all alerts');off.type='button';c.appendChild(off);
         off.onclick=async()=>{const os=await OS();try{if(os)await os.User.PushSubscription.optOut()}catch(_){}put({on:0});paint();close()}}}
     w.addEventListener('click',e=>{if(e.target===w)close()});document.body.appendChild(w);S=w;requestAnimationFrame(()=>w.classList.add('on'));document.addEventListener('keydown',esc);
