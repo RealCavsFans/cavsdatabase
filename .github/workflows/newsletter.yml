@@ -7,10 +7,10 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: 'test = test copy to you only; auto = normal morning run'
+        description: 'test = test copy to you only; auto = normal morning run; now = send the latest game to subscribers right away (never twice)'
         default: test
         type: choice
-        options: [test, auto]
+        options: [test, auto, now]
 permissions:
   contents: write
 concurrency:

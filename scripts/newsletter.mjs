@@ -212,6 +212,11 @@ if (MODE === 'auto') {
   g = [...D.SCHEDULE].reverse().find(x => x[0] < today && (D.SCORES[x[0]] || box[x[0]]?.status === 'final'));
   if (g) score = D.SCORES[g[0]] || box[g[0]].score;
   else { const p = D.PRESEASON[D.PRESEASON.length - 1]; g = [p[0], p[1], p[2]]; score = p[4]; preseason = true; }
+  // send now: the latest game goes straight to subscribers, but never twice
+  if (MODE === 'now') {
+    if (!LIVE) { console.log('NEWSLETTER_LIVE is false, send now is paused'); process.exit(0); }
+    if (sent[g[0]]?.live) { console.log('already sent for', g[0]); process.exit(0); }
+  }
 }
 const b = box[g[0]] || {};
 // since: the game the last issue covered, or the game before this one
@@ -265,23 +270,24 @@ const sotn = (() => { if (!b.box || preseason) return null; const prior = D.SCHE
     for (const [, i, lab] of K) { const val = i === 8 ? tm(r[8]) : +r[i] || 0; const a = hist.reduce((t, q) => t + (i === 8 ? tm(q[8]) : +q[i] || 0), 0) / hist.length; const z = (val - a) / Math.max(a * 0.5, 1);
       if (z > 0.9 && (!best || z > best[4])) best = [r[0], val, lab, (val - a).toFixed(1), z]; } }
   return best; })();
-const html = build(D, g, score, b.top || '', b.url || D.box[g[0]] || SITE + '/schedule', { issueDay: today, rcf, news, trivia: tq, since, sinceTs, qs: b.qs, milestone: milestone(), sotn, usedOtd: Object.values(sent).map(v => v.otd).filter(Boolean).slice(-60), test: MODE === 'test' || !LIVE, preseason });
+const html = build(D, g, score, b.top || '', b.url || D.box[g[0]] || SITE + '/schedule', { issueDay: today, rcf, news, trivia: tq, since, sinceTs, qs: b.qs, milestone: milestone(), sotn, usedOtd: Object.values(sent).map(v => v.otd).filter(Boolean).slice(-60), test: !(LIVE && MODE !== 'test'), preseason });
 const [cs, os] = score.split('-').map(Number);
 const topBit = b.top ? b.top.split(':')[0].split(' ').slice(-1)[0] + ' ' + (b.top.match(/(\d+) pts/) || [])[1] : '';
 const msBit = (() => { const m = (milestone() || '').match(/^(?!Milestone watch)(\S+ )?(\S+) (reached [\d,]+ career \w+|passed .+? for \d+\w+ on the Cavs' all-time \w+)/); return m ? `${m[2]} ${m[3].replace(/^reached/, 'hits').replace(/ on the Cavs' all-time (\w+)/, ' in Cavs $1').replace(/^passed .+? for/, 'moves to')}` : ''; })();
-const subj = `${MODE === 'test' || !LIVE ? '[Test] ' : ''}☕ Cavs ${cs}, ${NICK[g[1]] || g[1]} ${os}${msBit ? ' · ' + msBit : topBit ? ' · ' + topBit : ''}`;
+const subj = `${!(LIVE && MODE !== 'test') ? '[Test] ' : ''}☕ Cavs ${cs}, ${NICK[g[1]] || g[1]} ${os}${msBit ? ' · ' + msBit : topBit ? ' · ' + topBit : ''}`;
 await mkdir(new URL('nl/', root), { recursive: true });
 await writeFile(new URL('nl/last-issue.html', root), `<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>${esc(subj)}</title><body style="margin:0">${html}</body>`);
 
 if (DRY) { console.log('dry run:', subj); process.exit(0); }
 const email = await bd('/emails', 'POST', { subject: subj, body: html, status: 'draft' });
 console.log('draft created', email.id);
-if (LIVE && MODE === 'auto') {
-  const wait = msTo619(); if (wait > 0) { console.log('waiting ' + Math.round(wait / 60000) + ' min for 6:19 AM ET'); await new Promise(r => setTimeout(r, wait)); }
+const REAL = LIVE && (MODE === 'auto' || MODE === 'now');
+if (REAL) {
+  const wait = MODE === 'now' ? 0 : msTo619(); if (wait > 0) { console.log('waiting ' + Math.round(wait / 60000) + ' min for 6:19 AM ET'); await new Promise(r => setTimeout(r, wait)); }
   await bd('/emails/' + email.id, 'PATCH', { status: 'about_to_send' });
   console.log('sent to subscribers');
 } else {
   await bd('/emails/' + email.id + '/send-draft', 'POST', {});
   console.log('test copy sent to the newsletter owner');
 }
-if (MODE === 'auto') { sent[g[0]] = { id: email.id, live: LIVE, at: new Date().toISOString(), otd: otdKey }; await writeFile(sentFile, JSON.stringify(sent, null, 1) + '\n'); }
+if (MODE === 'auto' || MODE === 'now') { sent[g[0]] = { id: email.id, live: LIVE, at: new Date().toISOString(), otd: otdKey }; await writeFile(sentFile, JSON.stringify(sent, null, 1) + '\n'); }
