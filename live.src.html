@@ -1841,7 +1841,8 @@ function vShots(v,D,R){
     const base=src.filter(q=>SC.other.has(q.gi)&&(pl==='all'||(D.P[pl]&&q.id===SC.idOf(pl)))&&(!zoneOnly||q.xy)&&(!zoneOnly||S.f.shType==='all'||String(q.pt)===S.f.shType));
     const line=(lab,gs)=>{const q=base.filter(x=>gs.has(x.gi)),h=q.filter(pick),mk=h.filter(x=>x.m),n=gs.size;const pts=mk.reduce((a,x)=>a+(x.three?3:2),0);
       return {lab:lab+' ('+n+' g)',n,m:n?mk.length/n:0,a:n?h.length/n:0,fr:q.length?h.length/q.length:null,fg:h.length?mk.length/h.length:null,pps:h.length?pts/h.length:null,as:mk.length?mk.filter(x=>x.ast).length/mk.length:null}};
-    return [line('Season avg',SC.other),line('Vs '+SC.tierLab,SC.tierG)]};
+    /* the other team: what Cavs opponents average on these shots (the Cavs defense), not a tier split */
+    return isCle?[line('Season avg',SC.other),line('Vs '+SC.tierLab,SC.tierG)]:[line('Cavs defense avg',SC.other)]};
   const miniT=(tonight,lines,cols)=>{const w=el('div');if(lines==='pl'){w.appendChild(el('p','note','Season comparisons are for the Cavs’ side only when a player is picked.'));return w}
     if(!lines){w.appendChild(el('p','note',SC&&SC.err?'Season numbers aren’t available for this game.':'Loading the season…'));return w}
     const tb=el('table','zt shmini');const f0=x=>Math.round(x);const pc0=x=>x==null?'–':Math.round(x*100)+'%';
@@ -1851,14 +1852,14 @@ function vShots(v,D,R){
       if(i>0&&!r.n){tr.innerHTML='';tr.appendChild(el('td',null,r.lab.replace(/ \(0 g\)/,'')));const td=el('td',null,'no other games yet');td.colSpan=cols.length;tr.appendChild(td)}tb.appendChild(tr)});
     w.appendChild(tb);return w};
   right.appendChild(el('h3',null,who+' · how the shots came'));
-  right.appendChild(el('p','tap-hint','▸ Tap a row to compare with the season and with games vs similar teams'));
+  right.appendChild(el('p','tap-hint',isCle?'▸ Tap a row to compare with the season and with games vs similar teams':'▸ Tap a row to compare with what Cavs opponents average'));
   const rows=PT.map(([k,l],i)=>{const q=all.filter(x=>x.pt===i);const m=q.filter(x=>x.m);const pts=m.reduce((s,x)=>s+(x.three?3:2),0);return {i,l,a:q.length,m:m.length,fr:all.length?q.length/all.length:0,fg:q.length?m.length/q.length:null,pps:q.length?pts/q.length:null,as:m.length?m.filter(x=>x.ast).length/m.length:null,_cls:S.f.shType===String(i)?'now':'',_open:S.f.shOpen===i}}).filter(r=>r.a);
   const pc=x=>x==null?'–':Math.round(x*100)+'%';
   right.appendChild(dtable('pt',[{h:'Type',k:'l',f:r=>{const b=el('button',null,r.l);b.type='button';b.style.cssText='all:unset;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line);display:inline-block;max-width:calc(100% - 18px);vertical-align:top';b.onclick=()=>{S.f.shType=S.f.shType===String(r.i)?'all':String(r.i);renderView()};return b}},
     {h:'FG',k:'a',f:r=>r.m+'-'+r.a},{h:'FREQ',k:'fr',f:r=>pc(r.fr),title:'Share of his field-goal attempts'},{h:'FG%',k:'fg',f:r=>pc(r.fg)},{h:'PTS/SHOT',k:'pps',f:r=>r.pps==null?'–':r.pps.toFixed(2),title:'Points per shot'},{h:'AST',k:'as',f:r=>pc(r.as),title:'Share of makes that were assisted'}],rows,{def:'a',empty:'No shots yet.',toggle:r=>{S.f.shOpen=S.f.shOpen===r.i?null:r.i;renderView()},expand:r=>miniT({lab:'Tonight',m:r.m,a:r.a,fr:r.fr,fg:r.fg,pps:r.pps,as:r.as},cmpRows(x=>x.pt===r.i,false),['ma','fr','fg','pps','as'])}));
   right.appendChild(el('p','note','FREQ = share of all field-goal attempts. Tap a type’s name to filter the court; tap the rest of the row to compare with the season. Transition = shot within 7 seconds after a defensive rebound or turnover. Putbacks = tips, putbacks and shots within 3 seconds of an offensive rebound.'));
   right.appendChild(el('h3',null,who+typeLab+' · by zone'));
-  right.appendChild(el('p','tap-hint','▸ Tap a row to compare with the season and with games vs similar teams'));
+  right.appendChild(el('p','tap-hint',isCle?'▸ Tap a row to compare with the season and with games vs similar teams':'▸ Tap a row to compare with what Cavs opponents average'));
   /* shot quality: what an average NBA shooter would score on these same shots (league FG% in each zone) */
   const LZ=(()=>{const se=S.season||S.src||CUR_SEASON;const b=BLIVE&&BLIVE.lg&&BLIVE.season===se?BLIVE.lg:null;return ZN.map(([k],i)=>b&&b[i][1]?b[i][0]/b[i][1]:LG[k][0])})();
   const zv=i=>i>=3?3:2,exp=xy.reduce((a,q)=>a+LZ[q.zi]*zv(q.zi),0),act=xy.reduce((a,q)=>a+(q.m?zv(q.zi):0),0);
