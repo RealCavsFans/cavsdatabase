@@ -470,6 +470,7 @@ tr.xr{cursor:pointer}
 .zt td.up{color:var(--pos);font-weight:700}.zt td.dn{color:var(--neg);font-weight:700}
 .plq{margin-top:-4px}
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}.tiles div{background:var(--sub);padding:10px}.tiles b{display:block;font:800 1.375rem var(--cond)}.tiles span{font-size:.75rem;color:var(--muted)}
+.zt tr.sep td.hgh{font:800 .6875rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:12px}
 .tap-hint{font:600 11px/1.3 'Geist Mono',monospace;color:var(--wine,#860038);margin:6px 0 4px}tr.xr:hover td{background:var(--sub)}tr.xr[aria-expanded=true] td{background:var(--sub);font-weight:700}tr.xd>td{padding:10px 8px 14px!important;background:var(--sub)}.lsp-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;margin-bottom:8px}.lsp-h span{font:600 .75rem var(--mono);color:var(--muted)}.lsp-t{max-width:520px}.lsp-t td,.lsp-t th{text-align:right}.lsp-t td:first-child,.lsp-t th:first-child{text-align:left}.lsp-t td.up{font-weight:800;color:var(--wine-ink,#860038)}
 
 /* season filter bar */
@@ -1750,6 +1751,16 @@ function vSeason(v,D,R){
       const w=el('div','tw');w.appendChild(t);c.appendChild(w);if(G.length<10)c.appendChild(el('p','note','Only '+G.length+' game'+(G.length===1?'':'s')+' this season, so expect big swings early.'))}).catch(()=>{hold.textContent='No archive for '+prev.replace('-','–')+'.'})}
   /* four factors for the season, with NBA ranks */
   {const ff=el('div');vFF(ff,D,R);if(ff.firstChild){ff.firstChild.classList.add('sec');v.appendChild(ff.firstChild)}}
+  /* record when the Cavs win (or lose) each factor */
+  {const G=(D.games||[]).filter(g=>g.t&&g.u);if(G.length){const z=x=>Object.assign({tdreb:0},sRow(x));const K=[['efg','Shooting (eFG%)',1],['tov','Turnovers',0],['orb','Off. rebounding',1],['ftr','Free throw rate',1]];
+    const rec={};K.forEach(([k])=>rec[k]=[[0,0],[0,0]]);const byN=[[0,0],[0,0],[0,0]];
+    G.forEach(g=>{const a=z(g.t),b=z(g.u),fa=factors(a,b),fb=factors(b,a),w=g.cle>g.os?0:1;let n=0;K.forEach(([k,,hi])=>{if(fa[k]==null||fb[k]==null||fa[k]===fb[k])return;const won=hi?fa[k]>fb[k]:fa[k]<fb[k];if(won)n++;rec[k][won?0:1][w]++});byN[n>=3?0:n===2?1:2][w]++});
+    const c=el('div','card sec');head(c,'Win the factor, win the game?',G.length+' game'+(G.length===1?'':'s')+' · Cavs record when they beat the opponent in each factor, and when they don’t');
+    const t=el('table','zt');t.innerHTML='<tr><th></th><th>Won it</th><th>Lost it</th></tr>';const rs=x=>x[0]+'–'+x[1];
+    K.forEach(([k,l])=>{const tr=el('tr');const a=el('td',null,rs(rec[k][0])),b=el('td',null,rs(rec[k][1]));tr.append(el('td',null,l),a,b);t.appendChild(tr)});
+    {const h=el('tr','sep');const td=el('td','hgh','Factors won in the game');td.colSpan=3;h.appendChild(td);t.appendChild(h)}
+    [['3 or 4',0],['2',1],['0 or 1',2]].forEach(([l,i])=>{const tr=el('tr');const td=el('td',null,rs(byN[i]));td.colSpan=2;tr.append(el('td',null,l),td);t.appendChild(tr)});
+    const w=el('div','tw');w.appendChild(t);c.appendChild(w);c.appendChild(el('p','note','Records are wins–losses. Turnovers: winning it means a lower turnover rate. Ties don’t count either way.'));v.appendChild(c)}}
 }
 /* ---------- season filter: by opponent, or by opponent strength (net rating rank) ----------
    With a filter on, the season is rebuilt in the browser from the archived game files, the same way
