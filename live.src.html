@@ -245,7 +245,7 @@ table.dt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
 .plays{list-style:none;margin:0;padding:0}
 .plays li{display:grid;grid-template-columns:52px 6px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line2);font-size:0.875rem}
 .plays .t{font:500 0.75rem var(--mono);color:var(--muted)}
-.plays .c{width:6px;height:100%;min-height:18px}
+.plays .c{width:6px;height:100%;min-height:18px}.plays .x{overflow-wrap:anywhere}
 .plays .s{font:600 0.8125rem var(--mono);color:var(--muted);white-space:nowrap}
 .plays li.sc .x{font-weight:700}
 .plays li.sc .s{color:var(--fg)}
@@ -1826,9 +1826,9 @@ function vPlays(v,D,R){
   const c=el('div','card');head(c,'Play-by-play','Newest first · score shown '+D.away.abbr+'–'+D.home.abbr);
   const fl=el('div','fl');[['all','All'],['sc','Scoring'],['focus',D.focus.abbr+' only'],['sub','Substitutions']].forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',S.f.plays===k);b.onclick=()=>{S.f.plays=k;renderView()};fl.appendChild(b)});c.appendChild(fl);
   const list=R.plays.slice().reverse().filter(p=>S.f.plays==='sc'?p.sc:S.f.plays==='focus'?p.team===D.focus.id:S.f.plays==='sub'?p.type==='Substitution':true);
-  const ul=el('ul','plays');let lp=null;list.slice(0,200).forEach(p=>{if(p.per!==lp){lp=p.per;ul.appendChild(el('li','pd',p.per<=4?['1st','2nd','3rd','4th'][p.per-1]+' quarter':pname(p.per)))}
+  const ul=el('ul','plays');let lp=null;list.forEach(p=>{if(p.per!==lp){lp=p.per;ul.appendChild(el('li','pd',p.per<=4?['1st','2nd','3rd','4th'][p.per-1]+' quarter':pname(p.per)))}
     const li=el('li',p.sc?'sc':'');const t=D.teams.find(x=>x.id===p.team);const cb=el('span','c');cb.style.background=t?t.c:'transparent';li.append(el('span','t',p.clock),cb,el('span','x',p.text),el('span','s',p.as+'–'+p.hs));ul.appendChild(li)});
-  if(!list.length)ul.appendChild(el('li','empty','No plays yet.'));c.appendChild(ul);if(list.length>200)c.appendChild(el('p','note','Showing the latest 200.'));v.appendChild(c);
+  if(!list.length)ul.appendChild(el('li','empty','No plays yet.'));c.appendChild(ul);c.appendChild(el('p','note',list.length+' plays.'));v.appendChild(c);
 }
 
 /* ---------- boot ---------- */
