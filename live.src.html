@@ -2220,10 +2220,10 @@ function zoneBars(D,R,t,sh,BZ,baseLab){
   return w;
 }
 function vShots(v,D,R){
-  if(!S.f.shTeam||S.f.shView==='bars')S.f.shTeam=D.focus.id;const t=D.teams.find(x=>x.id===S.f.shTeam);
+  if(!S.f.shTeam||(S.season&&S.f.shView==='bars'))S.f.shTeam=D.focus.id;const t=D.teams.find(x=>x.id===S.f.shTeam);
   const c=el('div','card');head(c,'Shot chart',perLabel(S.per)+' · field goals only');
   const fl=teamBtns(D,'shTeam',()=>{S.f.shPl='all';S.f.shType='all'});
-  if(S.f.shView==='bars')fl.querySelectorAll('button[data-tid]').forEach(x=>x.style.display='none');  /* Zones already shows both teams side by side */
+  if(S.season&&S.f.shView==='bars')fl.querySelectorAll('button[data-tid]').forEach(x=>x.style.display='none');  /* season Zones view: Cavs only (game view keeps the toggle so the tables can show the other team, i.e. the Cavs defense) */
   const ps=el('select');ps.setAttribute('aria-label','Player');const o0=el('option',null,'Whole team');o0.value='all';ps.appendChild(o0);
   const cnt={};R.shots.filter(s=>s.t===t.id&&s.id&&D.P[s.id]).forEach(s=>cnt[s.id]=(cnt[s.id]||0)+1);
   Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]).forEach(id=>{const o=el('option',null,D.P[id].name+' · '+cnt[id]+' FGA');o.value=id;if(S.f.shPl===id)o.selected=true;ps.appendChild(o)});
