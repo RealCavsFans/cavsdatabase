@@ -3929,7 +3929,7 @@ function ppBuild(p,root){
   const pool=LP.filter(x=>x.g>=Math.max(3,maxG*0.4)&&x.min/x.g>=12&&lgGrp(x.p)===G);
   const meL=LP.find(x=>x.n===n&&x.t==='CLE');
   const per=(x,k)=>x[k]/x.g;
-  const rankIn=(val,arr,hi=true)=>{if(val==null||!arr.length)return null;const better=arr.filter(v2=>hi?v2>val:v2<val).length;return {r:better+1,of:arr.length+(arr.includes(val)?0:1),pct:Math.round(100*(arr.filter(v2=>hi?v2<val:v2>val).length)/Math.max(1,arr.length))}};
+  const rankIn=(val,arr,hi=true)=>{if(val==null||!arr.length)return null;const better=arr.filter(v2=>hi?v2>val:v2<val).length;return {r:better+1,of:arr.length+1,pct:Math.round(100*(arr.filter(v2=>hi?v2<val:v2>val).length)/Math.max(1,arr.length))}};
   const lgOK=meL&&meL.g>=3&&meL.min/meL.g>=12&&pool.length>=20;  /* rank only players who would qualify for the pool themselves */
   const lgRank=(k,fn)=>{if(!lgOK)return null;const f=fn||(x=>per(x,k));const arr=pool.filter(x=>x!==meL).map(f);return rankIn(f(meL),arr)};
   // Cavs rank this season (players with 3+ games)
@@ -3963,7 +3963,7 @@ function ppBuild(p,root){
     lk.append(ilink('Bio & Measurements','roster','r-'+slug(n)));if(R||stt)lk.append(ilink('Contract','cap','p-'+slug(n)));lk.append(ilink('Depth Chart','roster'),ilink('Transactions','moves'));
     if(stt==='TW')lk.append(ilink('Charge','charge'));
     /* season on/off and lineups: the live page's season mode, opened on him (shows once the season has a game in the archive) */
-    if(Object.keys(SCORES).length){const a2=el('a',null,'Season on/off and lineups');a2.href='/live.html?g=s2026-27&pl='+slug(n);lk.append(a2)}
+    if(Object.keys(SCORES).length){const a2=el('a',null,'Season on/off');a2.href='/live.html?g=s2026-27&pl='+slug(n);lk.append(a2)}
     root.appendChild(lk)}
 
   /* ---------- chapters ---------- */

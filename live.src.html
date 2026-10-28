@@ -347,6 +347,8 @@ table.dt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
 .tse{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}.tse span{font:600 0.75rem var(--sans);padding:4px 8px}.tse b{font-family:var(--mono)}
 .tsc{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;align-items:start}
 .tsm{display:none}
+small.rk,span.rk{text-transform:none!important}
+.hwc{margin-top:8px;text-align:left;max-width:640px;margin-inline:auto}.hwc summary{cursor:pointer;font:700 .75rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--wt);text-align:center}.hwc ul{margin:8px 0 0;padding-left:18px;font-size:.78rem;line-height:1.45}.hwc li{margin:4px 0}
 .pgc-zr{padding:12px 16px}.pgc-zr h4{font:800 0.75rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--wt);margin:0 0 6px}.pgc-zt td small.rk{display:block;font-weight:600}
 .clv{display:grid;gap:14px;margin:4px 0 14px}.clv-k{font:700 0.6875rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}.clv-k em{font-style:normal;margin-left:6px;font-family:var(--mono);letter-spacing:0}.clv-k em.up{color:var(--pos)}.clv-k em.dn{color:var(--neg)}
 .clv-g{display:flex;gap:6px;flex-wrap:wrap}.clv-g>div{flex:1;min-width:64px;max-width:120px;border-top:4px solid var(--miss,#9aa0a8);background:var(--sub);padding:6px 8px;display:grid;gap:1px}.clv-g>div.w{border-top-color:var(--cf,#860038)}.clv-g b{font:800 0.875rem var(--cond)}.clv-g .w b{color:var(--cf,#860038)}.clv-g span{font-size:0.75rem}.clv-g small{font:500 0.6875rem var(--mono);color:var(--muted)}
@@ -564,7 +566,15 @@ tr.lutot td{font-weight:800;border-top:2px solid var(--fg)}
  <div id="view"></div>
 </main>
 <section class="nlft" id="nlft" hidden aria-label="Cavs &amp; Coffee newsletter"><div><div class="t"><b><img src="/nl/icon-mug.png" alt="" width="42" height="32">Cavs <i>&amp;</i> Coffee</b><p>Your Cavs news, served unfiltered.</p><small>Free · No ads · All Cavs</small></div><form action="https://buttondown.com/api/emails/embed-subscribe/cavscoffee" method="post"><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email"><input type="hidden" name="embed" value="1"><button type="submit">Pour me a cup</button></form></div></section>
-<div class="foot">Lineups, minutes and possessions are reconstructed from substitutions and may differ slightly from official numbers.</div>
+<div class="foot">Lineups, minutes and possessions are rebuilt from the play-by-play and may differ slightly from official numbers.
+<details class="hwc"><summary>How we count</summary><ul>
+<li><b>Possessions:</b> counted play by play, the way NBA.com counts them. A possession ends on a made basket, a defensive rebound, a turnover or the end of a period. An offensive rebound continues the same possession. Each game is checked against pbpstats every morning.</li>
+<li><b>Pace:</b> 48 × (both teams’ possessions ÷ 2) ÷ (minutes ÷ 5).</li>
+<li><b>Points per 100:</b> points ÷ possessions × 100. Net = scored minus allowed.</li>
+<li><b>True shooting:</b> points ÷ (2 × (FGA + 0.44 × FTA)). <b>Effective FG%:</b> (FGM + 0.5 × 3PM) ÷ FGA.</li>
+<li><b>Turnover rate:</b> turnovers ÷ (FGA + 0.44 × FTA + turnovers). <b>Offensive rebound rate:</b> offensive rebounds ÷ (them + the other team’s defensive rebounds), player rebounds only. <b>FT rate:</b> free throws made ÷ FGA.</li>
+<li><b>NBA ranks:</b> team ratings, pace and play-by-play splits use pbpstats’ counts for all 30 teams; box-score stats use every ESPN box score this season.</li>
+</ul></details></div>
 <nav class="sh-bar" aria-label="Sections"><a href="/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</a><a href="/schedule" class="on" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Schedule</a><a href="/roster"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M16 14.6c2.8.2 4.7 2 5.4 5"/></svg>Team</a><a href="/cap"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 8.5c-.6-1-1.8-1.6-3-1.6-1.8 0-3 1-3 2.4 0 3.3 6.2 1.9 6.2 5.1 0 1.4-1.4 2.6-3.2 2.6-1.4 0-2.7-.7-3.2-1.6M12 5v2M12 17v2"/></svg>Cap</a><a href="/history"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>More</a></nav>
 <script src="/live-core.js?v=e7a2b93ce8"></script>
 <script>
@@ -672,7 +682,7 @@ function renderSB(D,R){
   if(S.state==='pre')mid.append(el('div','st','Tip-off'),el('div','ck',new Date(D.date).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})));
   else if(fin)mid.append(el('div','st','Final'+(per>4?'/'+pname(per):'')));
   else{const endP=R.lp&&R.lp.type==='End Period';mid.append(el('div','st',endP?(per===2?'Half':'End '+pname(per)):pname(per)),el('div','ck',endP?'':(R.lp?R.lp.clock:'')))}
-  mid.appendChild(el('span','pill'+(S.state==='in'&&!S.replay?' live':''),S.replay&&!fin?'Replay':S.state==='in'?'Live':fin?'Final':'Upcoming'));
+  if(!fin)mid.appendChild(el('span','pill'+(S.state==='in'&&!S.replay?' live':''),S.replay?'Replay':S.state==='in'?'Live':'Upcoming'));
   sb.append(tmEl(D.away,false),mid,tmEl(D.home,true));
   /* the latest real play, for people glancing at the score */
   if(S.state==='in'){const pl=(S.replay?D.plays.slice(0,S.cur):D.plays);let q=null;for(let i=pl.length-1;i>=0;i--){const x=pl[i];if(x.text&&!/^(Substitution|End Period|End Game)$/.test(x.type)&&!/Timeout/.test(x.type)){q=x;break}}
@@ -716,7 +726,7 @@ function renderNav(R){setTimeout(moreHint,0);
   const set=v=>{if(Array.isArray(v)){v=[...new Set(v)].filter(p=>avail.includes(p)).sort();if(!v.length||eqSet(v,avail))v='all'}S.per=v;if(S.season){(async()=>{$('view').classList.add('busy');await loadSeason(S.season);$('view').classList.remove('busy');render()})();return}rerender()};
   const SH={'1st half':'1H','2nd half':'2H','Clutch':'Clutch','No garbage time':'No garbage'};const btn=(l,pressed,dis,fn,title)=>{const b=el('button');b.innerHTML=SH[l]?`<span class="lg">${l}</span><span class="sh">${SH[l]}</span>`:l;b.type='button';b.setAttribute('aria-pressed',pressed);b.disabled=dis;b.onclick=fn;if(title)b.title=title;pr.appendChild(b)};
   const second=avail.filter(p=>p>=3);
-  btn('Game',S.per==='all',have<1,()=>set('all'));
+  btn(S.season?'Season':'Game',S.per==='all',have<1,()=>set('all'));
   btn('1st half',Array.isArray(S.per)&&eqSet(S.per,[1,2]),have<1,()=>set([1,2]));
   btn('2nd half',Array.isArray(S.per)&&eqSet(S.per,second),have<3,()=>set(second));
   pr.appendChild(el('i'));
@@ -837,21 +847,21 @@ function pbpVal(ab,side,k){/* side 'T' = the team's own offense, 'O' = opponents
 function pbpRank(k,side,dir){if(!PBT||!PBS||!lgOK()||PBT.season!==S.season)return null;const v=pbpVal('CLE',side,k);if(v==null)return null;const o=Object.keys(PBT.T||{}).filter(a=>a!=='CLE').map(a=>pbpVal(a,side,k));return lgRank(v,o,dir)}
 function contextCard(D,R){
   const c=el('div','card sec');head(c,'How possessions started',(S.season?'Season totals':perLabel(S.per))+' · possessions tracked, total points and points per possession');
-  const L=[['stl','After a steal'],['dreb','After a defensive rebound'],['to','After a dead-ball turnover'],['made','After an opponent score'],['oreb','Second chances']];
+  const L=[['stl','After a steal'],['dreb','After a defensive rebound'],['to','After a dead-ball turnover'],['made','After an opponent score'],['start','Start of a quarter'],['oreb','Second chances']];
   const cell=(x,y,t)=>{const td=el('td',null,x==null?'–':x.toFixed(2));if(x!=null&&y!=null&&x>y){td.style.fontWeight='800';td.style.color=t.c}return td};
   const tb=el('table','zt hps');tb.innerHTML=`<tr><th></th><th>${esc(D.focus.abbr)}</th><th>Pts</th><th>Per</th><th>${esc(D.other.abbr)}</th><th>Pts</th><th>Per</th></tr>`;
   if(S.season)pbpLoad();const rkOn=!!(S.season&&pbpRank('stl','T',1));
-  L.forEach(([k,l])=>{const a=R.pc[D.focus.id][k],b=R.pc[D.other.id][k];const pa=a.n?a.pts/a.n:null,pb=b.n?b.pts/b.n:null;const tr=el('tr');const ca=cell(pa,pb,D.focus),cb=cell(pb,pa,D.other);if(rkOn&&k!=='to'){ca.insertAdjacentHTML('beforeend',rkEl(pbpRank(k,'T',1)));cb.insertAdjacentHTML('beforeend',rkEl(pbpRank(k,'O',-1)))}tr.append(el('td',null,l),el('td',null,String(a.n)),el('td',null,String(a.pts)),ca,el('td',null,String(b.n)),el('td',null,String(b.pts)),cb);tb.appendChild(tr)});
+  L.forEach(([k,l])=>{const a=R.pc[D.focus.id][k],b=R.pc[D.other.id][k];const pa=a.n?a.pts/a.n:null,pb=b.n?b.pts/b.n:null;const tr=el('tr');const ca=cell(pa,pb,D.focus),cb=cell(pb,pa,D.other);if(rkOn&&k!=='to'&&k!=='start'){ca.insertAdjacentHTML('beforeend',rkEl(pbpRank(k,'T',1)));cb.insertAdjacentHTML('beforeend',rkEl(pbpRank(k,'O',-1)))}tr.append(el('td',null,l),el('td',null,String(a.n)),el('td',null,String(a.pts)),ca,el('td',null,String(b.n)),el('td',null,String(b.pts)),cb);tb.appendChild(tr)});
   const A=R.cx?R.cx[D.focus.id]:ctxRows(R,D.focus.id),B=R.cx?R.cx[D.other.id]:ctxRows(R,D.other.id);
   {const h=el('tr','sep');const td=el('td','hgh','Transition or halfcourt');td.colSpan=7;h.appendChild(td);tb.appendChild(h)}
   [[1,'Transition'],[0,'Halfcourt']].forEach(([i,l])=>{const a=A[i],b=B[i];const tr=el('tr');tr.append(el('td',null,l),el('td',null,String(a.n)),el('td',null,String(a.pts)),cell(a.pp,b.pp,D.focus),el('td',null,String(b.n)),el('td',null,String(b.pts)),cell(b.pp,a.pp,D.other));tb.appendChild(tr)});
   const w=el('div','tw');w.appendChild(tb);c.appendChild(w);
   if(rkOn)c.appendChild(el('p','note','Small numbers under Per = NBA rank among 30 teams by pbpstats’ count of the same kind of possession (1st = best for the Cavs: most points per possession on offense, fewest allowed under '+D.other.abbr+'). Green = top 10, red = bottom 10. Dead-ball turnovers, transition and halfcourt have no matching league count yet.'));
-  c.appendChild(el('p','note','Counted from rebounds, turnovers and made baskets. Transition = a shot, foul or turnover within 7 seconds of a steal, dead-ball turnover or defensive rebound. Second chances count each offensive rebound. These possessions are counted play by play, so totals can differ by a few from the box score estimate used for pace and ratings.'));return c;
+  c.appendChild(el('p','note','Counted from rebounds, turnovers and made baskets. Transition = a shot, foul or turnover within 7 seconds of a steal, dead-ball turnover or defensive rebound. Second chances count each offensive rebound. These are the same play-by-play possessions used for pace and ratings.'));return c;
 }
 function oppCard(D,R){
   const c=el('div','card sec');head(c,'Scoring chances',perLabel(S.per)+' · every possession, minus turnovers, plus second chances');
-  const st=t=>{const P=R.PL.filter(q=>q.team===t.id);const pos=P.filter(q=>q.how!=='oreb').length,orb=P.length-pos,to=R.T[t.id].to;const T=R.T[t.id];const tsa=T.fga+0.44*T.fta;return {pos,orb,to,used:Math.max(0,pos-to),opp:pos-to+orb,pts:T.pts,ts:tsa?T.pts/(2*tsa):null}};
+  const st=t=>{const pc=R.pc[t.id]||{};const pos=['stl','to','dreb','made','start'].reduce((n,k)=>n+((pc[k]||{}).n||0),0),orb=(pc.oreb||{}).n||0,to=R.T[t.id].to;/* same counts as How possessions started */const T=R.T[t.id];const tsa=T.fga+0.44*T.fta;return {pos,orb,to,used:Math.max(0,pos-to),opp:pos-to+orb,pts:T.pts,ts:tsa?T.pts/(2*tsa):null}};
   const a=st(D.focus),b=st(D.other);const mx=Math.max(a.pos+a.orb,b.pos+b.orb)||1;
   const stripe=col=>`repeating-linear-gradient(135deg,var(--card) 0 4px,color-mix(in srgb,${col} 32%,var(--card)) 4px 8px)`;
   const wrap=el('div','sc2');const left=el('div');left.appendChild(el('h3',null,'Chances'));
@@ -1216,11 +1226,11 @@ function wpCard(D,R){
   let d='',g='';R.wpS.forEach(([t,v],i)=>{const fv=fh?v:1-v;d+=(i?' L':'M')+X(t).toFixed(1)+','+Y(fv).toFixed(1)});
   for(let p=1;p<=R.maxPer;p++){const x0=X(pstart(p));g+=`<line x1="${x0}" x2="${x0}" y1="8" y2="${H-18}" stroke="var(--line)"/><text x="${X(pstart(p)+plen(p)/2)}" y="${H-4}" text-anchor="middle" font-size="10" fill="var(--muted)" font-family="var(--mono)">${pname(p)}</text>`}
   g+=`<line x1="${pad}" x2="${W-pad}" y1="${Y(.5)}" y2="${Y(.5)}" stroke="var(--fg2)" stroke-dasharray="3 3"/><text x="${pad-4}" y="${Y(1)+4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="var(--mono)">100</text><text x="${pad-4}" y="${Y(0)+4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="var(--mono)">0</text>`;
-  const sw=[];for(let i=1;i<R.wpS.length;i++){const dv=(R.wpS[i][1]-R.wpS[i-1][1])*(fh?1:-1);sw.push([Math.abs(dv),dv,R.wpS[i]])}sw.sort((a,b)=>b[0]-a[0]);const top=sw.slice(0,5);
+  const WS=R.wpS.filter(x=>!/Substitution|Timeout|End Period|Jumpball|Jump Ball/i.test((x[2]&&x[2].type)||''));const sw=[];for(let i=1;i<WS.length;i++){const dv=(WS[i][1]-WS[i-1][1])*(fh?1:-1);sw.push([Math.abs(dv),dv,WS[i]])}sw.sort((a,b)=>b[0]-a[0]);const top=sw.slice(0,5);
   top.forEach(([,dv,[t,v]],i)=>{const fv=fh?v:1-v;g+=`<circle cx="${X(t)}" cy="${Y(fv)}" r="7" fill="var(--gold)" stroke="#fff" stroke-width="1.5"/><text x="${X(t)}" y="${Y(fv)+3.5}" text-anchor="middle" font-size="9" font-weight="700" font-family="var(--mono)" fill="var(--ink)">${i+1}</text>`});
   f.insertAdjacentHTML('beforeend',`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(D.focus.abbr)} win probability"><path d="${d}" fill="none" stroke="${D.focus.c}" stroke-width="2.2"/>${g}</svg>`);
   scrub(f,D,R,W,pad,T,t=>{let v=null;for(const [tt,vv] of R.wpS){if(tt>t)break;v=vv}return v==null?'':D.focus.abbr+' win chance '+Math.round((fh?v:1-v)*100)+'%'});
-  const ul=el('ul','sw');top.forEach(([,dv,[t,v,p]],i)=>{const li=el('li');li.append(el('b',null,String(i+1)),el('span',null,p.text),el('small',null,pname(p.per)+' '+p.clock+' · '+D.focus.abbr+' '+(dv>0?'+':'−')+Math.abs(Math.round(dv*100))+' pts'));ul.appendChild(li)});
+  const ul=el('ul','sw');top.forEach(([,dv,[t,v,p]],i)=>{const li=el('li');li.append(el('b',null,String(i+1)),el('span',null,p.text),el('small',null,pname(p.per)+' '+p.clock+' · '+D.focus.abbr+' '+(dv>0?'+':'−')+Math.abs(Math.round(dv*100))+'% win chance'));ul.appendChild(li)});
   f.appendChild(el('h3',null,'Biggest swings for '+D.focus.abbr));f.appendChild(ul);
   f.appendChild(el('p','note','Line = '+D.focus.abbr+'’s chance to win.'));return f;
 }
@@ -1961,9 +1971,9 @@ function vPlayers(v,D,R){
     r._cls=R.B[id].on&&S.state==='in'?'':'';rows.push(r)});
   const nm=r=>{const s=el('span');const dot=el('span','oc'+(R.B[r.name.id].on&&S.state==='in'?'':' off'));s.append(dot,plink(D,r.name.id,r.name.short||r.name.name));if(r.name.starter)s.appendChild(el('span','pos',r.name.pos||''));return s};
   const d=x=>r=>r.dnp?'':x(r);
-  const cols=[{h:'Player',k:'name',f:nm},{h:'MIN',k:'min',f:d(r=>fmtMin(r.min))},{h:'PTS',k:'pts',f:d(r=>r.pts),cls:()=>'k'},
+  const cols=[{h:'Player',k:'name',f:nm},{h:'MIN',k:'min',f:r=>r.dnp?'DNP':fmtMin(r.min)},{h:'PTS',k:'pts',f:d(r=>r.pts),cls:()=>'k'},
     {h:'FG',k:'fgm',f:d(r=>r.fgm+'-'+r.fga)},{h:'2P',k:'twm',sv:r=>r.dnp?null:r.fgm-r.tpm,f:d(r=>(r.fgm-r.tpm)+'-'+(r.fga-r.tpa))},{h:'3PT',k:'tpm',f:d(r=>r.tpm+'-'+r.tpa)},{h:'FT',k:'ftm',f:d(r=>r.ftm+'-'+r.fta)},{h:'TS%',k:'ts',f:d(r=>r.ts==null?'–':(r.ts*100).toFixed(0)+'%'),title:'True shooting'},
-    {h:'REB',k:'reb',f:d(r=>r.reb)},{h:'OREB',k:'oreb',f:d(r=>r.oreb)},{h:'DREB',k:'dreb',f:d(r=>r.dreb==null||isNaN(r.dreb)?r.reb-r.oreb:r.dreb)},{h:'AST',k:'ast',f:d(r=>r.ast)},{h:'TO',k:'to',f:d(r=>r.to),asc:true},{h:'STL',k:'stl',f:d(r=>r.stl)},{h:'BLK',k:'blk',f:d(r=>r.blk)},{h:'PF',k:'pf',f:d(r=>r.pf),asc:true},{h:'+/-',k:'pm',f:d(r=>sgn(r.pm)),cls:r=>r.dnp?'':pmCls(r.pm)},{h:'NET',k:'net',f:d(r=>r.net==null?'–':sgn(Math.round(r.net))),cls:r=>r.dnp||r.net==null?'':pmCls(r.net),title:'Net rating: points per 100 possessions, scored minus allowed, with him on the floor'}];
+    {h:'REB',k:'reb',f:d(r=>r.reb)},{h:'OREB',k:'oreb',f:d(r=>r.oreb)},{h:'DREB',k:'dreb',f:d(r=>r.dreb==null||isNaN(r.dreb)?r.reb-r.oreb:r.dreb)},{h:'AST',k:'ast',f:d(r=>r.ast)},{h:'TO',k:'to',f:d(r=>r.to),asc:true},{h:'STL',k:'stl',f:d(r=>r.stl)},{h:'BLK',k:'blk',f:d(r=>r.blk)},{h:'PF',k:'pf',f:d(r=>r.pf),asc:true},{h:'+/-',k:'pm',f:d(r=>sgn(r.pm)),cls:r=>r.dnp?'':pmCls(r.pm)},{h:'NET/100',k:'net',f:d(r=>r.net==null?'–':sgn(Math.round(r.net))),cls:r=>r.dnp||r.net==null?'':pmCls(r.net),title:'Net rating: points per 100 possessions, scored minus allowed, with him on the floor'}];
   /* backup feeds without substitutions can't give minutes or plus-minus */
   if(S.data&&S.data.noSubs&&!S.season)cols.forEach(c=>{if(['min','pm','net'].includes(c.k)){c.f=()=>'–';c.cls=()=>''}});
   const foot=el('tr','tot');foot.appendChild(el('td',null,'Team'));['',TT.pts,TT.fgm+'-'+TT.fga,(TT.fgm-TT.tpm)+'-'+(TT.fga-TT.tpa),TT.tpm+'-'+TT.tpa,TT.ftm+'-'+TT.fta,TT.fga+TT.fta?(TT.pts/(2*(TT.fga+0.44*TT.fta))*100).toFixed(0)+'%':'–',TT.oreb+TT.dreb,TT.oreb,TT.dreb,TT.ast,TT.to,TT.stl,TT.blk,TT.pf,'',''].forEach(x=>foot.appendChild(el('td',null,String(x))));
@@ -2229,7 +2239,7 @@ function vSeason(v,D,R){
     G.forEach((g,i)=>{const x=pad+i*bw,y=Y(vals[i]);const won=g.cle>g.os;s+=`<rect x="${(x+1).toFixed(1)}" y="${Math.min(y,H/2).toFixed(1)}" width="${Math.max(1,bw-2).toFixed(1)}" height="${Math.max(1,Math.abs(y-H/2)).toFixed(1)}" fill="${won?'#860038':'#b9bcc0'}"><title>${new Date(g.et+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})} ${g.ha==='home'?'vs':'at'} ${esc(g.opp)}: ${won?'W':'L'} ${g.cle}–${g.os} · ${m[1]} ${f1(vals[i])}</title></rect>`});
     if(n>=3){const pts=G.map((g,i)=>{const w=G.slice(Math.max(0,i-9),i+1);return (pad+i*bw+bw/2).toFixed(1)+','+Y(sTeam(w)[S.f.sm]).toFixed(1)});s+=`<polyline points="${pts.join(' ')}" fill="none" stroke="#F2B231" stroke-width="3"/>`}
     s+=`<text x="${pad-5}" y="${Y(ctr+mx)+10}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="var(--mono)">${S.f.sm==='n'?sg1(mx):f1(ctr+mx)}</text><text x="${pad-5}" y="${Y(ctr-mx)}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="var(--mono)">${S.f.sm==='n'?sg1(-mx):f1(ctr-mx)}</text><text x="${pad-5}" y="${H/2+4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="var(--mono)">${S.f.sm==='n'?'0':'avg'}</text></svg>`;
-    c.insertAdjacentHTML('beforeend',s);const k=el('div','key');k.innerHTML=`<span><i style="background:#860038"></i>Win</span><span><i style="background:#b9bcc0"></i>Loss</span>${n>=3?'<span><i style="background:#F2B231"></i>10-game average</span>':''}<span>Season ${m[1].toLowerCase()} ${S.f.sm==='n'?sg1(avg):f1(avg)}${S.f.sm==='tpar'||S.f.sm==='ts'?'%':''} · hover a bar for the game</span>`;c.appendChild(k);v.appendChild(c)}
+    c.insertAdjacentHTML('beforeend',s);const k=el('div','key');k.innerHTML=`<span><i style="background:#860038"></i>Win</span><span><i style="background:#b9bcc0"></i>Loss</span>${n>=3?'<span><i style="background:#F2B231"></i>10-game average</span>':''}<span>Season ${m[1].toLowerCase()} ${S.f.sm==='n'?sg1(avg):f1(avg)}${S.f.sm==='tpar'||S.f.sm==='ts'?'%':''} · tap or hover a bar for the game</span>`;c.appendChild(k);v.appendChild(c)}
   /* 2 · splits: team, a lineup or a player */
   {const c=el('div','card sec');head(c,'Splits','Per 100 possessions, our own count. Pick a lineup or a player for the same splits with him on the floor.');
     const fl=el('div','fl');S.f.sk=S.f.sk||'team';
@@ -2313,7 +2323,7 @@ function seasonExtras(v,D,R){const J=S.sfull;const filt=!!((S.sf&&((S.sf.games&&
   {const L=Object.values((R.L[D.focus.id]||{})[5]||{});const minM=Math.min(30,Math.max(8,G*2));const Q=L.filter(l=>l.sec>=minM*60).map(l=>{const p=(poss(l.o)+poss(l.d))/2;return {l,net:p>=1?(l.pf-l.pa)/p*100:null,p}}).filter(x=>x.net!=null).sort((a,b)=>b.net-a.net);
     if(Q.length>=2){const c=el('div','card sec');head(c,'Best and worst lineups','Five-man units with '+minM+'+ minutes · net points per 100 possessions');const nm=l=>l.ids.map(id=>(D.P[id]||{}).last||'').join(', ');
       const mk=(lab,arr)=>{const t=el('table','zt');t.innerHTML=`<tr><th>${lab}</th><th>Min</th><th>+/-</th><th>Net</th></tr>`;arr.forEach(({l,net})=>{const tr=el('tr');tr.append(el('td',null,nm(l)),el('td',null,fmtMin(l.sec)),el('td',pmCls(l.pf-l.pa),sgn(l.pf-l.pa)),el('td',pmCls(net),sgn(Math.round(net))));t.appendChild(tr)});const w=el('div','tw');w.appendChild(t);return w};
-      const k=Math.min(5,Math.floor(Q.length/2));c.appendChild(mk('Best',Q.slice(0,k)));c.appendChild(mk('Worst',Q.slice(-k).reverse()));c.appendChild(el('p','note','Small samples swing hard. The full list is in Lineups.'));v.appendChild(c)}}
+      const up=Q.filter(x=>x.net>0),dn=Q.filter(x=>x.net<0).reverse();if(up.length)c.appendChild(mk('Best',up.slice(0,5)));if(dn.length)c.appendChild(mk('Worst',dn.slice(0,5)));c.appendChild(el('p','note','Small samples swing hard. The full list is in Lineups.'));v.appendChild(c)}}
 }
 /* ---------- season filter: by opponent, or by opponent strength (net rating rank) ----------
    With a filter on, the season is rebuilt in the browser from the archived game files, the same way
@@ -2402,7 +2412,7 @@ function seasonPlayers(v,D,R){
 function selfCard(D,R){const P={};(R.shots||[]).forEach(q=>{if(q.t!==D.focus.id||!q.m||!q.id)return;const o=P[q.id]=P[q.id]||[0,0,0,0];const v=q.three?3:2;if(q.ast){o[0]++;o[1]+=v}else{o[2]++;o[3]+=v}});
   const rows=Object.entries(P).filter(([,v])=>v[0]+v[2]>=5).map(([id,v])=>({id,ua:v[2],sh:v[2]/(v[0]+v[2]),pu:v[3],pa:v[1]}));if(!rows.length)return null;
   const c=el('div','card sec');head(c,'Who creates his own shot','Made field goals with no assist · '+(D.games||[]).length+' games');
-  c.appendChild(dtable('selfc',[{h:'Player',k:'id',f:r=>{const sp=el('span');sp.appendChild(plink(D,r.id,D.P[r.id].short));return sp}},{h:'UNAST.',k:'ua',title:'Made field goals with no assist'},{h:'SHARE',k:'sh',f:r=>Math.round(r.sh*100)+'%',title:'Share of his makes that were unassisted'},{h:'PTS UNAST.',k:'pu',title:'Points on unassisted makes'},{h:'PTS AST.',k:'pa',title:'Points on assisted makes'}],rows,{def:'pu'}));
+  c.appendChild(dtable('selfc',[{h:'Player',k:'id',f:r=>{const sp=el('span');sp.appendChild(plink(D,r.id,D.P[r.id].short));return sp}},{h:'Unassisted',k:'ua',title:'Made field goals with no assist'},{h:'SHARE',k:'sh',f:r=>Math.round(r.sh*100)+'%',title:'Share of his makes that were unassisted'},{h:'Pts on their own',k:'pu',title:'Points on unassisted makes'},{h:'Pts off assists',k:'pa',title:'Points on assisted makes'}],rows,{def:'pu'}));
   c.appendChild(el('p','note','Free throws aren’t included. Players with 5+ makes.'));return c}
 function gameByGame(D,R,pid,c){
   const pz=R.pz[pid];if(!pz)return;const tot=ZN.map(()=>[0,0]);Object.values(pz).forEach(z=>z.forEach((v,i)=>{tot[i][0]+=v[0];tot[i][1]+=v[1]}));
@@ -2451,7 +2461,7 @@ function vAst(v,D,R){
 function wfCard(v,D){const G=(D.games||[]).filter(g=>g.t&&g.u);if(!G.length)return;const z=x=>Object.assign({tdreb:0},sRow(x));
   const K=[['efg','Shooting','Effective FG%',1],['tov','Ball security','Turnover rate (lower wins)',0],['orb','Second chances','Offensive rebound rate',1],['ftr','Getting to the line','Free throws made per FGA',1]];const SN={efg:'Shooting',tov:'Ball security',orb:'Boards',ftr:'Free throws'};
   const rec={};K.forEach(([k])=>rec[k]=[[0,0],[0,0]]);const byN=[[0,0],[0,0],[0,0]],combo=[{},{}];
-  G.forEach(g=>{const a=z(g.t),b=z(g.u),fa=factors(a,b),fb=factors(b,a),w=g.cle>g.os?0:1;let n=0;const wk=[];K.forEach(([k,,,hi])=>{if(fa[k]==null||fb[k]==null||fa[k]===fb[k])return;const won=hi?fa[k]>fb[k]:fa[k]<fb[k];if(won){n++;wk.push(SN[k])}rec[k][won?0:1][w]++});byN[n>=3?0:n===2?1:2][w]++;const ck=wk.length?wk.join(' + '):'None';combo[w][ck]=(combo[w][ck]||0)+1});
+  G.forEach(g=>{const a=z(g.t),b=z(g.u),fa=factors(a,b),fb=factors(b,a),w=g.cle>g.os?0:1;let n=0;const wk=[];K.forEach(([k,,,hi])=>{if(fa[k]==null||fb[k]==null||fa[k]===fb[k])return;const won=hi?fa[k]>fb[k]:fa[k]<fb[k];if(won){n++;wk.push(SN[k])}rec[k][won?0:1][w]++});byN[n>=3?0:n===2?1:2][w]++;const ck=wk.length?wk.join(' + '):'Won no factors';combo[w][ck]=(combo[w][ck]||0)+1});
   const c=el('div','card sec');head(c,'Win the factor, win the game?',G.length+' game'+(G.length===1?'':'s')+' · the Cavs’ record when they beat the opponent in each factor, and when they don’t');
   const rs=x=>x[0]+'–'+x[1],wp=x=>x[0]+x[1]?x[0]/(x[0]+x[1]):null;const rows=el('div','wf-rows');
   K.forEach(([k,n,full])=>{const r=el('div','wf-r');const nn=el('div','wf-n');nn.append(el('b',null,n),el('small',null,full));r.appendChild(nn);
@@ -2474,7 +2484,7 @@ function vFF(v,D,R){
     if(x!=null&&y!=null){const better=(x>y)===hib?D.focus:D.other;const e=el('div','edge',x===y?'Even':better.abbr+' edge');e.style.color=better.c;box.appendChild(e)}
     box.appendChild(el('p','note',full));g.appendChild(box)});
   c.appendChild(g);
-  c.appendChild(el('p','note','Turnover rate = turnovers per estimated possession. Offensive rebound rate counts team rebounds. Use the quarter buttons above to compare any stretch.'+(LF?' Small numbers = NBA rank among 30 teams (for OPP, 1st = the toughest on opponents).':'')));
+  c.appendChild(el('p','note','Turnover rate = turnovers ÷ (FGA + 0.44 × FTA + turnovers). Offensive rebound rate uses player rebounds, the NBA.com way. Use the quarter buttons above to compare any stretch.'+(LF?' Small numbers = NBA rank among 30 teams (for OPP, 1st = the toughest on opponents).':'')));
   v.appendChild(c);if(S.season)wfCard(v,D);
 }
 
