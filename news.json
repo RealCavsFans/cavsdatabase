@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "Fear The Sword",
+   "title": "NBA reveals Cavs benefited from two missed calls late in win over Timberwolves",
+   "link": "https://www.fearthesword.com/cavs-news/53608/cavs-nba-last-two-minute-report-cleveland-cavaliers-minnesota-timberwolves-anthony-edwards-lamelo-ball-donovan-mitchell",
+   "date": "2026-10-27T23:22:39.000Z"
+  },
+  {
    "src": "Cavaliers on SI",
    "title": "Peyton Watson Did It All — and Showed Why the Cavs Needed Him",
    "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOMUY0ZThvbUkxSHotaXV1ZnJUWDFEWTFLb3U2bDdjdE1aUUhMRkRvX3NRQ1Y3RmtIZjhqOU9qNFQ0NW50WUlISHk2ZnNYMThVcVdST1F1N3hNeXFGY2tJYlNxRDlMLWNSMTZtQWdqSXJJbm43NnhfM2swZzJkTk1Hc2xsNGkxWmh1aUNpbE5xM0JTT3hqWG9mQnNTVVpxNHdaMTBlSUZna0hGN3dWNXVR?oc=5",
@@ -17,6 +23,12 @@
    "title": "The NBA’s regular season still means ‘everything’ to the Cavs",
    "link": "https://www.fearthesword.com/cavs-analysis/53600/the-nbas-regular-season-still-means-everything-to-the-cavs",
    "date": "2026-10-27T17:06:41.000Z"
+  },
+  {
+   "src": "cleveland.com",
+   "title": "‘Can’t keep a star in the closet’: Inside Meleek Thomas’ stellar NBA debut",
+   "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPaUdZZWxBRVNSeG81SDliX2UwcTJfUXQ0Zm5iSFNGb2tMNW5DZGtfcFZuVlhqaUhac2hnNmRQUDdqT0E1bGhpVTlTMlRnOFJud3M3bXZUZXlySjhSMGR0ZTlTSHE0ejVHNEQxcEN2MWxyRWVMUnhTUVdsOUdRMTJrMWJ4OGV1RHdPa2tKb1Z1OU9hX01vSnBIWmgwc2oyd3ZPQkFzR0VHWldIRWZuV0lXZTF2bw?oc=5",
+   "date": "2026-10-27T16:24:00.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -127,12 +139,6 @@
    "date": "2026-10-25T06:25:00.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "Diving deeper into Cavs narrow 125-121 victory over the Nets",
-   "link": "https://www.fearthesword.com/cavs-analysis/53438/diving-deeper-into-cavs-narrow-125-121-victory-over-the-nets",
-   "date": "2026-10-25T04:08:24.000Z"
-  },
-  {
    "src": "cleveland.com",
    "title": "Cavs nearly blow big lead again, escape home opener with 125-121 win over Brooklyn Nets",
    "link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQa0dLNzlXM3Y0ZUJlb1ZfWGktbDMyS1lBekM4UTZONGxycXFyQmE2SnUxQWxuckdQWURzU2ZKUVJ1VHlJUDRQdTd6bWNPVWE3aG8yelRmb0dGZkwwVDFsVnBmRFhOWTZNeDlmaXQ2WTZvWnZYRXl2eERCNVljRWpIbG44ZTZZR0JJVDdFRHUyQVBuOURIRl8tUks1b19BNi16VlQ1cEpJZU9kQWxkS2FXd3NxZ3F3bGhQQWc?oc=5",
@@ -143,12 +149,6 @@
    "title": "2026 NBA G League Draft Results",
    "link": "https://www.hoopsrumors.com/2026/10/2026-nba-g-league-draft-results.html",
    "date": "2026-10-24T21:35:01.000Z"
-  },
-  {
-   "src": "cleveland.com",
-   "title": "Donovan Mitchell opens up about therapy, mental growth as new Cavs season begins",
-   "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNenhnQU5XRHBGalBqNng5bWNjLWl0SEZFanZEMlNiZ3BFUzVPdTdlYU9DaHN4RlFURlBRUElvNmh2MkYzR2swZnFSRWkwT1RCelVJUXJNVkc2bjJ0TEhJdHpCQVI3Tm0xUDRIQjk1N2l6dVhXM2V5a3c5WER0STBnTUVNSndtNFVLaV9YUEt4Q3o5bVhVTVc4aXpVQTN4aDZDT3VLZFVqVm1DZW9Ic05ObHRwT2Fpd2NaQUxMT2VGc08?oc=5",
-   "date": "2026-10-24T09:00:00.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -190,7 +190,7 @@
    "src": "cleveland.com",
    "title": "‘A lot of consideration’: What LeBron James said about the Cavs’ pursuit of him in free agency",
    "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOUGZIVVpwZkwwMU1DTkZsRXJHUUhObG1VWU1zeTFrRXowMUlpVnpsWWVlVG5OTmlnOVYxeHc3Ml9JZWtWLTlXVS1XbFpGUWMzd0x1MnZNdWR6UGVTWUdzY2hodHNqb1Q3YXkwSDRFb2tyanYzc0F2b2JtOFpDLW9fSnBLeW4tLUh5aWlrbVRwdVBOQ01Scm9pTnR4WFBocTNKX2JPWUhsYXVoMGx5ZDhPS1VaX1o?oc=5",
-   "date": "2026-10-23T04:36:00.000Z"
+   "date": "2026-10-23T04:41:28.000Z"
   },
   {
    "src": "cleveland.com",
@@ -242,9 +242,9 @@
   },
   {
    "src": "cleveland.com",
-   "title": "Cavs could be without key big man in season opener against 76ers",
-   "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPUnVHY0Nhem8xdW9pNV9qWkluejN1bGtnRlUxdTd2VkVtNjZfTXZXV0xJNkV5dERWamNzWEExbGRWS1B1NGxGd1JuUlZVMzhXTTZfQjNmQ2pTdEdUMlhKdWNWMDhfQjZ2MXRDR0lwY1liTUpYU3h5YTNYWlAxOU45cU9fMEt1QS14a3FvOEVKN19UQ1lKaWtLN3BxVjZ2X2dVZlpkZ09rbENlblBO?oc=5",
-   "date": "2026-10-21T22:56:00.000Z"
+   "title": "‘I don’t ever want to wear another uniform’: Donovan Mitchell’s journey — from Knicks rumors to playoff breakthroughs to finding his home",
+   "link": "https://news.google.com/rss/articles/CBMihAJBVV95cUxNbVQ4MzZJTlJjUEZsV2NQLTR2Y085UF90TDNtMzZpMkNIMWxFT1c1TzJRd2U4YkRwTlJHdnJINW4zb3dZRGU1SU5WR1k2QXRuOWhwS0E2aTl6LVNEb1FqWVZHTGxaMEtvLUwwdDBnSVhLRGFwNWNGRUdicFFqU2Z5Xy1FSjhWSEZWV1pOWE93Q1QyVm91SE56ODRqTjAwdkp0MWFjclAwVnpOWXp2VHRTR245U0QwbkFnZFRndGlQcmZOaUxibGFqU1lsemowalZLaFl1SjJleV95NU0tVTVtd0p4c3pQMzBQZU1sRGk4Q29tejNCLS1yeXNldFdCbGtwUU9rOA?oc=5",
+   "date": "2026-10-21T15:05:00.000Z"
   },
   {
    "src": "Hoops Rumors",
