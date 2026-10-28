@@ -47,10 +47,11 @@ fs.writeFileSync('live-base.json', JSON.stringify({ season: SEASON, updated: new
   const S2 = {};
   for (const st of ST) { for (const ty of ['Team', 'Opponent']) {
     const u = `https://api.pbpstats.com/get-totals/nba?Season=${SEASON}&SeasonType=Regular%20Season&Type=${ty}&StartType=${st}`;
-    try { const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0 (cavsdatabase.com)' }, signal: AbortSignal.timeout(60000) }); if (!r.ok) { console.log(st, ty, 'HTTP', r.status); continue; }
+    let r = null; for (let k = 0; k < 4; k++) { try { r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0 (cavsdatabase.com)' }, signal: AbortSignal.timeout(60000) }); if (r.ok) break; console.log(st, ty, 'HTTP', r.status); } catch (e) { console.log(st, ty, String(e)); r = null; } await new Promise(w => setTimeout(w, 10000 * (k + 1))); }
+    try { if (!r || !r.ok) continue;
       const j = await r.json(); const out = {}; (j.multi_row_table_data || []).forEach(x => { out[ESPN_ABBR[x.Name] || x.Name] = [x.OffPoss || 0, x.Points || 0, x.FG3A || 0, x.SecondsPerPossOff || null]; });
       (S2[st] = S2[st] || {})[ty] = out; console.log(st, ty, Object.keys(out).length, JSON.stringify(out.CLE)); } catch (e) { console.log(st, ty, String(e)); }
-    await new Promise(r => setTimeout(r, 1200)); } }
+    await new Promise(r => setTimeout(r, 5000)); } }
   fs.writeFileSync('pdata/pbp-starts.json', JSON.stringify({ season: SEASON, updated: new Date().toISOString(), S: S2 }));
   console.log(`pdata/pbp-teams.json: ${Object.keys(T).length} teams, ${Object.keys(O).length} opponent rows, ${Object.keys(Object.values(T)[0] || {}).length} fields`); }
 console.log(`live-base.json: ${SEASON}, ${Object.keys(t).length} teams, ${Object.keys(p).length} players, up to ${games} games`);
