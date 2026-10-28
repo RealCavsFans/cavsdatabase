@@ -2374,6 +2374,15 @@ function seasonExtras(v,D,R){const J=S.sfull;const filt=!!((S.sf&&((S.sf.games&&
       [['1st','q1'],['2nd','q2'],['3rd','q3'],['4th','q4']].forEach(([l,k])=>{const q=J.tq[k];if(!q)return;const o=r100(q.pf,q.po),d=r100(q.pa,q.pd),nt=o!=null&&d!=null?o-d:null;const tr=el('tr');
         tr.append(el('td',null,l),el('td',null,(q.pf/n).toFixed(1)+'–'+(q.pa/n).toFixed(1)),el('td',pmCls(q.pf-q.pa),sgnf((q.pf-q.pa)/n)),el('td',null,n0(o)),el('td',null,n0(d)),el('td',nt==null?null:pmCls(nt),nt==null?'–':sgn(Math.round(nt))));t.appendChild(tr)});
       const w=el('div','tw');w.appendChild(t);c.appendChild(w);c.appendChild(el('p','note','Overtime isn’t included. Possessions are counted from the play-by-play.'))}v.appendChild(c)}
+  /* home vs road (follows the filters) */
+  if(false){const GG=(D.games||[]).filter(g=>g.t&&g.u);if(GG.length){const c=el('div','card sec');head(c,'Home vs road',GG.length+' game'+(GG.length===1?'':'s'));const t=el('table','zt');t.innerHTML='<tr><th></th><th>Record</th><th>Score</th><th>Off</th><th>Def</th><th>Net</th></tr>';
+    [['Home','home'],['Road','away']].forEach(([l,k])=>{const G2=GG.filter(g=>g.ha===k);if(!G2.length)return;const n=G2.length,w=G2.filter(g=>g.cle>g.os).length;let pf=0,pa=0,po=0;G2.forEach(g=>{pf+=g.cle;pa+=g.os;po+=(sPoss(sRow(g.t))+sPoss(sRow(g.u)))/2});const o=pf/po*100,d=pa/po*100;
+      const tr=el('tr');tr.append(el('td',null,l),el('td',null,w+'–'+(n-w)),el('td',null,(pf/n).toFixed(1)+'–'+(pa/n).toFixed(1)),el('td',null,o.toFixed(1)),el('td',null,d.toFixed(1)),el('td',pmCls(o-d),sgnf(o-d)));t.appendChild(tr)});
+    const w=el('div','tw');w.appendChild(t);c.appendChild(w);v.appendChild(c)}}
+  /* record by the score after each quarter */
+  {const GG=(D.games||[]).filter(g=>Array.isArray(g.qm));if(GG.length){const c=el('div','card sec');head(c,'After each quarter',GG.length+' game'+(GG.length===1?'':'s')+' · record by the score at each break');const t=el('table','zt');t.innerHTML='<tr><th></th><th>Leading</th><th>Trailing</th><th>Tied</th></tr>';
+    [['After the 1st',0],['Halftime',1],['After the 3rd',2]].forEach(([l,i])=>{const r={lead:[0,0],trail:[0,0],tie:[0,0]};GG.forEach(g=>{const m=g.qm[i];if(m==null)return;r[m>0?'lead':m<0?'trail':'tie'][g.cle>g.os?0:1]++});const tr=el('tr');tr.appendChild(el('td',null,l));['lead','trail','tie'].forEach(k=>tr.appendChild(el('td',null,r[k][0]+r[k][1]?r[k][0]+'–'+r[k][1]:'–')));t.appendChild(tr)});
+    const w=el('div','tw');w.appendChild(t);c.appendChild(w);c.appendChild(el('p','note','Wins–losses. Overtime games count by the final result.'));v.appendChild(c)}}
   /* clutch */
   {const c=el('div','card sec');head(c,'Clutch','Last 5 minutes of the 4th quarter or overtime, score within 5');
     if(filt||!J||!J.cg)noteF(c);else if(!J.cg.length)c.appendChild(el('p','note','No clutch minutes yet.'));else{const q=J.tq.clutch;const w=J.cg.filter(([i])=>J.games[i]&&J.games[i].cle>J.games[i].os).length,l=J.cg.length-w;const o=r100(q.pf,q.po),d=r100(q.pa,q.pd);
@@ -2386,15 +2395,6 @@ function seasonExtras(v,D,R){const J=S.sfull;const filt=!!((S.sf&&((S.sf.games&&
       const P=Object.entries(J.pq||{}).filter(([,x])=>x.clutch&&x.clutch[0]>0).map(([id,x])=>({id,s:x.clutch})).sort((a,b)=>b.s[1]-a.s[1]||b.s[0]-a.s[0]).slice(0,6);
       if(P.length){const t=el('table','zt');t.style.marginTop='12px';t.innerHTML='<tr><th>Player</th><th>Min</th><th>Pts</th><th>FG</th><th>3PT</th><th>+/-</th></tr>';P.forEach(({id,s:x})=>{const tr=el('tr');tr.append(el('td',null,(J.P[id]||{}).short||id),el('td',null,fmtMin(x[0])),el('td',null,String(x[1])),el('td',null,x[2]+'-'+x[3]),el('td',null,x[4]+'-'+x[5]),el('td',pmCls(x[6]),sgn(x[6])));t.appendChild(tr)});const ww=el('div','tw');ww.appendChild(t);c.appendChild(ww)}}
     v.appendChild(c)}
-  /* home vs road (follows the filters) */
-  if(false){const GG=(D.games||[]).filter(g=>g.t&&g.u);if(GG.length){const c=el('div','card sec');head(c,'Home vs road',GG.length+' game'+(GG.length===1?'':'s'));const t=el('table','zt');t.innerHTML='<tr><th></th><th>Record</th><th>Score</th><th>Off</th><th>Def</th><th>Net</th></tr>';
-    [['Home','home'],['Road','away']].forEach(([l,k])=>{const G2=GG.filter(g=>g.ha===k);if(!G2.length)return;const n=G2.length,w=G2.filter(g=>g.cle>g.os).length;let pf=0,pa=0,po=0;G2.forEach(g=>{pf+=g.cle;pa+=g.os;po+=(sPoss(sRow(g.t))+sPoss(sRow(g.u)))/2});const o=pf/po*100,d=pa/po*100;
-      const tr=el('tr');tr.append(el('td',null,l),el('td',null,w+'–'+(n-w)),el('td',null,(pf/n).toFixed(1)+'–'+(pa/n).toFixed(1)),el('td',null,o.toFixed(1)),el('td',null,d.toFixed(1)),el('td',pmCls(o-d),sgnf(o-d)));t.appendChild(tr)});
-    const w=el('div','tw');w.appendChild(t);c.appendChild(w);v.appendChild(c)}}
-  /* record by the score after each quarter */
-  {const GG=(D.games||[]).filter(g=>Array.isArray(g.qm));if(GG.length){const c=el('div','card sec');head(c,'After each quarter',GG.length+' game'+(GG.length===1?'':'s')+' · record by the score at each break');const t=el('table','zt');t.innerHTML='<tr><th></th><th>Leading</th><th>Trailing</th><th>Tied</th></tr>';
-    [['After the 1st',0],['Halftime',1],['After the 3rd',2]].forEach(([l,i])=>{const r={lead:[0,0],trail:[0,0],tie:[0,0]};GG.forEach(g=>{const m=g.qm[i];if(m==null)return;r[m>0?'lead':m<0?'trail':'tie'][g.cle>g.os?0:1]++});const tr=el('tr');tr.appendChild(el('td',null,l));['lead','trail','tie'].forEach(k=>tr.appendChild(el('td',null,r[k][0]+r[k][1]?r[k][0]+'–'+r[k][1]:'–')));t.appendChild(tr)});
-    const w=el('div','tw');w.appendChild(t);c.appendChild(w);c.appendChild(el('p','note','Wins–losses. Overtime games count by the final result.'));v.appendChild(c)}}
   /* starters vs bench */
   {const T=R.T[D.focus.id];if(T&&(T.stSec||T.bnSec)){const c=el('div','card sec');head(c,'Starters vs bench',G+' game'+(G===1?'':'s')+' · per game');const tot=(T.stPts||0)+(T.bnPts||0)||1;
     const t=el('table','zt');t.innerHTML='<tr><th></th><th>Points</th><th>Share</th><th>Minutes</th></tr>';[['Starters',T.stPts||0,T.stSec||0],['Bench',T.bnPts||0,T.bnSec||0]].forEach(([l,p,sc])=>{const tr=el('tr');tr.append(el('td',null,l),el('td',null,(p/G).toFixed(1)),el('td',null,Math.round(p/tot*100)+'%'),el('td',null,(sc/60/G).toFixed(1)));t.appendChild(tr)});
