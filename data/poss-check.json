@@ -1,5 +1,39 @@
 {
  "season": "2026-27",
  "games": {},
- "updated": "2026-10-28T19:36:19.366Z"
+ "updated": "2026-10-28T19:40:22.073Z",
+ "debug": {
+  "listed": 56,
+  "sample": [
+   {
+    "GameId": "0022600001",
+    "Date": "2026-10-20",
+    "HomeTeamId": "1610612765",
+    "AwayTeamId": "1610612738",
+    "HomePoints": 121,
+    "AwayPoints": 113,
+    "HomePossessions": 99,
+    "AwayPossessions": 99,
+    "HomeTeamAbbreviation": "DET",
+    "AwayTeamAbbreviation": "BOS"
+   },
+   {
+    "GameId": "0022600002",
+    "Date": "2026-10-20",
+    "HomeTeamId": "1610612752",
+    "AwayTeamId": "1610612755",
+    "HomePoints": 100,
+    "AwayPoints": 106,
+    "HomePossessions": 102,
+    "AwayPossessions": 102,
+    "HomeTeamAbbreviation": "NYK",
+    "AwayTeamAbbreviation": "PHI"
+   }
+  ],
+  "miss": [
+   "2026-10-22 PHI: no team results (fetch failed)",
+   "2026-10-24 BKN: no team results (fetch failed)",
+   "2026-10-26 MIN: no team results (fetch failed)"
+  ]
+ }
 }
