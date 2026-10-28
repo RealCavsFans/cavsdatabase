@@ -1,39 +1,82 @@
 {
  "season": "2026-27",
- "games": {},
- "updated": "2026-10-28T19:40:22.073Z",
+ "games": {
+  "401909093": {
+   "et": "2026-10-22",
+   "opp": "PHI",
+   "ours": {
+    "cle": [
+     109,
+     106
+    ],
+    "opp": [
+     110,
+     114
+    ]
+   },
+   "pb": {
+    "cle": [
+     108,
+     106
+    ],
+    "opp": [
+     109,
+     114
+    ]
+   }
+  },
+  "401909854": {
+   "et": "2026-10-24",
+   "opp": "BKN",
+   "ours": {
+    "cle": [
+     107,
+     125
+    ],
+    "opp": [
+     108,
+     121
+    ]
+   },
+   "pb": {
+    "cle": [
+     107,
+     125
+    ],
+    "opp": [
+     106,
+     121
+    ]
+   }
+  },
+  "401909869": {
+   "et": "2026-10-26",
+   "opp": "MIN",
+   "ours": {
+    "cle": [
+     113,
+     127
+    ],
+    "opp": [
+     111,
+     125
+    ]
+   },
+   "pb": {
+    "cle": [
+     112,
+     127
+    ],
+    "opp": [
+     111,
+     125
+    ]
+   }
+  }
+ },
+ "updated": "2026-10-28T19:42:31.612Z",
  "debug": {
   "listed": 56,
-  "sample": [
-   {
-    "GameId": "0022600001",
-    "Date": "2026-10-20",
-    "HomeTeamId": "1610612765",
-    "AwayTeamId": "1610612738",
-    "HomePoints": 121,
-    "AwayPoints": 113,
-    "HomePossessions": 99,
-    "AwayPossessions": 99,
-    "HomeTeamAbbreviation": "DET",
-    "AwayTeamAbbreviation": "BOS"
-   },
-   {
-    "GameId": "0022600002",
-    "Date": "2026-10-20",
-    "HomeTeamId": "1610612752",
-    "AwayTeamId": "1610612755",
-    "HomePoints": 100,
-    "AwayPoints": 106,
-    "HomePossessions": 102,
-    "AwayPossessions": 102,
-    "HomeTeamAbbreviation": "NYK",
-    "AwayTeamAbbreviation": "PHI"
-   }
-  ],
-  "miss": [
-   "2026-10-22 PHI: no team results (fetch failed)",
-   "2026-10-24 BKN: no team results (fetch failed)",
-   "2026-10-26 MIN: no team results (fetch failed)"
-  ]
+  "miss": []
  }
 }
