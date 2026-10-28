@@ -27,6 +27,9 @@ jobs:
         env:
           SEASON: '2026-27'
         continue-on-error: true
+      - name: Possession check against pbpstats
+        run: node scripts/check-poss.mjs
+        continue-on-error: true
       - name: Scouting report for the next opponent
         run: node scripts/scout.mjs
         continue-on-error: true
@@ -40,7 +43,7 @@ jobs:
         run: |
           git config user.name "cavsdatabase-bot"
           git config user.email "bot@cavsdatabase.com"
-          for f in live-base.json pdata/pbp-teams.json pdata/pbp-starts.json pdata/scout.json pdata/bbr-ids.json pdata/league-injuries.json; do [ -f "$f" ] && git add "$f"; done
+          for f in live-base.json pdata/pbp-teams.json pdata/pbp-starts.json pdata/scout.json pdata/bbr-ids.json pdata/league-injuries.json data/poss-check.json; do [ -f "$f" ] && git add "$f"; done
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Morning data: baselines, scouting, player ids, injuries"
           for i in 1 2 3; do

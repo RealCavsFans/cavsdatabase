@@ -66,5 +66,9 @@ else { if (days(LK.checked.slice(0, 10), today) > 9) problems.push(`The weekly l
     else problems.push(`Live page backup feed: ${src} failed on the ${last[0]} game (${msg}). The live page still has the other backups; see MANUAL.md.`);
   }
 }
+// 8. possession accuracy: our play-by-play counts vs pbpstats for every archived game (scripts/check-poss.mjs)
+{ const pc = await J('data/poss-check.json'); if (pc && pc.games) { const off = Object.values(pc.games).filter(x => x.pb && (Math.abs(x.ours.cle[0] - x.pb.cle[0]) > 2 || Math.abs(x.ours.opp[0] - x.pb.opp[0]) > 2 || x.ours.cle[1] !== x.pb.cle[1] || x.ours.opp[1] !== x.pb.opp[1]));
+  if (off.length) problems.push(`Possession or point counts differ from pbpstats in ${off.length} game(s): ${off.slice(-3).map(x => x.et + ' ' + x.opp + ' (ours ' + x.ours.cle.join('/') + ', pbpstats ' + x.pb.cle.join('/') + ')').join('; ')}`);
+  else notes.push('possessions match pbpstats (' + Object.values(pc.games).filter(x => x.pb).length + ' games)'); } }
 if (problems.length) { console.log('PROBLEMS:\n- ' + problems.join('\n- ')); console.log('ok: ' + notes.join(' · ')); process.exit(1); }
 console.log('HEALTHY: ' + notes.join(' · '));

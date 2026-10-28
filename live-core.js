@@ -97,7 +97,7 @@ function deriveCore(D,plays,F){
   const join=(id,t1)=>{enter[id]=[t1,pmAll[id]]};
   plays.forEach(p=>{
     if(p.per!==curPer){if(curPer){addTime(pstart(curPer)+plen(curPer));endPoss(hold,inFx(curPer));hold=null;tid.forEach(t=>on[t].forEach(id=>leave(id,pstart(curPer)+plen(curPer))))}
-      curPer=p.per;last=pstart(p.per);tid.forEach(t=>{on[t]=new Set(startFive[p.per][t]||[]);on[t].forEach(id=>{B[id].played=true;join(id,last)});src[t]='';newPoss(t,last,'start',inFx(p.per))});newSeg()}
+      curPer=p.per;last=pstart(p.per);tid.forEach(t=>{on[t]=new Set(startFive[p.per][t]||[]);on[t].forEach(id=>{B[id].played=true;join(id,last)});src[t]='';ps[t]={t:last,how:'init',pts:0,first:null,inF:false,on:'',od:''}});newSeg()}
     clutchNow=p.per>=4&&(p.per>4||p.t>=2580)&&Math.abs(mgNow)<=5;gtNow=isGT(p.per,p.t,mgNow);
     addTime(p.t);
     const inF=inFx(p.per);/* each player's own box score inside his 2-man and 5-man units (pb) */const pbA=(id,k,v,ONx)=>{if(!inF||!id||!D.P[id])return;const t=teamOf(id);if(!T[t])return;lu(t,(ONx||on)[t],o=>{if(o.ids.length!==2&&o.ids.length!==5)return;const q=(o.pb=o.pb||{})[id]=(o.pb[id]||{});q[k]=(q[k]||0)+v})};const ty=p.type,a=p.ids[0],b=p.ids[1];
@@ -109,7 +109,10 @@ function deriveCore(D,plays,F){
     /* lineup-only counts for the full advanced spread (makes, threes, assists, defensive boards) */
     const luStat=(t,k,ON)=>{if(!inF||!t)return;lu(t,(ON||on)[t],o=>o.o[k]=(o.o[k]||0)+1);lu(opp(t),(ON||on)[opp(t)],o=>o.d[k]=(o.d[k]||0)+1)};
     if(ty==='Substitution'){if(a&&b){const t=teamOf(a);if(t){on[t].delete(b);on[t].add(a);B[a].played=true;leave(b,p.t);join(a,p.t);newSeg()}}return}
-    const isFT=/^Free Throw/.test(ty);{const tt=p.team&&T[p.team]?p.team:teamOf(a);if(tt&&ps[tt]&&ps[tt].first==null&&(p.shot||/Turnover|Foul/.test(ty)))ps[tt].first=p.t-ps[tt].t}
+    const isFT=/^Free Throw/.test(ty);
+    /* the period's first possession: whoever first shoots or turns it over had the ball from the start of the period (Oct 28) */
+    {const tt=p.team&&T[p.team]?p.team:teamOf(a);if(hold===null&&tt&&T[tt]&&((p.shot&&!/Technical/.test(ty))||(/Turnover|^Traveling|Double Dribble|Discontinued? Dribble|Offensive Goaltending|Palming|Backcourt|3-Second Violation$|Inbound/.test(ty)&&!/Kicked|Defensive/.test(ty)))){newPoss(tt,pstart(p.per),'start',inF);hold=tt}}
+    {const tt=p.team&&T[p.team]?p.team:teamOf(a);if(tt&&ps[tt]&&ps[tt].first==null&&(p.shot||/Turnover|Foul/.test(ty)))ps[tt].first=p.t-ps[tt].t}
     if(/Foul/.test(ty)&&!/Offensive|Technical/.test(ty)){snap={t:p.t,per:p.per,on:{}};tid.forEach(x=>snap.on[x]=new Set(on[x]))}
     const ftSnap=isFT&&!/Technical/.test(ty)&&snap&&snap.t===p.t&&snap.per===p.per;const ON=ftSnap?snap.on:on;
     if(p.shot&&a&&B[a]&&!/Heave/.test(ty)){const t=teamOf(a);
@@ -124,7 +127,7 @@ function deriveCore(D,plays,F){
         if(inF){const st=ps[t],dt=p.t-st.t;const pt=/Putback|Tip/.test(ty)||(st.how==='oreb'&&dt<=3)?0:((st.how==='dreb'||st.how==='to'||st.how==='stl')&&dt<=7)?1:/Cutting|Alley Oop/.test(ty)?2:/Driving/.test(ty)?3:/Hook|Turnaround|Fade Away|Post/.test(ty)?4:/Pullup|Step Back/.test(ty)?5:/Jump Shot/.test(ty)?6:7;
           shots.push({t,on:[...on[t]].sort().join(','),od:[...on[opp(t)]].sort().join(','),id:a,x:p.x,y:p.y,hasXY:p.x!=null,m:!!p.sc,three,zi,pt,ast:!!(p.sc&&b&&/assists/.test(p.text)),per:p.per,clock:p.clock,text:p.text})}}}
     if(p.sc&&p.val>0){const t=p.team&&T[p.team]?p.team:teamOf(a);if(t){
-      if(inF&&a&&B[a])(B[a].pts+=p.val,pbA(a,'pts',p.val,ON));if(inF&&seg){seg.pts[t]+=p.val;if(a)seg.pp[a]=(seg.pp[a]||0)+p.val}if(inF)pc[t][ps[t].how].pts+=p.val;if(ps[t])ps[t].pts+=p.val;lineAt[p.id]={[t]:[...ON[t]],[opp(t)]:[...ON[opp(t)]]};TT(t).forEach(x=>{x.pts+=p.val;if(a&&D.P[a]){if(D.P[a].starter)x.stPts+=p.val;else x.bnPts+=p.val}if(src[t].includes('2nd'))x.second+=p.val;if(src[t].includes('to'))x.offto+=p.val});
+      if(inF&&a&&B[a])(B[a].pts+=p.val,pbA(a,'pts',p.val,ON));if(inF&&seg){seg.pts[t]+=p.val;if(a)seg.pp[a]=(seg.pp[a]||0)+p.val}if(inF&&pc[t][ps[t].how])pc[t][ps[t].how].pts+=p.val;if(ps[t])ps[t].pts+=p.val;lineAt[p.id]={[t]:[...ON[t]],[opp(t)]:[...ON[opp(t)]]};TT(t).forEach(x=>{x.pts+=p.val;if(a&&D.P[a]){if(D.P[a].starter)x.stPts+=p.val;else x.bnPts+=p.val}if(src[t].includes('2nd'))x.second+=p.val;if(src[t].includes('to'))x.offto+=p.val});
       const o=opp(t);ON[t].forEach(id=>{pmAll[id]+=p.val;if(inF)B[id].pm+=p.val});ON[o].forEach(id=>{pmAll[id]-=p.val;if(inF)B[id].pm-=p.val});
       if(inF){lu(t,ON[t],x=>x.pf+=p.val);lu(o,ON[o],x=>x.pa+=p.val)}
       if(!isFT||/(\d) of \1/.test(ty)){src[o]='';newPoss(o,p.t,'made',inF)}}}
@@ -148,12 +151,15 @@ function deriveCore(D,plays,F){
   plays.forEach(p=>{if(!(p.sc&&p.val>0))return;const t=p.team&&T[p.team]?p.team:teamOf(p.ids[0]);if(!t)return;
     if(run&&run.t===t){run.pts+=p.val;run.end=p}else{if(run&&run.pts>=8)runs.push(run);run={t,pts:p.val,start:p,end:p}}});
   if(run&&run.pts>=8)runs.push(Object.assign(run,{open:true}));
+  /* counted possessions (each team's possessions in the stretch, not counting offensive-rebound continuations) */
+  tid.forEach(t=>{T[t].np=PL.filter(q=>q.team===t&&q.how!=='oreb').length});
   const PLx=PL.filter(q=>q.first!=null||q.pts>0);
   return {PL:PLx,segs,curStint,dr,pmAll,pc,tf,to,ch,pfAll,wpS,lineAt,asts,plays,B,T,TQ,L,on,margin,runs,shots,stints,hs:lp?lp.hs:0,as:lp?lp.as:0,lp,lead,lc,ties,wp:lp&&D.wp[lp.id]!=null?D.wp[lp.id]:null,maxPer:lp?Math.max(4,lp.per):4};
 }
 
-function factors(a,b){const pa=poss({fga:a.fga,oreb:a.oreb,to:a.to,fta:a.fta});
-  return {efg:a.fga?(a.fgm+0.5*a.tpm)/a.fga:null,tov:pa?a.to/pa:null,orb:(a.oreb+a.toreb+b.dreb+b.tdreb)?(a.oreb+a.toreb)/(a.oreb+a.toreb+b.dreb+b.tdreb):null,ftr:a.fga?a.ftm/a.fga:null}}
+/* NBA.com definitions: TOV% = TOV / (FGA + 0.44 FTA + TOV); OREB% = player offensive rebounds / (them + opponent player defensive rebounds) (Oct 28) */
+function factors(a,b){const pa=poss({fga:a.fga,oreb:a.oreb,to:a.to,fta:a.fta,np:a.np});
+  return {efg:a.fga?(a.fgm+0.5*a.tpm)/a.fga:null,tov:(a.fga+0.44*a.fta+a.to)?a.to/(a.fga+0.44*a.fta+a.to):null,orb:(a.oreb+b.dreb)?a.oreb/(a.oreb+b.dreb):null,ftr:a.fga?a.ftm/a.fga:null}}
 const FF=[['efg','Shooting','Effective FG%',true],['tov','Ball security','Turnover rate',false],['orb','Second chances','Offensive rebound rate',true],['ftr','Getting to the line','Free throws made per FGA',true]];
 const CLE='5',C3=Math.sqrt(23.75**2-22**2);
 if(typeof module!=='undefined')module.exports={unpackSlim,prep,deriveCore,factors,poss,ZN,PT,LG,normName,pname,fmtMin,inPer,pstart,plen};
