@@ -348,7 +348,7 @@ table.dt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
 .tsc{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;align-items:start}
 .tsm{display:none}
 @media (max-width:760px){.tsx.hasm .tsc{display:none}.tsx.hasm .tsm{display:block}}
-.tsm-seg{display:flex;border:1px solid var(--line);margin:10px 0 4px}.tsm-seg button{flex:1;border:0;background:none;font:700 0.75rem var(--cond);letter-spacing:.1em;text-transform:uppercase;padding:7px 0;color:var(--muted);cursor:pointer}.tsm-seg button.on{background:var(--fg);color:var(--card)}
+.tsm-seg{display:inline-flex;border:1px solid var(--line);margin:10px 0 4px}.tsm-seg button{border:0;background:none;font:700 0.6875rem var(--cond);letter-spacing:.08em;text-transform:uppercase;padding:4px 14px;color:var(--muted);cursor:pointer}.tsm-seg button.on{background:var(--fg);color:var(--card)}
 .tsm-gh{display:flex;justify-content:space-between;align-items:baseline;border-top:1.5px solid var(--fg);padding-top:7px;margin-top:14px}.tsm-gh span:first-child{font:800 0.8125rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--wt)}.tsm-gh .w{font:500 0.75rem var(--sans);color:var(--muted)}
 .tsm-ch,.tsm-r{display:grid;grid-template-columns:1fr auto 2.8rem;gap:12px;align-items:baseline}
 .tsm-ch{font:700 0.65rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:6px}.tsm-ch span{text-align:right}
@@ -730,7 +730,7 @@ function renderView(){
   if(S.state==='pre'&&!R.plays.length){const c=el('div','card');c.append(el('h2',null,D.away.abbr+' at '+D.home.abbr),el('p',null,'Tip-off '+new Date(D.date).toLocaleString([],{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+(D.venue?' · '+D.venue:'')+(D.bc.length?' · '+D.bc.join(', '):'')+'.'),el('p','empty','Team and player stats, lineups, shots, four factors and rotations fill in once the game starts. The page refreshes every 15 seconds during the game.'));v.appendChild(c);
     const opp=D.other;const holder=el('div');holder.appendChild(el('p','note','Loading the scouting report…'));v.appendChild(holder);scoutData(opp.id).then(X=>{if(S.data!==D)return;holder.innerHTML='';holder.appendChild(scoutCard(D,X,opp))});return}
   ({season:vSeason,share:vShare,ast:vAst,team:vTeam,players:vPlayers,lineups:vLuHub,shots:vShots,flow:vFlow,ff:vFF,plays:vPlays})[S.tab](v,D,R);
-  if(S.season)vizTables(v); /* bars only on season tables; game tables stay plain (Oct 27) */
+  /* table bars removed everywhere (Oct 28) */
 }
 /* small bars inside the plain tables: net and +/- columns get a bar left or right of center, records a win-share bar, shares and per-possession numbers a length bar */
 function vizTables(v){v.querySelectorAll('table.zt:not(.shmini)').forEach(t=>{const rows=[...t.rows];if(rows.length<2)return;const hd=[...rows[0].cells].map(c=>c.textContent.trim().toLowerCase());
@@ -854,7 +854,7 @@ function oppCard(D,R){
 /* ---------- NBA ranks for season stats: every team's games from /pdata/league.json (ESPN box scores, refreshed daily) ---------- */
 let LGS=null,LGP=null;
 function lgLoad(){if(LGP)return LGP;return LGP=getJSON('/pdata/league.json').then(L=>{const T={};const z=()=>({pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,orb:0,drb:0,tov:0,ast:0,stl:0,blk:0,pf:0,paint:0,pot:0,fb:0,ex:0});
-  Object.values(L.tg||{}).forEach(g=>{if(g.cupFinal||!g.t||g.t.length!==2)return;const sec=2880+Math.max(0,(g.per||4)-4)*300;g.t.forEach((me,i)=>{const op=g.t[1-i];const x=T[me.ab]=T[me.ab]||{A:z(),O:z(),n:0,sec:0};x.n++;x.sec+=sec;for(const k in x.A){x.A[k]+=me[k]||0;x.O[k]+=op[k]||0}if(me.ast!=null)x.A.ex++})});
+  Object.values(L.tg||{}).forEach(g=>{if(g.cupFinal||!g.t||g.t.length!==2)return;const sec=2880+Math.max(0,(g.per||4)-4)*300;g.t.forEach((me,i)=>{const op=g.t[1-i];const x=T[me.ab]=T[me.ab]||{A:z(),O:z(),n:0,sec:0};x.n++;x.sec+=sec;for(const k in x.A){x.A[k]+=me[k]||0;x.O[k]+=op[k]||0}if(me.ast!=null){x.A.ex++;x.O.ex++}})});
   LGS={T,P:L.players||{},games:(L.games||[]).length};return LGS}).catch(()=>null)}
 const lgPoss=t=>poss({fga:t.fga,oreb:t.orb,to:t.tov,fta:t.fta});
 /* the same numbers the Team stats card shows, per game, from league sums (A = the team, O = its opponents) */
@@ -2215,7 +2215,7 @@ function vSeason(v,D,R){
     const tb=el('button',null,'Team');tb.type='button';tb.setAttribute('aria-pressed',S.f.sk==='team');tb.onclick=()=>{S.f.sk='team';renderView()};fl.appendChild(tb);
     const ps=el('select');ps.setAttribute('aria-label','Player');ps.appendChild(Object.assign(el('option',null,'A player…'),{value:''}));D.roster['5'].filter(id=>R.B[id]&&R.B[id].min>0).forEach(id=>{const o=el('option',null,D.P[id].name);o.value='p:'+id;if(S.f.sk==='p:'+id)o.selected=true;ps.appendChild(o)});ps.onchange=()=>{if(ps.value){S.f.sk=ps.value;renderView()}};fl.appendChild(ps);
     const top5=Object.entries(R.L['5'][5]||{}).sort((a,b)=>b[1].sec-a[1].sec).slice(0,15);const ls=el('select');ls.setAttribute('aria-label','Lineup');ls.appendChild(Object.assign(el('option',null,'A lineup…'),{value:''}));top5.forEach(([k2,l])=>{const o=el('option',null,l.ids.map(id=>D.P[id]?D.P[id].last:'?').join(', ')+' · '+fmtMin(l.sec));o.value='l:'+k2;if(S.f.sk==='l:'+k2)o.selected=true;ls.appendChild(o)});ls.onchange=()=>{if(ls.value){S.f.sk=ls.value;renderView()}};fl.appendChild(ls);c.appendChild(fl);
-    const SP=[['Season',G],['Wins',G.filter(g=>g.cle>g.os)],['Losses',G.filter(g=>g.cle<g.os)],['Home',G.filter(g=>g.ha==='home')],['Road',G.filter(g=>g.ha!=='home')],['Last 10',G.slice(-10)]].filter(([,x])=>x.length);
+    const SP=[['Season',G],['Wins',G.filter(g=>g.cle>g.os)],['Losses',G.filter(g=>g.cle<g.os)],['Last 10',G.slice(-10)]].filter(([,x])=>x.length);
     const t=el('table','zt ssp');
     if(S.f.sk==='team'){t.innerHTML='<tr><th></th><th>Record</th><th>Off rtg</th><th>Def rtg</th><th>Net</th><th>Pace</th><th>3PA rate</th><th>TS%</th><th>TOV%</th></tr>';
       SP.forEach(([lab,x])=>{const a=sTeam(x);if(!a)return;const tr=el('tr');[lab,a.w+'–'+a.l,f1(a.o),f1(a.d),sg1(a.n),f1(a.pace),a.tpar.toFixed(0)+'%',f1(a.ts)+'%',f1(a.tov)+'%'].forEach((x2,i)=>tr.appendChild(el('td',null,x2)));t.appendChild(tr)})}
@@ -2270,7 +2270,7 @@ function seasonExtras(v,D,R){const J=S.sfull;const filt=!!((S.sf&&((S.sf.games&&
       if(P.length){const t=el('table','zt');t.style.marginTop='12px';t.innerHTML='<tr><th>Player</th><th>Min</th><th>Pts</th><th>FG</th><th>3PT</th><th>+/-</th></tr>';P.forEach(({id,s:x})=>{const tr=el('tr');tr.append(el('td',null,(J.P[id]||{}).short||id),el('td',null,fmtMin(x[0])),el('td',null,String(x[1])),el('td',null,x[2]+'-'+x[3]),el('td',null,x[4]+'-'+x[5]),el('td',pmCls(x[6]),sgn(x[6])));t.appendChild(tr)});const ww=el('div','tw');ww.appendChild(t);c.appendChild(ww)}}
     v.appendChild(c)}
   /* home vs road (follows the filters) */
-  {const GG=(D.games||[]).filter(g=>g.t&&g.u);if(GG.length){const c=el('div','card sec');head(c,'Home vs road',GG.length+' game'+(GG.length===1?'':'s'));const t=el('table','zt');t.innerHTML='<tr><th></th><th>Record</th><th>Score</th><th>Off</th><th>Def</th><th>Net</th></tr>';
+  if(false){const GG=(D.games||[]).filter(g=>g.t&&g.u);if(GG.length){const c=el('div','card sec');head(c,'Home vs road',GG.length+' game'+(GG.length===1?'':'s'));const t=el('table','zt');t.innerHTML='<tr><th></th><th>Record</th><th>Score</th><th>Off</th><th>Def</th><th>Net</th></tr>';
     [['Home','home'],['Road','away']].forEach(([l,k])=>{const G2=GG.filter(g=>g.ha===k);if(!G2.length)return;const n=G2.length,w=G2.filter(g=>g.cle>g.os).length;let pf=0,pa=0,po=0;G2.forEach(g=>{pf+=g.cle;pa+=g.os;po+=(sPoss(sRow(g.t))+sPoss(sRow(g.u)))/2});const o=pf/po*100,d=pa/po*100;
       const tr=el('tr');tr.append(el('td',null,l),el('td',null,w+'–'+(n-w)),el('td',null,(pf/n).toFixed(1)+'–'+(pa/n).toFixed(1)),el('td',null,o.toFixed(1)),el('td',null,d.toFixed(1)),el('td',pmCls(o-d),sgnf(o-d)));t.appendChild(tr)});
     const w=el('div','tw');w.appendChild(t);c.appendChild(w);v.appendChild(c)}}
