@@ -22,6 +22,7 @@ jobs:
             scripts/fetch-live-base.mjs
             live-base.json
             pdata/pbp-teams.json
+            pdata/pbp-starts.json
           sparse-checkout-cone-mode: false
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
         with:
@@ -34,7 +35,7 @@ jobs:
           [ -f live-base.json ] || exit 0
           git config user.name "cavsdatabase-bot"
           git config user.email "bot@cavsdatabase.com"
-          git add live-base.json; [ -f pdata/pbp-teams.json ] && git add pdata/pbp-teams.json || true
+          git add live-base.json; for f in pdata/pbp-teams.json pdata/pbp-starts.json; do [ -f $f ] && git add $f; done; true
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Update live page baselines"
           for i in 1 2 3; do
