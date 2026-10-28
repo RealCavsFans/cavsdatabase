@@ -346,6 +346,15 @@ table.dt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
 .tsq{display:flex;gap:3px;margin-bottom:10px}.tsq i{flex:1;height:14px;max-width:26px}.tsq b{width:8px}
 .tse{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}.tse span{font:600 0.75rem var(--sans);padding:4px 8px}.tse b{font-family:var(--mono)}
 .tsc{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;align-items:start}
+.tsm{display:none}
+@media (max-width:760px){.tsx.hasm .tsc{display:none}.tsx.hasm .tsm{display:block}}
+.tsm-seg{display:flex;border:1px solid var(--line);margin:10px 0 4px}.tsm-seg button{flex:1;border:0;background:none;font:700 0.75rem var(--cond);letter-spacing:.1em;text-transform:uppercase;padding:7px 0;color:var(--muted);cursor:pointer}.tsm-seg button.on{background:var(--fg);color:var(--card)}
+.tsm-gh{display:flex;justify-content:space-between;align-items:baseline;border-top:1.5px solid var(--fg);padding-top:7px;margin-top:14px}.tsm-gh span:first-child{font:800 0.8125rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--wt)}.tsm-gh .w{font:500 0.75rem var(--sans);color:var(--muted)}
+.tsm-ch,.tsm-r{display:grid;grid-template-columns:1fr auto 2.8rem;gap:12px;align-items:baseline}
+.tsm-ch{font:700 0.65rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:6px}.tsm-ch span{text-align:right}
+.tsm-r{padding:8px 0;border-bottom:1px solid var(--line2);font-size:0.875rem}
+.tsm-r .v{text-align:right;font:600 0.9rem var(--mono)}.tsm-r .df{font:500 0.6875rem var(--mono);margin-left:6px}.tsm-r .df.u{color:var(--pos)}.tsm-r .df.d{color:var(--neg)}.tsm-r .df.n{color:var(--muted)}
+.tsm-r .rkw{text-align:right}.tsm-r .rkw small{display:inline;margin:0;font:500 0.72rem var(--mono);color:var(--muted)}.tsm-r .rkw small.g{color:var(--pos)}.tsm-r .rkw small.b{color:var(--neg)}
 .tsg{padding-top:12px}
 .tsgh{display:flex;justify-content:space-between;font:800 0.75rem var(--cond);letter-spacing:.1em;text-transform:uppercase;border-top:2px solid var(--fg);padding-top:6px}
 .tsgh span:first-child{color:var(--wt)}.tsgh span:last-child{color:var(--muted)}
@@ -880,7 +889,20 @@ function teamStatsBody(D,ROWS){
       const bar=r.better===0?`<i style="right:50%;width:${wd}%;background:${F.c}"></i>`:r.better===1?`<i style="left:50%;width:${wd}%;background:${O.c}"></i>`:'';
       d.innerHTML=`<span class="n">${esc(r.lab)}</span><b${r.better===0?` class="w" style="color:${F.c}"`:''}>${esc(fmt(r,0))}${rkEl(r.rx)}</b><span class="eb">${bar}</span><b${r.better===1?` class="w" style="color:${O.c}"`:''}>${esc(fmt(r,1))}${rkEl(r.ry)}</b>`;box.appendChild(d)});
     cols.appendChild(box)});
-  w.appendChild(cols);return w;
+  w.appendChild(cols);
+  /* phones, season view: one side at a time (Cavs or opponents), the gap to the other side, and the NBA rank (Oct 28) */
+  if(S.season){w.classList.add('hasm');const m=el('div','tsm');const side=S.f.tsSide==='o'?1:0;
+    const seg=el('div','tsm-seg');[['Cavs',0],['Opponents',1]].forEach(([l,k])=>{const bt=el('button',k===side?'on':'',l);bt.type='button';bt.onclick=()=>{S.f.tsSide=k?'o':'c';renderView()};seg.appendChild(bt)});m.appendChild(seg);
+    const dec=t=>{const x=String(t).replace(/[^\d.]/g,'').split('.')[1];return x?x.length:0};
+    groups.forEach(g=>{const rs=ROWS.filter(r=>r.g===g);const gw=rs.filter(r=>r.better===0).length,gl=rs.filter(r=>r.better===1).length;
+      const h=el('div','tsm-gh');h.append(el('span',null,g),el('span','w','Better in '+gw+' of '+(gw+gl)));m.appendChild(h);
+      const ch=el('div','tsm-ch');ch.append(el('span'),el('span',null,(side?'Opp':F.abbr)+' · vs '+(side?F.abbr:'opp')),el('span',null,'NBA'));m.appendChild(ch);
+      rs.forEach(r=>{const a=fmt(r,side),o=fmt(r,1-side);const va=parseFloat(a),vo=parseFloat(o);const d=va-vo,k=Math.max(dec(a),dec(o),/%/.test(a)?0:1);
+        const cls=r.hib===null||r.better<0?'n':r.better===0?'u':'d';const row=el('div','tsm-r');const v=el('span','v',a);v.appendChild(el('span','df '+cls,(d>=0?'+':'−')+Math.abs(d).toFixed(k)));
+        const rk=el('span','rkw');rk.innerHTML=rkEl(side?r.ry:r.rx);row.append(el('span','l',r.lab),v,rk);m.appendChild(row)})});
+    m.appendChild(el('p','note','Small number = the gap to the other side: green when it favors '+F.abbr+', red when it doesn’t, gray on volume stats like attempts. NBA rank in green when top 10 for '+F.abbr+', red when bottom 10.'));
+    w.appendChild(m)}
+  return w;
 }
 
 /* ---------- Flow: score margin, runs and win probability ---------- */
