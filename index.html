@@ -2674,10 +2674,14 @@ const perName=p=>p<=4?'Q'+p:(p===5?'OT':'OT'+(p-4));
     const g=SCHEDULE.find(x=>x[0]===today);
     if(g&&!isFin(g[0])&&now<tipOf(g).getTime()+3.5*H){day(g);box.hidden=false;return}
     const last=[...SCHEDULE].reverse().find(x=>x[0]<=today&&isFin(x[0]));
-    if(last){const b=B[last[0]]||{};const sc=SCORES[last[0]]||b.score;if(sc){after(last,sc,b.top||'',b.url||boxUrl(last[0]),false);box.hidden=false}}}
+    /* the final stays up until 1 PM PT (4 PM ET) the day after the game */
+    const offUntil=d=>{const [y,m,dd]=d.split('-').map(Number);let t=Date.UTC(y,m-1,dd+1,23);const hr=+new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',hour:'numeric',hour12:false}).format(new Date(t));return t+(13-hr)*H};
+    if(last&&now<offUntil(last[0])){const b=B[last[0]]||{};const sc=SCORES[last[0]]||b.score;if(sc){after(last,sc,b.top||'',b.url||boxUrl(last[0]),false);box.hidden=false;clearTimeout(window.cdbOffT);window.cdbOffT=setTimeout(render,Math.min(offUntil(last[0])-now+1000,2**31-1))}}}
   render();
   const load=()=>Promise.all([fetch('/box.json',{cache:'no-cache'}).then(r=>r.ok?r.json():{}).catch(()=>({})),fetch('/rcf.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null)]).then(([b,r])=>{B=b||{};RC=r;LAST=Date.now();render()});
-  if(location.protocol!=='file:')load();setInterval(load,10*6e4)})();
+  if(location.protocol!=='file:')load();setInterval(load,10*6e4);
+  /* phones freeze timers in background tabs: re-check when the page comes back */
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)render()});addEventListener('pageshow',e=>{if(e.persisted)render()})})();
 /* schedule: subscribe to the calendar feed (cavs.ics, rebuilt whenever the schedule, TV or scores change) */
 (function(){const b=document.getElementById('calbtn'),m=document.getElementById('calmenu');if(!b||!m)return;
   const set=o=>{m.hidden=!o;b.setAttribute('aria-expanded',o)};b.onclick=e=>{e.stopPropagation();set(m.hidden)};
