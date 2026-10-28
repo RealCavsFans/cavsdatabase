@@ -2000,6 +2000,7 @@ const ROSTER=[
   ['Cam Whitmore','—',[1819437,1819437,1819437,null,null],'—','—','Dead money'],
   ['Ricky Rubio','—',[424672,null,null,null,null],'—','—','Dead money']
 ];
+const TW_BIRD_NOW={'Tristan Enaruna':'Early Bird'}; /* rights earned so far, when they differ from the rights at contract expiry (Salary Swish) */
 const TWOWAY=[['Tristan Enaruna','Full Bird','2027 RFA'],['Riley Minix','Early Bird','2027 RFA'],['Ernest Udeh Jr.','Non-Bird','2027 RFA']];
 const onRoster=n=>ROSTER.some(r=>r[0]===n&&r[1]!=='—')||TWOWAY.some(t=>t[0]===n);
 const CAMP=[];
@@ -2192,7 +2193,7 @@ tf.insertBefore(pos,hdr);
 const tw=document.getElementById('twoway');tw.className='xl tw2 twx-g';TWOWAY.forEach(([n,b,f])=>{const [len,thru,yos,sp,ag]=TW_DEAL[n];const li=el('li');li.id='p-'+slug(n);
   const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span','twx-top');l.append(el('b',null,n),el('small',null,'Two-way · through '+thru));const svc=3-yos,team=3-(TW_CLE[n]||1),left=Math.max(0,Math.min(svc,team));const mm=el('span','twx-m');const pp=el('span','twx-p');for(let k=0;k<3;k++)pp.appendChild(el('i',k<(TW_CLE[n]||1)?'f':null));mm.append(el('span',null,'Seasons on a Cavs two-way'),pp,el('span',null,'Free agency'),el('b',null,f));const ex=el('span','twx-e');ex.append(el('b','mono',left?'→ '+left+' more season'+(left===1?'':'s')+' eligible':'→ last Cavs two-way season'),el('span','twx-more','Details'));sm.append(l,mm,ex);
   const bx=el('div','xb twb tw3');const [yr,type]=f.split(' ');const used=TW_CLE[n]||1;
-  const tiles=el('div','tw-tiles');[['Deal',len+' yr · thru '+thru.replace(/^20(\d\d)–(\d\d)$/,'$1–$2')],['Free agency',f],['Bird rights',b],['Agent',ag||'None listed']].forEach(([k,v],ix)=>{const t=el('div','tw-t'+(ix===3?' ag':''));t.append(el('span',null,k),el('b',null,v));tiles.appendChild(t)});bx.appendChild(tiles);
+  const tiles=el('div','tw-tiles');[['Deal',len+' yr · thru '+thru.replace(/^20(\d\d)–(\d\d)$/,'$1–$2')],['Free agency',f],['Bird rights',TW_BIRD_NOW[n]?b+' when his deal ends · '+TW_BIRD_NOW[n]+' so far':b],['Agent',ag||'None listed']].forEach(([k,v],ix)=>{const t=el('div','tw-t'+(ix===3?' ag':''));t.append(el('span',null,k),el('b',null,v));tiles.appendChild(t)});bx.appendChild(tiles);
   const meter=(lab,fill,note)=>{const m=el('div','tw-m');const dots=el('span','tw-d');for(let k=0;k<3;k++)dots.appendChild(el('i',k<fill?'f':null));m.append(el('span','tw-ml',lab),dots,el('small',null,note));return m};
   bx.append(meter('Seasons on a Cavs two-way',used,used+' of 3 used · the limit with one team'),meter('NBA service',Math.min(3,yos),yos+(yos===1?' year':' years')+' · two-ways need 3 or fewer'));
   const bl=el('p','tw-bl');bl.append(el('strong',null,'Bottom line: '),left?'Cleveland can bring him back on a two-way for '+left+' more season'+(left===1?'':'s')+' after 2026–27'+(svc<team?' (his service time is the tighter limit).':'.'):'He can’t sign another two-way with the Cavs after 2026–27; keeping him would take a standard contract.');bx.appendChild(bl);
