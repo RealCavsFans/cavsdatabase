@@ -17,21 +17,21 @@ let idx = []; try { idx = JSON.parse(await readFile(new URL(`live-archive/${SEAS
 const list = await get(`https://api.pbpstats.com/get-games/nba?Season=${SEASON}&SeasonType=Regular%20Season`);
 if (!list || !list.results) { console.log('check-poss: pbpstats game list unavailable'); process.exit(0); }
 let n = 0; const miss = [];
-prev.debug = { listed: list.results.length, sample: list.results.slice(0, 2) };
+prev.debug = { listed: list.results.length };
 for (const g of idx) {
   if (prev.games[g.id] && prev.games[g.id].pb) continue;   // already compared
   const opp = NBA[g.opp] || g.opp;
   const pg = list.results.find(x => x.Date === g.et && [x.HomeTeamAbbreviation, x.AwayTeamAbbreviation].includes('CLE') && [x.HomeTeamAbbreviation, x.AwayTeamAbbreviation].includes(opp));
   if (!pg) { miss.push(g.et + ' ' + opp + ': no pbpstats game'); continue; }
-  const d = await get(`https://api.pbpstats.com/get-game-stats?GameId=${pg.GameId}&Type=Team`);
-  const R = d && d.team_results; if (!R || !R.Home || !R.Away) { miss.push(g.et + ' ' + opp + ': no team results (' + (d ? Object.keys(d).join(',') : 'fetch failed') + ')'); continue; }
+  // the game list already carries each side's possessions and points
   const cleSide = pg.HomeTeamAbbreviation === 'CLE' ? 'Home' : 'Away', oppSide = cleSide === 'Home' ? 'Away' : 'Home';
-  const pb = s => { const x = R[s].FullGame || {}; return [x.OffPoss || 0, x.Points || 0]; };
+  if (pg[cleSide + 'Possessions'] == null) { miss.push(g.et + ' ' + opp + ': no possessions listed'); continue; }
+  const pb = s => [pg[s + 'Possessions'] || 0, pg[s + 'Points'] || 0];
   let ours = null;
   try { const s = JSON.parse(await readFile(new URL(`live-archive/${SEASON}/${g.id}.json`, root), 'utf8')); const D = C.prep(s), Rr = C.deriveCore(D, D.plays, 'all'); const o = Object.keys(Rr.T).find(k => k !== '5');
     ours = { cle: [Rr.T['5'].np || 0, Rr.T['5'].pts], opp: [Rr.T[o].np || 0, Rr.T[o].pts] }; } catch (e) { console.log('check-poss: could not rebuild', g.id, String(e)); continue; }
   prev.games[g.id] = { et: g.et, opp: g.opp, ours, pb: { cle: pb(cleSide), opp: pb(oppSide) } };
-  n++; await new Promise(r => setTimeout(r, 2000));
+  n++;
 }
 prev.updated = new Date().toISOString(); prev.debug.miss = miss;
 await writeFile(OUT, JSON.stringify(prev, null, 1) + '\n');
