@@ -347,6 +347,10 @@ table.dt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
 .tse{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}.tse span{font:600 0.75rem var(--sans);padding:4px 8px}.tse b{font-family:var(--mono)}
 .tsc{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;align-items:start}
 .tsm{display:none}
+.clv{display:grid;gap:14px;margin:4px 0 14px}.clv-k{font:700 0.6875rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}.clv-k em{font-style:normal;margin-left:6px;font-family:var(--mono);letter-spacing:0}.clv-k em.up{color:var(--pos)}.clv-k em.dn{color:var(--neg)}
+.clv-g{display:flex;gap:6px;flex-wrap:wrap}.clv-g>div{flex:1;min-width:64px;max-width:120px;border-top:4px solid var(--miss,#9aa0a8);background:var(--sub);padding:6px 8px;display:grid;gap:1px}.clv-g>div.w{border-top-color:var(--cf,#860038)}.clv-g b{font:800 0.875rem var(--cond)}.clv-g .w b{color:var(--cf,#860038)}.clv-g span{font-size:0.75rem}.clv-g small{font:500 0.6875rem var(--mono);color:var(--muted)}
+.clv-sb{display:flex;height:26px;gap:2px}.clv-sb span{display:flex;align-items:center;padding:0 8px;font:800 0.8125rem var(--cond);letter-spacing:.06em;color:#fff;white-space:nowrap}.clv-sb .c{background:var(--cf,#860038)}.clv-sb .o{background:var(--co,#5b6470);justify-content:flex-end}
+.clv-p{display:flex;gap:28px}.clv-p b{display:block;font:700 1.5rem var(--mono)}.clv-p span{font-size:.75rem;color:var(--muted)}.clv-b{display:grid;grid-template-columns:4.2rem 1fr 2.6rem;gap:8px;align-items:center;margin-top:4px;font-size:0.8125rem}.clv-b .t{height:10px;background:var(--track)}.clv-b .t i{display:block;height:100%}.clv-b .t i.c{background:var(--cf,#860038)}.clv-b .t i.o{background:var(--co,#5b6470)}.clv-b b{font:600 0.875rem var(--mono);text-align:right}
 @media (max-width:760px){.tsx.hasm .tsc{display:none}.tsx.hasm .tsm{display:block}}
 .tsm-seg{display:inline-flex;border:1px solid var(--line);margin:10px 0 4px}.tsm-seg button{border:0;background:none;font:700 0.6875rem var(--cond);letter-spacing:.08em;text-transform:uppercase;padding:4px 14px;color:var(--muted);cursor:pointer}.tsm-seg button.on{background:var(--fg);color:var(--card)}
 .tsm-gh{display:flex;justify-content:space-between;align-items:baseline;border-top:1.5px solid var(--fg);padding-top:7px;margin-top:14px}.tsm-gh span:first-child{font:800 0.8125rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--wt)}.tsm-gh .w{font:500 0.75rem var(--sans);color:var(--muted)}
@@ -812,10 +816,10 @@ function possXCards(D,R){const F=D.focus.id,O=D.other.id;let X,n=1;
   /* 2 · out of timeouts */
   {const a=X.ato[F],b=X.ato[O];const ta=X.tim[F].reduce((s,v)=>[s[0]+v[0],s[1]+v[1]],[0,0]);const c=el('div','card sec');head(c,'Out of timeouts',sub+' · the first possession after each team’s own timeout');
     const tb2=X.tim[O].reduce((s,v)=>[s[0]+v[0],s[1]+v[1]],[0,0]);const t=el('table','ato');t.innerHTML='<tr><th></th><th>After timeouts</th><th>Scored on</th><th>All poss.</th></tr>';
-    [[fa,a,ta,F===D.focus.id?D.focus.c:D.other.c],[oa,b,tb2]].forEach(([nm,x,all])=>{const tr=el('tr');const v=x[0]?x[1]/x[0]:null,av=all[0]?all[1]/all[0]:null;const c1=el('td',null,pp(x[1],x[0]));c1.appendChild(el('small',null,x[0]+' poss'));if(v!=null&&av!=null&&x[0]>=5)c1.className=v>av+.05?'up':v<av-.05?'dn':'';
+    [[fa,a,ta,F===D.focus.id?D.focus.c:D.other.c],[oa,b,tb2]].forEach(([nm,x,all])=>{const tr=el('tr');const v=x[0]?x[1]/x[0]:null,av=all[0]?all[1]/all[0]:null;const c1=el('td',null,pp(x[1],x[0]));c1.appendChild(el('small',null,x[0]+' poss'));if(S.season){pbpLoad();const k=PBS&&lgOK()&&PBT.season===S.season?(PBS.S.OffTimeout||{})[nm===fa?'Team':'Opponent']:null;if(k&&k.CLE&&k.CLE[0]){const pv=v2=>v2&&v2[0]?v2[1]/v2[0]:null;c1.insertAdjacentHTML('beforeend',rkEl(lgRank(pv(k.CLE),Object.entries(k).filter(([t])=>t!=='CLE').map(([,v2])=>pv(v2)),nm===fa?1:-1)))}}if(v!=null&&av!=null&&x[0]>=5)c1.className=v>av+.05?'up':v<av-.05?'dn':'';
       const c2=el('td',null,x[2]+' of '+x[0]);c2.appendChild(el('small',null,x[0]?Math.round(x[2]/x[0]*100)+'%':''));const c3=el('td',null,pp(all[1],all[0]));tr.append(el('td',null,nm),c1,c2,c3);t.appendChild(tr)});
     const tw=el('div','tw');tw.appendChild(t);c.appendChild(tw);
-    c.appendChild(el('p','note','Points per possession on the first possession after each team calls its own timeout, compared with all of its possessions. Green / red = better or worse than its usual. If a timeout comes while the other team has the ball, the next possession counts.'));if(a[0]||b[0])out.push(c)}
+    c.appendChild(el('p','note','Points per possession on the first possession after each team calls its own timeout, compared with all of its possessions. Green / red = better or worse than its usual. If a timeout comes while the other team has the ball, the next possession counts.'+(S.season&&PBS?' Small number under it = NBA rank among 30 teams by pbpstats’ count of possessions after timeouts (1st = most points for CLE, fewest allowed for OPP).':'')));if(a[0]||b[0])out.push(c)}
   /* 3 · first 3 minutes of each quarter */
   {const a=X.qs[F],b=X.qs[O];if(a.some(v=>v[1])){const c=el('div','card sec');head(c,'First 3 minutes',sub+' · how '+fa+' opened each quarter');
     const tb=el('table','zt');tb.innerHTML='<tr><th></th><th>Score</th><th>+/-</th><th>Off</th><th>Def</th><th>Net</th></tr>';
@@ -879,7 +883,11 @@ function rkEl(k){if(!k)return'';const cut=k.n>40?Math.max(1,Math.round(k.n*.1)):
 const lgOK=()=>S.season&&S.season===CUR_SEASON&&(S.per||'all')==='all'&&!((S.sf||{}).games||[]).length&&!(S.sf||{}).tier;
 function lgTeamRanks(ROWS){if(!LGS||!lgOK())return false;const others=Object.entries(LGS.T).filter(([ab,x])=>ab!=='CLE'&&x.n);
   ROWS.forEach(r=>{const f=LGM[r.lab];if(!f)return;const own=others.map(([,x])=>f(x.A,x.O,x.n,x.sec)),alw=others.map(([,x])=>f(x.O,x.A,x.n,x.sec));if(own.every(v=>v==null))return;
-    const d=r.hib===null?0:r.hib?1:-1;r.rx=lgRank(r.x,own,d);r.ry=lgRank(r.y,alw,d===0?0:-d)});return true}
+    const d=r.hib===null?0:r.hib?1:-1;r.rx=lgRank(r.x,own,d);r.ry=lgRank(r.y,alw,d===0?0:-d)});
+  /* stats the league box scores don't carry: rank them on pbpstats' season totals */
+  pbpLoad();if(PBT&&PBT.season===S.season){const ab=Object.keys(PBT.T||{}).filter(a=>a!=='CLE');const pg=(side,a,k)=>{const x=(PBT[side]||{})[a]||{};return x.GamesPlayed?(x[k]||0)/x.GamesPlayed:null};
+    ROWS.forEach(r=>{if(r.lab==='Second chance'&&!r.rx){r.rx=lgRank(r.x,ab.map(a=>pg('T',a,'SecondChancePoints')),1);r.ry=lgRank(r.y,ab.map(a=>pg('O',a,'SecondChancePoints')),-1)}})}
+  return true}
 const ord2=n=>n+(n%100>=11&&n%100<=13?'th':['th','st','nd','rd'][n%10]||'th');
 function teamStatsBody(D,ROWS){
   const F=D.focus,O=D.other,w=el('div','tsx');const won=ROWS.filter(r=>r.better===0).length,lost=ROWS.filter(r=>r.better===1).length,n=won+lost+ROWS.filter(r=>r.better===-1&&r.hib!==null).length;
@@ -2256,7 +2264,7 @@ function vSeason(v,D,R){
       rows.forEach(r=>{const tr=el('tr');if(r.length===4){r.forEach(x=>tr.appendChild(el('td',null,x)))}else{const [lab,k2,pc]=r;const a=A[k2],b=B2[k2];const better=k2==='d'||k2==='tov'?a<b:k2==='pace'||k2==='tpar'?null:a>b;tr.append(el('td',null,lab),el('td',null,f1(a)+(pc||'')),el('td',null,f1(b)+(pc||'')));const ch=el('td',better==null?null:better?'up':'dn',sg1(a-b));tr.appendChild(ch)}t.appendChild(tr)});
       const w=el('div','tw');w.appendChild(t);c.appendChild(w);if(G.length<10)c.appendChild(el('p','note','Only '+G.length+' game'+(G.length===1?'':'s')+' this season, so expect big swings early.'))}).catch(()=>{hold.textContent='No archive for '+prev.replace('-','–')+'.'})}
   /* four factors for the season, with NBA ranks */
-  {const ff=el('div');vFF(ff,D,R);if(ff.firstChild){ff.firstChild.classList.add('sec');v.appendChild(ff.firstChild)}}
+  /* four factors live on their own tab (removed here Oct 28) */
   /* record when the Cavs win (or lose) each factor */
 
   seasonExtras(v,D,R);
@@ -2274,7 +2282,12 @@ function seasonExtras(v,D,R){const J=S.sfull;const filt=!!((S.sf&&((S.sf.games&&
   /* clutch */
   {const c=el('div','card sec');head(c,'Clutch','Last 5 minutes of the 4th quarter or overtime, score within 5');
     if(filt||!J||!J.cg)noteF(c);else if(!J.cg.length)c.appendChild(el('p','note','No clutch minutes yet.'));else{const q=J.tq.clutch;const w=J.cg.filter(([i])=>J.games[i]&&J.games[i].cle>J.games[i].os).length,l=J.cg.length-w;const o=r100(q.pf,q.po),d=r100(q.pa,q.pd);
-      const g=el('div','tiles');[[w+'–'+l,'Record in games with clutch minutes'],[q.pf+'–'+q.pa,'Clutch score ('+fmtMin(q.sec)+' played)'],[o==null||d==null?'–':sgn(Math.round(o-d)),'Clutch net per 100'],[n0(o)+' / '+n0(d),'Points scored / allowed per 100']].forEach(([a,b])=>{const x=el('div');x.append(el('b',null,a),el('span',null,b));g.appendChild(x)});c.appendChild(g);
+      /* clutch at a glance: game-by-game results, the clutch score as a split bar, and points scored vs allowed per 100 (Oct 28) */
+      const cv=el('div','clv');
+      {const r=el('div','clv-r');r.appendChild(el('div','clv-k',w+'–'+l+' in clutch games'));const pp=el('div','clv-g');J.cg.forEach(([i,pf,pa])=>{const G=J.games[i];if(!G)return;const W=G.cle>G.os;const x=el('div',W?'w':'l');x.append(el('b',null,W?'W':'L'),el('span',null,(G.ha==='home'?'vs ':'@ ')+G.opp),el('small',null,(pf!=null?pf+'–'+pa:'')));pp.appendChild(x)});r.appendChild(pp);cv.appendChild(r)}
+      {const r=el('div','clv-r');r.appendChild(el('div','clv-k','Clutch score · '+fmtMin(q.sec)+' played'));const tot=(q.pf+q.pa)||1;const sb=el('div','clv-sb');const a1=el('span','c',D.focus.abbr+' '+q.pf);a1.style.flex=String(q.pf/tot);const a2=el('span','o',q.pa+' OPP');a2.style.flex=String(q.pa/tot);sb.append(a1,a2);r.appendChild(sb);cv.appendChild(r)}
+      if(o!=null&&d!=null){const r=el('div','clv-r');const nt=Math.round(o-d);const k=el('div','clv-k');k.append('Per 100 possessions ',el('em',nt>0?'up':nt<0?'dn':'',(nt>0?'+':'')+nt+' net'));r.appendChild(k);const pr=el('div','clv-p');[['Scored',o],['Allowed',d]].forEach(([l2,v])=>{const x=el('div');x.append(el('b',null,n0(v)),el('span',null,l2));pr.appendChild(x)});r.appendChild(pr);cv.appendChild(r)}
+      c.appendChild(cv);
       const P=Object.entries(J.pq||{}).filter(([,x])=>x.clutch&&x.clutch[0]>0).map(([id,x])=>({id,s:x.clutch})).sort((a,b)=>b.s[1]-a.s[1]||b.s[0]-a.s[0]).slice(0,6);
       if(P.length){const t=el('table','zt');t.style.marginTop='12px';t.innerHTML='<tr><th>Player</th><th>Min</th><th>Pts</th><th>FG</th><th>3PT</th><th>+/-</th></tr>';P.forEach(({id,s:x})=>{const tr=el('tr');tr.append(el('td',null,(J.P[id]||{}).short||id),el('td',null,fmtMin(x[0])),el('td',null,String(x[1])),el('td',null,x[2]+'-'+x[3]),el('td',null,x[4]+'-'+x[5]),el('td',pmCls(x[6]),sgn(x[6])));t.appendChild(tr)});const ww=el('div','tw');ww.appendChild(t);c.appendChild(ww)}}
     v.appendChild(c)}
