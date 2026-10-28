@@ -3640,7 +3640,7 @@ function buildDepth(){
   const face=(p,cls)=>'<span class="'+cls+'"><img src="'+HSU(p[12])+'" alt="" loading="lazy" onerror="this.remove()"></span>';
   const link=(p,inner)=>PP_ON?'<a href="/players/'+slug(p[1])+'" data-go="players/'+slug(p[1])+'">'+inner+'</a>':'<a href="'+profileUrl(p[1],p[12])+'" target="_blank" rel="noopener">'+inner+'</a>';
   const INJ=n=>{const r=INJURIES.find(x=>x[0]===n);return r?'<i class="injx" title="'+r[2]+': '+r[3]+'">+</i>':''};
-  const mp=n=>{const v=MPG[n]!=null?MPG[n]:MPG_PREV[n];return v!=null?v.toFixed(1)+' mpg':'—'};
+  const mp=n=>{const v=MPG[n];return v!=null?v.toFixed(1)+' mpg':'—'};
   const nm=p=>'<span class="t"><b>'+p[1]+INJ(p[1])+' <em>'+mp(p[1])+'</em></b>'+(p[11]==='TW'?'<span>two-way</span>':'')+'</span>';
   /* chart */
   let h='<div class="dsheet"><div class="ds-hdr"><b>Cavaliers Depth Chart</b>'+(DND_ON||/[?&]dnd=1/.test(location.search)?'<button type="button" class="ds-ed" id="ds-ed" aria-pressed="false" title="Drag players around to try your own depth chart">Shuffle it</button>':'')+'<span class="dsw" role="group" aria-label="Depth view"><button type="button" data-dv="chart" aria-pressed="true">Chart</button><button type="button" data-dv="pyr" aria-pressed="false">Pyramid</button></span></div>';
@@ -3651,7 +3651,7 @@ function buildDepth(){
   /* pyramid */
   h+='<div id="dv-pyr" hidden><div class="pyr">';
   DEPTH_TIERS.forEach(([t,d,ns],i)=>{h+='<div class="pt pt'+(i+1)+'"><div class="pt-band"><div class="pt-faces">'+ns.map(n=>{const p=P(n);return link(p,face(p,'pf')+'<b>'+lastN(n)+INJ(n)+'</b><span>'+mp(n)+'</span>')}).join('')+'</div></div><div class="pt-lab"><b>'+t+'</b><span>'+d+'</span></div></div>'});
-  h+='</div><div class="ds-foot">Tiers are an editorial call and will follow minutes once the season starts</div></div></div>';
+  h+='</div></div></div>';
   const rd=document.getElementById('rv-depth');rd.innerHTML=h;rd.insertAdjacentHTML('beforeend','<p class="ds-key"><span><i class="injx">+</i> on the injury report (hover or tap for details)</span><span><b>mpg</b> minutes per game, last season until 5 games are played</span><span>Order is cavs_db’s read of the rotation, updated as minutes change.</span></p>');
   rd.querySelectorAll('[data-dv]').forEach(b=>b.addEventListener('click',()=>{rd.querySelectorAll('[data-dv]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));document.getElementById('dv-chart').hidden=b.dataset.dv!=='chart';document.getElementById('dv-pyr').hidden=b.dataset.dv!=='pyr'}));
   /* make your own: drag any player onto another to swap them (chart), or onto another tier (pyramid). Nothing is saved; leaving the page resets it. */
