@@ -353,6 +353,8 @@ table.dt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
 .tse{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}.tse span{font:600 0.75rem var(--sans);padding:4px 8px}.tse b{font-family:var(--mono)}
 .tsc{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;align-items:start}
 .tsm{display:none}
+#view.gm:not(.gmp) .pm.p,#view.gm:not(.gmp) .pm.n,#view.gm .up,#view.gm .dn,#view.gm small.rk.g,#view.gm small.rk.b,#view.gm .df.u,#view.gm .df.d{color:inherit!important}
+#view.gm td[style*="--pos"],#view.gm td[style*="--neg"],#view.gm b[style*="--pos"],#view.gm b[style*="--neg"],#view.gm i[style*="--pos"],#view.gm i[style*="--neg"],#view.gm em.up,#view.gm em.dn{color:inherit!important}
 .sbc-lg{width:30px;height:30px;object-fit:contain;vertical-align:middle}.sbc-lg.sm{width:22px;height:22px}.ls-lg{width:22px;height:22px;object-fit:contain;vertical-align:middle}
 .chip.dr{background:transparent!important;border:2px solid;box-sizing:border-box}
 .sbrun{grid-column:1/-1;margin-top:8px;padding:6px 10px;background:color-mix(in srgb,var(--gold,#F2B231) 18%,var(--card));font:700 .8rem var(--sans);text-align:center}
@@ -766,10 +768,12 @@ function scrollHints(){document.querySelectorAll('#view .tw').forEach(w=>{const 
 let _shT;new MutationObserver(()=>{clearTimeout(_shT);_shT=setTimeout(scrollHints,60)}).observe(document.getElementById('view')||document.body,{childList:true,subtree:true});
 addEventListener('resize',()=>{clearTimeout(_shT);_shT=setTimeout(scrollHints,120)});
 function renderView(){
-  const v=$('view'),D=S.data,R=S.R;v.innerHTML='';
+  const v=$('view'),D=S.data,R=S.R;v.innerHTML='';v.classList.toggle('gm',!S.season&&S.tab!=='lineups');v.classList.toggle('gmp',S.tab==='players');/* keep green/red for lineups and for +/- in the box score *//* game view: no green/red on stats for now (Luka, Oct 28) */
   if(S.state==='pre'&&!R.plays.length){const c=el('div','card');c.append(el('h2',null,D.away.abbr+' at '+D.home.abbr),el('p',null,'Tip-off '+new Date(D.date).toLocaleString([],{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+(D.venue?' · '+D.venue:'')+(D.bc.length?' · '+D.bc.join(', '):'')+'.'),el('p','empty','Team and player stats, lineups, shots, four factors and rotations fill in once the game starts. The page refreshes every 15 seconds during the game.'));v.appendChild(c);
     const opp=D.other;const holder=el('div');holder.appendChild(el('p','note','Loading the scouting report…'));v.appendChild(holder);scoutData(opp.id).then(X=>{if(S.data!==D)return;holder.innerHTML='';holder.appendChild(scoutCard(D,X,opp))});return}
   ({season:vSeason,share:vShare,ast:vAst,team:vTeam,players:vPlayers,lineups:vLuHub,shots:vShots,flow:vFlow,ff:vFF,plays:vPlays})[S.tab](v,D,R);
+  /* game view: no green/red for now, so drop the sentences that explain them (also for notes added a moment later) */
+  if(!S.season&&S.tab!=='lineups'){const strip=root=>root.querySelectorAll('p.note').forEach(n=>{if(!/\b(Green|green|red)\b/.test(n.textContent)||n.children.length>1)return;const t=n.textContent.split(/(?<=\.)\s+/).filter(x=>!/\b(Green|green|red)\b/.test(x)).join(' ');if(t.trim())n.textContent=t;else n.remove()});strip(v);clearTimeout(S.gnT);S.gnT=setTimeout(()=>strip(v),1500)}
   /* table bars removed everywhere (Oct 28) */
 }
 /* small bars inside the plain tables: net and +/- columns get a bar left or right of center, records a win-share bar, shares and per-possession numbers a length bar */
