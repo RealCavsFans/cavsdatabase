@@ -43,7 +43,7 @@ fs.writeFileSync('live-base.json', JSON.stringify({ season: SEASON, updated: new
   fs.mkdirSync('pdata', { recursive: true }); fs.writeFileSync('pdata/pbp-teams.json', JSON.stringify({ season: SEASON, updated: new Date().toISOString(), T, O }));
   // possessions by how they started (pbpstats StartType filter), own offense and opponents, for ranks on How possessions started
   const Zs = ['AtRim', 'ShortMidRange', 'LongMidRange', 'Corner3', 'Arc3', 'FT'];
-  const ST = ['OffLiveBallTurnover', 'OffDeadball', 'OffTimeout', ...Zs.map(z => 'Off' + z + 'Miss'), ...Zs.map(z => 'Off' + z + 'Make')];
+  const ST = ['OffLiveBallTurnover', 'OffDeadball', 'OffTimeout', ...Zs.map(z => 'Off' + z + 'Miss'), ...Zs.map(z => 'Off' + z + 'Make'), ...Zs.slice(0, 5).map(z => 'Off' + z + 'Block')];
   const S2 = {};
   for (const st of ST) { for (const ty of ['Team', 'Opponent']) {
     const u = `https://api.pbpstats.com/get-totals/nba?Season=${SEASON}&SeasonType=Regular%20Season&Type=${ty}&StartType=${st}`;
