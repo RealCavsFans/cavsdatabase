@@ -7,12 +7,6 @@
    "date": "2026-10-28T18:30:00.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "Cavs vs. Wizards: How to watch, odds, and injury report",
-   "link": "https://www.fearthesword.com/cavs-injury-report/53642/cavs-vs-wizards-how-to-watch-odds-and-injury-report",
-   "date": "2026-10-28T17:30:00.000Z"
-  },
-  {
    "src": "Hoops Rumors",
    "title": "Central Notes: Thomas, Hezonja, Pistons, Pacers, Miller",
    "link": "https://www.hoopsrumors.com/2026/10/central-notes-thomas-hezonja-pistons-pacers-miller.html",
@@ -155,6 +149,12 @@
    "title": "Cavs vs. Timberwolves: preview, odds, injury report and TV info",
    "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPbTVuU1ExQUM3NG1DMzhZUTVjdWlYNjNLSFAxUDNFcEE2d3hWdS15QWxBcmFfLVMxZzM2ZkdzSFNNRkNIX1E3S3kxZk1EX2FRMTNyZGFUX25LMVd0eWM2b3VqMWZRWTVkQTVvd1AzbExoQWNlRnJ5NnpQZV9XSWRVejZ0ZThEYkxsbjdzM0JpMzJPejJxeWpjRUNR?oc=5",
    "date": "2026-10-26T09:00:00.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Cavs vs. Timberwolves: How to watch, odds, and injury report",
+   "link": "https://www.fearthesword.com/cavs-injury-report/53492/cavs-vs-timberwolves-how-to-watch-odds-and-injury-report",
+   "date": "2026-10-25T20:01:50.000Z"
   },
   {
    "src": "cleveland.com",
@@ -381,6 +381,13 @@
  ],
  "videos": [
   {
+   "src": "Locked On Cavs",
+   "title": "CAVS POSTCAST: The Cleveland Cavaliers Face the Washington Wizards in AJ Dybantsa's NBA Debut",
+   "link": "https://www.youtube.com/watch?v=iQM1vLprPXE",
+   "date": "2026-10-28T19:20:32.000Z",
+   "id": "iQM1vLprPXE"
+  },
+  {
    "src": "It's Cavalier Podcast",
    "title": "Jaylon Tyson Is Giving the Cavs Something They Didn’t Know They Needed!",
    "link": "https://www.youtube.com/watch?v=Id9YaOoDD2M",
@@ -526,13 +533,6 @@
    "link": "https://www.youtube.com/watch?v=Wu3JeibcMys",
    "date": "2026-10-26T15:53:54.000Z",
    "id": "Wu3JeibcMys"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "REVEALED: What's STOOD OUT About the Cleveland Cavaliers In 1st Week?! | Can They FIX The Turnovers?",
-   "link": "https://www.youtube.com/watch?v=jPF59goy7dc",
-   "date": "2026-10-26T03:17:06.000Z",
-   "id": "jPF59goy7dc"
   },
   {
    "src": "It's Cavalier Podcast",
