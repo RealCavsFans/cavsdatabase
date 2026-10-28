@@ -36,4 +36,10 @@ players.forEach(r => {
 const lg = Z.map((z, i) => { let m = 0, a = 0; Object.values(t).forEach(v => { m += v[i][0]; a += v[i][1]; }); return [m, a]; });
 const games = Math.max(...teams.map(r => r.GamesPlayed || 0));
 fs.writeFileSync('live-base.json', JSON.stringify({ season: SEASON, updated: new Date().toISOString(), games, lg, t, p, s }));
+// every team's full pbpstats totals, its own and what opponents did against it, for NBA ranks on the live page's play-by-play stats
+{ const opp = (await rows('Opponent')) || [];
+  const keep = r => Object.fromEntries(Object.entries(r).filter(([k, v]) => typeof v === 'number'));
+  const T = {}, O = {}; teams.forEach(r => { T[ESPN_ABBR[r.Name] || r.Name] = keep(r); }); opp.forEach(r => { O[ESPN_ABBR[r.Name] || r.Name] = keep(r); });
+  fs.mkdirSync('pdata', { recursive: true }); fs.writeFileSync('pdata/pbp-teams.json', JSON.stringify({ season: SEASON, updated: new Date().toISOString(), T, O }));
+  console.log(`pdata/pbp-teams.json: ${Object.keys(T).length} teams, ${Object.keys(O).length} opponent rows, ${Object.keys(Object.values(T)[0] || {}).length} fields`); }
 console.log(`live-base.json: ${SEASON}, ${Object.keys(t).length} teams, ${Object.keys(p).length} players, up to ${games} games`);
