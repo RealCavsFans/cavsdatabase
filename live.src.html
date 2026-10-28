@@ -364,7 +364,7 @@ table.dt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
 .tsr2 b{font:600 0.8125rem var(--mono);text-align:right}.tsr2 b:last-child{text-align:left}.tsr2 b.w{font-weight:800}
 .tsr2 .eb{position:relative;height:12px}.tsr2 .eb::after{content:'';position:absolute;left:50%;top:-4px;bottom:-4px;width:1px;background:var(--fg)}
 .tsr2 .eb i{position:absolute;top:2px;bottom:2px}
-.ato{width:100%;border-collapse:collapse;margin-top:6px}.ato th{font:700 0.6875rem var(--cond);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right;padding:4px 0 6px;border-bottom:2px solid var(--fg)}.ato th:first-child{text-align:left}.ato td{font:600 0.9375rem var(--mono);text-align:right;padding:9px 0 9px 14px;border-bottom:1px solid var(--line2)}.ato td:first-child{text-align:left;font:800 0.875rem var(--sans)}.ato td small{display:block;font:500 0.6875rem var(--sans);color:var(--muted)}.ato td.w{font-weight:800}
+.ato{width:100%;border-collapse:collapse;margin-top:6px}.ato th{font:700 0.6875rem var(--cond);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right;padding:4px 0 6px;border-bottom:2px solid var(--fg)}.ato th:first-child{text-align:left}.ato td{font:600 0.9375rem var(--mono);text-align:right;white-space:nowrap;padding:9px 0 9px 12px;border-bottom:1px solid var(--line2)}.ato td:first-child{text-align:left;font:800 0.875rem var(--sans)}.ato td small{display:block;font:500 0.6875rem var(--sans);color:var(--muted)}.ato td.w{font-weight:800}
 @media (max-width:760px){.tsc{grid-template-columns:1fr}}
 
 a.plk{color:inherit;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--wt) 45%,transparent);text-underline-offset:3px}
@@ -811,11 +811,11 @@ function possXCards(D,R){const F=D.focus.id,O=D.other.id;let X,n=1;
     const w=el('div','tw');w.appendChild(tb);c.appendChild(w);c.appendChild(el('p','note','Seconds from the start of the possession (a rebound, turnover, made basket or the start of the quarter). Offensive rebounds keep the same possession. Green / red = well above or below '+fa+'’s own average.'));out.push(c)}
   /* 2 · out of timeouts */
   {const a=X.ato[F],b=X.ato[O];const ta=X.tim[F].reduce((s,v)=>[s[0]+v[0],s[1]+v[1]],[0,0]);const c=el('div','card sec');head(c,'Out of timeouts',sub+' · the first possession after each team’s own timeout');
-    const tb2=X.tim[O].reduce((s,v)=>[s[0]+v[0],s[1]+v[1]],[0,0]);const t=el('table','ato');t.innerHTML='<tr><th></th><th>After own timeouts</th><th>Scored on</th><th>All possessions</th></tr>';
-    [[fa,a,ta,F===D.focus.id?D.focus.c:D.other.c],[oa,b,tb2]].forEach(([nm,x,all])=>{const tr=el('tr');const v=x[0]?x[1]/x[0]:null,av=all[0]?all[1]/all[0]:null;const c1=el('td',null,pp(x[1],x[0]));c1.appendChild(el('small',null,'pts per poss · '+x[0]+' poss'));if(v!=null&&av!=null&&x[0]>=5)c1.className=v>av+.05?'up':v<av-.05?'dn':'';
-      const c2=el('td',null,x[2]+' of '+x[0]);c2.appendChild(el('small',null,x[0]?Math.round(x[2]/x[0]*100)+'%':''));const c3=el('td',null,pp(all[1],all[0]));c3.appendChild(el('small',null,'pts per poss'));tr.append(el('td',null,nm),c1,c2,c3);t.appendChild(tr)});
+    const tb2=X.tim[O].reduce((s,v)=>[s[0]+v[0],s[1]+v[1]],[0,0]);const t=el('table','ato');t.innerHTML='<tr><th></th><th>After timeouts</th><th>Scored on</th><th>All poss.</th></tr>';
+    [[fa,a,ta,F===D.focus.id?D.focus.c:D.other.c],[oa,b,tb2]].forEach(([nm,x,all])=>{const tr=el('tr');const v=x[0]?x[1]/x[0]:null,av=all[0]?all[1]/all[0]:null;const c1=el('td',null,pp(x[1],x[0]));c1.appendChild(el('small',null,x[0]+' poss'));if(v!=null&&av!=null&&x[0]>=5)c1.className=v>av+.05?'up':v<av-.05?'dn':'';
+      const c2=el('td',null,x[2]+' of '+x[0]);c2.appendChild(el('small',null,x[0]?Math.round(x[2]/x[0]*100)+'%':''));const c3=el('td',null,pp(all[1],all[0]));tr.append(el('td',null,nm),c1,c2,c3);t.appendChild(tr)});
     const tw=el('div','tw');tw.appendChild(t);c.appendChild(tw);
-    c.appendChild(el('p','note','The first possession after each team calls its own timeout, compared with all of its possessions. Green / red = better or worse than its usual. If a timeout comes while the other team has the ball, the next possession counts.'));if(a[0]||b[0])out.push(c)}
+    c.appendChild(el('p','note','Points per possession on the first possession after each team calls its own timeout, compared with all of its possessions. Green / red = better or worse than its usual. If a timeout comes while the other team has the ball, the next possession counts.'));if(a[0]||b[0])out.push(c)}
   /* 3 · first 3 minutes of each quarter */
   {const a=X.qs[F],b=X.qs[O];if(a.some(v=>v[1])){const c=el('div','card sec');head(c,'First 3 minutes',sub+' · how '+fa+' opened each quarter');
     const tb=el('table','zt');tb.innerHTML='<tr><th></th><th>Score</th><th>+/-</th><th>Off</th><th>Def</th><th>Net</th></tr>';
