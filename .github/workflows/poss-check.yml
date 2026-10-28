@@ -1,0 +1,28 @@
+name: Possession check (by hand)
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: poss-check
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
+        with:
+          node-version: 22
+      - run: node scripts/check-poss.mjs
+      - name: Commit if changed
+        run: |
+          git config user.name "cavsdatabase-bot"
+          git config user.email "bot@cavsdatabase.com"
+          git add data/poss-check.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Possession check"
+          for i in 1 2 3; do
+            if git pull --rebase origin main && git push; then exit 0; fi
+            sleep 5
+          done
