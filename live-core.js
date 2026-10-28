@@ -53,6 +53,7 @@ const zT=()=>({pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,oreb:0,dreb:0,toreb:0,t
 const zP=()=>({min:0,pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,oreb:0,dreb:0,ast:0,stl:0,blk:0,to:0,pf:0,pm:0,played:false,on:false});
 /* np = counted possessions (each ends when the other team gets the ball or the period ends); poss() uses it when present, the estimate formula otherwise */
 const zS=()=>({fga:0,oreb:0,to:0,fta:0,fgm:0,tpa:0,tpm:0,ftm:0,ast:0,dreb:0,np:0});const zL=ids=>({ids,sec:0,pf:0,pa:0,o:zS(),d:zS()});
+/* box estimate uses player offensive rebounds only (team rebounds include dead balls after missed free throws), the same way the league box scores count, so our ratings and the NBA ranks line up (Oct 28) */
 const poss=o=>o.np!=null&&o.np>0?o.np:o.fga-o.oreb+o.to+0.44*o.fta;
 function zoneOf(x,y,three){const d=Math.hypot(x-25,y);if(three)return y<=C3?3:4;if(d<4)return 0;if(d<14)return 1;return 2}
 function combos(a,k){const r=[];const f=(s,c)=>{if(c.length===k){r.push(c.slice());return}for(let i=s;i<a.length;i++){c.push(a[i]);f(i+1,c);c.pop()}};f(0,[]);return r}
@@ -151,7 +152,7 @@ function deriveCore(D,plays,F){
   return {PL:PLx,segs,curStint,dr,pmAll,pc,tf,to,ch,pfAll,wpS,lineAt,asts,plays,B,T,TQ,L,on,margin,runs,shots,stints,hs:lp?lp.hs:0,as:lp?lp.as:0,lp,lead,lc,ties,wp:lp&&D.wp[lp.id]!=null?D.wp[lp.id]:null,maxPer:lp?Math.max(4,lp.per):4};
 }
 
-function factors(a,b){const pa=poss({fga:a.fga,oreb:a.oreb+a.toreb,to:a.to,fta:a.fta});
+function factors(a,b){const pa=poss({fga:a.fga,oreb:a.oreb,to:a.to,fta:a.fta});
   return {efg:a.fga?(a.fgm+0.5*a.tpm)/a.fga:null,tov:pa?a.to/pa:null,orb:(a.oreb+a.toreb+b.dreb+b.tdreb)?(a.oreb+a.toreb)/(a.oreb+a.toreb+b.dreb+b.tdreb):null,ftr:a.fga?a.ftm/a.fga:null}}
 const FF=[['efg','Shooting','Effective FG%',true],['tov','Ball security','Turnover rate',false],['orb','Second chances','Offensive rebound rate',true],['ftr','Getting to the line','Free throws made per FGA',true]];
 const CLE='5',C3=Math.sqrt(23.75**2-22**2);
