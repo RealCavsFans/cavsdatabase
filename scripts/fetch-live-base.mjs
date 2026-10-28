@@ -42,14 +42,15 @@ fs.writeFileSync('live-base.json', JSON.stringify({ season: SEASON, updated: new
   const T = {}, O = {}; teams.forEach(r => { T[ESPN_ABBR[r.Name] || r.Name] = keep(r); }); opp.forEach(r => { O[ESPN_ABBR[r.Name] || r.Name] = keep(r); });
   fs.mkdirSync('pdata', { recursive: true }); fs.writeFileSync('pdata/pbp-teams.json', JSON.stringify({ season: SEASON, updated: new Date().toISOString(), T, O }));
   // possessions by how they started (pbpstats StartType filter), own offense and opponents, for ranks on How possessions started
-  const ST = ['OffMissedShot', 'OffMadeShot', 'OffLiveBallTurnover', 'OffDeadball', 'OffTimeout', 'OffMadeFT', 'OffMissedFT'];
+  const Zs = ['AtRim', 'ShortMidRange', 'LongMidRange', 'Corner3', 'Arc3', 'FT'];
+  const ST = ['OffLiveBallTurnover', 'OffDeadball', 'OffTimeout', ...Zs.map(z => 'Off' + z + 'Miss'), ...Zs.map(z => 'Off' + z + 'Make')];
   const S2 = {};
   for (const st of ST) { for (const ty of ['Team', 'Opponent']) {
     const u = `https://api.pbpstats.com/get-totals/nba?Season=${SEASON}&SeasonType=Regular%20Season&Type=${ty}&StartType=${st}`;
     try { const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0 (cavsdatabase.com)' }, signal: AbortSignal.timeout(60000) }); if (!r.ok) { console.log(st, ty, 'HTTP', r.status); continue; }
       const j = await r.json(); const out = {}; (j.multi_row_table_data || []).forEach(x => { out[ESPN_ABBR[x.Name] || x.Name] = [x.OffPoss || 0, x.Points || 0, x.FG3A || 0, x.SecondsPerPossOff || null]; });
       (S2[st] = S2[st] || {})[ty] = out; console.log(st, ty, Object.keys(out).length, JSON.stringify(out.CLE)); } catch (e) { console.log(st, ty, String(e)); }
-    await new Promise(r => setTimeout(r, 1500)); } }
+    await new Promise(r => setTimeout(r, 1200)); } }
   fs.writeFileSync('pdata/pbp-starts.json', JSON.stringify({ season: SEASON, updated: new Date().toISOString(), S: S2 }));
   console.log(`pdata/pbp-teams.json: ${Object.keys(T).length} teams, ${Object.keys(O).length} opponent rows, ${Object.keys(Object.values(T)[0] || {}).length} fields`); }
 console.log(`live-base.json: ${SEASON}, ${Object.keys(t).length} teams, ${Object.keys(p).length} players, up to ${games} games`);
