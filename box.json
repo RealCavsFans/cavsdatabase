@@ -588,7 +588,24 @@
  },
  "2026-10-28": {
   "url": "https://www.nba.com/game/was-vs-cle-0022600133/box-score",
-  "status": "scheduled"
+  "status": "scheduled",
+  "refs": [
+   [
+    "Crew chief",
+    "Mitchell Ervin",
+    "27"
+   ],
+   [
+    "Referee",
+    "Jason Goldenberg",
+    "35"
+   ],
+   [
+    "Umpire",
+    "Simone Jelks",
+    "81"
+   ]
+  ]
  },
  "2026-10-29": {
   "url": "https://www.nba.com/game/cle-vs-atl-0022600144/box-score",
