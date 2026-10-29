@@ -1,8 +1,14 @@
 {
  "articles": [
   {
+   "src": "Cavaliers on SI",
+   "title": "Evan Mobley’s Ascension as a Reliable 3-Point Shooter Could Make Cavs' Offense \"Really Hard to Stop\"",
+   "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxObWQtWnhubVhBR09QRUxiRFA5TEpnbllwaWZQamlmSEdXVjYxdk55ZWUwdDlvUEs5d0htd1hBRlpPdDBXclFUY18tdEdUWFRnbGNqekpXS1JGdDlkS1ZOS3hFUW5BbVp1UHJOX2RhaUFpaEtEaTg5Rll1bUFwSmZVeThVc3l4MS1jRmtiMG1yWE5MS0o1RzFjZ29SQ2tKbmduV2szbzBmRk9PU1czVENSOGhXYVhsRlQtd054N3RrekJTZ25zOVc1bVBzUQ?oc=5",
+   "date": "2026-10-29T14:00:02.000Z"
+  },
+  {
    "src": "cleveland.com",
-   "title": "How Evan Mobley’s improved 3-point shot puts him in a different class -- and changes Cavs’ ceiling",
+   "title": "How Evan Mobley’s improved 3-point shot puts him in a different class — and changes the Cavs’ ceiling",
    "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQWGEyaGE0WlJTc2dfbnJjajhKNkxCaERYUlc0MW1uYV8wZnpxSUFpd1ZQYW14N1ByQldxZjlCSll3Qzgwejk3RUM2Smxla0N2R0Jia2RfXzczbzNBMm1uQmN3UU1Ec25ORjRxTW1XdEFJaGN2TnltcFhnRTF4U1NvRFdERUNnZGNaclBmQlU5WVV6c1RUN1hydmlNRUlaNkhBTXJ3SkdDNlg5YmpOUzZiQW9UODIwRXcxamU1b2FKS3JDS3gwcHJTZXYxMlA0N0ZDeTZn?oc=5",
    "date": "2026-10-29T05:08:00.000Z"
   },
@@ -223,12 +229,6 @@
    "date": "2026-10-23T12:30:00.000Z"
   },
   {
-   "src": "Cavaliers on SI",
-   "title": "Biggest Winners and Losers From Cavaliers Loss Against 76ers",
-   "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOOWg4MnZrT2NpaU84U2dUc2trcDV1ay1HQjlOZ1lDMVNnLVJOMUdMbWNHcDBKaC1NLXo1MHJNZ00yb19ucXhBSEhodHRJelZhT29wakNvdkVFQ0k1NFBhZHpoU2dqajFmWUcyTjMyMlNuQXFlcjZIbnBwQWVQUEZIYVZ3SFdFdF9RS3JyVTJDa2NPTFZFdGYwcXpwRFlVT2M1VDc2U21OMEdTbzBpeThBdQ?oc=5",
-   "date": "2026-10-23T10:00:04.000Z"
-  },
-  {
    "src": "cleveland.com",
    "title": "An epic collapse — what went wrong for the Cavs: Terry Pluto’s Scribbles",
    "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNdUg0WGJ6aEFLM1dLUFVXUDhzcEFmamk2WjgzUmNVb2JDcllya1FjZll2Y2hfdnJlTWkzNS1xcWlQU0pCUjh5cXhwSmYwOU51WUNycjFGN2JpdjlnWEFHYmJ6ek9BaW43RFhmQlBZTGFpdHNoVzloVW02WHhDeTRha3p6MzZIYS1OWjZYUGxlNnVzUWRBcWNFUzl3eS1HWHFCTmVFWWtNcGRybkZG?oc=5",
@@ -388,6 +388,13 @@
   }
  ],
  "videos": [
+  {
+   "src": "Ultimate Cleveland Sports Show",
+   "title": "Peyton Watson has his 1st BREAKOUT game as a member of the Cavs; Cleveland tops Wizards in shootout",
+   "link": "https://www.youtube.com/watch?v=1yOiAof1eok",
+   "date": "2026-10-29T14:26:05.000Z",
+   "id": "1yOiAof1eok"
+  },
   {
    "src": "Locked On Cavs",
    "title": "REACTION: Cleveland Cavaliers Use Peyton Watson's BREAKOUT To Beat Washington Wizards!",
@@ -604,13 +611,6 @@
    "link": "https://www.youtube.com/watch?v=qjQioeKX8MY",
    "date": "2026-10-23T03:09:21.000Z",
    "id": "qjQioeKX8MY"
-  },
-  {
-   "src": "Ultimate Cleveland Sports Show",
-   "title": "Is this the season Evan Mobley finally averages 20 points per game for the Cleveland Cavaliers?",
-   "link": "https://www.youtube.com/watch?v=U31slHqCVaA",
-   "date": "2026-10-22T15:46:37.000Z",
-   "id": "U31slHqCVaA"
   },
   {
    "src": "Fear The Fro",
