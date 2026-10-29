@@ -2017,13 +2017,17 @@ function pgCard(D,R,id){const p=D.P[id],b=R.B[id];if(!p||!b)return null;const t=
   {const end=R.lp?Math.max(2880,pstart(R.maxPer)+plen(R.maxPer)):2880,X=v=>(v/end*100).toFixed(2)+'%';const tl=el('div','pgc-tl');
     const ql=el('div','pgc-q');for(let q=1;q<=R.maxPer;q++){const sp=el('span',null,pname(q));sp.style.left=X(pstart(q)+plen(q)/2);ql.appendChild(sp)}tl.appendChild(ql);
     const lane=(lab,fill)=>{const r=el('div','pgc-ln');r.appendChild(el('span','pgc-ll',lab));const tr=el('div','pgc-tr');for(let q=2;q<=R.maxPer;q++){const g=el('i');g.style.left=X(pstart(q));tr.appendChild(g)}fill(tr);r.appendChild(tr);tl.appendChild(r)};
-    const st=(R.stints[id]||[]).slice();if(R.curStint&&R.curStint[id]&&b.on){const c=R.curStint[id];st.push([c.from,c.from+c.sec,c.pm])}
+    const st=(R.stints[id]||[]).slice();if(R.curStint&&R.curStint[id]&&b.on){const c=R.curStint[id];if(!st.some(x=>x[0]===c.from))st.push([c.from,c.from+c.sec,c.pm])}
     lane('On',tr=>st.forEach(([a,z,pm])=>{const q=el('b',pm>0?'p':pm<0?'n':'z');q.style.left=X(a);q.style.width=X(Math.max(10,z-a));q.title=fmtMin(z-a)+' · '+sgn(pm);tr.appendChild(q)}));
     lane('Runs',tr=>(R.runs||[]).forEach(r=>{const q=el('em',r.t===D.focus.id?'f':'o',r.pts+'–0');q.style.left=X(r.start.t);q.style.width='max('+X(Math.max(1,r.end.t-r.start.t))+',2.6em)';q.title=D.teams.find(z=>z.id===r.t).abbr+' '+r.pts+'–0 run';tr.appendChild(q)}));
     w.appendChild(tl);w.appendChild(el('p','note pgc-n','Green = '+t.abbr+' outscored '+o.abbr+' while he was on, red = outscored. Runs of 8–0 or better: wine '+D.focus.abbr+', gray '+D.other.abbr+'.'))}
   /* big numbers */
-  {const bg=el('div','pgc-big');const cell=(v,l,cls)=>{const d=el('div',cls);d.append(el('b',null,String(v)),el('span',null,l));bg.appendChild(d)};cell(Math.round((b.min||0)/60),'MIN');bg.appendChild(el('i',null,'▸'));
-    cell(b.pts,'PTS');cell(b.oreb+b.dreb,'REB');cell(b.ast,'AST');cell(b.stl,'STL');cell(b.blk,'BLK');cell(sgn(b.pm),'+/-',b.pm>0?'up':b.pm<0?'dn':'');w.appendChild(bg)}
+  {const bg=el('div','pgc-big');const cell=(v,l,cls)=>{const d=el('div',cls);d.append(el('b',null,String(v)),el('span',null,l));bg.appendChild(d)};
+    /* same source as the box score: ESPN's official line for the whole game (live and final), else our play-by-play count */
+    const e=D.P[id]&&D.P[id].espn,oe=!S.replay&&S.per==='all'&&S.state!=='pre'&&e&&e.MIN!=null&&e.MIN!==''&&isFinite(+e.MIN)&&isFinite(+e.PTS);
+    const k=oe?{min:+e.MIN*60,pts:+e.PTS,reb:+e.REB,ast:+e.AST,stl:+e.STL,blk:+e.BLK,pm:isFinite(+e['+/-'])?+e['+/-']:b.pm}:{min:b.min,pts:b.pts,reb:b.oreb+b.dreb,ast:b.ast,stl:b.stl,blk:b.blk,pm:b.pm};
+    cell(Math.round((k.min||0)/60),'MIN');bg.appendChild(el('i',null,'▸'));
+    cell(k.pts,'PTS');cell(k.reb,'REB');cell(k.ast,'AST');cell(k.stl,'STL');cell(k.blk,'BLK');cell(sgn(k.pm),'+/-',k.pm>0?'up':k.pm<0?'dn':'');w.appendChild(bg)}
   /* shooting lines against his own season average (other games this season); NBA average if he has none */
   {const PA=plAvg(D,id,b),A=PA||lgAvg(),lab=PA?'his avg ':'NBA ';const g=el('div','pgc-sh');const ts=b.fga+b.fta?b.pts/(2*(b.fga+.44*b.fta)):null;
     [['FG',b.fgm,b.fga,A&&A.fg],['3PT',b.tpm,b.tpa,A&&A.tp],['FT',b.ftm,b.fta,A&&A.ft],['TS%',null,null,A&&A.ts,ts]].forEach(([l,m,a,avg,v])=>{const d=el('div');const val=l==='TS%'?(v==null?'–':Math.round(v*100)+'%'):m+'/'+a;const pv=l==='TS%'?v:(a?m/a:null);
