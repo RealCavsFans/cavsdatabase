@@ -1,10 +1,12 @@
 // Pulls the RealCavsFans.com front page RSS feed and writes rcf.json for the site's RCF page.
 // Runs on a schedule from .github/workflows/videos.yml. Node 20+, no dependencies.
 // If the feed doesn't answer, it keeps the existing rcf.json and exits cleanly with a warning.
-import { writeFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 
 const FEED = 'https://realcavsfans.com/index.php?forums/FrontPage/index.rss';
 const OUT = new URL('../rcf.json', import.meta.url);
+// first date each article was seen: the feed re-dates an article when it's bumped back onto the front page, so we keep the original
+const FIRST = new URL('../data/rcf-first.json', import.meta.url);
 const KEEP = 12;
 const warn = m => console.log(`::warning::${m}`);
 const ent = s => s.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
@@ -37,5 +39,9 @@ const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].slice(0, KEEP).map(
   };
 }).filter(x => x.title && x.link);
 if (!items.length) { warn('No items parsed; keeping existing rcf.json'); process.exit(0); }
+let first = {}; try { first = JSON.parse(await readFile(FIRST, 'utf8')); } catch {}
+for (const x of items) { if (!first[x.link] || x.date < first[x.link]) first[x.link] = x.date; else x.date = first[x.link]; }
+items.sort((a, b) => a.date < b.date ? 1 : -1);
+await writeFile(FIRST, JSON.stringify(first, null, 0).replace(/,"/g, ',\n"') + '\n');
 await writeFile(OUT, JSON.stringify({ updated: new Date().toISOString(), items }, null, 1) + '\n');
 console.log(`rcf.json: ${items.length} items`);
