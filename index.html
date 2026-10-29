@@ -2674,11 +2674,16 @@ const perName=p=>p<=4?'Q'+p:(p===5?'OT':'OT'+(p-4));
     const isFin=d=>(B[d]&&B[d].status==='final')||!!SCORES[d];
     if(PV==='day'){const g=SCHEDULE.find(x=>tipOf(x).getTime()>now)||SCHEDULE[0];day(g);box.hidden=false;return}
     if(PV==='after'){const p=PRESEASON[PRESEASON.length-1];const b=B[p[0]]||{};after([p[0],p[1],p[2]],p[4],b.top||'',b.url||boxUrl(p[0]),true);box.hidden=false;return}
-    const g=SCHEDULE.find(x=>x[0]===today);
-    if(g&&!isFin(g[0])&&now<tipOf(g).getTime()+3.5*H){day(g);box.hidden=false;return}
-    const last=[...SCHEDULE].reverse().find(x=>x[0]<=today&&isFin(x[0]));
     /* the final stays up until 1 PM PT (4 PM ET) the day after the game */
     const offUntil=d=>{const [y,m,dd]=d.split('-').map(Number);let t=Date.UTC(y,m-1,dd+1,23);const hr=+new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',hour:'numeric',hour12:false}).format(new Date(t));return t+(13-hr)*H};
+    const g=SCHEDULE.find(x=>x[0]===today);
+    const last=[...SCHEDULE].reverse().find(x=>x[0]<=today&&isFin(x[0]));
+    /* back to backs: last night's final stays on top until 1 PM ET, then tonight's game takes over */
+    const etHr=+new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour:'numeric',hour12:false}).format(new Date(now))%24;
+    const b2b=g&&!isFin(g[0])&&last&&last[0]<today&&now<offUntil(last[0])&&etHr<13;
+    if(b2b){const b=B[last[0]]||{};const sc=SCORES[last[0]]||b.score;if(sc){after(last,sc,b.top||'',b.url||boxUrl(last[0]),false);box.hidden=false;clearTimeout(window.cdbOffT);
+      const nx=new Date(now);const m=(13-etHr)*60-nx.getMinutes();window.cdbOffT=setTimeout(render,Math.max(60e3,m*6e4+1000));return}}
+    if(g&&!isFin(g[0])&&now<tipOf(g).getTime()+3.5*H){day(g);box.hidden=false;return}
     if(last&&now<offUntil(last[0])){const b=B[last[0]]||{};const sc=SCORES[last[0]]||b.score;if(sc){after(last,sc,b.top||'',b.url||boxUrl(last[0]),false);box.hidden=false;clearTimeout(window.cdbOffT);window.cdbOffT=setTimeout(render,Math.min(offUntil(last[0])-now+1000,2**31-1))}}}
   render();
   const load=()=>Promise.all([fetch('/box.json',{cache:'no-cache'}).then(r=>r.ok?r.json():{}).catch(()=>({})),fetch('/rcf.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null)]).then(([b,r])=>{B=b||{};RC=r;LAST=Date.now();render()});
