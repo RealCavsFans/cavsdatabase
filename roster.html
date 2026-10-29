@@ -31,7 +31,7 @@
 <link rel="preload" href="/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/geist-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/saira-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/a/app.ea158c39c1.css"><link rel="preload" href="/a/app.5f363ed26f.js" as="script">
+<link rel="stylesheet" href="/a/app.ea158c39c1.css"><link rel="preload" href="/a/app.07aeabafdf.js" as="script">
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
 @media (max-width:720px){.side>.o-inj{order:3}.side>.o-otd,.o-otd{order:99}}
@@ -132,7 +132,20 @@
  .nlft .t,.nlft.mini .t{display:block;min-width:0}.nlft p,.nlft.mini p{display:block;font-size:.75rem;margin:3px 0 0;white-space:nowrap}.f-long{display:none}.f-short{display:inline}}
 
 /* games missed ranks: keep "T-23rd most of 30" on one line in the narrow side tiles */
-.gm-rk{white-space:nowrap}@media (min-width:761px){.gm-rk{font-size:.5625rem!important;letter-spacing:-.02em!important}}
+.gm-rk{white-space:nowrap}
+.nlw-ov{position:fixed;inset:0;z-index:1000;background:rgba(16,20,25,.55);display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
+.nlw{width:100%;max-width:520px;max-height:calc(100vh - 32px);overflow:auto;background:#F5F1EA;color:#101419;box-shadow:0 18px 50px rgba(0,0,0,.35)}
+.nlw img{display:block;width:100%;height:auto}.nlw-b{padding:18px 20px 20px}
+.nlw h2{font:800 1.75rem/1.1 "Saira Condensed",var(--sans);text-transform:uppercase;margin:0 0 6px;color:#101419}
+.nlw-l{font:1rem/1.5 Georgia,serif;margin:0 0 12px;color:#2F363E}
+.nlw dl{display:grid;grid-template-columns:auto 1fr;margin:0;border-top:3px solid #101419}
+.nlw dt,.nlw dd{margin:0;padding:8px 0;border-bottom:1px dotted #CFC8BC}
+.nlw dt{font:800 .75rem/1.45 var(--sans);letter-spacing:.05em;text-transform:uppercase;color:#860038;padding-right:14px;white-space:nowrap}
+.nlw dd{font:.875rem/1.45 var(--sans);color:#2F363E}
+.nlw-go{display:block;margin:16px 0 0;background:#860038;color:#fff!important;text-align:center;padding:11px 14px;font:700 .9375rem var(--sans);text-decoration:none!important}
+.nlw-x{display:block;width:100%;margin:8px 0 0;background:none;border:1px solid #CFC8BC;padding:9px;font:600 .875rem var(--sans);color:#2F363E;cursor:pointer}
+.nlw-f{font:.75rem/1.5 var(--sans);color:#6b7078;text-align:center;margin:12px 0 0}
+@media (min-width:761px){.gm-rk{font-size:.5625rem!important;letter-spacing:-.02em!important}}
 </style>
 <script>/* OneSignal web push for alerts: loads only on the live site, never prompts on its own */
 /* OneSignal: paused Oct 29 with the push alerts. Set PUSH_SDK to true to load it again. */var PUSH_SDK=false;if(PUSH_SDK&&location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async function(OneSignal){await OneSignal.init({appId:"3db75ca9-d797-40c7-8c53-c0711b41e956",serviceWorkerPath:"sw.js",serviceWorkerParam:{scope:"/"},notifyButton:{enable:false},promptOptions:{slidedown:{prompts:[]}}})});const s=document.createElement('script');s.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';s.defer=true;document.head.appendChild(s)}</script>
@@ -502,7 +515,7 @@
   <button type="button" class="thm2" id="thm2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Dark mode</span></button></div>
 </div></footer>
 
-<script src="/a/app.5f363ed26f.js"></script>
+<script src="/a/app.07aeabafdf.js"></script>
 
 <script>
 (function(){const R=document.documentElement,B=document.getElementById('thm'),T=document.getElementById('btt'),F=document.getElementById('fb');
