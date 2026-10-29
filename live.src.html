@@ -798,6 +798,8 @@ const SECX_ON=true; /* save-as-image buttons on every live section (approved Oct
  const LOGO='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#860038" stroke-width="2" fill="none"/></svg>';
  const scoreTxt=()=>{const D=S.data;if(!D)return '';const a=D.away,h=D.home;const st=D.status&&D.status.type||{};const tag=st.completed?'Final':st.state==='in'?(st.shortDetail||'Live'):'';return a.abbr+' '+a.score+' · '+h.abbr+' '+h.score+(tag?' · '+tag:'')};
  async function shot(card0,title,btn){btn.disabled=true;toast('Making the image…');
+  /* the image is made from a copy of the card, and a copy only keeps a dropdown's choice if it's written as an attribute */
+  card0.querySelectorAll('select').forEach(sl=>[...sl.options].forEach(o=>o.toggleAttribute('selected',o.selected)));
   /* an open row panel (a lineup, a player, a shot type) is what gets saved; otherwise the whole card */
   const xd=card0.querySelector('tr.xd>td>*');let card=card0;if(xd){card=xd;const r=xd.closest('tr.xd').previousElementSibling;const c0=r&&r.cells&&r.cells[0];const e0=c0&&(c0.querySelector('.nmf')||c0.querySelector('a,b,span')||c0);const nm=e0?e0.textContent.replace(/^[▸▾►▼\s]+/,'').trim():'';if(nm)title=title+' · '+nm}
   card.classList.add('capmode');card0.classList.add('capmode');
