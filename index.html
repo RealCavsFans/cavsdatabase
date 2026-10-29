@@ -548,6 +548,9 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 .nl-short{display:none;white-space:nowrap;font-size:min(.9375rem,3.2vw);letter-spacing:-.01em}.f-short{display:none}
 @media (max-width:760px){.f-dom{display:none}.nl-long{display:none}.nl-short{display:inline}
  .nlft .t,.nlft.mini .t{display:block;min-width:0}.nlft p,.nlft.mini p{display:block;font-size:.75rem;margin:3px 0 0;white-space:nowrap}.f-long{display:none}.f-short{display:inline}}
+
+/* games missed ranks: keep "T-23rd most of 30" on one line in the narrow side tiles */
+.gm-rk{white-space:nowrap}@media (min-width:761px){.gm-rk{font-size:.5625rem!important;letter-spacing:-.02em!important}}
 </style>
 <script>/* OneSignal web push for alerts: loads only on the live site, never prompts on its own */
 /* OneSignal: paused Oct 29 with the push alerts. Set PUSH_SDK to true to load it again. */var PUSH_SDK=false;if(PUSH_SDK&&location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async function(OneSignal){await OneSignal.init({appId:"3db75ca9-d797-40c7-8c53-c0711b41e956",serviceWorkerPath:"sw.js",serviceWorkerParam:{scope:"/"},notifyButton:{enable:false},promptOptions:{slidedown:{prompts:[]}}})});const s=document.createElement('script');s.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';s.defer=true;document.head.appendChild(s)}</script>
@@ -2312,13 +2315,13 @@ EXC.forEach(([a,full,exp,how,used])=>{const spent=used.reduce((t,u)=>t+u[2],0),l
   P('Used:',used.length?used.map(([dd,pl,amt])=>pl+', '+dd+': '+usd(amt)).join('. ')+'.':'Not used yet.');
   P('Under the 1st apron:','The Cavs are hard-capped with '+usd(HC_ROOM*1e6)+' of room, so they can only use as much of this as fits under '+usd(209015000)+' unless they shed salary first.');
   d.append(sm,bx);li.appendChild(d);ex.appendChild(li)});
-{const CASH_LIM=8495000,CASH=[['sent',[['Aug 20, 2026','Charlotte (Watson trade)',4350000],['Aug 20, 2026','Washington (Watson trade)',null]]],['got',[]]];
+{const CASH_LIM=8495000,CASH=[['sent',[['Aug 20, 2026','Charlotte (Watson trade)',4350000],['Aug 20, 2026','Washington (Watson trade)',3000000]]],['got',[]]];
   const ct=document.getElementById('cashtr');CASH.forEach(([dir,L])=>{const tot=L.reduce((t,x)=>t+(x[2]||0),0),unk=L.some(x=>x[2]==null),left=CASH_LIM-tot;
     const c=el('div','cash-c');c.appendChild(el('span','ab-n',dir==='sent'?'Cash sent':'Cash received'));
     c.appendChild(el('b','mono num-sc',usd(left)+(unk?'*':'')));c.appendChild(el('small',null,'left to '+(dir==='sent'?'send':'receive')+' of '+usd(CASH_LIM)));
     const bar=el('div','ab-bar');const bi=el('i');bi.style.width=Math.round(left/CASH_LIM*100)+'%';bar.appendChild(bi);c.appendChild(bar);
     const ul=el('ul','cash-l');if(!L.length)ul.appendChild(el('li','dim','None this season'));L.forEach(([d,w,v])=>{const li=el('li');li.append(el('span',null,d+' · '+w),el('b','mono',v==null?'Undisclosed':usd(v)));ul.appendChild(li)});c.appendChild(ul);ct.appendChild(c)});
-  const n=el('p','ab-note');n.append('Each team can send and receive up to 5.15% of the salary cap in cash per season, counted separately each way. Teams that would end up over the second apron can’t send cash, and sending cash hard-caps a team there. Receiving cash has no apron limit. *The amount sent to Washington wasn’t disclosed, so the true amount left is lower. Source: ');const a=el('a',null,'SalarySwish ↗');a.href='https://www.salaryswish.com/trades/cavaliers';a.target='_blank';a.rel='noopener';n.append(a,'.');ct.appendChild(n)}
+  const n=el('p','ab-note');n.append('Each team can send and receive up to 5.15% of the salary cap in cash per season, counted separately each way. Teams that would end up over the second apron can’t send cash, and sending cash hard-caps a team there. Receiving cash has no apron limit. Source: ');const a=el('a',null,'SalarySwish ↗');a.href='https://www.salaryswish.com/trades/cavaliers';a.target='_blank';a.rel='noopener';n.append(a,'.');ct.appendChild(n)}
 const rt=document.getElementById('rights');RIGHTS.forEach(([n,p2,dd,c])=>{const X=RIGHTS_X[n]||[];const yr=dd.slice(0,4);
   const li=el('li');li.id='d-'+slug(n);if(!/^(Active|Unsigned)/.test(X[0]||''))li.className='dim';const de=document.createElement('details');const sm=document.createElement('summary');const l=el('span');l.append(el('b',null,n),el('small',null,p2+' · '+c));
   {const av=el('div','ab-av');const C0=RIGHTS_CARD[n];const ini=n.split(' ').map(w=>w[0]).join('');if(C0&&C0.img){const im=el('img');im.src=C0.img;im.alt='';im.loading='lazy';im.onerror=()=>{im.remove();av.textContent=ini};av.appendChild(im)}else av.textContent=ini;sm.appendChild(av)}
@@ -2560,7 +2563,10 @@ const GALERT_ON=true;
   const show=(key,o)=>{clear();card=el('div','galert'+(o.fin?' ga-fin':''));card.setAttribute('role','status');const k=el('div','ga-k');if(o.live)k.appendChild(el('i'));k.append(o.kick);card.appendChild(k);
     const t=el('div','ga-t');if(o.fin)t.appendChild(el('span','ga-sc',o.title));else t.textContent=o.title;card.appendChild(t);if(o.sub)card.appendChild(el('div','ga-s',o.sub));
     if(o.link){const a=el('a',null,o.link[0]+' →');a.href=o.link[1];if(/^https?:/.test(o.link[1])){a.target='_blank';a.rel='noopener'}else if(o.link[2]&&o.link[1].includes('#')){const h=o.link[1].split('#')[1];a.onclick=e=>{if(e.metaKey||e.ctrlKey||e.shiftKey)return;e.preventDefault();go(o.link[2]);setTimeout(()=>{if(location.hash==='#'+h)window.dispatchEvent(new HashChangeEvent('hashchange'));else location.hash=h},80)}}else if(o.link[2]){a.dataset.go=o.link[2]}card.appendChild(a)}
-    const x=el('button','ga-x','×');x.type='button';x.setAttribute('aria-label','Dismiss');x.onclick=()=>{if(!PREVIEW)hide(key);clear()};card.appendChild(x);document.body.appendChild(card);document.body.classList.add('ga-on')};
+    const x=el('button','ga-x','×');x.type='button';x.setAttribute('aria-label','Dismiss');x.onclick=()=>{if(!PREVIEW)hide(key);clear()};card.appendChild(x);document.body.appendChild(card);document.body.classList.add('ga-on');
+    /* goes away on its own after 30 seconds unless someone is touching it; the countdown keeps running across refreshes of the same alert */
+    if(gaKey!==key){gaKey=key;clearTimeout(gaT);const auto=()=>{if(card&&(card.matches(':hover')||card.contains(document.activeElement))){gaT=setTimeout(auto,1e4);return}if(!PREVIEW)hide(key);clear()};gaT=setTimeout(auto,3e4)}};
+  let gaT=0,gaKey=null;
   const vs=g=>(g[2]==='H'?'Cavs vs ':'Cavs at ')+TEAMS[g[1]];
   const mins=ms=>{const m=Math.round(ms/6e4);return m>=60?'1 hour':m+' min'};
   const cavsPre=(g,t)=>{const tv=tvFor(g[0]),ra=radioFor(g[0]);const w=[tv.nat,tv.loc].filter(Boolean).join(' · ');const left=t-now();
