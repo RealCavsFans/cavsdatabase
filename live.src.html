@@ -544,6 +544,7 @@ tr.xr{cursor:pointer}
 .vz-st{display:flex;height:30px;margin:6px 0 12px;font:800 .75rem var(--cond);letter-spacing:.06em;text-transform:uppercase;color:#fff}.vz-st span{display:flex;align-items:center;padding:0 10px;background:#860038;white-space:nowrap;overflow:hidden}.vz-st span.b{background:#8a929c}
 .tap-hint{font:600 11px/1.3 'Geist Mono',monospace;color:var(--wine,#860038);margin:6px 0 4px}
 .capmode .noshot{display:none!important}
+.shtypes{margin-top:18px;padding-top:14px;border-top:1px solid var(--line2)}
 .ltc{border-left:3px solid var(--wt)}.ltn{display:grid;grid-template-columns:4.6rem 1fr;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line2)}.ltn:last-child{border:0;padding-bottom:2px}.ltn b{font:700 26px/1 'Geist Mono',monospace;color:var(--wt);display:block}.ltn small{display:block;font:600 10.5px/1.25 'Geist Mono',monospace;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.03em}.ltn p{margin:0;font-size:13.5px;line-height:1.4}.ltn p a{color:var(--wt);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--wt) 35%,transparent)}tr.xr:hover td{background:var(--sub)}tr.xr[aria-expanded=true] td{background:var(--sub);font-weight:700}tr.xd>td{padding:10px 8px 14px!important;background:var(--sub)}.lsp-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;margin-bottom:8px}.lsp-h span{font:600 .75rem var(--mono);color:var(--muted)}.lsp-t{max-width:520px}.lsp-t td,.lsp-t th{text-align:right}.lsp-t td:first-child,.lsp-t th:first-child{text-align:left}.lsp-t td.up{font-weight:800;color:var(--wine-ink,#860038)}
 
 /* season filter bar */
@@ -2288,6 +2289,8 @@ function vShots(v,D,R){
   right.appendChild(dtable('pt',[{h:'Type',k:'l',f:r=>{const b=el('button',null,r.l);b.type='button';b.style.cssText='all:unset;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line);display:inline-block;max-width:calc(100% - 18px);vertical-align:top';b.onclick=()=>{S.f.shType=S.f.shType===String(r.i)?'all':String(r.i);renderView()};return b}},
     {h:'FG',k:'a',f:r=>r.m+'-'+r.a},{h:'FREQ',k:'fr',f:r=>pc(r.fr),title:'Share of his field-goal attempts'},{h:'FG%',k:'fg',f:r=>pc(r.fg)},{h:'PTS/SHOT',k:'pps',f:r=>r.pps==null?'–':r.pps.toFixed(2),title:'Points per shot'},{h:'AST',k:'as',f:r=>pc(r.as),title:'Share of makes that were assisted'}],rows,{def:'a',empty:'No shots yet.',toggle:r=>{S.f.shOpen=S.f.shOpen===r.i?null:r.i;renderView()},expand:r=>miniT({lab:S.season?'Season':'Tonight',m:r.m,a:r.a,fr:r.fr,fg:r.fg,pps:r.pps,as:r.as},cmpRows(x=>x.pt===r.i,false),['ma','fr','fg','pps','as'])}));
   right.appendChild(el('p','note','FREQ = share of all field-goal attempts. Tap a type’s name to filter the court; tap the rest of the row to compare with the season. Transition = shot within 7 seconds after a defensive rebound or turnover. Putbacks = tips, putbacks and shots within 3 seconds of an offensive rebound.'));
+  /* shot types go full width under the court; the zone table sits next to the court */
+  const typesBox=el('div','shtypes');while(right.firstChild)typesBox.appendChild(right.firstChild);
   right.appendChild(el('h3',null,who+typeLab+' · by zone'));
   right.appendChild(el('p','tap-hint',S.season?'▸ Tap a row to split it by wins and losses'+(isCle?' and games vs top-10 teams':''):isCle?'▸ Tap a row to compare with the season and with games vs similar teams':'▸ Tap a row to compare with what Cavs opponents average'));
   /* shot quality: what an average NBA shooter would score on these same shots (league FG% in each zone) */
@@ -2302,7 +2305,7 @@ function vShots(v,D,R){
     if(op){const dr=el('tr','xd');const td=el('td');td.colSpan=5;const ln=cmpRows(x=>x.zi===i,true);const lz=Array.isArray(ln)?ln.map(r=>Object.assign({},r,{fr:r.fr})):ln;td.appendChild(miniT({lab:S.season?'Season':'Tonight',m,a,fg:a?m/a:null,fr:xy.length?a/xy.length:null},lz,['ma','fg','fr']));dr.appendChild(td);zt.appendChild(dr)}});
   right.appendChild(zt);
   const pts=Z.reduce((s,[m],i)=>s+m*(i>=3?3:2),0);right.appendChild(el('p','note',`${pts} points on ${xy.length} shots (${xy.length?(pts/xy.length).toFixed(2):'–'} per shot). FG% colored against ${baseLab} shooting in each zone. Vs avg = points above or below what an average NBA shooter scores on the same shots.${S.season&&PBT&&lgOK()&&S.f.shPl==='all'&&!typeLab?' Small numbers = NBA rank among 30 teams'+(isCle?' (FG%: 1st = best; % of shots: 1st = most)':' for what opponents did (FG%: 1st = lowest allowed)')+', from pbpstats.':''}${SC&&SC.ok?' Season rows: per game, other games only. Similar teams = the opponent’s net rating tier (top 5, 6–10, 11–20, bottom 9) by '+SC.rkLab+'.':''}`));
-  g.append(left,right);c.appendChild(g);if(S.season&&S.f.shPl!=='all')gameByGame(D,R,S.f.shPl,c);v.appendChild(c);
+  g.append(left,right);c.appendChild(g);c.appendChild(typesBox);if(S.season&&S.f.shPl!=='all')gameByGame(D,R,S.f.shPl,c);v.appendChild(c);
   if(S.season&&S.f.shPl==='all'&&S.f.shTeam===D.focus.id)pbpShotCards().forEach(x=>v.appendChild(x));
 }
 
