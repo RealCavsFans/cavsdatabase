@@ -3,7 +3,7 @@ name: Site health check
 # titled "Site health" (GitHub emails the repo owner); later problems add a comment; it closes the issue once healthy again.
 on:
   schedule:
-    - cron: '20 15 * * *'   # ~11:20 a.m. Eastern
+    - cron: '15 9 * * *'   # 5:15 a.m. Eastern (4:15 in winter), so the 5:48 a.m. daily update task can read the result
   workflow_dispatch:
 permissions:
   contents: read
