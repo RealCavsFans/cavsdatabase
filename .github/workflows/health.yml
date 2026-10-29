@@ -23,8 +23,8 @@ jobs:
         run: |
           set +e
           node scripts/health.mjs > /tmp/health.txt 2>&1; c1=$?
-          node scripts/site-check.mjs >> /tmp/health.txt 2>&1; c2=$?
-          echo "code=$((c1|c2))" >> "$GITHUB_OUTPUT"
+          # live-site comparison (scripts/site-check.mjs) removed Oct 29: Cloudflare's Bot Fight Mode blocks GitHub's servers from the site
+          echo "code=$c1" >> "$GITHUB_OUTPUT"
           cat /tmp/health.txt
       - name: Open, update or close the issue
         env:
