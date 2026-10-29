@@ -550,7 +550,7 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
  .nlft .t,.nlft.mini .t{display:block;min-width:0}.nlft p,.nlft.mini p{display:block;font-size:.75rem;margin:3px 0 0;white-space:nowrap}.f-long{display:none}.f-short{display:inline}}
 </style>
 <script>/* OneSignal web push for alerts: loads only on the live site, never prompts on its own */
-/* OneSignal: game alerts live since Oct 27. Set PUSH_SDK to false to stop loading it. */var PUSH_SDK=true;if(PUSH_SDK&&location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async function(OneSignal){await OneSignal.init({appId:"3db75ca9-d797-40c7-8c53-c0711b41e956",serviceWorkerPath:"sw.js",serviceWorkerParam:{scope:"/"},notifyButton:{enable:false},promptOptions:{slidedown:{prompts:[]}}})});const s=document.createElement('script');s.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';s.defer=true;document.head.appendChild(s)}</script>
+/* OneSignal: paused Oct 29 with the push alerts. Set PUSH_SDK to true to load it again. */var PUSH_SDK=false;if(PUSH_SDK&&location.hostname.endsWith('cavsdatabase.com')){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async function(OneSignal){await OneSignal.init({appId:"3db75ca9-d797-40c7-8c53-c0711b41e956",serviceWorkerPath:"sw.js",serviceWorkerParam:{scope:"/"},notifyButton:{enable:false},promptOptions:{slidedown:{prompts:[]}}})});const s=document.createElement('script');s.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';s.defer=true;document.head.appendChild(s)}</script>
 </head>
 <body>
 <a class="skip" href="#" id="skip">Skip to content</a>
@@ -2744,7 +2744,7 @@ const NL_ON=true; /* on since Oct 24: sign-ups collect on Buttondown; nothing is
    Choices are saved as OneSignal tags (tip/final/tx/inj = '1' or '0'); scripts/push.mjs sends to them. A small invite card shows only for regulars
    (2+ days visited, 3+ pages this visit, a game within 3 days), never in the same visit as the newsletter card, and "Not now" waits 30 days.
    ?alerts=sheet / ?alerts=invite / ?alerts=ios preview it. */
-const ALERTS_ON=true; /* live since Oct 27; false hides the alerts button and invite */
+const ALERTS_ON=false; /* paused Oct 29 with the push alerts; true brings back the alerts button and invite */
 (function(){const B=document.getElementById('galb');if(!B||window.CDB_EMBED)return;
   const pv=(/[?&]alerts=(sheet|invite|ios)/.exec(location.search)||[])[1];if(!ALERTS_ON&&!pv)return;
   const BELL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>';
