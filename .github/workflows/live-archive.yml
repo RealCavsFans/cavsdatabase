@@ -32,6 +32,9 @@ jobs:
         with:
           sparse-checkout: |
             scripts/live-archive.mjs
+            scripts/last-time.mjs
+            data/hist-cle.json
+            data/last-time.json
             live-core.js
             live-archive
             cavs.ics
@@ -44,13 +47,16 @@ jobs:
         if: steps.gate.outputs.go == '1'
         env:
           SEASON: ${{ github.event.inputs.season || '2026-27' }}
+      # "Last time this happened" notes for the game page (rare numbers vs every Cavs game since 2000-01)
+      - run: node scripts/last-time.mjs || true
+        if: steps.gate.outputs.go == '1' && (github.event.inputs.season || '2026-27') == '2026-27'
       - name: Commit if changed
         if: steps.gate.outputs.go == '1'
         run: |
           [ -d live-archive ] || exit 0
           git config user.name "cavsdatabase-bot"
           git config user.email "bot@cavsdatabase.com"
-          git add live-archive
+          git add live-archive; [ -f data/last-time.json ] && git add data/last-time.json || true
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Update live game archive"
           for i in 1 2 3; do
