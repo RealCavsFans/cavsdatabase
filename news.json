@@ -2,24 +2,6 @@
  "articles": [
   {
    "src": "Fear The Sword",
-   "title": "Diving deeper into Cavs 121-111 win over Wizards: Evan Mobley finds his three-point shot",
-   "link": "https://www.fearthesword.com/cavs-analysis/53680/cavs-diving-deeper-cleveland-cavaliers-washington-wizards-james-harden-evan-mobley-donovan-mitchell",
-   "date": "2026-10-29T03:55:28.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Player Grades: Cavs vs Wizards – Peyton Watson finds his groove",
-   "link": "https://www.fearthesword.com/cavs-analysis/53674/player-grades-cavs-vs-wizards-peyton-watson-finds-his-groove",
-   "date": "2026-10-29T01:46:28.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Evan Mobley nails five threes as Cavs beat Wizards 121-111",
-   "link": "https://www.fearthesword.com/cavs-scores-results/53675/evan-mobley-nails-5-threes-as-cavs-beat-wizards-121-111",
-   "date": "2026-10-29T01:28:40.000Z"
-  },
-  {
-   "src": "Fear The Sword",
    "title": "Cavs vs. Wizards game thread",
    "link": "https://www.fearthesword.com/cavs-game-previews/53641/cavs-vs-wizards-game-thread",
    "date": "2026-10-28T23:00:00.000Z"
@@ -145,10 +127,28 @@
    "date": "2026-10-27T10:30:00.000Z"
   },
   {
+   "src": "Fear The Sword",
+   "title": "Diving deeper into Cavs 127-125 overtime win over Timberwolves",
+   "link": "https://www.fearthesword.com/cavs-analysis/53538/cavs-diving-deeper-minnesota-timberwolves-cleveland-cavaliers-donovan-mitchell-anthony-edwards-james-harden-meleek-thomas",
+   "date": "2026-10-27T04:02:50.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Player Grades: Cavs vs Wolves – Meleek Thomas makes stellar debut",
+   "link": "https://www.fearthesword.com/cavs-analysis/53533/player-grades-cavs-vs-wolves-meleek-thomas-makes-stellar-debut",
+   "date": "2026-10-27T03:33:36.000Z"
+  },
+  {
    "src": "Cavaliers on SI",
    "title": "Instant Reactions to the Cleveland Cavaliers Overtime Win Against the Timberwolves",
    "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPeElJeEI2cFJscHZTTzhETjJmb3ZnVGFRYTJEZWZKd2hhZ2JJWFlDelNwaEFDbjU0MmZRdmZTNml5YlJhUzBPMVM2ellXdjhpM0o4QnV6MTRleWxjS0ZnT2VQOUZLUHY1SGhhOVRJeFBKd2h1aU9pYjM2U2tIZG9aVmJxNmF6Q25Xek54UXhfVVJpSVVBT25wUDQ5bFlsYXRsUHN5OHFqWEdQYU9DdTY5ZHpOQXkwY1A5eHN6S05oRTlvNDJlV0Uta3dRZ0d6dw?oc=5",
    "date": "2026-10-27T03:31:40.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Donovan Mitchell comes up clutch in Cavs 127-125 win over Wolves",
+   "link": "https://www.fearthesword.com/cavs-scores-results/53542/donovan-mitchell-comes-up-clutch-in-cavs-127-125-win-over-wolves",
+   "date": "2026-10-27T02:04:11.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -302,6 +302,13 @@
   }
  ],
  "podcasts": [
+  {
+   "src": "Wine and Gold Talk",
+   "title": "Could Evan Mobley’s shooting leap finally be real?",
+   "link": "https://pdst.fm/e/traffic.megaphone.fm/ADLM5567191384.mp3",
+   "date": "2026-10-29T08:45:00.000Z",
+   "dur": "41 min"
+  },
   {
    "src": "Wine and Gold Talk",
    "title": "Will Jarrett Allen continue to be left out of closing lineups? Hey, Chris!",
