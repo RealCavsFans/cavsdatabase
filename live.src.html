@@ -523,7 +523,7 @@ tr.xr{cursor:pointer}
 .pgc-sh{display:grid;grid-template-columns:repeat(4,1fr);gap:12px 16px;padding:12px 14px}@media(max-width:600px){.pgc-sh{grid-template-columns:1fr 1fr}}.pgc-sh b{font:800 1.5rem/1 var(--cond)}.pgc-sh small{display:block;font:600 .6875rem var(--sans);margin-top:4px}.pgc-sh small span{color:var(--muted);font-weight:500}
 .pgc-bar{display:block;position:relative;height:6px;background:var(--track,#ebe8e3);margin-top:6px}.pgc-bar i{position:absolute;left:0;top:0;bottom:0;background:#860038}.pgc-bar u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--fg)}
 .pgc-pl{border-top:1px solid var(--line);padding-bottom:6px}.pgc-k{font:800 .6875rem var(--cond);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:10px 14px 4px}
-.pgc-r{display:grid;grid-template-columns:38px 30px 1fr auto;gap:8px;align-items:center;padding:7px 14px;border-top:1px solid var(--line2);font-size:.8125rem}.pgc-r .t{font:500 .625rem/1.25 var(--mono);color:var(--muted);white-space:pre}.pgc-r .bd.on{background:#860038;color:#fff;font:800 .6875rem var(--mono);text-align:center;padding:2px 0}.pgc-r .x b{color:var(--wine-ink,#860038)}.pgc-r .s{font:500 .75rem var(--mono);color:var(--muted)}.pgc-r .s .hi{color:var(--fg);font-weight:800}
+.pgc-r{display:grid;grid-template-columns:34px 26px 1fr auto;gap:7px;align-items:center;padding:3px 14px;border-top:1px solid var(--line2);font-size:.75rem;line-height:1.3}.pgc-r .t{font:500 .5625rem/1.2 var(--mono);color:var(--muted);white-space:pre}.pgc-r .bd.on{background:#860038;color:#fff;font:800 .625rem var(--mono);text-align:center;padding:1px 0}.pgc-r .x b{color:var(--wine-ink,#860038)}.pgc-r .s{font:500 .6875rem var(--mono);color:var(--muted)}.pgc-r .s .hi{color:var(--fg);font-weight:800}
 .pgc-more{all:unset;cursor:pointer;display:block;margin:8px 14px 4px;font:700 .8125rem var(--sans);color:var(--wine-ink,#860038)}.xrc>td:first-child::before{content:'▸'}
 .oo2{background:var(--card,#fff);border:1px solid var(--line);margin:4px 0}.oo2-top{display:grid;grid-template-columns:1fr 1fr;background:#860038;color:#fff;position:relative}.oo2-top>div{text-align:center;padding:14px 6px 12px}.oo2-top>div.off{background:#5e0a2c}
 .oo2-av{width:72px;height:56px;margin:0 auto;overflow:hidden;font:800 1.5rem/56px var(--cond);color:#F2B231}.oo2-av img{width:100%;height:100%;object-fit:cover;object-position:top}.oo2-top .off .oo2-av{filter:grayscale(1);opacity:.6}
@@ -866,7 +866,7 @@ function possXCards(D,R){const F=D.focus.id,O=D.other.id;let X,n=1;
     const tw=el('div','tw');tw.appendChild(t);c.appendChild(tw);
     c.appendChild(el('p','note','Points per possession on the first possession after each team calls its own timeout, compared with all of its possessions. Green / red = better or worse than its usual. If a timeout comes while the other team has the ball, the next possession counts.'+(S.season&&PBS?' Small number under it = NBA rank among 30 teams by pbpstats’ count of possessions after timeouts (1st = most points for CLE, fewest allowed for OPP).':'')));if(a[0]||b[0])out.push(c)}
   /* 3 · first 3 minutes of each quarter */
-  {const a=X.qs[F],b=X.qs[O];if(a.some(v=>v[1])){const c=el('div','card sec');head(c,'First 3 minutes',sub+' · how '+fa+' opened each quarter');
+  {const a=X.qs[F],b=X.qs[O];if(false&&a.some(v=>v[1])){/* removed Oct 29; Second-half adjustments sits here instead */const c=el('div','card sec');head(c,'First 3 minutes',sub+' · how '+fa+' opened each quarter');
     const tb=el('table','zt');tb.innerHTML='<tr><th></th><th>Score</th><th>+/-</th><th>Off</th><th>Def</th><th>Net</th></tr>';
     ['1st','2nd','3rd','4th'].forEach((l,i)=>{if(!a[i][1]&&!b[i][1])return;const pf=a[i][0],pa=b[i][0],po=a[i][1],pd=b[i][1];const o=po?pf/po*100:null,d=pd?pa/pd*100:null,nt=o!=null&&d!=null?o-d:null;const tr=el('tr');const pm=el('td',pmCls(pf-pa),sgn(pf-pa));const ne=el('td',nt==null?null:pmCls(nt),nt==null?'–':sgn(Math.round(nt)));
       tr.append(el('td',null,l),el('td',null,pf+'–'+pa),pm,el('td',null,o==null?'–':String(Math.round(o))),el('td',null,d==null?'–':String(Math.round(d))),ne);tb.appendChild(tr)});
@@ -1151,8 +1151,8 @@ function vTeam(v,D,R){
   v.appendChild(contextCard(D,R));
   /* game view: any stretch (only that stretch's plays); the season view uses the period files, which carry the same rows per stretch */
   possXCards(D,R).forEach(x=>v.appendChild(x));
-  {const tv=tvsCard(D,R);if(tv)v.appendChild(tv)}
   {const hc=halvesCard(D,R);if(hc)v.appendChild(hc)}
+  {const tv=tvsCard(D,R);if(tv)v.appendChild(tv)}
 }
 
 
@@ -2042,10 +2042,10 @@ function pgCard(D,R,id){const p=D.P[id],b=R.B[id];if(!p||!b)return null;const t=
       [['Off. rating','o',true],['Def. rating','d',false],['Net','n',true]].forEach(([lab,k,hi])=>{const a=on[k],z=off?off[k]:null;const good=z==null||Math.abs(a-z)<.05?null:(a>z)===hi;const c=el('div');c.append(el('small',null,lab),el('b',good==null?null:good?'up':'dn',k==='n'?sg(a):f1(a)),el('span',null,'with him off: '+(k==='n'?sg(z):f1(z))));g.appendChild(c)});w.appendChild(g)}}}
   /* his plays */
   {const all=R.plays.filter(q=>q.ids[0]===id&&q.type!=='Substitution').slice().reverse();if(all.length){const box=el('div','pgc-pl');const hh=el('div','pgc-k');hh.textContent='His plays · newest first';box.appendChild(hh);
-    const show=S.f.pgAll?all:all.slice(0,6);show.forEach(q=>{const r=el('div','pgc-r');r.appendChild(el('span','t',pname(q.per)+'\n'+q.clock));const bd=el('span','bd');if(q.sc&&q.val>0){bd.textContent='+'+q.val;bd.classList.add('on')}r.appendChild(bd);
+    const show=S.f.pgAll?all:all.slice(0,5);show.forEach(q=>{const r=el('div','pgc-r');r.appendChild(el('span','t',pname(q.per)+'\n'+q.clock));const bd=el('span','bd');if(q.sc&&q.val>0){bd.textContent='+'+q.val;bd.classList.add('on')}r.appendChild(bd);
       const tx=el('span','x');const nm=p.name;const k=q.text.indexOf(nm);if(k>=0){tx.append(q.text.slice(0,k),el('b',null,nm),q.text.slice(k+nm.length))}else tx.textContent=q.text;r.appendChild(tx);
       const sc2=el('span','s');const mineH=t.ha==='home';const A2=el('span',null,String(q.as)),H2=el('span',null,String(q.hs));if(q.sc&&q.val>0)(mineH?H2:A2).className='hi';sc2.append(A2,'–',H2);r.appendChild(sc2);box.appendChild(r)});
-    if(all.length>6){const mb=el('button','pgc-more',S.f.pgAll?'Show fewer ▴':'All '+all.length+' plays ▾');mb.type='button';mb.onclick=()=>{S.f.pgAll=!S.f.pgAll;renderView()};box.appendChild(mb)}w.appendChild(box)}}
+    if(all.length>5){const mb=el('button','pgc-more',S.f.pgAll?'Show fewer ▴':'All '+all.length+' plays ▾');mb.type='button';mb.onclick=()=>{S.f.pgAll=!S.f.pgAll;renderView()};box.appendChild(mb)}w.appendChild(box)}}
   return w}
 function vPlayers(v,D,R){
   if(S.season)return seasonPlayers(v,D,R);
