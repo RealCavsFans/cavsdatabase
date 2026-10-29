@@ -1376,7 +1376,7 @@ requestAnimationFrame(()=>{document.getElementById('fill').style.width=pct(TEAM_
 
 /* injuries — status: Out | Doubtful | Questionable | Probable | Game-time decision */
 const INJ_UPDATED='Oct 29';
-const INJURIES=[["Nae'Qwan Tomlin",'PF','Back (stress reaction)','Out'],['Khalifa Diop','C','Knee','Out']];
+const INJURIES=[["Nae'Qwan Tomlin",'PF','Back (stress reaction)','Out'],['Jaylon Tyson','SF','Neck','Game-time decision'],['Meleek Thomas','PG','Foot','Game-time decision']];
 /* injury lists: Out first, then Doubtful, Questionable, Probable, game-time decisions */
 const INJ_RANK=st=>{const x=String(st).toLowerCase();return x.startsWith('out')?0:x.startsWith('doubt')?1:x.startsWith('quest')?2:x.startsWith('prob')?3:4};
 INJURIES.sort((a,b)=>INJ_RANK(a[3])-INJ_RANK(b[3]));
@@ -1390,7 +1390,8 @@ INJURIES.sort((a,b)=>INJ_RANK(a[3])-INJ_RANK(b[3]));
    (sample size, average, range, return rate), plus the player's own last return time for it if he had one.
    No study: falls back to Hashtag Basketball's NBA injury log by injury type (INJ_HB, matched from the injury text or set with hb:'<type>'), labeled as not peer-reviewed. */
 const INJ_CTX={
-  'Khalifa Diop':{hist:'https://www.salaryswish.com/injury/players/khalifa-diop',timeline:'Expected to be out until at least Nov 2 (CBS Sports, Oct 27)',prior:'No prior NBA injury listings (he played overseas 2023–26).'},
+  'Jaylon Tyson':{hist:'https://www.salaryswish.com/injury/players/jaylon-tyson',prior:'No prior neck listings. Earlier listings: hip (Nov 2024, day to day), concussion (Nov 2025), ankle (Mar 15-17, 2026), toe (Mar 2026).'},
+  'Meleek Thomas':{hist:'https://www.salaryswish.com/injury/players/meleek-thomas',prior:'No prior foot listings found.'},
   "Nae'Qwan Tomlin":{hist:'https://www.salaryswish.com/injury/players/naeqwan-tomlin',diag:'Stress reaction in his back (an early stage of bone stress, before a fracture)',prior:'No prior back listings found.',timeline:'Expected to be out until at least Nov 16 (Chris Fedor / Plain Dealer, Oct 20; CBS Sports)'}
 };
 /* fallback when no peer-reviewed NBA study fits: Hashtag Basketball's NBA injury log (2011–26), typical days out by injury type.
