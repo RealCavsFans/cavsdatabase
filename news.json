@@ -2,6 +2,12 @@
  "articles": [
   {
    "src": "Fear The Sword",
+   "title": "Player Grades: Cavs vs Wizards – Peyton Watson finds his groove",
+   "link": "https://www.fearthesword.com/cavs-analysis/53674/player-grades-cavs-vs-wizards-peyton-watson-finds-his-groove",
+   "date": "2026-10-29T01:46:28.000Z"
+  },
+  {
+   "src": "Fear The Sword",
    "title": "Evan Mobley nails 5 threes as Cavs beat Wizards 121-111",
    "link": "https://www.fearthesword.com/cavs-scores-results/53675/evan-mobley-nails-5-threes-as-cavs-beat-wizards-121-111",
    "date": "2026-10-29T01:28:40.000Z"
@@ -125,12 +131,6 @@
    "title": "Diving deeper into Cavs 127-125 overtime win over Timberwolves",
    "link": "https://www.fearthesword.com/cavs-analysis/53538/cavs-diving-deeper-minnesota-timberwolves-cleveland-cavaliers-donovan-mitchell-anthony-edwards-james-harden-meleek-thomas",
    "date": "2026-10-27T04:02:50.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Player Grades: Cavs vs Wolves – Meleek Thomas makes stellar debut",
-   "link": "https://www.fearthesword.com/cavs-analysis/53533/player-grades-cavs-vs-wolves-meleek-thomas-makes-stellar-debut",
-   "date": "2026-10-27T03:33:36.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -384,14 +384,14 @@
    "src": "It's Cavalier Podcast",
    "title": "REACTION: Cavs vs. Wizards",
    "link": "https://www.youtube.com/watch?v=qZ58UgS9Xvs",
-   "date": "2026-10-29T00:55:39.000Z",
+   "date": "2026-10-29T02:30:31.000Z",
    "id": "qZ58UgS9Xvs"
   },
   {
    "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: Peyton Watson & Evan Mobly Lead the Cleveland Cavaliers in a COMEBACK Win vs Wizards",
+   "title": "CAVS POSTCAST: Cleveland Cavaliers DOMINATE Second Half as Evan Mobley & Peyton Watson Deliver Win",
    "link": "https://www.youtube.com/watch?v=iQM1vLprPXE",
-   "date": "2026-10-28T19:20:32.000Z",
+   "date": "2026-10-29T01:55:18.000Z",
    "id": "iQM1vLprPXE"
   },
   {
@@ -613,6 +613,27 @@
   }
  ],
  "highlights": [
+  {
+   "src": "Cavs",
+   "title": "Cavs vs Wizards | Game Highlights | 10.28.2026",
+   "link": "https://www.youtube.com/watch?v=nq8aH8jUrb0",
+   "date": "2026-10-29T02:12:59.000Z",
+   "id": "nq8aH8jUrb0"
+  },
+  {
+   "src": "Cavs",
+   "title": "Cavs vs Wizards | Evan Mobley Highlights | 10.28.2026",
+   "link": "https://www.youtube.com/watch?v=-Zb-U1WDgI4",
+   "date": "2026-10-29T02:07:27.000Z",
+   "id": "-Zb-U1WDgI4"
+  },
+  {
+   "src": "NBA",
+   "title": "WIZARDS at CAVALIERS | FULL GAME HIGHLIGHTS | October 28, 2026",
+   "link": "https://www.youtube.com/watch?v=xWJfcKNc3AE",
+   "date": "2026-10-29T01:59:58.000Z",
+   "id": "xWJfcKNc3AE"
+  },
   {
    "src": "NBA",
    "title": "EXTENDED: TIMBERWOLVES at CAVALIERS | FULL GAME HIGHLIGHTS | October 26, 2026",
