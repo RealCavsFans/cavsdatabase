@@ -2,6 +2,12 @@
  "articles": [
   {
    "src": "Fear The Sword",
+   "title": "Evan Mobley nails 5 threes as Cavs beat Wizards 121-111",
+   "link": "https://www.fearthesword.com/cavs-scores-results/53675/evan-mobley-nails-5-threes-as-cavs-beat-wizards-121-111",
+   "date": "2026-10-29T01:28:40.000Z"
+  },
+  {
+   "src": "Fear The Sword",
    "title": "Cavs vs. Wizards game thread",
    "link": "https://www.fearthesword.com/cavs-game-previews/53641/cavs-vs-wizards-game-thread",
    "date": "2026-10-28T23:00:00.000Z"
@@ -131,12 +137,6 @@
    "title": "Instant Reactions to the Cleveland Cavaliers Overtime Win Against the Timberwolves",
    "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPeElJeEI2cFJscHZTTzhETjJmb3ZnVGFRYTJEZWZKd2hhZ2JJWFlDelNwaEFDbjU0MmZRdmZTNml5YlJhUzBPMVM2ellXdjhpM0o4QnV6MTRleWxjS0ZnT2VQOUZLUHY1SGhhOVRJeFBKd2h1aU9pYjM2U2tIZG9aVmJxNmF6Q25Xek54UXhfVVJpSVVBT25wUDQ5bFlsYXRsUHN5OHFqWEdQYU9DdTY5ZHpOQXkwY1A5eHN6S05oRTlvNDJlV0Uta3dRZ0d6dw?oc=5",
    "date": "2026-10-27T03:31:40.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Donovan Mitchell comes up clutch in Cavs 127-125 win over Wolves",
-   "link": "https://www.fearthesword.com/cavs-scores-results/53542/donovan-mitchell-comes-up-clutch-in-cavs-127-125-win-over-wolves",
-   "date": "2026-10-27T02:04:11.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -381,8 +381,15 @@
  ],
  "videos": [
   {
+   "src": "It's Cavalier Podcast",
+   "title": "REACTION: Cavs vs. Wizards",
+   "link": "https://www.youtube.com/watch?v=qZ58UgS9Xvs",
+   "date": "2026-10-29T00:55:39.000Z",
+   "id": "qZ58UgS9Xvs"
+  },
+  {
    "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: The Cleveland Cavaliers Face the Washington Wizards in AJ Dybantsa's NBA Debut",
+   "title": "CAVS POSTCAST: Peyton Watson & Evan Mobly Lead the Cleveland Cavaliers in a COMEBACK Win vs Wizards",
    "link": "https://www.youtube.com/watch?v=iQM1vLprPXE",
    "date": "2026-10-28T19:20:32.000Z",
    "id": "iQM1vLprPXE"
@@ -568,13 +575,6 @@
    "link": "https://www.youtube.com/watch?v=d7kZPmw2JHc",
    "date": "2026-10-24T20:48:00.000Z",
    "id": "d7kZPmw2JHc"
-  },
-  {
-   "src": "It's Cavalier Podcast",
-   "title": "Darius Acuff Jr. drops 33 Points on the Blazers. #kings #sacramentokings #nba",
-   "link": "https://www.youtube.com/watch?v=bwbMfl8-mys",
-   "date": "2026-10-24T15:48:47.000Z",
-   "id": "bwbMfl8-mys"
   },
   {
    "src": "Ultimate Cleveland Sports Show",
