@@ -3669,7 +3669,7 @@ const socialLinks=n=>{const S=SOCIAL[n];if(!S)return null;const w=el('span','soc
 const DEPTH_ON=true;
 const DEPTH_PICK=/preview=(depth|stack)/.test(location.search)?'depth':null;
 const DEPTH=[['PG',['James Harden','Meleek Thomas','Tyrese Proctor'],null],['SG',['Donovan Mitchell','Sam Merrill','Craig Porter Jr.'],null],['SF',['Peyton Watson','Jaylon Tyson','Tristan Enaruna'],'Riley Minix'],['PF',['Evan Mobley','Mario Hezonja',"Nae'Qwan Tomlin"],null],['C',['Jarrett Allen','Thomas Bryant','Khalifa Diop'],'Ernest Udeh Jr.']];
-const DEPTH_TIERS=[['Starters','The opening five',['James Harden','Donovan Mitchell','Peyton Watson','Evan Mobley','Jarrett Allen']],['Rotation','Nightly minutes off the bench',['Sam Merrill','Jaylon Tyson','Craig Porter Jr.','Mario Hezonja']],['Depth','Spot minutes, matchups, injuries',['Thomas Bryant',"Nae'Qwan Tomlin",'Tyrese Proctor','Meleek Thomas']],['Developmental','Young players and two-ways; time with the Charge',['Khalifa Diop','Tristan Enaruna','Riley Minix','Ernest Udeh Jr.']]];
+const DEPTH_TIERS=[['Starters','The opening five',['James Harden','Donovan Mitchell','Peyton Watson','Evan Mobley','Jarrett Allen']],['Rotation','Nightly minutes off the bench',['Sam Merrill','Jaylon Tyson','Meleek Thomas','Mario Hezonja']],['Depth','Spot minutes, matchups, injuries',['Thomas Bryant',"Nae'Qwan Tomlin",'Tyrese Proctor','Craig Porter Jr.']],['Developmental','Young players and two-ways; time with the Charge',['Khalifa Diop','Tristan Enaruna','Riley Minix','Ernest Udeh Jr.']]];
 const DND_ON=true;
 function buildDepth(){
   const P=n=>PLAYERS.find(p=>p[1]===n);const HSU=id=>'https://cdn.nba.com/headshots/nba/latest/260x190/'+id+'.png';
