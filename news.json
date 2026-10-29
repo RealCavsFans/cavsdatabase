@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "Cavaliers on SI",
+   "title": "Updated Injury Report for Cavs Vs Hawks: Two Key Players Listed As Questionable",
+   "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOOTRMWHFUY0ZSSzBmWnJ4UjZFU2ZSNTJ4a0RydmJDeE1PVnVTQVBRaThMYzM3c042cU5idjRocXhYb01mV3NmNGN1eWR0NmlUbmV3WWcwY0dGN0ZJQVAzMjdXQUg4LWljTEdfYl9zVWxXN1lEeGgzNU5mM1Z3ZWltZmt4ejdIYWpzVlJ2bFF5WXV6SWpOZDVySG1rQU42d2puemNaNFExdncwd2VCX0FVcF9jdzJENXIzWDVrM3lhVEZCMDR5ZmJTNg?oc=5",
+   "date": "2026-10-29T18:12:10.000Z"
+  },
+  {
    "src": "Fear The Sword",
    "title": "‘He’s putting it all together ’: Evan Mobley’s leap could be upon us",
    "link": "https://www.fearthesword.com/cavs-analysis/53746/hes-putting-it-all-together-evan-mobleys-leap-could-be-upon-us",
@@ -107,12 +113,6 @@
    "title": "Cavs vs. Wizards: preview, odds, injury report, TV",
    "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOd250RGl0VXVodFJPR2NYY2h0MTBPdVlwQTVRSnZDVjZSSUJCNFFNQ1NaX2tXQU8yTDJ1UXpaUzZCMG42TjRlMF9oZXdsVVZkQ29PTXVZVUw1eFc1QWlDajFNR3lNdl9pRmpvY1VaRVlwSXVkOVJmVGQyMnRJS1FsaW9rT3E0SUl2SVl4M1huaGdqOWc?oc=5",
    "date": "2026-10-28T09:00:00.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Three Reserves Crucial To Cleveland's Success",
-   "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOY0M3WUlObk5TdDFzR2hrUnhlY1V6LUN3Q1phMkYxcGhWVTZRVVlBTFF1Y3F2c1J0ckVjZ2JJaFAyT0xpR1k0UlhBaG8wOEs5XzRnWHZUaUdLdGpLZUY3N1FtQUxTTlNucUJVZnZpTlRjeWx1X0QwVjExQjF2ZDV3ekRPYmk2VTI0TjQ4MmYtQW5lUEFXMWNDYmZkeWw?oc=5",
-   "date": "2026-10-27T23:30:00.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -390,6 +390,13 @@
  "videos": [
   {
    "src": "Locked On Cavs",
+   "title": "CAVS POSTCAST: The Cleveland Cavaliers Head to Atlanta to Battle the Hawks",
+   "link": "https://www.youtube.com/watch?v=buODBaLuZyA",
+   "date": "2026-10-29T18:04:52.000Z",
+   "id": "buODBaLuZyA"
+  },
+  {
+   "src": "Locked On Cavs",
    "title": "CAVS POSTCAST: Cleveland Cavaliers DOMINATE Second Half as Evan Mobley & Peyton Watson Deliver Win",
    "link": "https://www.youtube.com/watch?v=iQM1vLprPXE",
    "date": "2026-10-29T16:05:47.000Z",
@@ -527,13 +534,6 @@
    "link": "https://www.youtube.com/watch?v=K3PN5QVzRaE",
    "date": "2026-10-27T15:45:17.000Z",
    "id": "K3PN5QVzRaE"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: The Cleveland Cavaliers and Donovan Mitchell DRIVE Big Win, Meleek Thomas Impresses",
-   "link": "https://www.youtube.com/watch?v=iJWUmnSxcqQ",
-   "date": "2026-10-27T15:14:48.000Z",
-   "id": "iJWUmnSxcqQ"
   },
   {
    "src": "Ultimate Cleveland Sports Show",
