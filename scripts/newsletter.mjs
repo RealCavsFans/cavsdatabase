@@ -95,10 +95,12 @@ const fontLink = `<!--[if !mso]><!--><link href="https://fonts.googleapis.com/cs
 const wrapOpen = bg => `${fontLink}<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#EEF0F2"><tr><td align="center" style="padding:0">
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:${bg}">
 <tr><td><a href="${SITE}"><img src="${SITE}/nl/header.png" width="600" alt="Cavs &amp; Coffee · freshly brewed after every game · presented by cavs_db" style="display:block;width:100%;max-width:600px;height:auto;border:0"></a></td></tr>`;
-const footer = (rule) => `<tr><td style="padding:30px 28px 26px;text-align:center;font:12px/1.7 ${F.sans};color:#5D646C">${rule || ''}
-<a href="https://www.buymeacoffee.com/cavsdb" style="color:#860038;font-weight:700;text-decoration:none">&#9749; Buy cavs_db a coffee</a><br>
-Independent fan reference, not affiliated with the Cavaliers or the NBA.<br>
-Cavs Database · P.O. Box 151 · West Jefferson, OH 43162</td></tr></table></td></tr></table>`;
+const footLinks = [['Roster', 'roster'], ['Cap sheet', 'cap'], ['Draft picks', 'assets'], ['Injuries', '#inj'], ['Staff', 'staff'], ['Live stats', 'live']];
+const footer = (rule) => `<tr><td style="padding:26px 28px 26px;text-align:center;font:12px/1.7 ${F.sans};color:#5D646C">${rule || ''}
+<div style="font:800 12px ${F.cond};letter-spacing:.12em;text-transform:uppercase;color:#101419;margin-bottom:2px">More on <a href="${SITE}" style="color:#860038;text-decoration:none">cavsdatabase.com</a></div>
+<div style="font:700 12.5px/2 ${F.sans}">${footLinks.map(([t, r]) => `<a href="${SITE}/${r}" style="color:#860038;text-decoration:none">${t}</a>`).join(' &nbsp;·&nbsp; ')}</div>
+<div style="margin:14px 0 12px"><a href="https://www.buymeacoffee.com/cavsdb" style="display:inline-block;border:1px solid #D9D4CC;padding:5px 12px;color:#860038;font:700 12px ${F.sans};text-decoration:none">&#9749; Buy cavs_db a coffee</a></div>
+<div style="font:11px/1.6 ${F.sans};color:#8A8F96">Independent fan reference, not affiliated with the Cavaliers or the NBA.<br>Cavs Database · P.O. Box 151 · West Jefferson, OH 43162</div></td></tr></table></td></tr></table>`;
 const T = (inner, attrs = '') => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" ${attrs}>${inner}</table>`;
 
 /* quarter-by-quarter line score, newspaper style */
@@ -167,10 +169,9 @@ ${x.tn ? `<div style="font:16px/1.55 ${F.serif};color:${P.fg2};margin-top:10px">
   if (x.play.length) s.push(K('Press play'), B(x.play.map(p => T(`<tr><td width="24" valign="top" style="padding:9px 0;font:14px ${F.sans};color:${P.wine}">${p.kind === 'video' ? '&#9654;' : '&#127911;'}</td><td valign="top" style="padding:8px 0;font:14px/1.45 ${F.sans}">${a(p.link, esc(p.title))}<div style="font:12px ${F.sans};color:${P.muted};margin-top:2px">${esc(p.src)}${p.dur ? ' · ' + esc(p.dur) : ''} · ${esc(md2(p.date.slice(0, 10)))}</div></td></tr>`, `style="border-bottom:1px dotted ${P.dot}"`)).join('')));
   if (x.moves.length) s.push(K('Transactions'), B(x.moves.map(([d, t]) => li(esc(t), { left: esc(d), lw: 60 })).join('')));
   if (x.week.length) s.push(K('This week'), B(x.week.map(([wd, d, t]) => li(esc(t), { left: `${esc(wd)} ${esc(d)}`, lw: 96 })).join('')));
-  if (x.tq) s.push(`<tr><td style="padding:18px 24px 0;text-align:center;font:12.5px ${F.sans};color:${P.muted}"><b style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine}">TRIVIA ANSWER</b>&nbsp; ${String.fromCharCode(65 + x.tq.a)}. ${esc(x.tq.c[x.tq.a])}</td></tr>`);
-  s.push(`<tr><td style="padding:24px 24px 0;text-align:center"><div style="font:800 15px ${F.cond};text-transform:uppercase;color:${P.ink};margin-bottom:4px">More on cavsdatabase.com</div><div style="font:700 13px/2 ${F.sans}">${[['Roster', 'roster'], ['Cap sheet', 'cap'], ['Draft picks', 'assets'], ['Injuries', '#inj'], ['Staff', 'staff']].map(([t, r]) => `<a href="${SITE}/${r}" style="color:#860038;text-decoration:none">${t}</a>`).join(' &nbsp;·&nbsp; ')}</div></td></tr>`);
-  /* pass it on: each subscriber's own Buttondown referral link (Settings → General → Referrals must be on) */
-  s.push(`<tr><td style="padding:18px 24px 0;text-align:center"><div style="font:800 13px ${F.cond};text-transform:uppercase;letter-spacing:.06em;color:${P.ink}">Pass it on</div><div style="font:13px/1.45 ${F.sans};color:${P.fg2};margin:2px 0 8px">Know a Cavs fan who&rsquo;d want this with their coffee? Send them your link.</div><table role="presentation" cellpadding="0" cellspacing="0" align="center" style="margin:0 auto"><tr><td bgcolor="${P.wine}" style="background:${P.wine}"><a href="https://buttondown.com/cavscoffee/?referral_code={{ subscriber.referral_code }}" style="display:inline-block;padding:7px 14px;font:700 12.5px ${F.sans};color:#ffffff !important;text-decoration:none"><span style="color:#ffffff !important;text-decoration:none">Share a Cup of Cavs &amp; Coffee</span></a></td></tr></table></td></tr>`);
+  if (x.tq) s.push(`<tr><td style="padding:14px 24px 0;text-align:center;font:italic 11px ${F.sans};color:${P.muted}">Trivia answer: ${String.fromCharCode(65 + x.tq.a)}. ${esc(x.tq.c[x.tq.a])}</td></tr>`);
+  /* pass it on: each subscriber's own Buttondown referral link (Settings → General → Referrals must be on). Its own boxed card so it doesn't run into the footer */
+  s.push(`<tr><td style="padding:22px 24px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid ${P.dot};background:#FFFDF8"><tr><td style="padding:16px 18px;text-align:center"><div style="font:800 16px ${F.cond};text-transform:uppercase;letter-spacing:.04em;color:${P.ink}">Pass it on</div><div style="font:13px/1.45 ${F.sans};color:${P.fg2};margin:3px 0 10px">Know a Cavs fan who&rsquo;d want this with their coffee? Send them your link.</div><table role="presentation" cellpadding="0" cellspacing="0" align="center" style="margin:0 auto"><tr><td bgcolor="${P.wine}" style="background:${P.wine}"><a href="https://buttondown.com/cavscoffee/?referral_code={{ subscriber.referral_code }}" style="display:inline-block;padding:8px 16px;font:700 12.5px ${F.sans};color:#ffffff !important;text-decoration:none"><span style="color:#ffffff !important;text-decoration:none">Share a Cup of Cavs &amp; Coffee</span></a></td></tr></table></td></tr></table></td></tr>`);
   return wrapOpen(P.bg) + s.join('\n') + footer(`<div style="border-top:4px double #F2B231;margin:0 0 18px;font-size:0;line-height:0">&nbsp;</div>`);
 }
 
@@ -262,15 +263,10 @@ function milestone() {
 }
 const tq = trivia.length ? trivia[Object.keys(sent).length % trivia.length] : null;
 const otdKey = (() => { const x = prep(D, g, score, b.top || '', b.url || D.box[g[0]] || SITE + '/schedule', { issueDay: today, rcf, news, trivia: null, since, sinceTs, usedOtd: Object.values(sent).map(v => v.otd).filter(Boolean).slice(-60) }); return x.otd ? x.otd[0] + '|' + x.otd[1] : null; })();
-// stat of the night: the Cavs player whose line was furthest above his own season average (3+ earlier regular season games)
-const sotn = (() => { if (!b.box || preseason) return null; const prior = D.SCHEDULE.filter(x => x[0] < g[0] && box[x[0]]?.box).map(x => box[x[0]].box);
-  const tm = s2 => { const m = String(s2 || '').match(/^(\d+)-/); return m ? +m[1] : 0; };
-  const K = [['pts', 2, 'points'], ['reb', 3, 'rebounds'], ['ast', 4, 'assists'], ['stl', 10, 'steals'], ['blk', 11, 'blocks'], ['tpm', 8, 'threes']];
-  let best = null; for (const r of b.box) { const hist = prior.map(bx => bx.find(q => q[0] === r[0])).filter(Boolean); if (hist.length < 3) continue;
-    for (const [, i, lab] of K) { const val = i === 8 ? tm(r[8]) : +r[i] || 0; const a = hist.reduce((t, q) => t + (i === 8 ? tm(q[8]) : +q[i] || 0), 0) / hist.length; const z = (val - a) / Math.max(a * 0.5, 1);
-      if (z > 0.9 && (!best || z > best[4])) best = [r[0], val, lab, (val - a).toFixed(1), z]; } }
-  return best; })();
-const html = build(D, g, score, b.top || '', b.url || D.box[g[0]] || SITE + '/schedule', { issueDay: today, rcf, news, trivia: tq, since, sinceTs, qs: b.qs, milestone: milestone(), sotn, usedOtd: Object.values(sent).map(v => v.otd).filter(Boolean).slice(-60), test: !(LIVE && MODE !== 'test'), preseason });
+// stat of the night: removed Oct 29 (Luka's call)
+const sotn = null;
+const ourBox = preseason ? (b.url || D.box[g[0]] || SITE + '/schedule') : `${SITE}/games/${g[0]}-${String(g[1]).toLowerCase()}`;
+const html = build(D, g, score, b.top || '', ourBox, { issueDay: today, rcf, news, trivia: tq, since, sinceTs, qs: b.qs, milestone: milestone(), sotn, usedOtd: Object.values(sent).map(v => v.otd).filter(Boolean).slice(-60), test: !(LIVE && MODE !== 'test'), preseason });
 const [cs, os] = score.split('-').map(Number);
 const topBit = b.top ? b.top.split(':')[0].split(' ').slice(-1)[0] + ' ' + (b.top.match(/(\d+) pts/) || [])[1] : '';
 const msBit = (() => { const m = (milestone() || '').match(/^(?!Milestone watch)(\S+ )?(\S+) (reached [\d,]+ career \w+|passed .+? for \d+\w+ on the Cavs' all-time \w+)/); return m ? `${m[2]} ${m[3].replace(/^reached/, 'hits').replace(/ on the Cavs' all-time (\w+)/, ' in Cavs $1').replace(/^passed .+? for/, 'moves to')}` : ''; })();
