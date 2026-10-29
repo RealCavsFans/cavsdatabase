@@ -1826,9 +1826,11 @@ Object.assign(CARDS,{
     lFrame(x);const TX=await lHero(x,D,id);const mn=Math.round((b.min||0)/60);
     lTitle(x,TX,kick()+[t.abbr,p.pos,p.starter?'STARTER':'BENCH'].filter(Boolean).join(' · ')+' · '+lKick(D).replace(/^[A-Z]+ /,''),p.name,[[String(b.pts),'800 104px "Saira Condensed"','#fff'],[' PTS  ','800 44px "Saira Condensed"','#fff'],[String(b.oreb+b.dreb),'800 104px "Saira Condensed"','#fff'],[' REB  ','800 44px "Saira Condensed"','#fff'],[String(b.ast),'800 104px "Saira Condensed"','#fff'],[' AST  ','800 44px "Saira Condensed"','#fff'],['in '+mn+' min','600 32px Archivo','#f4d6dd']]);
     /* Game Score (Hollinger): the box score in one number; 10 = an average night, 40 = a great one. Top right of the header, with his rank tonight */
-    {const gs=gmSc(b),all=Object.keys(R.B).filter(k=>R.B[k].played&&(R.B[k].min||0)>0).map(k=>gmSc(R.B[k])),rk=1+all.filter(v=>v>gs+1e-9).length;const RX=1860;
-     x.textAlign='right';x.fillStyle=GOLD;x.font='800 34px "Saira Condensed"';x.fillText('GAME SCORE',RX,112);x.fillStyle='#fff';x.font='800 120px "Saira Condensed"';x.fillText(gs.toFixed(1),RX,226);
-     x.fillStyle='#f4d6dd';x.font='600 26px Archivo';x.fillText(rk===1?'best of '+all.length+' players tonight':gsOrd(rk)+' of '+all.length+' players tonight',RX,270);x.textAlign='left'}
+    {const gs=gmSc(b),RX=1860,BW=340,BX=RX-BW,BY=208,mx=40,P=v=>BX+BW*Math.max(0,Math.min(mx,v))/mx;
+     x.textAlign='right';x.fillStyle='#fff';x.font='800 84px "Saira Condensed"';x.fillText(gs.toFixed(1),RX,180);const nw=x.measureText(gs.toFixed(1)).width;x.fillStyle=GOLD;x.font='800 28px "Saira Condensed"';x.fillText('GAME SCORE',RX-nw-18,178);
+     /* scale bar: Hollinger's guide, about 10 is an average night and 40 a great one */
+     x.fillStyle='rgba(255,255,255,.18)';x.fillRect(BX,BY,BW,14);x.fillStyle=GOLD;x.fillRect(BX,BY,P(gs)-BX,14);x.fillStyle='#fff';x.fillRect(P(10)-1.5,BY-6,3,26);
+     x.font='600 20px Archivo';x.fillStyle='#f4d6dd';x.textAlign='left';x.fillText('0',BX,BY+44);x.textAlign='center';x.fillText('10 avg',P(10),BY+44);x.textAlign='right';x.fillText('40 great',RX,BY+44);x.textAlign='left'}
     const se=await lSeason(D);const sh=se?se.shots.filter(q=>q.id===id):[];const sb=se?se.B(id):null;
     const ts=b.fga+b.fta?b.pts/(2*(b.fga+.44*b.fta))*100:null,sts=sb&&sb.fga+sb.fta?sb.pts/(2*(sb.fga+.44*sb.fta))*100:null;
     /* left: his game */
