@@ -24,18 +24,19 @@ if (!teams || !teams.length) { console.log(`No ${SEASON} team data yet; leaving 
 const players = (await rows('Player')) || [];
 const zones = r => Z.map(z => [r[z + 'FGM'] || 0, r[z + 'FGA'] || 0]);
 const t = {}; teams.forEach(r => { t[ESPN_ABBR[r.Name] || r.Name] = zones(r); });
-const p = {}, s = {};
+const p = {}, s = {}, u = {};   // u: points on unassisted and assisted makes, for the season page's self-creation percentiles
 const r1 = x => Math.round(x * 10) / 10;
 players.forEach(r => {
   const k = norm(r.Name || ''); if (!k) return;
   p[k] = zones(r);
+  u[k] = [(r.PtsUnassisted2s || 0) + (r.PtsUnassisted3s || 0), (r.PtsAssisted2s || 0) + (r.PtsAssisted3s || 0)];
   const g = r.GamesPlayed || 0; if (!g) return;
   const f = key => r1((r[key] || 0) / g);
   s[k] = [g, f('Minutes'), f('Points'), f('Rebounds'), f('Assists'), f('Steals'), f('Blocks'), f('Turnovers'), f('FG3M'), Math.round((r.TsPct || 0) * 1000) / 1000];
 });
 const lg = Z.map((z, i) => { let m = 0, a = 0; Object.values(t).forEach(v => { m += v[i][0]; a += v[i][1]; }); return [m, a]; });
 const games = Math.max(...teams.map(r => r.GamesPlayed || 0));
-fs.writeFileSync('live-base.json', JSON.stringify({ season: SEASON, updated: new Date().toISOString(), games, lg, t, p, s }));
+fs.writeFileSync('live-base.json', JSON.stringify({ season: SEASON, updated: new Date().toISOString(), games, lg, t, p, s, u }));
 // every team's full pbpstats totals, its own and what opponents did against it, for NBA ranks on the live page's play-by-play stats
 { const opp = (await rows('Opponent')) || [];
   const keep = r => Object.fromEntries(Object.entries(r).filter(([k, v]) => typeof v === 'number'));
