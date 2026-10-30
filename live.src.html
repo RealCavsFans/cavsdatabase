@@ -544,6 +544,8 @@ tr.xr{cursor:pointer}
 .vz-st{display:flex;height:30px;margin:6px 0 12px;font:800 .75rem var(--cond);letter-spacing:.06em;text-transform:uppercase;color:#fff}.vz-st span{display:flex;align-items:center;padding:0 10px;background:#860038;white-space:nowrap;overflow:hidden}.vz-st span.b{background:#8a929c}
 .tap-hint{font:600 11px/1.3 'Geist Mono',monospace;color:var(--wine,#860038);margin:6px 0 4px}
 .capmode .noshot{display:none!important}
+tr.xs td{background:var(--sub)!important;font-weight:500!important;font-size:.8125rem;color:var(--ink);border-bottom:0!important;padding-top:5px!important;padding-bottom:5px!important}tr.xs td:first-child{padding-left:24px!important;color:var(--muted);font-family:'Archivo',sans-serif}tr.xs-end td{padding-bottom:12px!important;border-bottom:1px solid var(--line2)!important}tr.xs td::before{content:none!important}
+tr.luth td{font:700 .625rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:10px!important;padding-bottom:2px!important;border-bottom:0!important}
 /* saved images keep the numbers: no filter buttons, player chips, tap hints or footnotes */
 .capmode .fl,.capmode .chips,.capmode .tap-hint,.capmode p.note,.capmode .lsp-sw{display:none!important}
 .capmode .luck{display:none!important}
@@ -846,7 +848,7 @@ function dtable(id,cols,rows,opt={}){
   rs.forEach(r=>{const tr=el('tr',r._cls||'');cols.forEach(c=>{const td=el('td',c.cls?c.cls(r):null);const v=c.f?c.f(r):r[c.k];if(v instanceof Node)td.appendChild(v);else td.textContent=v==null?'':String(v);tr.appendChild(td)});tb.appendChild(tr);
     /* optional: tap a row to open a detail row under it */
     if(opt.onRow&&!r.dnp){tr.classList.add('xr','xrc');tr.tabIndex=0;tr.onclick=e=>{if(e.target.closest('a,button'))return;opt.onRow(r)};tr.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();opt.onRow(r)}}}
-    if(opt.expand){tr.classList.add('xr');tr.tabIndex=0;tr.setAttribute('aria-expanded',!!r._open);const go=()=>{opt.toggle(r)};tr.onclick=e=>{if(e.target.closest('a,button'))return;go()};tr.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}};if(r._open){const dr=el('tr','xd');const td=el('td');td.colSpan=cols.length;td.appendChild(opt.expand(r));dr.appendChild(td);tb.appendChild(dr)}}});
+    if(opt.expand){tr.classList.add('xr');tr.tabIndex=0;tr.setAttribute('aria-expanded',!!r._open);const go=()=>{opt.toggle(r)};tr.onclick=e=>{if(e.target.closest('a,button'))return;go()};tr.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}};if(r._open){const x=opt.expand(r);if(Array.isArray(x))x.forEach(t=>tb.appendChild(t));else{const dr=el('tr','xd');const td=el('td');td.colSpan=cols.length;td.appendChild(x);dr.appendChild(td);tb.appendChild(dr)}}}});
   if(opt.foot)tb.appendChild(opt.foot);if(!rs.length){const tr=el('tr');const td=el('td','empty',opt.empty||'Nothing yet.');td.colSpan=cols.length;tr.appendChild(td);tb.appendChild(tr)}
   w.appendChild(tb);return w;
 }
@@ -2205,6 +2207,8 @@ function vLineups(v,D,R){
     const common=inc[0].ids.filter(id=>inc.every(r=>r.ids.includes(id))),every=[...new Set(inc.flatMap(r=>r.ids))];comb={ids:pbOK?every:common,common,sec,pf,pa,o,d,pb:pbOK&&Object.keys(pb).length?pb:null};
     const pp=(poss(o)+poss(d))/2;const T={ids:[],sec,pf,pa,pm:pf-pa,poss:pp,ortg:pp>=1?pf/pp*100:null,drtg:pp>=1?pa/pp*100:null,net:pp>=1?(pf-pa)/pp*100:null};
     foot=el('tr','lutot');cols.forEach((cc,i)=>{const td=el('td',i?(cc.cls?cc.cls(T):null):null);td.textContent=i?String(cc.f?cc.f(T):T[cc.k]):(inc.length<rows.length?'Total · '+inc.length+' of '+rows.length+' groups':'Total · '+rows.length+' groups');foot.appendChild(td)})}
+  /* a lineup's panel is open: repeat the column names just above the Total row, since the table's own header can be a long way up */
+  if(foot&&S.f.luOpen&&rows.some(r=>r.key===S.f.luOpen)){const fr=document.createDocumentFragment(),hr=el('tr','luth');cols.forEach((cc,i)=>hr.appendChild(el('td',null,i?cc.h:'')));fr.append(hr,foot);foot=fr}
   c.appendChild(dtable('lu'+S.f.luSize,cols,rows,Object.assign({def:'sec',minW:620,empty:'No lineups meet the filter yet.',foot},SEASONTAB_ON?{toggle:r=>{S.f.luOpen=S.f.luOpen===r.key?null:r.key;renderView()},expand:r=>luSpread(D,t,r.l)}:{})));
   if(SEASONTAB_ON)c.appendChild(el('p','note','Tap a lineup for its full advanced numbers. Untick a box to leave that group out of the total and the panel below.'));
   /* the included groups added together: the same advanced numbers as one lineup's panel (rebounding, shooting, turnovers, each player's box) */
@@ -2303,20 +2307,20 @@ function vShots(v,D,R){
     /* the other team: what Cavs opponents average on these shots (the Cavs defense), not a tier split */
     if(S.season)return isCle?[line('In wins',SC.winG),line('In losses',SC.lossG),line('Vs top-10 teams',SC.top10)]:[line('In Cavs wins',SC.winG),line('In Cavs losses',SC.lossG)];
     return isCle?[line('Season avg',SC.other),line('Vs '+SC.tierLab,SC.tierG)]:[line('Cavs defense avg',SC.other)]};
-  const miniT=(tonight,lines,cols)=>{const w=el('div');if(lines==='pl'){w.appendChild(el('p','note','Season comparisons are for the Cavs’ side only when a player is picked.'));return w}
+  const miniT=(tonight,lines,cols,ncol)=>{const w=el('div');if(lines==='pl'){w.appendChild(el('p','note','Season comparisons are for the Cavs’ side only when a player is picked.'));return w}
     if(!lines){w.appendChild(el('p','note',SC&&SC.err?'Season numbers aren’t available for this game.':'Loading the season…'));return w}
-    const tb=el('table','zt shmini');const f0=x=>Math.round(x);const pc0=x=>x==null?'–':Math.round(x*100)+'%';
+    const out=[];const f0=x=>Math.round(x);const pc0=x=>x==null?'–':Math.round(x*100)+'%';
     const cell={fg:r=>pc0(r.fg),fr:r=>pc0(r.fr),pps:r=>r.pps==null?'–':r.pps.toFixed(2),as:r=>pc0(r.as),ma:r=>r.n==null?r.m+'-'+r.a:f0(r.m)+'-'+f0(r.a)};
-    [tonight].concat(lines).forEach((r,i)=>{const tr=el('tr');tr.appendChild(el('td',null,r.lab));cols.forEach(k=>{const td=el('td',null,cell[k](r));
+    [tonight].concat(lines).forEach((r,i,A)=>{const tr=el('tr','xs'+(i===A.length-1?' xs-end':''));tr.appendChild(el('td',null,r.lab));cols.forEach(k=>{const td=el('td',null,cell[k](r));
       if(i===0&&lines[0]&&lines[0].n&&r.a>=3&&(k==='fg'||k==='pps')&&r[k]!=null&&lines[0][k]!=null){const d=r[k]-lines[0][k],lim=k==='fg'?.05:.1;if(Math.abs(d)>=lim)td.className=d>0?'up':'dn'}tr.appendChild(td)});
-      if(i>0&&!r.n){tr.innerHTML='';tr.appendChild(el('td',null,r.lab.replace(/ \(0 g\)/,'')));const td=el('td',null,'no other games yet');td.colSpan=cols.length;tr.appendChild(td)}tb.appendChild(tr)});
-    w.appendChild(tb);return w};
+      if(i>0&&!r.n){tr.innerHTML='';tr.appendChild(el('td',null,r.lab.replace(/ \(0 g\)/,'')));const td=el('td',null,'no other games yet');td.colSpan=cols.length;tr.appendChild(td)}while(tr.children.length<(ncol||cols.length+1))tr.appendChild(el('td'));out.push(tr)});
+    return out};
   right.appendChild(el('h3',null,who+' · how the shots came'));
   right.appendChild(el('p','tap-hint',S.season?'▸ Tap a row to split it by wins and losses'+(isCle?' and games vs top-10 teams':''):isCle?'▸ Tap a row to compare with the season and with games vs similar teams':'▸ Tap a row to compare with what Cavs opponents average'));
   const rows=PT.map(([k,l],i)=>{const q=all.filter(x=>x.pt===i);const m=q.filter(x=>x.m);const pts=m.reduce((s,x)=>s+(x.three?3:2),0);return {i,l,a:q.length,m:m.length,fr:all.length?q.length/all.length:0,fg:q.length?m.length/q.length:null,pps:q.length?pts/q.length:null,as:m.length?m.filter(x=>x.ast).length/m.length:null,_cls:S.f.shType===String(i)?'now':'',_open:S.f.shOpen===i}}).filter(r=>r.a);
   const pc=x=>x==null?'–':Math.round(x*100)+'%';
   right.appendChild(dtable('pt',[{h:'Type',k:'l',f:r=>{const b=el('button',null,r.l);b.type='button';b.style.cssText='all:unset;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line);display:inline-block;max-width:calc(100% - 18px);vertical-align:top';b.onclick=()=>{S.f.shType=S.f.shType===String(r.i)?'all':String(r.i);renderView()};return b}},
-    {h:'FG',k:'a',f:r=>r.m+'-'+r.a},{h:'FREQ',k:'fr',f:r=>pc(r.fr),title:'Share of his field-goal attempts'},{h:'FG%',k:'fg',f:r=>pc(r.fg)},{h:'PTS/SHOT',k:'pps',f:r=>r.pps==null?'–':r.pps.toFixed(2),title:'Points per shot'},{h:'AST',k:'as',f:r=>pc(r.as),title:'Share of makes that were assisted'}],rows,{def:'a',empty:'No shots yet.',toggle:r=>{S.f.shOpen=S.f.shOpen===r.i?null:r.i;renderView()},expand:r=>miniT({lab:S.season?'Season':'Tonight',m:r.m,a:r.a,fr:r.fr,fg:r.fg,pps:r.pps,as:r.as},cmpRows(x=>x.pt===r.i,false),['ma','fr','fg','pps','as'])}));
+    {h:'FG',k:'a',f:r=>r.m+'-'+r.a},{h:'FREQ',k:'fr',f:r=>pc(r.fr),title:'Share of his field-goal attempts'},{h:'FG%',k:'fg',f:r=>pc(r.fg)},{h:'PTS/SHOT',k:'pps',f:r=>r.pps==null?'–':r.pps.toFixed(2),title:'Points per shot'},{h:'AST',k:'as',f:r=>pc(r.as),title:'Share of makes that were assisted'}],rows,{def:'a',empty:'No shots yet.',toggle:r=>{S.f.shOpen=S.f.shOpen===r.i?null:r.i;renderView()},expand:r=>miniT({lab:S.season?'Season':'Tonight',m:r.m,a:r.a,fr:r.fr,fg:r.fg,pps:r.pps,as:r.as},cmpRows(x=>x.pt===r.i,false),['ma','fr','fg','pps','as'],6)}));
   right.appendChild(el('p','note','FREQ = share of all field-goal attempts. Tap a type’s name to filter the court; tap the rest of the row to compare with the season. Transition = shot within 7 seconds after a defensive rebound or turnover. Putbacks = tips, putbacks and shots within 3 seconds of an offensive rebound.'));
   /* shot types go full width under the court; the zone table sits next to the court */
   const typesBox=el('div','shtypes noshot');while(right.firstChild)typesBox.appendChild(right.firstChild);
@@ -2331,7 +2335,7 @@ function vShots(v,D,R){
     const dfc=a?(m/a-av(i)):0;const fg=el('td',null,a?pct(m,a):'–');if(a>=3)fg.style.color=dfc>0.02?'var(--pos)':dfc<-0.02?'var(--neg)':'';fg.style.fontWeight='700';
     const dz=m*zv(i)-a*LZ[i]*zv(i);const fr=el('td',null,xy.length?Math.round(a/xy.length*100)+'%':'–');if(S.season&&!typeLab&&S.f.shPl==='all'){pbpLoad();const sd=isCle?'T':'O';fg.insertAdjacentHTML('beforeend',rkEl(pbpRank('acc:'+k,sd,isCle?1:-1)));fr.insertAdjacentHTML('beforeend',rkEl(pbpRank('frq:'+k,sd,0)))}tr.append(nn,el('td',null,m+'-'+a),fg,fr,el('td',a&&Math.abs(dz)>=1?(dz>0?'up':'dn'):null,a?(dz>=0?'+':'−')+Math.abs(dz).toFixed(1):'–'));
     tr.className='xr';tr.tabIndex=0;const op=S.f.zOpen===i;tr.setAttribute('aria-expanded',op);const go=()=>{S.f.zOpen=op?null:i;renderView()};tr.onclick=go;tr.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}};zt.appendChild(tr);
-    if(op){const dr=el('tr','xd');const td=el('td');td.colSpan=5;const ln=cmpRows(x=>x.zi===i,true);const lz=Array.isArray(ln)?ln.map(r=>Object.assign({},r,{fr:r.fr})):ln;td.appendChild(miniT({lab:S.season?'Season':'Tonight',m,a,fg:a?m/a:null,fr:xy.length?a/xy.length:null},lz,['ma','fg','fr']));dr.appendChild(td);zt.appendChild(dr)}});
+    if(op){const ln=cmpRows(x=>x.zi===i,true);const x=miniT({lab:S.season?'Season':'Tonight',m,a,fg:a?m/a:null,fr:xy.length?a/xy.length:null},ln,['ma','fg','fr'],5);if(Array.isArray(x))x.forEach(t=>zt.appendChild(t));else{const dr=el('tr','xd');const td=el('td');td.colSpan=5;td.appendChild(x);dr.appendChild(td);zt.appendChild(dr)}}});
   right.appendChild(zt);
   const pts=Z.reduce((s,[m],i)=>s+m*(i>=3?3:2),0);right.appendChild(el('p','note',`${pts} points on ${xy.length} shots (${xy.length?(pts/xy.length).toFixed(2):'–'} per shot). FG% colored against ${baseLab} shooting in each zone. Vs avg = points above or below what an average NBA shooter scores on the same shots.${S.season&&PBT&&lgOK()&&S.f.shPl==='all'&&!typeLab?' Small numbers = NBA rank among 30 teams'+(isCle?' (FG%: 1st = best; % of shots: 1st = most)':' for what opponents did (FG%: 1st = lowest allowed)')+', from pbpstats.':''}${SC&&SC.ok?' Season rows: per game, other games only. Similar teams = the opponent’s net rating tier (top 5, 6–10, 11–20, bottom 9) by '+SC.rkLab+'.':''}`));
   g.append(left,right);c.appendChild(g);c.appendChild(typesBox);if(S.season&&S.f.shPl!=='all')gameByGame(D,R,S.f.shPl,c);v.appendChild(c);
