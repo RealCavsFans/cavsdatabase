@@ -482,6 +482,11 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 /* coach and exec cards: the saved image is just the main facts, no closed drop-downs or links (Oct 30) */
 .co.capmode details:not([open]),.co.capmode .bio-links,.co.capmode .co-link,.co.capmode .co-more{display:none!important}
 .ppx-ch.hasx{display:flex;justify-content:space-between;align-items:flex-end;gap:8px}.ppx-ch .xact{flex:none}
+.ppx-rot{font-size:.8125rem}.rot-r{display:grid;grid-template-columns:7.5rem minmax(0,1fr);gap:10px;align-items:center;margin:4px 0}.rot-l{font:600 .75rem var(--mono);color:var(--fg2);white-space:nowrap}.rot-t{display:grid;grid-template-columns:repeat(48,1fr);height:22px;gap:1px}.rot-t i{background:var(--wine);display:block}.rot-t i.q{box-shadow:-2px 0 0 var(--card)}
+.rot-q{display:grid;grid-template-columns:repeat(4,1fr);font:800 .625rem var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.rot-q span{border-left:1px solid var(--line);padding-left:4px}
+.rot-k{font:800 .6875rem var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:14px 0 6px}.rot-runs>div:not(.rot-k){display:flex;justify-content:space-between;max-width:420px;padding:4px 0;border-bottom:1px dotted var(--line2)}.rot-runs b{font:700 .8125rem var(--mono)}.rot-runs b.up{color:var(--pos,#1d6b3a)}.rot-runs b.dn{color:var(--neg,#a3122e)}
+.rot-s{display:block;position:relative;background:var(--line2);height:20px}.rot-s i{position:absolute;top:0;bottom:0;font:700 .625rem/20px var(--mono);color:#fff;text-align:center;overflow:hidden;box-shadow:inset -1px 0 0 var(--card)}.rot-s i.up{background:#1d6b3a}.rot-s i.dn{background:#a3122e}.rot-s i.ev{background:#8a9099}.rot-s b{position:absolute;top:-2px;bottom:-2px;border-left:1px solid var(--muted);opacity:.6}
+@media (max-width:600px){.rot-r{grid-template-columns:5.2rem minmax(0,1fr)}.rot-t{height:18px}}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
@@ -4117,6 +4122,23 @@ function ppBuild(p,root){
       if(!m||!(m.min>0)){const td=el('td','ppx-dnp',g.out?'Out':'Did not play');td.colSpan=12;tr.appendChild(td);bd.appendChild(tr);return}
       tr.append(el('td',null,String(Math.round(m.min))),el('td','k',String(m.pts)),el('td',null,String(m.reb)),el('td',null,String(m.ast)),el('td',null,String(m.tov)),el('td',null,m.fgm+'-'+m.fga),el('td',null,(m.fgm-m.tpm)+'-'+(m.fga-m.tpa)),el('td',null,m.tpm+'-'+m.tpa),el('td',null,m.ftm+'-'+m.fta),el('td',null,String(m.stl)),el('td',null,String(m.blk)),el('td',m.pm>0?'up':m.pm<0?'dn':null,(m.pm>0?'+':m.pm<0?'−':'')+Math.abs(m.pm)));bd.appendChild(tr)});
     t.appendChild(bd);const w=el('div','tablebox');w.appendChild(t);c.appendChild(w);ov.appendChild(c)}}
+  // when he plays: where his stints fall in the game, season vs his last 5, from the play-by-play archive (Oct 30)
+  if(gp>=2){const c=card('When he plays',null,'Where his minutes come in a game. Darker = on the floor in more games at that minute. Below: each of his last 5 games, stint by stint, with the Cavs’ +/− in that stint.');const box=el('div','ppx-rot');box.appendChild(el('p','dim','Loading…'));c.appendChild(box);ov.appendChild(c);
+    const nk=x=>x.normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');
+    fetch('/live-archive/2026-27/p/'+nk(n)+'.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(J=>{box.innerHTML='';const id=J&&J.player;const G=J&&J.rot&&J.rot[id];if(!G||G.length<2){c.remove();return}
+      const RG=G.filter(([,st])=>st.length).sort((a,b)=>a[0]-b[0]);const last=RG.slice(-5);const M=48;
+      const share=list=>{const on=Array(M).fill(0);list.forEach(([,st])=>{for(let m=0;m<M;m++){const a=m*60,b=a+60;let o=0;st.forEach(([s0,s1])=>{o+=Math.max(0,Math.min(b,s1)-Math.max(a,s0))});if(o>=30)on[m]++}});return on.map(v=>v/list.length)};
+      const SS=share(RG),SL=share(last);
+      const strip=(lab,arr,nG)=>{const r=el('div','rot-r');r.appendChild(el('span','rot-l',lab));const t=el('div','rot-t');arr.forEach((v,m)=>{const i=el('i');i.style.opacity=(0.08+0.92*v).toFixed(2);i.title=(Math.floor(m/12)+1)+'Q '+(m%12)+'–'+(m%12+1)+' min: on in '+Math.round(v*nG)+' of '+nG;if(m%12===0&&m)i.className='q';t.appendChild(i)});r.appendChild(t);return r};
+      const hd=el('div','rot-r rot-h');hd.appendChild(el('span','rot-l',''));const qh=el('div','rot-q');['1st','2nd','3rd','4th'].forEach(q=>qh.appendChild(el('span',null,q)));hd.appendChild(qh);box.appendChild(hd);
+      box.appendChild(strip('Season · '+RG.length+' g',SS,RG.length));box.appendChild(strip('Last '+last.length,SL,last.length));
+      /* his usual runs: stretches he's on in most games, with the average +/- a game in those minutes */
+      const runs=[];let st=-1;SS.forEach((v,m)=>{if(v>=.5&&st<0)st=m;if((v<.5||m===M-1)&&st>=0){runs.push([st,v>=.5&&m===M-1?m+1:m]);st=-1}});
+      const fm=m=>{const q=Math.min(3,Math.floor(m/12));return (q+1)+'Q '+(12-(m-q*12))+':00'};
+      if(runs.length){const ul=el('div','rot-runs');ul.appendChild(el('div','rot-k','His usual runs this season · game clock'));runs.forEach(([a,b])=>{let pm=0;RG.forEach(([,s2])=>s2.forEach(([s0,s1,p])=>{const o=Math.max(0,Math.min(b*60,s1)-Math.max(a*60,s0));if(o>0&&s1>s0)pm+=p*o/(s1-s0)}));pm/=RG.length;const d=el('div');d.append(el('span',null,fm(a)+' → '+(b%12===0&&b?(b/12)+'Q 0:00':fm(b))),el('b',pm>0.05?'up':pm<-0.05?'dn':null,(pm>=0?'+':'−')+Math.abs(pm).toFixed(1)+' a game'));ul.appendChild(d)});box.appendChild(ul)}
+      /* last 5 games, stint by stint */
+      const gl=el('div','rot-g');gl.appendChild(el('div','rot-k','Last '+last.length+' games, stint by stint'));last.slice().reverse().forEach(([gi,s2])=>{const g=(J.games||[])[gi]||{};const r=el('div','rot-r');const dd=g.et?new Date(g.et+'T12:00:00'):null;r.appendChild(el('span','rot-l',(dd?(dd.getMonth()+1)+'/'+dd.getDate()+' ':'')+(g.ha==='home'?'vs ':'@ ')+(g.opp||'')));const t=el('div','rot-t rot-s');
+        s2.filter(([s0])=>s0<2880).forEach(([s0,s1,p])=>{const i=el('i',p>0?'up':p<0?'dn':'ev');i.style.left=(s0/2880*100)+'%';i.style.width=Math.max(.4,(Math.min(s1,2880)-s0)/2880*100)+'%';if(s1-s0>=200)i.textContent=(p>0?'+':p<0?'−':'')+Math.abs(p);i.title=Math.round((s1-s0)/60)+' min, '+(p>0?'+':'')+p;t.appendChild(i)});[25,50,75].forEach(q=>{const l=el('b');l.style.left=q+'%';t.appendChild(l)});r.appendChild(t);gl.appendChild(r)});box.appendChild(gl)})}
   // season line
   {const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3P%','tp'],['FG%','fg'],['MIN','min']],W:[['PTS','pts'],['REB','reb'],['AST','ast'],['3P%','tp'],['STL','stl'],['MIN','min']],B:[['PTS','pts'],['REB','reb'],['AST','ast'],['BLK','blk'],['FG%','fg'],['MIN','min']]};
     const lkey={pts:'pts',reb:'reb',ast:'ast',stl:'stl',blk:'blk',min:'min'};
