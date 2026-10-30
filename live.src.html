@@ -544,6 +544,9 @@ tr.xr{cursor:pointer}
 .vz-st{display:flex;height:30px;margin:6px 0 12px;font:800 .75rem var(--cond);letter-spacing:.06em;text-transform:uppercase;color:#fff}.vz-st span{display:flex;align-items:center;padding:0 10px;background:#860038;white-space:nowrap;overflow:hidden}.vz-st span.b{background:#8a929c}
 .tap-hint{font:600 11px/1.3 'Geist Mono',monospace;color:var(--wine,#860038);margin:6px 0 4px}
 .capmode .noshot{display:none!important}
+/* saved images keep the numbers: no filter buttons, player chips, tap hints or footnotes */
+.capmode .fl,.capmode .chips,.capmode .tap-hint,.capmode p.note,.capmode .lsp-sw{display:none!important}
+.capmode .luck{display:none!important}.capmode .xr>td:first-child::before{display:none!important}.capmode td a,.capmode td button{text-decoration:none!important;border-bottom:0!important}
 .lsp-2{display:block}@media (min-width:900px){.lsp-2{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:start}.lsp-2.one{display:block}.lsp-2 .lsp-r{padding-top:2px}}
 .shtypes{margin-top:18px;padding-top:14px;border-top:1px solid var(--line2)}
 .ltc{border-left:3px solid var(--wt)}.ltn{display:grid;grid-template-columns:4.6rem 1fr;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line2)}.ltn:last-child{border:0;padding-bottom:2px}.ltn b{font:700 26px/1 'Geist Mono',monospace;color:var(--wt);display:block}.ltn small{display:block;font:600 10.5px/1.25 'Geist Mono',monospace;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.03em}.ltn p{margin:0;font-size:13.5px;line-height:1.4}.ltn p a{color:var(--wt);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--wt) 35%,transparent)}tr.xr:hover td{background:var(--sub)}tr.xr[aria-expanded=true] td{background:var(--sub);font-weight:700}tr.xd>td{padding:10px 8px 14px!important;background:var(--sub)}.lsp-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;margin-bottom:8px}.lsp-h span{font:600 .75rem var(--mono);color:var(--muted)}.lsp-t{max-width:520px}.lsp-t td,.lsp-t th{text-align:right}.lsp-t td:first-child,.lsp-t th:first-child{text-align:left}.lsp-t td.up{font-weight:800;color:var(--wine-ink,#860038)}
@@ -808,6 +811,7 @@ const SECX_ON=true; /* save-as-image buttons on every live section (approved Oct
   const xd=card0.querySelector('tr.xd>td>*');let card=card0;if(xd){card=xd;const r=xd.closest('tr.xd').previousElementSibling;const c0=r&&r.cells&&r.cells[0];const e0=c0&&(c0.querySelector('.nmf')||c0.querySelector('a,b,span')||c0);const nm=e0?e0.textContent.replace(/^[▸▾►▼\s]+/,'').trim():'';if(nm)title=title+' · '+nm}
   card.classList.add('capmode');card0.classList.add('capmode');
   /* saved images: lay the card out at phone-ish width so the numbers and text come out big in the picture (wide layouts like the shot chart and rotation keep their width) */
+  const subs=[...card.querySelectorAll('.sub')].map(e=>[e,e.textContent]);subs.forEach(([e,t])=>{e.textContent=t.replace(/[,·]\s*tap [^·]*$/i,'').trim()});
   const w0=card.style.width;let narrow=card.offsetWidth>700&&!card.querySelector('.grid2,.rot,.zchart');
   if(narrow){const fits=()=>{const R=card.getBoundingClientRect().right+1;return ![...card.querySelectorAll('*')].some(e=>!e.closest('.noshot')&&e.getClientRects().length&&e.getBoundingClientRect().right>R)};
     narrow=false;const ow=card.offsetWidth;for(const w of [640,760,880]){if(w>=ow)break;card.style.width=w+'px';if(fits()){narrow=true;break}}if(!narrow)card.style.width=w0}
@@ -822,7 +826,7 @@ const SECX_ON=true; /* save-as-image buttons on every live section (approved Oct
    const fy=H-FT/2;g.textAlign='left';g.font='700 '+(12*S2)+'px '+mono;g.fillStyle='#860038';g.fillText('cavsdatabase.com/live',pad*S2,fy);g.textAlign='right';g.font='600 '+(12*S2)+'px '+mono;g.fillStyle='#5D646C';const D=S.data;g.fillText(new Date(D&&D.date||Date.now()).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),W-pad*S2,fy);
    const blob=await new Promise(r=>cv.toBlob(r,'image/png'));const name='cavsdb-'+title.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.png';const file=new File([blob],name,{type:'image/png'});
    if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:title+' | cavs_db'}).catch(()=>{})}else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Image saved')}}
-  catch(e){toast('Couldn’t make the image. Try again.')}finally{card.classList.remove('capmode');card0.classList.remove('capmode');if(narrow)card.style.width=w0;btn.disabled=false}}
+  catch(e){toast('Couldn’t make the image. Try again.')}finally{card.classList.remove('capmode');card0.classList.remove('capmode');if(narrow)card.style.width=w0;subs.forEach(([e,t])=>{e.textContent=t});btn.disabled=false}}
  window.secShot=(c,title)=>{if(c.querySelector(':scope>.secx'))return;c.classList.add('xh');const b=document.createElement('button');b.type='button';b.className='secx';b.innerHTML=IC;b.title='Save as image';b.setAttribute('aria-label','Save '+title+' as an image');b.onclick=()=>shot(c,title,b);c.appendChild(b)}})();
 const head=(c,title,sub)=>{c.appendChild(el('h2',null,title));if(SECX_ON&&window.secShot&&!S.season&&title!=='Share cards')secShot(c,title);if(sub&&S.season)sub=sub.replace(/^Full game/,'Season, '+S.data.games.length+' games');if(sub)c.appendChild(el('p','sub',sub))};
 
@@ -1428,7 +1432,8 @@ function vOnOff(v,D,R){
   rows.forEach(r=>{r._open=S.f.ooOpen===r.id;r.key=r.id});
   c.appendChild(el('p','tap-hint','▸ Tap any player row to see every advanced number with him on vs off'));
   c.appendChild(dtable('oo',[{h:'Player',k:'id',f:r=>{const sp=el('span');sp.appendChild(plink(D,r.id,D.P[r.id].short));return sp}},{h:'MIN',k:'min',f:r=>fmtMin(r.min)},{h:'ON +/-',k:'onpm',f:r=>sgn(r.onpm),cls:r=>pmCls(r.onpm),title:'Team +/- with him on the floor'},{h:'OFF +/-',k:'offpm',f:r=>sgn(r.offpm),cls:r=>pmCls(r.offpm),title:'Team +/- with him on the bench'},{h:'ON − OFF',k:'dpm',f:r=>sgn(r.dpm),cls:r=>pmCls(r.dpm),title:'On +/- minus off +/-: how much better (or worse) the team did with him on than with him off'},{h:'OFF RTG',k:'ortg',f:r=>r.ortg==null?'–':r.ortg.toFixed(1),title:'Team points per 100 possessions with him on'},{h:'DEF RTG',k:'drtg',asc:true,f:r=>r.drtg==null?'–':r.drtg.toFixed(1),title:'Opponent points per 100 possessions with him on'},{h:'NET RTG',k:'onnet',f:r=>r.onnet==null?'–':(r.onnet>0.05?'+':r.onnet<-0.05?'−':'')+Math.abs(r.onnet).toFixed(1),cls:r=>r.onnet==null?'':pmCls(r.onnet),title:'Off rating minus def rating with him on'}],rows,{def:'min',minW:560,toggle:r=>{S.f.ooOpen=S.f.ooOpen===r.id?null:r.id;renderView()},expand:r=>ooSpread(r.id)}));
-  /* two-player combos */
+  /* two-player combos (left out of saved images, which keep just the main table) */
+  c.dataset.mk=c.childNodes.length;
   c.appendChild(el('h3',null,'Any two players, together and apart'));
   const fl=el('div','fl');const mk=(key,lab)=>{const sl=el('select');sl.setAttribute('aria-label',lab);ids.forEach(id=>{const o=el('option',null,D.P[id].name);o.value=id;if(S.f[key]===id)o.selected=true;sl.appendChild(o)});sl.onchange=()=>{S.f[key]=sl.value;renderView()};return sl};
   const byMin=rows.slice().sort((a,b)=>b.min-a.min);if(!S.f.ooA&&byMin[0])S.f.ooA=byMin[0].id;if(!S.f.ooB&&byMin[1])S.f.ooB=byMin[1].id;
@@ -1446,7 +1451,7 @@ function vOnOff(v,D,R){
       t2.appendChild(line(a+' with '+b,pr.pb[A]||{},pr.sec));t2.appendChild(line(a+' without '+b,wo(A),Math.max(0,BB[A].min-pr.sec)));t2.appendChild(line(b+' with '+a,pr.pb[B]||{},pr.sec));t2.appendChild(line(b+' without '+a,wo(B),Math.max(0,BB[B].min-pr.sec)));
       const w2=el('div','tw');w2.style.marginTop='10px';w2.appendChild(t2);c.appendChild(w2);c.appendChild(el('p','note','Each player’s own box score in the minutes they shared the floor and the minutes they didn’t.'))}}}
   c.appendChild(el('p','note','NET = points scored minus allowed per 100 possessions. Who was on the floor comes from the starters and every substitution; possessions are counted play by play, so ratings can differ a little from NBA.com. Small samples swing hard.'));
-  vsOpp(c,D,R,t);v.appendChild(c);
+  {const ns=el('div','noshot');[...c.childNodes].slice(+(c.dataset.mk||c.childNodes.length)).forEach(n=>ns.appendChild(n));vsOpp(ns,D,R,t);c.appendChild(ns)}v.appendChild(c);
 }
 
 function recordThrough(D,R){const se=S.src||(S.replay?'2025-26':'2026-27');const ix=(ARCH[se]||[]).slice().sort((a,b)=>a.date<b.date?-1:1);
@@ -2180,7 +2185,7 @@ function vLineups(v,D,R){
     b.onclick=()=>{pk[id]=st===0?1:st===1?-1:0;if(!pk[id])delete pk[id];renderView()};ch.appendChild(b)});
   if(Object.keys(pk).length){const x=el('button','clr','Clear');x.type='button';x.onclick=()=>{S.f.luPick={};renderView()};ch.appendChild(x)}
   c.appendChild(ch);c.appendChild(el('p','note','Tap a player once to show only groups with him, twice to show only groups without him.'));
-  if(S.state==='in'){c.appendChild(el('h3',null,'On the floor now'));const f=el('div','five');[...R.on[t.id]].forEach(id=>f.appendChild(el('span',null,D.P[id].short)));c.appendChild(f);c.appendChild(el('h3',null,'All '+S.f.luSize+'-man groups'))}
+  if(S.state==='in'){c.appendChild(el('h3','noshot','On the floor now'));const f=el('div','five noshot');[...R.on[t.id]].forEach(id=>f.appendChild(el('span',null,D.P[id].short)));c.appendChild(f);c.appendChild(el('h3',null,'All '+S.f.luSize+'-man groups'))}
   const nowSet=new Set(R.on[t.id]);
   const rows=Object.values(R.L[t.id][S.f.luSize]).filter(l=>l.sec>=S.f.luMin*60&&(l.sec>0||l.pf||l.pa)&&Object.entries(pk).every(([id,v])=>v===1?l.ids.includes(id):!l.ids.includes(id))).map(l=>{let po=poss(l.o),pd=poss(l.d);{const _a=(po+pd)/2;po=pd=_a}const pp=(po+pd)/2;
     return {l,key:l.ids.slice().sort().join(','),_open:SEASONTAB_ON&&S.f.luOpen===l.ids.slice().sort().join(','),ids:l.ids,sec:l.sec,pf:l.pf,pa:l.pa,pm:l.pf-l.pa,ortg:po>=1?l.pf/po*100:null,drtg:pd>=1?l.pa/pd*100:null,net:po>=1&&pd>=1?l.pf/po*100-l.pa/pd*100:null,poss:pp,_cls:S.state==='in'&&l.ids.every(id=>nowSet.has(id))?'now':''}});
@@ -2199,7 +2204,7 @@ function vLineups(v,D,R){
   c.appendChild(dtable('lu'+S.f.luSize,cols,rows,Object.assign({def:'sec',minW:620,empty:'No lineups meet the filter yet.',foot},SEASONTAB_ON?{toggle:r=>{S.f.luOpen=S.f.luOpen===r.key?null:r.key;renderView()},expand:r=>luSpread(D,t,r.l)}:{})));
   if(SEASONTAB_ON)c.appendChild(el('p','note','Tap a lineup for its full advanced numbers. Untick a box to leave that group out of the total and the panel below.'));
   /* the included groups added together: the same advanced numbers as one lineup's panel (rebounding, shooting, turnovers, each player's box) */
-  if(comb&&comb.o.fgm!=null){const box=el('div','luc');box.appendChild(el('h3',null,inc.length+' group'+(inc.length===1?'':'s')+' together'));const sp=luSpread(D,t,comb);const hb=sp.querySelector('.lsp-h b');if(hb)hb.textContent=comb.common.length?'Every group here with '+comb.common.map(id=>D.P[id].last).join(', '):'The groups ticked above, added up';const pk2=sp.querySelector('.lsp-k');if(pk2)pk2.textContent='Players in these groups';sp.querySelectorAll('p.note').forEach(p=>{if(/^Each player/.test(p.textContent))p.textContent='Each player’s own numbers in the minutes these groups played.'});box.appendChild(sp);c.appendChild(box)}
+  if(comb&&comb.o.fgm!=null){const box=el('div','luc noshot');box.appendChild(el('h3',null,inc.length+' group'+(inc.length===1?'':'s')+' together'));const sp=luSpread(D,t,comb);const hb=sp.querySelector('.lsp-h b');if(hb)hb.textContent=comb.common.length?'Every group here with '+comb.common.map(id=>D.P[id].last).join(', '):'The groups ticked above, added up';const pk2=sp.querySelector('.lsp-k');if(pk2)pk2.textContent='Players in these groups';sp.querySelectorAll('p.note').forEach(p=>{if(/^Each player/.test(p.textContent))p.textContent='Each player’s own numbers in the minutes these groups played.'});box.appendChild(sp);c.appendChild(box)}
   c.appendChild(el('p','note','OFF, DEF and NET are per 100 possessions; small samples swing hard. Gold edge = on the floor now. Lineups are rebuilt from substitutions.'));
   v.appendChild(c);
 }
