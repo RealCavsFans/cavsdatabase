@@ -2311,7 +2311,8 @@ function vShots(v,D,R){
     if(!lines){w.appendChild(el('p','note',SC&&SC.err?'Season numbers aren’t available for this game.':'Loading the season…'));return w}
     const out=[];const f0=x=>Math.round(x);const pc0=x=>x==null?'–':Math.round(x*100)+'%';
     const cell={fg:r=>pc0(r.fg),fr:r=>pc0(r.fr),pps:r=>r.pps==null?'–':r.pps.toFixed(2),as:r=>pc0(r.as),ma:r=>r.n==null?r.m+'-'+r.a:f0(r.m)+'-'+f0(r.a)};
-    [tonight].concat(lines).forEach((r,i,A)=>{const tr=el('tr','xs'+(i===A.length-1?' xs-end':''));tr.appendChild(el('td',null,r.lab));cols.forEach(k=>{const td=el('td',null,cell[k](r));
+    /* the tapped row itself is the game's line, so only the comparison lines go under it */
+    lines.forEach((r,j,A)=>{const i=j+1;const tr=el('tr','xs'+(j===A.length-1?' xs-end':''));tr.appendChild(el('td',null,r.lab));cols.forEach(k=>{const td=el('td',null,cell[k](r));
       if(i===0&&lines[0]&&lines[0].n&&r.a>=3&&(k==='fg'||k==='pps')&&r[k]!=null&&lines[0][k]!=null){const d=r[k]-lines[0][k],lim=k==='fg'?.05:.1;if(Math.abs(d)>=lim)td.className=d>0?'up':'dn'}tr.appendChild(td)});
       if(i>0&&!r.n){tr.innerHTML='';tr.appendChild(el('td',null,r.lab.replace(/ \(0 g\)/,'')));const td=el('td',null,'no other games yet');td.colSpan=cols.length;tr.appendChild(td)}while(tr.children.length<(ncol||cols.length+1))tr.appendChild(el('td'));out.push(tr)});
     return out};
