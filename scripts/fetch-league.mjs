@@ -4,6 +4,11 @@
 // remembered by id, so each run only reads new finals (at most MAX per run, so a backfill spreads over a few runs).
 //   pdata/league.json = { season, updated, games: [espn event ids], players: { espnId: { n, t, p, g, gs, min, pts, reb, oreb, ast, stl, blk, tov, fgm, fga, tpm, tpa, ftm, fta, dd, b2b } } }
 import { readFile, writeFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
+// every team's shots by type and zone, game by game (pdata/league-shots.json), sorted with the live page's own code,
+// so the game page can compare the opponent with its own season, not just with what Cavs opponents do
+const C = createRequire(import.meta.url)('../live-core.js');
+const SFILE = new URL('../pdata/league-shots.json', import.meta.url);
 
 const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba';
 const FILE = new URL('../pdata/league.json', import.meta.url);
@@ -13,6 +18,22 @@ const etDate = (d = new Date()) => new Intl.DateTimeFormat('en-CA', { timeZone: 
 let L = { season: SEASON, updated: null, games: [], players: {} };
 try { const prev = JSON.parse(await readFile(FILE, 'utf8')); if (prev.season === SEASON) L = prev; } catch {}
 const done = new Set(L.games);
+// SH.g[eventId] = { d, t: { ABBR: [a, axy, ...per type [m, a, pts, ast] x8, ...per zone [m, a] x5] } }
+let SH = { season: SEASON, g: {} };
+try { const prev = JSON.parse(await readFile(SFILE, 'utf8')); if (prev.season === SEASON) SH = prev; } catch {}
+function shotsOf(sum) {
+  if (!sum.plays?.length) return null;
+  const D = C.prep(C.slimSummary(sum)), R = C.deriveCore(D, D.plays, 'all'), out = {};
+  for (const tm of D.teams) {
+    const v = [0, 0, ...Array(C.PT.length * 4).fill(0), ...Array(C.ZN.length * 2).fill(0)], P0 = 2, Z0 = 2 + C.PT.length * 4;
+    for (const q of R.shots) { if (q.t !== tm.id) continue; v[0]++; const pts = q.m ? (q.three ? 3 : 2) : 0;
+      if (q.pt != null) { const k = P0 + q.pt * 4; v[k + 1]++; if (q.m) { v[k]++; v[k + 2] += pts; if (q.ast) v[k + 3]++; } }
+      if (q.hasXY) { v[1]++; if (q.zi != null) { const k = Z0 + q.zi * 2; v[k + 1]++; if (q.m) v[k]++; } } }
+    out[tm.abbr] = v;
+  }
+  return out;
+}
+let shBack = 0;
 const today = etDate();
 if (today < START) { console.log('league feed: season has not started'); process.exit(0); }
 
@@ -77,9 +98,12 @@ for (const date of dates.reverse()) {               // newest first, so a long b
     if (!ev.status?.type?.completed) continue;
     const seen = done.has(ev.id);
     const oldTg = seen && L.tg[ev.id] && L.tg[ev.id].t && L.tg[ev.id].t[0] && L.tg[ev.id].t[0].ast == null;   // saved before Oct 25: re-read once for the extra team stats
-    if (seen && !oldTg && !(fresh && L.recent[ev.id] && Date.now() - (L.recent[ev.id].at || 0) > 4 * 36e5)) continue;  // re-check recent games every 4 hours; older ones are final for good
+    const needSh = !SH.g[ev.id] && shBack < 60;
+    if (seen && !oldTg && !needSh && !(fresh && L.recent[ev.id] && Date.now() - (L.recent[ev.id].at || 0) > 4 * 36e5)) continue;  // re-check recent games every 4 hours; older ones are final for good
     let sum; try { sum = await get(`${ESPN}/summary?event=${ev.id}`); } catch { failed++; continue; }
     const tg = teamsOf(sum, ev); if (tg) L.tg[ev.id] = { d: date, ...tg };
+    try { const sh = shotsOf(sum); if (sh) { if (!SH.g[ev.id]) shBack++; SH.g[ev.id] = { d: date, t: sh }; } } catch (e) { console.log('shots: could not sort', ev.id, String(e)); }
+    if (seen && needSh && !oldTg && !(fresh && L.recent[ev.id])) continue;   // only came back for the shots
     const lines = tg?.cupFinal ? {} : linesOf(sum);   // the Cup final doesn't count toward season stats
     if (seen && oldTg && !L.recent[ev.id]) continue;                       // team lines refreshed; player lines were already counted
     if (seen) {                                                            // re-read: swap in corrected lines if anything changed
@@ -91,4 +115,5 @@ for (const date of dates.reverse()) {               // newest first, so a long b
 for (const [id, r] of Object.entries(L.recent)) if ((Date.parse(today) - Date.parse(r.d)) / 864e5 > 3) delete L.recent[id];
 L.updated = new Date().toISOString();
 await writeFile(FILE, JSON.stringify(L) + '\n');
+SH.updated = L.updated; await writeFile(SFILE, JSON.stringify(SH) + '\n');
 console.log(`league feed: read ${read} new games, corrected ${fixed} (${L.games.length} total, ${Object.keys(L.players).length} players)${failed ? `, ${failed} requests failed` : ''}`);
