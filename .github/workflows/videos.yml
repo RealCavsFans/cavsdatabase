@@ -27,6 +27,14 @@ jobs:
       - run: node scripts/fetch-boxscores.mjs
       - run: node scripts/fetch-league.mjs
         continue-on-error: true
+      # team numbers (standings, ratings, four factors, scores) from the box scores fetch-league just saved.
+      # Moved here from team-stats.yml (Oct 30) so the same data isn't read twice. The pbpstats backup only runs twice a day.
+      - name: Team stats
+        continue-on-error: true
+        run: |
+          case "$(date -u +%H)" in 05|09) node scripts/backup-pbpstats.mjs || true;; esac
+          node scripts/team-stats.mjs
+          node scripts/cle-rates.mjs
       - run: node scripts/fetch-rcf.mjs
       - run: node scripts/fetch-news.mjs
         continue-on-error: true
@@ -59,7 +67,7 @@ jobs:
         run: |
           git config user.name "cavsdatabase-bot"
           git config user.email "bot@cavsdatabase.com"
-          add(){ git add videos.json box.json rcf.json; [ -f data/rcf-first.json ] && git add data/rcf-first.json || true; [ -f news.json ] && git add news.json || true; [ -f news-status.txt ] && git add news-status.txt || true; [ -f niang.json ] && git add niang.json || true; [ -f pdata/niang-games.json ] && git add pdata/niang-games.json || true; git add *.html sitemap.xml; [ -d embed ] && git add embed || true; [ -d games ] && git add games || true; [ -f cavs.ics ] && git add cavs.ics || true; git add -A data/prerender-hash.txt 2>/dev/null || true; [ -d img ] && git add img || true; [ -d og/g ] && git add og/g || true; [ -d og/h ] && git add og/h || true; [ -d og/p ] && git add og/p || true; [ -d og/gp ] && git add -A og/gp || true; [ -f og/live.json ] && git add og/live.json og/cap.jpg og/schedule.jpg og/assets.jpg og/moves.jpg || true; [ -f og/history.jpg ] && git add og/history.jpg || true; [ -d a ] && git add -A a || true; [ -d players ] && git add players || true; [ -d history ] && git add history || true; [ -d media ] && git add media || true; [ -f box-status.txt ] && git add box-status.txt || true; [ -f pdata/league.json ] && git add pdata/league.json pdata/milestones.json || true; [ -f pdata/league-shots.json ] && git add pdata/league-shots.json || true; }
+          add(){ git add videos.json box.json rcf.json; [ -f data/rcf-first.json ] && git add data/rcf-first.json || true; [ -f news.json ] && git add news.json || true; [ -f news-status.txt ] && git add news-status.txt || true; [ -f niang.json ] && git add niang.json || true; [ -f pdata/niang-games.json ] && git add pdata/niang-games.json || true; git add *.html sitemap.xml; [ -d embed ] && git add embed || true; [ -d games ] && git add games || true; [ -f cavs.ics ] && git add cavs.ics || true; git add -A data/prerender-hash.txt 2>/dev/null || true; [ -d img ] && git add img || true; [ -d og/g ] && git add og/g || true; [ -d og/h ] && git add og/h || true; [ -d og/p ] && git add og/p || true; [ -d og/gp ] && git add -A og/gp || true; [ -f og/live.json ] && git add og/live.json og/cap.jpg og/schedule.jpg og/assets.jpg og/moves.jpg || true; [ -f og/history.jpg ] && git add og/history.jpg || true; [ -d a ] && git add -A a || true; [ -d players ] && git add players || true; [ -d history ] && git add history || true; [ -d media ] && git add media || true; [ -f box-status.txt ] && git add box-status.txt || true; [ -f pdata/league.json ] && git add pdata/league.json pdata/milestones.json || true; [ -f pdata/league-shots.json ] && git add pdata/league-shots.json || true; [ -f pdata/cle-rates.json ] && git add pdata/cle-rates.json || true; git add index.html; }
           # after a push that changed the pages, tell Bing/Yandex/others (IndexNow) to recrawl
           ping(){ if git diff --name-only HEAD~1 HEAD | grep -q prerender-hash; then
             K=$(ls *.txt | grep -E '^[0-9a-f]{32}\.txt$' | head -1 | sed 's/\.txt$//'); [ -n "$K" ] || return 0
@@ -76,10 +84,11 @@ jobs:
             git stash 2>/dev/null || true
             if git pull --rebase origin main && git push; then sleep 60; ping; exit 0; fi
             git rebase --abort 2>/dev/null || true
-            mkdir -p /tmp/keep && cp -r videos.json box.json rcf.json niang.json /tmp/keep/ 2>/dev/null || true; mkdir -p /tmp/keep/pdata && cp pdata/league.json pdata/niang-games.json /tmp/keep/pdata/ 2>/dev/null || true
+            mkdir -p /tmp/keep && cp -r videos.json box.json rcf.json niang.json /tmp/keep/ 2>/dev/null || true; mkdir -p /tmp/keep/pdata && cp pdata/league.json pdata/niang-games.json pdata/league-shots.json /tmp/keep/pdata/ 2>/dev/null || true
             [ -d img ] && cp -r img /tmp/keep/ || true
             git fetch origin main && git reset --hard origin/main
             cp -r /tmp/keep/. . 2>/dev/null || true
+            node scripts/team-stats.mjs || true; node scripts/cle-rates.mjs || true
             CHROME_PATH=/usr/bin/google-chrome node scripts/build-pages.mjs --prerender
             add
             if git diff --cached --quiet; then exit 0; fi

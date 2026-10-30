@@ -18,7 +18,7 @@ const lines = sh('git diff --cached --name-status').trim().split('\n').filter(Bo
 for (const ln of lines) {
   const [st, f] = ln.split('\t');
   if (st !== 'M') { console.log(`changed: ${st} ${f}`); process.exit(0); }      // a new or removed file always counts
-  if (STATUS.test(f) || GENERATED.test(f)) continue;
+  if (STATUS.test(f) || (GENERATED.test(f) && f !== 'index.html')) continue;   // index.html is the source (team stats write into it), not a page copy
   const a = show('HEAD', f), b = show('', f);                                       // '' = the staged copy
   if (a == null || b == null) { console.log('changed:', f); process.exit(0); }
   if (f.endsWith('.json')) {

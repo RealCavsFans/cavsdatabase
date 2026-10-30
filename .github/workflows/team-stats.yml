@@ -3,10 +3,8 @@ name: Team stats (from ESPN box scores)
 # Built from the box scores the 30-minute job already saves (pdata/league.json), so nothing extra is fetched.
 # This replaced ~35 daily web fetches the Claude data task used to make.
 on:
-  schedule:
-    - cron: '50 5 * * *'    # ~1:50 a.m. Eastern, after the night's games
-    - cron: '20 9 * * *'    # ~5:20 a.m. Eastern, before the daily data task
-    - cron: '15,45 3,4,5 * * *'  # every 30 min, ~11 p.m.–1:45 a.m. Eastern, so the record updates soon after the buzzer
+  # Oct 30: these steps now run inside "Update videos, box scores and news" (videos.yml) every 30 minutes,
+  # right after the box scores are read. Kept for running by hand.
   workflow_dispatch:
 permissions:
   contents: write
