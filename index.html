@@ -461,6 +461,7 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 .ppx-fr{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n v" "bar bar";column-gap:8px;padding:6px 0 7px;border-bottom:1px dotted var(--line);position:relative}.ppx-fr .n{grid-area:n;font-size:.8125rem}.ppx-fr .v{grid-area:v;font:700 .8125rem var(--mono)}
 .ppx-fr .bar{grid-area:bar;display:block;height:7px;background:var(--line2);margin-top:5px;position:relative;margin-right:36px}.ppx-fr .bar::after{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;border-left:1px dashed var(--muted)}.ppx-fr .bar i{display:block;height:100%;background:var(--wine)}.ppx-fr.top .bar i{background:var(--gold,#F2B231)}
 .ppx-fr .p{position:absolute;right:0;bottom:4px;font:700 .6875rem var(--mono);color:var(--muted)}.ppx-fr.top .p{color:var(--fg)}
+.ppx-vsc svg{width:100%;height:auto;display:block;margin-top:10px}.ppx-vsc .ax{font:500 10px var(--mono);fill:var(--muted)}.ppx-vsc .me{font:800 13px var(--sans);fill:var(--wine-ink)}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
@@ -4093,6 +4094,38 @@ function ppBuild(p,root){
     if(out.length>2){out.sort((a,b)=>b[1]-a[1]);c.appendChild(ctx(`Best: ${out[0][0].toLowerCase()} (${ord(out[0][1])} percentile). Room to grow: ${out[out.length-1][0].toLowerCase()} (${ord(out[out.length-1][1])}).`))}
     c.appendChild(note('Bar = percentile in his position group (players with 12+ minutes a game): fuller is better, gold = top 10%. Turnover rate counts lower as better. Rates use his team’s totals from every box score this season.'));ov.appendChild(c)}
   else waiting.push('Player fingerprint (after 10 games)');
+  // value for his contract: production against pay, every NBA player with real minutes (league box scores + league salaries)
+  if(meL&&meL.g>=3&&meL.min/meL.g>=12){const c=card('Value for his contract',null,'How much he produces for what he’s paid. Every dot is an NBA player with 12+ minutes a game: further right = paid more, higher = more production a night (Game Score).');const box=el('div','ppx-val');box.appendChild(el('p','dim','Loading…'));c.appendChild(box);ov.appendChild(c);
+    const nm=x=>String(x).normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');
+    const ESPB={NY:'NYK',GS:'GSW',SA:'SAS',NO:'NOP',UTAH:'UTA',WSH:'WAS'};
+    (PPD.sal?Promise.resolve(PPD.sal):fetch('/pdata/league-salaries.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(j=>PPD.sal=j)).then(SJ=>{box.innerHTML='';if(!SJ||!SJ.teams){c.remove();return}
+      const byT={},all={};Object.entries(SJ.teams).forEach(([t,o])=>Object.entries(o).forEach(([k,v])=>{(byT[t]=byT[t]||{})[nm(k)]=v;(all[nm(k)]=all[nm(k)]||[]).push(v)}));
+      const salOf=x=>{const t=byT[ESPB[x.t]||x.t]||{},k=nm(x.n);if(t[k]!=null)return t[k];const a2=all[k];return a2&&a2.length===1?a2[0]:null};
+      const gs=x=>(x.pts+.4*x.fgm-.7*x.fga-.4*(x.fta-x.ftm)+.7*x.oreb+.3*(x.reb-x.oreb)+x.stl+.7*x.ast+.7*x.blk-x.tov)/x.g;
+      const P=LP.filter(x=>x.g>=Math.max(3,maxG*0.4)&&x.min/x.g>=12).map(x=>({x,s:salOf(x),v:gs(x)})).filter(o=>o.s!=null&&o.s>0);
+      const me=P.find(o=>o.x===meL);if(!me||P.length<40){c.remove();return}
+      /* his pay band: the 30 players paid closest to him */
+      const band=P.slice().sort((a2,b2)=>Math.abs(a2.s-me.s)-Math.abs(b2.s-me.s)).slice(0,31);const rk=k=>1+band.filter(o=>k(o)>k(me)).length;
+      const lo=Math.min(...band.map(o=>o.s)),hi=Math.max(...band.map(o=>o.s));const M=v=>'$'+(v/1e6).toFixed(1)+'M';
+      /* expected production for his salary: least squares line through everyone */
+      const n2=P.length,mx=P.reduce((a2,o)=>a2+o.s,0)/n2,my=P.reduce((a2,o)=>a2+o.v,0)/n2,sl=P.reduce((a2,o)=>a2+(o.s-mx)*(o.v-my),0)/P.reduce((a2,o)=>a2+(o.s-mx)**2,0),fit=s2=>my+sl*(s2-mx);
+      const exp=fit(me.s),d=me.v-exp;
+      const tiles=el('div','ppx-big2');[[M(me.s),'His salary this season'],[me.v.toFixed(1),'Game Score a night'],[(d>=0?'+':'−')+Math.abs(d).toFixed(1),'Vs what his pay predicts'],[ord(rk(o=>o.v))+' of '+band.length,'In his pay range (him and the '+(band.length-1)+' paid closest)']].forEach(([u,w],i)=>{const d2=el('div');const b=el('b',null,u);if(i===2)b.style.color=d>=0?'var(--pos,#1d6b3a)':'var(--neg,#a3122e)';d2.append(b,el('span',null,w));tiles.appendChild(d2)});box.appendChild(tiles);
+      /* scatter */
+      const W=640,H=300,L0=46,R0=12,T0=12,B0=34,smax=Math.max(...P.map(o=>o.s)),vmin=Math.min(0,...P.map(o=>o.v)),vmax=Math.max(...P.map(o=>o.v));
+      const X=v=>L0+(v/smax)*(W-L0-R0),Y=v=>T0+(1-(v-vmin)/(vmax-vmin))*(H-T0-B0);
+      let sv=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Salary against Game Score for NBA players">`;
+      sv+=`<rect x="${X(lo)}" y="${T0}" width="${Math.max(2,X(hi)-X(lo))}" height="${H-T0-B0}" fill="var(--gold,#F2B231)" opacity=".13"/>`;
+      for(let m=0;m<=smax/1e6;m+=10){sv+=`<line x1="${X(m*1e6)}" x2="${X(m*1e6)}" y1="${T0}" y2="${H-B0}" stroke="var(--line2)"/><text x="${X(m*1e6)}" y="${H-B0+16}" text-anchor="middle" class="ax">$${m}M</text>`}
+      for(let v=Math.ceil(vmin/5)*5;v<=vmax;v+=5){sv+=`<line x1="${L0}" x2="${W-R0}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line2)"/><text x="${L0-6}" y="${Y(v)+4}" text-anchor="end" class="ax">${v}</text>`}
+      sv+=`<line x1="${X(0)}" y1="${Y(fit(0))}" x2="${X(smax)}" y2="${Y(fit(smax))}" stroke="var(--fg)" stroke-dasharray="4 4" opacity=".5"/>`;
+      P.forEach(o=>{if(o===me)return;sv+=`<circle cx="${X(o.s).toFixed(1)}" cy="${Y(o.v).toFixed(1)}" r="3.2" fill="${o.x.t==='CLE'?'var(--wine)':'#b9bec5'}" opacity="${o.x.t==='CLE'?.55:.6}"><title>${o.x.n.replace(/[<&"]/g,'')}: ${M(o.s)}, ${o.v.toFixed(1)}</title></circle>`});
+      sv+=`<circle cx="${X(me.s)}" cy="${Y(me.v)}" r="7" fill="var(--wine)" stroke="var(--card)" stroke-width="2.5"/><text x="${X(me.s)+(X(me.s)>W*.75?-11:11)}" y="${Y(me.v)+4}" text-anchor="${X(me.s)>W*.75?'end':'start'}" class="me">${n.split(' ').slice(-1)[0].replace(/[<&]/g,'')}</text>`;
+      sv+=`<text x="${W-R0}" y="${H-4}" text-anchor="end" class="ax">Salary this season →</text></svg>`;
+      const sc=el('div','ppx-vsc');sc.innerHTML=sv;box.appendChild(sc);
+      const lg=el('div','ppx-leg');lg.innerHTML='<span><i style="background:var(--wine)"></i>Cavs</span><span><i style="background:#b9bec5"></i>Rest of the NBA</span><span>Dashed line = production his pay predicts · gold band = his pay range, him and the '+(band.length-1)+' players paid closest ('+M(lo)+'–'+M(hi)+')</span>';box.appendChild(lg);
+      const pr=(lab,k)=>lab+' '+ord(rk(k));c.appendChild(ctx(`In his pay range (${band.length} players): ${[pr('points',o=>o.x.pts/o.x.g),pr('rebounds',o=>o.x.reb/o.x.g),pr('assists',o=>o.x.ast/o.x.g),pr('Game Score',o=>o.v)].join(' · ')}.`));
+      c.appendChild(note('Game Score: John Hollinger’s one-number box score summary (points, shooting, rebounds, assists, steals, blocks, turnovers; fouls left out because the league feed doesn’t carry them). Salaries from Spotrac, this season’s cap number.'))})}
   // typical night + spread
   const fourth=G==='B'?['blk','BLK']:G==='G'?['tpm','3PM']:['tpm','3PM'];
   if(gp>=5){const c=card('His typical night','Typical','The night you’d most expect from him, and every game’s points as a dot. The shaded band is his middle half of games.');
