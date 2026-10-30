@@ -27,3 +27,4 @@ for (const [y, r, p, n, sch] of H.draft) {
   fs.writeFileSync('scratch-out/draft-extra.json', JSON.stringify(out, null, 1));
 }
 fs.writeFileSync('scratch-out/draft-extra.json', JSON.stringify(out, null, 1));
+// run 2
