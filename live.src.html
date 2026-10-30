@@ -586,6 +586,7 @@ tr.lutot td{font-weight:800;border-top:2px solid var(--fg)}
 .clv-rk{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;margin:12px 0 2px;font-size:.8125rem}.clv-rk .k{font:800 .6875rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.clv-rk small.rk{margin-left:3px}.pctg{font:700 .75rem var(--mono)}.pctg.g{color:var(--pos,#1d6b3a)}.pctg.b{color:var(--neg,#a3122e)}
 .sp-tg{max-width:320px;margin:4px 0 10px}td.pp0{background:color-mix(in srgb,#a3122e 10%,transparent)}td.pp1{background:color-mix(in srgb,#a3122e 4%,transparent)}td.pp3{background:color-mix(in srgb,#1d6b3a 8%,transparent)}td.pp4{background:color-mix(in srgb,#1d6b3a 18%,transparent)}td .ppn{display:block;font:600 .625rem var(--mono);color:var(--muted)}
 .lk-more{all:unset;cursor:pointer;display:inline-block;margin-top:6px;font:700 .8125rem var(--sans);color:var(--wine-ink,#860038)}
+.rk.pc{color:var(--muted)!important}.rk.pc.pct9{color:var(--wine,#860038)!important;font-weight:800}
 </style>
 </head>
 <body>
@@ -1004,7 +1005,16 @@ const LGM={'FG%':(A)=>A.fga?A.fgm/A.fga:null,'Twos made':(A,O,n)=>(A.fgm-A.tpm)/
   'True shooting':A=>A.fga+A.fta?A.pts/(2*(A.fga+.44*A.fta)):null,'True shot att.':(A,O,n)=>(A.fga+.44*A.fta)/n};
 /* rank of a value among the other 29 teams: dir 1 = higher is better, -1 = lower is better, 0 = neutral (ranked by most) */
 function lgRank(v,others,dir){if(v==null||!others.length)return null;const o=others.filter(x=>x!=null);const r=1+(dir<0?o.filter(x=>x<v-1e-9).length:o.filter(x=>x>v+1e-9).length);return {r,n:o.length+1,dir}}
-function rkEl(k){if(!k)return'';const cut=k.n>40?Math.max(1,Math.round(k.n*.1)):10;const cls=!k.dir?'n':k.r<=cut?'g':k.r>k.n-cut?'b':'n';return `<small class="rk ${cls}" title="${ord2(k.r)} of ${k.n} NBA teams${k.dir?' (1st = best for the Cavs)':' (1st = most)'}">${ord2(k.r)}</small>`}
+function rkEl(k){if(!k)return'';if(k.p!=null)return `<small class="rk pc${k.p>=90?' pct9':''}" title="Better than ${k.p}% of ${k.n} NBA team games this season">${ord2(k.p)}</small>`;const cut=k.n>40?Math.max(1,Math.round(k.n*.1)):10;const cls=!k.dir?'n':k.r<=cut?'g':k.r>k.n-cut?'b':'n';return `<small class="rk ${cls}" title="${ord2(k.r)} of ${k.n} NBA teams${k.dir?' (1st = best for the Cavs)':' (1st = most)'}">${ord2(k.r)}</small>`}
+/* game view: where a team's number tonight sits among every NBA team game this season, as a percentile (99th = best; for turnovers and fouls, fewer is better). From /pdata/league.json box scores (Oct 30 mockup) */
+let LTG=null;function lgTeamGames(){if(LTG!==null)return LTG||null;LTG=false;getJSON('/pdata/league.json').then(L=>{const a=[];Object.entries(L.tg||{}).forEach(([id,g])=>{if(g.t&&g.t.length===2&&g.per>=4)a.push([id,g.t[0]],[id,g.t[1]])});LTG=a;if(!S.season&&S.tab==='team')renderView()}).catch(()=>{});return null}
+const LGP2={'FG%':t=>t.fga?t.fgm/t.fga:null,'Twos made':t=>t.fgm-t.tpm,'2PT%':t=>t.fga-t.tpa?(t.fgm-t.tpm)/(t.fga-t.tpa):null,'Threes made':t=>t.tpm,'3PT%':t=>t.tpa?t.tpm/t.tpa:null,'FT made':t=>t.ftm,'FT%':t=>t.fta?t.ftm/t.fta:null,'In the paint':t=>t.paint,'Fast-break points':t=>t.fb,
+  'Rebounds':t=>t.orb+t.drb,'Off. rebounds':t=>t.orb,'Assists':t=>t.ast,'Turnovers':t=>t.tov,'Steals':t=>t.stl,'Blocks':t=>t.blk,'Fouls':t=>t.pf,
+  'Points per 100':t=>{const p=t.fga-t.orb+t.tov+.44*t.fta;return p?t.pts/p*100:null},'True shooting':t=>t.fga+t.fta?t.pts/(2*(t.fga+.44*t.fta)):null};
+function lgGamePct(ROWS,D){const A=lgTeamGames();if(!A)return false;const pool=A.filter(([id])=>id!==String(S.ev)).map(([,t])=>t);if(pool.length<20)return false;let any=false;
+  ROWS.forEach(r=>{const f=LGP2[r.lab];if(!f||r.hib===null)return;const v=pool.map(f).filter(x=>x!=null&&isFinite(x));if(v.length<20)return;
+    const pc=x=>{if(x==null||!isFinite(x))return null;const lo=v.filter(y=>r.hib?y<x-1e-9:y>x+1e-9).length,eq=v.filter(y=>Math.abs(y-x)<=1e-9).length;return Math.max(1,Math.min(99,Math.round((lo+eq/2)/v.length*100)))};
+    r.rx={p:pc(r.x),n:v.length};r.ry={p:pc(r.y),n:v.length};if(r.rx.p==null)r.rx=null;if(r.ry.p==null)r.ry=null;any=true});return any?pool.length:false}
 const lgOK=()=>S.season&&S.season===CUR_SEASON&&(S.per||'all')==='all'&&!((S.sf||{}).games||[]).length&&!(S.sf||{}).tier;
 function lgTeamRanks(ROWS){if(!LGS||!lgOK())return false;const others=Object.entries(LGS.T).filter(([ab,x])=>ab!=='CLE'&&x.n);
   ROWS.forEach(r=>{const f=LGM[r.lab];if(!f)return;const own=others.map(([,x])=>f(x.A,x.O,x.n,x.sec)),alw=others.map(([,x])=>f(x.O,x.A,x.n,x.sec));if(own.every(v=>v==null))return;
@@ -1183,6 +1193,7 @@ function vTeam(v,D,R){
   {const ts=t=>t.fga+t.fta?t.pts/(2*(t.fga+0.44*t.fta)):0;row('True shooting',ts(a),ts(b),x=>(x*100).toFixed(0)+'%',x=>(x*100).toFixed(0)+'%');row('True shot attempts',a.fga+0.44*a.fta,b.fga+0.44*b.fta,x=>x.toFixed(1),x=>x.toFixed(1),null)}
   if(!S.season){const sa=stopPct(R,D.other.id),sb=stopPct(R,D.focus.id);if(sa!=null&&sb!=null)row('Stop %',sa,sb,x=>Math.round(x*100)+'%',x=>Math.round(x*100)+'%')}
   if(S.season){if(!LGS&&!LGP)lgLoad().then(x=>{if(x&&S.season&&S.tab==='team')renderView()});if(lgTeamRanks(ROWS))c.appendChild(el('p','note lgn','Small numbers = NBA rank among 30 teams, green top 10, red bottom 10. Under OPP, 1st = the fewest allowed. From every NBA box score this season.'));else if(S.season===CUR_SEASON&&LGS)c.appendChild(el('p','note lgn','NBA ranks show on the full-season view (no period, game or strength filter).'))}
+  if(!S.season&&(S.per||'all')==='all'){const st=D.status&&D.status.type||{};const done=st.completed||(S.replay&&S.data&&S.cur>=S.data.plays.length);if(done){const n=lgGamePct(ROWS,D);if(n)c.appendChild(el('p','note lgn','Small numbers = percentile among all '+n+' NBA team games this season: 90th means better than 90% of them (for turnovers and fouls, fewer is better). Wine = top 10%.'))}}
   c.appendChild(teamStatsBody(D,ROWS));
   /* projected final: each team's scoring rate so far, applied to the time left in regulation */
   if(S.state==='in'&&S.per==='all'&&R.lp){const e2=R.lp.t,left=Math.max(0,2880-e2);if(e2>=360&&left>0){const pf=Math.round(a.pts+a.pts/e2*left),po=Math.round(b.pts+b.pts/e2*left);
