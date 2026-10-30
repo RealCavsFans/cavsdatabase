@@ -1258,7 +1258,7 @@ function scoutCard(D,X,team){
   c.appendChild(dtable('sc_l',[{h:'Lineup',k:'names'},{h:'GAMES',k:'g'},{h:'MIN',k:'sec',f:r=>fmtMin(r.sec)},{h:'+/-',k:'pm',f:r=>sgn(r.pm),cls:r=>pmCls(r.pm)},{h:'NET',k:'net',f:r=>r.net==null?'–':sgn(Math.round(r.net)),cls:r=>r.net==null?'':pmCls(r.net)}],lu.slice(0,10),{def:'sec',minW:520}));
   /* where they shoot */
   c.appendChild(el('h3',null,'Where they shoot'));const g2=el('div','grid2');const left=el('div','zchart');
-  const Z=ZN.map(()=>[0,0]);X.shots.filter(q=>q.hasXY).forEach(q=>{Z[q.zi][1]++;if(q.m)Z[q.zi][0]++});const BZ=(BLIVE&&BLIVE.lg)||ZN.map(([k])=>[LG[k][0]*1000,1000]);
+  const Z=ZN.map(()=>[0,0]);X.shots.filter(q=>q.hasXY).forEach(q=>{Z[q.zi][1]++;if(q.m)Z[q.zi][0]++});withCorners(Z,X.shots.filter(q=>q.hasXY));const BZ=(BLIVE&&BLIVE.lg)||ZN.map(([k])=>[LG[k][0]*1000,1000]);
   left.innerHTML=zoneCourt(Z,0,'Opponent shooting by zone',BZ);left.insertAdjacentHTML('beforeend','<div class="leg"><span>Shaded against NBA average in each zone</span></div>');
   const right=el('div');const all=X.shots;const pr=PT.map(([k,l],i)=>{const q=all.filter(x=>x.pt===i),m=q.filter(x=>x.m);return {l,a:q.length,fr:all.length?q.length/all.length:0,pps:q.length?m.reduce((s2,x)=>s2+(x.three?3:2),0)/q.length:null}}).filter(r=>r.a);
   right.appendChild(dtable('sc_t',[{h:'Shot type',k:'l'},{h:'FREQ',k:'fr',f:r=>Math.round(r.fr*100)+'%'},{h:'PTS/SHOT',k:'pps',f:r=>r.pps==null?'–':r.pps.toFixed(2)}],pr,{def:'fr'}));
@@ -2194,7 +2194,7 @@ async function luDeep(D,l,box){const se=D.season,per=S.per||'all',key=l.ids.slic
   const runs=await Promise.all(gs.map(async g=>{const k=g.id+'|'+JSON.stringify(per);if(LUDC[k])return LUDC[k];const s=await(ARCHF[g.id]||(ARCHF[g.id]=getJSON('/live-archive/'+se+'/'+g.id+'.json'))).catch(()=>null);if(!s)return null;const Dg=prep(s);if(Dg.focus.id!=='5')return null;const Rg=deriveCore(Dg,Dg.plays,per);return LUDC[k]={oid:Dg.other.id,shots:Rg.shots,PL:Rg.PL||[],T:Rg.T,B:Rg.B}}));
   box.textContent='';const ok=runs.filter(Boolean);if(!ok.some(r=>r.shots.some(q=>q.on))){box.appendChild(el('p','note','Shot and possession detail fills in after the archive rebuilds.'));return}
   const own=[],alw=[],tOwn=[],tAlw=[],po=[],pd=[];ok.forEach(r=>{r.shots.forEach(q=>{if(q.t==='5'){tOwn.push(q);if(q.on===key)own.push(q)}else{tAlw.push(q);if(q.od===key)alw.push(q)}});r.PL.forEach(q=>{if(q.team==='5'){if(q.on===key)po.push(q)}else if(q.od===key)pd.push(q)})});
-  const Zs=sh=>{const Z=ZN.map(()=>[0,0]);sh.forEach(q=>{Z[q.zi][1]++;if(q.m)Z[q.zi][0]++});return Z};
+  const Zs=sh=>{const Z=ZN.map(()=>[0,0]);sh.forEach(q=>{Z[q.zi][1]++;if(q.m)Z[q.zi][0]++});return withCorners(Z,sh)};
   const n=po.length+pd.length;if(n<50)box.appendChild(el('p','note lud-small','Small sample: '+po.length+' offensive and '+pd.length+' defensive possessions together. Read these as a hint, not a verdict.'));
   /* shot profile: share of shots and FG% by zone, next to the team's season */
   const G=[['At the rim',[0]],['Midrange',[1,2]],['Corner 3',[3]],['Above-the-break 3',[4]]];const agg=(Z,ix)=>ix.reduce((a,i)=>[a[0]+Z[i][0],a[1]+Z[i][1]],[0,0]);
@@ -2251,24 +2251,28 @@ function vLineups(v,D,R){
 }
 
 /* ---------- Shots ---------- */
+/* corner threes split into the left and right corner (from each shot's spot), so each corner strip shows its own numbers */
+function withCorners(Z,list){const cs=[[0,0],[0,0]];list.forEach(q=>{if(q.zi!==3||q.x==null)return;const k=q.x<25?0:1;cs[k][1]++;if(q.m)cs[k][0]++});if(cs[0][1]+cs[1][1]===Z[3][1])Z.cs=cs;return Z}
 function zoneCourt(Z,tot,label,BZ,TC){TC=TC||'#860038';const av=i=>BZ[i][1]?BZ[i][0]/BZ[i][1]:LG[ZN[i][0]][0];
   const Sx=8,W=50*Sx,Hh=36*Sx,x=v=>v*Sx,y=v=>(v+5.25)*Sx;
-  const col=i=>{const[m,a]=Z[i];if(a<3)return'var(--track)';const t=Math.max(-1,Math.min(1,(m/a-av(i))/.15));return t>=0?`color-mix(in srgb,${TC} ${Math.round(18+t*70)}%,var(--card))`:`color-mix(in srgb,#c9a227 ${Math.round(12-t*45)}%,var(--card))`};
+  const col=(i,ma)=>{const[m,a]=ma||Z[i];if(a<3)return'var(--track)';const t=Math.max(-1,Math.min(1,(m/a-av(i))/.15));return t>=0?`color-mix(in srgb,${TC} ${Math.round(18+t*70)}%,var(--card))`:`color-mix(in srgb,#c9a227 ${Math.round(12-t*45)}%,var(--card))`};
   const fcOf=i=>{const[m,a]=Z[i];return a>=3&&(m/a-av(i))>.09?'#fff':'var(--fg)'};
   const lab=(i,cx,cy,small)=>{const[m,a]=Z[i];if(!a)return'';const df=(m/a-av(i))*100;const fc=fcOf(i);
-    return`<g><text x="${cx}" y="${cy}" text-anchor="middle" style="fill:${fc};font:700 ${small?12:13}px var(--mono)">${m}-${a}</text><text x="${cx}" y="${cy+(small?12:14)}" text-anchor="middle" style="fill:${fc};font:500 ${small?9.5:10.5}px var(--mono)">${Math.round(m/a*100)}%${small?' ':' · '}${df>=0?'+':'−'}${Math.abs(df).toFixed(0)}</text></g>`};
+    return`<g><text x="${cx}" y="${cy}" text-anchor="middle" style="fill:${fc};font:700 ${small?12:13}px var(--mono)">${m}-${a}</text><text x="${cx}" y="${cy+(small?12:14)}" text-anchor="middle" style="fill:${fc};font:500 ${small?9.5:10.5}px var(--mono)">${Math.round(m/a*100)}%</text></g>`};
   const arc=`M${x(3)} 0 V${y(C3)} A${23.75*Sx} ${23.75*Sx} 0 0 0 ${x(47)} ${y(C3)} V0 Z`;
   /* at the rim = the restricted area: baseline to the hoop, then a 4-foot half circle */
   const rim=`M${x(20.5)} 0 V${y(0)} A${4.5*Sx} ${4.5*Sx} 0 0 0 ${x(29.5)} ${y(0)} V0 Z`;
   const cz=Z[3];const ln='stroke="var(--card)" stroke-opacity=".75" stroke-width="1.5" fill="none"';
   return `<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="${esc(label)}"><defs><clipPath id="in3"><path d="${arc}"/></clipPath></defs>
-  <rect width="${W}" height="${Hh}" fill="${col(4)}"/><rect x="0" y="0" width="${x(3)}" height="${y(C3)}" fill="${col(3)}"/><rect x="${x(47)}" y="0" width="${x(3)}" height="${y(C3)}" fill="${col(3)}"/>
+  <rect width="${W}" height="${Hh}" fill="${col(4)}"/><rect x="0" y="0" width="${x(3)}" height="${y(C3)}" fill="${col(3,Z.cs&&Z.cs[0])}"/><rect x="${x(47)}" y="0" width="${x(3)}" height="${y(C3)}" fill="${col(3,Z.cs&&Z.cs[1])}"/>
   <path d="${arc}" fill="${col(2)}"/><circle cx="${x(25)}" cy="${y(0)}" r="${14*Sx}" fill="${col(1)}" clip-path="url(#in3)"/><path d="${rim}" fill="${col(0)}"/>
   <g fill="none" stroke="var(--card)" stroke-width="2.5"><path d="${arc}"/><circle cx="${x(25)}" cy="${y(0)}" r="${14*Sx}" clip-path="url(#in3)"/><path d="${rim}"/></g>
   <g ${ln}><rect x="${x(17)}" y="0" width="${16*Sx}" height="${19*Sx}"/><path d="M${x(19)} ${19*Sx} A${6*Sx} ${6*Sx} 0 0 0 ${x(31)} ${19*Sx}"/></g>
   <line x1="${x(22)}" x2="${x(28)}" y1="${y(-1.25)}" y2="${y(-1.25)}" stroke="${fcOf(0)}" stroke-width="2.5"/><circle cx="${x(25)}" cy="${y(0)}" r="${0.75*Sx}" fill="none" stroke="${fcOf(0)}" stroke-width="2"/>
   ${lab(0,x(25),y(2.3),true)}${lab(1,x(25),y(9.6))}${lab(2,x(25),y(17.5))}${lab(4,x(25),y(28))}
-  ${cz[1]?`<text x="${x(1.5)}" y="${y(2)}" text-anchor="middle" style="fill:var(--fg);font:700 11px var(--mono)" transform="rotate(-90 ${x(1.5)} ${y(2)})">${cz[0]}-${cz[1]} corner</text>`:''}</svg>`;
+  ${(()=>{const t=(cx,ma,lab)=>ma[1]?`<text x="${cx}" y="${y(C3)/2}" text-anchor="middle" dominant-baseline="central" style="fill:${ma[1]>=3&&ma[0]/ma[1]-av(3)>.09?'#fff':'var(--fg)'};font:700 11px var(--mono)" transform="rotate(-90 ${cx} ${y(C3)/2})">${ma[0]}-${ma[1]} · ${Math.round(ma[0]/ma[1]*100)}%${lab}</text>`:'';
+    /* each corner its own numbers when the split is known, else both corners together on the left strip */
+    return Z.cs?t(x(1.5),Z.cs[0],'')+t(x(48.5),Z.cs[1],''):t(x(1.5),cz,' both')})()}</svg>`;
 }
 
 function dotCourt(sh,col){const Sx=8,W=50*Sx,Hh=36*Sx,x=v=>v*Sx,y=v=>(v+5.25)*Sx;
@@ -2331,11 +2335,11 @@ function vShots(v,D,R){
   if(!BZ){BZ=S.season&&BLIVE&&S.season===BLIVE.season?BLIVE.lg:ZN.map(([k])=>[LG[k][0]*1000,1000]);baseLab='NBA '+(S.season?S.season.replace('-','–'):SL)+' average'}
   const av=i=>BZ[i][1]?BZ[i][0]/BZ[i][1]:LG[ZN[i][0]][0];
   const xy=sh.filter(q=>q.hasXY);
-  const Z=ZN.map(()=>[0,0]);xy.forEach(q=>{Z[q.zi][1]++;if(q.m)Z[q.zi][0]++});
+  const Z=ZN.map(()=>[0,0]);xy.forEach(q=>{Z[q.zi][1]++;if(q.m)Z[q.zi][0]++});withCorners(Z,xy);
   const g=el('div','grid2'+(S.f.shView==='dots'?' dots':''));const left=el('div','zchart');
   const who=S.f.shPl==='all'?t.abbr:D.P[S.f.shPl].name;const typeLab=S.f.shType==='all'?'':' · '+PT[+S.f.shType][1].toLowerCase();
   if(S.f.shView==='bars'){left.appendChild(zoneBars(D,R,t,sh,BZ,baseLab))}
-  else if(S.f.shView==='zones'){left.innerHTML=zoneCourt(Z,xy.length,who+' shooting by zone',BZ,t.c);left.insertAdjacentHTML('beforeend',`<div class="leg"><span><i style="background:${t.c}"></i>Better than ${esc(baseLab)}</span><span><i style="background:color-mix(in srgb,#c9a227 55%,var(--card))"></i>Worse</span><span>Each zone: makes-attempts, FG% and points above or below ${esc(baseLab)} in that zone. Fewer than 3 shots stays gray.</span></div>`)}
+  else if(S.f.shView==='zones'){left.innerHTML=zoneCourt(Z,xy.length,who+' shooting by zone',BZ,t.c);left.insertAdjacentHTML('beforeend',`<div class="leg"><span><i style="background:${t.c}"></i>Better than ${esc(baseLab)}</span><span><i style="background:color-mix(in srgb,#c9a227 55%,var(--card))"></i>Worse</span><span>Each zone: makes-attempts and FG%. Shaded better or worse than ${esc(baseLab)} there. Fewer than 3 shots stays gray.</span></div>`)}
   else{left.innerHTML=dotCourt(xy,t.c);left.insertAdjacentHTML('beforeend',`<div class="leg"><span><i style="background:${t.c};border-radius:50%"></i>Made</span><span>✕ Missed</span><span>${sh.filter(q=>q.m).length}-${sh.length} FG${esc(typeLab)}</span></div>`)}
   const right=el('div');
   /* shot types: frequency and efficiency */
