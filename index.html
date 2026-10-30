@@ -866,7 +866,7 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
       <input id="hx-q" type="search" placeholder="Type a number or a name" aria-label="Find a number or player"><div class="hx-nums" id="hx-nums"></div><ul class="kv" id="hx-wore"></ul></section>
     <section id="hx-draft"><div class="block-h"><h2>Draft history</h2><span id="hx-draft-n"></span></div>
       <div class="hx-dctl"><label class="hx-sel"><span>Decade</span><select id="hx-dec" aria-label="Decade"></select></label><label class="hx-tg"><input type="checkbox" id="hx-r1"><span>First round only</span></label><label class="hx-tg"><input type="checkbox" id="hx-pl"><span>Played for the Cavs</span></label><span class="hx-key"><span class="rt-key"><i class="on"></i>Played for the Cavs</span></span></div>
-      <div class="tablebox"><table class="hx-t"><thead><tr><th>Year</th><th>Pick</th><th>Player</th><th>From</th></tr></thead><tbody id="hx-draft-b"></tbody></table></div></section>
+      <div class="tablebox"><table class="hx-t"><thead><tr><th>Year</th><th>Pick</th><th>Player</th><th>Pos</th><th>Class</th><th>From</th></tr></thead><tbody id="hx-draft-b"></tbody></table></div></section>
     <section id="hx-coach"><div class="block-h"><h2>Head coaches</h2><span id="hx-coach-n"></span></div>
       <div class="tablebox"><table class="hx-t"><thead id="hx-coach-h"><tr><th class="hx-srt" data-k="0">Coach</th><th class="hx-srt" data-k="1">Years</th><th class="r hx-srt" data-k="2">Record</th><th class="r hx-srt" data-k="3">Playoffs</th><th class="hx-cn">Notes</th></tr></thead><tbody id="hx-coach-b"></tbody></table></div></section>
     <section id="hx-home"><div class="block-h"><h2>Homes of the Cavs</h2><span>Three buildings</span></div><ol class="hx-tl" id="hx-tl"></ol></section>
@@ -4668,7 +4668,7 @@ function draw(){const $=id=>document.getElementById(id);
    [...new Set(D.map(d=>Math.floor(d[0]/10)*10))].sort((a,b)=>b-a).forEach(d=>sel.appendChild(new Option(d+'s',String(d))));r1.checked=true;
    const ord=n=>n+(['th','st','nd','rd'][(n%100-20)%10]||['th','st','nd','rd'][n%100]||'th');
    const render=()=>{tb.textContent='';const rows=D.filter(d=>(sel.value==='all'||Math.floor(d[0]/10)*10===+sel.value)&&(!r1.checked||d[1]===1)&&(!pl.checked||d[5])).sort((a,b)=>b[0]-a[0]||a[2]-b[2]);
-     rows.forEach(([y,r,p,n,sch,cle])=>{const tr=el('tr',cle?'hx-pl':null);const td=el('td');{const id=(H.bbd||{})[y+'|'+p+'|'+n];if(id===null)td.append(n);else td.appendChild(bbA(n,'hx-bb',id))}const ty=el('td','m');const ya=el('a','dlink',String(y));ya.href='https://www.basketball-reference.com/draft/NBA_'+y+'.html';ya.target='_blank';ya.rel='noopener';ya.title='Full '+y+' draft on Basketball Reference';ty.appendChild(ya);tr.append(ty,el('td','m',ord(r)+' · No. '+p),td,el('td','dim',sch||'—'));tb.appendChild(tr)});
+     rows.forEach(([y,r,p,n,sch,cle])=>{const tr=el('tr',cle?'hx-pl':null);const td=el('td');{const id=(H.bbd||{})[y+'|'+p+'|'+n];if(id===null)td.append(n);else td.appendChild(bbA(n,'hx-bb',id))}const ty=el('td','m');const ya=el('a','dlink',String(y));ya.href='https://www.basketball-reference.com/draft/NBA_'+y+'.html';ya.target='_blank';ya.rel='noopener';ya.title='Full '+y+' draft on Basketball Reference';ty.appendChild(ya);const xx=(H.dx||{})[y+'|'+p+'|'+n]||[];tr.append(ty,el('td','m',ord(r)+' · No. '+p),td,el('td','m',xx[0]||'—'),el('td',null,xx[1]||'—'),el('td','dim',sch||'—'));tb.appendChild(tr)});
      $('hx-draft-n').textContent=rows.length+' picks shown · '+D.length+' since 1970'};
    [sel,r1,pl].forEach(e=>e.onchange=render);render()}
   /* coaches */
