@@ -271,7 +271,9 @@ const html = build(D, g, score, b.top || '', ourBox, { issueDay: today, rcf, new
 const [cs, os] = score.split('-').map(Number);
 const topBit = b.top ? b.top.split(':')[0].split(' ').slice(-1)[0] + ' ' + (b.top.match(/(\d+) pts/) || [])[1] : '';
 const msBit = (() => { const m = (milestone() || '').match(/^(?!Milestone watch)(\S+ )?(\S+) (reached [\d,]+ career \w+|passed .+? for \d+\w+ on the Cavs' all-time \w+)/); return m ? `${m[2]} ${m[3].replace(/^reached/, 'hits').replace(/ on the Cavs' all-time (\w+)/, ' in Cavs $1').replace(/^passed .+? for/, 'moves to')}` : ''; })();
-const subj = `${!(LIVE && MODE !== 'test') ? '[Test] ' : ''}☕ Cavs ${cs}, ${NICK[g[1]] || g[1]} ${os}${msBit ? ' · ' + msBit : topBit ? ' · ' + topBit : ''}`;
+/* subject is just the score so it fits on one line in phone mail apps; the top scorer is already in the preview text (Oct 30) */
+const subj = `${!(LIVE && MODE !== 'test') ? '[Test] ' : ''}☕ Cavs ${cs}, ${NICK[g[1]] || g[1]} ${os}`;
+void msBit; void topBit;
 await mkdir(new URL('nl/', root), { recursive: true });
 await writeFile(new URL('nl/last-issue.html', root), `<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>${esc(subj)}</title><body style="margin:0">${html.replace('<!--UNSUB-->', '')}</body>`);
 
