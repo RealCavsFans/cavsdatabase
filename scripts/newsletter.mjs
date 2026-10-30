@@ -272,7 +272,10 @@ const [cs, os] = score.split('-').map(Number);
 const topBit = b.top ? b.top.split(':')[0].split(' ').slice(-1)[0] + ' ' + (b.top.match(/(\d+) pts/) || [])[1] : '';
 const msBit = (() => { const m = (milestone() || '').match(/^(?!Milestone watch)(\S+ )?(\S+) (reached [\d,]+ career \w+|passed .+? for \d+\w+ on the Cavs' all-time \w+)/); return m ? `${m[2]} ${m[3].replace(/^reached/, 'hits').replace(/ on the Cavs' all-time (\w+)/, ' in Cavs $1').replace(/^passed .+? for/, 'moves to')}` : ''; })();
 /* subject is just the score so it fits on one line in phone mail apps; the top scorer is already in the preview text (Oct 30) */
-const subj = `${!(LIVE && MODE !== 'test') ? '[Test] ' : ''}☕ Cavs ${cs}, ${NICK[g[1]] || g[1]} ${os}`;
+/* winner first, then the Cavs' record after the game, e.g. "Hawks 114, Cavs 111 (3–3)" (Oct 30) */
+const recS = (() => { const r = (D.SEASON.results || '').replace(/[^WL]/g, ''); if (!r.length || preseason) return ''; const w = (r.match(/W/g) || []).length; return ` (${w}\u2013${r.length - w})`; })();
+const oppN = NICK[g[1]] || g[1];
+const subj = `${!(LIVE && MODE !== 'test') ? '[Test] ' : ''}☕ ${cs > os ? `Cavs ${cs}, ${oppN} ${os}` : `${oppN} ${os}, Cavs ${cs}`}${recS}`;
 void msBit; void topBit;
 await mkdir(new URL('nl/', root), { recursive: true });
 await writeFile(new URL('nl/last-issue.html', root), `<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>${esc(subj)}</title><body style="margin:0">${html.replace('<!--UNSUB-->', '')}</body>`);
