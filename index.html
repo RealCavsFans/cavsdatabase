@@ -4932,6 +4932,10 @@ const INTRO_V='tait';
   ['roster','roster',()=>document.querySelector('#view-roster .segs'),()=>[document.querySelector('#view-roster .tablebox:not([hidden])')||$('rv-bio')],'Cavs roster 2026–27'],
   ['roster-tree','roster-tree',()=>document.querySelector('#view-roster-tree .rt-card>.block-h'),()=>[document.querySelector('#view-roster-tree .rt-card')],'How this roster was built'],
   ['trade-trees','roster-tree',()=>document.querySelector('#rt-trees>.block-h'),()=>[$('rt-trees')],'Trade trees'],
+  ['chasing-history','history',()=>par($('chase-h')),()=>[$('chase')],'Chasing history'],
+  ['cavs-honors','history',()=>hOf('hx-aw'),()=>[hOf('hx-aw'),$('hx-aw')],'Cavs honors'],
+  ['all-time-leaders','history',()=>hOf('hx-lead-t'),()=>[hOf('hx-lead-t'),$('hx-lead-l')],()=>'All-time leaders · '+((document.querySelector('#hx-lead-t [aria-selected="true"]')||{}).textContent||'')],
+  ['franchise-records','history',()=>hOf('hx-rec-t'),()=>[hOf('hx-rec-t'),$('hx-rec-l')],()=>'Franchise records · '+((document.querySelector('#hx-rec-t [aria-selected="true"]')||{}).textContent||'')],
   ['cash-in-trades','assets',()=>hOf('cashtr'),()=>[hOf('cashtr'),$('cashtr')],'Cash in trades'],
   ['drafted-players','assets',()=>hOf('rights'),()=>[hOf('rights'),$('rights')],'Drafted players'],
   ['depth-chart','roster',()=>document.querySelector('.dsheet .ds-hdr'),()=>[document.querySelector('.dsheet')],'Depth chart'],
@@ -5029,10 +5033,10 @@ const INTRO_V='tait';
    if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]}))toast('Image ready','Save or share',save);else save();
   }catch(e){toast('Couldn’t make the image. Try again.')}
   finally{boxes[0].removeAttribute('data-capfirst');boxes.forEach(bx=>bx.querySelectorAll('[data-caphide]').forEach(x=>x.removeAttribute('data-caphide')));if(capEl)capEl.classList.remove('capmode');btn.disabled=false}}
- function attach(){document.querySelectorAll('.xact button:empty').forEach(b=>{b.innerHTML=b.title==='Share link'?I_L:I_C});T.forEach(([id,route,hdr,boxes,label])=>{const h=hdr();if(!h||h.dataset.anchor)return;h.dataset.anchor=id;h.classList.add('hasx');
+ function attach(){document.querySelectorAll('.xact button:empty').forEach(b=>{b.innerHTML=b.title==='Share link'?I_L:I_C});T.forEach(([id,route,hdr,boxes,label0])=>{const h=hdr();if(!h||h.dataset.anchor)return;const lf=()=>typeof label0==='function'?label0():label0,label=typeof label0==='function'?'this list':label0;h.dataset.anchor=id;h.classList.add('hasx');
   const w=document.createElement('span');w.className='xact';
-  const b1=document.createElement('button');b1.type='button';b1.innerHTML=I_L;b1.title='Share link';b1.setAttribute('aria-label','Share a link to '+label);b1.onclick=()=>share(route,id,label);
-  const b2=document.createElement('button');b2.type='button';b2.innerHTML=I_C;b2.title='Save as image';b2.setAttribute('aria-label','Save '+label+' as an image');b2.onclick=()=>{if(CUSTOM[id]){const nd=CUSTOM[id]();if(nd){cardShot(nd,route,id,label,b2);return}}const bx=boxes().filter(Boolean);if(bx.length)capture(route,id,label,bx,b2)};
+  const b1=document.createElement('button');b1.type='button';b1.innerHTML=I_L;b1.title='Share link';b1.setAttribute('aria-label','Share a link to '+label);b1.onclick=()=>share(route,id,lf());
+  const b2=document.createElement('button');b2.type='button';b2.innerHTML=I_C;b2.title='Save as image';b2.setAttribute('aria-label','Save '+label+' as an image');b2.onclick=()=>{if(CUSTOM[id]){const nd=CUSTOM[id]();if(nd){cardShot(nd,route,id,lf(),b2);return}}const bx=boxes().filter(Boolean);if(bx.length)capture(route,id,lf(),bx,b2)};
   w.append(b1,b2);const pl=T.find(x=>x[0]===id)[5];if(pl){w.classList.add('xact-'+pl);const bx=boxes()[0];if(bx){bx.classList.add('xhost');bx.appendChild(w)}}else h.appendChild(w)})}
 
  /* ---------- custom share cards: contract, cap position, next summer ---------- */
