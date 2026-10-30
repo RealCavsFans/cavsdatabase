@@ -1,10 +1,34 @@
 {
  "articles": [
   {
+   "src": "Fear The Sword",
+   "title": "Diving deeper into Cavs 114-111 loss to Hawks: Cavaliers are consistently inconsistent",
+   "link": "https://www.fearthesword.com/cavs-analysis/53770/cavs-diving-deeper-cleveland-cavaliers-atlanta-hawks-james-harden-jarrett-allen-kenny-atkinson-scottie-scheffler-milwaukee-brewers",
+   "date": "2026-10-30T04:24:13.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Player Grades: Cavs vs. Hawks – Cleveland starts fast, but falters late",
+   "link": "https://www.fearthesword.com/cavs-analysis/53772/player-grades-cavs-vs-hawks-cleveland-starts-fast-but-falters-late",
+   "date": "2026-10-30T03:01:38.000Z"
+  },
+  {
    "src": "cleveland.com",
    "title": "Cavs’ win streak snapped with 114-111 loss to Hawks",
    "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQTXFJZ3QzVTJ1Mnpxd3hybUR4QmtKYzFleWdOdWJIeTJ4OGQ1d3Z6Y1g0QkRBVVViSFlDcmQ3bUN2QnQzQ0ROU0pFMUd2blk0THpJR3JPZUEwaHFaVWJtb2kzR3A2N29OQnl0cFpuQ1Z3NFlEUEFNRWRSekFRNGZjMzJXZnhqZDZkOGR4QTF2Y00wc19ONEtwVVdB?oc=5",
    "date": "2026-10-30T02:49:00.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Cavaliers fall to the Hawks despite 24 points from James Harden",
+   "link": "https://www.fearthesword.com/cavs-scores-results/53774/cavaliers-fall-to-the-hawks-despite-24-points-from-james-harden",
+   "date": "2026-10-30T02:39:26.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Cavs at Hawks game thread",
+   "link": "https://www.fearthesword.com/cavs-game-previews/53735/cavs-at-hawks-game-thread",
+   "date": "2026-10-30T00:00:00.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -73,28 +97,10 @@
    "date": "2026-10-28T23:00:00.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "James Harden’s former coach isn’t surprised that he’s still performing at this level",
-   "link": "https://www.fearthesword.com/cavs-news/53654/cavs-james-harden-cleveland-cavaliers-washington-wizards-brian-keefe-oklahoma-city-thunder",
-   "date": "2026-10-28T22:45:18.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "NBA coach on injury wave: ‘We as coaches are asking a lot about it’",
-   "link": "https://www.fearthesword.com/cavs-analysis/53656/nba-coach-on-injury-wave-we-as-coaches-are-asking-a-lot-about-it",
-   "date": "2026-10-28T22:20:57.000Z"
-  },
-  {
    "src": "Cavaliers on SI",
    "title": "The Cavs’ Quiet Connector: How Jaylon Tyson Is Linking the Offense Early in 2026-27",
    "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOZzlENDJ0QXNud3NqOVotckdoVGVEX3czUWlCZVFKeWU4eFZXaEhUV21IMjRvcXExYldrQm9zenRCZGE1VTFPY3UwS19saFo3N3JmLW55MzlfN3kyNTl5YnlvMTZfbFU4Tm5CcjB0djVJNlJTTEN2bzNaZnFqTjl5dFFHY0xoRS1tX0NpR3JRZTZJSXRWakxsczNPeW5ZQWt0Sk1lcTBNOHZyR2dsdFJuTmxqUFlsRUUtN05xTFh0bzI0ZlFpeC1fN2VSeFQ?oc=5",
    "date": "2026-10-28T18:30:00.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cavs vs. Wizards: How to watch, odds, and injury report",
-   "link": "https://www.fearthesword.com/cavs-injury-report/53642/cavs-vs-wizards-how-to-watch-odds-and-injury-report",
-   "date": "2026-10-28T17:30:00.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -113,12 +119,6 @@
    "title": "Could Evan Mobley ever develop into a reliable free throw shooter?",
    "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQOEIwMlZsSkhlSExGMFFyTVVGSDhyWW5WbWd5cEE2bWRaczVYOEo5MmgtaE9UZVdiQ2VwNUROZ2g0Q2o0c1psdDh3WGl4NXFqNkg5bWoxTXNaNjRuU1NXb0doV3o0cHhEQVI3TnZUdFJjMURDSmZIZDRQSFQzZXJsWmItREVJNW1YX3RWdngyYmlJbUtOeHRxbGNOV2YtcHNRTXFmUGhPbw?oc=5",
    "date": "2026-10-28T14:00:00.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Meleek Thomas isn’t afraid of the moment: ‘I got everything that I need’",
-   "link": "https://www.fearthesword.com/cavs-analysis/53604/cavs-meleek-thomas-cleveland-cavaliers-donovan-mitchell-kenny-atkinson-pittsburgh-steelers",
-   "date": "2026-10-28T11:00:00.000Z"
   },
   {
    "src": "cleveland.com",
@@ -229,6 +229,12 @@
    "date": "2026-10-24T21:35:01.000Z"
   },
   {
+   "src": "Cavaliers on SI",
+   "title": "The Player That Played Like the Cavs MVP In the Season Opener Was...",
+   "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOaG9aS3BKSnVtQ0V3SGV3b2JJNk9IdEdYdWN2SEZjQk1YRUpRcVhyei1XZjNpX01wZUMzN2UyTlNfcFBSblE4TkdCZFlmb2h2NHVqdG4zXy1RaVpCNXA1VGRfTVlub3JIQ0l4U3YyaGxnRFRmQzg5UXp2XzZlMVJxSjdjbzhtc0J4OXdfNERNTTBvQkFwaEJNVXExWTlaXzRPY3BkUjkxY2swQWMzeWczQVFlN1Z6S28?oc=5",
+   "date": "2026-10-23T14:30:00.000Z"
+  },
+  {
    "src": "Hoops Rumors",
    "title": "Examining The 17 Teams With Standard Roster Openings",
    "link": "https://www.hoopsrumors.com/2026/10/examining-the-17-teams-with-standard-roster-openings.html",
@@ -257,12 +263,6 @@
    "title": "Everything To Know About the Cavs Season Opener Against the 76ers",
    "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNX1V5SnFheE5HNUR5QkY2aVpCT0ppVms5MVZIc3hjTDJfa21pdHhOcmRsWVFlOWUxb1dCRUlYaWVNbWdjUzNzQjg3VXVpbFhpS1dncW9GNk5VZWZvT2JGcjhCVTdBcGJZTGh1UFp0RFVnN2Fjd3BTNmVmRENtLWQzd3cyeHRHMGdnRHlKUER2TGFHOV9ib3dvbjlRX0I2akJDZkhlQ2w5WVItMFdwUTlCZ2xLcGVnV28?oc=5",
    "date": "2026-10-22T19:00:01.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "What Cavs' Meleek Thomas Can Learn From Yaxel Lendeborg After Controversial Debut",
-   "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOMkR0TlRLR28wS3RiY016YnBsaGlOZllOaDlGV2kyOWQ1eFpUdDhsMzJGUUlZVTFER25La1dMcldQbXVXeTRjSHJaYVBoeGFrSEhTSVFRMm9oMGlVelV1QkUtZ1BGRXpsSHJOMzIwWHFmTE9CYzhPMlVMNDlWR1ZxQzY1WGZwTGNGdjFSVkRON2ZuQVJtUkdjOURzdHdJYkJuRENKNnJGRkF0d2N6ZWZoVnZTM3h4VGVBRkk1NGtPYzlOZEZScnQtbTQ0Yw?oc=5",
-   "date": "2026-10-22T12:39:28.000Z"
   },
   {
    "src": "Hoops Rumors",
