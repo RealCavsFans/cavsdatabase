@@ -18,7 +18,7 @@ const etDate = (d = new Date()) => new Intl.DateTimeFormat('en-CA', { timeZone: 
 let L = { season: SEASON, updated: null, games: [], players: {} };
 try { const prev = JSON.parse(await readFile(FILE, 'utf8')); if (prev.season === SEASON) L = prev; } catch {}
 const done = new Set(L.games);
-// SH.g[eventId] = { d, t: { ABBR: [a, axy, ...per type [m, a, pts, ast] x8, ...per zone [m, a] x5] } }
+// SH.g[eventId] = { d, t: { ABBR: [a, axy, ...per type [m, a, pts, ast] x8, ...per zone [m, a] x5] }, x: { ABBR: { q: [[pf, pa, poss, opp poss, sec] x4], c: clutch same, b: [starter pts, bench pts, starter sec, bench sec] } } }
 let SH = { season: SEASON, g: {} };
 try { const prev = JSON.parse(await readFile(SFILE, 'utf8')); if (prev.season === SEASON) SH = prev; } catch {}
 function shotsOf(sum) {
@@ -31,7 +31,12 @@ function shotsOf(sum) {
       if (q.hasXY) { v[1]++; if (q.zi != null) { const k = Z0 + q.zi * 2; v[k + 1]++; if (q.m) v[k]++; } } }
     out[tm.abbr] = v;
   }
-  return out;
+  /* extras for the season page's NBA ranks: each quarter and the clutch (points for/against, counted possessions, seconds), and starters vs bench */
+  const x = {};
+  const part = f => { const Rf = C.deriveCore(D, D.plays, f); return Object.fromEntries(D.teams.map(t => { const o = D.teams.find(u => u !== t), a = Rf.T[t.id] || {}, b = Rf.T[o.id] || {}; return [t.abbr, [a.pts || 0, b.pts || 0, Math.round((a.np || 0) * 10) / 10, Math.round((b.np || 0) * 10) / 10, Math.round(a.sec || 0)]]; })); };
+  const Q = [[1], [2], [3], [4]].map(part), CL = part('clutch');
+  for (const t of D.teams) { const a = R.T[t.id] || {}; x[t.abbr] = { q: Q.map(q => q[t.abbr]), c: CL[t.abbr], b: [a.stPts || 0, a.bnPts || 0, Math.round(a.stSec || 0), Math.round(a.bnSec || 0)] }; }
+  return { v: out, x };
 }
 let shBack = 0;
 const today = etDate();
@@ -98,11 +103,11 @@ for (const date of dates.reverse()) {               // newest first, so a long b
     if (!ev.status?.type?.completed) continue;
     const seen = done.has(ev.id);
     const oldTg = seen && L.tg[ev.id] && L.tg[ev.id].t && L.tg[ev.id].t[0] && L.tg[ev.id].t[0].ast == null;   // saved before Oct 25: re-read once for the extra team stats
-    const needSh = !SH.g[ev.id] && shBack < 60;
+    const needSh = (!SH.g[ev.id] || !SH.g[ev.id].x) && shBack < 60;
     if (seen && !oldTg && !needSh && !(fresh && L.recent[ev.id] && Date.now() - (L.recent[ev.id].at || 0) > 4 * 36e5)) continue;  // re-check recent games every 4 hours; older ones are final for good
     let sum; try { sum = await get(`${ESPN}/summary?event=${ev.id}`); } catch { failed++; continue; }
     const tg = teamsOf(sum, ev); if (tg) L.tg[ev.id] = { d: date, ...tg };
-    try { const sh = shotsOf(sum); if (sh) { if (!SH.g[ev.id]) shBack++; SH.g[ev.id] = { d: date, t: sh }; } } catch (e) { console.log('shots: could not sort', ev.id, String(e)); }
+    try { const sh = shotsOf(sum); if (sh) { if (!SH.g[ev.id] || !SH.g[ev.id].x) shBack++; SH.g[ev.id] = { d: date, t: sh.v, x: sh.x }; } } catch (e) { console.log('shots: could not sort', ev.id, String(e)); }
     if (seen && needSh && !oldTg && !(fresh && L.recent[ev.id])) continue;   // only came back for the shots
     const lines = tg?.cupFinal ? {} : linesOf(sum);   // the Cup final doesn't count toward season stats
     if (seen && oldTg && !L.recent[ev.id]) continue;                       // team lines refreshed; player lines were already counted
