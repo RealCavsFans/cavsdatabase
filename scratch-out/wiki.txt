@@ -1,0 +1,1098 @@
+{{Short description|List of selected Cleveland Cavaliers players from the NBA draft}}
+{{Use mdy dates|date=May 2025}}
+
+In their {{age|1970|2|6}}-year history, the [[Cleveland Cavaliers]] have selected the following players in the [[National Basketball Association draft]].
+
+==Key==
+{| class="wikitable"
+|bgcolor="#FFCCCC"|<small>'''[[Naismith Memorial Basketball Hall of Fame|Naismith Basketball Hall of Famer]]'''</small>
+|bgcolor="#CCFFCC"|<small>'''[[List of first overall NBA draft picks|First overall NBA draft pick]]'''</small>
+|bgcolor="FFCC00"|<small>'''[[List of NBA All-Stars|Selected for an NBA All-Star Game]]'''</small>
+|}
+{| class="wikitable sortable"
+|-
+! style="{{NBA color cell|Cleveland Cavaliers|border=2}};"|Year !! style="{{NBA color cell|Cleveland Cavaliers|border=2}};"|Round !! style="{{NBA color cell|Cleveland Cavaliers|border=2}};"|Pick !! style="{{NBA color cell|Cleveland Cavaliers|border=2}};"|Player !! style="{{NBA color cell|Cleveland Cavaliers|border=2}};"| College/high school/club
+|-
+| [[2024 NBA draft|2025]] || 2 	|| 49
+| {{sortname|Tyrese|Proctor}}
+| [[Duke University]]
+|-
+| [[2024 NBA draft|2025]] || 2 	|| 58
+| {{sortname|Saliou|Niang}}
+| [[Italy]]
+|-
+| [[2024 NBA draft|2024]] || 1 	|| 20 	
+| {{sortname|Jaylon|Tyson}}
+| [[University of California, Berkeley]]
+|-
+| [[2023 NBA draft|2023]] || 2 	|| 49 	
+| {{sortname|Emoni|Bates}}
+| [[Eastern Michigan University]]
+|-
+| [[2022 NBA draft|2022]] || 1 || 14
+| {{sortname|Ochai|Agbaji}}
+| [[University of Kansas]]
+|-
+| [[2022 NBA draft|2022]] || 2 || 39
+| {{sortname|Khalifa|Diop}}
+| [[Senegal]]
+|-
+| [[2022 NBA draft|2022]] || 2 || 49
+| {{sortname|Isaiah|Mobley}}
+| [[University of Southern California|USC]]
+|-
+| [[2022 NBA draft|2022]] || 2 || 56
+| {{sortname|Luke|Travers}}
+| [[Australia]]
+|-
+| [[2021 NBA draft|2021]] || 1 || 3
+| bgcolor="FFCC00"| {{sortname|Evan|Mobley}}
+| [[University of Southern California|USC]]
+|-
+| [[2020 NBA draft|2020]] || 1 || 5
+| {{sortname|Isaac|Okoro}}
+| [[Auburn University]]
+|-
+| [[2019 NBA draft|2019]] || 1 || 5
+| bgcolor="FFCC00"|{{sortname|Darius|Garland}}
+| [[Vanderbilt University]]
+|-
+| [[2019 NBA draft|2019]] || 1 || 26
+| {{sortname|Dylan|Windler}}
+| [[Belmont University]]
+|-
+| [[2018 NBA draft|2018]] || 1 || 8
+| {{sortname|Collin|Sexton}}
+| [[University of Alabama]]
+|-
+| [[2015 NBA draft|2015]] || 1 || 24
+| {{sortname|Tyus|Jones}}
+| [[Duke University]]
+|-
+| [[2015 NBA draft|2015]] || 2 || 53
+| {{sortname|Sir'Dominic|Pointer}}
+| [[St. John's University (New York City)|St. John's University]]
+|-
+|  [[2014 NBA draft|2014]] || 1 || bgcolor="#CCFFCC"|1
+|  bgcolor="FFCC00"|{{sortname|Andrew|Wiggins|Andrew Wiggins}}
+|  [[University of Kansas]]
+|-
+|  [[2014 NBA draft|2014]] || 2 || 33
+|  {{sortname|Joe|Harris|dab=basketball}}
+|  [[University of Virginia]]
+|-
+| [[2013 NBA draft|2013]] || 1 || bgcolor="#CCFFCC"|1
+| {{sortname|Anthony|Bennett|dab=basketball}}
+| [[University of Nevada, Las Vegas]]
+|-
+| [[2013 NBA draft|2013]] || 1 || 19
+| {{sortname|Sergey|Karasev|}}
+| [[Russia]]
+|-
+| [[2013 NBA draft|2013]] || 2 || 31
+| {{sortname|Allen|Crabbe|}}
+| [[University of California, Berkeley]]
+|-
+| [[2013 NBA draft|2013]] || 2 || 34
+| {{sortname|Carrick|Felix|}}
+| [[Arizona State University]]
+
+|-
+| [[2012 NBA draft|2012]] || 1 || 4
+| {{sortname|Dion|Waiters|}}
+| [[Syracuse University]]
+|-
+| [[2012 NBA draft|2012]] || 1 || 24
+| {{sortname|Jared|Cunningham|}}
+| [[Oregon State University]]
+|-
+| [[2012 NBA draft|2012]] || 2 || 33
+| {{sortname|Bernard|James|}}
+| [[Florida State University]]
+|-
+| [[2012 NBA draft|2012]] || 2 || 34
+| {{sortname|Jae|Crowder|}}
+| [[Marquette University]]
+|-
+| [[2011 NBA draft|2011]] || 1 || bgcolor="#CCFFCC"|1
+| bgcolor="FFCC00"|{{sortname|Kyrie|Irving|}}
+| [[Duke University]]
+|-
+| [[2011 NBA draft|2011]] || 1 || 4
+| {{sortname|Tristan|Thompson|}}
+| [[University of Texas at Austin]]
+|-
+| [[2011 NBA draft|2011]] || 2 || 32
+| {{sortname|Justin|Harper|Justin Harper (basketball)}}
+| [[University of Richmond]]
+|-
+| [[2011 NBA draft|2011]] || 2 || 54
+| {{sortname|Milan|Mačvan|}}
+| [[Serbia]]
+|-
+| [[2009 NBA draft|2009]] || 1 || 30
+| {{sortname|Christian|Eyenga|}}
+| [[DR Congo]]
+|-
+| [[2009 NBA draft|2009]] || 2 || 46
+| {{sortname|Danny|Green|dab=basketball}}
+| [[University of North Carolina]]
+|-
+| [[2008 NBA draft|2008]] || 1 || 19
+| {{sortname|JJ|Hickson}}
+| [[North Carolina State University]]
+|-
+| [[2006 NBA draft|2006]] || 1 || 25
+| {{sortname|Shannon|Brown|}}
+| [[Michigan State University]]
+|-
+| [[2006 NBA draft|2006]] || 2 || 42
+| {{sortname|Daniel|Gibson|}}
+| [[University of Texas at Austin]]
+|-
+| [[2006 NBA draft|2006]] || 2 || 55
+| {{sortname|Ejike|Ugboaja|}}
+| [[Nigeria]]
+|-
+| [[2004 NBA draft|2004]] || 1 || 10
+| {{sortname|Luke|Jackson|dab=basketball, born 1981}}
+| [[University of Oregon]]
+|-
+| [[2003 NBA draft|2003]] || 1 || bgcolor="#CCFFCC"|1
+| bgcolor="FFCC00"|{{sortname|LeBron|James|}}
+| [[St. Vincent–St. Mary High School]]
+|-
+| [[2003 NBA draft|2003]] || 2 || 31
+| {{sortname|Jason|Kapono|}}
+| [[University of California, Los Angeles]]
+|-
+| [[2002 NBA draft|2002]] || 1 || 6
+| {{sortname|Dajuan|Wagner|}}
+| [[University of Memphis]]
+|-
+| [[2002 NBA draft|2002]] || 2 || 34
+| bgcolor="FFCC00"|{{sortname|Carlos|Boozer|}}
+| [[Duke University]]
+|-
+| [[2001 NBA draft|2001]] || 1 || 8
+| {{sortname|DeSagana|Diop|}}
+| [[Oak Hill Academy (Mouth of Wilson, Virginia)|Oak Hill Academy]]
+|-
+| [[2001 NBA draft|2001]] || 1 || 20
+| {{sortname|Brendan|Haywood|}}
+| [[University of North Carolina]]
+|-
+| [[2001 NBA draft|2001]] || 2 || 35
+| {{sortname|Jeff|Trepagnier|}}
+| [[University of Southern California]]
+|-
+| [[2000 NBA draft|2000]] || 1 || 7
+| {{sortname|Jamal|Crawford|}}
+| [[University of Michigan]]
+|-
+| [[1999 NBA draft|1999]] || 1 || 8
+| {{sortname|Andre|Miller|}}
+| [[University of Utah]]
+|-
+| [[1999 NBA draft|1999]] || 1 || 11
+| {{sortname|Trajan|Langdon|}}
+| [[Duke University]]
+|-
+| [[1999 NBA draft|1999]] || 2 || 39
+| {{sortname|A. J.|Bramlett|}}
+| [[University of Arizona]]
+|-
+| [[1998 NBA draft|1998]] || 2 || 48
+| {{sortname|Ryan|Stack|}}
+| [[University of South Carolina]]
+|-
+| [[1997 NBA draft|1997]] || 1 || 13
+| {{sortname|Derek|Anderson|dab=basketball}}
+| [[University of Kentucky]]
+|-
+| [[1997 NBA draft|1997]] || 1 || 16
+| {{sortname|Brevin|Knight|}}
+| [[Stanford University]]
+|-
+| [[1997 NBA draft|1997]] || 2 || 44
+| {{sortname|Cedric|Henderson|Cedric Henderson (basketball, born 1975)}}
+| [[University of Memphis]]
+|-
+| [[1996 NBA draft|1996]] || 1 || 12
+| {{sortname|Vitaly|Potapenko|}}
+| [[Wright State University]]
+|-
+| [[1996 NBA draft|1996]] || 1 || 20
+| bgcolor="FFCC00"|{{sortname|Zydrunas|Ilgauskas|}}
+| [[Lithuania]]
+|-
+| [[1996 NBA draft|1996]] || 2 || 56
+| {{sortname|Reggie|Geary|}}
+| [[University of Arizona]]
+|-
+| [[1995 NBA draft|1995]] || 1 || 17
+| {{sortname|Bob|Sura|}}
+| [[Florida State University]]
+|-
+| [[1995 NBA draft|1995]] || 2 || 39
+| {{sortname|Donny|Marshall|}}
+| [[University of Connecticut]]
+|-
+| [[1994 NBA draft|1994]] || 2 || 42
+| {{sortname|Gary|Collier|dab=basketball}}
+| [[University of Tulsa]]
+|-
+| [[1993 NBA draft|1993]] || 1 || 22
+| {{sortname|Chris|Mills|dab=basketball}}
+| [[University of Arizona]]
+|-
+| [[1991 NBA draft|1991]] || 1 || 11
+| bgcolor="FFCC00"|{{sortname|Terrell|Brandon|}}
+| [[University of Oregon]]
+|-
+| [[1991 NBA draft|1991]] || 2 || 39
+| {{sortname|Jimmy|Oliver|dab=basketball}}
+| [[Purdue University]]
+|-
+| [[1990 NBA draft|1990]] || 2 || 52
+| {{sortname|Stefano|Rusconi|}}
+| [[Italy]]
+|-
+| [[1989 NBA draft|1989]] || 1 || 25
+| {{sortname|John|Morton|dab=basketball}}
+| [[Seton Hall University]]
+|-
+| [[1989 NBA draft|1989]] || 2 || 43
+| {{sortname|Chucky|Brown|}}
+| [[North Carolina State University]]
+|-
+| [[1988 NBA draft|1988]] || 1 || 22
+| {{sortname|Randolph|Keys|}}
+| [[University of Southern Mississippi]]
+|-
+| [[1988 NBA draft|1988]] || 3 || 64
+| {{sortname|Winston|Bennett|}}
+| [[University of Kentucky]]
+|-
+| [[1987 NBA draft|1987]] || 1 || 7
+| bgcolor="FFCC00"|{{sortname|Kevin|Johnson|dab=basketball player}}
+| [[University of California]]
+|-
+| [[1987 NBA draft|1987]] || 2 || 41
+| {{sortname|Kannard|Johnson|}}
+| [[Western Kentucky University]]
+|-
+| [[1987 NBA draft|1987]] || 3 || 52
+| {{sortname|Donald|Royal|}}
+| [[University of Notre Dame]]
+|-
+| [[1987 NBA draft|1987]] || 4 || 75
+| {{sortname|Chris|Dudley|}}
+| [[Yale University]]
+|-
+| [[1987 NBA draft|1987]] || 4 || 80
+| {{sortname|Carven|Holcombe|}}
+| [[Texas Christian University]]
+|-
+| [[1987 NBA draft|1987]] || 5 || 98
+| {{sortname|Carl|Lott|}}
+| [[Texas Christian University]]
+|-
+| [[1987 NBA draft|1987]] || 6 || 121
+| {{sortname|Harold|Jensen|}}
+| [[Villanova University]]
+|-
+| [[1987 NBA draft|1987]] || 7 || 144
+| {{sortname|Mike|Foster|dab=basketball}}
+| [[University of South Carolina]]
+|-
+| [[1986 NBA draft|1986]] || 1 || bgcolor="#CCFFCC"|1
+| bgcolor="FFCC00"|{{sortname|Brad|Daugherty|dab=basketball}}
+| [[University of North Carolina]]
+|-
+| [[1986 NBA draft|1986]] || 1 || 8
+| {{sortname|Ron|Harper|}}
+| [[Miami University]]
+|-
+| [[1986 NBA draft|1986]] || 2 || 29
+| {{sortname|Johnny|Newman|}}
+| [[University of Richmond]]
+|-
+| [[1986 NBA draft|1986]] || 3 || 50
+| {{sortname|Kevin|Henderson|dab=basketball}}
+| [[California State University, Fullerton]]
+|-
+| [[1986 NBA draft|1986]] || 4 || 73
+| {{sortname|Warren|Martin|dab=basketball}}
+| [[University of North Carolina]]
+|-
+| [[1986 NBA draft|1986]] || 5 || 96
+| {{sortname|Ben|Davis|nolink=y}}
+| [[Gardner–Webb University]]
+|-
+| [[1986 NBA draft|1986]] || 6 || 119
+| {{sortname|Gilbert|Wilburn|}}
+| [[New Mexico State University]]
+|-
+| [[1986 NBA draft|1986]] || 7 || 142
+| {{sortname|Ralph|Dalton|}}
+| [[Georgetown University]]
+|-
+| [[1985 NBA draft|1985]] || 1 || 9
+| bgcolor="FFCC00"|{{sortname|Charles|Oakley|}}
+| [[Virginia Union University]]
+|-
+| [[1985 NBA draft|1985]] || 2 || 30
+| {{sortname|Calvin|Duncan|Calvin Duncan (basketball)}}
+| [[Virginia Commonwealth University]]
+|-
+| [[1985 NBA draft|1985]] || 2 || 45
+| {{sortname|John|Williams|John "Hot Rod" Williams}}
+| [[Tulane University]]
+|-
+| [[1985 NBA draft|1985]] || 3 || 55
+| {{sortname|Herb|Johnson|dab=basketball}}
+| [[University of Tulsa]]
+|-
+| [[1985 NBA draft|1985]] || 4 || 79
+| {{sortname|Mark|Davis|dab=basketball, born 1963}}
+| [[Old Dominion University]]
+|-
+| [[1985 NBA draft|1985]] || 5 || 101
+| {{sortname|Gunther|Behnke|}}
+| [[Germany]]
+|-
+| [[1985 NBA draft|1985]] || 6 || 125
+| {{sortname|Ricky|Johnson|dab=basketball}}
+| [[Illinois State University]]
+|-
+| [[1985 NBA draft|1985]] || 7 || 147
+| {{sortname|Buzz|Peterson|}}
+| [[University of North Carolina]]
+|-
+| [[1984 NBA draft|1984]] || 1 || 12
+| {{sortname|Tim|McCormick|}}
+| [[University of Michigan]]
+|-
+| [[1984 NBA draft|1984]] || 2 || 27
+| {{sortname|Ron|Anderson|dab=basketball, born 1958}}
+| [[California State University, Fresno]]
+|-
+| [[1984 NBA draft|1984]] || 3 || 50
+| {{sortname|Ben|McDonald|dab=basketball}}
+| [[University of California, Irvine]]
+|-
+| [[1984 NBA draft|1984]] || 3 || 60
+| {{sortname|Leonard|Mitchell|dab=basketball}}
+| [[Louisiana State University]]
+|-
+| [[1984 NBA draft|1984]] || 4 || 73
+| {{sortname|Art|Aaron|}}
+| [[Northwestern University]]
+|-
+| [[1984 NBA draft|1984]] || 5 || 96
+| {{sortname|Vince|Hinchen|}}
+| [[Boise State University]]
+|-
+| [[1984 NBA draft|1984]] || 6 || 119
+| {{sortname|Matt|Doherty|dab=basketball}}
+| [[University of North Carolina]]
+|-
+| [[1984 NBA draft|1984]] || 7 || 142
+| {{sortname|Joe|Jakubick|}}
+| [[University of Akron]]
+|-
+| [[1984 NBA draft|1984]] || 8 || 165
+| {{sortname|Elliot|Beard|}}
+| [[Oberlin College]]
+|-
+| [[1984 NBA draft|1984]] || 9 || 187
+| {{sortname|John|Shimko|}}
+| [[Xavier University]]
+|-
+| [[1984 NBA draft|1984]] || 10 || 209
+| {{sortname|Darrell|Space|}}
+| [[Northeastern Illinois University]]
+|-
+| [[1983 NBA draft|1983]] || 1 || 20
+| {{sortname|Roy|Hinson|}}
+| [[Rutgers University]]
+|-
+| [[1983 NBA draft|1983]] || 1 || 24
+| {{sortname|Stewart|Granger|dab=basketball}}
+| [[Villanova University]]
+|-
+| [[1983 NBA draft|1983]] || 2 || 27
+| {{sortname|John|Garris|dab=basketball}}
+| [[Boston College]]
+|-
+| [[1983 NBA draft|1983]] || 3 || 50
+| {{sortname|Paul|Thompson|dab=basketball}}
+| [[Tulane University]]
+|-
+| [[1983 NBA draft|1983]] || 3 || 56
+| {{sortname|Larry|Anderson|dab=basketball}}
+| [[University of Nevada, Las Vegas]]
+|-
+| [[1983 NBA draft|1983]] || 3 || 66
+| {{sortname|Les|Craft|}}
+| [[Kansas State University]]
+|-
+| [[1983 NBA draft|1983]] || 3 || 67
+| {{sortname|Derrick|Hord|}}
+| [[University of Kentucky]]
+|-
+| [[1983 NBA draft|1983]] || 4 || 73
+| {{sortname|Dwight|Jones|dab=Cincinnati}}
+| [[University of Cincinnati]]
+|-
+| [[1983 NBA draft|1983]] || 5 || 96
+| {{sortname|Chris|Logan|}}
+| [[College of the Holy Cross]]
+|-
+| [[1983 NBA draft|1983]] || 6 || 119
+| {{sortname|Mel|McLaughlin|dab=basketball}}
+| [[Central Michigan University]]
+|-
+| [[1983 NBA draft|1983]] || 7 || 142
+| {{sortname|John|Columbo|}}
+| [[John Carroll University]]
+|-
+| [[1983 NBA draft|1983]] || 8 || 165
+| {{sortname|Larry|Tucker|dab=basketball}}
+| [[Lewis University]]
+|-
+| [[1983 NBA draft|1983]] || 9 || 187
+| {{sortname|Joe|Brown|dab=basketball}}
+| [[Georgia State University]]
+|-
+| [[1983 NBA draft|1983]] || 10 || 208
+| {{sortname|Jon|Hanley|}}
+| [[Xavier University]]
+|-
+| [[1982 NBA draft|1982]] || 1 || 12
+| {{sortname|John|Bagley|dab=basketball}}
+| [[Boston College]]
+|-
+| [[1982 NBA draft|1982]] || 2 || 28
+| {{sortname|Dave|Magley|}}
+| [[University of Kansas]]
+|-
+| [[1982 NBA draft|1982]] || 3 || 47
+| {{sortname|Michael|Wilson|Mike Wilson (basketball)}}
+| [[Marquette University]]
+|-
+| [[1982 NBA draft|1982]] || 4 || 70
+| {{sortname|Reggie|Hannah|}}
+| [[University of South Alabama]]
+|-
+| [[1982 NBA draft|1982]] || 5 || 93
+| {{sortname|Terry|White|dab=basketball}}
+| [[University of Texas at El Paso]]
+|-
+| [[1982 NBA draft|1982]] || 6 || 116
+| {{sortname|Vince|Reynolds|}}
+| [[University of South Florida]]
+|-
+| [[1982 NBA draft|1982]] || 7 || 139
+| {{sortname|Randy|Reed|}}
+| [[Kansas State University]]
+|-
+| [[1982 NBA draft|1982]] || 8 || 162
+| {{sortname|Monty|Knight|}}
+| [[Virginia Commonwealth University]]
+|-
+| [[1982 NBA draft|1982]] || 9 || 185
+| {{sortname|Tony|Hafley|}}
+| [[University of South Alabama]]
+|-
+| [[1982 NBA draft|1982]] || 10 || 206
+| {{sortname|Durand|Walker|}}
+| [[Indiana Wesleyan University|Marion College]]
+|-
+| [[1981 NBA draft|1981]] || 3 || 55
+| {{sortname|Mickey|Dillard|}}
+| [[Florida State University]]
+|-
+| [[1981 NBA draft|1981]] || 3 || 59
+| {{sortname|Russell|Bowers|dab=basketball}}
+| [[American University]]
+|-
+| [[1981 NBA draft|1981]] || 4 || 74
+| {{sortname|Ethan|Martin|dab=basketball}}
+| [[Louisiana State University]]
+|-
+| [[1981 NBA draft|1981]] || 5 || 96
+| {{sortname|Ken|Page|dab=basketball}}
+| [[University of New Mexico]]
+|-
+| [[1981 NBA draft|1981]] || 6 || 120
+| {{sortname|Aaron|Strayhorn|}}
+| [[University of Hawaii]]
+|-
+| [[1981 NBA draft|1981]] || 7 || 142
+| {{sortname|Andre|Smith|dab=basketball, born 1958}}
+| [[University of Nebraska–Lincoln]]
+|-
+| [[1981 NBA draft|1981]] || 8 || 166
+| {{sortname|Glen|Marcus|}}
+| [[University of Alabama at Birmingham]]
+|-
+| [[1981 NBA draft|1981]] || 9 || 187
+| {{sortname|Paul|Roba|}}
+| [[Cleveland State University]]
+|-
+| [[1981 NBA draft|1981]] || 10 || 208
+| {{sortname|Greg|Boone|dab=basketball}}
+| [[Augsburg University|Augsburg College]]
+|-
+| [[1980 NBA draft|1980]] || 1 || 22
+| {{sortname|Chad|Kinch|}}
+| [[University of North Carolina at Charlotte]]
+|-
+| [[1980 NBA draft|1980]] || 3 || 53
+| {{sortname|Stuart|House|dab=basketball}}
+| [[Washington State University]]
+|-
+| [[1980 NBA draft|1980]] || 3 || 55
+| {{sortname|Wayne|Abrams|}}
+| [[Southern Illinois University]]
+|-
+| [[1980 NBA draft|1980]] || 3 || 68
+| {{sortname|Ron|Jones|dab=basketball}}
+| [[Illinois State University]]
+|-
+| [[1980 NBA draft|1980]] || 4 || 77
+| {{sortname|Murray|Brown|dab=basketball}}
+| [[Florida State University]]
+|-
+| [[1980 NBA draft|1980]] || 5 || 101
+| {{sortname|LaVon|Williams|}}
+| [[University of Kentucky]]
+|-
+| [[1980 NBA draft|1980]] || 6 || 123
+| {{sortname|Antonio|Martin|nolink=y}}
+| [[Oral Roberts University]]
+|-
+| [[1980 NBA draft|1980]] || 7 || 147
+| {{sortname|Leroy|Berry|dab=basketball}}
+| [[Wilmington College (Ohio)|Wilmington College]]
+|-
+| [[1980 NBA draft|1980]] || 8 || 166
+| {{sortname|Jim|Ellinghausen|}}
+| [[Ohio State University]]
+|-
+| [[1980 NBA draft|1980]] || 9 || 187
+| {{sortname|Melvin|Crafter|}}
+| [[Central State University]]
+|-
+| [[1979 NBA draft|1979]] || 2 || 26
+| {{sortname|Bruce|Flowers|}}
+| [[University of Notre Dame]]
+|-
+| [[1979 NBA draft|1979]] || 3 || 65
+| bgcolor="FFCC00"|{{sortname|Bill|Laimbeer|}}
+| [[University of Notre Dame]]
+|-
+| [[1979 NBA draft|1979]] || 4 || 70
+| {{sortname|Rick|Swing|}}
+| [[The Citadel, The Military College of South Carolina|The Citadel]]
+|-
+| [[1979 NBA draft|1979]] || 5 || 91
+| {{sortname|Matt|Simpkins|}}
+| [[Georgia Southern University]]
+|-
+| [[1979 NBA draft|1979]] || 6 || 112
+| {{sortname|Joe|Manning| dab= basketball}}
+| [[North Texas State University]]
+|-
+| [[1979 NBA draft|1979]] || 7 || 131
+| {{sortname|Steve|Skaggs|}}
+| [[Ohio University]]
+|-
+| [[1979 NBA draft|1979]] || 8 || 151
+| {{sortname|Mark|Haymore|}}
+| [[University of Massachusetts Amherst]]
+|-
+| [[1979 NBA draft|1979]] || 9 || 169
+| {{sortname|Tim|Joyce|dab=basketball}}
+| [[Ohio University]]
+|-
+| [[1979 NBA draft|1979]] || 10 || 188
+| {{sortname|Terry|Peavy|}}
+| [[Point Park University]]
+|-
+| [[1978 NBA draft|1978]] || 1 || 15
+| bgcolor="FFCC00"|{{sortname|Mike|Mitchell|dab=basketball, born 1956}}
+| [[Auburn University]]
+|-
+| [[1978 NBA draft|1978]] || 2 || 33
+| {{sortname|Harry|Davis|dab=basketball}}
+| [[Florida State University]]
+|-
+| [[1978 NBA draft|1978]] || 3 || 57
+| {{sortname|Ken|Higgs|Kenny Higgs}}
+| [[Louisiana State University]]
+|-
+| [[1978 NBA draft|1978]] || 4 || 78
+| {{sortname|Stan|Rome|}}
+| [[Clemson University]]
+|-
+| [[1978 NBA draft|1978]] || 5 || 99
+| {{sortname|Ken|Koenigs|}}
+| [[University of Kansas]]
+|-
+| [[1978 NBA draft|1978]] || 6 || 123
+| {{sortname|Ron|Bell|Ron Bell (basketball)}}
+| [[Virginia Tech]]
+|-
+| [[1978 NBA draft|1978]] || 7 || 143
+| {{sortname|Tony|Smith|nolink=y}}
+| [[University of Nevada, Las Vegas]]
+|-
+| [[1978 NBA draft|1978]] || 8 || 161
+| {{sortname|Roland|Martin|dab=basketball}}
+| [[Missouri Southern State University]]
+|-
+| [[1978 NBA draft|1978]] || 9 || 180
+| {{sortname|Steve|Bayless|}}
+| [[Central State University]]
+|-
+| [[1978 NBA draft|1978]] || 10 || 194
+| {{sortname|Gary|Winton}}
+| [[United States Military Academy]]
+|-
+| [[1977 NBA draft|1977]] || 2 || 33
+| {{sortname|Eddie|Jordan|dab=basketball}}
+| [[Rutgers University]]
+|-
+| [[1977 NBA draft|1977]] || 3 || 55
+| {{sortname|Steve|Grote|}}
+| [[University of Michigan]]
+|-
+| [[1977 NBA draft|1977]] || 4 || 77
+| {{sortname|Melvin|Jones|dab=basketball}}
+| [[West Texas A&M University]]
+|-
+| [[1977 NBA draft|1977]] || 5 || 99
+| {{sortname|Al|Smith|nolink=y}}
+| [[Jackson State University]]
+|-
+| [[1977 NBA draft|1977]] || 6 || 121
+| {{sortname|Ron|Cox|dab=basketball}}
+| [[Eastern Washington University]]
+|-
+| [[1977 NBA draft|1977]] || 7 || 141
+| {{sortname|Bob|Riddle|}}
+| [[Eastern Michigan University]]
+|-
+| [[1977 NBA draft|1977]] || 8 || 160
+| {{sortname|Tom|Cutter|}}
+| [[Western Michigan University]]
+|-
+| [[1976 NBA draft|1976]] || 1 || 15
+| {{sortname|Chuckie|Williams|}}
+| [[Kansas State University]]
+|-
+| [[1976 NBA draft|1976]] || 2 || 32
+| {{sortname|Mo|Howard|dab=basketball}}
+| [[University of Maryland, College Park|University of Maryland]]
+|-
+| [[1976 NBA draft|1976]] || 3 || 50
+| {{sortname|Gary|Cole|Abdul Jeelani}}{{efn|Now known as Abdul Qadir Jeelani.}}
+| [[University of Wisconsin–Parkside]]
+|-
+| [[1976 NBA draft|1976]] || 4 || 66
+| {{sortname|John|Engles|}}
+| [[University of Pennsylvania]]
+|-
+| [[1976 NBA draft|1976]] || 5 || 84
+| {{sortname|Edmund|Lawrence|dab=basketball}}
+| [[McNeese State University]]
+|-
+| [[1976 NBA draft|1976]] || 6 || 102
+| {{sortname|Harry|Davis|nolink=y}}
+| [[Morris Brown College]]
+|-
+| [[1976 NBA draft|1976]] || 7 || 120
+| {{sortname|Johnny|Britt|}}
+| [[Western Kentucky University]]
+|-
+| [[1976 NBA draft|1976]] || 8 || 123
+| {{sortname|Dale|Koehler|}}
+| [[University of Wisconsin–Madison]]
+|-
+| [[1976 NBA draft|1976]] || 8 || 138
+| {{sortname|Tim|Sisneros|}}
+| [[Middle Tennessee State University]]
+|-
+| [[1976 NBA draft|1976]] || 9 || 155
+| {{sortname|Bruce|Parkinson|}}
+| [[Purdue University]]
+|-
+| [[1976 NBA draft|1976]] || 10 || 171
+| {{sortname|Elisha|McSweeney|}}
+| [[Minnesota State University, Mankato]]
+|-
+| [[1975 NBA draft|1975]] || 1 || 15
+| {{sortname|John|Lambert|dab=basketball}}
+| [[University of Southern California]]
+|-
+| [[1975 NBA draft|1975]] || 2 || 28
+| bgcolor="FFCC00"|{{sortname|Dan|Roundfield|}}
+| [[Central Michigan University]]
+|-
+| [[1975 NBA draft|1975]] || 2 || 33
+| {{sortname|Mel|Utley|}}
+| [[St. John's University (New York City)|St. John's University]]
+|-
+| [[1975 NBA draft|1975]] || 3 || 45
+| {{sortname|Ted|Hathaway|}}
+| [[Cleveland State University]]
+|-
+| [[1975 NBA draft|1975]] || 4 || 62
+| {{sortname|Eric|Fernsten|}}
+| [[University of San Francisco]]
+|-
+| [[1975 NBA draft|1975]] || 5 || 79
+| {{sortname|Jim|Lee|dab=basketball}}
+| [[Syracuse University]]
+|-
+| [[1975 NBA draft|1975]] || 5 || 82
+| {{sortname|Mike|Odems|}}
+| [[Western Kentucky University]]
+|-
+| [[1975 NBA draft|1975]] || 6 || 99
+| {{sortname|Henry|Ward|dab=basketball}}
+| [[Jackson State University]]
+|-
+| [[1975 NBA draft|1975]] || 7 || 116
+| {{sortname|Shawn|Leftwich|}}
+| [[Jacksonville University]]
+|-
+| [[1975 NBA draft|1975]] || 8 || 136
+| {{sortname|Andre|McCarter|}}
+| [[University of California, Los Angeles]]
+|-
+| [[1975 NBA draft|1975]] || 9 || 152
+| {{sortname|Skip|Howard|}}
+| [[Bowling Green State University]]
+|-
+| [[1975 NBA draft|1975]] || 10 || 167
+| {{sortname|Eric|Anderson|nolink=y}}
+| [[Macalester College]]
+|-
+| [[1974 NBA draft|1974]] || 1 || 8
+| bgcolor="FFCC00"|{{sortname|Campy|Russell|}}
+| [[University of Michigan]]
+|-
+| [[1974 NBA draft|1974]] || 3 || 38
+| {{sortname|Clarence|Walker|link=Foots Walker}}
+| [[University of West Georgia|State University of West Georgia]]
+|-
+| [[1974 NBA draft|1974]] || 3 || 39
+| {{sortname|Kevin|Restani|}}
+| [[University of San Francisco]]
+|-
+| [[1974 NBA draft|1974]] || 4 || 57
+| {{sortname|James|Foster|Jimmy Foster (basketball)}}
+| [[University of Connecticut]]
+|-
+| [[1974 NBA draft|1974]] || 5 || 75
+| {{sortname|Gary|Novak|dab=basketball}}
+| [[University of Notre Dame]]
+|-
+| [[1974 NBA draft|1974]] || 6 || 93
+| {{sortname|Aron|Stewart|}}
+| [[University of Richmond]]
+|-
+| [[1974 NBA draft|1974]] || 7 || 111
+| {{sortname|Mike|Robinson|Mike Robinson (basketball, born 1952)}}
+| [[Michigan State University]]
+|-
+| [[1974 NBA draft|1974]] || 8 || 129
+| {{sortname|Kerry|Hughes|}}
+| [[University of Wisconsin–Madison]]
+|-
+| [[1974 NBA draft|1974]] || 9 || 147
+| {{sortname|Jim|Buskofsky|}}
+| [[Upper Iowa University]]
+|-
+| [[1974 NBA draft|1974]] || 10 || 164
+| {{sortname|Jim|Kelly|dab=basketball player}}
+| [[Loras College]]
+|-
+| [[1973 NBA draft|1973]] || 1 || 2
+| {{sortname|Jim|Brewer|dab=basketball}}
+| [[University of Minnesota]]
+|-
+| [[1973 NBA draft|1973]] || 2 || 26
+| {{sortname|Allan|Hornyak|}}
+| [[Ohio State University]]
+|-
+| [[1973 NBA draft|1973]] || 3 || 37
+| {{sortname|Jim|O'Brien|dab=basketball, born 1951}}
+| [[University of Maryland, College Park|University of Maryland]]
+|-
+| [[1973 NBA draft|1973]] || 3 || 40
+| {{sortname|Ozzie|Edwards|}}
+| [[Oklahoma City University]]
+|-
+| [[1973 NBA draft|1973]] || 3 || 41
+| {{sortname|James|Lister|dab=basketball}}
+| [[Sam Houston State University]]
+|-
+| [[1973 NBA draft|1973]] || 4 || 57
+| {{sortname|Luke|Witte|}}
+| [[Ohio State University]]
+|-
+| [[1973 NBA draft|1973]] || 5 || 74
+| {{sortname|John|Coughran|}}
+| [[University of California]]
+|-
+| [[1973 NBA draft|1973]] || 6 || 91
+| {{sortname|Willie|Calvert|}}
+| [[Abilene Christian University]]
+|-
+| [[1973 NBA draft|1973]] || 7 || 108
+| {{sortname|Larry|Farmer|Larry Farmer (basketball coach)}}
+| [[University of California, Los Angeles]]
+|-
+| [[1973 NBA draft|1973]] || 8 || 125
+| {{sortname|John|Ritter|dab=basketball}}
+| [[Indiana University]]
+|-
+| [[1973 NBA draft|1973]] || 9 || 142
+| {{sortname|Les|Taylor|dab=basketball}}
+| [[Murray State University]]
+|-
+| [[1973 NBA draft|1973]] || 10 || 156
+| {{sortname|Dean|Martin|dab=basketball}}
+| [[Baldwin-Wallace College]]
+|-
+| [[1973 NBA draft|1973]] || 11 || 169
+| {{sortname|Floyd|Lewis|}}
+| [[Harvard University]]
+|-
+| [[1973 NBA draft|1973]] || 12 || 178
+| {{sortname|Chris|McMurray|}}
+| [[San Diego State University]]
+|-
+| [[1973 NBA draft|1973]] || 13 || 185
+| {{sortname|John|Pennebacker|}}
+| [[University of Hawaii]]
+|-
+| [[1973 NBA draft|1973]] || 14 || 191
+| {{sortname|Charles|Mitchell|dab=basketball}}
+| [[Eastern Kentucky University]]
+|-
+| [[1973 NBA draft|1973]] || 15 || 196
+| {{sortname|Reese|Stovall|}}
+| [[University of Texas–Pan American]]
+|-
+| [[1973 NBA draft|1973]] || 16 || 201
+| {{sortname|Tom|O'Connor|dab=basketball}}
+| [[University of Iowa]]
+|-
+| [[1973 NBA draft|1973]] || 17 || 205
+| {{sortname|Phil|Elderkin|}}
+| [[Boston University]]
+|-
+| [[1972 NBA draft|1972]] || 1 || 3
+| {{sortname|Dwight|Davis|dab=basketball}}
+| [[University of Houston]]
+|-
+| [[1972 NBA draft|1972]] || 2 || 24
+| {{sortname|Steve|Hawes|}}
+| [[University of Washington]]
+|-
+| [[1972 NBA draft|1972]] || 4 || 50
+| {{sortname|Hank|Siemiontkowski|}}
+| [[Villanova University]]
+|-
+| [[1972 NBA draft|1972]] || 5 || 66
+| {{sortname|Sam|Cash|}}
+| [[University of California, Riverside]]
+|-
+| [[1972 NBA draft|1972]] || 6 || 83
+| {{sortname|Tom|Parker|dab=basketball}}
+| [[University of Kentucky]]
+|-
+| [[1972 NBA draft|1972]] || 7 || 100
+| {{sortname|Steve|Davidson|}}
+| [[West Texas A&M University]]
+|-
+| [[1972 NBA draft|1972]] || 8 || 116
+| {{sortname|Roger|Evans|dab=basketball}}
+| [[Kent State University]]
+|-
+| [[1972 NBA draft|1972]] || 9 || 132
+| {{sortname|Greg|Starrick|}}
+| [[Southern Illinois University]]
+|-
+| [[1972 NBA draft|1972]] || 10 || 145
+| {{sortname|Kent|Martens|}}
+| [[Abilene Christian University]]
+|-
+| [[1971 NBA draft|1971]] || 1 || bgcolor="#CCFFCC"|1
+| bgcolor="FFCC00"|{{sortname|Austin|Carr|}}
+| [[University of Notre Dame]]
+|-
+| [[1971 NBA draft|1971]] || 2 || 18
+| {{sortname|Steve|Patterson|dab=basketball}}
+| [[University of California, Los Angeles]]
+|-
+| [[1971 NBA draft|1971]] || 2 || 35
+| {{sortname|Willie|Long|}}
+| [[University of New Mexico]]
+|-
+| [[1971 NBA draft|1971]] || 3 || 36
+| {{sortname|Gerald|Lockett|}}
+| [[University of Arkansas at Pine Bluff]]
+|-
+| [[1971 NBA draft|1971]] || 3 || 41
+| {{sortname|Jackie|Ridgle|}}
+| [[University of California]]
+|-
+| [[1971 NBA draft|1971]] || 4 || 52
+| {{sortname|Cliff|Harris|dab=basketball}}
+| [[Hardin–Simmons University]]
+|-
+| [[1971 NBA draft|1971]] || 5 || 69
+| {{sortname|Brian|Mahoney|dab=basketball}}
+| [[Manhattan College]]
+|-
+| [[1971 NBA draft|1971]] || 6 || 86
+| {{sortname|Mike|Childress|}}
+| [[Colorado State University]]
+|-
+| [[1971 NBA draft|1971]] || 7 || 103
+| {{sortname|Tom|Bush|dab=basketball}}
+| [[Drake University]]
+|-
+| [[1971 NBA draft|1971]] || 8 || 120
+| {{sortname|Charlie|Davis|dab=basketball}}
+| [[Wake Forest University]]
+|-
+| [[1971 NBA draft|1971]] || 9 || 137
+| {{sortname|Rich|Walker|}}
+| [[Bowling Green State University]]
+|-
+| [[1971 NBA draft|1971]] || 10 || 153
+| {{sortname|Jim|Meredith|}}
+| [[Washington State University]]
+|-
+| [[1971 NBA draft|1971]] || 11 || 169
+| {{sortname|Mike|Casey|dab=basketball}}
+| [[University of Kentucky]]
+|-
+| [[1971 NBA draft|1971]] || 12 || 183
+| {{sortname|Doug|Hess|}}
+| [[University of Toledo]]
+|-
+| [[1971 NBA draft|1971]] || 13 || 196
+| {{sortname|Bobby|Jones|dab=Drake University basketball}}
+| [[Drake University]]
+|-
+| [[1971 NBA draft|1971]] || 14 || 208
+| {{sortname|Bubbles|Harris|}}
+| [[Indiana University]]
+|-
+| [[1971 NBA draft|1971]] || 15 || 217
+| {{sortname|Larry|Baker|dab=basketball}}
+| [[Wittenberg University]]
+|-
+| [[1971 NBA draft|1971]] || 16 || 225
+| {{sortname|Vance|Tyree|}}
+| [[University of Wisconsin–La Crosse]]
+|-
+| [[1970 NBA draft|1970]] || 1 || 7
+| bgcolor="FFCC00"|{{sortname|John|Johnson|dab=basketball, born 1947}}
+| [[University of Iowa]]
+|-
+| [[1970 NBA draft|1970]] || 2 || 26
+| {{sortname|Dave|Sorenson|}}
+| [[Ohio State University]]
+|-
+| [[1970 NBA draft|1970]] || 3 || 41
+| {{sortname|Surry|Oliver|}}
+| [[Stephen F. Austin State University]]
+|-
+| [[1970 NBA draft|1970]] || 4 || 60
+| {{sortname|Glen|Vidnovic|}}
+| [[University of Iowa]]
+|-
+| [[1970 NBA draft|1970]] || 5 || 75
+| {{sortname|Wayne|Sokolowski|}}
+| [[Ashland University]]
+|-
+| [[1970 NBA draft|1970]] || 6 || 94
+| {{sortname|Joe|Cooke|dab=basketball}}
+| [[Indiana University]]
+|-
+| [[1970 NBA draft|1970]] || 7 || 109
+| {{sortname|Narvis|Anderson|}}
+| [[Stephen F. Austin State University]]
+|-
+| [[1970 NBA draft|1970]] || 8 || 128
+| {{sortname|Walter|Robertson|nolink=y}}
+| [[Loyola University Chicago]]
+|-
+| [[1970 NBA draft|1970]] || 9 || 143
+| {{sortname|Tom|Lagodich|}}
+| [[Kent State University]]
+|-
+| [[1970 NBA draft|1970]] || 10 || 162
+| {{sortname|Ken|Johnson|dab=defensive end, born 1947}}
+| [[Indiana University]]
+|-
+| [[1970 NBA draft|1970]] || 11 || 175
+| {{sortname|Dave|Schneider|nolink=y}}
+| [[Wayne State University]]
+|-
+| [[1970 NBA draft|1970]] || 12 || 189
+| {{sortname|Oliver|Taylor|Ollie Taylor}}
+| [[University of Houston]]
+|-
+| [[1970 NBA draft|1970]] || 13 || 198
+| {{sortname|Kevin|Wilson|dab=basketball}}
+| [[Ashland University]]
+|-
+| [[1970 NBA draft|1970]] || 14 || 209
+| {{sortname|Don|Tomilson|}}
+| [[University of Missouri]]
+|-
+| [[1970 NBA draft|1970]] || 15 || 217
+| {{sortname|Steve|Wannamaker|}}
+| [[Drake University]]
+|-
+| [[1970 NBA draft|1970]] || 16 || 227
+| {{sortname|Steve|Wilson|nolink=y}}
+| [[Hanover College]]
+|-
+| [[1970 NBA draft|1970]] || 17 || 231
+| {{sortname|Bob|Peterson|nolink=y}}
+| [[Concordia College (Moorhead, Minnesota)|Concordia College (Minnesota)]]
+|-
+| [[1970 NBA draft|1970]] || 18 || 236
+| {{sortname|John|Cannon|dab=basketball}}
+| [[Grambling State University]]
+|-
+| [[1970 NBA draft|1970]] || 19 || 238
+| {{sortname|Allen|Waller|}}
+| [[St. Mary of the Plains College]]
+|}
+
+==Notes==
+{{notelist}}
+
+==References==
+* [https://www.basketball-reference.com/teams/CLE/draft.html Cleveland Cavaliers Draft Register] at Basketball-Reference.com
+
+{{NBA Draft history by team}}
+{{Cleveland Cavaliers}}
+
+{{DEFAULTSORT:Cleveland Cavaliers Draft History}}
+[[Category:Cleveland Cavaliers draft picks| ]]
+[[Category:NBA draft history by team]]
+[[Category:Cleveland Cavaliers lists|draft history]]
