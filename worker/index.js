@@ -10,7 +10,7 @@ export default {
       catch (e) { return new Response(JSON.stringify({ error: 'backup feed error' }), { status: 502, headers: { 'content-type': 'application/json' } }) }
     }
     /* single-game links on the live page get that game's own link preview */
-    if ((u.pathname === '/live.html' || u.pathname === '/live') && u.searchParams.has('g') && request.method === 'GET') {
+    if ((u.pathname === '/live.html' || u.pathname === '/live') && request.method === 'GET') {
       try { return await liveMeta(request, env); } catch (e) { return env.ASSETS.fetch(request); }
     }
     return env.ASSETS.fetch(request);
