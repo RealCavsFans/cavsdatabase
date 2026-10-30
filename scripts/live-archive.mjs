@@ -86,7 +86,7 @@ const files = fs.readdirSync(DIR).filter(f => /^(\d+|b\d{8})\.json$/.test(f));
 /* season files: the whole game (season.json) plus one per period, so the live page's quarter, half and clutch buttons load one small file */
 function build(per, file) {
   const games = [];
-  const P = {}, B = {}, gp = {}, L = { 2: {}, 3: {}, 4: {}, 5: {} }, shots = [], oshots = [], asts = [], pz = {};
+  const P = {}, B = {}, gp = {}, L = { 2: {}, 3: {}, 4: {}, 5: {} }, shots = [], oshots = [], asts = [], pz = {}, rot = {};   // rot: each Cav's stints game by game [gi, [[start sec, end sec, +/-], ...]]
   const T = { cle: null, opp: null }, pc = {}, pcO = {}, cx = { cle: { t: [0, 0], h: [0, 0] }, opp: { t: [0, 0], h: [0, 0] } };
   const isT = q => (q.how === 'stl' || q.how === 'dreb' || q.how === 'to') && q.first != null && q.first <= 7;
   const addObj = (a, b) => { for (const k in b) { if (typeof b[k] === 'number') a[k] = (a[k] || 0) + b[k]; } };
@@ -112,6 +112,7 @@ function build(per, file) {
       o.sec += l.sec; o.pf += l.pf; o.pa += l.pa; o.g++; for (const x in l.o) { o.o[x] = (o.o[x] || 0) + l.o[x]; o.d[x] = (o.d[x] || 0) + (l.d[x] || 0); }
       if (l.pb) { o.pb = o.pb || {}; for (const [id, q] of Object.entries(l.pb)) { const z = o.pb[id] = o.pb[id] || {}; for (const k in q) z[k] = (z[k] || 0) + q[k]; } }   // players' own numbers inside 2- and 5-man units (every period file too, so the quarter, clutch and garbage-time buttons keep them)
     }
+    if (per === 'all') for (const [id, st] of Object.entries(R0.stints || {})) if (D.P[id] && D.P[id].team === '5' && st.length) (rot[id] = rot[id] || []).push([gi, st.map(([a, b, pm]) => [Math.round(a), Math.round(b), pm])]);
     /* opponents' shots too, so the season Shots tab can show what the Cavs allow */
     for (const q of R.shots) if (q.t !== '5') oshots.push([q.hasXY ? q.x : null, q.hasXY ? q.y : null, q.m ? 1 : 0, q.three ? 1 : 0, q.zi, q.pt, q.ast ? 1 : 0, gi]);
     for (const q of R.shots) if (q.t === '5') {
@@ -139,9 +140,9 @@ function build(per, file) {
   const order = games.map((g, i) => [g.date, i]).sort().map(x => x[1]);
   const remap = {}; order.forEach((old, ni) => remap[old] = ni);
   const gs = order.map(i => games[i]);
-  shots.forEach(s => s[8] = remap[s[8]]); oshots.forEach(s => s[7] = remap[s[7]]); asts.forEach(a => a[3] = remap[a[3]]);
+  shots.forEach(s => s[8] = remap[s[8]]); for (const v of Object.values(rot)) v.forEach(x => x[0] = remap[x[0]]); oshots.forEach(s => s[7] = remap[s[7]]); asts.forEach(a => a[3] = remap[a[3]]);
   const pz2 = {}; for (const [id, z] of Object.entries(pz)) { pz2[id] = {}; for (const [g, v] of Object.entries(z)) pz2[id][remap[g]] = v; }
-  const out = { season: SEASON, per, updated: new Date().toISOString(), games: gs.map(({ recap, rc, ...g }) => g), P, B, gp, L, shots, oshots, asts, pz: pz2, T, pc, pcO, cx };
+  const out = { season: SEASON, per, updated: new Date().toISOString(), games: gs.map(({ recap, rc, ...g }) => g), P, B, gp, L, shots, oshots, asts, pz: pz2, T, pc, pcO, cx, ...(per === 'all' ? { rot } : {}) };
   fs.writeFileSync(path.join(DIR, file), JSON.stringify(out));
   if (per === 'all') fs.writeFileSync(path.join(DIR, 'index.json'), JSON.stringify(gs.map(g => ({ id: g.id, date: g.date, et: g.et, opp: g.opp, ha: g.ha, cle: g.cle, os: g.os, rc: g.rc }))));
   console.log(`${file}: ${gs.length} games, ${shots.length} shots, ${Object.keys(L[5]).length} five-man lineups`);
@@ -177,7 +178,7 @@ for (const [key, per] of [['h1', [1, 2]], ['h2', [3, 4]], ['q1', [1]], ['q2', [2
     for (const l of L5) if (!l.ids.includes(id)) { off.sec += l.sec; off.pf += l.pf; off.pa += l.pa; for (const k in l.o) off.o[k] = (off.o[k] || 0) + l.o[k]; for (const k in l.d) off.d[k] = (off.d[k] || 0) + (l.d[k] || 0); }
     const L2 = Object.fromEntries(Object.entries(ALL.L[2] || {}).filter(([, l]) => l.ids.includes(id)));
     const L5o = Object.fromEntries(on.map(l => [l.ids.join(','), l])); if (off.sec) L5o['_off'] = off;
-    const out = { season: ALL.season, updated: ALL.updated, player: id, P: ALL.P, B: { [id]: ALL.B[id] }, gp: { [id]: ALL.gp[id] || 0 }, L: { 2: L2, 5: L5o }, shots: ALL.shots.filter(x => x[0] === id), asts: ALL.asts.filter(a => a[0] === id || a[1] === id), pq: { [id]: (ALL.pq || {})[id] } };
+    const out = { season: ALL.season, updated: ALL.updated, player: id, P: ALL.P, B: { [id]: ALL.B[id] }, gp: { [id]: ALL.gp[id] || 0 }, L: { 2: L2, 5: L5o }, shots: ALL.shots.filter(x => x[0] === id), asts: ALL.asts.filter(a => a[0] === id || a[1] === id), pq: { [id]: (ALL.pq || {})[id] }, rot: { [id]: (ALL.rot || {})[id] || [] }, games: (ALL.games || []).map(g => ({ et: g.et, opp: g.opp, ha: g.ha })) };
     const f = nk(p.name) + '.json'; keep.add(f); fs.writeFileSync(path.join(PD, f), JSON.stringify(out));
   }
   for (const f of fs.readdirSync(PD)) if (!keep.has(f)) fs.unlinkSync(path.join(PD, f));
