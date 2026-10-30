@@ -2707,7 +2707,8 @@ const perName=p=>p<=4?'Q'+p:(p===5?'OT':'OT'+(p-4));
     const b2b=g&&!isFin(g[0])&&last&&last[0]<today&&now<offUntil(last[0])&&etHr<13;
     if(b2b){const b=B[last[0]]||{};const sc=SCORES[last[0]]||b.score;if(sc){after(last,sc,b.top||'',b.url||boxUrl(last[0]),false);box.hidden=false;clearTimeout(window.cdbOffT);
       const nx=new Date(now);const m=(13-etHr)*60-nx.getMinutes();window.cdbOffT=setTimeout(render,Math.max(60e3,m*6e4+1000));return}}
-    if(g&&!isFin(g[0])&&now<tipOf(g).getTime()+3.5*H){day(g);box.hidden=false;return}
+    /* the game card (live, then Final from ESPN) holds until the saved box score lands, up to 8 hours after tip, so there's no blank gap after the buzzer */
+    if(g&&!isFin(g[0])&&now<tipOf(g).getTime()+8*H){day(g);box.hidden=false;return}
     if(last&&now<offUntil(last[0])){const b=B[last[0]]||{};const sc=SCORES[last[0]]||b.score;if(sc){after(last,sc,b.top||'',b.url||boxUrl(last[0]),false);box.hidden=false;clearTimeout(window.cdbOffT);window.cdbOffT=setTimeout(render,Math.min(offUntil(last[0])-now+1000,2**31-1))}}}
   render();
   const load=()=>Promise.all([fetch('/box.json',{cache:'no-cache'}).then(r=>r.ok?r.json():{}).catch(()=>({})),fetch('/rcf.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null)]).then(([b,r])=>{B=b||{};RC=r;LAST=Date.now();render()});
