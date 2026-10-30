@@ -1493,8 +1493,9 @@ function brandBar(x,W,H,note){const bh=W>1500?100:90;x.fillStyle=WINE;x.fillRect
   const fs=Math.round(bh*.46);x.font=`600 ${fs}px "Geist Mono"`;const X=pad+m+14,Y=cy+fs*.34;x.fillStyle='#fff';x.fillText('cavs',X,Y);x.fillStyle=GOLD;x.fillText('_db',X+x.measureText('cavs').width,Y);
   x.font=`700 ${Math.round(bh*.3)}px Archivo`;x.fillStyle='#fff';const u='cavsdatabase.com';x.fillText(u,W-pad-x.measureText(u).width,cy+bh*.1)}
 function cStat(x,v,l,X0,Y0,sz=96,c='#101419'){num(x,v,X0,Y0,sz,c);lbl(x,l,X0+4,Y0+44,32)}
-const loadImg=src=>new Promise(r=>{if(!src)return r(null);const im=new Image();im.onload=()=>r(im);im.onerror=()=>r(null);im.src=src});
-const hsUrl=(D,id)=>{const p=D.P[id];const k=p&&HS[normName(p.name)];return k?'/img/h/'+k+'.png':null};
+const loadImg=src=>new Promise(r=>{if(!src)return r(null);const im=new Image();if(/^https?:/.test(src))im.crossOrigin='anonymous';im.onload=()=>r(im);im.onerror=()=>r(null);im.src=src});
+/* headshots: our own copies for Cavs players, ESPN's image server for everyone else (by ESPN player id); a failed load falls back to initials */
+const hsUrl=(D,id)=>{const p=D.P[id];const k=p&&HS[normName(p.name)];return k?'/img/h/'+k+'.png':(p&&/^\d+$/.test(id)?'https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/'+id+'.png&w=240&h=175':null)};
 function head2(x,img,cx,cy,r,ring='#F2B231',label){x.save();x.beginPath();x.arc(cx,cy,r,0,7);x.closePath();x.fillStyle='#e7e1d8';x.fill();x.clip();
   if(img){const ar=img.width/img.height,h=r*2.15,w=h*ar;x.drawImage(img,cx-w/2,cy-r*1.02,w,h)}else if(label){x.fillStyle='#860038';x.font=`800 ${Math.round(r*.8)}px "Saira Condensed"`;const t=label;x.fillText(t,cx-x.measureText(t).width/2,cy+r*.28)}
   x.restore()}
@@ -1828,7 +1829,7 @@ Object.assign(CARDS,{
     lNote(x,'Green = won that factor · tick = '+(S.season?'NBA average this season':Fo.abbr+'’s season average (left) and what '+Fo.abbr+' opponents average (right)'));brandBar(x,LW,LH)}},
   player:{label:'Player card',pick:'player',w:LW,h:LH,async draw(x,D,R,id){const p=D.P[id],b=R.B[id];if(!p||!b)return;const t=D.teams.find(z=>z.id===p.team);
     lFrame(x);const TX=await lHero(x,D,id);const mn=Math.round((b.min||0)/60);
-    lTitle(x,TX,kick()+[t.abbr,p.pos,p.starter?'STARTER':'BENCH'].filter(Boolean).join(' · ')+' · '+lKick(D).replace(/^[A-Z]+ /,''),p.name,[[String(b.pts),'800 104px "Saira Condensed"','#fff'],[' PTS  ','800 44px "Saira Condensed"','#fff'],[String(b.oreb+b.dreb),'800 104px "Saira Condensed"','#fff'],[' REB  ','800 44px "Saira Condensed"','#fff'],[String(b.ast),'800 104px "Saira Condensed"','#fff'],[' AST  ','800 44px "Saira Condensed"','#fff'],['in '+mn+' min','600 32px Archivo','#f4d6dd']]);
+    lTitle(x,TX,kick()+[t.abbr,p.pos,p.starter?'STARTER':'BENCH'].filter(Boolean).join(' · ')+' · '+(t.id===D.focus.id||S.season?lKick(D).replace(/^[A-Z]+ /,''):(t.ha==='home'?'VS ':'AT ')+D.focus.abbr+' · '+new Date(D.date).toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase()),p.name,[[String(b.pts),'800 104px "Saira Condensed"','#fff'],[' PTS  ','800 44px "Saira Condensed"','#fff'],[String(b.oreb+b.dreb),'800 104px "Saira Condensed"','#fff'],[' REB  ','800 44px "Saira Condensed"','#fff'],[String(b.ast),'800 104px "Saira Condensed"','#fff'],[' AST  ','800 44px "Saira Condensed"','#fff'],['in '+mn+' min','600 32px Archivo','#f4d6dd']]);
     /* Game Score (Hollinger): the box score in one number; 10 = an average night, 40 = a great one. Top right of the header, with his rank tonight */
     {const gs=gmSc(b),RX=1860,BW=340,BX=RX-BW,BY=208,mx=40,P=v=>BX+BW*Math.max(0,Math.min(mx,v))/mx;
      x.textAlign='right';x.fillStyle='#fff';x.font='800 84px "Saira Condensed"';x.fillText(gs.toFixed(1),RX,180);const nw=x.measureText(gs.toFixed(1)).width;x.fillStyle=GOLD;x.font='800 28px "Saira Condensed"';x.fillText('GAME SCORE',RX-nw-18,178);
