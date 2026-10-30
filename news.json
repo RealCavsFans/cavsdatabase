@@ -2,9 +2,27 @@
  "articles": [
   {
    "src": "Fear The Sword",
+   "title": "Player Grades: Cavs vs. Hawks – Cleveland starts fast, but falters late",
+   "link": "https://www.fearthesword.com/cavs-analysis/53772/player-grades-cavs-vs-hawks-cleveland-starts-fast-but-falters-late",
+   "date": "2026-10-30T03:01:38.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Cavaliers fall to the Hawks despite 24 points from James Harden",
+   "link": "https://www.fearthesword.com/cavs-scores-results/53774/cavaliers-fall-to-the-hawks-despite-24-points-from-james-harden",
+   "date": "2026-10-30T02:39:26.000Z"
+  },
+  {
+   "src": "Fear The Sword",
    "title": "Cavs at Hawks game thread",
    "link": "https://www.fearthesword.com/cavs-game-previews/53735/cavs-at-hawks-game-thread",
    "date": "2026-10-30T00:00:00.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "Why Cavs Battle with Hawks Is Crucial Litmus Test",
+   "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQQkVNWklldmZSVlh3WWlDMzhTYURUVm1DbFdENGNjdWJrdVgwbF9XSlkzd1ZramR5WFpTaTdWVlltNkM0bEhtOGphb0RQZGNVb0tHbldGSGs0enRtdTJ5TEgxSFdIS0lMZVZrRlpCWjZHc2NFX29qQjBPd0dZQk9tYW93bGE0MTloeG9qSkFyc3dyWFFCOER2YTJzUUZOMVJQNlE?oc=5",
+   "date": "2026-10-29T21:00:01.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -29,12 +47,6 @@
    "title": "Cavs vs. Hawks: How to watch, odds, and injury report",
    "link": "https://www.fearthesword.com/cavs-injury-report/53736/cavs-vs-hawks-how-to-watch-odds-and-injury-report",
    "date": "2026-10-29T15:00:00.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Evan Mobley’s Ascension as a 3-Point Shooter Could Make Cavs Really Hard to Stop",
-   "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxObWQtWnhubVhBR09QRUxiRFA5TEpnbllwaWZQamlmSEdXVjYxdk55ZWUwdDlvUEs5d0htd1hBRlpPdDBXclFUY18tdEdUWFRnbGNqekpXS1JGdDlkS1ZOS3hFUW5BbVp1UHJOX2RhaUFpaEtEaTg5Rll1bUFwSmZVeThVc3l4MS1jRmtiMG1yWE5MS0o1RzFjZ29SQ2tKbmduV2szbzBmRk9PU1czVENSOGhXYVhsRlQtd054N3RrekJTZ25zOVc1bVBzUQ?oc=5",
-   "date": "2026-10-29T14:00:02.000Z"
   },
   {
    "src": "cleveland.com",
@@ -79,24 +91,6 @@
    "date": "2026-10-28T22:45:18.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "NBA coach on injury wave: ‘We as coaches are asking a lot about it’",
-   "link": "https://www.fearthesword.com/cavs-analysis/53656/nba-coach-on-injury-wave-we-as-coaches-are-asking-a-lot-about-it",
-   "date": "2026-10-28T22:20:57.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "The Cavs’ Quiet Connector: How Jaylon Tyson Is Linking the Offense Early in 2026-27",
-   "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOZzlENDJ0QXNud3NqOVotckdoVGVEX3czUWlCZVFKeWU4eFZXaEhUV21IMjRvcXExYldrQm9zenRCZGE1VTFPY3UwS19saFo3N3JmLW55MzlfN3kyNTl5YnlvMTZfbFU4Tm5CcjB0djVJNlJTTEN2bzNaZnFqTjl5dFFHY0xoRS1tX0NpR3JRZTZJSXRWakxsczNPeW5ZQWt0Sk1lcTBNOHZyR2dsdFJuTmxqUFlsRUUtN05xTFh0bzI0ZlFpeC1fN2VSeFQ?oc=5",
-   "date": "2026-10-28T18:30:00.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cavs vs. Wizards: How to watch, odds, and injury report",
-   "link": "https://www.fearthesword.com/cavs-injury-report/53642/cavs-vs-wizards-how-to-watch-odds-and-injury-report",
-   "date": "2026-10-28T17:30:00.000Z"
-  },
-  {
    "src": "Hoops Rumors",
    "title": "Central Notes: Thomas, Hezonja, Pistons, Pacers, Miller",
    "link": "https://www.hoopsrumors.com/2026/10/central-notes-thomas-hezonja-pistons-pacers-miller.html",
@@ -107,6 +101,12 @@
    "title": "Jarrett Allen’s role shows the delicate decisions Kenny Atkinson must make",
    "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNUWZKaWE4WFVJZGRIUWxBQlZjRXhLVVk4Zzg2eE5wOWV1QU44eUZ4ME9wVXFNdWNMLVhNYzFjLTZENU96RHBOSU5qLVRjSnF5cmVXbENiOWpPVW9fRXhSVVJXMTkxTXlJcEFjbXNpcnNCWXhhamNzT3dDR2RsTzFUYzhpQlZQRFg4bG1kZ3JabjVjUExWd09nZ3FtT0tYaFQzakZjTDdFZGRLaHVJZEwydGJQemJ6VFhN?oc=5",
    "date": "2026-10-28T14:30:00.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "Three Keys to Victory For Cavs Against Wizards",
+   "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxQaWVfaGNQaWNxTHNsbFhmX3F5Mnk2WGVCYlZoYzJHYjE4VXA1bEJnanBTOUdQeGM0NVlFaHFjcWVTZGlIR0pRaFJOeTlBald3UTJhM0tWMkd0Z0ZsbEx4N0V2WnJydi14RE5ra2M5V1FxOFFQa2tROWtoaDBfbzQ1RWJWUlMwQVdoR1R4NnFfWHE5UllrUXBNZ3N1YlgxQQ?oc=5",
+   "date": "2026-10-28T14:00:01.000Z"
   },
   {
    "src": "cleveland.com",
@@ -122,45 +122,15 @@
   },
   {
    "src": "Cavaliers on SI",
-   "title": "Three Reserves Crucial To Cleveland's Success",
-   "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOY0M3WUlObk5TdDFzR2hrUnhlY1V6LUN3Q1phMkYxcGhWVTZRVVlBTFF1Y3F2c1J0ckVjZ2JJaFAyT0xpR1k0UlhBaG8wOEs5XzRnWHZUaUdLdGpLZUY3N1FtQUxTTlNucUJVZnZpTlRjeWx1X0QwVjExQjF2ZDV3ekRPYmk2VTI0TjQ4MmYtQW5lUEFXMWNDYmZkeWw?oc=5",
-   "date": "2026-10-27T23:30:00.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
    "title": "Peyton Watson Did It All — and Showed Why the Cavs Needed Him",
    "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOMUY0ZThvbUkxSHotaXV1ZnJUWDFEWTFLb3U2bDdjdE1aUUhMRkRvX3NRQ1Y3RmtIZjhqOU9qNFQ0NW50WUlISHk2ZnNYMThVcVdST1F1N3hNeXFGY2tJYlNxRDlMLWNSMTZtQWdqSXJJbm43NnhfM2swZzJkTk1Hc2xsNGkxWmh1aUNpbE5xM0JTT3hqWG9mQnNTVVpxNHdaMTBlSUZna0hGN3dWNXVR?oc=5",
    "date": "2026-10-27T22:30:00.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Looking Back At Donovan Mitchell's Breakthrough Performance Against Timberwolves",
-   "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxQYWZTdTNxX2RlLXcwcTlJSHlfMTR4b3YyQ2xvcXVWcnB0X3Z2dUVJTjdZVG9DdUlMMThHempaNnhyeFlvWjFFbjBaQUE1MXphYTFUOHJaNnhfRHkxTzJlUUVhZ2ZzWXZMb0x0UjZYdTBZcDNDeGg2RTZ1WXNzdTRkcmV1NURNMWlJeXVZajdRTUcyd3RhM2d1NXVWSFRCWjczaDBVaXAwMHJHTGNCemNEYUxhTmdxeXY1dEdKVTlwUXR4NnVHRm5pbUxfMA?oc=5",
-   "date": "2026-10-27T19:00:00.000Z"
   },
   {
    "src": "cleveland.com",
    "title": "‘Can’t keep a star in the closet’: Inside Meleek Thomas’ stellar NBA debut",
    "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPaUdZZWxBRVNSeG81SDliX2UwcTJfUXQ0Zm5iSFNGb2tMNW5DZGtfcFZuVlhqaUhac2hnNmRQUDdqT0E1bGhpVTlTMlRnOFJud3M3bXZUZXlySjhSMGR0ZTlTSHE0ejVHNEQxcEN2MWxyRWVMUnhTUVdsOUdRMTJrMWJ4OGV1RHdPa2tKb1Z1OU9hX01vSnBIWmgwc2oyd3ZPQkFzR0VHWldIRWZuV0lXZTF2bw?oc=5",
    "date": "2026-10-27T16:24:00.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "3 Major Takeaways from Cavs vs. Timberwolves",
-   "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxORHZidkxnVTJMU3g2bUdkZFhlODh1Y3VxbW1qUnh3anl3M25RNW9aVXZyM0hWVS03TE5IczBWYU1IVnBabU43Sy1CclZFem9kZmg1WUhmTFZiNmFDRTZwUXZvUWZieW1XNkNENDRRdnBNZlVtcG5IOHVEYnJwMTV5eXlKMkN5ZUVHQkZMb2pnTU56cVNKQVl6cDJn?oc=5",
-   "date": "2026-10-27T16:00:02.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Cavs Big Man Surging From Beyond The Arc As Offense Looks More Dynamic",
-   "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQV2lHODk5dTVxQ19yWGJ4NV9sZ2Rabnh4WGJxUUlfd2NoUnptSHE1Ukw0WGt1aV9sMHdsWVFCVjFlUl9id2FvQ2hYZkd5Ny1tTzJrMGk2YU02ZW1VM0I1aGl1VDVMX0xPWHA3TzdoUnotdHZUUGhZcUF4VkxmRUluaWZ1bFllYXdyTG4yS1NUUjltLTFaejJYelAxSWVrdjljU3RNOUZXTTFCMUtNOUI5SVJRQjlnR1U5dzR1UlNB?oc=5",
-   "date": "2026-10-27T15:00:00.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Do the Cavaliers Have a James Harden Problem?",
-   "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNV1g5VVBUTy14VUs4cmhyU1pYWjNicmhTTGk3UlVhNFFjZEQ4NjFRcU5EUkU1TXJlOGpSaWZSVUVyczN0dldDdFBVbE9SdFU4UnpwWDdKYVpMaE5oT0NONGNMQ1JIbnl3aEh5TXBOTHA5RWxQcFkwOXYwY2FpYlk3Zm9wSGNXSC0zeU5jMXFENGJ6YTVoSkZJOWdiUQ?oc=5",
-   "date": "2026-10-27T11:00:02.000Z"
   },
   {
    "src": "cleveland.com",
@@ -182,9 +152,15 @@
   },
   {
    "src": "Cavaliers on SI",
-   "title": "Marquee Matchup To Watch In Cavs vs. Timberwolves",
-   "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQVllyNW5QWF80anRsSXp0OFNNUWMxbjdEOF9URkx5am1oQ2xxZG9DVFo4R1g4ekthRV9tMHNKYk5Mc05fdlhHOWk0NTdJdEdlSDVuX1ZYQV91X01ld0o2TkpNSEhHQU5SREIyV0pHTkdFbjI2ZzhzNm5nbUwzdW1jdmkxV2FCRVhyVEdGZXNPNXo0NHNIWEZEX1NqcEVUcUZQ?oc=5",
-   "date": "2026-10-26T15:31:00.000Z"
+   "title": "Meleek Thomas Shines in Cavs Debut as Cleveland Survives Thrilling Overtime Battle",
+   "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxNRU1YblFLdEN1eEJEX2ZoT0hDWnRaQXhpQlJ4SGJzMXE5Sl9ka292SWpwU3l6eHdacDVkSHpzbTdQc2dRa0ZFaHVzMEo2R0VtX05aNl9Yclh4SVlIR0lFbWFvUWVQZWk0Rl9rZnVhSXVJUTlYTHJzUFVoM2xHLUViMENyNnFZYVRELVhxNlYxZzBZMnQ4bXpubDNiOFNrNzhhbUVzSXJzZUtBTFU3WUtoZWNhcHZRbDBjMm1jWmVUeEkwenhaWm95UVVEM2tRUQ?oc=5",
+   "date": "2026-10-27T02:09:28.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "James Harden Must Be More Efficient Moving Forward",
+   "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQVHhRN1pTOGxwbWtabmFVTmtVa2dmV0k2LWRnMEUwdGo5em5DVDVLbHBjODNjdmJvcVdXWF82elBjN1JGSWdpSjZGRDFKb3E3ZVBKUmlFTVV3UE9vdGhzMDFzTWVEQ2wzRmxWckhPYzY3TFMwQVVCbnhoQVB3MlVoal9TaFFZUXVScVJmMENpV3FHNmZhVmdiT3RvbWtYS1AtRGNCdU04by13VFF2MWNQT09CMzk2MG5x?oc=5",
+   "date": "2026-10-26T21:30:00.000Z"
   },
   {
    "src": "cleveland.com",
@@ -193,10 +169,22 @@
    "date": "2026-10-26T14:45:00.000Z"
   },
   {
+   "src": "Cavaliers on SI",
+   "title": "3 Critical Storylines I'm Focused on in Timberwolves vs Cavs",
+   "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNNFRoNEFJcHNFWUJESU1FNXI2ZXo5UGZacWpRQlpoNy02UlNkblhFeHRQOFcxM2lKQm9jOFB5ckswbFFCcWh0TDltVE13RHZOdWZCby1yV1lkQk9mMHFWellhUnF1RFdob2RMSkU3aThzbXZmeFpydDUxeEh6OU42RmJfRVhURUowMEMyU09KZUk5ZHcyckFVSi1rVkJCcWpEU0VuUFdJMFRYdGx5UkdjbA?oc=5",
+   "date": "2026-10-26T13:31:02.000Z"
+  },
+  {
    "src": "cleveland.com",
    "title": "Cavs vs. Timberwolves: preview, odds, injury report and TV info",
    "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPbTVuU1ExQUM3NG1DMzhZUTVjdWlYNjNLSFAxUDNFcEE2d3hWdS15QWxBcmFfLVMxZzM2ZkdzSFNNRkNIX1E3S3kxZk1EX2FRMTNyZGFUX25LMVd0eWM2b3VqMWZRWTVkQTVvd1AzbExoQWNlRnJ5NnpQZV9XSWRVejZ0ZThEYkxsbjdzM0JpMzJPejJxeWpjRUNR?oc=5",
    "date": "2026-10-26T09:00:00.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "Don't Rush It, Peyton Watson's Fit With Cavaliers May Take Time",
+   "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPZkJQUnY1U09QMXFzWUl3VEdBYmFtc2dHbkVSLVVnQi1Sbk1jcDhTVEQ2cWhyWjRHS1hwVS1QVmhGQmZPdlkxc3I0aDBld2lmaTFpTzdOYzdfVzAxZU1UZ2hHWnpWbkxSMDFPcHlreTRFZEhjQ09LcnFDM1FqMzJuRV8zN1g0TXJaV2FUVUk3S280d21RUTY5eW96b0dJT1U5bDZscHF2OVd0VWRpbkZVMnh3MA?oc=5",
+   "date": "2026-10-25T22:56:31.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -217,16 +205,16 @@
    "date": "2026-10-25T02:41:00.000Z"
   },
   {
-   "src": "Cavaliers on SI",
-   "title": "Mario Hezonja Waived Off Donovan Mitchell—Then Explained Why",
-   "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQMmluM0VlUWh2ZWpxOGM4Uy1uT1F3X0xEdFhUTjlvSGxheEZiRXYwMnZ4YU9LZTRBVGxaOWZRTHpMZ3RHb29lS0dDcnNEUVFKS19Sd1ViNzVJZzB6SG4yQmZMYjRGY3VreTZSaGFpYmZxNXQyRmhJTHJOVXpMX2ZSV3VFZWN4TGF0RmJRRTJDMzE5WktxeEdUTjdrWFlJY3J2WU9ybUVaZl9rVi1sUG9XMg?oc=5",
-   "date": "2026-10-24T23:05:30.000Z"
-  },
-  {
    "src": "Hoops Rumors",
    "title": "2026 NBA G League Draft Results",
    "link": "https://www.hoopsrumors.com/2026/10/2026-nba-g-league-draft-results.html",
    "date": "2026-10-24T21:35:01.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "3 Critical Storylines I’m Focused on in Cavs vs. Nets",
+   "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOeEpDZlFDRmxoQ0FDSUFhOEpTcnVBb2VzNjhFbnRlSHhSYzVORFozSVd4ZVhKdmRKTUlmSFhPdHBZS0ZURWFXaVdnUHk2cGZWUy1ibW5NMGE4SVpBZjkwV1ZYLUpBUDExOHNFQTNudGw4ODdlaFRDZmw2aGxlbURVa2VzY2EtY0QxUUdyR29RaWNaZHVIQ1ZzcWVyVmRNdTlQdGpQRUJB?oc=5",
+   "date": "2026-10-24T11:00:00.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -239,12 +227,6 @@
    "title": "LeBron James: Cavaliers Were In 'Consideration' During Free Agency",
    "link": "https://www.hoopsrumors.com/2026/10/lebron-james-cavaliers-were-in-consideration-during-free-agency.html",
    "date": "2026-10-23T12:57:48.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "The Biggest Cavaliers Development That Actually Matters Moving Forward",
-   "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxPanZfbkVBaWczUlRsM2x3Qm91akdRcG1IdEUtYWk5LThJNDFBMXBGVlhyQW9fQnFicWxNVTNYLU1USkwzXzZtVTl6WXM0SzdOVHpOUHF2T0tMWGU0eGJEMTgwWW5xMklfbUxqUS1MUVBHR1hqUVNaSURYdXYyWnd6emVrV3ZOQkJUSTctdkZmTmFMQTJnak1IZlFOaFRHUnc4SDBhRkdWUi1lX3dadHk1dnJ1MVNYRUxOT3pOMkl3?oc=5",
-   "date": "2026-10-23T12:30:00.000Z"
   },
   {
    "src": "cleveland.com",
@@ -260,9 +242,9 @@
   },
   {
    "src": "Cavaliers on SI",
-   "title": "Everything To Know About the Cavs Season Opener Against the 76ers",
-   "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNX1V5SnFheE5HNUR5QkY2aVpCT0ppVms5MVZIc3hjTDJfa21pdHhOcmRsWVFlOWUxb1dCRUlYaWVNbWdjUzNzQjg3VXVpbFhpS1dncW9GNk5VZWZvT2JGcjhCVTdBcGJZTGh1UFp0RFVnN2Fjd3BTNmVmRENtLWQzd3cyeHRHMGdnRHlKUER2TGFHOV9ib3dvbjlRX0I2akJDZkhlQ2w5WVItMFdwUTlCZ2xLcGVnV28?oc=5",
-   "date": "2026-10-22T19:00:01.000Z"
+   "title": "Former Cavalier Roundup: Ty Jerome Steals the Show In Memphis",
+   "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOblpDdWJLMk9UY1RDMy1ZbUdVWEhtWmN2VjRiNHQxNmVSbldiYzlhYzBoTW9FWUxyUnFpUUhUY0dYSW1MYlE0UU9mNXZ3c0stQTU0N1MwaDJrZVh4N3J2Q3ZHUWt3ejZtSzdaNVhrQW1vMC1aakEzakE1WDB6cEgySWxVMHh4bkwyR3Z1ZUpJVW9ZbkFnVVdabUhQVWQ3YVpDWmIzcUdjN1k3T2JUQWNFMQ?oc=5",
+   "date": "2026-10-22T16:00:01.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -275,6 +257,18 @@
    "title": "Cavs' Mitchell: 'I Don't Ever Want To Wear Another Uniform'",
    "link": "https://www.hoopsrumors.com/2026/10/cavs-mitchell-i-dont-ever-want-to-wear-another-uniform.html",
    "date": "2026-10-21T23:07:43.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "NBA Analyst Makes Absurd Cavaliers Playoff Prediction Ahead of Opening Night",
+   "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOZjJhSnA3VmZROXVhMWdpRVRNdE1na2I5elVQUDc5MU8xNVhZd1prTUd4LXRwbkRCMXpQbVZ4OW4wOVQyRTFBbURNRGVyMllqei1kWTA4MzlHemZhRWVoUGctc1VvcnBiTlV6U1NGUG92RENjVXY5WkxtUGs3T1M2aEdzN1Y1blRDR1dOWHVvMTBoMmw0WDZvWVdnYTJCOVRjcHhSVXZvZ3IwX3JtV1c1ZmVLLXZOc2FHUlRHLUtGN012SDRUY2c?oc=5",
+   "date": "2026-10-21T14:00:02.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "Cavs Hit With Big Injury as Big Man Questionable For Season Opener",
+   "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQbzBqSjl5QlRZNk9BUi1WV1VaaHlicFpxY3ZnN05zaFBfa2d3T1Y0RUx1VGxhUUhzSWszeE5CWVBhN0lrb19xTmsyajliNTRJQTB1dE1TWHFIQzkwSFhIbGxlQ3hiaXNpR2VfaTNXbHNkQVpHa1FUYnhDeFI1UTBULVZ3bkNmMWE4X0Z6N1FrZ1VCVmxCMXFBQlpleUFFZ1RDQXN2b3Z1Q1RiVFkxQ196NGt6RE5WMWdW?oc=5",
+   "date": "2026-10-21T07:00:00.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -299,6 +293,12 @@
    "title": "Injury Notes: Warriors, D. Murray, Sixers, Cavs, Nets, Raptors",
    "link": "https://www.hoopsrumors.com/2026/10/injury-notes-warriors-d-murray-sixers-cavs-nets-raptors.html",
    "date": "2026-10-20T14:41:37.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "The Cavs Exercise Jaylon Tyson's Fourth-Year Team Option",
+   "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQdlE3MW85dHItRzcxdmJOWHRuRVZCZ0V2NWF2bW9Yb2w5Z19YSWtzN1VLRkNUYjNGeUNsUzBJbE9sY2FHVWZMd19uclNqcmJXUG5BclN4M3N2MzdEVWtBdTB0M3pJSWZDb3UtVXpGdEpqUjVPRC11cXRnY3lxeVE5RGpPd3J5M0JKUTEzRXFHeGZhNU9IeVRGRHoybXc3eXQ0dG1vUUxSSGFFbTJwTGJTbFZ3?oc=5",
+   "date": "2026-10-20T07:00:00.000Z"
   }
  ],
  "podcasts": [
@@ -390,16 +390,16 @@
  "videos": [
   {
    "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: The Cleveland Cavaliers Drop a CLOSE Game vs the Atlanta Hawks",
+   "title": "CAVS POSTCAST: The Cleveland Cavaliers and James Harden FALL as Atlanta Seizes Dramatic Finish",
    "link": "https://www.youtube.com/watch?v=buODBaLuZyA",
-   "date": "2026-10-30T02:42:07.000Z",
+   "date": "2026-10-30T03:02:53.000Z",
    "id": "buODBaLuZyA"
   },
   {
    "src": "The Chase Down Podcast",
    "title": "Chase Down Podcast Live, presented by LECOM: Hawks Take Control Late, Drop Cavs to 3-2",
    "link": "https://www.youtube.com/watch?v=yS7ANmBRg0c",
-   "date": "2026-10-30T02:40:17.000Z",
+   "date": "2026-10-30T03:00:47.000Z",
    "id": "yS7ANmBRg0c"
   },
   {
@@ -628,6 +628,13 @@
   }
  ],
  "highlights": [
+  {
+   "src": "NBA",
+   "title": "CAVALIERS at HAWKS | FULL GAME HIGHLIGHTS | October 29, 2026",
+   "link": "https://www.youtube.com/watch?v=PJO8_pxOr08",
+   "date": "2026-10-30T03:01:27.000Z",
+   "id": "PJO8_pxOr08"
+  },
   {
    "src": "Cavs",
    "title": "Cavs vs Wizards | Game Highlights | 10.28.2026",
