@@ -42,11 +42,16 @@ for (const r of rows) {
   a.res.push({ d: r.d, w: r.me.pts > r.op.pts, net: r.me.pts - r.op.pts, poss: 0.5 * (possOf(r.me, r.op) + possOf(r.op, r.me)) });
 }
 const TSTATS = {}, FFR = {}, NRTG = {}, L14 = {}, OPP_FORM = {};
+/* season ratings from pbpstats' play-by-play possession counts (the way NBA.com counts them) when pbpstats is caught up
+   with the same number of games for that team; otherwise the box-score estimate below stays (Oct 30) */
+let PBT = null; try { const j = JSON.parse(await readFile(new URL('pdata/pbp-teams.json', root), 'utf8')); if (j && j.T) PBT = j.T; } catch {}
+const PBK = Object.fromEntries(Object.keys(PBT || {}).map(k => [ab(k), k]));
 const today = etDay(), from14 = etDay(new Date(Date.parse(today + 'T12:00:00Z') - 14 * 864e5));
 for (const [k, a] of Object.entries(A)) {
   const g = a.g, me = Object.fromEntries(F.map(f => [f, a[f]])), op = Object.fromEntries(F.map(f => [f, a['o' + f]]));
   const P = 0.5 * (possOf(me, op) + possOf(op, me));
-  const ortg = 100 * a.pts / P, drtg = 100 * a.opts / P, pace = 48 * (2 * P) / (2 * (a.mp / 5));
+  let ortg = 100 * a.pts / P, drtg = 100 * a.opts / P, pace = 48 * (2 * P) / (2 * (a.mp / 5));
+  { const x = PBT && PBT[PBK[k]]; if (x && x.GamesPlayed === g && x.OffPoss > 0 && x.DefPoss > 0 && x.Points === a.pts && x.OpponentPoints === a.opts) { ortg = 100 * x.Points / x.OffPoss; drtg = 100 * x.OpponentPoints / x.DefPoss; if (x.Pace) pace = x.Pace; } }
   TSTATS[k] = [a.w, g - a.w, r1(a.pts / g), r1(a.opts / g), r1(ortg), r1(drtg), r1(pace), r1(100 * a.tpm / (a.tpa || 1))];
   FFR[k] = ['fgm', 'fga', 'tpm', 'ftm', 'fta', 'orb', 'drb', 'tov', 'ofgm', 'ofga', 'otpm', 'oftm', 'ofta', 'oorb', 'odrb', 'otov'].map(f => r1(a[f] / g));
   NRTG[k] = [r1(ortg - drtg), g];
