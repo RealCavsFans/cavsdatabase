@@ -560,6 +560,33 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 @container (max-width:140px){.ppx-tm .ppx-tt .ln{display:none!important}}
 @container (max-height:58px){.ppx-tm .ppx-tt .sh{display:none!important}}
 @container (max-height:26px){.ppx-tm .ppx-tt b{display:none!important}}
+/* Oct 31 mock: drafted player card layout */
+.rc3-r{display:flex;flex-direction:column}.rc3-r .nxl,.rc2 .nxl{list-style:none!important;padding:0!important;margin:0!important}
+@media (min-width:900px){.ab-rt .xb.rc3-2{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:0 28px!important}.ab-rt .xb.rc3-2>.rc2{grid-row:auto!important}.ab-rt .xb>.rc3-r{padding-top:12px}.rc3-r>.nxbox{order:-1;margin:0 0 14px!important}.rc3-r>.bio-links{margin-top:10px}
+ .rc3-r .rc2-k:first-child{margin-top:0}.rc3-r .rc2-strip{gap:4px!important}.rc3-r .rc2-strip div{padding:6px 8px!important}.rc3-r .rc2-strip b{font-size:1rem!important}.rc3-r .rc2-strip span{font-size:.5625rem!important}
+ .ab-rt .xb .rc3-f{display:grid;grid-template-columns:auto 1fr;gap:4px 16px}}
+/* Oct 31 mock: stats side of the drafted cards */
+.rc2 .rc2-strip.rc3-slim,.rc3-r .rc2-strip.rc3-slim{display:grid!important;grid-auto-flow:column!important;grid-auto-columns:minmax(0,1fr)!important;grid-template-columns:none!important;gap:2px!important;border:0!important;background:none!important}
+.rc3-r .rc3-slim div{background:var(--sub)!important;padding:5px 2px!important;text-align:center!important;border:0!important}
+.rc3-r .rc3-slim b{font:700 .8125rem var(--mono)!important;display:block}.rc3-r .rc3-slim span{font:700 .5625rem var(--cond)!important;letter-spacing:.08em!important;color:var(--muted)}
+@media (max-width:600px){.rc2 .rc2-strip.rc3-slim,.rc3-r .rc2-strip.rc3-slim{grid-auto-flow:row!important;grid-template-columns:repeat(5,minmax(0,1fr))!important}}
+.rc3-adv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+.rc3-adv div{background:var(--sub);padding:5px 8px}.rc3-adv span{display:block;font:700 .5938rem var(--cond);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.rc3-adv b{display:block;font:700 .9375rem var(--mono);color:var(--fg)}.rc3-adv small{display:block;font-size:.625rem;color:var(--muted);line-height:1.25}
+@media (max-width:600px){.rc3-adv{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.rc3-sm{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:start}.rc3-smc svg{width:100%;height:auto;display:block;background:var(--card)}
+.rc3-smt{display:grid;grid-template-columns:1fr auto auto auto;gap:0 10px;font-size:.75rem}.rc3-smt span{padding:4px 0;border-bottom:1px solid var(--line2);text-align:right;font-family:var(--mono)}.rc3-smt span:nth-child(4n+1){text-align:left;font-family:var(--sans);font-weight:600}.rc3-smt span.h{font:700 .5938rem var(--cond);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)}.rc3-smt span.t{font-weight:800}
+.rc3-sml{display:flex;flex-direction:column;gap:4px;margin-top:10px;font-size:.6875rem;color:var(--muted)}.rc3-sml span{display:flex;align-items:center;gap:6px}.rc3-sml i{width:10px;height:10px;border-radius:50%;display:inline-block;box-sizing:border-box}
+@media (max-width:600px){.rc3-sm{grid-template-columns:1fr}}
+.rc2-hon span{font-size:.75rem!important;padding:3px 8px!important}
+.rc3-r .rc2-k{margin-top:14px}.rc3-r>.rc2-k:first-child,.rc3-r .rc3-ng>.rc2-k:first-child{margin-top:0}
+.rc2>.nxbox{margin-top:14px!important}.rc3-advw .rc2-k{margin-top:14px}.rc3-advw:empty{display:none}.rc3-r>.bio-links{margin-top:12px}
+.rc3-smt .zr{all:unset;display:contents;cursor:pointer}.rc3-smt .zr>span{padding:4px 0;border-bottom:1px solid var(--line2);text-align:right;font-family:var(--mono)}.rc3-smt .zr>span:first-child{text-align:left;font-family:var(--sans);font-weight:600}.rc3-smt .zr.t>span{font-weight:800}.rc3-smt .zr:hover>span{background:var(--sub)}.rc3-smt .zr.on>span{background:color-mix(in srgb,#860038 12%,var(--card));color:var(--wine-ink)}.rc3-smt .zr:focus-visible>span{outline:2px solid #f2b231}
+.rc3-sml .rc3-tip{font-style:italic}.rc3-advw .rc2-strip.rc3-slim{display:grid!important;grid-auto-flow:column!important;grid-auto-columns:minmax(0,1fr)!important;grid-template-columns:none!important;gap:2px!important;border:0!important;background:none!important}.rc3-advw .rc3-slim div{background:var(--sub)!important;padding:5px 2px!important;text-align:center!important;border:0!important}.rc3-advw .rc3-slim b{font:700 .8125rem var(--mono)!important;display:block}.rc3-advw .rc3-slim span{font:700 .5625rem var(--cond)!important;letter-spacing:.08em!important;color:var(--muted)}@media (max-width:600px){.rc3-advw .rc2-strip.rc3-slim{grid-auto-flow:row!important;grid-template-columns:repeat(5,minmax(0,1fr))!important}}
+.rc3-adv .rc3-bw.up{box-shadow:inset 3px 0 0 #860038}.rc3-adv .rc3-bw.dn{box-shadow:inset 3px 0 0 #8a929c}.rc3-adv .rc3-bw span{text-transform:none;letter-spacing:.02em}
+/* Oct 31 mock: link and capture buttons sit on their own at the top right; small source note */
+.ab-rt>li{position:relative}.ab-rt>li>.rc3-cx{position:absolute!important;top:14px;right:52px;display:flex!important;gap:6px;margin:0!important;z-index:2}@media (max-width:600px){.ab-rt>li>.rc3-cx{top:10px;right:12px}.ab-rt>li>.rc3-cx button{width:26px!important;height:26px!important}}.ab-rt>li:not([open]):not(:has(details[open]))>.rc3-cx{display:none!important}
+.rc3-ng>.rc2-fn{font-size:.625rem!important;line-height:1.4;margin-top:8px;color:var(--muted)}
+.rc2>.bio-links{margin-top:12px}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
@@ -2506,12 +2533,50 @@ const rt=document.getElementById('rights');RIGHTS.forEach(([n,p2,dd,c])=>{const 
      xa.append(s1,s2);top.appendChild(xa)}
     cd.appendChild(top);
     /* reworked card (Oct 30): status pill, quick facts like the staff cards, then the stat tiles */
-    {const st=X[0]||'';const [k0,...rest]=st.split(' · ');const pill=el('div','rc3-pill'+(/^Unsigned/.test(st)?' u':''));pill.append(el('b',null,k0),el('span',null,rest.join(' · ').replace(/\. Rights acquired.*$/,'')));{const xa0=top.querySelector('.rc-x');if(xa0)pill.appendChild(xa0)}cd.appendChild(pill);
+    {const st=X[0]||'';const [k0,...rest]=st.split(' · ');const pill=el('div','rc3-pill'+(/^Unsigned/.test(st)?' u':''));pill.append(el('b',null,k0),el('span',null,rest.join(' · ').replace(/\. Rights acquired.*$/,'')));cd.appendChild(pill);if(li.classList.contains('dim')){const xa0=top.querySelector('.rc-x');if(xa0)pill.appendChild(xa0)}
      const f=el('dl','rc3-f');[['Drafted',dd+' · '+(RIGHTS_ACQ[n]&&/Drafted by the Cavs/.test(RIGHTS_ACQ[n])?'by the Cavs':'by another team')],['Rights',RIGHTS_ACQ[n]&&!/Drafted by the Cavs/.test(RIGHTS_ACQ[n])?'Acquired · '+RIGHTS_ACQ[n]:'Held since draft night'],['Born',C.born?C.born.replace(' · ',' · ')+(age!=null?' (age '+age+')':''):null],['Size',[C.ht,C.pos].filter(Boolean).join(' · ')],['Country',C.nat]].forEach(([k,v])=>{if(!v)return;f.append(el('dt',null,k),el('dd',null,v))});cd.appendChild(f)}
     /* Niang: his LSU season, from ESPN box scores (niang.json, refreshed every 30 minutes), above last season once he has played */
-    if(n==='Saliou Niang'){const lw=el('div');cd.appendChild(lw);fetch('/niang.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(J=>{const q=J&&J.season;if(!q||!q.gp)return;const g=q.gp,f1=v=>(v/g).toFixed(1),pc=(m,a)=>a?(m/a*100).toFixed(1):null;
-      lw.appendChild(el('div','rc2-k',q.season+' · LSU · NCAA'));const st=el('div','rc2-strip');[['GP',String(g)],['MPG',f1(q.min)],['PPG',f1(q.pts)],['RPG',f1(q.reb)],['APG',f1(q.ast)],['SPG',f1(q.stl)],['BPG',f1(q.blk)],['FG%',pc(q.fgm,q.fga)],['3P%',pc(q.tpm,q.tpa)],['FT%',pc(q.ftm,q.fta)]].forEach(([k,v])=>{if(v==null)return;const x=el('div');x.append(el('b',null,v),el('span',null,k));st.appendChild(x)});lw.appendChild(st);
-      lw.appendChild(el('p','rc2-fn',q.fgm+'-'+q.fga+' FG, '+q.tpm+'-'+q.tpa+' 3PT, '+q.ftm+'-'+q.fta+' FT · from ESPN box scores'))})}
+    if(n==='Saliou Niang'){const lw=el('div','rc3-ng'),adw=el('div','rc3-advw');cd.append(lw,adw);fetch('/niang.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(J=>{const q=J&&J.season;if(!q||!q.gp)return;{const R2=lw.parentElement;if(R2)R2.querySelectorAll(':scope>.rc3-old').forEach(x=>x.remove())}
+      /* Oct 31: his college season (left column), last game, shot map and box-score ratings (right), all from ESPN box scores and play-by-play (niang.json) */
+      const g=q.gp,pc=(m,a)=>a?(m/a*100).toFixed(1):'–';
+      const slim=(host,title,rows)=>{host.appendChild(el('div','rc2-k',title));const st=el('div','rc2-strip rc3-slim');rows.forEach(([k,v])=>{const x=el('div');x.append(el('b',null,String(v)),el('span',null,k));st.appendChild(x)});host.appendChild(st)};
+      const f1=v=>(v/g).toFixed(1);
+      slim(adw,q.season+' · LSU · per game',[['GP',g],['MIN',f1(q.min)],['PTS',f1(q.pts)],['REB',f1(q.reb)],['AST',f1(q.ast)],['STL',f1(q.stl)],['BLK',f1(q.blk)],['FG%',pc(q.fgm,q.fga)],['3P%',pc(q.tpm,q.tpa)],['FT%',pc(q.ftm,q.fta)]]);
+      const L=J.last;if(L){const md=new Date(L.d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});const sc=(J.score||'').match(/^\D*?(\d+),\D*?(\d+)$/);const wl=sc?(+sc[1]>+sc[2]?'W ':'L ')+sc[1]+'–'+sc[2]:'';
+        slim(lw,'Last game · '+md+' vs '+L.opp+(wl?' · '+wl:''),[['MIN',L.min],['PTS',L.pts],['REB',L.reb],['AST',L.ast],['STL',L.stl],['BLK',L.blk],['TO',L.to],['FG',L.fgm+'-'+L.fga],['3PT',L.tpm+'-'+L.tpa],['FT',L.ftm+'-'+L.fta]])}
+      /* shot map: every field goal attempt; filled = made (wine assisted, gold on his own), ring = missed. Tap a zone to show only those shots. */
+      const SH=J.shots||[];if(SH.length>=10){lw.appendChild(el('div','rc2-k','Shot map · '+q.season+' · '+SH.length+' shots'));const wrap=el('div','rc3-sm');
+        const X=x=>x*10,Y=y=>(y+5.25)*10,dist=s=>Math.hypot(s[0]-25,s[1]);const Z=[['At the rim',s=>!s[3]&&dist(s)<4],['Short mid',s=>!s[3]&&dist(s)>=4&&dist(s)<14],['Long 2',s=>!s[3]&&dist(s)>=14],['Three',s=>s[3]],['All',()=>1]];let zsel=4;
+        const m=el('div','rc3-smc');const draw=()=>{const f=Z[zsel][1];let svg='<svg viewBox="0 0 500 350" role="img" aria-label="Shot map"><g fill="none" stroke="var(--line)" stroke-width="2"><rect x="1" y="1" width="498" height="348"/><rect x="190" y="1" width="120" height="189"/><circle cx="250" cy="190" r="60"/><path d="M33.5 1V99A221.5 221.5 0 0 0 466.5 99V1"/><circle cx="250" cy="52.5" r="7.5"/><path d="M220 40h60"/></g>';
+          SH.filter(f).sort((a,b)=>a[2]-b[2]).forEach(s=>{const cx=X(s[0]).toFixed(1),cy=Math.min(342,Y(s[1])).toFixed(1);svg+=s[2]?`<circle cx="${cx}" cy="${cy}" r="6" fill="${s[4]?'#860038':'#F2B231'}" stroke="${s[4]?'#fff':'#860038'}" stroke-width="1.2"/>`:`<circle cx="${cx}" cy="${cy}" r="5" fill="none" stroke="#8a929c" stroke-width="1.6" opacity=".75"/>`});m.innerHTML=svg+'</svg>';
+          tb.querySelectorAll('.zr').forEach((r2,i)=>r2.classList.toggle('on',i===zsel))};
+        const tb=el('div','rc3-smt');['Zone','FG','FG%','Ast\'d'].forEach(h=>tb.appendChild(el('span','h',h)));
+        Z.forEach(([k,f],i)=>{const q2=SH.filter(f),mk=q2.filter(s=>s[2]),as=mk.filter(s=>s[4]);if(!q2.length)return;const b=el('button','zr'+(k==='All'?' t':''));b.type='button';b.setAttribute('aria-label','Show '+k.toLowerCase()+' shots');b.append(el('span',null,k),el('span',null,mk.length+'-'+q2.length),el('span',null,pc(mk.length,q2.length)),el('span',null,mk.length?Math.round(as.length/mk.length*100)+'%':'–'));b.onclick=()=>{zsel=zsel===i?4:i;draw()};tb.appendChild(b)});
+        const lg=el('div','rc3-sml');lg.innerHTML='<span><i style="background:#860038"></i>Made, assisted</span><span><i style="background:#F2B231;border:1px solid #860038"></i>Made, on his own</span><span><i style="border:1.6px solid #8a929c"></i>Missed</span><span class="rc3-tip">Tap a zone to filter the map</span>';
+        wrap.appendChild(m);const side=el('div');side.append(tb,lg);wrap.appendChild(side);lw.appendChild(wrap);draw()}
+      /* box-score ratings (Basketball Reference's individual offensive and defensive rating formulas, over the games he played), then his two best and two weakest marks against LSU's team-wide mark */
+      const T=q.tm,O=q.op;if(T&&O&&q.min>0){const P=q,MP=P.min,TMP=T.min,trb=x=>x.oreb+x.dreb;
+        const qAST=(MP/(TMP/5))*(1.14*((T.ast-P.ast)/T.fgm))+((((T.ast/TMP)*MP*5-P.ast)/((T.fgm/TMP)*MP*5-P.fgm))*(1-MP/(TMP/5)));
+        const FGp=P.fga?P.fgm*(1-.5*((P.pts-P.ftm)/(2*P.fga))*qAST):0,ASTp=.5*(((T.pts-T.ftm)-(P.pts-P.ftm))/(2*(T.fga-P.fga)))*P.ast,FTp=P.fta?(1-Math.pow(1-P.ftm/P.fta,2))*.4*P.fta:0;
+        const TSP=T.fgm+(1-Math.pow(1-T.ftm/T.fta,2))*T.fta*.4,TORB=T.oreb/(T.oreb+(trb(O)-O.oreb)),TPLAY=TSP/(T.fga+T.fta*.4+T.to),TORBW=((1-TORB)*TPLAY)/((1-TORB)*TPLAY+TORB*(1-TPLAY));
+        const ORBp=P.oreb*TORBW*TPLAY,ScPoss=(FGp+ASTp+FTp)*(1-(T.oreb/TSP)*TORBW*TPLAY)+ORBp,FGx=(P.fga-P.fgm)*(1-1.07*TORB),FTx=P.fta?Math.pow(1-P.ftm/P.fta,2)*.4*P.fta:0,TotPoss=ScPoss+FGx+FTx+P.to;
+        const PFG=P.fga?2*(P.fgm+.5*P.tpm)*(1-.5*((P.pts-P.ftm)/(2*P.fga))*qAST):0,PAST=2*((T.fgm-P.fgm+.5*(T.tpm-P.tpm))/(T.fgm-P.fgm))*.5*(((T.pts-T.ftm)-(P.pts-P.ftm))/(2*(T.fga-P.fga)))*P.ast,PORB=P.oreb*TORBW*TPLAY*(T.pts/TSP);
+        const ORtg=100*((PFG+PAST+P.ftm)*(1-(T.oreb/TSP)*TORBW*TPLAY)+PORB)/TotPoss;
+        const poss=(a,b)=>a.fga+.4*a.fta-1.07*(a.oreb/(a.oreb+b.dreb))*(a.fga-a.fgm)+a.to,TPoss=.5*(poss(T,O)+poss(O,T));
+        const DOR=O.oreb/(O.oreb+T.dreb),DFG=O.fgm/O.fga,FM=(DFG*(1-DOR))/(DFG*(1-DOR)+(1-DFG)*DOR);
+        const S1=P.stl+P.blk*FM*(1-1.07*DOR)+P.dreb*(1-FM),S2=(((O.fga-O.fgm-T.blk)/TMP)*FM*(1-1.07*DOR)+((O.to-T.stl)/TMP))*MP+(P.pf/T.pf)*.4*O.fta*Math.pow(1-O.ftm/O.fta,2);
+        const StopPct=((S1+S2)*TMP)/(TPoss*MP),TDR=100*O.pts/TPoss,DPS=O.pts/(O.fgm+(1-Math.pow(1-O.ftm/O.fta,2))*O.fta*.4),DRtg=TDR+.2*(100*DPS*(1-StopPct)-TDR);
+        const sh5=TMP/5/MP,USG=100*(P.fga+.44*P.fta+P.to)*sh5/(T.fga+.44*T.fta+T.to),net=ORtg-DRtg;
+        /* his rate vs the same rate for LSU as a whole (hi = higher is better) */
+        const M=[['True shooting',100*P.pts/(2*(P.fga+.44*P.fta)),100*T.pts/(2*(T.fga+.44*T.fta)),1,'%'],['Effective FG',P.fga?100*(P.fgm+.5*P.tpm)/P.fga:null,100*(T.fgm+.5*T.tpm)/T.fga,1,'%'],
+          ['Off rebound rate',100*P.oreb*sh5/(T.oreb+O.dreb),20*T.oreb/(T.oreb+O.dreb),1,'%'],['Def rebound rate',100*P.dreb*sh5/(T.dreb+O.oreb),20*T.dreb/(T.dreb+O.oreb),1,'%'],
+          ['Turnover rate',100*P.to/(P.fga+.44*P.fta+P.to),100*T.to/(T.fga+.44*T.fta+T.to),0,'%'],
+          ['Steal rate',100*P.stl*sh5/TPoss,20*T.stl/TPoss,1,'%'],['Block rate',100*P.blk*sh5/(O.fga-O.tpa),20*T.blk/(O.fga-O.tpa),1,'%'],['Free throw rate',P.fga?100*P.fta/P.fga:null,100*T.fta/T.fga,1,'']].filter(x=>x[1]!=null&&isFinite(x[1])&&x[2]>0).map(x=>Object.assign(x,{sc:(x[3]?1:-1)*(x[1]/x[2]-1)}));
+        const srt=M.slice().sort((a,b)=>b.sc-a.sc),best=srt.slice(0,2),worst=srt.slice(-2).reverse();
+        lw.appendChild(el('div','rc2-k','Advanced · '+q.season));const ad=el('div','rc3-adv');
+        [['Off rating',ORtg.toFixed(1),'pts produced / 100 poss'],['Def rating',DRtg.toFixed(1),'pts allowed / 100 poss'],['Net',(net>=0?'+':'−')+Math.abs(net).toFixed(1),'off − def'],['Usage',USG.toFixed(1)+'%','team plays he ends']].forEach(([k,v,s2])=>{const x=el('div');x.append(el('span',null,k),el('b',null,v),el('small',null,s2));ad.appendChild(x)});
+        [[best[0],'up'],[best[1],'up'],[worst[1],'dn'],[worst[0],'dn']].forEach(([x2,c])=>{if(!x2)return;const x=el('div','rc3-bw '+c);x.append(el('span',null,(c==='up'?'Best · ':'Weakest · ')+x2[0]),el('b',null,x2[1].toFixed(1)+x2[4]),el('small',null,'LSU '+(/rebound|Steal|Block/.test(x2[0])?'avg player ':'')+x2[2].toFixed(1)+x2[4]));ad.appendChild(x)});lw.appendChild(ad)}
+      lw.appendChild(el('p','rc2-fn','From ESPN box scores and play-by-play. Ratings use Basketball Reference’s box-score formulas; best and weakest compare him with LSU’s team rates (per-player share for rebounds, steals and blocks). College box scores don’t include +/−.'))})}
     /* honors above the stats (Oct 31) */if(C.hl&&C.hl.length){cd.appendChild(el('div','rc2-k','Honors'));const hw=el('div','rc2-hon');C.hl.forEach(h=>hw.appendChild(el('span',null,h)));cd.appendChild(hw)}
     const [sz,tm,lg,gp,pp,rp,ap,fg,tp]=C.s;cd.appendChild(el('div','rc2-k',[sz,tm,lg].filter(Boolean).join(' · ')));
     const sts=el('div','rc2-strip');const XX=C.x||{};[['GP',gp],['MPG',XX.mpg],['PPG',pp],['RPG',rp],['APG',ap],['SPG',XX.spg],['BPG',XX.bpg],['FG%',fg],['3P%',tp],['FT%',XX.ft]].forEach(([k,v])=>{if(v==null)return;const x=el('div');x.append(el('b',null,typeof v==='number'&&k!=='GP'?v.toFixed(1):String(v)),el('span',null,k));sts.appendChild(x)});cd.appendChild(sts);
@@ -2523,6 +2588,11 @@ const rt=document.getElementById('rights');RIGHTS.forEach(([n,p2,dd,c])=>{const 
   const links=el('p','bio-links');if(X[1]){const a2=el('a',null,(/^Retired/.test(X[0]||'')?'Career profile':'Player profile and stats')+' ↗');a2.href=X[1];a2.target='_blank';a2.rel='noopener';links.appendChild(a2)}
   if(X[2]){if(links.childNodes.length)links.append(' · ');const a3=el('a',null,'Pre-draft scouting report ↗');a3.href=X[2];a3.target='_blank';a3.rel='noopener';links.appendChild(a3)}
   if(links.childNodes.length)bx.appendChild(links);
+  /* Oct 31 mock: two balanced columns on desktop: left = status, facts, honors; right = next games, stats, links */
+  {const cd=li.classList.contains('dim')?null:bx.querySelector(':scope>.rc2');if(cd){bx.classList.add('rc3-2');const R=el('div','rc3-r');const kids=[...cd.children];let k=kids.findIndex(x=>x.classList.contains('rc2-hon'));if(k<0)k=kids.findIndex(x=>x.classList.contains('rc3-f'));const ng=cd.querySelector(':scope>.rc3-ng');if(ng)R.appendChild(ng);const adw=cd.querySelector(':scope>.rc3-advw');kids.slice(k+1).filter(x=>x!==ng&&x!==adw).forEach(x=>{x.classList.add('rc3-old');R.appendChild(x)});R.querySelectorAll('.rc2-strip').forEach(x=>x.classList.add('rc3-slim'));const nb=bx.querySelector(':scope>.nxbox'),lk=bx.querySelector(':scope>.bio-links');if(nb)cd.appendChild(nb);if(adw)cd.appendChild(adw);if(lk)cd.appendChild(lk);bx.appendChild(R);
+    const ps=cd.querySelector('.rc3-pill>span');if(ps&&ps.firstChild&&ps.firstChild.nodeType===3)ps.firstChild.textContent=ps.firstChild.textContent.replace(/^\s*(\S)/,(m,c)=>c.toUpperCase())}}
+  /* Oct 31 mock: link and capture buttons sit on their own in the card's top right corner */
+  {const xa1=li.classList.contains('dim')?null:bx.querySelector('.rc-x');if(xa1){xa1.classList.add('rc3-cx');li.appendChild(xa1)}}
   de.append(sm,bx);li.appendChild(de);rt.appendChild(li)});
 
 /* resources */
