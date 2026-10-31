@@ -196,6 +196,7 @@ svg{display:block;width:100%;height:auto}
 .sbc-ab{font:800 1rem var(--cond);letter-spacing:.06em;color:var(--fg)}.sbc-ab.c{color:#860038}
 .lg-s{display:none}@media (max-width:600px){.lg-l{display:none}.lg-s{display:inline}
  table.lgp td:first-child{white-space:nowrap}
+ .tiles .lg-s{white-space:nowrap;font-size:.75rem}
  .wf-r{grid-template-columns:1fr 1fr!important;gap:4px 14px!important;padding:8px 0!important}.wf-n{grid-column:1/-1;display:flex;gap:8px;align-items:baseline}.wf-n b{display:inline!important;font-size:.9375rem!important}.wf-n small{font-size:.6875rem!important}.wf-c b{font-size:1.125rem!important}.wf-c em{font-size:.6875rem!important;margin-left:4px!important}.wf-bar{height:6px!important}.wf-rows{gap:4px!important}
 }
 .tw.more:has(.lsp),.tw.more:has(.spz-in){-webkit-mask-image:none;mask-image:none}
@@ -2397,7 +2398,7 @@ function zoneBars(D,R,t,sh,BZ,baseLab){
 }
 function vShots(v,D,R){
   if(!S.f.shTeam||(S.season&&S.f.shView==='bars'))S.f.shTeam=D.focus.id;const t=D.teams.find(x=>x.id===S.f.shTeam);
-  const c=el('div','card');head(c,'Shot chart',perLabel(S.per)+' · field goals only');
+  const c=el('div','card');head(c,'Shot chart',perLabel(S.per));
   const fl=teamBtns(D,'shTeam',()=>{S.f.shPl='all';S.f.shType='all'});
   if(S.season&&S.f.shView==='bars')fl.querySelectorAll('button[data-tid]').forEach(x=>x.style.display='none');  /* season Zones view: Cavs only (game view keeps the toggle so the tables can show the other team, i.e. the Cavs defense) */
   const ps=el('select');ps.setAttribute('aria-label','Player');const o0=el('option',null,'Whole team');o0.value='all';ps.appendChild(o0);
@@ -2459,7 +2460,7 @@ function vShots(v,D,R){
   /* shot quality: what an average NBA shooter would score on these same shots (league FG% in each zone) */
   const LZ=(()=>{const se=S.season||S.src||CUR_SEASON;const b=BLIVE&&BLIVE.lg&&BLIVE.season===se?BLIVE.lg:null;return ZN.map(([k],i)=>b&&b[i][1]?b[i][0]/b[i][1]:LG[k][0])})();
   const zv=i=>i>=3?3:2,exp=xy.reduce((a,q)=>a+LZ[q.zi]*zv(q.zi),0),act=xy.reduce((a,q)=>a+(q.m?zv(q.zi):0),0);
-  if(xy.length>=5){const g2=el('div','tiles');g2.style.margin='4px 0 10px';[[(exp/xy.length).toFixed(2),'Expected pts per shot · '+xy.length+' shots'],[(act-exp>=0?'+':'−')+Math.abs(act-exp).toFixed(1),'Shot making: '+act+' pts vs '+exp.toFixed(1)+' exp.']].forEach(([a,b],i)=>{const d=el('div');const bb=el('b',null,a);if(i===1&&Math.abs(act-exp)>=1)bb.style.color=act>exp?'var(--pos)':'var(--neg)';d.append(bb,el('span',null,b));g2.appendChild(d)});right.insertBefore(g2,right.lastChild)}
+  if(xy.length>=5){const g2=el('div','tiles');g2.style.margin='4px 0 10px';[[(exp/xy.length).toFixed(2),'Expected pts per shot · '+xy.length+' shots'],[(act-exp>=0?'+':'−')+Math.abs(act-exp).toFixed(1),'Shot making: '+act+' pts vs '+exp.toFixed(1)+' exp.']].forEach(([a,b],i)=>{const d=el('div');const bb=el('b',null,a);if(i===1&&Math.abs(act-exp)>=1)bb.style.color=act>exp?'var(--pos)':'var(--neg)';const sh=i===0?'xPts per shot · '+xy.length+' FGA':act+' pts vs '+exp.toFixed(1)+' exp.';const sp=el('span');sp.append(el('span','lg-l',b),el('span','lg-s',sh));d.append(bb,sp);g2.appendChild(d)});right.insertBefore(g2,right.lastChild)}
   const zt=el('table','zt');zt.innerHTML=`<tr><th>Zone</th><th>FG</th><th>FG%</th><th>Share</th><th title="Points above or below what an average NBA shooter scores on these shots">Vs avg</th></tr>`;
   ZN.forEach(([k,n,dsc],i)=>{const[m,a]=Z[i];const tr=el('tr');const nn=el('td');nn.append(n);if(dsc)nn.appendChild(el('span','pos',dsc));
     const dfc=a?(m/a-av(i)):0;const fg=el('td',null,a?pct(m,a):'–');if(a>=3)fg.style.color=dfc>0.02?'var(--pos)':dfc<-0.02?'var(--neg)':'';fg.style.fontWeight='700';
