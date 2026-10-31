@@ -1119,7 +1119,7 @@ function leadCard(D,R){const F=D.focus,O=D.other,c=el('div','card sec');head(c,'
   const tot=lf+lo+tie||1,lab=(w,t)=>w/tot>.14?t:'';
   c.insertAdjacentHTML('beforeend',`<div class="ldt"><span style="width:${lf/tot*100}%;background:${F.c}">${lab(lf,esc(F.abbr)+' '+fmtMin(lf))}</span><span class="tie" style="width:${tie/tot*100}%">${lab(tie,'Tied')}</span><span style="width:${lo/tot*100}%;background:${O.c}">${lab(lo,esc(O.abbr)+' '+fmtMin(lo))}</span></div>
    <div class="ldt-k"><span>${esc(F.abbr)} led ${fmtMin(lf)}</span><span>Tied ${fmtMin(tie)}</span><span>${esc(O.abbr)} led ${fmtMin(lo)}</span></div>
-   <div class="ldt-g">${[['Lead changes',R.lc],['Times tied',R.ties],['Longest lead held',(hold.f>=hold.o?esc(F.abbr):esc(O.abbr))+' '+fmtMin(Math.max(hold.f,hold.o))],['Biggest lead '+esc(F.abbr),R.lead[F.id]],['Biggest lead '+esc(O.abbr),R.lead[O.id]]].map(([a,b])=>`<div><span>${a}</span><b>${b}</b></div>`).join('')}</div>`);return c}
+   <div class="ldt-g">${[['Lead changes',R.lc],['Times tied',R.ties],['Longest lead held',(hold.f>=hold.o?esc(F.abbr):esc(O.abbr))+' '+fmtMin(Math.max(hold.f,hold.o))],['Biggest lead '+esc(F.abbr),R.lead[F.id]],['Biggest lead '+esc(O.abbr),R.lead[O.id]],...(()=>{const rs=(R.runs||[]).filter(r=>!S.per||S.per==='all'||inPer(S.per,r.start.per)||inPer(S.per,r.end.per));if(!rs.length)return[];const r=rs.reduce((x,y)=>y.pts>x.pts?y:x);return [['Biggest run',esc(r.t===F.id?F.abbr:O.abbr)+' '+r.pts+'–0']]})()].map(([a,b])=>`<div><span>${a}</span><b>${b}</b></div>`).join('')}</div>`);return c}
 /* Team tab: second-half adjustments (Oct 28) */
 function halvesCard(D,R){const out=[];const F=D.focus,O=D.other;if(!R.lp||!(R.lp.per>2||(R.lp.per===2&&R.lp.type==='End Period')))return null;
   /* 6 second-half adjustments */
