@@ -22,7 +22,7 @@ function grab(name) {
 const PLAYERS = grab('PLAYERS'), ROSTER = grab('ROSTER'), SCHEDULE = grab('SCHEDULE'), TV = grab('TV'), CAVS_TV = grab('CAVS_TV');
 const TSTATS = grab('TSTATS'), TSTATS_PREV = grab('TSTATS_PREV'), H2H_PREV = grab('H2H_PREV'), STANDINGS = grab('STANDINGS');
 const TEAM_SALARY = grab('TEAM_SALARY'), TAX_BILL = grab('TAX_BILL'), LINES = grab('LINES'), HARDCAP = grab('HARDCAP');
-const INJURIES = grab('INJURIES') || [], OPP_INJ = grab('OPP_INJ') || {};
+const INJURIES = grab('INJURIES') || [], OPP_INJ = grab('OPP_INJ') || {}, INJ_ASSIGN = grab('INJ_ASSIGN') || [], CAVS_RADIO = grab('CAVS_RADIO') || '';
 const EXC = grab('EXC'), PICKS = grab('PICKS'), TX = grab('TX'), SCORES = grab('SCORES'), SEASON = grab('SEASON'), TEAMS = grab('TEAMS'), GNICK = grab('GNICK');
 let PJ = {}; try { PJ = JSON.parse(await readFile(new URL('pdata/players.json', root), 'utf8')); } catch {}
 let LG = {}; try { LG = JSON.parse(await readFile(new URL('pdata/league.json', root), 'utf8')); } catch {}
@@ -82,6 +82,7 @@ for (const P of PLAYERS) {
 }
 
 /* upcoming games */
+const LG5 = { GSW: 'gs', NYK: 'ny', NOP: 'no', SAS: 'sa', UTA: 'utah', WAS: 'wsh' };
 const TS = (TSTATS.CLE && TSTATS.CLE[0] + TSTATS.CLE[1] > 0) ? TSTATS : null;
 const recOf = a => { const s = STANDINGS.find(x => x[0] === a); if (s && s[2] + s[3] > 0) return ['2026–27', s[2] + '–' + s[3]]; const t = TSTATS_PREV[a]; return t ? ['2025–26', t[0] + '–' + t[1]] : ['', '']; };
 SCHEDULE.forEach((g, i) => {
@@ -105,9 +106,9 @@ SCHEDULE.forEach((g, i) => {
     const cell = (x, f, hi, fm, better) => `<div class="v${better ? ' w' : ''}"><b>${fm(f(x))}</b><small>${ord(rk(f(x), f, hi))}</small></div>`;
     const tape = R.map(([l, f, hi, fm]) => { const cb = hi ? f(a) > f(b) : f(a) < f(b); return cell(a, f, hi, fm, cb) + `<div class="l">${l}</div>` + cell(b, f, hi, fm, !cb && f(a) !== f(b)); }).join('');
     const outs = L => L.filter(r => /^out$/i.test(r[r.length - 1])).map(r => r[0].split(' ').slice(-1)[0]);
-    const co = outs(INJURIES), oi = OPP_INJ[o], oo = oi && oi.rows ? outs(oi.rows) : null;
+    const co = outs(INJURIES).concat(INJ_ASSIGN.map(r => r[0].split(' ').slice(-1)[0] + ' (G League)')), oi = OPP_INJ[o], oo = oi && oi.rows ? outs(oi.rows) : null;
     const inj = `<div class="inj"><span><b>Out · CLE</b> ${co.length ? esc(co.join(', ')) : 'None'}</span>${oo ? `<span><b>Out · ${o}</b> ${oo.length ? esc(oo.join(', ')) : 'None'}</span>` : ''}${ser ? `<span class="sr">${ser}</span>` : ''}</div>`;
-    rich = `<style>.tm{font-size:128px!important}.T{top:74px!important}.when{top:300px!important}</style><div class="tape"><div class="th">${TS ? '2026–27' : '2025–26'} · per 100 possessions · NBA rank</div>${tape}</div>${inj}`;
+    rich = `<style>.T .tm{font-size:0!important;line-height:0}.T .tm span{display:none}.T .tm img{width:160px;height:160px;object-fit:contain;display:block}.T .tm.r img{margin-left:auto}.T .tm small{font-size:22px!important;line-height:1.2;margin-top:12px}.T{top:84px!important}.when{top:312px!important}</style><div class="tape"><div class="th">${TS ? '2026–27' : '2025–26'} · NBA rank</div>${tape}</div>${inj}`;
   }
   cards.push([`og/gp/${d}-${o.toLowerCase()}.jpg`, page(`.T{position:absolute;left:64px;right:64px;top:80px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
 .tm{font:800 170px/0.9 'Saira Condensed'}.tm.r{text-align:right}.tm small{display:block;font:700 22px Archivo;letter-spacing:2px;color:#F4D6DD;margin-top:8px}.tm span{display:block;font:600 34px 'Saira Condensed';letter-spacing:1px;text-transform:uppercase;color:#fff;opacity:.85}
@@ -117,8 +118,8 @@ SCHEDULE.forEach((g, i) => {
 .tape .v{display:flex;align-items:baseline;gap:10px;justify-content:center}.tape .v b{font:700 30px 'Geist Mono'}.tape .v small{font:700 17px 'Geist Mono';color:#F4D6DD}.tape .v.w b{color:#F2B231}
 .tape .l{font:600 24px 'Saira Condensed';letter-spacing:1.5px;text-transform:uppercase;text-align:center;padding:0 22px;color:#fff;opacity:.9}
 .inj{position:absolute;left:64px;right:64px;top:522px;display:flex;justify-content:center;gap:28px;font:500 19px Archivo;color:#F4D6DD}.inj b{color:#F2B231;font-weight:700;margin-right:4px}.inj .sr{color:#fff;font-weight:700}`,
-    `<div class="k" style="position:absolute;left:64px;top:38px">${kick}</div><div class="T"><div class="tm">CLE<span>Cavaliers</span><small>${cs} · ${cr}</small></div><div class="at">${ha === 'H' ? 'vs' : 'at'}</div><div class="tm r">${o}<span>${esc(GNICK[o] || TEAMS[o])}</span><small>${os} · ${orr}</small></div></div>
-<div class="when">${dl} <span>·</span> ${hm} PM ET <span>·</span> ${esc(net)}</div>
+    `<div class="k" style="position:absolute;left:64px;top:38px">${kick}</div><div class="T"><div class="tm">${rich.includes('tape') ? `<img src="../img/tl5/cle.png" alt="">` : 'CLE'}<span>Cavaliers</span><small>${cs} · ${cr}</small></div><div class="at">${ha === 'H' ? 'vs' : 'at'}</div><div class="tm r">${rich.includes('tape') ? `<img src="../img/tl5/${LG5[o] || o.toLowerCase()}.png" alt="">` : o}<span>${esc(GNICK[o] || TEAMS[o])}</span><small>${os} · ${orr}</small></div></div>
+<div class="when">${dl} <span>·</span> ${hm} PM ET <span>·</span> ${esc(net)}${CAVS_RADIO ? ` <span>·</span> ${esc(CAVS_RADIO.split(' · ')[0])}` : ''}</div>
 ${rich}`,
     `games/${d}-${o.toLowerCase()}`)]);
 });
