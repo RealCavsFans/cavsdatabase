@@ -5,7 +5,7 @@
 const LG={AtRim:[.6726,.2805],ShortMidRange:[.444,.2267],LongMidRange:[.4118,.0747],Corner3:[.3868,.107],Arc3:[.3445,.311]};
 const normName=n=>n.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');
 const PT=[['putback','Putbacks and tip-ins'],['trans','Transition'],['cut','Cuts and lobs'],['drive','Drives'],['post','Post-ups and turnarounds'],['pull','Pull-ups and step-backs'],['spot','Spot-up jumpers'],['fin','Other layups and dunks']];
-const ZN=[['AtRim','At the rim','0–4 ft'],['ShortMidRange','Short midrange','4–14 ft'],['LongMidRange','Long midrange','14 ft to the arc'],['Corner3','Corner 3',''],['Arc3','Above-the-break 3','']];
+const ZN=[['AtRim','At the rim','0–4 ft'],['ShortMidRange','Short midrange','4–14 ft'],['LongMidRange','Long midrange','14+ ft'],['Corner3','Corner 3',''],['Arc3','Above-the-break 3','']];
 /* ---------- time helpers ---------- */
 const plen=p=>p<=4?720:300;
 const pstart=p=>p<=4?(p-1)*720:2880+(p-5)*300;
