@@ -587,6 +587,7 @@ tr.lutot td{font-weight:800;border-top:2px solid var(--fg)}
 .sp-tg{max-width:320px;margin:4px 0 10px}td.pp0{background:color-mix(in srgb,#a3122e 10%,transparent)}td.pp1{background:color-mix(in srgb,#a3122e 4%,transparent)}td.pp3{background:color-mix(in srgb,#1d6b3a 8%,transparent)}td.pp4{background:color-mix(in srgb,#1d6b3a 18%,transparent)}td .ppn{display:block;font:600 .625rem var(--mono);color:var(--muted)}
 .lk-more{all:unset;cursor:pointer;display:inline-block;margin-top:6px;font:700 .8125rem var(--sans);color:var(--wine-ink,#860038)}
 .rk.pc{color:var(--muted)!important}.rk.pc.pct9{color:var(--wine,#860038)!important;font-weight:800}
+table th.thf,table td.thf{color:var(--cf)!important;font-weight:800!important}table th.tho,table td.tho{color:var(--co)!important;font-weight:800!important}table .ogrp{border-left:1px solid var(--line,#ddd);padding-left:10px!important}
 </style>
 </head>
 <body>
@@ -784,11 +785,19 @@ function scrollHints(){document.querySelectorAll('#view .tw').forEach(w=>{const 
   const end=w.scrollLeft+w.clientWidth>=w.scrollWidth-4;w.classList.toggle('more',over&&!end);h.style.display=over?'':'none'})}
 let _shT;new MutationObserver(()=>{clearTimeout(_shT);_shT=setTimeout(scrollHints,60)}).observe(document.getElementById('view')||document.body,{childList:true,subtree:true});
 addEventListener('resize',()=>{clearTimeout(_shT);_shT=setTimeout(scrollHints,120)});
+/* team names in table headers and row labels take the team's color, and a thin line splits the two teams' columns (Oct 30) */
+function teamHeads(v,D){if(!D||!D.focus||!D.other)return;const F=D.focus.abbr,O=D.other.abbr;const isT=(t,a)=>t===a||t.startsWith(a+' ');
+  const run=()=>v.querySelectorAll('table').forEach(t=>{if(t.dataset.th)return;const r0=t.rows[0];if(!r0)return;t.dataset.th='1';let oi=-1;
+    [...r0.cells].forEach((c,i)=>{const x=c.textContent.trim();if(isT(x,F)){c.classList.add('thf')}else if(isT(x,O)||x==='OPP'||x==='Opp'){c.classList.add('tho');if(oi<0&&i>1)oi=i}});
+    {const fi=[...r0.cells].findIndex(c=>c.classList.contains('thf'));if(fi>1&&oi>0)oi-=fi-1}if(oi>1&&[...r0.cells].some(c=>c.classList.contains('thf')))[...t.rows].forEach(r=>{const c=r.cells[oi];if(c&&r.cells.length===r0.cells.length)c.classList.add('ogrp')});
+    [...t.rows].slice(1).forEach(r=>{const c=r.cells[0];if(!c)return;const x=c.textContent.trim();if(x===F)c.classList.add('thf');else if(x===O)c.classList.add('tho')})});
+  run();setTimeout(run,600);setTimeout(run,2000)}
 function renderView(){
   const v=$('view'),D=S.data,R=S.R;v.innerHTML='';v.classList.toggle('gm',!S.season&&S.tab!=='lineups');v.classList.toggle('gmp',S.tab==='players');/* keep green/red for lineups and for +/- in the box score *//* game view: no green/red on stats for now (Luka, Oct 28) */
   if(S.state==='pre'&&!R.plays.length){const c=el('div','card');c.append(el('h2',null,D.away.abbr+' at '+D.home.abbr),el('p',null,'Tip-off '+new Date(D.date).toLocaleString([],{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+(D.venue?' · '+D.venue:'')+(D.bc.length?' · '+D.bc.join(', '):'')+'.'),el('p','empty','Team and player stats, lineups, shots, four factors and rotations fill in once the game starts. The page refreshes every 15 seconds during the game.'));v.appendChild(c);
     const opp=D.other;const holder=el('div');holder.appendChild(el('p','note','Loading the scouting report…'));v.appendChild(holder);scoutData(opp.id).then(X=>{if(S.data!==D)return;holder.innerHTML='';holder.appendChild(scoutCard(D,X,opp))});return}
   ({season:vSeason,share:vShare,ast:vAst,team:vTeam,players:vPlayers,lineups:vLuHub,shots:vShots,flow:vFlow,ff:vFF,plays:vPlays})[S.tab](v,D,R);
+  teamHeads(v,D);
   /* game view: no green/red for now, so drop the sentences that explain them (also for notes added a moment later) */
   if(!S.season&&S.tab!=='lineups'){const strip=root=>root.querySelectorAll('p.note').forEach(n=>{if(!/\b(Green|green|red)\b/.test(n.textContent)||n.children.length>1)return;const t=n.textContent.split(/(?<=\.)\s+/).filter(x=>!/\b(Green|green|red)\b/.test(x)).join(' ');if(t.trim())n.textContent=t;else n.remove()});strip(v);clearTimeout(S.gnT);S.gnT=setTimeout(()=>strip(v),1500)}
   /* table bars removed everywhere (Oct 28) */
