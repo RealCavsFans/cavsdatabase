@@ -61,6 +61,15 @@ jobs:
           git commit -m "Update live game archive"
           for i in 1 2 3; do
             if git pull --rebase origin main && git push; then exit 0; fi
-            git rebase --abort 2>/dev/null || true; sleep 20
+            git rebase --abort 2>/dev/null || true
+            # a hand edit to the same generated files (season.json, p/*.json) makes the rebase conflict every time:
+            # keep this run's game files, take the latest main, and rebuild the season files from them (Oct 30 audit)
+            rm -rf /tmp/la && cp -r live-archive /tmp/la
+            git fetch origin main && git reset --hard origin/main
+            cp -r /tmp/la/. live-archive/
+            SKIP_FETCH=1 node scripts/live-archive.mjs || true
+            git add live-archive; [ -f data/last-time.json ] && git add data/last-time.json || true
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m "Update live game archive"; sleep 20
           done
           exit 1
