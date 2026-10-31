@@ -1,30 +1,20 @@
-// For each Cavs draft pick: position from the Basketball Reference player page (or the draft page for players who never played),
-// and class year from the Sports Reference college page (seasons played before the draft).
 import fs from 'fs';
-fs.mkdirSync('scratch-out', { recursive: true });
-const H = JSON.parse(fs.readFileSync('pdata/history.json', 'utf8'));
-const UA = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36' };
-const sleep = ms => new Promise(r => setTimeout(r, ms));
-const get = async u => { for (let i = 0; i < 3; i++) { try { const r = await fetch(u, { headers: UA }); if (r.status === 429) { await sleep(60000); continue; } if (r.ok) return await r.text(); return null; } catch { await sleep(3000); } } return null; };
-const out = {};
-let prev = {}; try { prev = JSON.parse(fs.readFileSync('scratch-out/draft-extra.json', 'utf8')); } catch {}
-for (const [y, r, p, n, sch] of H.draft) {
-  const k = `${y}|${p}|${n}`; if (prev[k] && prev[k].pos) { out[k] = prev[k]; continue; }
-  const id = (H.bbd || {})[k]; const o = { sch };
-  if (id) {
-    const t = await get(`https://www.basketball-reference.com/players/${id[0]}/${id}.html`); await sleep(3300);
-    if (t) {
-      const m = t.match(/<strong>\s*Position:\s*<\/strong>\s*([^<\n]+)/); if (m) o.pos = m[1].replace(/&#9642;|▪/g, '').replace(/\s+/g, ' ').trim();
-      const c = t.match(/href="(https:\/\/www\.sports-reference\.com\/cbb\/players\/[^"]+)"/); if (c) o.cbb = c[1];
-    }
-    if (o.cbb) {
-      const t2 = await get(o.cbb); await sleep(3300);
-      if (t2) { const yrs = [...t2.matchAll(/data-stat="year_id"[^>]*>(?:<a[^>]*>)?(\d{4})-\d{2}/g)].map(x => +x[1]); const seasons = [...new Set(yrs.filter(v => v < y))]; o.ns = seasons.length;
-        const cl = [...t2.matchAll(/data-stat="class"[^>]*>([A-Z][A-Za-z]*)</g)].map(x => x[1]); if (cl.length) o.cls = cl[cl.length - 1]; }
-    }
+const N=["Rashaun Agee","Zack Austin","Lydell Elmore","Tristan Enaruna","Curtis Jones","Ian Martinez","Sean McNeil","Riley Minix","Marlon Moore","Norchad Omier","Kadary Richmond","Jaxson Robinson","Tre'Von Spillers","Markhi Strickland","Ernest Udeh Jr.","C.J. White","Noam Yaacov"];
+const UA={headers:{'user-agent':'Mozilla/5.0 (compatible; cavsdatabase.com research)'}};const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const get=async u=>{for(let i=0;i<3;i++){try{const r=await fetch(u,{...UA,redirect:'follow'});const t=await r.text();return {url:r.url,status:r.status,t}}catch(e){await sleep(5000)}}return {url:u,status:0,t:''}};
+const out={};
+for(const n of N){const o=out[n]={};
+  for(const [site,base] of [['bbr','https://www.basketball-reference.com/search/search.fcgi?search='],['cbb','https://www.sports-reference.com/cbb/search/search.fcgi?search=']]){
+    await sleep(4500);const r=await get(base+encodeURIComponent(n.replace(/['’]/g,'')));o[site+'_url']=r.url;o[site+'_status']=r.status;
+    let t=r.t;
+    if(/search\.fcgi/.test(r.url)){const hits=[...t.matchAll(/<div class="search-item-name">\s*<strong>\s*<a href="([^"]+)">([^<]+)<\/a>/g)].map(m=>[m[1],m[2]]);o[site+'_hits']=hits.slice(0,6);
+      const pick=hits.find(h=>site==='bbr'?/\/(players|gleague\/players)\//.test(h[0]):/\/cbb\/players\//.test(h[0]));if(pick){await sleep(4500);const r2=await get((site==='bbr'?'https://www.basketball-reference.com':'https://www.sports-reference.com')+pick[0]);o[site+'_url']=r2.url;t=r2.t}else t=''}
+    const b=t.match(/data-birth="(\d{4}-\d\d-\d\d)"/);if(b)o[site+'_birth']=b[1];
+    const d=t.match(/<strong>\s*Draft:\s*<\/strong>([\s\S]{0,600}?)<\/p>/);if(d)o[site+'_draft']=d[1].replace(/<a href="([^"]+)">/g,'[$1]').replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
+    const dl=t.match(/href="(\/draft\/NBA_\d{4}\.html)"/);if(dl)o[site+'_draftlink']=dl[1];
+    const seasons=[...t.matchAll(/<th scope="row" class="left " data-stat="(?:year_id|season)"[^>]*>(?:<a[^>]*>)?(\d{4}-\d{2})/g)].map(m=>m[1]);if(seasons.length)o[site+'_seasons']=[...new Set(seasons)];
+    const meta=(t.match(/<div id="meta">([\s\S]{0,3000}?)<\/div>\s*<\/div>/)||[])[1];if(meta)o[site+'_meta']=meta.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().slice(0,700);
   }
-  out[k] = o; console.log(k, JSON.stringify(o));
-  fs.writeFileSync('scratch-out/draft-extra.json', JSON.stringify(out, null, 1));
+  console.log(n,JSON.stringify(o).slice(0,300));
 }
-fs.writeFileSync('scratch-out/draft-extra.json', JSON.stringify(out, null, 1));
-// run 2
+fs.mkdirSync('scratch-out',{recursive:true});fs.writeFileSync('scratch-out/charge-bio.json',JSON.stringify(out,null,1));
