@@ -512,6 +512,7 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 @media (min-width:601px){.grec .rkbox{justify-content:center!important;gap:16px!important;align-self:center}.grec .gbig{align-items:center}}
 @media (max-width:600px){.gmu .nx-mu{display:none!important}}
 @media (max-width:600px){.gmu #cd{display:none!important}}
+.gteams.has-logos{display:flex;align-items:center;gap:22px}.gteams.has-logos .tm{line-height:0}.nx-logo{height:84px;width:84px;object-fit:contain;display:block}@media (max-width:600px){.gteams.has-logos{gap:14px}.nx-logo{height:54px;width:54px}}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
@@ -1352,6 +1353,10 @@ if(ng){
 
 /* scoreboard matchup */
 if(ng){document.getElementById('nx-at').textContent=ng[2]==='H'?'vs':'at';const o=document.getElementById('nx-opp');o.textContent='';const a=el('a','opp',ng[1]);a.href=bbTeam(ng[1]);a.target='_blank';a.rel='noopener';a.title=TEAMS[ng[1]]+' on Basketball Reference';o.appendChild(a);o.removeAttribute('aria-hidden');
+  /* team logos instead of abbreviations in Up next (Oct 30); the abbreviation comes back if a logo fails to load */
+  {const LGF=ab=>'/img/tl/'+({GSW:'gs',NYK:'ny',NOP:'no',SAS:'sa',UTA:'utah',WAS:'wsh',CHO:'cha',BRK:'bkn',PHO:'phx'}[ab]||ab.toLowerCase())+'.png';
+   const put=(host,ab,name)=>{if(!host)return;const t=host.textContent;const im=el('img','nx-logo');im.src=LGF(ab);im.alt=name;im.onerror=()=>{im.replaceWith(document.createTextNode(t))};host.textContent='';host.appendChild(im)};
+   put(document.querySelector('.gmu .gteams .tm.cle'),'CLE','Cavaliers');put(a,ng[1],TEAMS[ng[1]]||ng[1]);document.querySelector('.gmu .gteams')?.classList.add('has-logos')}
 }
 
 /* last completed game */
