@@ -19,12 +19,12 @@ const esc = t => t.replace(/&/g, '&amp;');
 const page = ([, title, sub, sub2, path]) => `<!doctype html><html><head><meta charset="utf-8"><style>
 @font-face{font-family:Archivo;src:url(../fonts/archivo-latin-wdth-normal.woff2);font-weight:100 900;font-stretch:62% 125%}
 @font-face{font-family:'Geist Mono';src:url(../fonts/geist-mono-latin-wght-normal.woff2);font-weight:100 900}
-*{margin:0;box-sizing:border-box}body{width:1200px;height:630px;background:radial-gradient(900px 520px at 50% 45%,#9b0a45,#860038 55%,#6a002c);color:#fff;font-family:Archivo,sans-serif;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 140px}
+*{margin:0;box-sizing:border-box}body{width:1200px;height:630px;background:radial-gradient(900px 520px at 50% 45%,#9b0a45,#860038 55%,#6a002c);color:#fff;font-family:Archivo,sans-serif;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 ${title ? 140 : 40}px}
 body:after{content:'';position:absolute;left:0;right:0;bottom:0;height:10px;background:#F2B231}
-.wm{display:flex;align-items:center;gap:${title ? 14 : 22}px;font:700 ${title ? 40 : 84}px 'Geist Mono',monospace;letter-spacing:-.02em;margin-bottom:${title ? 22 : 36}px}.wm svg{width:${title ? 56 : 110}px;height:${title ? 56 : 110}px}.wm em{font-style:normal;color:#F2B231}.wm i{display:inline-block;width:.42em;height:.86em;background:#F2B231;margin-left:4px;transform:translateY(-.06em)}
+.wm{display:flex;align-items:center;gap:${title ? 14 : 22}px;font:700 ${title ? 40 : 150}px 'Geist Mono',monospace;letter-spacing:-.03em;margin-bottom:${title ? 22 : 26}px}.wm svg{width:${title ? 56 : 180}px;height:${title ? 56 : 180}px}.wm em{font-style:normal;color:#F2B231}.wm i{display:inline-block;width:.42em;height:.86em;background:#F2B231;margin-left:4px;transform:translateY(-.06em)}
 h1{font:800 76px/1.05 Archivo,sans-serif;font-stretch:125%;letter-spacing:-.01em}p{font:500 27px/1.4 Archivo,sans-serif;color:#FBE3B0;margin-top:20px;max-width:760px}
-.big{font:800 52px/1.2 Archivo,sans-serif;font-stretch:125%}.big b{display:block;color:#F2B231}
-.u{position:absolute;bottom:36px;font:600 18px 'Geist Mono',monospace;letter-spacing:.04em;color:rgba(255,255,255,.85)}
+.big{font:800 68px/1.12 Archivo,sans-serif;font-stretch:125%}.big b{display:block;color:#F2B231}
+${title ? '' : 'body{padding-bottom:30px}'}.u{position:absolute;bottom:${title ? 36 : 30}px;font:600 ${title ? 18 : 24}px 'Geist Mono',monospace;letter-spacing:.04em;color:rgba(255,255,255,.85)}
 </style></head><body>
 <div class="wm">${mark}<span>cavs<em>_db</em><i></i></span></div>
 ${title ? `<h1>${esc(title)}</h1><p>${esc(sub)}</p>` : `<div class="big">${esc(sub)}<b>${esc(sub2)}</b></div>`}
