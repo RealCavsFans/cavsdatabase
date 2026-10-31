@@ -1501,6 +1501,8 @@ const INJURIES=[["Nae'Qwan Tomlin",'PF','Back (stress reaction)','Out'],['Jaylon
 /* injury lists: Out first, then Doubtful, Questionable, Probable, game-time decisions */
 const INJ_RANK=st=>{const x=String(st).toLowerCase();return x.startsWith('out')?0:x.startsWith('doubt')?1:x.startsWith('quest')?2:x.startsWith('prob')?3:4};
 INJURIES.sort((a,b)=>INJ_RANK(a[3])-INJ_RANK(b[3]));
+/* G League assignments (NBA official injury report lists them as "G League - On Assignment"): shown on the injury card but NOT injuries, so kept out of INJURIES (counts, alerts, newsletter). [name, pos] */
+const INJ_ASSIGN=[['Khalifa Diop','C']];
 /* INJURY REPORT STANDARD (every injured player gets an INJ_CTX entry with these fields; each shows as a stacked row):
    diag     Diagnosis, in the team's or a named reporter's words, plus a plain-English gloss of any medical term. Omit if none announced (page says "None announced").
    timeline Team timeline: the announced return plan with source and date (e.g. "Re-evaluation in 3–4 weeks (Chris Fedor / Plain Dealer, Oct 20)"). Omit for GTD/no timeline (page fills a default).
@@ -1544,6 +1546,7 @@ INJURIES.forEach(([n,p,inj,st])=>{const li=el('li','ij');const d=document.create
   if(c.hist){const l=el('a','ij-hist',"Full injury history ↗");l.href=c.hist;l.target='_blank';l.rel='noopener';ft.appendChild(l)}
   {const sv=el('button','ij-sv');sv.type='button';sv.title='Save as image';sv.setAttribute('aria-label','Save '+n+' injury card as an image');sv.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';sv.onclick=()=>window.cdbCard&&window.cdbCard('injury',n,sv);ft.appendChild(sv);box.appendChild(ft)}
   d.appendChild(box);li.appendChild(d);ij.appendChild(li)});
+INJ_ASSIGN.forEach(([n,p])=>{const li=el('li','ij');const d=document.createElement('details');const sm=document.createElement('summary');const a=el('span');a.append(el('b',null,n),' · G League assignment');const z=el('span',null,'G LEAGUE');z.title='On G League assignment, not injured';sm.append(a,z);d.appendChild(sm);const box=el('div','ijx');const dl=el('dl','ij-dl');dl.append(el('dt',null,'Status'),el('dd',null,'On assignment in the G League, not injured. Listed here because the NBA official injury report shows him as unavailable for the Cavs game. Not counted as an injury.'));box.appendChild(dl);d.appendChild(box);li.appendChild(d);ij.appendChild(li)});
 {const m=new Date(INJ_UPDATED+', '+SITE_UPDATED.slice(0,4)+' 12:00');{const ic=document.getElementById('inj-count');ic.className='upd-tag';ic.textContent='Updated '+(isNaN(m)?INJ_UPDATED:relDay(new Intl.DateTimeFormat('en-CA').format(m)))}}
 {const nt=document.getElementById('inj-note');if(nt){nt.textContent='';nt.hidden=true}}
 /* the injury report section can be lifted into the game-day card and put back */
@@ -3249,9 +3252,9 @@ window.renderGame=function(sl){const i=SCHEDULE.findIndex(g=>gslug(g)===sl);if(i
     const lp=H2H_PREV[o]||[];if(lp.length){const w=lp.filter(x=>x[2]>x[3]).length;s2.appendChild(el('h3','gp-sh','Last season · Cavs '+w+'–'+(lp.length-w)));const ul2=el('ul','gp-ser gp-ser-prev');lp.forEach(([d0,ha,cs2,os2])=>{const li=el('li');li.append(el('span','d',new Date(d0+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})),el('span',null,(ha==='H'?'vs ':'at ')+o),el('b',cs2>os2?'w':'l',(cs2>os2?'W ':'L ')+cs2+'–'+os2));ul2.appendChild(li)});s2.appendChild(ul2)}
     Rr.insertBefore(s2,Rr.firstChild)}
   /* injuries (before) */
-  if(!fin){const oi=OPP_INJ[o],fresh=oi&&oi.rows&&oi.d>=new Date(Date.now()-3*864e5).toISOString().slice(0,10);if(INJURIES.length||fresh){const c=card('Injury report','Updated '+INJ_UPDATED);
+  if(!fin){const oi=OPP_INJ[o],fresh=oi&&oi.rows&&oi.d>=new Date(Date.now()-3*864e5).toISOString().slice(0,10);if(INJURIES.length||INJ_ASSIGN.length||fresh){const c=card('Injury report','Updated '+INJ_UPDATED);
     const grp=(t,sub,rows)=>{c.appendChild(el('h3','gp-sh',t+(sub?' · '+sub:'')));const d=el('div','gp-inj');if(!rows.length){const x=el('div');x.append('None reported');d.appendChild(x)}rows.forEach(([n,inj,st])=>{const x=el('div');x.append(n+' · '+String(inj).toLowerCase(),el('span',/out/i.test(st)?'out':null,st));d.appendChild(x)});c.appendChild(d)};
-    grp('Cavs','',INJURIES.map(([n,,j,st])=>[n,j,st]));if(fresh)grp(GNICK[o]||TEAMS[o],'',oi.rows.slice().sort((x,y)=>INJ_RANK(x[2])-INJ_RANK(y[2])));
+    grp('Cavs','',INJURIES.map(([n,,j,st])=>[n,j,st]).concat(INJ_ASSIGN.map(([n])=>[n,'G League assignment','G League'])));if(fresh)grp(GNICK[o]||TEAMS[o],'',oi.rows.slice().sort((x,y)=>INJ_RANK(x[2])-INJ_RANK(y[2])));
     const a=el('a','gp-btn gp-inj-b','Official NBA injury report ↗');a.href='https://official.nba.com/nba-injury-report-2025-26-season/';a.target='_blank';a.rel='noopener';c.appendChild(a);c.classList.add('o-inj');Rr.appendChild(c)}}
   /* officials: the NBA posts crew assignments around 9 AM ET on game day; box.json carries them once posted */
   if(!fin){const c=card('Officials');c.classList.add('o-ref');const d=el('div','gp-inj gp-ref');c.appendChild(d);Rr.appendChild(c);
