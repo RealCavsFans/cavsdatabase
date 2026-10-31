@@ -1125,7 +1125,7 @@ function momentumCard(D,R){const F=D.focus,O=D.other,c=el('div','card sec');head
   const k=el('div','key');k.innerHTML=`<span><i style="background:${F.c}"></i>${esc(F.abbr)} on top</span><span><i style="background:${O.c}"></i>${esc(O.abbr)} on top</span>`+(best[1]>0?`<span>Best ${esc(F.abbr)} stretch +${best[1]} (${pname(perAt(Math.max(0,best[0]-1)))})</span>`:'')+(worst[1]<0?`<span>Best ${esc(O.abbr)} stretch +${-worst[1]} (${pname(perAt(Math.max(0,worst[0]-1)))})</span>`:'');c.appendChild(k);
   scrub(c,D,R,W,pad,T,t=>{const m=at(t)-at(Math.max(0,t-180));return 'Last 3 min: '+(m>0?F.abbr+' +'+m:m<0?O.abbr+' +'+(-m):'even')});return c}
 /* lead tracker: time each team led, time tied, lead changes, longest stretch in front */
-function leadCard(D,R){const F=D.focus,O=D.other,c=el('div','card sec');head(c,'Who led, and for how long','Whole game');
+function leadCard(D,R){const F=D.focus,O=D.other,c=el('div','card sec');head(c,'Who led, and for how long',S.per==='all'?'':'Whole game');
   if(!R.lp){c.appendChild(el('p','empty','Starts at tip-off.'));return c}
   const fh=F===D.home,end=R.lp.t;let lf=0,lo=0,tie=0,pt=0,pm=0,run0=0,hold={f:0,o:0};
   const close=t=>{const dt=t-pt;if(pm>0)lf+=dt;else if(pm<0)lo+=dt;else tie+=dt};
@@ -1146,7 +1146,7 @@ function halvesCard(D,R){const out=[];const F=D.focus,O=D.other;if(!R.lp||!(R.lp
 function vFlow(v,D,R){
   v.appendChild(leadCard(D,R));v.appendChild(wpCard(D,R));v.appendChild(momentumCard(D,R));
   /* margin chart with filtered periods highlighted */
-  const f=el('div','card sec smg');head(f,'Score margin',S.per==='all'?'Whole game':'Whole game, with '+perLow(S.per)+' highlighted');
+  const f=el('div','card sec smg');head(f,'Score margin',S.per==='all'?'':'Whole game, with '+perLow(S.per)+' highlighted');
   const T=pstart(R.maxPer)+plen(R.maxPer),W=(innerWidth<600?420:900),H=150,pad=26;let mx=10;R.margin.forEach(m=>mx=Math.max(mx,Math.abs(m[1])));mx=Math.ceil(mx/5)*5;
   const X=t=>pad+(W-pad*2)*t/T,Y=m=>H/2-(H/2-16)*m/mx;let d='M'+X(0)+','+Y(0),pv=0;R.margin.forEach(([t,m])=>{d+=` L${X(t).toFixed(1)},${Y(pv).toFixed(1)} L${X(t).toFixed(1)},${Y(m).toFixed(1)}`;pv=m});const eT=R.lp?R.lp.t:0;d+=` L${X(eT)},${Y(pv)}`;
   let g='';for(let p=1;p<=R.maxPer;p++){const x0=X(pstart(p)),x1=X(pstart(p)+plen(p));if(S.per!=='all'&&inPer(S.per,p))g+=`<rect x="${x0}" y="6" width="${x1-x0}" height="${H-22}" fill="#F2B231" opacity=".13"/>`;g+=`<line x1="${x0}" x2="${x0}" y1="6" y2="${H-16}" stroke="var(--line)"/><text x="${(x0+x1)/2}" y="${H-3}" text-anchor="middle" font-size="10" fill="var(--muted)" font-family="var(--mono)">${pname(p)}</text>`}
@@ -1395,7 +1395,7 @@ function droughtCard(D,R){
 
 /* ---------- win probability with the biggest swings ---------- */
 function wpCard(D,R){
-  const f=el('div','card sec');head(f,'Win probability','Whole game, with the plays that moved it most');
+  const f=el('div','card sec');head(f,'Win probability',S.per==='all'?'With the plays that moved it most':'Whole game, with the plays that moved it most');
   if(R.wpS.length<2){f.appendChild(el('p','empty','Win probability fills in once the game is under way.'));return f}
   const fh=D.focus===D.home;const T=pstart(R.maxPer)+plen(R.maxPer),W=(innerWidth<600?420:900),H=130,pad=26;const X=t=>pad+(W-pad*2)*t/T,Y=v=>10+(H-30)*(1-v);
   let d='',g='';R.wpS.forEach(([t,v],i)=>{const fv=fh?v:1-v;d+=(i?' L':'M')+X(t).toFixed(1)+','+Y(fv).toFixed(1)});
