@@ -3419,7 +3419,9 @@ function goTo(x){
 q.addEventListener('input',runSearch);
 q.addEventListener('focus',()=>{if(q.value.trim())runSearch()});
 /* History in search: seasons, numbers, records, coaches, draft picks and playoff series, loaded the first time the search box is used */
-{let hxIdx=false;const loadHx=()=>{if(hxIdx)return;hxIdx=true;fetch('/pdata/history.json').then(r=>r.json()).then(H=>{
+/* the active coach's row stays current: adds this season's record (TSTATS, from the box scores) until the season is folded into history.json (Oct 31) */
+const hxLive=H=>{if(!H||H._live)return H;H._live=1;try{const c=TSTATS.CLE;if(!c||!(c[0]+c[1]))return H;const y=+SCHEDULE[0][0].slice(0,4),cur=y+'–'+String(y+1).slice(2);if((H.seasons||[]).some(x=>x.s===cur))return H;(H.coaches||[]).forEach(r=>{if(/–$/.test(r[1])){const m=String(r[2]).match(/(\d+)\D+(\d+)/);if(m)r[2]=(+m[1]+c[0])+'–'+(+m[2]+c[1])}})}catch(e){}return H};
+{let hxIdx=false;const loadHx=()=>{if(hxIdx)return;hxIdx=true;fetch('/pdata/history.json').then(r=>r.json()).then(H=>{hxLive(H);
   [['History','Every season, retired numbers, leaders, records, draft and coaches','history',null,'franchise past all-time'],['Retired numbers','In the rafters','history','hx-ret','jersey banner'],['All-time leaders','Points, rebounds, assists and games with the Cavs','history','hx-lead','career most'],['Franchise records','Single game, season and playoffs','history','hx-rec','record most best'],['Playoff history','Every series since 1976','history','hx-po','playoffs series'],['Draft history','Every Cavs draft pick since 1970','history','hx-draft','draft picks'],['Head coaches','Every Cavs head coach','history','hx-coach','coach'],['Honors','MVPs, All-NBA, All-Defense, Hall of Fame','history','hx-hon','award mvp roy dpoy']].forEach(([t,s2,g,id,x])=>add(t,s2,'History',g,id,x));
   H.seasons.forEach(x=>{const y1=x.s.slice(0,4),y2=String(+y1+1);add(x.s+' Cavaliers',x.w+'–'+x.l+' · '+x.po,'Season','history/'+x.s.replace('–','-'),null,[y1,y2,y2.slice(2),x.coach.map(c=>c[0]).join(' '),(x.allstar||[]).join(' '),'season'].join(' '))});
   Object.entries(H.numbers||{}).forEach(([k,v])=>add('Who wore #'+k,v.slice().sort((x,y)=>+String(y[1]).slice(0,4)-+String(x[1]).slice(0,4)).slice(0,4).map(z=>z[0]).join(', ')+(v.length>4?' and more':''),'Number','history','hx-num','number jersey wore no '+k+' '+v.map(z=>z[0]).join(' ')));
@@ -4839,7 +4841,7 @@ function draw(){const $=id=>document.getElementById(id);
    $('hx-coach-h').querySelectorAll('th').forEach(th=>th.onclick=()=>{const k=+th.dataset.k;if(k===sk)dir=-dir;else{sk=k;dir=k>=2?-1:1}render()});render();
    $('hx-coach-n').textContent=new Set(H.coaches.map(c=>c[0])).size+' coaches · tap a column to sort'}
 }
-let loadP=null;const getH=()=>loadP||(loadP=Promise.all([fetch('/pdata/history.json').then(r=>r.json()),fetch('/pdata/milestones.json').then(r=>r.json()).catch(()=>null)]).then(([a,b])=>{H=a;MS=b}).catch(e=>{loadP=null;throw e}));
+let loadP=null;const getH=()=>loadP||(loadP=Promise.all([fetch('/pdata/history.json').then(r=>r.json()),fetch('/pdata/milestones.json').then(r=>r.json()).catch(()=>null)]).then(([a,b])=>{H=a;hxLive(H);MS=b}).catch(e=>{loadP=null;throw e}));
 window.hxLoad=async function(){if(busy)return;busy=true;try{await getH();draw()}catch(e){busy=false}};
 /* season pages: /history/2015-16 */
 window.renderSeason=function(sl){const v=document.getElementById('view-season');v.innerHTML='';const w=el('div','wrap page sp');v.appendChild(w);
