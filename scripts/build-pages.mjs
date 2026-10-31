@@ -63,6 +63,10 @@ let shell = html;
     await writeFile(new URL(`a/app.${hc}.css`, root), cssOut); await writeFile(new URL(`a/app.${hj}.js`, root), jsOut);
     for (const f of await readdir(new URL('a/', root))) if (/^app\.[0-9a-f]{10}\.(css|js)$/.test(f) && f !== `app.${hc}.css` && f !== `app.${hj}.js`) await unlink(new URL('a/' + f, root));
     shell = html.replace(sm[0], () => `<link rel="stylesheet" href="/a/app.${hc}.css"><link rel="preload" href="/a/app.${hj}.js" as="script">`).replace(jm[0], () => `<script src="/a/app.${hj}.js"></script>`);
+    // the small second <style> block stays inline in every page; minify it too (drops its comments and spacing)
+    try { const { transform } = await import('esbuild');
+      for (const m of [...shell.matchAll(/<style>([\s\S]*?)<\/style>/g)]) { const c = (await transform(m[1], { loader: 'css', minify: true })).code.trim(); shell = shell.replace(m[0], () => `<style>${c}</style>`); }
+    } catch (e) { if (!/Cannot find (package|module)/.test(e.message)) console.warn('inline css minify skipped:', e.message.split('\n')[0]); }
   } }
 await writeFile(new URL('home.html', root), shell); // front page copy (served at / via _redirects)
 { const { buildLive } = await import('./build-live.mjs'); console.log(await buildLive(root)); }   // /live.html from live.src.html, its script and styles cached in a/
