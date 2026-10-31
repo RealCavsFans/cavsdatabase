@@ -3642,6 +3642,8 @@ const CH_TEAM_URL={"Grand Rapids Gold": "https://grandrapids.gleague.nba.com/", 
 /* Charge player season stats, per game (RealGM). Empty until the season starts; the Leaders section stays hidden until then.
    [name, games, minutes, points, rebounds, assists, steals, blocks, FGM, FGA, 3PM, 3PA, PER] */
 const CH_STATS=[];
+/* birth dates and NBA draft class (all undrafted) from Basketball Reference and Sports Reference, Oct 30, 2026 */
+const CH_BIO={"Rashaun Agee": ["2000-11-02", 2026, null], "Zack Austin": ["2001-08-11", 2025, null], "Lydell Elmore": ["1998-01-01", 2021, null], "Tristan Enaruna": ["2001-06-26", 2024, null], "Curtis Jones": ["2001-12-04", 2025, null], "Ian Martinez": [null, 2025, null], "Sean McNeil": ["1998-08-17", 2023, null], "Riley Minix": ["2000-09-22", 2024, null], "Marlon Moore": [null, null, null], "Norchad Omier": ["2001-08-28", 2025, null], "Kadary Richmond": ["2001-08-25", 2025, null], "Jaxson Robinson": ["2002-12-03", 2025, null], "Tre’Von Spillers": ["2002-02-14", 2026, null], "Markhi Strickland": [null, 2026, null], "Ernest Udeh Jr.": ["2004-01-08", 2026, null], "C.J. White": [null, 2023, null], "Noam Yaacov": ["2004-10-20", null, null]};
 const CH_ROSTER=[
   /* 2026–27 training camp roster (Charge release, Oct 25, 2026): no., name, pos, ht, wt, college, how acquired, NBA/G League person id (links to gleague.nba.com/player/<id>) */
   [13, "Rashaun Agee", "F", "6-7", 210, "Texas A&M", "Affiliate", 1643772],
@@ -3688,12 +3690,14 @@ const CH_STAFF=[
     document.getElementById('ch-lead-n').textContent='Per game · min. '+Math.max(1,Math.ceil(mg*.4))+' games'}
   const t=document.getElementById('ch-tiles');[[CHARGE.record,'Record'],[nxt?shortFmt.format(new Date(nxt[0]+'T12:00:00')):'—','Next game']].forEach(([v,l])=>{const d=el('div','txs');d.append(el('b',null,v),el('span',null,l));t.appendChild(d)});
   /* roster table, like the Cavs roster: name links to the G League profile; two-ways tagged next to the name */
-  const ro=document.getElementById('ch-roster');let n=CH_ROSTER.length;{const tb=el('table','ros chros');tb.innerHTML='<thead><tr><th class="r">No.</th><th>Player</th><th class="c">Pos</th><th>Ht / Wt</th><th>College</th><th>How acquired</th></tr></thead>';const bd=el('tbody');
+  const ro=document.getElementById('ch-roster');let n=CH_ROSTER.length;{const tb=el('table','ros chros');tb.innerHTML='<thead><tr><th class="r">No.</th><th>Player</th><th class="c">Pos</th><th>Ht / Wt</th><th>Age · Born</th><th>College</th><th>NBA draft</th><th>How acquired</th></tr></thead>';const bd=el('tbody');
     const slugG=n=>n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’'.]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
     CH_ROSTER.slice().sort((a,b)=>a[0]-b[0]).forEach(([no,nm,pos,ht,wt,col,acq,gid])=>{const tr=el('tr');tr.appendChild(el('td','r mono',String(no)));const td=el('td','pn');{const hs=el('span','chhs');hs.textContent=nm.split(' ').map(w=>w[0]).slice(0,2).join('');if(gid){const im=el('img');im.alt='';im.loading='lazy';im.src='/img/h/'+gid+'.png';im.onerror=()=>im.remove();hs.appendChild(im)}td.appendChild(hs)}
       if(gid){const a=el('a',null,nm);a.href='https://gleague.nba.com/player/'+gid+'/'+slugG(nm);a.target='_blank';a.rel='noopener';a.title=nm+' on gleague.nba.com';td.appendChild(a)}else td.appendChild(el('b',null,nm));
       if(acq==='Two-way'){const t=el('span','ch2w','Two-way');t.title='Cavs two-way contract: also on the Cavs roster';td.appendChild(t)}
-      tr.append(td,el('td','c',pos),el('td','mono',ht+' · '+wt),el('td',null,col),el('td',null,acq==='Two-way'?'Cavs two-way':acq));bd.appendChild(tr)});
+      const [bd0,dy,dp]=CH_BIO[nm]||[];const ab=el('td','mono');if(bd0){const B=new Date(bd0+'T12:00:00'),N=new Date();let ag=N.getFullYear()-B.getFullYear();if(N<new Date(N.getFullYear(),B.getMonth(),B.getDate()))ag--;ab.textContent=ag+' · '+B.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}else ab.textContent='–';
+      const dtd=el('td');if(dy){const a2=el('a',null,dp?dy+' · '+dp:'Undrafted · '+dy);a2.href='https://www.basketball-reference.com/draft/NBA_'+dy+'.html';a2.target='_blank';a2.rel='noopener';a2.title=dy+' NBA draft on Basketball Reference';if(!dp){dtd.append('Undrafted · '+dy)}else dtd.appendChild(a2)}else dtd.textContent='–';
+      tr.append(td,el('td','c',pos),el('td','mono',ht+' · '+wt),ab,el('td',null,col),dtd,el('td',null,acq==='Two-way'?'Cavs two-way':acq));bd.appendChild(tr)});
     tb.appendChild(bd);const box=el('div','tablebox');box.appendChild(tb);ro.appendChild(box)}
   document.getElementById('ch-ros-n').textContent=n+' in training camp · camp opens Oct 27, final roster due Nov 5';
   const sf=document.getElementById('ch-staff');
@@ -3739,9 +3743,14 @@ const CH_STAFF=[
     ['Education','NYU, B.A. in sports marketing and sports management (2005)'],
     ['With the organization','Since 2018 (9th season)'],
     ['Honors','2025–26 G League Basketball Executive of the Year, the first woman to win it'],
-    ['Firsts','First woman to serve as Charge GM; the fourth woman GM in G League history when hired']],'https://cleveland.gleague.nba.com/news/liron-fanan-named-2025-26-nba-g-league-basketball-executive-of-the-year');
+    ['Firsts','First woman to serve as Charge GM; the fourth woman GM in G League history when hired'],
+    ['General manager since','July 2023 (4th season)'],
+    ['Cavs two-ways now','Tristan Enaruna, Riley Minix, Ernest Udeh Jr.']],'https://cleveland.gleague.nba.com/news/liron-fanan-named-2025-26-nba-g-league-basketball-executive-of-the-year');
   lir.append(det('Career path',pathList([['2005–09','Maccabi Tel Aviv (EuroLeague), assistant general manager'],['2009–18','Co-founder, 2Talent Sports Management (player representation)'],['2018–20','Cavaliers, Director of G League Player Development'],['2020–23','Charge, assistant general manager'],['Jul 2023','Charge, general manager'],['Now','Also President of G League Operations, Cavaliers']])),
     links([['GM promotion release','https://cleveland.gleague.nba.com/news/brendon-yu-elevated-to-director-of-scouting-for-the-cavaliers-and-liron-fanan-to-general-manager-of-charge'],['Executive of the Year release','https://cleveland.gleague.nba.com/news/liron-fanan-named-2025-26-nba-g-league-basketball-executive-of-the-year'],['Charge front office','https://cleveland.gleague.nba.com/charge-front-office']]));
+  /* her camp roster by how each player came in (Oct 30) */{const G={};CH_ROSTER.forEach(r=>{const k=r[6]==='Two-way'?'Cavs two-way':/^G League Draft/.test(r[6])?'G League Draft':r[6];(G[k]=G[k]||[]).push(r[1])});
+   const w=el('div','alt-b');Object.entries(G).sort((x,y)=>y[1].length-x[1].length).forEach(([k,L])=>{const c=el('div');c.appendChild(el('h4',null,k+' · '+L.length));L.forEach(n=>{const r=el('div');r.appendChild(el('b',null,n));c.appendChild(r)});w.appendChild(c)});
+   lir.insertBefore(det('How she built this camp roster',w),lir.querySelector('details'))}
   [eli,lir].forEach(coMore);co.append(eli,lir)})();
 
 /* "updated" status under the wordmark: green when updated within ~36 hours, gold when older */
