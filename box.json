@@ -977,7 +977,24 @@
  },
  "2026-10-31": {
   "url": "https://www.nba.com/game/cle-vs-mil-0022600151/box-score",
-  "status": "scheduled"
+  "status": "scheduled",
+  "refs": [
+   [
+    "Crew chief",
+    "Karl Lane",
+    "77"
+   ],
+   [
+    "Referee",
+    "Marat Kogut",
+    "32"
+   ],
+   [
+    "Umpire",
+    "Evan Scott",
+    "22"
+   ]
+  ]
  },
  "2026-11-02": {
   "url": "https://www.nba.com/game/okc-vs-cle-0022600158/box-score",
