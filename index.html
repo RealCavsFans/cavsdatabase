@@ -1471,7 +1471,7 @@ const HC_RULES=[[0,'Go over the first apron, at any time, for any reason'],[1,'U
  const cap=el('div','hc-cap');cap.append(el('b',null,'Hard-capped at the first apron'),el('span',null,'through June 30, 2027'));
  const tiles=el('div','hc-tiles');[[money(HC_ROOM),'Room under 1st apron'],[money(TEAM_SALARY-tax),'Over the tax'],[money(TAX_BILL),'Projected tax bill']].forEach(([v,l],i)=>{const d=el('div','hc-tile'+(i===0?' key':''));d.append(el('b',null,v),el('span',null,l));tiles.appendChild(d)});
  const ul=el('ul','hc-checks');HC_RULES.forEach(([ok,t])=>{const li=el('li',ok?'yes':'no');li.append(el('i',null,ok?'✓':'✕'),t);ul.appendChild(li)});
- const nt=el('p','hc-note');nt.append(el('span','hcn-l','Every ✓ has to fit within their '),el('span','hcn-s','Every ✓ must fit in their '),el('b',null,money(HC_ROOM)),el('span','hcn-l',' of room under the first apron.'),el('span','hcn-s',' under the 1st apron.'));
+ const nt=el('p','hc-note');nt.append(el('span','hcn-l','Every ✓ has to fit within their '),el('span','hcn-s','Every ✓ must fit in their '),el('b',null,money(HC_ROOM)),el('span','hcn-l',' of room under the first apron.'),el('span','hcn-s',' of apron room.'));
  h.append(tiles,ul,nt);
  /* phones: the cap bar sits right above the position tiles */
  {const mq=matchMedia('(max-width:600px)'),hb=document.getElementById('hbar'),home=hb&&hb.parentNode,nx=hb&&hb.nextSibling;const place=()=>{if(!hb)return;if(mq.matches)h.insertBefore(hb,tiles);else home.insertBefore(hb,nx)};place();mq.addEventListener&&mq.addEventListener('change',place)}
