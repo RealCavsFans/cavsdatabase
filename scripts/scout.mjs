@@ -40,7 +40,13 @@ for (const y of [YR, YR - 1]) {
   from = (y - 1) + '-' + String(y).slice(2);
   if (ids.length >= 1) break;   // once the season has started, this season's games only (Luka, Oct 23)
 }
-ids = ids.slice(-5);
+const allIds = ids.slice(); ids = ids.slice(-5);
+/* season shots for and against (Oct 31): per-game tallies cached in data/scout-cache.json so each game is fetched once */
+const SC_F = 'data/scout-cache.json'; let cache = {}; try { cache = JSON.parse(fs.readFileSync(SC_F, 'utf8')); } catch {}
+const sbox = () => ({ z: C.ZN.map(() => [0, 0]), cs: [[0, 0], [0, 0]], pt: C.PT.map(() => [0, 0]) });
+const tally = (b, q) => { if (q.hasXY) { b.z[q.zi][1]++; if (q.m) b.z[q.zi][0]++; if (q.zi === 3 && q.x != null) { const k = q.x < 25 ? 0 : 1; b.cs[k][1]++; if (q.m) b.cs[k][0]++; } } if (q.pt != null && b.pt[q.pt]) { b.pt[q.pt][0]++; if (q.m) b.pt[q.pt][1] += q.three ? 3 : 2; } };
+const gameShots = (R, tid) => { const f = sbox(), a = sbox(); R.shots.forEach(q => tally(q.t === tid ? f : a, q)); return { f, a }; };
+const ckey = id => YR + ':' + opp.id + ':' + id;
 const games = [], T = {}, O = {}, P = {}, L5 = {}, Z = C.ZN.map(() => [0, 0]), CN = [0, 0];
 const add = (d, x) => { for (const k in x) if (typeof x[k] === 'number') d[k] = (d[k] || 0) + x[k]; };
 for (const id of ids) {
@@ -50,6 +56,7 @@ for (const id of ids) {
   const me = G.teams.find(t => t.id === opp.id), op = G.teams.find(t => t.id !== opp.id); if (!me || !op) continue;
   G.focus = me; G.other = op;
   const R = C.deriveCore(G, G.plays, 'all');
+  cache[ckey(id)] = gameShots(R, me.id);
   const a = me.ha === 'home' ? R.hs : R.as, b = me.ha === 'home' ? R.as : R.hs;
   games.push({ d: etDay(G.date), ha: me.ha, op: op.abbr, a, b });
   add(T, R.T[me.id]); add(O, R.T[op.id]);
@@ -58,6 +65,13 @@ for (const id of ids) {
   R.shots.filter(q => q.t === me.id && q.hasXY).forEach(q => { Z[q.zi][1]++; if (q.m) Z[q.zi][0]++; if (q.zi === 3) CN[q.x < 25 ? 0 : 1]++; });
 }
 if (!games.length) { console.log('scout: no games to scout'); process.exit(0); }
+for (const id of allIds) { if (cache[ckey(id)]) continue; const d = await get(`${ESPN}summary?event=${id}`); if (!d || !d.plays || !d.plays.length) continue;
+  const G = C.prep(C.slimSummary(d)); const me = G.teams.find(t => t.id === opp.id), op = G.teams.find(t => t.id !== opp.id); if (!me || !op) continue; G.focus = me; G.other = op;
+  cache[ckey(id)] = gameShots(C.deriveCore(G, G.plays, 'all'), me.id); }
+for (const k of Object.keys(cache)) if (!k.startsWith(YR + ':')) delete cache[k];
+fs.mkdirSync('data', { recursive: true }); fs.writeFileSync(SC_F, JSON.stringify(cache));
+const sumB = list => { const o = sbox(); list.forEach(b => { if (!b) return; b.z.forEach((v, i) => { o.z[i][0] += v[0]; o.z[i][1] += v[1]; }); b.cs.forEach((v, i) => { o.cs[i][0] += v[0]; o.cs[i][1] += v[1]; }); b.pt.forEach((v, i) => { o.pt[i][0] += v[0]; o.pt[i][1] += v[1]; }); }); return o; };
+const sAll = allIds.map(id => cache[ckey(id)]).filter(Boolean), sL5 = ids.map(id => cache[ckey(id)]).filter(Boolean);
 games.sort((x, y) => x.d < y.d ? -1 : 1);
 const P2 = t => C.poss({ fga: t.fga, oreb: (t.oreb || 0) + (t.toreb || 0), to: t.to, fta: t.fta });
 const r1 = x => Math.round(x * 10) / 10;
@@ -75,7 +89,8 @@ const out = {
   who: Object.values(P).map(p => ({ n: p.n, gp: p.gp, pts: r1(p.pts / p.gp), reb: r1(p.reb / p.gp), ast: r1(p.ast / p.gp) })).sort((a, b) => b.pts - a.pts).slice(0, 4),
   five: top5 ? { n: top5.n, min: Math.round(top5.sec / 60), pm: top5.pm, g: top5.g, ...(top5.po >= 1 ? { o: r1(100 * top5.pf / top5.po), d: r1(100 * top5.pa / top5.po) } : {}) } : null,
   corners: CN.map(v => r1(100 * v / zt)),
-  zones: share(Z), lg: share(lgZ)
+  zones: share(Z), lg: share(lgZ),
+  sh: { n: sAll.length, s: { f: sumB(sAll.map(x => x.f)), a: sumB(sAll.map(x => x.a)) }, l: { f: sumB(sL5.map(x => x.f)), a: sumB(sL5.map(x => x.a)) } }
 };
 fs.mkdirSync('data', { recursive: true });
 /* only rewrite when something other than the timestamp changed, so quiet days don't redeploy the site */

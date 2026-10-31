@@ -1300,19 +1300,21 @@ async function scoutData(tid){
   return SCOUT[tid]=(async()=>{
     const yr=new Date().getUTCMonth()>=7?new Date().getUTCFullYear()+1:new Date().getUTCFullYear();
     let evs=[],used=yr;for(const y of [yr,yr-1]){used=y;try{const sc=await getJSON(`${ESPN}teams/${tid}/schedule?season=${y}`);evs=(sc.events||[]).filter(e=>e.competitions&&e.competitions[0].status&&e.competitions[0].status.type.completed).map(e=>e.id)}catch(e){}if(evs.length>=1)break}/* this season once they have played a game; last season only before that */
-    const seasonN=evs.length;evs=evs.slice(-82);const games=[];
+    evs=evs.slice(-5);const games=[];
     await Promise.all(evs.map(async id=>{try{const d=await getJSON(ESPN+'summary?event='+id);const G=prep(d);if(!G.teams.some(t=>t.id===tid))return;
       /* treat the scouted team as the focus so lineups/shots are theirs */
       const me=G.teams.find(t=>t.id===tid),op=G.teams.find(t=>t.id!==tid);G.focus=me;G.other=op;const RR=deriveCore(G,G.plays,'all');games.push({G,R:RR,date:G.date})}catch(e){}}));
     games.sort((a,b)=>a.date<b.date?-1:1);
     /* shots for and against: every game this season, and the last five (Oct 31) */
-    const SH={s:{f:[],a:[]},l:{f:[],a:[]}};games.forEach(({G,R:RR},gi)=>{RR.shots.forEach(q=>{const k=q.t===tid?'f':'a';SH.s[k].push(q);if(gi>=games.length-5)SH.l[k].push(q)})});const gAll=games.length;games.splice(0,Math.max(0,games.length-5));
+    const SH={s:{f:[],a:[]},l:{f:[],a:[]}};games.forEach(({G,R:RR},gi)=>{RR.shots.forEach(q=>{const k=q.t===tid?'f':'a';SH.s[k].push(q);if(gi>=games.length-5)SH.l[k].push(q)})});
     const T={},O={},L5={},P={},shots=[];const add=(dst,src)=>{for(const k in src)if(typeof src[k]==='number')dst[k]=(dst[k]||0)+src[k];dst.z=dst.z||ZN.map(()=>[0,0]);src.z.forEach((v,i)=>{dst.z[i][0]+=v[0];dst.z[i][1]+=v[1]})};
     games.forEach(({G,R:RR})=>{add(T,RR.T[tid]);add(O,RR.T[G.other.id]);
       Object.values(RR.L[tid][5]).forEach(l=>{const k=l.ids.slice().sort().join(',');const o=L5[k]=L5[k]||{ids:l.ids,names:l.ids.map(i=>G.P[i].last),sec:0,pf:0,pa:0,o:{fga:0,oreb:0,to:0,fta:0},d:{fga:0,oreb:0,to:0,fta:0},g:0};o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;o.g++;for(const x of ['fga','oreb','to','fta']){o.o[x]+=l.o[x];o.d[x]+=l.d[x]}});
       G.roster[tid].forEach(i=>{const b=RR.B[i];if(!(b.min>0))return;const p=P[G.P[i].name]=P[G.P[i].name]||{name:G.P[i].name,short:G.P[i].short,gp:0,gs:0,min:0,pts:0,reb:0,oreb:0,dreb:0,ast:0,stl:0,blk:0,to:0,pf:0,pm:0,tpm:0,tpa:0,fga:0,fgm:0,ftm:0,fta:0};p.gp++;if(G.P[i].starter)p.gs++;for(const k of ['min','pts','oreb','dreb','ast','stl','blk','to','pf','pm','tpm','tpa','fga','fgm','ftm','fta'])p[k]+=+b[k]||0;p.reb+=(+b.oreb||0)+(+b.dreb||0)});
       RR.shots.filter(q=>q.t===tid).forEach(q=>shots.push(q))});
-    return {tid,games,T,O,L5,P,shots,SH,gAll,last:used!==yr};
+    /* season totals come from the daily scouting job (pdata/scout.json), so the page never loads a whole season of games */
+    let SS=null;try{const j=await getJSON('/pdata/scout.json');const ab=(games[0]&&games[0].G.focus.abbr)||'';const A={GS:'GSW',NY:'NYK',NO:'NOP',SA:'SAS',WSH:'WAS',UTAH:'UTA'};if(j&&j.sh&&j.game&&(j.game.opp===ab||A[j.game.opp]===ab||A[ab]===j.game.opp))SS=j.sh}catch(e){}
+    return {tid,games,T,O,L5,P,shots,SH,SS,last:used!==yr};
   })();
 }
 function scoutCard(D,X,team){
@@ -1339,13 +1341,13 @@ function scoutCard(D,X,team){
   /* toggles: their shots or what they allow; last 5 games or the season (Oct 31) */
   const st={side:'f',rng:'l'};const tg=el('div','sc-tg');const g2=el('div','grid2 scg2');const left=el('div','zchart');const right=el('div');
   const mk=(k,opts)=>{const w=el('div','fl');w.style.marginBottom='6px';opts.forEach(([v,l])=>{const b=el('button',null,l);b.type='button';b.onclick=()=>{st[k]=v;draw()};b.dataset.k=k;b.dataset.v=v;w.appendChild(b)});tg.appendChild(w)};
-  mk('side',[['f','Their shots'],['a','What they allow']]);mk('rng',[['l','Last 5 games'],['s','Season'+(X.gAll?' ('+X.gAll+')':'')]]);
+  mk('side',[['f','Their shots'],['a','What they allow']]);if(X.SS)mk('rng',[['l','Last 5 games'],['s','Season ('+X.SS.n+' games)']]);
   const draw=()=>{tg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',st[b.dataset.k]===b.dataset.v));
-    const all=(X.SH&&X.SH[st.rng][st.side])||(st.side==='f'?X.shots:[]);const xy=all.filter(q=>q.hasXY);
-    const Z=ZN.map(()=>[0,0]);xy.forEach(q=>{Z[q.zi][1]++;if(q.m)Z[q.zi][0]++});withCorners(Z,xy);const BZ=(BLIVE&&BLIVE.lg)||ZN.map(([k])=>[LG[k][0]*1000,1000]);
-    left.innerHTML=zoneCourt(Z,xy.length,st.side==='f'?team.name+' shooting by zone':'Opponents’ shooting against '+team.name,BZ,st.side==='f'?'#860038':'#5b6470',true);
+    const box=st.rng==='s'&&X.SS?X.SS.s[st.side]:null;const all=box?[]:X.SH.l[st.side];const xy=all.filter(q=>q.hasXY);
+    let Z=ZN.map(()=>[0,0]);if(box){Z=box.z.map(v=>v.slice());if(box.cs&&box.cs[0][1]+box.cs[1][1]===Z[3][1])Z.cs=box.cs}else{xy.forEach(q=>{Z[q.zi][1]++;if(q.m)Z[q.zi][0]++});withCorners(Z,xy)}const nZ=Z.reduce((t,v)=>t+v[1],0);const BZ=(BLIVE&&BLIVE.lg)||ZN.map(([k])=>[LG[k][0]*1000,1000]);
+    left.innerHTML=zoneCourt(Z,nZ,st.side==='f'?team.name+' shooting by zone':'Opponents’ shooting against '+team.name,BZ,st.side==='f'?'#860038':'#5b6470',true);
     left.insertAdjacentHTML('beforeend','<div class="leg"><span>Makes-attempts, accuracy and share of shots · shaded against NBA average</span></div>');
-    right.textContent='';const pr=PT.map(([k,l],i)=>{const q=all.filter(x=>x.pt===i),m=q.filter(x=>x.m);return {l,a:q.length,fr:all.length?q.length/all.length:0,pps:q.length?m.reduce((s2,x)=>s2+(x.three?3:2),0)/q.length:null}}).filter(r=>r.a);
+    right.textContent='';const ptT=box?box.pt.reduce((t,v)=>t+v[0],0):all.length;const pr=PT.map(([k,l],i)=>{if(box){const [a,pts]=box.pt[i]||[0,0];return {l,a,fr:ptT?a/ptT:0,pps:a?pts/a:null}}const q=all.filter(x=>x.pt===i),m=q.filter(x=>x.m);return {l,a:q.length,fr:all.length?q.length/all.length:0,pps:q.length?m.reduce((s2,x)=>s2+(x.three?3:2),0)/q.length:null}}).filter(r=>r.a);
     right.appendChild(dtable('sc_t',[{h:'Shot type',k:'l'},{h:'FREQ',k:'fr',f:r=>Math.round(r.fr*100)+'%'},{h:'PTS/SHOT',k:'pps',f:r=>r.pps==null?'–':r.pps.toFixed(2)}],pr,{def:'fr'}))};
   c.appendChild(tg);draw();
   g2.append(left,right);c.appendChild(g2);return c;
