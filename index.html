@@ -552,6 +552,14 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 /* Oct 31: phone section buttons: a grid at the top, one pinned swipeable row once scrolled */
 @media (max-width:600px){.jump:not(.fx),#view-history .jump:not(.fx),#view-resources .jump:not(.fx){position:static!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px!important;padding:8px 0 10px!important;margin-top:10px!important;border-bottom:0}.jump:not(.fx) a{text-align:center;padding:6px 2px!important;font-size:.625rem!important;letter-spacing:.03em!important;overflow:hidden;text-overflow:ellipsis}.jump:not(.fx) .jmore{display:none!important}
 .jump.fx{position:fixed!important;left:0;right:0;width:auto!important;max-width:none!important;box-sizing:border-box;z-index:40;margin:0!important;padding:7px 0 7px 16px!important;display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;gap:6px!important;box-shadow:0 2px 8px rgba(0,0,0,.06)}.jump.fx a{padding:5px 9px!important;font-size:.625rem!important}.jump.fx .jmore{display:block!important}}
+/* Oct 31: shot diet tiles size their own text: each tile is a container, text scales with its width, and lines drop out when a tile is too small */
+.ppx-tm .ppx-tt{container-type:size;padding:clamp(4px,4cqi,10px)!important}
+.ppx-tm .ppx-tt b{font-size:clamp(.5625rem,10cqi,.9375rem)!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.ppx-tm .ppx-tt .sh{font-size:clamp(.75rem,17cqi,1.5rem)!important}
+.ppx-tm .ppx-tt .ln{font-size:clamp(.5625rem,5.2cqi,.75rem)!important}
+@container (max-width:140px){.ppx-tm .ppx-tt .ln{display:none!important}}
+@container (max-height:58px){.ppx-tm .ppx-tt .sh{display:none!important}}
+@container (max-height:26px){.ppx-tm .ppx-tt b{display:none!important}}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
