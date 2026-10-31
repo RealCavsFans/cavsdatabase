@@ -41,7 +41,7 @@ for (const y of [YR, YR - 1]) {
   if (ids.length >= 1) break;   // once the season has started, this season's games only (Luka, Oct 23)
 }
 ids = ids.slice(-5);
-const games = [], T = {}, O = {}, P = {}, L5 = {}, Z = C.ZN.map(() => [0, 0]);
+const games = [], T = {}, O = {}, P = {}, L5 = {}, Z = C.ZN.map(() => [0, 0]), CN = [0, 0];
 const add = (d, x) => { for (const k in x) if (typeof x[k] === 'number') d[k] = (d[k] || 0) + x[k]; };
 for (const id of ids) {
   const d = await get(`${ESPN}summary?event=${id}`);
@@ -54,8 +54,8 @@ for (const id of ids) {
   games.push({ d: etDay(G.date), ha: me.ha, op: op.abbr, a, b });
   add(T, R.T[me.id]); add(O, R.T[op.id]);
   G.roster[me.id].forEach(i => { const x = R.B[i]; if (!(x.min > 0)) return; const p = P[G.P[i].name] = P[G.P[i].name] || { n: G.P[i].name, gp: 0, min: 0, pts: 0, reb: 0, ast: 0 }; p.gp++; p.min += x.min; p.pts += x.pts; p.reb += x.oreb + x.dreb; p.ast += x.ast; });
-  Object.values(R.L[me.id][5]).forEach(l => { const k = l.ids.slice().sort().join(); const o = L5[k] = L5[k] || { n: l.ids.map(i => G.P[i].last), sec: 0, pm: 0, g: 0 }; o.sec += l.sec; o.pm += l.pf - l.pa; o.g++; });
-  R.shots.filter(q => q.t === me.id && q.hasXY).forEach(q => { Z[q.zi][1]++; if (q.m) Z[q.zi][0]++; });
+  Object.values(R.L[me.id][5]).forEach(l => { const k = l.ids.slice().sort().join(); const o = L5[k] = L5[k] || { n: l.ids.map(i => G.P[i].last), sec: 0, pm: 0, g: 0, pf: 0, pa: 0, po: 0 }; o.sec += l.sec; o.pm += l.pf - l.pa; o.g++; o.pf += l.pf; o.pa += l.pa; o.po += (C.poss(l.o) + C.poss(l.d)) / 2; });
+  R.shots.filter(q => q.t === me.id && q.hasXY).forEach(q => { Z[q.zi][1]++; if (q.m) Z[q.zi][0]++; if (q.zi === 3) CN[q.x < 25 ? 0 : 1]++; });
 }
 if (!games.length) { console.log('scout: no games to scout'); process.exit(0); }
 games.sort((x, y) => x.d < y.d ? -1 : 1);
@@ -66,13 +66,15 @@ const n = games.length;
 const share = z => { const t = z.reduce((s, v) => s + v[1], 0) || 1; return [z[0][1], z[1][1] + z[2][1], z[3][1], z[4][1]].map(v => r1(100 * v / t)); };
 let lgZ = C.ZN.map(([k]) => [C.LG[k][0] * 1000, C.LG[k][1] * 1000]);
 try { const b = JSON.parse(fs.readFileSync('live-base.json', 'utf8')); if (b.lg && b.lg.length === 5) lgZ = b.lg.map(([m, a]) => [m, a]); } catch {}
+const zt = Z.reduce((s, v) => s + v[1], 0) || 1;
 const top5 = Object.values(L5).sort((a, b) => b.sec - a.sec)[0];
 const out = {
   updated: now.toISOString(), game: { id: next.id, d: etDay(next.date), opp: opp.abbreviation, name: opp.shortDisplayName || opp.name }, from,
   games,
   pace: r1((P2(T) + P2(O)) / 2 / (T.sec || 1) * 2880), off: r1(100 * T.pts / P2(T)), def: r1(100 * O.pts / P2(O)), tpr: Math.round(100 * T.tpa / (T.fga || 1)),
   who: Object.values(P).map(p => ({ n: p.n, gp: p.gp, pts: r1(p.pts / p.gp), reb: r1(p.reb / p.gp), ast: r1(p.ast / p.gp) })).sort((a, b) => b.pts - a.pts).slice(0, 4),
-  five: top5 ? { n: top5.n, min: Math.round(top5.sec / 60), pm: top5.pm, g: top5.g } : null,
+  five: top5 ? { n: top5.n, min: Math.round(top5.sec / 60), pm: top5.pm, g: top5.g, ...(top5.po >= 1 ? { o: r1(100 * top5.pf / top5.po), d: r1(100 * top5.pa / top5.po) } : {}) } : null,
+  corners: CN.map(v => r1(100 * v / zt)),
   zones: share(Z), lg: share(lgZ)
 };
 fs.mkdirSync('data', { recursive: true });
