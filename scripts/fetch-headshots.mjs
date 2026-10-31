@@ -32,6 +32,11 @@ for (const id of ids) {
   } catch (e) { warn(`headshot ${id}: ${e.message}`); }
 }
 console.log(`headshots: ${ids.size} players, ${got} added`);
+// Charge roster (G League headshots first, NBA headshots for players with NBA time): img/h/<id>.png; a miss just leaves the initials
+{ const ch = (html.match(/CH_ROSTER\s*=\s*\[([\s\S]*?)\n\];/) || [])[1] || ''; let n = 0, g2 = 0;
+  for (const m of ch.matchAll(/,\s*(\d{6,8})\]/g)) { n++; const id = m[1]; const out = new URL(`img/h/${id}.png`, root); if (await have(out)) continue;
+    for (const lg of ['gleague', 'nba']) { try { const res = await fetch(`https://cdn.nba.com/headshots/${lg}/latest/260x190/${id}.png`, UA); const ct = res.headers.get('content-type') || ''; if (!res.ok || !/image/.test(ct)) continue; const buf = Buffer.from(await res.arrayBuffer()); if (buf.length < 2000) continue; await writeFile(out, buf); g2++; break; } catch {} } }
+  console.log(`charge headshots: ${n} players, ${g2} added`); }
 
 // 2. drafted-player card photos
 // every other photo the page shows (drafted-player cards, staff, Charge staff)

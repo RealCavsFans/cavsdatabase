@@ -521,6 +521,7 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 @media (min-width:601px){.ppx-lls>.ppx-llr{display:contents!important}.ppx-llr>div{display:flex;flex-direction:column}}@media (min-width:601px){:has(>.segs.hasx){position:relative}.segs.hasx{position:static;overflow:visible}.segs.hasx>.xact{position:absolute;right:14px;top:auto;margin:0!important;border:0!important;background:none!important}}
 .ppx-zm svg>g:last-of-type{opacity:.35}@media (min-width:601px){.ppx-zm{max-width:560px;margin:0 auto}}
 .alt-b{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.alt-b h4{margin:0 0 6px;font:800 .75rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.alt-b div>div{display:flex;flex-direction:column;padding:4px 0;border-top:1px solid var(--line2)}.alt-b b{font-weight:600;font-size:.875rem}.alt-b small{color:var(--muted);font-size:.75rem}@media (max-width:600px){.alt-b{grid-template-columns:1fr}}
+.chhs{position:relative;display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--sub);border:2px solid var(--wine);overflow:hidden;vertical-align:middle;margin-right:10px;font:800 .6875rem var(--cond);color:var(--muted);flex:none}.chhs img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}.chros td.pn{white-space:nowrap}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
@@ -3689,7 +3690,7 @@ const CH_STAFF=[
   /* roster table, like the Cavs roster: name links to the G League profile; two-ways tagged next to the name */
   const ro=document.getElementById('ch-roster');let n=CH_ROSTER.length;{const tb=el('table','ros chros');tb.innerHTML='<thead><tr><th class="r">No.</th><th>Player</th><th class="c">Pos</th><th>Ht / Wt</th><th>College</th><th>How acquired</th></tr></thead>';const bd=el('tbody');
     const slugG=n=>n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’'.]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-    CH_ROSTER.slice().sort((a,b)=>a[0]-b[0]).forEach(([no,nm,pos,ht,wt,col,acq,gid])=>{const tr=el('tr');tr.appendChild(el('td','r mono',String(no)));const td=el('td','pn');
+    CH_ROSTER.slice().sort((a,b)=>a[0]-b[0]).forEach(([no,nm,pos,ht,wt,col,acq,gid])=>{const tr=el('tr');tr.appendChild(el('td','r mono',String(no)));const td=el('td','pn');{const hs=el('span','chhs');hs.textContent=nm.split(' ').map(w=>w[0]).slice(0,2).join('');if(gid){const im=el('img');im.alt='';im.loading='lazy';im.src='/img/h/'+gid+'.png';im.onerror=()=>im.remove();hs.appendChild(im)}td.appendChild(hs)}
       if(gid){const a=el('a',null,nm);a.href='https://gleague.nba.com/player/'+gid+'/'+slugG(nm);a.target='_blank';a.rel='noopener';a.title=nm+' on gleague.nba.com';td.appendChild(a)}else td.appendChild(el('b',null,nm));
       if(acq==='Two-way'){const t=el('span','ch2w','Two-way');t.title='Cavs two-way contract: also on the Cavs roster';td.appendChild(t)}
       tr.append(td,el('td','c',pos),el('td','mono',ht+' · '+wt),el('td',null,col),el('td',null,acq==='Two-way'?'Cavs two-way':acq));bd.appendChild(tr)});
