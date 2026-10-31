@@ -15,11 +15,17 @@ const html = await readFile(new URL('index.html', root), 'utf8');
 const PRE = process.argv.includes('--prerender');
 const HASHF = new URL('data/prerender-hash.txt', root);
 const h = createHash('sha1');
-for (const f of ['index.html', 'videos.json', 'box.json', 'rcf.json', 'pdata/history.json', 'og/live.json', 'scripts/build-pages.mjs', 'scripts/prerender.mjs']) { try { h.update(await readFile(new URL(f, root))); } catch {} }
+/* JSON files are hashed without their clock stamps ("updated" and friends), so a run that only refreshed a timestamp
+   skips the five-minute prerender (Oct 30 audit: rcf.json's stamp was forcing a full rebuild every 30 minutes) */
+const STAMP = new Set(['updated', 'at', 'fetched', 'generated', 'checked']);
+const unstamp = v => Array.isArray(v) ? v.map(unstamp) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).filter(([k]) => !STAMP.has(k)).map(([k, x]) => [k, unstamp(x)])) : v;
+for (const f of ['index.html', 'videos.json', 'box.json', 'rcf.json', 'pdata/history.json', 'og/live.json', 'scripts/build-pages.mjs', 'scripts/prerender.mjs']) { try { const t = await readFile(new URL(f, root), 'utf8'); let x = t; if (f.endsWith('.json')) { try { x = JSON.stringify(unstamp(JSON.parse(t))); } catch {} } h.update(x); } catch {} }
 try { const { readdir } = await import('node:fs/promises'); h.update((await readdir(new URL('og/g/', root))).sort().join()); } catch {}
 try { const { readdir } = await import('node:fs/promises'); h.update((await readdir(new URL('og/h/', root))).sort().join()); } catch {}  // a new game share image means the page copies need the new image tag
 const hash = h.digest('hex');
-if (PRE) { let old = ''; try { old = (await readFile(HASHF, 'utf8')).trim(); } catch {} if (old === hash) { console.log('pages unchanged, nothing to build'); process.exit(0); } }
+// the baked-in "next game" and countdown text ages with the clock, so rebuild at least every 6 hours even when nothing else changed
+let stale = false; if (PRE) { try { const { execSync } = await import('node:child_process'); const t = +execSync('git log -1 --format=%ct -- data/prerender-hash.txt', { encoding: 'utf8' }).trim() * 1000; stale = !t || Date.now() - t > 6 * 3600e3; } catch { stale = true; } }
+if (PRE && !stale) { let old = ''; try { old = (await readFile(HASHF, 'utf8')).trim(); } catch {} if (old === hash) { console.log('pages unchanged, nothing to build'); process.exit(0); } }
 const m = html.match(/const PAGE_META=(\{[\s\S]*?\});\n/);
 if (!m) { console.log('::warning::PAGE_META not found'); process.exit(0); }
 const META = Function('return ' + m[1])();

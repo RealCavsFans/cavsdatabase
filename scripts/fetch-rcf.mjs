@@ -43,5 +43,7 @@ let first = {}; try { first = JSON.parse(await readFile(FIRST, 'utf8')); } catch
 for (const x of items) { if (!first[x.link] || x.date < first[x.link]) first[x.link] = x.date; else x.date = first[x.link]; }
 items.sort((a, b) => a.date < b.date ? 1 : -1);
 await writeFile(FIRST, JSON.stringify(first, null, 0).replace(/,"/g, ',\n"') + '\n');
+/* only rewrite when the list changed, so a quiet run leaves the file (and the page rebuild hash) alone */
+{ let prev = null; try { prev = JSON.parse(await readFile(OUT, 'utf8')); } catch {} if (prev && JSON.stringify(prev.items) === JSON.stringify(items)) { console.log(`rcf.json: ${items.length} items, unchanged`); process.exit(0); } }
 await writeFile(OUT, JSON.stringify({ updated: new Date().toISOString(), items }, null, 1) + '\n');
 console.log(`rcf.json: ${items.length} items`);

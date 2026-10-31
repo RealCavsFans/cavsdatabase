@@ -52,7 +52,7 @@ Don't hand-edit these. The automatic jobs own them and would overwrite you: `TST
 All keys live in GitHub → Settings → Secrets and variables → Actions. Never paste a key anywhere else.
 
 - `NEWSLETTER_LIVE`: set to `true` to send to subscribers.
-- Game alerts went live Oct 27. To pause them, comment out the schedule lines in `.github/workflows/push.yml` (or set the repository variable PUSH_LIVE to anything but "true", which turns every run into a dry run).
+- Game alerts went live Oct 27 and were paused Oct 29 (Luka's call). To turn them back on, uncomment the schedule lines in `.github/workflows/push.yml`. The repository variable PUSH_LIVE must also be "true"; anything else makes every run a dry run.
 
 ## If ESPN changes or blocks its feed
 
@@ -76,6 +76,8 @@ A daily check (`scripts/health.mjs`) flags anything stale: no box scores after a
 **Live page source.** Edit `live.src.html`, not `live.html`. The page build (`scripts/build-live.mjs`, run by build-pages in the Action) writes `live.html` as a small shell plus `a/live.<hash>.css/.js`, which browsers cache for a year. Run `node scripts/build-live.mjs` to rebuild it by hand.
 
 **Game archive format.** Archived games store plays and win probability as compact rows (`pv: 2`); `prep()` in live-core.js unpacks them, so every reader goes through `prep`.
+
+**Page rebuilds.** Any push that changes `index.html`, `live.src.html` or the build scripts starts the page rebuild by itself, so there's no need to start it by hand after an edit (extra starts queue up and cancel each other). The rebuild is skipped when nothing but timestamps changed, and runs at least every 6 hours so the baked-in next-game text stays current. The 30-minute job runs hourly from about 3 to 7 a.m. Eastern.
 
 **Commits from the 30-minute job.** `scripts/changed.mjs` skips a scheduled commit when only timestamps or rebuilt page copies changed; pages still refresh at least every 6 hours.
 
