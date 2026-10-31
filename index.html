@@ -560,6 +560,11 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 @container (max-width:140px){.ppx-tm .ppx-tt .ln{display:none!important}}
 @container (max-height:58px){.ppx-tm .ppx-tt .sh{display:none!important}}
 @container (max-height:26px){.ppx-tm .ppx-tt b{display:none!important}}
+/* Oct 31 mock: drafted player card layout */
+.rc3-r{display:flex;flex-direction:column}.rc3-r .nxl{list-style:none!important;padding:0!important;margin:0!important}
+@media (min-width:900px){.ab-rt .xb{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:0 28px!important}.ab-rt .xb>.rc2{grid-row:auto!important}.ab-rt .xb>.rc3-r{padding-top:12px}.rc3-r>.nxbox{order:-1;margin:0 0 14px!important}.rc3-r>.bio-links{margin-top:10px}
+ .rc3-r .rc2-k:first-child{margin-top:0}.rc3-r .rc2-strip{gap:4px!important}.rc3-r .rc2-strip div{padding:6px 8px!important}.rc3-r .rc2-strip b{font-size:1rem!important}.rc3-r .rc2-strip span{font-size:.5625rem!important}
+ .ab-rt .xb .rc3-f{display:grid;grid-template-columns:auto 1fr;gap:4px 16px}}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
@@ -2522,6 +2527,9 @@ const rt=document.getElementById('rights');RIGHTS.forEach(([n,p2,dd,c])=>{const 
   const links=el('p','bio-links');if(X[1]){const a2=el('a',null,(/^Retired/.test(X[0]||'')?'Career profile':'Player profile and stats')+' ↗');a2.href=X[1];a2.target='_blank';a2.rel='noopener';links.appendChild(a2)}
   if(X[2]){if(links.childNodes.length)links.append(' · ');const a3=el('a',null,'Pre-draft scouting report ↗');a3.href=X[2];a3.target='_blank';a3.rel='noopener';links.appendChild(a3)}
   if(links.childNodes.length)bx.appendChild(links);
+  /* Oct 31 mock: two balanced columns on desktop: left = status, facts, honors; right = next games, stats, links */
+  {const cd=bx.querySelector(':scope>.rc2');if(cd){const R=el('div','rc3-r');const kids=[...cd.children];let k=kids.findIndex(x=>x.classList.contains('rc2-hon'));if(k<0)k=kids.findIndex(x=>x.classList.contains('rc3-f'));kids.slice(k+1).forEach(x=>R.appendChild(x));const nb=bx.querySelector(':scope>.nxbox'),lk=bx.querySelector(':scope>.bio-links');if(nb)R.appendChild(nb);if(lk)R.appendChild(lk);bx.appendChild(R);
+    const ps=cd.querySelector('.rc3-pill>span');if(ps&&ps.firstChild&&ps.firstChild.nodeType===3)ps.firstChild.textContent=ps.firstChild.textContent.replace(/^\s*(\S)/,(m,c)=>c.toUpperCase())}}
   de.append(sm,bx);li.appendChild(de);rt.appendChild(li)});
 
 /* resources */
