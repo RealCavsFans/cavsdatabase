@@ -2355,7 +2355,7 @@ const CH_PIPE=[['Sam Merrill','On the Cavs',[['g','Charge 2022–23'],['','10-da
 /* draft board: every pick 2027–2033, tap for the full details */
 (function(){const bd=document.getElementById('board');if(!bd)return;
   const pickBlocks=([y,r,st,v,tr,sw,why,orig])=>[pviz(v),v[0]==='pool'?trackBox(y,v,true):null,v[0]==='frozen'?freezeBox():null,['Trade outright:',(tr?'Yes. ':'No. ')+(tr?'':why)],['Trade swap rights:',sw?'Yes. Another team can get the right to swap picks with the Cavs that year.':(v[0]==='frozen'?'No, while frozen.':'No. Those swap rights are already held by other teams.')],orig?['How it got here:',orig]:null,r==='1st'?el('p','pnote',PICK_NOTE):null];
-  const owedBlocks=([y,r,to,v,how,deal])=>[pviz(v),v[0]==='pool'&&r==='1st'?trackBox(y,v,false):null,how?['How it’s decided:',how]:null,deal?(()=>{const q=el('p');q.appendChild(el('strong',null,'How it left:'));return q})():null,deal?(()=>{const ul=el('ul','deal');deal.split(/(?<=\.) (?=(?:On |At the |Atlanta then|Charlotte |Utah |Phoenix ))/).forEach(t=>ul.appendChild(el('li',null,t)));return ul})():null];
+  const owedBlocks=([y,r,to,v,how,deal])=>[pviz(v),null/* no standings tracker on picks the Cavs don't own (Oct 30) */,how?['How it’s decided:',how]:null,deal?(()=>{const q=el('p');q.appendChild(el('strong',null,'How it left:'));return q})():null,deal?(()=>{const ul=el('ul','deal');deal.split(/(?<=\.) (?=(?:On |At the |Atlanta then|Charlotte |Utah |Phoenix ))/).forEach(t=>ul.appendChild(el('li',null,t)));return ul})():null];
   const YRS=[];for(let y=2027;y<=2033;y++)YRS.push(String(y));
   const cells={};
   PICKS.forEach(P=>{const [y,r,st,v,tr,sw]=P;const k=v[0]==='frozen'?'frz':v[0]==='pool'?'cond':'own';
