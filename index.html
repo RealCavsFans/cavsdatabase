@@ -4156,7 +4156,7 @@ function ppBuild(p,root){
     L.slice().reverse().forEach(g=>{const m=g.me;const tr=el('tr');const dd=new Date(g.d+'T12:00:00');{const gt=el('td','ppx-glg');gt.innerHTML='<span>'+(dd.getMonth()+1)+'/'+dd.getDate()+'</span> <span>'+(g.ha==='H'?'vs':'@')+' '+g.opp+' '+(g.res||'')+'</span>';tr.appendChild(gt)}
       if(!m||!(m.min>0)){const td=el('td','ppx-dnp',g.out?'Out':'Did not play');td.colSpan=12;tr.appendChild(td);bd.appendChild(tr);return}
       tr.append(el('td',null,String(Math.round(m.min))),el('td','k',String(m.pts)),el('td',null,String(m.reb)),el('td',null,String(m.ast)),el('td',null,String(m.tov)),el('td','fg',m.fgm+'-'+m.fga),el('td',null,(m.fgm-m.tpm)+'-'+(m.fga-m.tpa)),el('td',null,m.tpm+'-'+m.tpa),el('td',null,m.ftm+'-'+m.fta),el('td',null,String(m.stl)),el('td',null,String(m.blk)),el('td',m.pm>0?'up':m.pm<0?'dn':null,(m.pm>0?'+':m.pm<0?'−':'')+Math.abs(m.pm)));bd.appendChild(tr)});
-    t.appendChild(bd);const w=el('div','tablebox');w.appendChild(t);c.appendChild(w);ov.appendChild(c)}}
+    t.appendChild(bd);const w=el('div','tablebox');w.appendChild(t);c.appendChild(w);c.id='ppx-glc';ov.appendChild(c)}}
   // when he plays: where his stints fall in the game, season vs his last 5, from the play-by-play archive (Oct 30)
   if(gp>=2){const c=card('When he plays',null,'Where his minutes come in a game. Darker = on the floor in more games at that minute. Below: each of his last 5 games, stint by stint, with the Cavs’ +/− in that stint.');const box=el('div','ppx-rot');box.appendChild(el('p','dim','Loading…'));c.appendChild(box);ov.appendChild(c);
     const nk=x=>x.normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');
@@ -4196,7 +4196,7 @@ function ppBuild(p,root){
           if(lgOK){const arr=pool.filter(x=>x!==meL).map(fn).filter(v2=>v2!=null);const rk=rankIn(mv,arr,!low);if(rk){cell.appendChild(el('div','r',ord(rk.r)+' of '+rk.of+' '+GN));const pb=el('div','pct');const i2=el('i');i2.style.width=pc(rk.pct)+'%';pb.appendChild(i2);cell.appendChild(pb)}}adv.appendChild(cell)});
         if(adv.children.length){const mb=el('button','oo2-more','Show every advanced number ▾');mb.type='button';mb.onclick=()=>{adv.hidden=!adv.hidden;mb.textContent=adv.hidden?'Show every advanced number ▾':'Show fewer ▴'};c.append(mb,adv)}}
       if(cur.src!=='2026–27')c.appendChild(note(cur.base==='pre'?`${pre.gp||'—'} games at ${pre.team}${pre.note?'. '+pre.note:''}.`:`${cur.gp} games in 2025–26. This switches to 2026–27 after his first game.`))}
-    ov.appendChild(c)}
+    {const gl=document.getElementById('ppx-glc');if(gl&&gl.parentElement===ov)ov.insertBefore(c,gl);else ov.appendChild(c)}}/* season line sits above the game log (Oct 30) */
   // before the NBA: college or overseas, plus G League (rookies and second year players, two-ways)
   if((youngish||stt==='TW'||stt==='Camp')&&(pre||gl)&&!(cur&&cur.base==='pre'&&!gl)){const c=card('Before the NBA',null,'A baseline for a young player: his last season before Cleveland'+(gl?', and his G League line':'')+'.');
     const tb=el('table','ppx-t');tb.innerHTML='<thead><tr><th></th><th>GP</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>FG%</th><th>3P%</th></tr></thead>';const tbd=el('tbody');
