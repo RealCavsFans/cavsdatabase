@@ -24,7 +24,7 @@ body:after{content:'';position:absolute;left:0;right:0;bottom:0;height:10px;back
 .wm{display:flex;align-items:center;gap:${title ? 14 : 22}px;font:700 ${title ? 40 : 150}px 'Geist Mono',monospace;letter-spacing:-.03em;margin-bottom:${title ? 22 : 26}px}.wm svg{width:${title ? 56 : 180}px;height:${title ? 56 : 180}px}.wm em{font-style:normal;color:#F2B231}.wm i{display:inline-block;width:.42em;height:.86em;background:#F2B231;margin-left:4px;transform:translateY(-.06em)}
 h1{font:800 76px/1.05 Archivo,sans-serif;font-stretch:125%;letter-spacing:-.01em}p{font:500 27px/1.4 Archivo,sans-serif;color:#FBE3B0;margin-top:20px;max-width:760px}
 .big{font:800 68px/1.12 Archivo,sans-serif;font-stretch:125%}.big b{display:block;color:#F2B231}
-${title ? '' : 'body{padding-bottom:56px}'}.u{position:absolute;bottom:${title ? 36 : 34}px;font:600 ${title ? 18 : 36}px 'Geist Mono',monospace;letter-spacing:.04em;color:rgba(255,255,255,.85)}
+${title ? '' : 'body{padding-bottom:110px}'}.u{position:absolute;bottom:${title ? 36 : 28}px;font:600 ${title ? 18 : 72}px 'Geist Mono',monospace;letter-spacing:.04em;color:rgba(255,255,255,.85)}
 </style></head><body>
 <div class="wm">${mark}<span>cavs<em>_db</em><i></i></span></div>
 ${title ? `<h1>${esc(title)}</h1><p>${esc(sub)}</p>` : `<div class="big">${esc(sub)}<b>${esc(sub2)}</b></div>`}
