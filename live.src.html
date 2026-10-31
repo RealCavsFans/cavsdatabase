@@ -1725,16 +1725,28 @@ const CARDS={
       const i0=R.plays.findIndex(p=>p.per===q),i1=R.plays.length-1-R.plays.slice().reverse().findIndex(p=>p.per===q);const best=i0>=0?ptsIn(D,R,i0,i1,F.id)[0]:null;
       if(best){x.fillStyle=fg;x.font='600 30px Archivo';x.fillText(`${D.P[best[0]].last} ${best[1].pts} pts`,X0+28,Y0+H-34)}});
     footer(x)}},
-  podium:{label:'Leaders podium',async draw(x,D,R){const F=D.focus;const ids=D.roster[F.id].filter(i=>R.B[i].min>0);
-    const lead=k=>ids.slice().sort((a,b)=>(k==='reb'?(R.B[b].oreb+R.B[b].dreb)-(R.B[a].oreb+R.B[a].dreb):R.B[b][k]-R.B[a][k]))[0];
-    const L=[['pts','POINTS'],['reb','REBOUNDS'],['ast','ASSISTS']].map(([k,l])=>{const id=lead(k);const b=R.B[id];return {id,l,v:k==='reb'?b.oreb+b.dreb:b[k]}});
-    x.fillStyle='#101419';x.fillRect(0,0,1080,1350);const g=x.createLinearGradient(0,0,0,1350);g.addColorStop(0,'#2a0012');g.addColorStop(1,'#101419');x.fillStyle=g;x.fillRect(0,0,1080,1350);
-    x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText((kick()+atLbl(D)).toUpperCase(),72,100);x.fillStyle='#fff';x.font='800 120px "Saira Condensed"';x.fillText('CAVS LEADERS',72,220);
-    const [sl,wh]=scoreLine(D,R);x.font='700 40px "Geist Mono"';x.fillStyle='rgba(255,255,255,.8)';x.fillText(sl+'  '+wh,72,290);
-    const order=[1,0,2],hts=[330,420,260];const imgs=await Promise.all(L.map(o=>loadImg(hsUrl(D,o.id))));
-    order.forEach((li,pos)=>{const o=L[li],cx=72+150+pos*318,base=1180,h=hts[pos];
-      x.fillStyle=li===0?GOLD:'#3a2030';x.fillRect(cx-140,base-h,280,h);x.fillStyle=li===0?INK:'#fff';x.font='700 96px "Geist Mono"';ctr(x,String(o.v),cx,base-h+110);x.font='800 30px "Saira Condensed"';x.fillStyle=li===0?INK:GOLD;ctr(x,o.l,cx,base-h+150);
-      head2(x,imgs[li],cx,base-h-120,100,li===0?GOLD:'#ffffff',initials(D.P[o.id].name));x.fillStyle='#fff';x.font='800 36px "Saira Condensed"';ctr(x,D.P[o.id].last.toUpperCase(),cx,base-h-238)});
+  podium:{label:'Leaders podium',async draw(x,D,R){const F=D.focus,O=D.other;const ids=D.roster[F.id].filter(i=>R.B[i].min>0);
+    const rb=b=>b.oreb+b.dreb;const lead=k=>ids.slice().sort((a,b)=>(k==='reb'?rb(R.B[b])-rb(R.B[a]):R.B[b][k]-R.B[a][k]))[0];
+    const L=[['pts','POINTS'],['reb','REBOUNDS'],['ast','ASSISTS']].map(([k,l])=>{const id=lead(k);const b=R.B[id];return {id,l,v:k==='reb'?rb(b):b[k],b}});
+    /* on brand (Oct 30): wine field with faint court lines, gold accents, ink podium steps, full lines under each leader, team strip at the bottom */
+    const g=x.createLinearGradient(0,0,0,1350);g.addColorStop(0,'#9a0a45');g.addColorStop(1,'#5c0027');x.fillStyle=g;x.fillRect(0,0,1080,1350);
+    x.save();x.strokeStyle='rgba(255,255,255,.07)';x.lineWidth=4;x.beginPath();x.arc(540,1350,520,Math.PI,0);x.stroke();x.beginPath();x.arc(540,1350,240,Math.PI,0);x.stroke();x.strokeRect(300,830,480,520);x.restore();
+    x.fillStyle=GOLD;x.fillRect(0,0,1080,10);
+    x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText((kick()+atLbl(D)).toUpperCase(),72,100);x.fillStyle='#fff';x.font='800 128px "Saira Condensed"';x.fillText('CAVS LEADERS',72,222);
+    const [sl,wh]=scoreLine(D,R);x.font='700 42px "Geist Mono"';x.fillStyle='#fff';x.fillText(sl,72,296);const sw=x.measureText(sl).width;
+    if(wh){x.font='800 30px "Saira Condensed"';const tw=x.measureText(wh).width+28;x.fillStyle=GOLD;x.fillRect(72+sw+24,262,tw,46);x.fillStyle=INK;x.fillText(wh,72+sw+38,296)}
+    const order=[1,0,2],hts=[300,380,240],base=1060;const imgs=await Promise.all(L.map(o=>loadImg(hsUrl(D,o.id))));
+    order.forEach((li,pos)=>{const o=L[li],cx=72+150+pos*318,h=hts[pos],top=base-h,b=o.b;
+      x.fillStyle=li===0?GOLD:INK;x.fillRect(cx-145,top,290,h);
+      x.fillStyle=li===0?INK:'#fff';x.font='700 104px "Geist Mono"';ctr(x,String(o.v),cx,top+115);
+      x.font='800 32px "Saira Condensed"';x.fillStyle=li===0?WINE:GOLD;ctr(x,o.l,cx,top+158);
+      const line=o.l==='POINTS'?`${b.fgm}-${b.fga} FG · ${b.tpm}-${b.tpa} 3PT`:o.l==='REBOUNDS'?`${b.oreb} OFF · ${b.dreb} DEF`:`${b.to} TO · ${Math.round(b.min/60)} MIN`;
+      x.font='600 24px "Geist Mono"';x.fillStyle=li===0?'rgba(16,20,25,.75)':'rgba(255,255,255,.7)';ctr(x,line,cx,top+200);
+      head2(x,imgs[li],cx,top-118,100,GOLD,initials(D.P[o.id].name));x.fillStyle='#fff';x.font='800 38px "Saira Condensed"';ctr(x,D.P[o.id].last.toUpperCase(),cx,top-236)});
+    /* team strip */
+    const T=R.T[F.id],U=R.T[O.id];const pc=(m,a)=>a?Math.round(m/a*100)+'%':'–';const st=[['FG',pc(T.fgm,T.fga)],['3PT',T.tpm+'-'+T.tpa],['REB',String(rb(T))+'-'+rb(U)],['AST',String(T.ast)],['TO',String(T.to)]];
+    x.fillStyle='rgba(16,20,25,.35)';x.fillRect(72,1088,936,120);x.fillStyle=GOLD;x.fillRect(72,1088,6,120);
+    st.forEach(([l,v],i)=>{const cx=72+94+i*187;x.fillStyle='#fff';x.font='700 46px "Geist Mono"';ctr(x,v,cx,1158);x.fillStyle=GOLD;x.font='800 26px "Saira Condensed"';ctr(x,'CAVS '+l,cx,1192)});
     footer(x)}},
   box:{label:'Box score card',async draw(x,D,R){const F=D.focus;frame(x,kick()+atLbl(D),F.name+(S.season?' season totals':' box score'),D,R);
     const ids=D.roster[F.id].filter(i=>R.B[i].min>0).sort((a,b)=>R.B[b].min-R.B[a].min).slice(0,10);
@@ -1914,9 +1926,9 @@ Object.assign(CARDS,{
     {const qs=[...new Set(R.plays.map(p=>p.per))].sort((a,b)=>a-b);const cw=(LSW-72-110)/qs.length,X0=LX2+36+110;
       x.fillStyle=MUT;x.font='800 22px "Saira Condensed"';qs.forEach((q,i)=>ctr(x,pname(q),X0+cw*i+cw/2,LY0+210));
       const sh=R.shots.filter(q=>q.id===id);const ptsQ=q=>R.plays.filter(p=>p.per===q&&p.sc&&p.val>0&&p.ids&&p.ids[0]===id).reduce((s2,p)=>s2+p.val,0);
-      const rows=[['PTS',q=>String(ptsQ(q)),q=>ptsQ(q)],['FG',q=>{const z=sh.filter(v=>v.per===q);return z.filter(v=>v.m).length+'–'+z.length},null],['3P',q=>{const z=sh.filter(v=>v.per===q&&v.three);return z.filter(v=>v.m).length+'–'+z.length},null]];
+      const rows=[['PTS',q=>String(ptsQ(q)),q=>ptsQ(q)],['FG',q=>{const z=sh.filter(v=>v.per===q);return z.filter(v=>v.m).length+'–'+z.length},null],['REB/AST',q=>{const pl=R.plays.filter(p=>p.per===q&&p.ids);const rb=pl.filter(p=>/Rebound/.test(p.type||'')&&p.ids[0]===id).length,as=pl.filter(p=>p.sc&&p.ids[1]===id&&/assists/.test(p.text||'')).length;return rb+'/'+as},null]];/* rebounds and assists fit every position better than threes (Oct 30) */
       const mxq=Math.max(1,...qs.map(ptsQ));
-      rows.forEach(([lab,fn,bar],r)=>{const y=LY0+250+r*76;lbl(x,lab,LX2+36,y+34,26,MUT);qs.forEach((q,i)=>{const cx=X0+cw*i+cw/2;if(bar){const v=bar(q),bh=46*v/mxq;x.fillStyle='rgba(134,0,56,.14)';x.fillRect(cx-cw/2+10,y+44-bh,cw-20,bh)}x.fillStyle=INK;x.font=(r?'700 30px "Geist Mono"':'800 44px "Saira Condensed"');ctr(x,fn(q),cx,y+36)})});
+      rows.forEach(([lab,fn,bar],r)=>{const y=LY0+250+r*76;lbl(x,lab,LX2+36,y+34,lab.length>4?22:26,MUT);qs.forEach((q,i)=>{const cx=X0+cw*i+cw/2;if(bar){const v=bar(q),bh=46*v/mxq;x.fillStyle='rgba(134,0,56,.14)';x.fillRect(cx-cw/2+10,y+44-bh,cw-20,bh)}x.fillStyle=INK;x.font=(r?'700 30px "Geist Mono"':'800 44px "Saira Condensed"');ctr(x,fn(q),cx,y+36)})});
       /* stints: one lane across the game, green when the Cavs outscored the other side with him on, red when they were outscored */
       const Y=LY0+500,end=Math.max(2880,pstart(R.maxPer)+plen(R.maxPer)),bw=LSW-72,P=t2=>LX2+36+bw*t2/end;lbl(x,'ON THE FLOOR',LX2+36,Y,26,MUT);
       x.fillStyle='#eeebe7';x.fillRect(LX2+36,Y+24,bw,46);for(let q=2;q<=R.maxPer;q++){x.fillStyle='#fff';x.fillRect(P(pstart(q))-1,Y+24,2,46)}
