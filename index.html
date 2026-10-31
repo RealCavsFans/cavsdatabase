@@ -1538,7 +1538,7 @@ const INJ_TYPICAL={ /* diagnosis -> [typical return, source label, url]; see sta
 };
 const ij=document.getElementById('inj');
 if(!INJURIES.length){ij.appendChild(el('li',null,'No injuries reported.'))}
-const ABBR={'Out':'OUT','Doubtful':'DOUBT','Questionable':'Q','Probable':'PROB','Game-time decision':'GTD','Day-to-day':'DTD'};
+const ABBR={'Out':'OUT','Doubtful':'DOUBTFUL','Questionable':'QUESTIONABLE','Probable':'PROBABLE','Game-time decision':'GTD','Day-to-day':'DAY-TO-DAY'};
 INJURIES.forEach(([n,p,inj,st])=>{const li=el('li','ij');const d=document.createElement('details');const sm=document.createElement('summary');const a=el('span');a.append(el('b',null,n),' · '+inj);const z=el('span',st==='Out'?'out':null,ABBR[st]||st);z.title=st;sm.append(a,z);d.appendChild(sm);
   const c=INJ_CTX[n]||{};const box=el('div','ijx');const ty=INJ_TYPICAL[(c.type||inj).toLowerCase()];
   /* rows: diagnosis (as announced), team timeline, typical return for that diagnosis in NBA history, prior history */
