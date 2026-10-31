@@ -122,15 +122,17 @@ function build(per, file) {
     for (const a of R.asts) if (a.t === '5') asts.push([a.p, a.s, a.v, gi, a.z]);
     if (per === 'all') {
       const played = Object.keys(D.P).filter(id => D.P[id].team === '5' && R0.B[id] && R0.B[id].min > 0);
-      const X = id => dx[id] = dx[id] || { rim: [0, 0, 0, 0], opp: [0, 0, 0, 0], blk: [], rb: [[0, 0], [0, 0], [0, 0]], orb: [[0, 0], [0, 0], [0, 0]] };
+      const X = id => dx[id] = dx[id] || { rim: [0, 0, 0, 0], opp: [0, 0, 0, 0], z: [0, 1, 2, 3, 4].map(() => [0, 0, 0, 0]), stop: [0, 0, 0, 0], blk: [], rb: [[0, 0], [0, 0], [0, 0]], orb: [[0, 0], [0, 0], [0, 0]] };
       const byName = {}; for (const id of played) byName[D.P[id].name] = id;
       /* opponents' shots: at the rim and overall, with him on the floor vs off it; and the shots he blocked, with where they came from */
       for (const q of R0.shots) if (q.t !== '5') {
         const od = q.od ? q.od.split(',') : [];
-        for (const id of played) { const x = X(id), o = od.includes(id) ? 0 : 2; x.opp[o + 1]++; if (q.m) x.opp[o]++; if (q.zi === 0) { x.rim[o + 1]++; if (q.m) x.rim[o]++; } }
+        for (const id of played) { const x = X(id), o = od.includes(id) ? 0 : 2; x.opp[o + 1]++; if (q.m) x.opp[o]++; if (q.zi != null && x.z[q.zi]) { x.z[q.zi][o + 1]++; if (q.m) x.z[q.zi][o]++; } if (q.zi === 0) { x.rim[o + 1]++; if (q.m) x.rim[o]++; } }
         const bm = /^(.+?) blocks /.exec(q.text || ''); const bid = bm && byName[bm[1].trim()];
         if (bid && q.hasXY) X(bid).blk.push([q.x, q.y, q.zi, gi]);
       }
+      /* opponent possessions with him on vs off: stops = possessions that ended with no points */
+      for (const q of (R0.PL || [])) if (q.team !== '5') { const od = (q.od || '').split(','); for (const id of played) { const x = X(id), o = od.includes(id) ? 0 : 2; x.stop[o + 1]++; if (!q.pts) x.stop[o]++; } }
       /* rebounds by the kind of miss: every missed shot while he was on the floor is a chance; [his rebounds, chances] for rim, midrange, three */
       const sk = new Map(); for (const q of R0.shots) sk.set(q.per + '|' + q.clock + '|' + q.text, q);
       let miss = null;

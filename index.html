@@ -514,6 +514,8 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 @media (max-width:600px){.gmu #cd{display:none!important}}
 .gteams.has-logos{display:flex;align-items:center;gap:22px}.gteams.has-logos .tm{line-height:0}.nx-logo{height:84px;width:84px;object-fit:contain;display:block}@media (max-width:600px){.gteams.has-logos{gap:14px}.nx-logo{height:54px;width:54px}}
 @media (max-width:600px){.opp-cell .tlogo{display:none!important}}
+.ppx-zon td small{display:block;font:500 .6875rem var(--mono);color:var(--muted)}
+.ppx-wod b.g{color:var(--pos,#1d6b3a)!important}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
@@ -4502,6 +4504,16 @@ function ppBuild(p,root){
             const big=el('div','ppx-big3');[[on==null?'–':on.toFixed(1)+'%','On the floor · '+r[0]+' of '+r[1],on!=null&&nba&&on<nba?'g':on!=null&&nba?'r':null],[off==null?'–':off.toFixed(1)+'%','On the bench · '+r[2]+' of '+r[3],null],[nba?nba.toFixed(1)+'%':'–','NBA average at the rim',null]].forEach(([v,l,k])=>{const d=el('div');d.append(el('b',k,v),el('span',null,l));big.appendChild(d)});box.appendChild(big);
             const sh=el('div','ppx-share ppx-sw');[['At the rim, on',on,'rim'],['At the rim, off',off,'rim'],['All shots, on',o[1]?o[0]/o[1]*100:null],['All shots, off',o[3]?o[2]/o[3]*100:null]].forEach(([lab,v,z])=>{const r2=el('div');r2.appendChild(el('span',null,lab));const t2=el('span','t');const i2=el('i');i2.style.width=(v==null?0:v)+'%';t2.appendChild(i2);if(z&&nba){const u=el('u');u.style.left=nba+'%';t2.appendChild(u)}r2.appendChild(t2);r2.appendChild(el('b',null,v==null?'–':v.toFixed(1)+'%'));sh.appendChild(r2)});box.appendChild(sh);
             const dd=on!=null&&off!=null?on-off:null;box.appendChild(el('p','ppx-why',(dd==null?'':'Opponents shoot '+Math.abs(dd).toFixed(1)+' points '+(dd<0?'worse':'better')+' at the rim with him on the floor. ')+'Lower is better. Black line = NBA average at the rim. Rim shots with him on count every shot there, not only ones he contested.'))})}
+        /* opponents with him on vs off: stop rate and every zone (Oct 30) */
+        if(dx&&dx.stop&&dx.stop[1]>=40&&dx.stop[3]>=20){const c=card('With him on defense',null,'How opponents did with him on the floor and with him on the bench. From our play-by-play, '+gp+' game'+(gp===1?'':'s')+'.');
+          const st=dx.stop,on=st[0]/st[1]*100,off=st[2]/st[3]*100,dd=on-off;
+          const big=el('div','ppx-big3 ppx-wod');[[on.toFixed(1)+'%','Stop rate, him on · '+st[0]+' of '+st[1],dd>=1?'g':dd<=-1?'r':null],[off.toFixed(1)+'%','Stop rate, him off · '+st[2]+' of '+st[3],null],[(dd>0?'+':dd<0?'−':'')+Math.abs(dd).toFixed(1),'Difference (higher is better)',dd>=1?'g':dd<=-1?'r':null]].forEach(([v,l,k])=>{const d=el('div');d.append(el('b',k,v),el('span',null,l));big.appendChild(d)});c.appendChild(big);
+          const t=el('table','ppx-t ppx-oo ppx-zon');t.innerHTML='<thead><tr><th>Opponents</th><th>Him on</th><th>Him off</th><th>Diff</th></tr></thead>';const bd=el('tbody');
+          const rows=[['All shots',dx.opp]].concat(ZNM.map((z,i)=>[z,(dx.z||[])[i]])).filter(([,q])=>q&&q[1]>=5&&q[3]>=5);
+          rows.forEach(([lab,q])=>{const a1=q[0]/q[1]*100,a2=q[2]/q[3]*100,df=a1-a2;const tr=el('tr');tr.appendChild(el('td',null,lab));
+            [[a1,q[0]+'-'+q[1]],[a2,q[2]+'-'+q[3]]].forEach(([v,mk])=>{const td=el('td');td.innerHTML=v.toFixed(0)+'%<small>'+mk+'</small>';tr.appendChild(td)});
+            const dt=el('td',Math.abs(df)>=3?(df<0?'up':'dn'):null,(df>0?'+':df<0?'−':'')+Math.abs(df).toFixed(0));tr.appendChild(dt);bd.appendChild(tr)});t.appendChild(bd);const w=el('div','tablebox');w.appendChild(t);c.appendChild(w);
+          c.appendChild(el('p','ppx-why','Stop rate = share of opponent possessions that ended with no points. Shooting is opponents’ FG% in each zone; diff = on minus off, so negative (green) means they shot worse with him out there. Small samples swing hard.'));df.appendChild(c)}
         /* block map */
         if(dx&&dx.blk.length>=3){const c=card('Block map',null,'Where the shots he blocked came from. '+dx.blk.length+' blocks in '+gp+' game'+(gp===1?'':'s')+'.');let g='';dx.blk.forEach(q=>{g+='<circle cx="'+(q[0]*10).toFixed(0)+'" cy="'+(q[1]*10).toFixed(0)+'" r="9" fill="var(--wine)" fill-opacity=".85" stroke="var(--card)" stroke-width="2"/>'});
           const w=el('div','ppx-court');w.innerHTML=court(g,'Block map');c.appendChild(w);const zc=ZNM.map(()=>0);dx.blk.forEach(q=>{if(q[2]!=null)zc[q[2]]++});const sh=el('div','ppx-share');ZNM.forEach((z,i)=>{if(!zc[i])return;const r2=el('div');r2.appendChild(el('span',null,ZS[i]));const t2=el('span','t');const i2=el('i');i2.style.width=(zc[i]/dx.blk.length*100)+'%';t2.appendChild(i2);r2.appendChild(t2);r2.appendChild(el('b',null,String(zc[i])));sh.appendChild(r2)});c.appendChild(sh);df.appendChild(c)}
