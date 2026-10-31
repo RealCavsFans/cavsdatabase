@@ -536,6 +536,7 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 .gdm-mu.lgs{display:flex;align-items:center;gap:14px;padding-top:12px;padding-bottom:10px}.gdm-mu.lgs small{margin:0}.gdm-lg{width:80px;height:80px;object-fit:contain;display:block}.gdm-mu.lgs>.c .gdm-lg{margin-left:-3px}@media (max-width:600px){.gdm-lg{width:60px;height:60px}.gdm-mu.lgs>.c .gdm-lg{margin-left:-2.5px}}
 .rcfyt{margin:26px 0 8px}
 .hcn-s{display:none}@media (max-width:600px){.hcn-l{display:none}.hcn-s{display:inline}}
+.pace-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:2px}.pace-top .pace-l{margin-bottom:0}.sos-l{font:600 0.75rem var(--sans);color:var(--muted)}.sos-l b{color:var(--fg)}.sos-l small{font-size:inherit}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
@@ -1330,8 +1331,10 @@ const strip=document.getElementById('strip');for(let i=0;i<82;i++)strip.appendCh
 /* season pace: games over/under .500 as a line over the tracker, dashed out to game 82 at the current pace (from game 5 on) */
 if(res.length>=5){const wins=res.filter(x=>x==='W').length,pace=Math.round(wins/res.length*82);let d=0;const pts=[[0,0]];res.forEach((x,i)=>{d+=x==='W'?1:-1;pts.push([i+1,d])});
   const end=pace-(82-pace),mx=Math.max(6,...pts.map(q=>Math.abs(q[1])),Math.abs(end)),X=i=>(i/82*100).toFixed(2),Y=v=>(20-v/mx*17).toFixed(2);
-  const pw=el('div','pace');pw.innerHTML='<span class="pace-l">On pace for <b>'+pace+'–'+(82-pace)+'</b></span><svg viewBox="0 0 100 40" preserveAspectRatio="none" role="img" aria-label="Games over .500 by game, on pace for '+pace+' wins"><line class="z" x1="0" x2="100" y1="20" y2="20" vector-effect="non-scaling-stroke"/><line class="pj" x1="'+X(res.length)+'" y1="'+Y(d)+'" x2="100" y2="'+Y(end)+'" vector-effect="non-scaling-stroke"/><polyline class="pl" points="'+pts.map(q=>X(q[0])+','+Y(q[1])).join(' ')+'" vector-effect="non-scaling-stroke"/></svg>';
-  strip.before(pw)}
+  const pw=el('div','pace');pw.innerHTML='<div class="pace-top"><span class="sos-l"></span><span class="pace-l">On pace for <b>'+pace+'–'+(82-pace)+'</b></span></div><svg viewBox="0 0 100 40" preserveAspectRatio="none" role="img" aria-label="Games over .500 by game, on pace for '+pace+' wins"><line class="z" x1="0" x2="100" y1="20" y2="20" vector-effect="non-scaling-stroke"/><line class="pj" x1="'+X(res.length)+'" y1="'+Y(d)+'" x2="100" y2="'+Y(end)+'" vector-effect="non-scaling-stroke"/><polyline class="pl" points="'+pts.map(q=>X(q[0])+','+Y(q[1])).join(' ')+'" vector-effect="non-scaling-stroke"/></svg>';
+  strip.before(pw);
+  /* remaining strength of schedule: pdata/sos.json (scripts/sos.mjs, opponents' current win %, 1st = hardest of 30) (Oct 31) */
+  fetch('/pdata/sos.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(J=>{const x=J&&J.t&&J.t.CLE;const sl=pw.querySelector('.sos-l');if(!x||!sl)return;sl.innerHTML='Remaining SOS <b>'+ord(x[1])+'</b><small> of 30 · '+x[0].toFixed(3).replace(/^0/,'')+'</small>';sl.title='Strength of the '+x[2]+' games left: opponents’ combined win % ('+x[0].toFixed(3).replace(/^0/,'')+'). 1st = hardest schedule left in the NBA.'})}
 strip.setAttribute('aria-label','Game-by-game results: '+W+' wins, '+L+' losses');
 /* an RCF recap belongs to a game only if it was published after that game tipped off (a date-only match picked up the previous night's recap, posted after midnight) */
 const recapAfter=(x,g)=>{if(!x.date)return false;let t;try{t=g[3]?tipOf(g).getTime():NaN}catch(_){t=NaN}if(isNaN(t))t=Date.parse(g[0]+'T16:00:00Z');return Date.parse(x.date)>=t};
