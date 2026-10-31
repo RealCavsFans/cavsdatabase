@@ -544,6 +544,7 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 .tw-t.ag b{white-space:normal}.tw-t b span{display:inline;font:inherit;letter-spacing:inherit;text-transform:none;color:inherit}
 @media (max-width:600px){.rc2 .rc2-strip{gap:4px!important}.rc2 .rc2-strip div{padding:5px 6px!important}.rc2 .rc2-strip b{font-size:1rem!important}.rc2 .rc2-strip span{font-size:.5625rem!important}}
 @media (max-width:600px){.tx-val{font-size:.6875rem!important;font-weight:500!important;color:var(--muted)!important;margin-left:0!important;text-align:left!important;margin-top:-8px}}
+#hx-draft .hx-t th:nth-child(4),#hx-draft .hx-t td:nth-child(4){display:table-cell!important}.hxp-s{display:none!important}@media (max-width:600px){.hxp-l{display:none}span.hxp-s{display:inline!important}small.hxp-s{display:block!important}#hx-draft .hx-t td,#hx-draft .hx-t th{padding-right:7px}#hx-draft .hx-t td.dim{font-size:.8125rem}}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
@@ -567,7 +568,7 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 .ppx-ar{display:grid;grid-template-columns:72px 1fr 22px;gap:6px;align-items:center;font-size:0.8125rem;padding:2px 0}.ppx-ar .b{height:8px;background:var(--line2)}.ppx-ar .b i{display:block;height:100%;background:var(--wine)}.ppx-ar b{text-align:right;font-family:var(--mono)}
 .ppx-segs{margin-bottom:10px}.ppx-more{margin:12px 0 0;font-size:0.8125rem}.ppx-more a{color:var(--wine-ink);font-weight:700}
 @media (max-width:760px){.ppx-spg{grid-template-columns:1fr}}
-/* Oct 23: RCF recap link sits right on the final card; phones drop the Standings and Schedule links on home (the tab bar has Schedule) */
+/* Oct 23: RCF Recap link sits right on the final card; phones drop the Standings and Schedule links on home (the tab bar has Schedule) */
 .gdm-links{justify-content:flex-end}
 @media (max-width:600px){.home-std,#next-h-row a[data-go="schedule"]{display:none!important}}
 /* game recap page, Oct 23: no top line; box score sits in the grid (full width after both columns); phones read highlights, by quarter, box score, the game in numbers, season series */
@@ -870,7 +871,7 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
     <div id="vid-page"></div>
     <p class="dim" style="margin:0;font-size:0.8125rem">All video from the Cleveland Cavaliers' official YouTube channel.</p>
     <section id="rcfyt" class="rcfyt" hidden><div class="block-h"><h2>RealCavsFans on YouTube</h2><a href="https://www.youtube.com/@realcavsfanscom/videos" target="_blank" rel="noopener">More on YouTube ↗</a></div><div id="rcfyt-g"></div></section>
-    <div id="articles" class="art-h"><h2>Articles &amp; recaps</h2><p class="dim" style="margin:4px 0 0">From RealCavsFans.com.</p></div>
+    <div id="articles" class="art-h"><h2>Articles &amp; Recaps</h2><p class="dim" style="margin:4px 0 0">From RealCavsFans.com.</p></div>
     <div class="rcf-cols">
       <section><div class="block-h"><h2>RealCavsFans.com</h2><a href="https://realcavsfans.com/index.php?forums/FrontPage/" target="_blank" rel="noopener">Front page ↗</a></div><div class="rcf-list" id="rcf-list"></div></section>
     </div>
@@ -1343,7 +1344,7 @@ if(res.length>=5){const wins=res.filter(x=>x==='W').length,pace=Math.round(wins/
   /* remaining strength of schedule: pdata/sos.json (scripts/sos.mjs, opponents' current win %, 1st = hardest of 30) (Oct 31) */
   fetch('/pdata/sos.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(J=>{const x=J&&J.t&&J.t.CLE;const sl=pw.querySelector('.sos-l');if(!x||!sl)return;sl.innerHTML='Remaining SOS <b>'+ord(x[1])+'</b><small> of 30 · '+x[0].toFixed(3).replace(/^0/,'')+'</small>';sl.title='Strength of the '+x[2]+' games left: opponents’ combined win % ('+x[0].toFixed(3).replace(/^0/,'')+'). 1st = hardest schedule left in the NBA.'})}
 strip.setAttribute('aria-label','Game-by-game results: '+W+' wins, '+L+' losses');
-/* an RCF recap belongs to a game only if it was published after that game tipped off (a date-only match picked up the previous night's recap, posted after midnight) */
+/* an RCF Recap belongs to a game only if it was published after that game tipped off (a date-only match picked up the previous night's recap, posted after midnight) */
 const recapAfter=(x,g)=>{if(!x.date)return false;let t;try{t=g[3]?tipOf(g).getTime():NaN}catch(_){t=NaN}if(isNaN(t))t=Date.parse(g[0]+'T16:00:00Z');return Date.parse(x.date)>=t};
 const tipOf=g=>{const [h,m]=g[3].split(':').map(Number);const hh=h===12?12:h+12;const off=(g[0]<'2026-11-01'||g[0]>='2027-03-14')?'-04:00':'-05:00';
   return new Date(g[0]+'T'+String(hh).padStart(2,'0')+':'+String(m).padStart(2,'0')+':00'+off)};
@@ -2575,7 +2576,7 @@ SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
   const tvc=el('td','tvc');if(tv.nat)tvc.appendChild(el('b',null,tv.nat));if(tv.loc)tvc.appendChild(el('span',null,tv.loc));if(tv.opp)tvc.appendChild(el('small',null,TEAMS[g[1]]+': '+tv.opp));if(!tv.nat&&!tv.loc)tvc.appendChild(el('span','dim','TBA'));
   const rac=el('td','tvc');rac.appendChild(el('span',null,ra.cavs));rac.appendChild(el('small',null,ra.nat));if(ra.opp)rac.appendChild(el('small',null,TEAMS[g[1]]+': '+ra.opp));
   const pv=r?null:gameUrl(g[0]);const lnk=(t,href,title,cls)=>{const a=el('a',cls,t);a.href=href;a.target='_blank';a.rel='noopener';a.title=title;return a};
-  const rtd=el('td','r mono');if(r){const ra=el('a','reslink',r+(SCORES[g[0]]?' '+SCORES[g[0]].replace('-','–'):'')+' →');ra.href='/games/'+gslug(g);ra.dataset.go='games/'+gslug(g);ra.title='Game page: box score and recap';rtd.appendChild(ra)}
+  const rtd=el('td','r mono');if(r){const ra=el('a','reslink',r+(SCORES[g[0]]?' '+SCORES[g[0]].replace('-','–'):'')+' →');ra.href='/games/'+gslug(g);ra.dataset.go='games/'+gslug(g);ra.title='Game page: box score and Recap';rtd.appendChild(ra)}
   const dtd=el('td','mono'),ttd=el('td','mono dim');dtd.textContent=shortFmt.format(tipOf(g));if(!r){const ga=el('a','glink',tipTime(g,tipOf(g)));ga.href='/games/'+gslug(g);ga.dataset.go='games/'+gslug(g);ga.title='Game page';ttd.appendChild(ga)}
   /* (share card for a result left out for now) */
   tr.append(dtd,op,ttd,tvc,rac,rtd);if(mtag)tr.appendChild(mtag);
@@ -3106,7 +3107,7 @@ setTimeout(()=>{const t=document.getElementById('tw-spots');if(t){t.textContent=
 window.renderGame=function(sl){const i=SCHEDULE.findIndex(g=>gslug(g)===sl);if(i<0)return false;const g=SCHEDULE[i],o=g[1],H=g[2]==='H';const v=document.getElementById('view-game');v.textContent='';
   const res=SEASON.results.split('').filter(Boolean),r=res[i],sc=SCORES[g[0]];const fin=!!(r&&sc);const [cs,os]=sc?sc.split('-').map(Number):[];
   const dt=new Date(g[0]+'T12:00:00');const dLong=dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});const nk=GNICK[o]||TEAMS[o];
-  window.GAME_META=fin?['Cavs '+cs+', '+nk+' '+os+' ('+dLong+'): Box Score & Recap | cavs_db','Final: Cavaliers '+cs+', '+TEAMS[o]+' '+nk+' '+os+' on '+dLong+'. Box score, top performers, postgame video and recap.']:['Cavs '+(H?'vs ':'at ')+nk+', '+dLong+': How to Watch, Preview & Injuries | cavs_db','Cavaliers '+(H?'vs ':'at ')+TEAMS[o]+' '+nk+' on '+dLong+': tip time, TV and radio, tale of the tape, injuries and the season series.'];
+  window.GAME_META=fin?['Cavs '+cs+', '+nk+' '+os+' ('+dLong+'): Box Score & Recap | cavs_db','Final: Cavaliers '+cs+', '+TEAMS[o]+' '+nk+' '+os+' on '+dLong+'. Box score, top performers, postgame video and Recap.']:['Cavs '+(H?'vs ':'at ')+nk+', '+dLong+': How to Watch, Preview & Injuries | cavs_db','Cavaliers '+(H?'vs ':'at ')+TEAMS[o]+' '+nk+' on '+dLong+': tip time, TV and radio, tale of the tape, injuries and the season series.'];
   const W=el('div','wrap page');v.appendChild(W);
   const hd=el('div');const cr=el('div','dim');cr.style.fontSize='13px';const a1=el('a',null,'Home');a1.href='/';a1.dataset.go='home';const a2=el('a',null,'Schedule');a2.href='/schedule';a2.dataset.go='schedule';cr.append(a1,' / ',a2,' / '+dLong.replace(/, \d{4}$/,'')+(H?' vs ':' at ')+TEAMS[o]);
   const h1=el('h1',null,fin?'Cavs '+cs+', '+nk+' '+os:'Cavs '+(H?'vs. ':'at ')+nk);h1.appendChild(el('span','gp-h1d',fin?'Final':dLong));h1.style.marginTop='6px';
@@ -3146,7 +3147,7 @@ window.renderGame=function(sl){const i=SCHEDULE.findIndex(g=>gslug(g)===sl);if(i
   /* links (after) */
   let hlCard=null;
   if(fin){const lk=el('div','gp-under');const add=(t,h,ext,go)=>{if(lk.childNodes.length)lk.append(el('span','sep','·'));const a=el('a',null,t+(ext?' ↗':' →'));a.href=h;if(go)a.dataset.go=go;else{a.target='_blank';a.rel='noopener'}lk.appendChild(a);return a};{const fb=add('Full box score','/live.html',0);fb.removeAttribute('target');fb.removeAttribute('rel');fb.textContent='Box score →';const y0=+g[0].slice(0,4),se0=+g[0].slice(5,7)>=8?y0+'-'+String(y0+1).slice(2):(y0-1)+'-'+String(y0).slice(2);fetch('/live-archive/'+se0+'/index.json',{cache:'no-cache'}).then(x=>x.ok?x.json():null).catch(()=>null).then(ix=>{const e=ix&&ix.find(x=>x.et===g[0]);if(e)fb.href='/live.html?g='+e.id;else if(typeof cavsLive==='function')cavsLive(g[0]).then(Lv=>{if(Lv&&Lv.id)fb.href='/live.html?g='+Lv.id}).catch(()=>{})})}add('Postgame video','/media',0,'media');L.appendChild(lk);
-    fetch('/rcf.json',{cache:'no-cache'}).then(x=>x.ok?x.json():null).catch(()=>null).then(RC=>{const it=RC&&RC.items&&RC.items.find(x=>/recap/i.test(x.title)&&recapAfter(x,g)&&x.date.slice(0,10)<=SCHEDULE[i+1]?.[0]);if(it)add('RCF recap',it.link,1)});
+    fetch('/rcf.json',{cache:'no-cache'}).then(x=>x.ok?x.json():null).catch(()=>null).then(RC=>{const it=RC&&RC.items&&RC.items.find(x=>/recap/i.test(x.title)&&recapAfter(x,g)&&x.date.slice(0,10)<=SCHEDULE[i+1]?.[0]);if(it)add('RCF Recap',it.link,1)});
     /* full-game highlights: the NBA's own YouTube upload (news.json), else the NBA.com game page */
     hlCard=card('Highlights','NBA');hlCard.classList.add('o-hl');const hb=el('div','gp-hl');hlCard.appendChild(hb);
     const fallback=()=>{hb.textContent='';const a=el('a','gp-hl-lk','Watch the highlights on NBA.com ↗');a.href=(boxUrl(g[0])||'https://www.nba.com/cavaliers/schedule').replace(/\/box-score$/,'');a.target='_blank';a.rel='noopener';hb.appendChild(a)};
@@ -4045,7 +4046,7 @@ const PAGE_META={
  'moves':['Cavs Transactions & Trade History Since 2017 | cavs_db','Every Cavs trade, signing, extension, draft pick and waiver since 2017, with what moved in each deal.'],
  'charge':['Cleveland Charge Schedule, Roster & Stats 2026–27 (G League) | cavs_db','The Cavs’ G League affiliate: full schedule with results, player stats and leaders, two-way and affiliate players, and coach and front office bios.'],
  'history':['Cavs History: Every Season, Retired Numbers, Leaders & Draft Picks | cavs_db','Every Cleveland Cavaliers season since 1970: records, playoff results, coaches and leaders, plus retired numbers, all-time leaders, who wore each number, every draft pick and every head coach.'],
- 'media':['Cavs Press Conferences, Highlights & Articles | cavs_db','The latest Cavs press conferences and highlights from the team’s YouTube channel, plus articles and recaps from RealCavsFans.com.'],
+ 'media':['Cavs Press Conferences, Highlights & Articles | cavs_db','The latest Cavs press conferences and highlights from the team’s YouTube channel, plus articles and Recaps from RealCavsFans.com.'],
  'resources':['Best Cavs & NBA Stats, Salary Cap and Draft Sites | cavs_db','cavs_db approved sites for NBA and Cavs knowledge.']
 };
 /* tip jar: set to the Buy Me a Coffee page address to show the footer link */
@@ -4839,11 +4840,15 @@ function draw(){const $=id=>document.getElementById(id);
      keys.forEach(k=>N[k].forEach(([n,y])=>{if(fold(n).includes(f)){const li=el('li');li.append(el('span',null,n),el('b',null,'#'+k+' · '+y));out.appendChild(li)}}));if(!out.children.length)out.appendChild(el('li','dim','No match'))};
    showN('23')}
   /* draft */
+/* short class years and school names for the draft table (Oct 31); full name on hover */
+const CLS={Freshman:'FR',Sophomore:'SO',Junior:'JR',Senior:'SR','High school':'HS',International:'Intl'};
+const SCH={'University of Southern California':'USC','University of California, Los Angeles':'UCLA','University of California, Berkeley':'Cal','University of California':'Cal','University of Nevada, Las Vegas':'UNLV','University of Connecticut':'UConn','Louisiana State University':'LSU','University of Alabama at Birmingham':'UAB','University of Texas at El Paso':'UTEP','University of North Carolina':'UNC','North Carolina State University':'NC State','University of North Carolina at Charlotte':'Charlotte','University of Massachusetts Amherst':'UMass','Texas Christian University':'TCU','Virginia Commonwealth University':'VCU','United States Military Academy':'Army','University of Texas at Austin':'Texas','University of Texas–Pan American':'Texas–Pan Am','University of Nebraska–Lincoln':'Nebraska','University of Wisconsin–Madison':'Wisconsin','University of California, Irvine':'UC Irvine','University of California, Riverside':'UC Riverside','California State University, Fresno':'Fresno State','California State University, Fullerton':'Cal State Fullerton','Minnesota State University, Mankato':'Minnesota State','University of Arkansas at Pine Bluff':'Arkansas–Pine Bluff','Miami University':'Miami (OH)','St. Vincent–St. Mary High School':'St. Vincent–St. Mary HS','Oak Hill Academy':'Oak Hill Academy','College of the Holy Cross':'Holy Cross','Memphis State University':'Memphis State','North Texas State University':'North Texas State','Stephen F. Austin State University':'Stephen F. Austin','Concordia College (Minnesota)':'Concordia (MN)','State University of West Georgia':'West Georgia','Middle Tennessee State University':'Middle Tennessee','St. Mary of the Plains College':'St. Mary of the Plains'};
+const schShort=n=>SCH[n]||n.replace(/^University of /,'').replace(/ State University$/,' State').replace(/ (University|College)$/,'');
   {const D=H.draft,sel=$('hx-dec'),r1=$('hx-r1'),pl=$('hx-pl'),tb=$('hx-draft-b');sel.textContent='';sel.appendChild(new Option('Every year','all'));
    [...new Set(D.map(d=>Math.floor(d[0]/10)*10))].sort((a,b)=>b-a).forEach(d=>sel.appendChild(new Option(d+'s',String(d))));r1.checked=true;
    const ord=n=>n+(['th','st','nd','rd'][(n%100-20)%10]||['th','st','nd','rd'][n%100]||'th');
    const render=()=>{tb.textContent='';const rows=D.filter(d=>(sel.value==='all'||Math.floor(d[0]/10)*10===+sel.value)&&(!r1.checked||d[1]===1)&&(!pl.checked||d[5])).sort((a,b)=>b[0]-a[0]||a[2]-b[2]);
-     rows.forEach(([y,r,p,n,sch,cle])=>{const tr=el('tr',cle?'hx-pl':null);const td=el('td');{const id=(H.bbd||{})[y+'|'+p+'|'+n];if(id===null)td.append(n);else td.appendChild(bbA(n,'hx-bb',id))}const ty=el('td','m');const ya=el('a','dlink',String(y));ya.href='https://www.basketball-reference.com/draft/NBA_'+y+'.html';ya.target='_blank';ya.rel='noopener';ya.title='Full '+y+' draft on Basketball Reference';ty.appendChild(ya);const xx=(H.dx||{})[y+'|'+p+'|'+n]||[];tr.append(ty,el('td','m',ord(r)+' · No. '+p),td,el('td','m',xx[0]||'—'),el('td',null,xx[1]||'—'),el('td','dim',sch||'—'));tb.appendChild(tr)});
+     rows.forEach(([y,r,p,n,sch,cle])=>{const tr=el('tr',cle?'hx-pl':null);const td=el('td');{const id=(H.bbd||{})[y+'|'+p+'|'+n];if(id===null)td.append(n);else td.appendChild(bbA(n,'hx-bb',id))}const ty=el('td','m');const ya=el('a','dlink',String(y));ya.href='https://www.basketball-reference.com/draft/NBA_'+y+'.html';ya.target='_blank';ya.rel='noopener';ya.title='Full '+y+' draft on Basketball Reference';ty.appendChild(ya);const xx=(H.dx||{})[y+'|'+p+'|'+n]||[];const fr=el('td','dim',sch?schShort(sch):'—');if(sch&&schShort(sch)!==sch)fr.title=sch;const cl=el('td','m',xx[1]?(CLS[xx[1]]||xx[1]):'—');if(xx[1])cl.title=xx[1];const pk=el('td','m');pk.append(el('span','hxp-l',ord(r)+' · No. '+p),el('span','hxp-s','#'+p),el('small','hxp-s',ord(r)+' rd'));tr.append(ty,pk,td,el('td','m',xx[0]||'—'),cl,fr);tb.appendChild(tr)});
      $('hx-draft-n').textContent=rows.length+' picks shown · '+D.length+' since 1970'};
    [sel,r1,pl].forEach(e=>e.onchange=render);render()}
   /* coaches */
@@ -4890,7 +4895,7 @@ const y0now=s=>s===SEASONS[0];
 
 
 /* Media: who covers the Cavs, newest item from each outlet in news.json */
-(function(){let done=false;const HOME={'cleveland.com':['https://www.cleveland.com/cavs/','Beat writers at every game'],'Cavaliers on SI':['https://www.si.com/nba/cavaliers','Sports Illustrated team site'],'Fear The Sword':['https://www.fearthesword.com','SB Nation team site'],'Hoops Rumors':['https://www.hoopsrumors.com/cleveland-cavaliers','Transactions and rumors'],'RealCavsFans':['https://realcavsfans.com/index.php?forums/FrontPage/','Fan forum, recaps and analysis']};
+(function(){let done=false;const HOME={'cleveland.com':['https://www.cleveland.com/cavs/','Beat writers at every game'],'Cavaliers on SI':['https://www.si.com/nba/cavaliers','Sports Illustrated team site'],'Fear The Sword':['https://www.fearthesword.com','SB Nation team site'],'Hoops Rumors':['https://www.hoopsrumors.com/cleveland-cavaliers','Transactions and rumors'],'RealCavsFans':['https://realcavsfans.com/index.php?forums/FrontPage/','Fan forum, Recaps and analysis']};
  window.loadCovers=()=>{if(done)return;done=true;Promise.all([fetch('/news.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null),fetch('/rcf.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null)]).then(([N,RC])=>{if(!N)return;if(RC&&RC.items&&RC.items.length)N.articles=(N.articles||[]).concat(RC.items.slice(0,3).map(x=>({src:'RealCavsFans',title:x.title,link:x.link,date:x.date})));
   const md=d=>new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'America/New_York'});
   const fill=(id,items,kind)=>{const ul=document.getElementById(id);if(!ul)return;ul.textContent='';const by={};items.forEach(x=>{if(!by[x.src]||x.date>by[x.src].date)by[x.src]=x});
