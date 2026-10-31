@@ -1,20 +1,6 @@
 import fs from 'fs';
-const N=["Rashaun Agee","Zack Austin","Lydell Elmore","Tristan Enaruna","Curtis Jones","Ian Martinez","Sean McNeil","Riley Minix","Marlon Moore","Norchad Omier","Kadary Richmond","Jaxson Robinson","Tre'Von Spillers","Markhi Strickland","Ernest Udeh Jr.","C.J. White","Noam Yaacov"];
-const UA={headers:{'user-agent':'Mozilla/5.0 (compatible; cavsdatabase.com research)'}};const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-const get=async u=>{for(let i=0;i<3;i++){try{const r=await fetch(u,{...UA,redirect:'follow'});const t=await r.text();return {url:r.url,status:r.status,t}}catch(e){await sleep(5000)}}return {url:u,status:0,t:''}};
-const out={};
-for(const n of N){const o=out[n]={};
-  for(const [site,base] of [['bbr','https://www.basketball-reference.com/search/search.fcgi?search='],['cbb','https://www.sports-reference.com/cbb/search/search.fcgi?search=']]){
-    await sleep(4500);const r=await get(base+encodeURIComponent(n.replace(/['’]/g,'')));o[site+'_url']=r.url;o[site+'_status']=r.status;
-    let t=r.t;
-    if(/search\.fcgi/.test(r.url)){const hits=[...t.matchAll(/<div class="search-item-name">\s*<strong>\s*<a href="([^"]+)">([^<]+)<\/a>/g)].map(m=>[m[1],m[2]]);o[site+'_hits']=hits.slice(0,6);
-      const pick=hits.find(h=>site==='bbr'?/\/(players|gleague\/players)\//.test(h[0]):/\/cbb\/players\//.test(h[0]));if(pick){await sleep(4500);const r2=await get((site==='bbr'?'https://www.basketball-reference.com':'https://www.sports-reference.com')+pick[0]);o[site+'_url']=r2.url;t=r2.t}else t=''}
-    const b=t.match(/data-birth="(\d{4}-\d\d-\d\d)"/);if(b)o[site+'_birth']=b[1];
-    const d=t.match(/<strong>\s*Draft:\s*<\/strong>([\s\S]{0,600}?)<\/p>/);if(d)o[site+'_draft']=d[1].replace(/<a href="([^"]+)">/g,'[$1]').replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
-    const dl=t.match(/href="(\/draft\/NBA_\d{4}\.html)"/);if(dl)o[site+'_draftlink']=dl[1];
-    const seasons=[...t.matchAll(/<th scope="row" class="left " data-stat="(?:year_id|season)"[^>]*>(?:<a[^>]*>)?(\d{4}-\d{2})/g)].map(m=>m[1]);if(seasons.length)o[site+'_seasons']=[...new Set(seasons)];
-    const meta=(t.match(/<div id="meta">([\s\S]{0,3000}?)<\/div>\s*<\/div>/)||[])[1];if(meta)o[site+'_meta']=meta.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().slice(0,700);
-  }
-  console.log(n,JSON.stringify(o).slice(0,300));
-}
-fs.mkdirSync('scratch-out',{recursive:true});fs.writeFileSync('scratch-out/charge-bio.json',JSON.stringify(out,null,1));
+const P=[["James Harden","james","HARDEN",201935],["Thomas Bryant","thomas","BRYANT",1628418],["Evan Mobley","evan","MOBLEY",1630596],["Sam Merrill","sam","MERRILL",1630241],["Peyton Watson","peyton","WATSON",1631212],["Craig Porter Jr.","craig","PORTER_JR",1641854],["Meleek Thomas","meleek","THOMAS",1643509],["Khalifa Diop","khalifa","DIOP",1631215],["Jaylon Tyson","jaylon","TYSON",1642281],["Tyrese Proctor","tyrese","PROCTOR",1642878],["Jarrett Allen","jarrett","ALLEN",1628386],["Mario Hezonja","mario","HEZONJA",1626209],["Nae'Qwan Tomlin","naeqwan","TOMLIN",1641772],["Donovan Mitchell","donovan","MITCHELL",1628378],["Riley Minix","riley","MINIX",1642434],["Tristan Enaruna","tristan","ENARUNA",1642400],["Ernest Udeh Jr.","ernest","UDEH_JR",1643640]];
+const out={};const H=async u=>{try{const r=await fetch(u,{method:'HEAD'});return r.status}catch(e){return 0}};
+for(const [n,f,l,id] of P){out[n]={};for(const se of ['2026-27','2025-26'])for(const t of ['cle','den','lac','okc','rea','nop','orl','mia','dal','tor']){const k=`${t}/${f}${l}_${id}`;const u=`https://cdn.nba.com/logos/nba/playername-audio/${se}/${k}.wav`;const s=await H(u);if(s===200){out[n][se]=k;break}}console.log(n,JSON.stringify(out[n]))}
+for(const u of ['https://www.nba.com/pronunciation-guide','https://cdn.nba.com/static/json/staticData/pronunciationGuide.json','https://www.nba.com/news/nba-pronunciation-guide-2026-27']){try{const r=await fetch(u);const t=await r.text();out['_'+u]=[r.status,t.length,(t.match(/playername-audio\/2026-27[^"'\s]{0,80}/g)||[]).slice(0,40),(t.match(/[A-Z][a-z]+ [A-Z][a-zA-Z']+[^<]{0,4}\(([^)]{3,40})\)/g)||[]).slice(0,10)]}catch(e){out['_'+u]=String(e)}}
+fs.mkdirSync('scratch-out',{recursive:true});fs.writeFileSync('scratch-out/pron.json',JSON.stringify(out,null,1));
