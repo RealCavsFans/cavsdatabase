@@ -57,7 +57,8 @@ for (const [k, a] of Object.entries(A)) {
   NRTG[k] = [r1(ortg - drtg), g];
   /* last 14 days (ending yesterday): points margin per 100 possessions over those games, i.e. the pace-weighted mean of game net ratings */
   const w = a.res.filter(x => x.d >= from14 && x.d < today);
-  if (w.length) L14[k] = [r1(100 * w.reduce((s, x) => s + x.net, 0) / w.reduce((s, x) => s + x.poss, 0)), w.length];
+  /* when the window holds every game so far, use the season number so the two match (same possession count) */
+  if (w.length) L14[k] = [w.length === g ? r1(ortg - drtg) : r1(100 * w.reduce((s, x) => s + x.net, 0) / w.reduce((s, x) => s + x.poss, 0)), w.length];
   OPP_FORM[k] = a.res.slice(-5).map(x => x.w ? 'W' : 'L').join('');
 }
 const STANDINGS = Object.entries(A).map(([k, a]) => [k, EAST.includes(k) ? 'E' : 'W', a.w, a.g - a.w]);
