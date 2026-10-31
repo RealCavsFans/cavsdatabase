@@ -22,6 +22,7 @@ function grab(name) {
 const PLAYERS = grab('PLAYERS'), ROSTER = grab('ROSTER'), SCHEDULE = grab('SCHEDULE'), TV = grab('TV'), CAVS_TV = grab('CAVS_TV');
 const TSTATS = grab('TSTATS'), TSTATS_PREV = grab('TSTATS_PREV'), H2H_PREV = grab('H2H_PREV'), STANDINGS = grab('STANDINGS');
 const TEAM_SALARY = grab('TEAM_SALARY'), TAX_BILL = grab('TAX_BILL'), LINES = grab('LINES'), HARDCAP = grab('HARDCAP');
+const INJURIES = grab('INJURIES') || [], OPP_INJ = grab('OPP_INJ') || {};
 const EXC = grab('EXC'), PICKS = grab('PICKS'), TX = grab('TX'), SCORES = grab('SCORES'), SEASON = grab('SEASON'), TEAMS = grab('TEAMS'), GNICK = grab('GNICK');
 let PJ = {}; try { PJ = JSON.parse(await readFile(new URL('pdata/players.json', root), 'utf8')); } catch {}
 let LG = {}; try { LG = JSON.parse(await readFile(new URL('pdata/league.json', root), 'utf8')); } catch {}
@@ -92,13 +93,33 @@ SCHEDULE.forEach((g, i) => {
   const dl = new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' });
   const net = TV[d] || CAVS_TV, kick = i === 0 ? 'Season opener · Game preview' : `Game ${i + 1} of 82 · Game preview`;
   const [cs, cr] = recOf('CLE'), [os, orr] = recOf(o);
+  /* Oct 31: the next two games get a tale of the tape (ratings and NBA ranks) and who's out, so the link preview gives a reason to click.
+     Later games keep the simple chips, so a finished game doesn't redraw every future card. */
+  const nextIdx = SCHEDULE.findIndex((x, k) => !results[k] && !SCORES[x[0]] && x[0] >= todayET);
+  let rich = `<div class="row">${ser ? `<span class="chip g">${ser}</span>` : ''}<span class="chip">Tale of the tape</span><span class="chip">Injuries</span><span class="chip">How to watch</span></div>`;
+  const TT = TS || TSTATS_PREV, a = TT.CLE, b = TT[o];
+  if (i <= nextIdx + 1 && a && b) {
+    const all = Object.values(TT), rk = (v, f, hi) => 1 + all.filter(x => hi ? f(x) > v : f(x) < v).length;
+    const nt = x => x[4] - x[5], f1 = v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1);
+    const R = [['Net rating', nt, 1, f1], ['Offense', x => x[4], 1, v => v.toFixed(1)], ['Defense', x => x[5], 0, v => v.toFixed(1)]];
+    const cell = (x, f, hi, fm, better) => `<div class="v${better ? ' w' : ''}"><b>${fm(f(x))}</b><small>${ord(rk(f(x), f, hi))}</small></div>`;
+    const tape = R.map(([l, f, hi, fm]) => { const cb = hi ? f(a) > f(b) : f(a) < f(b); return cell(a, f, hi, fm, cb) + `<div class="l">${l}</div>` + cell(b, f, hi, fm, !cb && f(a) !== f(b)); }).join('');
+    const outs = L => L.filter(r => /^out$/i.test(r[r.length - 1])).map(r => r[0].split(' ').slice(-1)[0]);
+    const co = outs(INJURIES), oi = OPP_INJ[o], oo = oi && oi.rows ? outs(oi.rows) : null;
+    const inj = `<div class="inj"><span><b>Out · CLE</b> ${co.length ? esc(co.join(', ')) : 'None'}</span>${oo ? `<span><b>Out · ${o}</b> ${oo.length ? esc(oo.join(', ')) : 'None'}</span>` : ''}${ser ? `<span class="sr">${ser}</span>` : ''}</div>`;
+    rich = `<style>.tm{font-size:128px!important}.T{top:74px!important}.when{top:300px!important}</style><div class="tape"><div class="th">${TS ? '2026–27' : '2025–26'} · per 100 possessions · NBA rank</div>${tape}</div>${inj}`;
+  }
   cards.push([`og/gp/${d}-${o.toLowerCase()}.jpg`, page(`.T{position:absolute;left:64px;right:64px;top:80px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
 .tm{font:800 170px/0.9 'Saira Condensed'}.tm.r{text-align:right}.tm small{display:block;font:700 22px Archivo;letter-spacing:2px;color:#F4D6DD;margin-top:8px}.tm span{display:block;font:600 34px 'Saira Condensed';letter-spacing:1px;text-transform:uppercase;color:#fff;opacity:.85}
-.at{font:600 48px 'Saira Condensed';color:#F2B231;text-align:center}.when{position:absolute;left:64px;right:64px;top:370px;text-align:center;font:700 34px Archivo}.when span{color:#F2B231}
-.row{position:absolute;left:64px;right:64px;top:440px;display:flex;justify-content:center}`,
+.at{font:600 48px 'Saira Condensed';color:#F2B231;text-align:center}.when{position:absolute;left:64px;right:64px;top:352px;text-align:center;font:700 34px Archivo}.when span{color:#F2B231}
+.row{position:absolute;left:64px;right:64px;top:440px;display:flex;justify-content:center}
+.tape{position:absolute;left:240px;right:240px;top:362px;display:grid;grid-template-columns:1fr auto 1fr;gap:4px 0;align-items:center}.tape .th{grid-column:1/-1;text-align:center;font:700 15px 'Geist Mono';letter-spacing:2px;color:#F4D6DD;text-transform:uppercase;margin-bottom:4px}
+.tape .v{display:flex;align-items:baseline;gap:10px;justify-content:center}.tape .v b{font:700 30px 'Geist Mono'}.tape .v small{font:700 17px 'Geist Mono';color:#F4D6DD}.tape .v.w b{color:#F2B231}
+.tape .l{font:600 24px 'Saira Condensed';letter-spacing:1.5px;text-transform:uppercase;text-align:center;padding:0 22px;color:#fff;opacity:.9}
+.inj{position:absolute;left:64px;right:64px;top:522px;display:flex;justify-content:center;gap:28px;font:500 19px Archivo;color:#F4D6DD}.inj b{color:#F2B231;font-weight:700;margin-right:4px}.inj .sr{color:#fff;font-weight:700}`,
     `<div class="k" style="position:absolute;left:64px;top:38px">${kick}</div><div class="T"><div class="tm">CLE<span>Cavaliers</span><small>${cs} · ${cr}</small></div><div class="at">${ha === 'H' ? 'vs' : 'at'}</div><div class="tm r">${o}<span>${esc(GNICK[o] || TEAMS[o])}</span><small>${os} · ${orr}</small></div></div>
 <div class="when">${dl} <span>·</span> ${hm} PM ET <span>·</span> ${esc(net)}</div>
-<div class="row">${ser ? `<span class="chip g">${ser}</span>` : ''}<span class="chip">Tale of the tape</span><span class="chip">Injuries</span><span class="chip">How to watch</span></div>`,
+${rich}`,
     `games/${d}-${o.toLowerCase()}`)]);
 });
 
@@ -143,7 +164,7 @@ SCHEDULE.forEach((g, i) => {
 
 /* draw only what changed */
 const fp = h => createHash('sha1').update(h).digest('hex').slice(0, 10);
-const need = cards.filter(([f, h]) => !state[f] || state[f] !== fp(h));
+const need = cards.filter(([f, h]) => (!process.env.OG_ONLY || new RegExp(process.env.OG_ONLY).test(f)) && (!state[f] || state[f] !== fp(h) || process.env.OG_ONLY));
 if (!need.length) { console.log('og-live: nothing changed'); process.exit(0); }
 const { createRequire } = await import('node:module'); const require = createRequire(import.meta.url);
 const pw = (() => { for (const m of ['playwright-core', 'playwright']) { try { return require(m); } catch {} } return null; })();
