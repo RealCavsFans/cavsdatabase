@@ -588,6 +588,7 @@ tr.lutot td{font-weight:800;border-top:2px solid var(--fg)}
 .lk-more{all:unset;cursor:pointer;display:inline-block;margin-top:6px;font:700 .8125rem var(--sans);color:var(--wine-ink,#860038)}
 .rk.pc{color:var(--muted)!important}.rk.pc.pct9{color:var(--wine,#860038)!important;font-weight:800}
 table th.thf,table td.thf{color:var(--cf)!important;font-weight:800!important}table th.tho,table td.tho{color:var(--co)!important;font-weight:800!important}table .ogrp{border-left:1px solid var(--line,#ddd);padding-left:10px!important}
+tr.xs td:first-child{white-space:nowrap}@media (max-width:600px){tr.xs td:first-child{padding-left:14px!important;font-size:.75rem!important}}
 </style>
 </head>
 <body>
@@ -2341,7 +2342,7 @@ function lshLine(ab,key,zoneOnly){const se=S.src||CUR_SEASON;if(S.season)return 
   const nP=8,Z0=2+nP*4;let n=0,m=0,a=0,pts=0,as=0,tot=0;
   Object.entries(LSH.g||{}).forEach(([id,g])=>{const v=g.t&&g.t[ab];if(!v||id===String(S.ev))return;n++;
     if(key.pt!=null){const k=2+key.pt*4;m+=v[k];a+=v[k+1];pts+=v[k+2];as+=v[k+3];tot+=v[0]}else{const k=Z0+key.zi*2;m+=v[k];a+=v[k+1];pts+=v[k]*(key.zi>=3?3:2);tot+=v[1]}});
-  if(!n)return null;return {lab:ab+' season avg ('+n+' g)',n,m:m/n,a:a/n,fr:tot?a/tot:null,fg:a?m/a:null,pps:a?pts/a:null,as:m?as/m:null}}
+  if(!n)return null;return {lab:ab+' season ('+n+'g)',n,m:m/n,a:a/n,fr:tot?a/tot:null,fg:a?m/a:null,pps:a?pts/a:null,as:m?as/m:null}}
 function shCmp(D,t){const se=S.season||S.src||CUR_SEASON;const key=se;
   if(!SHC[key]){SHC[key]={loading:true};(async()=>{try{const J=await getJSON('/live-archive/'+se+'/season.json');const prev=se==='2026-27'?'2025-26':null;const useCur=!(se===CUR_SEASON&&(J.games||[]).length<15&&prev);
       const NR=await netRanks(useCur?se:prev);SHC[key]={J,NR,rkLab:useCur?(se.replace('-','–')+' net rating'):('last season’s net rating, until 15 games in')}}catch(e){SHC[key]={err:true}}renderView()})()}
@@ -2399,7 +2400,7 @@ function vShots(v,D,R){
     const src=isCle?SC.J.shots.map(r=>({id:r[0],xy:r[1]!=null,m:r[3],three:r[4],zi:r[5],pt:r[6],ast:r[7],gi:r[8]})):SC.J.oshots.map(r=>({xy:r[0]!=null,m:r[2],three:r[3],zi:r[4],pt:r[5],ast:r[6],gi:r[7]}));
     const base=src.filter(q=>SC.other.has(q.gi)&&(pl==='all'||(D.P[pl]&&q.id===SC.idOf(pl)))&&(!zoneOnly||q.xy)&&(!zoneOnly||S.f.shType==='all'||String(q.pt)===S.f.shType));
     const line=(lab,gs)=>{const q=base.filter(x=>gs.has(x.gi)),h=q.filter(pick),mk=h.filter(x=>x.m),n=gs.size;const pts=mk.reduce((a,x)=>a+(x.three?3:2),0);
-      return {lab:lab+' ('+n+' g)',n,m:n?mk.length/n:0,a:n?h.length/n:0,fr:q.length?h.length/q.length:null,fg:h.length?mk.length/h.length:null,pps:h.length?pts/h.length:null,as:mk.length?mk.filter(x=>x.ast).length/mk.length:null}};
+      return {lab:lab.replace(/ avg$/,'').replace('Cavs defense','Cavs D')+' ('+n+'g)',n,m:n?mk.length/n:0,a:n?h.length/n:0,fr:q.length?h.length/q.length:null,fg:h.length?mk.length/h.length:null,pps:h.length?pts/h.length:null,as:mk.length?mk.filter(x=>x.ast).length/mk.length:null}};
     /* the other team: what Cavs opponents average on these shots (the Cavs defense), not a tier split */
     if(S.season)return isCle?[line('In wins',SC.winG),line('In losses',SC.lossG),line('Vs top-10 teams',SC.top10)]:[line('In Cavs wins',SC.winG),line('In Cavs losses',SC.lossG)];
     if(isCle)return [line('Season avg',SC.other),line('Vs '+SC.tierLab,SC.tierG)];
