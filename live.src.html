@@ -191,6 +191,12 @@ svg{display:block;width:100%;height:auto}
 /* tables */
 .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .tw.more{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 44px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 44px),transparent)}
+/* an opened lineup drop-down shows in full: no right-edge fade over the OPP column (Oct 31) */
+.th-s{display:none}@media (max-width:600px){.th-l{display:none}.th-s{display:inline}}
+.tw.more:has(.lsp),.tw.more:has(.spz-in){-webkit-mask-image:none;mask-image:none}
+.spz-row>td{padding:0 0 10px!important;border-bottom:1px solid var(--line2)}.spz-row:hover>td{background:none}.spz-in{position:sticky;left:0;max-width:min(640px,calc(100vw - 80px));box-sizing:border-box;margin:4px 0 0!important;text-align:left;white-space:normal}.spz-in td,.spz-in th{white-space:nowrap}
+.luc .lsp-h b{font-size:.8125rem;font-weight:600;color:var(--muted)}
+@media (max-width:600px){.lud-t{font-size:.8125rem}.lud-t th{white-space:normal;line-height:1.2;vertical-align:bottom}.lud-t td,.lud-t th{padding-left:4px!important;padding-right:4px!important}.lud-t td small{display:block;margin-left:0}.lud-t td:first-child{white-space:normal}}
 .swh{display:flex;justify-content:flex-end;align-items:center;gap:5px;font:700 0.6875rem var(--cond);letter-spacing:.08em;text-transform:uppercase;color:var(--wt,var(--wine));margin:0 0 4px;transition:opacity .3s}
 .swh i{font-style:normal;display:inline-block;animation:swn 1.4s ease-in-out infinite}
 @keyframes swn{50%{transform:translateX(4px)}}
@@ -306,7 +312,7 @@ table.dt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
  .seg button[hidden]{display:none}
  .per{display:flex;gap:4px;overflow:visible;-webkit-mask-image:none!important;mask-image:none!important;padding:6px 0 8px}
  .per>span,.per>i{display:none}
- .per button{flex:1 1 0;min-width:0;padding:7px 0;font-size:0.75rem;text-align:center}
+ .per button{flex:1 1 0;min-width:0;padding:7px 0;font-size:0.75rem;text-align:center}.per button:first-of-type{flex-grow:1.45}
  .per .lg,.seg .lg{display:none}.per .sh,.seg .sh{display:inline}
  .seg button{white-space:nowrap}
  .more-btn{display:none!important}
@@ -1496,7 +1502,7 @@ function vOnOff(v,D,R){
     const a=M(A),b=M(B);a.sec=A.sec;a.pm=A.pf-A.pa;b.sec=B.sec;b.pm=B.pf-B.pa;
     w.appendChild(ooBox({name:D.P[id].name,img:hsUrl(D,id),ab:t.abbr,oab:(t.id===D.focus.id?D.other:D.focus).abbr,a,b,sub:(S.season?'Season':perLabel(S.per))+' · how '+t.abbr+' did with him and without him',note:'Diff = on minus off. Green = better for '+t.abbr+' with him on. Who was on the floor comes from the starters and every substitution in the play-by-play. Possessions are counted play by play, so ratings can differ a little from NBA.com, which counts them its own way'+(a.efg==null?'; shooting splits fill in for games after Oct 23':'')+'.'}));return w};
   rows.forEach(r=>{r._open=S.f.ooOpen===r.id;r.key=r.id});
-  c.appendChild(el('p','tap-hint','▸ Tap any player row to see every advanced number with him on vs off'));
+  {const th=el('p','tap-hint');th.append('▸ ',el('span','th-l','Tap any player row to see every advanced number with him on vs off'),el('span','th-s','Tap a player for full on/off'));c.appendChild(th)}
   c.appendChild(dtable('oo',[{h:'Player',k:'id',f:r=>{const sp=el('span');sp.appendChild(plink(D,r.id,D.P[r.id].short));return sp}},{h:'MIN',k:'min',f:r=>fmtMin(r.min)},{h:'ON +/-',k:'onpm',f:r=>sgn(r.onpm),cls:r=>pmCls(r.onpm),title:'Team +/- with him on the floor'},{h:'OFF +/-',k:'offpm',f:r=>sgn(r.offpm),cls:r=>pmCls(r.offpm),title:'Team +/- with him on the bench'},{h:'ON − OFF',k:'dpm',f:r=>sgn(r.dpm),cls:r=>pmCls(r.dpm),title:'On +/- minus off +/-: how much better (or worse) the team did with him on than with him off'},{h:'OFF RTG',k:'ortg',f:r=>r.ortg==null?'–':r.ortg.toFixed(1),title:'Team points per 100 possessions with him on'},{h:'DEF RTG',k:'drtg',asc:true,f:r=>r.drtg==null?'–':r.drtg.toFixed(1),title:'Opponent points per 100 possessions with him on'},{h:'NET RTG',k:'onnet',f:r=>r.onnet==null?'–':(r.onnet>0.05?'+':r.onnet<-0.05?'−':'')+Math.abs(r.onnet).toFixed(1),cls:r=>r.onnet==null?'':pmCls(r.onnet),title:'Off rating minus def rating with him on'}],rows,{def:'min',minW:560,toggle:r=>{S.f.ooOpen=S.f.ooOpen===r.id?null:r.id;renderView()},expand:r=>ooSpread(r.id)}));
   /* two-player combos (left out of saved images, which keep just the main table) */
   c.dataset.mk=c.childNodes.length;
@@ -2669,8 +2675,10 @@ function seasonPlayers(v,D,R){
     const Q=P.filter(p=>p.g>=minG&&p.min/p.g>=12);const ST=[['PTS',p=>p.pts/p.g],['REB',p=>p.reb/p.g],['AST',p=>p.ast/p.g],['STL',p=>p.stl/p.g],['BLK',p=>p.blk/p.g],['3PM',p=>p.tpm/p.g],['FG%',p=>p.fga/p.g>=5?p.fgm/p.fga:null],['TS%',p=>(p.fga+p.fta)/p.g>=5?p.pts/(2*(p.fga+.44*p.fta)):null],['TO',p=>p.tov/p.g,-1]];
     const cav=Q.filter(p=>p.t==='CLE');if(cav.length){const c2=el('div','card sec');head(c2,'Where they rank in the NBA','Per game · '+Q.length+' players with '+minG+'+ game'+(minG===1?'':'s')+' and 12+ minutes a game');
       const tb=el('table','zt lgp');tb.innerHTML='<tr><th>Player</th>'+ST.map(([h])=>`<th>${h}</th>`).join('')+'</tr>';
-      cav.sort((a,b)=>b.pts/b.g-a.pts/a.g).forEach(p=>{const tr=el('tr','xr');tr.tabIndex=0;tr.style.cursor='pointer';tr.onclick=()=>{S.f.spz=S.f.spz===p.n?null:p.n;renderView();setTimeout(()=>{const e=document.getElementById('spz');if(e)e.scrollIntoView({behavior:'smooth',block:'nearest'})},60)};let h=`<td>${esc(p.n)}</td>`;ST.forEach(([,f,dir])=>{const v=f(p);const k=v==null?null:lgRank(v,Q.filter(q=>q!==p).map(f),dir||1);h+=`<td>${k?rkEl(k).replace('<small','<span').replace('</small>','</span>'):'–'}</td>`});tr.innerHTML=h;tb.appendChild(tr)});
-      c2.appendChild(el('p','tap-hint','▸ Tap a player for his shooting by zone against the league'));      const w=el('div','tw');w.appendChild(tb);c2.appendChild(w);c2.appendChild(el('p','note','Green = top 10%, red = bottom 10% of qualified players. FG% and TS% need 5+ shots a game. TO: 1st = fewest. From every NBA box score this season.'));v.appendChild(c2);if(S.f.spz){const zc=zoneRankCard(S.f.spz);if(zc)v.appendChild(zc)}}}}
+      cav.sort((a,b)=>b.pts/b.g-a.pts/a.g).forEach(p=>{const tr=el('tr','xr');tr.tabIndex=0;tr.style.cursor='pointer';tr.onclick=()=>{S.f.spz=S.f.spz===p.n?null:p.n;renderView();setTimeout(()=>{const e=document.getElementById('spz');if(e)e.scrollIntoView({behavior:'smooth',block:'nearest'})},60)};let h=`<td>${esc(p.n)}</td>`;ST.forEach(([,f,dir])=>{const v=f(p);const k=v==null?null:lgRank(v,Q.filter(q=>q!==p).map(f),dir||1);h+=`<td>${k?rkEl(k).replace('<small','<span').replace('</small>','</span>'):'–'}</td>`});tr.innerHTML=h;tb.appendChild(tr);
+        /* the zone card opens right under the tapped row (Oct 31; it used to land below the whole table) */
+        if(S.f.spz===p.n){const zc=zoneRankCard(p.n);if(zc){zc.classList.add('spz-in');const xr=el('tr','spz-row');const td=el('td');td.colSpan=ST.length+1;td.appendChild(zc);xr.appendChild(td);tb.appendChild(xr)}}});
+      c2.appendChild(el('p','tap-hint','▸ Tap a player for his shooting by zone against the league'));      const w=el('div','tw');w.appendChild(tb);c2.appendChild(w);c2.appendChild(el('p','note','Green = top 10%, red = bottom 10% of qualified players. FG% and TS% need 5+ shots a game. TO: 1st = fewest. From every NBA box score this season.'));v.appendChild(c2)}}}
 }
 /* season Players tab: who creates his own shot (made field goals with no assist) */
 function selfCard(D,R){const P={};(R.shots||[]).forEach(q=>{if(q.t!==D.focus.id||!q.m||!q.id)return;const o=P[q.id]=P[q.id]||[0,0,0,0];const v=q.three?3:2;if(q.ast){o[0]++;o[1]+=v}else{o[2]++;o[3]+=v}});
