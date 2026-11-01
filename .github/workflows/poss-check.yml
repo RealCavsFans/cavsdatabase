@@ -22,7 +22,7 @@ jobs:
           git add data/poss-check.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Possession check"
-          for i in 1 2 3; do
-            if git pull --rebase origin main && git push; then exit 0; fi
-            sleep 5
+          for i in 1 2 3 4 5 6; do   # Nov 1: six tries with a random wait, so two jobs saving at once both get through
+            if git pull --rebase -X theirs origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true; sleep $((RANDOM % 15 + i * 5))
           done

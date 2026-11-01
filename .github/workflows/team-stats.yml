@@ -36,8 +36,8 @@ jobs:
           git add pdata/league.json 2>/dev/null || true
           git add pdata/cle-rates.json 2>/dev/null || true
           git commit -m "Team stats from ESPN box scores"
-          for i in 1 2 3; do
-            if git pull --rebase origin main && git push; then exit 0; fi
-            git rebase --abort 2>/dev/null || true; sleep 20
+          for i in 1 2 3 4 5 6; do   # Nov 1: six tries with a random wait, so two jobs saving at once both get through
+            if git pull --rebase -X theirs origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true; sleep $((RANDOM % 20 + i * 10))
           done
           exit 1

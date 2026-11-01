@@ -59,7 +59,7 @@ jobs:
           git add live-archive; [ -f data/last-time.json ] && git add data/last-time.json || true
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Update live game archive"
-          for i in 1 2 3; do
+          for i in 1 2 3 4 5 6; do   # Nov 1: six tries with a random wait, so two jobs saving at once both get through
             if git pull --rebase origin main && git push; then exit 0; fi
             git rebase --abort 2>/dev/null || true
             # a hand edit to the same generated files (season.json, p/*.json) makes the rebase conflict every time:
@@ -70,6 +70,6 @@ jobs:
             SKIP_FETCH=1 node scripts/live-archive.mjs || true
             git add live-archive; [ -f data/last-time.json ] && git add data/last-time.json || true
             if git diff --cached --quiet; then exit 0; fi
-            git commit -m "Update live game archive"; sleep 20
+            git commit -m "Update live game archive"; sleep $((RANDOM % 20 + i * 10))
           done
           exit 1

@@ -87,7 +87,7 @@ jobs:
           git commit -m "Update videos"
           # main can move while this runs (site edits, the daily data task). If the rebase or push
           # fails, keep this run's fresh data files, rebuild the page copies on top of the latest main and retry.
-          for i in 1 2 3; do
+          for i in 1 2 3 4 5 6; do   # Nov 1: six tries with a random wait, so two jobs saving at once both get through
             git stash 2>/dev/null || true
             if git pull --rebase origin main && git push; then ping; exit 0; fi
             git rebase --abort 2>/dev/null || true
@@ -100,6 +100,6 @@ jobs:
             add
             if git diff --cached --quiet; then exit 0; fi
             git commit -m "Update videos"
-            sleep $((i*10))
+            sleep $((RANDOM % 15 + i * 10))
           done
           exit 1
