@@ -1409,7 +1409,8 @@ if(ng){
 if(ng){document.getElementById('nx-at').textContent=ng[2]==='H'?'vs':'at';const o=document.getElementById('nx-opp');o.textContent='';const a=el('a','opp',ng[1]);a.href=bbTeam(ng[1]);a.target='_blank';a.rel='noopener';a.title=TEAMS[ng[1]]+' on Basketball Reference';o.appendChild(a);o.removeAttribute('aria-hidden');
   /* team logos instead of abbreviations in Up next (Oct 30); the abbreviation comes back if a logo fails to load */
   {const LGF=ab=>'/img/tl/'+({GSW:'gs',NYK:'ny',NOP:'no',SAS:'sa',UTA:'utah',WAS:'wsh',CHO:'cha',BRK:'bkn',PHO:'phx'}[ab]||ab.toLowerCase())+'.png';
-   const put=(host,ab,name)=>{if(!host)return;const t=host.textContent;const im=el('img','nx-logo');im.src=LGF(ab);im.alt=name;im.onerror=()=>{im.replaceWith(document.createTextNode(t))};host.textContent='';host.appendChild(im)};
+   /* logos have different shapes, so each is scaled to cover about the same area as the Cavs C (share of the 96px square that is ink, Nov 1) */const INK={atl:.673,bkn:.673,bos:.673,cha:.392,chi:.333,cle:.386,dal:.654,den:.673,det:.673,gs:.673,hou:.161,ind:.556,lac:.673,lal:.343,mem:.594,mia:.391,mil:.295,min:.674,no:.214,ny:.403,okc:.24,orl:.368,phi:.313,phx:.327,por:.579,sa:.289,sac:.63,tor:.45,utah:.188,wsh:.673};
+   const put=(host,ab,name)=>{if(!host)return;const t=host.textContent;const im=el('img','nx-logo');im.src=LGF(ab);im.alt=name;{const k=LGF(ab).split('/').pop().slice(0,-4),f=INK[k];if(f&&k!=='cle'){const sc=Math.max(.8,Math.min(1.3,Math.sqrt(INK.cle/f)));if(Math.abs(sc-1)>.04)im.style.transform='scale('+sc.toFixed(2)+')'}}im.onerror=()=>{im.replaceWith(document.createTextNode(t))};host.textContent='';host.appendChild(im)};
    put(document.querySelector('.gmu .gteams .tm.cle'),'CLE','Cavaliers');put(a,ng[1],TEAMS[ng[1]]||ng[1]);document.querySelector('.gmu .gteams')?.classList.add('has-logos')}
 }
 
