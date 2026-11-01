@@ -4024,7 +4024,7 @@ const COMBINE={
         const wp=WPCT[n];if(wp){const g=WGRP[wp[0]];const po=v=>{const s=['th','st','nd','rd'],m=v%100;return v+(s[(m-20)%10]||s[m]||s[0])};
           box.appendChild(el('h4',null,'Length vs other '+g[0]));const pr=el('div','wpct');[['Wingspan',wp[1]],['Standing reach',wp[2]],['Wingspan minus height',wp[3]]].forEach(([k,v])=>{if(v==null)return;const x=el('div','wp');const bar=el('i');bar.style.setProperty('--p',v+'%');x.append(el('b',null,po(v)),el('span',null,k),bar);pr.appendChild(x)});box.appendChild(pr);
           if(wp[4]!=null){box.appendChild(el('h4',null,'Size vs other '+g[0]));const sz=el('div','wpct');[['Height',wp[4],'no shoes'],['Weight',wp[5],'at the combine']].forEach(([k,v,sm])=>{if(v==null)return;const x=el('div','wp');const bar=el('i');bar.style.setProperty('--p',v+'%');x.append(el('b',null,po(v)),el('span',null,k+(c&&c[9]==='NBA combine'?' · '+sm:'')),bar);sz.appendChild(x)});box.appendChild(sz)}
-          box.appendChild(el('p','mcnote','Percentile among '+g[1]+' '+g[0]+' measured at the NBA draft combine since 2000. 90th = more than 90% of them.'+(c&&c[9]==='NBA combine'?'':' Uses his listed height and weight and CraftedNBA wingspan.')))}
+          box.appendChild(el('p','mcnote','Percentile among '+g[1]+' '+g[0]+' measured at the NBA draft combine since 2000. 90th = more than 90% of them. Group comes from his combine position, or his listed position if he wasn’t measured there.'+(c&&c[9]==='NBA combine'?'':' Uses his listed height and weight and CraftedNBA wingspan.')))}
         box.appendChild(el('h4',null,'Similar measurements across the NBA'));
         const tb=el('table','mctab');tb.innerHTML='<thead><tr><th>Player</th><th>Ht (no shoes)</th><th>Wingspan</th><th>Reach</th><th class="r">Wt</th></tr></thead>';const bd=el('tbody');
         mc.forEach(([nm2,tm,id,yr,h,w,rch,wt2])=>{const r=el('tr');const t1=el('td');const a=el('a','dlink',nm2);a.href='https://www.nba.com/player/'+id;a.target='_blank';a.rel='noopener';t1.append(a,' ',el('small',null,tm+' · '+yr));r.append(t1,el('td','m',ftin(h)),el('td','m',ftin(w)),el('td','m',ftin(rch)),el('td','r m',Math.round(wt2)+' lb'));bd.appendChild(r)});
@@ -4179,7 +4179,7 @@ window.renderPlayer=function(s){
 
 function ppBuild(p,root){
   const [no,n,pos,ht,wt,bd,age,exp,sch,cty,dr,stt,pid]=p;
-  const X=PPX,G=X.grpOf(n),GN=X.GN[G],S=(PPD.stats||{})[n]||{},L=PPD.league||{},BX=PPD.box||{};
+  const X=PPX,G=X.grpOf(n),GN=X.GN[G],RKN=' How the ranks work: only NBA '+GN+' (listed '+({G:'PG, SG or G',W:'SF, F or G-F',B:'PF, C or F-C'})[G]+') who play 12+ minutes a game and have played at least 40% of the most games anyone has so far.',S=(PPD.stats||{})[n]||{},L=PPD.league||{},BX=PPD.box||{};
   const f1=v=>v==null||isNaN(v)?'—':(+v).toFixed(1),f3=v=>v==null||isNaN(v)?'—':(+v).toFixed(3).replace(/^0/,''),pc=v=>Math.max(0,Math.min(100,v));
   const ext=(t,u)=>{const a=el('a',null,t+' ↗');a.href=u;a.target='_blank';a.rel='noopener';return a};
   const ilink=(t,route,hash)=>{const a=el('a',null,t);a.href='/'+route+(hash?'#'+hash:'');a.dataset.go=route;if(hash)a.addEventListener('click',()=>setTimeout(()=>{const e=document.getElementById(hash);if(e)e.scrollIntoView({block:'center'})},350));return a};
@@ -4320,7 +4320,7 @@ function ppBuild(p,root){
   {const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3P%','tp'],['FG%','fg'],['MIN','min']],W:[['PTS','pts'],['REB','reb'],['AST','ast'],['3P%','tp'],['STL','stl'],['MIN','min']],B:[['PTS','pts'],['REB','reb'],['AST','ast'],['BLK','blk'],['FG%','fg'],['MIN','min']]};
     const lkey={pts:'pts',reb:'reb',ast:'ast',stl:'stl',blk:'blk',min:'min'};
     const head=!cur?'Season line':cur.src==='2026–27'?'Season line · 2026–27':cur.base==='pre'?'Last season · '+(pre.team||''):'Last season · 2025–26';
-    const why=!cur?'':cur.src==='2026–27'?`His averages this season. Under each: where he ranks ${lgOK?'among NBA '+GN+' (bar = percentile)':'on the Cavs'}.`:cur.base==='pre'?`His numbers ${pre.league?'in '+escH(pre.league):''} last season, the baseline until he plays for the Cavs.`:`His 2025–26 averages, shown until his first game this season${career?', next to his career average':''}.`;
+    const why=!cur?'':cur.src==='2026–27'?`His averages this season. Under each: where he ranks ${lgOK?'among NBA '+GN+' (bar = percentile).'+RKN:'on the Cavs.'}`:cur.base==='pre'?`His numbers ${pre.league?'in '+escH(pre.league):''} last season, the baseline until he plays for the Cavs.`:`His 2025–26 averages, shown until his first game this season${career?', next to his career average':''}.`;
     const c=card(head,null,why);
     if(!cur){c.appendChild(note('No stats on record yet.'))}else{const g6=el('div','ppx-g6');
       sets[G].forEach(([lab,k])=>{const val=cur[k];const cell=el('div','ppx-cell');cell.appendChild(el('div','k')).appendChild(tip(lab));cell.appendChild(el('div','v',/%/.test(lab)?f3(val):f1(val)));
@@ -4348,7 +4348,7 @@ function ppBuild(p,root){
   // fingerprint
   const SK=[['Scoring','Offense',x=>x.pts/x.min],['Efficiency','Offense',x=>{const d2=2*(x.fga+0.44*x.fta);return d2?x.pts/d2:0}],['Shooting','Offense',x=>x.tpa/x.g>=1?x.tpm/x.tpa+x.tpm/x.min:x.tpm/x.min],['Playmaking','Offense',x=>x.ast/x.min],['Rim protection','Defense & boards',x=>x.blk/x.min],['Steals','Defense & boards',x=>x.stl/x.min],['Rebounding','Defense & boards',x=>x.reb/x.min],['Durability','Defense & boards',x=>x.min/Math.max(1,maxG)]];
   /* where he sits in the league: one row per stat, a gray dot for every NBA player in his position group, wine dot for him */
-  if(lgOK&&meL.g>=10){const c=card('Where he sits in the league','Fingerprint',`Every number ranked against NBA ${GN} with real minutes. The bar shows his percentile; the dashed line is the middle of the group.`);
+  if(lgOK&&meL.g>=10){const c=card('Where he sits in the league','Fingerprint',`Every number ranked against NBA ${GN} with real minutes. The bar shows his percentile; the dashed line is the middle of the group.${RKN}`);
     const ts=x=>{const d2=2*(x.fga+0.44*x.fta);return d2?x.pts/d2:null};
     /* team season totals from every team game line, for the rate stats (usage, assist %, rebound %, steal %, block %) */
     const TT={};Object.values(L.tg||{}).forEach(gm=>{const z=gm.t||[];if(z.length!==2||gm.cupFinal)return;z.forEach((a2,i)=>{const b2=z[1-i];const o=TT[a2.ab]||(TT[a2.ab]={min:0,fgm:0,fga:0,fta:0,tov:0,orb:0,drb:0,oorb:0,odrb:0,oposs:0,o2a:0});o.min+=240+Math.max(0,(gm.per||4)-4)*25;o.fgm+=a2.fgm;o.fga+=a2.fga;o.fta+=a2.fta;o.tov+=a2.tov;o.orb+=a2.orb;o.drb+=a2.drb;o.oorb+=b2.orb;o.odrb+=b2.drb;o.oposs+=b2.fga-b2.orb+b2.tov+.44*b2.fta;o.o2a+=b2.fga-b2.tpa})});
@@ -4515,7 +4515,7 @@ function ppBuild(p,root){
   /* ===== 3 · defense and boards ===== */
   const stocks=cur&&cur.stl!=null&&cur.blk!=null?cur.stl+cur.blk:null;
   const df=chap('def','Defense & boards',stocks!=null?f1(stocks)+' stocks · '+f1(cur.reb)+' reb':'',false,'Defense');
-  if(stocks!=null){const c=card('Defense and boards',null,lgOK?`Where he ranks among NBA ${GN} this season, per 36 minutes (bar = percentile, 99th = best; black line = the middle). Per game numbers are behind the toggle.`:'Per game this season. League ranks start once there are enough games to compare.');
+  if(stocks!=null){const c=card('Defense and boards',null,lgOK?`Where he ranks among NBA ${GN} this season, per 36 minutes (bar = percentile, 99th = best; black line = the middle). Per game numbers are behind the toggle.${RKN}`:'Per game this season. League ranks start once there are enough games to compare.');
     const src=meL&&cur&&cur.src==='2026–27'?meL:null;const pg=k=>src?src[k]/src.g:null;
     const rows=[['Rebounds','reb',cur.reb],['Off. rebounds','oreb',pg('oreb')],['Def. rebounds','dreb',src?(src.reb-src.oreb)/src.g:null],['Steals','stl',cur.stl],['Blocks','blk',cur.blk],['Stocks','stk',stocks]];
     const fnOf=k=>k==='dreb'?(x=>(x.reb-x.oreb)/x.g):k==='stk'?(x=>(x.stl+x.blk)/x.g):(x=>x[k]/x.g);
