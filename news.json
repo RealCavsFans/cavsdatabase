@@ -2,6 +2,12 @@
  "articles": [
   {
    "src": "cleveland.com",
+   "title": "Mobley scores 27, Allen adds 25 as Cavs ride 48-point second quarter to get past Bucks, 136-111",
+   "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxNcDZ2TkZvMlNuX2djWmpIMDlldWxWdXQ2QVBQRl9ZQWlNdEtydGk5X3NTOGJETDl6Yy1iVUl1NFdEb2h1M3E0MTlUdEFvSTdndVZTU09kdFctTmY4ODFaQ3FnUlgtRHh4WjVsXzRjUFpYMlYwbmQzZ2hxWnlNcmFEaGNVMnNkT29hendOenNoS0ttLUtJTThfZHFSSEdpTm9iRFNnX1BJY1IxbkJXazVEODJWbFdnLUJnUG9kamF5UEJKeUE3YUxpRnQ1cFFtNnBmV0Zv?oc=5",
+   "date": "2026-11-01T02:33:00.000Z"
+  },
+  {
+   "src": "cleveland.com",
    "title": "Cavs finally discover big-man offensive blueprint in blowout vs. Bucks",
    "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNZjlMaVIzMmpQU00xYVBxWU5yZTJZZmQySTdLU1R5ejEyZF9BTDFYN2tiNzZFcDl5MUoxUVh4RVRUM25fUjRQYml3M1oxTkdHUXp4VGR4MmY3MEFOUUw4S0kwS2ExVDhTTmNCRUJUOG1XcmdCNndnbzhKZUpZMmd4N2llMjItV29PS2h1eXR4QXVxMDFWd3VqM2VVV2JKUF9TR0Y4Y0kzSVdUaEZCNFUzN2NwSQ?oc=5",
    "date": "2026-11-01T02:32:00.000Z"
@@ -11,12 +17,6 @@
    "title": "Cavs Notes: Hezonja, Mobley, Altman, Thomas",
    "link": "https://www.hoopsrumors.com/2026/10/cavs-notes-hezonja-mobley-altman-thomas.html",
    "date": "2026-10-31T14:11:14.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cavs at Bucks: How to watch, odds, and injury report",
-   "link": "https://www.fearthesword.com/cavs-injury-report/53813/cavs-at-bucks-how-to-watch-odds-and-injury-report",
-   "date": "2026-10-31T11:00:00.000Z"
   },
   {
    "src": "cleveland.com",
@@ -139,6 +139,12 @@
    "date": "2026-10-29T01:28:40.000Z"
   },
   {
+   "src": "Fear The Sword",
+   "title": "Cavs vs. Wizards game thread",
+   "link": "https://www.fearthesword.com/cavs-game-previews/53641/cavs-vs-wizards-game-thread",
+   "date": "2026-10-28T23:00:00.000Z"
+  },
+  {
    "src": "Cavaliers on SI",
    "title": "The Cavs’ Quiet Connector: How Jaylon Tyson Is Linking the Offense Early in 2026-27",
    "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOZzlENDJ0QXNud3NqOVotckdoVGVEX3czUWlCZVFKeWU4eFZXaEhUV21IMjRvcXExYldrQm9zenRCZGE1VTFPY3UwS19saFo3N3JmLW55MzlfN3kyNTl5YnlvMTZfbFU4Tm5CcjB0djVJNlJTTEN2bzNaZnFqTjl5dFFHY0xoRS1tX0NpR3JRZTZJSXRWakxsczNPeW5ZQWt0Sk1lcTBNOHZyR2dsdFJuTmxqUFlsRUUtN05xTFh0bzI0ZlFpeC1fN2VSeFQ?oc=5",
@@ -161,12 +167,6 @@
    "title": "Jarrett Allen’s role shows the delicate decisions Kenny Atkinson must make",
    "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNUWZKaWE4WFVJZGRIUWxBQlZjRXhLVVk4Zzg2eE5wOWV1QU44eUZ4ME9wVXFNdWNMLVhNYzFjLTZENU96RHBOSU5qLVRjSnF5cmVXbENiOWpPVW9fRXhSVVJXMTkxTXlJcEFjbXNpcnNCWXhhamNzT3dDR2RsTzFUYzhpQlZQRFg4bG1kZ3JabjVjUExWd09nZ3FtT0tYaFQzakZjTDdFZGRLaHVJZEwydGJQemJ6VFhN?oc=5",
    "date": "2026-10-28T14:30:00.000Z"
-  },
-  {
-   "src": "cleveland.com",
-   "title": "Could Evan Mobley ever develop into a reliable free throw shooter?",
-   "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQOEIwMlZsSkhlSExGMFFyTVVGSDhyWW5WbWd5cEE2bWRaczVYOEo5MmgtaE9UZVdiQ2VwNUROZ2g0Q2o0c1psdDh3WGl4NXFqNkg5bWoxTXNaNjRuU1NXb0doV3o0cHhEQVI3TnZUdFJjMURDSmZIZDRQSFQzZXJsWmItREVJNW1YX3RWdngyYmlJbUtOeHRxbGNOV2YtcHNRTXFmUGhPbw?oc=5",
-   "date": "2026-10-28T14:00:00.000Z"
   },
   {
    "src": "cleveland.com",
@@ -220,7 +220,7 @@
    "src": "Cavaliers on SI",
    "title": "Instant Reactions to the Cleveland Cavaliers Overtime Win Against the Timberwolves",
    "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPeElJeEI2cFJscHZTTzhETjJmb3ZnVGFRYTJEZWZKd2hhZ2JJWFlDelNwaEFDbjU0MmZRdmZTNml5YlJhUzBPMVM2ellXdjhpM0o4QnV6MTRleWxjS0ZnT2VQOUZLUHY1SGhhOVRJeFBKd2h1aU9pYjM2U2tIZG9aVmJxNmF6Q25Xek54UXhfVVJpSVVBT25wUDQ5bFlsYXRsUHN5OHFqWEdQYU9DdTY5ZHpOQXkwY1A5eHN6S05oRTlvNDJlV0Uta3dRZ0d6dw?oc=5",
-   "date": "2026-10-27T03:31:40.000Z"
+   "date": "2026-10-27T03:30:00.000Z"
   },
   {
    "src": "Cavaliers on SI",
