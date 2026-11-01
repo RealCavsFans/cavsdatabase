@@ -72,6 +72,11 @@ let shell = html; let CHMAP = {};
     await writeFile(new URL(`a/app.${hc}.css`, root), cssOut); await writeFile(new URL(`a/app.${hj}.js`, root), jsOut);
     for (const f of await readdir(new URL('a/', root))) if (/^app\.[0-9a-f]{10}\.(css|js)$/.test(f) && f !== `app.${hc}.css` && f !== `app.${hj}.js`) await unlink(new URL('a/' + f, root));
     shell = html.replace(sm[0], () => `<link rel="stylesheet" href="/a/app.${hc}.css"><link rel="preload" href="/a/app.${hj}.js" as="script">`).replace(jm[0], () => `<script src="/a/app.${hj}.js"></script>`);
+    // other big inline scripts (share links + save-as-image, ~36 KB) also move to cached files, in the same spot so they run in the same order
+    for (const m of [...shell.matchAll(/<script>([\s\S]*?)<\/script>/g)]) { if (m[1].length < 5000) continue; let code = m[1];
+      try { const { transform } = await import('esbuild'); code = (await transform(code, { loader: 'js', minify: true, target: 'es2020', legalComments: 'none' })).code; } catch (e) {}
+      const f = `s-${ch('sha1').update(code).digest('hex').slice(0, 10)}.js`; await writeFile(new URL('a/' + f, root), code); keepC.add(f); shell = shell.replace(m[0], () => `<script src="/a/${f}"></script>`); }
+    for (const f of await readdir(new URL('a/', root))) if (/^s-[0-9a-f]{10}\.js$/.test(f) && !keepC.has(f)) await unlink(new URL('a/' + f, root));
     // the small second <style> block stays inline in every page; minify it too (drops its comments and spacing)
     try { const { transform } = await import('esbuild');
       for (const m of [...shell.matchAll(/<style>([\s\S]*?)<\/style>/g)]) { const c = (await transform(m[1], { loader: 'css', minify: true })).code.trim(); shell = shell.replace(m[0], () => `<style>${c}</style>`); }

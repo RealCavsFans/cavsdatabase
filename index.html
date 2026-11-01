@@ -1031,7 +1031,7 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 const NC={};function needChunk(n){const u=window.__CH&&window.__CH[n];if(!u)return Promise.resolve();return NC[n]=NC[n]||new Promise((res,rej)=>{const sc=document.createElement('script');sc.src=u;sc.onload=res;sc.onerror=()=>{delete NC[n];rej(new Error('chunk '+n))};document.head.appendChild(sc)})}
 const FJC={};function fJ(u){const now=Date.now(),c=FJC[u];if(!c||now-c.t>20000)FJC[u]={t:now,p:fetch(u,{cache:'no-cache'})};return FJC[u].p.then(r=>r.clone())}
 const VQ={},VDONE={};function onView(v,f){if(VDONE[v]){try{f()}catch(e){console.error('view '+v,e)}return}(VQ[v]=VQ[v]||[]).push(f)}
-function runView(v){if(VDONE[v])return;VDONE[v]=1;const go=()=>{const q=VQ[v]||[];VQ[v]=[];q.forEach(f=>{try{f()}catch(e){console.error('view '+v,e)}});if(window.cdbJump)cdbJump('view-'+v);if((v==='cap'||v==='assets')&&window.cdbTerms)setTimeout(()=>{const r=document.getElementById('view-'+v);if(r)cdbTerms(r)},300)};if(window.__CH&&window.__CH['v-'+v])needChunk('v-'+v).then(go,go);else go()}
+function runView(v){if(VDONE[v])return;VDONE[v]=1;const go=()=>{const q=VQ[v]||[];VQ[v]=[];q.forEach(f=>{try{f()}catch(e){console.error('view '+v,e)}});if(window.cdbJump)cdbJump('view-'+v);if((v==='cap'||v==='assets')&&window.cdbTerms)setTimeout(()=>{const r=document.getElementById('view-'+v);if(r)cdbTerms(r)},300)};const ck='v-'+(v==='season'?'history':v);if(window.__CH&&window.__CH[ck])needChunk(ck).then(go,go);else go()}
 
 /* player pages (/players/<name>): built and parked. true = live everywhere; ?pp=preview shows them without linking anything */
 const PP_ON=true;
@@ -3207,7 +3207,9 @@ onView('roster-tree',()=>{setTimeout(function(){const lanes=document.getElementB
 setTimeout(()=>{const t=document.getElementById('tw-spots');if(t){t.textContent='';for(let k=0;k<3;k++)t.appendChild(el('i',k<TWOWAY.length?'f':null));t.append(' '+TWOWAY.length+' of 3 filled')}const n=PLAYERS.filter(p=>!p[11]).length;const st=document.getElementById('std-spots');if(st)st.textContent=n+' of 15 standard spots filled.'},0);
 /* game pages: /games/YYYY-MM-DD-opp, one per regular-season game. Before tip: matchup, how to watch, tale of the tape, series, injuries. After: final, top line, Cavs box score, links. */
 
-window.renderGame=function(sl){const i=SCHEDULE.findIndex(g=>gslug(g)===sl);if(i<0)return false;const g=SCHEDULE[i],o=g[1],H=g[2]==='H';const v=document.getElementById('view-game');v.textContent='';
+/* game pages: on the built site the page code is its own file; this stand-in checks the game exists, loads it, then draws */
+window.renderGame=function(sl){if(SCHEDULE.findIndex(g=>gslug(g)===sl)<0)return false;const stub=window.renderGame;needChunk('game').then(()=>{if(window.renderGame!==stub){window.renderGame(sl);if(window.GAME_META)document.title=GAME_META[0]}});return true};
+/*@chunk:game*/window.renderGame=function(sl){const i=SCHEDULE.findIndex(g=>gslug(g)===sl);if(i<0)return false;const g=SCHEDULE[i],o=g[1],H=g[2]==='H';const v=document.getElementById('view-game');v.textContent='';
   const res=SEASON.results.split('').filter(Boolean),r=res[i],sc=SCORES[g[0]];const fin=!!(r&&sc);const [cs,os]=sc?sc.split('-').map(Number):[];
   const dt=new Date(g[0]+'T12:00:00');const dLong=dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});const nk=GNICK[o]||TEAMS[o];
   window.GAME_META=fin?['Cavs '+cs+', '+nk+' '+os+' ('+dLong+'): Box Score & Recap | cavs_db','Final: Cavaliers '+cs+', '+TEAMS[o]+' '+nk+' '+os+' on '+dLong+'. Box score, top performers, postgame video and Recap.']:['Cavs '+(H?'vs ':'at ')+nk+', '+dLong+': How to Watch, Preview & Injuries | cavs_db','Cavaliers '+(H?'vs ':'at ')+TEAMS[o]+' '+nk+' on '+dLong+': tip time, TV and radio, tale of the tape, injuries and the season series.'];
@@ -3367,7 +3369,7 @@ window.renderGame=function(sl){const i=SCHEDULE.findIndex(g=>gslug(g)===sl);if(i
   /* prev / next */
   const pn=el('div','gp-pn');const lab=x=>new Date(x[0]+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})+(x[2]==='H'?' vs ':' at ')+x[1];const P=SCHEDULE[i-1],N=SCHEDULE[i+1];
   const pa=el(P?'a':'span',null,P?'← '+lab(P):'');if(P){pa.href='/games/'+gslug(P);pa.dataset.go='games/'+gslug(P)}const na=el(N?'a':'span',null,N?lab(N)+' →':'');if(N){na.href='/games/'+gslug(N);na.dataset.go='games/'+gslug(N)}pn.append(pa,na);W.appendChild(pn);
-  return true};
+  return true};/*@/chunk*/
 /* tap a term: cap and contract words get a dotted underline; tap for the glossary's plain-English meaning */
 setTimeout(function(){const G={};GLOSS.forEach(([,items])=>items.forEach(([t,d])=>{G[t]=d}));
   const MAP=[['non-taxpayer mid-level','Non-taxpayer mid-level exception (NTMLE)'],['taxpayer mid-level','Taxpayer mid-level exception (TMLE)'],['mid-level','Non-taxpayer mid-level exception (NTMLE)'],['first apron','First apron'],['second apron','Second apron'],['luxury tax','Luxury tax'],['tax line','Luxury tax'],['hard-capped','Hard cap'],['hard cap','Hard cap'],['salary cap','Salary cap'],['dead money','Dead money (dead salary)'],['cap holds?','Cap hold'],['bi-annual','Bi-annual exception (BAE)'],['trade exceptions?','Traded player exception (TPE)'],['early bird','Early Bird rights'],['non-bird','Non-Bird rights'],['full bird','Bird rights (Veteran Free Agent Exception)'],['bird rights','Bird rights (Veteran Free Agent Exception)'],['two-way','Two-way contract'],['exhibit 10','Exhibit 10'],['player option','Player option'],['team option','Team option'],['qualifying offer','Qualifying offer (QO)'],['stepien rule','Stepien Rule'],['sign-and-trade','Sign-and-trade'],['rookie[- ]scale','Rookie scale contract'],['restricted free agent','Restricted free agent (RFA)'],['swap rights','Pick swap'],['frozen','Frozen pick'],['aggregat\\w*','Aggregation'],['stretch provision','Stretch provision'],['non-guaranteed','Non-guaranteed contract'],['trade bonus','Trade kicker (trade bonus)'],['supermax','Designated veteran extension (supermax)'],['UFA','Unrestricted free agent (UFA)'],['RFA','Restricted free agent (RFA)']].filter(([,g])=>G[g]);
@@ -4901,7 +4903,7 @@ function show(route){{const nf=document.getElementById('nlft');if(nf)nf.classLis
   if(e.key==='Tab'){if(I&&document.body.contains(I)&&!I.classList.contains('out')&&I.getClientRects().length&&getComputedStyle(I).visibility!=='hidden'){trap(I,e);return}if(F2&&!F2.hidden&&F2.dataset.modal)trap(F2,e)}});
  })();
 /* History tab: seasons, playoff runs, retired numbers, leaders, who wore it, draft and coaches. Data in /pdata/history.json (loaded on first visit). */
-(function(){let H=null,MS=null,busy=false;
+/*@chunk:v-history*/(function(){let H=null,MS=null,busy=false;
 const LV={title:['Champions','hx-l6'],finals:['Lost in the Finals','hx-l5'],conf:['Conference finals','hx-l4'],round2:['Second round','hx-l3'],round1:['First round','hx-l2'],playin:['Play-in','hx-l1'],missed:['Missed playoffs','hx-l0']};
 const yrs=s=>s.split('–'),num=s=>+String(s).split('–')[0];
 const bbS=n=>'https://www.basketball-reference.com/search/search.fcgi?search='+encodeURIComponent(n),bbA=(n,cls,id)=>{const a=el('a',cls||'dlink',n);a.href=id?'https://www.basketball-reference.com/players/'+id[0]+'/'+id+'.html':bbS(n);a.target='_blank';a.rel='noopener';a.title=n+' on Basketball Reference';return a};
@@ -5032,6 +5034,7 @@ window.renderSeason=function(sl){const v=document.getElementById('view-season');
   return true};
 const y0now=s=>s===SEASONS[0];
 })();
+;/* built site: this file arrives after the page was shown, so draw it now */if(window.__CH&&window.__CH['v-history']){const r=routeOf();if(r.startsWith('history/')&&window.renderSeason)renderSeason(r.split('/')[1]);else if(r==='history'&&window.hxLoad)hxLoad()}/*@/chunk*/
 
 
 /* Media: who covers the Cavs, newest item from each outlet in news.json */
