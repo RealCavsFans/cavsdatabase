@@ -55,13 +55,13 @@ let shell = html; let CHMAP = {};
     await mkdir(new URL('a/', root), { recursive: true });
     // Speed step 2 (Nov 1): code marked /*@chunk:name*/ ... /*@/chunk*/ in the source moves to its own file a/c-<name>.<hash>.js,
     // loaded by needChunk(name) only on the pages that use it (player pages, this-day-in-history); the main file gets the name -> file map
-    const chunks = {}; let mainJs = jm[1].replace(/\/\*@chunk:(\w+)\*\/([\s\S]*?)\/\*@\/chunk\*\//g, (m, n, code) => { (chunks[n] = chunks[n] || []).push(code); return ''; });
+    const chunks = {}; let mainJs = jm[1].replace(/\/\*@chunk:([\w-]+)\*\/([\s\S]*?)\/\*@\/chunk\*\//g, (m, n, code) => { (chunks[n] = chunks[n] || []).push(code); return ''; });
     const CH = {}, keepC = new Set();
     for (const [n, parts] of Object.entries(chunks)) { let code = parts.join('\n');
       try { const { transform } = await import('esbuild'); code = (await transform(code, { loader: 'js', minify: true, target: 'es2020', legalComments: 'none' })).code; } catch (e) {}
       const h = ch('sha1').update(code).digest('hex').slice(0, 10); const f = `c-${n}.${h}.js`; await writeFile(new URL('a/' + f, root), code); CH[n] = '/a/' + f; keepC.add(f); }
     mainJs = 'window.__CH=' + JSON.stringify(CH) + ';\n' + mainJs; CHMAP = CH;
-    for (const f of await readdir(new URL('a/', root))) if (/^c-\w+\.[0-9a-f]{10}\.js$/.test(f) && !keepC.has(f)) await unlink(new URL('a/' + f, root));
+    for (const f of await readdir(new URL('a/', root))) if (/^c-[\w-]+\.[0-9a-f]{10}\.js$/.test(f) && !keepC.has(f)) await unlink(new URL('a/' + f, root));
     const hc = ch('sha1').update(sm[1]).digest('hex').slice(0, 10), hj = ch('sha1').update(mainJs).digest('hex').slice(0, 10);
     // minify the shared files when esbuild is installed (the Action installs it); the hashes come from the source, so names only change when the source does
     let cssOut = sm[1], jsOut = mainJs;
