@@ -1027,7 +1027,7 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 
 <script>/* Speed (Nov 1): each page's own sections are built the first time that page is shown, not all at once on load */
 const VQ={},VDONE={};function onView(v,f){if(VDONE[v]){try{f()}catch(e){console.error('view '+v,e)}return}(VQ[v]=VQ[v]||[]).push(f)}
-function runView(v){if(VDONE[v])return;VDONE[v]=1;const q=VQ[v]||[];VQ[v]=[];q.forEach(f=>{try{f()}catch(e){console.error('view '+v,e)}});if((v==='cap'||v==='assets')&&window.cdbTerms)setTimeout(()=>{const r=document.getElementById('view-'+v);if(r)cdbTerms(r)},300)}
+function runView(v){if(VDONE[v])return;VDONE[v]=1;const q=VQ[v]||[];VQ[v]=[];q.forEach(f=>{try{f()}catch(e){console.error('view '+v,e)}});if(window.cdbJump)cdbJump('view-'+v);if((v==='cap'||v==='assets')&&window.cdbTerms)setTimeout(()=>{const r=document.getElementById('view-'+v);if(r)cdbTerms(r)},300)}
 
 /* player pages (/players/<name>): built and parked. true = live everywhere; ?pp=preview shows them without linking anything */
 const PP_ON=true;
@@ -1510,19 +1510,17 @@ LINES.forEach(([n,v,hard],i)=>{const r=el('div','ln'+(hard?' hard':'')+(i%2?' up
   r.style.left=pct(v)+'%';const SHORT={'Minimum':'Min','Salary cap':'Cap','Luxury tax':'Tax','First apron':'Apron 1','Second apron':'Apron 2'};const sp=el('span');if(n===HARDCAP){r.classList.add('lock');const k=document.createElement('b');k.className='lk';k.innerHTML=LOCK;k.title='Hard cap';sp.appendChild(k)}sp.append(el('i','full',n),el('i','short',SHORT[n]||n),(()=>{const e=el('em',null,money(v));if(n===HARDCAP)e.appendChild(el('small','hide-sm hcx',' · hard cap'));return e})());r.appendChild(sp);hbar.appendChild(r)});
 hbar.setAttribute('aria-label','Team salary '+money(TEAM_SALARY)+' against the cap, tax and apron lines');
 requestAnimationFrame(()=>{document.getElementById('fill').style.width=pct(TEAM_SALARY)+'%'});
-onView('cap',()=>{{const top=document.getElementById('captop');const nums=el('div','ct-nums');
+{const top=document.getElementById('captop');const nums=el('div','ct-nums');
  const PAY_RANK=LEAGUE_PAY.findIndex(t=>t[0]==='CLE')+1;
  [[money(TEAM_SALARY),'Team salary'],[money(HC_ROOM),'Under hard cap'],[money(TEAM_SALARY-tax),'Over the tax'],[money(TAX_BILL),'Tax bill'],[PAY_RANK+(PAY_RANK===1?'st':PAY_RANK===2?'nd':PAY_RANK===3?'rd':'th'),'Highest payroll of 30'],[TAX_RANK[0]+(TAX_RANK[0]===1?'st':TAX_RANK[0]===2?'nd':TAX_RANK[0]===3?'rd':'th'),'Largest tax bill of '+TAX_RANK[1]]].forEach(([v,l],i)=>{const d=el('div',i===1?'ctkey':null);d.append(el('b',null,v),el('span',null,l));nums.appendChild(d)});
  const hb=hbar.cloneNode(true);hb.removeAttribute('id');hb.querySelectorAll('[id]').forEach(x=>x.removeAttribute('id'));hb.querySelector('.fill').style.width=pct(TEAM_SALARY)+'%';
  top.append(nums,hb);
  top.appendChild(el('div','share',''));top.lastChild.id='share'}
-});
 
 /* apron chart: highlight the column for the Cavs' current band */
-onView('cap',()=>{{const V=n=>LINES.find(l=>l[0]===n)[1];const sal=TEAM_SALARY;const col=sal>V('Second apron')?4:sal>V('First apron')?3:sal>V('Salary cap')?2:1;
+{const V=n=>LINES.find(l=>l[0]===n)[1];const sal=TEAM_SALARY;const col=sal>V('Second apron')?4:sal>V('First apron')?3:sal>V('Salary cap')?2:1;
  document.querySelectorAll('#apt tr').forEach(tr=>{const c=tr.children[col];if(c)c.classList.add('cav')});
  const h=document.querySelector('#apt thead th.cav');if(h)h.insertAdjacentHTML('beforeend','<span class="apt-cav">Cavs</span>')}
-});
 
 /* injuries — status: Out | Doubtful | Questionable | Probable | Game-time decision */
 const INJ_UPDATED='Nov 1';
@@ -2271,7 +2269,7 @@ function openCapSheet(name,grid,home){let sh=document.getElementById('capsheet')
 const VETMIN=['Mario Hezonja','Thomas Bryant'];
 const cb=document.getElementById('capbody');const totals=[0,0,0,0,0];
 const salOf=y=>typeof y==='number'?y:Array.isArray(y)?y[0]:null;
-onView('cap',()=>{ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
+ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
   const tr=el('tr');tr.id='p-'+slug(n);const dead=t==='Dead money';if(dead)tr.className='deadrow';
   const nameTd=el('td','pcell');const cells=[nameTd];
   yrs.forEach((y,i)=>{const td=el('td','r '+(i===0?'cur':'fut'));
@@ -2330,9 +2328,8 @@ onView('cap',()=>{ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
   dtd.appendChild(g);det.appendChild(dtd);cb.appendChild(det);
   btn.addEventListener('click',()=>{if(matchMedia('(max-width:720px)').matches){openCapSheet(n,g,dtd);return}const o=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',String(!o));det.hidden=o});
 });
-});
 /* where the 2026-27 money goes: each player's share of team salary */
-onView('cap',()=>{{const sh=document.getElementById('share');const sum=totals[0];
+{const sh=document.getElementById('share');const sum=totals[0];
  sh.appendChild(el('h3',null,'Where the 2026–27 money goes'));
  const bar=el('div','sh-bar'),leg=el('ul','sh-leg');const items=ROSTER.map(r=>[r[0],typeof r[2][0]==='number'?r[2][0]:r[2][0][0],r[5]==='Dead money']).sort((a,b)=>b[1]-a[1]);
  items.forEach(([n,v,dead],i)=>{const pc=v/sum*100;const last=n.split(' ').filter(w=>!/^(Jr\.|III|II)$/.test(w)).pop();
@@ -2342,21 +2339,16 @@ onView('cap',()=>{{const sh=document.getElementById('share');const sum=totals[0]
    seg.addEventListener('click',e=>{e.preventDefault();const r=document.getElementById('p-'+slug(n));if(r)r.scrollIntoView({behavior:'smooth',block:'center'})});bar.appendChild(seg);
    const li=el('li',dead?'dead':null);const sw=el('i');if(!dead)sw.style.background=seg.style.background;li.append(sw,el('span',null,n),el('b',null,pc.toFixed(1)+'%'));leg.appendChild(li)});
  sh.append(bar,leg);sh.appendChild(el('p','dim','Share of the Cavs’ '+usd(sum)+' team salary, including dead money. Tap a name for his row.'))}
-});
 const tot=document.getElementById('captot');
-onView('cap',()=>{tot.append(el('td',null,'Team total'));
-});
+tot.append(el('td',null,'Team total'));
 const counts=[0,1,2,3,4].map(i=>{let pl=0,dm=0;ROSTER.forEach(([n,p,yrs,b,f,t])=>{const y=yrs[i];if(typeof y==='number'||Array.isArray(y)){t==='Dead money'?dm++:pl++}});return [pl,dm]});
-onView('cap',()=>{totals.forEach((v,i)=>{const td=el('td','r '+(i===0?'cur':'fut'),v?(i===0?usd(v):usdM(v)):'');const [pl,dm]=counts[i];if(v){const sm=el('small','cnt');sm.append(el('span','nw',pl+' player'+(pl===1?'':'s')));if(dm)sm.append(' ',el('span','nw','+ '+dm+' dead'));td.appendChild(sm)}tot.appendChild(td)});
-});
+totals.forEach((v,i)=>{const td=el('td','r '+(i===0?'cur':'fut'),v?(i===0?usd(v):usdM(v)):'');const [pl,dm]=counts[i];if(v){const sm=el('small','cnt');sm.append(el('span','nw',pl+' player'+(pl===1?'':'s')));if(dm)sm.append(' ',el('span','nw','+ '+dm+' dead'));td.appendChild(sm)}tot.appendChild(td)});
 const tf=tot.parentNode;
-const hdr=el('tr','thr-h');const hc=el('td',null,'League thresholds · Cavs committed salary vs. each line');hc.colSpan=6;hdr.appendChild(hc);onView('cap',()=>{tf.appendChild(hdr);
-});
-onView('cap',()=>{THRESH.forEach(([n,vals])=>{const tr=el('tr','thr');tr.append(el('td',null,n));
+const hdr=el('tr','thr-h');const hc=el('td',null,'League thresholds · Cavs committed salary vs. each line');hc.colSpan=6;hdr.appendChild(hc);tf.appendChild(hdr);
+THRESH.forEach(([n,vals])=>{const tr=el('tr','thr');tr.append(el('td',null,n));
   vals.forEach((v,i)=>{const td=el('td','r '+(i===0?'cur':'fut proj'),i===0?usd(v):usdM(v));if(i>0){const m=el('sup',null,'*');m.setAttribute('aria-label','projected');td.appendChild(m)}
     const dlt=totals[i]-v;td.appendChild(el('small','dlt '+(dlt>0?'over':'under'),money(Math.abs(dlt)/1e6)+(dlt>0?' over':' under')));tr.appendChild(td)});
   tf.appendChild(tr)});
-});
 /* Cavs position each season: which band the committed salary falls in, and the distance to the next line */
 const pos=el('tr','pos');pos.append(el('td',null,'Cavs position'));
 totals.forEach((v,i)=>{const L=THRESH.map(([n,a])=>[n,a[i]]);const td=el('td','r '+(i===0?'cur':'fut'));
@@ -2365,15 +2357,14 @@ totals.forEach((v,i)=>{const L=THRESH.map(([n,a])=>[n,a[i]]);const td=el('td','r
   const cls=!above?'ok':above[0]==='Salary cap'?'ok':above[0]==='Luxury tax'?'warn':'hot';
   td.appendChild(el('span','band '+cls,band));
   pos.appendChild(td)});
-onView('cap',()=>{tf.insertBefore(pos,hdr);
-});
+tf.insertBefore(pos,hdr);
 /* two-way game tracker on the cap page: games played for the Cavs out of the 50 allowed, with a pace line (Oct 30) */
 setTimeout(()=>{fetch('/box.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(B=>{if(!B)return;const reg=SCHEDULE.map(g=>g[0]);const done=reg.filter(d=>B[d]&&B[d].status==='final');const left=82-done.length;
   TWOWAY.forEach(([n])=>{const li=document.getElementById('p-'+slug(n));if(!li||li.querySelector('.twg'))return;const gp=done.filter(d=>(B[d].box||[]).some(r=>r[0]===n&&parseFloat(r[1])>0)).length;
     const pace=done.length>=5&&gp?Math.round(gp/done.length*82):null;const w=el('span','twg');const bar=el('span','twg-b');for(let k=0;k<50;k++){const t=el('i',k<gp?'on':pace!=null&&k<pace?'pc':null);bar.appendChild(t)}
     const tag=el('span','twg-t');tag.innerHTML='<b>'+gp+'</b><small>/50</small><em>'+(pace!=null?'on pace for '+pace:'games used')+'</em>';w.append(tag,bar);
     if(pace!=null&&pace>50)w.classList.add('hot');const sm=li.querySelector('summary');(sm.querySelector('.twx-e')||sm).before(w)})}).catch(()=>{})},0);
-const tw=document.getElementById('twoway');tw.className='xl tw2 twx-g';onView('cap',()=>{TWOWAY.forEach(([n,b,f])=>{const [len,thru,yos,sp,ag]=TW_DEAL[n];const li=el('li');li.id='p-'+slug(n);
+const tw=document.getElementById('twoway');tw.className='xl tw2 twx-g';TWOWAY.forEach(([n,b,f])=>{const [len,thru,yos,sp,ag]=TW_DEAL[n];const li=el('li');li.id='p-'+slug(n);
   const d=document.createElement('details');const sm=document.createElement('summary');const l=el('span','twx-top');l.append(el('b',null,n),el('small',null,'Two-way · through '+thru));const svc=3-yos,team=3-(TW_CLE[n]||1),left=Math.max(0,Math.min(svc,team));const mm=el('span','twx-m');const pp=el('span','twx-p');for(let k=0;k<3;k++)pp.appendChild(el('i',k<(TW_CLE[n]||1)?'f':null));mm.append(el('span',null,'Seasons on a Cavs two-way'),pp,el('span',null,'Free agency'),el('b',null,f));const ex=el('span','twx-e');ex.append(el('b','mono',left?'→ '+left+' more season'+(left===1?'':'s')+' eligible':'→ last Cavs two-way season'),el('span','twx-more','Details'));sm.append(l,mm,ex);
   const bx=el('div','xb twb tw3');const [yr,type]=f.split(' ');const used=TW_CLE[n]||1;
   const tiles=el('div','tw-tiles');[['Deal',len+' yr · thru '+thru.replace(/^20(\d\d)–(\d\d)$/,'$1–$2')],['Free agency',f],['Bird rights',TW_BIRD_NOW[n]?b+' when his deal ends · '+TW_BIRD_NOW[n]+' so far':b],['Agent',ag||'None listed']].forEach(([k,v],ix)=>{const t=el('div','tw-t'+(ix>=2?' ag wide':''));t.append(el('span',null,k),el('b',null,v));tiles.appendChild(t)});bx.appendChild(tiles);
@@ -2382,7 +2373,6 @@ const tw=document.getElementById('twoway');tw.className='xl tw2 twx-g';onView('c
   const bl=el('p','tw-bl');bl.append(el('strong',null,'Bottom line: '),left?'Cleveland can bring him back on a two-way for '+left+' more season'+(left===1?'':'s')+' after 2026–27'+(svc<team?' (his service time is the tighter limit).':'.'):'He can’t sign another two-way with the Cavs after 2026–27; keeping him would take a standard contract.');bx.appendChild(bl);
   const ft=el('div','tw-f');ft.append(el('span',null,'Two-ways are paid a set salary and don’t count against the cap.'));const a=el('a','splink','Spotrac ↗');a.href='https://www.spotrac.com/nba/player/_/id/'+sp;a.target='_blank';a.rel='noopener';a.title='Full contract on Spotrac';ft.appendChild(a);bx.appendChild(ft);
   d.append(sm,bx);li.appendChild(d);tw.appendChild(li)});
-});
 {document.getElementById('holds').textContent=HOLDS.map(([n,v])=>n+' '+usdM(v)).join(' · ');
  document.getElementById('holds-tot').textContent=HOLDS.length+' · '+usd(HOLDS.reduce((a,[,v])=>a+v,0))}
 
@@ -2988,13 +2978,12 @@ const NL_ON=true; /* on since Oct 24: sign-ups collect on Buttondown; nothing is
   if(msg){const t=el('div','nltoast');t.setAttribute('role','status');t.append(msg);const x=el('button',null,'×');x.type='button';x.setAttribute('aria-label','Close');x.onclick=()=>t.remove();t.appendChild(x);document.body.appendChild(t);setTimeout(()=>t.remove(),9000);try{history.replaceState(history.state,'',location.pathname)}catch(_){}}})();
 
 /* phones: compact cap sheet — "61.6" instead of "$61.6M" ($M in the header), "J. Harden", "26–27". Both forms are in the page; CSS picks one by screen width. */
-onView('cap',()=>{(function(){const cb=document.getElementById('capbody');const t=cb&&cb.closest('table');if(!t)return;
+(function(){const cb=document.getElementById('capbody');const t=cb&&cb.closest('table');if(!t)return;
   const sp=(c,tx)=>{const e=document.createElement('span');e.className=c;e.textContent=tx;return e};
   t.querySelectorAll('thead th').forEach((th,i)=>{const n=th.firstChild;if(i===0){th.appendChild(sp('cys',' $M'));return}if(n&&n.nodeType===3){const m=n.textContent.match(/^20(\d\d)–(\d\d)$/);if(m){const f=sp('yl',n.textContent);n.replaceWith(f);f.after(sp('cys',m[1]+'–'+m[2]))}}});
   const w=document.createTreeWalker(t,NodeFilter.SHOW_TEXT);const ns=[];let n;while(n=w.nextNode())if(/\$\d+(?:\.\d+)?[MK]|\$\d{1,3}(?:,\d{3}){2,}/.test(n.textContent)&&!n.parentElement.closest('thead')&&!n.parentElement.closest('.vfull'))ns.push(n);
   ns.forEach(n=>{const fr=document.createDocumentFragment();let last=0;const s=n.textContent;s.replace(/\$(\d+(?:\.\d+)?)M|\$(\d{1,3}(?:,\d{3}){2,})|\$(\d+)K/g,(m,v,d,k,i)=>{if(i>last)fr.append(s.slice(last,i));const dl=n.parentElement.closest('.dlt');fr.append(sp('mf',m),sp('ms',(v||(k?k+'K':(+d.replace(/,/g,'')/1e6).toFixed(1)))+(dl&&v?'M':'')));last=i+m.length;return m});if(last<s.length)fr.append(s.slice(last));n.replaceWith(fr)});
   t.querySelectorAll('.pbtn').forEach(b=>{const n=b.firstChild;if(!n||n.nodeType!==3)return;const full=n.textContent;const p=full.split(' ');if(p.length<2)return;const f=sp('nf',full);n.replaceWith(f);f.after(sp('ns',p[0][0]+'. '+p.slice(1).join(' ')))})})();
-});
 /* Cavs & Coffee sign-up above the footer on every page: shows with NL_ON (?nl=footer previews it); hidden once someone signs up */
 (function(){const f=document.getElementById('nlft');if(!f||window.CDB_EMBED)return;let st='';try{st=localStorage.getItem('cdb-nl')||''}catch(_){}
   if((NL_ON||/[?&]nl=footer/.test(location.search))&&st!=='sub')f.hidden=false;f.querySelector('form').addEventListener('submit',()=>{try{localStorage.setItem('cdb-nl','sub')}catch(_){}})})();
@@ -3119,7 +3108,7 @@ setTimeout(function(){const ov=(/[?&]bday=(\d\d-\d\d)/.exec(location.search)||[]
 /* jump-to chips: a sticky row of section links on long pages; highlights the section you're in */
 setTimeout(function(){const J={'view-cap':[['Cap sheet','#captop'],['Two-way','#twsec'],['Next summer','#summer'],['Apron rules','#ap-h'],['Glossary','#glossary']],'view-assets':[['Draft picks','#board'],['Exceptions','#exc'],['Cash','#cash-sec'],['Drafted players','#rights']],'view-resources':[['Tools','#tools'],['Who covers','#covers'],['Follow on X','#xfollow'],['Stats','#res>section:nth-of-type(1)'],['Cap','#res>section:nth-of-type(2)'],['Draft','#res>section:nth-of-type(3)'],['Trades','#res>section:nth-of-type(4)']],'view-history':[['Rafters','#hx-ret'],['Chasing','#chase'],['Seasons','#hx-sea'],['Playoffs','#hx-po'],['Honors','#hx-hon'],['Leaders','#hx-lead'],['Records','#hx-rec'],['Numbers','#hx-num'],['Draft','#hx-draft'],['Coaches','#hx-coach'],['Arenas','#hx-home']]};
   const hdr=()=>(document.querySelector('header.gbar')||{offsetHeight:0}).offsetHeight;
-  Object.entries(J).forEach(([vid,items])=>{const v=document.getElementById(vid);if(!v)return;const head=v.querySelector('.page>div');if(!head)return;
+  const build=(vid,items)=>{const v=document.getElementById(vid);if(!v||v.querySelector('nav.jump'))return;const vk=vid.slice(5);if(!VDONE[vk]&&VQ[vk]&&VQ[vk].length)return;/* not built yet: runs when the page is first shown */const head=v.querySelector('.page>div');if(!head)return;
     const secs=items.map(([l,q])=>{const t=document.querySelector(q);return t?[l,t.closest('section')||t]:null}).filter(Boolean);if(secs.length<2)return;
     const nav=el('nav','jump');nav.setAttribute('aria-label','Jump to section');const links=secs.map(([l,t],i)=>{const a=el('a',null,l);a.href='#';a.onclick=e=>{e.preventDefault();const y=t.getBoundingClientRect().top+scrollY-hdr()-nav.offsetHeight-10;scrollTo({top:y,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})};nav.appendChild(a);return a});
     const mo=el('button','jmore','›');mo.type='button';mo.setAttribute('aria-label','More sections');mo.onclick=()=>nav.scrollBy({left:nav.clientWidth*.6,behavior:'smooth'});nav.appendChild(mo);
@@ -3128,7 +3117,8 @@ setTimeout(function(){const J={'view-cap':[['Cap sheet','#captop'],['Two-way','#
     /* phones (Oct 31): at the top every section button shows in a tidy grid; once you scroll past it, it rides along as one swipeable row (a placeholder keeps the page from jumping) */
     const ph=el('div','jump-ph');nav.after(ph);const pin=()=>{const sm=matchMedia('(max-width:600px)').matches;const on=sm&&ph.getBoundingClientRect().top<hdr();if(on&&!nav.classList.contains('fx')){ph.style.height=nav.offsetHeight+parseFloat(getComputedStyle(nav).marginTop)+'px';nav.classList.add('fx')}else if(!on&&nav.classList.contains('fx')){nav.classList.remove('fx');ph.style.height='0'}};
     const spy=()=>{if(v.hidden)return;pin();edge();nav.style.top=hdr()+'px';const line=hdr()+nav.offsetHeight+30;let k=0;secs.forEach(([,t],i)=>{if(t.getBoundingClientRect().top<=line)k=i});links.forEach((a,i)=>{const on=i===k;a.classList.toggle('on',on);if(on&&a.getAttribute('aria-current')!=='true'){a.setAttribute('aria-current','true');const nl=nav.scrollLeft,ar=a.offsetLeft;if(ar<nl||ar+a.offsetWidth>nl+nav.clientWidth)nav.scrollTo({left:ar-16,behavior:'smooth'})}else if(!on)a.removeAttribute('aria-current')})};
-    addEventListener('scroll',spy,{passive:true});addEventListener('resize',spy);setTimeout(spy,50)})},0);
+    addEventListener('scroll',spy,{passive:true});addEventListener('resize',spy);setTimeout(spy,50)};
+  Object.entries(J).forEach(([vid,items])=>build(vid,items));window.cdbJump=vid=>{if(J[vid])build(vid,J[vid])}},0);
 /* press / anywhere to jump to search (desktop) */
 document.addEventListener('keydown',e=>{if(e.key!=='/'||e.metaKey||e.ctrlKey||e.altKey)return;const t=e.target;if(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)))return;const q=document.getElementById('q');if(!q)return;e.preventDefault();q.focus();q.select&&q.select()});
 /* printing: a source line under the page title, filled in when someone prints */
@@ -4030,7 +4020,7 @@ const COMBINE={
  'Sam Merrill':[null,null,null,77,null,null,null,null,null,'Crafted'],
  'Craig Porter Jr.':[null,null,null,76,null,null,null,null,null,'Crafted']
 };
-onView('roster',()=>{(function(){
+(function(){
   const ftin=v=>{if(v==null)return '—';const f=Math.floor(v/12),i=+(v-f*12).toFixed(2);return f+'′'+i+'″'};
   const htIn=h=>{const m=/^(\d+)-(\d+)$/.exec(h);return m?+m[1]*12+ +m[2]:null};
   const born=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
@@ -4109,7 +4099,6 @@ onView('roster',()=>{(function(){
   document.querySelectorAll('[data-rv]').forEach(b=>b.addEventListener('click',()=>pickRv(b.dataset.rv)));
   if(DEPTH_PICK)pickRv(DEPTH_PICK);
 })();
-});
 if(typeof ng!=='undefined'&&ng)add('Next game: '+(ng[2]==='H'?'vs ':'at ')+TEAMS[ng[1]],dayFmt.format(tipOf(ng))+' · '+ng[3]+' PM ET','Game','home','next-h-row','next game play when tip off tonight upcoming schedule');
 PLAYERS.forEach(p=>add(p[1],[p[2],'age '+p[6],p[8],p[9]].filter(Boolean).join(' · '),'Player bio','roster','r-'+slug(p[1]),'height weight wingspan college born age country draft bio measurements'));
 
