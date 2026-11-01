@@ -70,5 +70,18 @@ else { if (days(LK.checked.slice(0, 10), today) > 9) problems.push(`The weekly l
 { const pc = await J('data/poss-check.json'); if (pc && pc.games) { const off = Object.values(pc.games).filter(x => x.pb && (Math.abs(x.ours.cle[0] - x.pb.cle[0]) > 2 || Math.abs(x.ours.opp[0] - x.pb.opp[0]) > 2 || x.ours.cle[1] !== x.pb.cle[1] || x.ours.opp[1] !== x.pb.opp[1]));
   if (off.length) problems.push(`Possession or point counts differ from pbpstats in ${off.length} game(s): ${off.slice(-3).map(x => x.et + ' ' + x.opp + ' (ours ' + x.ours.cle.join('/') + ', pbpstats ' + x.pb.cle.join('/') + ')').join('; ')}`);
   else notes.push('possessions match pbpstats (' + Object.values(pc.games).filter(x => x.pb).length + ' games)'); } }
+// 9. the live site itself (Nov 1): cavsdatabase.com answers, and it serves the newest build (catches a stuck Cloudflare deploy)
+try {
+  const r = await fetch('https://cavsdatabase.com/', { headers: { 'cache-control': 'no-cache', 'user-agent': 'cavsdatabase-health' } });
+  if (!r.ok) problems.push(`cavsdatabase.com answered ${r.status}`);
+  else {
+    const live = ((await r.text()).match(/\/a\/app\.([0-9a-f]{10})\.js/) || [])[1];
+    let built = null, age = 0;
+    try { built = (execSync('git -C ' + root.pathname + ' show origin/deploy:home.html 2>/dev/null || cat ' + root.pathname + 'home.html', { encoding: 'utf8', shell: '/bin/bash' }).match(/\/a\/app\.([0-9a-f]{10})\.js/) || [])[1];
+      age = (now - +execSync('git -C ' + root.pathname + ' log -1 --format=%ct -- home.html', { encoding: 'utf8' }).trim() * 1000) / 36e5; } catch {}
+    if (live && built && live !== built && age > 2) problems.push(`The live site still serves an older build (app.${live}.js; newest is app.${built}.js, ${age.toFixed(0)} h old). Cloudflare may not be deploying.`);
+    else notes.push('live site ok');
+  }
+} catch (e) { problems.push('cavsdatabase.com did not answer: ' + String(e.message || e).slice(0, 80)); }
 if (problems.length) { console.log('PROBLEMS:\n- ' + problems.join('\n- ')); console.log('ok: ' + notes.join(' · ')); process.exit(1); }
 console.log('HEALTHY: ' + notes.join(' · '));
