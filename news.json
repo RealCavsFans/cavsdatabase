@@ -2,6 +2,18 @@
  "articles": [
   {
    "src": "Fear The Sword",
+   "title": "Diving deeper into Cavs 136-111 win over Bucks: Evan Mobley and Jarrett Allen dominate",
+   "link": "https://www.fearthesword.com/cavs-analysis/53825/cavs-diving-deeper-milwaukee-bucks-cleveland-cavaliers-evan-mobley-jarrett-allen-donovan-mitchell",
+   "date": "2026-11-01T03:23:43.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Evan Mobley and Jarrett Allen lead Cavs to runaway victory over Bucks",
+   "link": "https://www.fearthesword.com/cavs-scores-results/53826/cavs-recap-evan-mobley-jarrett-allen-cleveland-cavaliers-milwaukee-bucks",
+   "date": "2026-11-01T02:24:50.000Z"
+  },
+  {
+   "src": "Fear The Sword",
    "title": "Cavs at Bucks game thread",
    "link": "https://www.fearthesword.com/cavs-game-previews/53812/cavs-at-bucks-game-thread",
    "date": "2026-11-01T00:00:00.000Z"
@@ -113,18 +125,6 @@
    "title": "How Evan Mobley’s improved 3-point shot puts him in a different class — and changes the Cavs’ ceiling",
    "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQWGEyaGE0WlJTc2dfbnJjajhKNkxCaERYUlc0MW1uYV8wZnpxSUFpd1ZQYW14N1ByQldxZjlCSll3Qzgwejk3RUM2Smxla0N2R0Jia2RfXzczbzNBMm1uQmN3UU1Ec25ORjRxTW1XdEFJaGN2TnltcFhnRTF4U1NvRFdERUNnZGNaclBmQlU5WVV6c1RUN1hydmlNRUlaNkhBTXJ3SkdDNlg5YmpOUzZiQW9UODIwRXcxamU1b2FKS3JDS3gwcHJTZXYxMlA0N0ZDeTZn?oc=5",
    "date": "2026-10-29T05:08:00.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Diving deeper into Cavs 121-111 win over Wizards: Evan Mobley finds his three-point shot",
-   "link": "https://www.fearthesword.com/cavs-analysis/53680/cavs-diving-deeper-cleveland-cavaliers-washington-wizards-james-harden-evan-mobley-donovan-mitchell",
-   "date": "2026-10-29T03:55:28.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Player Grades: Cavs vs Wizards – Peyton Watson finds his groove",
-   "link": "https://www.fearthesword.com/cavs-analysis/53674/player-grades-cavs-vs-wizards-peyton-watson-finds-his-groove",
-   "date": "2026-10-29T01:46:28.000Z"
   },
   {
    "src": "cleveland.com",
@@ -354,7 +354,7 @@
    "src": "Locked On Cavs",
    "title": "CAVS POSTCAST: Jarrett Allen & Evan Mobley Cause NIGHTMARES for the Bucks as the Cavaliers DOMINATE",
    "link": "https://www.youtube.com/watch?v=tgT2kLuuYIY",
-   "date": "2026-11-01T02:17:39.000Z",
+   "date": "2026-11-01T02:55:16.000Z",
    "id": "tgT2kLuuYIY"
   },
   {
@@ -576,6 +576,27 @@
   }
  ],
  "highlights": [
+  {
+   "src": "Cavs",
+   "title": "Cavs at Bucks | Game Highlights | 10.31.2026",
+   "link": "https://www.youtube.com/watch?v=5fcYYzr0ZCI",
+   "date": "2026-11-01T02:30:21.000Z",
+   "id": "5fcYYzr0ZCI"
+  },
+  {
+   "src": "NBA",
+   "title": "CAVALIERS at BUCKS | FULL GAME HIGHLIGHTS | October 31, 2026",
+   "link": "https://www.youtube.com/watch?v=AigPdlRpHP0",
+   "date": "2026-11-01T02:28:41.000Z",
+   "id": "AigPdlRpHP0"
+  },
+  {
+   "src": "Cavs",
+   "title": "Cavs at Bucks | Evan Mobley & Jarrett Allen Highlights | 10.31.2026",
+   "link": "https://www.youtube.com/watch?v=aPz6G0kFR7Q",
+   "date": "2026-11-01T02:27:12.000Z",
+   "id": "aPz6G0kFR7Q"
+  },
   {
    "src": "NBA",
    "title": "CAVALIERS at HAWKS | FULL GAME HIGHLIGHTS | October 29, 2026",
