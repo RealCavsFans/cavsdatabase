@@ -2110,8 +2110,17 @@ function vShare(v,D,R){
   const avail={clutch:()=>deriveCore(D,R.plays,'clutch').T[D.focus.id].sec>0,milestone:()=>(milestoneCard(D,R),MSH.length>0),streak:()=>D.focus.id===CLE&&S.state==='post'};if(S.f.card&&avail[S.f.card]&&!avail[S.f.card]())S.f.card='game';
   Object.entries(CARDS0).forEach(([k,o])=>{if(!S.season&&avail[k]&&!avail[k]())return;const b=el('button',null,o.label);b.type='button';b.setAttribute('aria-pressed',S.f.card===k);b.onclick=()=>{S.f.card=k;renderView()};fl.appendChild(b)});c.appendChild(fl);
   const C=CARDS0[S.f.card];const f2=el('div','fl');let sel=null;
-  if(C.pick==='lineup'){/* 2-, 3-, 4- or 5-man groups (Oct 31) */const sz=el('div','fl');[[2,'2-man'],[3,'3-man'],[4,'4-man'],[5,'5-man']].forEach(([n,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',(S.f.luN||5)===n);b.onclick=()=>{S.f.luN=n;if(S.f.pk)delete S.f.pk.lineup;renderView()};sz.appendChild(b)});c.appendChild(sz)}
-  if(C.pick){sel=el('select');sel.setAttribute('aria-label','Pick');
+  let luBox=null;if(C.pick==='lineup'){/* lineup card: tick 2 to 5 players instead of scrolling a list (Oct 31) */
+    const F=D.focus.id,ids=Object.keys(R.B).filter(id=>D.P[id].team===F&&(R.B[id].min>0||R.B[id].gp)).sort((a,b)=>(R.B[b].min||0)-(R.B[a].min||0));
+    if(!S.f.luPk||!S.f.luPk.every(id=>ids.includes(id))){const top=Object.values(R.L[F][5]).sort((a,b)=>b.sec-a.sec)[0];S.f.luPk=top?top.ids.slice():ids.slice(0,5)}
+    const wrap=el('div','fl lu-pk');const msg=el('p','note');const key=()=>S.f.luPk.slice().sort().join(',');
+    const upd=()=>{const n=S.f.luPk.length;wrap.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',S.f.luPk.includes(b.dataset.id)));const l=n>=2&&n<=5?R.L[F][n][key()]:null;
+      msg.textContent=n<2?'Tick 2 to 5 players.':n>5?'Pick 5 players at most.':!l?'These players weren’t on the floor together.':n+' players · '+fmtMin(l.sec)+' together · '+(l.pf-l.pa>0?'+':'')+(l.pf-l.pa);
+      if(luBox)luBox.disabled=!l;S.f.luN=n};
+    ids.forEach(id=>{const b=el('button',null,D.P[id].short||D.P[id].name);b.type='button';b.dataset.id=id;b.onclick=()=>{const a=S.f.luPk;const i2=a.indexOf(id);if(i2>=0)a.splice(i2,1);else a.push(id);upd()};wrap.appendChild(b)});
+    c.append(wrap,msg);luBox={get value(){return key()},disabled:false};setTimeout(upd)}
+  if(C.pick==='lineup')sel=luBox;
+  else if(C.pick){sel=el('select');sel.setAttribute('aria-label','Pick');
     const opts=C.pick==='shooter'?[['team','Whole team']].concat(Object.keys(R.B).filter(id=>D.P[id].team===D.focus.id&&R.B[id].fga).sort((a,b)=>R.B[b].fga-R.B[a].fga).map(id=>[id,D.P[id].name+' · '+R.B[id].fga+' FGA'])):C.pick==='player'?(S.season?Object.keys(R.B).filter(id=>R.B[id].gp).sort((a,b)=>R.B[b].pts/R.B[b].gp-R.B[a].pts/R.B[a].gp).map(id=>[id,D.P[id].name+' · '+(R.B[id].pts/R.B[id].gp).toFixed(1)+' ppg']):Object.keys(R.B).filter(id=>(R.B[id].min>0||R.B[id].pts)&&(S.f.card!=='onoff'||D.P[id].team===D.focus.id)).sort((a,b)=>(D.P[a].team===D.focus.id?0:1)-(D.P[b].team===D.focus.id?0:1)||R.B[b].pts-R.B[a].pts).map(id=>[id,D.P[id].name+' · '+R.B[id].pts+' pts'])):
       C.pick==='run'?R.runs.map((r,i)=>[String(i),D.teams.find(t=>t.id===r.t).abbr+' '+r.pts+'–0 · '+pname(r.start.per)+' '+r.start.clock]).reverse():
       Object.entries(R.L[D.focus.id][R.L[D.focus.id][S.f.luN]?S.f.luN:5]).filter(([k,l])=>l.sec>=60).sort((a,b)=>b[1].sec-a[1].sec).map(([k,l])=>[k,l.ids.map(id=>D.P[id].last).join(', ')+' · '+fmtMin(l.sec)]);
@@ -2119,7 +2128,7 @@ function vShare(v,D,R){
     S.f.pk=S.f.pk||{};const keep=S.f.pk[S.f.card];opts.forEach(([val,l])=>{const o=el('option',null,l);o.value=val;if(val===keep)o.selected=true;sel.appendChild(o)});sel.onchange=()=>{S.f.pk[S.f.card]=sel.value;go.click()};f2.appendChild(sel)}
   const go=el('button','btn','Make card');go.type='button';f2.appendChild(go);c.appendChild(f2);
   const out=el('div','cardout');c.appendChild(out);
-  go.onclick=async()=>{const arg=sel?sel.value:null;if(sel){S.f.pk=S.f.pk||{};S.f.pk[S.f.card]=arg}const blob=await renderCard(S.f.card,arg,D,R);const url=URL.createObjectURL(blob);out.innerHTML='';const img=el('img');img.src=url;img.alt=C.label;
+  go.onclick=async()=>{if(sel&&sel===luBox&&luBox.disabled)return;const arg=sel?sel.value:null;if(sel){S.f.pk=S.f.pk||{};S.f.pk[S.f.card]=arg}const blob=await renderCard(S.f.card,arg,D,R);const url=URL.createObjectURL(blob);out.innerHTML='';const img=el('img');img.src=url;img.alt=C.label;
     const acts=el('div','acts');const fn=('cavsdb-'+S.f.card+'-'+(S.season?'season-'+S.season:D.away.abbr+'-'+D.home.abbr)).toLowerCase().replace(/[^a-z0-9-]/g,'')+'.png';
     const dl=el('a','btn','Download image');dl.href=url;dl.download=fn;acts.appendChild(dl);
     try{const file=new File([blob],fn,{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[file]})){const sh=el('button','btn ghost','Share');sh.type='button';sh.onclick=()=>navigator.share({files:[file]}).catch(()=>{});acts.appendChild(sh)}}catch(e){}
