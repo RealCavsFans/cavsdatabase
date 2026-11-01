@@ -48,16 +48,25 @@ let LIVE = {}; try { LIVE = JSON.parse(await readFile(new URL('og/live.json', ro
 const esc = s => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 // Speed: the site's big stylesheet and main script move into two shared files (a/app.<hash>.css/.js) that the browser
 // caches once and reuses on every page, instead of re-downloading ~770 KB inline with each page. index.html stays the editable source.
-let shell = html;
+let shell = html; let CHMAP = {};
 { const { createHash: ch } = await import('node:crypto'); const { readdir, unlink } = await import('node:fs/promises');
   const sm = html.match(/<style>([\s\S]*?)<\/style>/), jm = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].sort((x, y) => y[1].length - x[1].length)[0];
   if (PRE && sm && jm && jm[1].length > 100000) {  // only in the Action (--prerender), which also commits a/; plain builds (the daily task) stay inline so nothing points at an uncommitted file
-    const hc = ch('sha1').update(sm[1]).digest('hex').slice(0, 10), hj = ch('sha1').update(jm[1]).digest('hex').slice(0, 10);
     await mkdir(new URL('a/', root), { recursive: true });
+    // Speed step 2 (Nov 1): code marked /*@chunk:name*/ ... /*@/chunk*/ in the source moves to its own file a/c-<name>.<hash>.js,
+    // loaded by needChunk(name) only on the pages that use it (player pages, this-day-in-history); the main file gets the name -> file map
+    const chunks = {}; let mainJs = jm[1].replace(/\/\*@chunk:(\w+)\*\/([\s\S]*?)\/\*@\/chunk\*\//g, (m, n, code) => { (chunks[n] = chunks[n] || []).push(code); return ''; });
+    const CH = {}, keepC = new Set();
+    for (const [n, parts] of Object.entries(chunks)) { let code = parts.join('\n');
+      try { const { transform } = await import('esbuild'); code = (await transform(code, { loader: 'js', minify: true, target: 'es2020', legalComments: 'none' })).code; } catch (e) {}
+      const h = ch('sha1').update(code).digest('hex').slice(0, 10); const f = `c-${n}.${h}.js`; await writeFile(new URL('a/' + f, root), code); CH[n] = '/a/' + f; keepC.add(f); }
+    mainJs = 'window.__CH=' + JSON.stringify(CH) + ';\n' + mainJs; CHMAP = CH;
+    for (const f of await readdir(new URL('a/', root))) if (/^c-\w+\.[0-9a-f]{10}\.js$/.test(f) && !keepC.has(f)) await unlink(new URL('a/' + f, root));
+    const hc = ch('sha1').update(sm[1]).digest('hex').slice(0, 10), hj = ch('sha1').update(mainJs).digest('hex').slice(0, 10);
     // minify the shared files when esbuild is installed (the Action installs it); the hashes come from the source, so names only change when the source does
-    let cssOut = sm[1], jsOut = jm[1];
+    let cssOut = sm[1], jsOut = mainJs;
     try { const { transform } = await import('esbuild');
-      jsOut = (await transform(jm[1], { loader: 'js', minify: true, target: 'es2020', legalComments: 'none' })).code;
+      jsOut = (await transform(mainJs, { loader: 'js', minify: true, target: 'es2020', legalComments: 'none' })).code;
       cssOut = (await transform(sm[1], { loader: 'css', minify: true })).code;
     } catch (e) { if (!/Cannot find (package|module)/.test(e.message)) console.warn('minify skipped:', e.message.split('\n')[0]); }
     await writeFile(new URL(`a/app.${hc}.css`, root), cssOut); await writeFile(new URL(`a/app.${hj}.js`, root), jsOut);
@@ -68,7 +77,8 @@ let shell = html;
       for (const m of [...shell.matchAll(/<style>([\s\S]*?)<\/style>/g)]) { const c = (await transform(m[1], { loader: 'css', minify: true })).code.trim(); shell = shell.replace(m[0], () => `<style>${c}</style>`); }
     } catch (e) { if (!/Cannot find (package|module)/.test(e.message)) console.warn('inline css minify skipped:', e.message.split('\n')[0]); }
   } }
-await writeFile(new URL('home.html', root), shell); // front page copy (served at / via _redirects)
+const preload = (h, n) => CHMAP[n] ? h.replace('</head>', () => `<link rel="preload" href="${CHMAP[n]}" as="script"></head>`) : h;   // start the page's own chunk downloading alongside the main file
+await writeFile(new URL('home.html', root), preload(shell, 'hist')); // front page copy (served at / via _redirects)
 { const { buildLive } = await import('./build-live.mjs'); console.log(await buildLive(root)); }   // /live.html from live.src.html, its script and styles cached in a/
 for (const [route, [title, desc]] of Object.entries(META)) {
   if (route === 'home') continue;
@@ -80,6 +90,7 @@ for (const [route, [title, desc]] of Object.entries(META)) {
     .replace(/<meta property="og:url" content="[^"]*">/, `<meta property="og:url" content="${url}">`)
     .replace(/<meta property="og:title" content="[^"]*">/, `<meta property="og:title" content="${esc(title)}">`)
     .replace(/<meta property="og:description" content="[^"]*">/, `<meta property="og:description" content="${esc(desc)}">`);
+  if (route.startsWith('players/')) out = preload(out, 'pp');
   // each page has its own share image in og/<route>.jpg (media/rcf -> og/media-rcf.jpg); fall back to the site-wide one
   let img = 'og/' + (route.startsWith('players/') ? 'roster' : route.startsWith('games/') ? 'schedule' : route.replace(/\//g, '-')) + '.jpg';
   if (route.startsWith('history/') && await exists(new URL('og/h/' + route.slice(8) + '.jpg', root))) img = 'og/h/' + route.slice(8) + '.jpg';  // season cards (scripts/og-seasons.mjs)
