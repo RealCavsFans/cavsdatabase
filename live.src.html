@@ -1041,17 +1041,20 @@ const LGM={'FG%':(A)=>A.fga?A.fgm/A.fga:null,'Twos made':(A,O,n)=>(A.fgm-A.tpm)/
   'In the paint':(A)=>A.ex?A.paint/A.ex:null,'Off turnovers':(A,O)=>O.ex?O.pot/O.ex:null,'Rebounds':(A,O,n)=>(A.orb+A.drb)/n,'Off. rebounds':(A,O,n)=>A.orb/n,'Assists':(A)=>A.ex?A.ast/A.ex:null,
   'Turnovers':(A,O,n)=>A.tov/n,'Steals':(A)=>A.ex?A.stl/A.ex:null,'Blocks':(A)=>A.ex?A.blk/A.ex:null,'Fouls':(A)=>A.ex?A.pf/A.ex:null,
   'Pace':(A,O,n,sec)=>sec?((lgPoss(A)+lgPoss(O))/2)/sec*2880:null,'Possessions':(A,O,n)=>lgPoss(A)/n,'Points per 100':A=>{const p=lgPoss(A);return p?A.pts/p*100:null},
-  'True shooting':A=>A.fga+A.fta?A.pts/(2*(A.fga+.44*A.fta)):null,'True shot att.':(A,O,n)=>(A.fga+.44*A.fta)/n};
+  'True shooting':A=>A.fga+A.fta?A.pts/(2*(A.fga+.44*A.fta)):null,'True shot att.':(A,O,n)=>(A.fga+.44*A.fta)/n,
+  /* rates: assists, steals and blocks come from the games with full box data (ex), so their bases are scaled to the same games */
+  'Rebound %':(A,O)=>(A.orb+A.drb+O.orb+O.drb)?(A.orb+A.drb)/(A.orb+A.drb+O.orb+O.drb):null,'Assist %':(A,O,n)=>A.ex&&A.fgm?A.ast/(A.fgm*A.ex/n):null,'Steal %':(A,O,n)=>{const p=lgPoss(O);return A.ex&&p?A.stl/(p*A.ex/n):null},'Block %':(A,O,n)=>A.ex&&(O.fga-O.tpa)?A.blk/((O.fga-O.tpa)*A.ex/n):null};
 /* rank of a value among the other 29 teams: dir 1 = higher is better, -1 = lower is better, 0 = neutral (ranked by most) */
 function lgRank(v,others,dir){if(v==null||!others.length)return null;const o=others.filter(x=>x!=null);const r=1+(dir<0?o.filter(x=>x<v-1e-9).length:o.filter(x=>x>v+1e-9).length);return {r,n:o.length+1,dir}}
 function rkEl(k){if(!k)return'';if(k.p!=null)return `<small class="rk pc${k.p>=90?' pct9':''}" title="Better than ${k.p}% of ${k.n} NBA team games this season">${ord2(k.p)}</small>`;const cut=k.n>40?Math.max(1,Math.round(k.n*.1)):10;const cls=!k.dir?'n':k.r<=cut?'g':k.r>k.n-cut?'b':'n';return `<small class="rk ${cls}" title="${ord2(k.r)} of ${k.n} NBA teams${k.dir?' (1st = best for the Cavs)':' (1st = most)'}">${ord2(k.r)}</small>`}
 /* game view: where a team's number tonight sits among every NBA team game this season, as a percentile (99th = best; for turnovers and fouls, fewer is better). From /pdata/league.json box scores (Oct 30 mockup) */
-let LTG=null;function lgTeamGames(){if(LTG!==null)return LTG||null;LTG=false;getJSON('/pdata/league.json').then(L=>{const a=[];Object.entries(L.tg||{}).forEach(([id,g])=>{if(g.t&&g.t.length===2&&g.per>=4)a.push([id,g.t[0]],[id,g.t[1]])});LTG=a;if(!S.season&&S.tab==='team')renderView()}).catch(()=>{});return null}
+let LTG=null;function lgTeamGames(){if(LTG!==null)return LTG||null;LTG=false;getJSON('/pdata/league.json').then(L=>{const a=[];Object.entries(L.tg||{}).forEach(([id,g])=>{if(g.t&&g.t.length===2&&g.per>=4)a.push([id,g.t[0],g.t[1]],[id,g.t[1],g.t[0]])});LTG=a;if(!S.season&&S.tab==='team')renderView()}).catch(()=>{});return null}
 const LGP2={'FG%':t=>t.fga?t.fgm/t.fga:null,'Twos made':t=>t.fgm-t.tpm,'2PT%':t=>t.fga-t.tpa?(t.fgm-t.tpm)/(t.fga-t.tpa):null,'Threes made':t=>t.tpm,'3PT%':t=>t.tpa?t.tpm/t.tpa:null,'FT made':t=>t.ftm,'FT%':t=>t.fta?t.ftm/t.fta:null,'In the paint':t=>t.paint,'Fast-break points':t=>t.fb,
   'Rebounds':t=>t.orb+t.drb,'Off. rebounds':t=>t.orb,'Assists':t=>t.ast,'Turnovers':t=>t.tov,'Steals':t=>t.stl,'Blocks':t=>t.blk,'Fouls':t=>t.pf,
-  'Points per 100':t=>{const p=t.fga-t.orb+t.tov+.44*t.fta;return p?t.pts/p*100:null},'True shooting':t=>t.fga+t.fta?t.pts/(2*(t.fga+.44*t.fta)):null};
-function lgGamePct(ROWS,D){const A=lgTeamGames();if(!A)return false;const pool=A.filter(([id])=>id!==String(S.ev)).map(([,t])=>t);if(pool.length<20)return false;let any=false;
-  ROWS.forEach(r=>{const f=LGP2[r.lab];if(!f||r.hib===null)return;const v=pool.map(f).filter(x=>x!=null&&isFinite(x));if(v.length<20)return;
+  'Points per 100':t=>{const p=t.fga-t.orb+t.tov+.44*t.fta;return p?t.pts/p*100:null},'True shooting':t=>t.fga+t.fta?t.pts/(2*(t.fga+.44*t.fta)):null,
+  'Rebound %':(t,o)=>o&&(t.orb+t.drb+o.orb+o.drb)?(t.orb+t.drb)/(t.orb+t.drb+o.orb+o.drb):null,'Assist %':t=>t.fgm?t.ast/t.fgm:null,'Steal %':(t,o)=>{if(!o)return null;const p=lgPoss(o);return p?t.stl/p:null},'Block %':(t,o)=>o&&(o.fga-o.tpa)?t.blk/(o.fga-o.tpa):null};
+function lgGamePct(ROWS,D){const A=lgTeamGames();if(!A)return false;const pool=A.filter(([id])=>id!==String(S.ev)).map(([,t,o])=>[t,o]);if(pool.length<20)return false;let any=false;
+  ROWS.forEach(r=>{const f=LGP2[r.lab];if(!f||r.hib===null)return;const v=pool.map(([t,o])=>f(t,o)).filter(x=>x!=null&&isFinite(x));if(v.length<20)return;
     const pc=x=>{if(x==null||!isFinite(x))return null;const lo=v.filter(y=>r.hib?y<x-1e-9:y>x+1e-9).length,eq=v.filter(y=>Math.abs(y-x)<=1e-9).length;return Math.max(1,Math.min(99,Math.round((lo+eq/2)/v.length*100)))};
     r.rx={p:pc(r.x),n:v.length};r.ry={p:pc(r.y),n:v.length};if(r.rx.p==null)r.rx=null;if(r.ry.p==null)r.ry=null;any=true});return any?pool.length:false}
 const lgOK=()=>S.season&&S.season===CUR_SEASON&&(S.per||'all')==='all'&&!((S.sf||{}).games||[]).length&&!(S.sf||{}).tier;
