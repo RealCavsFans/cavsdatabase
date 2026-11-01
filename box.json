@@ -980,37 +980,7 @@
   "status": "final",
   "score": "136-111",
   "result": "W",
-  "refs": [
-   [
-    "Crew chief",
-    "Karl Lane",
-    "77"
-   ],
-   [
-    "Referee",
-    "Marat Kogut",
-    "32"
-   ],
-   [
-    "Umpire",
-    "Evan Scott",
-    "22"
-   ]
-  ],
-  "qs": {
-   "cle": [
-    24,
-    48,
-    37,
-    27
-   ],
-   "opp": [
-    25,
-    21,
-    30,
-    35
-   ]
-  },
+  "top": "Jarrett Allen: 25 pts, 11 reb, 4 ast",
   "out": [
    "Jaylon Tyson",
    "Nae'Qwan Tomlin"
@@ -1212,7 +1182,37 @@
     "0"
    ]
   ],
-  "top": "Jarrett Allen: 25 pts, 11 reb, 4 ast"
+  "qs": {
+   "cle": [
+    24,
+    48,
+    37,
+    27
+   ],
+   "opp": [
+    25,
+    21,
+    30,
+    35
+   ]
+  },
+  "refs": [
+   [
+    "Crew chief",
+    "Karl Lane",
+    "77"
+   ],
+   [
+    "Referee",
+    "Marat Kogut",
+    "32"
+   ],
+   [
+    "Umpire",
+    "Evan Scott",
+    "22"
+   ]
+  ]
  },
  "2026-11-02": {
   "url": "https://www.nba.com/game/okc-vs-cle-0022600158/box-score",
