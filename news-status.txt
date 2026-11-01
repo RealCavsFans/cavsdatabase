@@ -1,4 +1,4 @@
-2026-11-01T01:14:54.101Z
+2026-11-01T01:54:38.894Z
 NBA highlights: 6 new (YouTube API)
 Hoops Rumors: 6 from https://www.hoopsrumors.com/cleveland-cavaliers/feed
 Cavaliers on SI: 15 from https://news.google.com/rss/search?q=site%3Asi.com%2Fnba%2Fcavaliers&hl=en-US&gl=US&ceid=US:en
@@ -7,7 +7,7 @@ Fear The Sword: 10 from https://www.fearthesword.com/rss/current.xml
 Wine and Gold Talk: 7 from https://feeds.megaphone.fm/wineandgoldtalk
 The Block The Shot The Stop: 0 from https://www.spreaker.com/show/6772702/episodes/feed
 Locked On Cavs: 10 (YouTube API)
-The Chase Down Podcast: 3 (YouTube API)
+The Chase Down Podcast: 2 (YouTube API)
 It's Cavalier Podcast: 10 (YouTube API)
 The Block, The Shot, The Stop: 0 (YouTube API)
 Fear The Fro: 3 from https://feeds.transistor.fm/fear-the-fro-with-bob-schmidt-a-cavs-podcast
