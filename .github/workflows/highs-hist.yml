@@ -1,0 +1,30 @@
+name: Game-high history
+on:
+  # weekly: adds any new Cavs player's career game logs from Basketball Reference (history through last season never changes)
+  schedule:
+    - cron: '17 9 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: highs-hist
+  cancel-in-progress: false
+jobs:
+  hist:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
+        with:
+          node-version: 22
+      - run: node scripts/highs-hist.mjs
+      - name: Commit if changed
+        run: |
+          git config user.name "cavsdatabase-bot"
+          git config user.email "bot@cavsdatabase.com"
+          git add pdata/highs-hist.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Game-high history"
+          for i in 1 2 3; do git pull --rebase -q -X theirs origin main && git push -q origin HEAD:main && exit 0; sleep 5; done
+          exit 1

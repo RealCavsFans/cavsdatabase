@@ -99,7 +99,7 @@ function build(per, file) {
     const gi = games.length;
     const opp = D.other;
     const etd = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(D.date));
-    games.push({ id: f.slice(0, -5), date: D.date, et: etd, opp: opp.abbr, ha: D.focus.ha, cle: D.focus.ha === 'home' ? R0.hs : R0.as, os: D.focus.ha === 'home' ? R0.as : R0.hs, recap: s.recap || [], rc: C.recapL ? C.recapL(D, R0) : [] });
+    games.push({ id: f.slice(0, -5), date: D.date, et: etd, opp: opp.abbr, ha: D.focus.ha, cle: D.focus.ha === 'home' ? R0.hs : R0.as, os: D.focus.ha === 'home' ? R0.as : R0.hs, recap: s.recap || [], rc: C.recapL ? C.recapL(D, R0) : [], hl: per === 'all' && C.highLine ? C.highLine(D, R0) : null });
     for (const id of D.roster['5']) {
       const p = D.P[id], b = R.B[id];
       P[id] = { name: p.name, short: p.short, last: p.last, pos: p.pos };
@@ -166,7 +166,14 @@ function build(per, file) {
   const gs = order.map(i => games[i]);
   shots.forEach(s => s[8] = remap[s[8]]); for (const v of Object.values(dx)) v.blk.forEach(b => b[3] = remap[b[3]]); for (const v of Object.values(rot)) v.forEach(x => x[0] = remap[x[0]]); oshots.forEach(s => s[7] = remap[s[7]]); asts.forEach(a => a[3] = remap[a[3]]);
   const pz2 = {}; for (const [id, z] of Object.entries(pz)) { pz2[id] = {}; for (const [g, v] of Object.entries(z)) pz2[id][remap[g]] = v; }
-  const out = { season: SEASON, per, updated: new Date().toISOString(), games: gs.map(({ recap, rc, ...g }) => g), P, B, gp, L, shots, oshots, asts, pz: pz2, T, pc, pcO, cx, ...(per === 'all' ? { rot, dx } : {}) };
+  /* game highs (Nov 1): each game against this season's earlier games and the Basketball Reference history (pdata/highs-hist.json) */
+  if (per === 'all' && C.highsL) {
+    let H = null; try { H = JSON.parse(fs.readFileSync('pdata/highs-hist.json', 'utf8')); } catch {}
+    const lines = gs.map(g => g.hl && { id: g.id, opp: g.opp, ...g.hl });
+    gs.forEach((g, i) => { if (!lines[i]) return; const prior = lines.slice(0, i).filter(Boolean); for (const [l, t] of C.highsL(lines[i], prior, H)) g.rc.push([l, t]); });
+    fs.writeFileSync(path.join(DIR, 'highs.json'), JSON.stringify(lines.filter(Boolean)));
+  }
+  const out = { season: SEASON, per, updated: new Date().toISOString(), games: gs.map(({ recap, rc, hl, ...g }) => g), P, B, gp, L, shots, oshots, asts, pz: pz2, T, pc, pcO, cx, ...(per === 'all' ? { rot, dx } : {}) };
   fs.writeFileSync(path.join(DIR, file), JSON.stringify(out));
   if (per === 'all') fs.writeFileSync(path.join(DIR, 'index.json'), JSON.stringify(gs.map(g => ({ id: g.id, date: g.date, et: g.et, opp: g.opp, ha: g.ha, cle: g.cle, os: g.os, rc: g.rc }))));
   console.log(`${file}: ${gs.length} games, ${shots.length} shots, ${Object.keys(L[5]).length} five-man lineups`);

@@ -162,7 +162,47 @@ function factors(a,b){const pa=poss({fga:a.fga,oreb:a.oreb,to:a.to,fta:a.fta,np:
   return {efg:a.fga?(a.fgm+0.5*a.tpm)/a.fga:null,tov:(a.fga+0.44*a.fta+a.to)?a.to/(a.fga+0.44*a.fta+a.to):null,orb:(a.oreb+b.dreb)?a.oreb/(a.oreb+b.dreb):null,ftr:a.fga?a.ftm/a.fga:null}}
 const FF=[['efg','Shooting','Effective FG%',true],['tov','Ball security','Turnover rate',false],['orb','Second chances','Offensive rebound rate',true],['ftr','Getting to the line','Free throws made per FGA',true]];
 const CLE='5',C3=Math.sqrt(23.75**2-22**2);
-if(typeof module!=='undefined')module.exports={unpackSlim,prep,deriveCore,factors,poss,ZN,PT,LG,normName,pname,fmtMin,inPer,pstart,plen};
+
+/* ---------- game highs (Nov 1): "most since", career and season highs for the recap ----------
+   one game's line: {et, t:{pts,reb,ast,fgm,tpm,stl,blk}, p:{espnId:{n:name, ...same}}}. prior = this season's earlier games,
+   H = pdata/highs-hist.json (Basketball Reference game logs through last season, kept as a staircase per stat). */
+const HI_W={pts:'points',reb:'rebounds',ast:'assists',fgm:'made field goals',tpm:'made threes',stl:'steals',blk:'blocks'};
+const HI_MIN={pts:20,reb:10,ast:8,fgm:8,tpm:4,stl:3,blk:3};
+const HI_TM={ATL:'Atlanta',BOS:'Boston',BRK:'Brooklyn',NJN:'New Jersey',CHO:'Charlotte',CHA:'Charlotte',CHH:'Charlotte',CHI:'Chicago',CLE:'Cleveland',DAL:'Dallas',DEN:'Denver',DET:'Detroit',GSW:'Golden State',HOU:'Houston',IND:'Indiana',LAC:'the Clippers',LAL:'the Lakers',MEM:'Memphis',VAN:'Vancouver',MIA:'Miami',MIL:'Milwaukee',MIN:'Minnesota',NOP:'New Orleans',NOH:'New Orleans',NOK:'New Orleans',NYK:'New York',OKC:'Oklahoma City',SEA:'Seattle',ORL:'Orlando',PHI:'Philadelphia',PHO:'Phoenix',POR:'Portland',SAC:'Sacramento',SAS:'San Antonio',TOR:'Toronto',UTA:'Utah',WAS:'Washington',WSB:'Washington'};
+const hiDate=d=>new Date(d+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'});
+function highsL(cur,prior,H){
+  const out=[],day=d=>Date.parse(d+'T12:00:00Z'),gap=d=>(day(cur.et)-day(d))/864e5;
+  /* v against this season's earlier games, then the history staircase. Returns {kind, d, tm, tie} or null */
+  const judge=(v,seasonVals,stairs,haveHist,minPrior)=>{
+    if(v==null||!(v>0))return null;
+    const sMax=seasonVals.length?Math.max(...seasonVals):-1;
+    if(sMax>=v)return null;
+    if(stairs){const hit=stairs.find(x=>x[1]>=v);
+      if(!hit)return haveHist?{kind:'record'}:null;
+      const tie=hit[1]===v,i=stairs.indexOf(hit),gt=tie?stairs[i+1]:hit;
+      if(tie&&!gt)return {kind:'tie',d:hit[0],tm:hit[2]};
+      if(!tie&&gap(hit[0])>=365)return {kind:'since',d:hit[0],tm:hit[2]};
+      /* tied a recent game: say so, with the last time anyone went higher */
+      if(tie&&gap(gt[0])>=365)return {kind:'tiesince',d:gt[0],tm:gt[2],d2:hit[0],tm2:hit[2]}}
+    return seasonVals.length>=minPrior?{kind:'season'}:null};
+  const score=j=>j.kind==='record'?1e6:j.kind==='tie'?9e5:j.kind==='since'||j.kind==='tiesince'?gap(j.d):0;
+  const T=H&&H.team;
+  for(const k in HI_W){const v=cur.t[k];const j=judge(v,prior.map(g=>g.t[k]).filter(x=>x!=null),T&&T[k],!!T,3);if(!j)continue;
+    const w=HI_W[k],txt=j.kind==='record'?(H.teamFrom<=1971?`${v} ${w}, a Cavs regular-season record.`:`${v} ${w}, the most in a Cavs game since at least ${H.teamFrom-1}–${String(H.teamFrom).slice(2)}.`):j.kind==='tie'?`${v} ${w}, tying the Cavs’ most in a game (${hiDate(j.d)}).`:j.kind==='since'?`${v} ${w}, the Cavs’ most in a game since ${hiDate(j.d)}.`:j.kind==='tiesince'?`${v} ${w}, matching ${hiDate(j.d2)} for the Cavs’ most in a game since ${hiDate(j.d)}.`:`${v} ${w}, the Cavs’ most in a game this season.`;
+    out.push([score(j)+.5,j.kind==='record'?'Cavs record':j.kind==='tie'?'Ties record':j.kind==='season'?'Season high':'Most since',txt])}
+  for(const id in cur.p){const x=cur.p[id];let hp=H&&H.players&&H.players[normName(x.n)];const played=prior.filter(g=>g.p[id]);
+    /* career claims need a real career: 15+ games counting this one */
+    if(hp&&hp.games+played.length+1<15)hp=null;
+    for(const k in HI_W){const v=x[k];if(v==null||v<HI_MIN[k])continue;const j=judge(v,played.map(g=>g.p[id][k]).filter(y=>y!=null),hp&&hp.s[k],!!hp,3);if(!j)continue;
+      const w=HI_W[k],wt=t=>t&&t!=='CLE'?` with ${HI_TM[t]||t}`:'',with_=j.tm&&j.tm!=='CLE'?` (with ${HI_TM[j.tm]||j.tm})`:'';
+      const txt=j.kind==='record'?`${x.n}: ${v} ${w}, a career high.`:j.kind==='tie'?`${x.n}: ${v} ${w}, tying his career high (${hiDate(j.d)}${wt(j.tm)?','+wt(j.tm):''}).`:j.kind==='since'?`${x.n}: ${v} ${w}, his most since ${hiDate(j.d)}${with_}.`:j.kind==='tiesince'?`${x.n}: ${v} ${w}, matching ${hiDate(j.d2)}${j.tm2!==j.tm?wt(j.tm2):''} for his most since ${hiDate(j.d)}${with_}.`:`${x.n}: ${v} ${w}, his most this season.`;
+      out.push([score(j),j.kind==='record'||j.kind==='tie'?'Career high':j.kind==='since'||j.kind==='tiesince'?'Most since':'Season high',txt])}}
+  return out.sort((a,b)=>b[0]-a[0]).slice(0,4).map(([,l,t])=>[l,t]);
+}
+/* one game's line for highsL, from a derived game */
+function highLine(D,R){const t=R.T[D.focus.id];const p={};D.roster[D.focus.id].forEach(id=>{const b=R.B[id];if(!(b.min>0))return;p[id]={n:D.P[id].name,pts:b.pts,reb:b.oreb+b.dreb,ast:b.ast,fgm:b.fgm,tpm:b.tpm,stl:b.stl,blk:b.blk}});
+  return {et:new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(new Date(D.date)),opp:D.other.abbr,t:{pts:t.pts,reb:t.oreb+t.dreb,ast:t.ast,fgm:t.fgm,tpm:t.tpm,stl:t.stl,blk:t.blk},p}}
+if(typeof module!=='undefined')module.exports={highsL,highLine,unpackSlim,prep,deriveCore,factors,poss,ZN,PT,LG,normName,pname,fmtMin,inPer,pstart,plen};
 
 /* ---------- archive helpers (used by the nightly job and the page) ---------- */
 function slimSummary(d){

@@ -232,6 +232,7 @@ table.dt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
 .five span{padding:6px 10px;background:var(--sub);font:600 0.8125rem var(--sans)}
 /* shots */
 .zchart{max-width:480px;margin:0 auto}
+.hi-l b{color:var(--gold-ink,#9a6b00);font:700 0.8125rem var(--sans)}
 .zkey{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font:500 0.6875rem/1.45 var(--sans);color:var(--muted);margin:10px 0 0;text-align:left}.zkey b{color:var(--fg);font-weight:700;white-space:nowrap}
 .leg{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;font:500 0.75rem var(--sans);color:var(--muted);margin-top:8px}
 .leg i{display:inline-block;width:10px;height:10px;margin-right:5px;vertical-align:-1px}
@@ -1205,7 +1206,7 @@ function vTeam(v,D,R){
   /* season mode: the same team stats, per game, from the archive totals */
   if(S.season){const n=Math.max(1,(D.games||[]).length||1);const pg=t=>{const x={};for(const k in t)x[k]=typeof t[k]==='number'?t[k]/n:t[k];return x};R=Object.assign({},R,{T:{[D.focus.id]:pg(R.T[D.focus.id]),[D.other.id]:pg(R.T[D.other.id])}})}
   if(!S.season&&S.state!=='pre'){const mc=milestoneCard(D,R);if(mc)v.appendChild(mc)}
-  if(S.state==='post'&&!S.season&&R.lp){const RA=S.per==='all'?R:deriveCore(D,D.plays,'all');const c=el('div','card');c.style.borderTop='3px solid var(--gold)';c.style.marginBottom='14px';head(c,'Recap','Numbers only, written automatically at the final buzzer');const ul=el('ul','sw');recap(D,RA).forEach((t,i)=>{const li=el('li');li.style.gridTemplateColumns='1fr';li.appendChild(el('span',null,t));if(!i)li.style.fontWeight='700';ul.appendChild(li)});c.appendChild(ul);v.appendChild(c);ltLoad();const lt=ltCard();if(lt)v.appendChild(lt)}
+  if(S.state==='post'&&!S.season&&R.lp){const RA=S.per==='all'?R:deriveCore(D,D.plays,'all');const c=el('div','card');c.style.borderTop='3px solid var(--gold)';c.style.marginBottom='14px';head(c,'Recap','Numbers only, written automatically at the final buzzer');const ul=el('ul','sw');recap(D,RA).forEach((t,i)=>{const li=el('li');li.style.gridTemplateColumns='1fr';li.appendChild(el('span',null,t));if(!i)li.style.fontWeight='700';ul.appendChild(li)});c.appendChild(ul);v.appendChild(c);hiRecap(D,RA,ul);ltLoad();const lt=ltCard();if(lt)v.appendChild(lt)}
   const a=R.T[D.focus.id],b=R.T[D.other.id];
   const c=el('div','card');head(c,'Team stats',S.season?(S.per!=='all'?perLabel(S.per)+' · ':'')+'Per game · '+((D.games||[]).length)+' game'+((D.games||[]).length===1?'':'s'):perLabel(S.per));
   const ROWS=[];let G0=null;const SHORT={'Offensive rebounds':'Off. rebounds','Second-chance points':'Second chance','Points from threes':'From threes','Points from free throws':'From free throws','Points in the paint':'In the paint','Points off turnovers':'Off turnovers','Pace (possessions per 48)':'Pace','Possessions (est.)':'Possessions','Points per 100 possessions':'Points per 100','Free throws made':'FT made','True shot attempts':'True shot att.'};
@@ -1271,6 +1272,10 @@ function gameState(D,R){
 /* ---------- milestone watch: career and Cavs all-time lists (pdata/milestones.json, through last season)
    plus this season's archived games plus tonight ---------- */
 let MS=null,SEAS=null;const MSH=[];
+/* game highs in the recap (Nov 1): this game against the season's earlier games (highs.json) and Basketball Reference history (highs-hist.json) */
+let HIP=null;function hiRecap(D,R,ul){if(D.focus.id!=='5'||typeof highsL!=='function')return;const cur=highLine(D,R);if(cur.et<'2026-10-01')return;
+  HIP=HIP||Promise.all([getJSON('/live-archive/2026-27/highs.json').catch(()=>[]),getJSON('/pdata/highs-hist.json').catch(()=>null)]);
+  HIP.then(([G,H])=>{const prior=(G||[]).filter(g=>g.et<cur.et);highsL(cur,prior,H).forEach(([l,t])=>{const li=el('li','hi-l');li.style.gridTemplateColumns='1fr';const s=el('span');s.append(el('b',null,l+' · '),t);li.appendChild(s);ul.appendChild(li)})}).catch(()=>{})}
 async function msLoad(){if(MS)return;try{MS=await getJSON('/pdata/milestones.json')}catch(e){}try{SEAS=await getJSON('/live-archive/2026-27/season.json')}catch(e){SEAS=null}}
 function milestoneCard(D,R){
   if(!MS||D.focus.id!=='5'||!R.lp)return null;
