@@ -960,7 +960,7 @@ function lxAgg(){if(!LXS||!LXS.g||LXS.season!==CUR_SEASON)return null;if(LXS._a)
 /* the Cavs' rank among 30 teams for fn(team aggregate); dir 1 = higher is better, -1 = lower is better, 0 = neither (1st = most) */
 function lxRank(fn,dir){if(S.season!==CUR_SEASON)return null;lxLoad();const A=lxAgg();if(!A||!A.CLE||A.CLE.g<3)return null;const v=fn(A.CLE);if(v==null)return null;return lgRank(v,Object.entries(A).filter(([k])=>k!=='CLE').map(([,a])=>fn(a)),dir)}
 const pctTag=(p,neutral)=>{const e=el('span','pctg'+(neutral?'':p>=90?' g':p<=10?' b':''),ord2(Math.max(1,Math.min(99,p))));e.title=ord2(Math.max(1,Math.min(99,p)))+' percentile among NBA players';return e};
-const lxNet=q=>{const p=(q[2]+q[3])/2;return p>=1?(q[0]-q[1])/p*100:null},lxOff=q=>q[2]>=1?q[0]/q[2]*100:null,lxDef=q=>q[3]>=1?q[1]/q[3]*100:null;
+const lxNet=q=>q[2]>=1&&q[3]>=1?(q[0]/q[2]-q[1]/q[3])*100:null,lxOff=q=>q[2]>=1?q[0]/q[2]*100:null,lxDef=q=>q[3]>=1?q[1]/q[3]*100:null;
 let PBT=null,PBS=null;function pbpLoad(){if(PBT!==null)return;PBT=false;Promise.all([getJSON('/pdata/pbp-teams.json'),getJSON('/pdata/pbp-starts.json')]).then(([a,b])=>{PBT=a;PBS=b;if(S.season)renderView()}).catch(()=>{})}
 const PB_ZS=['AtRim','ShortMidRange','LongMidRange','Corner3','Arc3','FT'];
 function pbpVal(ab,side,k){/* side 'T' = the team's own offense, 'O' = opponents against it */const ty=side==='T'?'Team':'Opponent',st=x=>((PBS.S[x]||{})[ty]||{})[ab]||[0,0];const sum=L=>L.map(st).reduce((a,v)=>[a[0]+v[0],a[1]+v[1]],[0,0]);const pp=v=>v[0]?v[1]/v[0]:null;const row=(PBT[side]||{})[ab]||{};
@@ -1190,12 +1190,12 @@ function tvsCard(D,R){if(S.season||D.focus.id!==CLE)return null;const c=el('div'
     body.appendChild(el('p','note','Green = better than usual, red = worse. Pace is style, so it stays gray.'));
     /* tonight's points per 100 possessions against every NBA team game this season, as a percentile */
     if(false)lgGames().then(G=>{if(!G||G.o.length<30)return;const A=R.T[D.focus.id],B=R.T[D.other.id];const pa=poss({fga:A.fga,oreb:A.oreb,to:A.to,fta:A.fta,np:A.np}),pb=poss({fga:B.fga,oreb:B.oreb,to:B.to,fta:B.fta,np:B.np}),pp=(pa+pb)/2;if(!pp)return;
-      const o=A.pts/pp*100,d=B.pts/pp*100,nt=o-d;const ordP=p=>{const v=p%100,x=['th','st','nd','rd'];return p+(x[(v-20)%10]||x[v]||x[0])+' pct'};const pct=(v,arr,hi)=>Math.round(100*arr.filter(z=>hi?z<v:z>v).length/arr.length);
+      const o=A.pts/pa*100,d=B.pts/pb*100,nt=o-d;const ordP=p=>{const v=p%100,x=['th','st','nd','rd'];return p+(x[(v-20)%10]||x[v]||x[0])+' pct'};const pct=(v,arr,hi)=>Math.round(100*arr.filter(z=>hi?z<v:z>v).length/arr.length);
       const w=el('div','tvp');w.appendChild(el('h4',null,'Against every NBA team game this season ('+G.o.length+')'));
       [['Points per 100',o,pct(o,G.o,true)],['Allowed per 100',d,pct(d,G.o,false)],['Net per 100',nt,pct(nt,G.n,true)]].forEach(([lab,v,p])=>{const r=el('div','tvp-r');r.appendChild(el('span',null,lab));const bar=el('span','tvp-b');const i2=el('i',p>=67?'g':p<=33?'r':null);i2.style.width=p+'%';bar.appendChild(i2);r.appendChild(bar);r.appendChild(el('b',null,ordP(p)));w.appendChild(r)});
       w.appendChild(el('p','note','Percentile = share of every NBA team game this season with a worse mark: lower scoring, more allowed, or a lower net. 90th pct = better than 90% of them. Possessions are estimated from box scores the same way for every team.'));body.appendChild(w)})});return c}
 /* every NBA team game this season: points per 100 possessions and net per 100, from the league feed */
-let LGG=null;function lgGames(){if(LGG)return LGG;return LGG=getJSON('/pdata/league.json').then(L=>{const o=[],n=[];Object.values(L.tg||{}).forEach(g=>{if(!g.t||g.t.length!==2)return;const P=t=>poss({fga:t.fga,oreb:t.orb,to:t.tov,fta:t.fta});const pp=(P(g.t[0])+P(g.t[1]))/2;if(!pp)return;g.t.forEach((me,i)=>{const op=g.t[1-i];o.push(me.pts/pp*100);n.push((me.pts-op.pts)/pp*100)})});return {o,n}}).catch(()=>null)}
+let LGG=null;function lgGames(){if(LGG)return LGG;return LGG=getJSON('/pdata/league.json').then(L=>{const o=[],n=[];Object.values(L.tg||{}).forEach(g=>{if(!g.t||g.t.length!==2)return;const P=t=>poss({fga:t.fga,oreb:t.orb,to:t.tov,fta:t.fta});const pp=(P(g.t[0])+P(g.t[1]))/2;if(!pp)return;g.t.forEach((me,i)=>{const op=g.t[1-i],pm=P(me),po2=P(op);o.push(me.pts/pm*100);n.push(me.pts/pm*100-op.pts/po2*100)})});return {o,n}}).catch(()=>null)}
 /* ---------- Team ---------- */
 function vTeam(v,D,R){
   /* season mode: the same team stats, per game, from the archive totals */
@@ -1334,7 +1334,7 @@ function scoutCard(D,X,team){
   c.appendChild(dtable('sc_p',[{h:'Player',k:'name',f:r=>r.short},{h:'GP',k:'gp'},{h:'GS',k:'gs'},{h:'MIN',k:'mpg',f:r=>f1(r.mpg)},{h:'PTS',k:'ppg',f:r=>f1(r.ppg),cls:()=>'k'},{h:'FG',k:'fgmg',f:ma('fgmg','fgag')},{h:'2P',k:'twmg',f:ma('twmg','twag')},{h:'3PT',k:'tpmg',f:ma('tpmg','tpag')},{h:'FT',k:'ftmg',f:ma('ftmg','ftag')},{h:'TS%',k:'ts',f:r=>r.ts==null?'–':Math.round(r.ts*100)+'%',title:'True shooting'},{h:'REB',k:'rpg',f:r=>f1(r.rpg)},{h:'OREB',k:'orpg',f:r=>f1(r.orpg)},{h:'DREB',k:'drpg',f:r=>f1(r.drpg)},{h:'AST',k:'apg',f:r=>f1(r.apg)},{h:'TO',k:'topg',f:r=>f1(r.topg),asc:true},{h:'STL',k:'spg',f:r=>f1(r.spg)},{h:'BLK',k:'bpg',f:r=>f1(r.bpg)},{h:'PF',k:'pfpg',f:r=>f1(r.pfpg),asc:true},{h:'+/-',k:'pmg',f:r=>sgn(+r.pmg.toFixed(1)),cls:r=>pmCls(r.pmg)}],rows,{def:'ppg',minW:900}));
   /* lineups */
   c.appendChild(el('h3',null,'Their most-used lineups'));
-  const lu=Object.values(X.L5).filter(l=>l.sec>=120).map(l=>{let po=poss(l.o),pd=poss(l.d);{const _a=(po+pd)/2;po=pd=_a}return {names:l.names.join(', '),sec:l.sec,g:l.g,pm:l.pf-l.pa,net:po>=1&&pd>=1?l.pf/po*100-l.pa/pd*100:null}});
+  const lu=Object.values(X.L5).filter(l=>l.sec>=120).map(l=>{let po=poss(l.o),pd=poss(l.d);return {names:l.names.join(', '),sec:l.sec,g:l.g,pm:l.pf-l.pa,net:po>=1&&pd>=1?l.pf/po*100-l.pa/pd*100:null}});
   c.appendChild(dtable('sc_l',[{h:'Lineup',k:'names'},{h:'GAMES',k:'g'},{h:'MIN',k:'sec',f:r=>fmtMin(r.sec)},{h:'+/-',k:'pm',f:r=>sgn(r.pm),cls:r=>pmCls(r.pm)},{h:'NET',k:'net',f:r=>r.net==null?'–':sgn(Math.round(r.net)),cls:r=>r.net==null?'':pmCls(r.net)}],lu.slice(0,10),{def:'sec',minW:520}));
   /* where they shoot */
   c.appendChild(el('h3',null,'Where they shoot'));
@@ -1399,7 +1399,7 @@ function alertCard(D,R){
   const f=el('div','card sec');f.style.borderTop='3px solid var(--gold)';head(f,'Lineup alert · mockup','The five on the floor for '+D.focus.abbr+' right now');
   const ids=[...R.on[D.focus.id]].sort();const k=ids.join(',');const l=R.L[D.focus.id][5][k];
   if(!l||ids.length<5){f.appendChild(el('p','empty','No full lineup on the floor right now.'));return f}
-  let po=poss(l.o),pd=poss(l.d);{const _a=(po+pd)/2;po=pd=_a}const net=po>=1&&pd>=1?l.pf/po*100-l.pa/pd*100:null;
+  let po=poss(l.o),pd=poss(l.d);const net=po>=1&&pd>=1?l.pf/po*100-l.pa/pd*100:null;
   const box=el('div','ffc');box.style.borderLeft='4px solid '+(l.pf-l.pa<0?'var(--neg)':'var(--pos)');
   box.innerHTML=`<div class="n">${esc(ids.map(id=>D.P[id].last).join(', '))}</div><div class="row"><span>Tonight</span><b>${fmtMin(l.sec)} · ${sgn(l.pf-l.pa)}</b></div><div class="row"><span>Season</span><b>— once the archive has games</b></div>`+(l.pf-l.pa<=-6?`<div class="edge" style="color:var(--neg)">Alert: outscored by ${l.pa-l.pf} in ${fmtMin(l.sec)} tonight</div>`:'');
   f.appendChild(box);f.appendChild(el('p','note','Shows an alert when the current five is down 6 or more tonight, or below −5 net per 100 over the season (from the game archive).'));return f;
@@ -1458,7 +1458,7 @@ function advView(c,D,R,t){
   const tORB=T.oreb+T.toreb,tDRB=T.dreb+T.tdreb,oORB=O.oreb+O.toreb,oDRB=O.dreb+O.tdreb;const oPoss=poss({fga:O.fga,oreb:O.oreb,to:O.to,fta:O.fta,np:O.np});
   const L5=Object.values(R.L[t.id][5]);
   const rows=D.roster[t.id].filter(id=>R.B[id].min>0).map(id=>{const b=R.B[id],mp=b.min/60,f=(tmMP/5)/mp;
-    const onL=L5.filter(l=>l.ids.includes(id));let po=onL.reduce((s2,l)=>s2+poss(l.o),0),pd=onL.reduce((s2,l)=>s2+poss(l.d),0),pf=onL.reduce((s2,l)=>s2+l.pf,0),pa=onL.reduce((s2,l)=>s2+l.pa,0);{const _a=(po+pd)/2;po=pd=_a}
+    const onL=L5.filter(l=>l.ids.includes(id));let po=onL.reduce((s2,l)=>s2+poss(l.o),0),pd=onL.reduce((s2,l)=>s2+poss(l.d),0),pf=onL.reduce((s2,l)=>s2+l.pf,0),pa=onL.reduce((s2,l)=>s2+l.pa,0);
     const tsa=b.fga+0.44*b.fta;return {id,mp,tsa,ts:tsa?b.pts/(2*tsa):null,efg:b.fga?(b.fgm+.5*b.tpm)/b.fga:null,tpar:b.fga?b.tpa/b.fga:null,ftr:b.fga?b.fta/b.fga:null,
       orb:(tORB+oDRB)?100*b.oreb*f/(tORB+oDRB):null,drb:(tDRB+oORB)?100*b.dreb*f/(tDRB+oORB):null,trb:(tORB+tDRB+oORB+oDRB)?100*(b.oreb+b.dreb)*f/(tORB+tDRB+oORB+oDRB):null,
       ast:(mp/(tmMP/5)*T.fgm-b.fgm)>0?100*b.ast/((mp/(tmMP/5))*T.fgm-b.fgm):null,stl:oPoss?100*b.stl*f/oPoss:null,blk:(O.fga-O.tpa)?100*b.blk*f/(O.fga-O.tpa):null,
@@ -1483,7 +1483,7 @@ function vsOpp(c,D,R,t){
   const A=S.f.voA,Bp=S.f.voB;const split=[[`Both on`,g=>g.a[t.id].includes(A)&&g.a[o.id].includes(Bp)],[`${D.P[A].last} on, ${D.P[Bp].last} off`,g=>g.a[t.id].includes(A)&&!g.a[o.id].includes(Bp)],[`${D.P[A].last} off, ${D.P[Bp].last} on`,g=>!g.a[t.id].includes(A)&&g.a[o.id].includes(Bp)]];
   const tb=el('table','zt');tb.innerHTML=`<tr><th>Split</th><th>MIN</th><th>${esc(D.P[A].last)} PTS</th><th>${esc(t.abbr)}</th><th>${esc(o.abbr)}</th><th>+/-</th><th>NET</th></tr>`;
   split.forEach(([l,fn])=>{const G=R.segs.filter(fn);const sec=G.reduce((a,g)=>a+g.sec,0),pf=G.reduce((a,g)=>a+g.pts[t.id],0),pa=G.reduce((a,g)=>a+g.pts[o.id],0),pp=G.reduce((a,g)=>a+(g.pp[A]||0),0);
-    const so=k=>G.reduce((a,g)=>a+g.o[t.id][k],0),sd=k=>G.reduce((a,g)=>a+g.o[o.id][k],0);let po=poss({fga:so('fga'),oreb:so('oreb'),to:so('to'),fta:so('fta'),np:so('np')||0}),pd=poss({fga:sd('fga'),oreb:sd('oreb'),to:sd('to'),fta:sd('fta'),np:sd('np')||0});{const _a=(po+pd)/2;po=pd=_a}const net=po>=1&&pd>=1?pf/po*100-pa/pd*100:null;
+    const so=k=>G.reduce((a,g)=>a+g.o[t.id][k],0),sd=k=>G.reduce((a,g)=>a+g.o[o.id][k],0);let po=poss({fga:so('fga'),oreb:so('oreb'),to:so('to'),fta:so('fta'),np:so('np')||0}),pd=poss({fga:sd('fga'),oreb:sd('oreb'),to:sd('to'),fta:sd('fta'),np:sd('np')||0});const net=po>=1&&pd>=1?pf/po*100-pa/pd*100:null;
     const tr=el('tr');tr.append(el('td',null,l),el('td',null,fmtMin(sec)),el('td',null,l.startsWith(D.P[A].last+' off')?'–':String(pp)),el('td',null,String(pf)),el('td',null,String(pa)),el('td',pmCls(pf-pa),sgn(pf-pa)),el('td',net==null?'':pmCls(net),net==null?'–':sgn(Math.round(net))));tb.appendChild(tr)});
   const w=el('div','tw');w.appendChild(tb);c.appendChild(w);c.appendChild(el('p','note','Built from every stretch with the same ten players on the floor. It shows who was on the court together, not who guarded whom.'));
 }
@@ -1511,7 +1511,7 @@ function ooBox(o){const a=o.a,b=o.b,w=el('div','oo2');const pct=new Set(['efg','
   w.appendChild(el('p','oo2-n',o.note||''));return w}
 function vOnOff(v,D,R){
   if(!S.f.ooTeam)S.f.ooTeam=D.focus.id;const t=D.teams.find(x=>x.id===S.f.ooTeam);
-  const Ls=Object.values(R.L[t.id][5]);const sum=f=>{const o={sec:0,pf:0,pa:0,o:{fga:0,oreb:0,to:0,fta:0,np:0},d:{fga:0,oreb:0,to:0,fta:0,np:0}};Ls.filter(f).forEach(l=>{o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;['fga','oreb','to','fta','np'].forEach(k=>{o.o[k]+=l.o[k];o.d[k]+=l.d[k]})});let po=poss(o.o),pd=poss(o.d);{const _a=(po+pd)/2;po=pd=_a}o.net=po>=1&&pd>=1?o.pf/po*100-o.pa/pd*100:null;o.ortg=po>=1?o.pf/po*100:null;o.drtg=pd>=1?o.pa/pd*100:null;o.pm=o.pf-o.pa;o.poss=(po+pd)/2;return o};
+  const Ls=Object.values(R.L[t.id][5]);const sum=f=>{const o={sec:0,pf:0,pa:0,o:{fga:0,oreb:0,to:0,fta:0,np:0},d:{fga:0,oreb:0,to:0,fta:0,np:0}};Ls.filter(f).forEach(l=>{o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;['fga','oreb','to','fta','np'].forEach(k=>{o.o[k]+=l.o[k];o.d[k]+=l.d[k]})});let po=poss(o.o),pd=poss(o.d);o.net=po>=1&&pd>=1?o.pf/po*100-o.pa/pd*100:null;o.ortg=po>=1?o.pf/po*100:null;o.drtg=pd>=1?o.pa/pd*100:null;o.pm=o.pf-o.pa;o.poss=(po+pd)/2;return o};
   const c=el('div','card');head(c,t.abbr+' on/off',perLabel(S.per)+' · the team with each player on vs off');c.appendChild(teamBtns(D,'ooTeam',()=>{S.f.ooA=S.f.ooB=null}));
   const ids=D.roster[t.id].filter(id=>Ls.some(l=>l.ids.includes(id)));
   const rows=ids.map(id=>{const on=sum(l=>l.ids.includes(id)),off=sum(l=>!l.ids.includes(id));return {id,min:on.sec,onpm:on.pm,offpm:off.pm,dpm:on.pm-off.pm,ortg:on.ortg,drtg:on.drtg,onnet:on.net}});
@@ -1519,8 +1519,8 @@ function vOnOff(v,D,R){
   /* tap a player: every advanced number with him on vs off */
   const full=f=>{const o={sec:0,pf:0,pa:0,o:{},d:{}};Ls.filter(f).forEach(l=>{o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;for(const k in l.o)o.o[k]=(o.o[k]||0)+l.o[k];for(const k in l.d)o.d[k]=(o.d[k]||0)+l.d[k]});return o};
   const ooSpread=id=>{const w=el('div','lsp');const A=full(l=>l.ids.includes(id)),B=full(l=>!l.ids.includes(id));const g=(x,k)=>x[k]||0;
-    const M=x=>{const po=(poss(x.o)+poss(x.d))/2;const o=x.o,d=x.d,pc=(a,b)=>b?a/b*100:null;const has=o.fgm!=null;
-      return {ortg:po>=1?x.pf/po*100:null,drtg:po>=1?x.pa/po*100:null,net:po>=1?(x.pf-x.pa)/po*100:null,pace:x.sec?po/(x.sec/2880):null,poss:po,
+    const M=x=>{const po=(poss(x.o)+poss(x.d))/2,PO=poss(x.o),PD=poss(x.d);const o=x.o,d=x.d,pc=(a,b)=>b?a/b*100:null;const has=o.fgm!=null;
+      return {ortg:PO>=1?x.pf/PO*100:null,drtg:PD>=1?x.pa/PD*100:null,net:PO>=1&&PD>=1?x.pf/PO*100-x.pa/PD*100:null,pace:x.sec?po/(x.sec/2880):null,poss:po,
         efg:has?pc(g(o,'fgm')+.5*g(o,'tpm'),g(o,'fga')):null,ts:has?pc(x.pf,2*(g(o,'fga')+.44*g(o,'fta'))):null,tpar:has?pc(g(o,'tpa'),g(o,'fga')):null,tp:has?pc(g(o,'tpm'),g(o,'tpa')):null,
         tov:pc(g(o,'to'),g(o,'fga')+.44*g(o,'fta')+g(o,'to')),orb:has?pc(g(o,'oreb'),g(o,'oreb')+g(d,'dreb')):null,drb:has?pc(g(o,'dreb'),g(o,'dreb')+g(d,'oreb')):null,ftr:has?pc(g(o,'ftm'),g(o,'fga')):null,ast:has?pc(g(o,'ast'),g(o,'fgm')):null,
         oefg:has?pc(g(d,'fgm')+.5*g(d,'tpm'),g(d,'fga')):null,otov:pc(g(d,'to'),g(d,'fga')+.44*g(d,'fta')+g(d,'to')),otpar:has?pc(g(d,'tpa'),g(d,'fga')):null,oftr:has?pc(g(d,'ftm'),g(d,'fga')):null,otp:has?pc(g(d,'tpm'),g(d,'tpa')):null}};
@@ -1661,7 +1661,7 @@ const CARDS={
   onoff:{label:'On/off card',pick:'player',async draw(x,D,R,id){const p=D.P[id];if(!p)return;const L5=Object.values(R.L[D.focus.id][5]||{});
     const sum=f=>{const o={sec:0,pf:0,pa:0,o:{},d:{}};L5.filter(f).forEach(l=>{o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;for(const k in l.o)o.o[k]=(o.o[k]||0)+l.o[k];for(const k in l.d)o.d[k]=(o.d[k]||0)+l.d[k]});return o};
     const A=sum(l=>l.ids.includes(id)),B=sum(l=>!l.ids.includes(id));const g=(y,k)=>y[k]||0,q=(a,b)=>b?a/b*100:null;
-    const M=X=>{const po=(poss(X.o)+poss(X.d))/2,o=X.o,d=X.d;return {po,off:po>=1?X.pf/po*100:null,def:po>=1?X.pa/po*100:null,net:po>=1?(X.pf-X.pa)/po*100:null,pace:X.sec?po/(X.sec/2880):null,efg:q(g(o,'fgm')+.5*g(o,'tpm'),g(o,'fga')),tov:q(g(o,'to'),g(o,'fga')+.44*g(o,'fta')+g(o,'to')),orb:q(g(o,'oreb'),g(o,'oreb')+g(d,'dreb')),ftr:q(g(o,'ftm'),g(o,'fga')),oefg:q(g(d,'fgm')+.5*g(d,'tpm'),g(d,'fga')),otov:q(g(d,'to'),g(d,'fga')+.44*g(d,'fta')+g(d,'to'))}};
+    const M=X=>{const po=(poss(X.o)+poss(X.d))/2,PO=poss(X.o),PD=poss(X.d),o=X.o,d=X.d;return {po,off:PO>=1?X.pf/PO*100:null,def:PD>=1?X.pa/PD*100:null,net:PO>=1&&PD>=1?X.pf/PO*100-X.pa/PD*100:null,pace:X.sec?po/(X.sec/2880):null,efg:q(g(o,'fgm')+.5*g(o,'tpm'),g(o,'fga')),tov:q(g(o,'to'),g(o,'fga')+.44*g(o,'fta')+g(o,'to')),orb:q(g(o,'oreb'),g(o,'oreb')+g(d,'dreb')),ftr:q(g(o,'ftm'),g(o,'fga')),oefg:q(g(d,'fgm')+.5*g(d,'tpm'),g(d,'fga')),otov:q(g(d,'to'),g(d,'fga')+.44*g(d,'fta')+g(d,'to'))}};
     const a=M(A),b=M(B);if(S.season){sHead(x,D,p.name.toUpperCase(),'With him on the floor vs on the bench · per 100 possessions')}else frame(x,'On/off · '+kick()+D.focus.abbr+' vs '+D.other.abbr,p.name,D,R);
     const top=S.season?385:450,CX=[650,830,1008];const nr=(t,X,Y,sz,c)=>{x.fillStyle=c;x.font=`700 ${sz}px "Geist Mono"`;x.fillText(String(t),X-x.measureText(String(t)).width,Y)};
     ['ON','OFF','DIFF'].forEach((h,i)=>{x.fillStyle=MUT;x.font='800 32px "Saira Condensed"';x.fillText(h,CX[i]-x.measureText(h).width,top)});
@@ -1686,7 +1686,7 @@ const CARDS={
     /* the rest of the team's minutes: every five-man stint minus this group's (works for 2-, 3- and 4-man groups too) */const rest={sec:0,pf:0,pa:0,o:{},d:{}};Object.values(R.L[F][5]).forEach(z=>{rest.sec+=z.sec;rest.pf+=z.pf;rest.pa+=z.pa;['o','d'].forEach(s=>{for(const q in z[s])rest[s][q]=(rest[s][q]||0)+z[s][q]})});rest.sec-=l.sec;rest.pf-=l.pf;rest.pa-=l.pa;['o','d'].forEach(s=>{for(const q in l[s])rest[s][q]=(rest[s][q]||0)-l[s][q]});
     const rt=X=>{const g=(s,q)=>X[s][q]||0;const p=(poss(X.o)+poss(X.d))/2;const ok=p>=1;const ef=s=>g(s,'fga')?(g(s,'fgm')+.5*g(s,'tpm'))/g(s,'fga')*100:null;const tv=s=>{const d=g(s,'fga')+.44*g(s,'fta')+g(s,'to');return d?g(s,'to')/d*100:null};
       const orb=(a,b)=>{const d=g(a,'oreb')+g(b,'dreb');return d?g(a,'oreb')/d*100:null};const ob=orb('o','d'),db=orb('d','o');
-      return {p,ortg:ok?X.pf/p*100:null,drtg:ok?X.pa/p*100:null,net:ok?(X.pf-X.pa)/p*100:null,efg:ef('o'),tov:tv('o'),orb:ob,oefg:ef('d'),otov:tv('d'),drb:db==null?null:100-db}};
+      return {p,ortg:poss(X.o)>=1?X.pf/poss(X.o)*100:null,drtg:poss(X.d)>=1?X.pa/poss(X.d)*100:null,net:poss(X.o)>=1&&poss(X.d)>=1?X.pf/poss(X.o)*100-X.pa/poss(X.d)*100:null,efg:ef('o'),tov:tv('o'),orb:ob,oefg:ef('d'),otov:tv('d'),drb:db==null?null:100-db}};
     const A=rt(l),Z=rt(rest),cmp=rest.sec>=60;const GRN='#1d6b3a',RED='#a3122e';
     const f1=v=>v==null?'–':v.toFixed(1),sg1=v=>(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1);
     const tone=(a,b,hi)=>{if(!cmp||a==null||b==null||Math.abs(a-b)<.05)return null;return (a>b)===hi};
@@ -1839,8 +1839,8 @@ const SCARDS={
     const P=t=>poss({fga:t.fga,oreb:t.oreb,to:t.to,fta:t.fta,np:t.np});const pa=P(A),pb=P(B),pp=(pa+pb)/2;
     sHead(x,D,'THE SEASON SO FAR',null);
     const ppg=g.reduce((s,y)=>s+y.cle,0)/(n||1),opg=g.reduce((s,y)=>s+y.os,0)/(n||1);
-    [[ppg.toFixed(1),'POINTS'],[opg.toFixed(1),'ALLOWED'],[(pp?(A.pts-B.pts)/pp*100:0).toFixed(1).replace(/^(\d)/,'+$1'),'NET / 100']].forEach(([v,lb],i)=>cStat(x,v,lb,72+i*320,450,80,i===2?(v.startsWith('-')?'#a3122e':'#1d6b3a'):INK));
-    [[pp?(A.pts/pp*100).toFixed(1):'–','OFF RATING'],[pp?(B.pts/pp*100).toFixed(1):'–','DEF RATING'],[A.sec?(pp/A.sec*2880).toFixed(1):'–','PACE']].forEach(([v,lb],i)=>cStat(x,v,lb,72+i*320,620,64,GREY));
+    [[ppg.toFixed(1),'POINTS'],[opg.toFixed(1),'ALLOWED'],[(pa&&pb?A.pts/pa*100-B.pts/pb*100:0).toFixed(1).replace(/^(\d)/,'+$1'),'NET / 100']].forEach(([v,lb],i)=>cStat(x,v,lb,72+i*320,450,80,i===2?(v.startsWith('-')?'#a3122e':'#1d6b3a'):INK));
+    [[pa?(A.pts/pa*100).toFixed(1):'–','OFF RATING'],[pb?(B.pts/pb*100).toFixed(1):'–','DEF RATING'],[A.sec?(pp/A.sec*2880).toFixed(1):'–','PACE']].forEach(([v,lb],i)=>cStat(x,v,lb,72+i*320,620,64,GREY));
     x.fillStyle='#e3e0db';x.fillRect(72,700,936,2);lbl(x,'LEADING THE WAY · PER GAME',72,760,32);
     const ids=Object.keys(R.B).filter(id=>R.B[id].gp).sort((a,b)=>R.B[b].pts/R.B[b].gp-R.B[a].pts/R.B[a].gp).slice(0,3);const imgs=await Promise.all(ids.map(i=>loadImg(hsUrl(D,i))));
     ids.forEach((id,i)=>{const b=R.B[id],cx=72+140+i*312,cy=900;head2(x,imgs[i],cx,cy,110,null,initials(D.P[id].name));x.fillStyle=INK;x.font='800 40px "Saira Condensed"';ctr(x,D.P[id].last.toUpperCase(),cx,cy+160);
@@ -1904,7 +1904,7 @@ const lKick=D=>S.season?D.focus.abbr+' · '+(S.season||'').replace('-','–')+' 
 const lScore=D=>{const R=S.R;if(S.season){const [sl,wh]=scoreLine(D,R);return [[sl+'  ','800 60px "Saira Condensed"','#fff'],[wh,'600 30px Archivo','#f4d6dd']]}const F=D.focus,fs=F.ha==='home'?R.hs:R.as,os=F.ha==='home'?R.as:R.hs;
   return [[F.abbr+' ','800 44px "Saira Condensed"','#fff'],[String(fs),'800 104px "Saira Condensed"','#fff'],[' – ','800 60px "Saira Condensed"','#fff'],[String(os),'800 104px "Saira Condensed"','#f4d6dd'],[' '+D.other.abbr,'800 44px "Saira Condensed"','#fff']]};
 const lSum=(L5,f)=>{const o={sec:0,pf:0,pa:0,o:{},d:{}};L5.filter(f).forEach(l=>{o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;['o','d'].forEach(s=>{for(const k in l[s])o[s][k]=(o[s][k]||0)+l[s][k]})});return o};
-const lRt=X=>{const p=(poss(X.o)+poss(X.d))/2,ok=p>=1;return {p,ortg:ok?X.pf/p*100:null,drtg:ok?X.pa/p*100:null,net:ok?(X.pf-X.pa)/p*100:null}};
+const lRt=X=>{const p=(poss(X.o)+poss(X.d))/2,ok=p>=1;return {p,ortg:poss(X.o)>=1?X.pf/poss(X.o)*100:null,drtg:poss(X.d)>=1?X.pa/poss(X.d)*100:null,net:poss(X.o)>=1&&poss(X.d)>=1?X.pf/poss(X.o)*100-X.pa/poss(X.d)*100:null}};
 let LGF=null;async function lgFF(){if(LGF)return LGF;try{const L=await getJSON('/pdata/league.json');const t={fgm:0,fga:0,tpm:0,ftm:0,fta:0,orb:0,drb:0,tov:0,odrb:0};Object.values(L.tg||{}).forEach(g=>{const z=g.t||[];if(z.length!==2)return;z.forEach((a,i)=>{const b=z[1-i];['fgm','fga','tpm','ftm','fta','orb','tov'].forEach(k=>t[k]+=a[k]||0);t.odrb+=b.drb||0})});
   if(t.fga<1000)return null;LGF={efg:(t.fgm+.5*t.tpm)/t.fga,tov:t.tov/(t.fga-t.orb+t.tov+.44*t.fta),orb:t.orb/(t.orb+t.odrb),ftr:t.ftm/t.fga};return LGF}catch(e){return null}}
 /* team logo at the left of the header */
@@ -2048,7 +2048,7 @@ Object.assign(CARDS,{
 Object.assign(SCARDS,{
   season:{label:'Season card',w:LW,h:LH,async draw(x,D,R){const Fo=D.focus,F=Fo.id,[w,l]=sRec(D),g=sGames(D),n=Math.max(1,g.length);const A=R.T[F],B=R.T[D.other.id];
     lFrame(x);const TX=await lLogoHead(x,Fo);lTitle(x,TX,'Season card · '+sSea(D)+' · '+g.length+' games','The season so far',[[Fo.abbr+' ','800 44px "Saira Condensed"','#fff'],[w+'–'+l,'800 104px "Saira Condensed"','#fff'],['   '+(g.filter(z=>z.ha==='H'||z.home).length?'':'')+'points '+(g.reduce((s2,z)=>s2+z.cle,0)/n).toFixed(1)+' · allowed '+(g.reduce((s2,z)=>s2+z.os,0)/n).toFixed(1)+' a game','600 32px Archivo','#f4d6dd']]);
-    const P=t=>poss({fga:t.fga,oreb:t.oreb,to:t.to,fta:t.fta,np:t.np});const pp=(P(A)+P(B))/2,ortg=pp?A.pts/pp*100:null,drtg=pp?B.pts/pp*100:null,net=pp?(A.pts-B.pts)/pp*100:null;const lg=lgAvg();
+    const P=t=>poss({fga:t.fga,oreb:t.oreb,to:t.to,fta:t.fta,np:t.np});const pp=(P(A)+P(B))/2,ortg=P(A)?A.pts/P(A)*100:null,drtg=P(B)?B.pts/P(B)*100:null,net=ortg!=null&&drtg!=null?ortg-drtg:null;const lg=lgAvg();
     const box=(T)=>[['PTS',(T.pts/n).toFixed(1)],['FG%',lpc(T.fgm,T.fga)],['3P%',lpc(T.tpm,T.tpa),(T.tpm/n).toFixed(1)+' made'],['FT%',lpc(T.ftm,T.fta)],['REB',((T.oreb+T.dreb)/n).toFixed(1)],['AST',(T.ast/n).toFixed(1)],['STL',(T.stl/n).toFixed(1)],['TO',(T.to/n).toFixed(1)]];
     const own=q=>q.t===F,opp=q=>q.t!==F;
     lPanel(x,LX1,LY0,LSW,LBH,WINE);lHeadline(x,LX1,LSW,LY0,'OFFENSE','POINTS PER 100',lf1(ortg),null);lBox(x,LX1,LSW,LY0+176,box(A));lZones(x,LX1,LSW,LY0+476,'WHERE THEY SHOT',lZ3(R.shots.filter(own)),null,WINE,true,'');
@@ -2209,7 +2209,7 @@ function pgCard(D,R,id){const p=D.P[id],b=R.B[id];if(!p||!b)return null;const t=
         w.appendChild(g2);if(LR)w.appendChild(el('p','pgc-nt','Bars: tonight’s number as a percentile of NBA players’ season rates (12+ minutes a game). Tick = his season rate. TOV%: fuller = fewer turnovers.'))}}}
   /* team ratings with him on and off the floor */
   {const L5=Object.values((R.L[p.team]||{})[5]||{});if(L5.length){const sm=f=>{const o={sec:0,pf:0,pa:0,o:{},d:{}};L5.filter(f).forEach(l=>{o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;['o','d'].forEach(k=>{for(const q in l[k])o[k][q]=(o[k][q]||0)+l[k][q]})});return o};
-    const rt=X=>{const pp=(poss(X.o)+poss(X.d))/2;return pp>=1?{o:X.pf/pp*100,d:X.pa/pp*100,n:(X.pf-X.pa)/pp*100}:null};const on=rt(sm(l=>l.ids.includes(id))),off=rt(sm(l=>!l.ids.includes(id)));
+    const rt=X=>{const PO=poss(X.o),PD=poss(X.d);return PO>=1&&PD>=1?{o:X.pf/PO*100,d:X.pa/PD*100,n:X.pf/PO*100-X.pa/PD*100}:null};const on=rt(sm(l=>l.ids.includes(id))),off=rt(sm(l=>!l.ids.includes(id)));
     /* sits at the right end of the big stat line (wraps under it on phones) */
     if(on){const g=el('div','pgc-rt pgc-rt-in');g.appendChild(el('div','pgc-rh',t.abbr+' per 100 possessions with him on'));const f1=v=>v==null?'–':v.toFixed(1),sg=v=>v==null?'–':(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1);
       [['Off. rating','o',true],['Def. rating','d',false],['Net','n',true]].forEach(([lab,k,hi])=>{const a=on[k],z=off?off[k]:null;const good=z==null||Math.abs(a-z)<.05?null:(a>z)===hi;const c=el('div');c.append(el('small',null,lab),el('b',good==null?null:good?'up':'dn',k==='n'?sg(a):f1(a)),el('span',null,'with him off: '+(k==='n'?sg(z):f1(z))));g.appendChild(c)});const bg=w.querySelector('.pgc-big');if(bg)bg.appendChild(g);else w.appendChild(g)}}}
@@ -2235,7 +2235,7 @@ function vPlayers(v,D,R){
     if(!r){rows.push({name:p,_cls:'dnp',min:-1,dnp:true});return}
     r.name=p;r.ts=r.fga+r.fta?r.pts/(2*(r.fga+0.44*r.fta)):null;r.usg=null;
     {/* on-court net rating: points per 100 possessions scored minus allowed with him on (same count as the Advanced view) */
-      const onL=Object.values(R.L[t.id][5]).filter(l=>l.ids.includes(id));let po=onL.reduce((s2,l)=>s2+poss(l.o),0),pd=onL.reduce((s2,l)=>s2+poss(l.d),0);const pf=onL.reduce((s2,l)=>s2+l.pf,0),pa=onL.reduce((s2,l)=>s2+l.pa,0);const av=(po+pd)/2;r.net=av>=1?(pf-pa)/av*100:null}
+      const onL=Object.values(R.L[t.id][5]).filter(l=>l.ids.includes(id));let po=onL.reduce((s2,l)=>s2+poss(l.o),0),pd=onL.reduce((s2,l)=>s2+poss(l.d),0);const pf=onL.reduce((s2,l)=>s2+l.pf,0),pa=onL.reduce((s2,l)=>s2+l.pa,0);r.net=po>=1&&pd>=1?pf/po*100-pa/pd*100:null}
     r._cls=R.B[id].on&&S.state==='in'?'':'';rows.push(r)});
   const nm=r=>{const s=el('span');const dot=el('span','oc'+(R.B[r.name.id].on&&S.state==='in'?'':' off'));s.append(dot,plink(D,r.name.id,r.name.short||r.name.name));if(r.name.starter)s.appendChild(el('span','pos',r.name.pos||''));return s};
   const d=x=>r=>r.dnp?'':x(r);
@@ -2275,7 +2275,7 @@ function vLuHub(v,D,R){
 }
 /* the full advanced spread for one lineup: the group's numbers next to their opponents' while it was on the floor */
 function luSpread(D,t,l){const w=el('div','lsp');const o=l.o,d=l.d;if(o.fgm==null){w.appendChild(el('p','note','Full numbers fill in for games played after Oct 23.'));return w}
-  const po=(poss(o)+poss(d))/2,pct=(a,b)=>b?(a/b*100).toFixed(1)+'%':'–',f1=x=>x==null||!isFinite(x)?'–':x.toFixed(1);const opp=t.id===D.focus.id?D.other.abbr:D.focus.abbr;
+  const po=(poss(o)+poss(d))/2,PO=poss(o),PD=poss(d),pct=(a,b)=>b?(a/b*100).toFixed(1)+'%':'–',f1=x=>x==null||!isFinite(x)?'–':x.toFixed(1);const opp=t.id===D.focus.id?D.other.abbr:D.focus.abbr;
   const head2=el('div','lsp-h');head2.append(el('b',null,l.ids.map(id=>D.P[id].last).join(', ')),el('span',null,fmtMin(l.sec)+' · '+Math.round(po)+' possessions'+(l.g?' · '+l.g+' game'+(l.g===1?'':'s'):'')));w.appendChild(head2);
   /* each player's own box score while this group played (2- and 5-man groups) */
   /* desktop: players' box on the left, the group's team numbers on the right (stacks on phones) */
@@ -2288,9 +2288,9 @@ function luSpread(D,t,l){const w=el('div','lsp');const o=l.o,d=l.d;if(o.fgm==nul
     l.ids.slice().sort((a,b)=>((l.pb[b]||{}).pts||0)-((l.pb[a]||{}).pts||0)).forEach(id=>{const q=l.pb[id]||{},g=k=>q[k]||0;const tr=el('tr');
       [D.P[id].last,sc(g('pts')),g('fgm')+'-'+g('fga'),g('tpm')+'-'+g('tpa'),g('ftm')+'-'+g('fta'),sc(g('oreb')+g('dreb')),sc(g('ast')),sc(g('to')),sc(g('stl'))+'/'+sc(g('blk'))].forEach(v=>tr.appendChild(el('td',null,v)));tb.appendChild(tr)});
     lsL.appendChild(el('h4','lsp-k','Players in this group'));lsL.appendChild(sw);const tw=el('div','tw');tw.appendChild(tb);lsL.appendChild(tw);lsL.appendChild(el('p','note','Each player’s own numbers while '+(l.ids.length===2?'both':'all '+['','','','three','four','five'][l.ids.length])+' were on the floor'+(p36?' (points, rebounds, assists, turnovers, steals and blocks per 36 minutes; shooting stays as made-attempted)':'')+'.'))}
-  const rows=[['Points per 100',f1(l.pf/po*100),f1(l.pa/po*100),1],['Net per 100',(l.pf-l.pa>=0?'+':'−')+Math.abs((l.pf-l.pa)/po*100).toFixed(1),'',null],['Pace (per 48)',f1(po/(l.sec/2880)),'',null],
+  const rows=[['Points per 100',f1(l.pf/PO*100),f1(l.pa/PD*100),1],['Net per 100',(l.pf/PO-l.pa/PD>=0?'+':'−')+Math.abs(l.pf/PO*100-l.pa/PD*100).toFixed(1),'',null],['Pace (per 48)',f1(po/(l.sec/2880)),'',null],
     ['Effective FG%',pct(o.fgm+.5*o.tpm,o.fga),pct(d.fgm+.5*d.tpm,d.fga),1],['True shooting',pct(l.pf,2*(o.fga+.44*o.fta)),pct(l.pa,2*(d.fga+.44*d.fta)),1],['3P%',pct(o.tpm,o.tpa),pct(d.tpm,d.tpa),1],['3PA rate',pct(o.tpa,o.fga),pct(d.tpa,d.fga),null],
-    ['Turnovers per 100',f1(o.to/po*100),f1(d.to/po*100),0],['Off. rebound %',pct(o.oreb,o.oreb+d.dreb),pct(d.oreb,d.oreb+o.dreb),1],['Def. rebound %',pct(o.dreb,o.dreb+d.oreb),pct(d.dreb,d.dreb+o.oreb),1],['Free throw rate',pct(o.ftm,o.fga),pct(d.ftm,d.fga),1],['Assisted baskets',pct(o.ast,o.fgm),pct(d.ast,d.fgm),null],
+    ['Turnovers per 100',f1(o.to/PO*100),f1(d.to/PD*100),0],['Off. rebound %',pct(o.oreb,o.oreb+d.dreb),pct(d.oreb,d.oreb+o.dreb),1],['Def. rebound %',pct(o.dreb,o.dreb+d.oreb),pct(d.dreb,d.dreb+o.oreb),1],['Free throw rate',pct(o.ftm,o.fga),pct(d.ftm,d.fga),1],['Assisted baskets',pct(o.ast,o.fgm),pct(d.ast,d.fgm),null],
     ['FG',o.fgm+'-'+o.fga,d.fgm+'-'+d.fga,null],['3PT',o.tpm+'-'+o.tpa,d.tpm+'-'+d.tpa,null],['FT',o.ftm+'-'+o.fta,d.ftm+'-'+d.fta,null]];
   const tb=el('table','zt lsp-t');tb.innerHTML=`<tr><th></th><th>${esc(t.abbr)} lineup</th><th>${esc(opp)}</th></tr>`;
   rows.forEach(([k,a,b,hi])=>{const tr=el('tr');const na=parseFloat(String(a).replace('−','-')),nb=parseFloat(b);const win=hi==null||b===''||isNaN(na)||isNaN(nb)||na===nb?null:hi?na>nb:na<nb;/* one color rule: green / red only on the Cavs side, for better or worse than the other side */const cavL=t.id===CLE,cv=win==null?null:(cavL?win:!win)?'up':'dn';tr.append(el('td',null,k),el('td',cavL?cv:null,a),el('td',cavL?null:cv,b));tb.appendChild(tr)});
@@ -2337,7 +2337,7 @@ function vLineups(v,D,R){
   c.appendChild(ch);c.appendChild(el('p','note','Tap a player once to show only groups with him, twice to show only groups without him.'));
   if(S.state==='in'){c.appendChild(el('h3','noshot','On the floor now'));const f=el('div','five noshot');[...R.on[t.id]].forEach(id=>f.appendChild(el('span',null,D.P[id].short)));c.appendChild(f);c.appendChild(el('h3',null,'All '+S.f.luSize+'-man groups'))}
   const nowSet=new Set(R.on[t.id]);
-  const rows=Object.values(R.L[t.id][S.f.luSize]).filter(l=>l.sec>=S.f.luMin*60&&(l.sec>0||l.pf||l.pa)&&Object.entries(pk).every(([id,v])=>v===1?l.ids.includes(id):!l.ids.includes(id))).map(l=>{let po=poss(l.o),pd=poss(l.d);{const _a=(po+pd)/2;po=pd=_a}const pp=(po+pd)/2;
+  const rows=Object.values(R.L[t.id][S.f.luSize]).filter(l=>l.sec>=S.f.luMin*60&&(l.sec>0||l.pf||l.pa)&&Object.entries(pk).every(([id,v])=>v===1?l.ids.includes(id):!l.ids.includes(id))).map(l=>{let po=poss(l.o),pd=poss(l.d);const pp=(po+pd)/2;
     return {l,key:l.ids.slice().sort().join(','),_open:SEASONTAB_ON&&S.f.luOpen===l.ids.slice().sort().join(','),ids:l.ids,sec:l.sec,pf:l.pf,pa:l.pa,pm:l.pf-l.pa,ortg:po>=1?l.pf/po*100:null,drtg:pd>=1?l.pa/pd*100:null,net:po>=1&&pd>=1?l.pf/po*100-l.pa/pd*100:null,poss:pp,_cls:S.state==='in'&&l.ids.every(id=>nowSet.has(id))?'now':''}});
   const names=r=>r.ids.slice().sort((a,b)=>(D.P[b].starter-D.P[a].starter)).map(id=>D.P[id].last).join(', ');
   const f1=x=>x==null?'–':x.toFixed(0);
@@ -2349,7 +2349,7 @@ function vLineups(v,D,R){
   /* players picked: a totals row for every group shown (the time those players shared the floor, within the minutes filter) */
   let foot=null,comb=null;const inc=rows.filter(r=>!out[r.key]);if(rows.length>1&&inc.length){const add=(A,B)=>{for(const k in B)if(typeof B[k]==='number')A[k]=(A[k]||0)+B[k];return A};const o={},d={},pb={};let sec=0,pf=0,pa=0,pbOK=true;inc.forEach(r=>{sec+=r.sec;pf+=r.pf;pa+=r.pa;add(o,r.l.o);add(d,r.l.d);if(r.l.pb){for(const id in r.l.pb)add(pb[id]=pb[id]||{},r.l.pb[id])}else pbOK=false});
     const common=inc[0].ids.filter(id=>inc.every(r=>r.ids.includes(id))),every=[...new Set(inc.flatMap(r=>r.ids))];comb={ids:pbOK?every:common,common,sec,pf,pa,o,d,pb:pbOK&&Object.keys(pb).length?pb:null};
-    const pp=(poss(o)+poss(d))/2;const T={ids:[],sec,pf,pa,pm:pf-pa,poss:pp,ortg:pp>=1?pf/pp*100:null,drtg:pp>=1?pa/pp*100:null,net:pp>=1?(pf-pa)/pp*100:null};
+    const pp=(poss(o)+poss(d))/2;const PO=poss(o),PD=poss(d);const T={ids:[],sec,pf,pa,pm:pf-pa,poss:pp,ortg:PO>=1?pf/PO*100:null,drtg:PD>=1?pa/PD*100:null,net:PO>=1&&PD>=1?pf/PO*100-pa/PD*100:null};
     foot=el('tr','lutot');cols.forEach((cc,i)=>{const td=el('td',i?(cc.cls?cc.cls(T):null):null);td.textContent=i?String(cc.f?cc.f(T):T[cc.k]):(inc.length<rows.length?'Total · '+inc.length+' of '+rows.length+' groups':'Total · '+rows.length+' groups');foot.appendChild(td)})}
   /* a lineup's panel is open: repeat the column names just above the Total row, since the table's own header can be a long way up */
   if(foot&&S.f.luOpen&&rows.some(r=>r.key===S.f.luOpen)){const fr=document.createDocumentFragment(),hr=el('tr','luth');cols.forEach((cc,i)=>hr.appendChild(el('td',null,i?cc.h:'')));fr.append(hr,foot);foot=fr}
@@ -2518,7 +2518,7 @@ function sTeam(G){let pf=0,pa=0,po=0,sec=0,fga=0,tpa=0,fta=0,to=0,pts=0,w=0,ofga
   if(!po)return null;return {g:G.length,w,l:G.length-w,o:pf/po*100,d:pa/po*100,n:(pf-pa)/po*100,pace:po/(sec/2880)*1,tpar:tpa/fga*100,ts:pts/(2*(fga+.44*fta))*100,tov:to/po*100,ots:ofga+ofta?pa/(2*(ofga+.44*ofta))*100:null,reb:rb+orb?rb/(rb+orb)*100:null,otov:oto/po*100}}
 /* a player's or a lineup's on-court numbers for a set of games, from the five-man units */
 function sUnit(G,match){let sec=0,pf=0,pa=0,o={fga:0,oreb:0,to:0,fta:0},d={fga:0,oreb:0,to:0,fta:0},gp=0;G.forEach(g=>{let any=false;(g.l5||[]).forEach(l=>{if(!match(l[0]))return;any=true;sec+=l[1];pf+=l[2];pa+=l[3];o.fga+=l[4];o.oreb+=l[5];o.to+=l[6];o.fta+=l[7];d.fga+=l[8];d.oreb+=l[9];d.to+=l[10];d.fta+=l[11];if(l[12]!=null){o.np=(o.np||0)+l[12];d.np=(d.np||0)+l[13]}});if(any)gp++});
-  if(!sec)return null;const p=(poss(o)+poss(d))/2;return {g:gp,sec,o:p>=1?pf/p*100:null,d:p>=1?pa/p*100:null,n:p>=1?(pf-pa)/p*100:null,pm:pf-pa,pace:p/(sec/2880)}}
+  if(!sec)return null;const p=(poss(o)+poss(d))/2,PO=poss(o),PD=poss(d);return {g:gp,sec,o:PO>=1?pf/PO*100:null,d:PD>=1?pa/PD*100:null,n:PO>=1&&PD>=1?pf/PO*100-pa/PD*100:null,pm:pf-pa,pace:p/(sec/2880)}}
 function vSeason(v,D,R){
   const G=(D.games||[]).filter(g=>g.t);
   if(!G.length){const c=el('div','card');head(c,'Season','');c.appendChild(el('p','empty','Trends fill in once this season’s games are archived.'));v.appendChild(c);return}
@@ -2619,7 +2619,7 @@ function seasonExtras(v,D,R){const J=S.sfull;const filt=!!((S.sf&&((S.sf.games&&
     {const sb=el('div','vz-st');const a=(T.stPts||0)/tot*100;const s1=el('span',null,'Starters '+Math.round(a)+'%');s1.style.width=a+'%';const s2=el('span','b','Bench '+Math.round(100-a)+'%');s2.style.width=(100-a)+'%';sb.append(s1,s2);c.appendChild(sb)}
     const w=el('div','tw');w.appendChild(t);c.appendChild(w);c.appendChild(el('p','note','Minutes are player minutes (five players on the floor = 240 a game). Starters = the five who started each game.'+(lxAgg()&&!filt?' Small numbers = NBA rank among 30 teams (points: 1st = most; share and minutes: 1st = highest).':'')));v.appendChild(c)}}
   /* best and worst lineups */
-  {const L=Object.values((R.L[D.focus.id]||{})[5]||{});let minM=Math.min(30,Math.max(8,G*2));while(minM>4&&L.filter(l=>l.sec>=minM*60).length<10)minM--;const Q=L.filter(l=>l.sec>=minM*60).map(l=>{const p=(poss(l.o)+poss(l.d))/2;return {l,net:p>=1?(l.pf-l.pa)/p*100:null,p}}).filter(x=>x.net!=null).sort((a,b)=>b.net-a.net);
+  {const L=Object.values((R.L[D.focus.id]||{})[5]||{});let minM=Math.min(30,Math.max(8,G*2));while(minM>4&&L.filter(l=>l.sec>=minM*60).length<10)minM--;const Q=L.filter(l=>l.sec>=minM*60).map(l=>{const p=(poss(l.o)+poss(l.d))/2,PO=poss(l.o),PD=poss(l.d);return {l,net:PO>=1&&PD>=1?l.pf/PO*100-l.pa/PD*100:null,p}}).filter(x=>x.net!=null).sort((a,b)=>b.net-a.net);
     if(Q.length>=2){const c=el('div','card sec');head(c,'Best and worst lineups','Five-man units, '+minM+'+ minutes · net per 100');const nm=l=>l.ids.map(id=>(D.P[id]||{}).last||'').join(', ');
       const mk=(lab,arr)=>{const t=el('table','zt');t.innerHTML=`<tr><th>${lab}</th><th>Min</th><th>+/-</th><th>Net</th></tr>`;arr.forEach(({l,net})=>{const tr=el('tr');tr.append(el('td',null,nm(l)),el('td',null,fmtMin(l.sec)),el('td',pmCls(l.pf-l.pa),sgn(l.pf-l.pa)),el('td',pmCls(net),sgn(Math.round(net))));t.appendChild(tr)});const w=el('div','tw');w.appendChild(t);return w};
       const k5=Math.min(5,Math.ceil(Q.length/2));c.appendChild(mk('Best',Q.slice(0,k5)));const wr=Q.slice(k5).reverse().slice(0,5);if(wr.length)c.appendChild(mk('Worst',wr));c.appendChild(el('p','note','Small samples swing hard.'));{const a=el('button','lk-more','Every lineup in the Lineups tab →');a.type='button';a.onclick=()=>{S.tab='lineups';renderView();scrollTo({top:0,behavior:'smooth'})};c.appendChild(a)}v.appendChild(c)}}
