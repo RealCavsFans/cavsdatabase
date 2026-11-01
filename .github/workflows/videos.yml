@@ -103,3 +103,14 @@ jobs:
             sleep $((RANDOM % 15 + i * 10))
           done
           exit 1
+      # Repo size (Nov 1): the full built site (latest main + this run's page copies) is also published as ONE commit that
+      # replaces the 'deploy' branch each time, so old page builds don't pile up in history. Once Cloudflare deploys from
+      # 'deploy' instead of 'main', main can stop storing the built pages. Until then this is an extra copy and changes nothing.
+      - name: Publish the built site to the deploy branch
+        if: success()
+        run: |
+          git add -A . >/dev/null 2>&1 || true
+          git rm -r -q --cached .github >/dev/null 2>&1 || true   # the deploy copy carries no workflow files (the site never needs them)
+          T=$(git write-tree) && C=$(git commit-tree "$T" -m "Site build $(date -u +%Y-%m-%dT%H:%MZ) from main $(git rev-parse --short HEAD)")
+          for i in 1 2 3; do git push -q -f origin "$C:refs/heads/deploy" && exit 0; sleep 10; done
+          echo "::warning::could not publish the deploy branch"; exit 0

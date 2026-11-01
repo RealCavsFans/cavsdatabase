@@ -165,7 +165,11 @@ ${rich}`,
 
 /* draw only what changed */
 const fp = h => createHash('sha1').update(h).digest('hex').slice(0, 10);
-const need = cards.filter(([f, h]) => (!process.env.OG_ONLY || new RegExp(process.env.OG_ONLY).test(f)) && (!state[f] || state[f] !== fp(h) || process.env.OG_ONLY));
+/* Nov 1 (repo size): a finished game changes the records on every future preview card, which redrew ~80 images each game day
+   (the biggest source of repo growth). Cards for games more than 10 days out now redraw at most once a week; nearer games as before. */
+const DRAWN = state._drawn || {}; const nowMs = Date.now();
+const far = f => { const m = f.match(/^og\/gp\/(\d{4}-\d\d-\d\d)-/); return m && Date.parse(m[1] + 'T12:00:00Z') - nowMs > 10 * 864e5; };
+const need = cards.filter(([f, h]) => (!process.env.OG_ONLY || new RegExp(process.env.OG_ONLY).test(f)) && (!state[f] || process.env.OG_ONLY || (state[f] !== fp(h) && !(far(f) && DRAWN[f] && nowMs - DRAWN[f] < 7 * 864e5))));
 if (!need.length) { console.log('og-live: nothing changed'); process.exit(0); }
 const { createRequire } = await import('node:module'); const require = createRequire(import.meta.url);
 const pw = (() => { for (const m of ['playwright-core', 'playwright']) { try { return require(m); } catch {} } return null; })();
@@ -176,10 +180,11 @@ await mkdir(new URL('og/p/', root), { recursive: true }); await mkdir(new URL('o
 const tmp = new URL('og/_live.html', root);
 for (const [f, h] of need) {
   await writeFile(tmp, h); await pg.goto(tmp.href); await pg.evaluate(() => document.fonts.ready); await pg.waitForTimeout(60);
-  await pg.screenshot({ path: new URL(f, root).pathname, type: 'jpeg', quality: 86 }); state[f] = fp(h);
+  await pg.screenshot({ path: new URL(f, root).pathname, type: 'jpeg', quality: 86 }); state[f] = fp(h); DRAWN[f] = nowMs;
 }
 await unlink(tmp).catch(() => {}); await browser.close();
 // forget cards for games that have been played (their final card in og/g takes over)
-for (const f of Object.keys(state)) if (f.startsWith('og/gp/') && !cards.some(([c]) => c === f)) { delete state[f]; await unlink(new URL(f, root)).catch(() => {}); }
+for (const f of Object.keys(state)) if (f.startsWith('og/gp/') && !cards.some(([c]) => c === f)) { delete state[f]; delete DRAWN[f]; await unlink(new URL(f, root)).catch(() => {}); }
+for (const f of Object.keys(DRAWN)) if (!state[f]) delete DRAWN[f]; state._drawn = DRAWN;
 await writeFile(new URL('og/live.json', root), JSON.stringify(state, null, 1) + '\n');
 console.log('og-live: drew', need.length, 'of', cards.length);
