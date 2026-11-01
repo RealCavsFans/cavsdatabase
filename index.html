@@ -4373,7 +4373,7 @@ function ppBuild(p,root){
     c.appendChild(note('Bar = percentile in his position group (players with 12+ minutes a game): fuller is better, gold = top 10%. Turnover rate counts lower as better. Rates use his team’s totals from every box score this season.'));ov.appendChild(c)}
   else waiting.push('Player fingerprint (after 10 games)');
   // value for his contract: production against pay, every NBA player with real minutes (league box scores + league salaries)
-  if(meL&&meL.g>=3&&meL.min/meL.g>=12){const c=card('Value for his contract',null,'Production (Game Score a night) against salary, every NBA player with 12+ minutes a game.');c.id='ppx-valc';c.classList.add('ppx-sm');const box=el('div','ppx-val');box.appendChild(el('p','dim','Loading…'));c.appendChild(box);ov.appendChild(c);
+  if(meL&&meL.g>=3&&meL.min/meL.g>=12){const c=card('Value for his contract',null,'Production (Game Score a night) against salary, every NBA player with 12+ minutes a game. How the ranks work: “in his pay range” means the 30 players paid closest to him, every position, who play 12+ minutes a game and have played at least 40% of the most games anyone has so far. 1st = best.');c.id='ppx-valc';c.classList.add('ppx-sm');const box=el('div','ppx-val');box.appendChild(el('p','dim','Loading…'));c.appendChild(box);ov.appendChild(c);
     const nm=x=>String(x).normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');
     const ESPB={NY:'NYK',GS:'GSW',SA:'SAS',NO:'NOP',UTAH:'UTA',WSH:'WAS'};
     (PPD.sal?Promise.resolve(PPD.sal):fetch('/pdata/league-salaries.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(j=>PPD.sal=j)).then(SJ=>{box.innerHTML='';if(!SJ||!SJ.teams){c.remove();return}
