@@ -86,7 +86,7 @@ function deriveCore(D,plays,F){
   /* garbage time (published rule): 4th quarter, a lead of 25+ with 9–12 minutes left, 20+ with 6–9 left, or 15+ with under 6 left; overtime never counts */
   let gtNow=false;const isGT=(per,t,m)=>{if(per!==4)return false;const left=2880-t,a=Math.abs(m);return left>540?a>=25:left>360?a>=20:a>=15};
   const inFx=per=>F==='clutch'?clutchNow:F==='nogt'?!gtNow:inPer(F,per);
-  let hold=null;const endPoss=(t,inF)=>{if(!inF||!t)return;if(seg)seg.o[t].np++;lu(t,on[t],o=>o.o.np++);lu(opp(t),on[opp(t)],o=>o.d.np++)};
+  /* a possession that ends on free throws belongs to the ten players on the floor at the foul, like the points (Oct 31) */let hold=null,curON=null;const endPoss=(t,inF)=>{if(!inF||!t)return;const W=curON||on;if(seg)seg.o[t].np++;lu(t,W[t],o=>o.o.np++);lu(opp(t),W[opp(t)],o=>o.d.np++)};
   const PL=[];const newPoss=(t,tt,how,inF)=>{if(ps[t]&&ps[t].t===tt&&ps[t].how===how&&how!=='oreb')return;if(how!=='start'){if(how!=='oreb'&&hold===opp(t))endPoss(opp(t),inF);hold=t}ps[t]={t:tt,how,pts:0,first:null,inF,on:on[t]?[...on[t]].sort().join(','):'',od:on[opp(t)]?[...on[opp(t)]].sort().join(','):''};if(inF){pc[t][how].n++;PL.push(Object.assign(ps[t],{team:t}))}};
   const margin=[[0,0]];let lc=0,ties=0,prevSign=0;const lead={};tid.forEach(t=>lead[t]=0);
   const shots=[],asts=[];const lastFG={},lastPt={},dr=[];let lastMade=null;
@@ -95,7 +95,7 @@ function deriveCore(D,plays,F){
   const addTime=t1=>{const dt=t1-last;if(dt>0){const inF=inFx(curPer);if(inF&&seg)seg.sec+=dt;tid.forEach(t=>{const q=tq(curPer,t);q.sec+=dt;on[t].forEach(id=>{if(D.P[id].starter)q.stSec+=dt;else q.bnSec+=dt});if(inF){T[t].sec+=dt;on[t].forEach(id=>{B[id].min+=dt;if(D.P[id].starter)T[t].stSec+=dt;else T[t].bnSec+=dt});lu(t,on[t],o=>o.sec+=dt)}})}last=Math.max(last,t1)};
   const leave=(id,t1)=>{if(enter[id]!=null){(stints[id]=stints[id]||[]).push([enter[id][0],t1,pmAll[id]-enter[id][1]]);delete enter[id]}};
   const join=(id,t1)=>{enter[id]=[t1,pmAll[id]]};
-  plays.forEach(p=>{
+  plays.forEach(p=>{curON=null;
     if(p.per!==curPer){if(curPer){addTime(pstart(curPer)+plen(curPer));endPoss(hold,inFx(curPer));hold=null;tid.forEach(t=>on[t].forEach(id=>leave(id,pstart(curPer)+plen(curPer))))}
       curPer=p.per;last=pstart(p.per);tid.forEach(t=>{on[t]=new Set(startFive[p.per][t]||[]);on[t].forEach(id=>{B[id].played=true;join(id,last)});src[t]='';ps[t]={t:last,how:'init',pts:0,first:null,inF:false,on:'',od:''}});newSeg()}
     clutchNow=p.per>=4&&(p.per>4||p.t>=2580)&&Math.abs(mgNow)<=5;gtNow=isGT(p.per,p.t,mgNow);
@@ -114,7 +114,7 @@ function deriveCore(D,plays,F){
     {const tt=p.team&&T[p.team]?p.team:teamOf(a);if(hold===null&&tt&&T[tt]&&((p.shot&&!/Technical/.test(ty))||(/Turnover|^Traveling|Double Dribble|Discontinued? Dribble|Offensive Goaltending|Palming|Backcourt|3-Second Violation$|Inbound/.test(ty)&&!/Kicked|Defensive/.test(ty)))){newPoss(tt,pstart(p.per),'start',inF);hold=tt}}
     {const tt=p.team&&T[p.team]?p.team:teamOf(a);if(tt&&ps[tt]&&ps[tt].first==null&&(p.shot||/Turnover|Foul/.test(ty)))ps[tt].first=p.t-ps[tt].t}
     if(/Foul/.test(ty)&&!/Offensive|Technical/.test(ty)){snap={t:p.t,per:p.per,on:{}};tid.forEach(x=>snap.on[x]=new Set(on[x]))}
-    const ftSnap=isFT&&!/Technical/.test(ty)&&snap&&snap.t===p.t&&snap.per===p.per;const ON=ftSnap?snap.on:on;
+    const ftSnap=isFT&&!/Technical/.test(ty)&&snap&&snap.t===p.t&&snap.per===p.per;const ON=ftSnap?snap.on:on;curON=ftSnap?snap.on:null;
     if(p.shot&&a&&B[a]&&!/Heave/.test(ty)){const t=teamOf(a);
       if(isFT&&/ 1 of /.test(ty)&&inF)TT(t).forEach(x=>{x.ftTrips++;if(/1 of 1/.test(ty)&&lastMade&&lastMade.id===a&&lastMade.t===p.t)x.and1++});
       if(!isFT&&p.sc){lastMade={id:a,t:p.t};const g=p.t-(lastFG[t]!=null?lastFG[t]:pstart(1));if(g>=180)dr.push({t,kind:'fg',from:lastFG[t]!=null?lastFG[t]:0,to:p.t});lastFG[t]=p.t}
