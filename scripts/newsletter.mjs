@@ -7,6 +7,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { createRequire } from 'node:module';
 import { extname } from 'node:path';
+import { execSync } from 'node:child_process';
 
 const MODE = process.argv[2] || 'auto';
 const LIVE = process.env.NEWSLETTER_LIVE === 'true';
@@ -290,6 +291,12 @@ console.log('draft created', email.id);
 const REAL = LIVE && (MODE === 'auto' || MODE === 'now');
 if (REAL) {
   const wait = MODE === 'now' ? 0 : msTo619(); if (wait > 0) { console.log('waiting ' + Math.round(wait / 60000) + ' min for 6:19 AM ET'); await new Promise(r => setTimeout(r, wait)); }
+  /* Nov 1: two runs both sent. A run checks out the repo as it was when it was triggered, so a run that waited behind another
+     never saw the first run's record. Right before sending, read the latest record from GitHub and ask Buttondown what went out today. */
+  let dup = false;
+  try { execSync('git fetch -q origin main'); const fresh = JSON.parse(execSync('git show origin/main:data/newsletter-sent.json', { encoding: 'utf8' })); if (fresh[g[0]]?.live) dup = true; } catch (e) { console.log('could not re-read the sent record:', String(e).slice(0, 120)); }
+  try { const L = await bd('/emails?ordering=-publish_date&page_size=10', 'GET'); if ((L.results || []).some(x => x.id !== email.id && x.subject === subj && /sent|about_to_send|in_flight|scheduled/.test(x.status || ''))) dup = true; } catch (e) { console.log('could not list Buttondown emails:', String(e).slice(0, 120)); }
+  if (dup) { console.log('already sent by another run; deleting this draft'); try { await bd('/emails/' + email.id, 'DELETE'); } catch {} process.exit(0); }
   await bd('/emails/' + email.id, 'PATCH', { status: 'about_to_send' });
   console.log('sent to subscribers');
 } else {
