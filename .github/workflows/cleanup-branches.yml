@@ -1,0 +1,17 @@
+name: Delete old mockup branches
+on:
+  # run by hand: deletes mockup branches (mock-*) and the finished speed-1 branch; main, probe-draft and css-cleanup stay
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+        with:
+          fetch-depth: 1
+      - run: |
+          for b in $(git ls-remote --heads origin | awk '{print $2}' | sed 's#refs/heads/##' | grep -E '^(mock-|speed-1$)'); do
+            git push origin --delete "$b" && echo "deleted $b"
+          done
