@@ -1547,7 +1547,7 @@ const INJ_TYPICAL={ /* diagnosis -> [typical return, source label, url]; see sta
 };
 const ij=document.getElementById('inj');
 if(!INJURIES.length){ij.appendChild(el('li',null,'No injuries reported.'))}
-const ABBR={'Out':'OUT','Doubtful':'DOUBTFUL','Questionable':'QUESTIONABLE','Probable':'PROBABLE','Game-time decision':'GTD','Day-to-day':'DAY-TO-DAY'};
+const ABBR={'Out':'OUT','Doubtful':'DOUBTFUL','Questionable':'QUES','Probable':'PROBABLE','Game-time decision':'GTD','Day-to-day':'DAY-TO-DAY'};
 INJURIES.forEach(([n,p,inj,st])=>{const li=el('li','ij');const d=document.createElement('details');const sm=document.createElement('summary');const a=el('span');a.append(el('b',null,n),' · '+inj);const z=el('span',st==='Out'?'out':null,ABBR[st]||st);z.title=st;sm.append(a,z);d.appendChild(sm);
   const c=INJ_CTX[n]||{};const box=el('div','ijx');const ty=INJ_TYPICAL[(c.type||inj).toLowerCase()];
   /* rows: diagnosis (as announced), team timeline, typical return for that diagnosis in NBA history, prior history */
@@ -1562,7 +1562,7 @@ INJURIES.forEach(([n,p,inj,st])=>{const li=el('li','ij');const d=document.create
   if(c.hist){const l=el('a','ij-hist',"Full injury history ↗");l.href=c.hist;l.target='_blank';l.rel='noopener';ft.appendChild(l)}
   {const sv=el('button','ij-sv');sv.type='button';sv.title='Save as image';sv.setAttribute('aria-label','Save '+n+' injury card as an image');sv.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';sv.onclick=()=>window.cdbCard&&window.cdbCard('injury',n,sv);ft.appendChild(sv);box.appendChild(ft)}
   d.appendChild(box);li.appendChild(d);ij.appendChild(li)});
-INJ_ASSIGN.forEach(([n,p])=>{const li=el('li','ij');const d=document.createElement('details');const sm=document.createElement('summary');const a=el('span');a.append(el('b',null,n),' · G League assignment');const z=el('span',null,'G LEAGUE');z.title='On G League assignment, not injured';sm.append(a,z);d.appendChild(sm);const box=el('div','ijx');const dl=el('dl','ij-dl');dl.append(el('dt',null,'Status'),el('dd',null,'On assignment in the G League, not injured. Listed here because the NBA official injury report shows him as unavailable for the Cavs game. Not counted as an injury.'));box.appendChild(dl);d.appendChild(box);li.appendChild(d);ij.appendChild(li)});
+INJ_ASSIGN.forEach(([n,p])=>{const li=el('li','ij');const d=document.createElement('details');const sm=document.createElement('summary');const a=el('span');a.append(el('b',null,n),' · G League assignment');const z=el('span',null,'ASSIGN');z.title='On G League assignment, not injured';sm.append(a,z);d.appendChild(sm);const box=el('div','ijx');const dl=el('dl','ij-dl');dl.append(el('dt',null,'Status'),el('dd',null,'On assignment in the G League, not injured. Listed here because the NBA official injury report shows him as unavailable for the Cavs game. Not counted as an injury.'));box.appendChild(dl);d.appendChild(box);li.appendChild(d);ij.appendChild(li)});
 {const m=new Date(INJ_UPDATED+', '+SITE_UPDATED.slice(0,4)+' 12:00');{const ic=document.getElementById('inj-count');ic.className='upd-tag';ic.textContent='Updated '+(isNaN(m)?INJ_UPDATED:relDay(new Intl.DateTimeFormat('en-CA').format(m)))}}
 {const nt=document.getElementById('inj-note');if(nt){nt.textContent='';nt.hidden=true}}
 /* the injury report section can be lifted into the game-day card and put back */
