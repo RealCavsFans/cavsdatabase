@@ -240,8 +240,8 @@ function fromNBA(box,pbp,extra){extra=extra||{};const g=box.game,acts=((pbp&&pbp
   const subQ={};const flushSubs=()=>{Object.values(subQ).forEach(q=>{q.out.forEach((o,i)=>{const n=q.in[i];if(n)mk(n,'Substitution',N(n.personId)+' enters the game for '+N(o.personId),[n.personId,o.personId],{k:'s'+i,team:{id:byNba[n.teamId]}})})});for(const k in subQ)delete subQ[k]};
   let subKey=null;
   for(const a of acts){const t=a.actionType,sub=String(a.subType||'').toLowerCase(),desc=String(a.descriptor||'').toLowerCase();
-    if(t==='substitution'){const k=a.period+'|'+a.clock+'|'+a.teamId;if(subKey&&!subQ[k])flushSubs();subKey=k;const q=subQ[k]=subQ[k]||{out:[],in:[]};(sub==='out'?q.out:q.in).push(a);continue}
-    if(Object.keys(subQ).length)flushSubs();subKey=null;
+    if(t==='substitution'){const k=a.period+'|'+a.clock+'|'+a.teamId,m=a.period+'|'+a.clock;if(subKey&&subKey!==m)flushSubs();subKey=m;const q=subQ[k]=subQ[k]||{out:[],in:[]};(sub==='out'?q.out:q.in).push(a);if(q.out.length&&q.out.length===q.in.length){const one={[k]:q};delete subQ[k];const keep=Object.assign({},subQ);for(const x in subQ)delete subQ[x];Object.assign(subQ,one);flushSubs();Object.assign(subQ,keep)}continue}
+    if(Object.keys(subQ).length&&subKey!==a.period+'|'+a.clock){flushSubs();subKey=null}   /* subs at one moment can be split by free throws or the other team's subs: pair them once the clock moves */
     if(t==='2pt'||t==='3pt'||t==='heave'){const three=t==='3pt'||(t==='heave'&&a.shotDistance>=22),v=three?3:2,made=a.shotResult==='Made',ty=nbaShotType(a);
       const dist=a.shotDistance!=null?Math.round(a.shotDistance)+'-foot ':'';const ast=made&&a.assistPersonId,blk=!made&&a.blockPersonId;
       const text=blk?N(a.blockPersonId)+' blocks '+N(a.personId)+"'s "+dist+(three?'three point ':'')+ty.toLowerCase():N(a.personId)+(made?' makes ':' misses ')+dist+(three?'three point ':'two point ')+ty.toLowerCase()+(ast?' ('+N(a.assistPersonId)+' assists)':'');

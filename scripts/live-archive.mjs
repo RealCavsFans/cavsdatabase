@@ -101,6 +101,7 @@ if (NBA_MODE) {
   const covered = new Set(), byName = {}; let nw = 0;
   for (const [gid, row] of Object.entries(nidx)) {
     if (row[1] !== 'CLE' && row[2] !== 'CLE') continue;
+    if (!gid.startsWith('002')) continue;   // regular season only, like ESPN's schedule (seasontype=2)
     const d = row[0].slice(0, 4) + '-' + row[0].slice(4, 6) + '-' + row[0].slice(6, 8);
     let raw; try { raw = JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(NBA_DIR, SEASON, gid + '.json.gz')))); } catch (e) { console.log('NBA store: unreadable', gid, String(e)); continue; }
     for (const t of [raw.box.homeTeam, raw.box.awayTeam]) for (const p of t.players || []) byName[C.normName(p.name)] = String(p.personId);
