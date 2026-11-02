@@ -18,6 +18,15 @@ const ESPN_YEAR = +SEASON.slice(0, 4) + 1;           // ESPN names a season by t
 const DIR = path.join('live-archive', SEASON);
 const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/';
 fs.mkdirSync(DIR, { recursive: true });
+/* Nov 2: the NBA's own files come first. When the NBA game store (the 'nba-data' branch, scripts/nba-store.mjs) is checked out
+   next to this folder, each game is built from the NBA's box score and play-by-play and saved as <NBA game id>.json, with the
+   league's own player ids. ESPN's copies are still saved, in <season>/espn/, as the backup and for win probability. */
+const NBA_DIR = process.env.NBA_DIR || 'nba-data';
+const NIDX = path.join(NBA_DIR, SEASON, 'index.json');
+const NBA_MODE = fs.existsSync(NIDX) && !process.env.NO_NBA;
+const EDIR = NBA_MODE ? path.join(DIR, 'espn') : DIR;
+fs.mkdirSync(EDIR, { recursive: true });
+if (NBA_MODE) for (const f of fs.readdirSync(DIR)) if (/^4\d{8}\.json$/.test(f) && !fs.existsSync(path.join(EDIR, f))) fs.renameSync(path.join(DIR, f), path.join(EDIR, f));
 
 async function get(u) {
   for (let i = 0; i < 3; i++) {
@@ -44,7 +53,7 @@ console.log(`${SEASON}: ${finals.length} final Cavs games on ESPN`);
 const recent = new Set(((sched && sched.events) || []).filter(e => Date.now() - Date.parse(e.date) < 2 * 864e5).map(e => e.id));
 let added = 0;
 for (const id of finals) {
-  const f = path.join(DIR, id + '.json');
+  const f = path.join(EDIR, id + '.json');
   if (fs.existsSync(f) && !recent.has(id)) continue;
   const d = await get(`${ESPN}summary?event=${id}`);
   if (!d || !d.plays || !d.plays.length) { console.log('skip (no play-by-play yet)', id); continue; }
@@ -59,7 +68,7 @@ console.log(`${added} game file(s) written`);
 
 /* 2b) backup: a finished game ESPN never delivered comes from the site's /pbp backup (StatMuse, which has substitutions),
    saved as b<YYYYMMDD>.json with players matched to their ESPN ids by name. An ESPN copy, once it exists, replaces it. */
-if (SEASON === '2026-27' && !process.env.SKIP_FETCH) {
+if (SEASON === '2026-27' && !process.env.SKIP_FETCH && !NBA_MODE) {
   const etOf = t => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(t));
   const espnFiles = fs.readdirSync(DIR).filter(f => /^\d+\.json$/.test(f));
   const have = new Set(), byName = {};
@@ -81,6 +90,43 @@ if (SEASON === '2026-27' && !process.env.SKIP_FETCH) {
   }
 }
 
+/* 2c) NBA mode: every Cavs game in the NBA store becomes <NBA id>.json; ESPN fills in only for a final the store doesn't have yet,
+   with its players switched to NBA ids by name so the season adds up. One file per game date, NBA first. */
+if (NBA_MODE) {
+  const zlib = await import('zlib');
+  const nidx = JSON.parse(fs.readFileSync(NIDX, 'utf8'));
+  const etOf = t => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(t));
+  const espnBy = {};
+  for (const f of fs.readdirSync(EDIR).filter(f => /^\d+\.json$/.test(f))) { const s = JSON.parse(fs.readFileSync(path.join(EDIR, f), 'utf8')); espnBy[etOf(s.header.competitions[0].date)] = { id: f.slice(0, -5), s }; }
+  const covered = new Set(), byName = {}; let nw = 0;
+  for (const [gid, row] of Object.entries(nidx)) {
+    if (row[1] !== 'CLE' && row[2] !== 'CLE') continue;
+    const d = row[0].slice(0, 4) + '-' + row[0].slice(4, 6) + '-' + row[0].slice(6, 8);
+    let raw; try { raw = JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(NBA_DIR, SEASON, gid + '.json.gz')))); } catch (e) { console.log('NBA store: unreadable', gid, String(e)); continue; }
+    for (const t of [raw.box.homeTeam, raw.box.awayTeam]) for (const p of t.players || []) byName[C.normName(p.name)] = String(p.personId);
+    const out = C.fromNBA({ game: raw.box }, { game: raw.pbp });
+    if (!out.plays.length) continue;
+    const E = espnBy[d]; if (E) C.nbaWP(out, E.s);
+    const s = C.slimSummary(out); s.src = 'NBA'; s.nba = gid; if (E) s.espn = E.id;
+    const D = C.prep(s), R = C.deriveCore(D, D.plays, 'all'); s.recap = C.recap(D, R);
+    const f = path.join(DIR, gid + '.json'), next = JSON.stringify(s);
+    if (!fs.existsSync(f) || fs.readFileSync(f, 'utf8') !== next) { fs.writeFileSync(f, next); nw++; }
+    covered.add(d);
+  }
+  let bk = 0;
+  for (const [d, E] of Object.entries(espnBy)) {
+    const top = path.join(DIR, E.id + '.json');
+    if (covered.has(d)) { if (fs.existsSync(top)) fs.unlinkSync(top); continue; }
+    const j = C.unpackSlim(JSON.parse(JSON.stringify(E.s))); const map = {};
+    for (const tb of j.boxscore.players) for (const a of tb.statistics[0].athletes) { const n = byName[C.normName(a.athlete.displayName)]; if (n) { map[a.athlete.id] = n; a.athlete.id = n; a.athlete.nba = 1; } }
+    for (const q of j.plays) for (const x of q.participants || []) x.athlete.id = map[x.athlete.id] || x.athlete.id;
+    const s = C.slimSummary(j); s.src = 'ESPN'; s.espn = E.id; s.recap = E.s.recap;
+    const next = JSON.stringify(s); if (!fs.existsSync(top) || fs.readFileSync(top, 'utf8') !== next) { fs.writeFileSync(top, next); bk++; }
+  }
+  for (const f of fs.readdirSync(DIR)) if (/^b\d{8}\.json$/.test(f) && covered.has(f.slice(1, 5) + '-' + f.slice(5, 7) + '-' + f.slice(7, 9))) fs.unlinkSync(path.join(DIR, f));
+  console.log(`NBA: ${covered.size} Cavs games from the NBA store (${nw} written), ${bk} ESPN backup game(s)`);
+}
+
 /* 3) season totals from every archived game */
 const files = fs.readdirSync(DIR).filter(f => /^(\d+|b\d{8})\.json$/.test(f));
 /* season files: the whole game (season.json) plus one per period, so the live page's quarter, half and clutch buttons load one small file */
@@ -99,7 +145,7 @@ function build(per, file) {
     const gi = games.length;
     const opp = D.other;
     const etd = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(D.date));
-    games.push({ id: f.slice(0, -5), date: D.date, et: etd, opp: opp.abbr, ha: D.focus.ha, cle: D.focus.ha === 'home' ? R0.hs : R0.as, os: D.focus.ha === 'home' ? R0.as : R0.hs, recap: s.recap || [], rc: C.recapL ? C.recapL(D, R0) : [], hl: per === 'all' && C.highLine ? C.highLine(D, R0) : null });
+    games.push({ id: f.slice(0, -5), espn: s.espn, src: s.src, date: D.date, et: etd, opp: opp.abbr, ha: D.focus.ha, cle: D.focus.ha === 'home' ? R0.hs : R0.as, os: D.focus.ha === 'home' ? R0.as : R0.hs, recap: s.recap || [], rc: C.recapL ? C.recapL(D, R0) : [], hl: per === 'all' && C.highLine ? C.highLine(D, R0) : null });
     for (const id of D.roster['5']) {
       const p = D.P[id], b = R.B[id];
       P[id] = { name: p.name, short: p.short, last: p.last, pos: p.pos };
@@ -175,7 +221,7 @@ function build(per, file) {
   }
   const out = { season: SEASON, per, updated: new Date().toISOString(), games: gs.map(({ recap, rc, hl, ...g }) => g), P, B, gp, L, shots, oshots, asts, pz: pz2, T, pc, pcO, cx, ...(per === 'all' ? { rot, dx } : {}) };
   fs.writeFileSync(path.join(DIR, file), JSON.stringify(out));
-  if (per === 'all') fs.writeFileSync(path.join(DIR, 'index.json'), JSON.stringify(gs.map(g => ({ id: g.id, date: g.date, et: g.et, opp: g.opp, ha: g.ha, cle: g.cle, os: g.os, rc: g.rc }))));
+  if (per === 'all') fs.writeFileSync(path.join(DIR, 'index.json'), JSON.stringify(gs.map(g => ({ id: g.id, espn: g.espn, date: g.date, et: g.et, opp: g.opp, ha: g.ha, cle: g.cle, os: g.os, rc: g.rc }))));
   console.log(`${file}: ${gs.length} games, ${shots.length} shots, ${Object.keys(L[5]).length} five-man lineups`);
   return out;
 }

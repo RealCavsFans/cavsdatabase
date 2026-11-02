@@ -732,13 +732,15 @@ evs.sort((a,b)=>(isCavs(b)-isCavs(a))||(rank(a)-rank(b)));
    sel.appendChild(rg)}
   return evs;
 }
+/* Nov 2: archived games are saved under the NBA's game id; links made with ESPN's id still open the same game */
+function espnToArch(id){for(const se in ARCH){const x=(ARCH[se]||[]).find(g=>g.espn===id&&g.id!==id);if(x)return [se,x.id]}return null}
 async function choose(v,push){
   clearInterval(S.poll);S.playing=false;clearInterval(S.timer);
   S.season=null;S.src=null;S.data=null;S.bk=null;S.fail=0;S.feed=null;S.cur=Infinity;S.vt=0;S.per='all';
   if(v.startsWith('s')){S.season=v.slice(1);S.replay=false}
   else if(v.startsWith('b')){S.bk=v.slice(1);S.ev='b';S.replay=false}
-  else if(v.startsWith('a')){const[se,id]=v.slice(1).split(':');S.src=se;S.ev=id;S.replay=true}
-  else{S.replay=v.startsWith('r');S.ev=v.replace(/^r/,'');if(S.replay&&(ARCH['2025-26']||[]).some(g=>g.id===S.ev))S.src='2025-26'}
+  else if(v.startsWith('a')){const[se,id]=v.slice(1).split(':');S.src=se;S.ev=id;S.replay=true;const m=espnToArch(id);if(m&&!(ARCH[se]||[]).some(g=>g.id===id)){S.src=m[0];S.ev=m[1]}}
+  else{S.replay=v.startsWith('r');S.ev=v.replace(/^r/,'');if(S.replay&&(ARCH['2025-26']||[]).some(g=>g.id===S.ev))S.src='2025-26';else if(S.replay){const m=espnToArch(S.ev);if(m){S.src=m[0];S.ev=m[1]}}}
   Object.assign(S.f,{pgc:null,pgAll:false,plQ:null,voA:null,voB:null,astFoc:null,luPick:{},ooTeam:null,ooA:null,ooB:null,card:null,astTeam:null,plTeam:null,luTeam:null,shTeam:null,shPl:'all',shType:'all',rotTeam:null});
   $('gsel').value=v;if(window.gpSync)gpSync(v);
   if(push){const u=new URL(location.href);u.searchParams.set('g',v);history.replaceState(null,'',u)}
@@ -767,10 +769,7 @@ function nbaKey(espn){const D0=S.data;const d=S.bk||(D0&&etDate(D0.date))||(espn
   const ab=(D0&&D0.focus.abbr)||(espn&&(espn.header.competitions[0].competitors.find(c=>c.id===CLE)||espn.header.competitions[0].competitors[0]).team.abbreviation)||'CLE';return '/nba?d='+d+'&t='+(NBA_TRI[ab]||ab)}
 function nbaBuild(j,espn){if(!j||!j.box||!j.pbp)return null;const out=fromNBA(j.box,j.pbp);
   if(!out.plays.length&&out.header.competitions[0].status.type.state!=='pre')return null;
-  /* ESPN's win probability, matched to the NBA plays by game clock */
-  if(espn&&espn.winprobability&&espn.winprobability.length){const E=unpackSlim(espn);const byId={};(E.plays||[]).forEach(q=>byId[q.id]=gt(q.period.number,q.clock.displayValue));
-    const W=(E.winprobability||[]).map(w=>[byId[w.playId],w.homeWinPercentage]).filter(w=>w[0]!=null).sort((x,y)=>x[0]-y[0]);let k=0,cur=null;
-    out.winprobability=out.plays.map(q=>{const t=gt(q.period.number,q.clock.displayValue);while(k<W.length&&W[k][0]<=t){cur=W[k][1];k++}return cur==null?null:{playId:q.id,homeWinPercentage:cur}}).filter(Boolean)}
+  nbaWP(out,espn);   /* ESPN's win probability, matched to the NBA plays by game clock (live-core.js) */
   return out}
 async function fetchGame(){
   if(!S.src&&!S.replay&&!S.bk&&S.ev!=='b'){/* NBA first, ESPN alongside for win probability and as the fallback */

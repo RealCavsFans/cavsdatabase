@@ -267,6 +267,10 @@ function fromNBA(box,pbp,extra){extra=extra||{};const g=box.game,acts=((pbp&&pbp
   return {src:'NBA',nbaId:g.gameId,header,boxscore,plays,winprobability:[],gameInfo:{venue:{fullName:(g.arena&&g.arena.arenaName)||''}}}}
 
 /* ---------- archive helpers (used by the nightly job and the page) ---------- */
+/* ESPN's win probability laid over NBA plays by game clock (the NBA feed has none). espn: an ESPN summary, full or slim */
+function nbaWP(out,espn){if(!out||!espn||!espn.winprobability||!espn.winprobability.length)return out;const E=unpackSlim(espn);const byId={};(E.plays||[]).forEach(q=>byId[q.id]=gt(q.period.number,q.clock.displayValue));
+  const W=(E.winprobability||[]).map(w=>[byId[w.playId],w.homeWinPercentage]).filter(w=>w[0]!=null).sort((x,y)=>x[0]-y[0]);let k=0,cur=null;
+  out.winprobability=out.plays.map(q=>{const t=gt(q.period.number,q.clock.displayValue);while(k<W.length&&W[k][0]<=t){cur=W[k][1];k++}return cur==null?null:{playId:q.id,homeWinPercentage:cur}}).filter(Boolean);return out}
 function slimSummary(d){
   const c=d.header.competitions[0];
   const P=x=>x==null?undefined:x;
@@ -275,7 +279,7 @@ function slimSummary(d){
         team:{id:x.team.id,abbreviation:x.team.abbreviation,shortDisplayName:x.team.shortDisplayName,name:x.team.name,location:x.team.location,logos:(x.team.logos||[]).slice(0,1).map(l=>({href:l.href}))}}))}]},
     gameInfo:{venue:{fullName:d.gameInfo&&d.gameInfo.venue&&d.gameInfo.venue.fullName}},
     boxscore:{teams:((d.boxscore&&d.boxscore.teams)||[]).map(t=>({team:{id:t.team.id},statistics:(t.statistics||[]).map(s=>({name:s.name,displayValue:s.displayValue}))})),
-      players:((d.boxscore&&d.boxscore.players)||[]).map(t=>({team:{id:t.team.id},statistics:[{names:(t.statistics[0]||{}).names,athletes:((t.statistics[0]||{}).athletes||[]).map(a=>({athlete:{id:a.athlete.id,displayName:a.athlete.displayName,shortName:a.athlete.shortName,position:{abbreviation:a.athlete.position&&a.athlete.position.abbreviation},jersey:a.athlete.jersey},starter:a.starter,didNotPlay:a.didNotPlay,reason:a.reason,stats:a.stats}))}]}))},
+      players:((d.boxscore&&d.boxscore.players)||[]).map(t=>({team:{id:t.team.id},statistics:[{names:(t.statistics[0]||{}).names,athletes:((t.statistics[0]||{}).athletes||[]).map(a=>({athlete:{id:a.athlete.id,nba:a.athlete.nba?1:undefined,displayName:a.athlete.displayName,shortName:a.athlete.shortName,position:{abbreviation:a.athlete.position&&a.athlete.position.abbreviation},jersey:a.athlete.jersey},starter:a.starter,didNotPlay:a.didNotPlay,reason:a.reason,stats:a.stats}))}]}))},
     /* compact rows (pv:2): [id, type, text, period, clock, team, player ids, home, away, flags (1 scoring, 2 shooting), value, attempted, x, y]; prep() unpacks them */
     pv:2,plays:(unpackSlim(d).plays||[]).map(q=>{const c=q.coordinate&&q.coordinate.x>-100?q.coordinate:null;return [q.id,q.type.text,q.text,q.period.number,q.clock.displayValue,q.team?q.team.id:0,q.participants?q.participants.map(p=>p.athlete.id).join(','):'',q.homeScore,q.awayScore,(q.scoringPlay?1:0)|(q.shootingPlay?2:0),q.scoreValue,q.pointsAttempted==null?null:q.pointsAttempted,c?c.x:null,c?c.y:null]}),
     winprobability:(unpackSlim(d).winprobability||[]).map(w=>[w.playId,w.homeWinPercentage])};
@@ -328,4 +332,4 @@ function extras(D,R){const tid=[D.home.id,D.away.id],out={tim:{},ato:{},qs:{}};
 function extrasFor(D,R,per){if(!per||per==='all')return extras(D,R);let plays=R.plays||[];
   if(per==='clutch'||per==='nogt'){const st=(R.PL||[]).map(q=>q.t);plays=plays.filter(p=>st.some(t=>t>=p.t&&t-p.t<=24))}else plays=plays.filter(p=>inPer(per,p.per));
   return extras(D,Object.assign({},R,{plays}))}
-if(typeof module!=='undefined')Object.assign(module.exports,{slimSummary,recap,recapL,extras,extrasFor});
+if(typeof module!=='undefined')Object.assign(module.exports,{nbaWP,slimSummary,recap,recapL,extras,extrasFor});

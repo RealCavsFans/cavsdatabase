@@ -32,6 +32,7 @@ jobs:
         with:
           sparse-checkout: |
             scripts/live-archive.mjs
+            scripts/nba-store.mjs
             scripts/last-time.mjs
             data/hist-cle.json
             data/last-time.json
@@ -43,6 +44,21 @@ jobs:
         if: steps.gate.outputs.go == '1'
         with:
           node-version: 22
+      # Nov 2: the NBA's own files first. The saved NBA games (nba-data branch), plus any Cavs final it doesn't have yet,
+      # fetched straight from the NBA here (not saved back; the NBA game store job does that). If any of this fails, ESPN as before.
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+        if: steps.gate.outputs.go == '1'
+        continue-on-error: true
+        with:
+          ref: nba-data
+          path: nba-data
+          sparse-checkout: ${{ github.event.inputs.season || '2026-27' }}
+      - run: node scripts/nba-store.mjs nba-data || echo "::warning::NBA feed unavailable; using ESPN"
+        if: steps.gate.outputs.go == '1' && (github.event.inputs.season || '2026-27') == '2026-27'
+        continue-on-error: true
+        env:
+          SEASON: ${{ github.event.inputs.season || '2026-27' }}
+          TEAM: CLE
       - run: node scripts/live-archive.mjs
         if: steps.gate.outputs.go == '1'
         env:
