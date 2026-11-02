@@ -1216,7 +1216,24 @@
  },
  "2026-11-02": {
   "url": "https://www.nba.com/game/okc-vs-cle-0022600158/box-score",
-  "status": "scheduled"
+  "status": "scheduled",
+  "refs": [
+   [
+    "Crew chief",
+    "Marc Davis",
+    "8"
+   ],
+   [
+    "Referee",
+    "Sean Corbin",
+    "33"
+   ],
+   [
+    "Umpire",
+    "Dedric Taylor",
+    "21"
+   ]
+  ]
  },
  "2026-11-04": {
   "url": "https://www.nba.com/game/cle-vs-okc-0022600180/box-score",
