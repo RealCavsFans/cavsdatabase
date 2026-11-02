@@ -216,6 +216,21 @@ const today = process.env.NL_TODAY || etDate(); // NL_TODAY: preview a given mor
 if (MODE === 'auto' && (etHour() < 5 || etHour() > 7)) { console.log('outside the 5–8 AM ET window, skipping'); process.exit(0); }
 const msTo619 = () => { const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false }).formatToParts(new Date()).map(x => [x.type, +x.value])); return ((6 * 60 + 19) * 60 - (p.hour * 3600 + p.minute * 60 + p.second)) * 1000; };
 
+/* Nov 1: an early run used to build the issue at ~5:15 and then sit for an hour, so anything posted before 6:19 missed
+   Morning reads and Press play. Now, on a game morning, it waits first, then pulls the latest data (news, videos, box
+   scores, injury report) about 8 minutes before 6:19, and builds from that. Mornings with no game still exit at once. */
+if (MODE === 'auto' && LIVE && !DRY) {
+  const yd = etDate(new Date(Date.now() - 864e5));
+  let src = ''; try { src = await readFile(new URL('index.html', root), 'utf8'); } catch {}
+  const wait = msTo619() - 8 * 60000;
+  if (src.includes(`['${yd}',`) && !sent[yd] && wait > 60000) {
+    console.log('game morning: waiting ' + Math.round(wait / 60000) + ' min, then building from the latest data');
+    await new Promise(r => setTimeout(r, wait));
+    try { execSync('git pull -q --ff-only origin main', { stdio: 'inherit' }); } catch (e) { console.log('::warning::could not pull the latest main; building from this checkout'); }
+    try { sent = JSON.parse(await readFile(sentFile, 'utf8')); } catch {}
+  }
+}
+
 const D = await siteData();
 let box = {}; try { box = JSON.parse(await readFile(new URL('box.json', root), 'utf8')); } catch {}
 let rcf = null; try { rcf = JSON.parse(await readFile(new URL('rcf.json', root), 'utf8')); } catch {}
