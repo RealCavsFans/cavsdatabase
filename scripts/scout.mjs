@@ -41,6 +41,13 @@ for (const y of [YR, YR - 1]) {
   if (ids.length >= 1) break;   // once the season has started, this season's games only (Luka, Oct 23)
 }
 const allIds = ids.slice(); ids = ids.slice(-5);
+/* backup runs (scout.yml, ONLY_IF_STALE=1): do nothing when the saved report already covers this opponent's latest game */
+if (process.env.ONLY_IF_STALE) {
+  let prev0 = null; try { prev0 = JSON.parse(fs.readFileSync(OUT, 'utf8')); } catch {}
+  const lastId = allIds[allIds.length - 1];
+  if (prev0 && prev0.game && prev0.game.id === next.id && (!lastId || (prev0.ids || []).includes(lastId))) { console.log('scout: already up to date (morning run covered it)'); process.exit(0); }
+  console.log('scout: morning report is missing the latest game or the new opponent; rebuilding');
+}
 /* season shots for and against (Oct 31): per-game tallies cached in data/scout-cache.json so each game is fetched once */
 const SC_F = 'data/scout-cache.json'; let cache = {}; try { cache = JSON.parse(fs.readFileSync(SC_F, 'utf8')); } catch {}
 const sbox = () => ({ z: C.ZN.map(() => [0, 0]), cs: [[0, 0], [0, 0]], pt: C.PT.map(() => [0, 0]) });
@@ -83,7 +90,7 @@ try { const b = JSON.parse(fs.readFileSync('live-base.json', 'utf8')); if (b.lg 
 const zt = Z.reduce((s, v) => s + v[1], 0) || 1;
 const top5 = Object.values(L5).sort((a, b) => b.sec - a.sec)[0];
 const out = {
-  updated: now.toISOString(), game: { id: next.id, d: etDay(next.date), opp: opp.abbreviation, name: opp.shortDisplayName || opp.name }, from,
+  updated: now.toISOString(), ids, game: { id: next.id, d: etDay(next.date), opp: opp.abbreviation, name: opp.shortDisplayName || opp.name }, from,
   games,
   pace: r1((P2(T) + P2(O)) / 2 / (T.sec || 1) * 2880), off: r1(100 * T.pts / P2(T)), def: r1(100 * O.pts / P2(O)), tpr: Math.round(100 * T.tpa / (T.fga || 1)),
   who: Object.values(P).map(p => ({ n: p.n, gp: p.gp, pts: r1(p.pts / p.gp), reb: r1(p.reb / p.gp), ast: r1(p.ast / p.gp) })).sort((a, b) => b.pts - a.pts).slice(0, 4),

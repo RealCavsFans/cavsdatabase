@@ -29,14 +29,18 @@ jobs:
           node scripts/publish-deploy.mjs --restore
           echo "H0=$(head -1 data/prerender-hash.txt 2>/dev/null)" >> "$GITHUB_ENV"
       - run: node scripts/fetch-videos.mjs
+        if: github.event_name != 'push'   # a source edit only needs the pages rebuilt; the scheduled runs fetch the data
         env:
           YT_API_KEY: ${{ secrets.YT_API_KEY }}
       - run: node scripts/fetch-boxscores.mjs
+        if: github.event_name != 'push'
       - run: node scripts/fetch-league.mjs
+        if: github.event_name != 'push'
         continue-on-error: true
       # team numbers (standings, ratings, four factors, scores) from the box scores fetch-league just saved.
-      # Moved here from team-stats.yml (Oct 30) so the same data isn't read twice. The pbpstats backup only runs twice a day.
+      # Moved here from the old team-stats job (Oct 30) so the same data isn't read twice. The pbpstats backup only runs twice a day.
       - name: Team stats
+        if: github.event_name != 'push'
         continue-on-error: true
         run: |
           case "$(date -u +%H)" in 05|09) node scripts/backup-pbpstats.mjs || true;; esac
@@ -44,17 +48,22 @@ jobs:
           node scripts/cle-rates.mjs
           node scripts/sos.mjs || true
       - run: node scripts/fetch-rcf.mjs
+        if: github.event_name != 'push'
       # RealCavsFans YouTube uploads for the Media page only (Oct 31). Writes rcf-videos.json only when the list changes.
       - run: node scripts/fetch-rcf-videos.mjs
+        if: github.event_name != 'push'
         continue-on-error: true
         env:
           YT_API_KEY: ${{ secrets.YT_API_KEY }}
       - run: node scripts/fetch-news.mjs
+        if: github.event_name != 'push'
         continue-on-error: true
         env:
           YT_API_KEY: ${{ secrets.YT_API_KEY }}
       - run: node scripts/fetch-niang.mjs
+        if: github.event_name != 'push'
       - run: node scripts/fetch-headshots.mjs
+        if: github.event_name != 'push'
       - name: Install headless Chrome driver (for prerendering page copies)
         run: npm i --no-save --no-package-lock --no-audit --no-fund playwright-core@1.56.0 esbuild@0.24.0
       - run: node scripts/og-games.mjs

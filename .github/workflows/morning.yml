@@ -2,8 +2,8 @@ name: Morning data (baselines, scouting, BBR ids, injuries)
 # One morning run instead of four: live page baselines, the next opponent's scouting report,
 # Basketball Reference player ids and last night's games missed to injury. Each step runs even if an
 # earlier one fails, and everything that changed goes out in one commit.
-# scout.yml (1:35 p.m.) and league-injuries.yml (6:10 p.m.) keep their afternoon runs; live-base.yml and
-# bbr-ids.yml can still be run by hand.
+# league-injuries.yml (6:10 p.m.) keeps its evening run; scout.yml reruns the scouting step in the afternoon only if
+# a source was late. Nov 1: the by-hand copies of these steps were removed; run this whole job by hand instead.
 on:
   schedule:
     - cron: '45 10 * * *'   # 6:45 a.m. Eastern (5:45 in winter), after last night's games are final

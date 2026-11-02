@@ -1,6 +1,6 @@
 name: Delete old mockup branches
 on:
-  # run by hand: deletes mockup branches (mock-*) and the finished speed-1 branch; main, probe-draft and css-cleanup stay
+  # run by hand: deletes mockup and probe branches (mock-*, probe-*) and finished experiments; main and deploy stay
   workflow_dispatch:
 permissions:
   contents: write
@@ -12,6 +12,6 @@ jobs:
         with:
           fetch-depth: 1
       - run: |
-          for b in $(git ls-remote --heads origin | awk '{print $2}' | sed 's#refs/heads/##' | grep -E '^(mock-|probe-injury|speed-1$)'); do
+          for b in $(git ls-remote --heads origin | awk '{print $2}' | sed 's#refs/heads/##' | grep -E '^(mock-|probe-injury|probe-draft$|css-cleanup$|speed-1$)'); do
             git push origin --delete "$b" && echo "deleted $b"
           done

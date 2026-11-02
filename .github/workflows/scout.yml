@@ -1,8 +1,11 @@
 name: Scouting report for the next opponent
 on:
+  # Backup only (Nov 1): the morning job (morning.yml, 6:45 a.m.) builds the report. These runs check whether it already
+  # covers the next opponent and their latest game, and rebuild only if a source was late. Important on back-to-backs.
   schedule:
-    # the morning run moved into morning.yml (Oct 27)
-    - cron: '35 17 * * *'   # 1:35 p.m. Eastern, picks up a new opponent the day after a game
+    - cron: '35 15 * * *'   # 11:35 a.m. Eastern
+    - cron: '35 18 * * *'   # 2:35 p.m. Eastern
+    - cron: '5 21 * * *'    # 5:05 p.m. Eastern, still ahead of a 7 p.m. tip
   workflow_dispatch:
 permissions:
   contents: write
@@ -26,6 +29,8 @@ jobs:
         with:
           node-version: 22
       - run: node scripts/scout.mjs
+        env:
+          ONLY_IF_STALE: ${{ github.event_name == 'schedule' && '1' || '' }}
       - name: Commit if changed
         run: |
           [ -f pdata/scout.json ] || exit 0
