@@ -609,12 +609,43 @@ tr.xs td:first-child{white-space:nowrap}@media (max-width:600px){tr.xs td:first-
 @media (min-width:900px){.scg2{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)!important;align-items:start}.scg2 .zchart{max-width:none!important;width:100%}.scg2 .zchart svg{width:100%;height:auto}}
 .tsr2{grid-template-columns:minmax(0,1fr) 5.5rem 5.5rem!important;gap:0 18px!important}.tsr2>*:nth-child(2),.tsr2>*:nth-child(4){text-align:right!important;justify-self:end}.tsr2>.eb,.tsr2>span:nth-child(3):empty{display:none!important}@media (min-width:900px){.tsc{gap:0 56px!important}}
 @media (min-width:900px){.ldt-g{grid-template-columns:repeat(6,minmax(0,1fr))!important}.ldt-g>div{min-width:0}.ldt-g span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+
+/* Nov 1 mock: game picker. One button shows the game you're on, with arrows for the game before and after; it opens a panel with
+   a season switch, the opponents as logos (tap one for every game against them) and the season month by month as tiles */
+.pick.gp-old{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.gp2{display:flex;gap:6px;align-items:stretch;margin-bottom:12px;position:relative}
+.gp2>button{font:inherit;cursor:pointer;background:var(--card);border:1px solid var(--line);color:var(--fg)}
+.gp2-nav{width:40px;flex:none;font:700 1.125rem var(--sans)!important;color:var(--wine)!important}.gp2-nav:disabled{opacity:.3;cursor:default}
+.gp2-cur{flex:1;min-width:0;display:flex;align-items:center;gap:10px;padding:9px 12px;text-align:left}
+.gp2-cur .k{font:700 .6875rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);flex:none}
+.gp2-cur .t{font:600 .875rem var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+.gp2-cur .c{flex:none;color:var(--wine);font-size:.75rem}
+.gp2-pn{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:40;background:var(--card);border:1px solid var(--line);box-shadow:0 12px 32px rgba(16,20,25,.18);padding:12px;max-height:min(72vh,620px);overflow:auto}
+.gp2-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.gp2-seg{display:inline-flex;border:1px solid var(--line)}.gp2-seg button{font:700 .75rem var(--sans);padding:7px 11px;border:0;background:var(--card);color:var(--fg2);cursor:pointer}.gp2-seg button.on{background:var(--wine);color:#fff}
+.gp2-tot{margin-left:auto;font:600 .75rem var(--sans);color:var(--wine);background:none;border:1px solid var(--line);padding:7px 10px;cursor:pointer}
+.gp2-today{display:flex;align-items:center;gap:8px;width:100%;font:600 .8125rem var(--sans);padding:8px 10px;margin-bottom:10px;border:1px solid var(--gold);background:color-mix(in srgb,var(--gold) 12%,var(--card));color:var(--fg);cursor:pointer;text-align:left}
+.gp2-today b{font:700 .6875rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--wine)}
+.gp2-h{font:700 .6875rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:2px 0 6px}
+.gp2-tm{display:flex;gap:4px;overflow-x:auto;padding-bottom:6px;margin-bottom:8px;scrollbar-width:thin}
+.gp2-tm button{flex:none;width:38px;height:38px;border:1px solid var(--line2);background:var(--card);cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;font:700 .625rem var(--sans);color:var(--fg2)}
+.gp2-tm button img{width:26px;height:26px;object-fit:contain}.gp2-tm button.on{border:2px solid var(--wine);background:color-mix(in srgb,var(--wine) 8%,var(--card))}
+.gp2-mo{display:flex;gap:4px;overflow-x:auto;margin-bottom:8px}.gp2-mo button{flex:none;font:700 .75rem var(--sans);padding:6px 10px;border:1px solid var(--line2);background:var(--card);color:var(--fg2);cursor:pointer}.gp2-mo button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.gp2-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px;margin-bottom:10px}
+.gp2-t{display:grid;gap:3px;padding:7px 8px;border:1px solid var(--line2);background:var(--card);cursor:pointer;text-align:left;font:inherit;color:var(--fg)}
+.gp2-t .d{font:600 .6875rem var(--sans);color:var(--muted)}
+.gp2-t .o{display:flex;align-items:center;gap:5px;font:700 .8125rem var(--sans)}.gp2-t .o img{width:18px;height:18px;object-fit:contain}
+.gp2-t .r{font:600 .75rem var(--mono)}.gp2-t.w{border-left:3px solid var(--wine)}.gp2-t.l{border-left:3px solid var(--gold)}
+.gp2-t.w .r b{color:var(--wine)}.gp2-t.l .r b{color:#9a6b00}.gp2-t.on{outline:2px solid var(--ink);outline-offset:-2px}
+:root[data-theme=dark] .gp2-t.l .r b{color:var(--gold)}
+.gp2-note{font:500 .6875rem var(--sans);color:var(--muted)}
 </style>
 </head>
 <body>
 <header class="sh"><div class="sh-in"><a class="sh-b" href="/" aria-label="cavs_db home"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#860038" stroke-width="2" fill="none"/></svg><span>cavs<i>_db</i></span></a><nav class="sh-n" aria-label="Site"><a href="/">Home</a><a href="/schedule">Schedule</a><a href="/live.html" class="on" aria-current="page">Stats</a><a href="/roster">Roster</a><a href="/staff">Staff</a><a href="/cap">Cap</a><a href="/assets">Assets</a><a href="/moves">Transactions</a><a href="/charge">Charge</a><a href="/history">History</a><a href="/media">Media</a><a href="/resources">Resources</a></nav><form class="sh-s" action="/" method="get" role="search"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F4D6DD" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input name="s" type="search" placeholder="Search" aria-label="Search the site"></form><button type="button" class="tt" id="theme" aria-label="Color theme">Auto</button></div></header><nav class="sh-sub" aria-label="Pages"><a href="/schedule">Schedule</a><a href="/live.html" class="on" aria-current="page">Live Game</a></nav>
 <main class="wrap">
- <div class="pick"><label for="gsel">Game</label><select id="gsel"></select></div>
+ <div class="pick gp-old"><label for="gsel">Game</label><select id="gsel"></select></div>
+ <div class="gp2" id="gp2"></div>
  <section class="card sb" id="sb" aria-live="polite"><div class="empty">Loading…</div></section>
  <div class="card rpw" id="rpw" hidden></div>
  <div class="meta"><span id="upd"></span></div>
@@ -693,7 +724,7 @@ async function choose(v,push){
   else if(v.startsWith('a')){const[se,id]=v.slice(1).split(':');S.src=se;S.ev=id;S.replay=true}
   else{S.replay=v.startsWith('r');S.ev=v.replace(/^r/,'');if(S.replay&&(ARCH['2025-26']||[]).some(g=>g.id===S.ev))S.src='2025-26'}
   Object.assign(S.f,{pgc:null,pgAll:false,plQ:null,voA:null,voB:null,astFoc:null,luPick:{},ooTeam:null,ooA:null,ooB:null,card:null,astTeam:null,plTeam:null,luTeam:null,shTeam:null,shPl:'all',shType:'all',rotTeam:null});
-  $('gsel').value=v;
+  $('gsel').value=v;if(window.gpSync)gpSync(v);
   if(push){const u=new URL(location.href);u.searchParams.set('g',v);history.replaceState(null,'',u)}
   $('sb').innerHTML='<div class="empty">Loading…</div>';$('view').innerHTML='';$('rpw').innerHTML='';$('rpw').hidden=true;
   if(S.season){applyOpp(null);await loadSeason(S.season);render();return}
@@ -2871,6 +2902,44 @@ function vPlays(v,D,R){
 (async()=>{msLoad().then(()=>{if(S.data&&!S.season&&S.tab==='team')renderView()});await Promise.all(['2026-27','2025-26'].map(async se=>{try{const r=await fetch('/live-archive/'+se+'/index.json',{cache:'no-store'});if(r.ok)ARCH[se]=await r.json()}catch(e){}}));
   try{const r=await fetch('/live-base.json',{cache:'no-store'});if(r.ok){const j=await r.json();if(j&&j.t&&j.games>0&&j.season!=='2025-26')BLIVE=j}}catch(e){}
   const evs=await loadScoreboard();$('gsel').onchange=e=>{if(e.target.value==='pickprev'){prevPicker();return}const pp=document.getElementById('prevpk');if(pp)pp.remove();choose(e.target.value,true)};
+
+/* ---------- game picker (Nov 1 mock): replaces the long game menu ---------- */
+(function(){const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const box=document.getElementById('gp2');if(!box)return;
+  let cur=null,open=false,se='2026-27',team=null,mon=null;
+  const val=(s2,g)=>s2==='2026-27'?'a2026-27:'+g.id:'r'+g.id;
+  const games=s2=>(ARCH[s2]||[]).slice().sort((a,b)=>a.date<b.date?-1:1);
+  const logo=ab=>{const i=el('img');i.alt='';i.loading='lazy';i.src='/img/tl/'+String(ab).toLowerCase()+'.png';i.onerror=()=>i.remove();return i};
+  const dlab=g=>{const d=new Date(g.date);return MON[d.getMonth()]+' '+d.getDate()};
+  const res=g=>(g.cle>g.os?'W ':'L ')+Math.max(g.cle,g.os)+'–'+Math.min(g.cle,g.os);
+  const today=()=>{const o=[];const sel=$('gsel');[...sel.querySelectorAll('optgroup')].filter(gp=>gp.label==='Today').forEach(gp=>[...gp.children].forEach(x=>o.push([x.value,x.textContent])));return o};
+  const order=()=>{const L=[];['2025-26','2026-27'].forEach(s2=>games(s2).forEach(g=>L.push(val(s2,g))));today().forEach(([v])=>{if(!L.includes(v))L.push(v)});return L};
+  const find=v=>{let m=/^a(\d{4}-\d\d):(\d+)$/.exec(v);if(m)return [m[1],(ARCH[m[1]]||[]).find(g=>g.id===m[2])];m=/^r(\d+)$/.exec(v);if(m)return ['2025-26',(ARCH['2025-26']||[]).find(g=>g.id===m[1])];return [null,null]};
+  const label=v=>{if(!v)return '';if(v[0]==='s')return [v.slice(1).replace('-','–')+' season','Season totals · '+((ARCH[v.slice(1)]||[]).length)+' games'];const [s2,g]=find(v);if(g)return [s2.replace('-','–'),dlab(g)+' '+(g.ha==='home'?'vs':'at')+' '+g.opp+' · '+res(g)];const t=today().find(x=>x[0]===v);return ['Today',t?t[1]:'Live game']};
+  const go=v=>{open=false;draw();choose(v,true)};
+  function draw(){box.textContent='';const L=order(),i=L.indexOf(cur);
+    const pv=el('button','gp2-nav','‹');pv.type='button';pv.setAttribute('aria-label','Previous game');pv.disabled=!(i>0);pv.onclick=()=>go(L[i-1]);
+    const nx=el('button','gp2-nav','›');nx.type='button';nx.setAttribute('aria-label','Next game');nx.disabled=!(i>=0&&i<L.length-1);nx.onclick=()=>go(L[i+1]);
+    const [k,t]=label(cur)||['',''];const b=el('button','gp2-cur');b.type='button';b.setAttribute('aria-expanded',open);b.append(el('span','k',k||'Game'),el('span','t',t||'Pick a game'),el('span','c',open?'▴':'▾'));b.onclick=e=>{e.stopPropagation();open=!open;if(open){const [s2,g]=find(cur);if(s2)se=s2;if(g){const d=new Date(g.date);mon=d.getFullYear()+'-'+d.getMonth()}}draw()};
+    box.append(pv,b,nx);if(!open)return;
+    const pn=el('div','gp2-pn');pn.onclick=e=>e.stopPropagation();
+    /* season switch and season totals */
+    const r1=el('div','gp2-row');const seg=el('div','gp2-seg');['2026-27','2025-26'].forEach(s2=>{if(!(ARCH[s2]||[]).length)return;const x=el('button',s2===se?'on':null,s2.replace('-','–'));x.type='button';x.onclick=()=>{se=s2;mon=null;draw()};seg.appendChild(x)});
+    const tot=el('button','gp2-tot',se.replace('-','–')+' season totals →');tot.type='button';tot.onclick=()=>go('s'+se);r1.append(seg,tot);pn.appendChild(r1);
+    /* today's game */
+    today().forEach(([v,t2])=>{const x=el('button','gp2-today');x.type='button';x.append(el('b',null,'Today'),el('span',null,t2));x.onclick=()=>go(v);pn.appendChild(x)});
+    /* opponents */
+    const G=games(se);const opps=[...new Set(G.map(g=>g.opp))].sort();pn.appendChild(el('div','gp2-h',team?'Every game vs '+team+' · tap again for all':'Opponents · tap one for every game against them'));
+    const tm=el('div','gp2-tm');opps.forEach(ab=>{const x=el('button',team===ab?'on':null);x.type='button';x.title=ab;x.setAttribute('aria-label','Games against '+ab);x.appendChild(logo(ab));if(!x.querySelector('img'))x.textContent=ab;x.onclick=()=>{team=team===ab?null:ab;draw()};tm.appendChild(x)});pn.appendChild(tm);
+    const tile=(s2,g)=>{const v=val(s2,g);const x=el('button','gp2-t '+(g.cle>g.os?'w':'l')+(v===cur?' on':''));x.type='button';const o=el('span','o');o.append(g.ha==='home'?'vs':'@',logo(g.opp),g.opp);const r2=el('span','r');r2.append(el('b',null,g.cle>g.os?'W':'L'),' '+Math.max(g.cle,g.os)+'–'+Math.min(g.cle,g.os));x.append(el('span','d',dlab(g)),o,r2);x.onclick=()=>go(v);return x};
+    if(team){['2026-27','2025-26'].forEach(s2=>{const L2=games(s2).filter(g=>g.opp===team);if(!L2.length)return;pn.appendChild(el('div','gp2-h',s2.replace('-','–')+' · '+L2.length+' game'+(L2.length===1?'':'s')));const gr=el('div','gp2-g');L2.forEach(g=>gr.appendChild(tile(s2,g)));pn.appendChild(gr)})}
+    else{const mk=g=>{const d=new Date(g.date);return d.getFullYear()+'-'+d.getMonth()};const ms=[...new Set(G.map(mk))];if(!ms.includes(mon))mon=ms[ms.length-1];
+      const mo=el('div','gp2-mo');ms.forEach(m=>{const [y,mm]=m.split('-').map(Number);const n=G.filter(g=>mk(g)===m);const w=n.filter(g=>g.cle>g.os).length;const x=el('button',m===mon?'on':null,MON[mm]+' '+w+'–'+(n.length-w));x.type='button';x.onclick=()=>{mon=m;draw()};mo.appendChild(x)});pn.appendChild(mo);
+      const gr=el('div','gp2-g');G.filter(g=>mk(g)===mon).forEach(g=>gr.appendChild(tile(se,g)));pn.appendChild(gr)}
+    pn.appendChild(el('div','gp2-note','Wine edge = win · gold edge = loss · every game has the full play-by-play'));
+    box.appendChild(pn);if(window.innerWidth<600)setTimeout(()=>{const a=pn.querySelector('.gp2-mo .on');if(a)a.scrollIntoView({inline:'center',block:'nearest'})},0)}
+  window.gpSync=v=>{cur=v;draw()};
+  document.addEventListener('click',()=>{if(open){open=false;draw()}});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&open){open=false;draw()}});
+  draw()})();
 /* month, then game, for last season's replays */
 function prevPicker(){let w=document.getElementById('prevpk');if(w){w.remove()}w=el('div','prevpk');w.id='prevpk';const L=(ARCH['2025-26']||[]).slice();
   const gl=g=>{const d=new Date(g.date);const r=g.cle>g.os?'W':'L';return (d.getMonth()+1)+'/'+d.getDate()+' '+(g.ha==='home'?'vs':'@')+' '+g.opp+' · '+r+' '+Math.max(g.cle,g.os)+'–'+Math.min(g.cle,g.os)};
