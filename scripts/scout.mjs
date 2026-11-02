@@ -54,7 +54,7 @@ const sbox = () => ({ z: C.ZN.map(() => [0, 0]), cs: [[0, 0], [0, 0]], pt: C.PT.
 const tally = (b, q) => { if (q.hasXY) { b.z[q.zi][1]++; if (q.m) b.z[q.zi][0]++; if (q.zi === 3 && q.x != null) { const k = q.x < 25 ? 0 : 1; b.cs[k][1]++; if (q.m) b.cs[k][0]++; } } if (q.pt != null && b.pt[q.pt]) { b.pt[q.pt][0]++; if (q.m) b.pt[q.pt][1] += q.three ? 3 : 2; } };
 const gameShots = (R, tid) => { const f = sbox(), a = sbox(); R.shots.forEach(q => tally(q.t === tid ? f : a, q)); return { f, a }; };
 const ckey = id => YR + ':' + opp.id + ':' + id;
-const games = [], T = {}, O = {}, P = {}, L5 = {}, Z = C.ZN.map(() => [0, 0]), CN = [0, 0];
+const games = [], T = {}, O = {}, P = {}, L5 = {}, Z = C.ZN.map(() => [0, 0]), CN = [0, 0], CM = [0, 0];
 const add = (d, x) => { for (const k in x) if (typeof x[k] === 'number') d[k] = (d[k] || 0) + x[k]; };
 for (const id of ids) {
   const d = await get(`${ESPN}summary?event=${id}`);
@@ -69,7 +69,7 @@ for (const id of ids) {
   add(T, R.T[me.id]); add(O, R.T[op.id]);
   G.roster[me.id].forEach(i => { const x = R.B[i]; if (!(x.min > 0)) return; const p = P[G.P[i].name] = P[G.P[i].name] || { n: G.P[i].name, gp: 0, min: 0, pts: 0, reb: 0, ast: 0 }; p.gp++; p.min += x.min; p.pts += x.pts; p.reb += x.oreb + x.dreb; p.ast += x.ast; });
   Object.values(R.L[me.id][5]).forEach(l => { const k = l.ids.slice().sort().join(); const o = L5[k] = L5[k] || { n: l.ids.map(i => G.P[i].last), sec: 0, pm: 0, g: 0, pf: 0, pa: 0, po: 0 }; o.sec += l.sec; o.pm += l.pf - l.pa; o.g++; o.pf += l.pf; o.pa += l.pa; o.po += C.poss(l.o); o.pd = (o.pd || 0) + C.poss(l.d); });
-  R.shots.filter(q => q.t === me.id && q.hasXY).forEach(q => { Z[q.zi][1]++; if (q.m) Z[q.zi][0]++; if (q.zi === 3) CN[q.x < 25 ? 0 : 1]++; });
+  R.shots.filter(q => q.t === me.id && q.hasXY).forEach(q => { Z[q.zi][1]++; if (q.m) Z[q.zi][0]++; if (q.zi === 3) { CN[q.x < 25 ? 0 : 1]++; if (q.m) CM[q.x < 25 ? 0 : 1]++; } });
 }
 if (!games.length) { console.log('scout: no games to scout'); process.exit(0); }
 for (const id of allIds) { if (cache[ckey(id)]) continue; const d = await get(`${ESPN}summary?event=${id}`); if (!d || !d.plays || !d.plays.length) continue;
@@ -87,6 +87,7 @@ const n = games.length;
 const share = z => { const t = z.reduce((s, v) => s + v[1], 0) || 1; return [z[0][1], z[1][1] + z[2][1], z[3][1], z[4][1]].map(v => r1(100 * v / t)); };
 let lgZ = C.ZN.map(([k]) => [C.LG[k][0] * 1000, C.LG[k][1] * 1000]);
 try { const b = JSON.parse(fs.readFileSync('live-base.json', 'utf8')); if (b.lg && b.lg.length === 5) lgZ = b.lg.map(([m, a]) => [m, a]); } catch {}
+const fgz = z => { const g = [[z[0][0], z[0][1]], [z[1][0] + z[2][0], z[1][1] + z[2][1]], [z[3][0], z[3][1]], [z[4][0], z[4][1]]]; return g.map(([m, a]) => a ? r1(100 * m / a) : null); };
 const zt = Z.reduce((s, v) => s + v[1], 0) || 1;
 const top5 = Object.values(L5).sort((a, b) => b.sec - a.sec)[0];
 const out = {
@@ -97,6 +98,8 @@ const out = {
   five: top5 ? { n: top5.n, min: Math.round(top5.sec / 60), pm: top5.pm, g: top5.g, ...(top5.po >= 1 && top5.pd >= 1 ? { o: r1(100 * top5.pf / top5.po), d: r1(100 * top5.pa / top5.pd) } : {}) } : null,
   corners: CN.map(v => r1(100 * v / zt)),
   zones: share(Z), lg: share(lgZ),
+  /* Nov 2: how well they shoot from each zone (FG%), against the NBA's FG% there; corners left and right */
+  fg: fgz(Z), lgfg: fgz(lgZ), cfg: CN.map((a, i) => a ? r1(100 * CM[i] / a) : null), za: [Z[0][1], Z[1][1] + Z[2][1], Z[3][1], Z[4][1]],
   sh: { n: sAll.length, s: { f: sumB(sAll.map(x => x.f)), a: sumB(sAll.map(x => x.a)) }, l: { f: sumB(sL5.map(x => x.f)), a: sumB(sL5.map(x => x.a)) } }
 };
 fs.mkdirSync('data', { recursive: true });
