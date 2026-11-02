@@ -27,7 +27,7 @@ const cityCode = s => { if (!s) return null; s = s.trim(); for (const k of Objec
 const iso = d => d.slice(0, 4) + '-' + d.slice(4, 6) + '-' + d.slice(6);
 
 const SRC = {
-  async statmuse(g, d, q) {
+  async statmuse(g, d, q, ctx) {
     let slug = q.get('sm');
     if (!slug) {
       // Nov 2: StatMuse writes dates without leading zeros (11-2-2026), so build the date the same way
@@ -35,6 +35,9 @@ const SRC = {
       const SU = 'https://www.statmuse.com/nba/team/cleveland-cavaliers-42/schedule/' + yr;
       const find = h => [...h.matchAll(new RegExp('(?:^|[^0-9-])(' + md + '-([a-z]+)-at-([a-z]+)-\\d+)', 'g'))]   /* the game id can sit in a link or in the page's embedded data, so match it anywhere */
         .filter(m => teamCode(m[2]) === g.away && teamCode(m[3]) === g.home).map(m => m[1])[0];
+      // the morning job saves every Cavs game's StatMuse id (StatMuse gives Cloudflare a short schedule without most games)
+      try { const ids = await (await ctx.env.ASSETS.fetch(new URL('/pdata/statmuse-games.json', ctx.request.url))).json(); const id = ids.games && ids.games[md]; if (id && find(' ' + id)) slug = id; } catch {}
+      if (slug) return fromStatMuse(await get('https://www.statmuse.com/nba/game/' + slug));
       let sched = await get(SU, 21600); slug = find(sched);
       if (!slug) { sched = await get(SU + '?d=' + d); slug = find(sched); }   // a cached copy from before the game was listed: ask for a fresh one (a new address skips the cache)   // a cached copy from before the game was listed: read it fresh once
       if (!slug) throw new Error('statmuse: game not found (' + md + ', page ' + sched.length + ' bytes, ' + (sched.match(/\/nba\/game\//g) || []).length + ' game links, first ' + ((sched.match(/\/nba\/game\/[^"]{0,40}/) || [])[0] || '-') + ((sched.match(/<title>([^<]{0,60})/) || [])[1] ? ', "' + sched.match(/<title>([^<]{0,60})/)[1] + '"' : '') + ')');
@@ -79,7 +82,7 @@ export async function onRequestGet(ctx) {
   if (!g) return json({ error: 'no Cavs game that day' }, 404, 600, key, ctx);
   const errs = [];
   for (const s of only ? [only] : ['statmuse', 'cbs', 'yahoo']) {
-    try { const out = await SRC[s](g, d, q); if (!out.plays.length && out.header.competitions[0].status.type.state !== 'pre') throw new Error(s + ': empty'); out.tried = errs; const fin = out.header.competitions[0].status.type.state === 'post'; return json(out, 200, fin ? 600 : 15, key, ctx) }
+    try { const out = await SRC[s](g, d, q, ctx); if (!out.plays.length && out.header.competitions[0].status.type.state !== 'pre') throw new Error(s + ': empty'); out.tried = errs; const fin = out.header.competitions[0].status.type.state === 'post'; return json(out, 200, fin ? 600 : 15, key, ctx) }
     catch (e) { errs.push(String(e.message || e).slice(0, 120)) }
   }
   // nothing has the game yet: before tip-off, hand back the matchup from the calendar so the page can show it
