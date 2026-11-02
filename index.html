@@ -1506,7 +1506,7 @@ const money=v=>Math.abs(v)<1?'$'+Math.round(v*1000)+'K':'$'+v.toFixed(1)+'M';
 document.getElementById('payroll').textContent=money(TEAM_SALARY);
 document.getElementById('payroll-note').textContent='Team salary incl. $2.24M dead money';
 /* 2026-27 team salary (active + dead), highest first. Capsheets, Oct 26, 2026. */
-const LEAGUE_PAY=[['NYK',220876653],['GSW',220838432],['DEN',218127179],['ORL',217865321],['MIN',215400684],['OKC',214279492],['PHX',213776084],['CLE',208969955],['PHI',207186472],['IND',206299932],['MIA',206189256],['TOR',201188889],['LAL',200897322],['HOU',200413923],['BOS',198722406],['ATL',198473650],['SAS',198279967],['SAC',197280038],['NOP',196369877],['DET',194498178],['WAS',194462525],['POR',192093473],['DAL',189066095],['MIL',187760790],['LAC',183157552],['UTA',182965101],['CHA',174547971],['CHI',165770083],['MEM',161113773],['BKN',160056358]];
+const LEAGUE_PAY=[['NYK',220876653],['GSW',220838432],['DEN',218127179],['ORL',217865321],['MIN',215400684],['OKC',214279492],['PHX',213776084],['CLE',208969955],['PHI',207186472],['IND',206299932],['MIA',206189256],['TOR',201188889],['LAL',200897322],['HOU',200413923],['BOS',198722406],['ATL',198473650],['SAS',198279967],['SAC',197280038],['NOP',196369877],['DET',194498178],['WAS',194462525],['POR',192093473],['DAL',189066095],['MIL',187760790],['LAC',183157552],['UTA',182965101],['CHA',170732110],['CHI',165770083],['MEM',161113773],['BKN',160056358]];
 /* projected 2026-27 tax bill rank among teams over the tax: [rank, taxpaying teams]. Capsheets, Oct 19, 2026. */
 const TAX_RANK=[8,13];
 const TAX_BILL=9.161442; /* projected luxury tax payment, $M (Capsheets) */
