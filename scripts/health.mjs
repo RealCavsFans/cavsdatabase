@@ -60,7 +60,7 @@ else { if (days(LK.checked.slice(0, 10), today) > 9) problems.push(`The weekly l
       if (!r.ok || !j.plays) msg = (j.error || r.status) + (j.tried && j.tried.length ? ': ' + j.tried.join('; ') : '');
       else { const cav = j.header.competitions[0].competitors.find(c => c.id === '5'); const want = +String(box[last[0]].score || '').split('-')[0];
         if (j.plays.length < 150) msg = `only ${j.plays.length} plays`; else if (want && cav && +cav.score !== want) msg = `Cavs score ${cav.score}, box score says ${want}`; }
-    } catch (e) { notes.push(`backup ${src}: site not reachable from here`); continue; }
+    } catch (e) { notes.push(`backup ${src}: could not check (${String(e.message || e).slice(0, 60)})`); continue; }
     if (!msg) notes.push(`backup ${src} ok`);
     else if (src === 'statmuse') notes.push(`backup statmuse failed (${msg})`);   // Nov 2: last resort now
     else problems.push(`Live page backup feed: ${src} failed on the ${last[0]} game (${msg}). The live page still has the other backups; see MANUAL.md.`);
