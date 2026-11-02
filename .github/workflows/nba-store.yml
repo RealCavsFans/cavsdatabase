@@ -1,0 +1,55 @@
+name: NBA game store
+# Keeps the NBA's own box score and play-by-play for every finished game on the 'nba-data' branch (scripts/nba-store.mjs).
+# The game archive and the league-wide numbers are built from it. Runs after each night's games and again in the morning.
+on:
+  schedule:
+    - cron: '20 5 * * *'    # 1:20 a.m. Eastern, after the late games
+    - cron: '50 10 * * *'   # 6:50 a.m. Eastern, corrections and anything late
+  workflow_dispatch:
+    inputs:
+      season:
+        description: 'Season (default: current). A past season walks every game id once.'
+        required: false
+        default: ''
+      team:
+        description: 'Only this team (e.g. CLE), for a quick backfill'
+        required: false
+        default: ''
+permissions:
+  contents: write
+concurrency:
+  group: nba-store
+  cancel-in-progress: false
+jobs:
+  store:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+        with:
+          sparse-checkout: |
+            scripts/nba-store.mjs
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
+        with:
+          node-version: 22
+      - name: Open the nba-data branch
+        run: |
+          git config user.name "cavsdatabase-bot"; git config user.email "bot@cavsdatabase.com"
+          if git ls-remote --exit-code --heads origin nba-data >/dev/null; then
+            git fetch -q --depth 1 origin nba-data && git worktree add -q nba-data FETCH_HEAD && (cd nba-data && git checkout -q -B nba-data)
+          else
+            git worktree add -q --orphan -b nba-data nba-data
+            printf '# NBA game store\nThe NBA'"'"'s own box score and play-by-play for every finished game, saved by scripts/nba-store.mjs on main. Not part of the site.\n' > nba-data/README.md
+          fi
+      - run: node scripts/nba-store.mjs nba-data
+        env:
+          SEASON: ${{ github.event.inputs.season }}
+          TEAM: ${{ github.event.inputs.team }}
+      - name: Save
+        run: |
+          cd nba-data; git add -A
+          if git diff --cached --quiet; then echo "no new games"; exit 0; fi
+          git commit -q -m "NBA games $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3 4; do git push -q origin HEAD:nba-data && exit 0; sleep $((i * 15)); git fetch -q origin nba-data && git rebase -q FETCH_HEAD || git rebase --abort; done
+          exit 1
