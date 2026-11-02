@@ -57,7 +57,9 @@ else { if (days(LK.checked.slice(0, 10), today) > 9) problems.push(`The weekly l
   else for (const src of ['cbs', 'yahoo', 'statmuse']) {
     const d = last[0].replace(/-/g, ''); let msg = null;
     // Nov 2: the site's health identifier gets past Cloudflare's bot screen (without it the test never reached the backups)
-    try { const r = await fetch(`https://cavsdatabase.com/pbp?d=${d}&src=${src}`, { headers: { 'user-agent': 'cavsdatabase-health', 'cache-control': 'no-cache' }, signal: AbortSignal.timeout(45000) }); const j = await r.json();
+    try { const ask = () => fetch(`https://cavsdatabase.com/pbp?d=${d}&src=${src}`, { headers: { 'user-agent': 'cavsdatabase-health', 'cache-control': 'no-cache' }, signal: AbortSignal.timeout(45000) });
+      let r = await ask(); if (!/json/.test(r.headers.get('content-type') || '')) { await new Promise(z => setTimeout(z, 4000)); r = await ask(); }   // the bot screen sometimes answers the first try
+      const j = await r.json();
       if (!r.ok || !j.plays) msg = (j.error || r.status) + (j.tried && j.tried.length ? ': ' + j.tried.join('; ') : '');
       else { const cav = j.header.competitions[0].competitors.find(c => c.id === '5'); const want = +String(box[last[0]].score || '').split('-')[0];
         if (j.plays.length < 150) msg = `only ${j.plays.length} plays`; else if (want && cav && +cav.score !== want) msg = `Cavs score ${cav.score}, box score says ${want}`; }
