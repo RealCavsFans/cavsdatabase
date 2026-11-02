@@ -398,7 +398,7 @@ small.rk,span.rk{text-transform:none!important}
 .tsgh span:first-child{color:var(--wt)}.tsgh span:last-child{color:var(--muted)}
 .tsr2{display:grid;align-items:center;padding:6px 0;border-top:1px solid var(--line2)}
 .tsr2.hd{border:0;padding:4px 0 0;font:800 0.6875rem var(--cond);letter-spacing:.08em}.tsr2.hd b{text-align:right}.tsr2.hd b:last-child{text-align:left}
-.tsr2 .n{font-size:0.8125rem}
+.tsr2>.n{font-size:0.8125rem}/* Nov 2: only the row label, not a rank that also carries class n */
 .tsr2 b{font:600 0.8125rem var(--mono);text-align:right}.tsr2 b:last-child{text-align:left}.tsr2 b.w{font-weight:800}
 .tsr2 .eb{position:relative;height:12px}.tsr2 .eb::after{content:'';position:absolute;left:50%;top:-4px;bottom:-4px;width:1px;background:var(--fg)}
 .tsr2 .eb i{position:absolute;top:2px;bottom:2px}
@@ -577,7 +577,7 @@ tr.lutot td{font-weight:800;border-top:2px solid var(--fg)}
 .sgp{position:relative;display:inline-block}.sgp>summary{list-style:none;cursor:pointer;border:1px solid var(--line);background:var(--card);padding:6px 28px 6px 10px;font:600 .8125rem var(--sans);position:relative}.sgp>summary::-webkit-details-marker{display:none}.sgp>summary::after{content:"▾";position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:.7rem;color:var(--muted)}
 .sgp-l{position:absolute;z-index:30;top:calc(100% + 4px);left:0;min-width:240px;max-height:320px;overflow:auto;background:var(--card);border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.15);padding:8px}.sgp-l label{display:flex;gap:8px;align-items:center;padding:5px 4px;font:500 .8125rem var(--sans);cursor:pointer}.sgp-a{display:flex;gap:10px;align-items:center;padding-top:8px;border-top:1px solid var(--line);margin-top:6px}
 .lud{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}.lud-h{font:800 .875rem var(--cond);letter-spacing:.06em;text-transform:uppercase;margin:12px 0 6px}.lud-t td small{color:var(--muted);font-size:.75em;margin-left:4px}.lud-courts{display:grid;grid-template-columns:repeat(2,minmax(0,340px));gap:18px;margin-top:10px}@media(max-width:640px){.lud-courts{grid-template-columns:minmax(0,230px);justify-content:center;gap:10px}.lud-courts .note{font-size:.6875rem}}.lud-small{color:#9a6a00}
-.rk{display:block;font:700 .625rem var(--mono);letter-spacing:0;margin-top:1px;color:var(--muted)}.rk.g{color:var(--wine,#860038);font-weight:800}.rk.b{color:var(--muted)}.lgp td span.rk{display:inline;font-size:.75rem}.lgp td{text-align:center}.lgp td:first-child{text-align:left}.ffc .row b .rk{display:inline;margin-left:6px}
+.rk{display:block;font:700 .6875rem var(--mono);letter-spacing:0;margin-top:1px;color:var(--muted)}.rk.g{color:var(--wine,#860038);font-weight:800}.rk.b{color:var(--muted)}.lgp td span.rk{display:inline;font-size:.75rem}.lgp td{text-align:center}.lgp td:first-child{text-align:left}.ffc .row b .rk{display:inline;margin-left:6px}
 @media(max-width:640px){#sb.fin .sc{font-size:1.75rem!important;line-height:32px!important}#sb.fin .th img{width:28px;height:28px}#sb.fin .st{font-size:1.125rem}#sb.fin{padding-top:10px;padding-bottom:10px}}
 .prevpk{display:flex;gap:8px;flex-wrap:wrap;margin:-6px 0 12px}.prevpk select{flex:1 1 160px;min-width:0;font:600 .875rem var(--sans);padding:8px 10px;border:1px solid var(--line);background:var(--card);color:var(--fg)}
 .atl-note{background:var(--sub,#f5f4f1);border-left:3px solid #F2B231;padding:6px 10px;margin:6px 0 10px}
