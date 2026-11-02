@@ -181,7 +181,9 @@ const fp = h => createHash('sha1').update(h).digest('hex').slice(0, 10);
    (the biggest source of repo growth). Cards for games more than 10 days out now redraw at most once a week; nearer games as before. */
 const DRAWN = state._drawn || {}; const nowMs = Date.now();
 const far = f => { const m = f.match(/^og\/gp\/(\d{4}-\d\d-\d\d)-/); return m && Date.parse(m[1] + 'T12:00:00Z') - nowMs > 10 * 864e5; };
-const need = cards.filter(([f, h]) => (!process.env.OG_ONLY || new RegExp(process.env.OG_ONLY).test(f)) && (!state[f] || process.env.OG_ONLY || (state[f] !== fp(h) && !(far(f) && DRAWN[f] && nowMs - DRAWN[f] < 7 * 864e5))));
+/* a design change bumps LOOK so every card redraws once, far-off games included (Nov 2: /live footer) */
+const LOOK = 'live-footer-1', relook = state._look !== LOOK;
+const need = cards.filter(([f, h]) => (!process.env.OG_ONLY || new RegExp(process.env.OG_ONLY).test(f)) && (!state[f] || process.env.OG_ONLY || (relook && f.startsWith('og/gp/')) || (state[f] !== fp(h) && !(far(f) && DRAWN[f] && nowMs - DRAWN[f] < 7 * 864e5))));
 if (!need.length) { console.log('og-live: nothing changed'); process.exit(0); }
 const { createRequire } = await import('node:module'); const require = createRequire(import.meta.url);
 const pw = (() => { for (const m of ['playwright-core', 'playwright']) { try { return require(m); } catch {} } return null; })();
@@ -197,6 +199,6 @@ for (const [f, h] of need) {
 await unlink(tmp).catch(() => {}); await browser.close();
 // forget cards for games that have been played (their final card in og/g takes over)
 for (const f of Object.keys(state)) if (f.startsWith('og/gp/') && !cards.some(([c]) => c === f)) { delete state[f]; delete DRAWN[f]; await unlink(new URL(f, root)).catch(() => {}); }
-for (const f of Object.keys(DRAWN)) if (!state[f]) delete DRAWN[f]; state._drawn = DRAWN;
+for (const f of Object.keys(DRAWN)) if (!state[f]) delete DRAWN[f]; state._drawn = DRAWN; state._look = LOOK;
 await writeFile(new URL('og/live.json', root), JSON.stringify(state, null, 1) + '\n');
 console.log('og-live: drew', need.length, 'of', cards.length);
