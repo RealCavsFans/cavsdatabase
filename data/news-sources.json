@@ -27,7 +27,8 @@
   {
    "name": "The Athletic",
    "type": "article",
-   "url": "https://www.nytimes.com/athletic/rss/nba/cavaliers/"
+   "url": "https://www.nytimes.com/athletic/rss/nba/cavaliers/",
+   "filter": "\\b(Cavaliers|Cavs|Cleveland)\\b"
   },
   {
    "name": "The Inside Shot",
