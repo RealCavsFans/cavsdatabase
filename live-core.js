@@ -25,7 +25,7 @@ const perLabel=f=>Array.isArray(f)?(eqSet(f,[1,2])?'1st half':eqSet(f,[3,4,5])||
 function lastName(n){const p=n.replace(/ (Jr\.|Sr\.|II|III|IV)$/,'').split(' ');return p.length>1?p.slice(1).join(' '):n}
 /* archived games store plays and win probability as compact rows (pv:2, from slimSummary); turn them back into ESPN's shape */
 function unpackSlim(d){if(!d||d.pv!==2)return d;const o=Object.assign({},d);delete o.pv;
-  o.plays=(d.plays||[]).map(r=>({id:r[0],type:{text:r[1]},text:r[2],period:{number:r[3]},clock:{displayValue:r[4]},team:r[5]?{id:r[5]}:undefined,participants:r[6]?r[6].split(',').map(i=>({athlete:{id:i}})):undefined,homeScore:r[7],awayScore:r[8],scoringPlay:!!(r[9]&1),shootingPlay:!!(r[9]&2),scoreValue:r[10],pointsAttempted:r[11]==null?undefined:r[11],coordinate:r[12]==null?undefined:{x:r[12],y:r[13]}}));
+  o.plays=(d.plays||[]).map(r=>({id:r[0],type:{text:r[1]},text:r[2],period:{number:r[3]},clock:{displayValue:r[4]},team:r[5]?{id:r[5]}:undefined,participants:r[6]?r[6].split(',').map(i=>({athlete:{id:i}})):undefined,homeScore:r[7],awayScore:r[8],scoringPlay:!!(r[9]&1),shootingPlay:!!(r[9]&2),scoreValue:r[10],pointsAttempted:r[11]==null?undefined:r[11],coordinate:r[12]==null?undefined:{x:r[12],y:r[13]},zh:r[14]==null?undefined:r[14]}));
   o.winprobability=(d.winprobability||[]).map(r=>({playId:r[0],homeWinPercentage:r[1]}));return o}
 function prep(d){d=unpackSlim(d);
   const comp=d.header.competitions[0];
@@ -38,7 +38,7 @@ function prep(d){d=unpackSlim(d);
     const s={};names.forEach((n,i)=>s[n]=a.stats?a.stats[i]:null);
     P[a.athlete.id]={id:a.athlete.id,name:a.athlete.displayName,short:a.athlete.shortName,last:lastName(a.athlete.displayName),pos:a.athlete.position&&a.athlete.position.abbreviation,team:tb.team.id,nba:!!a.athlete.nba,starter:!!a.starter,dnp:!!a.didNotPlay,reason:a.reason,espn:s};
     roster[tb.team.id].push(a.athlete.id)})});
-  const plays=(d.plays||[]).map(q=>({id:q.id,type:q.type.text.replace(/\n/g,' '),text:q.text,per:q.period.number,clock:q.clock.displayValue,t:gt(q.period.number,q.clock.displayValue),team:q.team&&q.team.id,ids:(q.participants||[]).map(x=>x.athlete.id),hs:q.homeScore,as:q.awayScore,sc:q.scoringPlay,val:q.scoreValue,shot:q.shootingPlay,pa:q.pointsAttempted,x:q.coordinate&&q.coordinate.x>-100?q.coordinate.x:null,y:q.coordinate&&q.coordinate.y>-100?q.coordinate.y:null}));
+  const plays=(d.plays||[]).map(q=>({id:q.id,type:q.type.text.replace(/\n/g,' '),text:q.text,per:q.period.number,clock:q.clock.displayValue,t:gt(q.period.number,q.clock.displayValue),team:q.team&&q.team.id,ids:(q.participants||[]).map(x=>x.athlete.id),hs:q.homeScore,as:q.awayScore,sc:q.scoringPlay,val:q.scoreValue,shot:q.shootingPlay,pa:q.pointsAttempted,x:q.coordinate&&q.coordinate.x>-100?q.coordinate.x:null,y:q.coordinate&&q.coordinate.y>-100?q.coordinate.y:null,zh:q.zh}));
   /* ESPN's running score on each play sometimes drifts (Oct 26 vs MIN: it ended 125-124 MIN, the real final was 127-125 CLE).
      Keep our own running tally from the scoring plays, and use it whenever it lands on the scoreboard's score. */
   {let h=0,a=0;const run=plays.map(p=>{if(p.sc&&p.val>0){const t=p.team||(P[p.ids[0]]||{}).team;if(t===home.id)h+=p.val;else if(t===away.id)a+=p.val}return [h,a]});
@@ -119,7 +119,7 @@ function deriveCore(D,plays,F){
       if(isFT&&/ 1 of /.test(ty)&&inF)TT(t).forEach(x=>{x.ftTrips++;if(/1 of 1/.test(ty)&&lastMade&&lastMade.id===a&&lastMade.t===p.t)x.and1++});
       if(!isFT&&p.sc){lastMade={id:a,t:p.t};const g=p.t-(lastFG[t]!=null?lastFG[t]:pstart(1));if(g>=180)dr.push({t,kind:'fg',from:lastFG[t]!=null?lastFG[t]:0,to:p.t});lastFG[t]=p.t}
       if(isFT){if(inF){B[a].fta++;pbA(a,'fta',1,ON);if(p.sc){B[a].ftm++;pbA(a,'ftm',1,ON)}}TT(t).forEach(x=>{x.fta++;if(p.sc)x.ftm++});offStat(t,'fta',ON);if(p.sc)luStat(t,'ftm',ON)}
-      else{const three=p.pa===3;const zi=p.x!=null?zoneOf(p.x,p.y,three):(three?4:1);const paint=!three&&p.x!=null&&Math.abs(p.x-25)<=8&&p.y<=13.75;
+      else{const three=p.pa===3;const zi=p.x!=null?zoneOf(p.x,p.y,three):p.zh!=null&&(p.zh>=3)===three?p.zh:(three?4:1);const paint=!three&&p.x!=null&&Math.abs(p.x-25)<=8&&p.y<=13.75;
         if(inF){(B[a].fga++,pbA(a,'fga',1));if(three)(B[a].tpa++,pbA(a,'tpa',1));if(p.sc){(B[a].fgm++,pbA(a,'fgm',1));if(three)(B[a].tpm++,pbA(a,'tpm',1))}}
         TT(t).forEach(x=>{x.fga++;x.z[zi][1]++;if(three)x.tpa++;if(p.sc){x.fgm++;x.z[zi][0]++;if(three)x.tpm++;if(paint)x.paint+=2}});offStat(t,'fga');if(three)luStat(t,'tpa');if(p.sc){luStat(t,'fgm');if(three)luStat(t,'tpm');if(b&&/assists/.test(p.text))luStat(t,'ast')}
         if(p.sc&&b&&/assists/.test(p.text)&&B[b]){if(inF){(B[b].ast++,pbA(b,'ast',1));asts.push({t,p:b,s:a,v:three?3:2,z:zi})}TT(t).forEach(x=>x.ast++)}
@@ -245,8 +245,9 @@ function fromNBA(box,pbp,extra){extra=extra||{};const g=box.game,acts=((pbp&&pbp
     if(t==='2pt'||t==='3pt'||t==='heave'){const three=t==='3pt'||(t==='heave'&&a.shotDistance>=22),v=three?3:2,made=a.shotResult==='Made',ty=nbaShotType(a);
       const dist=a.shotDistance!=null?Math.round(a.shotDistance)+'-foot ':'';const ast=made&&a.assistPersonId,blk=!made&&a.blockPersonId;
       const text=blk?N(a.blockPersonId)+' blocks '+N(a.personId)+"'s "+dist+(three?'three point ':'')+ty.toLowerCase():N(a.personId)+(made?' makes ':' misses ')+dist+(three?'three point ':'two point ')+ty.toLowerCase()+(ast?' ('+N(a.assistPersonId)+' assists)':'');
-      const c=a.xLegacy!=null&&a.yLegacy!=null?{x:Math.round((25+a.xLegacy/10)*10)/10,y:Math.max(0,Math.round(a.yLegacy)/10)}:undefined;
-      mk(a,ty,text,[a.personId,ast?a.assistPersonId:blk?a.blockPersonId:null],{scoringPlay:made,scoreValue:made?v:0,shootingPlay:true,pointsAttempted:v,coordinate:c});continue}
+      const c=a.xLegacy!=null&&a.yLegacy!=null?{x:Math.round((25+a.xLegacy/10)*10)/10,y:Math.max(0,Math.round(a.yLegacy)/10)}:a.shotDistance!=null?{x:25,y:Math.round(Math.max(a.shotDistance,a.actionType==='3pt'?24:0)*10)/10}:undefined;   /* the rare shot with no court spot (about 1 in 1,500): placed straight on at its distance, so its zone still counts */
+      const zh=c?undefined:v===3?(/Corner/.test(a.area||'')?3:4):a.shotDistance!=null?(a.shotDistance<4?0:a.shotDistance<14?1:2):/Restricted/.test(a.area||'')?0:/Paint/.test(a.area||'')?1:/Mid/.test(a.area||'')?2:undefined;   /* rare shots with no location: zone from the NBA's distance or area, kept off the shot chart */
+      mk(a,ty,text,[a.personId,ast?a.assistPersonId:blk?a.blockPersonId:null],{scoringPlay:made,scoreValue:made?v:0,shootingPlay:true,pointsAttempted:v,coordinate:c,zh});continue}
     if(t==='freethrow'){const made=a.shotResult==='Made';const m=/(\d) of (\d)/.exec(sub);const tech=/technical/.test(sub),flag=/flagrant/.test(sub);
       const ty=tech?'Free Throw - Technical':'Free Throw - '+(flag?'Flagrant ':'')+(m?m[1]+' of '+m[2]:'1 of 1');
       mk(a,ty,N(a.personId)+(made?' makes ':' misses ')+'free throw'+(m?' '+m[1]+' of '+m[2]:''),[a.personId],{scoringPlay:made,scoreValue:made?1:0,shootingPlay:true,pointsAttempted:1});continue}
@@ -281,7 +282,7 @@ function slimSummary(d){
     boxscore:{teams:((d.boxscore&&d.boxscore.teams)||[]).map(t=>({team:{id:t.team.id},statistics:(t.statistics||[]).map(s=>({name:s.name,displayValue:s.displayValue}))})),
       players:((d.boxscore&&d.boxscore.players)||[]).map(t=>({team:{id:t.team.id},statistics:[{names:(t.statistics[0]||{}).names,athletes:((t.statistics[0]||{}).athletes||[]).map(a=>({athlete:{id:a.athlete.id,nba:a.athlete.nba?1:undefined,displayName:a.athlete.displayName,shortName:a.athlete.shortName,position:{abbreviation:a.athlete.position&&a.athlete.position.abbreviation},jersey:a.athlete.jersey},starter:a.starter,didNotPlay:a.didNotPlay,reason:a.reason,stats:a.stats}))}]}))},
     /* compact rows (pv:2): [id, type, text, period, clock, team, player ids, home, away, flags (1 scoring, 2 shooting), value, attempted, x, y]; prep() unpacks them */
-    pv:2,plays:(unpackSlim(d).plays||[]).map(q=>{const c=q.coordinate&&q.coordinate.x>-100?q.coordinate:null;return [q.id,q.type.text,q.text,q.period.number,q.clock.displayValue,q.team?q.team.id:0,q.participants?q.participants.map(p=>p.athlete.id).join(','):'',q.homeScore,q.awayScore,(q.scoringPlay?1:0)|(q.shootingPlay?2:0),q.scoreValue,q.pointsAttempted==null?null:q.pointsAttempted,c?c.x:null,c?c.y:null]}),
+    pv:2,plays:(unpackSlim(d).plays||[]).map(q=>{const c=q.coordinate&&q.coordinate.x>-100?q.coordinate:null;return [q.id,q.type.text,q.text,q.period.number,q.clock.displayValue,q.team?q.team.id:0,q.participants?q.participants.map(p=>p.athlete.id).join(','):'',q.homeScore,q.awayScore,(q.scoringPlay?1:0)|(q.shootingPlay?2:0),q.scoreValue,q.pointsAttempted==null?null:q.pointsAttempted,c?c.x:null,c?c.y:null,...(c||q.zh==null?[]:[q.zh])]}),
     winprobability:(unpackSlim(d).winprobability||[]).map(w=>[w.playId,w.homeWinPercentage])};
 }
 /* numbers-only recap for a finished game, focus team first */

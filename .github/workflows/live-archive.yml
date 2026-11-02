@@ -33,6 +33,7 @@ jobs:
           sparse-checkout: |
             scripts/live-archive.mjs
             scripts/nba-store.mjs
+            pdata/nba-fixes.json
             scripts/last-time.mjs
             data/hist-cle.json
             data/last-time.json

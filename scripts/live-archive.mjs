@@ -95,6 +95,13 @@ if (SEASON === '2026-27' && !process.env.SKIP_FETCH && !NBA_MODE) {
 if (NBA_MODE) {
   const zlib = await import('zlib');
   const nidx = JSON.parse(fs.readFileSync(NIDX, 'utf8'));
+  /* hand fixes for the rare NBA error that never gets corrected (pdata/nba-fixes.json):
+     {"<NBA game id>": [{"action": <actionNumber>, "set": {...fields}} | {"action": <actionNumber>, "drop": true} | {"player": <personId>, "set": {...box statistics}}]} */
+  let FIX = {}; try { FIX = JSON.parse(fs.readFileSync('pdata/nba-fixes.json', 'utf8')); } catch {}
+  const applyFixes = (gid, raw) => { for (const f of FIX[gid] || []) {
+    if (f.action != null) { const i = raw.pbp.actions.findIndex(a => a.actionNumber === f.action); if (i < 0) { console.log('fix: no action', gid, f.action); continue; } if (f.drop) raw.pbp.actions.splice(i, 1); else Object.assign(raw.pbp.actions[i], f.set || {}); }
+    else if (f.player != null) { const p = [raw.box.homeTeam, raw.box.awayTeam].flatMap(t => t.players || []).find(p => p.personId === f.player); if (p) Object.assign(p.statistics, f.set || {}); else console.log('fix: no player', gid, f.player); }
+  } };
   const etOf = t => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(t));
   const espnBy = {};
   for (const f of fs.readdirSync(EDIR).filter(f => /^\d+\.json$/.test(f))) { const s = JSON.parse(fs.readFileSync(path.join(EDIR, f), 'utf8')); espnBy[etOf(s.header.competitions[0].date)] = { id: f.slice(0, -5), s }; }
@@ -104,6 +111,7 @@ if (NBA_MODE) {
     if (!gid.startsWith('002')) continue;   // regular season only, like ESPN's schedule (seasontype=2)
     const d = row[0].slice(0, 4) + '-' + row[0].slice(4, 6) + '-' + row[0].slice(6, 8);
     let raw; try { raw = JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(NBA_DIR, SEASON, gid + '.json.gz')))); } catch (e) { console.log('NBA store: unreadable', gid, String(e)); continue; }
+    applyFixes(gid, raw);
     for (const t of [raw.box.homeTeam, raw.box.awayTeam]) for (const p of t.players || []) byName[C.normName(p.name)] = String(p.personId);
     const out = C.fromNBA({ game: raw.box }, { game: raw.pbp });
     if (!out.plays.length) continue;

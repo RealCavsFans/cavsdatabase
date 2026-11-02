@@ -4,7 +4,7 @@
 //   <season>/<gameId>.json.gz   {gameId, box, pbp}   the NBA's 'game' objects, untouched
 //   <season>/index.json         {gameId: [YYYYMMDD (Eastern), away tricode, home tricode, away pts, home pts, saved at]}
 //
-//   node scripts/nba-store.mjs <dir>                          the current season: new finals, plus re-checks of the last 3 days
+//   node scripts/nba-store.mjs <dir>                          the current season: new finals, plus re-checks of the last 7 days
 //   SEASON=2025-26 node scripts/nba-store.mjs <dir>          a past season, by walking its game ids (regular season + play-in + playoffs)
 //   TEAM=CLE ...                                             only one team's games (quick backfills)
 // The NBA bucket answers 403 for "not there"; that is never retried. Four downloads at a time, so it's gentle on their server.
@@ -62,10 +62,10 @@ async function pool(ids, force) {
 
 let ids = [];
 if (SEASON === CUR) {
-  // this season: the NBA's schedule says which games are final; games from the last 3 days are re-checked for corrections
+  // this season: the NBA's schedule says which games are final; games from the last 7 days are re-checked for corrections
   const sch = await get('/staticData/scheduleLeagueV2_1.json');
   const games = ((sch && sch.leagueSchedule && sch.leagueSchedule.gameDates) || []).flatMap(d => d.games || []);
-  const recent = Date.now() - 3 * 864e5;
+  const recent = Date.now() - 7 * 864e5;   // the NBA sometimes fixes a play days later
   for (const g of games) {
     if (!/^00[24]/.test(g.gameId) || g.gameStatus !== 3) continue;
     if (TEAM && g.homeTeam.teamTricode !== TEAM && g.awayTeam.teamTricode !== TEAM) continue;
