@@ -108,12 +108,18 @@ const wrapOpen = bg => `<meta name="viewport" content="width=device-width,initia
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:${bg}">
 <tr><td><a href="${SITE}"><img src="${SITE}/nl/header.png" width="600" alt="Cavs &amp; Coffee · freshly brewed after every game · presented by cavs_db" style="display:block;width:100%;max-width:600px;height:auto;border:0"></a></td></tr>`;
 const footLinks = [['Roster', 'roster'], ['Cap sheet', 'cap'], ['Draft picks', 'assets'], ['Injuries', '#inj'], ['Staff', 'staff'], ['Live stats', 'live']];
-const footer = (rule) => `<tr><td style="padding:26px 16px 26px;text-align:center;font:12px/1.7 ${F.sans};color:#5D646C">${rule || ''}
-<div style="font:800 12px ${F.cond};letter-spacing:.12em;text-transform:uppercase;color:#101419;margin-bottom:2px">More on <a href="${SITE}" style="color:#860038;text-decoration:none">cavsdatabase.com</a></div>
+/* Nov 1 footer: one closing block. Logo and tagline, site links, then the two asks side by side (share, coffee), then the fine print */
+const footer = (rule) => {
+  const btn = (href, label) => `<a href="${href}" style="display:inline-block;border:1px solid #D9D4CC;background:#FFFFFF;padding:7px 12px;color:#860038;font:700 12px ${F.sans};text-decoration:none;white-space:nowrap">${label}</a>`;
+  return `<tr><td style="padding:22px 16px 26px;text-align:center;font:12px/1.7 ${F.sans};color:#5D646C">${rule || ''}
+<a href="${SITE}" style="text-decoration:none"><img src="${SITE}/nl/logo.png" width="126" alt="cavs_db" style="display:block;width:126px;height:auto;border:0;margin:0 auto"></a>
+<div style="font:600 12px ${F.sans};color:#5D646C;margin:8px 0 10px">Everything Cavaliers. Everything you need.</div>
 ${[footLinks.slice(0, 3), footLinks.slice(3)].map(row => `<div style="font:700 12.5px/1.9 ${F.sans};white-space:nowrap">${row.map(([t, r]) => `<a href="${SITE}/${r}" style="color:#860038;text-decoration:none">${t}</a>`).join(' &nbsp;·&nbsp; ')}</div>`).join('')}
-<div style="margin:14px 0 12px"><a href="https://www.buymeacoffee.com/cavsdb" style="display:inline-block;border:1px solid #D9D4CC;padding:5px 12px;color:#860038;font:700 12px ${F.sans};text-decoration:none">&#9749; Buy cavs_db a coffee</a></div>
-<div style="font:600 11px/1.5 ${F.sans};color:#5D646C;margin-bottom:8px">Add us to your contacts so we land in your inbox.</div>
+<div style="margin:16px 0 4px;font:12px/1.5 ${F.sans};color:#5D646C">Know a Cavs fan who&rsquo;d want this with their coffee?</div>
+<div style="margin:0 0 16px;line-height:2.6">${btn('https://buttondown.com/cavscoffee/?referral_code={{ subscriber.referral_code }}', 'Share Cavs &amp; Coffee &rarr;')}&nbsp;&nbsp;${btn('https://www.buymeacoffee.com/cavsdb', '&#9749; Buy cavs_db a coffee')}</div>
+<div style="border-top:1px dotted #D9D4CC;padding-top:12px;font:600 11px/1.5 ${F.sans};color:#5D646C;margin-bottom:6px">Add us to your contacts so we land in your inbox.</div>
 <div style="font:10.5px/1.7 ${F.sans};color:#8A8F96"><span style="white-space:nowrap">Independent fan site, not affiliated with the Cavs or NBA.</span><br><span style="white-space:nowrap;color:#8A8F96;text-decoration:none">Cavs Database · P.O.&zwnj; Box 151 · West Jeff&zwnj;erson, OH 43&zwnj;162</span><!--UNSUB--></div></td></tr></table></td></tr></table>`;
+};
 const T = (inner, attrs = '') => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" ${attrs}>${inner}</table>`;
 
 /* quarter-by-quarter line score, newspaper style */
@@ -185,8 +191,7 @@ ${x.tn ? `<div style="font:16px/1.55 ${F.serif};color:${P.fg2};margin-top:10px">
   if (x.moves.length) s.push(K('Transactions'), B(x.moves.map(([d, t]) => li(esc(t), { left: esc(d), lw: 60 })).join('')));
   if (x.week.length) s.push(K('This week'), B(x.week.map(([wd, d, t]) => li(esc(t), { left: `${esc(wd)} ${esc(d)}`, lw: 96 })).join('')));
   if (x.tq) s.push(`<tr><td style="padding:14px 14px 0;text-align:center;font:italic 11px ${F.sans};color:${P.muted}">Trivia answer: ${String.fromCharCode(65 + x.tq.a)}. ${esc(x.tq.c[x.tq.a])}</td></tr>`);
-  /* pass it on: each subscriber's own Buttondown referral link (Settings → General → Referrals must be on). Its own boxed card so it doesn't run into the footer */
-  s.push(`<tr><td style="padding:18px 14px 0;text-align:center;font:12px/1.5 ${F.sans};color:${P.muted}">Know a Cavs fan who&rsquo;d want this with their coffee? <a href="https://buttondown.com/cavscoffee/?referral_code={{ subscriber.referral_code }}" style="color:${P.wine};font-weight:700;text-decoration:none;white-space:nowrap">Share your link &rarr;</a></td></tr>`);
+  /* pass it on: the referral link now lives in the footer (Nov 1) */
   return wrapOpen(P.bg) + s.join('\n') + footer(`<div style="border-top:4px double #F2B231;margin:0 0 18px;font-size:0;line-height:0">&nbsp;</div>`);
 }
 
