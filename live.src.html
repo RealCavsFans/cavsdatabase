@@ -703,6 +703,11 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const S={data:null,ev:null,replay:false,cur:Infinity,tab:'team',per:'all',playing:false,speed:30,fetched:0,timer:null,poll:null,state:'pre',sort:{},
   f:{plTeam:null,luTeam:null,luSize:5,luMin:2,shTeam:null,shPl:'all',shType:'all',shView:'bars',plays:'all',rotTeam:null,astTeam:null,astView:'grid',astFoc:null,ooTeam:null,ooA:null,ooB:null,plView:'box',card:null}};
 try{const t=localStorage.getItem('cdb-live-tab2');if(t)S.tab=t}catch(e){}
+/* Nov 2: remember exactly where you were (game or season, tab, period, scroll) when you leave for a player page or any other page,
+   so the site's Stats tab, the 'Back to stats' pill and the browser's back button all return to that spot */
+function saveStatsSpot(){try{const g=$('gsel')&&$('gsel').value;if(!g)return;localStorage.setItem('cdb-stats-back',JSON.stringify({u:'/live.html?g='+encodeURIComponent(g),tab:S.tab,per:S.per,y:Math.round(scrollY),t:Date.now()}))}catch(e){}}
+addEventListener('pagehide',saveStatsSpot);document.addEventListener('visibilitychange',()=>{if(document.hidden)saveStatsSpot()});
+document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a)return;const h=a.getAttribute('href')||'';if(/^\/live(\.html)?/.test(h)||h.startsWith('#'))return;saveStatsSpot();if(/^\/players\//.test(h)){try{sessionStorage.setItem('cdb-from-stats','1')}catch(e2){}}},true);
 
 /* Cavs & Coffee sign-up: keep NL_ON in step with index.html (?nl=footer previews it) */
 const NL_ON=false;{const f=document.getElementById('nlft');let st='';try{st=localStorage.getItem('cdb-nl')||''}catch(_){}if(f&&(NL_ON||/[?&]nl=footer/.test(location.search))&&st!=='sub')f.hidden=false;if(f)f.querySelector('form').addEventListener('submit',()=>{try{localStorage.setItem('cdb-nl','sub')}catch(_){}})}
@@ -2988,6 +2993,11 @@ function prevPicker(){let w=document.getElementById('prevpk');if(w){w.remove()}w
   let pick=new URLSearchParams(location.search).get('g');if(pick&&!/^(r?\d{6,12}|s\d{4}-\d\d|b\d{8}|a\d{4}-\d\d:\d{6,12})$/.test(pick))pick=null;/* only known game address shapes */
   if(!pick){const cav=evs.find(isCavs);pick=cav?cav.id:S.bkOpt||'r'+REPLAYS[0][0]}
   choose(pick,false).then(()=>{
+    /* back to the saved spot: ?resume=1 (Stats tab / Back to stats) or the browser's back button */
+    {let b=null;try{b=JSON.parse(localStorage.getItem('cdb-stats-back')||'null')}catch(e){}const q=new URLSearchParams(location.search);const nav=(performance.getEntriesByType&&performance.getEntriesByType('navigation')[0]||{}).type;
+      if(b&&Date.now()-b.t<2*36e5&&(q.get('resume')==='1'||nav==='back_forward')&&b.u==='/live.html?g='+encodeURIComponent(pick)){if(b.tab)S.tab=b.tab;if(b.per&&b.per!=='all'&&!S.season)S.per=b.per;renderNav(S.R);renderView();
+        if(q.has('resume')){q.delete('resume');history.replaceState(null,'',location.pathname+'?'+q.toString())}
+        if(b.y>0){let n=0;const to=()=>{scrollTo(0,b.y);if(Math.abs(scrollY-b.y)>4&&++n<25)setTimeout(to,150)};setTimeout(to,120)}return}}
     /* ?pl=<player slug> (from a player page): open season mode on him, lineups he was in and his on/off */
     {const pc=new URLSearchParams(location.search).get('pc');if(pc&&S.data&&!S.season){const id=Object.keys(S.data.P).find(k=>PP[ppKey(S.data.P[k].name)]===pc);if(id){S.tab='players';S.f.plTeam=S.data.focus.id;S.f.pgc=id;renderNav(S.R);renderView();setTimeout(()=>{const e=document.getElementById('pgc');if(e)e.scrollIntoView({block:'start'})},200);return}}}
     const pl=new URLSearchParams(location.search).get('pl');if(!pl||!S.data)return;const id=Object.keys(S.data.P).find(k=>PP[ppKey(S.data.P[k].name)]===pl);if(!id)return;
