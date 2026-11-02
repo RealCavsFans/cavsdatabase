@@ -141,8 +141,10 @@ def main():
     d, opp, ha, tip = games[0]
     today, tomorrow = now.date(), now.date() + dt.timedelta(days=1)
     gday = tip.date()
-    due = (gday == today and now.hour >= 10 and now < tip and (now.minute < 30 or (tip - now) <= dt.timedelta(minutes=95))) \
-        or (gday == tomorrow and now.hour == 17 and now.minute >= 30)
+    # Nov 2: GitHub starts scheduled runs late (often :50-:59 instead of :07/:37), so a 'first half of the hour' rule
+    # skipped every check. Now every run on a game day from 10 a.m. to tip looks (about hourly in practice, more near tip).
+    due = (gday == today and now.hour >= 10 and now < tip) \
+        or (gday == tomorrow and (now.hour == 17 and now.minute >= 15 or now.hour in (18, 19)))
     if os.environ.get('CHECK'): print('due=' + ('1' if due or os.environ.get('FORCE') else '0')); return
     if not due and not os.environ.get('FORCE'):
         log(f'not due (next game {d} {opp}, tip {tip:%H:%M})'); return
@@ -162,13 +164,11 @@ def main():
     old = {}
     try: old = json.load(open(OUT))
     except Exception: pass
-    if old.get('game', {}).get('date') == d and old.get('teams') == teams:
-        log('no change since', old.get('report')); return
     # a team that has filed before but shows 'not yet submitted' in a newer report (rare) keeps its last list
     if old.get('game', {}).get('date') == d:
         for ab, t in teams.items():
             if t['filed'] is not True and (old.get('teams', {}).get(ab) or {}).get('filed'): teams[ab] = old['teams'][ab]
-        if old.get('teams') == teams: log('no change since', old.get('report')); return
+        if old.get('teams') == teams and old.get('report') == title: log('no new report since', title); return
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     json.dump({'source': 'Official NBA injury report', 'report': title, 'url': url, 'saved': now.isoformat(timespec='minutes'),
                'game': {'date': d, 'opp': opp, 'home': ha == 'H', 'tip': tip.isoformat(timespec='minutes')}, 'teams': teams},
