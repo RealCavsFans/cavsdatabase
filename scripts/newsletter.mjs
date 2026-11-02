@@ -8,6 +8,7 @@ import { createServer } from 'node:http';
 import { createRequire } from 'node:module';
 import { extname } from 'node:path';
 import { execSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 
 const MODE = process.argv[2] || 'auto';
 const LIVE = process.env.NEWSLETTER_LIVE === 'true';
@@ -84,7 +85,17 @@ function prep(D, g, score, top, boxLink, opts) {
     if (TS.CLE && TS[o]) tape = [['Record', t => t[0] / Math.max(1, t[0] + t[1]), 1, t => t[0] + '–' + t[1]], ['Off rating', t => t[4], 1, t => t[4].toFixed(1)], ['Def rating', t => t[5], 0, t => t[5].toFixed(1)], ['Net rating', t => t[4] - t[5], 1, t => { const x = t[4] - t[5]; return (x > 0 ? '+' : '') + x.toFixed(1); }]]
       .map(([lab, f, hi, fm]) => { const rk = t => ord(1 + all.filter(u => hi ? f(u) > f(t) : f(u) < f(t)).length); return [lab, fm(TS.CLE), rk(TS.CLE), fm(TS[o]), rk(TS[o])]; });
   }
-  const inj = D.INJURIES.map(([n, , what, st]) => [n, what.toLowerCase(), st]);
+  let inj = D.INJURIES.map(([n, , what, st]) => [n, what.toLowerCase(), st]);
+  /* Nov 1: same as the site: when the league's official injury report (pdata/injury-report.json) covers the next game,
+     its statuses win and anyone else the Cavs listed is added (G League assignments aren't injuries, so they stay off) */
+  try {
+    const R = JSON.parse(readFileSync(new URL('../pdata/injury-report.json', import.meta.url), 'utf8')), t = R.teams && R.teams.CLE;
+    if (nx && t && t.filed && R.game && R.game.date === nx[0]) {
+      const off = t.rows.filter(r => !/^G League/.test(r[2])), by = Object.fromEntries(off.map(r => [r[0], r]));
+      inj = inj.map(([n, what, st]) => by[n] ? [n, what, by[n][1]] : [n, what, st])
+        .concat(off.filter(r => !inj.some(x => x[0] === r[0])).map(([n, st, why]) => [n, why.toLowerCase(), st]));
+    }
+  } catch {}
   // standings: five East rows around the Cavs (regular season only)
   const E = (D.STANDINGS || []).filter(t => t[1] === 'E').sort((x, y) => (y[2] - y[3]) - (x[2] - x[3]) || y[2] - x[2]);
   let stand = []; const ci = E.findIndex(t => t[0] === 'CLE');
