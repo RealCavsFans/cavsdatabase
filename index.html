@@ -3398,12 +3398,12 @@ window.renderGame=function(sl){if(SCHEDULE.findIndex(g=>gslug(g)===sl)<0)return 
     Rr.insertBefore(s2,Rr.firstChild)}
   /* injuries (before) */
   if(!fin){const oi=OPP_INJ[o],fresh=oi&&oi.rows&&oi.d>=new Date(Date.now()-3*864e5).toISOString().slice(0,10);if(INJURIES.length||INJ_ASSIGN.length||fresh){const c=card('Injury report','Updated '+INJ_UPDATED);
-    const grp=(t,sub,rows)=>{body.appendChild(el('h3','gp-sh',t+(sub?' · '+sub:'')));const d=el('div','gp-inj');if(!rows.length){const x=el('div');x.append('None reported');d.appendChild(x)}rows.forEach(([n,inj,st])=>{const x=el('div');x.append(n+' · '+String(inj).toLowerCase().replace(/\bg league\b/,'G League'),el('span',/out/i.test(st)?'out':null,st));d.appendChild(x)});body.appendChild(d)};
+    const grp=(t,sub,rows)=>{body.appendChild(el('h3','gp-sh',t+(sub?' · '+sub:'')));const d=el('div','gp-inj');if(!rows.length){const x=el('div');x.append('None reported');d.appendChild(x)}rows.forEach(([n,inj,st])=>{if(/^out\b/i.test(st))st='Out';/* Nov 2: just 'Out', no timeline */const x=el('div');x.append(n+' · '+String(inj).toLowerCase().replace(/\bg league\b/,'G League'),el('span',/out/i.test(st)?'out':null,st));d.appendChild(x)});body.appendChild(d)};
     const cavs0=INJURIES.map(([n,,j,st])=>[n,j,st]).concat(INJ_ASSIGN.map(([n])=>[n,'G League assignment','G League'])),opp0=fresh?oi.rows.slice():[],ON=GNICK[o]||TEAMS[o];
     const srt=rows=>rows.slice().sort((x,y)=>INJ_RANK(x[2])-INJ_RANK(y[2]));
     const body=el('div');c.appendChild(body);const lnk=el('a','gp-btn gp-inj-b','Official NBA injury report ↗');lnk.href='https://official.nba.com/nba-injury-report-2025-26-season/';lnk.target='_blank';lnk.rel='noopener';c.appendChild(lnk);
     const draw=R=>{body.textContent='';
-      const T=R&&R.game.date===g[0]&&R.game.opp===o?R.teams:null,side=(ab,label,fb,fbOk)=>{const t=T&&T[ab];if(t&&t.filed)grp(label,'',srt(t.rows.map(([n,st,why])=>{if(/^G League/.test(why))return[n,why.replace(/^G League \((.*)\)$/,'G League $1'),'G League'];const f=fb.find(r=>r[0]===n);return[n,why,/^out$/i.test(st)&&f&&/^out\b./i.test(f[2])?f[2]:st]})));else if(fbOk)grp(label,t&&t.filed===false?'not yet filed with the league':'',srt(fb))};
+      const T=R&&R.game.date===g[0]&&R.game.opp===o?R.teams:null,side=(ab,label,fb,fbOk)=>{const t=T&&T[ab];if(t&&t.filed)grp(label,'',srt(t.rows.map(([n,st,why])=>{if(/^G League/.test(why))return[n,why.replace(/^G League \((.*)\)$/,'G League $1'),'G League'];const f=fb.find(r=>r[0]===n);return[n,why,st]})));else if(fbOk)grp(label,t&&t.filed===false?'not yet filed with the league':'',srt(fb))};
       side('CLE','Cavs',cavs0,true);side(o,ON,opp0,fresh||!!(T&&T[o]));
       if(T){const sp=c.querySelector('.block-h > span');if(sp)sp.textContent=OFFI_LBL(R)}};
     draw(null);OFFI().then(R=>{if(R)draw(R)});c.classList.add('o-inj');Rr.appendChild(c)}}
