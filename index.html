@@ -1530,6 +1530,10 @@ requestAnimationFrame(()=>{document.getElementById('fill').style.width=pct(TEAM_
 const INJ_UPDATED='Nov 2';
 const INJURIES=[["Nae'Qwan Tomlin",'PF','Back (stress reaction)','Out'],['Jaylon Tyson','SF','Right ankle (sprain)','Out']];
 /* injury lists: Out first, then Doubtful, Questionable, Probable, game-time decisions */
+/* Nov 1: the league's own injury report for the next Cavs game (pdata/injury-report.json, read hourly on game days by
+   scripts/injury-report.py). OFFI() resolves to it while it's for a game that hasn't finished, else null. */
+const OFFI=()=>fJ('/pdata/injury-report.json').then(r=>r.ok?r.json():null).then(R=>R&&R.game&&R.teams&&Date.now()<new Date(R.game.tip).getTime()+3*36e5?R:null).catch(()=>null);
+const OFFI_LBL=R=>{const m=String(R.report||'').match(/(\d+)\/(\d+)\/\d+\s+0?(\d+):(\d\d)\s*(AM|PM)/);return 'Official report'+(m?' · '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m[1]-1]+' '+(+m[2])+', '+m[3]+(m[4]==='00'?'':':'+m[4])+' '+(m[5]==='AM'?'a.m.':'p.m.'):'')};
 const INJ_RANK=st=>{const x=String(st).toLowerCase();return x.startsWith('out')?0:x.startsWith('doubt')?1:x.startsWith('quest')?2:x.startsWith('prob')?3:4};
 INJURIES.sort((a,b)=>INJ_RANK(a[3])-INJ_RANK(b[3]));
 /* G League assignments (NBA official injury report lists them as "G League - On Assignment"): shown on the injury card but NOT injuries, so kept out of INJURIES (counts, alerts, newsletter). [name, pos] */
@@ -1577,6 +1581,13 @@ INJURIES.forEach(([n,p,inj,st])=>{const li=el('li','ij');const d=document.create
   {const sv=el('button','ij-sv');sv.type='button';sv.title='Save as image';sv.setAttribute('aria-label','Save '+n+' injury card as an image');sv.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';sv.onclick=()=>window.cdbCard&&window.cdbCard('injury',n,sv);ft.appendChild(sv);box.appendChild(ft)}
   d.appendChild(box);li.appendChild(d);ij.appendChild(li)});
 INJ_ASSIGN.forEach(([n,p])=>{const li=el('li','ij');const d=document.createElement('details');const sm=document.createElement('summary');const a=el('span');a.append(el('b',null,n),' · G League assignment');const z=el('span',null,'ASSIGN');z.title='On G League assignment, not injured';sm.append(a,z);d.appendChild(sm);const box=el('div','ijx');const dl=el('dl','ij-dl');dl.append(el('dt',null,'Status'),el('dd',null,'On assignment in the G League, not injured. Listed here because the NBA official injury report shows him as unavailable for the Cavs game. Not counted as an injury.'));box.appendChild(dl);d.appendChild(box);li.appendChild(d);ij.appendChild(li)});
+/* official report: game statuses for the listed Cavs, plus anyone else the team listed for the next game */
+OFFI().then(R=>{const t=R&&R.teams.CLE;if(!t||!t.filed)return;const by={};t.rows.forEach(r=>by[r[0]]=r);const seen=new Set();
+  ij.querySelectorAll('li.ij').forEach(li=>{const b=li.querySelector('summary b'),z=li.querySelector('summary > span:last-child');if(!b||!z)return;const r=by[b.textContent];if(!r)return;seen.add(r[0]);if(/^G League/.test(r[2]))return;z.textContent=ABBR[r[1]]||r[1].toUpperCase();z.className=/^out/i.test(r[1])?'out':'';z.title=r[1]+' (official NBA injury report)'});
+  const extra=t.rows.filter(r=>!seen.has(r[0])&&!/^G League/.test(r[2]));if(!extra.length&&!seen.size)return;
+  if(extra.length){const none=[...ij.children].find(x=>!x.classList.contains('ij'));if(none)none.remove()}
+  extra.forEach(([n,st,why])=>{const li=el('li','ij');const d=document.createElement('details');const sm=document.createElement('summary');const a=el('span');a.append(el('b',null,n),' · '+why);const z=el('span',/^out/i.test(st)?'out':null,ABBR[st]||st.toUpperCase());z.title=st;sm.append(a,z);d.appendChild(sm);const box=el('div','ijx');const dl=el('dl','ij-dl');dl.append(el('dt',null,'Status'),el('dd',null,st+' for '+(R.game.home?'vs ':'at ')+(TEAMS[R.game.opp]||R.game.opp)+' on the official NBA injury report'));box.appendChild(dl);d.appendChild(box);li.appendChild(d);ij.appendChild(li)});
+  const ic=document.getElementById('inj-count');if(ic)ic.textContent=OFFI_LBL(R)});
 {const m=new Date(INJ_UPDATED+', '+SITE_UPDATED.slice(0,4)+' 12:00');{const ic=document.getElementById('inj-count');ic.className='upd-tag';ic.textContent='Updated '+(isNaN(m)?INJ_UPDATED:relDay(new Intl.DateTimeFormat('en-CA').format(m)))}}
 {const nt=document.getElementById('inj-note');if(nt){nt.textContent='';nt.hidden=true}}
 /* the injury report section can be lifted into the game-day card and put back */
@@ -3355,9 +3366,15 @@ window.renderGame=function(sl){if(SCHEDULE.findIndex(g=>gslug(g)===sl)<0)return 
     Rr.insertBefore(s2,Rr.firstChild)}
   /* injuries (before) */
   if(!fin){const oi=OPP_INJ[o],fresh=oi&&oi.rows&&oi.d>=new Date(Date.now()-3*864e5).toISOString().slice(0,10);if(INJURIES.length||INJ_ASSIGN.length||fresh){const c=card('Injury report','Updated '+INJ_UPDATED);
-    const grp=(t,sub,rows)=>{c.appendChild(el('h3','gp-sh',t+(sub?' · '+sub:'')));const d=el('div','gp-inj');if(!rows.length){const x=el('div');x.append('None reported');d.appendChild(x)}rows.forEach(([n,inj,st])=>{const x=el('div');x.append(n+' · '+String(inj).toLowerCase(),el('span',/out/i.test(st)?'out':null,st));d.appendChild(x)});c.appendChild(d)};
-    grp('Cavs','',INJURIES.map(([n,,j,st])=>[n,j,st]).concat(INJ_ASSIGN.map(([n])=>[n,'G League assignment','G League'])));if(fresh)grp(GNICK[o]||TEAMS[o],'',oi.rows.slice().sort((x,y)=>INJ_RANK(x[2])-INJ_RANK(y[2])));
-    const a=el('a','gp-btn gp-inj-b','Official NBA injury report ↗');a.href='https://official.nba.com/nba-injury-report-2025-26-season/';a.target='_blank';a.rel='noopener';c.appendChild(a);c.classList.add('o-inj');Rr.appendChild(c)}}
+    const grp=(t,sub,rows)=>{body.appendChild(el('h3','gp-sh',t+(sub?' · '+sub:'')));const d=el('div','gp-inj');if(!rows.length){const x=el('div');x.append('None reported');d.appendChild(x)}rows.forEach(([n,inj,st])=>{const x=el('div');x.append(n+' · '+String(inj).toLowerCase().replace(/\bg league\b/,'G League'),el('span',/out/i.test(st)?'out':null,st));d.appendChild(x)});body.appendChild(d)};
+    const cavs0=INJURIES.map(([n,,j,st])=>[n,j,st]).concat(INJ_ASSIGN.map(([n])=>[n,'G League assignment','G League'])),opp0=fresh?oi.rows.slice():[],ON=GNICK[o]||TEAMS[o];
+    const srt=rows=>rows.slice().sort((x,y)=>INJ_RANK(x[2])-INJ_RANK(y[2]));
+    const body=el('div');c.appendChild(body);const lnk=el('a','gp-btn gp-inj-b','Official NBA injury report ↗');lnk.href='https://official.nba.com/nba-injury-report-2025-26-season/';lnk.target='_blank';lnk.rel='noopener';c.appendChild(lnk);
+    const draw=R=>{body.textContent='';
+      const T=R&&R.game.date===g[0]&&R.game.opp===o?R.teams:null,side=(ab,label,fb,fbOk)=>{const t=T&&T[ab];if(t&&t.filed)grp(label,'',srt(t.rows.map(([n,st,why])=>{if(/^G League/.test(why))return[n,why.replace(/^G League \((.*)\)$/,'G League $1'),'G League'];const f=fb.find(r=>r[0]===n);return[n,why,/^out$/i.test(st)&&f&&/^out\b./i.test(f[2])?f[2]:st]})));else if(fbOk)grp(label,t&&t.filed===false?'not yet filed with the league':'',srt(fb))};
+      side('CLE','Cavs',cavs0,true);side(o,ON,opp0,fresh||!!(T&&T[o]));
+      if(T){const sp=c.querySelector('.block-h > span');if(sp)sp.textContent=OFFI_LBL(R)}};
+    draw(null);OFFI().then(R=>{if(R)draw(R)});c.classList.add('o-inj');Rr.appendChild(c)}}
   /* officials: the NBA posts crew assignments around 9 AM ET on game day; box.json carries them once posted */
   if(!fin){const c=card('Officials');c.classList.add('o-ref');const d=el('div','gp-inj gp-ref');c.appendChild(d);Rr.appendChild(c);
     const note=()=>{const p=el('p','gp-rn');p.append('The NBA posts the crew around 9 AM ET on game day. ');const a=el('a',null,'NBA referee assignments ↗');a.href='https://official.nba.com/referee-assignments/';a.target='_blank';a.rel='noopener';p.appendChild(a);d.appendChild(p)};

@@ -1,0 +1,52 @@
+name: Official NBA injury report
+# Nov 1: reads the league's own injury report (PDF, posted every 15 minutes) for the next Cavs game and saves both
+# teams' lists to pdata/injury-report.json. Fires every 30 minutes in the day; scripts/injury-report.py decides whether
+# to look (hourly on game days from 10 a.m. ET to tip, every run in the last 95 minutes, and ~5:30 p.m. the day before).
+on:
+  schedule:
+    - cron: '7,37 14-23 * * *'
+    - cron: '7,37 0-3 * * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Check now, whatever the time'
+        type: boolean
+        default: false
+permissions:
+  contents: write
+concurrency:
+  group: injury-report
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+        with:
+          sparse-checkout: |
+            scripts/injury-report.py
+            index.html
+            pdata/injury-report.json
+          sparse-checkout-cone-mode: false
+      - name: Due?
+        id: due
+        run: CHECK=1 FORCE=${{ inputs.force && '1' || '' }} python3 scripts/injury-report.py >> "$GITHUB_OUTPUT"
+      - name: Read the report
+        if: steps.due.outputs.due == '1'
+        run: |
+          pip install -q pdfplumber==0.11.4
+          FORCE=${{ inputs.force && '1' || '' }} python3 scripts/injury-report.py
+      - name: Commit if changed
+        if: steps.due.outputs.due == '1'
+        run: |
+          [ -f pdata/injury-report.json ] || exit 0
+          git config user.name "cavsdatabase-bot"
+          git config user.email "bot@cavsdatabase.com"
+          git add pdata/injury-report.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Official injury report"
+          for i in 1 2 3 4 5 6; do
+            if git pull --rebase -X theirs origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true; sleep $((RANDOM % 20 + i * 10))
+          done
+          exit 1

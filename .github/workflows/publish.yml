@@ -12,6 +12,7 @@ on:
       - Live page season baselines
       - Morning data (baselines, scouting, BBR ids, injuries)
       - League games missed to injury
+      - Official NBA injury report
       - Scouting report for the next opponent
       - Team stats (from ESPN box scores)
       - Basketball Reference player IDs
