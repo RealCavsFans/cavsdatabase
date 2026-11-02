@@ -580,6 +580,9 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 /* Nov 1: section headers with share buttons on phones: title and buttons on one line, the subtitle tucked under the title */
 @media (max-width:600px){.block-h.hasx:has(>span:not(.xact))>h2{flex:1 1 auto!important;flex-basis:auto!important;order:0}
 .block-h.hasx:has(>span:not(.xact)){row-gap:2px}.block-h.hasx>.xact{order:1}.block-h.hasx>span:not(.xact){order:2;flex-basis:100%;margin-top:0}}
+
+/* Nov 2: the status pill on drafted-player cards is a compact tag on desktop, not a full-width box */
+@media (min-width:601px){.ab-rt .rc3-pill{display:inline-flex!important;width:auto;max-width:100%;min-height:0;padding:4px 10px 4px 4px;gap:8px;margin:10px 0 2px}.ab-rt .rc3-pill b{font-size:.625rem;padding:2px 6px}.ab-rt .rc3-pill span{font-size:.8125rem}}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link{font:800 1.0625rem var(--cond);text-transform:uppercase;letter-spacing:.05em}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
