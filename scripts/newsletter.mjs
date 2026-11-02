@@ -63,7 +63,10 @@ const wkd = d => new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', { weekda
 function prep(D, g, score, top, boxLink, opts) {
   const [cs, os] = score.split('-').map(Number), win = cs > os, issueDay = opts.issueDay, md = issueDay.slice(5);
   const rec = (D.SEASON.results || '').replace(/[^WL]/g, ''); const w = (rec.match(/W/g) || []).length, l = rec.length - w;
-  const [tn, tl] = (top || '').split(': ');
+  let [tn, tl] = (top || '').split(': ');
+  /* Nov 1: the line reads "X led the Cavs with N points", so X must be the top scorer (box.json's top is the best all-round line) */
+  { const bx = (opts.boxRows || []).filter(r => r && r[0]).map(r => ({ n: r[0], pts: +r[2], reb: +r[3], ast: +r[4] })).sort((a, b) => b.pts - a.pts || b.reb + b.ast - a.reb - a.ast)[0];
+    if (bx) { tn = bx.n; tl = `${bx.pts} pts, ${bx.reb} reb, ${bx.ast} ast`; } }
   const fresh = x => x.date && Date.parse(x.date) > opts.sinceTs;
   const rcfItems = opts.rcf?.items || [];
   const recap = rcfItems.find(x => /recap/i.test(x.title) && x.date && x.date.slice(0, 10) >= g[0]);
@@ -301,7 +304,7 @@ const otdKey = (() => { const x = prep(D, g, score, b.top || '', b.url || D.box[
 // stat of the night: removed Oct 29 (Luka's call)
 const sotn = null;
 const ourBox = preseason ? (b.url || D.box[g[0]] || SITE + '/schedule') : `${SITE}/games/${g[0]}-${String(g[1]).toLowerCase()}`;
-const html = build(D, g, score, b.top || '', ourBox, { issueDay: today, rcf, news, trivia: tq, since, sinceTs, qs: b.qs, milestone: milestone(), sotn, usedOtd: Object.values(sent).map(v => v.otd).filter(Boolean).slice(-60), test: !(LIVE && MODE !== 'test'), preseason });
+const html = build(D, g, score, b.top || '', ourBox, { issueDay: today, boxRows: b.box, rcf, news, trivia: tq, since, sinceTs, qs: b.qs, milestone: milestone(), sotn, usedOtd: Object.values(sent).map(v => v.otd).filter(Boolean).slice(-60), test: !(LIVE && MODE !== 'test'), preseason });
 const [cs, os] = score.split('-').map(Number);
 const topBit = b.top ? b.top.split(':')[0].split(' ').slice(-1)[0] + ' ' + (b.top.match(/(\d+) pts/) || [])[1] : '';
 const msBit = (() => { const m = (milestone() || '').match(/^(?!Milestone watch)(\S+ )?(\S+) (reached [\d,]+ career \w+|passed .+? for \d+\w+ on the Cavs' all-time \w+)/); return m ? `${m[2]} ${m[3].replace(/^reached/, 'hits').replace(/ on the Cavs' all-time (\w+)/, ' in Cavs $1').replace(/^passed .+? for/, 'moves to')}` : ''; })();
