@@ -1,6 +1,6 @@
 {
- "checked": "2026-10-26T11:26:01.704Z",
- "total": 811,
+ "checked": "2026-11-02T11:42:09.140Z",
+ "total": 814,
  "broken": [],
  "unsure": [
   [
@@ -44,40 +44,8 @@
    403
   ],
   [
-   "https://en.wikipedia.org/wiki/Stan_Albeck",
-   429
-  ],
-  [
-   "https://en.wikipedia.org/wiki/Ted_Stepien",
-   429
-  ],
-  [
-   "https://en.wikipedia.org/wiki/Terry_Furlow",
-   429
-  ],
-  [
-   "https://en.wikipedia.org/wiki/Timofey_Mozgov",
-   429
-  ],
-  [
-   "https://en.wikipedia.org/wiki/Tom_Nissalke",
-   429
-  ],
-  [
-   "https://en.wikipedia.org/wiki/Walt_Wesley",
-   429
-  ],
-  [
-   "https://en.wikipedia.org/wiki/Tyronn_Lue",
-   429
-  ],
-  [
-   "https://en.wikipedia.org/wiki/Zydrunas_Ilgauskas",
-   429
-  ],
-  [
-   "https://formsubmit.co/ajax/rcfwriter@gmail.com",
-   405
+   "https://theinsideshot.substack.com",
+   403
   ],
   [
    "https://www.cbafaq.com",
@@ -96,15 +64,19 @@
    403
   ],
   [
+   "https://formsubmit.co/ajax/rcfwriter@gmail.com",
+   "TimeoutError"
+  ],
+  [
    "https://www.nbadraft.net/players/arturas-gudaitis/",
    403
   ],
   [
-   "https://www.nbadraft.net/players/ismael-kamagate/",
+   "https://www.nbadraft.net/players/renaldas-seibutis/",
    403
   ],
   [
-   "https://www.nbadraft.net/players/renaldas-seibutis/",
+   "https://www.nbadraft.net/players/ismael-kamagate/",
    403
   ],
   [
