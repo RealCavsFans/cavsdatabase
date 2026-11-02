@@ -50,11 +50,11 @@ else { if (days(LK.checked.slice(0, 10), today) > 9) problems.push(`The weekly l
   if (LK.broken && LK.broken.length) problems.push(`${LK.broken.length} broken outside link(s) as of ${LK.checked.slice(0, 10)}: ${LK.broken.slice(0, 5).map(([u, s]) => u + ' (' + s + ')').join(', ')}${LK.broken.length > 5 ? ', …' : ''}`);
   else notes.push(`links ok (${LK.total})`); }
 // 7. live page backup feed (/pbp): replay the latest finished Cavs game through each source, so a layout change
-// at StatMuse or CBS shows up here instead of during a game when ESPN is down. Yahoo is the last resort, so it only gets a note.
+// at CBS or Yahoo shows up here instead of during a game when ESPN is down. StatMuse is the last resort (Nov 2), so it only gets a note.
 {
   const last = S.filter(([d]) => d < today && box[d] && box[d].status === 'final' && days(d, today) <= 10).pop();
   if (!last) notes.push('backup feed: no recent game to test');
-  else for (const src of ['statmuse', 'cbs', 'yahoo']) {
+  else for (const src of ['cbs', 'yahoo', 'statmuse']) {
     const d = last[0].replace(/-/g, ''); let msg = null;
     try { const r = await fetch(`https://cavsdatabase.com/pbp?d=${d}&src=${src}`, { headers: { 'user-agent': 'cavsdatabase-health', 'cache-control': 'no-cache' }, signal: AbortSignal.timeout(45000) });   // Nov 2: without this identifier Cloudflare's bot screen answered, so the test never reached the backups const j = await r.json();
       if (!r.ok || !j.plays) msg = (j.error || r.status) + (j.tried && j.tried.length ? ': ' + j.tried.join('; ') : '');
@@ -62,7 +62,7 @@ else { if (days(LK.checked.slice(0, 10), today) > 9) problems.push(`The weekly l
         if (j.plays.length < 150) msg = `only ${j.plays.length} plays`; else if (want && cav && +cav.score !== want) msg = `Cavs score ${cav.score}, box score says ${want}`; }
     } catch (e) { notes.push(`backup ${src}: site not reachable from here`); continue; }
     if (!msg) notes.push(`backup ${src} ok`);
-    else if (src === 'yahoo') notes.push(`backup yahoo failed (${msg})`);
+    else if (src === 'statmuse') notes.push(`backup statmuse failed (${msg})`);   // Nov 2: last resort now
     else problems.push(`Live page backup feed: ${src} failed on the ${last[0]} game (${msg}). The live page still has the other backups; see MANUAL.md.`);
   }
 }

@@ -1,5 +1,5 @@
 // /pbp: backup play-by-play for the live page when ESPN's feed fails.
-// GET /pbp?d=YYYYMMDD returns the Cavs game that day in ESPN's summary shape, from StatMuse, then CBS, then Yahoo.
+// GET /pbp?d=YYYYMMDD returns the Cavs game that day in ESPN's summary shape, from CBS, then Yahoo, then StatMuse.
 // One shared cached copy serves every visitor (15 seconds while live), so each source sees about four requests a minute.
 // Tests: &away=PHI&home=NYK picks another game; &src=statmuse|yahoo|cbs forces one source; &sm=<statmuse game slug>.
 import { fromStatMuse, fromText, yahooRows, cbsRows, teamCode, shell } from '../scripts/pbp-sources.mjs';
@@ -81,7 +81,7 @@ export async function onRequestGet(ctx) {
   let g = q.get('home') && q.get('away') ? { home: teamCode(q.get('home')), away: teamCode(q.get('away')) } : await cavsGame(ctx, d).catch(() => null);
   if (!g) return json({ error: 'no Cavs game that day' }, 404, 600, key, ctx);
   const errs = [];
-  for (const s of only ? [only] : ['statmuse', 'cbs', 'yahoo']) {
+  for (const s of only ? [only] : ['cbs', 'yahoo', 'statmuse']) {   /* Nov 2: CBS and Yahoo first; StatMuse's game page changed and its reader needs rework */
     try { const out = await SRC[s](g, d, q, ctx); if (!out.plays.length && out.header.competitions[0].status.type.state !== 'pre') throw new Error(s + ': empty'); out.tried = errs; const fin = out.header.competitions[0].status.type.state === 'post'; return json(out, 200, fin ? 600 : 15, key, ctx) }
     catch (e) { errs.push(String(e.message || e).slice(0, 120)) }
   }
