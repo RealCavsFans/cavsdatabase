@@ -21,3 +21,4 @@ node_modules/
 /og/history.jpg
 /sitemap.xml
 /data/prerender-hash.txt
+__pycache__/
