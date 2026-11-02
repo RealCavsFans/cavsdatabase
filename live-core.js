@@ -36,7 +36,7 @@ function prep(d){d=unpackSlim(d);
   const P={},roster={};teams.forEach(t=>roster[t.id]=[]);
   (d.boxscore&&d.boxscore.players||[]).forEach(tb=>{const st=tb.statistics[0]||{};const names=st.names||[];(st.athletes||[]).forEach(a=>{
     const s={};names.forEach((n,i)=>s[n]=a.stats?a.stats[i]:null);
-    P[a.athlete.id]={id:a.athlete.id,name:a.athlete.displayName,short:a.athlete.shortName,last:lastName(a.athlete.displayName),pos:a.athlete.position&&a.athlete.position.abbreviation,team:tb.team.id,starter:!!a.starter,dnp:!!a.didNotPlay,reason:a.reason,espn:s};
+    P[a.athlete.id]={id:a.athlete.id,name:a.athlete.displayName,short:a.athlete.shortName,last:lastName(a.athlete.displayName),pos:a.athlete.position&&a.athlete.position.abbreviation,team:tb.team.id,nba:!!a.athlete.nba,starter:!!a.starter,dnp:!!a.didNotPlay,reason:a.reason,espn:s};
     roster[tb.team.id].push(a.athlete.id)})});
   const plays=(d.plays||[]).map(q=>({id:q.id,type:q.type.text.replace(/\n/g,' '),text:q.text,per:q.period.number,clock:q.clock.displayValue,t:gt(q.period.number,q.clock.displayValue),team:q.team&&q.team.id,ids:(q.participants||[]).map(x=>x.athlete.id),hs:q.homeScore,as:q.awayScore,sc:q.scoringPlay,val:q.scoreValue,shot:q.shootingPlay,pa:q.pointsAttempted,x:q.coordinate&&q.coordinate.x>-100?q.coordinate.x:null,y:q.coordinate&&q.coordinate.y>-100?q.coordinate.y:null}));
   /* ESPN's running score on each play sometimes drifts (Oct 26 vs MIN: it ended 125-124 MIN, the real final was 127-125 CLE).
@@ -137,7 +137,7 @@ function deriveCore(D,plays,F){
     if(/Turnover|^Traveling|Double Dribble|Discontinued? Dribble|Offensive Goaltending|Palming|Backcourt|3-Second Violation$|Inbound/.test(ty)&&!/Kicked|Defensive/.test(ty)){
       const t=p.team||teamOf(a);if(T[t]){TT(t).forEach(x=>x.to++);if(inF&&a&&B[a]&&teamOf(a)===t)(B[a].to++,pbA(a,'to',1));offStat(t,'to');src[opp(t)]='to';newPoss(opp(t),p.t,b&&/steals/.test(p.text)?'stl':'to',inF)}
       if(b&&/steals/.test(p.text)&&B[b]){if(inF)(B[b].stl++,pbA(b,'stl',1));TT(teamOf(b)).forEach(x=>x.stl++)}}
-    else if(/Foul/.test(ty)&&!/Technical|Double Technical/.test(ty)&&a&&B[a]){if(inF)B[a].pf++;pfAll[a]=(pfAll[a]||0)+1;TT(teamOf(a)).forEach(x=>x.pf++);
+    else if(/Foul|Offensive Charge/.test(ty)&&!/Technical|Double Technical/.test(ty)&&a&&B[a]){/* Nov 2: charges are personal fouls too */if(inF)B[a].pf++;pfAll[a]=(pfAll[a]||0)+1;TT(teamOf(a)).forEach(x=>x.pf++);
       if(!/Offensive/.test(ty)){const k=p.per,tt=teamOf(a);tf[k]=tf[k]||{};const q=tf[k][tt]=tf[k][tt]||{n:0,l2:0};q.n++;if(pstart(k)+plen(k)-p.t<=120)q.l2++}}
     if(p.sc){const m=D.focus.ha==='home'?p.hs-p.as:p.as-p.hs;mgNow=m;margin.push([p.t,m]);const sg=Math.sign(m);if(sg===0&&prevSign!==0)ties++;if(sg&&prevSign&&sg!==prevSign)lc++;if(sg)prevSign=sg;
       if(m>lead[D.focus.id])lead[D.focus.id]=m;if(-m>lead[D.other.id])lead[D.other.id]=-m}
@@ -202,7 +202,69 @@ function highsL(cur,prior,H){
 /* one game's line for highsL, from a derived game */
 function highLine(D,R){const t=R.T[D.focus.id];const p={};D.roster[D.focus.id].forEach(id=>{const b=R.B[id];if(!(b.min>0))return;p[id]={n:D.P[id].name,pts:b.pts,reb:b.oreb+b.dreb,ast:b.ast,fgm:b.fgm,tpm:b.tpm,stl:b.stl,blk:b.blk}});
   return {et:new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(new Date(D.date)),opp:D.other.abbr,t:{pts:t.pts,reb:t.oreb+t.dreb,ast:t.ast,fgm:t.fgm,tpm:t.tpm,stl:t.stl,blk:t.blk},p}}
-if(typeof module!=='undefined')module.exports={highsL,highLine,unpackSlim,prep,deriveCore,factors,poss,ZN,PT,LG,normName,pname,fmtMin,inPer,pstart,plen};
+if(typeof module!=='undefined')module.exports={fromNBA,nbaClock,highsL,highLine,unpackSlim,prep,deriveCore,factors,poss,ZN,PT,LG,normName,pname,fmtMin,inPer,pstart,plen};
+
+/* ---------- NBA.com live feed (Nov 2) ----------
+   The NBA's own JSON (nba-prod-us-east-1-mediaops-stats.s3.amazonaws.com/NBA/liveData/{boxscore,playbyplay}/..._{gameId}.json),
+   fetched through our worker (/nba) because the bucket sends no CORS headers. fromNBA turns a box score + play-by-play
+   into the same shape as ESPN's summary, so prep() and deriveCore() work unchanged. Players keep their NBA person IDs
+   (the league's own index, shared with every other NBA dataset); teams keep the ESPN team IDs the page already uses. */
+const NBA_TEAM={ATL:1,BOS:2,BKN:17,CHA:30,CHI:4,CLE:5,DAL:6,DEN:7,DET:8,GSW:9,HOU:10,IND:11,LAC:12,LAL:13,MEM:29,MIA:14,MIL:15,MIN:16,NOP:3,NYK:18,OKC:25,ORL:19,PHI:20,PHX:21,POR:22,SAC:23,SAS:24,TOR:28,UTA:26,WAS:27};
+const NBA_ESPNAB={GSW:'GS',NOP:'NO',NYK:'NY',SAS:'SA',UTA:'UTAH',WAS:'WSH'};
+function nbaClock(iso){const m=/PT(\d+)M([\d.]+)S/.exec(iso||'');if(!m)return '0:00';const mi=+m[1],se=+m[2];return mi?mi+':'+String(Math.floor(se)).padStart(2,'0'):(se%1?se.toFixed(1):String(Math.floor(se)))}
+const nbaTitle=s=>String(s||'').replace(/-/g,' ').split(' ').filter(Boolean).map(w=>w[0].toUpperCase()+w.slice(1).toLowerCase()).join(' ');
+function nbaShotType(a){const sub=String(a.subType||'').toLowerCase(),d=String(a.descriptor||'').toLowerCase();
+  if(a.actionType==='heave')return 'Heave Jump Shot';
+  const base=/dunk/.test(sub)?'Dunk Shot':/layup/.test(sub)?'Layup Shot':/hook/.test(sub)?'Hook Shot':'Jump Shot';
+  if(/\btip\b/.test(d)&&base!=='Dunk Shot')return 'Tip Shot';
+  const W={pullup:'Pullup','pull up':'Pullup','step back':'Step Back',stepback:'Step Back',fadeaway:'Fade Away','fade away':'Fade Away',turnaround:'Turnaround',driving:'Driving',cutting:'Cutting','alley oop':'Alley Oop','alley-oop':'Alley Oop',putback:'Putback',running:'Running',floating:'Floating','finger roll':'Finger Roll',reverse:'Reverse',bank:'Bank',tip:'Tip'};
+  const mods=[];Object.keys(W).forEach(k=>{if(d.includes(k)&&!mods.includes(W[k]))mods.push(W[k])});
+  return mods.concat(base).join(' ')}
+function fromNBA(box,pbp,extra){extra=extra||{};const g=box.game,acts=((pbp&&pbp.game&&pbp.game.actions)||[]).slice().sort((x,y)=>x.period-y.period||x.orderNumber-y.orderNumber);
+  const tid=t=>String(NBA_TEAM[t.teamTricode]||t.teamId);const H=g.homeTeam,A=g.awayTeam;const byNba={[H.teamId]:tid(H),[A.teamId]:tid(A)};
+  const name={},team={};[H,A].forEach(t=>(t.players||[]).forEach(p=>{name[p.personId]=p.name;team[p.personId]=tid(t)}));const N=id=>name[id]||'';
+  const st=g.gameStatus===3?'post':g.gameStatus===2?'in':'pre';const per=g.period||1,clk=nbaClock(g.gameClock);
+  const comp=(t,ha)=>({id:tid(t),homeAway:ha,score:String(t.score||0),winner:st==='post'?(t.score>(ha==='home'?A:H).score):undefined,linescores:(t.periods||[]).map(q=>({displayValue:String(q.score)})),record:extra[t.teamTricode]?[{summary:extra[t.teamTricode]}]:[],
+    team:{id:tid(t),abbreviation:NBA_ESPNAB[t.teamTricode]||t.teamTricode,shortDisplayName:t.teamName,name:t.teamName,location:t.teamCity,logos:[{href:'https://cdn.nba.com/logos/nba/'+t.teamId+'/primary/L/logo.svg'}]}});
+  const ordP=n=>n<=4?['1st','2nd','3rd','4th'][n-1]:(n===5?'OT':(n-4)+'OT');
+  const header={competitions:[{date:g.gameTimeUTC,competitors:[comp(H,'home'),comp(A,'away')],broadcasts:[],
+    status:{period:per,displayClock:clk,type:{state:st,completed:st==='post',shortDetail:st==='post'?'Final'+(per>4?'/'+ordP(per):''):st==='in'?(g.gameStatusText||clk+' - '+ordP(per)):(g.gameStatusText||'')}}}]};
+  const mins=iso=>{const m=/PT(\d+)M([\d.]+)S/.exec(iso||'');return m?String(Math.round(+m[1]+ +m[2]/60)):'0'};
+  const players=[H,A].map(t=>({team:{id:tid(t)},statistics:[{names:['MIN','PTS','FG','3PT','FT','REB','AST','TO','STL','BLK','OREB','DREB','PF','+/-'],athletes:(t.players||[]).map(p=>{const s=p.statistics||{};const dnp=p.played!=='1';
+    return {athlete:{id:String(p.personId),displayName:p.name,shortName:p.nameI||p.name,position:{abbreviation:p.position||''},jersey:p.jerseyNum,nba:1},starter:p.starter==='1',didNotPlay:dnp,reason:dnp?(p.notPlayingReason||p.notPlayingDescription||(p.status==='INACTIVE'?'Inactive':'DNP')):'',stats:dnp?[]:[mins(s.minutes),String(s.points||0),(s.fieldGoalsMade||0)+'-'+(s.fieldGoalsAttempted||0),(s.threePointersMade||0)+'-'+(s.threePointersAttempted||0),(s.freeThrowsMade||0)+'-'+(s.freeThrowsAttempted||0),String(s.reboundsTotal||0),String(s.assists||0),String(s.turnovers||0),String(s.steals||0),String(s.blocks||0),String(s.reboundsOffensive||0),String(s.reboundsDefensive||0),String(s.foulsPersonal||0),(s.plusMinusPoints>0?'+':'')+Math.round(s.plusMinusPoints||0)]}})}]}));
+  const tstat=t=>{const s=t.statistics||{};return [['turnoverPoints',s.pointsFromTurnovers],['fastBreakPoints',s.pointsFastBreak],['pointsInPaint',s.pointsInThePaint]].map(([n,v])=>({name:n,displayValue:v==null?'':String(v)}))};
+  const boxscore={players,teams:[{team:{id:tid(H)},statistics:tstat(H)},{team:{id:tid(A)},statistics:tstat(A)}]};
+  /* plays: one ESPN-style play per NBA action; steals and blocks ride on the turnover / missed shot (as ESPN writes them), substitutions pair each "out" with an "in" at the same moment */
+  const plays=[];let hs=0,as=0;const mk=(a,type,text,ids,o)=>{const sh=+a.scoreHome||0,sa=+a.scoreAway||0;if(sh>hs)hs=sh;if(sa>as)as=sa;
+    plays.push(Object.assign({id:'n'+a.actionNumber+(o&&o.k||''),type:{text:type},text,period:{number:a.period},clock:{displayValue:nbaClock(a.clock)},team:a.teamId&&byNba[a.teamId]?{id:byNba[a.teamId]}:undefined,participants:ids.filter(x=>x).map(x=>({athlete:{id:String(x)}})),homeScore:hs,awayScore:as,scoringPlay:false,scoreValue:0,shootingPlay:false},o||{}))};
+  const subQ={};const flushSubs=()=>{Object.values(subQ).forEach(q=>{q.out.forEach((o,i)=>{const n=q.in[i];if(n)mk(n,'Substitution',N(n.personId)+' enters the game for '+N(o.personId),[n.personId,o.personId],{k:'s'+i,team:{id:byNba[n.teamId]}})})});for(const k in subQ)delete subQ[k]};
+  let subKey=null;
+  for(const a of acts){const t=a.actionType,sub=String(a.subType||'').toLowerCase(),desc=String(a.descriptor||'').toLowerCase();
+    if(t==='substitution'){const k=a.period+'|'+a.clock+'|'+a.teamId;if(subKey&&!subQ[k])flushSubs();subKey=k;const q=subQ[k]=subQ[k]||{out:[],in:[]};(sub==='out'?q.out:q.in).push(a);continue}
+    if(Object.keys(subQ).length)flushSubs();subKey=null;
+    if(t==='2pt'||t==='3pt'||t==='heave'){const three=t==='3pt'||(t==='heave'&&a.shotDistance>=22),v=three?3:2,made=a.shotResult==='Made',ty=nbaShotType(a);
+      const dist=a.shotDistance!=null?Math.round(a.shotDistance)+'-foot ':'';const ast=made&&a.assistPersonId,blk=!made&&a.blockPersonId;
+      const text=blk?N(a.blockPersonId)+' blocks '+N(a.personId)+"'s "+dist+(three?'three point ':'')+ty.toLowerCase():N(a.personId)+(made?' makes ':' misses ')+dist+(three?'three point ':'two point ')+ty.toLowerCase()+(ast?' ('+N(a.assistPersonId)+' assists)':'');
+      const c=a.xLegacy!=null&&a.yLegacy!=null?{x:Math.round((25+a.xLegacy/10)*10)/10,y:Math.max(0,Math.round(a.yLegacy)/10)}:undefined;
+      mk(a,ty,text,[a.personId,ast?a.assistPersonId:blk?a.blockPersonId:null],{scoringPlay:made,scoreValue:made?v:0,shootingPlay:true,pointsAttempted:v,coordinate:c});continue}
+    if(t==='freethrow'){const made=a.shotResult==='Made';const m=/(\d) of (\d)/.exec(sub);const tech=/technical/.test(sub),flag=/flagrant/.test(sub);
+      const ty=tech?'Free Throw - Technical':'Free Throw - '+(flag?'Flagrant ':'')+(m?m[1]+' of '+m[2]:'1 of 1');
+      mk(a,ty,N(a.personId)+(made?' makes ':' misses ')+'free throw'+(m?' '+m[1]+' of '+m[2]:''),[a.personId],{scoringPlay:made,scoreValue:made?1:0,shootingPlay:true,pointsAttempted:1});continue}
+    if(t==='rebound'){const off=sub==='offensive';const who=a.personId&&name[a.personId]?a.personId:null;
+      mk(a,off?'Offensive Rebound':'Defensive Rebound',(who?N(who):(a.teamTricode||'Team'))+(off?' offensive':' defensive')+(who?' rebound':' team rebound'),[who]);continue}
+    if(t==='turnover'){const w=sub==='traveling'?'Traveling':sub==='shot clock'?'Shot Clock Turnover':sub==='offensive foul'?'Offensive Foul Turnover':sub==='bad pass'?'Bad Pass Turnover':sub==='lost ball'?'Lost Ball Turnover':sub==='out-of-bounds'?'Out of Bounds - '+(desc?nbaTitle(desc):'Lost Ball')+' Turnover':nbaTitle(sub||'turnover')+(/turnover/.test(sub)?'':' Turnover');
+      const who=a.personId&&name[a.personId]?a.personId:null;mk(a,w,(who?N(who):(a.teamTricode||'Team'))+' '+(sub||'turnover')+(a.stealPersonId?' ('+N(a.stealPersonId)+' steals)':''),[who,a.stealPersonId]);continue}
+    if(t==='foul'){const ty=sub==='offensive'?(desc==='charge'?'Offensive Charge':'Offensive Foul'):sub==='technical'?'Technical Foul':sub==='double technical'?'Double Technical Foul':/flagrant/.test(sub)?'Flagrant Foul Type '+((/2/.test(sub))?2:1):sub==='loose ball'?'Loose Ball Foul':desc==='shooting'?'Shooting Foul':desc==='take'?'Personal Take Foul':desc==='transition take'?'Transition Take Foul':'Personal Foul';
+      mk(a,ty,(a.personId&&name[a.personId]?N(a.personId):(a.teamTricode||'Team'))+' '+ty.toLowerCase()+(a.foulDrawnPersonId?' ('+N(a.foulDrawnPersonId)+' draws the foul)':''),[a.personId&&name[a.personId]?a.personId:null,a.foulDrawnPersonId]);continue}
+    if(t==='jumpball'){mk(a,'Jumpball',N(a.jumpBallWonPersonId)+' vs. '+N(a.jumpBallLostPersonId)+' ('+N(a.jumpBallRecoverdPersonId)+' gains possession)',[a.jumpBallWonPersonId,a.jumpBallLostPersonId,a.jumpBallRecoverdPersonId]);continue}
+    if(t==='timeout'){mk(a,sub==='official'?'Official Timeout':'Full Timeout',(a.teamTricode||'Official')+' timeout',[]);continue}
+    if(t==='violation'){mk(a,nbaTitle(sub)+(sub==='kicked ball'?'':' Violation'),(a.personId&&name[a.personId]?N(a.personId)+' ':'')+sub+' violation',[a.personId&&name[a.personId]?a.personId:null]);continue}
+    if(t==='instantreplay'){mk(a,/overturn/.test(desc)?"Coach's Challenge (Overturned)":/challenge/.test(sub)?'Challenge':'Review',a.description||'Review',[]);continue}
+    if(t==='period'&&sub==='end'){mk(a,'End Period','End of '+(a.period>4?'OT'+(a.period-4):'Q'+a.period),[],{clock:{displayValue:'0:00'}});continue}
+    if(t==='game'&&sub==='end'){const l=plays[plays.length-1];if(l&&l.type.text==='End Period')l.type.text='End Game';else mk(a,'End Game','End of game',[],{clock:{displayValue:'0:00'}});continue}
+  }
+  if(Object.keys(subQ).length)flushSubs();
+  return {src:'NBA',nbaId:g.gameId,header,boxscore,plays,winprobability:[],gameInfo:{venue:{fullName:(g.arena&&g.arena.arenaName)||''}}}}
 
 /* ---------- archive helpers (used by the nightly job and the page) ---------- */
 function slimSummary(d){

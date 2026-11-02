@@ -760,7 +760,28 @@ function applyOpp(D){const c=D&&D.other&&D.other.abbr&&D.other.abbr!=='OPP'?oppC
 function setData(d,feed){S.data=prep(d);S.data.noSubs=!!d.noSubs;S.data.focus.c='var(--cf)';S.data.other.c='var(--co)';applyOpp(S.data);S.fetched=Date.now();S.err=null;S.feed=feed}
 /* live games: ESPN first. After two misses in a row, switch to the backup feed (/pbp: StatMuse, then CBS, then Yahoo),
    and check ESPN again every fourth refresh so the page returns to it once it's back. */
+/* Nov 2: the NBA's own feed first (box score + play-by-play through our /nba worker, the league's own player IDs), with ESPN's
+   win probability laid over it by game clock. If the NBA's files aren't up yet (before tip) or anything fails, ESPN as before. */
+const NBA_TRI={GS:'GSW',NO:'NOP',NY:'NYK',SA:'SAS',UTAH:'UTA',WSH:'WAS'};
+function nbaKey(espn){const D0=S.data;const d=S.bk||(D0&&etDate(D0.date))||(espn&&etDate(espn.header.competitions[0].date));if(!d)return null;
+  const ab=(D0&&D0.focus.abbr)||(espn&&(espn.header.competitions[0].competitors.find(c=>c.id===CLE)||espn.header.competitions[0].competitors[0]).team.abbreviation)||'CLE';return '/nba?d='+d+'&t='+(NBA_TRI[ab]||ab)}
+function nbaBuild(j,espn){if(!j||!j.box||!j.pbp)return null;const out=fromNBA(j.box,j.pbp);
+  if(!out.plays.length&&out.header.competitions[0].status.type.state!=='pre')return null;
+  /* ESPN's win probability, matched to the NBA plays by game clock */
+  if(espn&&espn.winprobability&&espn.winprobability.length){const E=unpackSlim(espn);const byId={};(E.plays||[]).forEach(q=>byId[q.id]=gt(q.period.number,q.clock.displayValue));
+    const W=(E.winprobability||[]).map(w=>[byId[w.playId],w.homeWinPercentage]).filter(w=>w[0]!=null).sort((x,y)=>x[0]-y[0]);let k=0,cur=null;
+    out.winprobability=out.plays.map(q=>{const t=gt(q.period.number,q.clock.displayValue);while(k<W.length&&W[k][0]<=t){cur=W[k][1];k++}return cur==null?null:{playId:q.id,homeWinPercentage:cur}}).filter(Boolean)}
+  return out}
 async function fetchGame(){
+  if(!S.src&&!S.replay&&!S.bk&&S.ev!=='b'){/* NBA first, ESPN alongside for win probability and as the fallback */
+    const k0=nbaKey(null);const [e,n]=await Promise.allSettled([getJSON(ESPN+'summary?event='+S.ev),k0?getJSON(k0):Promise.resolve(null)]);
+    const espn=e.status==='fulfilled'?e.value:null;let raw=n.status==='fulfilled'?n.value:null;
+    if(!raw&&!k0&&espn){const k1=nbaKey(espn);if(k1){try{raw=await getJSON(k1)}catch(x){raw=null}}}
+    let nb=null;try{nb=nbaBuild(raw,espn)}catch(x){nb=null}
+    if(nb){setData(nb,null);S.srcNBA=true;S.fail=0;return}
+    if(espn){setData(espn,null);S.srcNBA=false;S.fail=0;return}
+    S.fail=(S.fail||0)+1;if(S.fail<2){S.err='Could not load the game. Retrying.';return}S.bk=etDate(S.data&&S.data.date);S.bkN=0}
+  if(S.bk&&!S.src&&!S.replay){/* backup mode: the NBA's feed before the other sites */const k=nbaKey(null);if(k){try{const nb=nbaBuild(await getJSON(k),null);if(nb){setData(nb,null);S.srcNBA=true;return}}catch(x){}}}
   if(S.src||S.replay){try{setData(await getJSON(S.src?'/live-archive/'+S.src+'/'+S.ev+'.json':ESPN+'summary?event='+S.ev),null)}catch(e){S.err='Could not load the game. Retrying.'}return}
   if(!S.bk){try{setData(await getJSON(ESPN+'summary?event='+S.ev),null);S.fail=0;return}catch(e){S.fail=(S.fail||0)+1;if(S.fail<2){S.err='Could not load the game. Retrying.';return}S.bk=etDate(S.data&&S.data.date);S.bkN=0}}
   else if(S.ev!=='b'&&++S.bkN%4===0){try{setData(await getJSON(ESPN+'summary?event='+S.ev),null);S.bk=null;S.fail=0;return}catch(e){}}
@@ -1671,7 +1692,7 @@ function brandBar(x,W,H,note){const bh=W>1500?100:90;x.fillStyle=WINE;x.fillRect
 function cStat(x,v,l,X0,Y0,sz=96,c='#101419'){num(x,v,X0,Y0,sz,c);lbl(x,l,X0+4,Y0+44,32)}
 const loadImg=src=>new Promise(r=>{if(!src)return r(null);const im=new Image();if(/^https?:/.test(src))im.crossOrigin='anonymous';im.onload=()=>r(im);im.onerror=()=>r(null);im.src=src});
 /* headshots: our own copies for Cavs players, ESPN's image server for everyone else (by ESPN player id); a failed load falls back to initials */
-const hsUrl=(D,id)=>{const p=D.P[id];const k=p&&HS[normName(p.name)];return k?'/img/h/'+k+'.png':(p&&/^\d+$/.test(id)?'https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/'+id+'.png&w=240&h=175':null)};
+const hsUrl=(D,id)=>{const p=D.P[id];const k=p&&HS[normName(p.name)];return k?'/img/h/'+k+'.png':p&&p.nba?'https://cdn.nba.com/headshots/nba/latest/260x190/'+id+'.png':(p&&/^\d+$/.test(id)?'https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/'+id+'.png&w=240&h=175':null)};
 function head2(x,img,cx,cy,r,ring='#F2B231',label){x.save();x.beginPath();x.arc(cx,cy,r,0,7);x.closePath();x.fillStyle='#e7e1d8';x.fill();x.clip();
   if(img){const ar=img.width/img.height,h=r*2.15,w=h*ar;x.drawImage(img,cx-w/2,cy-r*1.02,w,h)}else if(label){x.fillStyle='#860038';x.font=`800 ${Math.round(r*.8)}px "Saira Condensed"`;const t=label;x.fillText(t,cx-x.measureText(t).width/2,cy+r*.28)}
   x.restore()}
