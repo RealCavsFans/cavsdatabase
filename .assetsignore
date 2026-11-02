@@ -4,3 +4,10 @@ node_modules
 worker
 wrangler.jsonc
 .assetsignore
+# Nov 1: build scripts and the jobs' internal data aren't part of the website (the repo itself stays public)
+scripts
+data/*
+!data/last-time.json
+MANUAL.md
+README.md
+.gitignore
