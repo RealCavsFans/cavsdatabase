@@ -18,7 +18,7 @@ const out = { articles: [], podcasts: [], videos: [], highlights: [] };
 const status = [];
 const YT = process.env.YT_API_KEY;
 const UA = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36' };
-const get = async (u, accept) => { const r = await fetch(u, { headers: { ...UA, ...(accept ? { Accept: accept } : {}) }, signal: AbortSignal.timeout(20000) }); if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + u); return r; };
+const get = async (u, accept) => { const r = await fetch(u, { headers: { ...UA, ...(accept ? { Accept: accept } : {}) }, signal: AbortSignal.timeout(20000) }); if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + String(u).replace(/([?&](?:key|token|api_key)=)[^&]+/gi, '$1…')); return r; };  // Nov 2: never write an API key into news-status.txt (it's public)
 // a YouTube playlist (a channel's uploads are playlist UU + channel id minus "UC")
 async function youtube(channel, playlist, pages = 1) {
   const pl = playlist || 'UU' + channel.slice(2);
