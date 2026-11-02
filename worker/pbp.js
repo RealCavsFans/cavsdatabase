@@ -33,7 +33,8 @@ const SRC = {
       // Nov 2: StatMuse writes dates without leading zeros (11-2-2026), so build the date the same way
       const md = (+d.slice(4, 6)) + '-' + (+d.slice(6)) + '-' + d.slice(0, 4); const yr = +d.slice(0, 4) + (+d.slice(4, 6) >= 8 ? 1 : 0);
       const SU = 'https://www.statmuse.com/nba/team/cleveland-cavaliers-42/schedule/' + yr;
-      const find = h => [...h.matchAll(new RegExp('/nba/game/(' + md + '-([a-z]+)-at-([a-z]+)-\\d+)', 'g'))].filter(m => teamCode(m[2]) === g.away && teamCode(m[3]) === g.home).map(m => m[1])[0];
+      const find = h => [...h.matchAll(new RegExp('(?:^|[^0-9-])(' + md + '-([a-z]+)-at-([a-z]+)-\\d+)', 'g'))]   /* the game id can sit in a link or in the page's embedded data, so match it anywhere */
+        .filter(m => teamCode(m[2]) === g.away && teamCode(m[3]) === g.home).map(m => m[1])[0];
       let sched = await get(SU, 21600); slug = find(sched);
       if (!slug) { sched = await get(SU); slug = find(sched); }   // a cached copy from before the game was listed: read it fresh once
       if (!slug) throw new Error('statmuse: game not found (' + md + ', page ' + sched.length + ' bytes, ' + (sched.match(/\/nba\/game\//g) || []).length + ' game links, first ' + ((sched.match(/\/nba\/game\/[^"]{0,40}/) || [])[0] || '-') + ((sched.match(/<title>([^<]{0,60})/) || [])[1] ? ', "' + sched.match(/<title>([^<]{0,60})/)[1] + '"' : '') + ')');
