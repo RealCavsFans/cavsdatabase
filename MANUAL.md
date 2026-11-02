@@ -9,13 +9,15 @@ These are free GitHub jobs plus Cloudflare. They keep going whatever happens to 
 - Box scores, news, videos, headshots and the site's page copies (every 30 minutes)
 - Season team stats: standings, records, scores, net rating, last 14 days (overnight)
 - Live game archive and the "game in numbers" recap (every 30 minutes on game nights)
-- Scouting report for the next opponent, and live-page baselines (daily)
+- Scouting report for the next opponent, and live-page baselines (daily; the scouting report reruns in the afternoon if a source was late)
+- Game-day injury statuses for both teams, from the league's official injury report (hourly on game days)
+- Box score accuracy check against Basketball Reference (every morning)
 - The live page itself (it runs in each visitor's browser)
 - The newsletter and game alerts (when they're turned on)
 
 ## What freezes without the daily update
 
-The things a person (or Claude) types in: injuries, transactions, standings ranks and the NBA Cup, TV listings, Charge stats, key dates, and cap or contract changes. Nothing breaks. These just stop changing until someone edits them.
+The things a person (or Claude) types in: injury details and timelines (game-day statuses still update from the official report), transactions, standings ranks and the NBA Cup, TV listings, Charge stats, key dates, and cap or contract changes. Nothing breaks. These just stop changing until someone edits them.
 
 ## How to edit by hand
 
@@ -24,7 +26,7 @@ The things a person (or Claude) types in: injuries, transactions, standings rank
 3. Press Ctrl+F (Cmd+F on a Mac) and search for the name in the table below, for example `const INJURIES=`.
 4. Change the line. Keep the same punctuation pattern as the lines around it: quotes, commas and square brackets.
 5. Click "Commit changes", then commit straight to `main`.
-6. The site updates within about 30 minutes. The next 30-minute job rebuilds the page copies and Cloudflare publishes them.
+6. The site updates within a few minutes: the edit starts a page rebuild, which publishes to the `deploy` branch, and Cloudflare serves that branch.
 
 If a commit breaks something, the 30-minute job's safety check refuses to publish the broken version. To undo a commit, open it from the repo's commit list and click "Revert".
 
@@ -69,7 +71,7 @@ Every job that reads ESPN keeps the last good data when a fetch fails, so pages 
 
 ## Health check
 
-A daily check (`scripts/health.mjs`) flags anything stale: no box scores after a game, team stats behind, or a failing job. It runs twice: as a Claude scheduled task, and as a free GitHub job (`.github/workflows/health.yml`) that opens a GitHub issue called "Site health" when something is wrong. GitHub emails you about the issue, so the warning reaches you even if Claude is down. The issue closes itself once things are healthy again.
+A daily check (`scripts/health.mjs`) flags anything stale: no box scores after a game, team stats behind, or a failing job. It runs as a free GitHub job (`.github/workflows/health.yml`, about 5:15 a.m. Eastern; the Claude daily update also reads its result) that opens a GitHub issue called "Site health" when something is wrong. GitHub emails you about the issue, so the warning reaches you even if Claude is down. The issue closes itself once things are healthy again.
 
 **Injury "Typical return" fallback.** When no peer-reviewed NBA study fits, the injury dropdown and share card use Hashtag Basketball's NBA injury log (hashtagbasketball.com/nba-injury) by injury type, labeled "not a peer-reviewed study". The type is matched from the injury text (e.g. "Ankle (sprain)" → sprained ankle); set `hb:'<type>'` in INJ_CTX to force one.
 
@@ -79,8 +81,11 @@ A daily check (`scripts/health.mjs`) flags anything stale: no box scores after a
 
 **Page rebuilds.** Any push that changes `index.html`, `live.src.html` or the build scripts starts the page rebuild by itself, so there's no need to start it by hand after an edit (extra starts queue up and cancel each other). The rebuild is skipped when nothing but timestamps changed, and runs at least every 6 hours so the baked-in next-game text stays current. The 30-minute job runs hourly from about 3 to 7 a.m. Eastern.
 
-**Commits from the 30-minute job.** `scripts/changed.mjs` skips a scheduled commit when only timestamps or rebuilt page copies changed; pages still refresh at least every 6 hours.
+**Commits from the 30-minute job.** `scripts/changed.mjs` skips a scheduled commit when only timestamps changed. The job commits data only; built pages never go to `main`.
 
-**Security.** GitHub Actions are pinned to exact commits (checkout v5.1.0, setup-node v5.0.0); to update, swap in the new tag's commit from `git ls-remote https://github.com/actions/<name> refs/tags/<tag>`. The daily health check also runs `scripts/site-check.mjs`, which compares the live front page and live game page (and the script files they load) with the repo and flags scripts from unexpected sites; a mismatch opens the "Site health" issue. Security headers are in `_headers`.
+**Security.** GitHub Actions are pinned to exact commits (checkout v5.1.0, setup-node v5.0.0); to update, swap in the new tag's commit from `git ls-remote https://github.com/actions/<name> refs/tags/<tag>`. The daily health check also confirms cavsdatabase.com answers and serves the newest build. Security headers are in `_headers`.
 
-- Oct 27: the four morning data jobs (live page baselines, scouting report, Basketball Reference ids, games missed to injury) run together in `.github/workflows/morning.yml` at 6:45 a.m. Eastern. The old workflow files stay for running by hand and for the afternoon/evening runs.
+- Oct 27: the four morning data jobs (live page baselines, scouting report, Basketball Reference ids, games missed to injury) run together in `.github/workflows/morning.yml` at 6:45 a.m. Eastern. To rerun any of them, run that whole job by hand (Nov 1: the separate by-hand copies were removed).
+- Nov 1: **Where the site comes from.** Cloudflare serves the `deploy` branch, not `main`. `main` holds the source (`index.html`, `live.src.html`, scripts) and data; the built pages, page copies and generated share images exist only on `deploy`, which `scripts/publish-deploy.mjs` replaces with one fresh commit each time (so old builds never pile up). The 30-minute job publishes after each build; `publish.yml` puts other data saves and hand edits on the site within a couple of minutes without a rebuild. Edit files on `main` as before; never edit `deploy` by hand. If `deploy` were ever lost, run "Update videos, box scores and news" by hand: it rebuilds everything and recreates it.
+- Nov 1: **Official injury report.** `scripts/injury-report.py` (`injury-report.yml`) reads the league's injury report PDF for the next Cavs game and saves `pdata/injury-report.json`; the home injury list and the game card show it over `INJURIES`/`OPP_INJ` while it's for the upcoming game. `INJURIES`, `INJ_CTX` and `OPP_INJ` stay hand-kept (details, timelines, and the fallback). Run it any time with "Official NBA injury report" → Run workflow → "Check now".
+- Nov 1: **Box score accuracy check.** `scripts/bbr-check.mjs` (`bbr-check.yml`, 3:41 a.m. Eastern) compares each finished game's box score with Basketball Reference (every player's points, rebounds, assists, shooting and minutes, plus the final score) and the health check reports any difference.
