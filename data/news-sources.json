@@ -25,6 +25,16 @@
    "url": "https://www.fearthesword.com/rss/current.xml"
   },
   {
+   "name": "The Athletic",
+   "type": "article",
+   "url": "https://www.nytimes.com/athletic/rss/nba/cavaliers/"
+  },
+  {
+   "name": "The Inside Shot",
+   "type": "article",
+   "google": "site:theinsideshot.substack.com"
+  },
+  {
    "name": "Wine and Gold Talk",
    "type": "podcast",
    "apple": "1339173433"
