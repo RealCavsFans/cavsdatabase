@@ -27,6 +27,8 @@ const EXC = grab('EXC'), PICKS = grab('PICKS'), TX = grab('TX'), SCORES = grab('
 let PJ = {}; try { PJ = JSON.parse(await readFile(new URL('pdata/players.json', root), 'utf8')); } catch {}
 let LG = {}; try { LG = JSON.parse(await readFile(new URL('pdata/league.json', root), 'utf8')); } catch {}
 const LGP = Object.values(LG.players || {});   // this season, from the 30-minute ESPN box score job (updated right after each game)
+/* Nov 2: the official NBA injury report (scripts/injury-report.py) is the first source for who's out on the next game's card */
+let IR = {}; try { IR = JSON.parse(await readFile(new URL('pdata/injury-report.json', root), 'utf8')); } catch {}
 let state = {}; try { state = JSON.parse(await readFile(new URL('og/live.json', root), 'utf8')); } catch {}
 
 const slug = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -105,9 +107,19 @@ SCHEDULE.forEach((g, i) => {
     const R = [['Net rating', nt, 1, f1], ['Offense', x => x[4], 1, v => v.toFixed(1)], ['Defense', x => x[5], 0, v => v.toFixed(1)]];
     const cell = (x, f, hi, fm, better) => `<div class="v${better ? ' w' : ''}"><b>${fm(f(x))}</b><small>${ord(rk(f(x), f, hi))}</small></div>`;
     const tape = R.map(([l, f, hi, fm]) => { const cb = hi ? f(a) > f(b) : f(a) < f(b); return cell(a, f, hi, fm, cb) + `<div class="l">${l}</div>` + cell(b, f, hi, fm, !cb && f(a) !== f(b)); }).join('');
-    const outs = L => L.filter(r => /^out$/i.test(r[r.length - 1])).map(r => r[0].split(' ').slice(-1)[0]);
-    const co = outs(INJURIES).concat(INJ_ASSIGN.map(r => r[0].split(' ').slice(-1)[0] + ' (G League)')), oi = OPP_INJ[o], oo = oi && oi.rows ? outs(oi.rows) : null;
-    const inj = `<div class="inj"><span><b>Out · CLE</b> ${co.length ? esc(co.join(', ')) : 'None'}</span>${oo ? `<span><b>Out · ${o}</b> ${oo.length ? esc(oo.join(', ')) : 'None'}</span>` : ''}</div>`;
+    const last = n => n.split(' ').filter(w => !/^(Jr\.|Sr\.|II|III|IV)$/.test(w)).pop();
+    /* "Out until at least Nov 4" and "Out 8–10 weeks" count as out too (the old exact match showed "None" for OKC) */
+    const outs = L => L.filter(r => /^out\b/i.test(r[r.length - 1])).map(r => last(r[0]));
+    const ir = IR.game && IR.game.date === d && IR.game.opp === o ? IR.teams : null;
+    const offi = ab => { const t = ir && ir[ab]; if (!t || !t.filed) return null; return t.rows.filter(r => /^out$/i.test(r[1])).map(r => last(r[0]) + (/^G League/.test(r[2]) ? ' (G League)' : '')); };
+    const oi = OPP_INJ[o];
+    let co = offi('CLE') || outs(INJURIES).concat(INJ_ASSIGN.map(r => last(r[0]) + ' (G League)'));
+    let oo = offi(o) || (oi && oi.rows ? outs(oi.rows) : null);
+    /* G League assignments aren't injuries: name the injured, then a count of G League players, so the line fits */
+    const gl = L => { if (!L) return L; const g = L.filter(x => / \(G League\)$/.test(x)), h = L.filter(x => !/ \(G League\)$/.test(x)); const t = h.join(', ') + (g.length ? (h.length ? ' · ' : '') + g.length + ' in G League' : ''); return t ? [t] : []; };
+    co = gl(co); oo = gl(oo);
+    const long = (co.join(', ') + (oo || []).join(', ')).length > 62;
+    const inj = `<div class="inj${long ? ' sm' : ''}"><span><b>Out · CLE</b> ${co.length ? esc(co.join(', ')) : 'None'}</span>${oo ? `<span><b>Out · ${o}</b> ${oo.length ? esc(oo.join(', ')) : 'None'}</span>` : ''}</div>`;
     rich = `<style>.T .tm{font-size:0!important;line-height:0}.T .tm span{display:none}.T .tm img{width:140px;height:140px;object-fit:contain;display:block}.T .tm.r img{margin-left:auto}.T .tm small{font-size:22px!important;line-height:1.2;margin-top:12px}.T{top:80px!important}.when{top:268px!important}</style><div class="tape"><div class="th">${TS ? '' : '2025–26 · '}NBA rank</div>${tape}</div>${inj}`;
   }
   cards.push([`og/gp/${d}-${o.toLowerCase()}.jpg`, page(`.T{position:absolute;left:64px;right:64px;top:80px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
@@ -117,7 +129,7 @@ SCHEDULE.forEach((g, i) => {
 .tape{position:absolute;left:240px;right:240px;top:322px;display:grid;grid-template-columns:1fr auto 1fr;gap:4px 0;align-items:center}.tape .th{grid-column:1/-1;text-align:center;font:700 15px 'Geist Mono';letter-spacing:2px;color:#F4D6DD;text-transform:uppercase;margin-bottom:4px}
 .tape .v{display:flex;align-items:baseline;gap:10px;justify-content:center}.tape .v b{font:700 30px 'Geist Mono'}.tape .v small{font:700 17px 'Geist Mono';color:#F4D6DD}.tape .v.w b{color:#F2B231}
 .tape .l{font:600 24px 'Saira Condensed';letter-spacing:1.5px;text-transform:uppercase;text-align:center;padding:0 22px;color:#fff;opacity:.9}
-.inj{position:absolute;left:64px;right:64px;top:480px;display:flex;justify-content:center;gap:28px;font:500 19px Archivo;color:#F4D6DD}.inj b{color:#F2B231;font-weight:700;margin-right:4px}.inj .sr{color:#fff;font-weight:700}`,
+.inj{position:absolute;left:64px;right:64px;top:480px;display:flex;justify-content:center;gap:28px;font:500 19px Archivo;color:#F4D6DD}.inj.sm{font-size:16px;gap:22px}.inj b{color:#F2B231;font-weight:700;margin-right:4px}.inj .sr{color:#fff;font-weight:700}`,
     `<div class="k" style="position:absolute;left:64px;top:38px">${kick}</div><div class="T"><div class="tm">${rich.includes('tape') ? `<img src="../img/tl5/cle.png" alt="">` : 'CLE'}<span>Cavaliers</span><small>${rich.includes('tape') && cs === '2026–27' ? cr : cs + ' · ' + cr}</small></div><div class="at">${ha === 'H' ? 'vs' : 'at'}</div><div class="tm r">${rich.includes('tape') ? `<img src="../img/tl5/${LG5[o] || o.toLowerCase()}.png" alt="">` : o}<span>${esc(GNICK[o] || TEAMS[o])}</span><small>${rich.includes('tape') && os === '2026–27' ? orr : os + ' · ' + orr}</small></div></div>
 <div class="when">${dl} <span>·</span> ${hm} PM ET <span>·</span> ${esc(net)}${CAVS_RADIO ? ` <span>·</span> ${esc(CAVS_RADIO.split(' · ')[0])}` : ''}</div>
 ${rich}`,
