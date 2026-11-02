@@ -2102,17 +2102,28 @@ Object.assign(CARDS,{
 /* season cards in the landscape system (Oct 27) */
 Object.assign(SCARDS,{
   season:{label:'Season card',w:LW,h:LH,async draw(x,D,R){const Fo=D.focus,F=Fo.id,[w,l]=sRec(D),g=sGames(D),n=Math.max(1,g.length);const A=R.T[F],B=R.T[D.other.id];
-    lFrame(x);const TX=await lLogoHead(x,Fo);lTitle(x,TX,'Season card · '+sSea(D)+' · '+g.length+' games','The season so far',[[Fo.abbr+' ','800 44px "Saira Condensed"','#fff'],[w+'–'+l,'800 104px "Saira Condensed"','#fff'],['   '+(g.filter(z=>z.ha==='H'||z.home).length?'':'')+'points '+(g.reduce((s2,z)=>s2+z.cle,0)/n).toFixed(1)+' · allowed '+(g.reduce((s2,z)=>s2+z.os,0)/n).toFixed(1)+' a game','600 32px Archivo','#f4d6dd']]);
-    const P=t=>poss({fga:t.fga,oreb:t.oreb,to:t.to,fta:t.fta,np:t.np});const pp=(P(A)+P(B))/2,ortg=P(A)?A.pts/P(A)*100:null,drtg=P(B)?B.pts/P(B)*100:null,net=ortg!=null&&drtg!=null?ortg-drtg:null;const lg=lgAvg();
-    const box=(T)=>[['PTS',(T.pts/n).toFixed(1)],['FG%',lpc(T.fgm,T.fga)],['3P%',lpc(T.tpm,T.tpa),(T.tpm/n).toFixed(1)+' made'],['FT%',lpc(T.ftm,T.fta)],['REB',((T.oreb+T.dreb)/n).toFixed(1)],['AST',(T.ast/n).toFixed(1)],['STL',(T.stl/n).toFixed(1)],['TO',(T.to/n).toFixed(1)]];
-    const own=q=>q.t===F,opp=q=>q.t!==F;
-    lPanel(x,LX1,LY0,LSW,LBH,WINE);lHeadline(x,LX1,LSW,LY0,'OFFENSE','POINTS PER 100',lf1(ortg),null);lBox(x,LX1,LSW,LY0+176,box(A));lZones(x,LX1,LSW,LY0+476,'WHERE THEY SHOT',lZ3(R.shots.filter(own)),null,WINE,true,'');
-    lPanel(x,LX2,LY0,LSW,LBH,GOLD);lHeadline(x,LX2,LSW,LY0,'DEFENSE','ALLOWED PER 100',lf1(drtg),null);lBox(x,LX2,LSW,LY0+176,box(B));lZones(x,LX2,LSW,LY0+476,'SHOTS ALLOWED',lZ3(R.shots.filter(opp)),null,'#5b6470',false,'');
-    lMid(x,LXM,LY0,LMW,500,lsg(net),'NET PER 100',null,null,null);x.fillStyle='#f4d6dd';x.font='600 26px Archivo';ctr(x,'pace '+(A.sec?(pp/A.sec*2880).toFixed(1):'–'),LXM+LMW/2,LY0+320);if(net!=null)lGauge(x,LXM+40,LY0+400,LMW-80,net,0,'even');
-    /* last games: W/L strip */
-    {const X=LXM,Y=LY0+520,W=LMW,H=LBH-520;x.fillStyle='#fff';x.fillRect(X,Y,W,H);x.strokeStyle='#e3e0db';x.lineWidth=2;x.strokeRect(X,Y,W,H);lbl(x,'GAME BY GAME',X+24,Y+44,24,MUT);
-      const G2=g.slice(-10),bw=(W-48)/Math.max(10,G2.length),mx=Math.max(10,...G2.map(z=>Math.abs(z.cle-z.os)));G2.forEach((z,i)=>{const m=z.cle-z.os,h=110*Math.abs(m)/mx,cx=X+24+i*bw;x.fillStyle=m>0?WINE:'#8a929c';x.fillRect(cx+4,m>0?Y+180-h:Y+180,bw-8,h);x.fillStyle=MUT;x.font='600 16px Archivo';ctr(x,(m>0?'W':'L'),cx+bw/2,Y+H-20)});x.fillStyle=INK;x.fillRect(X+24,Y+179,W-48,2)}
-    lNote(x,'Per game unless noted · ratings per 100 possessions, counted play by play');brandBar(x,LW,LH)}},
+    /* Nov 2 mockup: three numbers with NBA ranks, and every game as a bar. Less to read, more to take in at a glance. */
+    lFrame(x);const TX=await lLogoHead(x,Fo);lTitle(x,TX,'Season card · '+sSea(D)+' · '+g.length+' games','The season so far',[[Fo.abbr+' ','800 44px "Saira Condensed"','#fff'],[w+'–'+l,'800 104px "Saira Condensed"','#fff'],['   scored '+(g.reduce((s2,z)=>s2+z.cle,0)/n).toFixed(1)+' · allowed '+(g.reduce((s2,z)=>s2+z.os,0)/n).toFixed(1)+' a game','600 32px Archivo','#f4d6dd']]);
+    const P=t=>poss({fga:t.fga,oreb:t.oreb,to:t.to,fta:t.fta,np:t.np});let ortg=P(A)?A.pts/P(A)*100:null,drtg=P(B)?B.pts/P(B)*100:null;
+    /* ranks: pbpstats' possession counts for all 30 teams (the same counts the Team tab ranks on); the Cavs' own numbers come from there too so value and rank agree */
+    let rk={};try{const pb=await getJSON('/pdata/pbp-teams.json');if(pb&&pb.T&&pb.T.CLE&&pb.season===S.season){const T=pb.T,ab=Object.keys(T).filter(a=>T[a].OffPoss&&T[a].DefPoss);
+      const o=a=>T[a].Points/T[a].OffPoss*100,d=a=>T[a].OpponentPoints/T[a].DefPoss*100,nt=a=>o(a)-d(a);ortg=o('CLE');drtg=d('CLE');
+      const rank=(f,hi)=>1+ab.filter(a=>a!=='CLE'&&(hi?f(a)>f('CLE'):f(a)<f('CLE'))).length;rk={o:rank(o,1),d:rank(d,0),n:rank(nt,1),t:ab.length}}}catch(e){}
+    const net=ortg!=null&&drtg!=null?ortg-drtg:null;
+    const tiles=[['OFFENSE','Points per 100 possessions',lf1(ortg),rk.o,'#fff',INK,WINE],['NET RATING','Per 100 possessions',lsg(net),rk.n,WINE,'#fff',GOLD],['DEFENSE','Allowed per 100 possessions',lf1(drtg),rk.d,'#fff',INK,GOLD]];
+    const TW=(LW-80-2*28)/3,TY=LY0,TH=400;
+    tiles.forEach(([t,sub,v,r,bg,fg,top],i)=>{const X=40+i*(TW+28);x.fillStyle=bg;x.fillRect(X,TY,TW,TH);if(bg==='#fff'){x.strokeStyle='#e3e0db';x.lineWidth=2;x.strokeRect(X,TY,TW,TH)}x.fillStyle=top;x.fillRect(X,TY,TW,8);
+      x.fillStyle=bg==='#fff'?MUT:GOLD;x.font='800 40px "Saira Condensed"';ctr(x,t,X+TW/2,TY+82);x.fillStyle=fg;x.font='800 160px "Saira Condensed"';ctr(x,v,X+TW/2,TY+250);
+      x.fillStyle=bg==='#fff'?MUT:'#f4d6dd';x.font='600 26px Archivo';ctr(x,sub,X+TW/2,TY+296);
+      if(r){const rs=ord2(r)+' in the NBA';x.font='800 38px "Saira Condensed"';const rw=x.measureText(rs).width+40;x.fillStyle=bg==='#fff'?(r<=10?WINE:'#eeebe7'):GOLD;x.fillRect(X+TW/2-rw/2,TY+322,rw,54);x.fillStyle=bg==='#fff'?(r<=10?'#fff':INK):INK;ctr(x,rs,X+TW/2,TY+361)}});
+    /* every game: margin bar, W/L and opponent */
+    {const X=40,Y=TY+TH+28,W=LW-80,H=1240-Y;x.fillStyle='#fff';x.fillRect(X,Y,W,H);x.strokeStyle='#e3e0db';x.lineWidth=2;x.strokeRect(X,Y,W,H);lbl(x,'GAME BY GAME · MARGIN',X+36,Y+56,32,MUT);
+      const G2=g.slice(-20),slots=Math.max(6,G2.length),bw=(W-72)/slots,mid=Y+H/2+10,mx=Math.max(15,...G2.map(z=>Math.abs(z.cle-z.os))),hh=(H/2-80);
+      x.fillStyle='#d9d5ce';x.fillRect(X+36,mid-1,W-72,2);
+      G2.forEach((z,i)=>{const m=z.cle-z.os,h=Math.max(6,hh*Math.abs(m)/mx),cx=X+36+i*bw;x.fillStyle=m>0?WINE:'#8a929c';x.fillRect(cx+10,m>0?mid-h:mid,bw-20,h);
+        x.fillStyle=m>0?WINE:'#5b6470';x.font='700 26px "Geist Mono"';ctr(x,(m>0?'+':'−')+Math.abs(m),cx+bw/2,m>0?mid-h-12:mid+h+32);
+        x.fillStyle=INK;x.font='800 28px "Saira Condensed"';ctr(x,(z.ha==='home'?'':'@')+z.opp,cx+bw/2,Y+H-26)})}
+    lNote(x,'Ratings per 100 possessions'+(rk.t?' · NBA ranks from pbpstats possession counts':'')+' · games from the Cavs’ game archive');brandBar(x,LW,LH)}},
   splayer:{label:'Player season card',pick:'player',w:LW,h:LH,async draw(x,D,R,id){const p=D.P[id],b=R.B[id];if(!p||!b)return;const n=b.gp||0;const F=D.focus.id;
     lFrame(x);const TX=await lHero(x,D,id);
     lTitle(x,TX,[D.focus.abbr,p.pos,sSea(D)+' SEASON',n+' GAME'+(n===1?'':'S')+(b.gs?' · '+b.gs+' START'+(b.gs===1?'':'S'):'')].filter(Boolean).join(' · '),p.name,[[pg(b.pts,n),'800 104px "Saira Condensed"','#fff'],[' PPG  ','800 44px "Saira Condensed"','#fff'],[pg(b.oreb+b.dreb,n),'800 104px "Saira Condensed"','#fff'],[' RPG  ','800 44px "Saira Condensed"','#fff'],[pg(b.ast,n),'800 104px "Saira Condensed"','#fff'],[' APG  ','800 44px "Saira Condensed"','#fff'],['in '+pg(b.min/60,n)+' min','600 32px Archivo','#f4d6dd']]);
