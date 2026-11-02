@@ -1625,6 +1625,7 @@ const TCOL={ATL:'#C8102E',BOS:'#007A33',BKN:'#000000',CHA:'#1D1160',CHI:'#CE1141
 const tcol=t=>TCOL[t.abbr]||(t.abbr==='CLE'?'#860038':'#5b6470');
 const numW=(x,t,X,Y,sz,c,bold)=>{x.fillStyle=c;x.font=`${bold?800:400} ${sz}px "Geist Mono"`;x.fillText(String(t),X,Y)};
 const txt=(x,t,X,Y,sz=34,c='#101419',wt=600)=>{x.fillStyle=c;x.font=`${wt} ${sz}px Archivo`;x.fillText(t,X,Y)};
+const gDay=D=>new Date(D.date).toLocaleDateString('en-US',{month:'short',day:'numeric'});
 const kick=()=>S.per==='all'?'':perLabel(S.per).split(':')[0]+' · ';
 /* canvas helpers for the cards */
 function cMargin(x,R,D,X0,Y0,W,H,hl){const T=pstart(R.maxPer)+plen(R.maxPer);let mx=10;R.margin.forEach(m=>mx=Math.max(mx,Math.abs(m[1])));const X=t=>X0+W*t/T,Y=m=>Y0+H/2-(H/2-6)*m/mx;
@@ -1680,16 +1681,16 @@ const CARDS={
     const top=t=>D.roster[t.id].filter(id=>R.B[id].min>0||R.B[id].pts).sort((a,b)=>R.B[b].pts-R.B[a].pts);
     if(cavsWin){/* the win version: full wine, giant W and a line for the occasion */
       x.fillStyle=WINE;x.fillRect(0,0,1080,1350);x.fillStyle='rgba(255,255,255,.06)';x.font='800 900px "Saira Condensed"';x.fillText('W',560,980);
-      x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText((kick()+F.abbr+' '+(F.ha==='home'?'vs':'at')+' '+O.abbr).toUpperCase(),72,100);
+      x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText((kick()+F.abbr+' '+(F.ha==='home'?'vs':'at')+' '+O.abbr+' · '+gDay(D)).toUpperCase(),72,100);
       x.fillStyle='#fff';x.font='800 150px "Saira Condensed"';x.fillText('CAVS WIN',72,250);
       x.font='700 120px "Geist Mono"';x.fillText(fs+'–'+os,72,390);x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText(('vs the '+O.name+(F.rec?' · '+F.rec:'')).toUpperCase(),72,450);
       const yE=470;
             const ids=top(F).slice(0,3);const imgs=await Promise.all(ids.map(i=>loadImg(hsUrl(D,i))));
       ids.forEach((pid,i)=>{const cx=72+120+i*312,cy=yE+260,bb=R.B[pid];head2(x,imgs[i],cx,cy,130,null,initials(D.P[pid].name));
         x.fillStyle='#fff';x.font='800 40px "Saira Condensed"';ctr(x,D.P[pid].last.toUpperCase(),cx,cy+175);x.font='700 72px "Geist Mono"';ctr(x,String(bb.pts),cx,cy+255);x.fillStyle=GOLD;x.font='800 28px "Saira Condensed"';ctr(x,'POINTS',cx,cy+290);x.fillStyle='rgba(255,255,255,.85)';x.font='600 28px Archivo';ctr(x,`${bb.oreb+bb.dreb} reb · ${bb.ast} ast`,cx,cy+332)});
-      {const wn=wonNames(D,R);x.fillStyle='rgba(0,0,0,.28)';x.fillRect(72,1140,936,80);x.fillStyle=GOLD;x.font='800 30px "Saira Condensed"';x.fillText(`WON ${wn.length} OF THE 4 FACTORS`,96,1172);x.fillStyle='#fff';x.font='600 26px Archivo';x.fillText(wn.length?wn.join(' · '):'Shooting, ball security, rebounding and free throws all went the other way',96,1206)}
+      {const wn=wonNames(D,R);/* Nov 2: lighter box and bigger type so the factor line reads at timeline size */x.fillStyle='rgba(255,255,255,.12)';x.fillRect(72,1118,936,104);x.fillStyle=GOLD;x.fillRect(72,1118,8,104);x.font='800 36px "Saira Condensed"';x.fillText(`WON ${wn.length} OF THE 4 FACTORS`,104,1160);x.fillStyle='#fff';x.font='600 30px Archivo';x.fillText(wn.length?wn.join(' · '):'Shooting, ball security, rebounding and free throws all went the other way',104,1202)}
       footer(x);return}
-    const w=R.as===R.hs?null:(R.as>R.hs?D.away:D.home);frame(x,kick()+atLbl(D),S.state==='post'&&w?w.name+' win':(R.lp?pname(R.lp.per)+' '+R.lp.clock:'Score update'),D,R);
+    const w=R.as===R.hs?null:(R.as>R.hs?D.away:D.home);frame(x,kick()+atLbl(D)+' · '+gDay(D),S.state==='post'&&w?w.name+' win':(R.lp?pname(R.lp.per)+' '+R.lp.clock:'Score update'),D,R);
     lbl(x,'HOW IT PLAYED OUT',72,450,30);cMargin(x,R,D,72,470,936,200);
     [F,O].forEach((t,ti)=>{const X0=72+ti*480;lbl(x,t.name.toUpperCase(),X0,780,34,ti?GREY:WINE);
       top(t).slice(0,2).forEach((id,i)=>{const b=R.B[id],y=850+i*170;num(x,b.pts,X0,y+56,88,ti?GREY:WINE);lbl(x,'PTS',X0+4,y+92,26);const nx=X0+150;txt(x,D.P[id].last,nx,y+20,38,INK,700);
