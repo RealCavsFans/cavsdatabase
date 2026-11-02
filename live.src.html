@@ -451,6 +451,7 @@ h3{font-size:0.875rem}
 .sh-sub{display:flex;gap:6px;padding:8px 16px;background:var(--card);border-bottom:1px solid var(--line)}
 .sh-sub a{flex:none;padding:6px 11px;border:1px solid var(--line);font:700 .8125rem var(--sans);color:var(--fg2);text-decoration:none}.sh-sub a.on{background:#860038;border-color:#860038;color:#fff}
 body{padding-bottom:calc(56px + max(10px,env(safe-area-inset-bottom,0px) - 8px))}
+.sh-bar::after{content:'';position:absolute;left:0;right:0;top:100%;height:160px;background:var(--card,#fff);pointer-events:none}/* Nov 2: in-app browsers */
 .sh-bar{display:grid;position:fixed;left:0;right:0;bottom:0;z-index:95;grid-template-columns:repeat(5,1fr);background:var(--card);border-top:1px solid var(--line);padding:7px 0 max(10px,calc(env(safe-area-inset-bottom,0px) - 8px));box-shadow:0 -4px 16px rgba(0,0,0,.06)}
 .sh-bar a{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);font:700 .625rem var(--sans);text-decoration:none}
 .sh-bar svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.sh-bar a.on{color:var(--wine-ink,#860038)}
