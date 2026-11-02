@@ -78,7 +78,9 @@ try {
     const live = ((await r.text()).match(/\/a\/app\.([0-9a-f]{10})\.js/) || [])[1];
     let built = null, age = 0;
     try { built = (execSync('git -C ' + root.pathname + ' show origin/deploy:home.html 2>/dev/null || cat ' + root.pathname + 'home.html', { encoding: 'utf8', shell: '/bin/bash' }).match(/\/a\/app\.([0-9a-f]{10})\.js/) || [])[1];
-      age = (now - +execSync('git -C ' + root.pathname + ' log -1 --format=%ct -- home.html', { encoding: 'utf8' }).trim() * 1000) / 36e5; } catch {}
+      // the build time is the second line of the hash file on 'deploy' (Nov 1: main no longer stores the pages)
+      age = (now - +execSync('git -C ' + root.pathname + ' show origin/deploy:data/prerender-hash.txt', { encoding: 'utf8' }).trim().split('\n')[1]) / 36e5; } catch {}
+    if (!(age >= 0)) age = 0;
     if (live && built && live !== built && age > 2) problems.push(`The live site still serves an older build (app.${live}.js; newest is app.${built}.js, ${age.toFixed(0)} h old). Cloudflare may not be deploying.`);
     else notes.push('live site ok');
   }

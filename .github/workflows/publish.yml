@@ -1,0 +1,40 @@
+name: Publish data updates to the site
+# Nov 1: Cloudflare serves the 'deploy' branch, which the page build (videos.yml) replaces about every 30 minutes.
+# This puts other updates on the site within a minute or two: hand edits and the daily task's pushes to main, and the
+# data the other jobs save. It takes the latest main plus the pages already built on 'deploy' (no rebuild) and only
+# publishes when something actually changed. Saves made by the jobs themselves don't start workflows, hence workflow_run.
+on:
+  push:
+    branches: [main]
+  workflow_run:
+    workflows:
+      - Live page game archive
+      - Live page season baselines
+      - Morning data (baselines, scouting, BBR ids, injuries)
+      - League games missed to injury
+      - Scouting report for the next opponent
+      - Team stats (from ESPN box scores)
+      - Basketball Reference player IDs
+      - Game-high history
+      - Cavs & Coffee newsletter
+      - Push alerts (OneSignal)
+      - Weekly link check
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: publish
+  cancel-in-progress: true   # the newest run always publishes the newest main, so an older queued one isn't needed
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
+        with:
+          node-version: 22
+      - run: |
+          git config user.name "cavsdatabase-bot"
+          git config user.email "bot@cavsdatabase.com"
+          node scripts/publish-deploy.mjs

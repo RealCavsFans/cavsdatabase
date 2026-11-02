@@ -22,6 +22,7 @@ jobs:
         id: chk
         run: |
           set +e
+          git fetch -q --depth=1 origin +refs/heads/deploy:refs/remotes/origin/deploy   # the built site, for check 9
           node scripts/health.mjs > /tmp/health.txt 2>&1; c1=$?
           # live-site comparison (scripts/site-check.mjs) removed Oct 29: Cloudflare's Bot Fight Mode blocks GitHub's servers from the site
           echo "code=$c1" >> "$GITHUB_OUTPUT"

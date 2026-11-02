@@ -7,6 +7,7 @@
 // Without it (the daily task, local edits): plain copies only; the Action prerenders them on its next run.
 import { readFile, writeFile, mkdir, stat, rm } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { existsSync } from 'node:fs';
 // the player pages read franchise lists from /pdata (the /data folder isn't served); keep the copy current
 try { const { copyFileSync, mkdirSync } = await import('node:fs'); mkdirSync(new URL('../pdata/', import.meta.url), { recursive: true }); copyFileSync(new URL('../data/milestones.json', import.meta.url), new URL('../pdata/milestones.json', import.meta.url)); } catch (e) { console.warn('milestones copy skipped:', e.message); }
 const exists = async u => { try { await stat(u); return true; } catch { return false; } };
@@ -24,8 +25,10 @@ try { const { readdir } = await import('node:fs/promises'); h.update((await read
 try { const { readdir } = await import('node:fs/promises'); h.update((await readdir(new URL('og/h/', root))).sort().join()); } catch {}  // a new game share image means the page copies need the new image tag
 const hash = h.digest('hex');
 // the baked-in "next game" and countdown text ages with the clock, so rebuild at least every 6 hours even when nothing else changed
-let stale = false; if (PRE) { try { const { execSync } = await import('node:child_process'); const t = +execSync('git log -1 --format=%ct -- data/prerender-hash.txt', { encoding: 'utf8' }).trim() * 1000; stale = !t || Date.now() - t > 6 * 3600e3; } catch { stale = true; } }
-if (PRE && !stale) { let old = ''; try { old = (await readFile(HASHF, 'utf8')).trim(); } catch {} if (old === hash) { console.log('pages unchanged, nothing to build'); process.exit(0); } }
+// Nov 1: the hash file's second line is when the pages were last built (it lives on the deploy branch with the pages,
+// so git history can't date it); a missing page copy always forces a build
+let stale = false, oldHash = ''; if (PRE) { try { const [hh, tt] = (await readFile(HASHF, 'utf8')).trim().split('\n'); oldHash = hh; stale = !+tt || Date.now() - +tt > 6 * 3600e3; } catch { stale = true; } }
+if (PRE && !stale && oldHash === hash && existsSync(new URL('home.html', root)) && existsSync(new URL('live.html', root))) { console.log('pages unchanged, nothing to build'); process.exit(0); }
 const m = html.match(/const PAGE_META=(\{[\s\S]*?\});\n/);
 if (!m) { console.log('::warning::PAGE_META not found'); process.exit(0); }
 const META = Function('return ' + m[1])();
@@ -127,6 +130,6 @@ if (PRE) {
     const urls = Object.keys(META).map(r => `  <url><loc>https://cavsdatabase.com/${r === 'home' ? '' : r}</loc><lastmod>${(modDates() && modDates()(r)) || day}</lastmod><changefreq>daily</changefreq></url>`);
     await writeFile(new URL('sitemap.xml', root), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`);
     await mkdir(new URL('data/', root), { recursive: true });
-    await writeFile(HASHF, hash + '\n');
+    await writeFile(HASHF, hash + '\n' + Date.now() + '\n');
   }
 } else { await rm(HASHF, { force: true }); }
