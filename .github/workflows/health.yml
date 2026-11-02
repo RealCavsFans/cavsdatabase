@@ -20,6 +20,8 @@ jobs:
           node-version: 22
       - name: Check
         id: chk
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # check 11 counts this month's site builds from GitHub's push history
         run: |
           set +e
           git fetch -q --depth=1 origin +refs/heads/deploy:refs/remotes/origin/deploy   # the built site, for check 9

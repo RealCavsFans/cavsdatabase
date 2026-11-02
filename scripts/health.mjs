@@ -93,5 +93,20 @@ try {
     else notes.push('live site ok');
   }
 } catch (e) { problems.push('cavsdatabase.com did not answer: ' + String(e.message || e).slice(0, 80)); }
+// 11. Cloudflare build minutes (Nov 2): the free plan includes 3,000 a month and Cloudflare shows no counter for free usage.
+// Every publish to the 'deploy' branch is one build, so count this month's pushes there (about 45 seconds each, a safe estimate).
+if (process.env.GH_TOKEN) { try {
+  const repo = process.env.GITHUB_REPOSITORY || 'RealCavsFans/cavsdatabase', m0 = new Date().toISOString().slice(0, 7);
+  let n = 0;
+  for (let pg = 1; pg <= 20; pg++) {
+    const r = await fetch(`https://api.github.com/repos/${repo}/activity?ref=refs/heads/deploy&time_period=month&per_page=100&page=${pg}`, { headers: { authorization: 'Bearer ' + process.env.GH_TOKEN, accept: 'application/vnd.github+json' } });
+    if (!r.ok) throw new Error('GitHub ' + r.status); const a = await r.json();
+    n += a.filter(x => String(x.timestamp).slice(0, 7) === m0).length; if (a.length < 100) break;
+  }
+  const d = new Date(), day = d.getUTCDate() - 1 + d.getUTCHours() / 24, dim = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0)).getUTCDate();
+  const used = Math.round(n * 0.75), pace = day >= 1 ? Math.round(n * 0.75 / day * dim) : used;
+  if (pace > 2500) problems.push(`Cloudflare builds are on pace for about ${pace} of the 3,000 free minutes this month (${n} builds so far). Builds would pause if it runs out; ask Claude to cut down on publishes.`);
+  else notes.push(`builds this month ${n} (~${used} of 3,000 min, on pace for ~${pace})`);
+} catch (e) { notes.push('build count unavailable: ' + String(e.message || e).slice(0, 40)); } }
 if (problems.length) { console.log('PROBLEMS:\n- ' + problems.join('\n- ')); console.log('ok: ' + notes.join(' · ')); process.exit(1); }
 console.log('HEALTHY: ' + notes.join(' · '));
