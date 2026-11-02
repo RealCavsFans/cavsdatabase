@@ -30,15 +30,18 @@ const SRC = {
   async statmuse(g, d, q) {
     let slug = q.get('sm');
     if (!slug) {
-      const md = d.slice(4, 6) + '-' + d.slice(6) + '-' + d.slice(0, 4); const yr = +d.slice(0, 4) + (+d.slice(4, 6) >= 8 ? 1 : 0);
-      const sched = await get('https://www.statmuse.com/nba/team/cleveland-cavaliers-42/schedule/' + yr, 21600);
-      slug = [...sched.matchAll(new RegExp('/nba/game/(' + md + '-([a-z]+)-at-([a-z]+)-\\d+)', 'g'))].filter(m => teamCode(m[2]) === g.away && teamCode(m[3]) === g.home).map(m => m[1])[0];
-      if (!slug) throw new Error('statmuse: game not found');
+      // Nov 2: StatMuse writes dates without leading zeros (11-2-2026), so build the date the same way
+      const md = (+d.slice(4, 6)) + '-' + (+d.slice(6)) + '-' + d.slice(0, 4); const yr = +d.slice(0, 4) + (+d.slice(4, 6) >= 8 ? 1 : 0);
+      const SU = 'https://www.statmuse.com/nba/team/cleveland-cavaliers-42/schedule/' + yr;
+      const find = h => [...h.matchAll(new RegExp('/nba/game/(' + md + '-([a-z]+)-at-([a-z]+)-\\d+)', 'g'))].filter(m => teamCode(m[2]) === g.away && teamCode(m[3]) === g.home).map(m => m[1])[0];
+      let sched = await get(SU, 21600); slug = find(sched);
+      if (!slug) { sched = await get(SU); slug = find(sched); }   // a cached copy from before the game was listed: read it fresh once
+      if (!slug) throw new Error('statmuse: game not found (' + md + ', page ' + sched.length + ' bytes' + ((sched.match(/<title>([^<]{0,60})/) || [])[1] ? ', "' + sched.match(/<title>([^<]{0,60})/)[1] + '"' : '') + ')');
     }
     return fromStatMuse(await get('https://www.statmuse.com/nba/game/' + slug));
   },
   async yahoo(g, d) {
-    const sb = await get('https://sports.yahoo.com/nba/scoreboard/?confId=&schedState=&dateRange=' + iso(d), 300);
+    const sb = await get('https://sports.yahoo.com/nba/scoreboard/?date=' + iso(d), 300);   // Nov 2: Yahoo now ignores dateRange and shows today
     const slug = [...new Set([...sb.matchAll(/\/nba\/([a-z0-9-]+-\d{10,12})\//g)].map(m => m[1]))].find(s => s.includes(FULL[g.home]) && s.includes(FULL[g.away]) && s.includes(d));
     if (!slug) throw new Error('yahoo: game not found');
     const html = await get('https://sports.yahoo.com/nba/' + slug + '/?section=plays');

@@ -56,7 +56,7 @@ else { if (days(LK.checked.slice(0, 10), today) > 9) problems.push(`The weekly l
   if (!last) notes.push('backup feed: no recent game to test');
   else for (const src of ['statmuse', 'cbs', 'yahoo']) {
     const d = last[0].replace(/-/g, ''); let msg = null;
-    try { const r = await fetch(`https://cavsdatabase.com/pbp?d=${d}&src=${src}`, { signal: AbortSignal.timeout(30000) }); const j = await r.json();
+    try { const r = await fetch(`https://cavsdatabase.com/pbp?d=${d}&src=${src}`, { headers: { 'user-agent': 'cavsdatabase-health', 'cache-control': 'no-cache' }, signal: AbortSignal.timeout(45000) });   // Nov 2: without this identifier Cloudflare's bot screen answered, so the test never reached the backups const j = await r.json();
       if (!r.ok || !j.plays) msg = (j.error || r.status) + (j.tried && j.tried.length ? ': ' + j.tried.join('; ') : '');
       else { const cav = j.header.competitions[0].competitors.find(c => c.id === '5'); const want = +String(box[last[0]].score || '').split('-')[0];
         if (j.plays.length < 150) msg = `only ${j.plays.length} plays`; else if (want && cav && +cav.score !== want) msg = `Cavs score ${cav.score}, box score says ${want}`; }
