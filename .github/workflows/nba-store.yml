@@ -33,23 +33,18 @@ jobs:
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
         with:
           node-version: 22
-      - name: Open the nba-data branch
-        run: |
-          git config user.name "cavsdatabase-bot"; git config user.email "bot@cavsdatabase.com"
-          if git ls-remote --exit-code --heads origin nba-data >/dev/null; then
-            git fetch -q --depth 1 origin nba-data && git worktree add -q nba-data FETCH_HEAD && (cd nba-data && git checkout -q -B nba-data)
-          else
-            git worktree add -q --orphan -b nba-data nba-data
-            printf '# NBA game store\nThe NBA'"'"'s own box score and play-by-play for every finished game, saved by scripts/nba-store.mjs on main. Not part of the site.\n' > nba-data/README.md
-          fi
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+        with:
+          ref: nba-data
+          path: nba-data
       - run: node scripts/nba-store.mjs nba-data
         env:
           SEASON: ${{ github.event.inputs.season }}
           TEAM: ${{ github.event.inputs.team }}
       - name: Save
         run: |
-          cd nba-data; git add -A
+          cd nba-data; git config user.name "cavsdatabase-bot"; git config user.email "bot@cavsdatabase.com"; git add -A
           if git diff --cached --quiet; then echo "no new games"; exit 0; fi
           git commit -q -m "NBA games $(date -u +%Y-%m-%dT%H:%MZ)"
-          for i in 1 2 3 4; do git push -q origin HEAD:nba-data && exit 0; sleep $((i * 15)); git fetch -q origin nba-data && git rebase -q FETCH_HEAD || git rebase --abort; done
+          for i in 1 2 3 4; do git push -q origin HEAD:nba-data && exit 0; sleep $((i * 15)); git pull -q --rebase origin nba-data || git rebase --abort; done
           exit 1
