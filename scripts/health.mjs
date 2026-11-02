@@ -70,6 +70,11 @@ else { if (days(LK.checked.slice(0, 10), today) > 9) problems.push(`The weekly l
 { const pc = await J('data/poss-check.json'); if (pc && pc.games) { const off = Object.values(pc.games).filter(x => x.pb && (Math.abs(x.ours.cle[0] - x.pb.cle[0]) > 2 || Math.abs(x.ours.opp[0] - x.pb.opp[0]) > 2 || x.ours.cle[1] !== x.pb.cle[1] || x.ours.opp[1] !== x.pb.opp[1]));
   if (off.length) problems.push(`Possession or point counts differ from pbpstats in ${off.length} game(s): ${off.slice(-3).map(x => x.et + ' ' + x.opp + ' (ours ' + x.ours.cle.join('/') + ', pbpstats ' + x.pb.cle.join('/') + ')').join('; ')}`);
   else notes.push('possessions match pbpstats (' + Object.values(pc.games).filter(x => x.pb).length + ' games)'); } }
+// 10. box score accuracy (Nov 1): scripts/bbr-check.mjs compares each finished game with Basketball Reference
+{ const bc = await J('data/bbr-check.json'); if (bc && bc.games) { const G = Object.values(bc.games), off = G.filter(x => x.status === 'diff'), miss = G.filter(x => x.status !== 'diff' && x.status !== 'match' && (now - Date.parse(x.et)) / 864e5 > 3);
+  if (off.length) problems.push(`Box score differs from Basketball Reference in ${off.length} game(s): ${off.slice(-3).map(x => x.et + ' ' + x.opp + ' (' + (x.diffs || []).slice(0, 3).join('; ') + (x.diffs && x.diffs.length > 3 ? '; +' + (x.diffs.length - 3) + ' more' : '') + ')').join(' · ')}`);
+  else notes.push('box scores match Basketball Reference (' + G.filter(x => x.status === 'match').length + ' games)');
+  if (miss.length) problems.push(`Couldn't compare ${miss.length} game(s) with Basketball Reference: ${miss.map(x => x.et + ' ' + x.opp + ' (' + x.status + ')').join(', ')}`); } }
 // 9. the live site itself (Nov 1): cavsdatabase.com answers, and it serves the newest build (catches a stuck Cloudflare deploy)
 try {
   const r = await fetch('https://cavsdatabase.com/', { headers: { 'cache-control': 'no-cache', 'user-agent': 'cavsdatabase-health' } });
