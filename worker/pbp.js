@@ -36,7 +36,7 @@ const SRC = {
       const find = h => [...h.matchAll(new RegExp('/nba/game/(' + md + '-([a-z]+)-at-([a-z]+)-\\d+)', 'g'))].filter(m => teamCode(m[2]) === g.away && teamCode(m[3]) === g.home).map(m => m[1])[0];
       let sched = await get(SU, 21600); slug = find(sched);
       if (!slug) { sched = await get(SU); slug = find(sched); }   // a cached copy from before the game was listed: read it fresh once
-      if (!slug) throw new Error('statmuse: game not found (' + md + ', page ' + sched.length + ' bytes' + ((sched.match(/<title>([^<]{0,60})/) || [])[1] ? ', "' + sched.match(/<title>([^<]{0,60})/)[1] + '"' : '') + ')');
+      if (!slug) throw new Error('statmuse: game not found (' + md + ', page ' + sched.length + ' bytes, ' + (sched.match(/\/nba\/game\//g) || []).length + ' game links, first ' + ((sched.match(/\/nba\/game\/[^"]{0,40}/) || [])[0] || '-') + ((sched.match(/<title>([^<]{0,60})/) || [])[1] ? ', "' + sched.match(/<title>([^<]{0,60})/)[1] + '"' : '') + ')');
     }
     return fromStatMuse(await get('https://www.statmuse.com/nba/game/' + slug));
   },
