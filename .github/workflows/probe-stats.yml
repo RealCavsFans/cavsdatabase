@@ -1,8 +1,0 @@
-name: Probe stats.nba.com through the site (one-off)
-on:
-  workflow_dispatch:
-jobs:
-  probe:
-    runs-on: ubuntu-latest
-    steps:
-      - run: curl -s -m 60 "https://cavsdatabase.com/probe-stats?z=$(date +%s)"
