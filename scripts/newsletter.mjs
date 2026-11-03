@@ -41,7 +41,7 @@ async function siteData() {
   const md = (process.env.NL_TODAY || etDate()).slice(5);
   const d = await page.evaluate(md => {
     const tvw = d => { const t = tvFor(d); return [t.nat, t.loc].filter(Boolean)[0] || ''; };
-    return { SCHEDULE, SCORES, SEASON, PRESEASON, TEAMS, INJURIES, INJ_ASSIGN: typeof INJ_ASSIGN !== "undefined" ? INJ_ASSIGN : [], HISTORY, L14, TX: TX.slice(0, 60), DATES,
+    return { SCHEDULE, SCORES, SEASON, PRESEASON, TEAMS, INJURIES, INJ_ASSIGN: typeof INJ_ASSIGN !== "undefined" ? INJ_ASSIGN : [], CHARGE: typeof CHARGE !== "undefined" ? CHARGE : null, HISTORY, L14, TX: TX.slice(0, 60), DATES,
       PL: PLAYERS.map(p => [p[1], p[12]]), tv: Object.fromEntries(SCHEDULE.map(g => [g[0], tvw(g[0])])), radio: (radioFor(SCHEDULE[0][0]).cavs || '').split(' · ')[0],
       box: Object.fromEntries(SCHEDULE.map(g => [g[0], boxUrl(g[0])])), tips: Object.fromEntries(SCHEDULE.map(g => [g[0], tipOf(g).toISOString()])),
       TS: (typeof TSTATS === 'object' && TSTATS.CLE && TSTATS.CLE[0] + TSTATS.CLE[1] >= 1) ? TSTATS : (typeof TSTATS_PREV === 'object' ? TSTATS_PREV : {}), TS_CUR: !!(typeof TSTATS === 'object' && TSTATS.CLE && TSTATS.CLE[0] + TSTATS.CLE[1] >= 1),
@@ -107,7 +107,31 @@ function prep(D, g, score, top, boxLink, opts) {
   const E = (D.STANDINGS || []).filter(t => t[1] === 'E').sort((x, y) => (y[2] - y[3]) - (x[2] - x[3]) || y[2] - x[2]);
   let stand = []; const ci = E.findIndex(t => t[0] === 'CLE');
   if (ci >= 0 && E.some(t => t[2] + t[3] > 0)) { const a = Math.max(0, Math.min(ci - 2, E.length - 5)), L = E[0]; stand = E.slice(a, a + 5).map((t, k) => { const gb = ((L[2] - t[2]) + (t[3] - L[3])) / 2; return [a + k + 1, t[0] === 'CLE' ? 'Cleveland' : (D.TEAMS[t[0]] || t[0]), t[2] + '–' + t[3], gb ? (gb % 1 ? gb.toFixed(1) : String(gb)) : '—', t[0] === 'CLE']; }); }
-  return { g, cs, os, win, issueDay, md, w, l, hasRec: rec.length > 0, tn, tl, recap, hl, reads, play, moves, week, otd, nx: nxInfo, tape, inj, injNote, gl, stand, tq: opts.trivia, shot: opts.milestone || '', sotn: opts.sotn || null, names: (D.PL || []).map(p => p[0]),
+  /* MOCKUP (Nov 3) 1: last meeting and season series with the next opponent (this season's results) */
+  let meet = null;
+  if (nx) { const o = nx[1], past = D.SCHEDULE.filter(z => z[1] === o && D.SCORES[z[0]]), left = D.SCHEDULE.filter(z => z[1] === o && !D.SCORES[z[0]] && z[0] > g[0]).length;
+    if (past.length) { const L = past[past.length - 1], [a, b] = D.SCORES[L[0]].split('-').map(Number), w = past.filter(z => { const [p, q] = D.SCORES[z[0]].split('-').map(Number); return p > q; }).length;
+      meet = { d: L[0], ha: L[2], res: (a > b ? 'W ' : 'L ') + a + '–' + b, w, l: past.length - w, left, nick: NICK[o] || o }; } }
+  /* MOCKUP 2: around the East, last night's results for the teams in the standings table (league box scores, pdata/league.json) */
+  let around = [];
+  try { const LG = JSON.parse(readFileSync(new URL('../pdata/league.json', import.meta.url), 'utf8')), AL = { GS: 'GSW', NO: 'NOP', NY: 'NYK', SA: 'SAS', UTAH: 'UTA', WSH: 'WAS' }, ab = x => AL[x] || x;
+    const near = new Set(stand.filter(r => !r[4]).map(r => Object.keys(D.TEAMS).find(k => D.TEAMS[k] === r[1])).filter(Boolean));
+    Object.values(LG.tg || {}).filter(t => t.d === g[0] && t.t && t.t.length === 2).forEach(t => { const [A, B] = t.t;
+      for (const [me, op] of [[A, B], [B, A]]) if (near.has(ab(me.ab))) around.push([D.TEAMS[ab(me.ab)] || me.ab, (me.pts > op.pts ? 'W ' : 'L ') + me.pts + '–' + op.pts, (NICK[ab(op.ab)] || ab(op.ab))]); }); } catch {}
+  /* MOCKUP 3: lineup of the night, the Cavs five-man group with the best plus-minus in 5+ minutes together (the site's game archive) */
+  let lu = null;
+  try { const se = (() => { const y = +g[0].slice(0, 4), m = +g[0].slice(5, 7); const s0 = m >= 8 ? y : y - 1; return s0 + '-' + String(s0 + 1).slice(2); })();
+    const ix = JSON.parse(readFileSync(new URL(`../live-archive/${se}/index.json`, import.meta.url), 'utf8')), e = ix.find(z => z.et === g[0]);
+    if (e) { const C = createRequire(import.meta.url)('../live-core.js'), s = JSON.parse(readFileSync(new URL(`../live-archive/${se}/${e.id}.json`, import.meta.url), 'utf8')), Dg = C.prep(s), R = C.deriveCore(Dg, Dg.plays, 'all');
+      const L5 = Object.values(R.L['5'][5] || {}).filter(l => l.sec >= 300).map(l => ({ l, pm: l.pf - l.pa })).sort((a, b) => b.pm - a.pm || b.l.sec - a.l.sec)[0];
+      if (L5 && L5.pm > 0) lu = { names: L5.l.ids.map(id => Dg.P[id].last), pm: L5.pm, min: Math.floor(L5.l.sec / 60) + ':' + String(Math.round(L5.l.sec % 60)).padStart(2, '0'), pf: L5.l.pf, pa: L5.l.pa }; } } catch {}
+  /* MOCKUP 4: Charge corner, last night's Charge result, or the next Charge game within a week */
+  let ch = null;
+  if (D.CHARGE) { const G = D.CHARGE.games || [], last = G.filter(z => z[4] && z[0] <= issueDay && z[0] >= g[0]).pop(), next = G.find(z => z[0] >= issueDay && !z[4]);
+    if (last) ch = { kind: 'res', d: last[0], o: last[1], ha: last[2], res: last[4], rec: D.CHARGE.record };
+    else if (next && (Date.parse(next[0]) - Date.parse(issueDay)) / 864e5 <= 7) ch = { kind: 'next', d: next[0], o: next[1], ha: next[2], t: next[3], rec: D.CHARGE.record, first: !G.some(z => z[4]), venue: next[5] || (next[2] === 'H' ? D.CHARGE.venue : '') };
+    if (ch) ch.assign = (D.INJ_ASSIGN || []).map(r => r[0]); }
+  return { g, cs, os, win, issueDay, md, w, l, hasRec: rec.length > 0, tn, tl, recap, hl, reads, play, moves, week, otd, nx: nxInfo, tape, inj, injNote, gl, stand, meet, around, lu, ch, tq: opts.trivia, shot: opts.milestone || '', sotn: opts.sotn || null, names: (D.PL || []).map(p => p[0]),
     pid: n => (D.PL.find(p => p[0] === n) || [])[1], qs: opts.qs || null, where: (g[2] === 'H' ? 'vs ' : 'at ') + D.TEAMS[g[1]], whereShort: g[2] === 'H' ? 'Rocket Arena' : 'at ' + D.TEAMS[g[1]].split(' ').slice(-1)[0], boxLink, preseason: opts.preseason, test: opts.test, TEAMS: D.TEAMS };
 }
 const fontLink = `<!--[if !mso]><!--><link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@800&family=Geist+Mono:wght@700&display=swap" rel="stylesheet"><!--<![endif]-->`;
@@ -138,16 +162,16 @@ function lineScore(x, P) {
 }
 
 /* coffee score box: on a win the Cavs half fills with coffee (crema and steam on top);
-   on a loss it drains, leaving a stain line and drips off the edge. A roast label sets the mood by margin.
+   on a loss it drains, leaving a stain line and drips off the edge. A roast label sets the mood by margin; the line under the score no longer repeats it (Nov 3).
    Images are extras: with images off, the solid fill and the label still carry it. */
 function roast(x) {
   const m = Math.abs(x.cs - x.os), ot = x.qs && x.qs.cle && x.qs.cle.length > 4;
-  if (x.win) return ot ? { t: 'DOUBLE SHOT', bg: '#860038', fg: '#FFFFFF', line: 'Double shot. Needed the extra.' }
-    : m >= 15 ? { t: 'DARK ROAST', bg: '#3B2216', fg: '#F2B231', line: 'Dark roast. A strong brew.' }
-    : m >= 6 ? { t: 'MEDIUM ROAST', bg: '#A9744A', fg: '#FFFFFF', line: 'Medium roast. Smooth W.' }
-    : { t: 'LIGHT ROAST', bg: '#E9D6BE', fg: '#101419', line: 'Light roast, but still a W.' };
-  return m >= 15 ? { t: 'BURNT', bg: '#101419', fg: '#B9B2A8', line: 'Burnt. Dump it and brew again.' }
-    : { t: 'DECAF', bg: '#E3E5E0', fg: '#101419', line: 'Decaf. Fresh pot tomorrow.' };
+  if (x.win) return ot ? { t: 'DOUBLE SHOT', bg: '#860038', fg: '#FFFFFF', line: 'Needed the extra.' }
+    : m >= 15 ? { t: 'DARK ROAST', bg: '#3B2216', fg: '#F2B231', line: 'A strong brew.' }
+    : m >= 6 ? { t: 'MEDIUM ROAST', bg: '#A9744A', fg: '#FFFFFF', line: 'Smooth W.' }
+    : { t: 'LIGHT ROAST', bg: '#E9D6BE', fg: '#101419', line: 'Light, but still a W.' };
+  return m >= 15 ? { t: 'BURNT', bg: '#101419', fg: '#B9B2A8', line: 'Dump it and brew again.' }
+    : { t: 'DECAF', bg: '#E3E5E0', fg: '#101419', line: 'Fresh pot tomorrow.' };
 }
 function coffeeBox(x, P, cell) {
   const CO = '#6B3E26', PAPER = '#FFFDF8', r = roast(x);
@@ -184,17 +208,21 @@ ${x.tn ? `<div style="font:16px/1.55 ${F.serif};color:${P.fg2};margin-top:10px">
   /* email can't play video (Gmail and Outlook strip players), so this is built to look like one: the video's own frame plus a player bar; a tap opens it on YouTube */
   if (x.hl && x.hl.id) s.push(`<tr><td style="padding:12px 14px 0"><a href="${esc(x.hl.link)}" style="text-decoration:none"><img src="https://i.ytimg.com/vi/${esc(x.hl.id)}/hq720.jpg" width="572" alt="Play the full game highlights" style="display:block;width:100%;height:auto;border:0">${T(`<tr><td bgcolor="#101419" style="background:#101419;padding:10px 12px;font:800 13px ${F.sans};letter-spacing:.5px;color:#FFFFFF"><span style="display:inline-block;background:#C8102E;color:#FFFFFF;padding:3px 9px;margin-right:8px">&#9654;</span>PLAY HIGHLIGHTS</td><td bgcolor="#101419" align="right" style="background:#101419;padding:10px 12px;font:12px ${F.sans};color:#B9B2A8;white-space:nowrap">${x.hl.src === 'Cavs' ? 'Cavs' : 'NBA'} on YouTube</td></tr>`)}</a></td></tr>`);
   if (x.hl || x.recap) s.push(B(`${x.hl && !x.hl.id ? li(a(x.hl.link, '&#9654;&nbsp; Full game highlights'), { meta: x.hl.nba ? 'NBA.com' : 'NBA · YouTube' }) : ''}${x.recap ? li(a(x.recap.link, esc(x.recap.title)), { meta: 'RealCavsFans recap' }) : ''}`));
+  if (x.lu) s.push(B(`<div style="border-left:3px solid ${P.wine};background:#FFFDF8;padding:9px 12px;margin-top:10px;font:14px/1.5 ${F.sans};color:${P.ink}"><b style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine}">LINEUP OF THE NIGHT</b><br><b>${x.lu.names.map(esc).join(' · ')}</b><br><span style="color:${P.muted}">+${x.lu.pm} in ${x.lu.min} together (${x.lu.pf}–${x.lu.pa})</span></div>`));
   if (x.shot) s.push(B(`<div style="border-left:3px solid #F2B231;background:#FFFDF8;padding:9px 12px;margin-top:6px;font:15px/1.5 ${F.serif};color:${P.ink}"><b style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine}">ESPRESSO SHOT</b>&nbsp; ${(() => { let t = esc(x.shot); const nm = (x.names || []).find(n => t.includes(esc(n))); return nm ? t.replace(esc(nm), `<a href="${SITE}/players/${pslug(nm)}#ch-his" style="color:${P.ink};font-weight:700;text-decoration:none;border-bottom:2px solid #F2B231">${esc(nm)}</a>`) : t; })()}</div>`));
   if (x.nx) {
     const n = x.nx;
     s.push(K(n.tonight ? 'Tonight' : 'Up next', ['Preview', `${SITE}/games/${n.slug}`]), B(`<div style="font:800 26px/1 ${F.cond};color:${P.ink}"><span style="color:${P.wine}">CLE</span> ${n.home ? 'vs' : 'at'} ${n.o}</div><div style="font:13px ${F.sans};color:${P.muted};margin:4px 0 4px">${esc(short(n.date))} · ${esc(n.tip)} PM ET${n.tv ? ' · ' + esc(n.tv) : ''} · ${esc(n.radio)}</div>`));
+    if (x.meet) { const mt = x.meet; s.push(B(`<div style="font:13px/1.5 ${F.sans};color:${P.fg2};margin:-2px 0 8px"><b style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine}">LAST MEETING:</b>&nbsp; ${esc(short(mt.d))} ${mt.ha === 'H' ? 'vs' : 'at'} ${esc(mt.nick)}, ${esc(mt.res)} · ${mt.w === mt.l ? 'series tied ' + mt.w + '–' + mt.l : (mt.w > mt.l ? 'Cavs lead ' : esc(mt.nick) + ' lead ') + Math.max(mt.w, mt.l) + '–' + Math.min(mt.w, mt.l)}${mt.left ? ` · ${mt.left} more meeting${mt.left === 1 ? '' : 's'}` : ''}</div>`)); }
     if (x.tape.length) s.push(B(T(`<tr><td style="padding:4px 0;font:800 14px ${F.cond};color:${P.wine}">CLE</td><td align="center" style="font:700 9.5px ${F.sans};letter-spacing:1px;color:${P.muted}">${n.season} · RANK</td><td align="right" style="font:800 14px ${F.cond};color:${P.ink}">${n.o}</td></tr>` + x.tape.map(([lab, a1, r1, b1, r2]) => `<tr><td style="padding:5px 0;border-top:1px dotted ${P.dot};font:700 13.5px ${F.mono};color:${P.wine}">${a1} <span style="font:400 11px ${F.sans};color:${P.muted}">${r1}</span></td><td align="center" style="padding:5px 0;border-top:1px dotted ${P.dot};font:700 10px ${F.sans};letter-spacing:1px;text-transform:uppercase;color:${P.muted}">${lab}</td><td align="right" style="padding:5px 0;border-top:1px dotted ${P.dot};font:700 13.5px ${F.mono}"><span style="font:400 11px ${F.sans};color:${P.muted}">${r2}</span> ${b1}</td></tr>`).join(''))));
     if (x.inj.length) s.push(B(`<div style="font:13px/1.5 ${F.sans};color:${P.fg2};padding-top:6px;border-top:1px dotted ${P.dot}"><b style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine}">${x.injNote ? esc(x.injNote.toUpperCase()) + ':' : 'INJURIES'}</b>&nbsp; ${x.inj.map(([nm, what, st]) => `${esc(nm)} (${esc(what)}, ${esc(st.toLowerCase())})`).join(' · ')}${x.gl && x.gl.length ? `<br><b style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine}">G LEAGUE ASSIGNMENT:</b>&nbsp; ${x.gl.map(esc).join(' · ')}` : ''}</div>`));
   }
   if (x.stand.length) s.push(K('East standings'), B(T(x.stand.map(([rk, nm, wl, gb, me]) => `<tr><td width="26" style="padding:6px 0;border-bottom:1px dotted ${P.dot};font:700 12px ${F.mono};color:${P.muted}">${rk}</td><td style="padding:6px 0;border-bottom:1px dotted ${P.dot};font:${me ? 700 : 400} 14px ${F.sans};color:${me ? P.wine : P.ink}">${esc(nm)}</td><td align="right" style="padding:6px 0;border-bottom:1px dotted ${P.dot};font:700 13.5px ${F.mono};color:${me ? P.wine : P.ink}">${wl}</td><td width="46" align="right" style="padding:6px 0;border-bottom:1px dotted ${P.dot};font:700 12.5px ${F.mono};color:${P.muted}">${gb}</td></tr>`).join(''))));
+  if (x.around.length) s.push(B(`<div style="font:13px/1.6 ${F.sans};color:${P.fg2};padding-top:8px"><b style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine}">AROUND THE EAST LAST NIGHT:</b>&nbsp; ${x.around.map(([t, r, o]) => `${esc(t)} ${esc(r)} vs ${esc(o)}`).join(' · ')}</div>`));
   if (x.reads.length) s.push(K('Morning reads'), B(x.reads.map(r => li(a(r.link, esc(r.title)), { meta: `${esc(r.src)} · ${esc(md2(r.date.slice(0, 10)))}` })).join('')));
   if (x.play.length) s.push(K('Press play'), B(x.play.map(p => T(`<tr><td width="24" valign="top" style="padding:9px 0;font:14px ${F.sans};color:${P.wine}">${p.kind === 'video' ? '&#9654;' : '&#127911;'}</td><td valign="top" style="padding:8px 0;font:14px/1.45 ${F.sans}">${a(p.link, esc(p.title))}<div style="font:12px ${F.sans};color:${P.muted};margin-top:2px">${esc(p.src)}${p.dur ? ' · ' + esc(p.dur) : ''} · ${esc(md2(p.date.slice(0, 10)))}</div></td></tr>`, `style="border-bottom:1px dotted ${P.dot}"`)).join('')));
   if (x.moves.length) s.push(K('Transactions'), B(x.moves.map(([d, t]) => li(esc(t), { left: esc(d), lw: 60 })).join('')));
+  if (x.ch) { const c = x.ch; s.push(K('Charge corner', ['Charge', `${SITE}/charge`], 18), B(`<div style="font:14px/1.55 ${F.sans};color:${P.fg2}">${c.kind === 'res' ? `<b style="color:${P.ink}">${esc(c.res)}</b> ${c.ha === 'H' ? 'vs' : 'at'} ${esc(c.o)} · ${esc(c.rec)} on the season` : `${c.first ? 'Season opener: ' : 'Next: '}<b style="color:${P.ink}">${esc(short(c.d))}, ${esc(c.t)} PM</b> ${c.ha === 'H' ? 'vs' : 'at'} ${esc(c.o)}${c.venue ? ' · ' + esc(c.venue) : ''}`}${c.assign.length ? `<br><span style="color:${P.muted}">Cavs on assignment: ${c.assign.map(esc).join(', ')}</span>` : ''}</div>`)); }
   if (x.week.length) s.push(K('This week'), B(x.week.map(([wd, d, t]) => li(esc(t), { left: `${esc(wd)} ${esc(d)}`, lw: 96 })).join('')));
   if (x.tq) s.push(`<tr><td style="padding:14px 14px 0;text-align:center;font:italic 11px ${F.sans};color:${P.muted}">Trivia answer: ${String.fromCharCode(65 + x.tq.a)}. ${esc(x.tq.c[x.tq.a])}</td></tr>`);
   /* pass it on: the referral link now lives in the footer (Nov 1) */
