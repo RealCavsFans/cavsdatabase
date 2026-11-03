@@ -658,6 +658,7 @@ ul.plays li.st-pick{cursor:pointer}ul.plays li.st-in{background:color-mix(in srg
 .st-x{margin-left:auto;background:none;border:0;color:#860038;font:600 13px/1 inherit;text-decoration:underline;cursor:pointer}
 .st-sc{display:flex;gap:14px;align-items:baseline;margin:10px 0 6px;font:800 26px/1 'Saira Condensed',sans-serif}.st-sc .f{color:#860038}.st-sc .o{color:#5b6470}.st-sc em{font:600 14px/1 inherit;font-style:normal;color:#6b7280}.st-sc em.up{color:#860038}
 .st-t td:not(:first-child),.st-t th:not(:first-child),.st-p td:not(:first-child),.st-p th:not(:first-child){text-align:right}.st-p{margin-top:10px}.st-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.gf td:not(:first-child),.gf th:not(:first-child){text-align:right}ul.fm{list-style:none;padding:0;margin:6px 0;display:grid;gap:4px}ul.fm li{font-size:12px;line-height:1.35;color:var(--muted)}ul.fm{gap:2px!important}ul.fm b{color:var(--fg);font-weight:600}ul.fm .fm-n{margin-left:8px;color:#860038;font-weight:700}
 </style>
 </head>
 <body>
@@ -1280,6 +1281,30 @@ function tvsCard(D,R){if(S.season||D.focus.id!==CLE)return null;const c=el('div'
 /* every NBA team game this season: points per 100 possessions and net per 100, from the league feed */
 let LGG=null;function lgGames(){if(LGG)return LGG;return LGG=getJSON('/pdata/league.json').then(L=>{const o=[],n=[];Object.values(L.tg||{}).forEach(g=>{if(!g.t||g.t.length!==2)return;const P=t=>poss({fga:t.fga,oreb:t.orb,to:t.tov,fta:t.fta});const pp=(P(g.t[0])+P(g.t[1]))/2;if(!pp)return;g.t.forEach((me,i)=>{const op=g.t[1-i],pm=P(me),po2=P(op);o.push(me.pts/pm*100);n.push(me.pts/pm*100-op.pts/po2*100)})});return {o,n}}).catch(()=>null)}
 /* ---------- Team ---------- */
+/* MOCKUP (Nov 3): from the NBA's own box score (D.nbx): lead changes, ties, biggest lead and run, time leading, bench points, coach's challenges,
+   timeouts left and the bonus while live, and the officials */
+function gameFlowCard(D){const X=D.nbx;if(!X||!X.t||S.season)return null;const A=X.t[D.focus.id],B=X.t[D.other.id];if(!A||!B)return null;
+  const c=el('div','card sec');head(c,'Game flow','From the NBA’s box score');const t=el('table','zt gf');t.innerHTML='<tr><th></th><th>'+esc(D.focus.abbr)+'</th><th>'+esc(D.other.abbr)+'</th></tr>';
+  const row=(l,a,b,f)=>{const tr=el('tr');tr.append(el('td',null,l),el('td',null,f?f(a):String(a??'–')),el('td',null,f?f(b):String(b??'–')));t.appendChild(tr)};
+  const both=(l,v)=>{const tr=el('tr');const td=el('td',null,String(v??'–'));td.colSpan=2;td.style.textAlign='center';tr.append(el('td',null,l),td);t.appendChild(tr)};
+  both('Lead changes',A.lc);both('Times tied',A.tt);row('Biggest lead',A.bl,B.bl);row('Biggest run',A.br,B.br,x=>x?x+'–0':'–');row('Time leading',A.tl,B.tl,x=>x==null?'–':fmtMin(x));row('Bench points',A.bp,B.bp);row('Coach’s challenges',A.ch,B.ch);
+  if(S.state==='in'){row('Timeouts left',A.to,B.to);row('In the bonus',A.bonus,B.bonus,x=>x?'Yes':'No')}
+  const w=el('div','tw');w.appendChild(t);c.appendChild(w);if(X.ref&&X.ref.length)c.appendChild(el('p','note','Officials: '+X.ref.join(', ')+'.'));return c}
+/* MOCKUP (Nov 3): Players tab "Scoring & fouls" view: where each player's points came from and the fouls he drew, plus who fouled whom */
+function nbxView(c,D,R,t){const X=D.nbx;if(!X||!X.p){c.appendChild(el('p','note','Only for games from the NBA’s own feed.'));return}
+  const rows=D.roster[t.id].filter(id=>X.p[id]&&R.B[id]&&(R.B[id].min>0||R.B[id].pts)).map(id=>{const q=X.p[id],b=R.B[id];return {id,pts:b.pts,paint:q[6],fb:q[4],sc:q[5],pot:q[7],and1:q[8],fd:q[0],fta:b.fta,pf:b.pf,of:q[2],tech:q[1],blkd:q[3]}});
+  c.appendChild(dtable('nbx',[{h:'Player',k:'id',f:r=>{const sp=el('span');sp.appendChild(plink(D,r.id,D.P[r.id].short));return sp}},{h:'PTS',k:'pts',cls:()=>'k'},{h:'PAINT',k:'paint'},{h:'FAST BREAK',k:'fb'},{h:'2ND CH.',k:'sc'},{h:'OFF TO',k:'pot',title:'Points off turnovers'},{h:'AND-1',k:'and1'},{h:'FOULS DRAWN',k:'fd'},{h:'FTA',k:'fta'},{h:'PF',k:'pf',asc:true},{h:'OFF. FOULS',k:'of',asc:true},{h:'TECH',k:'tech',asc:true},{h:'GOT BLOCKED',k:'blkd',asc:true}],rows,{def:'pts',minW:900}));
+  const fm=(X.fm||[]).filter(([a,b])=>D.P[a]&&D.P[b]&&(D.P[a].team===t.id||D.P[b].team===t.id)).slice(0,8);
+  if(fm.length){{const h=el('div',null,'Who fouled whom');h.style.cssText='font:800 0.6875rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:14px 0 2px';c.appendChild(h)}const ul=el('ul','fm');fm.forEach(([a,b,n])=>{const li=el('li');li.style.cssText='font-size:12px;line-height:1.35;color:var(--muted)';li.append(el('b',null,D.P[a].short),' fouled ',el('b',null,D.P[b].short),el('span','fm-n',n+'×'));ul.appendChild(li)});c.appendChild(ul)}
+  c.appendChild(el('p','note','Paint, fast-break, second-chance and off-turnover points and fouls drawn are the NBA’s own counts. AND-1 = a made shot plus the free throw from the same foul.'))}
+/* MOCKUP (Nov 3): shot tags the NBA puts on every shot (pull-up, step-back, driving, floater…) */
+const STAG={pullup:'Pull-up',stepback:'Step-back',driving:'Driving',floating:'Floater',fadeaway:'Fadeaway',turnaround:'Turnaround',cutting:'Cutting',putback:'Putback','alley-oop':'Alley-oop',running:'Running',tip:'Tip-in',fingerroll:'Finger roll',bank:'Bank shot',reverse:'Reverse',spot:'No move (catch or stand)',jump:'Jump shot',hook:'Hook',turnaround2:'Turnaround'};
+function shotTagCard(D,t,pl){const X=D.nbx;if(!X||!X.st||S.season)return null;const ids=pl&&pl!=='all'?[pl]:D.roster[t.id];const agg={};
+  ids.forEach(id=>Object.entries(X.st[id]||{}).forEach(([k,[m,a]])=>{const [base,tg]=k.split(':');const o=agg[tg]=agg[tg]||{m:0,a:0,t3:[0,0]};o.m+=m;o.a+=a;if(base==='three'){o.t3[0]+=m;o.t3[1]+=a}}));
+  const L=Object.entries(agg).sort((a,b)=>b[1].a-a[1].a);if(!L.length)return null;const tot=L.reduce((x,[,o])=>x+0,0);
+  const c=el('div','card sec');head(c,'Shot tags',(pl&&pl!=='all'?D.P[pl].name:t.abbr)+' · how the NBA tagged each shot');const tb=el('table','zt');tb.innerHTML='<tr><th>Tag</th><th>FG</th><th>FG%</th><th>3PT</th></tr>';
+  L.forEach(([tg,o])=>{const tr=el('tr');tr.append(el('td',null,STAG[tg]||tg),el('td',null,o.m+'-'+o.a),el('td',null,o.a?Math.round(o.m/o.a*100)+'%':'–'),el('td',null,o.t3[1]?o.t3[0]+'-'+o.t3[1]:'–'));tb.appendChild(tr)});
+  const w=el('div','tw');w.appendChild(tb);c.appendChild(w);c.appendChild(el('p','note','A shot can carry more than one tag (a driving finger roll counts under both), so the rows add up to more than the total.'));return c}
 function vTeam(v,D,R){
   /* season mode: the same team stats, per game, from the archive totals */
   if(S.season){const n=Math.max(1,(D.games||[]).length||1);const pg=t=>{const x={};for(const k in t)x[k]=typeof t[k]==='number'?t[k]/n:t[k];return x};R=Object.assign({},R,{T:{[D.focus.id]:pg(R.T[D.focus.id]),[D.other.id]:pg(R.T[D.other.id])}})}
@@ -2350,7 +2375,8 @@ function pgCard(D,R,id){const p=D.P[id],b=R.B[id];if(!p||!b)return null;const t=
 function vPlayers(v,D,R){
   if(S.season)return seasonPlayers(v,D,R);
   if(!S.f.plTeam)S.f.plTeam=D.focus.id;const t=D.teams.find(x=>x.id===S.f.plTeam);
-  const c=el('div','card');head(c,t.loc+' '+t.name,perLabel(S.per)+' · tap a column to sort');const tbn=teamBtns(D,'plTeam');[['box','Box score'],['adv','Advanced'],['season','vs season']].forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',S.f.plView===k);b.onclick=()=>{S.f.plView=k;renderView()};tbn.appendChild(b)});c.appendChild(tbn);
+  const c=el('div','card');head(c,t.loc+' '+t.name,perLabel(S.per)+' · tap a column to sort');const tbn=teamBtns(D,'plTeam');[['box','Box score'],['adv','Advanced'],['nbx','Scoring & Fouls'],['season','vs season']].filter(([k])=>k!=='nbx'||D.nbx).forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',S.f.plView===k);b.onclick=()=>{S.f.plView=k;renderView()};tbn.appendChild(b)});c.appendChild(tbn);
+  if(S.f.plView==='nbx'&&D.nbx){nbxView(c,D,R,t);v.appendChild(c);return}
   if(S.f.plView==='season'){seasonView(c,D,R,t);v.appendChild(c);return}
   if(S.f.plView==='adv'){advView(c,D,R,t);v.appendChild(c);return}
   const useEspn=!S.replay&&S.per==='all'&&S.state!=='pre';
@@ -2535,8 +2561,8 @@ let LSH=null,LSHq=false;
 function lshLine(ab,key,zoneOnly){const se=S.src||CUR_SEASON;if(S.season)return null;
   if(!LSH){if(!LSHq){LSHq=true;getJSON('/pdata/league-shots.json').then(j=>{LSH=j;renderView()}).catch(()=>{LSH={g:{}}})}return null}
   if(LSH.season!==se||(zoneOnly&&S.f.shType!=='all'))return null;
-  const nP=8,Z0=2+nP*4;let n=0,m=0,a=0,pts=0,as=0,tot=0;
-  Object.entries(LSH.g||{}).forEach(([id,g])=>{const v=g.t&&g.t[ab];if(!v||id===String(S.ev))return;n++;
+  let n=0,m=0,a=0,pts=0,as=0,tot=0;
+  Object.entries(LSH.g||{}).forEach(([id,g])=>{const v=g.t&&g.t[ab];if(!v||id===String(S.ev))return;const nP=(v.length-2-ZN.length*2)/4,Z0=2+nP*4;/* Nov 3: shot types per game from the array's length (a 9th type, floaters, was added) */if(key.pt!=null&&key.pt>=nP)return;n++;
     if(key.pt!=null){const k=2+key.pt*4;m+=v[k];a+=v[k+1];pts+=v[k+2];as+=v[k+3];tot+=v[0]}else{const k=Z0+key.zi*2;m+=v[k];a+=v[k+1];pts+=v[k]*(key.zi>=3?3:2);tot+=v[1]}});
   if(!n)return null;return {lab:ab+' season ('+n+'g)',n,m:m/n,a:a/n,fr:tot?a/tot:null,fg:a?m/a:null,pps:a?pts/a:null,as:m?as/m:null}}
 function shCmp(D,t){const se=S.season||S.src||CUR_SEASON;const key=se;
@@ -2615,7 +2641,7 @@ function vShots(v,D,R){
   right.appendChild(dual(S.season?'▸ Tap a row to split it by wins and losses'+(isCle?' and games vs top-10 teams':''):isCle?'▸ Tap a row to compare with the season and with games vs similar teams':'▸ Tap a row to compare with '+t.abbr+'’s season and the Cavs defense',S.season?'▸ Tap a row: wins/losses'+(isCle?', vs top 10':''):isCle?'▸ Tap a row: season, similar teams':'▸ Tap a row: '+t.abbr+' season, Cavs D','tap-hint'));
   const rows=PT.map(([k,l],i)=>{const q=all.filter(x=>x.pt===i);const m=q.filter(x=>x.m);const pts=m.reduce((s,x)=>s+(x.three?3:2),0);return {i,l,a:q.length,m:m.length,fr:all.length?q.length/all.length:0,fg:q.length?m.length/q.length:null,pps:q.length?pts/q.length:null,as:m.length?m.filter(x=>x.ast).length/m.length:null,_cls:S.f.shType===String(i)?'now':'',_open:S.f.shOpen===i}}).filter(r=>r.a);
   const pc=x=>x==null?'–':Math.round(x*100)+'%';
-  right.appendChild(dtable('pt',[{h:'Type',k:'l',f:r=>{/* short names on phones (Oct 31) */const SH={'Putbacks and tip-ins':'Putbacks','Post-ups and turnarounds':'Post-ups','Pull-ups and step-backs':'Pull-ups','Other layups and dunks':'Other layups'};const b=el('button');b.append(el('span',SH[r.l]?'lg-l':null,r.l));if(SH[r.l])b.appendChild(el('span','lg-s',SH[r.l]));b.type='button';b.style.cssText='all:unset;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line);display:inline-block;max-width:calc(100% - 18px);vertical-align:top';b.onclick=()=>{S.f.shType=S.f.shType===String(r.i)?'all':String(r.i);renderView()};return b}},
+  right.appendChild(dtable('pt',[{h:'Type',k:'l',f:r=>{/* short names on phones (Oct 31) */const SH={'Putbacks and tip-ins':'Putbacks','Post-ups, turnarounds and fadeaways':'Post-ups','Pull-ups and step-backs':'Pull-ups','Other layups and dunks':'Other layups'};const b=el('button');b.append(el('span',SH[r.l]?'lg-l':null,r.l));if(SH[r.l])b.appendChild(el('span','lg-s',SH[r.l]));b.type='button';b.style.cssText='all:unset;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line);display:inline-block;max-width:calc(100% - 18px);vertical-align:top';b.onclick=()=>{S.f.shType=S.f.shType===String(r.i)?'all':String(r.i);renderView()};return b}},
     {h:'FG',k:'a',f:r=>r.m+'-'+r.a},{h:'FREQ',k:'fr',f:r=>pc(r.fr),title:'Share of his field-goal attempts'},{h:'FG%',k:'fg',f:r=>pc(r.fg)},{h:'PTS/SHOT',k:'pps',f:r=>r.pps==null?'–':r.pps.toFixed(2),title:'Points per shot'},{h:'AST',k:'as',f:r=>pc(r.as),title:'Share of makes that were assisted'}],rows,{def:'a',empty:'No shots yet.',toggle:r=>{S.f.shOpen=S.f.shOpen===r.i?null:r.i;renderView()},expand:r=>miniT({lab:S.season?'Season':'Tonight',m:r.m,a:r.a,fr:r.fr,fg:r.fg,pps:r.pps,as:r.as},cmpRows(x=>x.pt===r.i,false,{pt:r.i}),['ma','fr','fg','pps','as'],6)}));
   right.appendChild(el('p','note','FREQ = share of all field-goal attempts. Tap a type’s name to filter the court; tap the rest of the row to compare with the season. Transition = shot within 7 seconds after a defensive rebound or turnover. Putbacks = tips, putbacks and shots within 3 seconds of an offensive rebound.'));
   /* shot types go full width under the court; the zone table sits next to the court */
