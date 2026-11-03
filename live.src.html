@@ -656,6 +656,11 @@ ul.plays li.st-pick{cursor:pointer}ul.plays li.st-in{background:color-mix(in srg
 .st-x{margin-left:auto;background:none;border:0;color:#860038;font:600 13px/1 inherit;text-decoration:underline;cursor:pointer}
 .st-sc{display:flex;gap:14px;align-items:baseline;margin:10px 0 6px;font:800 26px/1 'Saira Condensed',sans-serif}.st-sc .f{color:#860038}.st-sc .o{color:#5b6470}.st-sc em{font:600 14px/1 inherit;font-style:normal;color:#6b7280}.st-sc em.up{color:#860038}
 .st-t td:not(:first-child),.st-t th:not(:first-child),.st-p td:not(:first-child),.st-p th:not(:first-child){text-align:right}.st-p{margin-top:10px}.st-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.onf{margin:8px 0 4px;display:grid;gap:8px}.onf-r{display:flex;flex-wrap:wrap;gap:6px}
+.onf-p{font:600 13px/1 inherit;padding:6px 10px;border:1px solid var(--line,#d9dce1);background:#fff;border-radius:999px;cursor:pointer;color:inherit}.onf-p.on{background:#860038;border-color:#860038;color:#fff}.onf-p.off{background:#eef0f2;color:#6b7280;text-decoration:line-through}
+.onf-clear,.onf-jump{justify-self:start;font:600 13px/1.3 inherit;background:none;border:0;color:#860038;cursor:pointer;padding:4px 0;text-align:left;text-decoration:underline}
+.onf-tog{display:block;width:100%;text-align:left;margin:10px 0 2px;padding:9px 12px;font:700 14px/1 inherit;background:#f7f5f2;border:1px solid var(--line,#d9dce1);border-radius:8px;cursor:pointer;color:inherit}
+.onf-cmp{display:grid;gap:6px;margin:8px 0 4px;padding:10px 12px;background:#f7f5f2;border-radius:8px}.onf-l{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:14px}.onf-l b{flex-basis:100%;font-size:13px}
 </style>
 </head>
 <body>
@@ -747,7 +752,7 @@ async function choose(v,push){
   else if(v.startsWith('b')){S.bk=v.slice(1);S.ev='b';S.replay=false}
   else if(v.startsWith('a')){const[se,id]=v.slice(1).split(':');S.src=se;S.ev=id;S.replay=true;const m=espnToArch(id);if(m&&!(ARCH[se]||[]).some(g=>g.id===id)){S.src=m[0];S.ev=m[1]}}
   else{S.replay=v.startsWith('r');S.ev=v.replace(/^r/,'');if(S.replay&&(ARCH['2025-26']||[]).some(g=>g.id===S.ev))S.src='2025-26';else if(S.replay){const m=espnToArch(S.ev);if(m){S.src=m[0];S.ev=m[1]}}}
-  Object.assign(S.f,{st:null,pgc:null,pgAll:false,plQ:null,voA:null,voB:null,astFoc:null,luPick:{},ooTeam:null,ooA:null,ooB:null,card:null,astTeam:null,plTeam:null,luTeam:null,shTeam:null,shPl:'all',shType:'all',rotTeam:null});
+  Object.assign(S.f,{st:null,pgc:null,pgAll:false,plQ:null,voA:null,voB:null,astFoc:null,luPick:{},ooTeam:null,ooA:null,ooB:null,card:null,astTeam:null,plTeam:null,luTeam:null,shTeam:null,shPl:'all',shType:'all',shOn:{},shOpen:false,rotTeam:null});
   $('gsel').value=v;if(window.gpSync)gpSync(v);
   if(push){const u=new URL(location.href);u.searchParams.set('g',v);history.replaceState(null,'',u)}
   $('sb').innerHTML='<div class="empty">Loading…</div>';$('view').innerHTML='';$('rpw').innerHTML='';$('rpw').hidden=true;
@@ -1132,7 +1137,7 @@ function lgGamePct(ROWS,D){const A=lgTeamGames();if(!A)return false;const pool=A
   ROWS.forEach(r=>{const f=LGP2[r.lab];if(!f||r.hib===null)return;const v=pool.map(([t,o])=>f(t,o)).filter(x=>x!=null&&isFinite(x));if(v.length<20)return;
     const pc=x=>{if(x==null||!isFinite(x))return null;const lo=v.filter(y=>r.hib?y<x-1e-9:y>x+1e-9).length,eq=v.filter(y=>Math.abs(y-x)<=1e-9).length;return Math.max(1,Math.min(99,Math.round((lo+eq/2)/v.length*100)))};
     r.rx={p:pc(r.x),n:v.length};r.ry={p:pc(r.y),n:v.length};if(r.rx.p==null)r.rx=null;if(r.ry.p==null)r.ry=null;any=true});return any?pool.length:false}
-const lgOK=()=>S.season&&S.season===CUR_SEASON&&(S.per||'all')==='all'&&!((S.sf||{}).games||[]).length&&!(S.sf||{}).tier;
+const lgOK=()=>S.season&&S.season===CUR_SEASON&&(S.per||'all')==='all'&&!((S.sf||{}).games||[]).length&&!(S.sf||{}).tier&&!(S.f&&S.f.shOpen&&S.f.shOn&&Object.keys(S.f.shOn).length&&S.tab==='shots');   /* no NBA ranks on a shot chart cut to who was on the floor (Nov 2) */
 function lgTeamRanks(ROWS){if(!LGS||!lgOK())return false;const others=Object.entries(LGS.T).filter(([ab,x])=>ab!=='CLE'&&x.n);
   ROWS.forEach(r=>{const f=LGM[r.lab];if(!f)return;const own=others.map(([,x])=>f(x.A,x.O,x.n,x.sec)),alw=others.map(([,x])=>f(x.O,x.A,x.n,x.sec));if(own.every(v=>v==null))return;
     const d=r.hib===null?0:r.hib?1:-1;r.rx=lgRank(r.x,own,d);r.ry=lgRank(r.y,alw,d===0?0:-d)});
@@ -2545,6 +2550,7 @@ function zoneBars(D,R,t,sh,BZ,baseLab){
   w.insertAdjacentHTML('beforeend',`<div class="key"><span><i style="background:${t.c}"></i>Points scored</span><span><i style="background:repeating-linear-gradient(135deg,var(--card) 0 3px,color-mix(in srgb,${t.c} 30%,var(--card)) 3px 6px)"></i>Missed</span></div><p class="note" style="margin-top:4px">Each bar is every point the shots in that zone could have scored. ${esc(t.abbr)} FG% green or red vs ${esc(baseLab)}.</p>`);
   return w;
 }
+const ONSH={};
 function vShots(v,D,R){
   if(!S.f.shTeam||(S.season&&S.f.shView==='bars'))S.f.shTeam=D.focus.id;const t=D.teams.find(x=>x.id===S.f.shTeam);
   const c=el('div','card');head(c,'Shot chart',perLabel(S.per));
@@ -2557,7 +2563,27 @@ function vShots(v,D,R){
   const ts=el('select');ts.setAttribute('aria-label','Shot type');const t0=el('option',null,'All shot types');t0.value='all';ts.appendChild(t0);PT.forEach(([k,l],i)=>{const o=el('option',null,l);o.value=String(i);if(S.f.shType===String(i))o.selected=true;ts.appendChild(o)});ts.onchange=()=>{S.f.shType=ts.value;renderView()};fl.appendChild(ts);
   [['bars','Zones'],['zones','Court'],['dots','Every shot']].forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',S.f.shView===k);b.onclick=()=>{S.f.shView=k;renderView()};fl.appendChild(b)});
   fl.classList.add('shfl');c.appendChild(fl);
-  const all=R.shots.filter(s=>s.t===t.id&&(S.f.shPl==='all'||s.id===S.f.shPl));
+  /* MOCKUP (Nov 2): who was on the floor, season view only (a game's chart stays clean; a link there jumps here).
+     Tucked behind a button; open it to tap Cavs players: once = shots with him on the floor, twice = with him off. Follows the season's game filters. */
+  const OF=S.f.shOn=S.f.shOn||{},isF=t.id===D.focus.id;let OSH=null;
+  if(!S.season&&isF){const a=el('button','onf-jump','Who was on the floor? Every '+(D.season||CUR_SEASON).replace('-','–')+' Cavs shot with players on or off →');a.type='button';
+    a.onclick=async()=>{const se=S.src||CUR_SEASON;S.f.shOn={};await choose('s'+se,true);S.tab='shots';S.f.shOpen=true;S.f.shView='zones';renderNav(S.R);renderView();scrollTo({top:0,behavior:'smooth'})};c.appendChild(a)}
+  if(S.season&&isF){const ob=el('button','onf-tog',(S.f.shOpen?'▾ ':'▸ ')+'Who was on the floor'+(Object.keys(OF).length?' · '+Object.keys(OF).length+' picked':''));ob.type='button';ob.setAttribute('aria-expanded',!!S.f.shOpen);ob.onclick=()=>{S.f.shOpen=!S.f.shOpen;renderView()};c.appendChild(ob);
+    if(S.f.shOpen){const key='on|'+(D.games||[]).map(g=>g.id).join(',')+'|'+JSON.stringify(S.per||'all');
+      if(!ONSH[key]){ONSH[key]='loading';seasonShots(D).then(r=>{ONSH[key]=r.shots;if(S.season&&S.tab==='shots')renderView()}).catch(()=>{ONSH[key]=[]})}
+      if(ONSH[key]==='loading')c.appendChild(el('p','note','Loading every game…'));else{OSH=ONSH[key].filter(q=>q.t===D.focus.id);
+        const box=el('div','onf');const row=el('div','onf-r');const fga={};OSH.forEach(q=>(q.on||'').split(',').forEach(id=>{if(D.P[id])fga[id]=(fga[id]||0)+1}));
+        Object.keys(fga).sort((a,b)=>fga[b]-fga[a]).forEach(id=>{const st=OF[id]||0;const b=el('button','onf-p'+(st===1?' on':st===-1?' off':''),D.P[id].last);b.type='button';b.title=st===1?'Only shots with him on the floor':st===-1?'Only shots with him off the floor':'Tap: with him on · tap again: with him off';
+          b.onclick=()=>{const n=((OF[id]||0)===0)?1:OF[id]===1?-1:0;if(n)OF[id]=n;else delete OF[id];renderView()};row.appendChild(b)});box.appendChild(row);
+        if(Object.keys(OF).length){const cl=el('button','onf-clear','Clear');cl.type='button';cl.onclick=()=>{S.f.shOn={};renderView()};box.appendChild(cl)}c.appendChild(box)}}}
+  const onOK=q=>Object.entries(OF).every(([id,st])=>((q.on||'').split(',').includes(id))===(st===1));
+  const onAct=!!(OSH&&Object.keys(OF).length);
+  if(onAct){const base=OSH.filter(s=>S.f.shPl==='all'||s.id===S.f.shPl);const inn=base.filter(onOK),out=base.filter(q=>!onOK(q));
+    const ln=(lab,A)=>{const fgm=A.filter(q=>q.m).length,tpa=A.filter(q=>q.three).length,tpm=A.filter(q=>q.three&&q.m).length,pts=A.reduce((a,q)=>a+(q.m?(q.three?3:2):0),0),rim=A.filter(q=>q.zi===0);const r=el('div','onf-l');
+      r.append(el('b',null,lab),el('span',null,fgm+'-'+A.length+' FG'+(A.length?' ('+Math.round(fgm/A.length*100)+'%)':'')),el('span',null,tpm+'-'+tpa+' 3PT'),el('span',null,'Rim '+rim.filter(q=>q.m).length+'-'+rim.length),el('span',null,A.length?(pts/A.length).toFixed(2)+' pts per shot':'–'));return r};
+    const pk=Object.entries(OF).map(([id,st])=>D.P[id].last+(st===1?' on':' off')).join(', ');const w=el('div','onf-cmp');w.append(ln('With '+pk,inn),ln('All other Cavs shots',out));c.appendChild(w);
+    c.appendChild(el('p','note','Field goals only, '+(D.games||[]).length+' games. The chart below shows just these shots.'))}
+  const all=onAct?OSH.filter(s=>(S.f.shPl==='all'||s.id===S.f.shPl)&&onOK(s)):R.shots.filter(s=>s.t===t.id&&(S.f.shPl==='all'||s.id===S.f.shPl));
   const sh=all.filter(s=>S.f.shType==='all'||String(s.pt)===S.f.shType);
   /* baseline: the player's own season zones, else his team's (this season once it starts; replays use 2025–26) */
   const CB=curBase(),SL=seasonLab(CB),minF=CB===BASE?150:30;
