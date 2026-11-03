@@ -2,6 +2,12 @@
  "articles": [
   {
    "src": "Cavaliers on SI",
+   "title": "Tyrese Proctor Is Making Every Opportunity Count—and Giving the Cavs a Reason to Play Him More",
+   "link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxOY2N5aWw1UGhCZzRyQ1g5ZVZaOVhTNS04T1ctc1hOYjZoNXF5YU02SEY4YW9CdnVWcVloWDRqVnN3UzQ2NlVWQTZCRlpCMVY1SjlwU3FRVm5tMHluSDZweUZjTWEzTFh3MjFzbDN1OXU2SDBXUmxIa1RuOEZxOHdmVEZBYldsaTdia2VHRTNCdFVyb3hnX1dNSnVyaE1KTTlibl9KUEp0MnJld1pBNmFjMEkwdGlZVHR0S3BEcjFVSzVtQndsSjNHaGFqb0E3YTlldmM0YnNIX3lNbDhnOXc?oc=5",
+   "date": "2026-11-03T18:26:25.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
    "title": "Meleek Thomas’ First NBA Start for Cavs Was Full of Lessons",
    "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQNzNCR2M5SVJGRHZkV3JXY0sydFJ3WUpPSjNweE5PbWwzM0w3YjRyenFNUjZTOE5XWFExWjZSTlRXV3hWMnNreElmdUxiNmdfVjV4NkNfWnBGd05RUmxYTjVRd3N6YzlfSU1QbG15Ny1faEhmakpaZXNjUzJZRjRfcXp3UnM2MXVMOTFYUEF1MGlOMlBrODlDSzNKdVJwVmtfdktwdElwbGpGZzY5Z2c?oc=5",
    "date": "2026-11-03T17:15:00.000Z"
@@ -167,12 +173,6 @@
    "title": "Cleveland’s transition defense is broken — the guards have to fix it",
    "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPaXowMDVDc1psQ3JlZVJTSDJQX29FSWdFZC1pQW5XQW9LMThCR2NTNnF6Q2h3a1RlWml3T2p2aXZfVWpja3lGRXI2aGx6VjZiVWhuVTN4NUdIZGtvMkpUcl9OWDQ4SzFkTXlxanlweWR1RVpoaF8zdENzMW1VYXBXVGlUNWZVQVpjYnZBLXkzcGtER2JrZGhsLWRTTmtrQXBaUktDTW04U2d6Wm1rQXc?oc=5",
    "date": "2026-10-31T09:00:00.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Key Winger Ruled Out vs. Bucks, Injuries Hitting Cavaliers Early in Season",
-   "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOVlR1MzhtN3pMU3dSWDcxanlEZnFMQV9WbnU5QmE4MFhPYW9GNWE0OHU4WHUzVE43TGFrQjBHeUJiV21NbndXd2FfMHdqQTNGSk1xZTMwRHYtd0VxQUR5czZsV1FoZHVKV05QUFZwU21PbDZFUEJWd2diZVhsZ1BKNUZ1SUlSSWJta0FjRU5tQkxKY3AyWm54WTZVTTFmdG1aVnhJanI0QWxiQVFJZVB3djU3QVpYMlp5c2N1RmdaaWE?oc=5",
-   "date": "2026-10-30T23:00:09.000Z"
   },
   {
    "src": "cleveland.com",
@@ -343,6 +343,20 @@
  ],
  "videos": [
   {
+   "src": "The Chase Down Podcast",
+   "title": "Chase Down Podcast Live, presented by LECOM: Thunder Hold Off Cavs Comeback",
+   "link": "https://www.youtube.com/watch?v=PNjm1qtxzt0",
+   "date": "2026-11-03T18:52:40.000Z",
+   "id": "PNjm1qtxzt0"
+  },
+  {
+   "src": "It's Cavalier Podcast",
+   "title": "REACTION: Cavs vs. Thunder",
+   "link": "https://www.youtube.com/watch?v=_e2-ooEN5IY",
+   "date": "2026-11-03T18:50:17.000Z",
+   "id": "_e2-ooEN5IY"
+  },
+  {
    "src": "Ultimate Cleveland Sports Show",
    "title": "Should the Cleveland Cavaliers close out games with BOTH Evan Mobley & Jarrett Allen on the court?",
    "link": "https://www.youtube.com/watch?v=BG_wc-pi8dk",
@@ -378,25 +392,11 @@
    "id": "SyAnPoq_5tQ"
   },
   {
-   "src": "The Chase Down Podcast",
-   "title": "Chase Down Podcast Live, presented by LECOM: Thunder Hold Off Cavs Comeback",
-   "link": "https://www.youtube.com/watch?v=PNjm1qtxzt0",
-   "date": "2026-11-03T03:49:28.000Z",
-   "id": "PNjm1qtxzt0"
-  },
-  {
    "src": "Locked On Cavs",
    "title": "Meleek Thomas Isn't Your Typical Second Round Pick",
    "link": "https://www.youtube.com/watch?v=9Y3cQCL7IFQ",
    "date": "2026-11-03T03:44:55.000Z",
    "id": "9Y3cQCL7IFQ"
-  },
-  {
-   "src": "It's Cavalier Podcast",
-   "title": "REACTION: Cavs vs. Thunder",
-   "link": "https://www.youtube.com/watch?v=_e2-ooEN5IY",
-   "date": "2026-11-03T03:24:57.000Z",
-   "id": "_e2-ooEN5IY"
   },
   {
    "src": "Locked On Cavs",
