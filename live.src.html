@@ -1110,7 +1110,7 @@ const LGM={'FG%':(A)=>A.fga?A.fgm/A.fga:null,'2PT made':(A,O,n)=>(A.fgm-A.tpm)/n
   'In the paint':(A)=>A.ex?A.paint/A.ex:null,'Off turnovers':(A,O)=>O.ex?O.pot/O.ex:null,'Rebounds':(A,O,n)=>(A.orb+A.drb)/n,'Off. rebounds':(A,O,n)=>A.orb/n,'Assists':(A)=>A.ex?A.ast/A.ex:null,
   'Turnovers':(A,O,n)=>A.tov/n,'Steals':(A)=>A.ex?A.stl/A.ex:null,'Blocks':(A)=>A.ex?A.blk/A.ex:null,'Fouls':(A)=>A.ex?A.pf/A.ex:null,
   'Pace':(A,O,n,sec)=>sec?((lgPoss(A)+lgPoss(O))/2)/sec*2880:null,'Possessions':(A,O,n)=>lgPoss(A)/n,'Points per 100':A=>{const p=lgPoss(A);return p?A.pts/p*100:null},
-  'True shooting':A=>A.fga+A.fta?A.pts/(2*(A.fga+.44*A.fta)):null,'True shot att.':(A,O,n)=>(A.fga+.44*A.fta)/n,
+  'TS%':A=>A.fga+A.fta?A.pts/(2*(A.fga+.44*A.fta)):null,'OREB %':(A,O)=>(A.orb+O.drb)?A.orb/(A.orb+O.drb):null,'DREB %':(A,O)=>(A.drb+O.orb)?A.drb/(A.drb+O.orb):null,'True shot att.':(A,O,n)=>(A.fga+.44*A.fta)/n,
   /* rates: assists, steals and blocks come from the games with full box data (ex), so their bases are scaled to the same games */
   'TOV %':(A)=>{const p=lgPoss(A);return p?A.tov/p:null},'Rebound %':(A,O)=>(A.orb+A.drb+O.orb+O.drb)?(A.orb+A.drb)/(A.orb+A.drb+O.orb+O.drb):null,'Assist %':(A,O,n)=>A.ex&&A.fgm?A.ast/(A.fgm*A.ex/n):null,'Steal %':(A,O,n)=>{const p=lgPoss(O);return A.ex&&p?A.stl/(p*A.ex/n):null},'Block %':(A,O,n)=>A.ex&&(O.fga-O.tpa)?A.blk/((O.fga-O.tpa)*A.ex/n):null};
 /* rank of a value among the other 29 teams: dir 1 = higher is better, -1 = lower is better, 0 = neutral (ranked by most) */
@@ -1120,7 +1120,7 @@ function rkEl(k){if(!k)return'';if(k.p!=null)return `<small class="rk pc${k.p>=9
 let LTG=null;function lgTeamGames(){if(LTG!==null)return LTG||null;LTG=false;getJSON('/pdata/league.json').then(L=>{const a=[];Object.entries(L.tg||{}).forEach(([id,g])=>{if(g.t&&g.t.length===2&&g.per>=4)a.push([id,g.t[0],g.t[1]],[id,g.t[1],g.t[0]])});LTG=a;if(!S.season&&S.tab==='team')renderView()}).catch(()=>{});return null}
 const LGP2={'FG%':t=>t.fga?t.fgm/t.fga:null,'2PT made':t=>t.fgm-t.tpm,'2PT%':t=>t.fga-t.tpa?(t.fgm-t.tpm)/(t.fga-t.tpa):null,'3PT made':t=>t.tpm,'3PT%':t=>t.tpa?t.tpm/t.tpa:null,'FT made':t=>t.ftm,'FT%':t=>t.fta?t.ftm/t.fta:null,'In the paint':t=>t.paint,'Fast-break points':t=>t.fb,
   'Rebounds':t=>t.orb+t.drb,'Off. rebounds':t=>t.orb,'Assists':t=>t.ast,'Turnovers':t=>t.tov,'Steals':t=>t.stl,'Blocks':t=>t.blk,'Fouls':t=>t.pf,
-  'Points per 100':t=>{const p=t.fga-t.orb+t.tov+.44*t.fta;return p?t.pts/p*100:null},'True shooting':t=>t.fga+t.fta?t.pts/(2*(t.fga+.44*t.fta)):null,
+  'Points per 100':t=>{const p=t.fga-t.orb+t.tov+.44*t.fta;return p?t.pts/p*100:null},'TS%':t=>t.fga+t.fta?t.pts/(2*(t.fga+.44*t.fta)):null,'OREB %':(t,o)=>o&&(t.orb+o.drb)?t.orb/(t.orb+o.drb):null,'DREB %':(t,o)=>o&&(t.drb+o.orb)?t.drb/(t.drb+o.orb):null,
   'TOV %':t=>{const p=t.fga-t.orb+t.tov+.44*t.fta;return p?t.tov/p:null},'Rebound %':(t,o)=>o&&(t.orb+t.drb+o.orb+o.drb)?(t.orb+t.drb)/(t.orb+t.drb+o.orb+o.drb):null,'Assist %':t=>t.fgm?t.ast/t.fgm:null,'Steal %':(t,o)=>{if(!o)return null;const p=lgPoss(o);return p?t.stl/p:null},'Block %':(t,o)=>o&&(o.fga-o.tpa)?t.blk/(o.fga-o.tpa):null};
 function lgGamePct(ROWS,D){const A=lgTeamGames();if(!A)return false;const pool=A.filter(([id])=>id!==String(S.ev)).map(([,t,o])=>[t,o]);if(pool.length<20)return false;let any=false;
   ROWS.forEach(r=>{const f=LGP2[r.lab];if(!f||r.hib===null)return;const v=pool.map(([t,o])=>f(t,o)).filter(x=>x!=null&&isFinite(x));if(v.length<20)return;
@@ -1289,6 +1289,7 @@ function vTeam(v,D,R){
   row('Free throws made',a.ftm,b.ftm);
   row('FT attempts',a.fta,b.fta,null,null,null);
   row('FT%',a.ftm/(a.fta||1),b.ftm/(b.fta||1),()=>pct(a.ftm,a.fta),()=>pct(b.ftm,b.fta));
+  {const ts=t=>t.fga+t.fta?t.pts/(2*(t.fga+0.44*t.fta)):0;row('TS%',ts(a),ts(b),x=>(x*100).toFixed(1)+'%',x=>(x*100).toFixed(1)+'%')}   /* true shooting: points per shot, counting threes and free throws (Nov 2) */
   row('Fouls',a.pf,b.pf,null,null,false);
   grp('Where the points came from');
   row('Points in the paint',a.paint,b.paint);row('Second-chance points',a.second,b.second);
@@ -1299,7 +1300,7 @@ function vTeam(v,D,R){
   grp('Possessions');
   /* Nov 1: each rate sits right under its count (shares of the available chances; TOV % = turnovers per possession, fewer is better) */
   {const sh=(x,y)=>y>0?x/y:0,fp=x=>(x*100).toFixed(1)+'%',R2=(lab,fa,fb,hib=true)=>row(lab,fa,fb,fp,fp,hib);const rb=a.oreb+a.dreb+b.oreb+b.dreb;
-    row('Rebounds',a.oreb+a.dreb,b.oreb+b.dreb);R2('Rebound %',sh(a.oreb+a.dreb,rb),sh(b.oreb+b.dreb,rb));row('Offensive rebounds',a.oreb,b.oreb);
+    row('Rebounds',a.oreb+a.dreb,b.oreb+b.dreb);R2('Rebound %',sh(a.oreb+a.dreb,rb),sh(b.oreb+b.dreb,rb));R2('OREB %',sh(a.oreb,a.oreb+b.dreb),sh(b.oreb,b.oreb+a.dreb));R2('DREB %',sh(a.dreb,a.dreb+b.oreb),sh(b.dreb,b.dreb+a.oreb));   /* Nov 2: shares of the available misses each side grabbed, in place of the offensive rebound count */
     row('Assists',a.ast,b.ast);R2('Assist %',sh(a.ast,a.fgm),sh(b.ast,b.fgm));
     row('Turnovers',a.to,b.to,null,null,false);R2('TOV %',sh(a.to,pa),sh(b.to,pb),false);
     row('Steals',a.stl,b.stl);R2('Steal %',sh(a.stl,pb),sh(b.stl,pa));
@@ -1308,7 +1309,7 @@ function vTeam(v,D,R){
   {const sec=a.sec||1;const pc=((pa+pb)/2)/sec*2880;row('Pace (possessions per 48)',pc,pc,x=>a.sec?x.toFixed(1):'–',x=>a.sec?x.toFixed(1):'–',null)}
   row('Possessions (est.)',pa,pb,x=>Math.round(x),x=>Math.round(x),null);
   row('Points per 100 possessions',pa?a.pts/pa*100:0,pb?b.pts/pb*100:0,x=>x.toFixed(0),x=>x.toFixed(0));
-  {const ts=t=>t.fga+t.fta?t.pts/(2*(t.fga+0.44*t.fta)):0;row('True shooting',ts(a),ts(b),x=>(x*100).toFixed(0)+'%',x=>(x*100).toFixed(0)+'%');row('True shot attempts',a.fga+0.44*a.fta,b.fga+0.44*b.fta,x=>x.toFixed(1),x=>x.toFixed(1),null)}
+  {row('True shot attempts',a.fga+0.44*a.fta,b.fga+0.44*b.fta,x=>x.toFixed(1),x=>x.toFixed(1),null)}
   if(!S.season){const sa=stopPct(R,D.other.id),sb=stopPct(R,D.focus.id);if(sa!=null&&sb!=null)row('Stop %',sa,sb,x=>Math.round(x*100)+'%',x=>Math.round(x*100)+'%')}
   if(S.season){if(!LGS&&!LGP)lgLoad().then(x=>{if(x&&S.season&&S.tab==='team')renderView()});if(lgTeamRanks(ROWS))c.appendChild(el('p','note lgn','Small numbers = NBA rank among 30 teams, wine top 10, gray bottom 10. Under OPP, 1st = the fewest allowed. From every NBA box score this season.'));else if(S.season===CUR_SEASON&&LGS)c.appendChild(el('p','note lgn','NBA ranks show on the full-season view (no period, game or strength filter).'))}
   if(!S.season&&(S.per||'all')==='all'){const st=D.status&&D.status.type||{};const done=st.completed||(S.replay&&S.data&&S.cur>=S.data.plays.length);if(done){const n=lgGamePct(ROWS,D);if(n)c.appendChild(el('p','note lgn','Small numbers = percentile among all '+n+' NBA team games this season: 90th means better than 90% of them (for turnovers and fouls, fewer is better). Wine = top 10%.'))}}
@@ -1316,7 +1317,7 @@ function vTeam(v,D,R){
   /* projected final: each team's scoring rate so far, applied to the time left in regulation */
   if(S.state==='in'&&S.per==='all'&&R.lp){const e2=R.lp.t,left=Math.max(0,2880-e2);if(e2>=360&&left>0){const pf=Math.round(a.pts+a.pts/e2*left),po=Math.round(b.pts+b.pts/e2*left);
     const p=el('p','tsp');p.innerHTML=`<b>On pace for</b> ${esc(D.focus.abbr)} ${pf}, ${esc(D.other.abbr)} ${po} <span class="note">(scoring rate so far × ${fmtMin(left)} left in regulation)</span>`;c.querySelector('.tsh').after(p)}}
-  c.appendChild(el('p','note','Rebound % = share of all available rebounds. Assist % = share of made shots that were assisted. TOV % = turnovers per possession. Steal % = steals per 100 opponent possessions. Block % = share of the opponent’s two-point tries blocked. Stop % = share of the other team’s possessions that ended with no points. True shot attempts = FGA + 0.44 × FTA.'));v.appendChild(c);if(S.season){if(R.pc&&R.pc[D.other.id]&&R.cx)v.appendChild(contextCard(D,R));possXCards(D,R).forEach(x=>v.appendChild(x));pbpTeamCards().forEach(x=>v.appendChild(x));return}v.appendChild(oppCard(D,R));
+  c.appendChild(el('p','note','TS% = true shooting: points per shot, counting threes and free throws. Rebound % = share of all available rebounds; OREB % = share of their own misses a team grabbed; DREB % = share of the other team’s misses a team grabbed. Assist % = share of made shots that were assisted. TOV % = turnovers per possession. Steal % = steals per 100 opponent possessions. Block % = share of the opponent’s two-point tries blocked. Stop % = share of the other team’s possessions that ended with no points. True shot attempts = FGA + 0.44 × FTA.'));v.appendChild(c);if(S.season){if(R.pc&&R.pc[D.other.id]&&R.cx)v.appendChild(contextCard(D,R));possXCards(D,R).forEach(x=>v.appendChild(x));pbpTeamCards().forEach(x=>v.appendChild(x));return}v.appendChild(oppCard(D,R));
   {const ff=el('div');vFF(ff,D,R);ff.firstChild.classList.add('sec');v.appendChild(ff.firstChild)}
   v.appendChild(contextCard(D,R));
   /* game view: any stretch (only that stretch's plays); the season view uses the period files, which carry the same rows per stretch */
@@ -2691,16 +2692,24 @@ function vSeason(v,D,R){
 
   seasonExtras(v,D,R);
 }
+const QFC={};function qFiles(se){return QFC[se]||(QFC[se]=Promise.all(['q1','q2','q3','q4','clutch'].map(k=>getJSON('/live-archive/'+se+'/season-p-'+k+'.json').then(j=>[k,j]).catch(()=>[k,null]))).then(a=>{QFC[se+'|r']=Object.fromEntries(a)}))}
+function qFilt(J,ids){const F=QFC[J.season+'|r'];if(!F)return null;const set=new Set(ids),tq={};
+  for(const k of ['q1','q2','q3','q4','clutch']){const f=F[k];if(!f)return null;const o={pf:0,pa:0,po:0,pd:0,sec:0};(f.games||[]).forEach(g=>{if(!set.has(g.id))return;o.pf+=g.pp?g.pp[0]:0;o.pa+=g.pp?g.pp[1]:0;o.po+=g.t?g.t[12]||0:0;o.pd+=g.u?g.u[12]||0:0;o.sec+=g.ps||0});tq[k]=o}
+  const cg=(F.clutch.games||[]).map(g=>g.ps>0&&set.has(g.id)?[J.games.findIndex(x=>x.id===g.id),g.pp[0],g.pp[1]]:null).filter(x=>x&&x[0]>=0);return {tq,cg}}
 /* Season tab: quarter by quarter, clutch, starters vs bench, best and worst lineups */
 function seasonExtras(v,D,R){const J=S.sfull;const filt=!!((S.sf&&((S.sf.games&&S.sf.games.length)||S.sf.tier))||S.per!=='all');const G=(D.games||[]).length||1;
   const sgnf=x=>(x>0?'+':x<0?'−':'')+Math.abs(x).toFixed(1),r100=(a,p)=>p?a/p*100:null,n0=x=>x==null?'–':String(Math.round(x));
-  const noteF=c=>c.appendChild(el('p','note','Whole season only: clear the filters above to see this.'));
+  const noteF=c=>c.appendChild(el('p','note',QL?'Loading…':'Whole season only: clear the filters above to see this.'));
+  /* Nov 2: quarter by quarter and clutch follow the game filters too, built from the per-period season files (season-p-q1…q4, clutch) for just the picked games */
+  const QIDS=(D.games||[]).map(g=>g.id),QF0=!!(J&&QIDS.length&&QIDS.length<(J.games||[]).length);let QJ=J,QN=J?J.games.length:0,QL=false;
+  if(QF0){const r=qFilt(J,QIDS);if(r){QJ=Object.assign({},J,r);QN=QIDS.length}else{QJ=null;QL=true;qFiles(J.season).then(()=>{if(S.season&&S.tab==='season')renderView()})}}
+  const qRank=QF0?()=>null:lxRank;
   /* quarter by quarter */
-  {const c=el('div','card sec');head(c,'Quarter by quarter',(J?J.games.length:0)+' games · per game, and points per 100 possessions');
-    if(filt||!J||!J.tq)noteF(c);else{const n=J.games.length||1;const t=el('table','zt');t.innerHTML='<tr><th></th><th>Score</th><th>+/-</th><th>Off</th><th>Def</th><th>Net</th></tr>';
-      [['1st','q1'],['2nd','q2'],['3rd','q3'],['4th','q4']].forEach(([l,k])=>{const q=J.tq[k];if(!q)return;const o=r100(q.pf,q.po),d=r100(q.pa,q.pd),nt=o!=null&&d!=null?o-d:null;const tr=el('tr');
+  {const c=el('div','card sec');head(c,'Quarter by quarter',(QJ?QN:(J?J.games.length:0))+' games · per game, and points per 100 possessions');
+    if(!QJ||!QJ.tq)noteF(c);else{const n=QN||1;const t=el('table','zt');t.innerHTML='<tr><th></th><th>Score</th><th>+/-</th><th>Off</th><th>Def</th><th>Net</th></tr>';
+      [['1st','q1'],['2nd','q2'],['3rd','q3'],['4th','q4']].forEach(([l,k])=>{const q=QJ.tq[k];if(!q)return;const o=r100(q.pf,q.po),d=r100(q.pa,q.pd),nt=o!=null&&d!=null?o-d:null;const tr=el('tr');
         tr.append(el('td',null,l),el('td',null,(q.pf/n).toFixed(1)+'–'+(q.pa/n).toFixed(1)),el('td',pmCls(q.pf-q.pa),sgnf((q.pf-q.pa)/n)),el('td',null,n0(o)),el('td',null,n0(d)),el('td',nt==null?null:pmCls(nt),nt==null?'–':sgn(Math.round(nt))));
-        {const qi=+k.slice(1)-1;[[3,lxOff,1],[4,lxDef,-1],[5,lxNet,1]].forEach(([ci,fn,dir])=>{const rk=lxRank(a=>fn(a.q[qi]),dir);if(rk)tr.children[ci].insertAdjacentHTML('beforeend',rkEl(rk))})}t.appendChild(tr)});
+        {const qi=+k.slice(1)-1;[[3,lxOff,1],[4,lxDef,-1],[5,lxNet,1]].forEach(([ci,fn,dir])=>{const rk=qRank(a=>fn(a.q[qi]),dir);if(rk)tr.children[ci].insertAdjacentHTML('beforeend',rkEl(rk))})}t.appendChild(tr)});
       const w=el('div','tw');w.appendChild(t);c.appendChild(w);c.appendChild(el('p','note','Overtime isn’t included. Possessions are counted from the play-by-play.'+(lxAgg()&&S.season===CUR_SEASON?' Small numbers = NBA rank in that quarter among 30 teams (Def: 1st = fewest allowed), from every NBA game’s play-by-play.':'')))}v.appendChild(c)}
   /* home vs road (follows the filters) */
   if(false){const GG=(D.games||[]).filter(g=>g.t&&g.u);if(GG.length){const c=el('div','card sec');head(c,'Home vs road',GG.length+' game'+(GG.length===1?'':'s'));const t=el('table','zt');t.innerHTML='<tr><th></th><th>Record</th><th>Score</th><th>Off</th><th>Def</th><th>Net</th></tr>';
@@ -2713,16 +2722,16 @@ function seasonExtras(v,D,R){const J=S.sfull;const filt=!!((S.sf&&((S.sf.games&&
     const w=el('div','tw');w.appendChild(t);c.appendChild(w);c.appendChild(el('p','note','Wins–losses. Overtime games count by the final result.'));v.appendChild(c)}}
   /* clutch */
   {const c=el('div','card sec');head(c,'Clutch','Last 5 minutes of the 4th quarter or overtime, score within 5');
-    if(filt||!J||!J.cg)noteF(c);else if(!J.cg.length)c.appendChild(el('p','note','No clutch minutes yet.'));else{const q=J.tq.clutch;const w=J.cg.filter(([i])=>J.games[i]&&J.games[i].cle>J.games[i].os).length,l=J.cg.length-w;const o=r100(q.pf,q.po),d=r100(q.pa,q.pd);
+    if(!QJ||!QJ.cg)noteF(c);else if(!QJ.cg.length)c.appendChild(el('p','note','No clutch minutes yet.'));else{const q=QJ.tq.clutch;const w=QJ.cg.filter(([i])=>J.games[i]&&J.games[i].cle>J.games[i].os).length,l=QJ.cg.length-w;const o=r100(q.pf,q.po),d=r100(q.pa,q.pd);
       /* clutch at a glance: game-by-game results, the clutch score as a split bar, and points scored vs allowed per 100 (Oct 28) */
       const cv=el('div','clv');
-      {const r=el('div','clv-r');r.appendChild(el('div','clv-k',w+'–'+l+' in clutch games'));const pp=el('div','clv-g');J.cg.forEach(([i,pf,pa])=>{const G=J.games[i];if(!G)return;const W=G.cle>G.os;const x=el('div',W?'w':'l');x.append(el('b',null,W?'W':'L'),el('span',null,(G.ha==='home'?'vs ':'@ ')+G.opp),el('small',null,(pf!=null?pf+'–'+pa:'')));pp.appendChild(x)});r.appendChild(pp);cv.appendChild(r)}
+      {const r=el('div','clv-r');r.appendChild(el('div','clv-k',w+'–'+l+' in clutch games'));const pp=el('div','clv-g');QJ.cg.forEach(([i,pf,pa])=>{const G=J.games[i];if(!G)return;const W=G.cle>G.os;const x=el('div',W?'w':'l');x.append(el('b',null,W?'W':'L'),el('span',null,(G.ha==='home'?'vs ':'@ ')+G.opp),el('small',null,(pf!=null?pf+'–'+pa:'')));pp.appendChild(x)});r.appendChild(pp);cv.appendChild(r)}
       {const r=el('div','clv-r');r.appendChild(el('div','clv-k','Clutch score · '+fmtMin(q.sec)+' played'));const tot=(q.pf+q.pa)||1;const sb=el('div','clv-sb');const a1=el('span','c',D.focus.abbr+' '+q.pf);a1.style.flex=String(q.pf/tot);const a2=el('span','o',q.pa+' OPP');a2.style.flex=String(q.pa/tot);sb.append(a1,a2);r.appendChild(sb);cv.appendChild(r)}
       if(o!=null&&d!=null){const r=el('div','clv-r');const nt=Math.round(o-d);const k=el('div','clv-k');k.append('Per 100 possessions ',el('em',nt>0?'up':nt<0?'dn':'',(nt>0?'+':'')+nt+' net'));r.appendChild(k);const pr=el('div','clv-p');[['Scored',o],['Allowed',d]].forEach(([l2,v])=>{const x=el('div');x.append(el('b',null,n0(v)),el('span',null,l2));pr.appendChild(x)});r.appendChild(pr);cv.appendChild(r)}
       c.appendChild(cv);
-      {const R3=[['Net per 100',a=>lxNet(a.c),1],['Scored per 100',a=>lxOff(a.c),1],['Allowed per 100',a=>lxDef(a.c),-1],['Clutch games',a=>a.cg,0]].map(([l,f,d])=>[l,lxRank(f,d)]).filter(x=>x[1]);
+      {const R3=[['Net per 100',a=>lxNet(a.c),1],['Scored per 100',a=>lxOff(a.c),1],['Allowed per 100',a=>lxDef(a.c),-1],['Clutch games',a=>a.cg,0]].map(([l,f,d])=>[l,qRank(f,d)]).filter(x=>x[1]);
         if(R3.length){const r=el('div','clv-rk');r.appendChild(el('span','k','NBA rank'));R3.forEach(([l,rk])=>{const d2=el('span');d2.innerHTML=`${esc(l)} ${rkEl(rk)}`;r.appendChild(d2)});c.appendChild(r)}}
-      const P=Object.entries(J.pq||{}).filter(([,x])=>x.clutch&&x.clutch[0]>0).map(([id,x])=>({id,s:x.clutch})).sort((a,b)=>b.s[1]-a.s[1]||b.s[0]-a.s[0]).slice(0,6);
+      const P=Object.entries(QF0?{}:J.pq||{}).filter(([,x])=>x.clutch&&x.clutch[0]>0).map(([id,x])=>({id,s:x.clutch})).sort((a,b)=>b.s[1]-a.s[1]||b.s[0]-a.s[0]).slice(0,6);
       if(P.length){const t=el('table','zt');t.style.marginTop='12px';t.innerHTML='<tr><th>Player</th><th>Min</th><th>Pts</th><th>FG</th><th>3PT</th><th>+/-</th></tr>';P.forEach(({id,s:x})=>{const tr=el('tr');tr.append(el('td',null,(J.P[id]||{}).short||id),el('td',null,fmtMin(x[0])),el('td',null,String(x[1])),el('td',null,x[2]+'-'+x[3]),el('td',null,x[4]+'-'+x[5]),el('td',pmCls(x[6]),sgn(x[6])));t.appendChild(tr)});const ww=el('div','tw');ww.appendChild(t);c.appendChild(ww)}}
     v.appendChild(c)}
   /* starters vs bench */
