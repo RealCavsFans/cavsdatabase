@@ -16,7 +16,10 @@ const C = require('../live-core.js');
 
 const SEASON = process.env.SEASON || '2026-27';
 const ESPN_YEAR = +SEASON.slice(0, 4) + 1;           // ESPN names a season by the year it ends
-const DIR = path.join('live-archive', SEASON);
+/* Nov 3: POST=1 builds the postseason (play-in + playoffs, NBA ids 005/004) into live-archive/<season>-post/, same file shapes,
+   from the NBA game store only (ESPN isn't read). The regular-season folder is never touched by a POST run. */
+const POST = !!process.env.POST;
+const DIR = path.join('live-archive', SEASON + (POST ? '-post' : ''));
 const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/';
 fs.mkdirSync(DIR, { recursive: true });
 /* Nov 2: the NBA's own files come first. When the NBA game store (the 'nba-data' branch, scripts/nba-store.mjs) is checked out
@@ -25,9 +28,9 @@ fs.mkdirSync(DIR, { recursive: true });
 const NBA_DIR = process.env.NBA_DIR || 'nba-data';
 const NIDX = path.join(NBA_DIR, SEASON, 'index.json');
 const NBA_MODE = fs.existsSync(NIDX) && !process.env.NO_NBA;
-const EDIR = NBA_MODE ? path.join(DIR, 'espn') : DIR;
+const EDIR = NBA_MODE && !POST ? path.join(DIR, 'espn') : DIR;
 fs.mkdirSync(EDIR, { recursive: true });
-if (NBA_MODE) for (const f of fs.readdirSync(DIR)) if (/^4\d{8}\.json$/.test(f) && !fs.existsSync(path.join(EDIR, f))) fs.renameSync(path.join(DIR, f), path.join(EDIR, f));
+if (NBA_MODE && !POST) for (const f of fs.readdirSync(DIR)) if (/^4\d{8}\.json$/.test(f) && !fs.existsSync(path.join(EDIR, f))) fs.renameSync(path.join(DIR, f), path.join(EDIR, f));
 
 async function get(u) {
   for (let i = 0; i < 3; i++) {
@@ -42,7 +45,7 @@ async function get(u) {
 }
 
 /* 1) which Cavs regular-season games are final */
-const sched = process.env.SKIP_FETCH ? { events: [] } : await get(`${ESPN}teams/5/schedule?season=${ESPN_YEAR}&seasontype=2`);
+const sched = process.env.SKIP_FETCH || POST ? { events: [] } : await get(`${ESPN}teams/5/schedule?season=${ESPN_YEAR}&seasontype=2`);
 if (!sched) console.log('No schedule from ESPN; trying the backup feed for missing games.');
 const finals = ((sched && sched.events) || []).filter(e => {
   const st = e.competitions && e.competitions[0] && e.competitions[0].status && e.competitions[0].status.type;
@@ -102,11 +105,11 @@ if (NBA_MODE) {
   const applyFixes = (gid, raw) => applyFixesTo(raw, FIX[gid], m => console.log(m, gid));
   const etOf = t => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(t));
   const espnBy = {};
-  for (const f of fs.readdirSync(EDIR).filter(f => /^\d+\.json$/.test(f))) { const s = JSON.parse(fs.readFileSync(path.join(EDIR, f), 'utf8')); espnBy[etOf(s.header.competitions[0].date)] = { id: f.slice(0, -5), s }; }
+  if (!POST) for (const f of fs.readdirSync(EDIR).filter(f => /^\d+\.json$/.test(f))) { const s = JSON.parse(fs.readFileSync(path.join(EDIR, f), 'utf8')); espnBy[etOf(s.header.competitions[0].date)] = { id: f.slice(0, -5), s }; }
   const covered = new Set(), byName = {}; let nw = 0;
   for (const [gid, row] of Object.entries(nidx)) {
     if (row[1] !== 'CLE' && row[2] !== 'CLE') continue;
-    if (!gid.startsWith('002')) continue;   // regular season only, like ESPN's schedule (seasontype=2)
+    if (POST ? !/^00[45]/.test(gid) : !gid.startsWith('002')) continue;   // regular season only (NBA Cup group games count), or with POST the play-in (005) and playoffs (004)
     const d = row[0].slice(0, 4) + '-' + row[0].slice(4, 6) + '-' + row[0].slice(6, 8);
     let raw; try { raw = JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(NBA_DIR, SEASON, gid + '.json.gz')))); } catch (e) { console.log('NBA store: unreadable', gid, String(e)); continue; }
     applyFixes(gid, raw);
@@ -228,13 +231,13 @@ function build(per, file) {
   shots.forEach(s => s[8] = remap[s[8]]); for (const v of Object.values(dx)) v.blk.forEach(b => b[3] = remap[b[3]]); for (const v of Object.values(rot)) v.forEach(x => x[0] = remap[x[0]]); oshots.forEach(s => s[7] = remap[s[7]]); asts.forEach(a => a[3] = remap[a[3]]);
   const pz2 = {}; for (const [id, z] of Object.entries(pz)) { pz2[id] = {}; for (const [g, v] of Object.entries(z)) pz2[id][remap[g]] = v; }
   /* game highs (Nov 1): each game against this season's earlier games and the Basketball Reference history (pdata/highs-hist.json) */
-  if (per === 'all' && C.highsL) {
+  if (per === 'all' && C.highsL && !POST) {
     let H = null; try { H = JSON.parse(fs.readFileSync('pdata/highs-hist.json', 'utf8')); } catch {}
     const lines = gs.map(g => g.hl && { id: g.id, opp: g.opp, ...g.hl });
     gs.forEach((g, i) => { if (!lines[i]) return; const prior = lines.slice(0, i).filter(Boolean); for (const [l, t] of C.highsL(lines[i], prior, H)) g.rc.push([l, t]); });
     fs.writeFileSync(path.join(DIR, 'highs.json'), JSON.stringify(lines.filter(Boolean)));
   }
-  const out = { season: SEASON, per, updated: new Date().toISOString(), games: gs.map(({ recap, rc, hl, ...g }) => g), P, B, gp, L, shots, oshots, asts, pz: pz2, T, pc, pcO, cx, ...(per === 'all' ? { rot, dx } : {}) };
+  const out = { season: SEASON + (POST ? '-post' : ''), ...(POST ? { post: true } : {}), per, updated: new Date().toISOString(), games: gs.map(({ recap, rc, hl, ...g }) => g), P, B, gp, L, shots, oshots, asts, pz: pz2, T, pc, pcO, cx, ...(per === 'all' ? { rot, dx } : {}) };
   fs.writeFileSync(path.join(DIR, file), JSON.stringify(out));
   if (per === 'all') fs.writeFileSync(path.join(DIR, 'index.json'), JSON.stringify(gs.map(g => ({ id: g.id, espn: g.espn, date: g.date, et: g.et, opp: g.opp, ha: g.ha, cle: g.cle, os: g.os, rc: g.rc }))));
   console.log(`${file}: ${gs.length} games, ${shots.length} shots, ${Object.keys(L[5]).length} five-man lineups`);
