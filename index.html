@@ -5453,6 +5453,67 @@ const INTRO_V='tait';
   const ref=(h-B-2)*w*4;const r0=d[ref+x0*4],g0=d[ref+x0*4+1],b0=d[ref+x0*4+2];let y=h-B-1;
   for(;y>0;y--){let hit=false;for(let x=x0;x<x1;x+=2){const i=(y*w+x)*4;if(Math.abs(d[i]-r0)+Math.abs(d[i+1]-g0)+Math.abs(d[i+2]-b0)>24){hit=true;break}}if(hit)break}
   const body=Math.min(h-B,Math.ceil(y+1+padB*S));if(body>=h-B-2)return cv;const out=document.createElement('canvas');out.width=w;out.height=body+B;const o=out.getContext('2d');o.drawImage(cv,0,0,w,body,0,0,w,body);o.drawImage(cv,0,h-B,w,B,0,body,w,B);return out}
+ /* MOCK (Nov 3): the terminal share look. Off: set TERM_ON=false */
+ const TERM_ON=true;
+ const TERM_CSS=`.tpz{position:fixed;left:-10000px;top:0;width:470px;background:radial-gradient(120% 70% at 100% 0%,#4a0a25 0%,#1a0f16 42%,#0d1014 100%);color:#fff;padding:26px 26px 0;font-family:var(--sans);overflow:hidden;
+ --fg:#fff;--fg2:#e8e9ea;--muted:rgba(255,255,255,.55);--line:rgba(255,255,255,.16);--line2:rgba(255,255,255,.08);--card:#12151a;--sub:rgba(255,255,255,.05);--track:rgba(255,255,255,.1);--wine-ink:#F2B231}
+ .tpz *{box-sizing:border-box}.tpz .hs{position:absolute;right:-30px;top:14px;height:232px;-webkit-mask-image:linear-gradient(180deg,#000 55%,transparent 100%);mask-image:linear-gradient(180deg,#000 55%,transparent 100%)}
+ .tpz .br{position:relative;display:flex;align-items:center;gap:7px;font:700 13px var(--mono)}.tpz .br i{color:#F2B231;font-style:normal}
+ .tpz .eb{position:relative;margin-top:24px;font:700 11px var(--sans);letter-spacing:.18em;color:#F2B231;text-transform:uppercase}
+ .tpz h1{position:relative;margin:6px 0 0!important;font:800 52px/.9 var(--cond)!important;text-transform:uppercase;max-width:250px!important;width:250px;letter-spacing:0!important;color:#fff!important}
+ .tpz .ld{position:relative;margin:10px 0 0;max-width:235px!important;font:400 12.5px/1.42 var(--sans);color:rgba(255,255,255,.64);max-width:260px}
+ .tpz .cmd{position:relative;margin-top:20px;font:600 12px var(--mono);color:#F2B231}.tpz .cmd span{color:rgba(255,255,255,.5)}
+ .tpz .tb{margin-top:9px;font:500 12px/1 var(--mono)}
+ .tpz .h,.tpz .r{display:grid;gap:8px;align-items:center}
+ .tpz .h{color:rgba(255,255,255,.42);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding-bottom:7px;border-bottom:1px dashed rgba(255,255,255,.26)}
+ .tpz .h>*:not(:first-child),.tpz .r>*:not(:first-child){text-align:right}.tpz .h>.bl,.tpz .r>.bl{text-align:left}
+ .tpz .r{padding:9px 0;border-bottom:1px dashed rgba(255,255,255,.12)}
+ .tpz .r .l{text-align:left!important;font:700 15px/1.05 var(--cond);text-transform:uppercase;letter-spacing:.03em}.tpz .r .l small{display:block;font:500 9.5px var(--mono);color:rgba(255,255,255,.4);text-transform:none;letter-spacing:0;margin-top:2px}
+ .tpz .r .v{font:800 21px/1 var(--cond)}.tpz .r .c{color:rgba(255,255,255,.55)}
+ .tpz .bl{font:500 12.5px/1 var(--mono);letter-spacing:-1px;color:#F2B231;white-space:nowrap}.tpz .bl i{font-style:normal;color:rgba(255,255,255,.14)}.tpz .bl b{color:#fff;letter-spacing:0;font-weight:500;margin-left:5px}
+ .tpz .up{color:#F2B231}.tpz .dn{color:#e0477f}
+ .tpz .kv{margin-top:9px}.tpz .kv>div{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,.12)}
+ .tpz .kv b{font:800 30px/1 var(--cond)}.tpz .kv span{font:500 11.5px var(--mono);color:rgba(255,255,255,.62)}
+ .tpz .ch{margin-top:14px;border:1px dashed rgba(255,255,255,.18);padding:8px}.tpz .ch svg{display:block;width:100%;height:auto}
+ .tpz .nt{margin-top:12px;font:500 10.5px/1.5 var(--mono);color:rgba(255,255,255,.5)}.tpz .nt p{margin:0 0 4px}
+ .tpz .cur{display:inline-block;width:7px;height:12px;background:#F2B231;vertical-align:-2px;margin-left:3px}
+ .tpz .ft{display:flex;justify-content:space-between;margin-top:18px;padding:10px 0 12px;font:500 10px var(--mono);color:rgba(255,255,255,.42)}
+ .tpz .gb{height:4px;background:#F2B231;margin:0 -26px}`;
+ async function termPoster(ms,route,label,box){
+  const T=t=>String(t||'').replace(/\s+/g,' ').trim();const card=box.closest('.ppx-c')||box;
+  const title=T((card.querySelector('h2')||{}).textContent);const [who]=String(label||'').split(' · ');const whys=[...card.querySelectorAll('p.ppx-why')];const desc=whys.length&&whys[0].previousElementSibling&&whys[0].previousElementSibling.classList.contains('ppx-ch')?whys.shift():null;
+  const tbl=[...card.querySelectorAll('table')].find(t=>!t.closest('.noshot')&&t.rows.length>1);const tiles=[...card.querySelectorAll('.ppx-big2>div')];
+  const svgs=[...card.querySelectorAll('svg')].filter(v=>{const r=v.getBoundingClientRect();return r.width>220&&r.height>120});
+  if(!tbl&&!tiles.length)return null;
+  if(!document.getElementById('tpz-css')){const st=document.createElement('style');st.id='tpz-css';st.textContent=TERM_CSS;document.head.appendChild(st)}
+  const esc=x=>String(x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
+  const pid=((document.querySelector('.ppx-ph img')||{}).src||'').match(/(\d{5,})\.png/);const last=who.split(' ').filter(x=>!/^(jr\.?|sr\.?|ii|iii|iv)$/i.test(x)).slice(-1)[0]||who;
+  const slugT=title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  let h=`<img class="hs" src="${pid?'/img/h/'+pid[1]+'.png':''}" alt=""><div class="br"><svg width="20" height="20" viewBox="0 0 100 100"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/></svg>cavs<i>_db</i></div><div class="eb">${esc(title)}</div><h1>${esc(who)}</h1>${desc?`<p class="ld">${esc(T(desc.textContent))}</p>`:''}<div class="cmd">&gt; ${esc(last.toLowerCase().replace(/[^a-z]/g,''))} <span>--${esc(slugT)}</span></div>`;
+  if(tiles.length)h+='<div class="kv">'+tiles.map(d=>`<div><b>${esc(T((d.querySelector('b')||{}).textContent))}</b><span>${esc(T((d.querySelector('span')||{}).textContent))}</span></div>`).join('')+'</div>';
+  if(svgs.length&&!tbl){const sv=svgs[0].cloneNode(true);sv.removeAttribute('width');sv.removeAttribute('height');h+='<div class="ch">'+sv.outerHTML+'</div>'}
+  if(tbl){const H=[...tbl.rows[0].cells].map(c=>T(c.textContent));const rows=[...tbl.rows].slice(1).filter(r=>r.cells.length===H.length).map(r=>[...r.cells]);
+   const fi=H.findIndex(x=>/^fg%$/i.test(x)),li=H.findIndex(x=>/^(league|nba)$/i.test(x)),si=H.findIndex(x=>/^(share|freq)$/i.test(x));
+   /* columns: label, share (as block bars), then the percent/rate columns; plain counts drop when there are more than five */
+   let cols=H.map((x,i)=>i);if(si>0)cols=[0,si,...cols.filter(i=>i&&i!==si)];
+   const isCount=i=>rows.every(r=>/^\d+[-–]\d+$/.test(T(r[i].textContent)));
+   if(cols.length+(fi>=0&&li>=0?1:0)>5)cols=cols.filter(i=>!isCount(i));
+   const addD=fi>=0&&li>=0;const n=cols.length+(addD?1:0);
+   const gt=['minmax(0,1.2fr)'].concat(cols.slice(1).map(i=>i===si?'minmax(0,1.5fr)':'48px'),addD?['40px']:[]).join(' ');
+   const lab=i=>i===si?'Share of shots':i===li?'NBA':H[i];/* header cells: plain labels */
+   h+=`<div class="tb"><div class="h" style="grid-template-columns:${gt}">`+cols.map(i=>`<span style="${i===si?'text-align:left':''}">${esc(lab(i))}</span>`).join('')+(addD?'<span>+/−</span>':'')+'</div>';
+   rows.forEach(r=>{const lc=r[0];const sm=lc.querySelector('small');const main=T(sm?[...lc.childNodes].filter(x=>x!==sm).map(x=>x.textContent).join(''):lc.textContent);
+    h+=`<div class="r" style="grid-template-columns:${gt}"><span class="l">${esc(main)}${sm?`<small>${esc(T(sm.textContent))}</small>`:''}</span>`;
+    cols.slice(1).forEach(i=>{const t=T(r[i].textContent);if(i===si){const v=parseFloat(t)||0,k=Math.max(0,Math.min(10,Math.round(v/50*10)));h+=`<span class="bl">${'█'.repeat(k)}<i>${'█'.repeat(10-k)}</i><b>${esc(t)}</b></span>`}else h+=`<span class="${i===fi?'v':i===li?'c':''}">${esc(t.replace(/%$/,i===fi?'':'%').replace(/%%$/,'%'))}</span>`});
+    if(addD){const a=parseFloat(T(r[fi].textContent)),b=parseFloat(T(r[li].textContent));const d=Math.round(a-b);h+=isFinite(d)?`<span class="${d>=0?'up':'dn'}">${d>0?'+':d<0?'−':'±'}${Math.abs(d)}</span>`:'<span>–</span>'}
+    h+='</div>'});h+='</div>'}
+  const notes=whys.map(p=>T(p.textContent)).filter(Boolean);const key=card.querySelector('.capkey');if(key)notes.push(T(key.textContent));
+  if(notes.length)h+='<div class="nt">'+notes.map((t,i)=>`<p># ${esc(t)}${i===notes.length-1?'<span class="cur"></span>':''}</p>`).join('')+'</div>';
+  h+=`<div class="ft"><span>cavsdatabase.com/${esc(route)}</span><span>${new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</span></div><div class="gb"></div>`;
+  const z=document.createElement('div');z.className='tpz';z.innerHTML=h;document.body.appendChild(z);
+  try{await Promise.all([...z.querySelectorAll('img')].map(i=>i.complete?0:new Promise(r=>{i.onload=i.onerror=r;setTimeout(r,3000)})));
+   const o={scale:2,backgroundColor:'#0d1014',fetchFn,timeout:6000,width:z.offsetWidth,height:z.offsetHeight,style:{left:'0',top:'0',position:'static'}};try{await ms.domToCanvas(z,{...o,scale:.3})}catch(e){}
+   return await ms.domToCanvas(z,o)}finally{z.remove()}}
  async function capture(route,id,label,boxes,btn){
   btn.disabled=true;toast('Making the image…');let capEl=null,capKeyEl=null;
   try{const ms=await load();let el=boxes[0];
@@ -5461,6 +5522,10 @@ const INTRO_V='tait';
    el.classList.add('capmode');capEl=el;
    /* Nov 3 (Luka): player-page images carry a one-line key for the NBA ranks */
    if(/^players\//.test(route)){const last=boxes[boxes.length-1],tx=boxes.map(b=>b.textContent).join(' ');if(/\b\d+(st|nd|rd|th) of \d+/.test(tx)){capKeyEl=document.createElement('p');capKeyEl.className='capkey';capKeyEl.innerHTML='<b>How to read the ranks</b> · Ranks are against every NBA player in his position group with real minutes. 1st = the best (the fewest for turnovers and fouls)'+(/Usage/.test(tx)?'; for usage, 1st = the biggest role.':'.');last.appendChild(capKeyEl)}}
+   /* MOCK (terminal look): player-page images become a dark cavs_db poster with the card's numbers as terminal output */
+   if(TERM_ON&&/^players\//.test(route)&&boxes.length===1){const tcv=await termPoster(ms,route,label,boxes[0]);if(tcv){const blob=await new Promise(r=>tcv.toBlob(r,'image/png'));const name='cavsdb-'+id+'-'+new Date().toISOString().slice(0,10)+'.png';const file=new File([blob],name,{type:'image/png'});
+     const save=()=>{if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:label+' | cavs_db'}).catch(()=>{})}else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Image saved')}};
+     if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]}))toast('Image ready','Save or share',save);else save();return}}
    /* links mean nothing on a picture: hide "… →" and "… ↗" links (and a line that holds only one) while drawing */
    boxes.forEach(bx=>bx.querySelectorAll('a').forEach(a=>{if(!/[→↗]\s*$/.test(a.textContent))return;const pa=a.parentElement;(pa&&pa!==bx&&pa.children.length===1&&pa.textContent.trim()===a.textContent.trim()?pa:a).setAttribute('data-caphide','')}));
    let bg=getComputedStyle(el).backgroundColor;if(!bg||bg==='rgba(0, 0, 0, 0)'||bg==='transparent'){let a=el.closest('section')||el.parentElement;while(a){const b=getComputedStyle(a).backgroundColor;if(b&&b!=='rgba(0, 0, 0, 0)'&&b!=='transparent'){bg=b;break}a=a.parentElement}if(!a)bg=getComputedStyle(document.body).backgroundColor}
