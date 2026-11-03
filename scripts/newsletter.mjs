@@ -113,7 +113,7 @@ const fontLink = `<!--[if !mso]><!--><link href="https://fonts.googleapis.com/cs
 const wrapOpen = bg => `<meta name="viewport" content="width=device-width,initial-scale=1">${fontLink}<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#EEF0F2"><tr><td align="center" style="padding:0">
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:${bg}">
 <tr><td><a href="${SITE}"><img src="${SITE}/nl/header.png" width="600" alt="Cavs &amp; Coffee · freshly brewed after every game · presented by cavs_db" style="display:block;width:100%;max-width:600px;height:auto;border:0"></a></td></tr>`;
-const footLinks = [['Roster', 'roster'], ['Cap', 'cap'], ['Assets', 'assets'], ['History', 'history'], ['Live stats', 'live']];
+const footLinks = [['Live stats', 'live'], ['Cap', 'cap'], ['Assets', 'assets'], ['Roster', 'roster'], ['History', 'history']];
 const FOOT_LOGO = ['logo-t.png', 120];   /* Nov 3: transparent wordmark (Luka's pick over the wine block, nl/logo.png) */
 /* Nov 3 footer (Luka: the old one was too clunky): small logo, one row of links, the two asks as plain links on one line, then the fine print in one small block */
 const footer = (rule) => {
