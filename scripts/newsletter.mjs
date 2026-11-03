@@ -114,18 +114,15 @@ const fontLink = `<!--[if !mso]><!--><link href="https://fonts.googleapis.com/cs
 const wrapOpen = bg => `<meta name="viewport" content="width=device-width,initial-scale=1">${fontLink}<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#EEF0F2"><tr><td align="center" style="padding:0">
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:${bg}">
 <tr><td><a href="${SITE}"><img src="${SITE}/nl/header.png" width="600" alt="Cavs &amp; Coffee · freshly brewed after every game · presented by cavs_db" style="display:block;width:100%;max-width:600px;height:auto;border:0"></a></td></tr>`;
-const footLinks = [['Roster', 'roster'], ['Cap sheet', 'cap'], ['Draft picks', 'assets'], ['Injuries', '#inj'], ['Staff', 'staff'], ['Live stats', 'live']];
-/* Nov 1 footer: one closing block. Logo and tagline, site links, then the two asks side by side (share, coffee), then the fine print */
+const footLinks = [['Roster', 'roster'], ['Cap', 'cap'], ['Picks', 'assets'], ['Injuries', '#inj'], ['Live stats', 'live']];
+/* Nov 3 footer (Luka: the old one was too clunky): small logo, one row of links, the two asks as plain links on one line, then the fine print in one small block */
 const footer = (rule) => {
-  const btn = (href, label) => `<a href="${href}" style="display:inline-block;border:1px solid #D9D4CC;background:#FFFFFF;padding:7px 12px;color:#860038;font:700 12px ${F.sans};text-decoration:none;white-space:nowrap">${label}</a>`;
-  return `<tr><td style="padding:22px 16px 26px;text-align:center;font:12px/1.7 ${F.sans};color:#5D646C">${rule || ''}
-<a href="${SITE}" style="text-decoration:none"><img src="${SITE}/nl/logo.png" width="126" alt="cavs_db" style="display:block;width:126px;height:auto;border:0;margin:0 auto"></a>
-<div style="font:600 12px ${F.sans};color:#5D646C;margin:8px 0 10px">Everything Cavaliers. Everything you need.</div>
-${[footLinks.slice(0, 3), footLinks.slice(3)].map(row => `<div style="font:700 12.5px/1.9 ${F.sans};white-space:nowrap">${row.map(([t, r]) => `<a href="${SITE}/${r}" style="color:#860038;text-decoration:none">${t}</a>`).join(' &nbsp;·&nbsp; ')}</div>`).join('')}
-<div style="margin:16px 0 4px;font:12px/1.5 ${F.sans};color:#5D646C">Know a Cavs fan who&rsquo;d want this with their coffee?</div>
-<div style="margin:0 0 16px;line-height:2.6">${btn('https://buttondown.com/cavscoffee/?referral_code={{ subscriber.referral_code }}', 'Share Cavs &amp; Coffee &rarr;')}&nbsp;&nbsp;${btn('https://www.buymeacoffee.com/cavsdb', '&#9749; Buy cavs_db a coffee')}</div>
-<div style="border-top:1px dotted #D9D4CC;padding-top:12px;font:600 11px/1.5 ${F.sans};color:#5D646C;margin-bottom:6px">Add us to your contacts so we land in your inbox.</div>
-<div style="font:10.5px/1.7 ${F.sans};color:#8A8F96"><span style="white-space:nowrap">Independent fan site, not affiliated with the Cavs or NBA.</span><br><span style="white-space:nowrap;color:#8A8F96;text-decoration:none">Cavs Database · P.O.&zwnj; Box 151 · West Jeff&zwnj;erson, OH 43&zwnj;162</span><!--UNSUB--></div></td></tr></table></td></tr></table>`;
+  const lk = (href, label) => `<a href="${href}" style="color:#860038;text-decoration:none;font-weight:700;white-space:nowrap">${label}</a>`;
+  return `<tr><td style="padding:20px 16px 24px;text-align:center;font:12px/1.7 ${F.sans};color:#5D646C">${rule || ''}
+<a href="${SITE}" style="text-decoration:none"><img src="${SITE}/nl/logo.png" width="96" alt="cavs_db" style="display:block;width:96px;height:auto;border:0;margin:0 auto 10px"></a>
+<div style="font:12.5px/1.8 ${F.sans}">${footLinks.map(([t, r]) => lk(`${SITE}/${r}`, t)).join(' &nbsp;·&nbsp; ')}</div>
+<div style="font:12.5px/1.8 ${F.sans};margin:6px 0 14px">${lk('https://buttondown.com/cavscoffee/?referral_code={{ subscriber.referral_code }}', 'Share with a Cavs fan &rarr;')} &nbsp;·&nbsp; ${lk('https://www.buymeacoffee.com/cavsdb', '&#9749; Buy cavs_db a coffee')}</div>
+<div style="border-top:1px dotted #D9D4CC;padding-top:10px;font:10.5px/1.7 ${F.sans};color:#8A8F96">Independent fan site, not affiliated with the Cavs or NBA. Add us to your contacts so we land in your inbox.<br><span style="white-space:nowrap">Cavs Database · P.O.&zwnj; Box 151 · West Jeff&zwnj;erson, OH 43&zwnj;162</span><!--UNSUB--></div></td></tr></table></td></tr></table>`;
 };
 const T = (inner, attrs = '') => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" ${attrs}>${inner}</table>`;
 
