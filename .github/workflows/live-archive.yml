@@ -57,12 +57,14 @@ jobs:
           sparse-checkout: |
             ${{ github.event.inputs.season || '2026-27' }}
             fixes.json
-      - run: node scripts/nba-store.mjs nba-data || echo "::warning::NBA feed unavailable; using ESPN"
+      - run: |
+          node scripts/nba-store.mjs nba-data || { echo "::warning::NBA feed unavailable; using ESPN"; [ -n "$NTFY_TOPIC" ] && curl -s -m 15 -H "Title: NBA feed down, game archive used ESPN" -H "Tags: warning" -d "The NBA's files didn't answer, so tonight's Cavs game was saved from ESPN. It switches back on its own." "https://ntfy.sh/$NTFY_TOPIC"; true; }
         if: steps.gate.outputs.go == '1' && (github.event.inputs.season || '2026-27') == '2026-27'
         continue-on-error: true
         env:
           SEASON: ${{ github.event.inputs.season || '2026-27' }}
           TEAM: CLE
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
       - run: node scripts/live-archive.mjs
         if: steps.gate.outputs.go == '1'
         env:
@@ -93,3 +95,11 @@ jobs:
             git commit -m "Update live game archive"; sleep $((RANDOM % 20 + i * 10))
           done
           exit 1
+      # Nov 3: a push to Luka's phone (ntfy app, private channel in the NTFY_TOPIC secret) when this job fails
+      - name: Alert on failure
+        if: failure()
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          [ -n "$NTFY_TOPIC" ] || exit 0
+          curl -s -m 15 -H "Title: cavsdatabase: ${{ github.workflow }} failed" -H "Priority: high" -H "Tags: warning" -H "Click: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" -d "The job stopped with an error. Tap to open the run on GitHub." "https://ntfy.sh/$NTFY_TOPIC" || true

@@ -54,3 +54,11 @@ jobs:
             git rebase --abort 2>/dev/null || true; sleep $((RANDOM % 20 + i * 10))
           done
           exit 1
+      # Nov 3: a push to Luka's phone (ntfy app, private channel in the NTFY_TOPIC secret) when this job fails
+      - name: Alert on failure
+        if: failure()
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          [ -n "$NTFY_TOPIC" ] || exit 0
+          curl -s -m 15 -H "Title: cavsdatabase: ${{ github.workflow }} failed" -H "Priority: high" -H "Tags: warning" -H "Click: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" -d "The job stopped with an error. Tap to open the run on GitHub." "https://ntfy.sh/$NTFY_TOPIC" || true
