@@ -663,6 +663,11 @@ ul.plays li.st-pick{cursor:pointer}ul.plays li.st-in{background:color-mix(in srg
 .capkey{margin:10px 0 0;padding:0;border:0;font:500 .6875rem/1.45 var(--sans);color:var(--muted,#5D646C)}.capkey b{font-weight:700}
 details.stx{margin-top:10px;border-top:1px solid var(--line2)}details.stx>summary{list-style:none;cursor:pointer;padding:9px 0 2px;font:700 .75rem var(--sans);color:var(--muted);display:flex;align-items:center;gap:6px}details.stx>summary::-webkit-details-marker{display:none}details.stx>summary::after{content:'';width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin-top:-3px}details.stx[open]>summary::after{transform:rotate(-135deg);margin-top:3px}details.stx>p.note:first-of-type{margin-top:4px!important}
 @media (max-width:640px){.clv{gap:10px!important}.clv-g{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px!important}.clv-g>div{min-width:0!important;max-width:none!important;padding:4px 5px!important;border-top-width:3px!important}.clv-g b{font-size:.75rem!important}.clv-g span{font-size:.625rem!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.clv-g small{font-size:.5625rem!important}.clv-sb{height:22px!important}.clv-sb span{font-size:.6875rem!important;padding:0 6px!important}.clv-p{gap:20px!important}.clv-p b{font-size:1.125rem!important}.clv-p span{font-size:.6875rem!important}.clv-k{margin-bottom:4px!important;font-size:.625rem!important}.clv-rk{font-size:.75rem!important;gap:6px 12px!important}}
+.pre-n{font-size:.75rem!important;margin-top:8px!important}
+/* Nov 3: scouting report: last games as tiles; the two shot-chart toggles as tidy segmented controls */
+.sc-l5{display:grid;grid-template-columns:repeat(var(--n,5),minmax(0,1fr));gap:6px;margin:4px 0 12px}.sc-l5>div{background:var(--sub);border-top:3px solid var(--miss,#9aa0a8);padding:6px 6px 5px;display:grid;gap:1px;text-align:center;min-width:0}.sc-l5>div.w{border-top-color:#860038}.sc-l5 b{font:800 .9375rem var(--cond)}.sc-l5 .w b{color:#860038}.sc-l5 .s{font:600 .75rem var(--mono);white-space:nowrap}.sc-l5 .o{font:600 .6875rem var(--sans);color:var(--fg2,#2F363E);white-space:nowrap}.sc-l5 small{font:500 .625rem var(--mono);color:var(--muted)}
+.sc-tg2{display:flex;flex-wrap:wrap;gap:6px 12px;margin:2px 0 10px}.sc-seg{display:inline-flex;border:1px solid var(--line)}.sc-seg button{appearance:none;border:0;background:var(--card);padding:6px 12px;font:700 .75rem var(--sans);color:var(--muted);cursor:pointer;white-space:nowrap}.sc-seg button[aria-pressed=true]{background:var(--fg);color:var(--card)}
+@media (max-width:640px){.sc-l5{gap:4px}.sc-l5>div{padding:5px 2px 4px}.sc-l5 b{font-size:.8125rem}.sc-l5 .s{font-size:.625rem}.sc-l5 .o{font-size:.59375rem}.sc-l5 small{font-size:.5625rem}.sc-tg2{flex-direction:column;gap:6px}.sc-seg{display:flex;width:100%}.sc-seg button{flex:1 1 0;padding:7px 6px;font-size:.6875rem}}
 </style>
 </head>
 <body>
@@ -908,7 +913,7 @@ function teamHeads(v,D){if(!D||!D.focus||!D.other)return;const F=D.focus.abbr,O=
   run();setTimeout(run,600);setTimeout(run,2000)}
 function renderView(){
   const v=$('view'),D=S.data,R=S.R;v.innerHTML='';v.classList.toggle('gm',!S.season&&S.tab!=='lineups');v.classList.toggle('gmp',S.tab==='players');/* keep green/red for lineups and for +/- in the box score *//* game view: no green/red on stats for now (Luka, Oct 28) */
-  if(S.state==='pre'&&!R.plays.length){const c=el('div','card');c.append(el('h2',null,D.away.abbr+' at '+D.home.abbr),el('p',null,'Tip-off '+new Date(D.date).toLocaleString([],{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+(D.venue?' · '+D.venue:'')+(D.bc.length?' · '+D.bc.join(', '):'')+'.'),el('p','empty','Team and player stats, lineups, shots, four factors and rotations fill in once the game starts. The page refreshes every 15 seconds during the game.'));v.appendChild(c);
+  if(S.state==='pre'&&!R.plays.length){const c=el('div','card');c.append(el('h2',null,D.away.abbr+' at '+D.home.abbr),el('p',null,'Tip-off '+new Date(D.date).toLocaleString([],{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+(D.venue?' · '+D.venue:'')+(D.bc.length?' · '+D.bc.join(', '):'')+'.'),el('p','note pre-n','Team and player stats, lineups, shots, four factors and rotations fill in once the game starts. The page refreshes every 15 seconds during the game.'));v.appendChild(c);
     const opp=D.other;const holder=el('div');holder.appendChild(el('p','note','Loading the scouting report…'));v.appendChild(holder);scoutData(opp.id).then(X=>{if(S.data!==D)return;holder.innerHTML='';holder.appendChild(scoutCard(D,X,opp))});return}
   ({season:vSeason,share:vShare,ast:vAst,team:vTeam,players:vPlayers,lineups:vLuHub,shots:vShots,flow:vFlow,ff:vFF,plays:vPlays})[S.tab](v,D,R);
   teamHeads(v,D);
@@ -1471,7 +1476,8 @@ async function scoutData(tid){
 }
 function scoutCard(D,X,team){
   const c=el('div','card sec');const n=X.games.length;head(c,'Scouting the '+team.name,n?(n>1?`Their last ${n} games`:'Their only game')+(X.last?' of 2025–26':' this season'):'No recent games to scout yet.');if(!n)return c;
-  const res=el('div','chips');X.games.forEach(({G,R:RR})=>{const me=G.focus,op=G.other;const a=me.ha==='home'?RR.hs:RR.as,b=me.ha==='home'?RR.as:RR.hs;const d=new Date(G.date);const sp=el('span','',`${d.getMonth()+1}/${d.getDate()} ${me.ha==='home'?'vs':'@'} ${op.abbr} ${a>b?'W':'L'} ${a}–${b}`);sp.style.cssText='padding:5px 10px;border-radius:999px;font:600 0.8125rem var(--sans);background:'+(a>b?'color-mix(in srgb,var(--pos) 15%,var(--card))':'var(--sub)');res.appendChild(sp)});c.appendChild(res);
+  /* Nov 3 (Luka): their recent results as one row of small tiles (W/L, score, opponent, date) instead of wrapping pills */
+  const res=el('div','sc-l5');res.style.setProperty('--n',X.games.length);X.games.forEach(({G,R:RR})=>{const me=G.focus,op=G.other;const a=me.ha==='home'?RR.hs:RR.as,b=me.ha==='home'?RR.as:RR.hs;const d=new Date(G.date);const t=el('div',a>b?'w':'l');t.append(el('b',null,a>b?'W':'L'),el('span','s',a+'–'+b),el('span','o',(me.ha==='home'?'vs ':'@ ')+op.abbr),el('small',null,(d.getMonth()+1)+'/'+d.getDate()));res.appendChild(t)});c.appendChild(res);
   /* pace and four factors */
   const T=X.T,O=X.O;const P2=t=>poss({fga:t.fga,oreb:(t.oreb||0),to:t.to,fta:t.fta,np:t.np});const pace=(P2(T)+P2(O))/2/(T.sec||1)*2880;const fa=factors(T,O);
   const g=el('div','ff');[['Pace',pace.toFixed(1),'Possessions per 48'],['Offense',(T.pts/P2(T)*100).toFixed(1),'Points per 100'],['Defense',(O.pts/P2(O)*100).toFixed(1),'Allowed per 100'],['3PT rate',Math.round(T.tpa/T.fga*100)+'%','Share of shots from three']].forEach(([a,b,cc])=>{const x=el('div','ffc');x.append(el('div','n',a));const r=el('div','row');r.appendChild(el('b',null,b));x.appendChild(r);x.appendChild(el('p','note',cc));x.dataset.k=a;g.appendChild(x)});c.appendChild(g);
@@ -1500,8 +1506,8 @@ function scoutCard(D,X,team){
   /* where they shoot */
   c.appendChild(el('h3',null,'Where they shoot'));
   /* toggles: their shots or what they allow; last 5 games or the season (Oct 31) */
-  const st={side:'f',rng:'l'};const tg=el('div','sc-tg');const g2=el('div','grid2 scg2');const left=el('div','zchart');const right=el('div');
-  const mk=(k,opts)=>{const w=el('div','fl');w.style.marginBottom='6px';opts.forEach(([v,l])=>{const b=el('button',null,l);b.type='button';b.onclick=()=>{st[k]=v;draw()};b.dataset.k=k;b.dataset.v=v;w.appendChild(b)});tg.appendChild(w)};
+  const st={side:'f',rng:'l'};const tg=el('div','sc-tg2');const g2=el('div','grid2 scg2');const left=el('div','zchart');const right=el('div');
+  const mk=(k,opts)=>{const w=el('div','sc-seg');opts.forEach(([v,l])=>{const b=el('button',null,l);b.type='button';b.onclick=()=>{st[k]=v;draw()};b.dataset.k=k;b.dataset.v=v;w.appendChild(b)});tg.appendChild(w)};
   mk('side',[['f','Their shots'],['a','What they allow']]);if(X.SS)mk('rng',[['l','Last 5 games'],['s','Season ('+X.SS.n+' games)']]);
   const draw=()=>{tg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',st[b.dataset.k]===b.dataset.v));
     const box=st.rng==='s'&&X.SS?X.SS.s[st.side]:null;const all=box?[]:X.SH.l[st.side];const xy=all.filter(q=>q.hasXY);
