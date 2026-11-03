@@ -4676,7 +4676,7 @@ window.renderPlayer=function(s){
       {const ZNM=['At the rim','Short midrange','Long midrange','Corner 3','Above-the-break 3'],ZS=['Rim','Short mid','Long mid','Corner 3','Above break'];
         const SH=(A.shots||[]).filter(x=>x[0]===id),AS=(A.asts||[]),dx=(A.dx||{})[id];
         const court=(inner,lab)=>'<svg viewBox="0 0 500 360" role="img" aria-label="'+lab+'"><rect x="1" y="1" width="498" height="358" fill="var(--sub)"/>'+inner+'<g fill="none" stroke="var(--line)" stroke-width="2"><rect x="1" y="1" width="498" height="358"/><rect x="170" y="1" width="160" height="190"/><circle cx="250" cy="190" r="60"/><path d="M30 1V140A237.5 237.5 0 0 0 470 140V1"/><path d="M210 52.5A40 40 0 0 0 290 52.5"/><line x1="220" y1="40" x2="280" y2="40"/><circle cx="250" cy="52.5" r="7.5"/></g></svg>';
-        const lgZ=()=>{const LS=PPD.lsh;if(!LS||LS.season!==SE)return null;const z=ZNM.map(()=>[0,0]);Object.values(LS.g||{}).forEach(gm=>Object.values(gm.t||{}).forEach(v=>z.forEach((q,i)=>{q[0]+=v[34+i*2]||0;q[1]+=v[35+i*2]||0})));return z.every(q=>q[1])?z:null};
+        const lgZ=()=>{const LS=PPD.lsh;if(!LS||LS.season!==SE)return null;const z=ZNM.map(()=>[0,0]);Object.values(LS.g||{}).forEach(gm=>Object.values(gm.t||{}).forEach(v=>{const Z0=v.length-ZNM.length*2;/* zones are the last 10 numbers (Nov 3: a 9th shot type, floaters, moved them) */z.forEach((q,i)=>{q[0]+=v[Z0+i*2]||0;q[1]+=v[Z0+1+i*2]||0})}));return z.every(q=>q[1])?z:null};
         const withLS=fn=>{if(PPD.lsh)return fn();fJ('/pdata/league-shots.json').then(r=>r.ok?r.json():null).then(j=>{PPD.lsh=j||{};fn()}).catch(()=>fn())};
         const pct1=(m,a)=>a?(m/a*100).toFixed(1)+'%':'–';
         /* usage vs efficiency: every NBA player in his position group with real minutes */
