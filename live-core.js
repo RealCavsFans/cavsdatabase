@@ -221,6 +221,13 @@ function nbaShotType(a){const sub=String(a.subType||'').toLowerCase(),d=String(a
   const mods=[];Object.keys(W).forEach(k=>{if(d.includes(k)&&!mods.includes(W[k]))mods.push(W[k])});
   return mods.concat(base).join(' ')}
 function fromNBA(box,pbp,extra){extra=extra||{};const g=box.game,acts=((pbp&&pbp.game&&pbp.game.actions)||[]).slice().sort((x,y)=>x.period-y.period||x.orderNumber-y.orderNumber);
+  /* free throws belong to the five on the floor when the foul happened: a sub made between the foul and its free throws moves to after the last one (NBA plus-minus rule) */
+  {const skip=x=>x.actionType==='substitution'||x.actionType==='timeout'||(x.actionType==='rebound'&&!x.personId)||x.actionType==='instantreplay'||x.actionType==='stoppage';
+   for(let i=0;i<acts.length;i++){if(acts[i].actionType!=='substitution')continue;
+    let j=i-1;while(j>=0&&skip(acts[j]))j--;if(j<0||!(acts[j].actionType==='foul'||acts[j].actionType==='freethrow')||acts[j].period!==acts[i].period)continue;
+    let k=i+1;while(k<acts.length&&skip(acts[k]))k++;if(k>=acts.length||acts[k].actionType!=='freethrow')continue;
+    let last=k;for(let m=k+1;m<acts.length;m++){if(acts[m].actionType==='freethrow')last=m;else if(!skip(acts[m]))break}
+    let e=i;while(e+1<last&&acts[e+1].actionType==='substitution')e++;const mv=acts.splice(i,e-i+1);acts.splice(last-mv.length+1,0,...mv);i=last}}
   const tid=t=>String(NBA_TEAM[t.teamTricode]||t.teamId);const H=g.homeTeam,A=g.awayTeam;const byNba={[H.teamId]:tid(H),[A.teamId]:tid(A)};
   const name={},team={};[H,A].forEach(t=>(t.players||[]).forEach(p=>{name[p.personId]=p.name;team[p.personId]=tid(t)}));const N=id=>name[id]||'';
   const st=g.gameStatus===3?'post':g.gameStatus===2?'in':'pre';const per=g.period||1,clk=nbaClock(g.gameClock);
