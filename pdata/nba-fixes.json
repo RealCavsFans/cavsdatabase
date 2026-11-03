@@ -1,16 +1,4 @@
 {
- "0022500093": [
-  {
-   "action": 668,
-   "set": {
-    "personId": 1630578,
-    "playerName": "Sengun",
-    "playerNameI": "A. Sengun"
-   },
-   "was": "K. Durant",
-   "why": "substitution named the wrong player (minutes then match the NBA box score)"
-  }
- ],
  "0022500379": [
   {
    "action": 307,
@@ -47,15 +35,27 @@
    "why": "substitution named the wrong player (minutes then match the NBA box score)"
   }
  ],
+ "0022500737": [
+  {
+   "action": 333,
+   "set": {
+    "personId": 1628970,
+    "playerName": "Bridges",
+    "playerNameI": "M. Bridges"
+   },
+   "was": "T. Mann",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
  "0022500773": [
   {
-   "action": 522,
+   "action": 507,
    "set": {
     "personId": 1630230,
     "playerName": "Marshall",
     "playerNameI": "N. Marshall"
    },
-   "was": "C. Martin",
+   "was": "D. Powell",
    "why": "substitution named the wrong player (minutes then match the NBA box score)"
   }
  ],

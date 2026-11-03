@@ -23,8 +23,13 @@ const secOf = iso => { const m = /PT(\d+)M([\d.]+)S/.exec(iso || ''); return m ?
 function err(raw) {
   let out; try { out = C.fromNBA({ game: raw.box }, { game: raw.pbp }); } catch { return null; }
   const D = C.prep(out), R = C.deriveCore(D, D.plays, 'all'), e = {};
+  const per = Math.max(4, raw.box.period || 4), gameSec = 4 * 720 + (per - 4) * 300;
   for (const t of [raw.box.homeTeam, raw.box.awayTeam]) { let s = 0, worst = 0;
     for (const p of t.players || []) { const b = R.B[String(p.personId)], d = Math.abs((b ? b.min : 0) - secOf((p.statistics || {}).minutes)); s += d; worst = Math.max(worst, d); }
+    // five on the floor the whole game: 5-man lineup time has to equal the game length too (a wrong fix can match minutes with 4 or 6 on the floor)
+    const tm = D.teams.find(x => (t.players || []).some(p => (D.roster[x.id] || []).includes(String(p.personId))));
+    const L5 = tm ? Object.values(((R.L[tm.id] || {})[5]) || {}).reduce((a, l) => a + l.sec, 0) : gameSec, ld = Math.abs(L5 - gameSec);
+    s += ld * 5; worst = Math.max(worst, ld > 2 ? 999 : 0);
     e[t.teamId] = { s, worst }; }
   return e;
 }

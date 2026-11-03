@@ -3,7 +3,8 @@
 //
 //   NBA's own box score adds up    player points = team points = final score = sum of the quarters; minutes = 5 x game length;
 //                                  plus-minus totals 5 x the margin; assists never exceed made shots
-//   Our play-by-play build         every player's minutes, points, rebounds, assists and plus-minus match the NBA box score;
+//   Our play-by-play build         every player's minutes and every box column (points, shots, threes, free throws, rebounds,
+//                                  assists, steals, blocks, turnovers, fouls, plus-minus) match the NBA box score;
 //                                  lineup time = game time; shot chart makes = field goals made
 //   Possessions                    our count within 5 of the NBA's own possession markers, both teams within 4 of each other
 //   Second source (Cavs games)     the NBA's box score against ESPN's (saved in live-archive/<season>/espn/), player by player
@@ -63,7 +64,7 @@ for (const [gid, row] of Object.entries(idx)) {
       if (!b) { if (bs > 0) ours.push(`${p.nameI}: in the box score (${(bs / 60).toFixed(1)} min) but not in our build`); continue; }
       const diffs = [];
       if (Math.abs(b.min - bs) > 36) diffs.push(`min ${(bs / 60).toFixed(1)}/${(b.min / 60).toFixed(1)}`);
-      for (const [k, ok] of [['points', 'pts'], ['assists', 'ast'], ['foulsPersonal', 'pf'], ['fieldGoalsAttempted', 'fga'], ['plusMinusPoints', 'pm']]) if ((q[k] || 0) !== (b[ok] || 0)) diffs.push(`${ok} ${q[k] || 0}/${b[ok] || 0}`);
+      for (const [k, ok] of [['points', 'pts'], ['assists', 'ast'], ['foulsPersonal', 'pf'], ['fieldGoalsAttempted', 'fga'], ['fieldGoalsMade', 'fgm'], ['threePointersMade', 'tpm'], ['threePointersAttempted', 'tpa'], ['freeThrowsMade', 'ftm'], ['freeThrowsAttempted', 'fta'], ['reboundsOffensive', 'oreb'], ['steals', 'stl'], ['blocks', 'blk'], ['turnovers', 'to'], ['plusMinusPoints', 'pm']])   /* Nov 3: every box column, not just the main ones */ if ((q[k] || 0) !== (b[ok] || 0)) diffs.push(`${ok} ${q[k] || 0}/${b[ok] || 0}`);
       if ((q.reboundsTotal || 0) !== (b.oreb || 0) + (b.dreb || 0)) diffs.push(`reb ${q.reboundsTotal || 0}/${(b.oreb || 0) + (b.dreb || 0)}`);
       if (diffs.length) ours.push(`${p.nameI} (${t.teamTricode}): ${diffs.join(', ')} (NBA/ours)`);
     }

@@ -111,10 +111,12 @@ function deriveCore(D,plays,F){
     if(ty==='Substitution'){if(a&&b){const t=teamOf(a);if(t){on[t].delete(b);on[t].add(a);B[a].played=true;leave(b,p.t);join(a,p.t);newSeg()}}return}
     const isFT=/^Free Throw/.test(ty);
     /* the period's first possession: whoever first shoots or turns it over had the ball from the start of the period (Oct 28) */
-    {const tt=p.team&&T[p.team]?p.team:teamOf(a);if(hold===null&&tt&&T[tt]&&((p.shot&&!/Technical/.test(ty))||(/Turnover|^Traveling|Double Dribble|Discontinued? Dribble|Offensive Goaltending|Palming|Backcourt|3-Second Violation$|Inbound/.test(ty)&&!/Kicked|Defensive/.test(ty)))){newPoss(tt,pstart(p.per),'start',inF);hold=tt}}
+    {const tt=p.team&&T[p.team]?p.team:teamOf(a);if(hold===null&&tt&&T[tt]&&((p.shot&&!/Technical/.test(ty))||(/Turnover|^Traveling|Double Dribble|Discontinued? Dribble|Offensive Goaltending|Palming|Backcourt|3-Second Violation$|Inbound/.test(ty)&&!/^Kicked Ball|Defensive/.test(ty)))){newPoss(tt,pstart(p.per),'start',inF);hold=tt}}
     {const tt=p.team&&T[p.team]?p.team:teamOf(a);if(tt&&ps[tt]&&ps[tt].first==null&&(p.shot||/Turnover|Foul/.test(ty)))ps[tt].first=p.t-ps[tt].t}
     if(/Foul/.test(ty)&&!/Offensive|Technical/.test(ty)){snap={t:p.t,per:p.per,on:{}};tid.forEach(x=>snap.on[x]=new Set(on[x]))}
     const ftSnap=isFT&&!/Technical/.test(ty)&&snap&&snap.t===p.t&&snap.per===p.per;const ON=ftSnap?snap.on:on;curON=ftSnap?snap.on:null;
+    /* a blocked heave isn't a shot attempt, but the NBA still credits the block (Nov 3) */
+    if(p.shot&&/Heave/.test(ty)&&!p.sc&&/blocks/.test(p.text||'')){const hb=(p.ids||[]).length>1?b:a;if(hb&&B[hb]){if(inF)(B[hb].blk++,pbA(hb,'blk',1));TT(teamOf(hb)).forEach(x=>x.blk++)}}
     if(p.shot&&a&&B[a]&&!/Heave/.test(ty)){const t=teamOf(a);
       if(isFT&&/ 1 of /.test(ty)&&inF)TT(t).forEach(x=>{x.ftTrips++;if(/1 of 1/.test(ty)&&lastMade&&lastMade.id===a&&lastMade.t===p.t)x.and1++});
       if(!isFT&&p.sc){lastMade={id:a,t:p.t};const g=p.t-(lastFG[t]!=null?lastFG[t]:pstart(1));if(g>=180)dr.push({t,kind:'fg',from:lastFG[t]!=null?lastFG[t]:0,to:p.t});lastFG[t]=p.t}
@@ -134,7 +136,7 @@ function deriveCore(D,plays,F){
     if(/Rebound/.test(ty)){const off=/Offensive/.test(ty);const t=a&&B[a]?teamOf(a):p.team;
       if(t&&T[t]){if(a&&B[a]){if(inF)(B[a][off?'oreb':'dreb']++,pbA(a,off?'oreb':'dreb',1));TT(t).forEach(x=>x[off?'oreb':'dreb']++)}else TT(t).forEach(x=>x[off?'toreb':'tdreb']++);
         if(off){offStat(t,'oreb');src[t]=(src[t].includes('to')?'to':'')+'2nd';newPoss(t,p.t,'oreb',inF)}else{luStat(t,'dreb');src[t]='';newPoss(t,p.t,'dreb',inF)}}}
-    if(/Turnover|^Traveling|Double Dribble|Discontinued? Dribble|Offensive Goaltending|Palming|Backcourt|3-Second Violation$|Inbound/.test(ty)&&!/Kicked|Defensive/.test(ty)){
+    if(/Turnover|^Traveling|Double Dribble|Discontinued? Dribble|Offensive Goaltending|Palming|Backcourt|3-Second Violation$|Inbound/.test(ty)&&!/^Kicked Ball|Defensive/.test(ty)){
       const t=p.team||teamOf(a);if(T[t]){TT(t).forEach(x=>x.to++);if(inF&&a&&B[a]&&teamOf(a)===t)(B[a].to++,pbA(a,'to',1));offStat(t,'to');src[opp(t)]='to';newPoss(opp(t),p.t,b&&/steals/.test(p.text)?'stl':'to',inF)}
       if(b&&/steals/.test(p.text)&&B[b]){if(inF)(B[b].stl++,pbA(b,'stl',1));TT(teamOf(b)).forEach(x=>x.stl++)}}
     else if(/Foul|Offensive Charge/.test(ty)&&!/Technical|Double Technical/.test(ty)&&a&&B[a]){/* Nov 2: charges are personal fouls too */if(inF)B[a].pf++;pfAll[a]=(pfAll[a]||0)+1;TT(teamOf(a)).forEach(x=>x.pf++);
@@ -260,7 +262,7 @@ function fromNBA(box,pbp,extra){extra=extra||{};const g=box.game,acts=((pbp&&pbp
     if(Object.keys(subQ).length&&subKey!==a.period+'|'+a.clock){flushSubs();subKey=null}   /* subs at one moment can be split by free throws or the other team's subs: pair them once the clock moves */
     if(t==='2pt'||t==='3pt'||t==='heave'){const three=t==='3pt'||(t==='heave'&&a.shotDistance>=22),v=three?3:2,made=a.shotResult==='Made',ty=nbaShotType(a);
       const dist=a.shotDistance!=null?Math.round(a.shotDistance)+'-foot ':'';const ast=made&&a.assistPersonId,blk=!made&&a.blockPersonId;
-      const text=blk?N(a.blockPersonId)+' blocks '+N(a.personId)+"'s "+dist+(three?'three point ':'')+ty.toLowerCase():N(a.personId)+(made?' makes ':' misses ')+dist+(three?'three point ':'two point ')+ty.toLowerCase()+(ast?' ('+N(a.assistPersonId)+' assists)':'');
+      const text=blk?N(a.blockPersonId)+' blocks '+(a.personId&&name[a.personId]?N(a.personId)+"'s ":'a ')+dist+(three?'three point ':'')+ty.toLowerCase():N(a.personId)+(made?' makes ':' misses ')+dist+(three?'three point ':'two point ')+ty.toLowerCase()+(ast?' ('+N(a.assistPersonId)+' assists)':'');
       const c=a.xLegacy!=null&&a.yLegacy!=null?{x:Math.round((25+a.xLegacy/10)*10)/10,y:Math.max(0,Math.round(a.yLegacy)/10)}:a.shotDistance!=null?{x:25,y:Math.round(Math.max(a.shotDistance,a.actionType==='3pt'?24:0)*10)/10}:undefined;   /* the rare shot with no court spot (about 1 in 1,500): placed straight on at its distance, so its zone still counts */
       const zh=c?undefined:v===3?(/Corner/.test(a.area||'')?3:4):a.shotDistance!=null?(a.shotDistance<4?0:a.shotDistance<14?1:2):/Restricted/.test(a.area||'')?0:/Paint/.test(a.area||'')?1:/Mid/.test(a.area||'')?2:undefined;   /* rare shots with no location: zone from the NBA's distance or area, kept off the shot chart */
       mk(a,ty,text,[a.personId,ast?a.assistPersonId:blk?a.blockPersonId:null],{scoringPlay:made,scoreValue:made?v:0,shootingPlay:true,pointsAttempted:v,coordinate:c,zh});continue}
