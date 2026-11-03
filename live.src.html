@@ -1808,8 +1808,12 @@ const CARDS={
     /* offense and defense, mirrored */
     const SW=682,MW=420,Y0=390,X1=40,XM=X1+SW+28,X2=XM+MW+28,BH=850;
     const SS=S.season?await seasonShots(D).catch(()=>({shots:[],PL:[]})):{shots:R.shots,PL:R.PL||[]},SH=SS.shots,PLs=SS.PL;
-    const bx=(s,mine)=>{const g=q=>l[s][q]||0;const blk=SH.filter(q=>(mine?q.t!==F&&KS.has(q.od):q.t===F&&KS.has(q.on))&&/block/i.test(q.text||'')).length,stl=PLs.filter(q=>q.how==='stl'&&(mine?q.team===F&&KS.has(q.on):q.team!==F&&KS.has(q.od))).length;
-      return {pts:mine?l.pf:l.pa,p2:[g('fgm')-g('tpm'),g('fga')-g('tpa')],p3:[g('tpm'),g('tpa')],ft:[g('ftm'),g('fta')],reb:g('oreb')+g('dreb'),blk,stl,to:g('to')}};
+    const bx=(s,mine)=>{const g=q=>l[s][q]||0;const blk=SH.filter(q=>q.t!==F&&KS.has(q.od)&&/block/i.test(q.text||'')).length,stl=PLs.filter(q=>q.how==='stl'&&q.team===F&&KS.has(q.on)).length;   /* the Cavs' own blocks and steals with this group on */
+      /* Nov 2: the second row belongs to the side it sits on. Offense = the Cavs' own offensive boards, assists, turnovers and eFG%;
+         defense = what the Cavs did on that end (defensive boards, steals, blocks) and the turnovers they forced */
+      const L=k=>l.o[k]||0,O=k=>l.d[k]||0,efg=L('fga')?Math.round((L('fgm')+.5*L('tpm'))/L('fga')*100)+'%':'–';
+      const row2=mine?[['OREB',L('oreb')],['AST',L('ast')],['TO',L('to')],['eFG%',efg]]:[['DREB',L('dreb')],['STL',stl],['BLK',blk],['FORCED TO',O('to')]];
+      return {pts:mine?l.pf:l.pa,p2:[g('fgm')-g('tpm'),g('fga')-g('tpa')],p3:[g('tpm'),g('tpa')],ft:[g('ftm'),g('fta')],row2}};
     const zones=f=>{const z=[[0,0],[0,0],[0,0]];SH.filter(f).forEach(q=>{if(q.zi==null)return;const i=q.zi===0?0:q.zi<3?1:2;z[i][1]++;if(q.m)z[i][0]++});return z};
     const side=(X0,top,title,big,bigLab,bt,rows,cap,zs,col,avg,hiZ)=>{x.fillStyle='#fff';x.fillRect(X0,Y0,SW,BH);x.strokeStyle='#e3e0db';x.lineWidth=2;x.strokeRect(X0,Y0,SW,BH);x.fillStyle=top;x.fillRect(X0,Y0,SW,8);
       lbl(x,title,X0+36,Y0+86,44,INK);x.fillStyle=MUT;x.font='700 24px Archivo';x.fillText(bigLab,X0+36,Y0+128);
@@ -1818,7 +1822,7 @@ const CARDS={
       {const cw=(SW-72)/4,B=rows;const pc=([m,a])=>a?Math.round(m/a*100)+'%':'–';
         const cell=(i,r,lab,val,sub)=>{const cx=X0+36+cw*i+cw/2,y=Y0+176+r*118;x.fillStyle=MUT;x.font='800 22px "Saira Condensed"';ctr(x,lab,cx,y+34);x.fillStyle=INK;x.font='800 52px "Saira Condensed"';ctr(x,val,cx,y+86);if(sub){x.fillStyle=MUT;x.font='600 22px Archivo';ctr(x,sub,cx,y+114)}};
         cell(0,0,'PTS',String(B.pts));cell(1,0,'2P',B.p2[0]+'–'+B.p2[1],pc(B.p2));cell(2,0,'3P',B.p3[0]+'–'+B.p3[1],pc(B.p3));cell(3,0,'FT',B.ft[0]+'–'+B.ft[1],pc(B.ft));
-        cell(0,1,'REB',String(B.reb));cell(1,1,'BLK',String(B.blk));cell(2,1,'STL',String(B.stl));cell(3,1,'TO',String(B.to))}
+        B.row2.forEach(([lab,v],i)=>cell(i,1,lab,String(v)))}
       const cy=Y0+176+236+64;x.fillStyle='#e3e0db';x.fillRect(X0+36,cy-48,SW-72,2);
       lZones(x,X0,SW,cy,cap,zs,avg,col,hiZ,'team '+(S.season?'season':'game')+' avg')};
     const own=q=>q.t===F&&KS.has(q.on),opp=q=>q.t!==F&&KS.has(q.od);
