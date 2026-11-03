@@ -98,10 +98,9 @@ function prep(D, g, score, top, boxLink, opts) {
       inj = inj.map(([n, what, st]) => by[n] ? [n, what, by[n][1]] : [n, what, st])
         .concat(off.filter(r => !inj.some(x => x[0] === r[0])).map(([n, st, why]) => [n, why.toLowerCase(), st]));
     }
-    /* Nov 3 (Luka): say which report this is. A list from the last game's report can change before the next one */
+    /* Nov 3 (Luka): the label itself names the report, e.g. "Nov 2, 6:30 pm injury report" */
     const fd = (R.report || '').replace(/^(\d+)\/(\d+)\/\d+ (\d+):(\d+) ([AP])M$/, (m, mo, d, h, mi, ap) => ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+mo - 1] + ' ' + (+d) + ', ' + (+h) + (mi !== '00' ? ':' + mi : '') + ' ' + ap.toLowerCase() + 'm');
-    if (nx && R.game && R.game.date === nx[0] && t && t.filed) injNote = 'Official NBA injury report for this game, filed ' + fd + '.';
-    else if (R.game && R.report) injNote = 'From the official NBA injury report for the last game (' + fd + '). Statuses can change before this one; the league posts the new report the day before.';
+    if (fd && fd !== R.report) injNote = fd + ' injury report';
   } catch {}
   // standings: five East rows around the Cavs (regular season only)
   const E = (D.STANDINGS || []).filter(t => t[1] === 'E').sort((x, y) => (y[2] - y[3]) - (x[2] - x[3]) || y[2] - x[2]);
@@ -115,7 +114,7 @@ const wrapOpen = bg => `<meta name="viewport" content="width=device-width,initia
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:${bg}">
 <tr><td><a href="${SITE}"><img src="${SITE}/nl/header.png" width="600" alt="Cavs &amp; Coffee · freshly brewed after every game · presented by cavs_db" style="display:block;width:100%;max-width:600px;height:auto;border:0"></a></td></tr>`;
 const footLinks = [['Roster', 'roster'], ['Cap', 'cap'], ['Assets', 'assets'], ['History', 'history'], ['Live stats', 'live']];
-const FOOT_LOGO = process.env.NL_LOGO === 'block' ? ['logo.png', 96] : ['logo-t.png', 120];   /* Nov 3 mockup: transparent wordmark (logo-t.png) vs the wine block (logo.png) */
+const FOOT_LOGO = ['logo-t.png', 120];   /* Nov 3: transparent wordmark (Luka's pick over the wine block, nl/logo.png) */
 /* Nov 3 footer (Luka: the old one was too clunky): small logo, one row of links, the two asks as plain links on one line, then the fine print in one small block */
 const footer = (rule) => {
   const lk = (href, label) => `<a href="${href}" style="color:#860038;text-decoration:none;font-weight:700;white-space:nowrap">${label}</a>`;
@@ -189,7 +188,7 @@ ${x.tn ? `<div style="font:16px/1.55 ${F.serif};color:${P.fg2};margin-top:10px">
     const n = x.nx;
     s.push(K(n.tonight ? 'Tonight' : 'Up next', ['Preview', `${SITE}/games/${n.slug}`]), B(`<div style="font:800 26px/1 ${F.cond};color:${P.ink}"><span style="color:${P.wine}">CLE</span> ${n.home ? 'vs' : 'at'} ${n.o}</div><div style="font:13px ${F.sans};color:${P.muted};margin:4px 0 4px">${esc(short(n.date))} · ${esc(n.tip)} PM ET${n.tv ? ' · ' + esc(n.tv) : ''} · ${esc(n.radio)}</div>`));
     if (x.tape.length) s.push(B(T(`<tr><td style="padding:4px 0;font:800 14px ${F.cond};color:${P.wine}">CLE</td><td align="center" style="font:700 9.5px ${F.sans};letter-spacing:1px;color:${P.muted}">${n.season} · RANK</td><td align="right" style="font:800 14px ${F.cond};color:${P.ink}">${n.o}</td></tr>` + x.tape.map(([lab, a1, r1, b1, r2]) => `<tr><td style="padding:5px 0;border-top:1px dotted ${P.dot};font:700 13.5px ${F.mono};color:${P.wine}">${a1} <span style="font:400 11px ${F.sans};color:${P.muted}">${r1}</span></td><td align="center" style="padding:5px 0;border-top:1px dotted ${P.dot};font:700 10px ${F.sans};letter-spacing:1px;text-transform:uppercase;color:${P.muted}">${lab}</td><td align="right" style="padding:5px 0;border-top:1px dotted ${P.dot};font:700 13.5px ${F.mono}"><span style="font:400 11px ${F.sans};color:${P.muted}">${r2}</span> ${b1}</td></tr>`).join(''))));
-    if (x.inj.length) s.push(B(`<div style="font:13px/1.5 ${F.sans};color:${P.fg2};padding-top:6px;border-top:1px dotted ${P.dot}"><b style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine}">INJURIES</b>&nbsp; ${x.inj.map(([nm, what, st]) => `${esc(nm)} (${esc(what)}, ${esc(st.toLowerCase())})`).join(' · ')}${x.injNote ? `<div style="font:11.5px/1.4 ${F.sans};color:${P.muted};margin-top:3px">${esc(x.injNote)}</div>` : ''}</div>`));
+    if (x.inj.length) s.push(B(`<div style="font:13px/1.5 ${F.sans};color:${P.fg2};padding-top:6px;border-top:1px dotted ${P.dot}"><b style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine}">${x.injNote ? esc(x.injNote.toUpperCase()) + ':' : 'INJURIES'}</b>&nbsp; ${x.inj.map(([nm, what, st]) => `${esc(nm)} (${esc(what)}, ${esc(st.toLowerCase())})`).join(' · ')}</div>`));
   }
   if (x.stand.length) s.push(K('East standings'), B(T(x.stand.map(([rk, nm, wl, gb, me]) => `<tr><td width="26" style="padding:6px 0;border-bottom:1px dotted ${P.dot};font:700 12px ${F.mono};color:${P.muted}">${rk}</td><td style="padding:6px 0;border-bottom:1px dotted ${P.dot};font:${me ? 700 : 400} 14px ${F.sans};color:${me ? P.wine : P.ink}">${esc(nm)}</td><td align="right" style="padding:6px 0;border-bottom:1px dotted ${P.dot};font:700 13.5px ${F.mono};color:${me ? P.wine : P.ink}">${wl}</td><td width="46" align="right" style="padding:6px 0;border-bottom:1px dotted ${P.dot};font:700 12.5px ${F.mono};color:${P.muted}">${gb}</td></tr>`).join(''))));
   if (x.reads.length) s.push(K('Morning reads'), B(x.reads.map(r => li(a(r.link, esc(r.title)), { meta: `${esc(r.src)} · ${esc(md2(r.date.slice(0, 10)))}` })).join('')));
