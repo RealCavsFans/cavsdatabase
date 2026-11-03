@@ -97,11 +97,13 @@ try {
 // Every publish to the 'deploy' branch is one build, so count this month's pushes there (about 45 seconds each, a safe estimate).
 if (process.env.GH_TOKEN) { try {
   const repo = process.env.GITHUB_REPOSITORY || 'RealCavsFans/cavsdatabase', m0 = new Date().toISOString().slice(0, 7);
-  let n = 0;
-  for (let pg = 1; pg <= 20; pg++) {
-    const r = await fetch(`https://api.github.com/repos/${repo}/activity?ref=refs/heads/deploy&time_period=month&per_page=100&page=${pg}`, { headers: { authorization: 'Bearer ' + process.env.GH_TOKEN, accept: 'application/vnd.github+json' } });
+  // Nov 3: this endpoint pages with a cursor ('after' in the Link header); a page number just repeats page 1, which read as 2,000 builds
+  let n = 0, after = '';
+  for (let pg = 1; pg <= 60; pg++) {
+    const r = await fetch(`https://api.github.com/repos/${repo}/activity?ref=refs/heads/deploy&time_period=month&per_page=100${after ? '&after=' + after : ''}`, { headers: { authorization: 'Bearer ' + process.env.GH_TOKEN, accept: 'application/vnd.github+json' } });
     if (!r.ok) throw new Error('GitHub ' + r.status); const a = await r.json();
-    n += a.filter(x => String(x.timestamp).slice(0, 7) === m0).length; if (a.length < 100) break;
+    n += a.filter(x => String(x.timestamp).slice(0, 7) === m0).length;
+    const nx = /[?&]after=([^&>]+)[^>]*>;\s*rel="next"/.exec(r.headers.get('link') || ''); if (!nx || !a.length) break; after = nx[1];
   }
   const d = new Date(), day = d.getUTCDate() - 1 + d.getUTCHours() / 24, dim = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0)).getUTCDate();
   const used = Math.round(n * 0.75), pace = day >= 1 ? Math.round(n * 0.75 / day * dim) : used;
