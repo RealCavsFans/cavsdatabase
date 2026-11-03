@@ -348,7 +348,7 @@ const lastIssue = Object.keys(sent).filter(d => d < g[0]).sort().pop();
 const prevGame = [...D.SCHEDULE].reverse().find(x => x[0] < g[0])?.[0];
 const since = lastIssue || prevGame || etDate(new Date(Date.parse(g[0] + 'T12:00:00Z') - 3 * 864e5));
 const lastSent = Object.values(sent).map(x => x.at).filter(Boolean).sort().pop();
-const sinceTs = lastSent ? Date.parse(lastSent) : Date.parse(since + 'T12:00:00Z');
+const sinceTs = process.env.NL_SINCE ? Date.parse(process.env.NL_SINCE) : lastSent ? Date.parse(lastSent) : Date.parse(since + 'T12:00:00Z');   // NL_SINCE: dry runs only, to rebuild an issue as it looked when sent
 // milestone watch / records: career and Cavs totals (through last season) plus this season's box scores
 let MS = null; try { MS = JSON.parse(await readFile(new URL('data/milestones.json', root), 'utf8')); } catch {}
 function milestone() {
