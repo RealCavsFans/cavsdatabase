@@ -7,6 +7,7 @@
 //
 // SEASON=2026-27 node scripts/live-archive.mjs          (default: the current season)
 // SEASON=2025-26 node scripts/live-archive.mjs          (backfill a past season)
+import { loadFixes, applyFixes as applyFixesTo } from './nba-fixes.mjs';
 import fs from 'fs';
 import path from 'path';
 import { createRequire } from 'module';
@@ -69,6 +70,36 @@ console.log(`${added} game file(s) written`);
 /* 2b) backup: a finished game ESPN never delivered comes from the site's /pbp backup (StatMuse, which has substitutions),
    saved as b<YYYYMMDD>.json with players matched to their ESPN ids by name. An ESPN copy, once it exists, replaces it. */
 if (SEASON === '2026-27' && !process.env.SKIP_FETCH && !NBA_MODE) {
+  const etOf = t => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(t));
+  const espnFiles = fs.readdirSync(DIR).filter(f => /^\d+\.json$/.test(f));
+  const have = new Set(), byName = {};
+  for (const f of espnFiles) { const g = JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8')); have.add(etOf(g.header.competitions[0].date));
+    for (const tb of (g.boxscore && g.boxscore.players) || []) for (const a of tb.statistics[0].athletes) byName[C.normName(a.athlete.displayName)] = a.athlete.id; }
+  let ics = ''; try { ics = fs.readFileSync('cavs.ics', 'utf8'); } catch { console.log('no cavs.ics; skipping the backup check'); }
+  const past = [...ics.matchAll(/UID:cavs-(\d{4}-\d\d-\d\d)@[\s\S]*?DTSTART:(\d{8}T\d{6}Z)/g)].filter(m => Date.now() - Date.parse(m[2].replace(/(\d{4})(\d\d)(\d\d)T(\d\d)(\d\d)(\d\d)Z/, '$1-$2-$3T$4:$5:$6Z')) > 4 * 36e5 && etOf(m[2].replace(/(\d{4})(\d\d)(\d\d)T(\d\d)(\d\d)(\d\d)Z/, '$1-$2-$3T$4:$5:$6Z')) >= SEASON.slice(0, 4) + '-10-01').map(m => m[1]);
+  for (const d of past) {
+    const bf = path.join(DIR, 'b' + d.replace(/-/g, '') + '.json');
+    if (have.has(d)) { if (fs.existsSync(bf)) { fs.unlinkSync(bf); console.log('ESPN copy replaces backup', d); } continue; }
+    if (fs.existsSync(bf) && Date.now() - Date.parse(d) > 3 * 864e5) continue;
+    const j = await get('https://cavsdatabase.com/pbp?d=' + d.replace(/-/g, '') + '&src=statmuse');
+    if (!j || !j.plays || !j.plays.length || j.header.competitions[0].status.type.state !== 'post') { console.log('backup: no final copy for', d); continue; }
+    const map = {}; for (const tb of j.boxscore.players) for (const a of tb.statistics[0].athletes) { const e = byName[C.normName(a.athlete.displayName)]; if (e) map[a.athlete.id] = e; }
+    for (const tb of j.boxscore.players) for (const a of tb.statistics[0].athletes) a.athlete.id = map[a.athlete.id] || a.athlete.id;
+    for (const q of j.plays) for (const x of q.participants || []) x.athlete.id = map[x.athlete.id] || x.athlete.id;
+    const s = C.slimSummary(j); const D = C.prep(s), R = C.deriveCore(D, D.plays, 'all'); s.recap = C.recap(D, R); s.src = 'StatMuse';
+    const next = JSON.stringify(s); if (!fs.existsSync(bf) || fs.readFileSync(bf, 'utf8') !== next) { fs.writeFileSync(bf, next); console.log('backup game saved', d); }
+  }
+}
+
+/* 2c) NBA mode: every Cavs game in the NBA store becomes <NBA id>.json; ESPN fills in only for a final the store doesn't have yet,
+   with its players switched to NBA ids by name so the season adds up. One file per game date, NBA first. */
+if (NBA_MODE) {
+  const zlib = await import('zlib');
+  const nidx = JSON.parse(fs.readFileSync(NIDX, 'utf8'));
+  /* hand fixes for the rare NBA error that never gets corrected (pdata/nba-fixes.json):
+     {"<NBA game id>": [{"action": <actionNumber>, "set": {...fields}} | {"action": <actionNumber>, "drop": true} | {"player": <personId>, "set": {...box statistics}}]} */
+  const FIX = loadFixes(NBA_DIR);   // hand-checked (pdata/nba-fixes.json) plus the nightly fix finder's (nba-data/fixes.json)
+  const applyFixes = (gid, raw) => applyFixesTo(raw, FIX[gid], m => console.log(m, gid));
   const etOf = t => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(t));
   const espnFiles = fs.readdirSync(DIR).filter(f => /^\d+\.json$/.test(f));
   const have = new Set(), byName = {};

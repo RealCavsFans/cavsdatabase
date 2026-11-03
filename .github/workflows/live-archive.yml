@@ -33,6 +33,7 @@ jobs:
           sparse-checkout: |
             scripts/live-archive.mjs
             scripts/nba-store.mjs
+            scripts/nba-fixes.mjs
             pdata/nba-fixes.json
             scripts/last-time.mjs
             data/hist-cle.json
@@ -53,7 +54,9 @@ jobs:
         with:
           ref: nba-data
           path: nba-data
-          sparse-checkout: ${{ github.event.inputs.season || '2026-27' }}
+          sparse-checkout: |
+            ${{ github.event.inputs.season || '2026-27' }}
+            fixes.json
       - run: node scripts/nba-store.mjs nba-data || echo "::warning::NBA feed unavailable; using ESPN"
         if: steps.gate.outputs.go == '1' && (github.event.inputs.season || '2026-27') == '2026-27'
         continue-on-error: true

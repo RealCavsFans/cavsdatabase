@@ -30,6 +30,9 @@ jobs:
           sparse-checkout: |
             scripts/nba-store.mjs
             scripts/nba-check.mjs
+            scripts/nba-fixes.mjs
+            scripts/nba-fixfind.mjs
+            pdata/nba-fixes.json
             live-core.js
             live-archive
           sparse-checkout-cone-mode: false
@@ -44,6 +47,10 @@ jobs:
         env:
           SEASON: ${{ github.event.inputs.season }}
           TEAM: ${{ github.event.inputs.team }}
+      # Nov 3: the NBA sometimes names the wrong player in a substitution; find the one correction that makes every player's
+      # minutes match the NBA box score (last 7 days, or the whole season when one is given) and save it with the games
+      - run: node scripts/nba-fixfind.mjs nba-data ${{ github.event.inputs.season && format('--season {0}', github.event.inputs.season) || '--days 7' }} || echo "::warning::fix finder did not finish"
+        continue-on-error: true
       # every stored game held to rules that are always true (scripts/nba-check.mjs); the report is saved with the games
       - run: node scripts/nba-check.mjs nba-data || echo "::warning::check did not finish"
         continue-on-error: true

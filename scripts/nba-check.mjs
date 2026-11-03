@@ -16,6 +16,7 @@ import zlib from 'zlib';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const C = require('../live-core.js');
+import { loadFixes, applyFixes } from './nba-fixes.mjs';
 
 const ND = process.argv[2] || 'nba-data';
 const CUR = (() => { const d = new Date(), y = d.getUTCFullYear(), m = d.getUTCMonth() + 1; const s = m >= 8 ? y : y - 1; return s + '-' + String(s + 1).slice(2); })();
@@ -23,6 +24,7 @@ const SEASON = process.env.SEASON || CUR;
 const OUT = process.argv[3] || path.join(ND, 'checks', SEASON + '.json');
 const DAYS = +process.env.DAYS || 0;
 const idx = JSON.parse(fs.readFileSync(path.join(ND, SEASON, 'index.json'), 'utf8'));
+const FIX = loadFixes(ND);   // Nov 3: games are checked with the NBA's play-by-play corrections applied
 const secOf = iso => { const m = /PT(\d+)M([\d.]+)S/.exec(iso || ''); return m ? +m[1] * 60 + +m[2] : 0; };
 const ESPN_AB = { GSW: 'GS', NOP: 'NO', NYK: 'NY', SAS: 'SA', UTA: 'UTAH', WAS: 'WSH' };
 const norm = n => String(n).normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g, '').replace(/[^a-z]/g, '');
@@ -36,7 +38,7 @@ const cutoff = DAYS ? new Date(Date.now() - DAYS * 864e5).toISOString().slice(0,
 for (const [gid, row] of Object.entries(idx)) {
   if (cutoff && row[0] < cutoff) continue;
   let raw; try { raw = JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(ND, SEASON, gid + '.json.gz')))); } catch (e) { games[gid] = { d: row[0], ours: ['unreadable: ' + e.message] }; continue; }
-  tally.games++;
+  applyFixes(raw, FIX[gid]); tally.games++;
   const B = raw.box, nba = [], ours = [], poss = [], esp = [];
   const per = Math.max(4, B.period || 4), gameSec = 4 * 720 + (per - 4) * 300;
   /* 1) the NBA's own box score adds up */
