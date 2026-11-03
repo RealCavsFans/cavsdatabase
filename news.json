@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "Hoops Rumors",
+   "title": "Central Notes: Pacers, Watson, Thomas, Claxton",
+   "link": "https://www.hoopsrumors.com/2026/11/central-notes-pacers-watson-thomas-claxton.html",
+   "date": "2026-11-03T15:59:42.000Z"
+  },
+  {
    "src": "The Inside Shot",
    "title": "Game Night Observations: Rebounds, Lineups and a Bad Loss",
    "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE8wUXFSVHhKYXVpTEFfRVFaQWttNTRTVF9QNzZaNFVxZmpyUGp6TmI3NVhhbDA2QkY2ekR4WFZiNnFUMVlqYkFxa2dQdHZXdk9RS3RsV1dYRGtIUEh1T1BrZFNaekZzTHNYXzE0alpGdmJGa25oVnFFNQ?oc=5",
@@ -247,12 +253,6 @@
    "date": "2026-10-27T16:00:02.000Z"
   },
   {
-   "src": "The Inside Shot",
-   "title": "Game Night Observations: Meleek Thomas’ Debut, Peyton Watson’s Block and the First Big Win",
-   "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1JSjFUMUNqeGhzaFZLa3Jidlh2dDFkUmRva0JRTVJHWkR0OFM4VnI4NE9Jb2YwaHdfRmxLUDNvZHI1TTJMSHFDXy1jV0xCc0xkY2dCR0RGc1dNakRuTkVwNnE1WTVXVGFSLUdGWjVmSlZNUkdKcTVHOEVKVkJaTzA?oc=5",
-   "date": "2026-10-27T11:44:37.000Z"
-  },
-  {
    "src": "Cavaliers on SI",
    "title": "Do the Cavaliers Have a James Harden Problem?",
    "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNV1g5VVBUTy14VUs4cmhyU1pYWjNicmhTTGk3UlVhNFFjZEQ4NjFRcU5EUkU1TXJlOGpSaWZSVUVyczN0dldDdFBVbE9SdFU4UnpwWDdKYVpMaE5oT0NONGNMQ1JIbnl3aEh5TXBOTHA5RWxQcFkwOXYwY2FpYlk3Zm9wSGNXSC0zeU5jMXFENGJ6YTVoSkZJOWdiUQ?oc=5",
@@ -342,6 +342,13 @@
   }
  ],
  "videos": [
+  {
+   "src": "Ultimate Cleveland Sports Show",
+   "title": "Cleveland Cavaliers COLLAPSE Late Against Oklahoma City Thunder! What Went Wrong for the Cavs Team?",
+   "link": "https://www.youtube.com/watch?v=YXTJ7eettoY",
+   "date": "2026-11-03T15:26:44.000Z",
+   "id": "YXTJ7eettoY"
+  },
   {
    "src": "Locked On Cavs",
    "title": "REACTION: Cleveland Cavaliers STUNNED By Oklahoma City Thunder! | Who Is to BLAME?!",
@@ -565,13 +572,6 @@
    "link": "https://www.youtube.com/watch?v=K3PN5QVzRaE",
    "date": "2026-10-27T15:45:17.000Z",
    "id": "K3PN5QVzRaE"
-  },
-  {
-   "src": "Ultimate Cleveland Sports Show",
-   "title": "Cleveland Cavaliers FLIPPED THE SCRIPT & erased a double-digit deficit to beat the T'Wolves in OT",
-   "link": "https://www.youtube.com/watch?v=mFxzpV2Zcps",
-   "date": "2026-10-27T14:56:46.000Z",
-   "id": "mFxzpV2Zcps"
   }
  ],
  "highlights": [
