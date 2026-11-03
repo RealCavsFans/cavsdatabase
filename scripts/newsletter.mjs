@@ -114,15 +114,17 @@ const fontLink = `<!--[if !mso]><!--><link href="https://fonts.googleapis.com/cs
 const wrapOpen = bg => `<meta name="viewport" content="width=device-width,initial-scale=1">${fontLink}<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#EEF0F2"><tr><td align="center" style="padding:0">
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:${bg}">
 <tr><td><a href="${SITE}"><img src="${SITE}/nl/header.png" width="600" alt="Cavs &amp; Coffee · freshly brewed after every game · presented by cavs_db" style="display:block;width:100%;max-width:600px;height:auto;border:0"></a></td></tr>`;
-const footLinks = [['Roster', 'roster'], ['Cap', 'cap'], ['Picks', 'assets'], ['Injuries', '#inj'], ['Live stats', 'live']];
+const footLinks = [['Roster', 'roster'], ['Cap', 'cap'], ['Assets', 'assets'], ['History', 'history'], ['Live stats', 'live']];
+const FOOT_LOGO = process.env.NL_LOGO === 'block' ? ['logo.png', 96] : ['logo-t.png', 120];   /* Nov 3 mockup: transparent wordmark (logo-t.png) vs the wine block (logo.png) */
 /* Nov 3 footer (Luka: the old one was too clunky): small logo, one row of links, the two asks as plain links on one line, then the fine print in one small block */
 const footer = (rule) => {
   const lk = (href, label) => `<a href="${href}" style="color:#860038;text-decoration:none;font-weight:700;white-space:nowrap">${label}</a>`;
   return `<tr><td style="padding:20px 16px 24px;text-align:center;font:12px/1.7 ${F.sans};color:#5D646C">${rule || ''}
-<a href="${SITE}" style="text-decoration:none"><img src="${SITE}/nl/logo.png" width="96" alt="cavs_db" style="display:block;width:96px;height:auto;border:0;margin:0 auto 10px"></a>
+<a href="${SITE}" style="text-decoration:none"><img src="${SITE}/nl/${FOOT_LOGO[0]}" width="${FOOT_LOGO[1]}" alt="cavs_db" style="display:block;width:${FOOT_LOGO[1]}px;height:auto;border:0;margin:0 auto 10px"></a>
 <div style="font:12.5px/1.8 ${F.sans}">${footLinks.map(([t, r]) => lk(`${SITE}/${r}`, t)).join(' &nbsp;·&nbsp; ')}</div>
 <div style="font:12.5px/1.8 ${F.sans};margin:6px 0 14px">${lk('https://buttondown.com/cavscoffee/?referral_code={{ subscriber.referral_code }}', 'Share with a Cavs fan &rarr;')} &nbsp;·&nbsp; ${lk('https://www.buymeacoffee.com/cavsdb', '&#9749; Buy cavs_db a coffee')}</div>
-<div style="border-top:1px dotted #D9D4CC;padding-top:10px;font:10.5px/1.7 ${F.sans};color:#8A8F96">Independent fan site, not affiliated with the Cavs or NBA. Add us to your contacts so we land in your inbox.<br><span style="white-space:nowrap">Cavs Database · P.O.&zwnj; Box 151 · West Jeff&zwnj;erson, OH 43&zwnj;162</span><!--UNSUB--></div></td></tr></table></td></tr></table>`;
+<div style="font:600 11.5px/1.5 ${F.sans};color:#5D646C;margin:-6px 0 14px">Save us to your contacts so every issue skips the spam folder.</div>
+<div style="border-top:1px dotted #D9D4CC;padding-top:10px;font:10.5px/1.7 ${F.sans};color:#8A8F96">Independent fan site, not affiliated with the Cavs or NBA.<br><span style="white-space:nowrap">Cavs Database · P.O.&zwnj; Box 151 · West Jeff&zwnj;erson, OH 43&zwnj;162</span><!--UNSUB--></div></td></tr></table></td></tr></table>`;
 };
 const T = (inner, attrs = '') => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" ${attrs}>${inner}</table>`;
 
