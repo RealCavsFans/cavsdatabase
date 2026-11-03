@@ -45,7 +45,7 @@ function prep(d){d=unpackSlim(d);
     const lp=plays[plays.length-1];if(lp&&h===home.score&&a===away.score&&(lp.hs!==h||lp.as!==a))plays.forEach((p,i)=>{p.hs=run[i][0];p.as=run[i][1]})}
   const wp={};(d.winprobability||[]).forEach(w=>wp[w.playId]=w.homeWinPercentage);
   const esp={};((d.boxscore&&d.boxscore.teams)||[]).forEach(tb=>{const g=n=>{const x=(tb.statistics||[]).find(y=>y.name===n);return x&&x.displayValue!==''&&!isNaN(+x.displayValue)?+x.displayValue:null};esp[tb.team.id]={pot:g('turnoverPoints'),fb:g('fastBreakPoints'),pip:g('pointsInPaint')}});
-  return {esp,teams,home,away,focus,other,P,roster,plays,wp,status:comp.status||{},date:comp.date,venue:d.gameInfo&&d.gameInfo.venue&&d.gameInfo.venue.fullName,bc:(comp.broadcasts||[]).map(b=>b.media&&b.media.shortName).filter(Boolean)};
+  return {esp,teams,home,away,focus,other,P,roster,plays,wp,status:comp.status||{},date:comp.date,venue:d.gameInfo&&d.gameInfo.venue&&d.gameInfo.venue.fullName,bc:(comp.broadcasts||[]).map(b=>b.media&&b.media.shortName).filter(Boolean),nbx:d.nbx||null};
 }
 
 /* ---------- derive: one pass over the revealed plays ---------- */
@@ -281,7 +281,22 @@ function fromNBA(box,pbp,extra){extra=extra||{};const g=box.game,acts=((pbp&&pbp
     if(t==='game'&&sub==='end'){const l=plays[plays.length-1];if(l&&l.type.text==='End Period')l.type.text='End Game';else mk(a,'End Game','End of game',[],{clock:{displayValue:'0:00'}});continue}
   }
   if(Object.keys(subQ).length)flushSubs();
-  return {src:'NBA',nbaId:g.gameId,header,boxscore,plays,winprobability:[],gameInfo:{venue:{fullName:(g.arena&&g.arena.arenaName)||''}}}}
+  /* Nov 3: what only the NBA's files have, kept as nbx (survives slimSummary into the archive):
+     p  per player [fouls drawn, technicals, offensive fouls, got blocked, fast-break pts, second-chance pts, paint pts, pts off turnovers, and-ones]
+     t  per team {lc lead changes, tt times tied, bl biggest lead, br biggest run, tl time leading (s), bp bench pts, ch coach's challenges, to timeouts left, bonus}
+     fm foul matchups [fouler, drawn by, count]   ref the officials   st shot tags per shooter {tag: [made, att]} */
+  const nbx={p:{},t:{},fm:[],ref:(g.officials||[]).map(o=>o.name),st:{}};
+  [H,A].forEach(t=>{const T=tid(t),q=t.statistics||{};const ch=acts.filter(a=>a.actionType==='timeout'&&a.subType==='challenge'&&a.teamId===t.teamId).length;
+    nbx.t[T]={lc:q.leadChanges,tt:q.timesTied,bl:q.biggestLead,br:q.biggestScoringRun,tl:nbaSec(q.timeLeading),bp:q.benchPoints,ch,to:t.timeoutsRemaining,bonus:!!t.inBonus};
+    (t.players||[]).forEach(p=>{const s=p.statistics||{};nbx.p[p.personId]=[s.foulsDrawn,s.foulsTechnical,s.foulsOffensive,s.blocksReceived,s.pointsFastBreak,s.pointsSecondChance,s.pointsInThePaint,s.pointsFromTurnovers,0].map(v=>v||0)})});
+  {const fm={};acts.forEach((a,i)=>{if(a.actionType==='foul'&&a.personId&&a.foulDrawnPersonId){const k=a.personId+'|'+a.foulDrawnPersonId;fm[k]=(fm[k]||0)+1}
+     /* and-one: a made shot followed (same clock) by a 1-of-1 free throw by the same player */
+     if(a.isFieldGoal&&a.shotResult==='Made'){for(let j=i+1;j<acts.length&&acts[j].clock===a.clock&&acts[j].period===a.period;j++){const b=acts[j];if(b.actionType==='freethrow'&&b.subType==='1 of 1'&&b.personId===a.personId){if(nbx.p[a.personId])nbx.p[a.personId][8]++;break}}}
+     if(a.isFieldGoal&&a.personId){const tags=String(a.descriptor||'').replace('step back','stepback').replace('finger roll','fingerroll').split(' ').filter(Boolean);const base=a.actionType==='3pt'?'three':/Layup|DUNK|Dunk/i.test(a.subType||'')?'rim':'two';
+       const z=nbx.st[a.personId]=nbx.st[a.personId]||{};(tags.length?tags:['spot']).forEach(tg=>{const k=base+':'+tg;const v=z[k]=z[k]||[0,0];v[1]++;if(a.shotResult==='Made')v[0]++})}});
+   nbx.fm=Object.entries(fm).map(([k,n])=>{const [x,y]=k.split('|');return [x,y,n]}).sort((a,b)=>b[2]-a[2])}
+  return {src:'NBA',nbaId:g.gameId,header,boxscore,plays,winprobability:[],nbx,gameInfo:{venue:{fullName:(g.arena&&g.arena.arenaName)||''}}}}
+const nbaSec=iso=>{const m=/PT(\d+)M([\d.]+)S/.exec(iso||'');return m?Math.round(+m[1]*60+ +m[2]):null};
 
 /* ---------- archive helpers (used by the nightly job and the page) ---------- */
 /* ESPN's win probability laid over NBA plays by game clock (the NBA feed has none). espn: an ESPN summary, full or slim */
@@ -294,7 +309,7 @@ function slimSummary(d){
   return {header:{competitions:[{date:c.date,status:c.status,broadcasts:(c.broadcasts||[]).map(b=>({media:{shortName:b.media&&b.media.shortName}})),
       competitors:c.competitors.map(x=>({id:x.id,homeAway:x.homeAway,winner:x.winner,score:x.score,linescores:(x.linescores||[]).map(l=>({displayValue:l.displayValue})),record:(x.record||[]).slice(0,1).map(r=>({summary:r.summary})),
         team:{id:x.team.id,abbreviation:x.team.abbreviation,shortDisplayName:x.team.shortDisplayName,name:x.team.name,location:x.team.location,logos:(x.team.logos||[]).slice(0,1).map(l=>({href:l.href}))}}))}]},
-    gameInfo:{venue:{fullName:d.gameInfo&&d.gameInfo.venue&&d.gameInfo.venue.fullName}},
+    gameInfo:{venue:{fullName:d.gameInfo&&d.gameInfo.venue&&d.gameInfo.venue.fullName}},nbx:d.nbx,
     boxscore:{teams:((d.boxscore&&d.boxscore.teams)||[]).map(t=>({team:{id:t.team.id},statistics:(t.statistics||[]).map(s=>({name:s.name,displayValue:s.displayValue}))})),
       players:((d.boxscore&&d.boxscore.players)||[]).map(t=>({team:{id:t.team.id},statistics:[{names:(t.statistics[0]||{}).names,athletes:((t.statistics[0]||{}).athletes||[]).map(a=>({athlete:{id:a.athlete.id,nba:a.athlete.nba?1:undefined,displayName:a.athlete.displayName,shortName:a.athlete.shortName,position:{abbreviation:a.athlete.position&&a.athlete.position.abbreviation},jersey:a.athlete.jersey},starter:a.starter,didNotPlay:a.didNotPlay,reason:a.reason,stats:a.stats}))}]}))},
     /* compact rows (pv:2): [id, type, text, period, clock, team, player ids, home, away, flags (1 scoring, 2 shooting), value, attempted, x, y]; prep() unpacks them */
