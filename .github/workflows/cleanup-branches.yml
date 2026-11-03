@@ -12,6 +12,6 @@ jobs:
         with:
           fetch-depth: 1
       - run: |
-          for b in $(git ls-remote --heads origin | awk '{print $2}' | sed 's#refs/heads/##' | grep -E '^(mock-|probe-injury|probe-draft$|css-cleanup$|speed-1$)'); do
+          for b in $(git ls-remote --heads origin | awk '{print $2}' | sed 's#refs/heads/##' | grep -E '^(mock-|probe-injury|probe-nba$|probe-draft$|css-cleanup$|speed-1$)'); do
             git push origin --delete "$b" && echo "deleted $b"
           done
