@@ -21,6 +21,24 @@ export default {
     if ((u.pathname === '/live.html' || u.pathname === '/live') && request.method === 'GET') {
       try { return await liveMeta(request, env); } catch (e) { return env.ASSETS.fetch(request); }
     }
+    /* Nov 3: vanity links for share images: cavsdatabase.com/tyson, /jaylontyson or /jtyson -> that player's page (players from the sitemap) */
+    if (request.method === 'GET' && /^\/[a-z][a-z.'-]{2,40}\/?$/i.test(u.pathname)) {
+      const res = await env.ASSETS.fetch(request);
+      if (res.status !== 404) return res;
+      try { const slug = (await vanity(env, u)).get(u.pathname.replace(/\//g, '').toLowerCase().replace(/[^a-z]/g, '')); if (slug) return Response.redirect(u.origin + '/players/' + slug, 301); } catch (e) {}
+      return res;
+    }
     return env.ASSETS.fetch(request);
   }
 };
+let VAN = null, VAN_T = 0;
+async function vanity(env, u) {
+  if (VAN && Date.now() - VAN_T < 36e5) return VAN;
+  const xml = await (await env.ASSETS.fetch(new Request(u.origin + '/sitemap.xml'))).text();
+  const slugs = [...new Set([...xml.matchAll(/\/players\/([a-z0-9-]+)/g)].map(m => m[1]))];
+  const m = new Map(), lastCount = {};
+  const parts = s => s.split('-').filter(x => !/^(jr|sr|ii|iii|iv)$/.test(x));
+  slugs.forEach(s => { const p = parts(s); const l = p[p.length - 1]; lastCount[l] = (lastCount[l] || 0) + 1; });
+  slugs.forEach(s => { const p = parts(s); const l = p[p.length - 1]; m.set(s.replace(/-/g, ''), s); m.set(p.join(''), s); m.set(p[0][0] + l, s); if (lastCount[l] === 1) m.set(l, s); });
+  VAN = m; VAN_T = Date.now(); return m;
+}
