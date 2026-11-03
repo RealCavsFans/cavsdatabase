@@ -1,4 +1,6 @@
 // League-wide player stats for the player pages (position ranks, percentiles, league averages).
+// Nov 3: team game lines and every game's shots now come from the NBA's own files (see the NBA store block below);
+// ESPN still supplies the player season lines (keyed by ESPN ids) and any game the store doesn't have yet.
 // Reads ESPN's public scoreboard and box scores (the same feed fetch-boxscores uses), one regular season game at a time,
 // and keeps running season totals per player in pdata/league.json. Safe to run every 30 minutes: finished games are
 // remembered by id, so each run only reads new finals (at most MAX per run, so a backfill spreads over a few runs).
@@ -21,9 +23,9 @@ const done = new Set(L.games);
 // SH.g[eventId] = { d, t: { ABBR: [a, axy, ...per type [m, a, pts, ast] x8, ...per zone [m, a] x5] }, x: { ABBR: { q: [[pf, pa, poss, opp poss, sec] x4], c: clutch same, b: [starter pts, bench pts, starter sec, bench sec] } } }
 let SH = { season: SEASON, g: {} };
 try { const prev = JSON.parse(await readFile(SFILE, 'utf8')); if (prev.season === SEASON) SH = prev; } catch {}
-function shotsOf(sum) {
-  if (!sum.plays?.length) return null;
-  const D = C.prep(C.slimSummary(sum)), R = C.deriveCore(D, D.plays, 'all'), out = {};
+function shotsOf(sum, Dp) {
+  if (!Dp && !sum.plays?.length) return null;
+  const D = Dp || C.prep(C.slimSummary(sum)), R = C.deriveCore(D, D.plays, 'all'), out = {};
   for (const tm of D.teams) {
     const v = [0, 0, ...Array(C.PT.length * 4).fill(0), ...Array(C.ZN.length * 2).fill(0)], P0 = 2, Z0 = 2 + C.PT.length * 4;
     for (const q of R.shots) { if (q.t !== tm.id) continue; v[0]++; const pts = q.m ? (q.three ? 3 : 2) : 0;
@@ -92,6 +94,40 @@ const apply = (lines, sign) => { for (const [id, x] of Object.entries(lines)) {
 L.recent = L.recent || {};
 L.tg = L.tg || {};   // team game lines by event id, for team-stats.mjs   // the last few nights' lines, kept so a stat correction can replace them
 
+/* Nov 3: the NBA's own files first. When the NBA game store (nba-data branch) is checked out next to this folder, every team
+   game line (L.tg) and every game's shots (league-shots.json) come from the NBA's box score and play-by-play, keyed 'n<gameId>'
+   (with the corrections from scripts/nba-fixes.mjs). ESPN then only supplies the player season lines (keyed by ESPN ids, which
+   the player pages use) and fills in any game the store doesn't have yet. One entry per game: an NBA line replaces ESPN's. */
+const NBA_DIR = process.env.NBA_DIR || 'nba-data';
+const gkey = g => g.d + '|' + (g.t || []).map(t => t.ab).sort().join('-');
+const nbaKeys = new Set();
+{ const fsx = await import('node:fs'), zlib = await import('node:zlib'), path = await import('node:path');
+  const idxF = path.join(NBA_DIR, SEASON, 'index.json');
+  if (fsx.existsSync(idxF)) {
+    const { loadFixes, applyFixes } = await import('./nba-fixes.mjs');
+    const FIX = loadFixes(NBA_DIR), idx = JSON.parse(fsx.readFileSync(idxF, 'utf8')), AB = { GSW: 'GS', NOP: 'NO', NYK: 'NY', SAS: 'SA', UTA: 'UTAH', WAS: 'WSH' };
+    let nN = 0, nS = 0;
+    for (const [gid, row] of Object.entries(idx)) {
+      if (!gid.startsWith('002')) continue;                                     // regular season (NBA Cup group games are 002; the Cup final is 006)
+      const k = 'n' + gid, d = row[0].slice(0, 4) + '-' + row[0].slice(4, 6) + '-' + row[0].slice(6, 8);
+      const haveT = L.tg[k] && L.tg[k].t && L.tg[k].t[0].fb != null, haveS = SH.g[k] && SH.g[k].x;
+      const recent = (Date.parse(today) - Date.parse(d)) / 864e5 <= 7;           // the store re-checks a week back for NBA corrections
+      if (haveT && haveS && !recent) { nbaKeys.add(gkey(L.tg[k])); continue; }
+      let raw; try { raw = JSON.parse(zlib.gunzipSync(fsx.readFileSync(path.join(NBA_DIR, SEASON, gid + '.json.gz')))); } catch { continue; }
+      applyFixes(raw, FIX[gid]);
+      const B = raw.box, S2 = t => t.statistics || {}, ab = t => AB[t.teamTricode] || t.teamTricode;
+      const line = (t, o) => { const a = S2(t), b = S2(o); return { ab: ab(t), pts: t.score, fgm: a.fieldGoalsMade, fga: a.fieldGoalsAttempted, tpm: a.threePointersMade, tpa: a.threePointersAttempted, ftm: a.freeThrowsMade, fta: a.freeThrowsAttempted,
+        orb: a.reboundsOffensive, drb: a.reboundsDefensive, tov: a.turnoversTotal ?? a.turnovers, ast: a.assists, stl: a.steals, blk: a.blocks, pf: a.foulsPersonal, paint: a.pointsInThePaint, pot: b.pointsFromTurnovers, fb: a.pointsFastBreak }; };
+      L.tg[k] = { d, per: Math.max(4, (B.homeTeam.periods || []).length), t: [line(B.awayTeam, B.homeTeam), line(B.homeTeam, B.awayTeam)], cupFinal: 0, src: 'NBA' }; nN++;
+      nbaKeys.add(gkey(L.tg[k]));
+      try { const D = C.prep(C.slimSummary(C.fromNBA({ game: B }, { game: raw.pbp }))); const sh = shotsOf(null, D); if (sh) { SH.g[k] = { d, t: sh.v, x: sh.x, src: 'NBA' }; nS++; } } catch (e) { console.log('shots: could not sort', gid, String(e)); }
+    }
+    /* one entry per game: drop ESPN and pbpstats copies of games the NBA store has */
+    for (const [id, g] of Object.entries(L.tg)) if (g.src !== 'NBA' && nbaKeys.has(gkey(g))) delete L.tg[id];
+    for (const [id, g] of Object.entries(SH.g)) if (g.src !== 'NBA' && L.tg[id] === undefined && !id.startsWith('n')) { const tm = Object.keys(g.t || {}); if (nbaKeys.has(g.d + '|' + tm.sort().join('-'))) delete SH.g[id]; }
+    console.log(`league feed: NBA store, ${nN} team game lines and ${nS} shot charts refreshed (${nbaKeys.size} games)`);
+  }
+}
 let read = 0, failed = 0, fixed = 0;
 for (const date of dates.reverse()) {               // newest first, so a long backfill never delays last night's games
   if (read >= MAX) break;
@@ -106,8 +142,9 @@ for (const date of dates.reverse()) {               // newest first, so a long b
     const needSh = (!SH.g[ev.id] || !SH.g[ev.id].x) && shBack < 60;
     if (seen && !oldTg && !needSh && !(fresh && L.recent[ev.id] && Date.now() - (L.recent[ev.id].at || 0) > 4 * 36e5)) continue;  // re-check recent games every 4 hours; older ones are final for good
     let sum; try { sum = await get(`${ESPN}/summary?event=${ev.id}`); } catch { failed++; continue; }
-    const tg = teamsOf(sum, ev); if (tg) L.tg[ev.id] = { d: date, ...tg };
-    try { const sh = shotsOf(sum); if (sh) { if (!SH.g[ev.id] || !SH.g[ev.id].x) shBack++; SH.g[ev.id] = { d: date, t: sh.v, x: sh.x }; } } catch (e) { console.log('shots: could not sort', ev.id, String(e)); }
+    const tg = teamsOf(sum, ev); const inNBA = tg && nbaKeys.has(gkey({ d: date, t: tg.t }));   // the NBA store has this game: keep its lines and shots
+    if (tg && !inNBA) L.tg[ev.id] = { d: date, ...tg };
+    if (!inNBA) try { const sh = shotsOf(sum); if (sh) { if (!SH.g[ev.id] || !SH.g[ev.id].x) shBack++; SH.g[ev.id] = { d: date, t: sh.v, x: sh.x }; } } catch (e) { console.log('shots: could not sort', ev.id, String(e)); }
     if (seen && needSh && !oldTg && !(fresh && L.recent[ev.id])) continue;   // only came back for the shots
     const lines = tg?.cupFinal ? {} : linesOf(sum);   // the Cup final doesn't count toward season stats
     if (seen && oldTg && !L.recent[ev.id]) continue;                       // team lines refreshed; player lines were already counted
