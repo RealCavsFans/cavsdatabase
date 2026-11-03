@@ -8,7 +8,8 @@ These are free GitHub jobs plus Cloudflare. They keep going whatever happens to 
 
 - Box scores, news, videos, headshots and the site's page copies (every 30 minutes)
 - Season team stats: standings, records, scores, net rating, last 14 days (overnight)
-- Live game archive and the "game in numbers" recap (every 30 minutes on game nights)
+- Live game archive and the "game in numbers" recap (every 30 minutes on game nights), built from the NBA's own files
+- NBA game store and nightly accuracy checks (1:20 and 6:50 a.m. Eastern)
 - Scouting report for the next opponent, and live-page baselines (daily; the scouting report reruns in the afternoon if a source was late)
 - Game-day injury statuses for both teams, from the league's official injury report (hourly on game days)
 - Box score accuracy check against Basketball Reference (every morning)
@@ -55,6 +56,19 @@ All keys live in GitHub → Settings → Secrets and variables → Actions. Neve
 
 - `NEWSLETTER_LIVE`: set to `true` to send to subscribers.
 - Game alerts went live Oct 27 and were paused Oct 29 (Luka's call). To turn them back on, uncomment the schedule lines in `.github/workflows/push.yml`. The repository variable PUSH_LIVE must also be "true"; anything else makes every run a dry run.
+
+## The NBA feed comes first (Nov 3)
+
+Since Nov 2 the site reads the NBA's own files (box scores and play-by-play from the NBA's stats feed) wherever it can, with ESPN kept as the backup and for win probability, the schedule, TV and news.
+
+- **NBA game store.** `scripts/nba-store.mjs` (`nba-store.yml`, 1:20 and 6:50 a.m. Eastern) saves every finished NBA game, untouched, on the `nba-data` branch (`<season>/<gameId>.json.gz`). The game archive and the checks build from these copies.
+- **Live page.** The live page reads the NBA feed through the site's `/nba` route (`worker/nba.js`) and falls back to ESPN by itself if the NBA doesn't answer.
+- **Nightly checks.** `scripts/nba-check.mjs` (same job) holds every stored game to rules that are always true: the NBA's box score adds up on its own; our play-by-play build matches it player by player (minutes and every box column); five on the floor all game; possessions within 5 of the NBA's own markers; and, for Cavs games, the NBA box score against ESPN's. The report is saved on `nba-data` as `checks/<season>.json`.
+- **Corrections.** The NBA sometimes names the wrong player in a substitution. `scripts/nba-fixfind.mjs` runs nightly on the last 7 days and finds the one correction that makes every player's minutes match the NBA box score (saved on `nba-data` as `fixes.json`). Hand-checked corrections live in `pdata/nba-fixes.json`. Both are applied by the archive and the checks (`scripts/nba-fixes.mjs`). To redo a past season: run "NBA game store" by hand with that season.
+- **Locked test games.** `scripts/regress.mjs` rebuilds three saved games (`tests/nba/`) and runs a live replay and bad-data drills (missing shot spots, a player missing from the box, plays out of order or sent twice, no plays). It runs before every publish and page build; if it fails, the site keeps the last good version.
+- **Phone alerts.** Failures push to Luka's phone through the ntfy app (private channel in the `NTFY_TOPIC` secret): the NBA store, game archive, newsletter, morning, injury report and publish jobs, the health check, and a game saved from ESPN because the NBA feed was down. "Test phone alert" (Actions tab) sends a test push.
+- **Shot contest.** Closest-defender shooting only comes from stats.nba.com, which answers a real browser only. A daily scheduled task reads it in the Claude app's browser on Luka's computer (5:22 p.m. Eastern) and saves `pdata/defender.json`; if the computer is off, that day is skipped and the card shows the last saved numbers with their date.
+- If the NBA feed's address ever changes, open any game on nba.com with the browser's network tab and look for the `boxscore_` and `playbyplay_` file names; update the base address in `scripts/nba-store.mjs` and `worker/nba.js`.
 
 ## If ESPN changes or blocks its feed
 
