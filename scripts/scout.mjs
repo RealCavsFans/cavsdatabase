@@ -1,8 +1,11 @@
 // Scouting report for the next Cavs opponent, shown on the site's game preview.
 // Finds the next Cavs regular-season game on ESPN, then rebuilds the opponent's last 5 finished games from
-// ESPN play-by-play with the same code as /live.html (live-core.js): results, pace, ratings, top scorers,
+// the NBA's own play-by-play (nba-data branch, Nov 3; ESPN's when the store doesn't have a game) with the same code as /live.html (live-core.js): results, pace, ratings, top scorers,
 // most-used five and shot locations against the NBA average. Writes pdata/scout.json. Exits 0 on any problem.
 import fs from 'fs';
+import path from 'path';
+import zlib from 'zlib';
+import { loadFixes, applyFixes } from './nba-fixes.mjs';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const C = require('../live-core.js');
@@ -33,10 +36,10 @@ const opp = next.competitions[0].competitors.find(c => c.team.id !== '5').team;
 console.log('next game', next.id, etDay(next.date), 'vs', opp.abbreviation);
 
 /* 2) their last 5 finished regular-season games: this season as soon as they've played once, else last season */
-let ids = [], from = '';
+let ids = [], from = '', evs = {};
 for (const y of [YR, YR - 1]) {
   const s = await get(`${ESPN}teams/${opp.id}/schedule?season=${y}&seasontype=2`);
-  ids = (s?.events || []).filter(done).sort((a, b) => Date.parse(a.date) - Date.parse(b.date)).map(e => e.id);
+  const fin = (s?.events || []).filter(done).sort((a, b) => Date.parse(a.date) - Date.parse(b.date)); fin.forEach(e => { evs[e.id] = e; }); ids = fin.map(e => e.id);
   from = (y - 1) + '-' + String(y).slice(2);
   if (ids.length >= 1) break;   // once the season has started, this season's games only (Luka, Oct 23)
 }
@@ -54,13 +57,23 @@ const sbox = () => ({ z: C.ZN.map(() => [0, 0]), cs: [[0, 0], [0, 0]], pt: C.PT.
 const tally = (b, q) => { if (q.hasXY) { b.z[q.zi][1]++; if (q.m) b.z[q.zi][0]++; if (q.zi === 3 && q.x != null) { const k = q.x < 25 ? 0 : 1; b.cs[k][1]++; if (q.m) b.cs[k][0]++; } } if (q.pt != null && b.pt[q.pt]) { b.pt[q.pt][0]++; if (q.m) b.pt[q.pt][1] += q.three ? 3 : 2; } };
 const gameShots = (R, tid) => { const f = sbox(), a = sbox(); R.shots.forEach(q => tally(q.t === tid ? f : a, q)); return { f, a }; };
 const ckey = id => YR + ':' + opp.id + ':' + id;
+/* Nov 3: each game from the NBA's own files when the NBA game store (nba-data branch) is checked out here and has it
+   (same date and teams, with the play-by-play corrections); ESPN's play-by-play otherwise */
+const NB = (() => { try { const se = (YR - 1) + '-' + String(YR).slice(2), dir = path.join(process.env.NBA_DIR || 'nba-data', se); const idx = JSON.parse(fs.readFileSync(path.join(dir, 'index.json'), 'utf8')); return { dir, idx }; } catch { return null; } })();
+const FIX = NB ? loadFixes(path.dirname(NB.dir)) : {}, TO_NBA = { GS: 'GSW', NO: 'NOP', NY: 'NYK', SA: 'SAS', UTAH: 'UTA', WSH: 'WAS' };
+let nbaUsed = 0;
+async function game(id) {
+  const e = evs[id];
+  if (NB && e) { const d = etDay(e.date).replace(/-/g, ''), ab = (e.competitions?.[0]?.competitors || []).map(c => TO_NBA[c.team.abbreviation] || c.team.abbreviation).sort().join();
+    const gid = Object.keys(NB.idx).find(g => NB.idx[g][0] === d && [NB.idx[g][1], NB.idx[g][2]].sort().join() === ab);
+    if (gid) try { const raw = applyFixes(JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(NB.dir, gid + '.json.gz')))), FIX[gid]); const G = C.prep(C.slimSummary(C.fromNBA({ game: raw.box }, { game: raw.pbp }))); if (G.plays.length) { nbaUsed++; return G; } } catch (err) { console.log('scout: NBA copy unreadable', gid, String(err)); } }
+  const d = await get(`${ESPN}summary?event=${id}`); return d && d.plays && d.plays.length ? C.prep(C.slimSummary(d)) : null;
+}
 const games = [], T = {}, O = {}, P = {}, L5 = {}, Z = C.ZN.map(() => [0, 0]), CN = [0, 0], CM = [0, 0];
 const add = (d, x) => { for (const k in x) if (typeof x[k] === 'number') d[k] = (d[k] || 0) + x[k]; };
 for (const id of ids) {
-  const d = await get(`${ESPN}summary?event=${id}`);
-  if (!d || !d.plays || !d.plays.length) continue;
-  const G = C.prep(C.slimSummary(d));
-  const me = G.teams.find(t => t.id === opp.id), op = G.teams.find(t => t.id !== opp.id); if (!me || !op) continue;
+  const G = await game(id); if (!G) continue;
+  const me = G.teams.find(t => t.abbr === opp.abbreviation), op = G.teams.find(t => t.abbr !== opp.abbreviation); if (!me || !op) continue;
   G.focus = me; G.other = op;
   const R = C.deriveCore(G, G.plays, 'all');
   cache[ckey(id)] = gameShots(R, me.id);
@@ -72,8 +85,8 @@ for (const id of ids) {
   R.shots.filter(q => q.t === me.id && q.hasXY).forEach(q => { Z[q.zi][1]++; if (q.m) Z[q.zi][0]++; if (q.zi === 3) { CN[q.x < 25 ? 0 : 1]++; if (q.m) CM[q.x < 25 ? 0 : 1]++; } });
 }
 if (!games.length) { console.log('scout: no games to scout'); process.exit(0); }
-for (const id of allIds) { if (cache[ckey(id)]) continue; const d = await get(`${ESPN}summary?event=${id}`); if (!d || !d.plays || !d.plays.length) continue;
-  const G = C.prep(C.slimSummary(d)); const me = G.teams.find(t => t.id === opp.id), op = G.teams.find(t => t.id !== opp.id); if (!me || !op) continue; G.focus = me; G.other = op;
+for (const id of allIds) { if (cache[ckey(id)]) continue; const G = await game(id); if (!G) continue;
+  const me = G.teams.find(t => t.abbr === opp.abbreviation), op = G.teams.find(t => t.abbr !== opp.abbreviation); if (!me || !op) continue; G.focus = me; G.other = op;
   cache[ckey(id)] = gameShots(C.deriveCore(G, G.plays, 'all'), me.id); }
 for (const k of Object.keys(cache)) if (!k.startsWith(YR + ':')) delete cache[k];
 fs.mkdirSync('data', { recursive: true }); fs.writeFileSync(SC_F, JSON.stringify(cache));
@@ -107,4 +120,4 @@ fs.mkdirSync('data', { recursive: true });
 let prev = null; try { prev = JSON.parse(fs.readFileSync(OUT, 'utf8')); } catch {}
 if (prev && JSON.stringify({ ...prev, updated: 0 }) === JSON.stringify({ ...out, updated: 0 })) { console.log('scout: no changes'); process.exit(0); }
 fs.writeFileSync(OUT, JSON.stringify(out));
-console.log(`scout: ${opp.abbreviation}, ${n} games (${from})`);
+console.log(`scout: ${opp.abbreviation}, ${n} games (${from}), ${nbaUsed} from the NBA's own files`);

@@ -30,6 +30,15 @@ jobs:
       - name: Possession check against pbpstats
         run: node scripts/check-poss.mjs
         continue-on-error: true
+      # Nov 3: the NBA's own box scores and play-by-play (nba-data branch, this season) for the scouting report
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+        continue-on-error: true
+        with:
+          ref: nba-data
+          path: nba-data
+          sparse-checkout: |
+            2026-27
+            fixes.json
       - name: Scouting report for the next opponent
         run: node scripts/scout.mjs
         continue-on-error: true
