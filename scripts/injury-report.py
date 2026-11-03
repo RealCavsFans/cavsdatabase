@@ -136,19 +136,25 @@ def reason(raw):
 
 def main():
     now = dt.datetime.now(ET)
-    games = [g for g in schedule() if g[3] > now - dt.timedelta(hours=1)]
+    games = [g for g in schedule() if g[3] > now - dt.timedelta(hours=4)]
+    if os.environ.get('IR_GAME'): games = [g for g in schedule() if g[0] == os.environ['IR_GAME']] or games   # re-read one game's final pre-tip report
     if not games: log('no upcoming game'); return
     d, opp, ha, tip = games[0]
     today, tomorrow = now.date(), now.date() + dt.timedelta(days=1)
     gday = tip.date()
     # Nov 2: GitHub starts scheduled runs late (often :50-:59 instead of :07/:37), so a 'first half of the hour' rule
     # skipped every check. Now every run on a game day from 10 a.m. to tip looks (about hourly in practice, more near tip).
-    due = (gday == today and now.hour >= 10 and now < tip) \
+    # Nov 3: GitHub's scheduled runs can skip the last half hour before tip (Nov 2: the 6:30 report was the last one saved,
+    # so a late scratch was missed). For four hours after tip, look once more at the last report filed before tip.
+    final = gday == today and tip <= now < tip + dt.timedelta(hours=4)
+    if os.environ.get('IR_GAME'): final = True
+    due = (gday == today and now.hour >= 10 and now < tip) or final \
         or (gday == tomorrow and (now.hour == 17 and now.minute >= 15 or now.hour in (18, 19)))
+    if not final and games[0][3] <= now and len(games) > 1: d, opp, ha, tip = games[1]; gday = tip.date()   # the earlier game is done: look ahead
     if os.environ.get('CHECK'): print('due=' + ('1' if due or os.environ.get('FORCE') else '0')); return
     if not due and not os.environ.get('FORCE'):
         log(f'not due (next game {d} {opp}, tip {tip:%H:%M})'); return
-    stamp, url, b = newest(now)
+    stamp, url, b = newest(min(now, tip - dt.timedelta(minutes=1)) if final else now)
     if not b: log('no report found in the last six hours'); return
     title, rows = parse(b)
     want = gday.strftime('%m/%d/%Y')

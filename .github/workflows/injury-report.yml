@@ -12,6 +12,10 @@ on:
         description: 'Check now, whatever the time'
         type: boolean
         default: false
+      game:
+        description: 'Re-read the final pre-tip report for this game date (YYYY-MM-DD)'
+        required: false
+        default: ''
 permissions:
   contents: write
 concurrency:
@@ -30,12 +34,12 @@ jobs:
           sparse-checkout-cone-mode: false
       - name: Due?
         id: due
-        run: CHECK=1 FORCE=${{ inputs.force && '1' || '' }} python3 scripts/injury-report.py >> "$GITHUB_OUTPUT"
+        run: CHECK=1 IR_GAME=${{ inputs.game }} FORCE=${{ inputs.force && '1' || '' }} python3 scripts/injury-report.py >> "$GITHUB_OUTPUT"
       - name: Read the report
         if: steps.due.outputs.due == '1'
         run: |
           pip install -q pdfplumber==0.11.4
-          FORCE=${{ inputs.force && '1' || '' }} python3 scripts/injury-report.py
+          IR_GAME=${{ inputs.game }} FORCE=${{ inputs.force && '1' || '' }} python3 scripts/injury-report.py
       - name: Commit if changed
         if: steps.due.outputs.due == '1'
         run: |
