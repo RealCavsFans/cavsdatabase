@@ -20,7 +20,7 @@ const h = createHash('sha1');
    skips the five-minute prerender (Oct 30 audit: rcf.json's stamp was forcing a full rebuild every 30 minutes) */
 const STAMP = new Set(['updated', 'at', 'fetched', 'generated', 'checked']);
 const unstamp = v => Array.isArray(v) ? v.map(unstamp) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).filter(([k]) => !STAMP.has(k)).map(([k, x]) => [k, unstamp(x)])) : v;
-for (const f of ['index.html', 'videos.json', 'box.json', 'rcf.json', 'pdata/history.json', 'og/live.json', 'scripts/build-pages.mjs', 'scripts/prerender.mjs']) { try { const t = await readFile(new URL(f, root), 'utf8'); let x = t; if (f.endsWith('.json')) { try { x = JSON.stringify(unstamp(JSON.parse(t))); } catch {} } h.update(x); } catch {} }
+for (const f of ['index.html', 'videos.json', 'box.json', 'rcf.json', 'pdata/history.json', 'og/live.json', 'scripts/build-pages.mjs', 'scripts/prerender.mjs', 'live.src.html', 'live-core.js', 'scripts/build-live.mjs']) { try { const t = await readFile(new URL(f, root), 'utf8'); let x = t; if (f.endsWith('.json')) { try { x = JSON.stringify(unstamp(JSON.parse(t))); } catch {} } h.update(x); } catch {} }
 try { const { readdir } = await import('node:fs/promises'); h.update((await readdir(new URL('og/g/', root))).sort().join()); } catch {}
 try { const { readdir } = await import('node:fs/promises'); h.update((await readdir(new URL('og/h/', root))).sort().join()); } catch {}  // a new game share image means the page copies need the new image tag
 const hash = h.digest('hex');
