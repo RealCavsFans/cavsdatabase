@@ -228,6 +228,15 @@ function fromNBA(box,pbp,extra){extra=extra||{};const g=box.game,acts=((pbp&&pbp
     let k=i+1;while(k<acts.length&&skip(acts[k]))k++;if(k>=acts.length||acts[k].actionType!=='freethrow')continue;
     let last=k;for(let m=k+1;m<acts.length;m++){if(acts[m].actionType==='freethrow')last=m;else if(!skip(acts[m]))break}
     let e=i;while(e+1<last&&acts[e+1].actionType==='substitution')e++;const mv=acts.splice(i,e-i+1);acts.splice(last-mv.length+1,0,...mv);i=last}}
+  /* the NBA now and then names the wrong player in a "SUB out" (someone already on the bench). When exactly one player on the floor
+     for that team next appears checking back in (no plays in between, this quarter or later), he's the one who left: fix the row (Nov 2) */
+  {const court={};[g.homeTeam,g.awayTeam].forEach(t=>{const st=(t.players||[]).filter(p=>p.starter==='1').map(p=>p.personId);if(st.length===5)court[t.teamId]=new Set(st)});
+   acts.forEach((a,n)=>{if(a.actionType!=='substitution')return;const T=court[a.teamId];if(!T)return;
+     if(a.subType==='in'){if(T.has(a.personId)){court[a.teamId]=null;return}T.add(a.personId);if(T.size>5){court[a.teamId]=null}return}
+     if(!T.has(a.personId)){const later=acts.slice(n+1);
+       const cand=[...T].filter(id=>!later.some(b=>b.actionType==='substitution'&&b.subType==='out'&&b.personId===id&&b.clock===a.clock)).filter(id=>{for(const b of later){if(b.personId!==id)continue;return b.actionType==='substitution'&&b.subType==='in'}return false});   /* his next appearance is checking back in: he was the one on the bench */
+       if(cand.length===1){a.personId=cand[0];a.fixed='sub-out'}else{court[a.teamId]=null;return}}
+     T.delete(a.personId)})}
   const tid=t=>String(NBA_TEAM[t.teamTricode]||t.teamId);const H=g.homeTeam,A=g.awayTeam;const byNba={[H.teamId]:tid(H),[A.teamId]:tid(A)};
   const name={},team={};[H,A].forEach(t=>(t.players||[]).forEach(p=>{name[p.personId]=p.name;team[p.personId]=tid(t)}));const N=id=>name[id]||'';
   const st=g.gameStatus===3?'post':g.gameStatus===2?'in':'pre';const per=g.period||1,clk=nbaClock(g.gameClock);

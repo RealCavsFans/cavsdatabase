@@ -29,6 +29,9 @@ jobs:
         with:
           sparse-checkout: |
             scripts/nba-store.mjs
+            scripts/nba-check.mjs
+            live-core.js
+            live-archive
           sparse-checkout-cone-mode: false
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
         with:
@@ -41,6 +44,11 @@ jobs:
         env:
           SEASON: ${{ github.event.inputs.season }}
           TEAM: ${{ github.event.inputs.team }}
+      # every stored game held to rules that are always true (scripts/nba-check.mjs); the report is saved with the games
+      - run: node scripts/nba-check.mjs nba-data || echo "::warning::check did not finish"
+        continue-on-error: true
+        env:
+          SEASON: ${{ github.event.inputs.season }}
       - name: Save
         run: |
           cd nba-data; git config user.name "cavsdatabase-bot"; git config user.email "bot@cavsdatabase.com"; git add -A
