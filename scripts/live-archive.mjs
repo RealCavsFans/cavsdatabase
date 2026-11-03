@@ -117,6 +117,9 @@ if (NBA_MODE) {
     if (!out.plays.length) continue;
     const E = espnBy[d]; if (E) C.nbaWP(out, E.s);
     const s = C.slimSummary(out); s.src = 'NBA'; s.nba = gid; if (E) s.espn = E.id;
+    /* the NBA's final box line per player: [seconds, pts, fgm, fga, 3pm, 3pa, ftm, fta, oreb, dreb, ast, stl, blk, to, pf, +/-] */
+    s.nb = {}; for (const t of [raw.box.homeTeam, raw.box.awayTeam]) for (const p of t.players || []) { const q = p.statistics || {}, m = /PT(\d+)M([\d.]+)S/.exec(q.minutes || '');
+      s.nb[p.personId] = [m ? Math.round((+m[1] * 60 + +m[2]) * 10) / 10 : 0, q.points, q.fieldGoalsMade, q.fieldGoalsAttempted, q.threePointersMade, q.threePointersAttempted, q.freeThrowsMade, q.freeThrowsAttempted, q.reboundsOffensive, q.reboundsDefensive, q.assists, q.steals, q.blocks, q.turnovers, q.foulsPersonal, q.plusMinusPoints].map(v => v ?? 0); }
     const D = C.prep(s), R = C.deriveCore(D, D.plays, 'all'); s.recap = C.recap(D, R);
     const f = path.join(DIR, gid + '.json'), next = JSON.stringify(s);
     if (!fs.existsSync(f) || fs.readFileSync(f, 'utf8') !== next) { fs.writeFileSync(f, next); nw++; }
@@ -158,8 +161,13 @@ function build(per, file) {
     for (const id of D.roster['5']) {
       const p = D.P[id], b = R.B[id];
       P[id] = { name: p.name, short: p.short, last: p.last, pos: p.pos };
-      if (!(b.min > 0)) continue;
-      gp[id] = (gp[id] || 0) + 1; B[id] = B[id] || {}; addObj(B[id], { min: b.min, pts: b.pts, fgm: b.fgm, fga: b.fga, tpm: b.tpm, tpa: b.tpa, ftm: b.ftm, fta: b.fta, oreb: b.oreb, dreb: b.dreb, ast: b.ast, stl: b.stl, blk: b.blk, to: b.to, pf: b.pf, pm: b.pm });
+      /* whole-game totals for NBA games come from the NBA's own final box score (s.nb), so season totals match NBA.com to the
+         point; quarter, half and clutch files (and lineups, on/off) stay built from the play-by-play */
+      const nb = per === 'all' && s.nb && s.nb[id];
+      if (nb ? !(nb[0] > 0) : !(b.min > 0)) continue;
+      const row = nb ? { min: nb[0], pts: nb[1], fgm: nb[2], fga: nb[3], tpm: nb[4], tpa: nb[5], ftm: nb[6], fta: nb[7], oreb: nb[8], dreb: nb[9], ast: nb[10], stl: nb[11], blk: nb[12], to: nb[13], pf: nb[14], pm: nb[15] }
+        : { min: b.min, pts: b.pts, fgm: b.fgm, fga: b.fga, tpm: b.tpm, tpa: b.tpa, ftm: b.ftm, fta: b.fta, oreb: b.oreb, dreb: b.dreb, ast: b.ast, stl: b.stl, blk: b.blk, to: b.to, pf: b.pf, pm: b.pm };
+      gp[id] = (gp[id] || 0) + 1; B[id] = B[id] || {}; addObj(B[id], row);
       if (p.starter) B[id].gs = (B[id].gs || 0) + 1;
     }
     for (const n of [2, 3, 4, 5]) for (const [k, l] of Object.entries(R.L['5'][n])) {
