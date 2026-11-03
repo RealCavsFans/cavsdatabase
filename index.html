@@ -5430,7 +5430,12 @@ const INTRO_V='tait';
    const lg=await img('data:image/svg+xml;charset=utf-8,'+encodeURIComponent(LOGO));if(lg)g.drawImage(lg,pad*S,13*S,32*S,32*S);
    const mono=css('--mono')||'monospace',sans=css('--sans')||'sans-serif';
    g.textBaseline='middle';g.font='700 '+(22*S)+'px '+mono;g.fillStyle='#fff';g.fillText('cavs',(pad+40)*S,HH/2);const w1=g.measureText('cavs').width;g.fillStyle='#F2B231';g.fillText('_db',(pad+40)*S+w1,HH/2);
-   const wmEnd=(pad+40)*S+w1+g.measureText('_db').width;capHdr(g,label,wmEnd+18*S,W-pad*S,HH,S,sans);
+   const wmEnd=(pad+40)*S+w1+g.measureText('_db').width;
+   /* Nov 3 (Luka): player pages put the player's headshot in the header, a circle at the right end (the site's own copy, so the image stays saveable) */
+   let hx1=W-pad*S;if(/^players\//.test(route)){const m=(document.querySelector('.ppx-ph img')||{}).src;const pid=m&&(m.match(/(\d{5,})\.png/)||[])[1];const hs=pid?await img('/img/h/'+pid+'.png'):null;
+     if(hs&&hs.width){const D=46*S,cx=W-pad*S-D/2,cy=HH/2;g.save();g.beginPath();g.arc(cx,cy,D/2,0,7);g.closePath();g.fillStyle='#F4D6DD';g.fill();g.clip();const h2=D*1.35,w2=h2*hs.width/hs.height;g.drawImage(hs,cx-w2/2,cy-D/2-D*.04,w2,h2);g.restore();
+       g.beginPath();g.arc(cx,cy,D/2,0,7);g.lineWidth=2*S;g.strokeStyle='#F2B231';g.stroke();hx1=W-pad*S-D-12*S}}
+   capHdr(g,label,wmEnd+18*S,hx1,HH,S,sans);
    g.drawImage(shot,Math.round((W-shot.width)/2),HH+GOLD+pad*S);
    capFoot(g,capUrl,capDate,W,H,FT,pad,S,mono,css('--wine-ink')||'#860038',css('--muted')||'#5D646C');const now=new Date();
    const blob=await new Promise(r=>cv.toBlob(r,'image/png'));const name='cavsdb-'+id+'-'+now.toISOString().slice(0,10)+'.png';
