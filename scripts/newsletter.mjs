@@ -112,8 +112,8 @@ function prep(D, g, score, top, boxLink, opts) {
   if (nx) { const o = nx[1], past = D.SCHEDULE.filter(z => z[1] === o && D.SCORES[z[0]]), left = D.SCHEDULE.filter(z => z[1] === o && !D.SCORES[z[0]] && z[0] > g[0]).length;
     if (past.length) { const L = past[past.length - 1], [a, b] = D.SCORES[L[0]].split('-').map(Number), w = past.filter(z => { const [p, q] = D.SCORES[z[0]].split('-').map(Number); return p > q; }).length;
       meet = { d: L[0], ha: L[2], res: (a > b ? 'W ' : 'L ') + a + '–' + b, w, l: past.length - w, left, nick: NICK[o] || o, o, show: L[0] !== g[0] };
-      /* the season series is a row in the record and ratings table; the "last meeting" line shows only when that game wasn't last night */
-      if (tape.length) tape.splice(1, 0, ['Season series', meet.w + '–' + meet.l, '', meet.l + '–' + meet.w, '']); } }
+      /* the "last meeting" line shows only when that game wasn't last night */
+    } }
   /* MOCKUP 2: around the East, last night's results for the teams in the standings table (league box scores, pdata/league.json) */
   let around = [];
   try { const LG = JSON.parse(readFileSync(new URL('../pdata/league.json', import.meta.url), 'utf8')), AL = { GS: 'GSW', NO: 'NOP', NY: 'NYK', SA: 'SAS', UTAH: 'UTA', WSH: 'WAS' }, ab = x => AL[x] || x;
@@ -175,10 +175,18 @@ function tastingNotes(rc, opp) {
   const get = re => rc.filter(([l]) => re.test(l)), out = [], dot = t => String(t).replace(/\.$/, '');
   get(/^Cavs high/).slice(0, 1).forEach(([, t]) => out.push(['Top line', dot(t)]));
   get(/^Four factors/).forEach(([, t]) => out.push(['Factors', dot(t).replace(/^Cavs won (\d) of 4: ([^.]*)\.\s*/, (m, n, w) => `Won ${n} of 4 (${w}) · `).replace(/^Cavs won 0 of 4\.?\s*/, 'Won 0 of 4 · ').replace(/Effective FG%/, 'eFG%').replace(/ to /g, '–')]));
-  get(/^Best lineup/).forEach(([, t]) => out.push(['Best five', dot(t).replace(/: \+/, ' · +')]));
+  get(/^Best lineup/).forEach(([, t]) => out.push(['Best five', dot(t).replace(/: \+/, ' · +').replace(/: -/, ' · -')]));
   get(/^Edges/).forEach(([, t]) => { const E = t.split(' · ').map(x => { const m = /^(.*?) (\d+)–(\d+)$/.exec(x); return m ? [m[1], +m[2], +m[3]] : null; }).filter(Boolean).filter(([, a, b]) => a !== b).sort((x, y) => Math.abs(y[1] - y[2]) - Math.abs(x[1] - x[2])).slice(0, 2);
     if (E.length) out.push(['Edges', E.map(([k, a, b]) => `${k}: ${a > b ? 'CLE ' + a + '–' + b : opp + ' ' + b + '–' + a}`).join(' · ')]); });
-  get(/high|Milestone|Record|First/i).filter(([l]) => !/^(Cavs|Their) high/.test(l)).slice(0, 2).forEach(([l, t]) => out.push([l, dot(t)]));
+  // highs and records share one row: last name, short stat, and what kind of high in parentheses
+  const AB = [[/made field goals?/, 'FGM'], [/made threes?/, '3PM'], [/made free throws?/, 'FTM'], [/points?/, 'pts'], [/rebounds?/, 'reb'], [/offensive reb/, 'oreb'], [/assists?/, 'ast'], [/steals?/, 'stl'], [/blocks?/, 'blk'], [/turnovers?/, 'tov']];
+  const hi = get(/high|Milestone|Record|First|Most since/i).filter(([l]) => !/^(Cavs|Their) high/.test(l)).slice(0, 2).map(([l, t]) => {
+    const m = /^(?:(.+?): )?(\d+) ([a-z ]+?), (.*?)\.?$/i.exec(t); if (!m) return dot(t);
+    const who = m[1] ? m[1].replace(/ (Jr\.|Sr\.|II|III|IV)$/, '').split(' ').slice(-1)[0] : 'Cavs', st = (AB.find(([re]) => re.test(m[3])) || [, m[3]])[1];
+    const kind = /tying/.test(m[4]) ? 'ties career high' : /^Career high/.test(l) ? 'career high' : /^Ties record/.test(l) ? 'ties Cavs record' : /^Cavs record/.test(l) ? 'Cavs record'
+      : /most since/.test(m[4]) ? m[4].replace(/^(his|the Cavs’) /, '').replace(/,.*$/, '') : /^Season high/.test(l) ? 'season high' : l.toLowerCase();
+    return `${who} ${m[2]} ${st} (${kind})`; });
+  if (hi.length) out.push(['Highs', hi.join(' · ')]);
   return out.slice(0, 6);
 }
 function roast(x) {
@@ -221,7 +229,7 @@ function renderSports(x) {
   const cell = (ab, pts, won, nm) => `<td width="50%" align="center" style="padding:10px 0 9px;${won ? 'border-bottom:4px solid #F2B231;' : 'border-bottom:4px solid transparent;'}"><div style="font:800 20px/1 ${F.cond};color:${P.ink}">${ab}</div><div style="font:700 36px/1.15 ${F.mono};color:${won ? P.ink : '#9A948B'}">${pts}</div><div style="font:11px ${F.sans};color:${P.muted}">${esc(nm)}</div></td>`;
   s.push(K(x.preseason ? 'Last game · preseason' : 'Last game' + (x.hasRec ? ` · ${x.w}–${x.l}` : ''), ['Box score', esc(x.boxLink)]));
   s.push(B(`${coffeeBox(x, P, cell)}${x.qs ? lineScore(x, P) : ''}
-${x.notes && x.notes.length ? `<div style="margin-top:14px"><div style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine};padding-bottom:2px">THE POUR</div>${x.notes.map(([l, t]) => li(esc(t), { left: esc(l.toUpperCase()), lw: 88, sm: 1 })).join('')}</div>` : x.tn ? `<div style="font:16px/1.55 ${F.serif};color:${P.fg2};margin-top:10px">${esc(x.tn)} led the Cavs with ${esc(x.tl || '')}.</div>` : ''}${x.sotn ? `<div style="font:13.5px/1.5 ${F.sans};color:${P.fg2};margin-top:6px"><b style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine}">STAT OF THE NIGHT</b>&nbsp; ${x.sotn[1]} ${esc(x.sotn[2])} from <a href="${SITE}/players/${pslug(x.sotn[0])}" style="color:${P.ink};font-weight:700;text-decoration:none;border-bottom:2px solid #F2B231">${esc(x.sotn[0].split(' ').slice(-1)[0])}</a>, ${esc(x.sotn[3])} above his average</div>` : ''}`));
+${x.notes && x.notes.length ? `<div style="margin-top:14px"><div style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine};padding-bottom:2px">THE POUR</div>${x.notes.map(([l, t]) => li(esc(t).split(' · ').map(z => z.length < 34 ? `<span style="white-space:nowrap">${z}</span>` : z).join(' · '), { left: esc(l.toUpperCase()), lw: 88, sm: 1 })).join('')}</div>` : x.tn ? `<div style="font:16px/1.55 ${F.serif};color:${P.fg2};margin-top:10px">${esc(x.tn)} led the Cavs with ${esc(x.tl || '')}.</div>` : ''}${x.sotn ? `<div style="font:13.5px/1.5 ${F.sans};color:${P.fg2};margin-top:6px"><b style="font:800 10px ${F.sans};letter-spacing:1.4px;color:${P.wine}">STAT OF THE NIGHT</b>&nbsp; ${x.sotn[1]} ${esc(x.sotn[2])} from <a href="${SITE}/players/${pslug(x.sotn[0])}" style="color:${P.ink};font-weight:700;text-decoration:none;border-bottom:2px solid #F2B231">${esc(x.sotn[0].split(' ').slice(-1)[0])}</a>, ${esc(x.sotn[3])} above his average</div>` : ''}`));
   /* email can't play video (Gmail and Outlook strip players), so this is built to look like one: the video's own frame plus a player bar; a tap opens it on YouTube */
   if (x.hl && x.hl.id) s.push(`<tr><td style="padding:12px 14px 0"><a href="${esc(x.hl.link)}" style="text-decoration:none"><img src="https://i.ytimg.com/vi/${esc(x.hl.id)}/hq720.jpg" width="572" alt="Play the full game highlights" style="display:block;width:100%;height:auto;border:0">${T(`<tr><td bgcolor="#101419" style="background:#101419;padding:10px 12px;font:800 13px ${F.sans};letter-spacing:.5px;color:#FFFFFF"><span style="display:inline-block;background:#C8102E;color:#FFFFFF;padding:3px 9px;margin-right:8px">&#9654;</span>PLAY HIGHLIGHTS</td><td bgcolor="#101419" align="right" style="background:#101419;padding:10px 12px;font:12px ${F.sans};color:#B9B2A8;white-space:nowrap">${x.hl.src === 'Cavs' ? 'Cavs' : 'NBA'} on YouTube</td></tr>`)}</a></td></tr>`);
   if (x.hl || x.recap) s.push(B(`${x.hl && !x.hl.id ? li(a(x.hl.link, '&#9654;&nbsp; Full game highlights'), { meta: x.hl.nba ? 'NBA.com' : 'NBA · YouTube' }) : ''}${x.recap ? li(a(x.recap.link, esc(x.recap.title)), { meta: 'RealCavsFans recap' }) : ''}`));
