@@ -1,0 +1,71 @@
+{
+ "season": "2026-27",
+ "checked": "2026-11-03T03:57:24.407Z",
+ "tally": {
+  "games": 101,
+  "clean": 95,
+  "nba": 0,
+  "ours": 5,
+  "poss": 1,
+  "espn": 0
+ },
+ "how": "nba = the NBA box score does not add up on its own; ours = our play-by-play build differs from the NBA box score; poss = possession count off from the NBA markers; espn = the NBA and ESPN box scores disagree (Cavs games)",
+ "games": {
+  "0022600009": {
+   "d": "20261023",
+   "m": "HOU@SAS",
+   "ours": [
+    "A. Sengun (HOU): pm 3/2 (NBA/ours)",
+    "S. Adams (HOU): pm 6/7 (NBA/ours)"
+   ]
+  },
+  "0022600096": {
+   "d": "20261023",
+   "m": "MIN@ORL",
+   "ours": [
+    "J. McDaniels (MIN): ast 3/4 (NBA/ours)",
+    "A. Dosunmu (MIN): ast 10/9 (NBA/ours)"
+   ]
+  },
+  "0022600101": {
+   "d": "20261023",
+   "m": "MEM@GSW",
+   "poss": [
+    "teams 106 vs 99 possessions (more than 4 apart)"
+   ]
+  },
+  "0022600102": {
+   "d": "20261023",
+   "m": "LAC@LAL",
+   "ours": [
+    "K. Dunn (LAC): reb 4/5 (NBA/ours)"
+   ]
+  },
+  "0022600124": {
+   "d": "20261026",
+   "m": "PHX@OKC",
+   "ours": [
+    "I. Hartenstein (OKC): pm -1/-2 (NBA/ours)",
+    "B. Stirtz (OKC): pm 1/2 (NBA/ours)",
+    "A. Mara (OKC): pm 13/14 (NBA/ours)",
+    "J. Dix (OKC): pm -7/-8 (NBA/ours)",
+    "K. Maluach (PHX): pm -2/-3 (NBA/ours)",
+    "J. Green (PHX): pm -10/-11 (NBA/ours)",
+    "D. Booker (PHX): pm -11/-12 (NBA/ours)",
+    "C. Gillespie (PHX): pm -16/-15 (NBA/ours)",
+    "L. Kennard (PHX): pm -6/-5 (NBA/ours)",
+    "R. Dunn (PHX): pm 5/6 (NBA/ours)"
+   ]
+  },
+  "0022600155": {
+   "d": "20261101",
+   "m": "BKN@IND",
+   "ours": [
+    "J. Randle (BKN): pm 17/18 (NBA/ours)",
+    "C. Johnson (BKN): pm 10/9 (NBA/ours)",
+    "N. Traore (BKN): pm 8/9 (NBA/ours)",
+    "K. Ellis (BKN): pm 1/0 (NBA/ours)"
+   ]
+  }
+ }
+}
