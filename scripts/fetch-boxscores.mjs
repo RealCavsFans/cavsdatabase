@@ -3,13 +3,17 @@
 // (preseason + regular season) from NBA.com's public schedule feed.
 // On any failure it keeps the existing box.json and exits 0.
 import { readFile, writeFile } from 'node:fs/promises';
-const FEED = 'https://cdn.nba.com/static/json/staticData/scheduleLeagueV2.json';
+// Nov 2: the NBA's own bucket first (where its live files moved on Oct 28), the old cdn.nba.com address as the backup
+const FEEDS = ['https://nba-prod-us-east-1-mediaops-stats.s3.amazonaws.com/NBA/staticData/scheduleLeagueV2_1.json', 'https://cdn.nba.com/static/json/staticData/scheduleLeagueV2.json'];
 let prev = {};
 try { prev = JSON.parse(await readFile('box.json', 'utf8')); } catch {}
 try {
-  const r = await fetch(FEED, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Referer': 'https://www.nba.com/', 'Origin': 'https://www.nba.com' } });
-  if (!r.ok) throw new Error('HTTP ' + r.status);
-  const data = await r.json();
+  let data = null, why = [];
+  for (const FEED of FEEDS) {
+    try { const r = await fetch(FEED, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36', 'Accept': 'application/json, text/plain, */*', 'Accept-Language': 'en-US,en;q=0.9', 'Referer': 'https://www.nba.com/', 'Origin': 'https://www.nba.com' }, signal: AbortSignal.timeout(60000) });
+      if (!r.ok) throw new Error('HTTP ' + r.status); data = JSON.parse(await r.text()); if (data && data.leagueSchedule) break; } catch (e) { why.push(FEED.split('/')[2] + ': ' + (e.message || e)); data = null; }
+  }
+  if (!data) throw new Error(why.join('; '));
   const out = { ...prev };
   for (const day of data.leagueSchedule.gameDates) {
     for (const g of day.games) {
