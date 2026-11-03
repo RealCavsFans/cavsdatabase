@@ -32,6 +32,12 @@ jobs:
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
         with:
           node-version: 22
+      # Nov 3: Cloudflare builds one version at a time and skips a build when a newer push lands first. On busy days the jobs
+      # published every minute or two, so builds kept getting skipped and the live site fell an hour behind. Wait 3 minutes
+      # first: a newer publish cancels this one (cancel-in-progress), so a burst of saves becomes one push to 'deploy'.
+      - name: Let a burst of saves settle
+        if: github.event_name != 'workflow_dispatch'
+        run: sleep 180
       # Nov 3: locked test games and bad-data drills for the NBA-feed build; a failure stops the publish so the site keeps the last good version
       - run: node scripts/regress.mjs
       - run: |
