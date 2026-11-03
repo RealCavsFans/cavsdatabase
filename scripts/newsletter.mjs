@@ -127,7 +127,27 @@ function prep(D, g, score, top, boxLink, opts) {
     if (e) notes = tastingNotes(e.rc || [], e.opp);
     if (e) { const C = createRequire(import.meta.url)('../live-core.js'), s = JSON.parse(readFileSync(new URL(`../live-archive/${se}/${e.id}.json`, import.meta.url), 'utf8')), Dg = C.prep(s), R = C.deriveCore(Dg, Dg.plays, 'all');
       const L5 = Object.values(R.L['5'][5] || {}).filter(l => l.sec >= 300).map(l => ({ l, pm: l.pf - l.pa })).sort((a, b) => b.pm - a.pm || b.l.sec - a.l.sec)[0];
-      if (L5 && L5.pm > 0) lu = { names: L5.l.ids.map(id => Dg.P[id].last), pm: L5.pm, min: Math.floor(L5.l.sec / 60) + ':' + String(Math.round(L5.l.sec % 60)).padStart(2, '0'), pf: L5.l.pf, pa: L5.l.pa }; } } catch {}
+      if (L5 && L5.pm > 0) lu = { names: L5.l.ids.map(id => Dg.P[id].last), pm: L5.pm, min: Math.floor(L5.l.sec / 60) + ':' + String(Math.round(L5.l.sec % 60)).padStart(2, '0'), pf: L5.l.pf, pa: L5.l.pa };
+      /* best five with its net rating (points per 100 possessions scored minus allowed) */
+      const bi = notes.findIndex(([l]) => l === 'Best five');
+      if (lu && bi >= 0 && L5.l.o?.np && L5.l.d?.np) { const nr = 100 * (L5.l.pf / L5.l.o.np - L5.l.pa / L5.l.d.np), sg = v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1);
+        notes[bi] = ['Best five', `${lu.names.join(', ')} · +${lu.pm} in ${lu.min} · ${sg(nr)} net rating`]; }
+      /* swing stats: the one or two numbers worth the most points either way. Cavs shooting is measured against their own
+         season average before this game (makes above or below average, in points); the rest are head-to-head point gaps. */
+      const cid = Dg.teams.find(t => t.abbr === 'CLE').id, oid = Dg.teams.find(t => t.abbr !== 'CLE').id, A = R.T[cid], O = R.T[oid], oab = e.opp, cand = [];
+      const prior = ix.filter(z => z.et < g[0]).map(z => { try { const s2 = JSON.parse(readFileSync(new URL(`../live-archive/${se}/${z.id}.json`, import.meta.url), 'utf8')), D2 = C.prep(s2), R2 = C.deriveCore(D2, D2.plays, 'all'); return R2.T[D2.teams.find(t => t.abbr === 'CLE').id]; } catch { return null; } }).filter(Boolean);
+      const pct = (m, a2) => a2 ? (100 * m / a2).toFixed(1) : '0.0';
+      if (prior.length >= 2) { const sum = k => prior.reduce((v, t) => v + (t[k] || 0), 0);
+        const fd = A.ftm - O.ftm, fx = A.fta && sum('fta') ? A.ftm - A.fta * sum('ftm') / sum('fta') : 0, off = Math.abs(100 * A.ftm / (A.fta || 1) - 100 * sum('ftm') / (sum('fta') || 1)) >= 5;
+        // free throws as one line: the head-to-head makes, plus the Cavs' rate against their season when it's 5+ points off
+        if (fd || off) cand.push([Math.abs(fd) >= Math.abs(fx) ? fd : fx, `Free throws: ${fd >= 0 ? 'CLE ' + A.ftm + '–' + O.ftm : oab + ' ' + O.ftm + '–' + A.ftm}${off && A.fta ? ` (Cavs ${A.ftm}-${A.fta}, ${pct(A.ftm, A.fta)}%; season ${pct(sum('ftm'), sum('fta'))}%)` : ''}`]);
+        for (const [lab, m, a2, v, sm, sa] of [['3PT', A.tpm, A.tpa, 3, sum('tpm'), sum('tpa')], ['2PT', A.fgm - A.tpm, A.fga - A.tpa, 2, sum('fgm') - sum('tpm'), sum('fga') - sum('tpa')]])
+          if (a2 && sa) cand.push([(m - a2 * sm / sa) * v, `Cavs ${lab} ${m}-${a2} (${pct(m, a2)}%, season ${pct(sm, sa)}%)`]); }
+      const hh = (lab, a2, o2) => { if (a2 !== o2) cand.push([a2 - o2, `${lab}: ${a2 > o2 ? 'CLE ' + a2 + '–' + o2 : oab + ' ' + o2 + '–' + a2}`]); };
+      hh('Paint', A.paint, O.paint); hh('Second chance', A.second, O.second); hh('Points off turnovers', A.offto, O.offto); hh('Bench', A.bnPts, O.bnPts);
+      const sw = cand.sort((x2, y2) => Math.abs(y2[0]) - Math.abs(x2[0])).slice(0, 2).map(z => z[1]);
+      if (sw.length) { const hiAt = notes.findIndex(([l]) => l === 'Highs'); notes.splice(hiAt >= 0 ? hiAt : notes.length, 0, ['Swing stats', sw.join(' · ')]); }
+    } } catch (err) { if (process.env.NL_DRY) console.log('notes:', err.message); }
   /* MOCKUP 4: Charge corner, last night's Charge result, or the next Charge game within a week */
   let ch = null;
   if (D.CHARGE && process.env.NL_CH_EXAMPLE) D.CHARGE = { ...D.CHARGE, record: '1–0', games: [['2026-11-02', 'Motor City Cruise', 'H', '7:00', 'W 118–110', '', 'https://www.basketball-reference.com/gleague/boxscores/', [['Khalifa Diop', 16, 11, 2, 28], ['Ernest Udeh Jr.', 9, 8, 1, 22]]], ...(D.CHARGE.games || [])] };   // mockup only
@@ -174,10 +194,8 @@ function lineScore(x, P) {
 function tastingNotes(rc, opp) {
   const get = re => rc.filter(([l]) => re.test(l)), out = [], dot = t => String(t).replace(/\.$/, '');
   get(/^Cavs high/).slice(0, 1).forEach(([, t]) => out.push(['Top line', dot(t)]));
-  get(/^Four factors/).forEach(([, t]) => out.push(['Factors', dot(t).replace(/^Cavs won (\d) of 4: ([^.]*)\.\s*/, (m, n, w) => `Won ${n} of 4 (${w}) · `).replace(/^Cavs won 0 of 4\.?\s*/, 'Won 0 of 4 · ').replace(/Effective FG%/, 'eFG%').replace(/ to /g, '–')]));
+  get(/^Four factors/).forEach(([, t]) => out.push(['Four Factors', dot(t).replace(/^Cavs won (\d) of 4: ([^.]*)\.\s*/, (m, n, w) => `Won ${n} of 4 (${w}) · `).replace(/^Cavs won 0 of 4\.?\s*/, 'Won 0 of 4 · ').replace(/Effective FG%/, 'eFG%').replace(/ to /g, '–')]));
   get(/^Best lineup/).forEach(([, t]) => out.push(['Best five', dot(t).replace(/: \+/, ' · +').replace(/: -/, ' · -')]));
-  get(/^Edges/).forEach(([, t]) => { const E = t.split(' · ').map(x => { const m = /^(.*?) (\d+)–(\d+)$/.exec(x); return m ? [m[1], +m[2], +m[3]] : null; }).filter(Boolean).filter(([, a, b]) => a !== b).sort((x, y) => Math.abs(y[1] - y[2]) - Math.abs(x[1] - x[2])).slice(0, 2);
-    if (E.length) out.push(['Edges', E.map(([k, a, b]) => `${k}: ${a > b ? 'CLE ' + a + '–' + b : opp + ' ' + b + '–' + a}`).join(' · ')]); });
   // highs and records share one row: last name, short stat, and what kind of high in parentheses
   const AB = [[/made field goals?/, 'FGM'], [/made threes?/, '3PM'], [/made free throws?/, 'FTM'], [/points?/, 'pts'], [/rebounds?/, 'reb'], [/offensive reb/, 'oreb'], [/assists?/, 'ast'], [/steals?/, 'stl'], [/blocks?/, 'blk'], [/turnovers?/, 'tov']];
   const hi = get(/high|Milestone|Record|First|Most since/i).filter(([l]) => !/^(Cavs|Their) high/.test(l)).slice(0, 2).map(([l, t]) => {
@@ -215,7 +233,7 @@ function renderSports(x) {
   const P = { bg: '#F7F3EC', dot: '#B9B2A8', wine: '#860038', ink: '#101419', fg2: '#2F363E', muted: '#5D646C' };
   const K = (t, link, sz) => `<tr><td style="padding:24px 14px 0">${T(`<tr><td style="font:800 ${sz || 21}px/1 ${F.cond};text-transform:uppercase;color:${P.ink};padding-bottom:6px;border-bottom:3px solid ${P.ink}">${t}</td><td align="right" valign="bottom" style="padding-bottom:6px;border-bottom:3px solid ${P.ink};font:700 13px ${F.sans};white-space:nowrap">${link ? `<a href="${link[1]}" style="color:#860038;text-decoration:none">${link[0]} &rarr;</a>` : ''}</td></tr>`)}</td></tr>`;
   const B = inner => `<tr><td style="padding:8px 14px 0">${inner}</td></tr>`;
-  const li = (main, o = {}) => T(`<tr>${o.left ? `<td width="${o.lw || 86}" valign="top" style="padding:${o.sm ? '7px 8px 7px 0;font:700 10px' : '9px 8px 9px 0;font:700 11.5px'} ${F.mono};color:${P.muted};white-space:nowrap">${o.left}</td>` : ''}<td valign="top" style="padding:${o.sm ? '6px 0;font:12.5px/1.45' : '8px 0;font:14px/1.45'} ${F.sans};color:${P.ink}">${main}${o.meta ? `<div style="font:12px ${F.sans};color:${P.muted};margin-top:2px">${o.meta}</div>` : ''}</td></tr>`, `style="border-bottom:1px dotted ${P.dot}"`);
+  const li = (main, o = {}) => T(`<tr>${o.left ? `<td width="${o.lw || 86}" valign="baseline" style="vertical-align:baseline;padding:${o.sm ? '6px 8px 6px 0;font:700 10px/18px' : '8px 8px 8px 0;font:700 11.5px/20px'} ${F.mono};color:${P.muted};white-space:nowrap">${o.left}</td>` : ''}<td valign="baseline" style="vertical-align:baseline;padding:${o.sm ? '6px 0;font:12.5px/18px' : '8px 0;font:14px/20px'} ${F.sans};color:${P.ink}">${main}${o.meta ? `<div style="font:12px ${F.sans};color:${P.muted};margin-top:2px">${o.meta}</div>` : ''}</td></tr>`, `style="border-bottom:1px dotted ${P.dot}"`);
   const a = (h, t) => `<a href="${esc(h)}" style="color:${P.ink};font-weight:700;text-decoration:none">${t}</a>`;
   const s = [];
   s.push(`<tr><td style="padding:12px 14px 0"><div style="border-bottom:3px double ${P.ink};padding-bottom:9px;text-align:center;font:700 11px ${F.mono};letter-spacing:1px;color:${P.ink}"><span style="color:${P.wine}">&gt;</span> ${esc(new Date(x.issueDay + 'T12:00:00Z').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).toUpperCase())}${x.test ? ' · <span style="color:#C8102E">TEST</span>' : ''}</div><div style="height:2px;background:#F2B231;margin-top:2px;font-size:0;line-height:0">&nbsp;</div></td></tr>`);
@@ -223,7 +241,7 @@ function renderSports(x) {
   { const kick = t => `<div style="font:800 10px ${F.sans};letter-spacing:1.4px;text-transform:uppercase;color:${P.wine};margin-bottom:3px">${t}</div>`;
     const rows = [];
     if (x.otd) rows.push(kick('This day in Cavs history · ' + esc(x.otd[1])) + `<div style="font:13.5px/1.45 ${F.serif};color:${P.fg2}">${esc(x.otd[2])}</div>`);
-    if (x.tq) rows.push(kick('Daily trivia') + `<div style="font:700 13.5px/1.4 ${F.serif};color:${P.ink}">${esc(x.tq.q)}</div><div style="font:12.5px/1.6 ${F.sans};color:${P.ink};margin-top:3px">${[0, 1, 2, 3].map(k => `<span style="white-space:nowrap;margin-right:12px"><b style="color:${P.wine};font-family:${F.mono}">${'ABCD'[k]}</b>&nbsp;${esc(x.tq.c[k] ?? '')}</span>`).join(' ')}</div><div style="font:11px ${F.sans};color:${P.muted};margin-top:2px">Answer at the bottom</div>`);
+    if (x.tq) rows.push(kick('Daily trivia') + `<div style="font:700 13.5px/1.4 ${F.serif};color:${P.ink}">${esc(x.tq.q)}</div><div style="font:12.5px/1.6 ${F.sans};color:${P.ink};margin-top:3px">${[0, 1, 2, 3].map(k => `<span style="white-space:nowrap;margin-right:12px"><b style="color:${P.wine};font-family:${F.mono}">${'ABCD'[k]}</b>&nbsp;${esc(x.tq.c[k] ?? '')}</span>`).join(' ')}<span style="float:right;font:11px/2 ${F.sans};color:${P.muted}">Answer at the bottom</span></div>`);
     if (rows.length) s.push(`<tr><td style="padding:16px 14px 0">${T(rows.map((r, k) => `<tr><td style="padding:${k ? '10px' : '0'} 0 ${k === rows.length - 1 ? '0' : '10px'};${k < rows.length - 1 ? `border-bottom:1px dotted ${P.dot};` : ''}">${r}</td></tr>`).join(''))}</td></tr>`); }
   // last game: boxed linescore, winner reversed out in ink
   const cell = (ab, pts, won, nm) => `<td width="50%" align="center" style="padding:10px 0 9px;${won ? 'border-bottom:4px solid #F2B231;' : 'border-bottom:4px solid transparent;'}"><div style="font:800 20px/1 ${F.cond};color:${P.ink}">${ab}</div><div style="font:700 36px/1.15 ${F.mono};color:${won ? P.ink : '#9A948B'}">${pts}</div><div style="font:11px ${F.sans};color:${P.muted}">${esc(nm)}</div></td>`;
