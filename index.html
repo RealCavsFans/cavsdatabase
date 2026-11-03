@@ -5433,8 +5433,7 @@ const INTRO_V='tait';
    const wmEnd=(pad+40)*S+w1+g.measureText('_db').width;
    /* Nov 3 (Luka): player pages put the player's headshot in the header, a circle at the right end (the site's own copy, so the image stays saveable) */
    let hx1=W-pad*S;if(/^players\//.test(route)){const m=(document.querySelector('.ppx-ph img')||{}).src;const pid=m&&(m.match(/(\d{5,})\.png/)||[])[1];const hs=pid?await img('/img/h/'+pid+'.png'):null;
-     if(hs&&hs.width){const D=46*S,cx=W-pad*S-D/2,cy=HH/2;g.save();g.beginPath();g.arc(cx,cy,D/2,0,7);g.closePath();g.fillStyle='#F4D6DD';g.fill();g.clip();const h2=D*1.35,w2=h2*hs.width/hs.height;g.drawImage(hs,cx-w2/2,cy-D/2-D*.04,w2,h2);g.restore();
-       g.beginPath();g.arc(cx,cy,D/2,0,7);g.lineWidth=2*S;g.strokeStyle='#F2B231';g.stroke();hx1=W-pad*S-D-12*S}}
+     if(hs&&hs.width){/* the full headshot, no frame: standing on the gold rule at the right end of the header */const h2=HH-6*S,w2=h2*hs.width/hs.height,x2=W-pad*S-w2;g.drawImage(hs,x2,HH-h2,w2,h2);hx1=x2-10*S}}
    capHdr(g,label,wmEnd+18*S,hx1,HH,S,sans);
    g.drawImage(shot,Math.round((W-shot.width)/2),HH+GOLD+pad*S);
    capFoot(g,capUrl,capDate,W,H,FT,pad,S,mono,css('--wine-ink')||'#860038',css('--muted')||'#5D646C');const now=new Date();
