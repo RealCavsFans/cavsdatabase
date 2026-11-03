@@ -107,20 +107,20 @@ function prep(D, g, score, top, boxLink, opts) {
   const E = (D.STANDINGS || []).filter(t => t[1] === 'E').sort((x, y) => (y[2] - y[3]) - (x[2] - x[3]) || y[2] - x[2]);
   let stand = []; const ci = E.findIndex(t => t[0] === 'CLE');
   if (ci >= 0 && E.some(t => t[2] + t[3] > 0)) { const a = Math.max(0, Math.min(ci - 2, E.length - 5)), L = E[0]; stand = E.slice(a, a + 5).map((t, k) => { const gb = ((L[2] - t[2]) + (t[3] - L[3])) / 2; return [a + k + 1, t[0] === 'CLE' ? 'Cleveland' : (D.TEAMS[t[0]] || t[0]), t[2] + '–' + t[3], gb ? (gb % 1 ? gb.toFixed(1) : String(gb)) : '—', t[0] === 'CLE']; }); }
-  /* MOCKUP (Nov 3) 1: last meeting and season series with the next opponent (this season's results) */
+  /* Nov 3: last meeting and season series with the next opponent (this season's results) */
   let meet = null;
   if (nx) { const o = nx[1], past = D.SCHEDULE.filter(z => z[1] === o && D.SCORES[z[0]]), left = D.SCHEDULE.filter(z => z[1] === o && !D.SCORES[z[0]] && z[0] > g[0]).length;
     if (past.length) { const L = past[past.length - 1], [a, b] = D.SCORES[L[0]].split('-').map(Number), w = past.filter(z => { const [p, q] = D.SCORES[z[0]].split('-').map(Number); return p > q; }).length;
       meet = { d: L[0], ha: L[2], res: (a > b ? 'W ' : 'L ') + a + '–' + b, w, l: past.length - w, left, nick: NICK[o] || o, o, show: L[0] !== g[0] };
       /* the "last meeting" line shows only when that game wasn't last night */
     } }
-  /* MOCKUP 2: around the East, last night's results for the teams in the standings table (league box scores, pdata/league.json) */
+  /* Nov 3: around the East, last night's results for the teams in the standings table (league box scores, pdata/league.json) */
   let around = [];
   try { const LG = JSON.parse(readFileSync(new URL('../pdata/league.json', import.meta.url), 'utf8')), AL = { GS: 'GSW', NO: 'NOP', NY: 'NYK', SA: 'SAS', UTAH: 'UTA', WSH: 'WAS' }, ab = x => AL[x] || x;
     const near = new Set(stand.filter(r => !r[4]).map(r => Object.keys(D.TEAMS).find(k => D.TEAMS[k] === r[1])).filter(Boolean));
     Object.values(LG.tg || {}).filter(t => t.d === g[0] && t.t && t.t.length === 2).forEach(t => { const [A, B] = t.t;
       if (near.has(ab(A.ab)) || near.has(ab(B.ab))) { const [W, Lo] = A.pts > B.pts ? [A, B] : [B, A]; around.push(`${esc(NICK[ab(W.ab)] || W.ab)} ${W.pts} – ${esc(NICK[ab(Lo.ab)] || Lo.ab)} ${Lo.pts}`); } }); } catch {}
-  /* MOCKUP 3: lineup of the night, the Cavs five-man group with the best plus-minus in 5+ minutes together (the site's game archive) */
+  /* Nov 3: lineup of the night, the Cavs five-man group with the best plus-minus in 5+ minutes together (the site's game archive) */
   let lu = null, notes = [];
   try { const se = (() => { const y = +g[0].slice(0, 4), m = +g[0].slice(5, 7); const s0 = m >= 8 ? y : y - 1; return s0 + '-' + String(s0 + 1).slice(2); })();
     const ix = JSON.parse(readFileSync(new URL(`../live-archive/${se}/index.json`, import.meta.url), 'utf8')), e = ix.find(z => z.et === g[0]);
@@ -148,7 +148,7 @@ function prep(D, g, score, top, boxLink, opts) {
       const sw = cand.sort((x2, y2) => Math.abs(y2[0]) - Math.abs(x2[0])).slice(0, 2).map(z => z[1]);
       if (sw.length) { const hiAt = notes.findIndex(([l]) => l === 'Highs'); notes.splice(hiAt >= 0 ? hiAt : notes.length, 0, ['Swing stats', sw.join(' · ')]); }
     } } catch (err) { if (process.env.NL_DRY) console.log('notes:', err.message); }
-  /* MOCKUP 4: Charge corner, last night's Charge result, or the next Charge game within a week */
+  /* Nov 3: Charge corner, last night's Charge result, or the next Charge game within a week */
   let ch = null;
   if (D.CHARGE && process.env.NL_CH_EXAMPLE) D.CHARGE = { ...D.CHARGE, record: '1–0', games: [['2026-11-02', 'Motor City Cruise', 'H', '7:00', 'W 118–110', '', 'https://www.basketball-reference.com/gleague/boxscores/', [['Khalifa Diop', 16, 11, 2, 28], ['Ernest Udeh Jr.', 9, 8, 1, 22]]], ...(D.CHARGE.games || [])] };   // mockup only
   if (D.CHARGE) { const G = D.CHARGE.games || [], last = G.filter(z => z[4] && z[0] <= issueDay && z[0] >= g[0]).pop(), next = G.find(z => z[0] >= issueDay && !z[4]);
@@ -188,7 +188,7 @@ function lineScore(x, P) {
 /* coffee score box: on a win the Cavs half fills with coffee (crema and steam on top);
    on a loss it drains, leaving a stain line and drips off the edge. A roast label sets the mood by margin; no extra line under the score (Nov 3).
    Images are extras: with images off, the solid fill and the label still carry it. */
-/* Nov 3 mockup: "Tasting notes", 4-6 short facts about the game from the game page's own recap lines (live-archive index rc):
+/* Nov 3: "The Pour", 4-6 short facts about the game from the game page's own recap lines (live-archive index rc):
    the best Cavs line, the four factors, the best lineup, the one or two biggest team edges either way, then any season or
    career high or milestone. No opinion: every line is a number from the game. */
 function tastingNotes(rc, opp) {
