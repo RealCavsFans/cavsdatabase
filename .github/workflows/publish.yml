@@ -32,6 +32,8 @@ jobs:
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
         with:
           node-version: 22
+      # Nov 3: locked test games and bad-data drills for the NBA-feed build; a failure stops the publish so the site keeps the last good version
+      - run: node scripts/regress.mjs
       - run: |
           git config user.name "cavsdatabase-bot"
           git config user.email "bot@cavsdatabase.com"
