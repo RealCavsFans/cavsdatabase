@@ -49,7 +49,55 @@
    "at": "2026-11-02T09:38:11.588Z",
    "second": true,
    "players": 25
+  },
+  "0022600006": {
+   "et": "2026-10-22",
+   "opp": "PHI",
+   "status": "match",
+   "url": "https://www.basketball-reference.com/boxscores/202610220PHI.html",
+   "at": "2026-11-03T09:27:18.034Z",
+   "players": 19
+  },
+  "0022600105": {
+   "et": "2026-10-24",
+   "opp": "BKN",
+   "status": "match",
+   "url": "https://www.basketball-reference.com/boxscores/202610240CLE.html",
+   "at": "2026-11-03T09:27:21.782Z",
+   "players": 21
+  },
+  "0022600120": {
+   "et": "2026-10-26",
+   "opp": "MIN",
+   "status": "match",
+   "url": "https://www.basketball-reference.com/boxscores/202610260CLE.html",
+   "at": "2026-11-03T09:27:25.510Z",
+   "players": 19
+  },
+  "0022600133": {
+   "et": "2026-10-28",
+   "opp": "WSH",
+   "status": "match",
+   "url": "https://www.basketball-reference.com/boxscores/202610280CLE.html",
+   "at": "2026-11-03T09:27:29.204Z",
+   "players": 19
+  },
+  "0022600144": {
+   "et": "2026-10-29",
+   "opp": "ATL",
+   "status": "match",
+   "url": "https://www.basketball-reference.com/boxscores/202610290ATL.html",
+   "at": "2026-11-03T09:27:32.946Z",
+   "players": 19
+  },
+  "0022600151": {
+   "et": "2026-10-31",
+   "opp": "MIL",
+   "status": "match",
+   "url": "https://www.basketball-reference.com/boxscores/202610310MIL.html",
+   "at": "2026-11-03T09:27:36.611Z",
+   "players": 25
   }
  },
- "checked": "2026-11-02T09:38:11.588Z"
+ "checked": "2026-11-03T09:27:36.611Z"
 }
