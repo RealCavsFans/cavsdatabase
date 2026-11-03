@@ -6,6 +6,8 @@ import { nbaGame } from './nba.js';
 export default {
   async fetch(request, env, ctx) {
     const u = new URL(request.url);
+    /* Nov 3: short sign-up links for Cavs & Coffee */
+    if (u.pathname === '/coffee' || u.pathname === '/newsletter') return Response.redirect('https://buttondown.com/cavscoffee', 302);
     if (u.pathname === '/pbp' && request.method === 'GET') {
       try { return await onRequestGet({ request, env, waitUntil: p => ctx.waitUntil(p) }) }
       catch (e) { return new Response(JSON.stringify({ error: 'backup feed error' }), { status: 502, headers: { 'content-type': 'application/json' } }) }
