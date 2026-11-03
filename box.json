@@ -1219,37 +1219,7 @@
   "status": "final",
   "score": "112-117",
   "result": "L",
-  "refs": [
-   [
-    "Crew chief",
-    "Marc Davis",
-    "8"
-   ],
-   [
-    "Referee",
-    "Sean Corbin",
-    "33"
-   ],
-   [
-    "Umpire",
-    "Dedric Taylor",
-    "21"
-   ]
-  ],
-  "qs": {
-   "cle": [
-    30,
-    18,
-    36,
-    28
-   ],
-   "opp": [
-    26,
-    33,
-    31,
-    27
-   ]
-  },
+  "top": "Donovan Mitchell: 17 pts, 5 reb, 11 ast",
   "out": [
    "Peyton Watson",
    "Jaylon Tyson",
@@ -1407,7 +1377,37 @@
     "0"
    ]
   ],
-  "top": "Donovan Mitchell: 17 pts, 5 reb, 11 ast"
+  "qs": {
+   "cle": [
+    30,
+    18,
+    36,
+    28
+   ],
+   "opp": [
+    26,
+    33,
+    31,
+    27
+   ]
+  },
+  "refs": [
+   [
+    "Crew chief",
+    "Marc Davis",
+    "8"
+   ],
+   [
+    "Referee",
+    "Sean Corbin",
+    "33"
+   ],
+   [
+    "Umpire",
+    "Dedric Taylor",
+    "21"
+   ]
+  ]
  },
  "2026-11-04": {
   "url": "https://www.nba.com/game/cle-vs-okc-0022600180/box-score",
