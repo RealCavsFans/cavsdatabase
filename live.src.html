@@ -659,6 +659,9 @@ ul.plays li.st-pick{cursor:pointer}ul.plays li.st-in{background:color-mix(in srg
 .st-sc{display:flex;gap:14px;align-items:baseline;margin:10px 0 6px;font:800 26px/1 'Saira Condensed',sans-serif}.st-sc .f{color:#860038}.st-sc .o{color:#5b6470}.st-sc em{font:600 14px/1 inherit;font-style:normal;color:#6b7280}.st-sc em.up{color:#860038}
 .st-t td:not(:first-child),.st-t th:not(:first-child),.st-p td:not(:first-child),.st-p th:not(:first-child){text-align:right}.st-p{margin-top:10px}.st-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
 .gf td:not(:first-child),.gf th:not(:first-child){text-align:right}ul.fm{list-style:none;padding:0;margin:6px 0;display:grid;gap:4px}ul.fm li{font-size:12px;line-height:1.35;color:var(--muted)}ul.fm{gap:2px!important}ul.fm b{color:var(--fg);font-weight:600}ul.fm .fm-n{margin-left:8px;color:#860038;font-weight:700}
+/* Nov 3: phones: "Stats explained" drop-down, smaller clutch card */
+details.stx{margin-top:10px;border-top:1px solid var(--line2)}details.stx>summary{list-style:none;cursor:pointer;padding:9px 0 2px;font:700 .75rem var(--sans);color:var(--muted);display:flex;align-items:center;gap:6px}details.stx>summary::-webkit-details-marker{display:none}details.stx>summary::after{content:'';width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin-top:-3px}details.stx[open]>summary::after{transform:rotate(-135deg);margin-top:3px}details.stx>p.note:first-of-type{margin-top:4px!important}
+@media (max-width:640px){.clv{gap:10px!important}.clv-g{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px!important}.clv-g>div{min-width:0!important;max-width:none!important;padding:4px 5px!important;border-top-width:3px!important}.clv-g b{font-size:.75rem!important}.clv-g span{font-size:.625rem!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.clv-g small{font-size:.5625rem!important}.clv-sb{height:22px!important}.clv-sb span{font-size:.6875rem!important;padding:0 6px!important}.clv-p{gap:20px!important}.clv-p b{font-size:1.125rem!important}.clv-p span{font-size:.6875rem!important}.clv-k{margin-bottom:4px!important;font-size:.625rem!important}.clv-rk{font-size:.75rem!important;gap:6px 12px!important}}
 </style>
 </head>
 <body>
@@ -891,7 +894,9 @@ function renderNav(R){setTimeout(moreHint,0);
 /* scroll hints: a table wider than the screen fades at its right edge and shows "Swipe for more"; both go away once it's scrolled to the end */
 function scrollHints(){document.querySelectorAll('#view .tw').forEach(w=>{const over=w.scrollWidth>w.clientWidth+4;let h=w.previousElementSibling;if(!(h&&h.classList.contains('swh'))){if(!over)return;h=el('div','swh');h.innerHTML='Swipe for more <i>→</i>';w.before(h);w.addEventListener('scroll',()=>{const end=w.scrollLeft+w.clientWidth>=w.scrollWidth-4;w.classList.toggle('more',!end);if(w.scrollLeft>8)h.classList.add('gone')},{passive:true})}
   const end=w.scrollLeft+w.clientWidth>=w.scrollWidth-4;w.classList.toggle('more',over&&!end);h.style.display=over?'':'none'})}
-let _shT;new MutationObserver(()=>{clearTimeout(_shT);_shT=setTimeout(scrollHints,60)}).observe(document.getElementById('view')||document.body,{childList:true,subtree:true});
+/* Nov 3: on phones the long how-to-read notes fold into one "Stats explained" drop-down at the bottom of each card */
+function foldNotes(){if(!matchMedia('(max-width:640px)').matches)return;document.querySelectorAll('#view .card').forEach(c=>{const ns=[...c.querySelectorAll('p.note')].filter(n=>!n.closest('details.stx')&&n.textContent.length>=90&&!/Loading/.test(n.textContent));if(!ns.length)return;let d=[...c.children].find(x=>x.matches('details.stx'));if(!d){d=document.createElement('details');d.className='stx';const sm=document.createElement('summary');sm.textContent='Stats explained';d.appendChild(sm);c.appendChild(d)}ns.forEach(n=>d.appendChild(n))})}
+let _shT;new MutationObserver(()=>{clearTimeout(_shT);_shT=setTimeout(()=>{scrollHints();foldNotes()},60)}).observe(document.getElementById('view')||document.body,{childList:true,subtree:true});
 addEventListener('resize',()=>{clearTimeout(_shT);_shT=setTimeout(scrollHints,120)});
 /* team names in table headers and row labels take the team's color, and a thin line splits the two teams' columns (Oct 30) */
 function teamHeads(v,D){if(!D||!D.focus||!D.other)return;const F=D.focus.abbr,O=D.other.abbr;const isT=(t,a)=>t===a||t.startsWith(a+' ');
@@ -1195,7 +1200,7 @@ function teamStatsBody(D,ROWS){
       const h=el('div','tsm-gh');h.append(el('span',null,g),el('span','w','Better in '+gw+' of '+(gw+gl)));m.appendChild(h);
       const ch=el('div','tsm-ch');ch.append(el('span'),el('span',null,(side?'Opp':F.abbr)+' · vs '+(side?F.abbr:'opp')),el('span',null,'NBA'));m.appendChild(ch);
       rs.forEach(r=>{const a=fmt(r,side),o=fmt(r,1-side);const va=parseFloat(a),vo=parseFloat(o);const d=va-vo,k=Math.max(dec(a),dec(o),/%/.test(a)?0:1);
-        const cls=r.hib===null||r.better<0?'n':r.better===0?'u':'d';const row=el('div','tsm-r');const v=el('span','v',a);v.appendChild(el('span','df '+cls,(d>=0?'+':'−')+Math.abs(d).toFixed(k)));
+        const cls=r.hib===null||r.better<0?'n':r.better===0?'u':'d';const row=el('div','tsm-r');const v=el('span','v',a);if(isFinite(d)&&r.lab!=='Pace'&&r.lab!=='Net rating')v.appendChild(el('span','df '+cls,(d>=0?'+':'−')+Math.abs(d).toFixed(k)));
         const rk=el('span','rkw');rk.innerHTML=rkEl(side?r.ry:r.rx);const lb=el('span','l',r.lab);if(r.sx!=null)lb.appendChild(el('small','l2',side?r.sy:r.sx));row.append(lb,v,rk);m.appendChild(row)})});
     m.appendChild(el('p','note','Small number = the gap to the other side: wine when it favors '+F.abbr+', gray otherwise. NBA rank in wine when top 10 for '+F.abbr+', gray when bottom 10.'));
     w.appendChild(m)}
