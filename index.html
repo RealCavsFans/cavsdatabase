@@ -970,7 +970,7 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
     <div>
       <div class="dim" style="font-size:0.8125rem"><a href="/" data-go="home">Home</a> / Media</div>
       <h1 style="margin-top:6px">Media</h1>
-      <p class="dim vdesc" style="margin:6px 0 0"><span>Press conferences, practice availability and the latest from the official Cavs channel.</span> <a href="https://www.youtube.com/@cavs" target="_blank" rel="noopener">Cavs YouTube channel ↗</a></p>
+      <p class="dim vdesc" style="margin:6px 0 0"><span>Press conferences, practice availability and highlights from the Cavs, plus RealCavsFans videos, articles and recaps.</span></p>
     </div>
     <div id="vid-page"></div>
     <p class="dim" style="margin:0;font-size:0.8125rem">All video from the Cleveland Cavaliers' official YouTube channel.</p>
@@ -3608,7 +3608,7 @@ function renderVideo(list){
   one.appendChild(txt);home.appendChild(one);
   if(!list||!list.length){page.appendChild(posters(VLINKS));return}
   [['Latest uploads',/./]].concat(VCATS).forEach(([name,re])=>{const vs=list.filter(v=>re.test(v.title)).slice(0,5);if(!vs.length)return;
-    const sec=el('section');const h=el('div','block-h');h.appendChild(el('h2',null,name));sec.appendChild(h);const gg=el('div','vgrid');vs.forEach(v=>gg.appendChild(vCard(v)));sec.appendChild(gg);if(vs.length>2){const mb=el('button','vmore','Show '+(vs.length-2)+' more');mb.type='button';mb.onclick=()=>{gg.classList.add('all');mb.remove()};sec.appendChild(mb)}page.appendChild(sec)});
+    const sec=el('section');const h=el('div','block-h');h.appendChild(el('h2',null,name));if(name==='Latest uploads'){const a=el('a',null,'Cavs YouTube channel ↗');a.href='https://www.youtube.com/@cavs';a.target='_blank';a.rel='noopener';h.appendChild(a)}sec.appendChild(h);const gg=el('div','vgrid');vs.forEach(v=>gg.appendChild(vCard(v)));sec.appendChild(gg);if(vs.length>2){const mb=el('button','vmore','Show '+(vs.length-2)+' more');mb.type='button';mb.onclick=()=>{gg.classList.add('all');mb.remove()};sec.appendChild(mb)}page.appendChild(sec)});
 }
 renderVideo(null);
 if(ON_DOMAIN)fJ('/videos.json').then(r=>r.ok?r.json():null).then(d=>{if(d&&d.length)renderVideo(d)}).catch(()=>{});
