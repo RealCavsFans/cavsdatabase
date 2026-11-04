@@ -1694,7 +1694,7 @@ setTimeout(()=>{fJ('/box.json').then(r=>r.ok?r.json():null).catch(()=>null).then
   const played=CHARGE.games.some(g=>g[4]);
   document.getElementById('ch-label').textContent=nxt?(played?'Next game':'Season opener'):'Season complete';
   if(nxt){document.getElementById('ch-next').textContent=(nxt[2]==='H'?'vs ':'at ')+nxt[1];
-    document.getElementById('ch-meta').textContent=shortFmt.format(tip(nxt))+' · '+chTime(nxt)+(nxt[5]?' · '+nxt[5].split(',')[0]:nxt[2]==='H'?' · '+CHARGE.venue:'')}
+    document.getElementById('ch-meta').textContent=shortFmt.format(tip(nxt))+' · '+chTime(nxt)}
   const kv=document.getElementById('ch-kv');
   /* Nov 3 (Luka): the record sits at the top right of the card, no label */
   document.getElementById('ch-rec').textContent=CHARGE.record;kv.remove();
