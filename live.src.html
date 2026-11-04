@@ -979,7 +979,7 @@ function capFoot(g,url,date,W,H,FT,pad,S,mono,wine,muted){const two=FT>45*S;g.te
  /* the card's numbers as terminal output: a table becomes rows with block bars for its first two number columns; tiles become big numbers */
  function termBody(card,esc2){if(!card)return '';const T=x=>String(x||'').replace(/\s+/g,' ').trim();const vis=e=>!e.closest('details.stx')&&!e.closest('.noshot')&&e.getClientRects().length;
   const rkOf=c=>{const r=c.querySelector('small.rk');return r?{t:T(r.textContent),k:r.classList.contains('g')?'g':r.classList.contains('b')?'b':'n'}:null};
-  const valOf=c=>{const cl=c.cloneNode(true);cl.querySelectorAll('small.rk,.vz').forEach(x=>x.remove());return T(cl.textContent)};
+  const valOf=c=>{const cl=c.cloneNode(true);cl.querySelectorAll('small.rk,.vz,small').forEach(x=>x.remove());return T(cl.textContent)};const subOf=c=>T([...c.querySelectorAll('small:not(.rk)')].map(x=>x.textContent).join(' '));
   const num=v=>{const m=String(v).replace('−','-').replace('+','').match(/^-?\d+(\.\d+)?/);return m?parseFloat(m[0]):null};
   const notes=[...card.querySelectorAll('p.note,.capkey')].map(x=>T(x.textContent)).filter(t=>t&&t.length<260&&!/^Loading/.test(t)&&(/^How to read/.test(t)||!/\b(wine|gray|grey|green|red|shaded|shading|bar)s?\b/i.test(t))).slice(-2);
   const nt=notes.length?'<div class="t-nt">'+notes.map(t=>`<p># ${esc2(t.replace(/Wine = top 10/,'Gold = top 10'))}</p>`).join('')+'</div>':'';
@@ -995,7 +995,7 @@ function capFoot(g,url,date,W,H,FT,pad,S,mono,wine,muted){const two=FT>45*S;g.te
    lcs.forEach(d=>{const em=T((d.querySelector('em')||{}).textContent);const rt=em.split(' · ')[0];h+=`<div class="t-r" style="grid-template-columns:${gt}"><span class="t-l">${esc2(T((d.querySelector('span')||{}).textContent))}</span><span class="t-v"><b>${esc2(T((d.querySelector('b')||{}).textContent))}</b></span><span class="t-v">${esc2(T((d.querySelector('small')||{}).textContent).replace(/^League avg\s*/i,''))}</span>${rbar(rt,(rkN(rt)||99)<=10?'g':'n')}</div>`});return h+'</div>'+nt}
   const tbl=[...card.querySelectorAll('table')].find(t=>vis(t)&&t.rows.length>2);
   if(tbl){const all=[...tbl.rows];const hi=all.findIndex(r=>[...r.cells].some(c=>c.tagName==='TH'));const hr=all[hi<0?0:hi];const H=[...hr.cells].map(c=>T(c.textContent));const rows=all.slice(all.indexOf(hr)+1).filter(r=>!r.classList.contains('xd')&&r.cells.length===H.length&&![...r.cells].some(c=>c.tagName==='TH')).slice(0,10);
-   if(rows.length>=2&&H.length>=2&&H.length<=6){const V=rows.map(r=>[...r.cells].map(c=>({v:valOf(c),rk:rkOf(c)})));
+   if(rows.length>=2&&H.length>=2&&H.length<=6){const V=rows.map(r=>[...r.cells].map(c=>({v:valOf(c),rk:rkOf(c),sb:subOf(c)})));
     const isNum=i=>V.every(r=>num(r[i].v)!=null&&!/\d\s*[-–]\s*\d/.test(r[i].v));const nc=H.map((h,i)=>i).filter(i=>i&&isNum(i));
     if(nc.length){const pctCol=i=>V.every(r=>/%$/.test(r[i].v));const bars=nc.filter(i=>pctCol(i)&&(/share|freq/i.test(H[i])||(/get it|rate/i.test(H[i])&&!/fg|ts|ft|3pt|2pt/i.test(H[i])))).slice(0,2);const rest=nc.filter(i=>!bars.includes(i));let bigs=rest.filter(i=>/^(cle|opp|cavs|opponents?)\b|fg%/i.test(H[i]));if(!bigs.length)bigs=rest.filter(i=>/^(pts|points)$/i.test(H[i]));if(!bigs.length&&rest.length)bigs=[rest[0]];const side=[];const mx={};bars.forEach(i=>mx[i]=Math.max(50,...bars.flatMap(j=>V.map(r=>num(r[j].v)))));/* one scale for both sides, so Cavs and opponents compare */
      const cols=[0,...nc,...H.map((h,i)=>i).filter(i=>i&&!nc.includes(i))];const own=i=>/^(cle|cavs)\b/i.test(H[i]),opp=i=>/^(opp|opponents?)\b/i.test(H[i]);/* the Cavs side reads first: gold header, full white; the other side dimmer */
@@ -1004,9 +1004,9 @@ function capFoot(g,url,date,W,H,FT,pad,S,mono,wine,muted){const two=FT>45*S;g.te
      const gt=cols.map(i=>i===0?'minmax(0,1.15fr)':bars.includes(i)?'minmax(0,1.6fr)':'minmax(0,.7fr)').join(' ');
      let h=`<div class="t-tb"><div class="t-h" style="grid-template-columns:${gt}">`+cols.map(i=>`<span class="${i?side2(i):''}"${i&&bars.includes(i)?' style="text-align:left"':''}>${esc2(H[i].replace(/^CLE\b/,'CAVS'))}</span>`).join('')+'</div>';
      V.forEach(r=>{h+=`<div class="t-r" style="grid-template-columns:${gt}">`+cols.map(i=>{const c=r[i];const rk=c.rk?`<em class="${c.rk.k}">${esc2(c.rk.t)}</em>`:'';
-       if(i===0)return `<span class="t-l">${esc2(c.v)}</span>`;
+       if(i===0)return `<span class="t-l${c.v.length<=18?' nw':''}">${esc2(c.v)}</span>`;
        const sd=side2(i);if(bars.includes(i)){const n=num(c.v);return `<span class="t-bl ${sd}"><span class="bk">${blk(n/mx[i],10)}</span><span class="vv">${esc2(c.v)}${rk}</span></span>`}
-       const pmc=/^(\+\/[-−]|net|diff)/i.test(H[i]);const sg=/^[+−-]/.test(c.v)&&num(c.v)!==0?(pmc?(num(c.v)>0?' pu':' pd'):(num(c.v)>0?' up':' dn')):'';return bigs.includes(i)?`<span class="t-v${sg} ${sd}"><b>${esc2(c.v)}</b>${rk}</span>`:`<span class="t-v${sg} ${sd}">${esc2(c.v)}${rk}</span>`}).join('')+'</div>'});
+       const pmc=/^(\+\/[-−]|net|diff)/i.test(H[i]);const sg=/^[+−-]/.test(c.v)&&num(c.v)!==0?(pmc?(num(c.v)>0?' pu':' pd'):(num(c.v)>0?' up':' dn')):'';const sbx=c.sb?`<i class="sb">${esc2(c.sb)}</i>`:'';return bigs.includes(i)?`<span class="t-v${sg} ${sd}"><b>${esc2(c.v)}</b>${rk}${sbx}</span>`:`<span class="t-v${sg} ${sd}">${esc2(c.v)}${rk}${sbx}</span>`}).join('')+'</div>'});
      return h+'</div>'+nt}}}
   const tiles=[...card.querySelectorAll('.pbt>div,.ff>.ffc')].filter(vis);
   if(tiles.length){return '<div class="t-kv">'+tiles.map(d=>{const b=d.querySelector('b');const lab=d.dataset.k||T((d.querySelector('span,.n')||{}).textContent);const rk=d.querySelector('small.rk');return `<div><b>${esc2(T(b&&b.textContent))}</b><span>${esc2(lab)}${rk?` <em class="${rk.classList.contains('g')?'g':'n'}">${esc2(T(rk.textContent))}</em>`:''}</span></div>`}).join('')+'</div>'+nt}
@@ -1019,7 +1019,7 @@ function capFoot(g,url,date,W,H,FT,pad,S,mono,wine,muted){const two=FT>45*S;g.te
  .tps .t-br{display:flex;align-items:center;gap:9px;font:700 17px var(--mono)}.tps .t-br i{color:#F2B231;font-style:normal}
  .tps .t-eb{margin-top:24px;font:700 11px var(--sans);letter-spacing:.18em;color:#F2B231;text-transform:uppercase}
  .tps h1.t-h{margin:6px 0 0;font:800 46px/.92 var(--cond);text-transform:uppercase;max-width:330px;color:#fff;letter-spacing:0}
- .tps .t-ld{margin:10px 0 0;font:400 12px/1.42 var(--sans);color:rgba(255,255,255,.64);max-width:none}.tps .t-l{white-space:nowrap}.tps .t-v.pu,.tps .t-v.pu b{color:#4ade80!important}.tps .t-v.pd,.tps .t-v.pd b{color:#ff6b6b!important}
+ .tps .t-ld{margin:10px 0 0;font:400 12px/1.42 var(--sans);color:rgba(255,255,255,.64);max-width:none}.tps .t-l.nw{white-space:nowrap}.tps .t-v i.sb{display:block;font:500 9px var(--mono);font-style:normal;color:rgba(255,255,255,.45);margin-top:2px}.tps .t-v.pu,.tps .t-v.pu b{color:#4ade80!important}.tps .t-v.pd,.tps .t-v.pd b{color:#ff6b6b!important}
  .tps .t-tab{margin-top:18px}.tps .t-tab .t-lb{display:inline-flex;gap:8px;align-items:center;font:600 10px var(--mono);color:rgba(255,255,255,.6);background:rgba(255,255,255,.07);padding:6px 10px;border-radius:8px 8px 0 0}.tps .t-tab .t-lb b{width:7px;height:7px;border-radius:50%;background:#F2B231}
  .tps .t-bd{background:#15181e;border:1px solid rgba(255,255,255,.08);border-radius:0 12px 12px 12px;padding:12px 14px}.tps .t-cmd{font:600 12px var(--mono);color:#F2B231;margin-bottom:6px}.tps .t-cmd span{color:rgba(255,255,255,.5)}.tps .t-bd img{display:block;max-width:none}
  .tps .t-tb{margin-top:8px;font:500 12px/1 var(--mono)}.tps .t-h,.tps .t-r{display:grid;gap:8px;align-items:center}
