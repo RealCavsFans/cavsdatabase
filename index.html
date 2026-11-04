@@ -4127,7 +4127,7 @@ function buildDepth(){
   h+='<div id="dv-pyr" hidden><div class="pyr">';
   DEPTH_TIERS.forEach(([t,d,ns],i)=>{h+='<div class="pt pt'+(i+1)+'"><div class="pt-band"><div class="pt-faces">'+ns.map(n=>{const p=P(n);return link(p,face(p,'pf')+'<b>'+lastN(n)+INJ(n)+'</b><span>'+mp(n)+'</span>')}).join('')+'</div></div><div class="pt-lab"><b>'+t+'</b><span>'+d+'</span></div></div>'});
   h+='</div></div></div>';
-  const rd=document.getElementById('rv-depth');rd.innerHTML=h;rd.insertAdjacentHTML('beforeend','<p class="ds-key"><span><i class="injx">+</i> on the injury report (hover or tap for details)</span><span><b>mpg</b> minutes per game, last season until 5 games are played</span><span>Order is cavs_db’s read of the rotation, updated as minutes change.</span></p>');
+  const rd=document.getElementById('rv-depth');rd.innerHTML=h;rd.insertAdjacentHTML('beforeend','<p class="ds-key"><span><i class="injx">+</i> on the injury report (hover or tap for details)</span><span><b>mpg</b> minutes per game this season</span><span>Order is cavs_db’s read of the rotation, updated as minutes change.</span></p>');
   rd.querySelectorAll('[data-dv]').forEach(b=>b.addEventListener('click',()=>{rd.querySelectorAll('[data-dv]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));document.getElementById('dv-chart').hidden=b.dataset.dv!=='chart';document.getElementById('dv-pyr').hidden=b.dataset.dv!=='pyr'}));
   /* make your own: drag any player onto another to swap them (chart), or onto another tier (pyramid). Nothing is saved; leaving the page resets it. */
   const ed=document.getElementById('ds-ed');if(ed){const sheet=rd.querySelector('.dsheet');const orig={c:document.getElementById('dv-chart').innerHTML,p:document.getElementById('dv-pyr').innerHTML};
