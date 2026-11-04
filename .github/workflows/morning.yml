@@ -54,11 +54,14 @@ jobs:
       - name: League games missed to injury
         run: node scripts/league-injuries.mjs
         continue-on-error: true
+      - name: Charge East rank (record tracker on /charge)
+        run: node scripts/charge-standings.mjs
+        continue-on-error: true
       - name: Commit if changed
         run: |
           git config user.name "cavsdatabase-bot"
           git config user.email "bot@cavsdatabase.com"
-          for f in pdata/nba-games.json pdata/statmuse-games.json live-base.json pdata/pbp-teams.json pdata/pbp-starts.json pdata/scout.json data/scout-cache.json pdata/bbr-ids.json pdata/league-injuries.json data/poss-check.json; do [ -f "$f" ] && git add "$f"; done
+          for f in pdata/nba-games.json pdata/statmuse-games.json live-base.json pdata/pbp-teams.json pdata/pbp-starts.json pdata/scout.json data/scout-cache.json pdata/bbr-ids.json pdata/league-injuries.json data/poss-check.json pdata/charge.json; do [ -f "$f" ] && git add "$f"; done
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Morning data: baselines, scouting, player ids, injuries"
           for i in 1 2 3 4 5 6; do   # Nov 1: six tries with a random wait, so two jobs saving at once both get through

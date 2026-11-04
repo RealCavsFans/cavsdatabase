@@ -55,6 +55,8 @@ body:after{content:'';position:absolute;left:0;right:0;bottom:0;height:10px;back
 .n3{display:flex;gap:56px}.n3 b{display:block;font:800 64px/1 'Geist Mono',monospace}.n3 small{font:700 18px Archivo;letter-spacing:2px;color:#F4D6DD;text-transform:uppercase}`;
 const page = (css, body, path) => `<!doctype html><html><head><meta charset="utf-8"><style>${BASE}${css}</style></head><body>${body}<div class="ft"><span>cavsdatabase.com/${path}</span><span class="wm">${MARK}cavs<em>_db</em></span></div></body></html>`;
 
+const LOGO_SC = {"atl": 0.92, "bkn": 0.92, "bos": 0.92, "cha": 0.92, "dal": 0.92, "den": 0.92, "det": 0.92, "gs": 0.92, "hou": 1.07, "ind": 0.96, "lac": 0.92, "lal": 1.18, "mem": 0.95, "mia": 0.95, "mil": 1.06, "min": 0.92, "no": 1.25, "ny": 1.04, "okc": 1.23, "orl": 1.1, "por": 0.97, "sa": 1.03, "tor": 0.92, "utah": 1.12, "wsh": 0.92};   // Nov 4: same per-logo scale as the site, so marks read the same size
+const lsc = f => LOGO_SC[f] ? ` style="scale:${LOGO_SC[f]}"` : '';
 const cards = [];   // [file, html]
 
 /* players */
@@ -104,7 +106,7 @@ SCHEDULE.forEach((g, i) => {
   if (i <= nextIdx + 1 && a && b) {
     const all = Object.values(TT), rk = (v, f, hi) => 1 + all.filter(x => hi ? f(x) > v : f(x) < v).length;
     const nt = x => x[4] - x[5], f1 = v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1);
-    const R = [['Net rating', nt, 1, f1], ['Offense', x => x[4], 1, v => v.toFixed(1)], ['Defense', x => x[5], 0, v => v.toFixed(1)]];
+    const R = [['NET RTG', nt, 1, f1], ['ORTG', x => x[4], 1, v => v.toFixed(1)], ['DRTG', x => x[5], 0, v => v.toFixed(1)]];
     const cell = (x, f, hi, fm, better) => `<div class="v${better ? ' w' : ''}"><b>${fm(f(x))}</b><small>${ord(rk(f(x), f, hi))}</small></div>`;
     const tape = R.map(([l, f, hi, fm]) => { const cb = hi ? f(a) > f(b) : f(a) < f(b); return cell(a, f, hi, fm, cb) + `<div class="l">${l}</div>` + cell(b, f, hi, fm, !cb && f(a) !== f(b)); }).join('');
     const last = n => n.split(' ').filter(w => !/^(Jr\.|Sr\.|II|III|IV)$/.test(w)).pop();
@@ -120,7 +122,7 @@ SCHEDULE.forEach((g, i) => {
     co = gl(co); oo = gl(oo);
     const long = (co.join(', ') + (oo || []).join(', ')).length > 62;
     const inj = `<div class="inj${long ? ' sm' : ''}"><span><b>Out · CLE</b> ${co.length ? esc(co.join(', ')) : 'None'}</span>${oo ? `<span><b>Out · ${o}</b> ${oo.length ? esc(oo.join(', ')) : 'None'}</span>` : ''}</div>`;
-    rich = `<style>.T .tm{font-size:0!important;line-height:0}.T .tm span{display:none}.T .tm img{width:140px;height:140px;object-fit:contain;display:block}.T .tm.r img{margin-left:auto}.T .tm{display:flex!important;align-items:center;gap:24px}.T .tm.r{flex-direction:row-reverse}.T .tm.r img{margin-left:0!important}.T .tm small{font:700 44px 'Geist Mono'!important;letter-spacing:0!important;color:#fff!important;line-height:1!important;margin-top:0!important}.T{top:72px!important}.when{top:236px!important}</style><div class="tape"><div class="th">${TS ? '' : '2025–26 · '}NBA rank</div>${tape}</div>${inj}`;
+    rich = `<style>.T .tm{font-size:0!important;line-height:0}.T .tm span{display:none}.T .tm img{width:140px;height:140px;object-fit:contain;display:block}.T .tm.r img{margin-left:auto}.T .tm{display:flex!important;align-items:center;gap:24px}.T .tm.r{flex-direction:row-reverse}.T .tm.r img{margin-left:0!important}.T .tm small{font:700 44px 'Geist Mono'!important;letter-spacing:0!important;color:#fff!important;line-height:1!important;margin-top:0!important}.T{top:72px!important;grid-template-columns:auto auto auto!important;justify-content:center;column-gap:72px}.when{top:222px!important}.tape{top:282px!important}.inj{top:448px!important}/* Nov 4: X lays the page title over the bottom of a link card, so the wordmark moves to the top right on these */.ft{top:30px;bottom:auto;justify-content:flex-end}.ft>span:first-child{display:none}</style><div class="tape"><div class="th">${TS ? '' : '2025–26 · '}NBA rank</div>${tape}</div>${inj}`;
   }
   cards.push([`og/gp/${d}-${o.toLowerCase()}.jpg`, page(`.T{position:absolute;left:64px;right:64px;top:80px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
 .tm{font:800 170px/0.9 'Saira Condensed'}.tm.r{text-align:right}.tm small{display:block;font:700 22px Archivo;letter-spacing:2px;color:#F4D6DD;margin-top:8px}.tm span{display:block;font:600 34px 'Saira Condensed';letter-spacing:1px;text-transform:uppercase;color:#fff;opacity:.85}
@@ -130,7 +132,7 @@ SCHEDULE.forEach((g, i) => {
 .tape .v{display:flex;align-items:baseline;gap:10px;justify-content:center}.tape .v b{font:700 30px 'Geist Mono'}.tape .v small{font:700 17px 'Geist Mono';color:#F4D6DD}.tape .v.w b{color:#F2B231}
 .tape .l{font:600 24px 'Saira Condensed';letter-spacing:1.5px;text-transform:uppercase;text-align:center;padding:0 22px;color:#fff;opacity:.9}
 .inj{position:absolute;left:64px;right:64px;top:458px;display:flex;flex-direction:column;align-items:center;gap:6px;font:500 25px Archivo;color:#F4D6DD;text-align:center}.inj.sm{font-size:23px}.inj b{color:#F2B231;font-weight:700;margin-right:4px}.inj .sr{color:#fff;font-weight:700}`,
-    `<div class="k" style="position:absolute;left:64px;top:38px">${kick}</div><div class="T"><div class="tm">${rich.includes('tape') ? `<img src="../img/tl5/cle.png" alt="">` : 'CLE'}<span>Cavaliers</span><small>${rich.includes('tape') && cs === '2026–27' ? cr : cs + ' · ' + cr}</small></div><div class="at">${ha === 'H' ? 'vs' : 'at'}</div><div class="tm r">${rich.includes('tape') ? `<img src="../img/tl5/${LG5[o] || o.toLowerCase()}.png" alt="">` : o}<span>${esc(GNICK[o] || TEAMS[o])}</span><small>${rich.includes('tape') && os === '2026–27' ? orr : os + ' · ' + orr}</small></div></div>
+    `<div class="k" style="position:absolute;left:64px;top:38px">${kick}</div><div class="T"><div class="tm">${rich.includes('tape') ? `<img src="../img/tl5/cle.png" alt=""${lsc('cle')}>` : 'CLE'}<span>Cavaliers</span><small>${rich.includes('tape') && cs === '2026–27' ? cr : cs + ' · ' + cr}</small></div><div class="at">${ha === 'H' ? 'vs' : 'at'}</div><div class="tm r">${rich.includes('tape') ? `<img src="../img/tl5/${LG5[o] || o.toLowerCase()}.png" alt=""${lsc(LG5[o] || o.toLowerCase())}>` : o}<span>${esc(GNICK[o] || TEAMS[o])}</span><small>${rich.includes('tape') && os === '2026–27' ? orr : os + ' · ' + orr}</small></div></div>
 <div class="when">${dl} <span>·</span> ${hm} PM ET <span>·</span> ${esc(net)}${CAVS_RADIO ? ` <span>·</span> ${esc(CAVS_RADIO.split(' · ')[0])}` : ''}</div>
 ${rich}`,
     'live')]);

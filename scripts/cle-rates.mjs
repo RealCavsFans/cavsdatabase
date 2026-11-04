@@ -1,11 +1,11 @@
 // The Cavs' season rates for the live page's "Tonight vs the season" card, from the site's own team numbers
-// (TSTATS and FFR in index.html: this season once the Cavs have 10 games, last season before that). Writes pdata/cle-rates.json.
+// (TSTATS and FFR in index.html: this season from the first game). Writes pdata/cle-rates.json.
 import { readFile, writeFile } from 'node:fs/promises';
 const root = new URL('../', import.meta.url);
 const s = await readFile(new URL('index.html', root), 'utf8');
 const g = n => { const m = s.match(new RegExp('const ' + n + '=([\\[{][\\s\\S]*?[\\]}]);')); try { return m ? Function('return ' + m[1])() : null; } catch { return null; } };
 const T = g('TSTATS') || {}, F = g('FFR') || {}, TP = g('TSTATS_PREV') || {}, FP = g('FFR_PREV') || {};
-const cur = T.CLE && F.CLE && T.CLE[0] + T.CLE[1] >= 10;
+const cur = T.CLE && F.CLE && T.CLE[0] + T.CLE[1] >= 1;   // Nov 4: this season from game one
 const t = cur ? T.CLE : TP.CLE, f = cur ? F.CLE : FP.CLE;
 if (!t || !f) { console.log('cle-rates: no data'); process.exit(0); }
 const [fgm, fga, tpm, ftm, fta, orb, drb, tov, ofgm, ofga, otpm, oftm, ofta, oorb, odrb, otov] = f;
