@@ -1004,7 +1004,7 @@ function capFoot(g,url,date,W,H,FT,pad,S,mono,wine,muted){const two=FT>45*S;g.te
      const gt=cols.map(i=>i===0?'minmax(0,1.15fr)':bars.includes(i)?'minmax(0,1.6fr)':'minmax(0,.7fr)').join(' ');
      let h=`<div class="t-tb"><div class="t-h" style="grid-template-columns:${gt}">`+cols.map(i=>`<span class="${i?side2(i):''}"${i&&bars.includes(i)?' style="text-align:left"':''}>${esc2(H[i].replace(/^CLE\b/,'CAVS'))}</span>`).join('')+'</div>';
      V.forEach(r=>{h+=`<div class="t-r" style="grid-template-columns:${gt}">`+cols.map(i=>{const c=r[i];const rk=c.rk?`<em class="${c.rk.k}">${esc2(c.rk.t)}</em>`:'';
-       if(i===0)return `<span class="t-l${c.v.length<=12?' nw':''}">${esc2(c.v==='CLE'?'CAVS':c.v)}</span>`;
+       if(i===0){const lv=c.v==='CLE'?'CAVS':c.v.replace(/^Above-the-break 3$/i,'Above break 3');return `<span class="t-l${lv.length<=13?' nw':''}">${esc2(lv)}</span>`}
        const sd=side2(i);if(bars.includes(i)){const n=num(c.v);return `<span class="t-bl ${sd}"><span class="bk">${blk(n/mx[i],10)}</span><span class="vv">${esc2(c.v)}${rk}</span></span>`}
        const pmc=/^(\+\/[-−]|net|diff)/i.test(H[i]);const sg=/^[+−-]/.test(c.v)&&num(c.v)!==0?(pmc?(num(c.v)>0?' pu':' pd'):(num(c.v)>0?' up':' dn')):'';const sbx=c.sb?`<i class="sb">${esc2(c.sb)}</i>`:'';return bigs.includes(i)?`<span class="t-v${sg} ${sd}"><b>${esc2(c.v)}</b>${rk}${sbx}</span>`:`<span class="t-v${sg} ${sd}">${esc2(c.v)}${rk}${sbx}</span>`}).join('')+'</div>'});
      return h+'</div>'+nt}}}
