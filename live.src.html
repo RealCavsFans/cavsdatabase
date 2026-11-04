@@ -553,7 +553,7 @@ tr.xr{cursor:pointer}
 .pgc-two .pgc-bar{margin-top:5px}.pgc-two small{margin-top:2px!important}
 .pgc-sh2{border-top:1px solid var(--line2)}.pgc-pm{position:relative}.pgc-pm i{position:absolute;top:0;bottom:0}.pgc-pm em{position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--muted)}.pgc-nt{font-size:.6875rem;color:var(--muted);margin:0;padding:0 14px 10px}
 .pgc-sh{display:grid;grid-template-columns:repeat(4,1fr);gap:12px 16px;padding:12px 14px}@media(max-width:600px){.pgc-sh{grid-template-columns:1fr 1fr}}.pgc-sh b{font:800 1.5rem/1 var(--cond)}.pgc-sh small{display:block;font:600 .6875rem var(--sans);margin-top:4px}.pgc-sh small span{color:var(--muted);font-weight:500}
-.pgc-bar{display:block;position:relative;height:6px;background:var(--track,#ebe8e3);margin-top:6px}.pgc-bar i{position:absolute;left:0;top:0;bottom:0;background:#860038}.pgc-bar u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--fg)}
+.pgc-bar{display:block;position:relative;height:6px;background:var(--track,#ebe8e3);margin-top:6px}.pgc-bar i{position:absolute;left:0;top:0;bottom:0;background:#860038}.pgc-bar u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--fg)}.pgc-bar.seg{background:none!important;height:10px!important;display:flex;gap:2px}.pgc-bar.seg>s{flex:1;border-radius:1px;background:color-mix(in srgb,var(--track,#ebe8e3) 60%,transparent)}.pgc-bar.seg>s.on{background:#860038}.pgc-bar.seg>s.ctr{box-shadow:inset 0 0 0 1px var(--muted)}.pgc-bar.seg>u{z-index:1}@media (max-width:600px){.pgc-bar.seg{gap:1px;height:9px!important}}
 .pgc-pl{border-top:1px solid var(--line);padding-bottom:6px}.pgc-k{font:800 .6875rem var(--cond);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:10px 14px 4px}
 .pgc-r{display:grid;grid-template-columns:34px 26px 1fr auto;gap:7px;align-items:center;padding:3px 14px;border-top:1px solid var(--line2);font-size:.75rem;line-height:1.3}.pgc-r .t{font:500 .5625rem/1.2 var(--mono);color:var(--muted);white-space:pre}.pgc-r .bd.on{background:#860038;color:#fff;font:800 .625rem var(--mono);text-align:center;padding:1px 0}.pgc-r .x b{color:var(--wine-ink,#860038)}.pgc-r .s{font:500 .6875rem var(--mono);color:var(--muted)}.pgc-r .s .hi{color:var(--fg);font-weight:800}
 .pgc-more{all:unset;cursor:pointer;display:block;margin:8px 14px 4px;font:700 .8125rem var(--sans);color:var(--wine-ink,#860038)}.xrc>td:first-child::before{content:'▸'}
@@ -2426,7 +2426,10 @@ function pgCard(D,R,id){const p=D.P[id],b=R.B[id];if(!p||!b)return null;const t=
       const tx=el('span','x');const nm=p.name;const k=q.text.indexOf(nm);if(k>=0){tx.append(q.text.slice(0,k),el('b',null,nm),q.text.slice(k+nm.length))}else tx.textContent=q.text;r.appendChild(tx);
       const sc2=el('span','s');const mineH=t.ha==='home';const A2=el('span',null,String(q.as)),H2=el('span',null,String(q.hs));if(q.sc&&q.val>0)(mineH?H2:A2).className='hi';sc2.append(A2,'–',H2);r.appendChild(sc2);box.appendChild(r)});
     if(all.length>5){const mb=el('button','pgc-more',S.f.pgAll?'Show fewer ▴':'All '+all.length+' plays ▾');mb.type='button';mb.onclick=()=>{S.f.pgAll=!S.f.pgAll;renderView()};box.appendChild(mb)}w.appendChild(box)}}
-  return w}
+   /* Nov 4: terminal-style bars, 30 ticks; the white season mark stays on top; +/- fills from the center */
+   w.querySelectorAll('.pgc-bar').forEach(bar=>{const i=bar.querySelector('i'),u=bar.querySelector('u');const Lf=i?parseFloat(i.style.left||'0'):0,Wd=i?parseFloat(i.style.width||'0'):0;const tk=u?parseFloat(u.style.left):null;const pm=bar.classList.contains('pgc-pm');bar.textContent='';bar.classList.add('seg');const n=30;
+     for(let j=0;j<n;j++){const c=document.createElement('s');const a=j/n*100,b2=(j+1)/n*100;if(Wd>0&&b2>Lf+.01&&a<Lf+Wd-.01)c.className='on';if(pm&&j===n/2)c.classList.add('ctr');bar.appendChild(c)}if(tk!=null&&!isNaN(tk)){const t2=document.createElement('u');t2.style.left='calc('+tk+'% - 1px)';bar.appendChild(t2)}});
+   return w}
 function vPlayers(v,D,R){
   if(S.season)return seasonPlayers(v,D,R);
   if(!S.f.plTeam)S.f.plTeam=D.focus.id;const t=D.teams.find(x=>x.id===S.f.plTeam);
