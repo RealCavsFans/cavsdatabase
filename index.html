@@ -2483,7 +2483,7 @@ const trackBox=(y,v,cavsGet)=>{const w=el('div','ptrk');w.appendChild(el('div','
   const pct=t=>t[2]/(t[2]+t[3]);const order=[...STANDINGS].sort((a,b)=>pct(a)-pct(b)||a[2]-b[2]);const slot=ab=>order.findIndex(t=>t[0]===ab)+1;
   const rows=v[1].map(ab=>{const t=STANDINGS.find(x=>x[0]===ab)||[ab,'',0,0];return {ab,rec:t[2]+'–'+t[3],slot:slot(ab)}}).sort((a,b)=>a.slot-b.slot);
   const seasonFor=+y-1;const stand=seasonFor+'–'+String(seasonFor+1).slice(2);const cur=SEASONS[0];
-  if(stand!==cur)w.appendChild(el('p','ptrk-n','Decided by the '+stand+' standings. Until then this uses '+cur+' as a stand-in.'));
+  if(stand!==cur)return null;/* Nov 3 (Luka): only for the draft this season's standings decide; no stand-in for later years */
   const box=el('div','ptrk-rows');rows.forEach((r,k)=>{const out=(v[2][Math.min(k,v[2].length-1)]||[])[1]||'';const me=cavsGet?out==='CLE':r.ab==='CLE';
     const row=el('div','ptrk-r'+(cavsGet&&out==='CLE'?' win':''));row.append(el('b',null,r.ab),el('span',null,r.rec),el('span','sl','No. '+r.slot),el('span','to',cavsGet?(out==='CLE'?'Cavs get this one':'→ '+out):'→ '+out));box.appendChild(row)});
   w.appendChild(box);
