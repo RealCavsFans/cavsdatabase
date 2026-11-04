@@ -104,7 +104,7 @@ SCHEDULE.forEach((g, i) => {
   if (i <= nextIdx + 1 && a && b) {
     const all = Object.values(TT), rk = (v, f, hi) => 1 + all.filter(x => hi ? f(x) > v : f(x) < v).length;
     const nt = x => x[4] - x[5], f1 = v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1);
-    const R = [['NET RTG', nt, 1, f1], ['Offense', x => x[4], 1, v => v.toFixed(1)], ['Defense', x => x[5], 0, v => v.toFixed(1)]];
+    const R = [['NET RTG', nt, 1, f1], ['ORTG', x => x[4], 1, v => v.toFixed(1)], ['DRTG', x => x[5], 0, v => v.toFixed(1)]];
     const cell = (x, f, hi, fm, better) => `<div class="v${better ? ' w' : ''}"><b>${fm(f(x))}</b><small>${ord(rk(f(x), f, hi))}</small></div>`;
     const tape = R.map(([l, f, hi, fm]) => { const cb = hi ? f(a) > f(b) : f(a) < f(b); return cell(a, f, hi, fm, cb) + `<div class="l">${l}</div>` + cell(b, f, hi, fm, !cb && f(a) !== f(b)); }).join('');
     const last = n => n.split(' ').filter(w => !/^(Jr\.|Sr\.|II|III|IV)$/.test(w)).pop();
@@ -120,7 +120,7 @@ SCHEDULE.forEach((g, i) => {
     co = gl(co); oo = gl(oo);
     const long = (co.join(', ') + (oo || []).join(', ')).length > 62;
     const inj = `<div class="inj${long ? ' sm' : ''}"><span><b>Out · CLE</b> ${co.length ? esc(co.join(', ')) : 'None'}</span>${oo ? `<span><b>Out · ${o}</b> ${oo.length ? esc(oo.join(', ')) : 'None'}</span>` : ''}</div>`;
-    rich = `<style>.T .tm{font-size:0!important;line-height:0}.T .tm span{display:none}.T .tm img{width:140px;height:140px;object-fit:contain;display:block}.T .tm.r img{margin-left:auto}.T .tm{display:flex!important;align-items:center;gap:24px}.T .tm.r{flex-direction:row-reverse}.T .tm.r img{margin-left:0!important}.T .tm small{font:700 44px 'Geist Mono'!important;letter-spacing:0!important;color:#fff!important;line-height:1!important;margin-top:0!important}.T{top:72px!important}.when{top:236px!important}</style><div class="tape"><div class="th">${TS ? '' : '2025–26 · '}NBA rank</div>${tape}</div>${inj}`;
+    rich = `<style>.T .tm{font-size:0!important;line-height:0}.T .tm span{display:none}.T .tm img{width:140px;height:140px;object-fit:contain;display:block}.T .tm.r img{margin-left:auto}.T .tm{display:flex!important;align-items:center;gap:24px}.T .tm.r{flex-direction:row-reverse}.T .tm.r img{margin-left:0!important}.T .tm small{font:700 44px 'Geist Mono'!important;letter-spacing:0!important;color:#fff!important;line-height:1!important;margin-top:0!important}.T{top:72px!important;grid-template-columns:auto auto auto!important;justify-content:center;column-gap:72px}.when{top:222px!important}.tape{top:282px!important}.inj{top:448px!important}/* Nov 4: X lays the page title over the bottom of a link card, so the wordmark moves to the top right on these */.ft{top:30px;bottom:auto;justify-content:flex-end}.ft>span:first-child{display:none}</style><div class="tape"><div class="th">${TS ? '' : '2025–26 · '}NBA rank</div>${tape}</div>${inj}`;
   }
   cards.push([`og/gp/${d}-${o.toLowerCase()}.jpg`, page(`.T{position:absolute;left:64px;right:64px;top:80px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
 .tm{font:800 170px/0.9 'Saira Condensed'}.tm.r{text-align:right}.tm small{display:block;font:700 22px Archivo;letter-spacing:2px;color:#F4D6DD;margin-top:8px}.tm span{display:block;font:600 34px 'Saira Condensed';letter-spacing:1px;text-transform:uppercase;color:#fff;opacity:.85}
