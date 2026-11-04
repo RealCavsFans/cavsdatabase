@@ -1088,7 +1088,7 @@ function pbpRank(k,side,dir){if(!PBT||!PBS||!lgOK()||PBT.season!==S.season)retur
 function pbpOK(){pbpLoad();return !!(PBT&&PBT.T&&PBT.T.CLE&&PBT.season===S.season&&lgOK())}
 function pbr(f,dir,src){const T=src||PBT.T;const v=f(T.CLE);if(v==null)return null;return lgRank(v,Object.keys(T).filter(a=>a!=='CLE').map(a=>f(T[a])),dir)}
 const pcs=x=>x==null?'–':Math.round(x*100)+'%';
-function pbpShotCards(){if(!pbpOK())return [];const T=PBT.T,O=PBT.O,ab=Object.keys(T),out=[];
+function pbpShotCards(op){if(!pbpOK())return [];/* op: the Cavs' opponents (what the defense allows) */const T=op?PBT.O:PBT.T,O=op?PBT.T:PBT.O,ab=Object.keys(T),out=[];const ME=op?'CLE OPP':'CLE';
   if(false){const c=el('div','card sec');head(c,'Shot diet','Share of Cavs shots from each zone, against every NBA team');const k=el('div','sdk');k.innerHTML='<span><i class="me"></i>Cavs</span><span><i class="av"></i>League average</span><span><i class="ot"></i>Other teams</span>';c.appendChild(k);
     ZN.forEach(([z,lab])=>{const f=x=>x[z+'Frequency'];const vs=ab.map(a=>f(T[a])).filter(v=>v!=null);const lo=Math.min(...vs),hi=Math.max(...vs),avg=vs.reduce((a,b)=>a+b,0)/vs.length;const X=v=>((v-lo)/((hi-lo)||1)*100).toFixed(1)+'%';const r=el('div','sdr');r.appendChild(el('span','l',lab));
       const st=el('div','sds');vs.forEach(v=>{const i=el('i');i.style.left=X(v);st.appendChild(i)});const u=el('u');u.style.left=X(avg);st.appendChild(u);const e=el('em');e.style.left=X(f(T.CLE));st.appendChild(e);r.appendChild(st);
@@ -1099,10 +1099,10 @@ function pbpShotCards(){if(!pbpOK())return [];const T=PBT.T,O=PBT.O,ab=Object.ke
     let g=`<line x1="${X(mx)}" x2="${X(mx)}" y1="10" y2="${H-pad}" stroke="var(--line)" stroke-dasharray="3 3"/><line x1="${pad}" x2="${W-12}" y1="${Y(my)}" y2="${Y(my)}" stroke="var(--line)" stroke-dasharray="3 3"/>`;
     [['good shots, made them',W-14,22,'end'],['tough shots, made them',pad+4,22,'start'],['good shots, missed',W-14,H-pad-6,'end'],['tough shots, missed',pad+4,H-pad-6,'start']].forEach(([t,x,y,a])=>g+=`<text x="${x}" y="${y}" text-anchor="${a}" font-size="10" fill="var(--muted)" font-family="var(--mono)">${t}</text>`);
     ab.forEach(a=>{if(a!=='CLE')g+=`<circle cx="${X(T[a].ShotQualityAvg)}" cy="${Y(T[a].EfgPct)}" r="4" fill="var(--tick,#c9c6c0)"><title>${a}</title></circle>`});
-    g+=`<circle cx="${X(T.CLE.ShotQualityAvg)}" cy="${Y(T.CLE.EfgPct)}" r="7" fill="var(--wine,#860038)" stroke="#fff" stroke-width="2"/><text x="${X(T.CLE.ShotQualityAvg)+10}" y="${Y(T.CLE.EfgPct)+4}" font-size="11" font-weight="700" fill="var(--wine,#860038)" font-family="var(--mono)">CLE</text>`;
+    g+=`<circle cx="${X(T.CLE.ShotQualityAvg)}" cy="${Y(T.CLE.EfgPct)}" r="7" fill="var(--wine,#860038)" stroke="#fff" stroke-width="2"/><text x="${X(T.CLE.ShotQualityAvg)+10}" y="${Y(T.CLE.EfgPct)+4}" font-size="11" font-weight="700" fill="var(--wine,#860038)" font-family="var(--mono)">${ME}</text>`;
     g+=`<text x="${W/2}" y="${H-8}" text-anchor="middle" font-size="10" fill="var(--muted)" font-family="var(--mono)">Shot quality (expected eFG%) →</text>`;
-    const c=el('div','card sec');head(c,'Shot quality vs shot making','Every NBA offense: shots it gets vs how it makes them');c.insertAdjacentHTML('beforeend',`<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:${W}px;display:block;margin:0 auto" role="img" aria-label="Shot quality against effective field goal percentage for every NBA team">${g}</svg>`);
-    const tl=el('div','pbt');[['Shot quality',T.CLE.ShotQualityAvg,x=>x.ShotQualityAvg],['Actual eFG%',T.CLE.EfgPct,x=>x.EfgPct]].forEach(([l,v,f])=>{const d=el('div');d.append(el('b',null,(v*100).toFixed(1)+'%'),el('span',null,l));d.insertAdjacentHTML('beforeend',rkEl(pbr(f,1)));tl.appendChild(d)});c.appendChild(tl);
+    const c=el('div','card sec');head(c,op?'Shot quality allowed':'Shot quality vs shot making',op?'Every NBA defense: the shots it allows vs how opponents make them':'Every NBA offense: shots it gets vs how it makes them');c.insertAdjacentHTML('beforeend',`<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:${W}px;display:block;margin:0 auto" role="img" aria-label="Shot quality against effective field goal percentage for every NBA team">${g}</svg>`);
+    const tl=el('div','pbt');[['Shot quality'+(op?' allowed':''),T.CLE.ShotQualityAvg,x=>x.ShotQualityAvg],[op?'Opponent eFG%':'Actual eFG%',T.CLE.EfgPct,x=>x.EfgPct]].forEach(([l,v,f])=>{const d=el('div');d.append(el('b',null,(v*100).toFixed(1)+'%'),el('span',null,l));d.insertAdjacentHTML('beforeend',rkEl(op?pbr(f,-1,T):pbr(f,1)));tl.appendChild(d)});c.appendChild(tl);
     c.appendChild(el('p','note','Shot quality = the eFG% an average NBA team would get on the same shots, from pbpstats. Above the dashed line = making more than the shots deserve.'));out.push(c)}}
   return out}
 function pbpPaceCard(){if(!pbpOK())return null;const T=PBT.T,O=PBT.O;const c=el('div','card sec');head(c,'How fast they play','Average seconds per possession, against every NBA team');const tl=el('div','pbt pbt3');
@@ -2627,10 +2627,10 @@ function zoneBars(D,R,t,sh,BZ,baseLab){
   return w;
 }
 function vShots(v,D,R){
-  if(!S.f.shTeam||(S.season&&S.f.shView==='bars'))S.f.shTeam=D.focus.id;const t=D.teams.find(x=>x.id===S.f.shTeam);
+  if(!S.f.shTeam)S.f.shTeam=D.focus.id;/* Nov 4 (Luka): the CLE/OPP switch works in every shot view, Zones included */const t=D.teams.find(x=>x.id===S.f.shTeam);
   const c=el('div','card');head(c,'Shot chart',perLabel(S.per));
   const fl=teamBtns(D,'shTeam',()=>{S.f.shPl='all';S.f.shType='all'});
-  if(S.season&&S.f.shView==='bars')fl.querySelectorAll('button[data-tid]').forEach(x=>x.style.display='none');  /* season Zones view: Cavs only (game view keeps the toggle so the tables can show the other team, i.e. the Cavs defense) */
+  /* season Zones view: Cavs only (game view keeps the toggle so the tables can show the other team, i.e. the Cavs defense) */
   const ps=el('select');ps.setAttribute('aria-label','Player');const o0=el('option',null,'Whole team');o0.value='all';ps.appendChild(o0);
   const cnt={};R.shots.filter(s=>s.t===t.id&&s.id&&D.P[s.id]).forEach(s=>cnt[s.id]=(cnt[s.id]||0)+1);
   Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]).forEach(id=>{const o=el('option',null,D.P[id].name+' · '+cnt[id]+' FGA');o.value=id;if(S.f.shPl===id)o.selected=true;ps.appendChild(o)});
@@ -2700,7 +2700,7 @@ function vShots(v,D,R){
   right.appendChild(zt);
   const pts=Z.reduce((s,[m],i)=>s+m*(i>=3?3:2),0);right.appendChild(el('p','note',`${pts} points on ${xy.length} shots (${xy.length?(pts/xy.length).toFixed(2):'–'} per shot). FG% colored against ${baseLab} shooting in each zone. Vs avg = points above or below what an average NBA shooter scores on the same shots.${S.season&&PBT&&lgOK()&&S.f.shPl==='all'&&!typeLab?' Small numbers = NBA rank among 30 teams'+(isCle?' (FG%: 1st = best; % of shots: 1st = most)':' for what opponents did (FG%: 1st = lowest allowed)')+', from pbpstats.':''}${SC&&SC.ok?' Season rows: per game, other games only. Similar teams = the opponent’s net rating tier (top 5, 6–10, 11–20, bottom 9) by '+SC.rkLab+'.':''}`));right.insertAdjacentHTML('beforeend',ZKEY);
   g.append(left,right);c.appendChild(g);c.appendChild(typesBox);if(S.season&&S.f.shPl!=='all')gameByGame(D,R,S.f.shPl,c);v.appendChild(c);
-  if(S.season&&S.f.shPl==='all'&&S.f.shTeam===D.focus.id)pbpShotCards().forEach(x=>v.appendChild(x));
+  if(S.season&&S.f.shPl==='all')pbpShotCards(S.f.shTeam!==D.focus.id).forEach(x=>v.appendChild(x));
 }
 
 
