@@ -85,7 +85,7 @@ function prep(D, g, score, top, boxLink, opts) {
     const o = nx[1], TS = D.TS || {}, all = Object.values(TS), i = D.SCHEDULE.indexOf(nx);
     const rr = D.REST[nx[0]] || []; const rest = rr[0] === 0 ? 'Back-to-back' : rr[0] == null ? (i === 0 ? 'Season opener' : '') : rr[0] + ' day' + (rr[0] === 1 ? '' : 's') + ' rest';
     nxInfo = { o, home: nx[2] === 'H', date: nx[0], tip: nx[3], tv: D.tv[nx[0]] || '', radio: D.radio, rest, slug: nx[0] + '-' + o.toLowerCase(), tonight: !!tg, season: D.TS_CUR ? '2026–27' : '2025–26' };
-    if (TS.CLE && TS[o]) tape = [['Record', t => t[0] / Math.max(1, t[0] + t[1]), 1, t => t[0] + '–' + t[1]], ['Off rating', t => t[4], 1, t => t[4].toFixed(1)], ['Def rating', t => t[5], 0, t => t[5].toFixed(1)], ['Net rating', t => t[4] - t[5], 1, t => { const x = t[4] - t[5]; return (x > 0 ? '+' : '') + x.toFixed(1); }]]
+    if (TS.CLE && TS[o]) tape = [['Record', t => t[0] / Math.max(1, t[0] + t[1]), 1, t => t[0] + '–' + t[1]], ['ORTG', t => t[4], 1, t => t[4].toFixed(1)], ['DRTG', t => t[5], 0, t => t[5].toFixed(1)], ['NET RTG', t => t[4] - t[5], 1, t => { const x = t[4] - t[5]; return (x > 0 ? '+' : '') + x.toFixed(1); }]]
       .map(([lab, f, hi, fm]) => { const rk = t => ord(1 + all.filter(u => hi ? f(u) > f(t) : f(u) < f(t)).length); return [lab, fm(TS.CLE), rk(TS.CLE), fm(TS[o]), rk(TS[o])]; });
   }
   let inj = D.INJURIES.map(([n, , what, st]) => [n, what.toLowerCase(), st]), injNote = '', gl = (D.INJ_ASSIGN || []).map(r => r[0]);

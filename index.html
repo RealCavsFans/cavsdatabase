@@ -1203,7 +1203,7 @@ const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt
       rows.forEach(([lab,k,hi])=>{const x=a[k],y=b[k];if(x==null&&y==null)return;const df=x==null||y==null||!isFinite(x)||!isFinite(y)?null:x-y;const cls=hi==null||df==null||Math.abs(df)<.05?'n':((df>0)===!!hi?'g':'r');
         const tr=el('tr');tr.append(el('th',null,lab),el('td','on',fm(k,x)),el('td','off',fm(k,y)),el('td','df '+cls,df==null?'–':(df>0?'+':df<0?'−':'')+Math.abs(df).toFixed(1)));
         const bc=el('td','bc'),bar=el('span','oo2-bar');if(df!=null){const i=el('i',cls);const wd=Math.min(50,Math.abs(df)*(k==='ortg'||k==='drtg'||k==='net'?1.2:2.2));i.style.width=wd+'%';if(df>0)i.style.left='50%';else i.style.right='50%';bar.appendChild(i)}bc.appendChild(bar);tr.appendChild(bc);t.appendChild(tr)})});return t};
-  const cav=mk([['Scoring',[['Points per 100','ortg',1],['Allowed per 100','drtg',0],['Net per 100','net',1],['Pace','pace',null]]],['Shooting',[['Effective FG%','efg',1],['True shooting','ts',1],['3P%','tp',1],['3PA rate','tpar',null],['FT rate','ftr',1]]],['Possessions',[['Turnover rate','tov',0],['Off. rebound %','orb',1],['Def. rebound %','drb',1],['Assisted baskets','ast',null]]]]);
+  const cav=mk([['Scoring',[['ORTG','ortg',1],['DRTG','drtg',0],['NET RTG','net',1],['Pace','pace',null]]],['Shooting',[['eFG%','efg',1],['TS%','ts',1],['3PT%','tp',1],['3PT rate','tpar',null],['FT rate','ftr',1]]],['Possessions',[['TOV%','tov',0],['OREB%','orb',1],['DREB%','drb',1],['AST%','ast',null]]]]);
   const opp=mk([['What '+(o.oab||'opponents')+' did',[['Opp. effective FG%','oefg',0],['Opp. 3P%','otp',0],['Opp. 3PA rate','otpar',null],['Opp. turnover rate','otov',1],['Opp. FT rate','oftr',0]]]]);opp.hidden=true;
   const tg=el('div','oo2-tg');[[o.ab||'Team',cav],['Opponents',opp]].forEach(([l,tb],i)=>{const btn=el('button',null,l);btn.type='button';btn.setAttribute('aria-pressed',i===0);btn.onclick=()=>{cav.hidden=tb!==cav;opp.hidden=tb!==opp;tg.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===btn))};tg.appendChild(btn)});
   w.append(tg,cav,opp);
@@ -1419,7 +1419,7 @@ const sgn=v=>(v>0?'+':v<0?'\u2212':'')+Math.abs(v).toFixed(1);
 const ord=n=>{const x=['th','st','nd','rd'],v=n%100;return n+(x[(v-20)%10]||x[v]||x[0])};
 const nr=NRTG.CLE?sgn(NRTG.CLE[0]):'—';
 const nr14=L14.CLE?sgn(L14.CLE[0]):'—';
-[['Home',rec('H')],['Road',rec('A')],['Last 10',last10.length?last10.filter(x=>x==='W').length+'–'+last10.filter(x=>x==='L').length:'—'],['Streak',streak],['Net rtg',nr],['Net 2 wk',nr14]]
+[['Home',rec('H')],['Road',rec('A')],['Last 10',last10.length?last10.filter(x=>x==='W').length+'–'+last10.filter(x=>x==='L').length:'—'],['Streak',streak],['NET RTG',nr],['Net 2 wk',nr14]]
   .forEach(([k,v])=>{const d=el('div');const dd=el('dd');const m=String(v).match(/^(.*?) (\(.*\))$/);if(m)dd.append(m[1],el('small',null,' '+m[2]));else dd.textContent=v;d.append(el('dt',null,k),dd);sp.appendChild(d)});
 /* conference and division rank sit beside the record tiles, with the standings link under them */
 {const box=el('div','rkbox');[['East rank',SEASON.eastRank,15],['Central rank',SEASON.centralRank,5]].forEach(([k,v,n])=>{const dl=el('dl','rk');const dd=el('dd',null,v&&v!=='—'?v:'—');if(v&&v!=='—')dd.appendChild(el('small',null,'of '+n));dl.append(el('dt',null,k),dd);box.appendChild(dl)});
@@ -2614,7 +2614,7 @@ const rt=document.getElementById('rights');onView('assets',()=>{RIGHTS.forEach((
       const g=q.gp,pc=(m,a)=>a?(m/a*100).toFixed(1):'–';
       const slim=(host,title,rows)=>{host.appendChild(el('div','rc2-k',title));const st=el('div','rc2-strip rc3-slim');rows.forEach(([k,v])=>{const x=el('div');x.append(el('b',null,String(v)),el('span',null,k));st.appendChild(x)});host.appendChild(st)};
       const f1=v=>(v/g).toFixed(1);
-      slim(adw,q.season+' · LSU · per game',[['GP',g],['MIN',f1(q.min)],['PTS',f1(q.pts)],['REB',f1(q.reb)],['AST',f1(q.ast)],['STL',f1(q.stl)],['BLK',f1(q.blk)],['FG%',pc(q.fgm,q.fga)],['3P%',pc(q.tpm,q.tpa)],['FT%',pc(q.ftm,q.fta)]]);
+      slim(adw,q.season+' · LSU · per game',[['GP',g],['MIN',f1(q.min)],['PTS',f1(q.pts)],['REB',f1(q.reb)],['AST',f1(q.ast)],['STL',f1(q.stl)],['BLK',f1(q.blk)],['FG%',pc(q.fgm,q.fga)],['3PT%',pc(q.tpm,q.tpa)],['FT%',pc(q.ftm,q.fta)]]);
       const L=J.last;if(L){const md=new Date(L.d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});const sc=(J.score||'').match(/^\D*?(\d+),\D*?(\d+)$/);const wl=sc?(+sc[1]>+sc[2]?'W ':'L ')+sc[1]+'–'+sc[2]:'';
         slim(lw,'Last game · '+md+' vs '+L.opp+(wl?' · '+wl:''),[['MIN',L.min],['PTS',L.pts],['REB',L.reb],['AST',L.ast],['STL',L.stl],['BLK',L.blk],['TO',L.to],['FG',L.fgm+'-'+L.fga],['3PT',L.tpm+'-'+L.tpa],['FT',L.ftm+'-'+L.fta]])}
       /* shot map: every field goal attempt; filled = made (wine assisted, gold on his own), ring = missed. Tap a zone to show only those shots. */
@@ -2641,18 +2641,18 @@ const rt=document.getElementById('rights');onView('assets',()=>{RIGHTS.forEach((
         const StopPct=((S1+S2)*TMP)/(TPoss*MP),TDR=100*O.pts/TPoss,DPS=O.pts/(O.fgm+(1-Math.pow(1-O.ftm/O.fta,2))*O.fta*.4),DRtg=TDR+.2*(100*DPS*(1-StopPct)-TDR);
         const sh5=TMP/5/MP,USG=100*(P.fga+.44*P.fta+P.to)*sh5/(T.fga+.44*T.fta+T.to),net=ORtg-DRtg;
         /* his rate vs the same rate for LSU as a whole (hi = higher is better) */
-        const M=[['True shooting',100*P.pts/(2*(P.fga+.44*P.fta)),100*T.pts/(2*(T.fga+.44*T.fta)),1,'%'],['Effective FG',P.fga?100*(P.fgm+.5*P.tpm)/P.fga:null,100*(T.fgm+.5*T.tpm)/T.fga,1,'%'],
+        const M=[['TS%',100*P.pts/(2*(P.fga+.44*P.fta)),100*T.pts/(2*(T.fga+.44*T.fta)),1,'%'],['eFG%',P.fga?100*(P.fgm+.5*P.tpm)/P.fga:null,100*(T.fgm+.5*T.tpm)/T.fga,1,'%'],
           ['Off rebound rate',100*P.oreb*sh5/(T.oreb+O.dreb),20*T.oreb/(T.oreb+O.dreb),1,'%'],['Def rebound rate',100*P.dreb*sh5/(T.dreb+O.oreb),20*T.dreb/(T.dreb+O.oreb),1,'%'],
-          ['Turnover rate',100*P.to/(P.fga+.44*P.fta+P.to),100*T.to/(T.fga+.44*T.fta+T.to),0,'%'],
+          ['TOV%',100*P.to/(P.fga+.44*P.fta+P.to),100*T.to/(T.fga+.44*T.fta+T.to),0,'%'],
           ['Steal rate',100*P.stl*sh5/TPoss,20*T.stl/TPoss,1,'%'],['Block rate',100*P.blk*sh5/(O.fga-O.tpa),20*T.blk/(O.fga-O.tpa),1,'%'],['Free throw rate',P.fga?100*P.fta/P.fga:null,100*T.fta/T.fga,1,'']].filter(x=>x[1]!=null&&isFinite(x[1])&&x[2]>0).map(x=>Object.assign(x,{sc:(x[3]?1:-1)*(x[1]/x[2]-1)}));
         const srt=M.slice().sort((a,b)=>b.sc-a.sc),best=srt.slice(0,2),worst=srt.slice(-2).reverse();
         lw.appendChild(el('div','rc2-k','Advanced · '+q.season));const ad=el('div','rc3-adv');
-        [['Off rating',ORtg.toFixed(1),'pts produced / 100 poss'],['Def rating',DRtg.toFixed(1),'pts allowed / 100 poss'],['Net',(net>=0?'+':'−')+Math.abs(net).toFixed(1),'off − def'],['Usage',USG.toFixed(1)+'%','team plays he ends']].forEach(([k,v,s2])=>{const x=el('div');x.append(el('span',null,k),el('b',null,v),el('small',null,s2));ad.appendChild(x)});
+        [['ORTG',ORtg.toFixed(1),'pts produced / 100 poss'],['DRTG',DRtg.toFixed(1),'pts allowed / 100 poss'],['Net',(net>=0?'+':'−')+Math.abs(net).toFixed(1),'off − def'],['Usage',USG.toFixed(1)+'%','team plays he ends']].forEach(([k,v,s2])=>{const x=el('div');x.append(el('span',null,k),el('b',null,v),el('small',null,s2));ad.appendChild(x)});
         [[best[0],'up'],[best[1],'up'],[worst[1],'dn'],[worst[0],'dn']].forEach(([x2,c])=>{if(!x2)return;const x=el('div','rc3-bw '+c);x.append(el('span',null,(c==='up'?'Best · ':'Weakest · ')+x2[0]),el('b',null,x2[1].toFixed(1)+x2[4]),el('small',null,'LSU '+(/rebound|Steal|Block/.test(x2[0])?'avg player ':'')+x2[2].toFixed(1)+x2[4]));ad.appendChild(x)});lw.appendChild(ad)}
       lw.appendChild(el('p','rc2-fn','From ESPN box scores and play-by-play. Ratings use Basketball Reference’s box-score formulas; best and weakest compare him with LSU’s team rates (per-player share for rebounds, steals and blocks). College box scores don’t include +/−.'))})}
     /* honors above the stats (Oct 31) */if(C.hl&&C.hl.length){cd.appendChild(el('div','rc2-k','Honors'));const hw=el('div','rc2-hon');C.hl.forEach(h=>hw.appendChild(el('span',null,h)));cd.appendChild(hw)}
     const [sz,tm,lg,gp,pp,rp,ap,fg,tp]=C.s;cd.appendChild(el('div','rc2-k',[sz,tm,lg].filter(Boolean).join(' · ')));
-    const sts=el('div','rc2-strip');const XX=C.x||{};[['GP',gp],['MPG',XX.mpg],['PPG',pp],['RPG',rp],['APG',ap],['SPG',XX.spg],['BPG',XX.bpg],['FG%',fg],['3P%',tp],['FT%',XX.ft]].forEach(([k,v])=>{if(v==null)return;const x=el('div');x.append(el('b',null,typeof v==='number'&&k!=='GP'?v.toFixed(1):String(v)),el('span',null,k));sts.appendChild(x)});cd.appendChild(sts);
+    const sts=el('div','rc2-strip');const XX=C.x||{};[['GP',gp],['MPG',XX.mpg],['PPG',pp],['RPG',rp],['APG',ap],['SPG',XX.spg],['BPG',XX.bpg],['FG%',fg],['3PT%',tp],['FT%',XX.ft]].forEach(([k,v])=>{if(v==null)return;const x=el('div');x.append(el('b',null,typeof v==='number'&&k!=='GP'?v.toFixed(1):String(v)),el('span',null,k));sts.appendChild(x)});cd.appendChild(sts);
     if(C.s[9])cd.appendChild(el('p','rc2-fn',C.s[9].replace(/^[^(]*\((.*)\)$/,'$1')));
     bx.appendChild(cd)}}
   if(X[0]&&!RIGHTS_CARD[n])P('Status:',X[0]);
@@ -2762,7 +2762,7 @@ onView('schedule',()=>{SCHEDULE.forEach((g,i)=>{const m=g[0].slice(0,7);
     /* tale of the tape: each stat with its league rank, better side in bold */
     if(TS.CLE&&TS[o]){const tape=el('div','gp-tape');const all=Object.values(TS);
       const rk=(v,i,hi)=>1+all.filter(t=>hi?t[i]>v:t[i]<v).length;
-      const ROWS=[['Record',-2,1,null],['Off rating',4,1,v=>v.toFixed(1)],['Def rating',5,0,v=>v.toFixed(1)],['Net rating',-1,1,v=>(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1)],['Net, last 2 wks',-3,1,v=>(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1)],['Pace',6,1,v=>v.toFixed(1)]];
+      const ROWS=[['Record',-2,1,null],['ORTG',4,1,v=>v.toFixed(1)],['DRTG',5,0,v=>v.toFixed(1)],['NET RTG',-1,1,v=>(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1)],['Net, last 2 wks',-3,1,v=>(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1)],['Pace',6,1,v=>v.toFixed(1)]];
       const l14=Object.values(L14).map(x=>x[0]);const val=(t,i)=>i===-3?(t===TS.CLE?(L14.CLE||[])[0]:(L14[o]||[])[0]):i===-2?t[0]/Math.max(1,t[0]+t[1]):i<0?+(t[4]-t[5]).toFixed(1):t[i];
       ROWS.forEach(([lab,i,hi,f])=>{const a=val(TS.CLE,i),b=val(TS[o],i);if(i===-3&&(a==null||b==null)){tape.append(el('span','gtv',a==null?'—':f(a)),el('span','gtl',lab),el('span','gtv r',b==null?'—':f(b)));return}const rr=v=>1+(i===-3?l14.filter(x=>x>v).length:all.filter(t=>val(t,i)>v).length);const ra=i<0?rr(a):rk(a,i,hi),rb=i<0?rr(b):rk(b,i,hi);const fmt=(t,v)=>f?f(v):t[0]+'–'+t[1];
         const better=lab==='Pace'?0:(hi?a>b:a<b)?1:(hi?b>a:b<a)?2:0;
@@ -2970,13 +2970,13 @@ const perName=p=>p<=4?'Q'+p:(p===5?'OT':'OT'+(p-4));
     const row=el('div','gdm-row');
     if(TS.CLE&&TS[g[1]]){const c2=card('','Tale of the tape');const tp=el('div','gdm-tape');
       const a=TS.CLE,b=TS[g[1]],net=x=>x[4]-x[5],f1=v=>(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1);
-      [['Record',a[0]+'–'+a[1],b[0]+'–'+b[1],a[0]/(a[0]+a[1]||1)>b[0]/(b[0]+b[1]||1)],['Net rating',f1(net(a)),f1(net(b)),net(a)>net(b)],['Off rating',a[4].toFixed(1),b[4].toFixed(1),a[4]>b[4]],['Def rating',a[5].toFixed(1),b[5].toFixed(1),a[5]<b[5]]].forEach(([k,x,y,cw])=>{const l=el('span','l');if(cw)l.appendChild(el('b',null,x));else l.textContent=x;const r=el('span','r');if(cw===false)r.appendChild(el('b',null,y));else r.textContent=y;tp.append(l,el('span','m',k),r)});
+      [['Record',a[0]+'–'+a[1],b[0]+'–'+b[1],a[0]/(a[0]+a[1]||1)>b[0]/(b[0]+b[1]||1)],['NET RTG',f1(net(a)),f1(net(b)),net(a)>net(b)],['ORTG',a[4].toFixed(1),b[4].toFixed(1),a[4]>b[4]],['DRTG',a[5].toFixed(1),b[5].toFixed(1),a[5]<b[5]]].forEach(([k,x,y,cw])=>{const l=el('span','l');if(cw)l.appendChild(el('b',null,x));else l.textContent=x;const r=el('span','r');if(cw===false)r.appendChild(el('b',null,y));else r.textContent=y;tp.append(l,el('span','m',k),r)});
       {const hd=el('div','gdm-tape-h');hd.append(el('span','l','CLE'),el('span','m'),el('span','r',g[1]));tp.prepend(...hd.childNodes)}
       /* phones: the same four stats as bars by league rank (longer bar = better rank), like the game preview page */
       const bars=el('div','gdm-bars');{const all=Object.values(TS),rk=(f,hi)=>v=>1+all.filter(x=>hi?f(x)>v:f(x)<v).length;
         const wp=x=>x[0]/((x[0]+x[1])||1);const ns=n=>n+(['th','st','nd','rd'][(n%100-20)%10]||['th','st','nd','rd'][n%100]||'th');
         const hdr=el('div','gb-h');hdr.append(el('b',null,'CLE'),el('b',null,g[1]));bars.appendChild(hdr);
-        [['Record',wp,true,x=>x[0]+'–'+x[1]],['Net rating',x=>x[4]-x[5],true,x=>f1(x[4]-x[5])],['Off rating',x=>x[4],true,x=>x[4].toFixed(1)],['Def rating',x=>x[5],false,x=>x[5].toFixed(1)]].forEach(([k,f,hi,fmt])=>{
+        [['Record',wp,true,x=>x[0]+'–'+x[1]],['NET RTG',x=>x[4]-x[5],true,x=>f1(x[4]-x[5])],['ORTG',x=>x[4],true,x=>x[4].toFixed(1)],['DRTG',x=>x[5],false,x=>x[5].toFixed(1)]].forEach(([k,f,hi,fmt])=>{
           const ra=rk(f,hi)(f(a)),rb=rk(f,hi)(f(b));const cw=ra<rb,ow=rb<ra;const r=el('div','gb-r');
           const va=el('div','gb-v'+(cw?' up':''));va.append(el('b',null,fmt(a)),el('small',null,ns(ra)));const vb=el('div','gb-v r'+(ow?' up':''));vb.append(el('b',null,fmt(b)),el('small',null,ns(rb)));
           const bl=el('div','gb-b l');const il=el('i',cw?'c':'');il.style.setProperty('--w',((31-ra)/30*100).toFixed(0)+'%');bl.appendChild(il);
@@ -3382,7 +3382,7 @@ window.renderGame=function(sl){if(SCHEDULE.findIndex(g=>gslug(g)===sl)<0)return 
   /* tale of the tape (before) */
   if(!fin){const cur=TSTATS.CLE&&TSTATS[o]&&TSTATS.CLE[0]+TSTATS.CLE[1]>=1&&TSTATS[o][0]+TSTATS[o][1]>=1,TS=cur?TSTATS:TSTATS_PREV;
     if(TS.CLE&&TS[o]){const c=card('Tale of the tape',(cur?'2026–27':'2025–26')+' · league rank');const tp=el('div','gp-tape');const all=Object.values(TS);
-      const ROWS=[['Record',t=>t[0]/Math.max(1,t[0]+t[1]),1,t=>t[0]+'–'+t[1]],['Off rating',t=>t[4],1,t=>t[4].toFixed(1)],['Def rating',t=>t[5],0,t=>t[5].toFixed(1)],['Net rating',t=>t[4]-t[5],1,t=>{const x=t[4]-t[5];return (x>0?'+':x<0?'−':'')+Math.abs(x).toFixed(1)}],['Pace',t=>t[6],1,t=>t[6].toFixed(1)]];
+      const ROWS=[['Record',t=>t[0]/Math.max(1,t[0]+t[1]),1,t=>t[0]+'–'+t[1]],['ORTG',t=>t[4],1,t=>t[4].toFixed(1)],['DRTG',t=>t[5],0,t=>t[5].toFixed(1)],['NET RTG',t=>t[4]-t[5],1,t=>{const x=t[4]-t[5];return (x>0?'+':x<0?'−':'')+Math.abs(x).toFixed(1)}],['Pace',t=>t[6],1,t=>t[6].toFixed(1)]];
       ROWS.forEach(([lab,f,hi,fm])=>{const a=TS.CLE,b=TS[o];const rk=t=>1+all.filter(u=>hi?f(u)>f(t):f(u)<f(t)).length;const better=lab==='Pace'?0:(hi?f(a)>f(b):f(a)<f(b))?1:(hi?f(b)>f(a):f(b)<f(a))?2:0;
         const x=el('span','gtv'+(better===1?' up':''));x.append(fm(a),el('small',null,ord(rk(a))));const y=el('span','gtv r'+(better===2?' up':''));y.append(el('small',null,ord(rk(b))),fm(b));tp.append(x,el('span','gtl',lab),y)});
       /* home vs road: the Cavs' record where this game is played, next to the opponent's (league box scores; listed away team first) */
@@ -3918,7 +3918,7 @@ onView('charge',()=>{(function(){const tb=document.getElementById('ch-sched');if
     const mg=Math.max(...CH_STATS.map(r=>r[1])),q=r=>r[1]>=Math.max(1,Math.ceil(mg*.4));
     const pct=(m,a)=>a?m/a*100:0;
     const CATS=[['Points',r=>r[3],r=>q(r),v=>v.toFixed(1)],['Rebounds',r=>r[4],q,v=>v.toFixed(1)],['Assists',r=>r[5],q,v=>v.toFixed(1)],['Steals',r=>r[6],q,v=>v.toFixed(1)],['Blocks',r=>r[7],q,v=>v.toFixed(1)],
-      ['FG%',r=>pct(r[8],r[9]),r=>q(r)&&r[9]>=3,v=>v.toFixed(1)+'%'],['3P%',r=>pct(r[10],r[11]),r=>q(r)&&r[11]>=1.5,v=>v.toFixed(1)+'%'],['PER',r=>r[12],r=>q(r)&&r[2]>=10,v=>v.toFixed(1)]];
+      ['FG%',r=>pct(r[8],r[9]),r=>q(r)&&r[9]>=3,v=>v.toFixed(1)+'%'],['3PT%',r=>pct(r[10],r[11]),r=>q(r)&&r[11]>=1.5,v=>v.toFixed(1)+'%'],['PER',r=>r[12],r=>q(r)&&r[2]>=10,v=>v.toFixed(1)]];
     CATS.forEach(([lab,f,ok,fmt])=>{const top=CH_STATS.filter(ok).filter(r=>f(r)!=null&&!isNaN(f(r))).sort((a,b)=>f(b)-f(a)).slice(0,3);if(!top.length)return;
       const c=el('div','chl-c');c.appendChild(el('span','chl-k',lab));const lead=el('div','chl-1');lead.append(el('b',null,fmt(f(top[0]))),el('span',null,top[0][0]));c.appendChild(lead);
       const ul=el('ol','chl-r');top.slice(1).forEach(r=>{const li=el('li');li.append(el('span',null,r[0]),el('b',null,fmt(f(r))));ul.appendChild(li)});c.appendChild(ul);box.appendChild(c)});
@@ -4273,7 +4273,7 @@ const ppLoad=()=>Promise.all([['stats','/pdata/players.json'],['box','/box.json'
   POS:{PG:'Point guard',SG:'Shooting guard',SF:'Small forward',PF:'Power forward',C:'Center',G:'Guard',F:'Forward','G-F':'Guard/Forward','F-G':'Forward/Guard','C-F':'Center/Forward','F-C':'Forward/Center'},
   TIPS:{
     PTS:'Points per game.',REB:'Rebounds per game.',AST:'Assists per game.',STL:'Steals per game.',BLK:'Blocks per game.',MIN:'Minutes per game.',
-    'FG%':'Field goal percentage: shots made out of shots taken, threes included.','3P%':'Three point percentage.','FT%':'Free throw percentage.',
+    'FG%':'Field goal percentage: shots made out of shots taken, threes included.','3PT%':'Three point percentage.','FT%':'Free throw percentage.',
     'Pts/shot':'Points per shot: total points divided by field goal attempts. It rewards efficient scorers and players who get to the line.',
     Stocks:'Steals plus blocks per game. The quickest read on how disruptive a defender is.',
     Fingerprint:'Each bar is a percentile among NBA players at his position group with real minutes. 90th means he’s ahead of 90% of them.',
@@ -4447,7 +4447,7 @@ window.renderPlayer=function(s){
       const gl=el('div','rot-g');gl.appendChild(el('div','rot-k','Last '+last.length+' games, stint by stint'));last.slice().reverse().forEach(([gi,s2])=>{const g=(J.games||[])[gi]||{};const r=el('div','rot-r');const dd=g.et?new Date(g.et+'T12:00:00'):null;r.appendChild(el('span','rot-l',(dd?(dd.getMonth()+1)+'/'+dd.getDate()+' ':'')+(g.ha==='home'?'vs ':'@ ')+(g.opp||'')));const t=el('div','rot-t rot-s');
         s2.filter(([s0])=>s0<2880).forEach(([s0,s1,p])=>{const i=el('i',p>0?'up':p<0?'dn':'ev');i.style.left=(s0/2880*100)+'%';i.style.width=Math.max(.4,(Math.min(s1,2880)-s0)/2880*100)+'%';{/* Nov 2: only label a stint wide enough for its number (narrow ones showed '+1(' cut off); the number stays in the tooltip */const lab=(p>0?'+':p<0?'−':'')+Math.abs(p),px=(Math.min(s1,2880)-s0)/2880*Math.max(220,Math.min(innerWidth-130,640));if(px>=lab.length*6.6+8)i.textContent=lab}i.title=Math.round((s1-s0)/60)+' min, '+(p>0?'+':'')+p;t.appendChild(i)});[25,50,75].forEach(q=>{const l=el('b');l.style.left=q+'%';t.appendChild(l)});r.appendChild(t);gl.appendChild(r)});box.appendChild(gl)})}
   // season line
-  {const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3P%','tp'],['FG%','fg'],['MIN','min']],W:[['PTS','pts'],['REB','reb'],['AST','ast'],['3P%','tp'],['STL','stl'],['MIN','min']],B:[['PTS','pts'],['REB','reb'],['AST','ast'],['BLK','blk'],['FG%','fg'],['MIN','min']]};
+  {const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3PT%','tp'],['FG%','fg'],['MIN','min']],W:[['PTS','pts'],['REB','reb'],['AST','ast'],['3PT%','tp'],['STL','stl'],['MIN','min']],B:[['PTS','pts'],['REB','reb'],['AST','ast'],['BLK','blk'],['FG%','fg'],['MIN','min']]};
     const lkey={pts:'pts',reb:'reb',ast:'ast',stl:'stl',blk:'blk',min:'min'};
     const head=!cur?'Season line':cur.src==='2026–27'?'Season line · 2026–27':cur.base==='pre'?'Last season · '+(pre.team||''):'Last season · 2025–26';
     const why=!cur?'':cur.src==='2026–27'?`His averages this season. Under each: where he ranks ${lgOK?'among NBA '+GN+' (bar = percentile).'+RKN:'on the Cavs.'}`:cur.base==='pre'?`His numbers ${pre.league?'in '+escH(pre.league):''} last season, the baseline until he plays for the Cavs.`:`His 2025–26 averages, shown until his first game this season${career?', next to his career average':''}.`;
@@ -4463,7 +4463,7 @@ window.renderPlayer=function(s){
       /* every advanced number for this season, ranked in his position group (opens with the button) */
       if(cur.src==='2026–27'&&meL){const TT={};Object.values(L.tg||{}).forEach(gm=>{const z=gm.t||[];if(z.length!==2||gm.cupFinal)return;z.forEach((a2,i)=>{const b2=z[1-i];const o=TT[a2.ab]||(TT[a2.ab]={min:0,fgm:0,fga:0,fta:0,tov:0,orb:0,drb:0,oorb:0,odrb:0,oposs:0,o2a:0});o.min+=240+Math.max(0,(gm.per||4)-4)*25;o.fgm+=a2.fgm;o.fga+=a2.fga;o.fta+=a2.fta;o.tov+=a2.tov;o.orb+=a2.orb;o.drb+=a2.drb;o.oorb+=b2.orb;o.odrb+=b2.drb;o.oposs+=b2.fga-b2.orb+b2.tov+.44*b2.fta;o.o2a+=b2.fga-b2.tpa})});
         const q=(a2,d2)=>d2>0?a2/d2:null,rt=(x,f)=>{const t=TT[x.t];if(!t||!x.min)return null;return f(t,x.min/(t.min/5))},pc1=v=>(v*100).toFixed(1)+'%';
-        const AD=[['Usage',x=>rt(x,(t,sh)=>q(x.fga+.44*x.fta+x.tov,sh*(t.fga+.44*t.fta+t.tov))),pc1],['True shooting',x=>q(x.pts,2*(x.fga+.44*x.fta)),pc1],['Effective FG%',x=>q(x.fgm+.5*x.tpm,x.fga),pc1],['Free throw rate',x=>q(x.fta,x.fga),v=>v.toFixed(3).replace(/^0/,'')],['3PA rate',x=>q(x.tpa,x.fga),pc1],['Assist rate',x=>rt(x,(t,sh)=>q(x.ast,sh*t.fgm-x.fgm)),pc1],['Assist to turnover',x=>q(x.ast,x.tov),v=>v.toFixed(1)],['Turnover rate',x=>q(x.tov,x.fga+.44*x.fta+x.tov),pc1,1],['Off. rebound rate',x=>rt(x,(t,sh)=>q(x.oreb,sh*(t.orb+t.odrb))),pc1],['Def. rebound rate',x=>rt(x,(t,sh)=>q(x.reb-x.oreb,sh*(t.drb+t.oorb))),pc1],['Steal rate',x=>rt(x,(t,sh)=>q(x.stl,sh*t.oposs)),pc1],['Block rate',x=>rt(x,(t,sh)=>q(x.blk,sh*t.o2a)),pc1]];
+        const AD=[['Usage',x=>rt(x,(t,sh)=>q(x.fga+.44*x.fta+x.tov,sh*(t.fga+.44*t.fta+t.tov))),pc1],['TS%',x=>q(x.pts,2*(x.fga+.44*x.fta)),pc1],['eFG%',x=>q(x.fgm+.5*x.tpm,x.fga),pc1],['Free throw rate',x=>q(x.fta,x.fga),v=>v.toFixed(3).replace(/^0/,'')],['3PT rate',x=>q(x.tpa,x.fga),pc1],['Assist rate',x=>rt(x,(t,sh)=>q(x.ast,sh*t.fgm-x.fgm)),pc1],['Assist to turnover',x=>q(x.ast,x.tov),v=>v.toFixed(1)],['TOV%',x=>q(x.tov,x.fga+.44*x.fta+x.tov),pc1,1],['Off. rebound rate',x=>rt(x,(t,sh)=>q(x.oreb,sh*(t.orb+t.odrb))),pc1],['Def. rebound rate',x=>rt(x,(t,sh)=>q(x.reb-x.oreb,sh*(t.drb+t.oorb))),pc1],['Steal rate',x=>rt(x,(t,sh)=>q(x.stl,sh*t.oposs)),pc1],['Block rate',x=>rt(x,(t,sh)=>q(x.blk,sh*t.o2a)),pc1]];
         const adv=el('div','ppx-adv');adv.hidden=true;AD.forEach(([lab,fn,fmt,low])=>{const mv=fn(meL);if(mv==null)return;const cell=el('div','ppx-cell');cell.appendChild(el('div','k',lab));cell.appendChild(el('div','v',fmt(mv)));
           if(lgOK){const arr=pool.filter(x=>x!==meL).map(fn).filter(v2=>v2!=null);const rk=rankIn(mv,arr,!low);if(rk){cell.appendChild(el('div','r',ord(rk.r)+' of '+rk.of+' '+GN));const pb=el('div','pct');const i2=el('i');i2.style.width=pc(rk.pct)+'%';pb.appendChild(i2);cell.appendChild(pb)}}adv.appendChild(cell)});
         if(adv.children.length){const mb=el('button','oo2-more','Show every advanced number ▾');mb.type='button';mb.onclick=()=>{adv.hidden=!adv.hidden;mb.textContent=adv.hidden?'Show every advanced number ▾':'Show fewer ▴'};c.append(mb,adv)}}
@@ -4471,7 +4471,7 @@ window.renderPlayer=function(s){
     {const gl=document.getElementById('ppx-glc');if(gl&&gl.parentElement===ov)ov.insertBefore(c,gl);else ov.appendChild(c)}}/* season line sits above the game log (Oct 30) */
   // before the NBA: college or overseas, plus G League (rookies and second year players, two-ways)
   if((youngish||stt==='TW'||stt==='Camp')&&(pre||gl)&&!(cur&&cur.base==='pre'&&!gl)){const c=card('Before the NBA',null,'A baseline for a young player: his last season before Cleveland'+(gl?', and his G League line':'')+'.');
-    const tb=el('table','ppx-t');tb.innerHTML='<thead><tr><th></th><th>GP</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>FG%</th><th>3P%</th></tr></thead>';const tbd=el('tbody');
+    const tb=el('table','ppx-t');tb.innerHTML='<thead><tr><th></th><th>GP</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>FG%</th><th>3PT%</th></tr></thead>';const tbd=el('tbody');
     const row=(lab,x)=>{if(!x)return;const tr=el('tr');[lab,x.gp,f1(x.min),f1(x.pts),f1(x.reb),f1(x.ast),f3(x.fg),f3(x.tp)].forEach((v2,i)=>tr.appendChild(el('td',null,v2==null?'—':String(v2))));tbd.appendChild(tr)};
     if(pre&&!(cur&&cur.base==='pre'))row((pre.team||'')+' '+(pre.season||''),pre);if(gl)row((gl.team||'G League')+' '+(gl.season||'2025–26'),gl);tb.appendChild(tbd);const bx=el('div','ppx-tbx');bx.appendChild(tb);c.appendChild(bx);
     if(pre&&pre.note&&!(cur&&cur.base==='pre'))c.appendChild(note(pre.note));ov.appendChild(c)}
@@ -4485,8 +4485,8 @@ window.renderPlayer=function(s){
     const ESP={NYK:'NY',GSW:'GS',SAS:'SA',NOP:'NO',UTA:'UTAH',WAS:'WSH'};const tt=x=>TT[x.t]||TT[ESP[x.t]];
     const rt=(x,f)=>{const t=tt(x);if(!t||!x.min)return null;const sh=x.min/(t.min/5);return f(t,sh)};
     const q=(n2,d2)=>d2>0?n2/d2:null,pc1=v=>(v*100).toFixed(1)+'%';
-    const WS=[['Scoring',[['Points',x=>x.pts/x.g,v=>f1(v)],['Usage',x=>rt(x,(t,sh)=>q(x.fga+.44*x.fta+x.tov,sh*(t.fga+.44*t.fta+t.tov))),pc1],['True shooting',ts,pc1],['Effective FG%',x=>q(x.fgm+.5*x.tpm,x.fga),pc1],['Threes made',x=>x.tpm/x.g,v=>f1(v)],['Free throw rate',x=>x.fga?x.fta/x.fga:null,v=>v.toFixed(3).replace(/^0/,'')]]],
-      ['Playmaking',[['Assists',x=>x.ast/x.g,v=>f1(v)],['Assist rate',x=>rt(x,(t,sh)=>q(x.ast,sh*t.fgm-x.fgm)),pc1],['Assist to turnover',x=>x.tov?x.ast/x.tov:null,v=>v.toFixed(1)],['Turnover rate',x=>{const d2=x.fga+0.44*x.fta+x.tov;return d2?x.tov/d2:null},pc1,1]]],
+    const WS=[['Scoring',[['Points',x=>x.pts/x.g,v=>f1(v)],['Usage',x=>rt(x,(t,sh)=>q(x.fga+.44*x.fta+x.tov,sh*(t.fga+.44*t.fta+t.tov))),pc1],['TS%',ts,pc1],['eFG%',x=>q(x.fgm+.5*x.tpm,x.fga),pc1],['Threes made',x=>x.tpm/x.g,v=>f1(v)],['Free throw rate',x=>x.fga?x.fta/x.fga:null,v=>v.toFixed(3).replace(/^0/,'')]]],
+      ['Playmaking',[['Assists',x=>x.ast/x.g,v=>f1(v)],['Assist rate',x=>rt(x,(t,sh)=>q(x.ast,sh*t.fgm-x.fgm)),pc1],['Assist to turnover',x=>x.tov?x.ast/x.tov:null,v=>v.toFixed(1)],['TOV%',x=>{const d2=x.fga+0.44*x.fta+x.tov;return d2?x.tov/d2:null},pc1,1]]],
       ['Defense and boards',[['Rebounds',x=>x.reb/x.g,v=>f1(v)],['Offensive rebounds',x=>x.oreb/x.g,v=>f1(v)],['Off. rebound rate',x=>rt(x,(t,sh)=>q(x.oreb,sh*(t.orb+t.odrb))),pc1],['Def. rebound rate',x=>rt(x,(t,sh)=>q(x.reb-x.oreb,sh*(t.drb+t.oorb))),pc1],['Steals',x=>x.stl/x.g,v=>f1(v)],['Steal rate',x=>rt(x,(t,sh)=>q(x.stl,sh*t.oposs)),pc1],['Blocks',x=>x.blk/x.g,v=>f1(v)],['Block rate',x=>rt(x,(t,sh)=>q(x.blk,sh*t.o2a)),pc1]]]];
     const others=pool.filter(x=>x!==meL);const out=[];const grid=el('div','ppx-fp');
     WS.forEach(([grp,rows])=>{const col=el('div','ppx-fg');const hd=el('div','ppx-fgh');col.appendChild(hd);const pcs=[];
@@ -4639,7 +4639,7 @@ window.renderPlayer=function(s){
     const L0=meL&&cur.src==='2026–27'?meL:null,ma=(m,a)=>L0&&L0.g?f1(L0[m]/L0.g)+'–'+f1(L0[a]/L0.g)+' a game':'';
     const rows=[['FG%',cur.fg,x=>x.fga?x.fgm/x.fga:null,ma('fgm','fga')]];
     if(L0){const p2=x=>x.fga-x.tpa?(x.fgm-x.tpm)/(x.fga-x.tpa):null;rows.push(['2P%',p2(L0),p2,L0.g?f1((L0.fgm-L0.tpm)/L0.g)+'–'+f1((L0.fga-L0.tpa)/L0.g)+' a game':''])}
-    rows.push(['3P%',cur.tp,x=>x.tpa?x.tpm/x.tpa:null,ma('tpm','tpa')],['FT%',cur.ft,x=>x.fta?x.ftm/x.fta:null,ma('ftm','fta')]);
+    rows.push(['3PT%',cur.tp,x=>x.tpa?x.tpm/x.tpa:null,ma('tpm','tpa')],['FT%',cur.ft,x=>x.fta?x.ftm/x.fta:null,ma('ftm','fta')]);
     if(L0){const ef=x=>x.fga?(x.fgm+.5*x.tpm)/x.fga:null,tsf=x=>x.fga+x.fta?x.pts/(2*(x.fga+.44*x.fta)):null;rows.push(['eFG%',ef(L0),ef,''],['TS%',tsf(L0),tsf,''])}
     if(cur.pps!=null)rows.push(['Pts/shot',cur.pps,x=>x.fga?x.pts/x.fga:null,''])
     const sh=el('div','ppx-share');rows.forEach(([lab,val,fn,sub])=>{if(val==null)return;const r2=el('div');r2.appendChild(el('span',null)).appendChild(tip(lab));const t2=el('span','t');const sc=lab==='Pts/shot'?val/2:val;const i2=el('i');i2.style.width=pc(sc*100)+'%';t2.appendChild(i2);
@@ -4699,7 +4699,7 @@ window.renderPlayer=function(s){
         const sel=document.createElement('select');sel.className='ppx-sel';sel.setAttribute('aria-label','Teammate');L2.forEach(l=>{const m=l.ids.find(x=>x!==id);const o=document.createElement('option');o.value=m;o.textContent=(A.P[m]||{}).name+' · '+fmtMinS(l.sec)+' together';sel.appendChild(o)});c.appendChild(sel);
         const box=el('div','tablebox');c.appendChild(box);const K=['pts','fgm','fga','tpm','tpa','ftm','fta','oreb','dreb','ast','to','blk','stl'];
         const draw=()=>{const m=sel.value,l=L2.find(x=>x.ids.includes(m));const w=l.pb[id]||{},wo={};K.forEach(k=>wo[k]=(b[k]||0)-(w[k]||0));const ws=l.sec,wos=Math.max(0,b.min-l.sec);const nm=(A.P[m]||{}).last||'';
-          const t=el('table','ppx-t ppx-oo');t.innerHTML='<thead><tr><th></th><th>Min</th><th>Pts</th><th>Reb</th><th>Ast</th><th>Blk</th><th>FG%</th><th>3P%</th><th>TS%</th></tr></thead>';const bd=el('tbody');
+          const t=el('table','ppx-t ppx-oo');t.innerHTML='<thead><tr><th></th><th>Min</th><th>Pts</th><th>Reb</th><th>Ast</th><th>Blk</th><th>FG%</th><th>3PT%</th><th>TS%</th></tr></thead>';const bd=el('tbody');
           [['With '+nm,w,ws],['Without '+nm,wo,wos]].forEach(([lab,q,sc])=>{const g=k=>q[k]||0,p36=k=>sc?(g(k)/sc*2160).toFixed(1):'–',pc2=(x,y)=>y?Math.round(x/y*100)+'%':'–';const tr=el('tr');
             [lab,String(Math.round(sc/60)),p36('pts'),sc?((g('oreb')+g('dreb'))/sc*2160).toFixed(1):'–',p36('ast'),p36('blk'),pc2(g('fgm'),g('fga')),pc2(g('tpm'),g('tpa')),pc2(g('pts'),2*(g('fga')+.44*g('fta')))].forEach(v=>tr.appendChild(el('td',null,v)));bd.appendChild(tr)});
           t.appendChild(bd);box.textContent='';box.appendChild(t)};sel.onchange=draw;draw();c.appendChild(el('p','ppx-why','Minutes together need 5+ to be listed. Per 36 = his rate over 36 minutes of that playing time.'));ov.appendChild(c)}}
@@ -4745,10 +4745,10 @@ window.renderPlayer=function(s){
             s+='<text class="q" x="'+(W-pr-4)+'" y="'+(pt+14)+'" text-anchor="end">BIG ROLE, EFFICIENT</text><text class="q" x="'+(pl+6)+'" y="'+(pt+14)+'">SMALL ROLE, EFFICIENT</text><text class="q" x="'+(W-pr-4)+'" y="'+(H-pb-8)+'" text-anchor="end">BIG ROLE, INEFFICIENT</text><text class="q" x="'+(pl+6)+'" y="'+(H-pb-8)+'">SMALL ROLE, INEFFICIENT</text>';
             pts.filter(q=>q!==me).forEach(q=>{const cav=q.p.t==='CLE';s+='<circle cx="'+X(q.u).toFixed(1)+'" cy="'+Y(q.s).toFixed(1)+'" r="'+(cav?5:3.5)+'" fill="'+(cav?'var(--gold,#f2b231)':'var(--muted)')+'" fill-opacity="'+(cav?.95:.35)+'"><title>'+q.p.n+' · '+q.u.toFixed(1)+'% usage · '+q.s.toFixed(1)+'% TS</title></circle>'});
             s+=headDot(pid,X(me.u),Y(me.s),15)+'<text class="me" x="'+(X(me.u)+(X(me.u)>W-120?-20:20))+'" y="'+(Y(me.s)+4)+'" text-anchor="'+(X(me.u)>W-120?'end':'start')+'">'+n.split(' ').slice(-1)[0]+'</text>';
-            s+='<text x="'+((pl+W-pr)/2)+'" y="'+(H-4)+'" text-anchor="middle" class="ax">Usage →</text><text x="12" y="'+((pt+H-pb)/2)+'" text-anchor="middle" class="ax" transform="rotate(-90 12 '+((pt+H-pb)/2)+')">True shooting →</text></svg>';
+            s+='<text x="'+((pl+W-pr)/2)+'" y="'+(H-4)+'" text-anchor="middle" class="ax">Usage →</text><text x="12" y="'+((pt+H-pb)/2)+'" text-anchor="middle" class="ax" transform="rotate(-90 12 '+((pt+H-pb)/2)+')">TS% →</text></svg>';
             const ug=el('div','ppx-ug');c.appendChild(ug);const w=el('div','ppx-scw');w.innerHTML=s;ug.appendChild(w);
             const rU=rankIn(me.u,pts.filter(q=>q!==me).map(q=>q.u)),rS=rankIn(me.s,pts.filter(q=>q!==me).map(q=>q.s));
-            const big=el('div','ppx-big2');[[me.u.toFixed(1)+'%','Usage · '+ord(rU.r)+' of '+rU.of+' '+GN],[me.s.toFixed(1)+'%','True shooting · '+ord(rS.r)+' of '+rS.of]].forEach(([v,l])=>{const d=el('div');d.append(el('b',null,v),el('span',null,l));big.appendChild(d)});ug.appendChild(big);
+            const big=el('div','ppx-big2');[[me.u.toFixed(1)+'%','Usage · '+ord(rU.r)+' of '+rU.of+' '+GN],[me.s.toFixed(1)+'%','TS% · '+ord(rS.r)+' of '+rS.of]].forEach(([v,l])=>{const d=el('div');d.append(el('b',null,v),el('span',null,l));big.appendChild(d)});ug.appendChild(big);
             c.appendChild(el('p','ppx-why','Dashed lines = the average '+GN.slice(0,-1)+'. Gold = other Cavs '+GN+'. From every NBA box score this season.'));of.appendChild(c)}}
         /* Nov 3: shot contest: his FG% by how close the nearest defender was (NBA.com tracking, saved daily by the shot contest task) */
         {const c=card('Shot contest',null,'How he shoots by how close the nearest defender was when he let it go, from NBA.com player tracking. League = every NBA shot this season.');of.appendChild(c);const bx=el('div');c.appendChild(bx);
@@ -4768,7 +4768,7 @@ window.renderPlayer=function(s){
             const lg=el('div','ppx-leg');lg.innerHTML='<span><i style="background:var(--wine)"></i>His points</span><span><i style="background:var(--gold,#f2b231)"></i>Points from his assists</span>';c.appendChild(lg);of.appendChild(c)}}
         /* true shooting game by game, against the NBA average */
         {const G2=[];/* true shooting game by game: off (Luka, Oct 30) */if(G2.length>=3){let lp=0,lfa=0,lft=0;Object.values(L.tg||{}).forEach(g=>(g.t||[]).forEach(t=>{lp+=t.pts;lfa+=t.fga;lft+=t.fta}));const nba=lfa?lp/(2*(lfa+.44*lft))*100:null;
-          const ts=G2.map(g=>({g,v:g.me.pts/(2*(g.me.fga+.44*g.me.fta))*100}));const c=card('True shooting, game by game',null,'His true shooting each game'+(nba?' against the NBA average ('+nba.toFixed(1)+'%)':'')+'. The thick line is his rolling 3-game average.');
+          const ts=G2.map(g=>({g,v:g.me.pts/(2*(g.me.fga+.44*g.me.fta))*100}));const c=card('TS%, game by game',null,'His true shooting each game'+(nba?' against the NBA average ('+nba.toFixed(1)+'%)':'')+'. The thick line is his rolling 3-game average.');
           const W=innerWidth<600?330:600,H=innerWidth<600?200:220,pl=38,pr=26,pt=12,pb=34;const lo=Math.min(20,...ts.map(q=>q.v)),hi=Math.max(90,...ts.map(q=>q.v));const X=i=>pl+(ts.length===1?0:i/(ts.length-1))*(W-pl-pr),Y=v=>pt+(1-(v-lo)/(hi-lo))*(H-pt-pb);
           let s='<svg viewBox="0 0 '+W+' '+H+'" class="ppx-sc" role="img" aria-label="True shooting by game">';[30,50,70,90].filter(v=>v>=lo&&v<=hi).forEach(v=>{s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="var(--line2)"/><text x="'+(pl-6)+'" y="'+(Y(v)+4)+'" text-anchor="end">'+v+'%</text>'});
           if(nba)s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+Y(nba)+'" y2="'+Y(nba)+'" stroke="var(--fg)" stroke-dasharray="5 4"/><text x="'+(W-pr-6)+'" y="'+(Y(nba)+15)+'" text-anchor="end" class="ax">NBA '+nba.toFixed(1)+'%</text>';
@@ -4930,7 +4930,7 @@ window.renderPlayer=function(s){
       {let X=TX;const seg=(t,f,c)=>{x.font=f;x.fillStyle=c;x.fillText(t,X,290);X+=x.measureText(t).width};[[f1(cur.pts),' PPG  '],[f1(cur.reb),' RPG  '],[f1(cur.ast),' APG  ']].forEach(([v2,l])=>{seg(v2,'800 104px '+CND,'#fff');seg(l,'800 44px '+CND,'#fff')});seg((cur.min!=null?'in '+f1(cur.min)+' min · ':'')+(cur.gp||gp)+' games','600 32px '+SAN,'#f4d6dd')}
       const Y0=390,BH=850,SW=682,MW=420,X1=40,XM=X1+SW+28,X2=XM+MW+28;
       /* left: shooting line */
-      panel(X1,Y0,SW,BH,W8);x.fillStyle=INK;x.font='800 44px '+CND;x.fillText('SHOOTING',X1+36,Y0+86);x.fillStyle=MUT;x.font='700 24px '+SAN;x.fillText('TRUE SHOOTING',X1+36,Y0+128);
+      panel(X1,Y0,SW,BH,W8);x.fillStyle=INK;x.font='800 44px '+CND;x.fillText('SHOOTING',X1+36,Y0+86);x.fillStyle=MUT;x.font='700 24px '+SAN;x.fillText('TS%',X1+36,Y0+128);
       const L0=meL&&cur.src==='2026–27'?meL:null;const ts=L0&&L0.fga+L0.fta?L0.pts/(2*(L0.fga+.44*L0.fta)):null;
       const pAvg=fn=>{if(!lgOK)return null;const T2=pool.reduce((a2,z)=>{for(const k of ['fgm','fga','tpm','tpa','ftm','fta','pts'])a2[k]=(a2[k]||0)+z[k];return a2},{});return fn(T2)};
       const tsF=z=>z.fga+z.fta?z.pts/(2*(z.fga+.44*z.fta)):null,tsA=pAvg(tsF);x.fillStyle=ts==null||tsA==null?INK:ts>=tsA?GR:RD;x.font='800 120px '+CND;rgt(ts==null?'–':Math.round(ts*100)+'%',X1+SW-36,Y0+132);x.fillStyle='#e3e0db';x.fillRect(X1+36,Y0+170,SW-72,2);
@@ -4945,7 +4945,7 @@ window.renderPlayer=function(s){
       x.fillStyle=pmG>0?GR:pmG<0?RD:INK;x.font='800 150px '+CND;ctr(gp?(pmG>0?'+':pmG<0?'−':'')+Math.abs(pmG).toFixed(1):'–',XM+MW/2,Y0+720);x.fillStyle=MUT;x.font='800 30px '+CND;ctr('PLUS-MINUS A GAME',XM+MW/2,Y0+782);
       /* right: where he ranks among NBA players at his position */
       panel(X2,Y0,SW,BH,GD);x.fillStyle=INK;x.font='800 44px '+CND;x.fillText(lgOK?'AMONG NBA '+GN.toUpperCase():'HIS NIGHTS',X2+36,Y0+86);x.fillStyle=MUT;x.font='700 24px '+SAN;x.fillText(lgOK?'per game · rank and percentile':'points, game by game',X2+36,Y0+128);x.fillStyle='#e3e0db';x.fillRect(X2+36,Y0+170,SW-72,2);
-      if(lgOK){const RK=[['Points','pts',cur.pts],['Rebounds','reb',cur.reb],['Assists','ast',cur.ast],['Steals','stl',cur.stl],['Blocks','blk',cur.blk],['3-pointers made','tpm',L0?L0.tpm/L0.g:null],['True shooting','ts',ts]];
+      if(lgOK){const RK=[['Points','pts',cur.pts],['Rebounds','reb',cur.reb],['Assists','ast',cur.ast],['Steals','stl',cur.stl],['Blocks','blk',cur.blk],['3-pointers made','tpm',L0?L0.tpm/L0.g:null],['TS%','ts',ts]];
         RK.forEach(([lab,k,v2],i)=>{const y=Y0+196+i*92;const rk=k==='ts'?lgRank(null,tsF):lgRank(k);x.fillStyle=INK;x.font='600 30px '+SAN;x.fillText(lab,X2+36,y+30);x.font='800 44px '+CND;rgt(v2==null?'–':k==='ts'?Math.round(v2*100)+'%':f1(v2),X2+SW-36,y+34);
           const bw=SW-72-170;x.fillStyle='#eeebe7';x.fillRect(X2+36,y+46,bw,18);if(rk){x.fillStyle=rk.pct>=67?GR:rk.pct<=33?RD:W8;x.fillRect(X2+36,y+46,bw*rk.pct/100,18);x.fillStyle=MUT;x.font='600 20px '+SAN;rgt(ord(rk.r)+' of '+rk.of,X2+SW-36,y+64)}})}
       else{const mx=Math.max(1,...mine.map(g=>g.me.pts)),n2=Math.max(1,mine.length),bw=(SW-72)/n2;mine.forEach((g,i)=>{const h2=520*g.me.pts/mx;x.fillStyle=W8;x.fillRect(X2+36+i*bw+6,Y0+760-h2,bw-12,h2);x.fillStyle=INK;x.font='800 40px '+CND;ctr(String(g.me.pts),X2+36+i*bw+bw/2,Y0+750-h2);x.fillStyle=MUT;x.font='600 20px '+SAN;ctr((g.ha==='H'?'vs ':'@ ')+g.opp,X2+36+i*bw+bw/2,Y0+800)})}

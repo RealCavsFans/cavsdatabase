@@ -162,7 +162,7 @@ function deriveCore(D,plays,F){
 /* NBA.com definitions: TOV% = TOV / (FGA + 0.44 FTA + TOV); OREB% = player offensive rebounds / (them + opponent player defensive rebounds) (Oct 28) */
 function factors(a,b){const pa=poss({fga:a.fga,oreb:a.oreb,to:a.to,fta:a.fta,np:a.np});
   return {efg:a.fga?(a.fgm+0.5*a.tpm)/a.fga:null,tov:(a.fga+0.44*a.fta+a.to)?a.to/(a.fga+0.44*a.fta+a.to):null,orb:(a.oreb+b.dreb)?a.oreb/(a.oreb+b.dreb):null,ftr:a.fga?a.ftm/a.fga:null}}
-const FF=[['efg','Shooting','Effective FG%',true],['tov','Ball security','Turnover rate',false],['orb','Second chances','Offensive rebound rate',true],['ftr','Getting to the line','Free throws made per FGA',true]];
+const FF=[['efg','Shooting','eFG%',true],['tov','Ball security','TOV%',false],['orb','Second chances','Offensive rebound rate',true],['ftr','Getting to the line','Free throws made per FGA',true]];
 const CLE='5',C3=Math.sqrt(23.75**2-22**2);
 
 /* ---------- game highs (Nov 1): "most since", career and season highs for the recap ----------
