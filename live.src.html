@@ -1532,8 +1532,8 @@ function scoutCard(D,X,team){
   const draw=()=>{tg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',st[b.dataset.k]===b.dataset.v));
     const box=st.rng==='s'&&X.SS?X.SS.s[st.side]:null;const all=box?[]:X.SH.l[st.side];const xy=all.filter(q=>q.hasXY);
     let Z=ZN.map(()=>[0,0]);if(box){Z=box.z.map(v=>v.slice());if(box.cs&&box.cs[0][1]+box.cs[1][1]===Z[3][1])Z.cs=box.cs}else{xy.forEach(q=>{Z[q.zi][1]++;if(q.m)Z[q.zi][0]++});withCorners(Z,xy)}const nZ=Z.reduce((t,v)=>t+v[1],0);const BZ=(BLIVE&&BLIVE.lg)||ZN.map(([k])=>[LG[k][0]*1000,1000]);
-    left.innerHTML=zoneCourt(Z,nZ,st.side==='f'?team.name+' shooting by zone':'Opponents’ shooting against '+team.name,BZ,st.side==='f'?'#860038':'#5b6470',true);
-    left.insertAdjacentHTML('beforeend',zLegend(st.side==='f'?'#860038':'#5b6470','NBA average','Numbers: makes-attempts, FG% and share of shots.',st.side!=='f')+ZKEY);
+    left.innerHTML=zoneCourt(Z,nZ,st.side==='f'?team.name+' shooting by zone':'Opponents’ shooting against '+team.name,BZ,'#860038',true);
+    left.insertAdjacentHTML('beforeend',zLegend('#860038','NBA average','Numbers: makes-attempts, FG% and share of shots.',st.side!=='f')+ZKEY);
     right.textContent='';const ptT=box?box.pt.reduce((t,v)=>t+v[0],0):all.length;const pr=PT.map(([k,l],i)=>{if(box){const [a,pts]=box.pt[i]||[0,0];return {l,a,fr:ptT?a/ptT:0,pps:a?pts/a:null}}const q=all.filter(x=>x.pt===i),m=q.filter(x=>x.m);return {l,a:q.length,fr:all.length?q.length/all.length:0,pps:q.length?m.reduce((s2,x)=>s2+(x.three?3:2),0)/q.length:null}}).filter(r=>r.a);
     right.appendChild(dtable('sc_t',[{h:'Shot type',k:'l'},{h:'FREQ',k:'fr',f:r=>Math.round(r.fr*100)+'%'},{h:'PTS/SHOT',k:'pps',f:r=>r.pps==null?'–':r.pps.toFixed(2)}],pr,{def:'fr'}))};
   c.appendChild(tg);draw();
@@ -2519,7 +2519,7 @@ async function luDeep(D,l,box){const se=D.season,per=S.per||'all',key=l.ids.slic
   G.forEach(([lab,ix])=>{const tr=el('tr');tr.innerHTML=`<td>${lab}</td><td><b>${fr(zo,ix)}</b> <small>${fg(zo,ix)}</small></td><td>${fr(zt,ix)} <small>${fg(zt,ix)}</small></td><td><b>${fr(za,ix)}</b> <small>${fg(za,ix)}</small></td><td>${fr(zta,ix)} <small>${fg(zta,ix)}</small></td>`;tb.appendChild(tr)});
   const w=el('div','tw');w.appendChild(tb);box.appendChild(w);box.appendChild(el('p','note','Share of shots from each zone, then FG% from there. '+own.length+' shots taken, '+alw.length+' allowed while this group played.'));
   const cr=el('div','lud-courts');const c1=el('div');c1.innerHTML=zoneCourt(zo,own.length,'This group’s shots by zone',zt,'#860038');c1.appendChild(el('p','note','Its shooting vs the team’s season (wine = better)'));
-  const c2=el('div');c2.innerHTML=zoneCourt(za,alw.length,'Shots allowed by zone',zta,'#5b6470');c2.appendChild(el('p','note','What opponents shot vs what they shoot on the Cavs overall (gray = opponents did better)'));cr.append(c1,c2);box.appendChild(cr);box.insertAdjacentHTML('beforeend',ZKEY);
+  const c2=el('div');c2.innerHTML=zoneCourt(za,alw.length,'Shots allowed by zone',zta,'#860038');c2.appendChild(el('p','note','What opponents shot vs what they shoot on the Cavs overall (gray = opponents did better)'));cr.append(c1,c2);box.appendChild(cr);box.insertAdjacentHTML('beforeend',ZKEY);
   /* how its possessions started */
   box.appendChild(el('h4','lud-h','How its possessions started'));const H=[['stl','After a steal'],['dreb','After a defensive rebound'],['to','After a dead-ball turnover'],['made','After an opponent score'],['oreb','Second chances']];
   const sum=(L,f)=>{const q=L.filter(f);const p=q.reduce((s,x)=>s+x.pts,0);return [q.length,p,q.length?(p/q.length).toFixed(2):'–']};
