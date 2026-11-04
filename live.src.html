@@ -160,6 +160,17 @@ svg{display:block;width:100%;height:auto}
 .chips button.in{background:var(--cf);border-color:var(--cf);color:#fff}
 .chips button.out{text-decoration:line-through;color:var(--muted);background:var(--sub)}
 .chips button.clr{border:0;background:none;color:var(--wt);text-decoration:underline}
+/* lineup player filter (Nov 4) */
+.lupk-r{display:flex;align-items:center;gap:8px;margin:8px 0 6px}.lupk-r .lab,.lupk-d .lab{font:700 .6875rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.lupk-sw{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.lupk-sw button{border:0;background:var(--card);color:var(--fg2);font:700 .8125rem var(--sans);padding:5px 12px;cursor:pointer}.lupk-sw button[aria-pressed=true]{background:var(--fg);color:var(--bg)}.lupk-sw button.wo[aria-pressed=true]{background:#5d646c;color:#fff}
+.lupk-ch.chips button.in{background:#860038;border-color:#860038;color:#fff}
+.lupk-s{font:500 .8125rem var(--sans);color:var(--fg2);margin:6px 0 2px}.lupk-s b{font-weight:700}.lupk-s b.w{color:var(--wine-ink)}.lupk-s .clr{border:0;background:none;color:var(--muted);text-decoration:underline;cursor:pointer;margin-left:8px;font:inherit}
+.lupk-dd{display:none}
+@media (max-width:600px){.lupk-r,.lupk-ch,.lupk-n{display:none!important}.lupk-dd{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0 4px}.lupk-d{position:relative;display:flex;flex-direction:column;gap:3px;min-width:0}
+.lupk-b{text-align:left;font:600 .8125rem var(--sans);color:var(--fg);border:1px solid var(--line);background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6' fill='%23888'/%3E%3C/svg%3E") no-repeat right 10px center;padding:8px 26px 8px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}.lupk-b.on{border-color:#860038;color:var(--wine-ink)}.lupk-b.off{border-color:#5d646c}
+.lupk-m{position:absolute;z-index:20;top:100%;left:0;width:min(240px,80vw);max-height:320px;overflow:auto;background:var(--card);border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.18);padding:4px 0}.lupk-d:nth-child(2) .lupk-m{left:auto;right:0}
+.lupk-m label{display:flex;align-items:center;gap:8px;padding:7px 12px;font:500 .875rem var(--sans)}.lupk-m input{accent-color:#860038;width:16px;height:16px}.lupk-done{display:block;width:calc(100% - 16px);margin:6px 8px;padding:7px;border:0;background:var(--fg);color:var(--bg);font:700 .8125rem var(--sans);cursor:pointer}}
+
 .agrid th{font-size:0.625rem;white-space:nowrap}.agrid td,.agrid th{padding:6px 5px}
 .agrid td:first-child,.agrid th:first-child{position:sticky;left:0;background:var(--card);white-space:nowrap}
 /* scrollable rows fade at the edge so it's clear there's more to the right */
@@ -569,7 +580,7 @@ tr.xr{cursor:pointer}
 tr.xs td{background:var(--sub)!important;font-weight:500!important;font-size:.8125rem;color:var(--ink);border-bottom:0!important;padding-top:5px!important;padding-bottom:5px!important}tr.xs td:first-child{padding-left:24px!important;color:var(--muted);font-family:'Archivo',sans-serif}tr.xs-end td{padding-bottom:12px!important;border-bottom:1px solid var(--line2)!important}tr.xs td::before{content:none!important}
 tr.luth td{font:700 .625rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:10px!important;padding-bottom:2px!important;border-bottom:0!important}
 /* saved images keep the numbers: no filter buttons, player chips, tap hints or footnotes */
-.capmode .fl,.capmode .chips,.capmode .tap-hint,.capmode p.note,.capmode .lsp-sw{display:none!important}
+.capmode .fl,.capmode .chips,.capmode .lupk,.capmode .tap-hint,.capmode p.note,.capmode .lsp-sw{display:none!important}
 .capmode .luck{display:none!important}
 .capmode .grid2{display:block!important}.capmode .grid2>*{width:auto!important;max-width:none!important}.capmode .zchart svg text{font-weight:800!important}.capmode .zt td{font-weight:600}.capmode .zt td:first-child{font-weight:700}.capmode .xr>td:first-child::before{display:none!important}.capmode td a,.capmode td button{text-decoration:none!important;border-bottom:0!important}
 .lsp-2{display:block}@media (min-width:900px){.lsp-2{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:start}.lsp-2.one{display:block}.lsp-2 .lsp-r{padding-top:2px}}
@@ -1511,7 +1522,7 @@ function scoutCard(D,X,team){
   /* lineups */
   c.appendChild(el('h3',null,'Their most-used lineups'));
   const lu=Object.values(X.L5).filter(l=>l.sec>=120).map(l=>{let po=poss(l.o),pd=poss(l.d);return {names:l.names.join(', '),sec:l.sec,g:l.g,pm:l.pf-l.pa,net:po>=1&&pd>=1?l.pf/po*100-l.pa/pd*100:null}});
-  c.appendChild(dtable('sc_l',[{h:'Lineup',k:'names'},{h:'GAMES',k:'g'},{h:'MIN',k:'sec',f:r=>fmtMin(r.sec)},{h:'+/-',k:'pm',f:r=>sgn(r.pm),cls:r=>pmCls(r.pm)},{h:'NET',k:'net',f:r=>r.net==null?'–':sgn(Math.round(r.net)),cls:r=>r.net==null?'':pmCls(r.net)}],lu.slice(0,10),{def:'sec',minW:520}));
+  c.appendChild(dtable('sc_l',[{h:'Lineup',k:'names'},{h:'GAMES',k:'g'},{h:'MIN',k:'sec',f:r=>fmtMin(r.sec)},{h:'+/-',k:'pm',f:r=>sgn(r.pm),cls:r=>pmCls(r.pm)},{h:'NET RTG',k:'net',f:r=>r.net==null?'–':sgn(Math.round(r.net)),cls:r=>r.net==null?'':pmCls(r.net)}],lu.slice(0,10),{def:'sec',minW:520}));
   /* where they shoot */
   c.appendChild(el('h3',null,'Where they shoot'));
   /* toggles: their shots or what they allow; last 5 games or the season (Oct 31) */
@@ -2525,10 +2536,20 @@ function vLineups(v,D,R){
   fl.classList.add('lufl');c.appendChild(fl);
   /* pick players: tap once = must be in the group, twice = must be out */
   const pk=S.f.luPick=S.f.luPick||{};const pool=D.roster[t.id].filter(id=>Object.values(R.L[t.id][5]).some(l=>l.ids.includes(id))).sort((a,b)=>R.B[b].min-R.B[a].min);
-  const ch=el('div','chips');ch.appendChild(el('span','lab','Players'));pool.forEach(id=>{const st=pk[id]||0;const b=el('button',st===1?'in':st===-1?'out':'',D.P[id].last);b.type='button';b.title=st===1?'In every group shown (tap to exclude)':st===-1?'Left out (tap to clear)':'Tap to require this player';
-    b.onclick=()=>{pk[id]=st===0?1:st===1?-1:0;if(!pk[id])delete pk[id];renderView()};ch.appendChild(b)});
-  if(Object.keys(pk).length){const x=el('button','clr','Clear');x.type='button';x.onclick=()=>{S.f.luPick={};renderView()};ch.appendChild(x)}
-  c.appendChild(ch);c.appendChild(el('p','note','Tap a player once to show only groups with him, twice to show only groups without him.'));
+  /* Nov 4: desktop = With / Without switch, then tap players; phones = two dropdown checklists (With, Without). Same filter underneath (pk: 1 in, -1 out) */
+  const md=S.f.luMode||1,nm=id=>D.P[id].last;
+  const pw=el('div','lupk');const sw=el('div','lupk-r');sw.appendChild(el('span','lab','Players'));const sg=el('span','lupk-sw');[[1,'With'],[-1,'Without']].forEach(([v,l])=>{const b=el('button',v===-1?'wo':null,l);b.type='button';b.setAttribute('aria-pressed',md===v);b.onclick=()=>{S.f.luMode=v;renderView()};sg.appendChild(b)});sw.appendChild(sg);pw.appendChild(sw);
+  const ch=el('div','chips lupk-ch');pool.forEach(id=>{const st=pk[id]||0;const b=el('button',st===1?'in':st===-1?'out':'',(st===1?'+ ':st===-1?'− ':'')+nm(id));b.type='button';b.setAttribute('aria-pressed',!!st);b.title=st?'Tap to clear':md===1?'Show only groups with him':'Show only groups without him';
+    b.onclick=()=>{if(pk[id]===md)delete pk[id];else pk[id]=md;renderView()};ch.appendChild(b)});pw.appendChild(ch);
+  /* phones: two dropdowns */
+  const dd=el('div','lupk-dd');[[1,'With'],[-1,'Without']].forEach(([v,l])=>{const w=el('div','lupk-d');w.appendChild(el('span','lab',l));const sel=pool.filter(id=>pk[id]===v).map(nm);const bt=el('button','lupk-b'+(sel.length?(v===1?' on':' off'):''));bt.type='button';
+      const lab=sel.length?(sel.length>2?sel.slice(0,2).join(', ')+' +'+(sel.length-2):sel.join(', ')):(v===1?'Any player':'Nobody');bt.appendChild(el('span',null,lab));bt.setAttribute('aria-expanded',S.f.luDD===v);bt.onclick=()=>{S.f.luDD=S.f.luDD===v?0:v;renderView()};w.appendChild(bt);
+      if(S.f.luDD===v){const m=el('div','lupk-m');pool.forEach(id=>{const r=el('label');const cb=document.createElement('input');cb.type='checkbox';cb.checked=pk[id]===v;cb.disabled=pk[id]===-v;cb.onchange=()=>{if(cb.checked)pk[id]=v;else delete pk[id];renderView()};r.append(cb,nm(id)+(pk[id]===-v?(v===1?' (in Without)':' (in With)'):''));m.appendChild(r)});const dn=el('button','lupk-done','Done');dn.type='button';dn.onclick=()=>{S.f.luDD=0;renderView()};m.appendChild(dn);w.appendChild(m)}
+      dd.appendChild(w)});pw.appendChild(dd);
+  const ins=pool.filter(id=>pk[id]===1).map(nm),outs=pool.filter(id=>pk[id]===-1).map(nm);
+  if(ins.length||outs.length){const sm=el('div','lupk-s');sm.append('Showing groups ');if(ins.length)sm.appendChild(el('b','w','with '+ins.join(' + ')));if(ins.length&&outs.length)sm.append(', ');if(outs.length)sm.appendChild(el('b',null,'without '+outs.join(', ')));const x=el('button','clr','Clear');x.type='button';x.onclick=()=>{S.f.luPick={};S.f.luDD=0;renderView()};sm.appendChild(x);pw.appendChild(sm)}
+  else pw.appendChild(el('p','note lupk-n','Pick With or Without, then tap players.'));
+  c.appendChild(pw);
   if(S.state==='in'){c.appendChild(el('h3','noshot','On the floor now'));const f=el('div','five noshot');[...R.on[t.id]].forEach(id=>f.appendChild(el('span',null,D.P[id].short)));c.appendChild(f);c.appendChild(el('h3',null,'All '+S.f.luSize+'-man groups'))}
   const nowSet=new Set(R.on[t.id]);
   /* with a player left out, smaller groups are rebuilt from the five-man stints without him; otherwise a 3-man group would still count minutes he shared the floor (Nov 1) */
@@ -2544,7 +2565,7 @@ function vLineups(v,D,R){
   const OUTK='luOut'+t.id+S.f.luSize;const out=S.f[OUTK]=S.f[OUTK]||{};
   const nameCell=r=>{const w=el('span','lun');const b=el('button','luck'+(out[r.key]?'':' on'));b.type='button';b.setAttribute('aria-label',(out[r.key]?'Include ':'Leave out ')+names(r));b.setAttribute('aria-pressed',!out[r.key]);b.onclick=e=>{e.stopPropagation();if(out[r.key])delete out[r.key];else out[r.key]=1;renderView()};w.append(b,document.createTextNode(names(r)));return w};
   const cols=[{h:'Lineup',k:'ids',f:nameCell},{h:'MIN',k:'sec',f:r=>fmtMin(r.sec)},{h:'PTS',k:'pf'},{h:'OPP',k:'pa',asc:true},{h:'+/-',k:'pm',f:r=>sgn(r.pm),cls:r=>pmCls(r.pm)},
-    {h:'POSS',k:'poss',f:r=>Math.round(r.poss),title:'Possessions, counted from the play-by-play'},{h:'OFF',k:'ortg',f:r=>f1(r.ortg),title:'Points scored per 100 possessions'},{h:'DEF',k:'drtg',f:r=>f1(r.drtg),asc:true,title:'Points allowed per 100 possessions'},{h:'NET',k:'net',f:r=>r.net==null?'–':sgn(Math.round(r.net)),cls:r=>r.net==null?'':pmCls(r.net)}];
+    {h:'POSS',k:'poss',f:r=>Math.round(r.poss),title:'Possessions, counted from the play-by-play'},{h:'ORTG',k:'ortg',f:r=>f1(r.ortg),title:'Points scored per 100 possessions'},{h:'DRTG',k:'drtg',f:r=>f1(r.drtg),asc:true,title:'Points allowed per 100 possessions'},{h:'NET RTG',k:'net',f:r=>r.net==null?'–':sgn(Math.round(r.net)),cls:r=>r.net==null?'':pmCls(r.net)}];
   /* players picked: a totals row for every group shown (the time those players shared the floor, within the minutes filter) */
   let foot=null,comb=null;const inc=rows.filter(r=>!out[r.key]);if(rows.length>1&&inc.length){const add=(A,B)=>{for(const k in B)if(typeof B[k]==='number')A[k]=(A[k]||0)+B[k];return A};const o={},d={},pb={};let sec=0,pf=0,pa=0,pbOK=true;if(S.f.luSize<5){/* smaller groups overlap, so the total counts each five-man stint once: every stint that holds at least one ticked group (Nov 1) */
       Object.values(R.L[t.id][5]).forEach(l5=>{if(outIds.some(id=>l5.ids.includes(id))||!inc.some(r=>r.ids.every(id=>l5.ids.includes(id))))return;sec+=l5.sec;pf+=l5.pf;pa+=l5.pa;add(o,l5.o);add(d,l5.d);if(l5.pb){for(const id in l5.pb)add(pb[id]=pb[id]||{},l5.pb[id])}else pbOK=false})}
