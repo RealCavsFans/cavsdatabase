@@ -1411,7 +1411,24 @@
  },
  "2026-11-04": {
   "url": "https://www.nba.com/game/cle-vs-okc-0022600180/box-score",
-  "status": "scheduled"
+  "status": "scheduled",
+  "refs": [
+   [
+    "Crew chief",
+    "John Goble",
+    "10"
+   ],
+   [
+    "Referee",
+    "John Butler",
+    "30"
+   ],
+   [
+    "Umpire",
+    "Jonathan Sterling",
+    "17"
+   ]
+  ]
  },
  "2026-11-06": {
   "url": "https://www.nba.com/game/phi-vs-cle-0022600027/box-score",
