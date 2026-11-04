@@ -55,6 +55,8 @@ body:after{content:'';position:absolute;left:0;right:0;bottom:0;height:10px;back
 .n3{display:flex;gap:56px}.n3 b{display:block;font:800 64px/1 'Geist Mono',monospace}.n3 small{font:700 18px Archivo;letter-spacing:2px;color:#F4D6DD;text-transform:uppercase}`;
 const page = (css, body, path) => `<!doctype html><html><head><meta charset="utf-8"><style>${BASE}${css}</style></head><body>${body}<div class="ft"><span>cavsdatabase.com/${path}</span><span class="wm">${MARK}cavs<em>_db</em></span></div></body></html>`;
 
+const LOGO_SC = {"atl": 0.92, "bkn": 0.92, "bos": 0.92, "cha": 0.92, "dal": 0.92, "den": 0.92, "det": 0.92, "gs": 0.92, "hou": 1.07, "ind": 0.96, "lac": 0.92, "lal": 1.18, "mem": 0.95, "mia": 0.95, "mil": 1.06, "min": 0.92, "no": 1.25, "ny": 1.04, "okc": 1.23, "orl": 1.1, "por": 0.97, "sa": 1.03, "tor": 0.92, "utah": 1.12, "wsh": 0.92};   // Nov 4: same per-logo scale as the site, so marks read the same size
+const lsc = f => LOGO_SC[f] ? ` style="scale:${LOGO_SC[f]}"` : '';
 const cards = [];   // [file, html]
 
 /* players */
@@ -130,7 +132,7 @@ SCHEDULE.forEach((g, i) => {
 .tape .v{display:flex;align-items:baseline;gap:10px;justify-content:center}.tape .v b{font:700 30px 'Geist Mono'}.tape .v small{font:700 17px 'Geist Mono';color:#F4D6DD}.tape .v.w b{color:#F2B231}
 .tape .l{font:600 24px 'Saira Condensed';letter-spacing:1.5px;text-transform:uppercase;text-align:center;padding:0 22px;color:#fff;opacity:.9}
 .inj{position:absolute;left:64px;right:64px;top:458px;display:flex;flex-direction:column;align-items:center;gap:6px;font:500 25px Archivo;color:#F4D6DD;text-align:center}.inj.sm{font-size:23px}.inj b{color:#F2B231;font-weight:700;margin-right:4px}.inj .sr{color:#fff;font-weight:700}`,
-    `<div class="k" style="position:absolute;left:64px;top:38px">${kick}</div><div class="T"><div class="tm">${rich.includes('tape') ? `<img src="../img/tl5/cle.png" alt="">` : 'CLE'}<span>Cavaliers</span><small>${rich.includes('tape') && cs === '2026–27' ? cr : cs + ' · ' + cr}</small></div><div class="at">${ha === 'H' ? 'vs' : 'at'}</div><div class="tm r">${rich.includes('tape') ? `<img src="../img/tl5/${LG5[o] || o.toLowerCase()}.png" alt="">` : o}<span>${esc(GNICK[o] || TEAMS[o])}</span><small>${rich.includes('tape') && os === '2026–27' ? orr : os + ' · ' + orr}</small></div></div>
+    `<div class="k" style="position:absolute;left:64px;top:38px">${kick}</div><div class="T"><div class="tm">${rich.includes('tape') ? `<img src="../img/tl5/cle.png" alt=""${lsc('cle')}>` : 'CLE'}<span>Cavaliers</span><small>${rich.includes('tape') && cs === '2026–27' ? cr : cs + ' · ' + cr}</small></div><div class="at">${ha === 'H' ? 'vs' : 'at'}</div><div class="tm r">${rich.includes('tape') ? `<img src="../img/tl5/${LG5[o] || o.toLowerCase()}.png" alt=""${lsc(LG5[o] || o.toLowerCase())}>` : o}<span>${esc(GNICK[o] || TEAMS[o])}</span><small>${rich.includes('tape') && os === '2026–27' ? orr : os + ' · ' + orr}</small></div></div>
 <div class="when">${dl} <span>·</span> ${hm} PM ET <span>·</span> ${esc(net)}${CAVS_RADIO ? ` <span>·</span> ${esc(CAVS_RADIO.split(' · ')[0])}` : ''}</div>
 ${rich}`,
     'live')]);
