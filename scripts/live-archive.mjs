@@ -243,14 +243,14 @@ function build(per, file) {
 const ALL = build('all', 'season.json'), OUT = {};
 for (const [key, per] of [['h1', [1, 2]], ['h2', [3, 4]], ['q1', [1]], ['q2', [2]], ['q3', [3]], ['q4', [4]], ['clutch', 'clutch'], ['nogt', 'nogt']]) OUT[key] = build(per, 'season-p-' + key + '.json');
 /* small summaries in season.json, so player pages and the Season tab don't need the period files:
-   pq  each player by quarter and in the clutch: [seconds, pts, fgm, fga, tpm, tpa, +/-, games]
+   pq  each player by quarter and in the clutch: [seconds, pts, fgm, fga, tpm, tpa, +/-, games, ast, to] (ast and to added Nov 4)
    tq  the team by quarter and in the clutch: points for and against, counted possessions, seconds
    cg  games with clutch minutes: [game index, clutch points for, against] */
 {
   const pq = {}, tq = {};
   for (const key of ['q1', 'q2', 'q3', 'q4', 'clutch']) {
     const o = OUT[key];
-    for (const [id, b] of Object.entries(o.B)) (pq[id] = pq[id] || {})[key] = [Math.round(b.min), b.pts, b.fgm, b.fga, b.tpm, b.tpa, b.pm, o.gp[id] || 0];
+    for (const [id, b] of Object.entries(o.B)) (pq[id] = pq[id] || {})[key] = [Math.round(b.min), b.pts, b.fgm, b.fga, b.tpm, b.tpa, b.pm, o.gp[id] || 0, b.ast || 0, b.to || 0];
     const L5 = Object.values(o.L[5]);
     tq[key] = { pf: o.T.cle.pts || 0, pa: o.T.opp.pts || 0, po: L5.reduce((a, l) => a + (l.o.np || 0), 0), pd: L5.reduce((a, l) => a + (l.d.np || 0), 0), sec: Math.round(o.T.cle.sec || 0) };
   }
