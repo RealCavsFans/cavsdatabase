@@ -5473,6 +5473,7 @@ const INTRO_V='tait';
  .tpz .r .l{text-align:left!important;font:700 15px/1.05 var(--cond);text-transform:uppercase;letter-spacing:.03em}.tpz .r .l small{display:block;font:500 9.5px var(--mono);color:rgba(255,255,255,.4);text-transform:none;letter-spacing:0;margin-top:2px}
  .tpz .r .v{font:800 21px/1 var(--cond)}.tpz .r .c{color:rgba(255,255,255,.55)}
  .tpz .bl{font:500 12.5px/1 var(--mono);letter-spacing:-1px;color:#F2B231;white-space:nowrap}.tpz .bl i{font-style:normal;color:rgba(255,255,255,.14)}.tpz .bl b{color:#fff;letter-spacing:0;font-weight:500;margin-left:5px}
+ .tpz .bk{display:inline-flex;gap:1.5px;width:70px;flex:none}.tpz .bk u,.tpz .bk s{display:block;flex:1;height:13px;text-decoration:none}.tpz .bk u{background:#F2B231}.tpz .bk s{background:rgba(255,255,255,.13)}.tpz .bl{display:flex!important;align-items:center}
  .tpz .up{color:#F2B231}.tpz .dn{color:rgba(255,255,255,.5)}
  .tpz .kv{margin-top:9px}.tpz .kv>div{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,.12)}
  .tpz .kv b{font:800 30px/1 var(--cond)}.tpz .kv span{font:500 11.5px var(--mono);color:rgba(255,255,255,.62)}
@@ -5506,7 +5507,7 @@ const INTRO_V='tait';
    h+=`<div class="tb"><div class="h" style="grid-template-columns:${gt}">`+cols.map(i=>`<span style="${i===si?'text-align:left':''}">${esc(lab(i))}</span>`).join('')+(addD?'<span>+/−</span>':'')+'</div>';
    rows.forEach(r=>{const lc=r[0];const sm=lc.querySelector('small');const main=T(sm?[...lc.childNodes].filter(x=>x!==sm).map(x=>x.textContent).join(''):lc.textContent);
     h+=`<div class="r" style="grid-template-columns:${gt}"><span class="l">${esc(main)}${sm?`<small>${esc(T(sm.textContent))}</small>`:''}</span>`;
-    cols.slice(1).forEach(i=>{const t=T(r[i].textContent);if(i===si){const v=parseFloat(t)||0,k=Math.max(0,Math.min(10,Math.round(v/50*10)));h+=`<span class="bl">${'█'.repeat(k)}<i>${'█'.repeat(10-k)}</i><b>${esc(t)}</b></span>`}else h+=`<span class="${i===fi?'v':i===li?'c':''}">${esc(t.replace(/%$/,i===fi?'':'%').replace(/%%$/,'%'))}</span>`});
+    cols.slice(1).forEach(i=>{const t=T(r[i].textContent);if(i===si){const v=parseFloat(t)||0,k=Math.max(0,Math.min(10,Math.round(v/50*10)));h+=`<span class="bl"><span class="bk">${'<u></u>'.repeat(k)}${'<s></s>'.repeat(10-k)}</span><b>${esc(t)}</b></span>`}else h+=`<span class="${i===fi?'v':i===li?'c':''}">${esc(t.replace(/%$/,i===fi?'':'%').replace(/%%$/,'%'))}</span>`});
     if(addD){const a=parseFloat(T(r[fi].textContent)),b=parseFloat(T(r[li].textContent));const d=Math.round(a-b);h+=isFinite(d)?`<span class="${d>=0?'up':'dn'}">${d>0?'+':d<0?'−':'±'}${Math.abs(d)}</span>`:'<span>–</span>'}
     h+='</div>'});h+='</div>'}
   const notes=whys.map(p=>T(p.textContent)).filter(Boolean);const key=card.querySelector('.capkey');if(key)notes.push(T(key.textContent));
