@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "Fear The Sword",
+   "title": "Cavaliers reach two-way agreement with familiar face",
+   "link": "https://www.fearthesword.com/cavs-news/53891/cavs-two-way-eal-norchad-omier-cleveland-cavaliers-charge-g-league",
+   "date": "2026-11-04T15:32:09.000Z"
+  },
+  {
    "src": "Hoops Rumors",
    "title": "Norchad Omier Backs Out Of Wolves Deal, Will Sign With Cavs",
    "link": "https://www.hoopsrumors.com/2026/11/timberwolves-to-sign-norchad-omier-to-two-way-contract.html",
@@ -211,12 +217,6 @@
    "date": "2026-10-30T04:24:13.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "Player Grades: Cavs vs. Hawks – Cleveland starts fast, but falters late",
-   "link": "https://www.fearthesword.com/cavs-analysis/53772/player-grades-cavs-vs-hawks-cleveland-starts-fast-but-falters-late",
-   "date": "2026-10-30T03:01:38.000Z"
-  },
-  {
    "src": "cleveland.com",
    "title": "Cavs’ win streak snapped with 114-111 loss to Hawks",
    "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQTXFJZ3QzVTJ1Mnpxd3hybUR4QmtKYzFleWdOdWJIeTJ4OGQ1d3Z6Y1g0QkRBVVViSFlDcmQ3bUN2QnQzQ0ROU0pFMUd2blk0THpJR3JPZUEwaHFaVWJtb2kzR3A2N29OQnl0cFpuQ1Z3NFlEUEFNRWRSekFRNGZjMzJXZnhqZDZkOGR4QTF2Y00wc19ONEtwVVdB?oc=5",
@@ -354,6 +354,13 @@
   }
  ],
  "videos": [
+  {
+   "src": "Ultimate Cleveland Sports Show",
+   "title": "Are you BUYING or SELLING these fan hot takes about the Cleveland Cavaliers 7 games into the season?",
+   "link": "https://www.youtube.com/watch?v=Mj6jSZaBm6A",
+   "date": "2026-11-04T15:58:03.000Z",
+   "id": "Mj6jSZaBm6A"
+  },
   {
    "src": "It's Cavalier Podcast",
    "title": "Cavs Sign Norchad Omier to Two-Way Deal, Bolster Frontcourt Depth",
@@ -570,13 +577,6 @@
    "link": "https://www.youtube.com/watch?v=syZazmRfIl0",
    "date": "2026-10-28T15:30:38.000Z",
    "id": "syZazmRfIl0"
-  },
-  {
-   "src": "Ultimate Cleveland Sports Show",
-   "title": "The NBA is becoming a WAR OF ATTRITION & staying healthy might be team's #1 priority now",
-   "link": "https://www.youtube.com/watch?v=Vq3snZGQwWg",
-   "date": "2026-10-28T14:54:04.000Z",
-   "id": "Vq3snZGQwWg"
   },
   {
    "src": "The Chase Down Podcast",
