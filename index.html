@@ -5455,14 +5455,16 @@ const INTRO_V='tait';
   const body=Math.min(h-B,Math.ceil(y+1+padB*S));if(body>=h-B-2)return cv;const out=document.createElement('canvas');out.width=w;out.height=body+B;const o=out.getContext('2d');o.drawImage(cv,0,0,w,body,0,0,w,body);o.drawImage(cv,0,h-B,w,B,0,body,w,B);return out}
  /* MOCK (Nov 3): the terminal share look. Off: set TERM_ON=false */
  const TERM_ON=true;
- const TERM_CSS=`.tpz{position:fixed;left:-10000px;top:0;width:470px;background:radial-gradient(120% 70% at 100% 0%,#4a0a25 0%,#1a0f16 42%,#0d1014 100%);color:#fff;padding:26px 26px 0;font-family:var(--sans);overflow:hidden;
+ const TERM_CSS=`.tpz{position:fixed;left:-10000px;top:0;width:470px;background:radial-gradient(110% 65% at 100% 0%,#3d0a20 0%,#15101a 45%,#0d1014 100%);color:#fff;padding:26px 26px 0;font-family:var(--sans);overflow:hidden;
  --fg:#fff;--fg2:#e8e9ea;--muted:rgba(255,255,255,.55);--line:rgba(255,255,255,.16);--line2:rgba(255,255,255,.08);--card:#12151a;--sub:rgba(255,255,255,.05);--track:rgba(255,255,255,.1);--wine-ink:#F2B231}
- .tpz *{box-sizing:border-box}.tpz .hs{position:absolute;right:-30px;top:14px;height:232px;-webkit-mask-image:linear-gradient(180deg,#000 55%,transparent 100%);mask-image:linear-gradient(180deg,#000 55%,transparent 100%)}
- .tpz .br{position:relative;display:flex;align-items:center;gap:7px;font:700 13px var(--mono)}.tpz .br i{color:#F2B231;font-style:normal}
+ .tpz *{box-sizing:border-box}.tpz .hs{position:absolute;right:-30px;top:14px;height:232px;z-index:1;-webkit-mask-image:linear-gradient(180deg,#000 70%,transparent 100%);mask-image:linear-gradient(180deg,#000 70%,transparent 100%)}
+ .tpz .lgb{position:absolute;right:-40px;top:20px;width:330px;z-index:0;opacity:.32;filter:grayscale(1) brightness(.55) sepia(1) hue-rotate(300deg) saturate(3);-webkit-mask-image:linear-gradient(180deg,#000 38%,transparent 62%);mask-image:linear-gradient(180deg,#000 38%,transparent 62%)}.tpz>*:not(.hs):not(.lgb){position:relative;z-index:2}
+ .tpz .br{position:relative;display:flex;align-items:center;gap:9px;font:700 17px var(--mono)}.tpz .br i{color:#F2B231;font-style:normal}
  .tpz .eb{position:relative;margin-top:24px;font:700 11px var(--sans);letter-spacing:.18em;color:#F2B231;text-transform:uppercase}
  .tpz h1{position:relative;margin:6px 0 0!important;font:800 52px/.9 var(--cond)!important;text-transform:uppercase;max-width:250px!important;width:250px;letter-spacing:0!important;color:#fff!important}
  .tpz .ld{position:relative;margin:10px 0 0;max-width:235px!important;font:400 12.5px/1.42 var(--sans);color:rgba(255,255,255,.64);max-width:260px}
- .tpz .cmd{position:relative;margin-top:20px;font:600 12px var(--mono);color:#F2B231}.tpz .cmd span{color:rgba(255,255,255,.5)}
+ .tpz .tab{margin-top:18px}.tpz .tab .lb{display:inline-flex;gap:8px;align-items:center;font:600 10px var(--mono);color:rgba(255,255,255,.6);background:rgba(255,255,255,.07);padding:6px 10px;border-radius:8px 8px 0 0}.tpz .tab .lb b{width:7px;height:7px;border-radius:50%;background:#F2B231}.tpz .tab .bd{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:0 12px 12px 12px;padding:12px 14px}
+ .tpz .cmd{position:relative;margin-top:0;font:600 12px var(--mono);color:#F2B231}.tpz .cmd span{color:rgba(255,255,255,.5)}
  .tpz .tb{margin-top:9px;font:500 12px/1 var(--mono)}
  .tpz .h,.tpz .r{display:grid;gap:8px;align-items:center}
  .tpz .h{color:rgba(255,255,255,.42);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding-bottom:7px;border-bottom:1px dashed rgba(255,255,255,.26)}
@@ -5477,8 +5479,7 @@ const INTRO_V='tait';
  .tpz .ch{margin-top:14px;border:1px dashed rgba(255,255,255,.18);padding:8px}.tpz .ch svg{display:block;width:100%;height:auto}
  .tpz .nt{margin-top:12px;font:500 10.5px/1.5 var(--mono);color:rgba(255,255,255,.5)}.tpz .nt p{margin:0 0 4px}
  .tpz .cur{display:inline-block;width:7px;height:12px;background:#F2B231;vertical-align:-2px;margin-left:3px}
- .tpz .ft{display:flex;justify-content:space-between;margin-top:18px;padding:10px 0 12px;font:500 10px var(--mono);color:rgba(255,255,255,.42)}
- .tpz .gb{height:4px;background:#F2B231;margin:0 -26px}`;
+ .tpz .sb{display:flex;margin:18px -26px 0;font:700 10px/1 var(--mono);text-transform:uppercase;letter-spacing:.04em}.tpz .sb span{padding:7px 10px}.tpz .sb .a{background:#F2B231;color:#101419}.tpz .sb .b{background:#860038;color:#fff}.tpz .sb .c{background:#1d2229;color:rgba(255,255,255,.65);flex:1}.tpz .sb .d{background:#1d2229;color:rgba(255,255,255,.65)}`;
  async function termPoster(ms,route,label,box){
   const T=t=>String(t||'').replace(/\s+/g,' ').trim();const card=box.closest('.ppx-c')||box;
   const title=T((card.querySelector('h2')||{}).textContent);const [who]=String(label||'').split(' · ');const whys=[...card.querySelectorAll('p.ppx-why')];const desc=whys.length&&whys[0].previousElementSibling&&whys[0].previousElementSibling.classList.contains('ppx-ch')?whys.shift():null;
@@ -5489,7 +5490,8 @@ const INTRO_V='tait';
   const esc=x=>String(x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
   const pid=((document.querySelector('.ppx-ph img')||{}).src||'').match(/(\d{5,})\.png/);const last=who.split(' ').filter(x=>!/^(jr\.?|sr\.?|ii|iii|iv)$/i.test(x)).slice(-1)[0]||who;
   const slugT=title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-  let h=`<img class="hs" src="${pid?'/img/h/'+pid[1]+'.png':''}" alt=""><div class="br"><svg width="20" height="20" viewBox="0 0 100 100"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/></svg>cavs<i>_db</i></div><div class="eb">${esc(title)}</div><h1>${esc(who)}</h1>${desc?`<p class="ld">${esc(T(desc.textContent))}</p>`:''}<div class="cmd">&gt; ${esc(last.toLowerCase().replace(/[^a-z]/g,''))} <span>--${esc(slugT)}</span></div>`;
+  const P0=(typeof PLAYERS!=='undefined'?PLAYERS:[]).find(x=>x[1]===who);const lastOf=n=>n.toLowerCase().split(' ').filter(x=>!/^(jr\.?|sr\.?|ii|iii|iv)$/.test(x)).slice(-1)[0].replace(/[^a-z]/g,'');const lk=lastOf(who);const dup=(typeof PLAYERS!=='undefined'?PLAYERS:[]).filter(x=>lastOf(x[1])===lk).length>1;const short=dup?who[0].toLowerCase()+lk:lk;
+  let h=`<img class="lgb" src="/img/tl/cle.png" alt=""><img class="hs" src="${pid?'/img/h/'+pid[1]+'.png':''}" alt=""><div class="br"><svg width="28" height="28" viewBox="0 0 100 100"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/></svg>cavs<i>_db</i></div><div class="eb">${esc(title)}</div><h1>${esc(who)}</h1>${desc?`<p class="ld">${esc(T(desc.textContent))}</p>`:''}<div class="tab"><span class="lb"><b></b>cavs_db · ${esc(lk)} · 2026–27</span><div class="bd"><div class="cmd">&gt; ${esc(lk)} <span>--${esc(slugT)}</span></div>`;
   if(tiles.length)h+='<div class="kv">'+tiles.map(d=>`<div><b>${esc(T((d.querySelector('b')||{}).textContent))}</b><span>${esc(T((d.querySelector('span')||{}).textContent))}</span></div>`).join('')+'</div>';
   if(svgs.length&&!tbl){const sv=svgs[0].cloneNode(true);sv.removeAttribute('width');sv.removeAttribute('height');h+='<div class="ch">'+sv.outerHTML+'</div>'}
   if(tbl){const H=[...tbl.rows[0].cells].map(c=>T(c.textContent));const rows=[...tbl.rows].slice(1).filter(r=>r.cells.length===H.length).map(r=>[...r.cells]);
@@ -5509,7 +5511,7 @@ const INTRO_V='tait';
     h+='</div>'});h+='</div>'}
   const notes=whys.map(p=>T(p.textContent)).filter(Boolean);const key=card.querySelector('.capkey');if(key)notes.push(T(key.textContent));
   if(notes.length)h+='<div class="nt">'+notes.map((t,i)=>`<p># ${esc(t)}${i===notes.length-1?'<span class="cur"></span>':''}</p>`).join('')+'</div>';
-  h+=`<div class="ft"><span>cavsdatabase.com/${esc(route)}</span><span>${new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</span></div><div class="gb"></div>`;
+  h+=`</div></div><div class="sb"><span class="a">cavs_db</span>${P0?`<span class="b">#${esc(P0[0])} · ${esc(P0[2])}</span>`:''}<span class="c">cavsdatabase.com/${esc(short)}</span><span class="d">${new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'})}</span></div>`;
   const z=document.createElement('div');z.className='tpz';z.innerHTML=h;document.body.appendChild(z);
   try{await Promise.all([...z.querySelectorAll('img')].map(i=>i.complete?0:new Promise(r=>{i.onload=i.onerror=r;setTimeout(r,3000)})));
    const o={scale:2,backgroundColor:'#0d1014',fetchFn,timeout:6000,width:z.offsetWidth,height:z.offsetHeight,style:{left:'0',top:'0',position:'static'}};try{await ms.domToCanvas(z,{...o,scale:.3})}catch(e){}
