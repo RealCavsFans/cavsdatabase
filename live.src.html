@@ -1309,7 +1309,7 @@ function teamStatsBody(D,ROWS){
   const fmt=(r,j)=>{const f=j?r.fy:r.fx,v=j?r.y:r.x;return f?f(v):String(Math.round(v*10)/10)};
   const top=ROWS.filter(r=>r.better>=0&&!/^(Possessions|True shot|Points from|NET RTG)/.test(r.lab)).sort((a,b)=>gap(b)-gap(a)).slice(0,4);
   if(top.length){const ch=el('div','tse');top.forEach(r=>{const t=r.better===0?F:O;const s=el('span');s.style.color=t.c;s.style.background='var(--sub)';s.style.boxShadow=`inset 3px 0 0 ${t.c}`;s.append(el('em',null,t.abbr+' '+r.lab.replace(/ \(est\.\)/,'')),el('b',null,fmt(r,0)+'–'+fmt(r,1)));ch.appendChild(s)});w.appendChild(ch)}
-  if(!S.season)w.appendChild(el('p','tsx','Small number under each stat = percentile vs every NBA team game this season (99th = best).'));
+  /* Nov 5 (Luka): one percentile explainer only, the note above the win categories */
   const cols=el('div','tsc');
   const ORD=['Shooting','Possessions','Scoring','Efficiency'];const groups=[...new Set(ROWS.map(r=>r.g))].sort((x,y)=>ORD.indexOf(x)-ORD.indexOf(y));
   groups.forEach(g=>{const rs=ROWS.filter(r=>r.g===g);const gw=rs.filter(r=>r.better===0).length,gl=rs.filter(r=>r.better===1).length;const box=el('div','tsg');
