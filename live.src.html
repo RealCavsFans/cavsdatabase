@@ -2794,8 +2794,8 @@ function withCorners(Z,list){const cs=[[0,0],[0,0]];list.forEach(q=>{if(q.zi!==3
 /* how each shot zone is defined, shown under every zone court and table (Nov 1) */
 const ZKEY='<div class="zkey"><b>At the rim</b><span>within 4 ft of the hoop</span><b>Short midrange</b><span>2s from 4–14 ft</span><b>Long midrange</b><span>2s from 14 ft out to the 3-point line</span><b>Corner 3</b><span>3s along the baseline, where the line is 22 ft</span><b>Above-the-break 3</b><span>every other 3, where the arc is 23 ft 9 in</span></div>';
 /* Nov 4: a readable key for the zone shading: a scale from colder to hotter than the baseline, with the ends labeled */
-/* Nov 5 (Luka): when the shooter is the opponent, colors read from the Cavs' side: green = they shot worse (good), red = they shot better (bad) */
-const ZOPP='opp',ZG='#2f9a5b',ZR='#d0393f';
+/* Nov 5 (Luka): opponent shot zones: red = they shot worse than the NBA average, green = they shot better */
+const ZOPP='opp',ZG='#d0393f',ZR='#2f9a5b';
 function zLegend(TC,base,cap,allow){const op=TC===ZOPP,lo=op?ZG:'#c9a227',hi=op?ZR:TC;if(op)allow=true;const g=`linear-gradient(90deg,color-mix(in srgb,${lo} ${op?75:57}%,var(--card)),color-mix(in srgb,${lo} 12%,var(--card)) 45%,color-mix(in srgb,${hi} 18%,var(--card)) 55%,color-mix(in srgb,${hi} 88%,var(--card)))`;
   return `<div class="zleg"><div class="zleg-r"><span>${allow?'Opponents shoot worse':'Worse'}</span><i style="background:${g}"></i><span>${allow?'Opponents shoot better':'Better'}</span></div><div class="zleg-c">Zone color = FG% there vs ${esc(base)} (full color at 15 points either way). Zones with fewer than 3 shots stay unshaded.${cap?' '+cap:''}</div></div>`}
 function zoneCourt(Z,tot,label,BZ,TC,FQ){TC=TC||'#860038';const op=TC===ZOPP,LO=op?ZG:'#c9a227';if(op)TC=ZR;const fq=a=>FQ&&tot?' · '+Math.round(a/tot*100)+'% of shots':'';const av=i=>BZ[i][1]?BZ[i][0]/BZ[i][1]:LG[ZN[i][0]][0];
