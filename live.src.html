@@ -1466,7 +1466,7 @@ function vTeam(v,D,R){
   const c=el('div','card');head(c,'Team stats',S.season?(S.per!=='all'?perLabel(S.per)+' · ':'')+'Per game · '+((D.games||[]).length)+' game'+((D.games||[]).length===1?'':'s'):perLabel(S.per));
   const ROWS=[];let G0=null;const SHORT={'Offensive rebounds':'Off. rebounds','Second-chance points':'Second chance','Points from threes':'From threes','Points from free throws':'From free throws','Points in the paint':'In the paint','Points off turnovers':'Off turnovers','Pace (possessions per 48)':'Pace','Possessions (est.)':'Possessions','Points per 100 possessions':'ORTG','Free throws made':'FT made','True shot attempts':'True shot att.'};
   const grp=n=>{G0=n==='Where the points came from'?'Scoring':n};
-  const MOB=matchMedia('(max-width:640px)').matches?{'Points in the paint':'Paint Pts','Second-chance points':'2nd Chance','Points off turnovers':'Off TO','Fast-break points':'FBPTS','Bench points':'Bench Pts','Starters points':'Starter Pts'}:{};/* Nov 5 (Luka): short scoring labels on phones */
+  const MOB=matchMedia('(max-width:640px)').matches?{'Points in the paint':'Paint Pts','Second-chance points':'2nd Chance','Points off turnovers':'Off TO','Fast-break points':'FB Pts','Bench points':'Bench Pts','Starters points':'Starter Pts'}:{};/* Nov 5 (Luka): short scoring labels on phones */
   const row=(lab,x,y,fx,fy,hib=true)=>ROWS.push({g:G0,lab:MOB[lab]||SHORT[lab]||lab,x,y,fx,fy,hib,better:hib===null||Math.abs(x-y)<1e-9?-1:((x>y)===hib?0:1)});
   const P=t=>poss({fga:t.fga,oreb:t.oreb,to:t.to,fta:t.fta,np:t.np});
   const pa=P(a),pb=P(b);
