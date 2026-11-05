@@ -8,7 +8,10 @@ import { createHash } from 'node:crypto';
 export async function buildLive(root = new URL('../', import.meta.url)) {
   // Nov 2: the shared live-core.js is tagged with a hash of its own text, so a change to it reaches every browser at once
   const core = await readFile(new URL('live-core.js', root), 'utf8').catch(() => '');
-  const src = (await readFile(new URL('live.src.html', root), 'utf8')).replace(/live-core\.js\?v=[0-9a-f]+/, () => 'live-core.js?v=' + createHash('sha1').update(core).digest('hex').slice(0, 10));
+  // Nov 4: the Cavs schedule (date, opponent, home/away, tip) is copied from index.html so share cards can name the next game
+  const idx = await readFile(new URL('index.html', root), 'utf8').catch(() => '');
+  const sch = (idx.match(/const SCHEDULE=(\[[\s\S]*?\n\s*\]);/) || [])[1] || 'null';
+  const src = (await readFile(new URL('live.src.html', root), 'utf8')).replace('/*@SCHED*/null', () => sch).replace(/live-core\.js\?v=[0-9a-f]+/, () => 'live-core.js?v=' + createHash('sha1').update(core).digest('hex').slice(0, 10));
   const sm = src.match(/<style>([\s\S]*?)<\/style>/);
   const jm = [...src.matchAll(/<script>([\s\S]*?)<\/script>/g)].sort((x, y) => y[1].length - x[1].length)[0];
   if (!sm || !jm || jm[1].length < 50000) { await writeFile(new URL('live.html', root), src); return 'live.html: copied as is'; }
