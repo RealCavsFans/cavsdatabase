@@ -1848,12 +1848,15 @@ const TC_L={light:1,bg:'#f7f5f2',ink:'#101419',hi:'#101419',line:'#e3e0db',track
 /* Nov 4 (mock): wine & gold theme for every share image, and a risograph poster theme for wins and milestones */
 const TC_W={light:0,wine:1,bg:'#5c0026',ink:'#ffffff',hi:'#ffffff',line:'rgba(255,255,255,.16)',track:'rgba(255,255,255,.12)',grid:'rgba(255,255,255,.22)',court:'rgba(0,0,0,.2)',cline:'rgba(255,255,255,.28)',hsbg:'rgba(0,0,0,.22)',mut:'rgba(255,255,255,.68)',grey:'rgba(255,255,255,.6)',panel:'rgba(0,0,0,.22)',sb:'rgba(0,0,0,.3)',dash:'rgba(255,255,255,.22)',dim:'rgba(255,255,255,.45)',soft:'rgba(255,255,255,.8)',acc:'#F2B231',page:'#4a001f',glow:'#a30a4a',glow2:'#6e002e',glowEnd:'rgba(74,0,31,0)',logoA:.1};
 const TC_R={light:1,riso:1,bg:'#f2e8d2',ink:'#2a0b17',hi:'#2a0b17',line:'rgba(42,11,23,.2)',track:'rgba(42,11,23,.1)',grid:'rgba(42,11,23,.2)',court:'#ece0c4',cline:'rgba(163,18,63,.45)',hsbg:'#e9dcbd',mut:'#6d4b52',grey:'#e3a227',panel:'rgba(255,250,238,.55)',sb:'#e6d7b4',dash:'rgba(163,18,63,.45)',dim:'rgba(42,11,23,.45)',soft:'rgba(42,11,23,.75)',acc:'#a3123f',page:'#f2e8d2',glow:'#efe2c6',glow2:'#f2e8d2',logoA:0};
-const TC=Object.assign({},TC_D);function tTheme(light){const th=window.__shareTheme;for(const k in TC)delete TC[k];Object.assign(TC,th==='riso'?TC_R:th==='wine'?TC_W:light?Object.assign({},TC_L,window.__lightVar||{}):TC_D);/* __lightVar: mock hook for trying other light palettes */BG=TC.bg;INK=TC.ink;GREY=TC.grey;MUT=TC.mut}
+/* Nov 4 (mock): player-card look for game cards: wine header band + gold rule, white panels; light (neutral gray page) or wine (wine page, white sheet) */
+const TC_PC=Object.assign({},TC_L,{pc:1,bg:'#eef0f3',page:'#eef0f3',glow:'#eef0f3',glow2:'#eef0f3',glowEnd:'rgba(238,240,243,0)',panel:'#ffffff',line:'#dfe2e6',track:'#e6e8ec',sb:'#e2e5e9',court:'#f4f5f7',hsbg:'#e6e8ec',grid:'#d6dade',logoA:0});
+const TC_PCW=Object.assign({},TC_PC,{pcw:1,page:'#6b2141',bg:'#ffffff',sb:'#4a1029'});
+const TC=Object.assign({},TC_D);function tTheme(light){const th=window.__shareTheme;for(const k in TC)delete TC[k];Object.assign(TC,th==='pc'?TC_PC:th==='pcw'?TC_PCW:th==='riso'?TC_R:th==='wine'?TC_W:light?Object.assign({},TC_L,window.__lightVar||{}):TC_D);/* __lightVar: mock hook for trying other light palettes */BG=TC.bg;INK=TC.ink;GREY=TC.grey;MUT=TC.mut}
 /* ---------- share cards ---------- */
 async function cardFonts(){try{await Promise.all([document.fonts.load('800 80px "Saira Condensed"'),document.fonts.load('700 60px "Geist Mono"'),document.fonts.load('600 30px Archivo')])}catch(e){}}
 /* Nov 4 (mock): terminal look for every game share card: dark frame, wine glow, faint Cavs logo, mono wordmark, status-bar footer */
 const T_LOGO=(()=>{const im=new Image();im.src='/img/tl/cle.png';return im})();
-function tBg(x,W,H){x.fillStyle=TC.page;x.fillRect(0,0,W,H);const g=x.createRadialGradient(W,0,0,W,0,W*.95);g.addColorStop(0,TC.glow);g.addColorStop(.45,TC.glow2);g.addColorStop(1,TC.glowEnd||(TC.light?'rgba(247,245,242,0)':'rgba(13,16,20,0)'));x.fillStyle=g;x.fillRect(0,0,W,TC.wine?H:H*.7);
+function tBg(x,W,H){if(TC.pc)return pcBg(x,W,H);x.fillStyle=TC.page;x.fillRect(0,0,W,H);const g=x.createRadialGradient(W,0,0,W,0,W*.95);g.addColorStop(0,TC.glow);g.addColorStop(.45,TC.glow2);g.addColorStop(1,TC.glowEnd||(TC.light?'rgba(247,245,242,0)':'rgba(13,16,20,0)'));x.fillStyle=g;x.fillRect(0,0,W,TC.wine?H:H*.7);
   if(TC.riso){/* risograph: halftone gold dots and a little paper grain */x.save();x.globalCompositeOperation='multiply';x.fillStyle='rgba(227,162,39,.8)';const cx0=W-160,cy0=260,R0=W*.3;for(let yy=cy0-R0;yy<cy0+R0;yy+=16)for(let xx=cx0-R0;xx<cx0+R0;xx+=16){const d=Math.hypot(xx-cx0,yy-cy0)/R0;if(d<1){x.beginPath();x.arc(xx,yy,5.5*(1-d*.55),0,7);x.fill()}}x.fillStyle='rgba(42,11,23,.05)';for(let k=0;k<9000;k++){x.fillRect(Math.random()*W,Math.random()*H,1.4,1.4)}x.restore()}
   if(T_LOGO.complete&&T_LOGO.naturalWidth){x.save();x.globalAlpha=TC.logoA;if(TC.riso)return x.restore();if(TC.light)x.filter='grayscale(1)';const s=W*.48;x.drawImage(T_LOGO,W-s*.82,-s*.06,s,s);x.restore()}}
 function tMark(x,X,Y){x.save();x.translate(X,Y-30);x.scale(.36,.36);x.strokeStyle=GOLD;x.lineWidth=11;x.lineCap='round';x.lineJoin='round';x.beginPath();x.moveTo(14,26);x.lineTo(40,50);x.lineTo(14,74);x.stroke();x.fillStyle=GOLD;x.beginPath();x.arc(70,64,20,0,7);x.fill();x.restore();
@@ -1863,11 +1866,16 @@ function tScore(x,D,R,X,Y){const F=D.focus,O=D.other;const fs=F.ha==='home'?R.hs
   const seg=(t,f,c,gap,ctr)=>{x.font=f;x.fillStyle=c;let y=Y;if(ctr){const m=x.measureText(t);y=mid+((m.actualBoundingBoxAscent||0)-(m.actualBoundingBoxDescent||0))/2}x.fillText(t,cx,y);cx+=x.measureText(t).width+gap};
   const L='800 46px "Saira Condensed"',N=`800 ${BIG}px "Saira Condensed"`;seg(F.abbr==='CLE'?'CAVS':F.abbr,L,TC.wine?TC.hi:TC.acc,14);seg(String(fs),N,TC.wine?TC.hi:TC.acc,26);seg(F.ha==='home'?'VS':'AT','700 22px "Geist Mono"',TC.dim,26,1);seg(O.abbr,L,TC.soft,14);seg(String(os),N,TC.hi,26);
   x.font='700 22px "Geist Mono"';const w=x.measureText(when).width+28,h=40;x.fillStyle=TC.track;x.fillRect(cx,mid-h/2,w,h);x.fillStyle=TC.soft;const wm=x.measureText(when);x.fillText(when,cx+14,mid+((wm.actualBoundingBoxAscent||16)-(wm.actualBoundingBoxDescent||0))/2)}
+function pcBg(x,W,H){const land=W>1500,BH=land?340:372;x.fillStyle=TC.page;x.fillRect(0,0,W,H);
+  const g=x.createLinearGradient(0,0,W,BH);g.addColorStop(0,'#9a0a45');g.addColorStop(1,'#6e002e');x.fillStyle=g;x.fillRect(0,0,W,BH);
+  x.save();x.strokeStyle='rgba(255,255,255,.07)';x.lineWidth=land?60:44;x.beginPath();x.arc(W-(land?150:120),land?40:30,land?230:170,0,7);x.stroke();x.restore();
+  x.fillStyle='#F2B231';x.fillRect(0,BH,W,10);
+  if(TC.pcw&&!land){x.fillStyle='#ffffff';x.fillRect(36,BH+18,W-72,H-BH-18-58-24)}}
 function frame(x,kicker,title,D,R,fs0=104){tBg(x,1080,1350);tMark(x,72,96);
   x.fillStyle=TC.acc;x.font='700 26px Archivo';if('letterSpacing' in x)x.letterSpacing='5px';x.fillText(kicker.toUpperCase(),72,170);if('letterSpacing' in x)x.letterSpacing='0px';
   x.fillStyle=TC.hi;let fs=fs0;x.font=`800 ${fs}px "Saira Condensed"`;const T=title.toUpperCase();while(x.measureText(T).width>936&&fs>56){fs-=6;x.font=`800 ${fs}px "Saira Condensed"`}x.fillText(T,72,268);
   if(S.season){const [sl,wh]=scoreLine(D,R);x.font='700 40px "Geist Mono"';x.fillStyle=GOLD;x.fillText(sl,72,336);const w=x.measureText(sl).width;x.font='600 26px "Geist Mono"';x.fillStyle=TC.soft;x.fillText(wh,72+w+28,336)}else tScore(x,D,R,72,338);
-  x.strokeStyle=TC.cline;x.setLineDash([6,6]);x.lineWidth=2;x.beginPath();x.moveTo(72,376);x.lineTo(1008,376);x.stroke();x.setLineDash([]);
+  if(!TC.pc){x.strokeStyle=TC.cline;x.setLineDash([6,6]);x.lineWidth=2;x.beginPath();x.moveTo(72,376);x.lineTo(1008,376);x.stroke();x.setLineDash([])}
   brandBar(x,1080,1350);
 }
 const lbl=(x,t,X,Y,sz=36,c=TC.mut)=>{x.fillStyle=c==='#860038'&&!TC.light?(TC.wine?'#ffffff':'#F2B231'):c;x.font=`800 ${sz}px "Saira Condensed"`;x.fillText(t,X,Y)};
@@ -1903,7 +1911,7 @@ function brandBar(x,W,H,note){/* terminal status bar */const bh=W>1500?64:58,y=H
   const seg=(t,bg,fg,flex)=>{const w=flex?W-cx-(flex):x.measureText(t).width+44;x.fillStyle=bg;x.fillRect(cx,y,w,bh);x.fillStyle=fg;x.fillText(t,cx+22,y+bh/2+fs*.36);cx+=w};
   const fin=S.state==='post';const mid=S.season?((D.season||'').replace('-','–')+' SEASON'):(F&&O?((F.ha==='home'?'VS ':'AT ')+O.abbr+(fin?' · FINAL':'')):'');
   const dt=S.season?new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase():(D.date?new Date(D.date).toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase():'');
-  seg('CAVS_DB',GOLD,'#101419');if(mid)seg(mid,WINE,'#fff');x.font=`700 ${fs}px "Geist Mono"`;const dw=x.measureText(dt).width+44;seg('CAVSDATABASE.COM/LIVE',TC.sb,TC.soft,dw);seg(dt,TC.sb,TC.soft)}
+  seg('CAVS_DB',GOLD,'#101419');if(mid&&!TC.pc)seg(mid,WINE,'#fff');x.font=`700 ${fs}px "Geist Mono"`;const dw=x.measureText(dt).width+44;if(TC.pc){seg('CAVSDATABASE.COM/LIVE',TC.sb,TC.soft,1);return}seg('CAVSDATABASE.COM/LIVE',TC.sb,TC.soft,dw);seg(dt,TC.sb,TC.soft)}
 function cStat(x,v,l,X0,Y0,sz=96,c=TC.ink){num(x,v,X0,Y0,sz,c);lbl(x,l,X0+4,Y0+44,32)}
 const loadImg=src=>new Promise(r=>{if(!src)return r(null);const im=new Image();if(/^https?:/.test(src))im.crossOrigin='anonymous';im.onload=()=>r(im);im.onerror=()=>r(null);im.src=src});
 /* headshots: our own copies for Cavs players, ESPN's image server for everyone else (by ESPN player id); a failed load falls back to initials */
@@ -1932,7 +1940,7 @@ let BG=TC.bg,INK=TC.ink;const WINE='#860038',GOLD='#F2B231';let GREY=TC.grey,MUT
 function footer(x){brandBar(x,1080,1350)}
 const scoreLine=(D,R)=>{if(S.season){const g=D.games||[],w=g.filter(x=>x.cle>x.os).length;return [`CLE ${w}–${g.length-w}`,(D.season||'').replace('-','–')+' · '+g.length+' GAMES']}const fin=S.state==='post',per=R.lp?R.lp.per:1;return [`${D.away.abbr} ${R.as}  ${D.home.abbr} ${R.hs}`,fin?'FINAL'+(per>4?'/'+pname(per):''):pname(per)+' '+(R.lp?R.lp.clock:'')]};
 /* Nov 2: one matchup format on every card, Cavs first, with the date */
-const atLbl=D=>S.season?(D.season||'').replace('-','–')+' Cavs':D.focus.abbr+(D.focus.ha==='home'?' vs ':' at ')+D.other.abbr+' · '+gDay(D);
+const atLbl=D=>TC.pc&&!S.season?gKick(D):S.season?(D.season||'').replace('-','–')+' Cavs':D.focus.abbr+(D.focus.ha==='home'?' vs ':' at ')+D.other.abbr+' · '+gDay(D);
 const CARDS={
   game:{label:'Game card',async draw(x,D,R){const F=D.focus,O=D.other,fs=F.ha==='home'?R.hs:R.as,os=F.ha==='home'?R.as:R.hs;const cavsWin=S.state==='post'&&F.id==='5'&&fs>os;
     const top=t=>D.roster[t.id].filter(id=>R.B[id].min>0||R.B[id].pts).sort((a,b)=>R.B[b].pts-R.B[a].pts);
@@ -2053,7 +2061,7 @@ const CARDS={
     brandBar(x,W,H)}},
   /* ---- a second set, each with its own look ---- */
   shotmap:{label:'Shot map',pick:'shooter',async draw(x,D,R,id){const team=id==='team';const t=D.focus;const sh=R.shots.filter(q=>q.t===t.id&&q.hasXY&&(team||q.id===id));
-    if(TC.wine||TC.riso)tBg(x,1080,1350);else{x.fillStyle=TC.panel;x.fillRect(0,0,1080,1350)}const s=19.2,X0=60,Y0=330,X=v=>X0+v*s,Y=v=>Y0+(v+5.25)*s,c3=Math.sqrt(23.75**2-22**2);
+    if(TC.wine||TC.riso||TC.pc)tBg(x,1080,1350);else{x.fillStyle=TC.panel;x.fillRect(0,0,1080,1350)}const s=TC.pc?17.4:19.2,X0=TC.pc?105:60,Y0=TC.pc?425:330,X=v=>X0+v*s,Y=v=>Y0+(v+5.25)*s,c3=Math.sqrt(23.75**2-22**2);
     x.strokeStyle='rgba(242,178,49,.55)';x.lineWidth=3;x.strokeRect(X(0),Y0,50*s,34*s);x.strokeRect(X(17),Y0,16*s,19*s);x.beginPath();x.arc(X(25),Y(13.75),6*s,0,Math.PI);x.stroke();
     x.beginPath();x.moveTo(X(3),Y0);x.lineTo(X(3),Y(c3));x.arc(X(25),Y(0),23.75*s,Math.atan2(c3,-22),Math.atan2(c3,22),true);x.lineTo(X(47),Y0);x.stroke();x.beginPath();x.arc(X(25),Y(0),.75*s,0,7);x.stroke();
     sh.filter(q=>!q.m).forEach(q=>{if(q.y>28.5)return;const a=X(Math.max(.5,Math.min(49.5,q.x))),b=Y(Math.max(-4.5,q.y));x.strokeStyle=TC.light?'#8b929b':'rgba(160,168,180,.7)';x.lineWidth=4;x.beginPath();x.moveTo(a-9,b-9);x.lineTo(a+9,b+9);x.moveTo(a+9,b-9);x.lineTo(a-9,b+9);x.stroke()});
@@ -2089,7 +2097,7 @@ const CARDS={
     0;
     x.fillStyle=TC.acc;x.font='800 40px "Saira Condensed"';x.fillText((kick()+atLbl(D)).toUpperCase(),72,100);x.fillStyle=TC.hi;x.font='800 128px "Saira Condensed"';x.fillText('CAVS LEADERS',72,222);
     tScore(x,D,R,72,300);/* Nov 4: same score row as the other cards, FINAL box centred */
-    const order=[1,0,2],hts=[300,380,240],base=1060;const imgs=await Promise.all(L.map(o=>loadImg(hsUrl(D,o.id))));
+    const order=[1,0,2],hts=TC.pc?[250,320,225]:[300,380,240],base=1060;const imgs=await Promise.all(L.map(o=>loadImg(hsUrl(D,o.id))));
     order.forEach((li,pos)=>{const o=L[li],cx=72+150+pos*318,h=hts[pos],top=base-h,b=o.b;
       x.fillStyle=li===0?GOLD:TC.sb;x.fillRect(cx-145,top,290,h);
       x.fillStyle=li===0?INK:'#fff';x.font='700 104px "Geist Mono"';ctr(x,String(o.v),cx,top+115);
@@ -2203,7 +2211,7 @@ const SCARDS={
 /* ---------- landscape cards (Oct 27): the lineup card's look for on/off, four factors, player, clutch and quarters ---------- */
 const LW=1920,LH=1440,LGR='#1d6b3a',LRD='#a3122e',LBT='#860038',LWS='#7b828c'/* Nov 2: better/worse = wine/gray; green/red only for +/- */;
 const lf1=v=>v==null||!isFinite(v)?'–':v.toFixed(1),lsg=v=>v==null||!isFinite(v)?'–':(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1),lsgi=v=>(v>0?'+':v<0?'−':'')+Math.abs(v),lpc=(m,a)=>a?Math.round(m/a*100)+'%':'–';
-function lFrame(x){tBg(x,LW,LH);x.strokeStyle=TC.cline;x.setLineDash([6,6]);x.lineWidth=2;x.beginPath();x.moveTo(60,344);x.lineTo(LW-60,344);x.stroke();x.setLineDash([])}
+function lFrame(x){tBg(x,LW,LH);if(TC.pc)return;x.strokeStyle=TC.cline;x.setLineDash([6,6]);x.lineWidth=2;x.beginPath();x.moveTo(60,344);x.lineTo(LW-60,344);x.stroke();x.setLineDash([])}
 /* kicker, title and a score-style line in the header, starting at TX */
 function lTitle(x,TX,kick,title,line){const TW=LW-TX-60;x.fillStyle=TC.acc;x.font='800 34px "Saira Condensed"';x.fillText(kick.toUpperCase(),TX,108);
   const T=title.toUpperCase();let fs=96;x.fillStyle=TC.hi;x.font=`800 ${fs}px "Saira Condensed"`;while(x.measureText(T).width>TW&&fs>48){fs-=4;x.font=`800 ${fs}px "Saira Condensed"`}x.fillText(T,TX,108+fs*.95+6);
@@ -2230,7 +2238,7 @@ function lZones(x,X,W,Y,cap,zs,avg,col,hi,avgLab){lbl(x,cap,X+36,Y,30,MUT);const
     const sh=tot?a/tot:0,L=bw*sh;x.fillStyle=TC.track;tk(x,X+36,y+44,bw,24);x.fillStyle=TC.grid;tk(x,X+36,y+44,L,24);x.fillStyle=col;tk(x,X+36,y+44,a?L*m/a:0,24);})}
 function lNote(x,t){x.font='600 26px Archivo';x.fillStyle=MUT;ctr(x,t,LW/2,1290)}
 /* wine call-out box with a big number, a label, an optional white chip and a line */
-function lMid(x,X,Y,W,H,big,lab,chip,chipGood,line){const cx=X+W/2;x.fillStyle=WINE;x.fillRect(X,Y,W,H);x.fillStyle='#fff';x.font='800 150px "Saira Condensed"';ctr(x,big,cx,Y+190);x.fillStyle='rgba(255,255,255,.88)';x.font='800 30px "Saira Condensed"';ctr(x,lab,cx,Y+250);
+function lMid(x,X,Y,W,H,big,lab,chip,chipGood,line){const cx=X+W/2;x.fillStyle=TC.pcw?'#3d0a1f':WINE;x.fillRect(X,Y,W,H);x.fillStyle='#fff';x.font='800 150px "Saira Condensed"';ctr(x,big,cx,Y+190);x.fillStyle='rgba(255,255,255,.88)';x.font='800 30px "Saira Condensed"';ctr(x,lab,cx,Y+250);
   if(chip!=null){x.fillStyle=TC.wine?'#F2B231':'#fff';x.fillRect(cx-110,Y+300,220,64);x.fillStyle=TC.wine?'#3d0018':chipGood==null?INK:chipGood?LBT:LWS;x.font='700 36px "Geist Mono"';ctr(x,chip,cx,Y+345)}if(line){x.fillStyle='rgba(255,255,255,.88)';x.font='600 26px Archivo';ctr(x,line,cx,Y+420)}}
 function lWhite(x,X,Y,W,H,big,col,lab,lines){const cx=X+W/2;x.fillStyle=TC.panel;x.fillRect(X,Y,W,H);x.strokeStyle=TC.line;x.lineWidth=2;x.strokeRect(X,Y,W,H);x.fillStyle=col;let fz=150;x.font=`800 ${fz}px "Saira Condensed"`;while(x.measureText(big).width>W-50&&fz>60){fz-=8;x.font=`800 ${fz}px "Saira Condensed"`}ctr(x,big,cx,Y+200);x.fillStyle=MUT;x.font='800 30px "Saira Condensed"';ctr(x,lab,cx,Y+262);
   (lines||[]).forEach((l,i)=>{x.fillStyle=i?MUT:INK;x.font='600 28px Archivo';ctr(x,l,cx,Y+322+i*40)})}
@@ -2239,7 +2247,8 @@ function lGauge(x,X,Y,W,v,ref,refLab){const lo=-30,hi=30,P=z=>X+(Math.max(lo,Mat
   if(ref!=null){x.fillStyle=GOLD;x.fillRect(P(ref)-2,Y-10,4,34);x.font='700 23px Archivo';x.fillStyle=GOLD;{const hw=x.measureText(refLab).width/2+4;ctr(x,refLab,Math.max(X+hw,Math.min(X+W-hw,P(ref))),Y+50)}}if(v!=null){x.fillStyle='#fff';x.beginPath();x.arc(P(v),Y+7,15,0,7);x.fill()}
   x.font='600 22px Archivo';x.fillStyle='rgba(255,255,255,.85)';x.fillText('−30',X,Y-14);const t='+30';x.fillText(t,X+W-x.measureText(t).width,Y-14)}
 const LX1=40,LSW=682,LMW=420,LXM=LX1+LSW+28,LX2=LXM+LMW+28,LY0=390,LBH=850;
-const lKick=D=>S.season?D.focus.abbr+' · '+(S.season||'').replace('-','–')+' SEASON':(D.focus.ha==='home'?D.focus.abbr+' VS '+D.other.abbr:D.focus.abbr+' AT '+D.other.abbr)+' · '+new Date(D.date).toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase();
+const gKick=D=>{let n='';try{n=recordThrough(D,S.R).res.length}catch(e){}return (n?'Game '+n+' · ':'')+gDay(D)};
+const lKick=D=>TC.pc&&!S.season?gKick(D).toUpperCase():S.season?D.focus.abbr+' · '+(S.season||'').replace('-','–')+' SEASON':(D.focus.ha==='home'?D.focus.abbr+' VS '+D.other.abbr:D.focus.abbr+' AT '+D.other.abbr)+' · '+new Date(D.date).toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase();
 const lScore=D=>{const R=S.R;if(S.season){const [sl,wh]=scoreLine(D,R);return [[sl+'  ','800 60px "Saira Condensed"','#fff'],[wh,'600 30px Archivo','rgba(255,255,255,.62)']]}const F=D.focus,fs=F.ha==='home'?R.hs:R.as,os=F.ha==='home'?R.as:R.hs;
   return [[F.abbr+' ','800 44px "Saira Condensed"','#fff'],[String(fs),'800 104px "Saira Condensed"','#fff'],[' – ','800 60px "Saira Condensed"','#fff'],[String(os),'800 104px "Saira Condensed"','rgba(255,255,255,.62)'],[' '+D.other.abbr,'800 44px "Saira Condensed"','#fff']]};
 const lSum=(L5,f)=>{const o={sec:0,pf:0,pa:0,o:{},d:{}};L5.filter(f).forEach(l=>{o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;['o','d'].forEach(s=>{for(const k in l[s])o[s][k]=(o[s][k]||0)+l[s][k]})});return o};
@@ -2460,6 +2469,10 @@ function autoInk(x){const ft=x.fillText.bind(x),W=x.canvas.width,H=x.canvas.heig
   if(wh||gd){try{const fs=parseFloat((x.font.match(/([\d.]+)px/)||[])[1])||30;let sx=X;const tw=x.measureText(t).width;if(x.textAlign==='center')sx-=tw/2;else if(x.textAlign==='right'||x.textAlign==='end')sx-=tw;
     const pts=[[sx-5,Y-fs*.35],[sx+tw+5,Y-fs*.35],[sx-5,Y-fs*.75],[sx+tw/2,Y-fs*1.1],[sx+tw/2,Y+fs*.25]];let lt=0;pts.forEach(([a,b])=>{const d=x.getImageData(Math.round(Math.max(0,Math.min(W-1,a))),Math.round(Math.max(0,Math.min(H-1,b))),1,1).data;if(.299*d[0]+.587*d[1]+.114*d[2]>185)lt++});
     if(lt>=3){const pv=x.fillStyle;x.fillStyle=gd?'#860038':c==='#ffffff'?TC.hi:TC.mut;ft(t,X,Y,mw);x.fillStyle=pv;return}}catch(e){}}
+  if(TC.pc&&!wh&&!gd){try{const m=c.match(/^#([0-9a-f]{6})$/)||null;let r,g,b;if(m){const n=parseInt(m[1],16);r=n>>16&255;g=n>>8&255;b=n&255}else{const q=c.match(/[\d.]+/g);if(q){[r,g,b]=q.map(Number)}}
+    if(r!=null&&.299*r+.587*g+.114*b<140){const fs=parseFloat((x.font.match(/([\d.]+)px/)||[])[1])||30;let sx=X;const tw=x.measureText(t).width;if(x.textAlign==='center')sx-=tw/2;else if(x.textAlign==='right'||x.textAlign==='end')sx-=tw;
+      const pts=[[sx-5,Y-fs*.35],[sx+tw+5,Y-fs*.35],[sx-5,Y-fs*.75],[sx+tw/2,Y-fs*1.1],[sx+tw/2,Y+fs*.25]];let dk=0;pts.forEach(([a,bb])=>{const d=x.getImageData(Math.round(Math.max(0,Math.min(W-1,a))),Math.round(Math.max(0,Math.min(H-1,bb))),1,1).data;if(.299*d[0]+.587*d[1]+.114*d[2]<110)dk++});
+      if(dk>=3){const pv=x.fillStyle;const wine=r>100&&g<40;const mut=Math.abs(r-g)<20&&r>70;x.fillStyle=wine?'#F2B231':mut?'rgba(255,255,255,.78)':'#ffffff';ft(t,X,Y,mw);x.fillStyle=pv;return}}}catch(e){}}
   return ft(t,X,Y,mw)}}
 /* wine/riso: remap the card palette as it is drawn: wine fills become white (wine theme) or riso crimson; opponent gray becomes the opponent's light team color (wine) or riso gold; big wine panels turn into dark translucent panels so white text still reads; riso big type gets an offset gold print */
 function themeInk(x,D){const P=CanvasRenderingContext2D.prototype,df=Object.getOwnPropertyDescriptor(P,'fillStyle'),ds=Object.getOwnPropertyDescriptor(P,'strokeStyle');
