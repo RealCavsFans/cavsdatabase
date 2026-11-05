@@ -1,12 +1,12 @@
-2026-11-05T18:47:03.080Z
+2026-11-05T19:47:53.967Z
 NBA highlights: 6 new (YouTube API)
-Hoops Rumors: 7 from https://www.hoopsrumors.com/cleveland-cavaliers/feed
-Cavaliers on SI: 15 from https://news.google.com/rss/search?q=site%3Asi.com%2Fnba%2Fcavaliers&hl=en-US&gl=US&ceid=US:en
-cleveland.com: 15 from https://news.google.com/rss/search?q=site%3Acleveland.com%2Fcavs&hl=en-US&gl=US&ceid=US:en
+Hoops Rumors: 8 from https://www.hoopsrumors.com/cleveland-cavaliers/feed
+Cavaliers on SI: FAILED no working feed found
+cleveland.com: FAILED no working feed found
 Fear The Sword: 10 from https://www.fearthesword.com/rss/current.xml
 The Athletic: 0 from https://www.nytimes.com/athletic/rss/nba/cavaliers/
-The Inside Shot: 2 from https://news.google.com/rss/search?q=site%3Atheinsideshot.substack.com&hl=en-US&gl=US&ceid=US:en
-Wine and Gold Talk: 7 from https://feeds.megaphone.fm/wineandgoldtalk
+The Inside Shot: FAILED no working feed found
+Wine and Gold Talk: 6 from https://feeds.megaphone.fm/wineandgoldtalk
 The Block The Shot The Stop: 0 from https://www.spreaker.com/show/6772702/episodes/feed
 Locked On Cavs: 10 (YouTube API)
 The Chase Down Podcast: 3 (YouTube API)
