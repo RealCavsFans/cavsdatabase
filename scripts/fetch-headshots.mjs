@@ -87,7 +87,9 @@ console.log(`team logos: ${tl} added`);
   const pids = new Set(); let read = 0;
   for (const [id] of todo) {
     try {
-      const res = await fetch(`https://cdn.nba.com/static/json/liveData/boxscore/boxscore_${id}.json`, UA); if (!res.ok) continue;
+      let res = await fetch(`https://nba-prod-us-east-1-mediaops-stats.s3.amazonaws.com/NBA/liveData/boxscore/boxscore_${id}.json`, UA).catch(() => null);/* the same NBA.com feed mirror the box scores use; NBA.com's own copy turns away GitHub's machines */
+      if (!res || !res.ok) res = await fetch(`https://cdn.nba.com/static/json/liveData/boxscore/boxscore_${id}.json`, UA).catch(() => null);
+      if (!res || !res.ok) { if (!read && !S.size) warn(`box score ${id}: HTTP ${res && res.status}`); continue; }
       const g = (await res.json()).game; for (const t of [g.homeTeam, g.awayTeam]) for (const p of t.players || []) if (p.personId) pids.add(String(p.personId));
       S.add(id); read++;
     } catch {}
@@ -95,7 +97,7 @@ console.log(`team logos: ${tl} added`);
   let n = 0;
   for (const id of pids) {
     const out = new URL(`img/h/${id}.png`, root); if (await have(out)) continue;
-    try { const res = await fetch(`https://cdn.nba.com/headshots/nba/latest/260x190/${id}.png`, UA); const ct = res.headers.get('content-type') || ''; if (!res.ok || !/image/.test(ct)) continue; await writeFile(out, Buffer.from(await res.arrayBuffer())); n++; } catch {}
+    try { const res = await fetch(`https://cdn.nba.com/headshots/nba/latest/260x190/${id}.png`, UA); const ct = res.headers.get('content-type') || ''; if (!res.ok || !/image/.test(ct)) { if (!n) warn(`headshot ${id}: HTTP ${res.status}`); continue; } await writeFile(out, Buffer.from(await res.arrayBuffer())); n++; } catch {}
   }
   await writeFile(seenUrl, JSON.stringify([...S].sort()) + '\n');
   console.log(`league headshots: ${read} new games read, ${n} photos added`); }
