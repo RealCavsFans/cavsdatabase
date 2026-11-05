@@ -1974,7 +1974,7 @@ const CARDS={
     /* header */
     tBg(x,W,H);x.strokeStyle=TC.cline;x.setLineDash([6,6]);x.lineWidth=2;x.beginPath();x.moveTo(60,344);x.lineTo(W-60,344);x.stroke();x.setLineDash([]);
     const ids=l.ids.slice().sort((a,b)=>D.P[b].starter-D.P[a].starter);const imgs=await Promise.all(ids.map(i=>loadImg(hsUrl(D,i))));
-    ids.forEach((id,j)=>{const cx=60+78+j*128;head2(x,imgs[j],cx,175,78,null,initials(D.P[id].name));x.strokeStyle=WINE;x.lineWidth=6;x.beginPath();x.rect(cx-80,175-80,160,160);x.stroke()});
+    ids.forEach((id,j)=>{const cx=60+78+j*128;head2(x,imgs[j],cx,175,78,null,initials(D.P[id].name));});
     ids.forEach((id,j)=>{const cx=60+78+j*128,pp=PB[id]||0;const t1=String(pp),t2=' PTS';x.font='800 40px "Saira Condensed"';const w1=x.measureText(t1).width;x.font='800 24px "Saira Condensed"';const w2=x.measureText(t2).width;const X=cx-(w1+w2)/2;x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText(t1,X,300);x.fillStyle='rgba(255,255,255,.62)';x.font='800 24px "Saira Condensed"';x.fillText(t2,X+w1,300)});
     const TX=60+156+4*128+56,TW=W-TX-60;const starters=NN===5&&!S.season&&ids.every(i=>D.P[i].starter);
     const all=Object.values(L5).filter(z=>z.sec>=180).sort((a,b)=>(b.pf-b.pa)-(a.pf-a.pa));const best=all[0]===l&&all.length>1;
@@ -2158,7 +2158,7 @@ function lFrame(x){tBg(x,LW,LH);x.strokeStyle=TC.cline;x.setLineDash([6,6]);x.li
 function lTitle(x,TX,kick,title,line){const TW=LW-TX-60;x.fillStyle=TC.acc;x.font='800 34px "Saira Condensed"';x.fillText(kick.toUpperCase(),TX,108);
   const T=title.toUpperCase();let fs=96;x.fillStyle=TC.hi;x.font=`800 ${fs}px "Saira Condensed"`;while(x.measureText(T).width>TW&&fs>48){fs-=4;x.font=`800 ${fs}px "Saira Condensed"`}x.fillText(T,TX,108+fs*.95+6);
   let X=TX;(line||[]).forEach(([t,f,c])=>{x.font=f;x.fillStyle=TC.light&&/^rgba\(255,255,255,\./i.test(c)?TC.mut:TC.light&&/^(#fff|#ffffff|rgba\(255,255,255)/i.test(c)?TC.hi:TC.light&&c===GOLD?TC.acc:c;x.fillText(t,X,290);X+=x.measureText(t).width})}
-async function lHero(x,D,id){const img=await loadImg(hsUrl(D,id));head2(x,img,210,172,138,null,initials(D.P[id].name));x.strokeStyle=WINE;x.lineWidth=6;x.beginPath();x.rect(70,32,280,280);x.stroke();return 410}
+async function lHero(x,D,id){const img=await loadImg(hsUrl(D,id));head2(x,img,210,172,138,null,initials(D.P[id].name));;return 410}
 function lPanel(x,X,Y,W,H,top){x.fillStyle=TC.panel;x.fillRect(X,Y,W,H);x.strokeStyle=TC.line;x.lineWidth=2;x.strokeRect(X,Y,W,H);x.fillStyle=top;x.fillRect(X,Y,W,8)}
 /* panel head: title and small label on the left, one big number on the right */
 function lHeadline(x,X,W,Y,title,sub,val,tone){lbl(x,title,X+36,Y+86,44,INK);x.fillStyle=MUT;x.font='700 24px Archivo';x.fillText(sub,X+36,Y+128);
