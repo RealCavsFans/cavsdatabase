@@ -1881,9 +1881,15 @@ function pcWrap(A,slug){const W=A.width,H=A.height,land=W>1500,BH=land?340:372,F
   const cy=wy+(land?36:32);g.font=`600 ${land?24:22}px "Geist Mono"`;g.fillStyle='#860038';g.fillText('> cavs ',M+24,cy+8);let cx=M+24+g.measureText('> cavs ').width;g.fillStyle='#6b7078';const cmd='--'+(slug||'game');g.fillText(cmd,cx,cy+8);cx+=g.measureText(cmd).width+6;g.fillStyle='#860038';g.fillRect(cx,cy-14,12,26);
   const sx=land?34:28,sy=BH+(land?40:24),sw=W-2*sx,sh=H-FB-(land?36:0)-sy,ix=M+12,iy=cy+(land?26:24),iw=W-2*M-24,ih=wy+wh-12-iy,k=Math.min(iw/sw,ih/sh),dw=sw*k,dh=sh*k;
   g.drawImage(A,sx,sy,sw,sh,ix+(iw-dw)/2,iy,dw,dh);g.drawImage(A,0,H-FB,W,FB,0,H-FB,W,FB);return B}
+/* Nov 5 (mock): depth on the banner title (window.__titleFx: shadow | offset | extrude) */
+function titleFx(x,T,X,Y,fs){const fx=TC.pc&&window.__titleFx,c0=x.fillStyle;x.save();
+  if(fx==='shadow'){x.shadowColor='rgba(40,0,15,.55)';x.shadowBlur=fs*.18;x.shadowOffsetY=fs*.06;x.fillText(T,X,Y)}
+  else if(fx==='offset'){x.fillStyle='#F2B231';x.fillText(T,X+fs*.045,Y+fs*.045);x.fillStyle=c0;x.fillText(T,X,Y)}
+  else if(fx==='extrude'){const n=Math.round(fs*.08);for(let i=n;i>0;i--){x.fillStyle=i===n?'rgba(30,0,12,.35)':'#4a001f';x.fillText(T,X+i*.7,Y+i)}x.fillStyle=c0;x.fillText(T,X,Y)}
+  else x.fillText(T,X,Y);x.restore()}
 function frame(x,kicker,title,D,R,fs0=104){tBg(x,1080,1350);tMark(x,72,96);
   x.fillStyle=TC.acc;x.font='700 26px Archivo';if('letterSpacing' in x)x.letterSpacing='5px';x.fillText(kicker.toUpperCase(),72,170);if('letterSpacing' in x)x.letterSpacing='0px';
-  x.fillStyle=TC.hi;let fs=fs0;x.font=`800 ${fs}px "Saira Condensed"`;const T=title.toUpperCase();while(x.measureText(T).width>936&&fs>56){fs-=6;x.font=`800 ${fs}px "Saira Condensed"`}x.fillText(T,72,268);
+  x.fillStyle=TC.hi;let fs=fs0;x.font=`800 ${fs}px "Saira Condensed"`;const T=title.toUpperCase();while(x.measureText(T).width>936&&fs>56){fs-=6;x.font=`800 ${fs}px "Saira Condensed"`}titleFx(x,T,72,268,fs);
   if(S.season){const [sl,wh]=scoreLine(D,R);x.font='700 40px "Geist Mono"';x.fillStyle=GOLD;x.fillText(sl,72,336);const w=x.measureText(sl).width;x.font='600 26px "Geist Mono"';x.fillStyle=TC.soft;x.fillText(wh,72+w+28,336)}else tScore(x,D,R,72,338);
   if(!TC.pc){x.strokeStyle=TC.cline;x.setLineDash([6,6]);x.lineWidth=2;x.beginPath();x.moveTo(72,376);x.lineTo(1008,376);x.stroke();x.setLineDash([])}
   brandBar(x,1080,1350);
