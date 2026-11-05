@@ -76,3 +76,26 @@ for (const a of TL) {
   } catch (e) { warn(`logo ${a}: ${e.message}`); }
 }
 console.log(`team logos: ${tl} added`);
+
+// 4. other teams' players (Nov 5, Luka): share cards draw headshots on a canvas, and the browser won't let a page read
+// NBA.com's photos into one, so opposing players came out as initials. Every player in every league game so far
+// (from NBA.com's box scores, games listed in pdata/league-shots.json) gets a same-site copy at img/h/<NBA id>.png.
+// Games already read are remembered in img/h/games.json; at most 60 new games per run, newest first.
+{ const seenUrl = new URL('img/h/games.json', root); let seen = []; try { seen = JSON.parse(await readFile(seenUrl, 'utf8')); } catch {}
+  const S = new Set(seen); let gm = {}; try { gm = JSON.parse(await readFile(new URL('pdata/league-shots.json', root), 'utf8')).g || {}; } catch {}
+  const todo = Object.entries(gm).map(([k, v]) => [k.replace(/^n/, ''), v.d || '']).filter(([id]) => /^\d{10}$/.test(id) && !S.has(id)).sort((a, b) => b[1].localeCompare(a[1])).slice(0, 60);
+  const pids = new Set(); let read = 0;
+  for (const [id] of todo) {
+    try {
+      const res = await fetch(`https://cdn.nba.com/static/json/liveData/boxscore/boxscore_${id}.json`, UA); if (!res.ok) continue;
+      const g = (await res.json()).game; for (const t of [g.homeTeam, g.awayTeam]) for (const p of t.players || []) if (p.personId) pids.add(String(p.personId));
+      S.add(id); read++;
+    } catch {}
+  }
+  let n = 0;
+  for (const id of pids) {
+    const out = new URL(`img/h/${id}.png`, root); if (await have(out)) continue;
+    try { const res = await fetch(`https://cdn.nba.com/headshots/nba/latest/260x190/${id}.png`, UA); const ct = res.headers.get('content-type') || ''; if (!res.ok || !/image/.test(ct)) continue; await writeFile(out, Buffer.from(await res.arrayBuffer())); n++; } catch {}
+  }
+  await writeFile(seenUrl, JSON.stringify([...S].sort()) + '\n');
+  console.log(`league headshots: ${read} new games read, ${n} photos added`); }
