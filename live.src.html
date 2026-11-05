@@ -478,7 +478,7 @@ body{padding-bottom:calc(56px + max(10px,env(safe-area-inset-bottom,0px) - 8px))
 .ff{grid-template-columns:1fr 1fr!important;gap:6px!important}.ffc{padding:7px 9px!important}.ffc .n{font-size:.625rem!important;letter-spacing:.06em}.ffc .row{margin-top:2px!important}.ffc .row b{font-size:.9375rem!important}.ffc .row span{font-size:.75rem!important}.ffc .edge{margin-top:3px!important;font-size:.6875rem!important}.ffc>*:last-child:not(.row):not(.bar){font-size:.625rem!important}
 p.note{font-size:.6875rem!important;line-height:1.35!important;margin-top:6px!important}
 .sc2{gap:6px!important}.oppr{grid-template-columns:2.2rem 1fr 2.6rem!important;gap:5px!important;margin:3px 0!important}.oppr .ab{font-size:.75rem!important}.sc2 [style*=height]{max-height:22px}.sc2 *{font-size:.75rem}.sc2 h3,.sc2 h4{font-size:.6875rem!important;margin:6px 0 2px!important}.sc2 small,.sc2 .key{font-size:.625rem!important}
-.fl{gap:4px!important;margin-bottom:6px!important}.fl button,.fl select{padding:4px 8px!important;font-size:.71875rem!important}.chips button{padding:3px 8px!important;font-size:.71875rem!important}
+.fl{gap:4px!important;margin-bottom:6px!important}.fl button,.fl select{padding:4px 8px!important;font-size:.71875rem!important}/* Nov 5 (Luka): selects match the square buttons on iPhone */.fl select{-webkit-appearance:none;appearance:none;border-radius:0!important;padding-right:24px!important;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236b7078' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 8px center!important;color:var(--fg);line-height:1.2}.chips button{padding:3px 8px!important;font-size:.71875rem!important}
 .dt th{font-size:.625rem!important;padding:4px 3px!important}.dt td{padding:4px 3px!important;font-size:.75rem!important}.dt td:first-child{min-width:96px!important;max-width:120px!important;font-size:.75rem!important}.dt td:first-child .pos,.dt td:first-child small{font-size:.5625rem!important}
 .zt th{font-size:.625rem!important;padding:3px 3px!important}.zt td{padding:5px 3px!important;font-size:.75rem!important}
 /* one size for every stat table on phones: the Tonight vs the season rows and the tiles match the tables */
@@ -1466,7 +1466,8 @@ function vTeam(v,D,R){
   const c=el('div','card');head(c,'Team stats',S.season?(S.per!=='all'?perLabel(S.per)+' · ':'')+'Per game · '+((D.games||[]).length)+' game'+((D.games||[]).length===1?'':'s'):perLabel(S.per));
   const ROWS=[];let G0=null;const SHORT={'Offensive rebounds':'Off. rebounds','Second-chance points':'Second chance','Points from threes':'From threes','Points from free throws':'From free throws','Points in the paint':'In the paint','Points off turnovers':'Off turnovers','Pace (possessions per 48)':'Pace','Possessions (est.)':'Possessions','Points per 100 possessions':'ORTG','Free throws made':'FT made','True shot attempts':'True shot att.'};
   const grp=n=>{G0=n==='Where the points came from'?'Scoring':n};
-  const row=(lab,x,y,fx,fy,hib=true)=>ROWS.push({g:G0,lab:SHORT[lab]||lab,x,y,fx,fy,hib,better:hib===null||Math.abs(x-y)<1e-9?-1:((x>y)===hib?0:1)});
+  const MOB=matchMedia('(max-width:640px)').matches?{'Points in the paint':'Paint Pts','Second-chance points':'2nd Chance','Points off turnovers':'Off TO','Fast-break points':'FBPTS','Bench points':'Bench Pts','Starters points':'Starter Pts'}:{};/* Nov 5 (Luka): short scoring labels on phones */
+  const row=(lab,x,y,fx,fy,hib=true)=>ROWS.push({g:G0,lab:MOB[lab]||SHORT[lab]||lab,x,y,fx,fy,hib,better:hib===null||Math.abs(x-y)<1e-9?-1:((x>y)===hib?0:1)});
   const P=t=>poss({fga:t.fga,oreb:t.oreb,to:t.to,fta:t.fta,np:t.np});
   const pa=P(a),pb=P(b);
   grp('Shooting');
@@ -1870,13 +1871,15 @@ function tScore(x,D,R,X,Y){const F=D.focus,O=D.other;const fs=F.ha==='home'?R.hs
   const seg=(t,f,c,gap,ctr)=>{x.font=f;x.fillStyle=c;let y=Y;if(ctr){const m=x.measureText(t);y=mid+((m.actualBoundingBoxAscent||0)-(m.actualBoundingBoxDescent||0))/2}x.fillText(t,cx,y);cx+=x.measureText(t).width+gap};
   const L='800 46px "Saira Condensed"',N=`800 ${BIG}px "Saira Condensed"`;seg(F.abbr==='CLE'?'CAVS':F.abbr,L,TC.wine?TC.hi:TC.acc,14);seg(String(fs),N,TC.wine?TC.hi:TC.acc,26);seg(F.ha==='home'?'VS':'AT','700 22px "Geist Mono"',TC.dim,26,1);seg(O.abbr,L,TC.soft,14);seg(String(os),N,TC.hi,26);
   x.font='700 22px "Geist Mono"';const w=x.measureText(when).width+28,h=40;x.fillStyle=TC.track;x.fillRect(cx,mid-h/2,w,h);x.fillStyle=TC.soft;const wm=x.measureText(when);x.fillText(when,cx+14,mid+((wm.actualBoundingBoxAscent||16)-(wm.actualBoundingBoxDescent||0))/2)}
-function pcBg(x,W,H){const land=W>1500,BH=land?340:372;x.fillStyle=TC.page;x.fillRect(0,0,W,H);x.fillStyle=pcGrad(x,W);x.fillRect(0,0,W,BH);
+function pcBg(x,W,H){const land=W>1500,BH=land?340:372;x.fillStyle=TC.page;x.fillRect(0,0,W,H);x.fillStyle=pcGrad(x,W,BH);x.fillRect(0,0,W,BH);
   x.fillStyle='#F2B231';x.fillRect(0,BH,W,10);
   if(TC.pcw&&!land){x.fillStyle='#ffffff';x.fillRect(36,BH+18,W-72,H-BH-18-58-24)}}
-const pcGrad=(x,W)=>{const g=x.createLinearGradient(0,0,W,0);g.addColorStop(0,'#9a0a45');g.addColorStop(1,'#6e002e');return g};
+const pcGrad=(x,W,H0)=>{const g=x.createLinearGradient(0,0,0,H0||372);g.addColorStop(0,'#9a0a45');g.addColorStop(1,'#6e002e');return g};
 /* Nov 5 (mock): light player-card look: taller wine header, then the card body set inside a terminal window (tab, command line, frame) like the player page images */
-function pcWrap(A,slug){const W=A.width,H=A.height,land=W>1500,BH=land?340:372,FB=land?64:58,off=land?58:24,HB=BH+off;const B=document.createElement('canvas');B.width=W;B.height=H;const g=B.getContext('2d');
-  g.fillStyle='#eef0f3';g.fillRect(0,0,W,H);g.fillStyle=pcGrad(g,W);g.fillRect(0,0,W,HB);g.drawImage(A,0,0,W,BH,0,off,W,BH);if(land){const h0=TC.hi;TC.hi='#ffffff';tMark(g,60,off+4);TC.hi=h0}g.fillStyle='#F2B231';g.fillRect(0,HB,W,8);
+function pcWrap(A,slug){const W=A.width,H=A.height,land=W>1500,BH=land?340:372,FB=land?64:58,off=land?58:0,hk=land?1:.74,HB=Math.round(BH*hk)+off;/* Nov 5 (Luka): tall cards get a shorter banner so the content can be bigger */const B=document.createElement('canvas');B.width=W;B.height=H;const g=B.getContext('2d');
+  g.fillStyle='#eef0f3';g.fillRect(0,0,W,H);g.fillStyle=pcGrad(g,W,HB);g.fillRect(0,0,W,HB);if(land)g.drawImage(A,0,0,W,BH,0,off,W,BH);else{/* split the banner at the widest empty column between the words and the photo, so the photo stays on the right edge */let sp=W;try{const d=A.getContext('2d').getImageData(0,0,W,BH).data;const emp=x=>{for(let y=40;y<BH-4;y+=3){const o=(y*W+x)*4,r=(y*W+20)*4;if(Math.abs(d[o]-d[r])+Math.abs(d[o+1]-d[r+1])+Math.abs(d[o+2]-d[r+2])>24)return false}return true};
+      let best=0,run=0,st=0;for(let xx=Math.round(W*.3);xx<W;xx+=2){if(emp(xx)){if(!run)st=xx;run+=2;if(run>best){best=run;sp=st+run/2}}else run=0}if(best<12)sp=W}catch(e){}
+    g.drawImage(A,0,0,sp,BH,0,0,sp*hk,BH*hk);if(sp<W)g.drawImage(A,sp,0,W-sp,BH,W-(W-sp)*hk,0,(W-sp)*hk,BH*hk)}if(land){const h0=TC.hi;TC.hi='#ffffff';tMark(g,60,off+4);TC.hi=h0}g.fillStyle='#F2B231';g.fillRect(0,HB,W,8);
   const M=land?44:36,ty=HB+8+(land?22:18),th=land?40:36,fz=land?21:19;g.font=`600 ${fz}px "Geist Mono"`;const tab='cavs_db · cavs · '+(S.season?String(S.season).replace('-','–')+' season':gKick(S.data||{}).toLowerCase());const tw=g.measureText(tab).width+(land?64:58);
   const r=14,wy=ty+th,wh=H-FB-(land?22:18)-wy;g.fillStyle='#e2e5e9';g.beginPath();g.moveTo(M,wy);g.lineTo(M,ty+10);g.quadraticCurveTo(M,ty,M+10,ty);g.lineTo(M+tw-10,ty);g.quadraticCurveTo(M+tw,ty,M+tw,ty+10);g.lineTo(M+tw,wy);g.fill();
   g.fillStyle='#F2B231';g.beginPath();g.arc(M+22,ty+th/2,6,0,7);g.fill();g.fillStyle='#5d646c';g.fillText(tab,M+40,ty+th/2+fz*.36);
@@ -2235,7 +2238,7 @@ const LW=1920,LH=1440,LGR='#1d6b3a',LRD='#a3122e',LBT='#860038',LWS='#7b828c'/* 
 const lf1=v=>v==null||!isFinite(v)?'–':v.toFixed(1),lsg=v=>v==null||!isFinite(v)?'–':(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1),lsgi=v=>(v>0?'+':v<0?'−':'')+Math.abs(v),lpc=(m,a)=>a?Math.round(m/a*100)+'%':'–';
 function lFrame(x){tBg(x,LW,LH);if(TC.pc)return;x.strokeStyle=TC.cline;x.setLineDash([6,6]);x.lineWidth=2;x.beginPath();x.moveTo(60,344);x.lineTo(LW-60,344);x.stroke();x.setLineDash([])}
 /* kicker, title and a score-style line in the header, starting at TX */
-function lTitle(x,TX,kick,title,line){const TW=LW-TX-60-(TC.pc?440:0);x.fillStyle=TC.acc;x.font='800 34px "Saira Condensed"';x.fillText(kick.toUpperCase(),TX,108);
+function lTitle(x,TX,kick,title,line){const TW=LW-TX-60;x.fillStyle=TC.acc;x.font='800 34px "Saira Condensed"';x.fillText(kick.toUpperCase(),TX,108);
   const T=title.toUpperCase();let fs=96;x.fillStyle=TC.hi;x.font=`800 ${fs}px "Saira Condensed"`;while(x.measureText(T).width>TW&&fs>48){fs-=4;x.font=`800 ${fs}px "Saira Condensed"`}x.fillText(T,TX,108+fs*.95+6);
   let X=TX;const BIG=Math.max(0,...(line||[]).map(([,f])=>+(f.match(/(\d+)px/)||[0,0])[1]));(line||[]).forEach(([t,f,c])=>{x.font=f;x.fillStyle=TC.light&&/^rgba\(255,255,255,\./i.test(c)?TC.mut:TC.light&&/^(#fff|#ffffff|rgba\(255,255,255)/i.test(c)?TC.hi:TC.light&&c===GOLD?TC.acc:c;{const sz=+(f.match(/(\d+)px/)||[0,BIG])[1];const fam=f.replace(/\d+px/,'');x.font=`800 ${BIG}px "Saira Condensed"`;const capMid=290-(x.measureText('0').actualBoundingBoxAscent||BIG*.7)/2;x.font=f;
     const cen=(str,ff)=>{x.font=ff;const m=x.measureText(str);return capMid+((m.actualBoundingBoxAscent||0)-(m.actualBoundingBoxDescent||0))/2};
@@ -2243,7 +2246,7 @@ function lTitle(x,TX,kick,title,line){const TW=LW-TX-60-(TC.pc?440:0);x.fillStyl
     else{const tt=t.trim();const lead=t.length-t.trimStart().length,trail=t.length-t.trimEnd().length;x.font=f;const sp=x.measureText(' ').width;X+=lead*sp;x.fillText(tt,X,/^[–—-]$/.test(tt)?cen(tt,f):290);/* labels share the numbers' baseline; a lone dash is centred */x.font=f;X+=x.measureText(tt).width+trail*sp}}})}
 /* Nov 4: small labels sit on the middle of the big numbers instead of their baseline, so a score line reads as one balanced row */
 const midY=(Y,big,f)=>{const sz=+(f.match(/(\d+)px/)||[0,big])[1];return sz>=big*.8?Y:Y-.35*big+.36*sz};
-async function lHero(x,D,id){const img=await loadImg(hsUrl(D,id));if(TC.pc){head2(x,img,LW-250,202,138,null,initials(D.P[id].name));return 60}head2(x,img,210,172,138,null,initials(D.P[id].name));;return 410}
+async function lHero(x,D,id){const img=await loadImg(hsUrl(D,id));if(TC.pc){head2(x,img,210,202,138,null,initials(D.P[id].name));return 410}head2(x,img,210,172,138,null,initials(D.P[id].name));;return 410}
 function lPanel(x,X,Y,W,H,top){x.fillStyle=TC.panel;x.fillRect(X,Y,W,H);x.strokeStyle=TC.line;x.lineWidth=2;x.strokeRect(X,Y,W,H);x.fillStyle=top;x.fillRect(X,Y,W,8)}
 /* panel head: title and small label on the left, one big number on the right */
 function lHeadline(x,X,W,Y,title,sub,val,tone){lbl(x,title,X+36,Y+86,44,INK);x.fillStyle=MUT;x.font='700 24px Archivo';x.fillText(sub,X+36,Y+128);
@@ -2278,7 +2281,7 @@ const lRt=X=>{const p=(poss(X.o)+poss(X.d))/2,ok=p>=1;return {p,ortg:poss(X.o)>=
 let LGF=null;async function lgFF(){if(LGF)return LGF;try{const L=await getJSON('/pdata/league.json');const t={fgm:0,fga:0,tpm:0,ftm:0,fta:0,orb:0,drb:0,tov:0,odrb:0};Object.values(L.tg||{}).forEach(g=>{const z=g.t||[];if(z.length!==2)return;z.forEach((a,i)=>{const b=z[1-i];['fgm','fga','tpm','ftm','fta','orb','tov'].forEach(k=>t[k]+=a[k]||0);t.odrb+=b.drb||0})});
   if(t.fga<1000)return null;LGF={efg:(t.fgm+.5*t.tpm)/t.fga,tov:t.tov/(t.fga-t.orb+t.tov+.44*t.fta),orb:t.orb/(t.orb+t.odrb),ftr:t.ftm/t.fga};return LGF}catch(e){return null}}
 /* team logo at the left of the header */
-async function lLogoHead(x,t){const im=await loadImg('/img/tl/'+String(t.abbr||'').toLowerCase()+'.png');if(!im)return 60;if(TC.pc){x.drawImage(im,LW-330,60,240,240);return 60}x.drawImage(im,190-110,172-110,220,220);return 380}
+async function lLogoHead(x,t){const im=await loadImg('/img/tl/'+String(t.abbr||'').toLowerCase()+'.png');if(!im)return 60;if(TC.pc){x.drawImage(im,70,70,240,240);return 380}x.drawImage(im,190-110,172-110,220,220);return 380}
 /* the season so far from the archive (this game included): team and opponent totals, every shot, each player's totals */
 let LSE={};async function lSeason(D){const se=D.season||S.src||CUR_SEASON;const key=se+'|'+(S.per||'all');if(LSE[key])return LSE[key];const DD=D.season?D:Object.assign({},D,{season:se,games:ARCH[se]||[]});
   const r=await seasonShots(DD).catch(()=>null);if(!r||!r.runs||!r.runs.length)return null;const F={},O={};const add=(o,t)=>{if(!t)return;for(const k in t)if(typeof t[k]==='number')o[k]=(o[k]||0)+t[k]};
