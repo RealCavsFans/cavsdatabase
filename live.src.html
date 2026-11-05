@@ -2871,22 +2871,24 @@ function vShots(v,D,R){
   const ps=el('select');ps.setAttribute('aria-label','Player');const o0=el('option',null,'Whole team');o0.value='all';ps.appendChild(o0);
   const cnt={};R.shots.filter(s=>s.t===t.id&&s.id&&D.P[s.id]).forEach(s=>cnt[s.id]=(cnt[s.id]||0)+1);
   Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]).forEach(id=>{const o=el('option',null,D.P[id].name+' · '+cnt[id]+' FGA');o.value=id;if(S.f.shPl===id)o.selected=true;ps.appendChild(o)});
+  /* Nov 5 (Luka): opponents' shots can be filtered by which Cav was on the floor */if(t.id!==D.focus.id){const oc={};R.shots.filter(s=>s.t===t.id&&s.od).forEach(s=>s.od.split(',').forEach(id=>{if(id)oc[id]=(oc[id]||0)+1}));const ids=Object.keys(oc).filter(id=>D.P[id]).sort((a,b)=>oc[b]-oc[a]);
+    if(ids.length){const og=document.createElement('optgroup');og.label=(D.focus.abbr==='CLE'?'Cavs':D.focus.abbr)+' on the floor';ids.forEach(id=>{const o=el('option',null,D.P[id].name+' on · '+oc[id]+' FGA');o.value='on:'+id;if(S.f.shPl==='on:'+id)o.selected=true;og.appendChild(o)});ps.appendChild(og)}}
   ps.onchange=()=>{S.f.shPl=ps.value;renderView()};fl.appendChild(ps);
   const ts=el('select');ts.setAttribute('aria-label','Shot type');const t0=el('option',null,'All shot types');t0.value='all';ts.appendChild(t0);PT.forEach(([k,l],i)=>{const o=el('option',null,l);o.value=String(i);if(S.f.shType===String(i))o.selected=true;ts.appendChild(o)});ts.onchange=()=>{S.f.shType=ts.value;renderView()};fl.appendChild(ts);
   [['bars','Zones'],['zones','Court'],['dots','Every shot']].forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',S.f.shView===k);b.onclick=()=>{S.f.shView=k;renderView()};fl.appendChild(b)});
   fl.classList.add('shfl');c.appendChild(fl);
-  const all=R.shots.filter(s=>s.t===t.id&&(S.f.shPl==='all'||s.id===S.f.shPl));
+  const onPl=String(S.f.shPl).startsWith('on:')?S.f.shPl.slice(3):null;const all=R.shots.filter(s=>s.t===t.id&&(S.f.shPl==='all'||(onPl?(s.od||'').split(',').includes(onPl):s.id===S.f.shPl)));
   const sh=all.filter(s=>S.f.shType==='all'||String(s.pt)===S.f.shType);
   /* baseline: the player's own season zones, else his team's (this season once it starts; replays use 2025–26) */
   const CB=curBase(),SL=seasonLab(CB),minF=CB===BASE?150:30;
   let BZ=S.season?null:CB.t[t.abbr],baseLab=t.abbr+' '+SL;
-  if(S.f.shPl!=='all'&&!S.season){const pb=CB.p[normName(D.P[S.f.shPl].name)];const fga=pb?pb.reduce((s,z)=>s+z[1],0):0;if(pb&&fga>=minF){BZ=pb;baseLab='his '+SL}else baseLab=t.abbr+' '+SL+(pb?' (his sample is still small)':' (no NBA numbers for him yet)')}
+  if(S.f.shPl!=='all'&&!onPl&&!S.season){const pb=CB.p[normName(D.P[S.f.shPl].name)];const fga=pb?pb.reduce((s,z)=>s+z[1],0):0;if(pb&&fga>=minF){BZ=pb;baseLab='his '+SL}else baseLab=t.abbr+' '+SL+(pb?' (his sample is still small)':' (no NBA numbers for him yet)')}
   if(!BZ){BZ=S.season&&BLIVE&&S.season===BLIVE.season?BLIVE.lg:ZN.map(([k])=>[LG[k][0]*1000,1000]);baseLab='NBA '+(S.season?S.season.replace('-','–'):SL)+' average'}
   const av=i=>BZ[i][1]?BZ[i][0]/BZ[i][1]:LG[ZN[i][0]][0];
   const xy=sh.filter(q=>q.hasXY);
   const Z=ZN.map(()=>[0,0]);xy.forEach(q=>{Z[q.zi][1]++;if(q.m)Z[q.zi][0]++});withCorners(Z,xy);
   const g=el('div','grid2'+(S.f.shView==='dots'?' dots':''));const left=el('div','zchart');
-  const who=S.f.shPl==='all'?t.abbr:D.P[S.f.shPl].name;const typeLab=S.f.shType==='all'?'':' · '+PT[+S.f.shType][1].toLowerCase();
+  const who=S.f.shPl==='all'?t.abbr:onPl?t.abbr+' with '+(D.P[onPl]?D.P[onPl].last||D.P[onPl].name:'')+' on':D.P[S.f.shPl].name;const typeLab=S.f.shType==='all'?'':' · '+PT[+S.f.shType][1].toLowerCase();
   if(S.f.shView==='bars'){left.appendChild(zoneBars(D,R,t,sh,BZ,baseLab))}
   else if(S.f.shView==='zones'){const zc=t.id!==D.focus.id?ZOPP:t.c;left.innerHTML=zoneCourt(Z,xy.length,who+' shooting by zone',BZ,zc);left.insertAdjacentHTML('beforeend',zLegend(zc,baseLab,'Numbers: makes-attempts and FG%.'))}
   else{left.innerHTML=dotCourt(xy,t.c);left.insertAdjacentHTML('beforeend',`<div class="leg"><span><i style="background:${t.c};border-radius:50%"></i>Made</span><span>✕ Missed</span><span>${sh.filter(q=>q.m).length}-${sh.length} FG${esc(typeLab)}</span></div>`)}
@@ -2894,7 +2896,7 @@ function vShots(v,D,R){
   /* shot types: frequency and efficiency */
   /* tap a row: tonight next to the season (other games) and games vs teams in the same net rating tier */
   const SC=shCmp(D,t),isCle=t.id===D.focus.id&&D.focus.abbr==='CLE';
-  const cmpRows=(pick,zoneOnly,key)=>{if(!SC||!SC.ok)return null;const pl=S.f.shPl;if(pl!=='all'&&!isCle)return 'pl';
+  const cmpRows=(pick,zoneOnly,key)=>{if(!SC||!SC.ok)return null;const pl=S.f.shPl;if(pl!=='all'&&(!isCle||String(pl).startsWith('on:')))return 'pl';
     const src=isCle?SC.J.shots.map(r=>({id:r[0],xy:r[1]!=null,m:r[3],three:r[4],zi:r[5],pt:r[6],ast:r[7],gi:r[8]})):SC.J.oshots.map(r=>({xy:r[0]!=null,m:r[2],three:r[3],zi:r[4],pt:r[5],ast:r[6],gi:r[7]}));
     const base=src.filter(q=>SC.other.has(q.gi)&&(pl==='all'||(D.P[pl]&&q.id===SC.idOf(pl)))&&(!zoneOnly||q.xy)&&(!zoneOnly||S.f.shType==='all'||String(q.pt)===S.f.shType));
     const line=(lab,gs)=>{const q=base.filter(x=>gs.has(x.gi)),h=q.filter(pick),mk=h.filter(x=>x.m),n=gs.size;const pts=mk.reduce((a,x)=>a+(x.three?3:2),0);
@@ -2936,7 +2938,7 @@ function vShots(v,D,R){
     if(op){const ln=cmpRows(x=>x.zi===i,true,{zi:i});const x=miniT({lab:S.season?'Season':'Tonight',m,a,fg:a?m/a:null,fr:xy.length?a/xy.length:null},ln,['ma','fg','fr'],5);if(Array.isArray(x))x.forEach(t=>zt.appendChild(t));else{const dr=el('tr','xd');const td=el('td');td.colSpan=5;td.appendChild(x);dr.appendChild(td);zt.appendChild(dr)}}});
   right.appendChild(zt);
   const pts=Z.reduce((s,[m],i)=>s+m*(i>=3?3:2),0);right.appendChild(el('p','note',`${pts} points on ${xy.length} shots (${xy.length?(pts/xy.length).toFixed(2):'–'} per shot). FG% colored against ${baseLab} shooting in each zone. Vs avg = points above or below what an average NBA shooter scores on the same shots.${S.season&&PBT&&lgOK()&&S.f.shPl==='all'&&!typeLab?' Small numbers = NBA rank among 30 teams'+(isCle?' (FG%: 1st = best; % of shots: 1st = most)':' for what opponents did (FG%: 1st = lowest allowed)')+', from pbpstats.':''}${SC&&SC.ok?' Season rows: per game, other games only. Similar teams = the opponent’s net rating tier (top 5, 6–10, 11–20, bottom 9) by '+SC.rkLab+'.':''}`));right.insertAdjacentHTML('beforeend',ZKEY);
-  g.append(left,right);c.appendChild(g);c.appendChild(typesBox);if(S.season&&S.f.shPl!=='all')gameByGame(D,R,S.f.shPl,c);v.appendChild(c);
+  g.append(left,right);c.appendChild(g);c.appendChild(typesBox);if(S.season&&S.f.shPl!=='all'&&!onPl)gameByGame(D,R,S.f.shPl,c);v.appendChild(c);
   if(S.season&&S.f.shPl==='all')pbpShotCards(S.f.shTeam!==D.focus.id).forEach(x=>v.appendChild(x));
 }
 
@@ -3095,7 +3097,7 @@ function seasonFrom(se,files,games,per='all'){
   files.forEach((s,fi)=>{const D=prep(s),R=deriveCore(D,D.plays,per);if(D.focus.id!=='5')return;const gi=gs.length;const g0=games[fi];gs.push(g0);
     for(const id of D.roster['5']){const p=D.P[id],b=R.B[id];P[id]={name:p.name,short:p.short,last:p.last,pos:p.pos};if(!(b.min>0))continue;gp[id]=(gp[id]||0)+1;const x=B[id]=B[id]||{};['min','pts','fgm','fga','tpm','tpa','ftm','fta','oreb','dreb','ast','stl','blk','to','pf','pm'].forEach(k=>x[k]=(x[k]||0)+b[k]);if(p.starter)x.gs=(x.gs||0)+1}
     for(const n of [2,3,4,5])for(const [k,l] of Object.entries(R.L['5'][n])){const o=L[n][k]=L[n][k]||{ids:l.ids,sec:0,pf:0,pa:0,o:{},d:{},g:0};o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;o.g++;for(const x in l.o){o.o[x]=(o.o[x]||0)+l.o[x];o.d[x]=(o.d[x]||0)+(l.d[x]||0)}if(l.pb){o.pb=o.pb||{};for(const[id,q] of Object.entries(l.pb)){const z=o.pb[id]=o.pb[id]||{};for(const k in q)z[k]=(z[k]||0)+q[k]}}}
-    for(const q of R.shots)if(q.t!=='5')oshots.push([q.hasXY?q.x:null,q.hasXY?q.y:null,q.m?1:0,q.three?1:0,q.zi,q.pt,q.ast?1:0,gi]);
+    for(const q of R.shots)if(q.t!=='5')oshots.push([q.hasXY?q.x:null,q.hasXY?q.y:null,q.m?1:0,q.three?1:0,q.zi,q.pt,q.ast?1:0,gi,q.od||'']);
     for(const q of R.shots)if(q.t==='5'){shots.push([q.id,q.hasXY?q.x:null,q.hasXY?q.y:null,q.m?1:0,q.three?1:0,q.zi,q.pt,q.ast?1:0,gi]);if(q.hasXY){const z=(pz[q.id]=pz[q.id]||{});const g=(z[gi]=z[gi]||ZN.map(()=>[0,0]));g[q.zi][1]++;if(q.m)g[q.zi][0]++}}
     for(const a of R.asts)if(a.t==='5')asts.push([a.p,a.s,a.v,gi,a.z]);
     const tc=R.T['5'],to=R.T[D.other.id];for(const [dst,src] of [[T.cle,tc],[T.opp,to]]){for(const k in src)if(typeof src[k]==='number')dst[k]=(dst[k]||0)+src[k];src.z.forEach((v,i)=>{dst.z[i][0]+=v[0];dst.z[i][1]+=v[1]})}
@@ -3134,7 +3136,7 @@ async function loadSeason(se){
   const D={season:se,teams:[focus,other],focus,other,home:focus,away:other,P,roster:{'5':ids,opp:[]},plays:[],wp:{},esp:{},games:j.games};
   const B={};Object.keys(P).forEach(id=>B[id]=Object.assign({min:0,pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,oreb:0,dreb:0,ast:0,stl:0,blk:0,to:0,pf:0,pm:0,gs:0},j.B[id]||{},{gp:j.gp[id]||0}));
   const fill=t=>Object.assign({pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,oreb:0,dreb:0,toreb:0,tdreb:0,ast:0,stl:0,blk:0,to:0,pf:0,sec:0},t);
-  const shots=j.shots.map(([id,x,y,m,th,zi,pt,ast,gi])=>({t:'5',id,x,y,hasXY:x!=null,m:!!m,three:!!th,zi,pt,ast:!!ast,gi,per:0,clock:'',text:''})).concat((j.oshots||[]).map(([x,y,m,th,zi,pt,ast,gi])=>({t:'opp',id:null,x,y,hasXY:x!=null,m:!!m,three:!!th,zi,pt,ast:!!ast,gi,per:0,clock:'',text:''})));
+  const shots=j.shots.map(([id,x,y,m,th,zi,pt,ast,gi])=>({t:'5',id,x,y,hasXY:x!=null,m:!!m,three:!!th,zi,pt,ast:!!ast,gi,per:0,clock:'',text:''})).concat((j.oshots||[]).map(([x,y,m,th,zi,pt,ast,gi,od])=>({t:'opp',id:null,od:od||'',x,y,hasXY:x!=null,m:!!m,three:!!th,zi,pt,ast:!!ast,gi,per:0,clock:'',text:''})));
   const R={B,L:{'5':j.L,opp:{2:{},3:{},4:{},5:{}}},T:{'5':fill(j.T.cle),opp:fill(j.T.opp)},shots,asts:j.asts.map(([p,s2,v,gi,z])=>({t:'5',p,s:s2,v,gi,z})),on:{'5':new Set(),opp:new Set()},plays:[],runs:[],pc:{'5':j.pc,opp:j.pcO||null},cx:j.cx?(()=>{const mk=c=>[{n:c.h[0],pts:c.h[1],pp:c.h[0]?c.h[1]/c.h[0]:null},{n:c.t[0],pts:c.t[1],pp:c.t[0]?c.t[1]/c.t[0]:null}];return {'5':mk(j.cx.cle),opp:mk(j.cx.opp)}})():null,pz:j.pz,lp:null,maxPer:4};
   S.data=D;S.R=R;S.state='post';S.err=null;
 }

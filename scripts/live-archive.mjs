@@ -175,7 +175,7 @@ function build(per, file) {
     }
     if (per === 'all') for (const [id, st] of Object.entries(R0.stints || {})) if (D.P[id] && D.P[id].team === '5' && st.length) (rot[id] = rot[id] || []).push([gi, st.map(([a, b, pm]) => [Math.round(a), Math.round(b), pm])]);
     /* opponents' shots too, so the season Shots tab can show what the Cavs allow */
-    for (const q of R.shots) if (q.t !== '5') oshots.push([q.hasXY ? q.x : null, q.hasXY ? q.y : null, q.m ? 1 : 0, q.three ? 1 : 0, q.zi, q.pt, q.ast ? 1 : 0, gi]);
+    for (const q of R.shots) if (q.t !== '5') oshots.push([q.hasXY ? q.x : null, q.hasXY ? q.y : null, q.m ? 1 : 0, q.three ? 1 : 0, q.zi, q.pt, q.ast ? 1 : 0, gi, q.od || '']); // [8]: the Cavs on the floor (Nov 5: filter what opponents shoot by who was on)
     for (const q of R.shots) if (q.t === '5') {
       shots.push([q.id, q.hasXY ? q.x : null, q.hasXY ? q.y : null, q.m ? 1 : 0, q.three ? 1 : 0, q.zi, q.pt, q.ast ? 1 : 0, gi]);
       if (q.hasXY) { const z = (pz[q.id] = pz[q.id] || {}); const g = (z[gi] = z[gi] || C.ZN.map(() => [0, 0])); g[q.zi][1]++; if (q.m) g[q.zi][0]++; }
