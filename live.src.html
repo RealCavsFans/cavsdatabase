@@ -248,7 +248,7 @@ table.dt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
 .zkey{display:block!important;font:400 0.5625rem/1.5 var(--sans)!important;color:var(--muted);margin:6px 0 0;text-align:left;opacity:.9}.zkey b{display:inline;color:var(--muted);font-weight:700;white-space:nowrap}.zkey b::after{content:' '}.zkey span{display:inline}.zkey span::after{content:'  ·  ';white-space:pre}.zkey span:last-child::after{content:''}
 .leg{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;font:500 0.75rem var(--sans);color:var(--muted);margin-top:8px}
 .leg i{display:inline-block;width:10px;height:10px;margin-right:5px;vertical-align:-1px}
-td.pnm{font-weight:700;color:var(--fg)}body>main.wrap{min-height:100vh}b.ffv>small,b.ffv>span{margin:0 8px 0 0!important}.tcap p.note,.tcap .capkey,.tcap .sfn,.tcap .zleg-c,.tcap .ffn-l{font-size:7.5px!important;line-height:1.4!important}.tcap .key span:last-child{font-size:8px!important}.tcap .key.mkey span:last-child{font-size:inherit!important}.zleg{margin-top:10px;text-align:center}.zleg-r{display:flex;align-items:center;justify-content:center;gap:8px;font:600 .75rem var(--sans);color:var(--fg2)}.zleg-r i{display:block;width:min(220px,40vw);height:10px;border-radius:2px;border:1px solid var(--line)}.zleg-c{font:500 .71875rem/1.4 var(--sans);color:var(--muted);margin-top:4px}
+td.pnm{font-weight:700;color:var(--fg)}body>main.wrap{min-height:100vh}b.ffv>small,b.ffv>span{margin:0 8px 0 0!important}.tcap p.note,.tcap .capkey,.tcap .sfn,.tcap .zleg-c,.tcap .ffn-l{font-size:7.5px!important;line-height:1.4!important}.tcap .key span:last-child{font-size:8px!important}.tcap .key.mkey span:last-child{font-size:inherit!important}.key .kn{flex-basis:100%}.zleg{margin-top:10px;text-align:center}.zleg-r{display:flex;align-items:center;justify-content:center;gap:8px;font:600 .75rem var(--sans);color:var(--fg2)}.zleg-r i{display:block;width:min(220px,40vw);height:10px;border-radius:2px;border:1px solid var(--line)}.zleg-c{font:500 .71875rem/1.4 var(--sans);color:var(--muted);margin-top:4px}
 .zt{width:100%;border-collapse:collapse;font:500 0.8125rem var(--mono)}
 .zt th{font:700 0.6875rem var(--cond);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right;padding:5px 4px;border-bottom:1px solid var(--line)}
 .zt td{text-align:right;padding:7px 4px;border-top:1px solid var(--line2);white-space:nowrap}
@@ -430,7 +430,7 @@ a.plk:hover{color:var(--wt)}
 .ldt span.tie{background:var(--track);color:var(--fg)}
 .ldt-k{display:flex;justify-content:space-between;font:600 0.75rem var(--mono);color:var(--muted);margin-bottom:12px}
 .ldt-g{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-.ldt-g div{background:var(--sub);padding:8px 10px}.ldt-g span{display:block;font:700 0.625rem var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.ldt-g b{font:700 1rem var(--mono)}
+.ldt-g div{background:var(--sub);padding:8px 10px}.ldt-g span{display:block;font:700 0.625rem var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.ldt-g b{font:700 1rem var(--mono)}.ldt-g b i.tmc{font-style:normal}
 @media (max-width:640px){.ldt-g{grid-template-columns:repeat(3,1fr)}}
 
 .tvs{display:grid;grid-template-columns:minmax(0,1fr) 4rem 4rem 4rem;gap:0 8px;align-items:center;padding:7px 0;border-top:1px solid var(--line2);font-size:0.8125rem}
@@ -674,7 +674,7 @@ ul.plays li.st-pick{cursor:pointer}ul.plays li.st-in{background:var(--sub)}ul.pl
 .st-t td:not(:first-child),.st-t th:not(:first-child),.st-p td:not(:first-child),.st-p th:not(:first-child){text-align:right}.st-p{margin-top:10px}.st-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
 .gf td:not(:first-child),.gf th:not(:first-child){text-align:right}ul.fm{list-style:none;padding:0;margin:6px 0;display:grid;gap:4px}ul.fm li{font-size:12px;line-height:1.35;color:var(--muted)}ul.fm{gap:2px!important}ul.fm b{color:var(--fg);font-weight:600}ul.fm .fm-n{margin-left:8px;color:#860038;font-weight:700}
 /* Nov 3: phones: "Stats explained" drop-down, smaller clutch card */
-.tcap{--pos:#F2B231;--wt:#F2B231;--pmp:#F2B231;--pmn:#9aa0a8;--neg:#9aa0a8;--cf:#F2B231;--co:#8f9aa8}.tcap .ldt-g{grid-template-columns:repeat(3,minmax(0,1fr))!important}.tcap .ldt-g span{white-space:normal;overflow:visible}.tcap-st ul.plays li.st-in{background:none!important;box-shadow:none!important}.tcap-st .st-clr,.tcap-st a,.tcap-st button{display:none!important}.tcap-st ul.plays li:not(.st-in):not(.pd),.tcap-st .fl,.tcap-st .plb,.tcap-st .st-hint,.tcap-st>p.note{display:none!important}.tcap.tcapL{--pos:#860038;--wt:#860038;--pmp:#860038;--cf:#860038;--gold:#860038}.tcap.tcapL small.rk.g{color:#860038!important}.tcap-big li,.tcap-big p:not(.note):not(.capkey){font-size:1.125rem!important;line-height:1.5!important}.tcap small.rk.g{color:#F2B231!important}.capkey{margin:10px 0 0;padding:0;border:0;font:500 .6875rem/1.45 var(--sans);color:var(--muted,#5D646C)}.capkey b{font-weight:700}
+.tcap{--pos:#F2B231;--wt:#F2B231;--pmp:#4ade80;--pmn:#ff6b6b;--neg:#9aa0a8;--cf:#F2B231;--co:#8f9aa8}.tcap .ldt-g{grid-template-columns:repeat(3,minmax(0,1fr))!important}.tcap .ldt-g span{white-space:normal;overflow:visible}.tcap-st ul.plays li.st-in{background:none!important;box-shadow:none!important}.tcap-st .st-clr,.tcap-st a,.tcap-st button{display:none!important}.tcap-st ul.plays li:not(.st-in):not(.pd),.tcap-st .fl,.tcap-st .plb,.tcap-st .st-hint,.tcap-st>p.note{display:none!important}.ffc .n .ffs{font:600 .6875rem var(--mono);color:var(--muted);margin-left:6px;text-transform:none;letter-spacing:0}.tps .rc-b,.rc-b{font:inherit!important;font-weight:700!important;letter-spacing:0!important;color:inherit}.rc-h span{font:800 1.375rem/1.15 var(--cond);letter-spacing:.01em}.tcap .rc-h span{font-size:2rem}.tcap.tcapL{--co:var(--cot,#5b6470);--pos:#860038;--wt:#860038;--pmp:#1f8a4c;--pmn:#c8283c;--cf:#860038;--gold:#860038}.tcap.tcapL small.rk.g{color:#860038!important}.tcap-big li,.tcap-big p:not(.note):not(.capkey){font-size:1.125rem!important;line-height:1.5!important}.tcap small.rk.g{color:#F2B231!important}.capkey{margin:10px 0 0;padding:0;border:0;font:500 .6875rem/1.45 var(--sans);color:var(--muted,#5D646C)}.capkey b{font-weight:700}
 details.stx{margin-top:10px;border-top:1px solid var(--line2)}details.stx>summary{list-style:none;cursor:pointer;padding:9px 0 2px;font:700 .75rem var(--sans);color:var(--muted);display:flex;align-items:center;gap:6px}details.stx>summary::-webkit-details-marker{display:none}details.stx>summary::after{content:'';width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin-top:-3px}details.stx[open]>summary::after{transform:rotate(-135deg);margin-top:3px}details.stx>p.note:first-of-type{margin-top:4px!important}
 @media (max-width:640px){.clv{gap:10px!important}.clv-g{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px!important}.clv-g>div{min-width:0!important;max-width:none!important;padding:4px 5px!important;border-top-width:3px!important}.clv-g b{font-size:.75rem!important}.clv-g span{font-size:.625rem!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.clv-g small{font-size:.5625rem!important}.clv-sb{height:22px!important}.clv-sb span{font-size:.6875rem!important;padding:0 6px!important}.clv-p{gap:20px!important}.clv-p b{font-size:1.125rem!important}.clv-p span{font-size:.6875rem!important}.clv-k{margin-bottom:4px!important;font-size:.625rem!important}.clv-rk{font-size:.75rem!important;gap:6px 12px!important}}
 .pre-n{font-size:.75rem!important;margin-top:8px!important}
@@ -802,7 +802,7 @@ function oppColor(ab){const L=OCOL[OTAB[ab]||ab];const ok=h=>{const n=parseInt(h
   if(Y<.035)return false;if(1.05/(Y+.05)<3)return false;if(sat>.45&&(hu>=325||hu<=15))return false;return true};
   return (L&&L.find(ok))||'#9a6a00'}
 function applyOpp(D){const c=D&&D.other&&D.other.abbr&&D.other.abbr!=='OPP'?oppColor(D.other.abbr):'#9a6a00';let st=document.getElementById('co-team');if(!st){st=document.createElement('style');st.id='co-team';document.body.appendChild(st)}
-  const dk=`color-mix(in srgb,${c} 55%,#fff)`;st.textContent=`:root{--co:${c}}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--co:${dk}}}:root[data-theme=dark]{--co:${dk}}`}
+  const dk=`color-mix(in srgb,${c} 55%,#fff)`;st.textContent=`:root{--co:${c};--cot:${c}}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--co:${dk}}}:root[data-theme=dark]{--co:${dk}}`}
 function setData(d,feed){S.data=prep(d);S.data.noSubs=!!d.noSubs;S.data.focus.c='var(--cf)';S.data.other.c='var(--co)';applyOpp(S.data);S.fetched=Date.now();S.err=null;S.feed=feed}
 /* live games: ESPN first. After two misses in a row, switch to the backup feed (/pbp: StatMuse, then CBS, then Yahoo),
    and check ESPN again every fourth refresh so the page returns to it once it's back. */
@@ -1010,7 +1010,7 @@ function capFoot(g,url,date,W,H,FT,pad,S,mono,wine,muted){const two=FT>45*S;g.te
        const pmc=/^(\+\/[-−]|net|diff)/i.test(H[i]);const sg=/^[+−-]/.test(c.v)&&num(c.v)!==0?(pmc?(num(c.v)>0?' pu':' pd'):(num(c.v)>0?' up':' dn')):'';const sbx=c.sb?`<i class="t-sub">${esc2(c.sb)}</i>`:'';return bigs.includes(i)?`<span class="t-v${sg} ${sd}"><b>${esc2(c.v)}</b>${rk}${sbx}</span>`:`<span class="t-v${sg} ${sd}">${esc2(c.v)}${rk}${sbx}</span>`}).join('')+'</div>'});
      return h+'</div>'+nt}}}
   const tiles=[...card.querySelectorAll('.pbt>div,.ff>.ffc')].filter(vis);
-  if(tiles.length){return '<div class="t-kv">'+tiles.map(d=>{const b=d.querySelector('b');const lab=d.dataset.k||T((d.querySelector('span,.n')||{}).textContent);const rk=d.querySelector('small.rk');return `<div><b>${esc2(T(b&&b.textContent))}</b><span>${esc2(lab)}${rk?` <em class="${rk.classList.contains('g')?'g':'n'}">${esc2(T(rk.textContent))}</em>`:''}</span></div>`}).join('')+'</div>'+nt}
+  if(tiles.length){return '<div class="t-kv">'+tiles.map(d=>{const b=d.querySelector('b');const ln=d.querySelector('span,.n')||{},fs=ln.querySelector&&ln.querySelector('.ffs');const lab=d.dataset.k||T(fs?[...ln.childNodes].filter(z=>z!==fs).map(z=>z.textContent).join(''):ln.textContent);const rk=d.querySelector('small.rk');return `<div><b>${esc2(T(b&&b.textContent))}</b><span>${esc2(lab)}${rk?` <em class="${rk.classList.contains('g')?'g':'n'}">${esc2(T(rk.textContent))}</em>`:''}${fs?`<i class="t-ss">${esc2(T(fs.textContent))}</i>`:''}</span></div>`}).join('')+'</div>'+nt}
   return ''}
  async function termSeason(ms,sh,title,hid,card){title=String(title||"").replace(/\bCLE\b/g,"CAVS");const esc2=x=>String(x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
   const sub=((hid.find(x=>x.matches('p.sub'))||{}).textContent||'').trim().replace(/\s*·\s*tap a column to sort/i,'').replace(/^Tap a column to sort\.?$/i,'');const gm=!S.season,D0=S.data||{},se=gm?'':S.season.replace('-','–');const gday=gm&&D0.date?new Date(D0.date).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'';const gOpp=gm&&D0.focus&&D0.other?D0.other.abbr:'';const gHA=gm&&D0.home&&D0.focus&&D0.home.id===D0.focus.id?'vs':'at';const gSt=gm&&D0.status&&D0.status.type||{};const gTag=gSt.completed?'Final':gSt.state==='in'?(gSt.shortDetail||'Live'):'';const gSc=gm&&D0.focus?`<div class="t-gs"><span class="cv">CAVS <b>${D0.focus.score}</b></span><i>${gHA}</i><span>${esc2(gOpp)} <b>${D0.other.score}</b></span>${gTag?`<em>${esc2(gTag)}</em>`:''}</div>`:'';const slugT=title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
@@ -1020,7 +1020,7 @@ function capFoot(g,url,date,W,H,FT,pad,S,mono,wine,muted){const two=FT>45*S;g.te
  .tps .t-br{display:flex;align-items:center;gap:9px;font:700 17px var(--mono)}.tps .t-br i{color:#F2B231;font-style:normal}
  .tps .t-eb{margin-top:24px;font:700 11px var(--sans);letter-spacing:.18em;color:#F2B231;text-transform:uppercase}
  .tps h1.t-h{margin:6px 0 0;font:800 46px/.92 var(--cond);text-transform:uppercase;max-width:330px;color:#fff;letter-spacing:0}
- /* score line: the FINAL box sits centred on the numbers */.tps .t-gs{display:flex;align-items:center;gap:10px;margin-top:10px;font:700 13px var(--mono);color:rgba(255,255,255,.7)}.tps .t-gs b{font:800 22px var(--cond);color:#fff;margin-left:4px}.tps .t-gs .cv{color:#F2B231}.tps .t-gs .cv b{color:#F2B231}.tps .t-gs i{font-style:normal;color:rgba(255,255,255,.4)}.tps .t-gs em{font-style:normal;font-size:10px;line-height:1.2;letter-spacing:.1em;text-transform:uppercase;background:rgba(255,255,255,.08);padding:3px 6px;color:rgba(255,255,255,.7)}.tps .t-ld{margin:10px 0 0;font:400 12px/1.42 var(--sans);color:rgba(255,255,255,.64);max-width:none}.tps .t-l.nw{white-space:nowrap}.tps .t-v i.t-sub{display:block;font:500 9px var(--mono);font-style:normal;color:rgba(255,255,255,.45);margin-top:2px}.tps .t-v.pu,.tps .t-v.pu b{color:#4ade80!important}.tps .t-v.pd,.tps .t-v.pd b{color:#ff6b6b!important}
+ /* score line: the FINAL box sits centred on the numbers */.tps .t-gs{display:flex;align-items:center;gap:16px;margin-top:10px;font:800 16px/1 var(--cond);letter-spacing:.03em;color:rgba(255,255,255,.7)}.tps .t-gs>span{display:inline-flex;align-items:center;gap:8px}.tps .t-gs b{font:800 28px/1 var(--cond);color:#fff}.tps .t-gs .cv{color:#F2B231}.tps .t-gs .cv b{color:#F2B231}.tps .t-gs i{font:700 11px/1 var(--mono);font-style:normal;text-transform:uppercase;color:rgba(255,255,255,.4)}.tps .t-gs em{font-style:normal;font-size:10px;line-height:1.2;letter-spacing:.1em;text-transform:uppercase;background:rgba(255,255,255,.08);padding:3px 6px;color:rgba(255,255,255,.7)}.tps .t-ld{margin:10px 0 0;font:400 12px/1.42 var(--sans);color:rgba(255,255,255,.64);max-width:none}.tps .t-l.nw{white-space:nowrap}.tps .t-v i.t-sub{display:block;font:500 9px var(--mono);font-style:normal;color:rgba(255,255,255,.45);margin-top:2px}.tps .t-v.pu,.tps .t-v.pu b{color:#4ade80!important}.tps .t-v.pd,.tps .t-v.pd b{color:#ff6b6b!important}
  .tps .t-tab{margin-top:18px}.tps .t-tab .t-lb{display:inline-flex;gap:8px;align-items:center;font:600 10px var(--mono);color:rgba(255,255,255,.6);background:rgba(255,255,255,.07);padding:6px 10px;border-radius:8px 8px 0 0}.tps .t-tab .t-lb b{width:7px;height:7px;border-radius:50%;background:#F2B231}
  .tps .t-bd{background:#15181e;border:1px solid rgba(255,255,255,.08);border-radius:0 12px 12px 12px;padding:12px 14px}.tps .t-cmd{font:600 12px var(--mono);color:#F2B231;margin-bottom:6px}.tps .t-cmd span{color:rgba(255,255,255,.5)}.tps .t-bd img{display:block;max-width:none}
  .tps .t-tb{margin-top:8px;font:500 12px/1 var(--mono)}.tps .t-h,.tps .t-r{display:grid;gap:8px;align-items:center}
@@ -1033,12 +1033,12 @@ function capFoot(g,url,date,W,H,FT,pad,S,mono,wine,muted){const two=FT>45*S;g.te
  .tps .bk{display:inline-flex;gap:1.5px;width:64px;flex:none}.tps .bk u,.tps .bk s{display:block;flex:1;height:13px;text-decoration:none}.tps .bk u{background:#F2B231}.tps .bk s{background:rgba(255,255,255,.13)}
  .tps .t-h .cv{color:#F2B231;font-weight:700}.tps .t-bl.op .bk u{background:rgba(255,255,255,.5)}.tps .t-bl.op .vv,.tps .t-v.op{color:rgba(255,255,255,.62)}.tps .t-v.op b{color:rgba(255,255,255,.72)}.tps .t-v.op.up{color:rgba(242,178,49,.7)}.tps em.t-rk{margin:0;font-size:12px;display:inline}.tps .t-rb{text-align:left!important;display:flex;align-items:center;gap:6px;white-space:nowrap;font:500 12px/1 var(--mono);color:#F2B231;letter-spacing:-1px}.tps .t-rb i{font-style:normal;color:rgba(255,255,255,.13)}.tps .t-rb em{margin:0;letter-spacing:0}
  .tps .t-gh{display:flex;justify-content:space-between;margin-top:14px;padding-bottom:4px;font:800 13px var(--cond);letter-spacing:.1em;text-transform:uppercase;color:#F2B231}.tps .t-gh span{font:500 10px var(--mono);letter-spacing:0;text-transform:none;color:rgba(255,255,255,.5)}.tps .t-tb>.t-gh:first-child{margin-top:4px}
- .tps .t-kv{margin-top:6px}.tps .t-kv>div{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,.12)}.tps .t-kv b{font:800 30px/1 var(--cond);color:#fff}.tps .t-kv span{font:500 11.5px var(--mono);color:rgba(255,255,255,.62)}
+ .tps .t-kv{margin-top:6px}.tps .t-kv>div{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,.12)}.tps .t-kv b{font:800 30px/1 var(--cond);color:#fff}.tps .t-kv span{font:500 11.5px var(--mono);color:rgba(255,255,255,.62)}.tps .t-kv .t-ss{font:500 10.5px var(--mono);font-style:normal;color:rgba(255,255,255,.42);margin-left:12px}
  .tps .t-nt{margin-top:10px;font:500 7.5px/1.45 var(--mono);color:rgba(255,255,255,.45)}.tps .t-nt p{margin:0 0 4px}.tps .t-cur{display:inline-block;width:7px;height:12px;background:#F2B231;vertical-align:-2px;margin-left:3px}.tps .t-sb span{border:0}
  .tps .t-sb{display:flex;margin:18px -26px 0;font:700 10px/1 var(--mono);text-transform:uppercase;letter-spacing:.04em}.tps .t-sb span{padding:7px 10px}.tps .t-sb .ta{background:#F2B231;color:#101419}.tps .t-sb .tb{background:#860038;color:#fff}.tps .t-sb .tc{background:#1d2229;color:rgba(255,255,255,.65);flex:1}.tps .t-sb .td{background:#1d2229;color:rgba(255,255,255,.65)}`;
    /* light version for live-game images: same rules with ink for white, wine for gold text and bars, paper panels */
    st.textContent+=st.textContent.replace(/\.tps(?=[\s{.:>,])/g,'.tps.tl').replace(/#fff(?![0-9a-f])/gi,'#101419').replace(/rgba\(255,\s*255,\s*255,\s*([.\d]+)\)/g,(m,a)=>'rgba(16,20,25,'+Math.min(1,a*1.15).toFixed(2)+')').replace(/#F2B231/gi,'#860038').replace(/rgba\(242,\s*178,\s*49,/g,'rgba(134,0,56,').replace(/#15181e/gi,'#ffffff').replace(/#1d2229/gi,'#e9e6e1').replace(/#3d0a20/gi,'#ece5d8').replace(/#15101a/gi,'#f3efe8').replace(/#0d1014/gi,'#f7f5f2').replace(/#4ade80/gi,'#1d6b3a').replace(/#ff6b6b/gi,'#b42318')
-    +'.tps.tl{color:#101419}.tps.tl .t-lgb{filter:grayscale(1);opacity:.1}.tps.tl .t-bd{border-color:#e3e0db}.tps.tl .t-sb .ta{background:#F2B231;color:#101419}.tps.tl .t-sb .tb{background:#860038;color:#fff}.tps.tl .t-sb .tc,.tps.tl .t-sb .td{background:#e9e6e1;color:rgba(16,20,25,.7)}';
+    +'.tps.tl .t-v.pu,.tps.tl .t-v.pu b{color:#1f8a4c!important}.tps.tl .t-v.pd,.tps.tl .t-v.pd b{color:#c8283c!important}.tps.tl{color:#101419}.tps.tl .t-lgb{filter:grayscale(1);opacity:.1}.tps.tl .t-bd{border-color:#e3e0db}.tps.tl .t-sb .ta{background:#F2B231;color:#101419}.tps.tl .t-sb .tb{background:#860038;color:#fff}.tps.tl .t-sb .tc,.tps.tl .t-sb .td{background:#e9e6e1;color:rgba(16,20,25,.7)}';
    document.head.appendChild(st)}
   const TL=gm&&window.__lightCards!==0;const z=document.createElement('div');z.className=TL?'tps tl':'tps';z.style.width=W+'px';
   z.innerHTML=`<img class="t-lgb" src="/img/tl/cle.png" alt=""><div class="t-br"><svg style="width:28px;height:28px;flex:none" viewBox="0 0 100 100"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/></svg>cavs<i>_db</i></div><div class="t-eb">${gm?esc2(gday+' · Cavs '+gHA+' '+gOpp):'Cavs · '+esc2(se)+' season'}</div><h1 class="t-h">${esc2(title)}</h1>${typeof gSc!=="undefined"?gSc:""}${sub?`<p class="t-ld">${esc2(sub)}</p>`:''}<div class="t-tab"><span class="t-lb"><b></b>cavs_db · cavs · ${gm?esc2(gday):esc2(se)}</span><div class="t-bd"><div class="t-cmd">&gt; cavs <span>--${esc2(slugT)}</span><span class="t-cur"></span></div>${tb||`<img src="${sh.toDataURL('image/png')}" style="width:${iw}px">`}</div></div><div class="t-sb"><span class="ta">cavs_db</span><span class="tb">${gm?esc2(gHA+' '+gOpp+(gTag?' · '+gTag:'')):esc2(se)+(gp?' · '+gp+' GP':'')}</span><span class="tc">cavsdatabase.com/live</span><span class="td">${gm&&gday?esc2(gday):new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'})}</span></div>`;
@@ -1053,7 +1053,7 @@ function capFoot(g,url,date,W,H,FT,pad,S,mono,wine,muted){const two=FT>45*S;g.te
    const TOK=/rgba?\([^)]*\)|color\(srgb[^)]*\)/g;
    const fx=v=>v.replace(TOK,m=>{let r,g,b,a=1;if(m[0]==='c'){const q=m.match(/[\d.]+/g).map(Number);[r,g,b]=q.slice(0,3).map(z=>z*255);if(q.length>3)a=q[3]}else{const q=m.match(/[\d.]+/g).map(Number);[r,g,b]=q;if(q.length>3)a=q[3]}
      if(r>=130&&r>=g&&g>=r*.45&&g<=r*.9&&b<=r*.5&&r-b>=70)return a<1?`rgba(134, 0, 56, ${a})`:'rgb(134, 0, 56)';
-     const R2=255-(255-r)*a,G2=255-(255-g)*a,B2=255-(255-b)*a;if(R2-G2>=22&&B2>=G2-6&&R2>=175){const L=Math.round(.299*R2+.587*G2+.114*B2);return `rgb(${L}, ${L}, ${L})`}return m});
+     const R2=255-(255-r)*a,G2=255-(255-g)*a,B2=255-(255-b)*a;if(R2-G2>=22&&B2>=G2-6&&R2>=175&&G2>=80){/* pale tints only: the saturated plus-minus red stays red */const L=Math.round(.299*R2+.587*G2+.114*B2);return `rgb(${L}, ${L}, ${L})`}return m});
    [card,...card.querySelectorAll('*')].forEach(e=>{const c=getComputedStyle(e),o={};['color','backgroundColor','borderTopColor','borderRightColor','borderBottomColor','borderLeftColor','fill','stroke','outlineColor','textDecorationColor','backgroundImage','boxShadow'].forEach(k=>{const v=c[k];if(!v||v==='none')return;const w=fx(v);if(w!==v)o[k]=w});
     if(Object.keys(o).length){st.push([e,e.getAttribute('style')]);Object.assign(e.style,o)}})}
   return ()=>{undo.forEach(([n,v])=>n.nodeValue=v);st.forEach(([e,v])=>v==null?e.removeAttribute('style'):e.setAttribute('style',v));card.classList.remove('tcap-big','tcapL')}}
@@ -1359,7 +1359,7 @@ function momentumCard(D,R){const F=D.focus,O=D.other,c=el('div','card sec');head
   const k=el('div','key mkey');k.innerHTML=`<span><i style="background:${F.c}"></i>${esc(F.abbr)} on top</span><span><i style="background:${O.c}"></i>${esc(O.abbr)} on top</span>`+(best[1]>0?`<span>Best ${esc(F.abbr)} stretch +${best[1]} (${pname(perAt(Math.max(0,best[0]-1)))})</span>`:'')+(worst[1]<0?`<span>Best ${esc(O.abbr)} stretch +${-worst[1]} (${pname(perAt(Math.max(0,worst[0]-1)))})</span>`:'');c.appendChild(k);
   scrub(c,D,R,W,pad,T,t=>{const m=at(t)-at(Math.max(0,t-180));return 'Last 3 min: '+(m>0?F.abbr+' +'+m:m<0?O.abbr+' +'+(-m):'even')});return c}
 /* lead tracker: time each team led, time tied, lead changes, longest stretch in front */
-function leadCard(D,R){const F=D.focus,O=D.other,c=el('div','card sec');head(c,'Who led, and for how long',S.per==='all'?'':'Whole game');
+function leadCard(D,R){const F=D.focus,O=D.other,c=el('div','card sec');/* Nov 4: team names in their bar color */const tmc=t=>`<i class="tmc" style="color:${t.c}">${esc(t.abbr)}</i>`;head(c,'Who led, and for how long',S.per==='all'?'':'Whole game');
   if(!R.lp){c.appendChild(el('p','empty','Starts at tip-off.'));return c}
   const fh=F===D.home,end=R.lp.t;let lf=0,lo=0,tie=0,pt=0,pm=0,run0=0,hold={f:0,o:0};
   const close=t=>{const dt=t-pt;if(pm>0)lf+=dt;else if(pm<0)lo+=dt;else tie+=dt};
@@ -1367,7 +1367,7 @@ function leadCard(D,R){const F=D.focus,O=D.other,c=el('div','card sec');head(c,'
   const tot=lf+lo+tie||1,lab=(w,t)=>w/tot>.14?t:'';
   c.insertAdjacentHTML('beforeend',`<div class="ldt"><span style="width:${lf/tot*100}%;background:${F.c}">${lab(lf,esc(F.abbr)+' '+fmtMin(lf))}</span><span class="tie" style="width:${tie/tot*100}%">${lab(tie,'Tied')}</span><span style="width:${lo/tot*100}%;background:${O.c}">${lab(lo,esc(O.abbr)+' '+fmtMin(lo))}</span></div>
    <div class="ldt-k"><span>${esc(F.abbr)} led ${fmtMin(lf)}</span><span>Tied ${fmtMin(tie)}</span><span>${esc(O.abbr)} led ${fmtMin(lo)}</span></div>
-   <div class="ldt-g">${[['Lead changes',R.lc],['Times tied',R.ties],['Longest lead held',(hold.f>=hold.o?esc(F.abbr):esc(O.abbr))+' '+fmtMin(Math.max(hold.f,hold.o))],['Biggest lead '+esc(F.abbr),R.lead[F.id]],['Biggest lead '+esc(O.abbr),R.lead[O.id]],...(()=>{const rs=(R.runs||[]).filter(r=>!S.per||S.per==='all'||inPer(S.per,r.start.per)||inPer(S.per,r.end.per));if(!rs.length)return[];const r=rs.reduce((x,y)=>y.pts>x.pts?y:x);return [['Biggest run',esc(r.t===F.id?F.abbr:O.abbr)+' '+r.pts+'–0']]})()].map(([a,b])=>`<div><span>${a}</span><b>${b}</b></div>`).join('')}</div>`);return c}
+   <div class="ldt-g">${[['Lead changes',R.lc],['Times tied',R.ties],['Longest lead held',tmc(hold.f>=hold.o?F:O)+' '+fmtMin(Math.max(hold.f,hold.o))],['Biggest lead '+esc(F.abbr),R.lead[F.id]],['Biggest lead '+esc(O.abbr),R.lead[O.id]],...(()=>{const rs=(R.runs||[]).filter(r=>!S.per||S.per==='all'||inPer(S.per,r.start.per)||inPer(S.per,r.end.per));if(!rs.length)return[];const r=rs.reduce((x,y)=>y.pts>x.pts?y:x);return [['Biggest run',tmc(r.t===F.id?F:O)+' '+r.pts+'–0']]})()].map(([a,b])=>`<div><span>${a}</span><b>${b}</b></div>`).join('')}</div>`);return c}
 /* Team tab: second-half adjustments (Oct 28) */
 function halvesCard(D,R){const out=[];const F=D.focus,O=D.other;if(!R.lp||!(R.lp.per>2||(R.lp.per===2&&R.lp.type==='End Period')))return null;
   /* 6 second-half adjustments */
@@ -1387,7 +1387,7 @@ function vFlow(v,D,R){
   g+=`<line x1="${pad}" x2="${W-pad}" y1="${H/2}" y2="${H/2}" stroke="var(--fg2)"/><text x="${pad-4}" y="${Y(mx)+4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="var(--mono)">+${mx}</text><text x="${pad-4}" y="${Y(-mx)+4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="var(--mono)">−${mx}</text>`;
   f.insertAdjacentHTML('beforeend',`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Score margin"><defs><clipPath id="up"><rect width="${W}" height="${H/2}"/></clipPath><clipPath id="dn"><rect y="${H/2}" width="${W}" height="${H/2}"/></clipPath></defs>${g}<path d="${d} L${X(eT)},${H/2} Z" fill="${D.focus.c}" opacity=".85" clip-path="url(#up)"/><path d="${d} L${X(eT)},${H/2} Z" fill="${D.other.c}" opacity=".75" clip-path="url(#dn)"/></svg>`);
   scrub(f,D,R,W,pad,T,t=>{let m=0;for(const [tt,mm] of R.margin){if(tt>t)break;m=mm}return m>0?D.focus.abbr+' by '+m:m<0?D.other.abbr+' by '+(-m):'Tied'});
-  const k=el('div','key');k.innerHTML=`<span><i style="background:${D.focus.c}"></i>${esc(D.focus.abbr)} ahead</span><span><i style="background:${D.other.c}"></i>${esc(D.other.abbr)} ahead</span><span>Lead changes ${R.lc} · Ties ${R.ties} · Largest lead ${esc(D.focus.abbr)} ${R.lead[D.focus.id]}, ${esc(D.other.abbr)} ${R.lead[D.other.id]}</span>`;f.appendChild(k);
+  const k=el('div','key mkey');k.innerHTML=`<span><i style="background:${D.focus.c}"></i>${esc(D.focus.abbr)} ahead</span><span><i style="background:${D.other.c}"></i>${esc(D.other.abbr)} ahead</span><span class="kn">Lead changes ${R.lc} · Ties ${R.ties} · Largest lead ${esc(D.focus.abbr)} ${R.lead[D.focus.id]}, ${esc(D.other.abbr)} ${R.lead[D.other.id]}</span>`;f.appendChild(k);
   const rr=R.runs.filter(r=>inPer(S.per,r.start.per)||inPer(S.per,r.end.per));
   /* runs (8–0 or more) and field goal droughts (3+ minutes), one list in game order */
   {const clk=t=>{let p=1;while(p<R.maxPer&&t>=pstart(p)+plen(p))p++;const left=Math.max(0,pstart(p)+plen(p)-t);return pname(p)+' '+Math.floor(left/60)+':'+String(Math.floor(left%60)).padStart(2,'0')};const perOf=t=>{let p=1;while(p<R.maxPer&&t>=pstart(p)+plen(p))p++;return p};
@@ -1452,7 +1452,7 @@ function vTeam(v,D,R){
   /* season mode: the same team stats, per game, from the archive totals */
   if(S.season){const n=Math.max(1,(D.games||[]).length||1);const pg=t=>{const x={};for(const k in t)x[k]=typeof t[k]==='number'?t[k]/n:t[k];return x};R=Object.assign({},R,{T:{[D.focus.id]:pg(R.T[D.focus.id]),[D.other.id]:pg(R.T[D.other.id])}})}
   if(!S.season&&S.state!=='pre'){const mc=milestoneCard(D,R);if(mc)v.appendChild(mc)}
-  if(S.state==='post'&&!S.season&&R.lp){const RA=S.per==='all'?R:deriveCore(D,D.plays,'all');const c=el('div','card');c.style.borderTop='3px solid var(--gold)';c.style.marginBottom='14px';head(c,'Recap','Numbers only, written automatically at the final buzzer');const ul=el('ul','sw');recap(D,RA).forEach((t,i)=>{const li=el('li');li.style.gridTemplateColumns='1fr';li.appendChild(el('span',null,t));if(!i)li.style.fontWeight='700';ul.appendChild(li)});c.appendChild(ul);v.appendChild(c);hiRecap(D,RA,ul);ltLoad();const lt=ltCard();if(lt)v.appendChild(lt)}
+  if(S.state==='post'&&!S.season&&R.lp){const RA=S.per==='all'?R:deriveCore(D,D.plays,'all');const c=el('div','card');c.style.borderTop='3px solid var(--gold)';c.style.marginBottom='14px';head(c,'Recap','Numbers only, written automatically at the final buzzer');const ul=el('ul','sw');recap(D,RA).forEach((t,i)=>{const li=el('li');li.style.gridTemplateColumns='1fr';const sp=el('span');/* Nov 4: the phrase before each colon in bold; the first line reads as a headline */sp.innerHTML=i?esc(t).replace(/(^|\.\s+)([A-Z][^:.]{1,44}):(?=\s)/g,'$1<b class="rc-b">$2:</b>'):esc(t);li.appendChild(sp);if(!i)li.className='rc-h';ul.appendChild(li)});c.appendChild(ul);v.appendChild(c);hiRecap(D,RA,ul);ltLoad();const lt=ltCard();if(lt)v.appendChild(lt)}
   const a=R.T[D.focus.id],b=R.T[D.other.id];
   const c=el('div','card');head(c,'Team stats',S.season?(S.per!=='all'?perLabel(S.per)+' · ':'')+'Per game · '+((D.games||[]).length)+' game'+((D.games||[]).length===1?'':'s'):perLabel(S.per));
   const ROWS=[];let G0=null;const SHORT={'Offensive rebounds':'Off. rebounds','Second-chance points':'Second chance','Points from threes':'From threes','Points from free throws':'From free throws','Points in the paint':'In the paint','Points off turnovers':'Off turnovers','Pace (possessions per 48)':'Pace','Possessions (est.)':'Possessions','Points per 100 possessions':'ORTG','Free throws made':'FT made','True shot attempts':'True shot att.'};
@@ -1834,7 +1834,7 @@ function vOnOff(v,D,R){
 
 function recordThrough(D,R){const se=S.src||(S.replay?'2025-26':'2026-27');const ix=(ARCH[se]||[]).slice().sort((a,b)=>a.date<b.date?-1:1);
   const cut=ix.findIndex(g=>g.id===S.ev);const prior=(cut>=0?ix.slice(0,cut):ix.filter(g=>g.date<D.date));const fs=D.focus.ha==='home'?R.hs:R.as,os=D.focus.ha==='home'?R.as:R.hs;
-  const res=prior.map(g=>g.cle>g.os?'W':'L').concat(S.state==='post'?[fs>os?'W':'L']:[]);const w=res.filter(x=>x==='W').length,l=res.length-w;let k=0;const last=res[res.length-1];for(let i=res.length-1;i>=0&&res[i]===last;i--)k++;return {w,l,last,k,res,se}}
+  const res=prior.map(g=>g.cle>g.os?'W':'L').concat(S.state==='post'?[fs>os?'W':'L']:[]);const games=prior.map(g=>({date:g.date,ha:g.ha,opp:g.opp,cle:g.cle,os:g.os})).concat(S.state==='post'?[{date:D.date,ha:D.focus.ha,opp:D.other.abbr,cle:fs,os,now:1}]:[]);const w=res.filter(x=>x==='W').length,l=res.length-w;let k=0;const last=res[res.length-1];for(let i=res.length-1;i>=0&&res[i]===last;i--)k++;return {w,l,last,k,res,se,games}}
 /* Nov 4 (mock): share-card palette; dark terminal by default, light terminal when TC.light */
 const TC_D={light:0,bg:'#0f1216',ink:'#eef0f2',hi:'#fff',line:'rgba(255,255,255,.12)',track:'rgba(255,255,255,.08)',grid:'rgba(255,255,255,.2)',court:'#1a1f26',cline:'rgba(255,255,255,.22)',hsbg:'#2a2f37',mut:'#9aa0a6',grey:'#8b929b',panel:'#161a20',sb:'#1d2229',dash:'rgba(255,255,255,.18)',dim:'rgba(255,255,255,.4)',soft:'rgba(255,255,255,.7)',acc:'#F2B231',page:'#0d1014',glow:'#3d0a20',glow2:'#15101a',logoA:.13};
 const TC_L={light:1,bg:'#f7f5f2',ink:'#101419',hi:'#101419',line:'#e3e0db',track:'#eeebe7',grid:'#d8d3cc',court:'#ece6dc',cline:'#cfc6b8',hsbg:'#e7e1d8',mut:'#6b7078',grey:'#5b6470',panel:'#ffffff',sb:'#e9e6e1',dash:'rgba(16,20,25,.18)',dim:'rgba(16,20,25,.4)',soft:'rgba(16,20,25,.7)',acc:'#860038',page:'#f7f5f2',glow:'#ece5d8',glow2:'#f3efe8',logoA:.09};
@@ -1848,9 +1848,9 @@ function tBg(x,W,H){x.fillStyle=TC.page;x.fillRect(0,0,W,H);const g=x.createRadi
 function tMark(x,X,Y){x.save();x.translate(X,Y-30);x.scale(.36,.36);x.strokeStyle=GOLD;x.lineWidth=11;x.lineCap='round';x.lineJoin='round';x.beginPath();x.moveTo(14,26);x.lineTo(40,50);x.lineTo(14,74);x.stroke();x.fillStyle=GOLD;x.beginPath();x.arc(70,64,20,0,7);x.fill();x.restore();
   x.font='700 34px "Geist Mono"';x.fillStyle=TC.hi;x.fillText('cavs',X+50,Y);x.fillStyle=GOLD;x.fillText('_db',X+50+x.measureText('cavs ').width,Y)}
 function tScore(x,D,R,X,Y){const F=D.focus,O=D.other;const fs=F.ha==='home'?R.hs:R.as,os=F.ha==='home'?R.as:R.hs;const fin=S.state==='post',per=R.lp?R.lp.per:1;const when=fin?'FINAL'+(per>4?'/'+pname(per):''):pname(per)+' '+(R.lp?R.lp.clock:'');
-  let cx=X;const seg=(t,f,c)=>{x.font=f;x.fillStyle=c;x.fillText(t,cx,Y);cx+=x.measureText(t).width};
-  seg('CAVS ','700 30px "Geist Mono"',TC.acc);seg(String(fs),'800 50px "Saira Condensed"',TC.acc);seg('   '+(F.ha==='home'?'vs':'at')+'   ','600 28px "Geist Mono"',TC.dim);seg(O.abbr+' ','700 30px "Geist Mono"',TC.soft);seg(String(os),'800 50px "Saira Condensed"',TC.hi);
-  cx+=22;x.font='700 22px "Geist Mono"';const w=x.measureText(when).width+24;x.fillStyle=TC.track;x.fillRect(cx,Y-30,w,38);x.fillStyle=TC.soft;x.fillText(when,cx+12,Y-4)}
+  /* Nov 4: one balanced row, labels centred on the numbers, even gaps */const BIG=56,mid=Y-.35*BIG;let cx=X;const seg=(t,f,c,gap)=>{x.font=f;x.fillStyle=c;x.fillText(t,cx,midY(Y,BIG,f));cx+=x.measureText(t).width+gap};
+  const L='800 34px "Saira Condensed"',N=`800 ${BIG}px "Saira Condensed"`;seg(F.abbr==='CLE'?'CAVS':F.abbr,L,TC.acc,12);seg(String(fs),N,TC.acc,24);seg(F.ha==='home'?'VS':'AT','700 22px "Geist Mono"',TC.dim,24);seg(O.abbr,L,TC.soft,12);seg(String(os),N,TC.hi,24);
+  x.font='700 22px "Geist Mono"';const w=x.measureText(when).width+28,h=40;x.fillStyle=TC.track;x.fillRect(cx,mid-h/2,w,h);x.fillStyle=TC.soft;x.textBaseline='middle';x.fillText(when,cx+14,mid+1);x.textBaseline='alphabetic'}
 function frame(x,kicker,title,D,R,fs0=104){tBg(x,1080,1350);tMark(x,72,96);
   x.fillStyle=TC.acc;x.font='700 26px Archivo';if('letterSpacing' in x)x.letterSpacing='5px';x.fillText(kicker.toUpperCase(),72,170);if('letterSpacing' in x)x.letterSpacing='0px';
   x.fillStyle=TC.hi;let fs=fs0;x.font=`800 ${fs}px "Saira Condensed"`;const T=title.toUpperCase();while(x.measureText(T).width>936&&fs>56){fs-=6;x.font=`800 ${fs}px "Saira Condensed"`}x.fillText(T,72,268);
@@ -1936,8 +1936,8 @@ const CARDS={
       footer(x);return}
     const w=R.as===R.hs?null:(R.as>R.hs?D.away:D.home);frame(x,kick()+atLbl(D),S.state==='post'&&w?w.name+' win':(R.lp?pname(R.lp.per)+' '+R.lp.clock:'Score update'),D,R,84);
     lbl(x,'HOW IT PLAYED OUT',72,450,30);cMargin(x,R,D,72,470,936,200);
-    [F,O].forEach((t,ti)=>{const X0=72+ti*480;lbl(x,t.name.toUpperCase(),X0,780,34,ti?GREY:WINE);
-      top(t).slice(0,2).forEach((id,i)=>{const b=R.B[id],y=850+i*170;num(x,b.pts,X0,y+56,88,ti?GREY:WINE);lbl(x,'PTS',X0+4,y+92,26);const nx=X0+150;txt(x,D.P[id].last,nx,y+20,38,INK,700);
+    [F,O].forEach((t,ti)=>{const X0=72+ti*480;lbl(x,t.name.toUpperCase(),X0,752,34,ti?GREY:WINE);
+      top(t).slice(0,2).forEach((id,i)=>{const b=R.B[id],y=812+i*158;num(x,b.pts,X0,y+56,88,ti?GREY:WINE);lbl(x,'PTS',X0+4,y+92,26);const nx=X0+150;{let fz=38;x.font=`700 ${fz}px Archivo`;while(x.measureText(D.P[id].last).width>310&&fz>24){fz-=2;x.font=`700 ${fz}px Archivo`}txt(x,D.P[id].last,nx,y+20,fz,INK,700)}
         x.font='700 28px "Geist Mono"';x.fillStyle=INK;[[b.oreb+b.dreb,'REB'],[b.ast,'AST'],[b.fgm+'-'+b.fga,'FG']].forEach(([v,l],k)=>{const cx=nx+k*96;x.fillStyle=INK;x.font='700 30px "Geist Mono"';x.fillText(String(v),cx,y+64);lbl(x,l,cx,y+92,24)})})});
     {const wn=wonNames(D,R);x.fillStyle=TC.panel;x.fillRect(72,1128,936,116);x.strokeStyle=TC.dash;x.setLineDash([5,5]);x.strokeRect(72,1128,936,116);x.setLineDash([]);x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText(`${F.abbr==='CLE'?'CAVS':F.abbr} WON ${wn.length} OF THE 4 FACTORS`,100,1176);x.fillStyle='#fff';x.font='600 32px Archivo';x.fillText(wn.length?wn.join(' · '):'None tonight',100,1222)}
   }},
@@ -1977,8 +1977,10 @@ const CARDS={
     const i0=R.plays.indexOf(r.start),i1=R.plays.indexOf(r.end);const best=ptsIn(D,R,i0,i1,r.t)[0];
     if(best){const [pid,v]=best;const img=await loadImg(hsUrl(D,pid));x.fillStyle=MUT;x.font='800 30px "Saira Condensed"';ctr(x,'LED THE RUN',830,462);head2(x,img,830,575,95,null,initials(D.P[pid].name));
       x.fillStyle=INK;x.font='800 40px "Saira Condensed"';ctr(x,D.P[pid].last.toUpperCase(),830,712);x.font='700 34px "Geist Mono"';ctr(x,`${v.pts} PTS${v.ast?' · '+v.ast+' AST':''}`,830,756)}
-    lbl(x,'WHERE IT HAPPENED',72,850,30);cMargin(x,R,D,72,870,936,200,[r.start.t,r.end.t]);
-    const ln=R.lineAt[r.start.id];if(ln&&ln[r.t])txt(x,'On the floor: '+ln[r.t].map(id=>D.P[id].last).join(', '),72,1150,34,TC.ink,600);footer(x)}},
+    lbl(x,'WHERE IT HAPPENED',72,818,30);cMargin(x,R,D,72,836,936,160,[r.start.t,r.end.t]);
+    /* Nov 4: the five on the floor as headshots, centred under the chart */
+    const ln=R.lineAt[r.start.id];if(ln&&ln[r.t]){const ids=ln[r.t].slice(0,5),imgs=await Promise.all(ids.map(i=>loadImg(hsUrl(D,i))));x.fillStyle=MUT;x.font='800 28px "Saira Condensed"';ctr(x,'ON THE FLOOR',540,1080);
+      const cw=936/ids.length;ids.forEach((pid,k)=>{const cx=72+cw*(k+.5),cy=1160;head2(x,imgs[k],cx,cy,50,null,initials(D.P[pid].name));x.fillStyle=TC.ink;x.font='700 26px Archivo';let nm=D.P[pid].last;ctr(x,nm,cx,cy+86)})}footer(x)}},
   lineup:{label:'Lineup card',pick:'lineup',w:1920,h:1440,async draw(x,D,R,k){const F=D.focus.id,NN=(R.L[F][S.f.luN]?S.f.luN:5),L5=R.L[F][NN],l=L5[k];if(!l)return;const W=1920,H=1440;const NW={2:'TWO',3:'THREE',4:'FOUR',5:'FIVE'}[NN];
     /* the five-man stints this group was part of: shots, steals, blocks and each player's points come from those */const KS=new Set(NN===5?[k]:Object.entries(R.L[F][5]).filter(([kk,z])=>l.ids.every(i=>z.ids.includes(i))).map(([kk])=>kk));const PB={};KS.forEach(kk=>{const z=R.L[F][5][kk];Object.entries(z.pb||{}).forEach(([id,v])=>{if(l.ids.includes(id))PB[id]=(PB[id]||0)+(v.pts||0)})});
     /* this group vs every other five-man group in the same stretch */
@@ -2000,7 +2002,7 @@ const CARDS={
     const dd=new Date(D.date);const when=S.season?D.focus.abbr+' · '+(S.season||'').replace('-','–')+' SEASON':(D.focus.ha==='home'?D.focus.abbr+' VS '+D.other.abbr:D.focus.abbr+' AT '+D.other.abbr)+' · '+dd.toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase();
     x.fillStyle=GOLD;x.font='800 34px "Saira Condensed"';x.fillText(kick().toUpperCase()+what+' · '+when,TX,108);
     const nm=ids.map(i=>D.P[i].last.toUpperCase()).join(', ');let fs=96;x.fillStyle='#fff';x.font=`800 ${fs}px "Saira Condensed"`;while(x.measureText(nm).width>TW&&fs>48){fs-=4;x.font=`800 ${fs}px "Saira Condensed"`}x.fillText(nm,TX,108+fs*.95+6);
-    {let X=TX;const Y=290;const seg=(t,f,c)=>{x.font=f;x.fillStyle=c;x.fillText(t,X,Y);X+=x.measureText(t).width};const o=S.season?'OPP':D.other.abbr;
+    {let X=TX;const Y=290;const seg=(t,f,c)=>{x.font=f;x.fillStyle=c;x.fillText(t,X,midY(Y,104,f));X+=x.measureText(t).width};const o=S.season?'OPP':D.other.abbr;
       seg(D.focus.abbr+' ','800 44px "Saira Condensed"','#fff');seg(String(l.pf),'800 104px "Saira Condensed"','#fff');seg(' – ','800 60px "Saira Condensed"','#fff');seg(String(l.pa),'800 104px "Saira Condensed"','rgba(255,255,255,.62)');seg(' '+o,'800 44px "Saira Condensed"','#fff');
       X+=30;seg('in '+fmtMin(l.sec)+' together','600 32px Archivo','rgba(255,255,255,.62)')}
     /* offense and defense, mirrored */
@@ -2042,9 +2044,9 @@ const CARDS={
     x.strokeStyle='rgba(242,178,49,.55)';x.lineWidth=3;x.strokeRect(X(0),Y0,50*s,34*s);x.strokeRect(X(17),Y0,16*s,19*s);x.beginPath();x.arc(X(25),Y(13.75),6*s,0,Math.PI);x.stroke();
     x.beginPath();x.moveTo(X(3),Y0);x.lineTo(X(3),Y(c3));x.arc(X(25),Y(0),23.75*s,Math.atan2(c3,-22),Math.atan2(c3,22),true);x.lineTo(X(47),Y0);x.stroke();x.beginPath();x.arc(X(25),Y(0),.75*s,0,7);x.stroke();
     sh.filter(q=>!q.m).forEach(q=>{if(q.y>28.5)return;const a=X(Math.max(.5,Math.min(49.5,q.x))),b=Y(Math.max(-4.5,q.y));x.strokeStyle=TC.light?'#8b929b':'rgba(160,168,180,.7)';x.lineWidth=4;x.beginPath();x.moveTo(a-9,b-9);x.lineTo(a+9,b+9);x.moveTo(a+9,b-9);x.lineTo(a-9,b+9);x.stroke()});
-    sh.filter(q=>q.m).forEach(q=>{if(q.y>28.5)return;const a=X(Math.max(.5,Math.min(49.5,q.x))),b=Y(Math.max(-4.5,q.y));x.strokeStyle=q.three?(TC.light?'#d9960f':GOLD):(TC.light?WINE:'#fff');x.lineWidth=6;x.beginPath();x.arc(a,b,14,0,7);x.stroke()});
+    sh.filter(q=>q.m).forEach(q=>{if(q.y>28.5)return;const a=X(Math.max(.5,Math.min(49.5,q.x))),b=Y(Math.max(-4.5,q.y));x.fillStyle=q.three?(TC.light?'#d9960f':GOLD):(TC.light?WINE:'#fff');x.beginPath();x.arc(a,b,15,0,7);x.fill();x.strokeStyle=TC.light?'#fff':'#101419';x.lineWidth=3;x.stroke()});
     x.fillStyle=TC.acc;x.font='800 40px "Saira Condensed"';x.fillText((kick()+atLbl(D)).toUpperCase(),60,100);
-    x.fillStyle=TC.hi;x.font='800 120px "Saira Condensed"';x.fillText(team?'EVERY CAVS SHOT':D.P[id].last.toUpperCase()+"'S SHOTS",60,220);
+    {/* Nov 4: his headshot top right, title sized to leave room */const T=team?'EVERY CAVS SHOT':D.P[id].last.toUpperCase()+"'S SHOTS";if(!team){const img=await loadImg(hsUrl(D,id));head2(x,img,930,182,98,null,initials(D.P[id].name))}let fz=120;x.fillStyle=TC.hi;x.font=`800 ${fz}px "Saira Condensed"`;while(x.measureText(T).width>(team?960:700)&&fz>64){fz-=6;x.font=`800 ${fz}px "Saira Condensed"`}x.fillText(T,60,220)}
     const m=sh.filter(q=>q.m).length,th=sh.filter(q=>q.three),thm=th.filter(q=>q.m).length;const pts=sh.filter(q=>q.m).reduce((a,q)=>a+(q.three?3:2),0);
     const dist=sh.length?sh.reduce((a,q)=>a+Math.hypot(q.x-25,q.y),0)/sh.length:null;
     /* small line under each number: the same stat for the season so far (his, or the Cavs'), from the game archive */
@@ -2052,7 +2054,7 @@ const CARDS={
     const sAvg=ss.length>=20?[Math.round(sm.length/ss.length*100)+'%',s3.length?Math.round(s3.filter(q=>q.m).length/s3.length*100)+'%':'–',(sm.reduce((a,q)=>a+(q.three?3:2),0)/ss.length).toFixed(2),(ss.reduce((a,q)=>a+Math.hypot(q.x-25,q.y),0)/ss.length).toFixed(1)+' ft']:null;
     [['FG',m+'-'+sh.length],['3PT',thm+'-'+th.length],['PTS/SHOT',sh.length?(pts/sh.length).toFixed(2):'–'],['AVG DISTANCE',dist==null?'–':dist.toFixed(1)+' ft']].forEach(([l,v],i)=>{const cx=60+i*250;x.fillStyle=TC.hi;x.font='700 54px "Geist Mono"';x.fillText(v,cx,1060);x.fillStyle='#8d939d';x.font='800 30px "Saira Condensed"';x.fillText(l,cx+4,1100);
       if(sAvg){x.fillStyle='#8d939d';x.font='600 24px Archivo';x.fillText('season '+sAvg[i],cx+4,1136)}});
-    x.font='800 28px "Saira Condensed"';const LY=sAvg?1200:1170;x.fillStyle=TC.light?WINE:'#fff';x.fillText('○ MADE 2',60,LY);x.fillStyle=TC.light?'#d9960f':GOLD;x.fillText('○ MADE 3',230,LY);x.fillStyle='#8b929b';x.fillText('✕ MISSED',400,LY);
+    x.font='800 28px "Saira Condensed"';const LY=sAvg?1200:1170;x.fillStyle=TC.light?WINE:'#fff';x.fillText('● MADE 2',60,LY);x.fillStyle=TC.light?'#d9960f':GOLD;x.fillText('● MADE 3',230,LY);x.fillStyle='#8b929b';x.fillText('✕ MISSED',400,LY);
     footer(x)}},
   quarters:{label:'Quarter by quarter',async draw(x,D,R){const F=D.focus,O=D.other;const qs=Object.keys(R.TQ).map(Number).sort((a,b)=>a-b);
     frame(x,atLbl(D),'Quarter by quarter',D,R);
@@ -2073,8 +2075,7 @@ const CARDS={
     x.save();x.strokeStyle='rgba(255,255,255,.07)';x.lineWidth=4;x.beginPath();x.arc(540,1350,520,Math.PI,0);x.stroke();x.beginPath();x.arc(540,1350,240,Math.PI,0);x.stroke();x.strokeRect(300,830,480,520);x.restore();
     0;
     x.fillStyle=TC.acc;x.font='800 40px "Saira Condensed"';x.fillText((kick()+atLbl(D)).toUpperCase(),72,100);x.fillStyle=TC.hi;x.font='800 128px "Saira Condensed"';x.fillText('CAVS LEADERS',72,222);
-    const [sl,wh]=scoreLine(D,R);x.font='700 42px "Geist Mono"';x.fillStyle=TC.hi;x.fillText(sl,72,296);const sw=x.measureText(sl).width;
-    if(wh){x.font='800 30px "Saira Condensed"';const tw=x.measureText(wh).width+28;x.fillStyle=TC.acc;x.fillRect(72+sw+24,258,tw,46);x.fillStyle=TC.light?'#fff':INK;x.fillText(wh,72+sw+38,296)}
+    tScore(x,D,R,72,300);/* Nov 4: same score row as the other cards, FINAL box centred */
     const order=[1,0,2],hts=[300,380,240],base=1060;const imgs=await Promise.all(L.map(o=>loadImg(hsUrl(D,o.id))));
     order.forEach((li,pos)=>{const o=L[li],cx=72+150+pos*318,h=hts[pos],top=base-h,b=o.b;
       x.fillStyle=li===0?GOLD:TC.sb;x.fillRect(cx-145,top,290,h);
@@ -2111,13 +2112,25 @@ const CARDS={
     if(kind==='career'){x.fillStyle=WINE;x.font='700 130px "Geist Mono"';ctr(x,v.toLocaleString('en-US'),540,1030);x.fillStyle=MUT;x.font='800 40px "Saira Condensed"';ctr(x,'CAREER '+W2[k],540,1085)}
     else{const o=v+(v%100>=11&&v%100<=13?'TH':['TH','ST','ND','RD'][v%10]||'TH');x.fillStyle=WINE;x.font='700 130px "Geist Mono"';ctr(x,o,540,1030);x.fillStyle=MUT;x.font='800 40px "Saira Condensed"';ctr(x,'ON THE CAVS ALL-TIME '+W2[k]+' LIST',540,1085);x.fillStyle='#3a3f46';x.font='600 30px Archivo';ctr(x,'Passed '+passed.join(', '),540,1140)}
     footer(x)}},
-  streak:{label:'Record card',async draw(x,D,R){const F=D.focus,O=D.other;const rc=recordThrough(D,R);
-    /* Nov 2: wine like the other posters, with the date */{const gr=x.createLinearGradient(0,0,0,1350);gr.addColorStop(0,'#9a0a45');gr.addColorStop(1,'#5c0027');tBg(x,1080,1350)}0;x.font='800 40px "Saira Condensed"';x.fillText((rc.se.replace('-','–')+' · AFTER '+(D.focus.ha==='home'?'vs ':'at ')+O.abbr+' · '+gDay(D)).toUpperCase(),72,100);
-    const hot=rc.k>=3;x.fillStyle=TC.hi;x.font='700 280px "Geist Mono"';x.fillText(hot?(rc.last+rc.k):rc.w+'–'+rc.l,72,380);
-    x.fillStyle=TC.acc;x.font='800 54px "Saira Condensed"';x.fillText(hot?(rc.last==='W'?rc.k+'-GAME WIN STREAK':rc.k+'-GAME SKID'):'SEASON RECORD',80,460);x.fillStyle=TC.soft;x.font='600 34px Archivo';x.fillText(hot?`${rc.w}–${rc.l} on the season`:`Last ${Math.min(10,rc.res.length)}: ${rc.res.slice(-10).filter(z=>z==='W').length}–${rc.res.slice(-10).filter(z=>z==='L').length}`,80,515);
-    const L=rc.res.slice(-20);L.forEach((z,i)=>{x.fillStyle=z==='W'?GOLD:'rgba(0,0,0,.32)';x.fillRect(80+i*46,570,38,90);x.fillStyle=z==='W'?INK:TC.soft;x.font='800 30px "Saira Condensed"';ctr(x,z,99+i*46,628)});
-    const ids=D.roster[F.id].filter(i=>R.B[i].min>0).sort((p,q)=>R.B[q].pts-R.B[p].pts);const id=ids[0];if(id){const img=await loadImg(hsUrl(D,id));head2(x,img,200,880,120,null,initials(D.P[id].name));const bb=R.B[id];x.fillStyle=TC.hi;x.font='800 50px "Saira Condensed"';x.fillText(D.P[id].name.toUpperCase(),360,860);x.font='600 34px Archivo';x.fillStyle=TC.soft;x.fillText(`${bb.pts} pts · ${bb.oreb+bb.dreb} reb · ${bb.ast} ast tonight`,360,910)}
-    const [sl,wh]=scoreLine(D,R);x.fillStyle=TC.hi;x.font='700 44px "Geist Mono"';x.fillText(sl+'  '+wh,80,1120);footer(x)}},
+  streak:{label:'Record card',async draw(x,D,R){const F=D.focus,O=D.other;const rc=recordThrough(D,R);tBg(x,1080,1350);
+    /* Nov 4: fuller record card: record, home/road split, last ten, the last five results and tonight's top scorer */
+    x.fillStyle=TC.acc;x.font='800 40px "Saira Condensed"';x.fillText((rc.se.replace('-','–')+' · AFTER '+(F.ha==='home'?'vs ':'at ')+O.abbr+' · '+gDay(D)).toUpperCase(),72,100);
+    const hot=rc.k>=3;x.fillStyle=TC.hi;x.font='700 230px "Geist Mono"';const big=rc.w+'–'+rc.l;x.fillText(big,60,330);const bw=x.measureText(big).width;
+    const G=rc.games,sp=h=>{const z=G.filter(g=>g.ha===h);const w=z.filter(g=>g.cle>g.os).length;return w+'–'+(z.length-w)};
+    const RX=Math.max(72+bw+40,640);x.fillStyle=TC.acc;x.font='800 50px "Saira Condensed"';x.fillText(hot?(rc.last==='W'?'WON '+rc.k+' STRAIGHT':'LOST '+rc.k+' STRAIGHT'):'SEASON RECORD',RX,190);
+    x.fillStyle=TC.ink;x.font='600 32px Archivo';x.fillText('Home '+sp('home'),RX,250);x.fillText('Road '+sp('away'),RX,296);
+    const L=rc.res.slice(-10),l10w=L.filter(z=>z==='W').length;lbl(x,'LAST '+L.length+' · '+l10w+'–'+(L.length-l10w),72,420,30);
+    L.forEach((z,i)=>{x.fillStyle=z==='W'?GOLD:TC.sb;x.fillRect(72+i*93.6,440,85,64);x.fillStyle=z==='W'?'#101419':TC.mut;x.font='800 34px "Saira Condensed"';ctr(x,z,72+i*93.6+42.5,484)});
+    lbl(x,'LATEST RESULTS',72,575,30);const recent=G.slice(-5).reverse();
+    recent.forEach((g,i)=>{const y=592+i*70,w=g.cle>g.os;if(g.now){x.fillStyle=TC.panel;x.fillRect(72,y,936,66);x.fillStyle=WINE;x.fillRect(72,y,6,66)}else{x.fillStyle=TC.line;x.fillRect(72,y+66,936,2)}
+      x.fillStyle=TC.mut;x.font='700 28px "Geist Mono"';x.fillText(new Date(g.date).toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase(),96,y+44);
+      x.fillStyle=TC.ink;x.font='700 34px Archivo';x.fillText((g.ha==='home'?'vs ':'at ')+g.opp,290,y+45);if(g.now){x.fillStyle=TC.mut;x.font='800 24px "Saira Condensed"';x.fillText('TONIGHT',470,y+43)}
+      x.fillStyle=w?GOLD:TC.sb;x.fillRect(760,y+13,44,40);x.fillStyle=w?'#101419':TC.mut;x.font='800 28px "Saira Condensed"';ctr(x,w?'W':'L',782,y+43);
+      x.fillStyle=TC.ink;x.font='700 34px "Geist Mono"';const sc=g.cle+'–'+g.os;x.fillText(sc,984-x.measureText(sc).width,y+45)});
+    const ids=D.roster[F.id].filter(i=>R.B[i].min>0).sort((p,q)=>R.B[q].pts-R.B[p].pts);const id=ids[0];
+    if(id){const Y0=1000;lbl(x,'TOP SCORER TONIGHT',72,Y0,30);const img=await loadImg(hsUrl(D,id));head2(x,img,190,Y0+150,100,null,initials(D.P[id].name));const bb=R.B[id];
+      x.fillStyle=TC.hi;x.font='800 54px "Saira Condensed"';x.fillText(D.P[id].name.toUpperCase(),360,Y0+110);x.font='600 34px Archivo';x.fillStyle=TC.soft;x.fillText(`${bb.pts} pts · ${bb.oreb+bb.dreb} reb · ${bb.ast} ast · ${bb.fgm}-${bb.fga} FG`,360,Y0+162)}
+    footer(x)}},
   story:{label:'Game story',async draw(x,D,R){const F=D.focus,O=D.other;frame(x,atLbl(D),'The story of the game',D,R);
     cMargin(x,R,D,72,430,936,170);
     const ev=[];const fh=F===D.home;
@@ -2176,7 +2189,9 @@ function lFrame(x){tBg(x,LW,LH);x.strokeStyle=TC.cline;x.setLineDash([6,6]);x.li
 /* kicker, title and a score-style line in the header, starting at TX */
 function lTitle(x,TX,kick,title,line){const TW=LW-TX-60;x.fillStyle=TC.acc;x.font='800 34px "Saira Condensed"';x.fillText(kick.toUpperCase(),TX,108);
   const T=title.toUpperCase();let fs=96;x.fillStyle=TC.hi;x.font=`800 ${fs}px "Saira Condensed"`;while(x.measureText(T).width>TW&&fs>48){fs-=4;x.font=`800 ${fs}px "Saira Condensed"`}x.fillText(T,TX,108+fs*.95+6);
-  let X=TX;(line||[]).forEach(([t,f,c])=>{x.font=f;x.fillStyle=TC.light&&/^rgba\(255,255,255,\./i.test(c)?TC.mut:TC.light&&/^(#fff|#ffffff|rgba\(255,255,255)/i.test(c)?TC.hi:TC.light&&c===GOLD?TC.acc:c;x.fillText(t,X,290);X+=x.measureText(t).width})}
+  let X=TX;const BIG=Math.max(0,...(line||[]).map(([,f])=>+(f.match(/(\d+)px/)||[0,0])[1]));(line||[]).forEach(([t,f,c])=>{x.font=f;x.fillStyle=TC.light&&/^rgba\(255,255,255,\./i.test(c)?TC.mut:TC.light&&/^(#fff|#ffffff|rgba\(255,255,255)/i.test(c)?TC.hi:TC.light&&c===GOLD?TC.acc:c;x.fillText(t,X,midY(290,BIG,f));X+=x.measureText(t).width})}
+/* Nov 4: small labels sit on the middle of the big numbers instead of their baseline, so a score line reads as one balanced row */
+const midY=(Y,big,f)=>{const sz=+(f.match(/(\d+)px/)||[0,big])[1];return sz>=big*.8?Y:Y-.35*big+.36*sz};
 async function lHero(x,D,id){const img=await loadImg(hsUrl(D,id));head2(x,img,210,172,138,null,initials(D.P[id].name));;return 410}
 function lPanel(x,X,Y,W,H,top){x.fillStyle=TC.panel;x.fillRect(X,Y,W,H);x.strokeStyle=TC.line;x.lineWidth=2;x.strokeRect(X,Y,W,H);x.fillStyle=top;x.fillRect(X,Y,W,8)}
 /* panel head: title and small label on the left, one big number on the right */
@@ -2229,7 +2244,9 @@ Object.assign(CARDS,{
     side(LX1,WINE,'ON THE FLOOR',a,A,true);side(LX2,GOLD,'ON THE BENCH',b,B,false);
     const sw=a.net!=null&&b.net!=null?a.net-b.net:null;lMid(x,LXM,LY0,LMW,500,lsg(sw),'NET SWING PER 100',null,null,'on minus off');
     if(sw!=null){x.fillStyle='rgba(255,255,255,.62)';x.font='600 26px Archivo';ctr(x,'Off '+lf1(a.ortg)+' · Def '+lf1(a.drtg)+' on',LXM+LMW/2,LY0+460)}
-    lWhite(x,LXM,LY0+520,LMW,LBH-520,lsgi(pm),pm>0?LGR:pm<0?LRD:INK,'PLUS-MINUS ON',[lsgi(pmo)+' with him off']);
+    {/* Nov 4: on and off side by side, same size, both inside the box */const Y=LY0+520,H=LBH-520;x.fillStyle=TC.panel;x.fillRect(LXM,Y,LMW,H);x.strokeStyle=TC.line;x.lineWidth=2;x.strokeRect(LXM,Y,LMW,H);x.fillStyle=MUT;x.font='800 30px "Saira Condensed"';ctr(x,'PLUS-MINUS',LXM+LMW/2,Y+62);
+      [[pm,'WITH HIM ON'],[pmo,'WITH HIM OFF']].forEach(([v,l],k)=>{const cx=LXM+LMW*(k?.75:.25);x.fillStyle=v>0?LGR:v<0?LRD:INK;x.font='800 112px "Saira Condensed"';ctr(x,lsgi(v),cx,Y+200);x.fillStyle=MUT;x.font='800 24px "Saira Condensed"';ctr(x,l,cx,Y+246)});
+      x.fillStyle=TC.line;x.fillRect(LXM+LMW/2-1,Y+100,2,160)}
     lNote(x,'Possessions counted play by play · shot avg = whole team '+(S.season?'this season':'this game'));brandBar(x,LW,LH)}},
   ff:{label:'Four factors card',w:LW,h:LH,async draw(x,D,R){const Fo=D.focus,Ot=D.other,A=R.T[Fo.id],B=R.T[Ot.id],fa=factors(A,B),fb=factors(B,A);
     /* tick: the Cavs' own season average on their side, what Cavs opponents average on the other (NBA average on season cards) */
@@ -2290,7 +2307,7 @@ Object.assign(CARDS,{
     if(!a.sec){txt(x,'No clutch time in this game.',60,520,48,INK,700);txt(x,'Clutch = the last 5 minutes with the score within 5.',60,580,32,MUT,500);brandBar(x,LW,LH);return}
     const side=(X,top,t,T,us)=>{lPanel(x,X,LY0,LSW,LBH,top);lHeadline(x,X,LSW,LY0,t.abbr,'POINTS IN CLUTCH TIME',String(T.pts),null);
       lBox(x,X,LSW,LY0+176,[['FG',T.fgm+'–'+T.fga,lpc(T.fgm,T.fga)],['3P',T.tpm+'–'+T.tpa,lpc(T.tpm,T.tpa)],['FT',T.ftm+'–'+T.fta,lpc(T.ftm,T.fta)],['REB',T.oreb+T.dreb],['AST',T.ast],['STL',T.stl],['BLK',T.blk],['TO',T.to]]);
-      const ids=D.roster[t.id].filter(i=>C2.B[i]&&C2.B[i].pts>0).sort((p,q)=>C2.B[q].pts-C2.B[p].pts).slice(0,3);lbl(x,'CLUTCH SCORERS',X+36,LY0+500,26,MUT);const mx=Math.max(1,...ids.map(i=>C2.B[i].pts));
+      const ids=D.roster[t.id].filter(i=>C2.B[i]&&C2.B[i].pts>0).sort((p,q)=>C2.B[q].pts-C2.B[p].pts).slice(0,3);lbl(x,'CLUTCH SCORERS · POINTS',X+36,LY0+500,26,MUT);const mx=Math.max(1,...ids.map(i=>C2.B[i].pts));
       if(!ids.length)txt(x,'No points',X+36,LY0+550,28,MUT,600);ids.forEach((i,j)=>{const bb=C2.B[i],y=LY0+528+j*96;{x.font='700 30px Archivo';const n0=D.P[i].name,nm=x.measureText(n0).width>LSW-72-300?n0[0]+'. '+n0.split(' ').slice(1).join(' '):n0;txt(x,nm,X+36,y+30,30,INK,700)}x.fillStyle=MUT;x.font='600 22px Archivo';x.fillText(bb.fgm+'–'+bb.fga+' FG · '+bb.ftm+'–'+bb.fta+' FT',X+36,y+62);
         const bw=200;x.fillStyle=us?WINE:'#5b6470';tk(x,X+LSW-36-bw-70,y+12,bw*bb.pts/mx,28);x.fillStyle=INK;x.font='800 44px "Saira Condensed"';const s=String(bb.pts);x.fillText(s,X+LSW-36-x.measureText(s).width,y+42)})};
     side(LX1,WINE,Fo,a,true);side(LX2,GOLD,Ot,b,false);const m=a.pts-b.pts;
@@ -2308,7 +2325,7 @@ Object.assign(CARDS,{
       const clk=t=>{const p=Math.min(R.maxPer,Math.max(1,(()=>{let q=1;while(q<R.maxPer&&t>=pstart(q+1))q++;return q})())),r=Math.max(0,plen(p)-(t-pstart(p)));return pname(p)+' '+Math.floor(r/60)+':'+String(Math.round(r%60)).padStart(2,'0')};
       x.fillStyle=MUT;x.font='700 22px "Geist Mono"';x.fillText(clk(c0),cx0,cy0+ch+24);const ef='Final';x.fillText(ef,cx0+cw-x.measureText(ef).width,cy0+ch+24);
       const fs=Fo.ha==='home'?R.hs:R.as,os=Fo.ha==='home'?R.as:R.hs;x.fillStyle=INK;x.font='800 44px "Saira Condensed"';const fl=(S.state==='post'?(fs>os?'WON ':'LOST '):'')+fs+'–'+os;ctr(x,fl,X+W/2,Y+H-22);}
-    lNote(x,'Clutch time = the last 5 minutes of the 4th quarter or overtime with the score within 5');brandBar(x,LW,LH)}},
+    lNote(x,'Clutch time = the last 5 minutes of the 4th quarter or overtime with the score within 5 · bars = clutch points');brandBar(x,LW,LH)}},
   quarters:{label:'Quarter by quarter',w:LW,h:LH,async draw(x,D,R){const Fo=D.focus,Ot=D.other;const qs=Object.keys(R.TQ).map(Number).sort((a,b)=>a-b);
     lFrame(x);const TX=await lLogoHead(x,Fo);const won=qs.filter(q=>R.TQ[q][Fo.id]&&R.TQ[q][Ot.id]&&R.TQ[q][Fo.id].pts>R.TQ[q][Ot.id].pts).length;lTitle(x,TX,kick()+'Quarter by quarter · '+lKick(D),Fo.abbr+' won '+won+' of '+qs.length,lScore(D));
     const n=qs.length,gap=24,W=(LW-80-gap*(n-1))/n,H=560;
@@ -2327,15 +2344,15 @@ Object.assign(CARDS,{
     const per=b=>season?(b.gp||1):1,pv=(b,k)=>b[k]/per(b),f0=v=>season?v.toFixed(1):String(Math.round(v));const imgs=await Promise.all(ids.map(i=>loadImg(hsUrl(D,i))));
     const X=40,W=LW-80,Y=LY0,H=LBH;lPanel(x,X,Y,W,H,WINE);
     /* columns: player | MIN | PTS (with bar) | REB | AST | FG | 3PT | FT | STL | BLK | +/- */
-    const C={min:620,pts:720,reb:810,ast:895,fg:1035,tp:1170,ft:1290,stl:1370,blk:1440,pm:1530,gs:1640,bar:1660};
-    const hy=Y+56;x.fillStyle=MUT;x.font='800 24px "Saira Condensed"';[['MIN',C.min],['PTS',C.pts],['REB',C.reb],['AST',C.ast],['FG',C.fg],['3PT',C.tp],['FT',C.ft],['STL',C.stl],['BLK',C.blk],['+/-',C.pm],['GAME SCORE',C.bar+190]].forEach(([h,cx])=>x.fillText(h,cx-x.measureText(h).width,hy));x.fillText('PLAYER',X+36,hy);
+    /* Nov 4: game score sits between MIN and PTS, drawn as a terminal tick bar */const C={min:610,gs:715,bar:732,bw:170,pts:985,reb:1072,ast:1157,fg:1300,tp:1435,ft:1555,stl:1635,blk:1705,pm:1810};const tick=(X0,Y0,w,h)=>{for(let p=0;p+6<=w+.5;p+=10)x.fillRect(X0+p,Y0,6,h)};
+    const hy=Y+56;x.fillStyle=MUT;x.font='800 24px "Saira Condensed"';[['MIN',C.min],['PTS',C.pts],['REB',C.reb],['AST',C.ast],['FG',C.fg],['3PT',C.tp],['FT',C.ft],['STL',C.stl],['BLK',C.blk],['+/-',C.pm]].forEach(([h,cx])=>x.fillText(h,cx-x.measureText(h).width,hy));{const h='GAME SCORE',w=x.measureText(h).width;x.fillText(h,(C.gs-60+C.bar+C.bw)/2-w/2,hy)}x.fillText('PLAYER',X+36,hy);
     const rh=Math.min(72,(H-150)/Math.max(ids.length,1));const mxp=Math.max(1,...ids.map(i=>pv(R.B[i],'pts'))),gsv=b=>gmSc(b)/per(b),mxg=Math.max(1,...ids.map(i=>gsv(R.B[i])));const sv=(s,cx,y,font,col)=>{x.font=font;x.fillStyle=col;x.fillText(s,cx-x.measureText(s).width,y)};
     ids.forEach((id,k)=>{const b=R.B[id],y=hy+18+k*rh,cy=y+rh/2;if(k%2===0){x.fillStyle=TC.bg;x.fillRect(X+2,y,W-4,rh)}
       if(k>0&&D.P[ids[k-1]].starter&&!D.P[id].starter){x.fillStyle=GOLD;x.fillRect(X+36,y-1,W-72,3)}
       x.save();x.beginPath();x.rect(X+60-(rh/2-5),cy-(rh/2-5),rh-10,rh-10);x.clip();if(!imgs[k]){x.fillStyle=TC.hsbg;x.fillRect(X+30,cy-rh/2,60,rh)}if(imgs[k]){const r=rh/2-5,h2=r*2.15,w2=h2*imgs[k].width/imgs[k].height;x.drawImage(imgs[k],X+60-w2/2,cy-r*1.02,w2,h2)}x.restore();
       txt(x,D.P[id].name,X+100,cy+10,28,INK,700);const m=pv(b,'min')/60,pts=pv(b,'pts'),bl=f0;
       sv(season?m.toFixed(1):String(Math.round(m)),C.min,cy+10,'600 28px "Geist Mono"',MUT);sv(bl(pts),C.pts,cy+12,'800 40px "Saira Condensed"',pts===mxp?WINE:INK);
-      {const g=gsv(b);sv(g.toFixed(1),C.gs,cy+10,'700 28px "Geist Mono"',g===mxg?WINE:INK);x.fillStyle=TC.track;x.fillRect(C.bar,cy-8,190,16);x.fillStyle=g===mxg?WINE:'#5b6470';x.fillRect(C.bar,cy-8,190*Math.max(0,g)/mxg,16)}
+      {const g=gsv(b);sv(g.toFixed(1),C.gs,cy+10,'700 28px "Geist Mono"',g===mxg?WINE:INK);x.fillStyle=TC.track;tick(C.bar,cy-9,C.bw,18);x.fillStyle=g===mxg?WINE:'#5b6470';tick(C.bar,cy-9,C.bw*Math.max(0,g)/mxg,18)}
       sv(bl(pv(b,'oreb')+pv(b,'dreb')),C.reb,cy+10,'700 30px "Geist Mono"',INK);sv(bl(pv(b,'ast')),C.ast,cy+10,'700 30px "Geist Mono"',INK);
       const sh=(m2,a2)=>{const t=season?(m2/per(b)).toFixed(1)+'–'+(a2/per(b)).toFixed(1):m2+'–'+a2;return t};
       sv(sh(b.fgm,b.fga),C.fg,cy+4,'700 28px "Geist Mono"',INK);sv(lpc(b.fgm,b.fga),C.fg,cy+28,'600 21px Archivo',MUT);sv(sh(b.tpm,b.tpa),C.tp,cy+4,'700 28px "Geist Mono"',INK);sv(lpc(b.tpm,b.tpa),C.tp,cy+28,'600 21px Archivo',MUT);
@@ -2345,7 +2362,7 @@ Object.assign(CARDS,{
     const ty=hy+18+ids.length*rh+8;x.fillStyle=INK;x.fillRect(X+36,ty,W-72,3);const gp=season?Math.max(1,(D.games||[]).length):1,tv=v=>season?(v/gp).toFixed(1):String(v);
     lbl(x,'TEAM',X+36,ty+50,32,INK);sv(tv(T.pts),C.pts,ty+52,'800 40px "Saira Condensed"',WINE);sv(tv(T.oreb+T.dreb),C.reb,ty+50,'700 30px "Geist Mono"',INK);sv(tv(T.ast),C.ast,ty+50,'700 30px "Geist Mono"',INK);
     sv(lpc(T.fgm,T.fga),C.fg,ty+50,'700 28px "Geist Mono"',INK);sv(lpc(T.tpm,T.tpa),C.tp,ty+50,'700 28px "Geist Mono"',INK);sv(lpc(T.ftm,T.fta),C.ft,ty+50,'600 26px "Geist Mono"',INK);sv(tv(T.stl),C.stl,ty+50,'600 28px "Geist Mono"',INK);sv(tv(T.blk),C.blk,ty+50,'600 28px "Geist Mono"',INK);
-    lNote(x,(season?'Per game this season · ':'')+'Gold line = starters above, bench below · bar = game score (Hollinger)');brandBar(x,LW,LH)}}
+    lNote(x,(season?'Per game this season · ':'')+'Gold line = starters above, bench below · game score (Hollinger) bar scaled to the top score');brandBar(x,LW,LH)}}
 });
 /* season cards in the landscape system (Oct 27) */
 Object.assign(SCARDS,{
@@ -3169,6 +3186,7 @@ function vFF(v,D,R){
     if(x!=null&&y!=null){const better=(x>y)===hib?D.focus:D.other;const e=el('div','edge',x===y?'Even':better.abbr+' edge');e.style.color=better.c;box.appendChild(e)}
     box.appendChild(el('p','note',full));g.appendChild(box)});
   c.appendChild(g);
+  /* Nov 4: the Cavs' season average next to each factor */if(!S.season&&D.focus.id===CLE)seasonTotals().then(X=>{if(!X)return;g.querySelectorAll('.ffc').forEach((bx,i)=>{const k=FF[i][0];if(X[k]==null||bx.querySelector('.ffs'))return;bx.querySelector('.n').insertAdjacentHTML('beforeend',' <small class="ffs">Cavs season '+X[k].toFixed(1)+'%</small>')})}).catch(()=>{});
   c.appendChild(el('p','note','TOV% = turnovers ÷ (FGA + 0.44 × FTA + turnovers). Offensive rebound rate uses player rebounds, the NBA.com way. Use the quarter buttons above to compare any stretch.'+(LF?' Small numbers = NBA rank among 30 teams (for OPP, 1st = the toughest on opponents).':'')));
   v.appendChild(c);if(S.season)wfCard(v,D);
 }
