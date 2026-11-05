@@ -1853,7 +1853,8 @@ const TC_R={light:1,riso:1,bg:'#f2e8d2',ink:'#2a0b17',hi:'#2a0b17',line:'rgba(42
 /* Nov 4 (mock): player-card look for game cards: wine header band + gold rule, white panels; light (neutral gray page) or wine (wine page, white sheet) */
 const TC_PC=Object.assign({},TC_L,{pc:1,bg:'#ffffff',page:'#ffffff',glow:'#ffffff',glow2:'#ffffff',glowEnd:'rgba(255,255,255,0)',panel:'#ffffff',line:'#dfe2e6',track:'#e6e8ec',sb:'#e2e5e9',court:'#f4f5f7',hsbg:'#e6e8ec',grid:'#d6dade',logoA:0});
 const TC_PCW=Object.assign({},TC_PC,{pcw:1,page:'#6b2141',bg:'#ffffff',sb:'#4a1029'});
-const TC=Object.assign({},TC_D);function tTheme(light){const th=window.__shareTheme;for(const k in TC)delete TC[k];Object.assign(TC,th==='pc'?TC_PC:th==='pcw'?TC_PCW:th==='riso'?TC_R:th==='wine'?TC_W:light?Object.assign({},TC_L,window.__lightVar||{}):TC_D);/* __lightVar: mock hook for trying other light palettes */BG=TC.bg;INK=TC.ink;GREY=TC.grey;MUT=TC.mut}
+const TC=Object.assign({},TC_D);/* Nov 5 (Luka): live game images use the wine-banner light look; season cards stay dark */if(window.__shareTheme===undefined)window.__shareTheme='pc';
+function tTheme(light){const th=window.__shareTheme;for(const k in TC)delete TC[k];Object.assign(TC,th==='pc'?(light?TC_PC:TC_D):th==='pcw'?TC_PCW:th==='riso'?TC_R:th==='wine'?TC_W:light?Object.assign({},TC_L,window.__lightVar||{}):TC_D);/* __lightVar: mock hook for trying other light palettes */BG=TC.bg;INK=TC.ink;GREY=TC.grey;MUT=TC.mut}
 /* ---------- share cards ---------- */
 async function cardFonts(){try{await Promise.all([document.fonts.load('800 80px "Saira Condensed"'),document.fonts.load('700 60px "Geist Mono"'),document.fonts.load('600 30px Archivo')])}catch(e){}}
 /* Nov 4 (mock): terminal look for every game share card: dark frame, wine glow, faint Cavs logo, mono wordmark, status-bar footer */
