@@ -3384,6 +3384,7 @@ function prevPicker(){let w=document.getElementById('prevpk');if(w){w.remove()}w
         if(b.y>0){let n=0;const to=()=>{scrollTo(0,b.y);if(Math.abs(scrollY-b.y)>4&&++n<25)setTimeout(to,150)};setTimeout(to,120)}return}}
     /* ?pl=<player slug> (from a player page): open season mode on him, lineups he was in and his on/off */
     {const pc=new URLSearchParams(location.search).get('pc');if(pc&&S.data&&!S.season){const id=Object.keys(S.data.P).find(k=>PP[ppKey(S.data.P[k].name)]===pc);if(id){S.tab='players';S.f.plTeam=S.data.focus.id;S.f.pgc=id;renderNav(S.R);renderView();setTimeout(()=>{const e=document.getElementById('pgc');if(e)e.scrollIntoView({block:'start'})},200);return}}}
+    {/* Nov 5: ?tab=players and so on opens that tab (newsletter box score link) */const tb=new URLSearchParams(location.search).get('tab');if(tb&&S.data&&!S.season&&TABS.some(t=>t[0]===tb)){S.tab=tb;renderNav(S.R);renderView()}}
     const pl=new URLSearchParams(location.search).get('pl');if(!pl||!S.data)return;const id=Object.keys(S.data.P).find(k=>PP[ppKey(S.data.P[k].name)]===pl);if(!id)return;
     S.tab='lineups';S.lu='groups';S.f.luPick={[id]:1};S.f.ooA=id;renderNav(S.R);renderView()})})();
 </script>

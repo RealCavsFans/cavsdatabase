@@ -39,9 +39,10 @@ async function siteData() {
   await page.route(u => !u.href.startsWith('http://127.0.0.1'), r => r.abort());
   await page.goto(`http://127.0.0.1:${server.address().port}/index.html`, { waitUntil: 'load' });
   const md = (process.env.NL_TODAY || etDate()).slice(5);
-  const d = await page.evaluate(md => {
+  const d = await page.evaluate(async md => {
     const tvw = d => { const t = tvFor(d); return [t.nat, t.loc].filter(Boolean)[0] || ''; };
-    return { SCHEDULE, SCORES, SEASON, PRESEASON, TEAMS, INJURIES, INJ_ASSIGN: typeof INJ_ASSIGN !== "undefined" ? INJ_ASSIGN : [], CHARGE: typeof CHARGE !== "undefined" ? CHARGE : null, HISTORY, L14, TX: TX.slice(0, 60), DATES,
+    const NIANG = await fetch('/niang.json').then(r => r.ok ? r.json() : null).catch(() => null);
+    return { DRAFT_LAST: typeof DRAFT_LAST === 'object' ? DRAFT_LAST : [], NIANG, SCHEDULE, SCORES, SEASON, PRESEASON, TEAMS, INJURIES, INJ_ASSIGN: typeof INJ_ASSIGN !== "undefined" ? INJ_ASSIGN : [], CHARGE: typeof CHARGE !== "undefined" ? CHARGE : null, HISTORY, L14, TX: TX.slice(0, 60), DATES,
       PL: PLAYERS.map(p => [p[1], p[12]]), tv: Object.fromEntries(SCHEDULE.map(g => [g[0], tvw(g[0])])), radio: (radioFor(SCHEDULE[0][0]).cavs || '').split(' · ')[0],
       box: Object.fromEntries(SCHEDULE.map(g => [g[0], boxUrl(g[0])])), tips: Object.fromEntries(SCHEDULE.map(g => [g[0], tipOf(g).toISOString()])),
       TS: (typeof TSTATS === 'object' && TSTATS.CLE && TSTATS.CLE[0] + TSTATS.CLE[1] >= 1) ? TSTATS : (typeof TSTATS_PREV === 'object' ? TSTATS_PREV : {}), TS_CUR: !!(typeof TSTATS === 'object' && TSTATS.CLE && TSTATS.CLE[0] + TSTATS.CLE[1] >= 1),
@@ -155,7 +156,11 @@ function prep(D, g, score, top, boxLink, opts) {
     if (last) ch = { kind: 'res', d: last[0], o: last[1], ha: last[2], res: last[4], rec: D.CHARGE.record, box: last[6] || '', lines: last[7] || [] }, ch.nx = next && (Date.parse(next[0]) - Date.parse(issueDay)) / 864e5 <= 7 ? { d: next[0], o: next[1], ha: next[2], t: next[3] } : null;   // [7] = Cavs two-way and assignment players' lines [name, pts, reb, ast, min], kept by the daily update from the box score
     else if (next && (Date.parse(next[0]) - Date.parse(issueDay)) / 864e5 <= 7) ch = { kind: 'next', d: next[0], o: next[1], ha: next[2], t: next[3], rec: D.CHARGE.record, first: !G.some(z => z[4]), venue: next[5] || (next[2] === 'H' ? D.CHARGE.venue : '') };
     if (ch) { ch.assign = (D.INJ_ASSIGN || []).map(r => r[0]); ch.lines = ch.lines || []; } }
-  return { g, cs, os, win, issueDay, md, w, l, hasRec: rec.length > 0, tn, tl, recap, hl, reads, play, moves, week, otd, nx: nxInfo, tape, inj, injNote, gl, stand, meet, around, lu, ch, notes, tq: opts.trivia, shot: opts.milestone || '', sotn: opts.sotn || null, names: (D.PL || []).map(p => p[0]),
+  /* Nov 5 (Luka): drafted players' latest games, same as the home page's Prospect pipeline (last 10 days) */
+  const dp = (D.DRAFT_LAST || []).map(([n, d, team, opp, ha, res, url, st]) => ({ n, d, team, opp, ha, res, url, st }));
+  { const J = D.NIANG, L = J && J.last; if (L && !L.dnp) { const m = String(J.score || '').match(/^LSU (\d+), .* (\d+)$/); dp.push({ n: 'Saliou Niang', d: L.d, team: 'LSU', opp: L.opp, ha: '', res: m ? (+m[1] > +m[2] ? 'W ' : 'L ') + m[1] + '–' + m[2] : 'Final', url: J.url, st: { pts: L.pts, reb: L.reb, ast: L.ast, stl: L.stl, blk: L.blk } }); } }
+  const drafted = dp.filter(r => r.d && (Date.parse(issueDay) - Date.parse(r.d)) / 864e5 <= 10).sort((a, b) => a.d < b.d ? 1 : -1);
+  return { g, cs, os, win, issueDay, md, w, l, hasRec: rec.length > 0, tn, tl, recap, hl, reads, play, moves, week, otd, nx: nxInfo, tape, inj, injNote, gl, stand, meet, around, lu, ch, drafted, notes, tq: opts.trivia, shot: opts.milestone || '', sotn: opts.sotn || null, names: (D.PL || []).map(p => p[0]),
     pid: n => (D.PL.find(p => p[0] === n) || [])[1], qs: opts.qs || null, where: (g[2] === 'H' ? 'vs ' : 'at ') + D.TEAMS[g[1]], whereShort: g[2] === 'H' ? 'Rocket Arena' : 'at ' + D.TEAMS[g[1]].split(' ').slice(-1)[0], boxLink, preseason: opts.preseason, test: opts.test, TEAMS: D.TEAMS };
 }
 const fontLink = `<!--[if !mso]><!--><link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@800&family=Geist+Mono:wght@700&display=swap" rel="stylesheet"><!--<![endif]-->`;
@@ -194,7 +199,10 @@ function lineScore(x, P) {
 function tastingNotes(rc, opp) {
   const get = re => rc.filter(([l]) => re.test(l)), out = [], dot = t => String(t).replace(/\.$/, '');
   get(/^Cavs high/).slice(0, 1).forEach(([, t]) => out.push(['Top line', dot(t)]));
-  get(/^Four factors/).forEach(([, t]) => out.push(['Four Factors', dot(t).replace(/^Cavs won (\d) of 4: ([^.]*)\.\s*/, (m, n, w) => `Won ${n} of 4 (${w}) · `).replace(/^Cavs won 0 of 4\.?\s*/, 'Won 0 of 4 · ').replace(/Effective FG%/, 'eFG%').replace(/ to /g, '–')]));
+  get(/^Four factors/).forEach(([, t]) => { /* Nov 5 (Luka): say who won each part, e.g. "Cavs won 1 of 4 (second chances) · Shooting: OKC 54.5–53.2 eFG%" */
+    let s2 = dot(t).replace(/^(?:CLE|CAVS|Cavs) won (\d) of 4(?: factors)?: ([^.]*)\.\s*/, (m, n, w) => `Cavs won ${n} of 4 (${w}) · `).replace(/^(?:CLE|CAVS|Cavs) won 0 of 4(?: factors)?\.?\s*/, 'Cavs won 0 of 4 · ');
+    s2 = s2.replace(/Effective FG% ([\d.]+) to ([\d.]+)/, (m, a, b) => +a >= +b ? `Shooting: Cavs ${a}–${b} eFG%` : `Shooting: ${opp || 'Opp'} ${b}–${a} eFG%`);
+    out.push(['Four Factors', s2]); });
   get(/^Best lineup/).forEach(([, t]) => out.push(['Best five', dot(t).replace(/: \+/, ' · +').replace(/: -/, ' · -')]));
   // highs and records share one row: last name, short stat, and what kind of high in parentheses
   const AB = [[/made field goals?/, 'FGM'], [/made threes?/, '3PM'], [/made free throws?/, 'FTM'], [/points?/, 'pts'], [/rebounds?/, 'reb'], [/offensive reb/, 'oreb'], [/assists?/, 'ast'], [/steals?/, 'stl'], [/blocks?/, 'blk'], [/turnovers?/, 'tov']];
@@ -220,8 +228,8 @@ function coffeeBox(x, P, cell) {
   const CO = '#6B3E26', PAPER = '#FFFDF8', r = roast(x);
   const chip = `<div style="margin-top:6px"><span style="display:inline-block;background:${r.bg};color:${r.fg};font:800 10px ${F.sans};letter-spacing:1.4px;padding:4px 8px">${r.t}</span></div>`;
   const img = (f, w) => `<img src="${SITE}/nl/${f}.png" width="${w}" alt="" style="display:block;width:${w === '100%' ? '100%' : w + 'px'};height:auto;border:0;margin:0 auto">`;
-  const cav = (bg, fg, sub, dim, pad) => `<td width="50%" align="center" bgcolor="${bg}" style="background:${bg};padding:${pad}"><div style="font:800 20px/1 ${F.cond};color:${fg}">CLE</div><div style="font:700 36px/1.15 ${F.mono};color:${dim ? '#9A948B' : fg}">${x.cs}</div><div style="font:11px ${F.sans};color:${sub}">Cavaliers</div>${chip}</td>`;
-  const opp = (pad) => cell(x.g[1], x.os, !x.win, NICK[x.g[1]] || '').replace('<td ', '<td valign="middle" ').replace('padding:10px 0 9px;', `padding:${pad};`).replace(/border-bottom:4px solid [^;]+;/, '');
+  const cav = (bg, fg, sub, dim, pad) => `<td width="50%" align="center" valign="top" bgcolor="${bg}" style="background:${bg};padding:${pad}"><div style="font:800 20px/1 ${F.cond};color:${fg}">CLE</div><div style="font:700 36px/1.15 ${F.mono};color:${dim ? '#9A948B' : fg}">${x.cs}</div><div style="font:11px ${F.sans};color:${sub}">Cavaliers</div>${chip}</td>`;
+  const opp = (pad) => cell(x.g[1], x.os, !x.win, NICK[x.g[1]] || '').replace('<td ', '<td valign="top" ').replace('padding:10px 0 9px;', `padding:${pad};`).replace(/border-bottom:4px solid [^;]+;/, '');
   const box = rows => T(rows, `bgcolor="${PAPER}" style="border:2px solid ${P.ink};background:${PAPER};border-collapse:collapse"`);
   if (x.win) return box(`<tr><td width="50%" style="padding:6px 0 0">${img('steam', 42)}</td><td width="50%"></td></tr><tr><td width="50%" style="padding:0;line-height:0;font-size:0">${img('crema', '100%')}</td><td width="50%"></td></tr><tr>${cav(CO, PAPER, '#E9D6BE', false, '2px 0 10px')}${opp('2px 0 10px')}</tr>`);
   return box(`<tr>${cav(PAPER, '#9A948B', P.muted, true, '16px 0 2px')}${opp('16px 0 2px')}</tr><tr><td width="50%" bgcolor="${PAPER}" style="background:${PAPER};padding:0 10px 6px;line-height:0;font-size:0">${img('ring', '100%')}</td><td></td></tr>`)
@@ -276,7 +284,15 @@ ${x.notes && x.notes.length ? `<div style="margin-top:14px"><div style="font:800
     const rows = c.kind === 'res'
       ? li(`${c.box ? `<a href="${esc(c.box)}" style="color:${P.ink};font-weight:700;text-decoration:none;border-bottom:1px solid #F2B231">${esc(c.res)}</a>` : `<b>${esc(c.res)}</b>`} <span style="color:${P.muted}">(${esc(c.rec)})</span>${c.lines.map(([nm, p, r, a2, mi]) => `<div style="padding-top:2px">${esc(nm)} ${p} pts, ${r} reb, ${a2} ast <span style="color:${P.muted}">· ${mi} min</span></div>`).join('')}${asg}`, o(c.d)) + (c.nx ? li(nx(c.nx), o(c.nx.d)) : '')
       : li(nx(c) + asg, o(c.d));
-    s.push(K('Charge corner', ['Charge', `${SITE}/charge`]), B(rows)); }
+    if (!process.env.NL_PIPE) s.push(K('Charge corner', ['Charge', `${SITE}/charge`]), B(rows)); else x.chRows = rows; }
+  /* Nov 5 mockup (NL_PIPE=1): Prospect pipeline, the Charge plus the drafted players, like the home page */
+  if (process.env.NL_PIPE && (x.chRows || x.drafted.length)) { const sub = (t, link) => `<tr><td style="padding:14px 0 2px;font:800 13px ${F.cond};letter-spacing:1px;text-transform:uppercase;color:${P.wine}">${t}${link ? ` <a href="${link[1]}" style="float:right;font:700 12.5px ${F.sans};letter-spacing:0;text-transform:none;color:${P.wine};text-decoration:none">${link[0]} &rarr;</a>` : ''}</td></tr>`;
+    const dd = d => new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+    const drow = r => { const v = (k, n) => n == null ? '' : `<td style="padding:0 12px 0 0;white-space:nowrap"><b style="font:700 13.5px ${F.mono};color:${P.ink}">${n}</b> <span style="font:700 9.5px ${F.sans};letter-spacing:1px;color:${P.muted}">${k}</span></td>`;
+      return `<tr><td style="padding:9px 0;border-bottom:1px dotted ${P.dot}"><div style="font:700 14px ${F.sans};color:${P.ink}">${esc(r.n)} <span style="font:700 10px ${F.sans};letter-spacing:1px;text-transform:uppercase;color:${P.muted}">${esc(r.team)}</span></div>
+        <div style="font:12.5px ${F.sans};color:${P.muted};margin:2px 0 5px">${esc(dd(r.d))} ${r.ha === 'A' ? 'at' : 'vs'} ${esc(r.opp)} · ${r.url ? `<a href="${esc(r.url)}" style="color:${P.ink};font-weight:700;text-decoration:none;border-bottom:1px solid #F2B231">${esc(r.res)}</a>` : `<b style="color:${P.ink}">${esc(r.res)}</b>`}</div>
+        ${T(`<tr>${v('PTS', r.st.pts)}${v('REB', r.st.reb)}${v('AST', r.st.ast)}${v('STL', r.st.stl)}${v('BLK', r.st.blk)}<td width="100%"></td></tr>`, 'style="width:auto"')}</td></tr>`; };
+    s.push(K('Prospect pipeline', ['Assets', `${SITE}/assets#rights`]), B(T((x.chRows ? sub('Cleveland Charge', ['Charge', `${SITE}/charge`]) + `<tr><td>${x.chRows}</td></tr>` : '') + (x.drafted.length ? sub('Drafted players', ['All drafted', `${SITE}/assets#rights`]) + x.drafted.map(drow).join('') : '')))); }
   if (x.week.length) s.push(K('This week'), B(x.week.map(([wd, d, t]) => li(esc(t), { left: `${esc(wd)} ${esc(d)}`, lw: 96 })).join('')));
   if (x.tq) s.push(`<tr><td style="padding:14px 14px 0;text-align:center;font:italic 12px ${F.sans};color:${P.muted}">Trivia answer: ${String.fromCharCode(65 + x.tq.a)}. ${esc(x.tq.c[x.tq.a])}</td></tr>`);
   /* pass it on: the referral link now lives in the footer (Nov 1) */
@@ -388,7 +404,11 @@ const tq = trivia.length ? trivia[Object.keys(sent).length % trivia.length] : nu
 const otdKey = (() => { const x = prep(D, g, score, b.top || '', b.url || D.box[g[0]] || SITE + '/schedule', { issueDay: today, rcf, news, trivia: null, since, sinceTs, usedOtd: Object.values(sent).map(v => v.otd).filter(Boolean).slice(-60) }); return x.otd ? x.otd[0] + '|' + x.otd[1] : null; })();
 // stat of the night: removed Oct 29 (Luka's call)
 const sotn = null;
-const ourBox = preseason ? (b.url || D.box[g[0]] || SITE + '/schedule') : `${SITE}/games/${g[0]}-${String(g[1]).toLowerCase()}`;
+let ourBox = preseason ? (b.url || D.box[g[0]] || SITE + '/schedule') : `${SITE}/games/${g[0]}-${String(g[1]).toLowerCase()}`;
+/* Nov 5 (Luka): Box score opens the live game page's box score (players tab) when the game is in the live archive */
+if (!preseason) { try { const y = +g[0].slice(0, 4), mo = +g[0].slice(5, 7), s0 = mo >= 8 ? y : y - 1, se = s0 + '-' + String(s0 + 1).slice(2);
+  const IX = JSON.parse(await readFile(new URL(`live-archive/${se}/index.json`, root), 'utf8')); const hit = IX.find(z => etDate(new Date(z.date)) === g[0]);
+  if (hit) ourBox = `${SITE}/live.html?g=a${se}:${hit.id}&tab=players`; } catch {} }
 const html = build(D, g, score, b.top || '', ourBox, { issueDay: today, boxRows: b.box, rcf, news, trivia: tq, since, sinceTs, qs: b.qs, milestone: milestone(), sotn, usedOtd: Object.values(sent).map(v => v.otd).filter(Boolean).slice(-60), test: !(LIVE && MODE !== 'test'), preseason });
 const [cs, os] = score.split('-').map(Number);
 const topBit = b.top ? b.top.split(':')[0].split(' ').slice(-1)[0] + ' ' + (b.top.match(/(\d+) pts/) || [])[1] : '';
