@@ -1307,14 +1307,15 @@ function teamStatsBody(D,ROWS){
   const st=el('div','tsq');let pg=null;ROWS.filter(r=>r.hib!==null).forEach(r=>{if(pg!==null&&r.g!==pg)st.appendChild(el('b'));pg=r.g;const i=el('i');i.style.background=r.better===0?F.c:r.better===1?O.c:'var(--track)';i.title=r.lab;st.appendChild(i)});/* category squares removed (Oct 28) */
   const gap=r=>Math.abs(r.x-r.y)/Math.max(Math.abs(r.x),Math.abs(r.y),1e-9);
   const fmt=(r,j)=>{const f=j?r.fy:r.fx,v=j?r.y:r.x;return f?f(v):String(Math.round(v*10)/10)};
+  /* Nov 5 (Luka): CAVS, not CLE, in labels */const AB=t=>t&&t.abbr==='CLE'?'CAVS':(t&&t.abbr);
   const top=ROWS.filter(r=>r.better>=0&&!/^(Possessions|True shot|Points from|NET RTG)/.test(r.lab)).sort((a,b)=>gap(b)-gap(a)).slice(0,4);
-  if(top.length){const ch=el('div','tse');top.forEach(r=>{const t=r.better===0?F:O;const s=el('span');s.style.color=t.c;s.style.background='var(--sub)';s.style.boxShadow=`inset 3px 0 0 ${t.c}`;s.append(el('em',null,t.abbr+' '+r.lab.replace(/ \(est\.\)/,'')),el('b',null,fmt(r,0)+'–'+fmt(r,1)));ch.appendChild(s)});w.appendChild(ch)}
+  if(top.length){const ch=el('div','tse');top.forEach(r=>{const t=r.better===0?F:O;const s=el('span');s.style.color=t.c;s.style.background='var(--sub)';s.style.boxShadow=`inset 3px 0 0 ${t.c}`;s.append(el('em',null,AB(t)+' '+r.lab.replace(/ \(est\.\)/,'')),el('b',null,fmt(r,0)+'–'+fmt(r,1)));ch.appendChild(s)});w.appendChild(ch)}
   /* Nov 5 (Luka): one percentile explainer only, the note above the win categories */
   const cols=el('div','tsc');
   const ORD=['Shooting','Possessions','Scoring','Efficiency'];const groups=[...new Set(ROWS.map(r=>r.g))].sort((x,y)=>ORD.indexOf(x)-ORD.indexOf(y));
   groups.forEach(g=>{const rs=ROWS.filter(r=>r.g===g);const gw=rs.filter(r=>r.better===0).length,gl=rs.filter(r=>r.better===1).length;const box=el('div','tsg');
-    const h=el('div','tsgh');h.innerHTML=`<span>${esc(g)}</span><span>${esc(F.abbr)} ${gw}–${gl}</span>`;box.appendChild(h);
-    const hd=el('div','tsr2 hd');hd.innerHTML=`<span></span><b style="color:${F.c}">${esc(F.abbr)}</b><span></span><b style="color:${O.c}">${esc(O.abbr)}</b>`;box.appendChild(hd);
+    const h=el('div','tsgh');h.innerHTML=`<span>${esc(g)}</span><span>${esc(AB(F))} ${gw}–${gl}</span>`;box.appendChild(h);
+    const hd=el('div','tsr2 hd');hd.innerHTML=`<span></span><b style="color:${F.c}">${esc(AB(F))}</b><span></span><b style="color:${O.c}">${esc(O.abbr)}</b>`;box.appendChild(hd);
     rs.forEach(r=>{const d=el('div','tsr2');const g2=gap(r);const wd=Math.min(50,6+g2*90);
       const bar=r.better===0?`<i style="right:50%;width:${wd}%;background:${F.c}"></i>`:r.better===1?`<i style="left:50%;width:${wd}%;background:${O.c}"></i>`:'';
       const cc='',oc='';/* plain numbers, no green/red (Luka, Oct 28) *//* one color rule: only the Cavs side is colored, green when it’s better */
@@ -1324,15 +1325,15 @@ function teamStatsBody(D,ROWS){
   w.appendChild(cols);
   /* phones, season view: one side at a time (Cavs or opponents), the gap to the other side, and the NBA rank (Oct 28) */
   if(S.season){w.classList.add('hasm');const m=el('div','tsm');const side=S.f.tsSide==='o'?1:0;
-    const seg=el('div','tsm-seg');[['Cavs',0],['Opponents',1]].forEach(([l,k])=>{const bt=el('button',k===side?'on':'',l);bt.type='button';bt.onclick=()=>{S.f.tsSide=k?'o':'c';renderView()};seg.appendChild(bt)});m.appendChild(seg);m.appendChild(el('p','tsm-x','Big number = '+(side?'opponents':F.abbr)+' per game. Small number beside it = the gap to the other side (wine = better, gray = worse). NBA = rank among 30 teams.'));
+    const seg=el('div','tsm-seg');[['Cavs',0],['Opponents',1]].forEach(([l,k])=>{const bt=el('button',k===side?'on':'',l);bt.type='button';bt.onclick=()=>{S.f.tsSide=k?'o':'c';renderView()};seg.appendChild(bt)});m.appendChild(seg);m.appendChild(el('p','tsm-x','Big number = '+(side?'opponents':AB(F))+' per game. Small number beside it = the gap to the other side (wine = better, gray = worse). NBA = rank among 30 teams.'));
     const dec=t=>{const x=String(t).replace(/[^\d.]/g,'').split('.')[1];return x?x.length:0};
     groups.forEach(g=>{const rs=ROWS.filter(r=>r.g===g);const gw=rs.filter(r=>r.better===0).length,gl=rs.filter(r=>r.better===1).length;
       const h=el('div','tsm-gh');h.append(el('span',null,g),el('span','w','Better in '+gw+' of '+(gw+gl)));m.appendChild(h);
-      const ch=el('div','tsm-ch');ch.append(el('span'),el('span',null,(side?'Opp':F.abbr)+' · vs '+(side?F.abbr:'opp')),el('span',null,'NBA'));m.appendChild(ch);
+      const ch=el('div','tsm-ch');ch.append(el('span'),el('span',null,(side?'Opp':AB(F))+' · vs '+(side?AB(F):'opp')),el('span',null,'NBA'));m.appendChild(ch);
       rs.forEach(r=>{const a=fmt(r,side),o=fmt(r,1-side);const va=parseFloat(a),vo=parseFloat(o);const d=va-vo,k=Math.max(dec(a),dec(o),/%/.test(a)?0:1);
         const cls=r.hib===null||r.better<0?'n':r.better===0?'u':'d';const row=el('div','tsm-r');const v=el('span','v',a);if(isFinite(d)&&r.lab!=='Pace'&&r.lab!=='NET RTG')v.appendChild(el('span','df '+cls,(d>=0?'+':'−')+Math.abs(d).toFixed(k)));
         const rk=el('span','rkw');rk.innerHTML=rkEl(side?r.ry:r.rx);const lb=el('span','l',r.lab);if(r.sx!=null)lb.appendChild(el('small','l2',side?r.sy:r.sx));row.append(lb,v,rk);m.appendChild(row)})});
-    m.appendChild(el('p','note','Small number = the gap to the other side: wine when it favors '+F.abbr+', gray otherwise. NBA rank in wine when top 10 for '+F.abbr+', gray when bottom 10.'));
+    m.appendChild(el('p','note','Small number = the gap to the other side: wine when it favors '+AB(F)+', gray otherwise. NBA rank in wine when top 10 for '+F.abbr+', gray when bottom 10.'));
     w.appendChild(m)}
   return w;
 }
@@ -3397,6 +3398,10 @@ function prevPicker(){let w=document.getElementById('prevpk');if(w){w.remove()}w
     {/* Nov 5: ?tab=players and so on opens that tab (newsletter box score link) */const tb=new URLSearchParams(location.search).get('tab');if(tb&&S.data&&!S.season&&TABS.some(t=>t[0]===tb)){S.tab=tb;renderNav(S.R);renderView()}}
     const pl=new URLSearchParams(location.search).get('pl');if(!pl||!S.data)return;const id=Object.keys(S.data.P).find(k=>PP[ppKey(S.data.P[k].name)]===pl);if(!id)return;
     S.tab='lineups';S.lu='groups';S.f.luPick={[id]:1};S.f.ooA=id;renderNav(S.R);renderView()})})();
+/* Nov 5 (Luka): CAVS, not CLE, in every label: one pass over the page's text whenever it changes (the data keeps CLE for lookups) */
+(()=>{const RX=/\bCLE\b/;const fix=root=>{const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode()){const t=n.nodeValue;if(RX.test(t)&&!(n.parentElement&&n.parentElement.closest('script,style,textarea')))n.nodeValue=t.replace(/\bCLE\b/g,'CAVS')}};
+  let q=false;const run=()=>{q=false;const m=document.querySelector('main');if(m)fix(m)};const mo=new MutationObserver(()=>{if(!q){q=true;requestAnimationFrame(run)}});
+  const go=()=>{const m=document.querySelector('main');if(!m)return;run();mo.observe(m,{childList:true,subtree:true,characterData:true})};if(document.readyState==='loading')addEventListener('DOMContentLoaded',go);else go()})();
 </script>
 <script>/* stat bars grow in: any bar sized by an inline % width (or height) fills from zero the first time it scrolls into view on each page; off for reduced motion */
 (function(){if(!('IntersectionObserver' in window)||!Element.prototype.animate)return;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
