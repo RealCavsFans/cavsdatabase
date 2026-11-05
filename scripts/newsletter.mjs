@@ -284,15 +284,15 @@ ${x.notes && x.notes.length ? `<div style="margin-top:14px"><div style="font:800
     const rows = c.kind === 'res'
       ? li(`${c.box ? `<a href="${esc(c.box)}" style="color:${P.ink};font-weight:700;text-decoration:none;border-bottom:1px solid #F2B231">${esc(c.res)}</a>` : `<b>${esc(c.res)}</b>`} <span style="color:${P.muted}">(${esc(c.rec)})</span>${c.lines.map(([nm, p, r, a2, mi]) => `<div style="padding-top:2px">${esc(nm)} ${p} pts, ${r} reb, ${a2} ast <span style="color:${P.muted}">· ${mi} min</span></div>`).join('')}${asg}`, o(c.d)) + (c.nx ? li(nx(c.nx), o(c.nx.d)) : '')
       : li(nx(c) + asg, o(c.d));
-    if (!process.env.NL_PIPE) s.push(K('Charge corner', ['Charge', `${SITE}/charge`]), B(rows)); else x.chRows = rows; }
-  /* Nov 5 mockup (NL_PIPE=1): Prospect pipeline, the Charge plus the drafted players, like the home page */
-  if (process.env.NL_PIPE && (x.chRows || x.drafted.length)) { const sub = (t, link) => `<tr><td style="padding:14px 0 2px;font:800 13px ${F.cond};letter-spacing:1px;text-transform:uppercase;color:${P.wine}">${t}${link ? ` <a href="${link[1]}" style="float:right;font:700 12.5px ${F.sans};letter-spacing:0;text-transform:none;color:${P.wine};text-decoration:none">${link[0]} &rarr;</a>` : ''}</td></tr>`;
+    x.chRows = rows; }
+  /* Nov 5 (Luka): Prospect pipeline replaces Charge corner: the Charge plus the drafted players, like the home page */
+  if (x.chRows || x.drafted.length) { const sub = (t, link) => `<tr><td style="padding:14px 0 2px;font:800 13px ${F.cond};letter-spacing:1px;text-transform:uppercase;color:${P.wine}">${t}${link ? ` <a href="${link[1]}" style="float:right;font:700 12.5px ${F.sans};letter-spacing:0;text-transform:none;color:${P.wine};text-decoration:none">${link[0]} &rarr;</a>` : ''}</td></tr>`;
     const dd = d => new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
     const drow = r => { const v = (k, n) => n == null ? '' : `<td style="padding:0 12px 0 0;white-space:nowrap"><b style="font:700 13.5px ${F.mono};color:${P.ink}">${n}</b> <span style="font:700 9.5px ${F.sans};letter-spacing:1px;color:${P.muted}">${k}</span></td>`;
       return `<tr><td style="padding:9px 0;border-bottom:1px dotted ${P.dot}"><div style="font:700 14px ${F.sans};color:${P.ink}">${esc(r.n)} <span style="font:700 10px ${F.sans};letter-spacing:1px;text-transform:uppercase;color:${P.muted}">${esc(r.team)}</span></div>
         <div style="font:12.5px ${F.sans};color:${P.muted};margin:2px 0 5px">${esc(dd(r.d))} ${r.ha === 'A' ? 'at' : 'vs'} ${esc(r.opp)} · ${r.url ? `<a href="${esc(r.url)}" style="color:${P.ink};font-weight:700;text-decoration:none;border-bottom:1px solid #F2B231">${esc(r.res)}</a>` : `<b style="color:${P.ink}">${esc(r.res)}</b>`}</div>
         ${T(`<tr>${v('PTS', r.st.pts)}${v('REB', r.st.reb)}${v('AST', r.st.ast)}${v('STL', r.st.stl)}${v('BLK', r.st.blk)}<td width="100%"></td></tr>`, 'style="width:auto"')}</td></tr>`; };
-    s.push(K('Prospect pipeline', ['Assets', `${SITE}/assets#rights`]), B(T((x.chRows ? sub('Cleveland Charge', ['Charge', `${SITE}/charge`]) + `<tr><td>${x.chRows}</td></tr>` : '') + (x.drafted.length ? sub('Drafted players', ['All drafted', `${SITE}/assets#rights`]) + x.drafted.map(drow).join('') : '')))); }
+    s.push(K('Prospect pipeline'), B(T((x.chRows ? sub('Cleveland Charge', ['Charge', `${SITE}/charge`]) + `<tr><td>${x.chRows}</td></tr>` : '') + (x.drafted.length ? sub('Drafted players') + x.drafted.map(drow).join('') : '')))); }
   if (x.week.length) s.push(K('This week'), B(x.week.map(([wd, d, t]) => li(esc(t), { left: `${esc(wd)} ${esc(d)}`, lw: 96 })).join('')));
   if (x.tq) s.push(`<tr><td style="padding:14px 14px 0;text-align:center;font:italic 12px ${F.sans};color:${P.muted}">Trivia answer: ${String.fromCharCode(65 + x.tq.a)}. ${esc(x.tq.c[x.tq.a])}</td></tr>`);
   /* pass it on: the referral link now lives in the footer (Nov 1) */
