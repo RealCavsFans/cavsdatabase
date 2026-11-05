@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "Hoops Rumors",
+   "title": "Cavaliers To Waive Riley Minix",
+   "link": "https://www.hoopsrumors.com/2026/11/cavaliers-to-waive-riley-minix.html",
+   "date": "2026-11-05T19:15:37.000Z"
+  },
+  {
    "src": "The Inside Shot",
    "title": "Game Night Observations: An Ugly Problem, Getting to the Rim and More Injuries",
    "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPQ2xQTTJfWXp4VVlEMFUxaHRRYnVpdi1EbW93TzM0TmlJeHJ2cWxVX1VGaWxSQV84WnJHdVdKSko2MExCQUtxcGVJb09rSFBnM1JzTWMtTzFwX0lRRW12ZXNfcHljQTBFTFVPWi04YnBrVEhrNDJvUDU2QkFRV1NNT01n?oc=5",
@@ -351,16 +357,23 @@
    "link": "https://share.transistor.fm/s/781a15f6",
    "date": "2026-10-27T07:05:00.000Z",
    "dur": "31 min"
-  },
-  {
-   "src": "Wine and Gold Talk",
-   "title": "How soon is too soon to worry about the Cavs’ old habits?",
-   "link": "https://pdst.fm/e/traffic.megaphone.fm/ADLM3435269632.mp3",
-   "date": "2026-10-26T19:02:00.000Z",
-   "dur": "25 min"
   }
  ],
  "videos": [
+  {
+   "src": "It's Cavalier Podcast",
+   "title": "Cavs Make Room for Norchad Omier—Riley Minix Is the Odd Man Out",
+   "link": "https://www.youtube.com/watch?v=w1SSeEqaloM",
+   "date": "2026-11-05T19:32:24.000Z",
+   "id": "w1SSeEqaloM"
+  },
+  {
+   "src": "Locked On Cavs",
+   "title": "CAVS POSTCAST: Cavaliers’ Early DEFICIT Costly—Donovan Mitchell, James Harden NEED Big Answers",
+   "link": "https://www.youtube.com/watch?v=TLfxQJoYr8g",
+   "date": "2026-11-05T19:02:33.000Z",
+   "id": "TLfxQJoYr8g"
+  },
   {
    "src": "Ultimate Cleveland Sports Show",
    "title": "The Cavaliers have no shot this year unless Donovan Mitchell & James Harden start playing WAY better",
@@ -388,13 +401,6 @@
    "link": "https://www.youtube.com/watch?v=BBkUcOVIC3I",
    "date": "2026-11-05T03:54:41.000Z",
    "id": "BBkUcOVIC3I"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: Cavaliers’ Early DEFICIT Costly—Donovan Mitchell, James Harden NEED Big Answers",
-   "link": "https://www.youtube.com/watch?v=TLfxQJoYr8g",
-   "date": "2026-11-05T03:51:32.000Z",
-   "id": "TLfxQJoYr8g"
   },
   {
    "src": "Locked On Cavs",
@@ -556,13 +562,6 @@
    "link": "https://www.youtube.com/watch?v=5VPapNSnNzY",
    "date": "2026-10-31T13:29:34.000Z",
    "id": "5VPapNSnNzY"
-  },
-  {
-   "src": "It's Cavalier Podcast",
-   "title": "Kyrie Irving gets BUCKETS! Drops 35 PTS on Houston! #mavs #dallasmavericks #nba",
-   "link": "https://www.youtube.com/watch?v=VryapBjKl2Q",
-   "date": "2026-10-31T03:39:43.000Z",
-   "id": "VryapBjKl2Q"
   },
   {
    "src": "The Chase Down Podcast",
