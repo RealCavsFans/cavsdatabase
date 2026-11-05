@@ -1,6 +1,7 @@
 // Share images for finished games: og/g/<date>-<opp>.jpg (1200x630), used as the link preview for /games/<date>-<opp>.
 // Reads the schedule, scores and results baked into index.html. Only draws games that don't have an image yet.
 // Needs playwright-core and Chrome (CHROME_PATH), same as the prerender step. Safe to skip: pages fall back to the schedule image.
+import { launch } from './launch.mjs';
 import { readFile, stat, mkdir } from 'node:fs/promises';
 const root = new URL('../', import.meta.url);
 const html = await readFile(new URL('index.html', root), 'utf8');
@@ -17,7 +18,7 @@ for (const t of todo) if (!(await exists(new URL(`og/g/${t.d}-${t.o.toLowerCase(
 if (!need.length) { console.log('og-games: nothing new'); process.exit(0); }
 let pw; try { pw = await import('playwright-core'); } catch { console.log('og-games: playwright-core missing, skipped'); process.exit(0); }
 const opts = { headless: true }; if (process.env.CHROME_PATH) opts.executablePath = process.env.CHROME_PATH;
-const browser = await pw.chromium.launch(opts); const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
+const browser = await launch(pw, opts); const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
 await mkdir(new URL('og/g/', root), { recursive: true });
 const card = t => { const [c, o] = t.sc.split('-'), dl = new Date(t.d + 'T12:00:00Z').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
   return `<!doctype html><html><head><link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@700;800&family=Geist+Mono:wght@600;700&family=Archivo:wght@600;800&display=swap" rel="stylesheet">

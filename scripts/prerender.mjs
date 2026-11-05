@@ -3,6 +3,7 @@
 // The original empty section is kept in a <template>; the site's script swaps it back in and redraws on load,
 // so visitors get exactly the same page. Also adds per-page structured data (breadcrumbs, games, players).
 // Called by build-pages.mjs --prerender (the GitHub Action). Needs Playwright or playwright-core + Chrome.
+import { launch } from './launch.mjs';
 import { readFile, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { createRequire } from 'node:module';
@@ -53,7 +54,7 @@ export default async function prerender(root, META) {
   await new Promise(r => server.listen(0, '127.0.0.1', r));
   const base = 'http://127.0.0.1:' + server.address().port;
   const opts = { headless: true }; if (process.env.CHROME_PATH) opts.executablePath = process.env.CHROME_PATH;
-  const browser = await pw.chromium.launch(opts);
+  const browser = await launch(pw, opts);
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce', colorScheme: 'light', timezoneId: 'America/New_York' });
   await ctx.addInitScript(() => { try { localStorage.setItem('cdb-intro', '1'); localStorage.removeItem('cdb-theme'); } catch {} });
   await ctx.route(u => !u.href.startsWith(base), r => r.request().resourceType() === 'image' ? r.fulfill({ status: 200, contentType: 'image/png', body: PIXEL }) : r.abort());

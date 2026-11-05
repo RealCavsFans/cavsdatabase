@@ -1,5 +1,6 @@
 // Share images for season pages: og/h/<YYYY-YY>.jpg (1200x630), used as the link preview for /history/<YYYY-YY>.
 // Also draws og/history.jpg for the History page. Past seasons never change, so each card is drawn once. Usage: node scripts/og-seasons.mjs [outDir] [season,season]
+import { launch } from './launch.mjs';
 import { readFile, stat, mkdir, writeFile, unlink } from 'node:fs/promises';
 const root = new URL('../', import.meta.url);
 const H = JSON.parse(await readFile(new URL('pdata/history.json', root), 'utf8'));
@@ -18,7 +19,7 @@ const require = createRequire(import.meta.url);
 const pw = (() => { for (const m of ['playwright-core', 'playwright']) { try { return require(m); } catch {} } return null; })();
 if (!pw) { console.log('og-seasons: playwright missing, skipped'); process.exit(0); }
 const opts = { headless: true }; if (process.env.CHROME_PATH) opts.executablePath = process.env.CHROME_PATH;
-const browser = await pw.chromium.launch(opts); const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
+const browser = await launch(pw, opts); const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
 await mkdir(out, { recursive: true });
 const esc = t => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;');
 const card = (i, x) => {

@@ -3,6 +3,7 @@
 //   node scripts/newsletter.mjs test   (latest final, or the preseason finale before the opener; test copy to the owner only)
 // Nothing reaches subscribers unless the repo variable NEWSLETTER_LIVE is "true". Until then every issue is a
 // Buttondown draft plus a test copy to the newsletter owner. Needs BUTTONDOWN_API_KEY, and Playwright/Chrome to read the site's data.
+import { launch } from './launch.mjs';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { createRequire } from 'node:module';
@@ -34,7 +35,7 @@ async function siteData() {
   const server = createServer(async (req, res) => { let p = decodeURIComponent(req.url.split('?')[0]); if (p.endsWith('/')) p += 'index.html'; try { const b = await readFile(new URL('.' + p, root)); res.writeHead(200, { 'content-type': T[extname(p)] || 'application/octet-stream' }); res.end(b); } catch { res.writeHead(404); res.end(); } });
   await new Promise(r => server.listen(0, '127.0.0.1', r));
   const opts = { headless: true }; if (process.env.CHROME_PATH) opts.executablePath = process.env.CHROME_PATH;
-  const browser = await pw.chromium.launch(opts);
+  const browser = await launch(pw, opts);
   const page = await browser.newPage({ timezoneId: 'America/New_York' });
   await page.route(u => !u.href.startsWith('http://127.0.0.1'), r => r.abort());
   await page.goto(`http://127.0.0.1:${server.address().port}/index.html`, { waitUntil: 'load' });

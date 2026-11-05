@@ -1,6 +1,7 @@
 // Safety check: opens the main pages in headless Chrome from the files on disk and fails (exit 1) if any page throws a
 // script error or comes up empty. Run before publishing: the 30-minute Action runs it after the build and skips the commit
 // if it fails, so a broken edit never goes live. With --source it checks index.html itself (no build needed). Needs playwright or playwright-core + Chrome (CHROME_PATH); skips if missing.
+import { launch } from './launch.mjs';
 import { readFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { createRequire } from 'node:module';
@@ -21,7 +22,7 @@ const server = createServer(async (req, res) => {
 await new Promise(r => server.listen(0, '127.0.0.1', r));
 const base = 'http://127.0.0.1:' + server.address().port;
 const opts = { headless: true }; if (process.env.CHROME_PATH) opts.executablePath = process.env.CHROME_PATH;
-const browser = await pw.chromium.launch(opts);
+const browser = await launch(pw, opts);
 const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
 await ctx.addInitScript(() => { try { localStorage.setItem('cdb-intro', '1'); sessionStorage.setItem('cdb-nl-seen', '1'); } catch {} });
 await ctx.route(u => !u.href.startsWith(base), r => r.abort());

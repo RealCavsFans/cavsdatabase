@@ -5,6 +5,7 @@
 // og/live.json keeps a fingerprint of each card (so unchanged cards are skipped) and the version that
 // build-pages.mjs adds to the image address, so X, iMessage and Slack fetch the new picture after a change.
 // Run by .github/workflows/videos.yml before build-pages. Needs playwright-core and Chrome (CHROME_PATH); skips if missing.
+import { launch } from './launch.mjs';
 import { readFile, writeFile, mkdir, unlink } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 const root = new URL('../', import.meta.url);
@@ -191,7 +192,7 @@ const { createRequire } = await import('node:module'); const require = createReq
 const pw = (() => { for (const m of ['playwright-core', 'playwright']) { try { return require(m); } catch {} } return null; })();
 if (!pw) { console.log('og-live: playwright missing, skipped'); process.exit(0); }
 const opts = { headless: true }; if (process.env.CHROME_PATH) opts.executablePath = process.env.CHROME_PATH;
-const browser = await pw.chromium.launch(opts); const pg = await browser.newPage({ viewport: { width: 1200, height: 630 } });
+const browser = await launch(pw, opts); const pg = await browser.newPage({ viewport: { width: 1200, height: 630 } });
 await mkdir(new URL('og/p/', root), { recursive: true }); await mkdir(new URL('og/gp/', root), { recursive: true });
 const tmp = new URL('og/_live.html', root);
 for (const [f, h] of need) {

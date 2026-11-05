@@ -1,4 +1,5 @@
 // Share images for the main pages (cap, schedule, assets and transactions are drawn live by og-live.mjs): og.jpg (site-wide) and og/<route>.jpg (1200x630). Run by hand when a page title or the brand changes.
+import { launch } from './launch.mjs';
 import { writeFile, unlink, readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
@@ -30,7 +31,7 @@ ${title ? '' : 'body{padding-bottom:110px}'}.u{position:absolute;bottom:${title 
 ${title ? `<h1>${esc(title)}</h1><p>${esc(sub)}</p>` : `<div class="big">${esc(sub)}<b>${esc(sub2)}</b></div>`}
 <div class="u">cavsdatabase.com${title ? '/' + path : ''}</div></body></html>`;
 const opts = { headless: true }; if (process.env.CHROME_PATH) opts.executablePath = process.env.CHROME_PATH;
-const browser = await pw.chromium.launch(opts); const p = await browser.newPage({ viewport: { width: 1200, height: 630 } });
+const browser = await launch(pw, opts); const p = await browser.newPage({ viewport: { width: 1200, height: 630 } });
 const tmp = new URL('og/_page.html', root);
 for (const d of PAGES) { await writeFile(tmp, page(d)); await p.goto(tmp.href); await p.evaluate(() => document.fonts.ready); await p.waitForTimeout(80);
   await p.screenshot({ path: new URL(d[0], root).pathname, type: 'jpeg', quality: 88 }); }
