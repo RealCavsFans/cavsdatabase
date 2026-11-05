@@ -378,7 +378,7 @@ td.pnm{font-weight:700;color:var(--fg)}body>main.wrap{min-height:100vh}b.ffv>sma
 /* team stats: edges */
 .tsh{font:700 1.0625rem var(--sans);margin:2px 0 6px}
 .tsq{display:flex;gap:3px;margin-bottom:10px}.tsq i{flex:1;height:14px;max-width:26px}.tsq b{width:8px}
-.tse{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}.tse span{font:600 0.75rem var(--sans);padding:4px 8px}.tse b{font-family:var(--mono)}
+.tse{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}.tse span{font:600 0.75rem var(--sans);padding:4px 8px;display:inline-flex;gap:6px;align-items:baseline}.tse em{font-style:normal}.tsx{font:500 .6875rem/1.35 var(--sans);color:var(--muted);margin:2px 0 8px}@media (max-width:640px){.tse{display:grid;grid-template-columns:1fr 1fr;gap:4px}.tse span{display:flex;flex-direction:column;gap:1px;padding:5px 8px;font-size:.6875rem;line-height:1.2}.tse b{font-size:.8125rem}.tsh{font-size:.9375rem}}.tse b{font-family:var(--mono)}
 .tsc{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;align-items:start}
 .tsm{display:none}
 #view.gm:not(.gmp) .pm.p,#view.gm:not(.gmp) .pm.n,#view.gm .up,#view.gm .dn,#view.gm small.rk.g,#view.gm small.rk.b,#view.gm .df.u,#view.gm .df.d{color:inherit!important}
@@ -1308,7 +1308,8 @@ function teamStatsBody(D,ROWS){
   const gap=r=>Math.abs(r.x-r.y)/Math.max(Math.abs(r.x),Math.abs(r.y),1e-9);
   const fmt=(r,j)=>{const f=j?r.fy:r.fx,v=j?r.y:r.x;return f?f(v):String(Math.round(v*10)/10)};
   const top=ROWS.filter(r=>r.better>=0&&!/^(Possessions|True shot|Points from|NET RTG)/.test(r.lab)).sort((a,b)=>gap(b)-gap(a)).slice(0,4);
-  if(top.length){const ch=el('div','tse');top.forEach(r=>{const t=r.better===0?F:O;const s=el('span');s.style.color=t.c;s.style.background=`color-mix(in srgb,${t.c} 10%,var(--card))`;s.append(t.abbr+' '+r.lab.replace(/ \(est\.\)/,'')+' ',el('b',null,fmt(r,0)+'–'+fmt(r,1)));ch.appendChild(s)});w.appendChild(ch)}
+  if(top.length){const ch=el('div','tse');top.forEach(r=>{const t=r.better===0?F:O;const s=el('span');s.style.color=t.c;s.style.background='var(--sub)';s.style.boxShadow=`inset 3px 0 0 ${t.c}`;s.append(el('em',null,t.abbr+' '+r.lab.replace(/ \(est\.\)/,'')),el('b',null,fmt(r,0)+'–'+fmt(r,1)));ch.appendChild(s)});w.appendChild(ch)}
+  if(!S.season)w.appendChild(el('p','tsx','Small number under each stat = percentile vs every NBA team game this season (99th = best).'));
   const cols=el('div','tsc');
   const ORD=['Shooting','Possessions','Scoring','Efficiency'];const groups=[...new Set(ROWS.map(r=>r.g))].sort((x,y)=>ORD.indexOf(x)-ORD.indexOf(y));
   groups.forEach(g=>{const rs=ROWS.filter(r=>r.g===g);const gw=rs.filter(r=>r.better===0).length,gl=rs.filter(r=>r.better===1).length;const box=el('div','tsg');
@@ -1854,7 +1855,7 @@ const TC_R={light:1,riso:1,bg:'#f2e8d2',ink:'#2a0b17',hi:'#2a0b17',line:'rgba(42
 const TC_PC=Object.assign({},TC_L,{pc:1,bg:'#ffffff',page:'#ffffff',glow:'#ffffff',glow2:'#ffffff',glowEnd:'rgba(255,255,255,0)',panel:'#ffffff',line:'#dfe2e6',track:'#e6e8ec',sb:'#e2e5e9',court:'#f4f5f7',hsbg:'#e6e8ec',grid:'#d6dade',logoA:0});
 const TC_PCW=Object.assign({},TC_PC,{pcw:1,page:'#6b2141',bg:'#ffffff',sb:'#4a1029'});
 const TC=Object.assign({},TC_D);/* Nov 5 (Luka): live game images use the wine-banner light look; season cards stay dark */if(window.__shareTheme===undefined)window.__shareTheme='pc';
-function tTheme(light){const th=window.__shareTheme;for(const k in TC)delete TC[k];Object.assign(TC,th==='pc'?(light?TC_PC:TC_D):th==='pcw'?TC_PCW:th==='riso'?TC_R:th==='wine'?TC_W:light?Object.assign({},TC_L,window.__lightVar||{}):TC_D);/* __lightVar: mock hook for trying other light palettes */BG=TC.bg;INK=TC.ink;GREY=TC.grey;MUT=TC.mut}
+function tTheme(light){const th=window.__shareTheme;for(const k in TC)delete TC[k];Object.assign(TC,th==='pc'?TC_PC:th==='pcw'?TC_PCW:th==='riso'?TC_R:th==='wine'?TC_W:light?Object.assign({},TC_L,window.__lightVar||{}):TC_D);/* __lightVar: mock hook for trying other light palettes */BG=TC.bg;INK=TC.ink;GREY=TC.grey;MUT=TC.mut}
 /* ---------- share cards ---------- */
 async function cardFonts(){try{await Promise.all([document.fonts.load('800 80px "Saira Condensed"'),document.fonts.load('700 60px "Geist Mono"'),document.fonts.load('600 30px Archivo')])}catch(e){}}
 /* Nov 4 (mock): terminal look for every game share card: dark frame, wine glow, faint Cavs logo, mono wordmark, status-bar footer */
@@ -1876,13 +1877,16 @@ const pcGrad=(x,W)=>{const g=x.createLinearGradient(0,0,W,0);g.addColorStop(0,'#
 /* Nov 5 (mock): light player-card look: taller wine header, then the card body set inside a terminal window (tab, command line, frame) like the player page images */
 function pcWrap(A,slug){const W=A.width,H=A.height,land=W>1500,BH=land?340:372,FB=land?64:58,off=land?58:24,HB=BH+off;const B=document.createElement('canvas');B.width=W;B.height=H;const g=B.getContext('2d');
   g.fillStyle='#eef0f3';g.fillRect(0,0,W,H);g.fillStyle=pcGrad(g,W);g.fillRect(0,0,W,HB);g.drawImage(A,0,0,W,BH,0,off,W,BH);if(land){const h0=TC.hi;TC.hi='#ffffff';tMark(g,60,off+4);TC.hi=h0}g.fillStyle='#F2B231';g.fillRect(0,HB,W,8);
-  const M=land?44:36,ty=HB+8+(land?22:18),th=land?40:36,fz=land?21:19;g.font=`600 ${fz}px "Geist Mono"`;const tab='cavs_db · cavs · '+(gKick(S.data||{}).toLowerCase());const tw=g.measureText(tab).width+(land?64:58);
+  const M=land?44:36,ty=HB+8+(land?22:18),th=land?40:36,fz=land?21:19;g.font=`600 ${fz}px "Geist Mono"`;const tab='cavs_db · cavs · '+(S.season?String(S.season).replace('-','–')+' season':gKick(S.data||{}).toLowerCase());const tw=g.measureText(tab).width+(land?64:58);
   const r=14,wy=ty+th,wh=H-FB-(land?22:18)-wy;g.fillStyle='#e2e5e9';g.beginPath();g.moveTo(M,wy);g.lineTo(M,ty+10);g.quadraticCurveTo(M,ty,M+10,ty);g.lineTo(M+tw-10,ty);g.quadraticCurveTo(M+tw,ty,M+tw,ty+10);g.lineTo(M+tw,wy);g.fill();
   g.fillStyle='#F2B231';g.beginPath();g.arc(M+22,ty+th/2,6,0,7);g.fill();g.fillStyle='#5d646c';g.fillText(tab,M+40,ty+th/2+fz*.36);
   g.fillStyle='#ffffff';g.strokeStyle='#dfe2e6';g.lineWidth=2;g.beginPath();g.moveTo(M,wy);g.lineTo(W-M-r,wy);g.quadraticCurveTo(W-M,wy,W-M,wy+r);g.lineTo(W-M,wy+wh-r);g.quadraticCurveTo(W-M,wy+wh,W-M-r,wy+wh);g.lineTo(M+r,wy+wh);g.quadraticCurveTo(M,wy+wh,M,wy+wh-r);g.closePath();g.fill();g.stroke();
   const cy=wy+(land?36:32);g.font=`600 ${land?24:22}px "Geist Mono"`;g.fillStyle='#860038';g.fillText('> cavs ',M+24,cy+8);let cx=M+24+g.measureText('> cavs ').width;g.fillStyle='#6b7078';const cmd='--'+(slug||'game');g.fillText(cmd,cx,cy+8);cx+=g.measureText(cmd).width+6;g.fillStyle='#860038';g.fillRect(cx,cy-14,12,26);
-  const sx=land?34:28,sy=BH+(land?40:24),sw=W-2*sx,sh=H-FB-(land?36:0)-sy,ix=M+12,iy=cy+(land?26:24),iw=W-2*M-24,ih=wy+wh-12-iy,k=Math.min(iw/sw,ih/sh),dw=sw*k,dh=sh*k;
-  g.drawImage(A,sx,sy,sw,sh,ix+(iw-dw)/2,iy,dw,dh);g.drawImage(A,0,H-FB,W,FB,0,H-FB,W,FB);return B}
+  /* Nov 5 (Luka): trim the empty margins around the content so it fills the window as large as it can, never past it */
+  let sx=land?34:28,sy=BH+(land?40:24),sw=W-2*sx,sh=H-FB-(land?36:0)-sy;try{const d=A.getContext('2d').getImageData(sx,sy,sw,sh).data;let x0=sw,x1=0,y0=sh,y1=0;for(let y=0;y<sh;y+=2)for(let x=0;x<sw;x+=2){const o=(y*sw+x)*4;if(d[o]<243||d[o+1]<243||d[o+2]<243){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}}
+    if(x1>x0&&y1>y0){const P=10;const nx=Math.max(0,x0-P),ny=Math.max(0,y0-P);sw=Math.min(sw-nx,x1-x0+2*P);sh=Math.min(sh-ny,y1-y0+2*P);sx+=nx;sy+=ny}}catch(e){}
+  const ix=M+12,iy=cy+(land?26:24),iw=W-2*M-24,ih=wy+wh-12-iy,k=Math.min(iw/sw,ih/sh,1.3),dw=sw*k,dh=sh*k;g.imageSmoothingQuality='high';
+  g.drawImage(A,sx,sy,sw,sh,ix+(iw-dw)/2,iy+Math.max(0,(ih-dh)/2),dw,dh);g.drawImage(A,0,H-FB,W,FB,0,H-FB,W,FB);return B}
 /* Nov 5 (mock): depth on the banner title (window.__titleFx: shadow | offset | extrude) */
 function titleFx(x,T,X,Y,fs){const fx=TC.pc&&window.__titleFx,c0=x.fillStyle;x.save();
   if(fx==='shadow'){x.shadowColor='rgba(40,0,15,.55)';x.shadowBlur=fs*.18;x.shadowOffsetY=fs*.06;x.fillText(T,X,Y)}
@@ -2403,8 +2407,8 @@ Object.assign(CARDS,{
       {const g=gsv(b);sv(g.toFixed(1),C.gs,cy+10,'700 28px "Geist Mono"',g===mxg?WINE:INK);x.fillStyle=TC.track;tick(C.bar,cy-9,C.bw,18);x.fillStyle=g===mxg?WINE:'#5b6470';tick(C.bar,cy-9,C.bw*Math.max(0,g)/mxg,18)}
       sv(bl(pv(b,'oreb')+pv(b,'dreb')),C.reb,cy+10,'700 30px "Geist Mono"',INK);sv(bl(pv(b,'ast')),C.ast,cy+10,'700 30px "Geist Mono"',INK);
       const sh=(m2,a2)=>{const t=season?(m2/per(b)).toFixed(1)+'–'+(a2/per(b)).toFixed(1):m2+'–'+a2;return t};
-      sv(sh(b.fgm,b.fga),C.fg,cy+4,'700 28px "Geist Mono"',INK);sv(lpc(b.fgm,b.fga),C.fg,cy+28,'600 21px Archivo',MUT);sv(sh(b.tpm,b.tpa),C.tp,cy+4,'700 28px "Geist Mono"',INK);sv(lpc(b.tpm,b.tpa),C.tp,cy+28,'600 21px Archivo',MUT);
-      sv(sh(b.ftm,b.fta),C.ft,cy+10,'600 26px "Geist Mono"',INK);sv(bl(pv(b,'stl')),C.stl,cy+10,'600 28px "Geist Mono"',INK);sv(bl(pv(b,'blk')),C.blk,cy+10,'600 28px "Geist Mono"',INK);
+      if(season){sv(lpc(b.fgm,b.fga),C.fg,cy+4,'700 28px "Geist Mono"',INK);sv(sh(b.fgm,b.fga),C.fg,cy+28,'600 19px Archivo',MUT);sv(lpc(b.tpm,b.tpa),C.tp,cy+4,'700 28px "Geist Mono"',INK);sv(sh(b.tpm,b.tpa),C.tp,cy+28,'600 19px Archivo',MUT)}else{sv(sh(b.fgm,b.fga),C.fg,cy+4,'700 28px "Geist Mono"',INK);sv(lpc(b.fgm,b.fga),C.fg,cy+28,'600 21px Archivo',MUT);sv(sh(b.tpm,b.tpa),C.tp,cy+4,'700 28px "Geist Mono"',INK);sv(lpc(b.tpm,b.tpa),C.tp,cy+28,'600 21px Archivo',MUT)}
+      sv(season?lpc(b.ftm,b.fta):sh(b.ftm,b.fta),C.ft,cy+10,'600 26px "Geist Mono"',INK);sv(bl(pv(b,'stl')),C.stl,cy+10,'600 28px "Geist Mono"',INK);sv(bl(pv(b,'blk')),C.blk,cy+10,'600 28px "Geist Mono"',INK);
       const pm=season?b.pm/per(b):b.pm;const ps=season?lsg(pm):lsgi(pm);sv(ps,C.pm,cy+10,'800 26px "Geist Mono"',pm>0?LGR:pm<0?LRD:MUT)});
     /* team line */
     const ty=hy+18+ids.length*rh+8;x.fillStyle=INK;x.fillRect(X+36,ty,W-72,3);const gp=season?Math.max(1,(D.games||[]).length):1,tv=v=>season?(v/gp).toFixed(1):String(v);
@@ -2501,7 +2505,7 @@ function themeInk(x,D){const P=CanvasRenderingContext2D.prototype,df=Object.getO
   Object.defineProperty(x,'strokeStyle',{configurable:true,get(){return ds.get.call(x)},set(v){ds.set.call(x,mp(v))}});
   if(TC.wine){const fr=x.fillRect.bind(x);x.fillRect=(a,b,w,h)=>{if(isW(raw)&&Math.abs(w)>60&&Math.abs(h)>44){const s0=df.get.call(x);df.set.call(x,'rgba(0,0,0,.3)');fr(a,b,w,h);df.set.call(x,s0);return}fr(a,b,w,h)}}
   if(TC.riso){const ft=x.fillText.bind(x),ft0=P.fillText.bind(x);x.fillText=(t,a,b,...m)=>{const sz=+((x.font.match(/(\d+)px/)||[0,0])[1]);if(sz>=80){const s0=df.get.call(x),op=x.globalCompositeOperation;df.set.call(x,'rgba(227,162,39,.85)');x.globalCompositeOperation='multiply';ft0(t,a+Math.round(sz*.05),b+Math.round(sz*.04),...m);x.globalCompositeOperation=op;df.set.call(x,'#a3123f');ft0(t,a,b,...m);df.set.call(x,s0);return}ft(t,a,b,...m)}}}
-async function renderCard(type,arg,D,R){await cardFonts();tTheme(window.__lightCards!=null?!!window.__lightCards:!S.season);const C=shareCards()[type];window.__cardSlug=String(C.label||type).toLowerCase().replace(/ card$/,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');const cv=document.createElement('canvas');cv.width=C.w||1080;cv.height=C.h||1350;const cx2=cv.getContext('2d',{willReadFrequently:!!TC.light});if(TC.light)autoInk(cx2);if(TC.wine||TC.riso)themeInk(cx2,D);{const sw=t=>typeof t==='string'?t.replace(/\bCLE['’]s\b/g,'the Cavs’').replace(/\bCLE\b/g,'CAVS'):t,ft=cx2.fillText.bind(cx2),mt=cx2.measureText.bind(cx2);cx2.fillText=(t,...a)=>ft(sw(t),...a);cx2.measureText=t=>mt(sw(t))}/* labels say CAVS, never CLE */await C.draw(cx2,D,R,arg);const out=TC.pc&&!TC.pcw?pcWrap(cv,window.__cardSlug):cv;return new Promise(r=>out.toBlob(r,'image/png'))}
+async function renderCard(type,arg,D,R){await cardFonts();tTheme(window.__lightCards!=null?!!window.__lightCards:true);const C=shareCards()[type];window.__cardSlug=String(C.label||type).toLowerCase().replace(/ card$/,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');const cv=document.createElement('canvas');cv.width=C.w||1080;cv.height=C.h||1350;const cx2=cv.getContext('2d',{willReadFrequently:!!TC.light});if(TC.light)autoInk(cx2);if(TC.wine||TC.riso)themeInk(cx2,D);{const sw=t=>typeof t==='string'?t.replace(/\bCLE['’]s\b/g,'the Cavs’').replace(/\bCLE\b/g,'CAVS'):t,ft=cx2.fillText.bind(cx2),mt=cx2.measureText.bind(cx2);cx2.fillText=(t,...a)=>ft(sw(t),...a);cx2.measureText=t=>mt(sw(t))}/* labels say CAVS, never CLE */await C.draw(cx2,D,R,arg);const out=TC.pc&&!TC.pcw?pcWrap(cv,window.__cardSlug):cv;return new Promise(r=>out.toBlob(r,'image/png'))}
 function vShare(v,D,R){
   const CARDS0=shareCards();const c=el('div','card');head(c,'Share cards',(S.season?'Season so far':perLabel(S.per))+' · images sized for X and Instagram');
   const fl=el('div','fl');if(!S.f.card||!CARDS0[S.f.card])S.f.card=S.season?'season':'game';
@@ -3247,7 +3251,7 @@ function vFF(v,D,R){
     if(x!=null&&y!=null){const better=(x>y)===hib?D.focus:D.other;const e=el('div','edge',x===y?'Even':better.abbr+' edge');e.style.color=better.c;box.appendChild(e)}
     box.appendChild(el('p','note',full));g.appendChild(box)});
   c.appendChild(g);
-  /* Nov 4: the Cavs' season average next to each factor */if(!S.season&&D.focus.id===CLE)seasonTotals().then(X=>{if(!X)return;g.querySelectorAll('.ffc').forEach((bx,i)=>{const k=FF[i][0];if(X[k]==null||bx.querySelector('.ffs'))return;bx.querySelector('.n').insertAdjacentHTML('beforeend',' <small class="ffs">Cavs season '+X[k].toFixed(1)+'%</small>')})}).catch(()=>{});
+  /* Nov 5 (Luka): no season averages on the game four factors */if(false)seasonTotals().then(X=>{if(!X)return;g.querySelectorAll('.ffc').forEach((bx,i)=>{const k=FF[i][0];if(X[k]==null||bx.querySelector('.ffs'))return;bx.querySelector('.n').insertAdjacentHTML('beforeend',' <small class="ffs">Cavs season '+X[k].toFixed(1)+'%</small>')})}).catch(()=>{});
   c.appendChild(el('p','note','TOV% = turnovers ÷ (FGA + 0.44 × FTA + turnovers). Offensive rebound rate uses player rebounds, the NBA.com way. Use the quarter buttons above to compare any stretch.'+(LF?' Small numbers = NBA rank among 30 teams (for OPP, 1st = the toughest on opponents).':'')));
   v.appendChild(c);if(S.season)wfCard(v,D);
 }
