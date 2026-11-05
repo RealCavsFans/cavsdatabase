@@ -1,10 +1,22 @@
 {
  "articles": [
   {
+   "src": "Fear The Sword",
+   "title": "Player Grades: Cavs at Thunder: Donovan Mitchell’s fourth-quarter outing not enough",
+   "link": "https://www.fearthesword.com/cavs-analysis/53922/player-grades-cavs-at-thunder-donovan-mitchells-fourth-quarter-outing-not-enough",
+   "date": "2026-11-05T04:04:34.000Z"
+  },
+  {
    "src": "cleveland.com",
-   "title": "Cavs’ Jarrett Allen suffers injury in first half vs. Oklahoma City Wednesday",
-   "link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNa2x2Q2Fmbk1QN2l3WW5Jcy1jN2owQTFZdUtfeldHZUxtZ09SakJ6bU1GRTQwamxYUmRoMTFnb0VWcUFkZ1VQc2Qxd2dHMXZtVGpjSEVyUWR4VmxzaklUTzNpYTJ5OXlkLUtRUDdnR3gwR3FWQnBaQVNRZUF0ZmFwaWhQeE1XcFVaY2RQMEdQM3hrMUdKTEhqQUpla0s1Tl9FNDRmdHJjd2I0T1E3OUxZZjdDMkg3U2t4WXc?oc=5",
-   "date": "2026-11-05T02:06:00.000Z"
+   "title": "Cavs rolled by Thunder, 124-116, in wire-to-wire loss",
+   "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOMEFkM0d1UERxWUdiQXR3VjVBcFBuTDBvaUctVlNtU3pmRGFFRzdweTVmVHI4M0l1U2hvVU9Ic19qaHdUclV1aktlRmo2Smh0c3FMN1FkWnpDTEV2a0ltWEh1YWtaTUJueWxwbXRSQ09CR1FZRUhFUm02c3lLaUZTNjNUdU5xRmtZOWFENEtFM3pIWWxVT3Z5dGRWbw?oc=5",
+   "date": "2026-11-05T03:39:00.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Slow start dooms Cavs in 124-116 loss to the Thunder",
+   "link": "https://www.fearthesword.com/cavs-scores-results/53926/slow-start-dooms-cavs-in-124-116-loss-to-the-thunder",
+   "date": "2026-11-05T03:36:06.000Z"
   },
   {
    "src": "Fear The Sword",
@@ -211,18 +223,6 @@
    "date": "2026-11-01T03:23:43.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "Evan Mobley and Jarrett Allen lead Cavs to runaway victory over Bucks",
-   "link": "https://www.fearthesword.com/cavs-scores-results/53826/cavs-recap-evan-mobley-jarrett-allen-cleveland-cavaliers-milwaukee-bucks",
-   "date": "2026-11-01T02:24:50.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cavs at Bucks game thread",
-   "link": "https://www.fearthesword.com/cavs-game-previews/53812/cavs-at-bucks-game-thread",
-   "date": "2026-11-01T00:00:00.000Z"
-  },
-  {
    "src": "Hoops Rumors",
    "title": "Cavs Notes: Hezonja, Mobley, Altman, Thomas",
    "link": "https://www.hoopsrumors.com/2026/10/cavs-notes-hezonja-mobley-altman-thomas.html",
@@ -355,18 +355,18 @@
  ],
  "videos": [
   {
-   "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: The Cleveland Cavaliers Head to Oklahoma City for Second Leg of Hom & Home vs Thunder",
-   "link": "https://www.youtube.com/watch?v=TLfxQJoYr8g",
-   "date": "2026-11-05T03:34:41.000Z",
-   "id": "TLfxQJoYr8g"
-  },
-  {
    "src": "It's Cavalier Podcast",
    "title": "REACTION: Cavs vs. Thunder",
    "link": "https://www.youtube.com/watch?v=BBkUcOVIC3I",
-   "date": "2026-11-05T03:33:34.000Z",
+   "date": "2026-11-05T03:54:41.000Z",
    "id": "BBkUcOVIC3I"
+  },
+  {
+   "src": "Locked On Cavs",
+   "title": "CAVS POSTCAST: Cavaliers’ Early DEFICIT Costly—Donovan Mitchell, James Harden NEED Big Answers",
+   "link": "https://www.youtube.com/watch?v=TLfxQJoYr8g",
+   "date": "2026-11-05T03:51:32.000Z",
+   "id": "TLfxQJoYr8g"
   },
   {
    "src": "Locked On Cavs",

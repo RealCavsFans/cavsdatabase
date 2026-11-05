@@ -1414,37 +1414,7 @@
   "status": "final",
   "score": "116-124",
   "result": "L",
-  "refs": [
-   [
-    "Crew chief",
-    "John Goble",
-    "10"
-   ],
-   [
-    "Referee",
-    "John Butler",
-    "30"
-   ],
-   [
-    "Umpire",
-    "Jonathan Sterling",
-    "17"
-   ]
-  ],
-  "qs": {
-   "cle": [
-    20,
-    24,
-    30,
-    42
-   ],
-   "opp": [
-    37,
-    23,
-    28,
-    36
-   ]
-  },
+  "top": "Donovan Mitchell: 27 pts, 3 reb, 6 ast",
   "out": [
    "Jaylon Tyson",
    "Peyton Watson",
@@ -1617,7 +1587,37 @@
     "0"
    ]
   ],
-  "top": "Donovan Mitchell: 27 pts, 3 reb, 6 ast"
+  "qs": {
+   "cle": [
+    20,
+    24,
+    30,
+    42
+   ],
+   "opp": [
+    37,
+    23,
+    28,
+    36
+   ]
+  },
+  "refs": [
+   [
+    "Crew chief",
+    "John Goble",
+    "10"
+   ],
+   [
+    "Referee",
+    "John Butler",
+    "30"
+   ],
+   [
+    "Umpire",
+    "Jonathan Sterling",
+    "17"
+   ]
+  ]
  },
  "2026-11-06": {
   "url": "https://www.nba.com/game/phi-vs-cle-0022600027/box-score",
