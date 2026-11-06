@@ -5119,7 +5119,7 @@ const bbS=n=>'https://www.basketball-reference.com/search/search.fcgi?search='+e
 function draw(){const $=id=>document.getElementById(id);
   const S=H.seasons;
   /* stat strip */
-  {const st=$('hx-stats');st.textContent='';const W=S.reduce((a,x)=>a+x.w,0),L=S.reduce((a,x)=>a+x.l,0);
+  {const st=$('hx-stats');st.textContent='';const cw=(SEASON.results.match(/W/g)||[]).length,cl=(SEASON.results.match(/L/g)||[]).length,W=S.reduce((a,x)=>a+x.w,0)+cw,L=S.reduce((a,x)=>a+x.l,0)+cl;/* Nov 6: includes this season's games, like the coaches table */
    [[W+'–'+L,'All-time record'],[S.filter(x=>!['missed','playin'].includes(x.poLevel)).length,'Playoff trips'],[S.filter(x=>['finals','title'].includes(x.poLevel)).length,'NBA Finals'],['2016','Champions'],[H.retired.length,'Retired numbers']].forEach(([v,l])=>{const d=el('div','txs');d.append(el('b','num-sc',String(v)),el('span',null,l));st.appendChild(d)})}
   /* season grid */
   {const lg=$('hx-leg');lg.textContent='';['title','finals','conf','round2','round1','playin','missed'].forEach(k=>{const s=el('span');s.append(el('i',LV[k][1]),LV[k][0]);lg.appendChild(s)});
