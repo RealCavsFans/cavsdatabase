@@ -1155,7 +1155,7 @@ const pmCls=v=>'pm '+(v>0?'p':v<0?'n':'');
 
 /* ---------- possessions from the play-by-play: groups, stops, context ---------- */
 function possGroups(R,tid){const out=[];R.PL.filter(q=>q.team===tid).forEach(q=>{if(q.how==='oreb'&&out.length)out[out.length-1].push(q);else out.push([q])});return out}
-function stopPct(R,tid){const g=possGroups(R,tid);return g.length?g.filter(x=>x.reduce((a,q)=>a+q.pts,0)===0).length/g.length:null}
+function stopPct(R,tid){/* Nov 6: every counted possession (np), not only the ones with a shot, turnover or foul: running out a quarter with nothing is a stop too */const g=possGroups(R,tid);const n=R.T[tid]&&R.T[tid].np>0?R.T[tid].np:g.length;if(!n)return null;const sc=g.filter(x=>x.reduce((a,q)=>a+q.pts,0)>0).length;return Math.max(0,n-sc)/n}
 const isTrans=q=>(q.how==='stl'||q.how==='dreb'||q.how==='to')&&q.first!=null&&q.first<=7;
 function ctxRows(R,tid){const P=R.PL.filter(q=>q.team===tid);const n=P.length||1;const f=(L,lab)=>({lab,n:L.length,pts:L.reduce((a,q)=>a+q.pts,0),fr:L.length/n,pp:L.length?L.reduce((a,q)=>a+q.pts,0)/L.length:null});
   return [f(P.filter(q=>q.how!=='oreb'&&!isTrans(q)),'Halfcourt'),f(P.filter(isTrans),'All transition'),f(P.filter(q=>isTrans(q)&&q.how==='stl'),'Off steals'),f(P.filter(q=>isTrans(q)&&q.how==='dreb'),'Off live rebounds'),f(P.filter(q=>q.how==='oreb'),'Putbacks / 2nd chances')]}

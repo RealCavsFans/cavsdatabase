@@ -63,7 +63,7 @@ function linesOf(sum) {
       const id = a.athlete?.id; if (!id) continue;
       const [fgm, fga] = ma(a, 'FG'), [tpm, tpa] = ma(a, '3PT'), [ftm, fta] = ma(a, 'FT');
       const x = { n: a.athlete.displayName, t: team.team?.abbreviation || '', p: a.athlete.position?.abbreviation || '', g: 1, gs: a.starter ? 1 : 0,
-        min: v(a, 'MIN'), pts: v(a, 'PTS'), reb: v(a, 'REB'), oreb: v(a, 'OREB'), ast: v(a, 'AST'), stl: v(a, 'STL'), blk: v(a, 'BLK'), tov: v(a, 'TO'), fgm, fga, tpm, tpa, ftm, fta };
+        min: v(a, 'MIN'), pts: v(a, 'PTS'), reb: v(a, 'REB'), oreb: v(a, 'OREB'), ast: v(a, 'AST'), stl: v(a, 'STL'), blk: v(a, 'BLK'), tov: v(a, 'TO'), pf: v(a, 'PF'), fgm, fga, tpm, tpa, ftm, fta };
       x.dd = [x.pts, x.reb, x.ast, x.stl, x.blk].filter(z => z >= 10).length >= 2 ? 1 : 0;
       out[id] = x;
     }
@@ -85,11 +85,11 @@ function teamsOf(sum, ev) {
   const c0 = ev.competitions?.[0] || {}, cupFinal = c0.type?.abbreviation === 'CC' || /Cup Championship/i.test(JSON.stringify(c0.notes || [])) ? 1 : 0;
   return t.length === 2 ? { per, t, cupFinal } : null;
 }
-const NUM = ['g', 'gs', 'min', 'pts', 'reb', 'oreb', 'ast', 'stl', 'blk', 'tov', 'fgm', 'fga', 'tpm', 'tpa', 'ftm', 'fta', 'dd'];
+const NUM = ['g', 'gs', 'min', 'pts', 'reb', 'oreb', 'ast', 'stl', 'blk', 'tov', 'fgm', 'fga', 'tpm', 'tpa', 'ftm', 'fta', 'pf', 'dd'];
 const apply = (lines, sign) => { for (const [id, x] of Object.entries(lines)) {
   const P = L.players[id] || (L.players[id] = Object.fromEntries([['n', x.n], ['t', x.t], ['p', x.p], ...NUM.map(k => [k, 0])]));
   if (sign > 0) { P.n = x.n; if (x.t) P.t = x.t; if (x.p) P.p = x.p; }
-  for (const k of NUM) P[k] = Math.round((P[k] + sign * (x[k] || 0)) * 10) / 10;
+  for (const k of NUM) P[k] = Math.round(((P[k] || 0) + sign * (x[k] || 0)) * 10) / 10;
 } };
 L.recent = L.recent || {};
 L.tg = L.tg || {};   // team game lines by event id, for team-stats.mjs   // the last few nights' lines, kept so a stat correction can replace them
@@ -155,6 +155,41 @@ for (const date of dates.reverse()) {               // newest first, so a long b
   }
 }
 for (const [id, r] of Object.entries(L.recent)) if ((Date.parse(today) - Date.parse(r.d)) / 864e5 > 3) delete L.recent[id];
+/* Nov 6 (Luka): player season lines from the NBA's own box scores too, when the store is here. ESPN's running totals had
+   missed whole games for about 70 players. Same shape as before (names, ESPN-style team codes, positions kept from ESPN),
+   plus fouls (pf) for Game Score and exact minutes. ESPN's lines stay only for players the store doesn't have. */
+{ const fsx = await import('node:fs'), zlib = await import('node:zlib'), path = await import('node:path');
+  const idxF = path.join(NBA_DIR, SEASON, 'index.json');
+  if (fsx.existsSync(idxF)) {
+    const { loadFixes, applyFixes } = await import('./nba-fixes.mjs');
+    const FIX = loadFixes(NBA_DIR), idx = JSON.parse(fsx.readFileSync(idxF, 'utf8')), AB = { GSW: 'GS', NOP: 'NO', NYK: 'NY', SAS: 'SA', UTA: 'UTAH', WAS: 'WSH' };
+    const nm = x => String(x).normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g, '').replace(/[^a-z]/g, '');
+    const old = {}; for (const [id, P] of Object.entries(L.players || {})) old[nm(P.n) + '|' + P.t] = [id, P];
+    const mins = v => { const m = String(v || '').match(/PT(\d+)M([\d.]+)S/); return m ? +m[1] + +m[2] / 60 : (parseFloat(v) || 0); };
+    const NP = {}; let games = 0;
+    for (const gid of Object.keys(idx)) {
+      if (!gid.startsWith('002')) continue;
+      let raw; try { raw = JSON.parse(zlib.gunzipSync(fsx.readFileSync(path.join(NBA_DIR, SEASON, gid + '.json.gz')))); } catch { continue; }
+      applyFixes(raw, FIX[gid]); const B = raw.box; if (!B || B.gameStatus !== 3) continue;   // finals only
+      games++;
+      for (const T of [B.homeTeam, B.awayTeam]) for (const p of T.players || []) {
+        const st = p.statistics || {}, mn = mins(st.minutes); if (!(mn > 0)) continue;
+        const t = AB[T.teamTricode] || T.teamTricode, key = nm(p.name) + '|' + t, prev = old[key];
+        const id = prev ? prev[0] : 'n' + p.personId;
+        const o = NP[id] || (NP[id] = { n: prev ? prev[1].n : p.name, t, p: prev ? prev[1].p : ({ PG: 'G', SG: 'G', G: 'G', SF: 'F', PF: 'F', F: 'F', C: 'C' }[p.position] || ''), g: 0, gs: 0, min: 0, pts: 0, reb: 0, oreb: 0, ast: 0, stl: 0, blk: 0, tov: 0, fgm: 0, fga: 0, tpm: 0, tpa: 0, ftm: 0, fta: 0, pf: 0, dd: 0, src: 'NBA' });
+        const x = { pts: st.points, reb: st.reboundsTotal, oreb: st.reboundsOffensive, ast: st.assists, stl: st.steals, blk: st.blocks, tov: st.turnovers, fgm: st.fieldGoalsMade, fga: st.fieldGoalsAttempted, tpm: st.threePointersMade, tpa: st.threePointersAttempted, ftm: st.freeThrowsMade, fta: st.freeThrowsAttempted, pf: st.foulsPersonal };
+        o.g++; if (p.starter === '1' || p.starter === 1 || p.starter === true) o.gs++; o.min = Math.round((o.min + mn) * 100) / 100;
+        for (const k in x) o[k] += x[k] || 0;
+        if ([x.pts, x.reb, x.ast, x.stl, x.blk].filter(z => z >= 10).length >= 2) o.dd++;
+      }
+    }
+    if (games >= 10) {
+      const have = new Set(Object.values(NP).map(P => nm(P.n) + '|' + P.t));
+      for (const [id, P] of Object.entries(L.players || {})) if (!NP[id] && !have.has(nm(P.n) + '|' + P.t)) NP[id] = P;   // a player only ESPN has (store lag)
+      L.players = NP; L.playersSrc = 'NBA'; console.log(`league feed: player lines from the NBA store (${games} games, ${Object.keys(NP).length} players)`);
+    }
+  }
+}
 L.updated = new Date().toISOString();
 await writeFile(FILE, JSON.stringify(L) + '\n');
 SH.updated = L.updated; await writeFile(SFILE, JSON.stringify(SH) + '\n');

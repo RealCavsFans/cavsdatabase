@@ -4393,11 +4393,11 @@ window.renderPlayer=function(s){
     const sum=k=>b.box.reduce((t,r)=>t+(+r[k]||0),0),ma=s2=>{const m=String(s2||'').match(/(\d+)-(\d+)/);return m?[+m[1],+m[2]]:[0,0]};
     const team={pts:sum(2),reb:sum(3),ast:sum(4),stl:sum(10),blk:sum(11),fga:b.box.reduce((t,r)=>t+ma(r[7])[1],0)};
     const r=b.box.find(x=>x[0]===n);let me=null;
-    if(r){const [fgm,fga]=ma(r[7]),[tpm,tpa]=ma(r[8]),[ftm,fta]=ma(r[9]);me={min:parseFloat(r[1])||0,pts:+r[2]||0,reb:+r[3]||0,ast:+r[4]||0,pm:parseFloat(r[5])||0,st:+r[6]||0,fgm,fga,tpm,tpa,ftm,fta,stl:+r[10]||0,blk:+r[11]||0,tov:+r[12]||0}}
+    if(r){const [fgm,fga]=ma(r[7]),[tpm,tpa]=ma(r[8]),[ftm,fta]=ma(r[9]);me={min:parseFloat(r[1])||0,pts:+r[2]||0,reb:+r[3]||0,ast:+r[4]||0,pm:parseFloat(r[5])||0,st:+r[6]||0,fgm,fga,tpm,tpa,ftm,fta,stl:+r[10]||0,blk:+r[11]||0,tov:+r[12]||0,oreb:r[13]!=null&&r[13]!==''?+r[13]:null,pf:r[14]!=null&&r[14]!==''?+r[14]:null}}
     return {d,opp:g[1],ha:g[2],res:b.result,score:b.score,me,out:(b.out||[]).includes(n),team}});
   const mine=games.filter(g=>g.me&&g.me.min>0);const gp=mine.length;
   const avg=k=>gp?mine.reduce((t,g)=>t+g.me[k],0)/gp:null,tot=k=>mine.reduce((t,g)=>t+g.me[k],0);
-  const gmsc=m=>m.pts+0.4*m.fgm-0.7*m.fga-0.4*(m.fta-m.ftm)+0.5*m.reb+m.stl+0.7*m.ast+0.7*m.blk-m.tov;
+  /* Nov 6: John Hollinger's Game Score exactly (0.7 OREB + 0.3 DREB, minus 0.4 fouls); games saved before Nov 6 without fouls and offensive boards use 0.5 REB and no foul term */const gmsc=m=>m.pts+0.4*m.fgm-0.7*m.fga-0.4*(m.fta-m.ftm)+(m.oreb!=null?0.7*m.oreb+0.3*(m.reb-m.oreb):0.5*m.reb)+m.stl+0.7*m.ast+0.7*m.blk-(m.pf!=null?0.4*m.pf:0)-m.tov;
   const med=a=>{const s2=[...a].sort((x,y)=>x-y),k=s2.length;return k?(k%2?s2[(k-1)/2]:(s2[k/2-1]+s2[k/2])/2):null};
 
   /* ---------- baseline: last NBA season, or college / overseas ---------- */
@@ -4584,7 +4584,7 @@ window.renderPlayer=function(s){
     (PPD.sal?Promise.resolve(PPD.sal):fJ('/pdata/league-salaries.json').then(r=>r.ok?r.json():null).catch(()=>null).then(j=>PPD.sal=j)).then(SJ=>{box.innerHTML='';if(!SJ||!SJ.teams){c.remove();return}
       const byT={},all={};Object.entries(SJ.teams).forEach(([t,o])=>Object.entries(o).forEach(([k,v])=>{(byT[t]=byT[t]||{})[nm(k)]=v;(all[nm(k)]=all[nm(k)]||[]).push(v)}));
       const salOf=x=>{const t=byT[ESPB[x.t]||x.t]||{},k=nm(x.n);if(t[k]!=null)return t[k];const a2=all[k];return a2&&a2.length===1?a2[0]:null};
-      const gs=x=>(x.pts+.4*x.fgm-.7*x.fga-.4*(x.fta-x.ftm)+.7*x.oreb+.3*(x.reb-x.oreb)+x.stl+.7*x.ast+.7*x.blk-x.tov)/x.g;
+      const gs=x=>(x.pts+.4*x.fgm-.7*x.fga-.4*(x.fta-x.ftm)+.7*x.oreb+.3*(x.reb-x.oreb)+x.stl+.7*x.ast+.7*x.blk-.4*(x.pf||0)-x.tov)/x.g;/* Nov 6: with fouls (Hollinger) */
       const P=LP.filter(x=>x.g>=Math.max(3,maxG*0.4)&&x.min/x.g>=12).map(x=>({x,s:salOf(x),v:gs(x)})).filter(o=>o.s!=null&&o.s>0);
       const me=P.find(o=>o.x===meL);if(!me||P.length<40){c.remove();return}
       /* his pay band: the 30 players paid closest to him */
