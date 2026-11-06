@@ -165,6 +165,7 @@ function build(per, file) {
       if (nb ? !(nb[0] > 0) : !(b.min > 0)) continue;
       const row = nb ? { min: nb[0], pts: nb[1], fgm: nb[2], fga: nb[3], tpm: nb[4], tpa: nb[5], ftm: nb[6], fta: nb[7], oreb: nb[8], dreb: nb[9], ast: nb[10], stl: nb[11], blk: nb[12], to: nb[13], pf: nb[14], pm: nb[15] }
         : { min: b.min, pts: b.pts, fgm: b.fgm, fga: b.fga, tpm: b.tpm, tpa: b.tpa, ftm: b.ftm, fta: b.fta, oreb: b.oreb, dreb: b.dreb, ast: b.ast, stl: b.stl, blk: b.blk, to: b.to, pf: b.pf, pm: b.pm };
+      /* Nov 6: possessions he played (NBA.com style, from the play-by-play) for his on-floor ratings */row.po = b && b.po || 0; row.pd = b && b.pd || 0;
       gp[id] = (gp[id] || 0) + 1; B[id] = B[id] || {}; addObj(B[id], row);
       if (p.starter) B[id].gs = (B[id].gs || 0) + 1;
     }
