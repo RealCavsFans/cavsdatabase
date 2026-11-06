@@ -304,6 +304,13 @@
  "podcasts": [
   {
    "src": "Wine and Gold Talk",
+   "title": "What would it take for Kenny Atkinson to lose his job? Hey, Chris!",
+   "link": "https://pdst.fm/e/traffic.megaphone.fm/ADLM8465950951.mp3",
+   "date": "2026-11-06T09:30:00.000Z",
+   "dur": "35 min"
+  },
+  {
+   "src": "Wine and Gold Talk",
    "title": "Are the Cavs' offensive struggles becoming a bigger problem than their 4-4 start?",
    "link": "https://pdst.fm/e/traffic.megaphone.fm/ADLM6125814778.mp3",
    "date": "2026-11-05T09:30:00.000Z",
@@ -343,13 +350,6 @@
    "link": "https://pdst.fm/e/traffic.megaphone.fm/ADLM3097940289.mp3",
    "date": "2026-10-28T08:30:00.000Z",
    "dur": "38 min"
-  },
-  {
-   "src": "Wine and Gold Talk",
-   "title": "Analyzing the Cavs' come from behind overtime win over the red-hot Minnesota Timberwolves",
-   "link": "https://pdst.fm/e/traffic.megaphone.fm/ADLM8417820045.mp3",
-   "date": "2026-10-27T09:29:00.000Z",
-   "dur": "37 min"
   }
  ],
  "videos": [
