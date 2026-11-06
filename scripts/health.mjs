@@ -71,7 +71,7 @@ else { if (days(LK.checked.slice(0, 10), today) > 9) problems.push(`The weekly l
 }
 // 8. possession accuracy: our play-by-play counts vs pbpstats for every archived game (scripts/check-poss.mjs)
 { const pc = await J('data/poss-check.json'); if (pc && pc.games) { const off = Object.values(pc.games).filter(x => x.pb && !x.reviewed && (Math.abs(x.ours.cle[0] - x.pb.cle[0]) > 2 || Math.abs(x.ours.opp[0] - x.pb.opp[0]) > 2 || x.ours.cle[1] !== x.pb.cle[1] || x.ours.opp[1] !== x.pb.opp[1]));
-  if (off.length) problems.push(`Possession or point counts differ from pbpstats in ${off.length} game(s): ${off.slice(-3).map(x => x.et + ' ' + x.opp + ' (ours ' + x.ours.cle.join('/') + ', pbpstats ' + x.pb.cle.join('/') + ')').join('; ')}`);
+  if (off.length) problems.push(`Possession or point counts differ from pbpstats in ${off.length} game(s): ${off.slice(-3).map(x => x.et + ' ' + x.opp + ' (possessions/points, Cavs then ' + x.opp + ': ours ' + x.ours.cle.join('/') + ' · ' + x.ours.opp.join('/') + ', pbpstats ' + x.pb.cle.join('/') + ' · ' + x.pb.opp.join('/') + ')').join('; ')}`);
   else notes.push('possessions match pbpstats (' + Object.values(pc.games).filter(x => x.pb).length + ' games)'); } }
 // 10. box score accuracy (Nov 1): scripts/bbr-check.mjs compares each finished game with Basketball Reference
 { const bc = await J('data/bbr-check.json'); if (bc && bc.games) { const G = Object.values(bc.games), off = G.filter(x => x.status === 'diff'), miss = G.filter(x => x.status !== 'diff' && x.status !== 'match' && (now - Date.parse(x.et)) / 864e5 > 3);
