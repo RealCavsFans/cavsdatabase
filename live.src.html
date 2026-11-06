@@ -710,6 +710,7 @@ details.stx{margin-top:10px;border-top:1px solid var(--line2)}details.stx>summar
 .tkc-h{height:17px;-webkit-mask:repeating-linear-gradient(90deg,#000 0 calc(100%/15 - 3px),transparent calc(100%/15 - 3px) calc(100%/15));mask:repeating-linear-gradient(90deg,#000 0 calc(100%/15 - 3px),transparent calc(100%/15 - 3px) calc(100%/15))}.tkc-h.l{transform:scaleX(-1)}
 .tkc-q .tkc-s{grid-column:2;display:flex;justify-content:space-between;margin-top:3px;font:600 .75rem var(--mono);color:var(--tm)}.tkc-q .tkc-s b{font:700 .9375rem var(--mono);color:var(--tm)}.tkc-q .tkc-s b.c{color:var(--tr)}
 .tkc-q+.tkc-q{margin-top:10px}
+/* Nov 6 (Luka): the chart is only for the camera image; the page keeps its tables */.card>.tkc{display:none!important}
 /* in the light/wine camera image, always the light colors */
 .tps .tkc{--tc:#860038;--to:#9aa1a9;--tt:#e6e8eb;--tf:#101419;--tm:#5d646c;--tr:#860038;margin:4px 0 8px}
 </style>
@@ -1007,7 +1008,7 @@ function capFoot(g,url,date,W,H,FT,pad,S,mono,wine,muted){const two=FT>45*S;g.te
   const num=v=>{const m=String(v).replace('−','-').replace('+','').match(/^-?\d+(\.\d+)?/);return m?parseFloat(m[0]):null};
   const notes=[...card.querySelectorAll('p.note,.capkey')].map(x=>T(x.textContent)).filter(t=>t&&t.length<260&&!/^Loading/.test(t)&&(/^How to read/.test(t)||!/\b(wine|gray|grey|green|red|shaded|shading|bar)s?\b/i.test(t))).slice(-2);
   const nt=notes.length?'<div class="t-nt">'+notes.map(t=>`<p># ${esc2(window.__shareTheme==='pc'?t:t.replace(/Wine = top 10/,'Gold = top 10'))}</p>`).join('')+'</div>':'';
-  /* Nov 5 (Luka): a season tick chart is the image (the table stays on the page) */{const tk=card.querySelector(':scope>.tkc');if(tk&&vis(tk))return '<div class="t-chart">'+tk.outerHTML+'</div>'+nt}
+  /* Nov 5 (Luka): a season tick chart is the image (the table stays on the page) */{const tk=card.querySelector(':scope>.tkc');if(tk)return '<div class="t-chart">'+tk.outerHTML+'</div>'+nt}
   const blk=(f,n)=>{const k=Math.max(0,Math.min(n,Math.round(f*n)));return '<u></u>'.repeat(k)+'<s></s>'.repeat(n-k)};
   /* rank bars: how far up the league he/they are (1st = full bar) */
   const rkN=t=>{const m=String(t||'').match(/^(\d+)/);return m?+m[1]:null};const rbar=(t,k)=>`<span class="t-v"><em class="${k||'n'} t-rk">${esc2(t||'')}</em></span>`;
