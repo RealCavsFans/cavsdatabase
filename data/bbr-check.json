@@ -105,7 +105,15 @@
    "url": "https://www.basketball-reference.com/boxscores/202611020CLE.html",
    "at": "2026-11-04T09:30:05.426Z",
    "players": 20
+  },
+  "0022600180": {
+   "et": "2026-11-04",
+   "opp": "OKC",
+   "status": "match",
+   "url": "https://www.basketball-reference.com/boxscores/202611040OKC.html",
+   "at": "2026-11-06T09:30:23.927Z",
+   "players": 21
   }
  },
- "checked": "2026-11-04T09:30:05.427Z"
+ "checked": "2026-11-06T09:30:23.928Z"
 }
