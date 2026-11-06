@@ -87,7 +87,7 @@ function deriveCore(D,plays,F){
   let gtNow=false;const isGT=(per,t,m)=>{if(per!==4)return false;const left=2880-t,a=Math.abs(m);return left>540?a>=25:left>360?a>=20:a>=15};
   const inFx=per=>F==='clutch'?clutchNow:F==='nogt'?!gtNow:inPer(F,per);
   /* a possession that ends on free throws belongs to the ten players on the floor at the foul, like the points (Oct 31) */let hold=null,curON=null;const endPoss=(t,inF)=>{if(!inF||!t)return;const W=curON||on;if(seg)seg.o[t].np++;lu(t,W[t],o=>o.o.np++);lu(opp(t),W[opp(t)],o=>o.d.np++)};
-  const PL=[];const newPoss=(t,tt,how,inF)=>{if(ps[t]&&ps[t].t===tt&&ps[t].how===how&&how!=='oreb')return;if(how!=='start'){if(how!=='oreb'&&hold===opp(t))endPoss(opp(t),inF);hold=t}ps[t]={t:tt,how,pts:0,first:null,inF,on:on[t]?[...on[t]].sort().join(','):'',od:on[opp(t)]?[...on[opp(t)]].sort().join(','):''};if(inF){pc[t][how].n++;PL.push(Object.assign(ps[t],{team:t}))}};
+  const PL=[];const newPoss=(t,tt,how,inF)=>{if(ps[t]&&ps[t].t===tt&&ps[t].how===how&&how!=='oreb')return;/* Nov 6: nothing starts with no time left (a rebound or steal at the buzzer), as on NBA.com */if(how!=='start'&&curPer&&tt>=pstart(curPer)+plen(curPer))return;if(how!=='start'){if(how!=='oreb'&&hold===opp(t))endPoss(opp(t),inF);hold=t}ps[t]={t:tt,how,pts:0,first:null,inF,on:on[t]?[...on[t]].sort().join(','):'',od:on[opp(t)]?[...on[opp(t)]].sort().join(','):''};if(inF){pc[t][how].n++;PL.push(Object.assign(ps[t],{team:t}))}};
   const margin=[[0,0]];let lc=0,ties=0,prevSign=0;const lead={};tid.forEach(t=>lead[t]=0);
   const shots=[],asts=[];const lastFG={},lastPt={},dr=[];let lastMade=null;
   /* segments: every stretch with the same ten players on the floor (for player-vs-opponent on/off) */
@@ -95,7 +95,7 @@ function deriveCore(D,plays,F){
   const addTime=t1=>{const dt=t1-last;if(dt>0){const inF=inFx(curPer);if(inF&&seg)seg.sec+=dt;tid.forEach(t=>{const q=tq(curPer,t);q.sec+=dt;on[t].forEach(id=>{if(D.P[id].starter)q.stSec+=dt;else q.bnSec+=dt});if(inF){T[t].sec+=dt;on[t].forEach(id=>{B[id].min+=dt;if(D.P[id].starter)T[t].stSec+=dt;else T[t].bnSec+=dt});lu(t,on[t],o=>o.sec+=dt)}})}last=Math.max(last,t1)};
   const leave=(id,t1)=>{if(enter[id]!=null){(stints[id]=stints[id]||[]).push([enter[id][0],t1,pmAll[id]-enter[id][1]]);delete enter[id]}};
   const join=(id,t1)=>{enter[id]=[t1,pmAll[id]]};
-  /* Nov 6 (Luka): rebounds of missed field goals, team rebounds included (NBA.com advanced / pbpstats / Cleaning the Glass); rebounds after free throws and heaves left out */let skipReb=false;
+  /* Nov 6 (Luka): rebound rates the NBA.com way: every rebound, player or team, except the dead-ball team rebounds after a missed free throw that isn't the last of the trip (or a technical); a team rebound at the buzzer counts, as on NBA.com */let deadReb=false,ftKeep=false;
   plays.forEach(p=>{curON=null;
     if(p.per!==curPer){if(curPer){addTime(pstart(curPer)+plen(curPer));endPoss(hold,inFx(curPer));hold=null;tid.forEach(t=>on[t].forEach(id=>leave(id,pstart(curPer)+plen(curPer))))}
       curPer=p.per;last=pstart(p.per);tid.forEach(t=>{on[t]=new Set(startFive[p.per][t]||[]);on[t].forEach(id=>{B[id].played=true;join(id,last)});src[t]='';ps[t]={t:last,how:'init',pts:0,first:null,inF:false,on:'',od:''}});newSeg()}
@@ -113,12 +113,13 @@ function deriveCore(D,plays,F){
     const isFT=/^Free Throw/.test(ty);
     /* the period's first possession: whoever first shoots or turns it over had the ball from the start of the period (Oct 28) */
     {const tt=p.team&&T[p.team]?p.team:teamOf(a);if(hold===null&&tt&&T[tt]&&((p.shot&&!/Technical/.test(ty))||(/Turnover|^Traveling|Double Dribble|Discontinued? Dribble|Offensive Goaltending|Palming|Backcourt|3-Second Violation$|Inbound/.test(ty)&&!/^Kicked Ball|Defensive/.test(ty)))){newPoss(tt,pstart(p.per),'start',inF);hold=tt}}
-    {const tt=p.team&&T[p.team]?p.team:teamOf(a);if(tt&&ps[tt]&&ps[tt].first==null&&(p.shot||/Turnover|Foul/.test(ty)))ps[tt].first=p.t-ps[tt].t}
+    {const tt=p.team&&T[p.team]?p.team:teamOf(a);if(tt&&ps[tt]&&ps[tt].first==null&&(p.shot||/Turnover|Foul|^Traveling|Double Dribble|Discontinued? Dribble|Offensive Goaltending|Palming|Backcourt|3-Second Violation$|Inbound/.test(ty)))ps[tt].first=p.t-ps[tt].t}
+    /* Nov 6: free throws for a technical, flagrant or clear-path foul don't hand the ball over (the shooting team keeps it, or play goes back to whoever had it) */if(/Foul/.test(ty))ftKeep=/Technical|Flagrant|Clear Path|Defensive 3 Second|Delay/i.test(ty);
     if(/Foul/.test(ty)&&!/Offensive|Technical/.test(ty)){snap={t:p.t,per:p.per,on:{}};tid.forEach(x=>snap.on[x]=new Set(on[x]))}
     const ftSnap=isFT&&!/Technical/.test(ty)&&snap&&snap.t===p.t&&snap.per===p.per;const ON=ftSnap?snap.on:on;curON=ftSnap?snap.on:null;
     /* a blocked heave isn't a shot attempt, but the NBA still credits the block (Nov 3) */
     if(p.shot&&/Heave/.test(ty)&&!p.sc&&/blocks/.test(p.text||'')){const hb=(p.ids||[]).length>1?b:a;if(hb&&B[hb]){if(inF)(B[hb].blk++,pbA(hb,'blk',1));TT(teamOf(hb)).forEach(x=>x.blk++)}}
-    if(p.shot&&!p.sc)skipReb=isFT||/Heave/.test(ty);
+    if(p.shot&&!p.sc){const m=isFT&&/(\d) of (\d)/.exec(ty);deadReb=!!(isFT&&(/Technical|Flagrant/.test(ty)&&!m||m&&+m[1]<+m[2]))}
     if(p.shot&&a&&B[a]&&!/Heave/.test(ty)){const t=teamOf(a);
       if(isFT&&/ 1 of /.test(ty)&&inF)TT(t).forEach(x=>{x.ftTrips++;if(/1 of 1/.test(ty)&&lastMade&&lastMade.id===a&&lastMade.t===p.t)x.and1++});
       if(!isFT&&p.sc){lastMade={id:a,t:p.t};const g=p.t-(lastFG[t]!=null?lastFG[t]:pstart(1));if(g>=180)dr.push({t,kind:'fg',from:lastFG[t]!=null?lastFG[t]:0,to:p.t});lastFG[t]=p.t}
@@ -134,10 +135,11 @@ function deriveCore(D,plays,F){
       if(inF&&a&&B[a])(B[a].pts+=p.val,pbA(a,'pts',p.val,ON));if(inF&&seg){seg.pts[t]+=p.val;if(a)seg.pp[a]=(seg.pp[a]||0)+p.val}if(inF&&pc[t][ps[t].how])pc[t][ps[t].how].pts+=p.val;if(ps[t])ps[t].pts+=p.val;lineAt[p.id]={[t]:[...ON[t]],[opp(t)]:[...ON[opp(t)]]};TT(t).forEach(x=>{x.pts+=p.val;if(a&&D.P[a]){if(D.P[a].starter)x.stPts+=p.val;else x.bnPts+=p.val}if(src[t].includes('2nd'))x.second+=p.val;if(src[t].includes('to'))x.offto+=p.val});
       const o=opp(t);ON[t].forEach(id=>{pmAll[id]+=p.val;if(inF)B[id].pm+=p.val});ON[o].forEach(id=>{pmAll[id]-=p.val;if(inF)B[id].pm-=p.val});
       if(inF){lu(t,ON[t],x=>x.pf+=p.val);lu(o,ON[o],x=>x.pa+=p.val)}
-      if(!isFT||/(\d) of \1/.test(ty)){src[o]='';newPoss(o,p.t,'made',inF)}}}
+      if(!isFT||(/(\d) of \1/.test(ty)&&!ftKeep&&!/Technical|Flagrant/.test(ty))){src[o]='';newPoss(o,p.t,'made',inF)}}}
     if(/Rebound/.test(ty)){const off=/Offensive/.test(ty);const t=a&&B[a]?teamOf(a):p.team;
-      if(t&&T[t]){if(a&&B[a]){if(inF)(B[a][off?'oreb':'dreb']++,pbA(a,off?'oreb':'dreb',1));TT(t).forEach(x=>x[off?'oreb':'dreb']++)}else TT(t).forEach(x=>x[off?'toreb':'tdreb']++);if(!skipReb&&!(!(a&&B[a])&&p.t>=pstart(p.per)+plen(p.per)))TT(t).forEach(x=>x[off?'forb':'fdrb']++);/* a team rebound at the buzzer isn't a real chance */
-        if(off){offStat(t,'oreb');src[t]=(src[t].includes('to')?'to':'')+'2nd';newPoss(t,p.t,'oreb',inF)}else{luStat(t,'dreb');src[t]='';newPoss(t,p.t,'dreb',inF)}}}
+      if(t&&T[t]){if(a&&B[a]){if(inF)(B[a][off?'oreb':'dreb']++,pbA(a,off?'oreb':'dreb',1));TT(t).forEach(x=>x[off?'oreb':'dreb']++)}else TT(t).forEach(x=>x[off?'toreb':'tdreb']++);if((a&&B[a])||!deadReb)TT(t).forEach(x=>x[off?'forb':'fdrb']++);
+        /* Nov 6: a dead-ball team rebound (missed free throw that isn't the last) doesn't start a second chance */if(!(a&&B[a])&&deadReb){}
+        else if(off){offStat(t,'oreb');src[t]=(src[t].includes('to')?'to':'')+'2nd';newPoss(t,p.t,'oreb',inF)}else{luStat(t,'dreb');src[t]='';newPoss(t,p.t,'dreb',inF)}}}
     if(/Turnover|^Traveling|Double Dribble|Discontinued? Dribble|Offensive Goaltending|Palming|Backcourt|3-Second Violation$|Inbound/.test(ty)&&!/^Kicked Ball|Defensive/.test(ty)){
       const t=p.team||teamOf(a);if(T[t]){TT(t).forEach(x=>x.to++);if(inF&&a&&B[a]&&teamOf(a)===t)(B[a].to++,pbA(a,'to',1));offStat(t,'to');src[opp(t)]='to';newPoss(opp(t),p.t,b&&/steals/.test(p.text)?'stl':'to',inF)}
       if(b&&/steals/.test(p.text)&&B[b]){if(inF)(B[b].stl++,pbA(b,'stl',1));TT(teamOf(b)).forEach(x=>x.stl++)}}
@@ -161,10 +163,10 @@ function deriveCore(D,plays,F){
   return {PL:PLx,segs,curStint,dr,pmAll,pc,tf,to,ch,pfAll,wpS,lineAt,asts,plays,B,T,TQ,L,on,margin,runs,shots,stints,hs:lp?lp.hs:0,as:lp?lp.as:0,lp,lead,lc,ties,wp:lp&&D.wp[lp.id]!=null?D.wp[lp.id]:null,maxPer:lp?Math.max(4,lp.per):4};
 }
 
-/* NBA.com definitions: TOV% = TOV / (FGA + 0.44 FTA + TOV); OREB% = offensive rebounds of missed field goals, team rebounds included / all rebounds of those misses (Nov 6; falls back to player rebounds when the play-by-play counts aren't there) */
+/* NBA.com definitions: TOV% = TOV / possessions; FTA rate = FTA / FGA; OREB% = offensive rebounds of missed field goals, team rebounds included / all rebounds of those misses (Nov 6; falls back to player rebounds when the play-by-play counts aren't there) */
 function factors(a,b){const pa=poss({fga:a.fga,oreb:a.oreb,to:a.to,fta:a.fta,np:a.np});
-  return {efg:a.fga?(a.fgm+0.5*a.tpm)/a.fga:null,tov:(a.fga+0.44*a.fta+a.to)?a.to/(a.fga+0.44*a.fta+a.to):null,orb:(a.forb||0)+(b.fdrb||0)>0?a.forb/(a.forb+b.fdrb):(a.oreb+b.dreb)?a.oreb/(a.oreb+b.dreb):null,ftr:a.fga?a.ftm/a.fga:null}}
-const FF=[['efg','Shooting','eFG%',true],['tov','Ball security','TOV%',false],['orb','Second chances','Offensive rebound rate',true],['ftr','Getting to the line','Free throws made per FGA',true]];
+  return {efg:a.fga?(a.fgm+0.5*a.tpm)/a.fga:null,tov:pa>0?a.to/pa:null,/* Nov 6: NBA.com TOV% = turnovers per possession */orb:(a.forb||0)+(b.fdrb||0)>0?a.forb/(a.forb+b.fdrb):(a.oreb+b.dreb)?a.oreb/(a.oreb+b.dreb):null,ftr:a.fga?a.fta/a.fga:null}}/* Nov 6: NBA.com FTA rate = FTA / FGA */
+const FF=[['efg','Shooting','eFG%',true],['tov','Ball security','TOV%',false],['orb','Second chances','Offensive rebound rate',true],['ftr','Getting to the line','Free throw attempts per FGA',true]];
 const CLE='5',C3=Math.sqrt(23.75**2-22**2);
 
 /* ---------- game highs (Nov 1): "most since", career and season highs for the recap ----------
