@@ -1,6 +1,24 @@
 {
  "articles": [
   {
+   "src": "Hoops Rumors",
+   "title": "Jarrett Allen's Knee Injury Isn't Considered Serious",
+   "link": "https://www.hoopsrumors.com/2026/11/central-notes-d-robinson-allen-giannis-buzelis.html",
+   "date": "2026-11-06T16:00:22.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Cavs vs. 76ers: How to watch, odds, and injury report",
+   "link": "https://www.fearthesword.com/cavs-injury-report/53991/cavs-vs-76ers-how-to-watch-odds-and-injury-report",
+   "date": "2026-11-06T15:30:00.000Z"
+  },
+  {
+   "src": "cleveland.com",
+   "title": "What would it take for Kenny Atkinson to lose his job? Hey, Chris! Wine and Gold Talk podcast",
+   "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxOekliSGxHUUJ6S0JkSV9YVzd5S3V5cGM2UVVFOWJCMVJwaWdaeENBVGdjWE4yYXlyMU1zb0ZISmVPVUxuSUw4NFBHcy13ekYwX0JTNldfTUJzRmc2Y2t1dmU1MmVnWjktdlA2blN3MF9xWEJINXR3RGlwalBvaUM1cG5xeGNkSU1rNm1WRFpwckZpRHhXdG1XaW5EN3ZBZ3lMS0pncFJ2N2F3djc0T3g4VVItRnNqS1JJeXNUT3VxN2tJalF5a1JMTFFnUnRldGM?oc=5",
+   "date": "2026-11-06T10:05:00.000Z"
+  },
+  {
    "src": "cleveland.com",
    "title": "Cavs vs. 76ers: preview, odds, injury report, TV",
    "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQdzI1OXg3NlRabW02YUtjRlRFRUlUT3VtcFhHcTg1NUMzdmVhbVZxUm1fZDFNSk9qRzhrMklvbmx1NkIwbFpHeWhaSjNTenF4SlI4S0I2alR6b2RLSVZpUnFvSXBwbkZ1Q1FmNTBLN3NDdmxZVWY0dXZsTTF5X2VPZ3NPZ2dJQmpfUnozbUFXV2s?oc=5",
@@ -217,12 +235,6 @@
    "date": "2026-11-03T12:45:00.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "Player Grades: Cavs vs Thunder – Donovan Mitchell dishes 11 assists in loss",
-   "link": "https://www.fearthesword.com/cavs-analysis/53870/player-grades-cavs-vs-thunder-donovan-mitchell-dishes-11-assists-in-loss",
-   "date": "2026-11-03T03:42:07.000Z"
-  },
-  {
    "src": "Cavaliers on SI",
    "title": "3 Notable Takeaways from Cavs vs Thunder",
    "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxQeThoaS1keHpQNFNIX1FnTWpJSnk3elE1clQ3dzBPb0ZGQU02RkY3b1JoTDhldURXRTh1UFkzZVBaN0p2eEtXaklPM0lNU1dtQnJIdUJ0UFJqZzk0aVEzLUVtR3NHOXVETWNwR2xOWmJLOEpzaGY1Ql9uVlM5REJWMnNUNllUR2VyZHhCeDVxeG1TdzhyRmt1MWl3V3pOR2NIMjQzRzdMUFgySkVpVTJDNTBFVXJfTTVWc2hFNw?oc=5",
@@ -233,12 +245,6 @@
    "title": "Cavs’ comeback attempt falls short against Shai Gilgeous-Alexander, Oklahoma City Thunder 117-112",
    "link": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxQMzlKS3VsSjU5cGpGc3JxcmxCQm9sTXZlbmJWS0lmajk3QVI4cWhJUEJDUnY4NUtCMGVuQ09DamZteE10b1l6SDVCMllueE1URERmVktRUjg1alFaelhqQkZMTExFdTUwYXFad3pIcFNrS3ZHcW9GYllpc1V4OXNyektHT3hZWExOaHFGWjdYS21DZG5uQ3MxN1REN05JYjVoYlZEeWVaVTJNTk9oYS0tOUZ4VFFUaEE5Mk55WXl2ZHNmVUUwWkIxTFAzUFZ4WHRRYURCMThn?oc=5",
    "date": "2026-11-03T02:49:00.000Z"
-  },
-  {
-   "src": "cleveland.com",
-   "title": "Will Cavs’ Peyton Watson play Monday vs. Thunder?",
-   "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQQk5ZLTZPbWpsNUxVVUdjT2pTcTU5R0VUSWVORUZWZ1pQNDFON0ZtLWFFdFlSMFhPdXZyOGhRWkRRZU9WNHVGc2lGNzVxY2lteXlJRjE2R3ZvdWh6bkZoWmNPYzUtV1Y2cDlrNHF3UW9RRl9PMHhOamJNRklGSjg3NTM4LWFkZm1TT0hWbFBaNm1mS3Bo?oc=5",
-   "date": "2026-11-02T23:28:00.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -284,15 +290,15 @@
   },
   {
    "src": "Cavaliers on SI",
-   "title": "Updated Injury Report for Cavs Vs Hawks: Two Key Players Listed As Questionable",
-   "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOOTRMWHFUY0ZSSzBmWnJ4UjZFU2ZSNTJ4a0RydmJDeE1PVnVTQVBRaThMYzM3c042cU5idjRocXhYb01mV3NmNGN1eWR0NmlUbmV3WWcwY0dGN0ZJQVAzMjdXQUg4LWljTEdfYl9zVWxXN1lEeGgzNU5mM1Z3ZWltZmt4ejdIYWpzVlJ2bFF5WXV6SWpOZDVySG1rQU42d2puemNaNFExdncwd2VCX0FVcF9jdzJENXIzWDVrM3lhVEZCMDR5ZmJTNg?oc=5",
-   "date": "2026-10-29T18:12:10.000Z"
+   "title": "Key Winger Ruled Out vs. Bucks, Injuries Hitting Cavaliers Early in Season",
+   "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOVlR1MzhtN3pMU3dSWDcxanlEZnFMQV9WbnU5QmE4MFhPYW9GNWE0OHU4WHUzVE43TGFrQjBHeUJiV21NbndXd2FfMHdqQTNGSk1xZTMwRHYtd0VxQUR5czZsV1FoZHVKV05QUFZwU21PbDZFUEJWd2diZVhsZ1BKNUZ1SUlSSWJta0FjRU5tQkxKY3AyWm54WTZVTTFmdG1aVnhJanI0QWxiQVFJZVB3djU3QVpYMlp5c2N1RmdaaWE?oc=5",
+   "date": "2026-10-30T23:00:09.000Z"
   },
   {
    "src": "Cavaliers on SI",
-   "title": "Evan Mobley’s Ascension as a 3-Point Shooter Could Make Cavs Really Hard to Stop",
-   "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxObWQtWnhubVhBR09QRUxiRFA5TEpnbllwaWZQamlmSEdXVjYxdk55ZWUwdDlvUEs5d0htd1hBRlpPdDBXclFUY18tdEdUWFRnbGNqekpXS1JGdDlkS1ZOS3hFUW5BbVp1UHJOX2RhaUFpaEtEaTg5Rll1bUFwSmZVeThVc3l4MS1jRmtiMG1yWE5MS0o1RzFjZ29SQ2tKbmduV2szbzBmRk9PU1czVENSOGhXYVhsRlQtd054N3RrekJTZ25zOVc1bVBzUQ?oc=5",
-   "date": "2026-10-29T14:00:02.000Z"
+   "title": "Updated Injury Report for Cavs Vs Hawks: Two Key Players Listed As Questionable",
+   "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOOTRMWHFUY0ZSSzBmWnJ4UjZFU2ZSNTJ4a0RydmJDeE1PVnVTQVBRaThMYzM3c042cU5idjRocXhYb01mV3NmNGN1eWR0NmlUbmV3WWcwY0dGN0ZJQVAzMjdXQUg4LWljTEdfYl9zVWxXN1lEeGgzNU5mM1Z3ZWltZmt4ejdIYWpzVlJ2bFF5WXV6SWpOZDVySG1rQU42d2puemNaNFExdncwd2VCX0FVcF9jdzJENXIzWDVrM3lhVEZCMDR5ZmJTNg?oc=5",
+   "date": "2026-10-29T18:12:10.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -353,6 +359,13 @@
   }
  ],
  "videos": [
+  {
+   "src": "Ultimate Cleveland Sports Show",
+   "title": "Everyone deserves some level of blame for the Cavaliers slow start but it's too early to blow it up",
+   "link": "https://www.youtube.com/watch?v=d-oxmXEF080",
+   "date": "2026-11-06T14:21:18.000Z",
+   "id": "d-oxmXEF080"
+  },
   {
    "src": "Locked On Cavs",
    "title": "CAVS POSTCAST: The Cleveland Cavaliers Begin NBA Cup Play vs LeBron James and the Philadelphia 76ers",
@@ -606,13 +619,6 @@
    "id": "qDMHEHScaTc"
   },
   {
-   "src": "Ultimate Cleveland Sports Show",
-   "title": "Did the refs miss a BLATANT FLAGRANT FOUL at the end of the Cavaliers vs. Hawks game that cost CLE?",
-   "link": "https://www.youtube.com/watch?v=5uOkBh_Gsig",
-   "date": "2026-10-30T14:34:58.000Z",
-   "id": "5uOkBh_Gsig"
-  },
-  {
    "src": "Cavs Roundtable",
    "title": "Cleveland Cavaliers SPOIL AJ DyBansta's NBA Debut With HUGE Second Half Against Wizards",
    "link": "https://www.youtube.com/watch?v=xP9L1sZ5Fmc",
@@ -718,13 +724,6 @@
    "link": "https://www.youtube.com/watch?v=xWJfcKNc3AE",
    "date": "2026-10-29T01:59:58.000Z",
    "id": "xWJfcKNc3AE"
-  },
-  {
-   "src": "NBA",
-   "title": "EXTENDED: TIMBERWOLVES at CAVALIERS | FULL GAME HIGHLIGHTS | October 26, 2026",
-   "link": "https://www.youtube.com/watch?v=C3C6dPCeo9M",
-   "date": "2026-10-27T15:23:52.000Z",
-   "id": "C3C6dPCeo9M"
   }
  ]
 }

@@ -1621,7 +1621,24 @@
  },
  "2026-11-06": {
   "url": "https://www.nba.com/game/phi-vs-cle-0022600027/box-score",
-  "status": "scheduled"
+  "status": "scheduled",
+  "refs": [
+   [
+    "Crew chief",
+    "Kevin Scott",
+    "24"
+   ],
+   [
+    "Referee",
+    "JB DeRosa",
+    "14"
+   ],
+   [
+    "Umpire",
+    "Pat O'Connell",
+    "90"
+   ]
+  ]
  },
  "2026-11-07": {
   "url": "https://www.nba.com/game/nyk-vs-cle-0022600191/box-score",
