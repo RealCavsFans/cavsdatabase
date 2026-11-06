@@ -1588,6 +1588,20 @@ upcoming.forEach(([d,t,c],i)=>{const dt=new Date(d+'T00:00:00');const days=Math.
 
 /* cap bar — figures in $M. Thresholds: NBA, 2026-27. */
 const TEAM_SALARY=208.969955; /* capsheets.com: payroll $206,725,846 + dead money $2,244,109 */
+/* Nov 6 (Luka): the tax and aprons don't use team salary alone. Fill these in whenever a deal has them; both are empty for the Cavs today.
+   UNLIKELY: unlikely bonuses by player, dollars per season [2026-27 … 2030-31], with a 6th entry = dollars of the current season's already earned.
+     Likely bonuses are already in each cap hit. Aprons count every unlikely bonus; the tax only counts the earned ones (CBA Art. VII 2(d)(1)(i)(A), 2(e)(1)(i)).
+   FA01: players who signed as free agents with 0 or 1 years of service: extra dollars per season to bring them up to the two-year minimum (counts for the tax and aprons, not the cap; 2(d)(1)(i)(F)). */
+const UNLIKELY={};
+const FA01={};
+const ADJ_SUM=(T,i)=>Object.values(T).reduce((t,a)=>t+((a&&a[i])||0),0);
+/* a season's salary as a given line measures it (dollars): apron lines add every unlikely bonus and the 0/1-year floor; the tax adds earned bonuses (this season) and the floor */
+const LINE_SAL=(n,i,v)=>v+(/apron|hard cap/i.test(n)?ADJ_SUM(UNLIKELY,i)+ADJ_SUM(FA01,i):/tax/i.test(n)?(i===0?ADJ_SUM(UNLIKELY,5):0)+ADJ_SUM(FA01,i):0);
+const APRON_SALARY=TEAM_SALARY+(ADJ_SUM(UNLIKELY,0)+ADJ_SUM(FA01,0))/1e6; /* what the aprons and the hard cap measure */
+const TAX_SALARY=TEAM_SALARY+(ADJ_SUM(UNLIKELY,5)+ADJ_SUM(FA01,0))/1e6;   /* what the luxury tax measures */
+/* luxury tax on the amount over the line ($M): non-repeater rates since 2025-26, brackets one taxpayer mid-level wide */
+const TAX_BRACKET=6.064,TAX_REPEATER=false;
+const taxOn=over=>{let t=0,k=0,r;while(over>0){const b=Math.min(over,TAX_BRACKET);r=(TAX_REPEATER?[3,3.25,5.5,6.75]:[1,1.25,3.5,4.75])[k]??((TAX_REPEATER?6.75:4.75)+.5*(k-3));t+=b*r;over-=b;k++}return t};
 const LINES=[
   ['Minimum',148.465,0],['Salary cap',164.961,0],['Luxury tax',200.428,0],['First apron',209.015,1],['Second apron',221.686,1]
 ];
@@ -1601,14 +1615,14 @@ document.getElementById('payroll-note').textContent='Team salary incl. $2.24M de
 const LEAGUE_PAY=[['NYK',220876653],['GSW',220838432],['DEN',218127179],['ORL',217865321],['MIN',215400684],['OKC',214279492],['PHX',213776084],['CLE',208969955],['PHI',207186472],['IND',206299932],['MIA',206189256],['TOR',201188889],['LAL',200897322],['HOU',200413923],['BOS',198722406],['ATL',198473650],['SAS',198279967],['SAC',197280038],['NOP',196369877],['DET',194498178],['WAS',194462525],['POR',192093473],['DAL',189066095],['MIL',187760790],['LAC',183157552],['UTA',182965101],['CHA',170732110],['CHI',165770083],['MEM',161113773],['BKN',160056358]];
 /* projected 2026-27 tax bill rank among teams over the tax: [rank, taxpaying teams]. Capsheets, Oct 19, 2026. */
 const TAX_RANK=[8,13];
-const TAX_BILL=9.161442; /* projected luxury tax payment, $M (Capsheets) */
+const TAX_BILL=taxOn(TAX_SALARY-200.428); /* projected luxury tax payment, $M (matches Capsheets' $9,161,442 today) */
 const near=LINES.find(([,v])=>v>=TEAM_SALARY);const tax=LINES.find(l=>l[0]==='Luxury tax')[1];
 /* hard cap: what the Cavs can't do this season (Hoops Rumors hard-cap explainer; ESPN/Roundtable on the Watson sign-and-trade) */
-const HC_ROOM=LINES.find(l=>l[0]===HARDCAP)[1]-TEAM_SALARY;
+const HC_ROOM=LINES.find(l=>l[0]===HARDCAP)[1]-APRON_SALARY; /* the hard cap is tested on apron team salary */
 const HC_RULES=[[0,'Go over the first apron, at any time, for any reason'],[1,'Use the mid-level'],[1,'Use the bi-annual'],[1,'Use trade exceptions'],[1,'Take back more salary in a trade'],[1,'Aggregate salaries in trades'],[1,'Sign buyout players']];
 {const h=document.getElementById('hcap');
  const cap=el('div','hc-cap');cap.append(el('b',null,'Hard-capped at the first apron'),el('span',null,'through June 30, 2027'));
- const tiles=el('div','hc-tiles');[[money(HC_ROOM),'Room under 1st apron'],[money(TEAM_SALARY-tax),'Over the tax'],[money(TAX_BILL),'Projected tax bill']].forEach(([v,l],i)=>{const d=el('div','hc-tile'+(i===0?' key':''));d.append(el('b',null,v),el('span',null,l));tiles.appendChild(d)});
+ const tiles=el('div','hc-tiles');[[money(Math.abs(HC_ROOM)),HC_ROOM<0?'Over the 1st apron':'Room under 1st apron'],[money(TAX_SALARY-tax),'Over the tax'],[money(TAX_BILL),'Projected tax bill']].forEach(([v,l],i)=>{const d=el('div','hc-tile'+(i===0?' key':''));d.append(el('b',null,v),el('span',null,l));tiles.appendChild(d)});
  const ul=el('ul','hc-checks');HC_RULES.forEach(([ok,t])=>{const li=el('li',ok?'yes':'no');li.append(el('i',null,ok?'✓':'✕'),t);ul.appendChild(li)});
  const nt=el('p','hc-note');nt.append(el('span','hcn-l','Every ✓ has to fit within their '),el('span','hcn-s','Every ✓ must fit in their '),el('b',null,money(HC_ROOM)),el('span','hcn-l',' of room under the first apron.'),el('span','hcn-s',' of apron room.'));
  h.append(tiles,ul,nt);
@@ -1624,13 +1638,13 @@ hbar.setAttribute('aria-label','Team salary '+money(TEAM_SALARY)+' against the c
 requestAnimationFrame(()=>{document.getElementById('fill').style.width=pct(TEAM_SALARY)+'%'});
 {const top=document.getElementById('captop');const nums=el('div','ct-nums');
  const PAY_RANK=LEAGUE_PAY.findIndex(t=>t[0]==='CLE')+1;
- [[money(TEAM_SALARY),'Team salary'],[money(HC_ROOM),'Under hard cap'],[money(TEAM_SALARY-tax),'Over the tax'],[money(TAX_BILL),'Tax bill'],[PAY_RANK+(PAY_RANK===1?'st':PAY_RANK===2?'nd':PAY_RANK===3?'rd':'th'),'Highest payroll of 30'],[TAX_RANK[0]+(TAX_RANK[0]===1?'st':TAX_RANK[0]===2?'nd':TAX_RANK[0]===3?'rd':'th'),'Largest tax bill of '+TAX_RANK[1]]].forEach(([v,l],i)=>{const d=el('div',i===1?'ctkey':null);const sp=el('span',null,l);if(l==='Tax bill'){/* Nov 2: tap for how the tax bill is figured (glossary) */const g=el('span','gt',l);g.tabIndex=0;g.dataset.g='Tax bill (tax liability)';sp.textContent='';sp.appendChild(g)}d.append(el('b',null,v),sp);nums.appendChild(d)});
+ [[money(TEAM_SALARY),'Team salary'],[money(Math.abs(HC_ROOM)),HC_ROOM<0?'Over hard cap':'Under hard cap'],[money(TAX_SALARY-tax),'Over the tax'],[money(TAX_BILL),'Tax bill'],[PAY_RANK+(PAY_RANK===1?'st':PAY_RANK===2?'nd':PAY_RANK===3?'rd':'th'),'Highest payroll of 30'],[TAX_RANK[0]+(TAX_RANK[0]===1?'st':TAX_RANK[0]===2?'nd':TAX_RANK[0]===3?'rd':'th'),'Largest tax bill of '+TAX_RANK[1]]].forEach(([v,l],i)=>{const d=el('div',i===1?'ctkey':null);const sp=el('span',null,l);if(l==='Tax bill'){/* Nov 2: tap for how the tax bill is figured (glossary) */const g=el('span','gt',l);g.tabIndex=0;g.dataset.g='Tax bill (tax liability)';sp.textContent='';sp.appendChild(g)}d.append(el('b',null,v),sp);nums.appendChild(d)});
  const hb=hbar.cloneNode(true);hb.removeAttribute('id');hb.querySelectorAll('[id]').forEach(x=>x.removeAttribute('id'));hb.querySelector('.fill').style.width=pct(TEAM_SALARY)+'%';
  top.append(nums,hb);
  top.appendChild(el('div','share',''));top.lastChild.id='share'}
 
 /* apron chart: highlight the column for the Cavs' current band */
-{const V=n=>LINES.find(l=>l[0]===n)[1];const sal=TEAM_SALARY;const col=sal>V('Second apron')?4:sal>V('First apron')?3:sal>V('Salary cap')?2:1;
+{const V=n=>LINES.find(l=>l[0]===n)[1];const sal=TEAM_SALARY,ap=APRON_SALARY;const col=ap>V('Second apron')?4:ap>V('First apron')?3:sal>V('Salary cap')?2:1;
  document.querySelectorAll('#apt tr').forEach(tr=>{const c=tr.children[col];if(c)c.classList.add('cav')});
  const h=document.querySelector('#apt thead th.cav');if(h)h.insertAdjacentHTML('beforeend','<span class="apt-cav">Cavs</span>')}
 
@@ -2479,12 +2493,12 @@ const tf=tot.parentNode;
 const hdr=el('tr','thr-h');const hc=el('td',null,'League thresholds · Cavs committed salary vs. each line');hc.colSpan=6;hdr.appendChild(hc);tf.appendChild(hdr);
 THRESH.forEach(([n,vals])=>{const tr=el('tr','thr');tr.append(el('td',null,n));
   vals.forEach((v,i)=>{const td=el('td','r '+(i===0?'cur':'fut proj'),i===0?usd(v):usdM(v));if(i>0){const m=el('sup',null,'*');m.setAttribute('aria-label','projected');td.appendChild(m)}
-    const dlt=totals[i]-v;td.appendChild(el('small','dlt '+(dlt>0?'over':'under'),money(Math.abs(dlt)/1e6)+(dlt>0?' over':' under')));tr.appendChild(td)});
+    const dlt=LINE_SAL(n,i,totals[i])-v;td.appendChild(el('small','dlt '+(dlt>0?'over':'under'),money(Math.abs(dlt)/1e6)+(dlt>0?' over':' under')));tr.appendChild(td)});
   tf.appendChild(tr)});
 /* Cavs position each season: which band the committed salary falls in, and the distance to the next line */
 const pos=el('tr','pos');pos.append(el('td',null,'Cavs position'));
 totals.forEach((v,i)=>{const L=THRESH.map(([n,a])=>[n,a[i]]);const td=el('td','r '+(i===0?'cur':'fut'));
-  const above=L.filter(([,x])=>v>x).pop(),next=L.find(([,x])=>v<=x);
+  const above=L.filter(([n2,x])=>LINE_SAL(n2,i,v)>x).pop(),next=L.find(([n2,x])=>LINE_SAL(n2,i,v)<=x);
   const band=!above?'Under cap':above[0]==='Second apron'?'Over 2nd apron':above[0]==='First apron'?'Over 1st apron':above[0]==='Luxury tax'?'Over tax':'Over cap';
   const cls=!above?'ok':above[0]==='Salary cap'?'ok':above[0]==='Luxury tax'?'warn':'hot';
   td.appendChild(el('span','band '+cls,band));
@@ -5297,7 +5311,7 @@ onView('cap',()=>{(function(){const B=document.getElementById('sm-b');if(!B)retu
     const opt=opts.reduce((t,o)=>t+(ST.opt[o[0]]?o[1]:0),0),re=fas.reduce((t,f)=>t+(ST.fa[f[0]].on?hitOf(f):0),0);
     const nOpt=opts.filter(o=>ST.opt[o[0]]).length,nRe=fas.filter(f=>ST.fa[f[0]].on).length;const open=Math.max(0,14-(n+nOpt+nRe)),fillAmt=ST.fill?open*minFor(2):0;const tot=gu+opt+re+fillAmt,changed=opts.some(o=>!ST.opt[o[0]])||nRe>0||ST.fill;
     ST.fillLabel.textContent='Fill the '+open+' open roster spot'+(open===1?'':'s')+' (to 14) with minimum deals: +'+usdM(open*minFor(2))+' (each counted at the two-year minimum: that is the cap charge for a veteran on a one-year minimum, who is paid more with the league covering the difference, and what a free agent with 0 or 1 years of service counts for the tax and aprons)';
-    const over=tot-cap,where=tot>a2?'over the second apron':tot>a1?'over the first apron':tot>tax?'over the tax line':tot>cap?'over the cap':'under the cap';
+    const over=tot-cap,apT=LINE_SAL('apron',1,tot),txT=LINE_SAL('tax',1,tot),where=apT>a2?'over the second apron':apT>a1?'over the first apron':txT>tax?'over the tax line':tot>cap?'over the cap':'under the cap';/* Nov 6: aprons and tax measured their own way (LINE_SAL) */
     const big=el('p','sm-big');if(over>0){big.append('No cap space. ');big.appendChild(el('em',null,usdM(over)+' over'));big.append(' the cap')}else{big.append('About ');big.appendChild(el('em',null,usdM(-over)));big.append(' in cap space')}
     const pin=el('div','sm-pin');pin.appendChild(big);view.appendChild(pin);
     const kept=opts.filter(o=>ST.opt[o[0]]).map(o=>o[0]+'’s team option'),res=fas.filter(f=>ST.fa[f[0]].on).map(f=>f[0]);
@@ -5307,7 +5321,7 @@ onView('cap',()=>{(function(){const B=document.getElementById('sm-b');if(!B)retu
     const m=el('div','sm-meter');m.innerHTML='<div class="f" style="width:'+pc(gu)+'"></div>'+(opt?'<div class="o" style="left:'+pc(gu)+';width:'+pw(opt)+'"></div>':'')+(re?'<div class="r" style="left:'+pc(gu+opt)+';width:'+pw(re)+'"></div>':'')+(fillAmt?'<div class="m" style="left:'+pc(gu+opt+re)+';width:'+pw(fillAmt)+'"></div>':'');
     const mS=v=>'$'+Math.round(v/1e6)+'M';[['Cap',cap],['Tax',tax],['1st apron',a1],['2nd apron',a2]].forEach(([l,v],i)=>{const d=el('div','ln l');d.style.left=pc(v);d.appendChild(el(i%2?'i':'b',null,l.replace(' apron','')));m.appendChild(d)});
     pin.appendChild(m);{const h=document.querySelector('header.gbar');pin.style.setProperty('--pt',(h?h.offsetHeight:0)+'px')}const lg=el('div','sm-leg');lg.innerHTML='<span><i></i>Committed '+usdM(gu)+'</span>'+(opt?'<span><i class="o"></i>Team options '+usdM(opt)+'</span>':'')+(re?'<span><i class="r"></i>Re-signed '+usdM(re)+'</span>':'')+(fillAmt?'<span><i class="m"></i>Minimum deals '+usdM(fillAmt)+'</span>':'')+'<span class="sm-th">Cap '+mS(cap)+' · Tax '+mS(tax)+' · 1st apron '+mS(a1)+' · 2nd apron '+mS(a2)+'</span>';view.appendChild(lg);
-    const st=el('div','sm-stats');[[usdM(tot),changed?'Payroll with your calls':'Committed, with options'],[String(n+nOpt+nRe+(ST.fill?open:0)),'Players signed for '+NY],[usdM(Math.abs(a2-tot)),(tot<a2?'Under':'Over')+' the second apron'+(ST.fill?'':', before filling the roster')],[(fas.length-nRe)+' + '+TWOWAY.length,'Free agents (standard + two-way)']].forEach(([v,l])=>{const d=el('div');d.append(el('b',null,v),el('span',null,l));st.appendChild(d)});view.appendChild(st);
+    const st=el('div','sm-stats');[[usdM(tot),changed?'Payroll with your calls':'Committed, with options'],[String(n+nOpt+nRe+(ST.fill?open:0)),'Players signed for '+NY],[usdM(Math.abs(a2-apT)),(apT<a2?'Under':'Over')+' the second apron'+(ST.fill?'':', before filling the roster')],[(fas.length-nRe)+' + '+TWOWAY.length,'Free agents (standard + two-way)']].forEach(([v,l])=>{const d=el('div');d.append(el('b',null,v),el('span',null,l));st.appendChild(d)});view.appendChild(st);
     /* row status and rule checks */
     const hard=fas.find(f=>ST.fa[f[0]].on&&/mle/.test(ST.fa[f[0]].how));const lineFor=hard&&ST.fa[hard[0]].how==='ntmle'?a1:hard?a2:null;const bad=lineFor!=null&&tot>lineFor;
     opts.forEach(o=>{rowsEl[o[0]].st.textContent=ST.opt[o[0]]?'Picked up':'Declined'});
@@ -5315,13 +5329,13 @@ onView('cap',()=>{(function(){const B=document.getElementById('sm-b');if(!B)retu
     if(bad)view.appendChild(el('p','sm-bad','Not allowed: signing '+hard[0]+' with the '+(ST.fa[hard[0]].how==='ntmle'?'non-taxpayer mid-level hard-caps the Cavs at the first apron':'taxpayer mid-level hard-caps the Cavs at the second apron')+', and this payroll is '+usdM(tot-lineFor)+' over it.'));
     view.appendChild(dec);
     window.cdbSummer=()=>({tot,gu:gu+opt,cap,tax,a1,a2,yr,NY,where:where,changed,nSigned:n+nOpt+nRe+(ST.fill?open:0),
-      canAdd:over>0?(tot<a2?'Bird rights, taxpayer mid-level, minimums':'Bird rights, minimums'):'Cap space, Bird rights, minimums',
+      canAdd:over>0?(apT<a2?'Bird rights, taxpayer mid-level, minimums':'Bird rights, minimums'):'Cap space, Bird rights, minimums',
       fas:fas.map(f=>{const x=ST.fa[f[0]];return [f[0],x.on?'Re-signed '+usdM(x.amt)+' · '+({bird:'Bird',ntmle:'NT-MLE',tmle:'T-MLE',min:'Min'})[x.how]:f[1]+' · '+(BW[f[2]]||f[2])]}),
       big:ROSTER.map(r=>[r[0],sal(r[2][I])]).filter(x=>x[1]&&ROSTER.find(r=>r[0]===x[0])[5]!=='Dead money').sort((a,b)=>b[1]-a[1]).slice(0,5)});
     const cols=el('div','sm-cols');const col=(h,rows)=>{const d=el('div');d.appendChild(el('h4',null,h));const ul=el('ul','kv');rows.forEach(([a,sm,b,cls])=>{const li=el('li');const sp=el('span',null,a);sp.appendChild(el('small',null,sm));li.append(sp,el('b',cls||null,b));ul.appendChild(li)});d.appendChild(ul);return d};
     const c1=col('Two-way contracts ending',TWOWAY.length?[[TWOWAY.map(t=>t[0].replace(/ Jr\.$/,'').split(' ').slice(-1)[0]).join(', '),'Two-way · '+TWOWAY[0][2].split(' ')[1],'—']]:[]);
     const ext=Object.entries(EXT).filter(([k,v])=>v===I).map(([k])=>k.split(' ').slice(-1)[0]);
-    const tools=[['Bird rights','Re-sign their own free agents over the cap','Yes','sm-y'],['Taxpayer mid-level','Using it hard-caps them at the second apron',tot<a2?'Tight':'No',tot<a2?'sm-y':'sm-n'],['Minimum contracts','Always available','Yes','sm-y'],['Cap space signings',over>0?'Payroll is above the cap':'Room under the cap',over>0?'No':'Yes',over>0?'sm-n':'sm-y']];
+    const tools=[['Bird rights','Re-sign their own free agents over the cap','Yes','sm-y'],['Taxpayer mid-level','Using it hard-caps them at the second apron',apT<a2?'Tight':'No',apT<a2?'sm-y':'sm-n'],['Minimum contracts','Always available','Yes','sm-y'],['Cap space signings',over>0?'Payroll is above the cap':'Room under the cap',over>0?'No':'Yes',over>0?'sm-n':'sm-y']];
     const also=ext.length?[['Extension window opens',ext.join(', ')+' become eligible','July '+yr]]:[];
     cols.append(c1,col('How they can add players',tools));if(also.length)cols.appendChild(col('Also next summer',also));view.appendChild(cols)}
   draw();
@@ -5809,12 +5823,12 @@ function capFoot(g,url,date,W,H,FT,pad,S,mono,wine,muted){const two=FT>45*S;g.te
   return frame('Cap position · '+SEASONS[0],'cap',`<div style="display:flex;justify-content:space-between;align-items:flex-end"><div><div class="k">Team salary</div><div class="big" style="font-size:96px">${V(0)}</div></div><div style="text-align:right">${badge}</div></div>
    <div style="position:relative;height:70px;margin:66px 0 62px;background:#ebe8e3">${segs}${lines([['Cap',cap],['Tax',tax],['1st apron',a1],['2nd apron',a2]],X)}</div>${lineKey([['Cap',cap],['Tax',tax],['1st apron',a1],['2nd apron',a2]])}
    <div style="display:grid;grid-template-columns:1.25fr 1fr;gap:40px"><div><div class="k" style="margin-bottom:10px">Where the money goes</div><div style="columns:2;column-gap:28px">${pl.filter(x=>x[2]!=='Dead money').slice(0,10).map(([n,v],i)=>`<div style="display:flex;justify-content:space-between;font:600 20px var(--sans);padding:5px 0;border-bottom:1px solid #e3e0db;break-inside:avoid"><span><i style="display:inline-block;width:14px;height:14px;background:${cols[Math.min(i,6)]};margin-right:8px"></i>${esc2(n.replace(/ Jr\.$/,'').split(' ').slice(-1)[0])}</span><b style="font-family:var(--mono)">${M1(v)}</b></div>`).join('')}</div></div>
-   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-content:start"><div class="tile"><span class="k">Over the tax</span><b>${V(2)}</b><small>Line ${M1(tax)}</small></div><div class="tile"><span class="k">Tax bill</span><b>${V(3)}</b><small>Projected</small></div><div class="tile"><span class="k">Payroll rank</span><b>${V(4)}</b><small>of 30 teams</small></div><div class="tile"><span class="k">Vs 2nd apron</span><b>${M1(Math.abs(a2-tot))}</b><small>${tot<a2?'under':'over'} · line ${M1(a2)}</small></div></div></div>`)}
+   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-content:start"><div class="tile"><span class="k">Over the tax</span><b>${V(2)}</b><small>Line ${M1(tax)}</small></div><div class="tile"><span class="k">Tax bill</span><b>${V(3)}</b><small>Projected</small></div><div class="tile"><span class="k">Payroll rank</span><b>${V(4)}</b><small>of 30 teams</small></div><div class="tile"><span class="k">Vs 2nd apron</span><b>${M1(Math.abs(a2-LINE_SAL('apron',1,tot)))}</b><small>${LINE_SAL('apron',1,tot)<a2?'under':'over'} · line ${M1(a2)}</small></div></div></div>`)}
  function cardSummer(){const Q=window.cdbSummer;if(!Q)return null;const {tot,gu,cap,tax,a1,a2,yr,NY,where,changed,fas,big,nSigned,canAdd}=Q();
   const mn=Math.floor(cap*0.9/1e7)*1e7,mx=Math.max(a2,tot)*1.04,X=v=>Math.max(0,(v-mn)/(mx-mn)*100);
   return frame('Summer '+yr+' outlook'+(changed?' · what-if':''),'cap',`<div style="display:grid;grid-template-columns:1fr 470px;gap:48px;height:100%"><div><div class="k">${NY} ${changed?'payroll with these calls':'already committed'}</div><div class="big" style="font-size:88px">${M1(tot)}</div><div class="sub">${nSigned} players under contract · starts the summer <b>${where}</b></div>
    <div style="position:relative;height:60px;margin:70px 0 70px;background:#ebe8e3"><div style="position:absolute;left:0;top:0;bottom:0;width:${X(gu)}%;background:#860038"></div>${tot>gu?`<div style="position:absolute;top:0;bottom:0;left:${X(gu)}%;width:${X(tot)-X(gu)}%;background:#F2B231"></div>`:''}${lines([['Cap',cap],['Tax',tax],['1st apron',a1],['2nd apron',a2]],X)}</div>${lineKey([['Cap',cap],['Tax',tax],['1st apron',a1],['2nd apron',a2]])}
-   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px"><div class="tile"><span class="k">${tot<a2?'Under':'Over'} 2nd apron</span><b>${M1(Math.abs(a2-tot))}</b><small>${changed?'with these calls':'before filling the roster'}</small></div><div class="tile"><span class="k">Cap space</span><b>${tot>cap?'None':M1(cap-tot)}</b><small>${tot>cap?M1(tot-cap)+' over the cap':'under the cap'}</small></div><div class="tile"><span class="k">Can add with</span><b style="font-size:22px;font-family:var(--sans)">${esc2(canAdd)}</b></div></div></div>
+   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px"><div class="tile"><span class="k">${LINE_SAL('apron',1,tot)<a2?'Under':'Over'} 2nd apron</span><b>${M1(Math.abs(a2-LINE_SAL('apron',1,tot)))}</b><small>${changed?'with these calls':'before filling the roster'}</small></div><div class="tile"><span class="k">Cap space</span><b>${tot>cap?'None':M1(cap-tot)}</b><small>${tot>cap?M1(tot-cap)+' over the cap':'under the cap'}</small></div><div class="tile"><span class="k">Can add with</span><b style="font-size:22px;font-family:var(--sans)">${esc2(canAdd)}</b></div></div></div>
    <div><div class="k" style="margin-bottom:10px">Free agents${changed?' · the calls':''}</div>${fas.map(([n,lab])=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #e3e0db"><span style="font:700 24px var(--sans)">${esc2(n)}</span><span style="font:800 18px 'Saira Condensed',sans-serif;letter-spacing:.06em;color:#860038;text-align:right">${esc2(lab).toUpperCase()}</span></div>`).join('')}
    <div class="k" style="margin:26px 0 10px">Biggest ${NY} salaries</div>${big.map(([n,v])=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #e3e0db;font:600 22px var(--sans)"><span>${esc2(n)}</span><b style="font-family:var(--mono)">${M1(v)}</b></div>`).join('')}</div></div>`)}
  async function cardShot(node,route,id,label,btn){if(!node){return false}btn.disabled=true;toast('Making the image…');document.body.appendChild(node);

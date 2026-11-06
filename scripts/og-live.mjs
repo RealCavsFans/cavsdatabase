@@ -22,7 +22,11 @@ function grab(name) {
 }
 const PLAYERS = grab('PLAYERS'), ROSTER = grab('ROSTER'), SCHEDULE = grab('SCHEDULE'), TV = grab('TV'), CAVS_TV = grab('CAVS_TV');
 const TSTATS = grab('TSTATS'), TSTATS_PREV = grab('TSTATS_PREV'), H2H_PREV = grab('H2H_PREV'), STANDINGS = grab('STANDINGS');
-const TEAM_SALARY = grab('TEAM_SALARY'), TAX_BILL = grab('TAX_BILL'), LINES = grab('LINES'), HARDCAP = grab('HARDCAP');
+const TEAM_SALARY = grab('TEAM_SALARY'), LINES = grab('LINES'), HARDCAP = grab('HARDCAP');
+// Nov 6: the hard cap and tax use their own salary figures (unlikely bonuses, 0/1-year free agent floor); same formulas as index.html
+const UNLIKELY = grab('UNLIKELY') || {}, FA01 = grab('FA01') || {}, ADJ = (T, i) => Object.values(T).reduce((t, a) => t + ((a && a[i]) || 0), 0);
+const APRON_SALARY = TEAM_SALARY + (ADJ(UNLIKELY, 0) + ADJ(FA01, 0)) / 1e6, TAX_SALARY = TEAM_SALARY + (ADJ(UNLIKELY, 5) + ADJ(FA01, 0)) / 1e6;
+const TAX_BILL = (() => { let over = TAX_SALARY - grab('LINES').find(l => l[0] === 'Luxury tax')[1], t = 0, k = 0; while (over > 0) { const b = Math.min(over, 6.064); t += b * ([1, 1.25, 3.5, 4.75][k] ?? 4.75 + .5 * (k - 3)); over -= b; k++ } return t })();
 const INJURIES = grab('INJURIES') || [], OPP_INJ = grab('OPP_INJ') || {}, INJ_ASSIGN = grab('INJ_ASSIGN') || [], CAVS_RADIO = grab('CAVS_RADIO') || '';
 const EXC = grab('EXC'), PICKS = grab('PICKS'), TX = grab('TX'), SCORES = grab('SCORES'), SEASON = grab('SEASON'), TEAMS = grab('TEAMS'), GNICK = grab('GNICK');
 let PJ = {}; try { PJ = JSON.parse(await readFile(new URL('pdata/players.json', root), 'utf8')); } catch {}
@@ -141,7 +145,7 @@ ${rich}`,
 
 /* cap */
 {
-  const L = Object.fromEntries(LINES.map(l => [l[0], l[1]])), room = L[HARDCAP] - TEAM_SALARY, lo = LINES[0][1] - 1, hi = LINES[LINES.length - 1][1] + 4;
+  const L = Object.fromEntries(LINES.map(l => [l[0], l[1]])), room = L[HARDCAP] - APRON_SALARY, lo = LINES[0][1] - 1, hi = LINES[LINES.length - 1][1] + 4;
   const pct = v => Math.max(0, Math.min(100, (v - lo) / (hi - lo) * 100)).toFixed(1);
   const lab = { 'Salary cap': 'Cap', 'Luxury tax': 'Tax', 'First apron': 'Apron 1', 'Second apron': 'Apron 2' };
   const roomTxt = room >= 1 ? '$' + room.toFixed(1) + 'M' : room > 0 ? '$' + Math.round(room * 1000) + 'K' : '$0';
@@ -164,7 +168,7 @@ ${rich}`,
 /* assets */
 {
   const firsts = PICKS.filter(p => p[1] === '1st'), left = EXC.reduce((t, e) => t + e[1] - e[4].reduce((a, u) => a + u[2], 0), 0);
-  const L = Object.fromEntries(LINES.map(l => [l[0], l[1]])), room = L[HARDCAP] - TEAM_SALARY;
+  const L = Object.fromEntries(LINES.map(l => [l[0], l[1]])), room = L[HARDCAP] - APRON_SALARY;
   cards.push(['og/assets.jpg', page(`.L{position:absolute;left:64px;top:56px;right:64px}.n3{margin-top:26px}.yrs{position:absolute;left:64px;right:64px;top:400px;display:flex;gap:10px}.yrs span{flex:1;padding:16px 0;text-align:center;font:800 34px 'Geist Mono';background:rgba(255,255,255,.12)}.yrs span.h{background:#F2B231;color:#4a0020}`,
     `<div class="L"><div class="k">Draft picks &amp; exceptions</div><div class="big" style="font-size:96px;margin-top:10px">Cavs assets</div><div class="n3"><div><b>${firsts.length}</b><small>Firsts held</small></div><div><b>${M(left * 1)}</b><small>Exceptions left</small></div><div><b>${room > 0 ? '$' + Math.round(room * 1000) + 'K' : '$0'}</b><small>Usable under hard cap</small></div></div></div>
 <div class="yrs">${Array.from({ length: 7 }, (_, k) => 2027 + k).map(y => `<span class="${firsts.some(p => +p[0] === y) ? 'h' : ''}">${y}</span>`).join('')}</div>`, 'assets')]);
