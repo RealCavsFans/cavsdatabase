@@ -1,0 +1,110 @@
+{
+ "note": "NBA.com's official possession counts per game (boxscoreadvancedv3), copied by hand because GitHub's servers can't reach stats.nba.com. scripts/check-poss.mjs compares against these first, then pbpstats.",
+ "season": "2026-27",
+ "games": {
+  "0022600006": {
+   "et": "2026-10-22",
+   "opp": "PHI",
+   "cle": [
+    109,
+    106
+   ],
+   "opp_": [
+    110,
+    114
+   ],
+   "checked": "2026-11-06"
+  },
+  "0022600105": {
+   "et": "2026-10-24",
+   "opp": "BKN",
+   "cle": [
+    107,
+    125
+   ],
+   "opp_": [
+    107,
+    121
+   ],
+   "checked": "2026-11-06"
+  },
+  "0022600120": {
+   "et": "2026-10-26",
+   "opp": "MIN",
+   "cle": [
+    113,
+    127
+   ],
+   "opp_": [
+    111,
+    125
+   ],
+   "checked": "2026-11-06"
+  },
+  "0022600133": {
+   "et": "2026-10-28",
+   "opp": "WSH",
+   "cle": [
+    95,
+    121
+   ],
+   "opp_": [
+    93,
+    111
+   ],
+   "checked": "2026-11-06"
+  },
+  "0022600144": {
+   "et": "2026-10-29",
+   "opp": "ATL",
+   "cle": [
+    98,
+    111
+   ],
+   "opp_": [
+    98,
+    114
+   ],
+   "checked": "2026-11-06"
+  },
+  "0022600151": {
+   "et": "2026-10-31",
+   "opp": "MIL",
+   "cle": [
+    105,
+    136
+   ],
+   "opp_": [
+    105,
+    111
+   ],
+   "checked": "2026-11-06"
+  },
+  "0022600158": {
+   "et": "2026-11-02",
+   "opp": "OKC",
+   "cle": [
+    96,
+    112
+   ],
+   "opp_": [
+    97,
+    117
+   ],
+   "checked": "2026-11-06"
+  },
+  "0022600180": {
+   "et": "2026-11-04",
+   "opp": "OKC",
+   "cle": [
+    102,
+    116
+   ],
+   "opp_": [
+    103,
+    124
+   ],
+   "checked": "2026-11-06"
+  }
+ }
+}
