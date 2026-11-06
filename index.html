@@ -663,6 +663,20 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 .o-otd .otd-when b{display:inline!important;font:inherit!important;font-size:inherit!important;letter-spacing:inherit!important;color:var(--wine-ink)!important;margin:0!important}.otd-when b::before{content:' · '}
 .o-otd .dc-d{font-family:var(--mono)!important;font-weight:700!important;letter-spacing:-.02em;font-size:1.25rem!important}
 .otd-text{font-size:.84375rem!important;line-height:1.35!important}#view-home .o-otd .otd-row>.dcal{transform:scale(.808)!important;transform-origin:left center}}
+
+/* Nov 6 mock: home game-day tape uses the game preview's tape */
+.gdm-gpt{min-width:0}@media(max-width:760px){.gdm-gpt{padding:0 14px 6px}}.gdm-tsub{margin-left:auto;font:400 .75rem var(--sans);letter-spacing:0;text-transform:none;color:var(--muted)}
+
+/* Nov 6 mock: About page */
+.abt{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}
+.abt-c{background:var(--card);border:1px solid var(--line);padding:16px 18px}.abt-w{grid-column:1/-1;border-left:3px solid var(--wine-ink,#860038)}
+.abt-c h2{font:800 1.125rem var(--cond);letter-spacing:.04em;text-transform:uppercase;margin:0 0 8px;padding-bottom:8px;border-bottom:3px solid var(--fg)}
+.abt-c p{margin:0 0 8px;font:500 .875rem/1.5 var(--sans);color:var(--fg)}.abt-c p.dim{color:var(--muted);font-size:.8125rem}
+.abt-b{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
+.abt-btn{display:inline-flex;align-items:center;height:38px;padding:0 16px;border-radius:999px;background:var(--wine,#860038);color:#fff!important;border:0;font:700 .8125rem var(--sans);text-decoration:none;cursor:pointer}
+.abt-mail{font:600 .8125rem var(--mono);color:var(--wine-ink)}
+#abt-nl .nlft{max-width:none;margin:8px 0 0;padding:0}#abt-nl .nlft>div{border:0;padding:0;background:none}#abt-nl .nlft .t{display:none!important}
+@media(max-width:760px){.abt{grid-template-columns:1fr;gap:10px}.abt-c{padding:14px}}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link,#dp-h{font:800 .9375rem var(--cond);text-transform:uppercase;letter-spacing:.06em;margin:0;color:var(--fg)}.pp-sub{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:2px 0 6px}.pp-sub>span{font-size:.8125rem;color:var(--muted)}/* Nov 4 audit: one kicker style, one rule weight, same name/meta sizes for the Charge game and drafted players */.o-pipe .cap-label{font:700 .6875rem var(--cond);font-stretch:normal;letter-spacing:.1em;margin-top:2px}.o-pipe .ch-next{font-size:.9375rem;margin-top:2px}.o-pipe .ch-meta{font-size:.8125rem}.o-pipe .ch-rec{font:700 .875rem var(--mono);color:var(--muted)}.o-pipe .pp-lk{font:400 .8125rem var(--sans);color:var(--wine-ink);text-decoration:none;white-space:nowrap}.ch-nrow{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.o-pipe .ch-nrow .ch-rec{font:600 .8125rem var(--mono);color:var(--muted)}.o-pipe .ch-nrow .ch-rec:before{content:'Record ';font:700 .625rem var(--cond);letter-spacing:.1em;text-transform:uppercase;margin-right:2px}.o-dp{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
@@ -957,6 +971,23 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
     <div class="tipcard"><div class="tc-t"><b>Keep cavs_db free</b><p>No paywall, no ads. If the site saved you a few tabs (or settled an argument), throw the hammer down in the tip jar. It covers hosting and the late nights after West Coast games. Thank you!</p></div><a class="tc-btn" href="https://www.buymeacoffee.com/cavsdb" target="_blank" rel="noopener">☕ Buy cavs_db a coffee</a></div>
   </div>
 </main>
+<main id="view-about" hidden>
+  <div class="wrap page">
+    <div>
+      <div class="dim" style="font-size:0.8125rem"><a href="/" data-go="home">Home</a> / About</div>
+      <h1 style="margin-top:6px">About cavs_db</h1>
+      <p class="dim" style="margin:6px 0 0">What this is, how to reach us and how to support it.</p>
+    </div>
+    <div class="abt">
+      <section class="abt-c abt-w"><h2>What this is</h2><p>cavs_db is an independent, facts-only reference for the Cleveland Cavaliers: the schedule, roster, salary cap, assets, transactions, live game stats, history and the Cleveland Charge, all in one place.</p><p>Numbers come from the NBA's own feeds first, then Basketball Reference, Spotrac and other trusted sources, and the site updates through the day. It started on <a href="https://realcavsfans.com" target="_blank" rel="noopener">RealCavsFans ↗</a>. Thanks for the floor.</p><p class="dim">Independent fan reference. Not affiliated with the Cleveland Cavaliers or the NBA.</p></section>
+      <section class="abt-c" id="abt-nl"><h2>Cavs &amp; Coffee</h2><p>Free, unfiltered Cavs news in your inbox the morning after every game.</p></section>
+      <section class="abt-c"><h2>Contact</h2><p>Questions, corrections or ideas? Every message is read.</p><div class="abt-b"><button type="button" class="abt-btn" onclick="window.cdbFeedback&&window.cdbFeedback()">Send a message</button><a class="abt-mail" id="abt-mail"></a></div></section>
+      <section class="abt-c"><h2>Tip jar</h2><p>No paywall, no ads. If the site saved you a few tabs (or settled an argument), a tip covers hosting and the late nights after West Coast games. Thank you!</p><div class="abt-b"><a class="abt-btn" href="https://www.buymeacoffee.com/cavsdb" target="_blank" rel="noopener">☕ Buy cavs_db a coffee ↗</a></div></section>
+      <section class="abt-c"><h2>App &amp; game alerts</h2><p>Add cavs_db to your home screen like an app, and get alerts for tip-off and final scores.</p><div class="abt-b" id="abt-app"><button type="button" class="abt-btn ftip fapp" id="appbtn">Get the app</button><button type="button" class="abt-btn ftip falert" id="falb" hidden onclick="window.cdbAlerts&&window.cdbAlerts()">Game alerts</button></div></section>
+      <section class="abt-c"><h2>Privacy</h2><p>No account and no ads. Cavs &amp; Coffee emails are sent through Buttondown, and every email has an unsubscribe link. Game alerts go through OneSignal, only if you turn them on. Settings like dark mode are saved in your own browser.</p></section>
+    </div>
+  </div>
+</main>
 
 <main id="view-schedule" hidden>
   <div class="wrap page">
@@ -1130,7 +1161,7 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 <section class="nlft" id="nlft" hidden aria-label="Cavs &amp; Coffee newsletter"><div><div class="t"><b><img src="/nl/icon-mug.png" alt="" width="42" height="32">Cavs <i>&amp;</i> Coffee</b><p><span class="nl-long">Free unfiltered Cavs news the morning after every game (before your second cup).</span><span class="nl-short">Free unfiltered Cavs news the morning after every game.</span></p></div><form action="https://buttondown.com/api/emails/embed-subscribe/cavscoffee" method="post"><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email"><input type="hidden" name="embed" value="1"><button type="submit">Sign me up</button></form></div></section>
 <footer><div class="wrap">
   <span><span class="f-dom">cavsdatabase.com · </span>Independent fan reference. Not affiliated with the <span class="f-long">Cleveland </span>Cavaliers or the NBA.<br><a class="f-rcf" href="https://realcavsfans.com" target="_blank" rel="noopener">Started on RealCavsFans. Thanks for the floor.</a></span>
-  <div class="fright"><button type="button" class="ftip falert" id="falb" hidden onclick="window.cdbAlerts&&window.cdbAlerts()">Game alerts</button><button type="button" class="ftip fapp" id="appbtn">Get the app</button><a class="ftip" href="https://www.buymeacoffee.com/cavsdb" target="_blank" rel="noopener">☕ Tip jar</a><button type="button" class="fcontact" onclick="window.cdbFeedback&&window.cdbFeedback()">Contact</button>
+  <div class="fright"><a class="ftip" href="/about" data-go="about">About</a><button type="button" class="fcontact" onclick="window.cdbFeedback&&window.cdbFeedback()">Contact</button>
   <button type="button" class="thm2" id="thm2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Dark mode</span></button></div>
 </div></footer>
 
@@ -1161,7 +1192,8 @@ const SECTIONS=[
   ['charge','Cleveland Charge','CHG','G League schedule, roster, stats and staff.'],
   ['history','History','HIS','Every season since 1970, retired numbers, all-time leaders, draft history and coaches.'],
   ['media','Media','MED','Cavs video, press conferences and RealCavsFans articles.'],
-  ['resources','Resources','RES','cavs_db approved sites for NBA and Cavs knowledge.']
+  ['resources','Resources','RES','cavs_db approved sites for NBA and Cavs knowledge.'],
+  ['about','About','ABT','What cavs_db is, contact, the tip jar, Cavs & Coffee and the app.']
 ];
 /* picks — RealGM future draft picks, Oct 14 2026. [draft, pick, plain-English status, how it's decided, trade-eligible?, why] */
 /* picks the Cavs hold: [year, round, label, visual, can trade outright, can trade swap rights, status note, origin of the pick/routing]
@@ -2750,6 +2782,12 @@ const rs=document.getElementById('res');
 /* cost of each outside site, checked Oct 2026: f free, p paid, m free with a paid tier. Sites we couldn't confirm get no tag. */
 const coT=t=>{const[a,...b]=String(t).split(' · ');const r=[el('div','co-t',a)];if(b.length)r.push(el('div','co-tn',b.join(' · ')));return r};
 const RES_PRICE={'NBA.com Stats':'f','Basketball Reference':'f','Cleaning the Glass':'p','Dunks & Threes':'m','CraftedNBA':'m','BBall Index':'m','NBA RAPM':'f','databallr':'f','CourtSketch':'m','Hoopology':'f','Spotrac':'m','Capsheets':'f','Hoops Rumors':'m','Salary Swish':'f','NBA Salary Model':'f','CBA Guide':'f','draftballr':'f','No Ceilings':'m','Tankathon':'f','Swish Theory':'f'};
+
+/* Nov 6 mock: About page. The newsletter signup and contact address live here instead of the bottom of every page */
+onView('about',()=>{const m=document.getElementById('abt-mail');if(m&&!m.textContent){const ad=['rcfwriter','gmail.com'].join('@');m.href='mailto:'+ad+'?subject='+encodeURIComponent('cavsdatabase.com');m.textContent=ad}
+});
+/* the newsletter signup lives on the About page now, not at the bottom of every page */
+{const nl=document.getElementById('nlft'),box=document.getElementById('abt-nl');if(nl&&box){box.appendChild(nl);nl.classList.remove('mini')}}
 onView('resources',()=>{RES.forEach(([g,items])=>{const sec=el('section');const h=el('div','block-h');h.appendChild(el('h2',null,g));sec.appendChild(h);
   items.forEach(([n,d,dom,u])=>{const a=el('a','res');a.href=u;a.target='_blank';a.rel='noopener';const nb=el('b',null,n);const pr=RES_PRICE[n];if(pr)nb.appendChild(el('i','rtag rtag-'+pr,{f:'Free',p:'Paid',m:'Free + paid'}[pr]));a.append(nb,el('span',null,d),el('em',null,dom+' ↗'));sec.appendChild(a)});rs.appendChild(sec)});
 });
@@ -3089,7 +3127,13 @@ function fitLogo(img){/* Nov 4: sizing now comes from the site-wide logo scale (
         const ser=el('div','gdm-ser');const won=ms.filter(([,k])=>rs[k]==='W').length,lost=ms.filter(([,k])=>rs[k]==='L').length;
         const hd=el('div','gs-k');hd.append('Season series',el('b',null,won+lost?(won>lost?'Cavs lead ':won<lost?'Cavs trail ':'Tied ')+won+'–'+lost:ms.length+' meeting'+(ms.length===1?'':'s')));ser.appendChild(hd);
         const ul=el('ul');ms.forEach(([x,k])=>{const li=el('li');const rr=rs[k],sc=SCORES[x[0]];li.append(el('span','d',fd(x[0])),el('span',null,(x[2]==='H'?'vs ':'at ')+o));li.appendChild(x[0]===g[0]?el('b','nw','Tonight'):rr&&sc?el('b',rr==='W'?'w':'l',rr+' '+sc.replace('-','–')):el('span','u','—'));ul.appendChild(li)});ser.appendChild(ul);
-        const bd=el('div','gdm-tb');bd.append(tp,bars,ser);c2.appendChild(bd);row.appendChild(c2)}
+        /* Nov 6 mock (Luka): the home tape is the game preview's terminal-style tape (same rows, rank bars and team header) on every screen */
+        const gpt=el('div','gp-tape gdm-gpt');{const all=Object.values(TS),o2=g[1];const ROWS=[['Record',t=>t[0]/Math.max(1,t[0]+t[1]),1,t=>t[0]+'–'+t[1]],['ORTG',t=>t[4],1,t=>t[4].toFixed(1)],['DRTG',t=>t[5],0,t=>t[5].toFixed(1)],['NET RTG',t=>t[4]-t[5],1,t=>{const x=t[4]-t[5];return (x>0?'+':x<0?'−':'')+Math.abs(x).toFixed(1)}],['Pace',t=>t[6],1,t=>t[6].toFixed(1)]];
+          ROWS.forEach(([lab,f,hi,fm])=>{const A=TS.CLE,B=TS[o2];const rk=t=>1+all.filter(u=>hi?f(u)>f(t):f(u)<f(t)).length;const better=lab==='Pace'?0:(hi?f(A)>f(B):f(A)<f(B))?1:(hi?f(B)>f(A):f(B)<f(A))?2:0;
+            const x=el('span','gtv'+(better===1?' up':''));x.append(fm(A),el('small',null,ord(rk(A))));const y=el('span','gtv r'+(better===2?' up':''));y.append(el('small',null,ord(rk(B))),fm(B));gpt.append(x,el('span','gtl',lab),y)});
+          tapeRows(gpt,'Cavs',GNICK[o2]||TEAMS[o2])}
+        {const k=c2.querySelector('.gdm-k');if(k)k.appendChild(el('small','gdm-tsub',(cur?'2026–27':'2025–26')+' · league rank'))}
+        const bd=el('div','gdm-tb');bd.append(gpt,ser);c2.appendChild(bd);row.appendChild(c2)}
       /* numbers count up the first time the tape scrolls into view */
       if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window){const els=[...tp.querySelectorAll('.l,.r')].filter(x=>/\d/.test(x.textContent)).map(x=>{const n=x.querySelector('b')||x;return [n,n.textContent]});
         const run=()=>{const t0=performance.now();const step=now=>{const k=Math.min(1,(now-t0)/900),e=1-Math.pow(1-k,3);els.forEach(([n,f])=>{n.textContent=k<1?f.replace(/\d+(\.\d+)?/g,v=>{const d=(v.split('.')[1]||'').length;return (parseFloat(v)*e).toFixed(d)}):f});if(k<1)requestAnimationFrame(step)};requestAnimationFrame(step)};
@@ -4356,7 +4400,8 @@ const PAGE_META={
  'charge':['Cleveland Charge Schedule, Roster & Stats 2026–27 (G League) | cavs_db','The Cavs’ G League affiliate: full schedule with results, player stats and leaders, two-way and affiliate players, and coach and front office bios.'],
  'history':['Cavs History: Every Season, Retired Numbers, Leaders & Draft Picks | cavs_db','Every Cleveland Cavaliers season since 1970: records, playoff results, coaches and leaders, plus retired numbers, all-time leaders, who wore each number, every draft pick and every head coach.'],
  'media':['Cavs Press Conferences, Highlights & Articles | cavs_db','The latest Cavs press conferences and highlights from the team’s YouTube channel, plus articles and Recaps from RealCavsFans.com.'],
- 'resources':['Best Cavs & NBA Stats, Salary Cap and Draft Sites | cavs_db','cavs_db approved sites for NBA and Cavs knowledge.']
+ 'resources':['Best Cavs & NBA Stats, Salary Cap and Draft Sites | cavs_db','cavs_db approved sites for NBA and Cavs knowledge.'],
+ 'about':['About cavs_db: Contact, Tip Jar, Cavs & Coffee | cavs_db','What cavs_db is, how to reach us, the tip jar, the Cavs & Coffee newsletter and the app.']
 };
 /* tip jar: set to the Buy Me a Coffee page address to show the footer link */
 /* player pages: /players/<name> — everything the site knows about one player, built from the same data as the rest of the site */
@@ -5073,7 +5118,7 @@ window.renderPlayer=function(s){
   /* Nov 5 (Luka): no sources footnote on player pages */
 }/*@/chunk*/
 
-const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge','player','roster-tree','game','history','season'];
+const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge','player','roster-tree','game','history','season','about'];
 /* page titles and descriptions per route (search engines and browser tabs) */
 const ROUTE_ALIAS={video:'media',rcf:'media/rcf'}; /* media/rcf now opens Media scrolled to the articles */
 function routeOf(){let r=location.pathname.replace(/^\/+|\/+$/g,'').toLowerCase();if(/index\.html$/.test(r)||location.protocol==='file:')r='';const h=location.hash.slice(1);if(!r&&h&&(SECTIONS.some(x=>x[0]===h)||ROUTE_ALIAS[h]))r=h;const AL={video:'media',rcf:'media/rcf'};return AL[r]||r||'home'}
@@ -5081,7 +5126,7 @@ function routeOf(){let r=location.pathname.replace(/^\/+|\/+$/g,'').toLowerCase(
 function statsBackChip(route){let c=document.getElementById('sbk');let from=false;try{from=sessionStorage.getItem('cdb-from-stats')==='1'}catch(_){}
   if(!route.startsWith('players/')){if(c)c.remove();try{sessionStorage.removeItem('cdb-from-stats')}catch(_){}return}
   const b=statsBack();if(!from||!b){if(c)c.remove();return}if(!c){c=el('a','sbk','← Back to stats');c.id='sbk';document.body.appendChild(c)}c.href=b.u+'&resume=1'}
-function show(route){setTimeout(()=>statsBackChip(route),0);{const nf=document.getElementById('nlft');if(nf)nf.classList.add('mini')}if(route==='home'){const fa=document.querySelector('.galert.ga-fin');if(fa&&!/Niang/.test(fa.textContent))fa.remove()}setTimeout(()=>window.cdbBarsReset&&cdbBarsReset(),0);
+function show(route){setTimeout(()=>statsBackChip(route),0);if(route==='home'){const fa=document.querySelector('.galert.ga-fin');if(fa&&!/Niang/.test(fa.textContent))fa.remove()}setTimeout(()=>window.cdbBarsReset&&cdbBarsReset(),0);
   if(window.cdbNlView)window.cdbNlView();
   if(window.cdbAlView)window.cdbAlView();
   if(window.cdbAttachX)setTimeout(window.cdbAttachX,60);
