@@ -20,12 +20,6 @@
   },
   {
    "src": "cleveland.com",
-   "title": "The long road back for Nae’Qwan Tomlin is only beginning",
-   "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOWWJDTDBTejl6anM4SEF3OUhOdVVGRU96eGw1VnVRVEM0NThST2x6dHpyWVVEMzZTYXZuQ0MzRGQ2WkQwcVZ0VkJuUEVkZVYyN29HUVBfVXh2eE9UaDZwUW5QMTBGTHc2OHNfV25YWEx3OG1nZHFZRU9QMS1Hd0YtTTJxV2tBRDF5VllvX1RRangwNFU2eDVnUzVVdExUclBV?oc=5",
-   "date": "2026-11-06T11:00:00.000Z"
-  },
-  {
-   "src": "cleveland.com",
    "title": "What would it take for Kenny Atkinson to lose his job? Hey, Chris! Wine and Gold Talk podcast",
    "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxOekliSGxHUUJ6S0JkSV9YVzd5S3V5cGM2UVVFOWJCMVJwaWdaeENBVGdjWE4yYXlyMU1zb0ZISmVPVUxuSUw4NFBHcy13ekYwX0JTNldfTUJzRmc2Y2t1dmU1MmVnWjktdlA2blN3MF9xWEJINXR3RGlwalBvaUM1cG5xeGNkSU1rNm1WRFpwckZpRHhXdG1XaW5EN3ZBZ3lMS0pncFJ2N2F3djc0T3g4VVItRnNqS1JJeXNUT3VxN2tJalF5a1JMTFFnUnRldGM?oc=5",
    "date": "2026-11-06T10:05:00.000Z"
@@ -77,6 +71,12 @@
    "title": "3 Players That Stand To Gain Most From Cavs Recent Injury Woes",
    "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPNU1MOXU0Z3k2b2swbG5hSF9zNXRQbUx4a09lUTNfeV8yWnFyNHh0NU1JcmZwY0RWcUF0T2c2T1lhS0xnS29hdFllMnU1RGNJRXBucVVjUzBXa3RzZ0FZWWpyV09GTk4tRFdQa3JXckgxVGdCNDVwcVV2akdYRHNQQWw3aXRYNURiX1UwSzA1VTg3X1NYcDdYUEtjTW5ocnZJM3FObGNvREl5OGpBRDNkdHhobw?oc=5",
    "date": "2026-11-05T21:00:01.000Z"
+  },
+  {
+   "src": "cleveland.com",
+   "title": "The Cavs are signing former Charge standout to two-way contract, reshuffling their developmental resources",
+   "link": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxOeEhkUFZ0YnZRbzZ5UlZ5MFRiTmU4emRYUVZXbGM2OWctMEZrOGdQc3hncWV0WFRxc0o5N0ZtQlBBbXdjUVI5NGlNOFl3N2VFaElJOGFFVm1SWFdBZXJQZzZ2T0lFWnZVQ2ZBR283VHpGeXFqUGhMQVZoVDlOdmV0VUlzYmVqSVBCWkQxNjFYNl9qbGtvanY1d3NRdXMzV0VlV0IxWUpGWDRxb2FqLVVFaUZnbGsyR09lcEx6RzBoNHlGUVhJZUt2QjlZNjBzcVJJdWs0THhsRlNRQ2FLZ0VDZ3YtMA?oc=5",
+   "date": "2026-11-05T18:51:00.000Z"
   },
   {
    "src": "The Inside Shot",
@@ -136,7 +136,7 @@
    "src": "Cavaliers on SI",
    "title": "Updated Starting Lineup: Cleveland Cavaliers vs. Oklahoma City Thunder",
    "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQZDd4NmZWWmJhRS1BS0VIa185Nl9xdjFPUzI5bFlIVTNuSWI4ZVRwek0wb003MVUyMXZmZzNuOFVDT2MzajZkMXJnTW1nSFRpaG9WUmo4Sk9mdzB5NTY2X2h1a1pkN3JrX1p4VXBSQUlVRnVKVE56SnV5M1JxNzFLRWNadW15N21iTWc4eHhrSG9wT1J4REFkMmVhMVhRSzU1RlFtMEtCM0NnaVl5MHJYeU5mTVF6NnlEY0pn?oc=5",
-   "date": "2026-11-05T00:08:32.000Z"
+   "date": "2026-11-05T00:05:42.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -360,6 +360,13 @@
  ],
  "videos": [
   {
+   "src": "It's Cavalier Podcast",
+   "title": "Can Donovan Mitchell Find the Right Balance Between Scoring and Playmaking?",
+   "link": "https://www.youtube.com/watch?v=J679vtKsCRc",
+   "date": "2026-11-06T19:10:56.000Z",
+   "id": "J679vtKsCRc"
+  },
+  {
    "src": "Locked On Cavs",
    "title": "PREVIEW: Cleveland Cavaliers Host LeBron James in NBA CUP Action! | Is it a MUST WIN!?",
    "link": "https://www.youtube.com/watch?v=ILiscQLqDDo",
@@ -393,13 +400,6 @@
    "link": "https://www.youtube.com/watch?v=DzZZ8kcLhuk",
    "date": "2026-11-06T12:15:06.000Z",
    "id": "DzZZ8kcLhuk"
-  },
-  {
-   "src": "It's Cavalier Podcast",
-   "title": "Can Donovan Mitchell Find the Right Balance Between Scoring and Playmaking?",
-   "link": "https://www.youtube.com/watch?v=kUpbPbzioXc",
-   "date": "2026-11-06T03:30:16.000Z",
-   "id": "kUpbPbzioXc"
   },
   {
    "src": "It's Cavalier Podcast",
