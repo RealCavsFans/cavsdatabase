@@ -1,6 +1,18 @@
 {
  "articles": [
   {
+   "src": "Hoops Rumors",
+   "title": "Norchad Omier Signs Two-Way Contract With Cavaliers",
+   "link": "https://www.hoopsrumors.com/2026/11/timberwolves-to-sign-norchad-omier-to-two-way-contract.html",
+   "date": "2026-11-06T04:01:55.000Z"
+  },
+  {
+   "src": "Hoops Rumors",
+   "title": "Cavaliers Waive Riley Minix",
+   "link": "https://www.hoopsrumors.com/2026/11/cavaliers-to-waive-riley-minix.html",
+   "date": "2026-11-06T04:00:37.000Z"
+  },
+  {
    "src": "Fear The Sword",
    "title": "Cavs reportedly sign Norchad Omier to two-way deal; waive Riley Minix",
    "link": "https://www.fearthesword.com/cavs-news/53977/cavs-reportedly-sign-norchad-omier-to-two-way-deal-waive-riley-minix",
@@ -19,16 +31,16 @@
    "date": "2026-11-05T23:09:08.000Z"
   },
   {
+   "src": "cleveland.com",
+   "title": "Why Jarrett Allen’s knee injury has the Cavs holding their breath",
+   "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPWkdURDBqb05vUDhPaXFkbUtieGZJR2w3UWhLVTlBWmJhUnRYc2d5c0labDNUUG9ZQ0kxM1R4STc3SDQ0ZEhNVFNJemlOT1ZFel91Q1BzZ3BPdTJTRnpjb1gyVkY4WXV6cWd1OUxBRkRKcWNPS2dfWkNneXhLQjg1bUFidzMwdEZhRHpzTzlSX0hfWndpeDRqVmkyZTE4SUhETm5MX0hsZVNQc0dz?oc=5",
+   "date": "2026-11-05T22:13:00.000Z"
+  },
+  {
    "src": "Cavaliers on SI",
    "title": "3 Players That Stand To Gain Most From Cavs Recent Injury Woes",
    "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPNU1MOXU0Z3k2b2swbG5hSF9zNXRQbUx4a09lUTNfeV8yWnFyNHh0NU1JcmZwY0RWcUF0T2c2T1lhS0xnS29hdFllMnU1RGNJRXBucVVjUzBXa3RzZ0FZWWpyV09GTk4tRFdQa3JXckgxVGdCNDVwcVV2akdYRHNQQWw3aXRYNURiX1UwSzA1VTg3X1NYcDdYUEtjTW5ocnZJM3FObGNvREl5OGpBRDNkdHhobw?oc=5",
    "date": "2026-11-05T21:00:01.000Z"
-  },
-  {
-   "src": "Hoops Rumors",
-   "title": "Cavaliers To Waive Riley Minix",
-   "link": "https://www.hoopsrumors.com/2026/11/cavaliers-to-waive-riley-minix.html",
-   "date": "2026-11-05T19:15:37.000Z"
   },
   {
    "src": "The Inside Shot",
@@ -134,12 +146,6 @@
   },
   {
    "src": "Hoops Rumors",
-   "title": "Norchad Omier Backs Out Of Wolves Deal, Will Sign With Cavs",
-   "link": "https://www.hoopsrumors.com/2026/11/timberwolves-to-sign-norchad-omier-to-two-way-contract.html",
-   "date": "2026-11-04T04:46:55.000Z"
-  },
-  {
-   "src": "Hoops Rumors",
    "title": "Injury Notes: Leonard, Pacers, Caruso, Embiid, Aldama",
    "link": "https://www.hoopsrumors.com/2026/11/injury-notes-leonard-pacers-caruso-embiid-aldama.html",
    "date": "2026-11-04T03:45:08.000Z"
@@ -155,6 +161,12 @@
    "title": "Cavs Got Meleek Thomas at a Second-Round Discount, But He's Showing First-Round Talent",
    "link": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPdE94Q1NvNTRFTG5jX3kwUjlkVVR4cTl3QW1kVkp6bEo0aFBNM1Bjd01vYzM5MnctQXJqQWNfVzlPYTFPNzk2NTJnT0t3VXQzV2VKbFluS3RFUFNKbXZ6bEdyc01qV2xiRlVxbGZ2bjZoTUl6TG9RakdFbDA0Z2pjU0V5aElST3ZnTnZWVS0xamhreGs0Z2ZqZmlpX29jVUpYSTRzMTVsanRwUGNVTEtYNWlwUDlRZldKWjBZZjNiSUFKYWh3MEpKT1J4cnRsQ2lsZkE?oc=5",
    "date": "2026-11-03T21:06:43.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "Tyrese Proctor Is Making Every Opportunity Count—and Giving the Cavs a Reason to Play Him More",
+   "link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxOY2N5aWw1UGhCZzRyQ1g5ZVZaOVhTNS04T1ctc1hOYjZoNXF5YU02SEY4YW9CdnVWcVloWDRqVnN3UzQ2NlVWQTZCRlpCMVY1SjlwU3FRVm5tMHluSDZweUZjTWEzTFh3MjFzbDN1OXU2SDBXUmxIa1RuOEZxOHdmVEZBYldsaTdia2VHRTNCdFVyb3hnX1dNSnVyaE1KTTlibl9KUEp0MnJld1pBNmFjMEkwdGlZVHR0S3BEcjFVSzVtQndsSjNHaGFqb0E3YTlldmM0YnNIX3lNbDhnOXc?oc=5",
+   "date": "2026-11-03T18:26:25.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -181,10 +193,22 @@
    "date": "2026-11-03T15:16:00.000Z"
   },
   {
+   "src": "cleveland.com",
+   "title": "The Cavs’ depth question marks are turning into answers",
+   "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxNRVNPdTRZNHBhaDhlWmdlYkg4OVhWUmo2MU93Z1psbXl2N1pjOXNfbmg4Qk1lNElHSk50RjFHWnFTUFRFN1ktSDFnWTZlR3oydkh6VTBaeUIyWWEwdC1QQXVhdFJySmxJVnJfdFF5NUttcms4ZG9kSEU4bHFDMWh5b0NDbDVBcjRpOV9ySzNUcUdkbTdNdHk0NVB1TTJXd3c?oc=5",
+   "date": "2026-11-03T13:58:00.000Z"
+  },
+  {
    "src": "The Inside Shot",
    "title": "Game Night Observations: Rebounds, Lineups and a Bad Loss",
    "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE8wUXFSVHhKYXVpTEFfRVFaQWttNTRTVF9QNzZaNFVxZmpyUGp6TmI3NVhhbDA2QkY2ekR4WFZiNnFUMVlqYkFxa2dQdHZXdk9RS3RsV1dYRGtIUEh1T1BrZFNaekZzTHNYXzE0alpGdmJGa25oVnFFNQ?oc=5",
    "date": "2026-11-03T12:50:36.000Z"
+  },
+  {
+   "src": "cleveland.com",
+   "title": "Why does Kenny Atkinson keep benching Jarrett Allen when the Cavs need him most?",
+   "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNSkNWcDM4ek1TNks1Qm1vUmFWMFh0dXM5Tm5pbDBTQ0JIOVFuMVBnQlpzN1lNS1NKR3RLZVRlT2gtNDZyMFg2UzYzNDFkZ1dTSlJnZjJlMUdyWXZCOEphcFJfUGdrY0pHdHh4eGdyLVhKZk56M3RTazZPVUZCMjdWbnNfZ25veTlJWHdSYUY0V0M1S3NBbmpaVmY5elVNb3ZfQkJaMVE3ai1JbVdwSkpvbEp6TDhNdmtnaWxKTGxacHc?oc=5",
+   "date": "2026-11-03T12:45:00.000Z"
   },
   {
    "src": "Fear The Sword",
@@ -259,24 +283,6 @@
    "date": "2026-10-31T14:11:14.000Z"
   },
   {
-   "src": "cleveland.com",
-   "title": "Cavs vs. Bucks: preview, odds, injury report, TV",
-   "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQMjNYQ1RZSGdFV3drSFo2N0J2TnVxbTJDUXctNng5RGpROGZ3ZXlkWkEzeUswVVFsMmVpOGxpTm5NTTBydmFUOVJaeVF5d2VUbW9mQ2xQVTR0cjJaZGUyNDJ6RzI2SEdlMWEtYWFMeFIzU3RYbm1SS09vemxmbXpQYWlsd0ctaHI1MGEzLXhfZjQ?oc=5",
-   "date": "2026-10-31T09:05:00.000Z"
-  },
-  {
-   "src": "cleveland.com",
-   "title": "Cleveland’s transition defense is broken — the guards have to fix it",
-   "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPaXowMDVDc1psQ3JlZVJTSDJQX29FSWdFZC1pQW5XQW9LMThCR2NTNnF6Q2h3a1RlWml3T2p2aXZfVWpja3lGRXI2aGx6VjZiVWhuVTN4NUdIZGtvMkpUcl9OWDQ4SzFkTXlxanlweWR1RVpoaF8zdENzMW1VYXBXVGlUNWZVQVpjYnZBLXkzcGtER2JrZGhsLWRTTmtrQXBaUktDTW04U2d6Wm1rQXc?oc=5",
-   "date": "2026-10-31T09:00:00.000Z"
-  },
-  {
-   "src": "cleveland.com",
-   "title": "Cavs’ win streak snapped with 114-111 loss to Hawks",
-   "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQTXFJZ3QzVTJ1Mnpxd3hybUR4QmtKYzFleWdOdWJIeTJ4OGQ1d3Z6Y1g0QkRBVVViSFlDcmQ3bUN2QnQzQ0ROU0pFMUd2blk0THpJR3JPZUEwaHFaVWJtb2kzR3A2N29OQnl0cFpuQ1Z3NFlEUEFNRWRSekFRNGZjMzJXZnhqZDZkOGR4QTF2Y00wc19ONEtwVVdB?oc=5",
-   "date": "2026-10-30T02:49:00.000Z"
-  },
-  {
    "src": "Cavaliers on SI",
    "title": "Updated Injury Report for Cavs Vs Hawks: Two Key Players Listed As Questionable",
    "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOOTRMWHFUY0ZSSzBmWnJ4UjZFU2ZSNTJ4a0RydmJDeE1PVnVTQVBRaThMYzM3c042cU5idjRocXhYb01mV3NmNGN1eWR0NmlUbmV3WWcwY0dGN0ZJQVAzMjdXQUg4LWljTEdfYl9zVWxXN1lEeGgzNU5mM1Z3ZWltZmt4ejdIYWpzVlJ2bFF5WXV6SWpOZDVySG1rQU42d2puemNaNFExdncwd2VCX0FVcF9jdzJENXIzWDVrM3lhVEZCMDR5ZmJTNg?oc=5",
@@ -293,15 +299,16 @@
    "title": "Central Notes: Thomas, Hezonja, Pistons, Pacers, Miller",
    "link": "https://www.hoopsrumors.com/2026/10/central-notes-thomas-hezonja-pistons-pacers-miller.html",
    "date": "2026-10-28T15:36:45.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Peyton Watson Did It All — and Showed Why the Cavs Needed Him",
-   "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxOMUY0ZThvbUkxSHotaXV1ZnJUWDFEWTFLb3U2bDdjdE1aUUhMRkRvX3NRQ1Y3RmtIZjhqOU9qNFQ0NW50WUlISHk2ZnNYMThVcVdST1F1N3hNeXFGY2tJYlNxRDlMLWNSMTZtQWdqSXJJbm43NnhfM2swZzJkTk1Hc2xsNGkxWmh1aUNpbE5xM0JTT3hqWG9mQnNTVVpxNHdaMTBlSUZna0hGN3dWNXVR?oc=5",
-   "date": "2026-10-27T07:00:00.000Z"
   }
  ],
  "podcasts": [
+  {
+   "src": "Wine and Gold Talk",
+   "title": "What would it take for Kenny Atkinson to lose his job? Hey, Chris!",
+   "link": "https://pdst.fm/e/traffic.megaphone.fm/ADLM8465950951.mp3",
+   "date": "2026-11-06T09:30:00.000Z",
+   "dur": "35 min"
+  },
   {
    "src": "Wine and Gold Talk",
    "title": "Are the Cavs' offensive struggles becoming a bigger problem than their 4-4 start?",
@@ -343,23 +350,23 @@
    "link": "https://pdst.fm/e/traffic.megaphone.fm/ADLM3097940289.mp3",
    "date": "2026-10-28T08:30:00.000Z",
    "dur": "38 min"
-  },
-  {
-   "src": "Wine and Gold Talk",
-   "title": "Analyzing the Cavs' come from behind overtime win over the red-hot Minnesota Timberwolves",
-   "link": "https://pdst.fm/e/traffic.megaphone.fm/ADLM8417820045.mp3",
-   "date": "2026-10-27T09:29:00.000Z",
-   "dur": "37 min"
-  },
-  {
-   "src": "Fear The Fro",
-   "title": "Peyton Watson Impressed In Cavs OT Win Over Wolves",
-   "link": "https://share.transistor.fm/s/781a15f6",
-   "date": "2026-10-27T07:05:00.000Z",
-   "dur": "31 min"
   }
  ],
  "videos": [
+  {
+   "src": "Locked On Cavs",
+   "title": "INJURY UPDATES: Cleveland Cavaliers Get GOOD NEWS Ahead of Showdown | Can they UNLOCK Peyton Watson?",
+   "link": "https://www.youtube.com/watch?v=DzZZ8kcLhuk",
+   "date": "2026-11-06T12:15:06.000Z",
+   "id": "DzZZ8kcLhuk"
+  },
+  {
+   "src": "It's Cavalier Podcast",
+   "title": "Can Donovan Mitchell Find the Right Balance Between Scoring and Playmaking?",
+   "link": "https://www.youtube.com/watch?v=kUpbPbzioXc",
+   "date": "2026-11-06T03:30:16.000Z",
+   "id": "kUpbPbzioXc"
+  },
   {
    "src": "It's Cavalier Podcast",
    "title": "REACTION: Cavs vs. Thunder",
@@ -585,20 +592,6 @@
    "id": "qq1kOWmjQxU"
   },
   {
-   "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: Jarrett Allen & Evan Mobley Cause NIGHTMARES for the Bucks as the Cavaliers DOMINATE",
-   "link": "https://www.youtube.com/watch?v=tgT2kLuuYIY",
-   "date": "2026-11-01T02:55:16.000Z",
-   "id": "tgT2kLuuYIY"
-  },
-  {
-   "src": "It's Cavalier Podcast",
-   "title": "Steph Curry Crosses Up Doncic! #nba #goldenstatewarriors #warriors",
-   "link": "https://www.youtube.com/watch?v=5VPapNSnNzY",
-   "date": "2026-10-31T13:29:34.000Z",
-   "id": "5VPapNSnNzY"
-  },
-  {
    "src": "The Chase Down Podcast",
    "title": "Chase Down Podcast Live, presented by LECOM: Hawks Take Control Late, Drop Cavs to 3-2",
    "link": "https://www.youtube.com/watch?v=yS7ANmBRg0c",
@@ -732,13 +725,6 @@
    "link": "https://www.youtube.com/watch?v=C3C6dPCeo9M",
    "date": "2026-10-27T15:23:52.000Z",
    "id": "C3C6dPCeo9M"
-  },
-  {
-   "src": "Cavs",
-   "title": "Cavs vs Timberwolves | Game Highlights | 10.26.2026",
-   "link": "https://www.youtube.com/watch?v=2cz2XMs0IG8",
-   "date": "2026-10-27T03:21:50.000Z",
-   "id": "2cz2XMs0IG8"
   }
  ]
 }
