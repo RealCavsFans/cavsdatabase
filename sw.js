@@ -1,5 +1,6 @@
 /* cavs_db service worker: offline mode.
-   - Season archive files (live-archive/<season>/season*.json and p/<id>.json): saved copy first, refreshed in the background.
+   - Season archive files (live-archive/<season>/season*.json and p/<id>.json): network first (Nov 6: saved-copy-first showed
+     days-old numbers on the first visit after an update); the saved copy only when offline or slower than 4 seconds.
    - Pages and data (html, json): network first, so they're always fresh; the last saved copy is used when offline or very slow.
    - Built files (/a/ app js/css, fonts, icons, headshots, logos): cache first; their names change whenever their contents do.
    - On install it saves the home page and the files it needs, so the site opens offline after one visit.
@@ -7,7 +8,7 @@
    OneSignal web push (alerts) runs inside this same worker. */
 /* in a try, so a blocked or unreachable OneSignal (ad blockers, no network) never stops offline mode from installing */
 try { importScripts('https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js'); } catch (_) {}
-const PAGES = 'cdb-pages-v2', STATIC = 'cdb-static-v2', ARCH = 'cdb-arch-v1', KEEP = [PAGES, STATIC, ARCH];
+const PAGES = 'cdb-pages-v2', STATIC = 'cdb-static-v2', ARCH = 'cdb-arch-v2', KEEP = [PAGES, STATIC, ARCH];
 const CORE = ['/', '/schedule', '/roster', '/cap', '/videos.json', '/box.json', '/news.json', '/icon-192.png', '/site.webmanifest', '/favicon.svg'];
 const MAX_PAGES = 120, MAX_STATIC = 400, SLOW = 4000;
 
@@ -36,14 +37,14 @@ self.addEventListener('fetch', e => {
   const r = e.request; if (r.method !== 'GET') return;
   const u = new URL(r.url); if (u.origin !== location.origin) return;
   if (u.pathname === '/sw.js') return;
-  /* season archive files (season.json, the period files, per-player files): show the saved copy at once and refresh it in the background */
+  /* season archive files (season.json, the period files, per-player files): fresh from the network; the saved copy only when offline or slow */
   if (/^\/live-archive\/[^/]+\/(season(-p-[a-z0-9]+)?\.json|p\/[^/]+\.json)$/.test(u.pathname)) {
     const key = new Request(u.origin + u.pathname);
-    e.respondWith(caches.open(ARCH).then(c => c.match(key).then(m => {
-      const net = fetch(r).then(res => { if (res.ok) { c.put(key, res.clone()); trim(ARCH, 60); } return res; });
-      if (m) { e.waitUntil(net.catch(() => null)); return m; }
-      return net;
-    })));
+    e.respondWith(caches.open(ARCH).then(c => {
+      const net = fetch(r, { cache: 'no-cache' }).then(res => { if (res.ok) { c.put(key, res.clone()); trim(ARCH, 60); } return res; });
+      const late = new Promise(ok => setTimeout(ok, SLOW)).then(() => c.match(key));
+      return Promise.race([net.catch(() => null), late]).then(x => x || net.catch(() => c.match(key)).then(y => y || Response.error()));
+    }));
     return;
   }
   if (isStatic(u.pathname)) {
