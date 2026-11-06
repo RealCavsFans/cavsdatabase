@@ -5426,10 +5426,10 @@ function startHints(){const q=document.getElementById('q');if(!q||window._hints)
     setTimeout(tick,del?25:60)};setTimeout(tick,1200)}
 
 /* first-visit intro: home page only, once per browser, skipped for reduced motion and on June 19.
-   INTRO_V 'tour': fan questions that spin into the page that answers them. 'tait': Joe Tait's opener cycling through every Cavs home. ?preview=intro&iv=tour|tait previews either. */
+   Joe Tait's opener cycling through every Cavs home (the old question-tour version was removed Nov 6). ?preview=intro replays it. */
 const INTRO_V='tait';
 (function(){const I=document.getElementById('ci');if(!I)return;let seen=false;try{seen=!!localStorage.getItem('cdb-intro')}catch(e){seen=true}
-  const force=/preview=intro/.test(location.search);const V=(location.search.match(/[?&]iv=(tour|tait)/)||[])[1]||INTRO_V;
+  const force=/preview=intro/.test(location.search);const V=INTRO_V;
   /* only for people who typed the address or used a bookmark: anyone arriving from Google, X or a shared link goes straight to the page */
   let ext=false;try{ext=!!document.referrer&&new URL(document.referrer).host!==location.host}catch(e){}
   /* some browsers and the Google app hide where a visit came from; a tab that already has history (a search results page, another site) also skips it */
@@ -5447,14 +5447,7 @@ const INTRO_V='tait';
   if(V==='tait'){I.classList.add('tait');(async()=>{await sl(350);await type("it's basketball time at ",40);T.insertAdjacentHTML('beforeend','<br><span class="ci-gold"></span>');const g=T.lastChild;BY.classList.add('on');
       for(const a of ['Cleveland Arena','Richfield Coliseum','Gund Arena','Quicken Loans Arena']){for(const c of a){if(stop)return;g.textContent+=c;await sl(42)}await sl(420);while(g.textContent){if(stop)return;g.textContent=g.textContent.slice(0,-1);await sl(14)}await sl(90)}
       for(const c of 'cavsdatabase.com'){if(stop)return;g.textContent+=c;await sl(46)}await sl(900);BY.classList.remove('on');await sl(400);await brand()})();return}
-  /* tour: each question spins into the page that answers it */
-  fetch('/pdata/history.json').catch(()=>{});
-  const Q=[["how is mobley playing?",'players/evan-mobley',null,'players/evan-mobley'],["which firsts do the cavs own?",'assets','#board','assets'],["are the cavs over the tax?",'cap','#captop','cap'],["who's chasing cavs history?",'history','#chase','history']];
-  const peek=async([q,route,sel,path])=>{await type(q);await sl(380);if(stop)return;I.classList.add('spin-out');await sl(320);if(stop)return;
-    show(route);await sl(60);const t=sel&&document.querySelector(sel);const hb=(document.querySelector('header.gbar')||{offsetHeight:0}).offsetHeight;scrollTo(0,t?Math.max(0,t.getBoundingClientRect().top+scrollY-hb-12):0);
-    I.classList.remove('spin-out');I.classList.add('peek');P.innerHTML='<b>&gt;</b> cavsdatabase.com/'+path;P.classList.add('on');await sl((+(location.search.match(/[?&]hold=(\d+)/)||[])[1]||1500)*(route.startsWith('players')?1.75:1));if(stop)return;
-    P.classList.remove('on');I.classList.remove('peek');T.textContent='';I.classList.add('spin-in');await sl(340);I.classList.remove('spin-in')};
-  (async()=>{await sl(300);for(const q of Q){if(stop)return;await peek(q)}if(stop)return;show('home');scrollTo(0,0);await sl(120);await brand()})()})();
+})();
 
 /* split-flap: record tiles flip into place on load; splits and the last score scramble in */
 (function(){
