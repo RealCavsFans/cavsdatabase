@@ -110,7 +110,7 @@ const nbaKeys = new Set();
     for (const [gid, row] of Object.entries(idx)) {
       if (!gid.startsWith('002')) continue;                                     // regular season (NBA Cup group games are 002; the Cup final is 006)
       const k = 'n' + gid, d = row[0].slice(0, 4) + '-' + row[0].slice(4, 6) + '-' + row[0].slice(6, 8);
-      const haveT = L.tg[k] && L.tg[k].t && L.tg[k].t[0].fb != null, haveS = SH.g[k] && SH.g[k].x;
+      const haveT = L.tg[k] && L.tg[k].t && L.tg[k].t[0].fb != null && L.tg[k].t[0].np != null, haveS = SH.g[k] && SH.g[k].x;   // Nov 6: np = counted possessions
       const recent = (Date.parse(today) - Date.parse(d)) / 864e5 <= 7;           // the store re-checks a week back for NBA corrections
       if (haveT && haveS && !recent) { nbaKeys.add(gkey(L.tg[k])); continue; }
       let raw; try { raw = JSON.parse(zlib.gunzipSync(fsx.readFileSync(path.join(NBA_DIR, SEASON, gid + '.json.gz')))); } catch { continue; }
@@ -120,7 +120,12 @@ const nbaKeys = new Set();
         orb: a.reboundsOffensive, drb: a.reboundsDefensive, tov: a.turnoversTotal ?? a.turnovers, ast: a.assists, stl: a.steals, blk: a.blocks, pf: a.foulsPersonal, paint: a.pointsInThePaint, pot: b.pointsFromTurnovers, fb: a.pointsFastBreak }; };
       L.tg[k] = { d, per: Math.max(4, (B.homeTeam.periods || []).length), t: [line(B.awayTeam, B.homeTeam), line(B.homeTeam, B.awayTeam)], cupFinal: 0, src: 'NBA' }; nN++;
       nbaKeys.add(gkey(L.tg[k]));
-      try { const D = C.prep(C.slimSummary(C.fromNBA({ game: B }, { game: raw.pbp }))); const sh = shotsOf(null, D); if (sh) { SH.g[k] = { d, t: sh.v, x: sh.x, src: 'NBA' }; nS++; } } catch (e) { console.log('shots: could not sort', gid, String(e)); }
+      try { const D = C.prep(C.slimSummary(C.fromNBA({ game: B }, { game: raw.pbp }))); const sh = shotsOf(null, D); if (sh) { SH.g[k] = { d, t: sh.v, x: sh.x, src: 'NBA' }; nS++; }
+        /* Nov 6 (Luka): every team's possessions and rebounds counted from the play-by-play with the live page's own code (it matches
+           NBA.com for the Cavs), so ORTG, DRTG, pace and rebound-rate ranks use one NBA.com-style count for all 30 teams */
+        const R = C.deriveCore(D, D.plays, 'all'), ids = [D.away && D.away.id, D.home && D.home.id];
+        L.tg[k].t.forEach((ln, i) => { const T = ids[i] && R.T[ids[i]]; if (T && T.np > 0) { ln.np = T.np; ln.forb = T.forb || 0; ln.fdrb = T.fdrb || 0; } });
+      } catch (e) { console.log('shots/possessions: could not build', gid, String(e)); }
     }
     /* one entry per game: drop ESPN and pbpstats copies of games the NBA store has */
     for (const [id, g] of Object.entries(L.tg)) if (g.src !== 'NBA' && nbaKeys.has(gkey(g))) delete L.tg[id];

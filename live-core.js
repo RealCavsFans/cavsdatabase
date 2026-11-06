@@ -87,7 +87,7 @@ function deriveCore(D,plays,F){
   let gtNow=false;const isGT=(per,t,m)=>{if(per!==4)return false;const left=2880-t,a=Math.abs(m);return left>540?a>=25:left>360?a>=20:a>=15};
   const inFx=per=>F==='clutch'?clutchNow:F==='nogt'?!gtNow:inPer(F,per);
   /* a possession that ends on free throws belongs to the ten players on the floor at the foul, like the points (Oct 31) */let hold=null,curON=null;const endPoss=(t,inF)=>{if(!inF||!t)return;/* Nov 6: NBA.com player possessions: every player on the floor at any point in the possession gets it */const pp=ps[t]&&ps[t].part;if(pp)pp.forEach(id=>{if(!B[id])return;const k=teamOf(id)===t?'po':'pd';B[id][k]=(B[id][k]||0)+1});const W=curON||on;if(seg)seg.o[t].np++;lu(t,W[t],o=>o.o.np++);lu(opp(t),W[opp(t)],o=>o.d.np++)};
-  const PL=[];const newPoss=(t,tt,how,inF)=>{if(ps[t]&&ps[t].t===tt&&ps[t].how===how&&how!=='oreb')return;/* Nov 6: nothing starts with no time left (a rebound or steal at the buzzer), as on NBA.com */if(how!=='start'&&curPer&&tt>=pstart(curPer)+plen(curPer))return;if(how!=='start'){if(how!=='oreb'&&hold===opp(t))endPoss(opp(t),inF);hold=t}const part=how==='oreb'&&ps[t]&&ps[t].part?ps[t].part:new Set([...(on[t]||[]),...(on[opp(t)]||[])]);ps[t]={part,t:tt,how,pts:0,first:null,inF,on:on[t]?[...on[t]].sort().join(','):'',od:on[opp(t)]?[...on[opp(t)]].sort().join(','):''};if(inF){pc[t][how].n++;PL.push(Object.assign(ps[t],{team:t}))}};
+  const PL=[];let lastFGA=null,seq=0;const newPoss=(t,tt,how,inF)=>{if(ps[t]&&ps[t].t===tt&&ps[t].how===how&&how!=='oreb')return;/* Nov 6: a team that already has the ball can't start a new possession unless the other team has shot since (an and-one's free throw, made or missed and rebounded, is the same trip) */if(how!=='start'&&how!=='oreb'&&hold===t&&ps[t]&&!(lastFGA&&lastFGA.team===opp(t)&&lastFGA.seq>(ps[t].seq||0)))return;/* Nov 6: nothing starts with no time left (a rebound or steal at the buzzer), as on NBA.com */if(how!=='start'&&curPer&&tt>=pstart(curPer)+plen(curPer))return;if(how!=='start'){if(how!=='oreb'&&hold===opp(t))endPoss(opp(t),inF);hold=t}const part=how==='oreb'&&ps[t]&&ps[t].part?ps[t].part:new Set([...(on[t]||[]),...(on[opp(t)]||[])]);ps[t]={seq,part,t:tt,how,pts:0,first:null,inF,on:on[t]?[...on[t]].sort().join(','):'',od:on[opp(t)]?[...on[opp(t)]].sort().join(','):''};if(inF){pc[t][how].n++;PL.push(Object.assign(ps[t],{team:t}))}};
   const margin=[[0,0]];let lc=0,ties=0,prevSign=0;const lead={};tid.forEach(t=>lead[t]=0);
   const shots=[],asts=[];const lastFG={},lastPt={},dr=[];let lastMade=null;
   /* segments: every stretch with the same ten players on the floor (for player-vs-opponent on/off) */
@@ -96,7 +96,7 @@ function deriveCore(D,plays,F){
   const leave=(id,t1)=>{if(enter[id]!=null){(stints[id]=stints[id]||[]).push([enter[id][0],t1,pmAll[id]-enter[id][1]]);delete enter[id]}};
   const join=(id,t1)=>{enter[id]=[t1,pmAll[id]]};
   /* Nov 6 (Luka): rebound rates the NBA.com way: every rebound, player or team, except the dead-ball team rebounds after a missed free throw that isn't the last of the trip (or a technical); a team rebound at the buzzer counts, as on NBA.com */let deadReb=false,ftKeep=false;
-  plays.forEach(p=>{curON=null;
+  plays.forEach(p=>{curON=null;seq++;
     if(p.per!==curPer){if(curPer){addTime(pstart(curPer)+plen(curPer));endPoss(hold,inFx(curPer));hold=null;tid.forEach(t=>on[t].forEach(id=>leave(id,pstart(curPer)+plen(curPer))))}
       curPer=p.per;last=pstart(p.per);tid.forEach(t=>{on[t]=new Set(startFive[p.per][t]||[]);on[t].forEach(id=>{B[id].played=true;join(id,last)});src[t]='';ps[t]={t:last,how:'init',pts:0,first:null,inF:false,on:'',od:''}});newSeg()}
     clutchNow=p.per>=4&&(p.per>4||p.t>=2580)&&Math.abs(mgNow)<=5;gtNow=isGT(p.per,p.t,mgNow);
@@ -119,6 +119,7 @@ function deriveCore(D,plays,F){
     const ftSnap=isFT&&!/Technical/.test(ty)&&snap&&snap.t===p.t&&snap.per===p.per;const ON=ftSnap?snap.on:on;curON=ftSnap?snap.on:null;
     /* a blocked heave isn't a shot attempt, but the NBA still credits the block (Nov 3) */
     if(p.shot&&/Heave/.test(ty)&&!p.sc&&/blocks/.test(p.text||'')){const hb=(p.ids||[]).length>1?b:a;if(hb&&B[hb]){if(inF)(B[hb].blk++,pbA(hb,'blk',1));TT(teamOf(hb)).forEach(x=>x.blk++)}}
+    if(p.shot&&!isFT&&!/Heave/.test(ty)){const ft=p.team&&T[p.team]?p.team:teamOf(a);if(ft)lastFGA={team:ft,t:p.t,seq}}
     if(p.shot&&!p.sc){const m=isFT&&/(\d) of (\d)/.exec(ty);deadReb=!!(isFT&&(/Technical|Flagrant/.test(ty)&&!m||m&&+m[1]<+m[2]))}
     if(p.shot&&a&&B[a]&&!/Heave/.test(ty)){const t=teamOf(a);
       if(isFT&&/ 1 of /.test(ty)&&inF)TT(t).forEach(x=>{x.ftTrips++;if(/1 of 1/.test(ty)&&lastMade&&lastMade.id===a&&lastMade.t===p.t)x.and1++});
