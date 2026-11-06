@@ -1555,6 +1555,7 @@ function vTeam(v,D,R){
   /* Nov 3 (Luka): each count and its rate share one row: the rate on top (what the ranks and the better side use), the count under it */
   {const sh=(x,y)=>y>0?x/y:0,R2=(lab,fa,fb,ca,cb,u,hib=true)=>{row(lab,fa,fb,fp1,fp1,hib);sub(n1(ca)+' '+u,n1(cb)+' '+u)};const rb=a.oreb+a.dreb+b.oreb+b.dreb;if(S.season)pbpLoad();const pr=pbRbOK()?pbRb('CLE'):null;
     if(pr){R2('REB%',pr.reb,1-pr.reb,(pr.ao+pr.ad)/pr.g,(pr.bo+pr.bd)/pr.g,'reb');R2('OREB%',pr.oreb,1-pr.dreb,pr.ao/pr.g,pr.bo/pr.g,'oreb');R2('DREB%',pr.dreb,1-pr.oreb,pr.ad/pr.g,pr.bd/pr.g,'dreb')}
+    else if((a.forb||0)+(a.fdrb||0)+(b.forb||0)+(b.fdrb||0)>0){const fr=a.forb+a.fdrb+b.forb+b.fdrb;R2('REB%',sh(a.forb+a.fdrb,fr),sh(b.forb+b.fdrb,fr),a.forb+a.fdrb,b.forb+b.fdrb,'reb');R2('OREB%',sh(a.forb,a.forb+b.fdrb),sh(b.forb,b.forb+a.fdrb),a.forb,b.forb,'oreb');R2('DREB%',sh(a.fdrb,a.fdrb+b.forb),sh(b.fdrb,b.fdrb+a.forb),a.fdrb,b.fdrb,'dreb')}
     else{R2('REB%',sh(a.oreb+a.dreb,rb),sh(b.oreb+b.dreb,rb),a.oreb+a.dreb,b.oreb+b.dreb,'reb');R2('OREB%',sh(a.oreb,a.oreb+b.dreb),sh(b.oreb,b.oreb+a.dreb),a.oreb,b.oreb,'oreb');R2('DREB%',sh(a.dreb,a.dreb+b.oreb),sh(b.dreb,b.dreb+a.oreb),a.dreb,b.dreb,'dreb')}
     R2('AST%',sh(a.ast,a.fgm),sh(b.ast,b.fgm),a.ast,b.ast,'ast');
     R2('TOV%',sh(a.to,pa),sh(b.to,pb),a.to,b.to,'tov',false);
@@ -3327,7 +3328,7 @@ function vFF(v,D,R){
     box.appendChild(el('p','note',full));g.appendChild(box)});
   c.appendChild(g);
   /* Nov 5 (Luka): no season averages on the game four factors */if(false)seasonTotals().then(X=>{if(!X)return;g.querySelectorAll('.ffc').forEach((bx,i)=>{const k=FF[i][0];if(X[k]==null||bx.querySelector('.ffs'))return;bx.querySelector('.n').insertAdjacentHTML('beforeend',' <small class="ffs">Cavs season '+X[k].toFixed(1)+'%</small>')})}).catch(()=>{});
-  c.appendChild(el('p','note','TOV% = turnovers ÷ (FGA + 0.44 × FTA + turnovers). '+(prF?'Offensive rebound rate = the share of missed shots the offense got back, team rebounds included and free throws left out (pbpstats, the Cleaning the Glass way).':'Offensive rebound rate uses player rebounds, the NBA.com way.')+' Use the quarter buttons above to compare any stretch.'+(LF?' Small numbers = NBA rank among 30 teams (for OPP, 1st = the toughest on opponents).':'')));
+  c.appendChild(el('p','note','TOV% = turnovers ÷ (FGA + 0.44 × FTA + turnovers). '+(prF?'Offensive rebound rate = the share of missed shots the offense got back, team rebounds included and free throws left out (pbpstats, the Cleaning the Glass way).':'Offensive rebound rate = the share of missed shots the offense got back, team rebounds included and free throws left out (the NBA.com advanced way).')+' Use the quarter buttons above to compare any stretch.'+(LF?' Small numbers = NBA rank among 30 teams (for OPP, 1st = the toughest on opponents).':'')));
   v.appendChild(c);if(S.season)wfCard(v,D);
 }
 

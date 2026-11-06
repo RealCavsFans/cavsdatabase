@@ -49,7 +49,7 @@ function prep(d){d=unpackSlim(d);
 }
 
 /* ---------- derive: one pass over the revealed plays ---------- */
-const zT=()=>({pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,oreb:0,dreb:0,toreb:0,tdreb:0,ast:0,stl:0,blk:0,to:0,pf:0,paint:0,second:0,offto:0,sec:0,stPts:0,bnPts:0,stSec:0,bnSec:0,and1:0,ftTrips:0,z:ZN.map(()=>[0,0])});
+const zT=()=>({pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,oreb:0,dreb:0,toreb:0,tdreb:0,forb:0,fdrb:0,ast:0,stl:0,blk:0,to:0,pf:0,paint:0,second:0,offto:0,sec:0,stPts:0,bnPts:0,stSec:0,bnSec:0,and1:0,ftTrips:0,z:ZN.map(()=>[0,0])});
 const zP=()=>({min:0,pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,oreb:0,dreb:0,ast:0,stl:0,blk:0,to:0,pf:0,pm:0,played:false,on:false});
 /* np = counted possessions (each ends when the other team gets the ball or the period ends); poss() uses it when present, the estimate formula otherwise */
 const zS=()=>({fga:0,oreb:0,to:0,fta:0,fgm:0,tpa:0,tpm:0,ftm:0,ast:0,dreb:0,np:0});const zL=ids=>({ids,sec:0,pf:0,pa:0,o:zS(),d:zS()});
@@ -95,6 +95,7 @@ function deriveCore(D,plays,F){
   const addTime=t1=>{const dt=t1-last;if(dt>0){const inF=inFx(curPer);if(inF&&seg)seg.sec+=dt;tid.forEach(t=>{const q=tq(curPer,t);q.sec+=dt;on[t].forEach(id=>{if(D.P[id].starter)q.stSec+=dt;else q.bnSec+=dt});if(inF){T[t].sec+=dt;on[t].forEach(id=>{B[id].min+=dt;if(D.P[id].starter)T[t].stSec+=dt;else T[t].bnSec+=dt});lu(t,on[t],o=>o.sec+=dt)}})}last=Math.max(last,t1)};
   const leave=(id,t1)=>{if(enter[id]!=null){(stints[id]=stints[id]||[]).push([enter[id][0],t1,pmAll[id]-enter[id][1]]);delete enter[id]}};
   const join=(id,t1)=>{enter[id]=[t1,pmAll[id]]};
+  /* Nov 6 (Luka): rebounds of missed field goals, team rebounds included (NBA.com advanced / pbpstats / Cleaning the Glass); rebounds after free throws and heaves left out */let skipReb=false;
   plays.forEach(p=>{curON=null;
     if(p.per!==curPer){if(curPer){addTime(pstart(curPer)+plen(curPer));endPoss(hold,inFx(curPer));hold=null;tid.forEach(t=>on[t].forEach(id=>leave(id,pstart(curPer)+plen(curPer))))}
       curPer=p.per;last=pstart(p.per);tid.forEach(t=>{on[t]=new Set(startFive[p.per][t]||[]);on[t].forEach(id=>{B[id].played=true;join(id,last)});src[t]='';ps[t]={t:last,how:'init',pts:0,first:null,inF:false,on:'',od:''}});newSeg()}
@@ -117,6 +118,7 @@ function deriveCore(D,plays,F){
     const ftSnap=isFT&&!/Technical/.test(ty)&&snap&&snap.t===p.t&&snap.per===p.per;const ON=ftSnap?snap.on:on;curON=ftSnap?snap.on:null;
     /* a blocked heave isn't a shot attempt, but the NBA still credits the block (Nov 3) */
     if(p.shot&&/Heave/.test(ty)&&!p.sc&&/blocks/.test(p.text||'')){const hb=(p.ids||[]).length>1?b:a;if(hb&&B[hb]){if(inF)(B[hb].blk++,pbA(hb,'blk',1));TT(teamOf(hb)).forEach(x=>x.blk++)}}
+    if(p.shot&&!p.sc)skipReb=isFT||/Heave/.test(ty);
     if(p.shot&&a&&B[a]&&!/Heave/.test(ty)){const t=teamOf(a);
       if(isFT&&/ 1 of /.test(ty)&&inF)TT(t).forEach(x=>{x.ftTrips++;if(/1 of 1/.test(ty)&&lastMade&&lastMade.id===a&&lastMade.t===p.t)x.and1++});
       if(!isFT&&p.sc){lastMade={id:a,t:p.t};const g=p.t-(lastFG[t]!=null?lastFG[t]:pstart(1));if(g>=180)dr.push({t,kind:'fg',from:lastFG[t]!=null?lastFG[t]:0,to:p.t});lastFG[t]=p.t}
@@ -134,7 +136,7 @@ function deriveCore(D,plays,F){
       if(inF){lu(t,ON[t],x=>x.pf+=p.val);lu(o,ON[o],x=>x.pa+=p.val)}
       if(!isFT||/(\d) of \1/.test(ty)){src[o]='';newPoss(o,p.t,'made',inF)}}}
     if(/Rebound/.test(ty)){const off=/Offensive/.test(ty);const t=a&&B[a]?teamOf(a):p.team;
-      if(t&&T[t]){if(a&&B[a]){if(inF)(B[a][off?'oreb':'dreb']++,pbA(a,off?'oreb':'dreb',1));TT(t).forEach(x=>x[off?'oreb':'dreb']++)}else TT(t).forEach(x=>x[off?'toreb':'tdreb']++);
+      if(t&&T[t]){if(a&&B[a]){if(inF)(B[a][off?'oreb':'dreb']++,pbA(a,off?'oreb':'dreb',1));TT(t).forEach(x=>x[off?'oreb':'dreb']++)}else TT(t).forEach(x=>x[off?'toreb':'tdreb']++);if(!skipReb&&!(!(a&&B[a])&&p.t>=pstart(p.per)+plen(p.per)))TT(t).forEach(x=>x[off?'forb':'fdrb']++);/* a team rebound at the buzzer isn't a real chance */
         if(off){offStat(t,'oreb');src[t]=(src[t].includes('to')?'to':'')+'2nd';newPoss(t,p.t,'oreb',inF)}else{luStat(t,'dreb');src[t]='';newPoss(t,p.t,'dreb',inF)}}}
     if(/Turnover|^Traveling|Double Dribble|Discontinued? Dribble|Offensive Goaltending|Palming|Backcourt|3-Second Violation$|Inbound/.test(ty)&&!/^Kicked Ball|Defensive/.test(ty)){
       const t=p.team||teamOf(a);if(T[t]){TT(t).forEach(x=>x.to++);if(inF&&a&&B[a]&&teamOf(a)===t)(B[a].to++,pbA(a,'to',1));offStat(t,'to');src[opp(t)]='to';newPoss(opp(t),p.t,b&&/steals/.test(p.text)?'stl':'to',inF)}
@@ -159,9 +161,9 @@ function deriveCore(D,plays,F){
   return {PL:PLx,segs,curStint,dr,pmAll,pc,tf,to,ch,pfAll,wpS,lineAt,asts,plays,B,T,TQ,L,on,margin,runs,shots,stints,hs:lp?lp.hs:0,as:lp?lp.as:0,lp,lead,lc,ties,wp:lp&&D.wp[lp.id]!=null?D.wp[lp.id]:null,maxPer:lp?Math.max(4,lp.per):4};
 }
 
-/* NBA.com definitions: TOV% = TOV / (FGA + 0.44 FTA + TOV); OREB% = player offensive rebounds / (them + opponent player defensive rebounds) (Oct 28) */
+/* NBA.com definitions: TOV% = TOV / (FGA + 0.44 FTA + TOV); OREB% = offensive rebounds of missed field goals, team rebounds included / all rebounds of those misses (Nov 6; falls back to player rebounds when the play-by-play counts aren't there) */
 function factors(a,b){const pa=poss({fga:a.fga,oreb:a.oreb,to:a.to,fta:a.fta,np:a.np});
-  return {efg:a.fga?(a.fgm+0.5*a.tpm)/a.fga:null,tov:(a.fga+0.44*a.fta+a.to)?a.to/(a.fga+0.44*a.fta+a.to):null,orb:(a.oreb+b.dreb)?a.oreb/(a.oreb+b.dreb):null,ftr:a.fga?a.ftm/a.fga:null}}
+  return {efg:a.fga?(a.fgm+0.5*a.tpm)/a.fga:null,tov:(a.fga+0.44*a.fta+a.to)?a.to/(a.fga+0.44*a.fta+a.to):null,orb:(a.forb||0)+(b.fdrb||0)>0?a.forb/(a.forb+b.fdrb):(a.oreb+b.dreb)?a.oreb/(a.oreb+b.dreb):null,ftr:a.fga?a.ftm/a.fga:null}}
 const FF=[['efg','Shooting','eFG%',true],['tov','Ball security','TOV%',false],['orb','Second chances','Offensive rebound rate',true],['ftr','Getting to the line','Free throws made per FGA',true]];
 const CLE='5',C3=Math.sqrt(23.75**2-22**2);
 
