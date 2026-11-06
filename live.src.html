@@ -1550,8 +1550,8 @@ function vTeam(v,D,R){
   row('Points in the paint',a.paint,b.paint);row('Second-chance points',a.second,b.second);
   const live=!S.replay&&S.per==='all'&&D.esp[D.focus.id]&&D.esp[D.other.id];
   /* ESPN's turnoverPoints is what a team gave up off its own turnovers, so each side reads the other's number */
-  const pa2=live&&D.esp[D.other.id].pot!=null?D.esp[D.other.id].pot:a.offto,pb2=live&&D.esp[D.focus.id].pot!=null?D.esp[D.focus.id].pot:b.offto;row('Points off turnovers',pa2,pb2);
-  if(live&&D.esp[D.focus.id].fb!=null&&D.esp[D.other.id].fb!=null)row('Fast-break points',D.esp[D.focus.id].fb,D.esp[D.other.id].fb);row('Bench points',a.bnPts,b.bnPts);row('Starters points',a.stPts,b.stPts);
+  /* Nov 6: the NBA's own numbers when the game has them (a.fb set = official), then ESPN's, then our count */const off=a.fb!=null&&b.fb!=null;const pa2=!off&&live&&D.esp[D.other.id].pot!=null?D.esp[D.other.id].pot:a.offto,pb2=!off&&live&&D.esp[D.focus.id].pot!=null?D.esp[D.focus.id].pot:b.offto;row('Points off turnovers',pa2,pb2);
+  if(off)row('Fast-break points',a.fb,b.fb);else if(live&&D.esp[D.focus.id].fb!=null&&D.esp[D.other.id].fb!=null)row('Fast-break points',D.esp[D.focus.id].fb,D.esp[D.other.id].fb);row('Bench points',a.bnPts,b.bnPts);row('Starters points',a.stPts,b.stPts);
   grp('Possessions');
   /* Nov 1: each rate sits right under its count (shares of the available chances; TOV % = turnovers per possession, fewer is better) */
   /* Nov 3 (Luka): each count and its rate share one row: the rate on top (what the ranks and the better side use), the count under it */

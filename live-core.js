@@ -160,6 +160,7 @@ function deriveCore(D,plays,F){
   if(run&&run.pts>=8)runs.push(Object.assign(run,{open:true}));
   /* counted possessions (each team's possessions in the stretch, not counting offensive-rebound continuations) */
   tid.forEach(t=>{T[t].np=PL.filter(q=>q.team===t&&q.how!=='oreb').length});
+  /* Nov 6 (Luka): for a whole game, the NBA's own paint, second-chance, off-turnover and fast-break points (our play-by-play count can be 1-3 off) */if(F==='all'&&D.nbx&&D.nbx.t)tid.forEach(t=>{const o=D.nbx.t[t];if(o&&o.pip!=null&&T[t]){T[t].paint=o.pip;T[t].second=o.p2;T[t].offto=o.pot;T[t].fb=o.fb}});
   const PLx=PL.filter(q=>q.first!=null||q.pts>0);
   return {PL:PLx,segs,curStint,dr,pmAll,pc,tf,to,ch,pfAll,wpS,lineAt,asts,plays,B,T,TQ,L,on,margin,runs,shots,stints,hs:lp?lp.hs:0,as:lp?lp.as:0,lp,lead,lc,ties,wp:lp&&D.wp[lp.id]!=null?D.wp[lp.id]:null,maxPer:lp?Math.max(4,lp.per):4};
 }
@@ -294,7 +295,7 @@ function fromNBA(box,pbp,extra){extra=extra||{};const g=box.game,acts=((pbp&&pbp
      fm foul matchups [fouler, drawn by, count]   ref the officials   st shot tags per shooter {tag: [made, att]} */
   const nbx={p:{},t:{},fm:[],ref:(g.officials||[]).map(o=>o.name),st:{}};
   [H,A].forEach(t=>{const T=tid(t),q=t.statistics||{};const ch=acts.filter(a=>a.actionType==='timeout'&&a.subType==='challenge'&&a.teamId===t.teamId).length;
-    nbx.t[T]={lc:q.leadChanges,tt:q.timesTied,bl:q.biggestLead,br:q.biggestScoringRun,tl:nbaSec(q.timeLeading),bp:q.benchPoints,ch,to:t.timeoutsRemaining,bonus:!!t.inBonus};
+    nbx.t[T]={lc:q.leadChanges,tt:q.timesTied,bl:q.biggestLead,br:q.biggestScoringRun,tl:nbaSec(q.timeLeading),bp:q.benchPoints,pip:q.pointsInThePaint,p2:q.pointsSecondChance,pot:q.pointsFromTurnovers,fb:q.pointsFastBreak,ch,to:t.timeoutsRemaining,bonus:!!t.inBonus};
     (t.players||[]).forEach(p=>{const s=p.statistics||{};nbx.p[p.personId]=[s.foulsDrawn,s.foulsTechnical,s.foulsOffensive,s.blocksReceived,s.pointsFastBreak,s.pointsSecondChance,s.pointsInThePaint,s.pointsFromTurnovers,0].map(v=>v||0)})});
   {const fm={};acts.forEach((a,i)=>{if(a.actionType==='foul'&&a.personId&&a.foulDrawnPersonId){const k=a.personId+'|'+a.foulDrawnPersonId;fm[k]=(fm[k]||0)+1}
      /* and-one: a made shot followed (same clock) by a 1-of-1 free throw by the same player */
