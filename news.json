@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "cleveland.com",
+   "title": "Cavs vs. 76ers: preview, odds, injury report, TV",
+   "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQdzI1OXg3NlRabW02YUtjRlRFRUlUT3VtcFhHcTg1NUMzdmVhbVZxUm1fZDFNSk9qRzhrMklvbmx1NkIwbFpHeWhaSjNTenF4SlI4S0I2alR6b2RLSVZpUnFvSXBwbkZ1Q1FmNTBLN3NDdmxZVWY0dXZsTTF5X2VPZ3NPZ2dJQmpfUnozbUFXV2s?oc=5",
+   "date": "2026-11-06T10:00:00.000Z"
+  },
+  {
    "src": "Hoops Rumors",
    "title": "Norchad Omier Signs Two-Way Contract With Cavaliers",
    "link": "https://www.hoopsrumors.com/2026/11/timberwolves-to-sign-norchad-omier-to-two-way-contract.html",
@@ -265,12 +271,6 @@
    "date": "2026-11-02T09:57:00.000Z"
   },
   {
-   "src": "cleveland.com",
-   "title": "Cavs finally discover big-man offensive blueprint in blowout vs. Bucks",
-   "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNZjlMaVIzMmpQU00xYVBxWU5yZTJZZmQySTdLU1R5ejEyZF9BTDFYN2tiNzZFcDl5MUoxUVh4RVRUM25fUjRQYml3M1oxTkdHUXp4VGR4MmY3MEFOUUw4S0kwS2ExVDhTTmNCRUJUOG1XcmdCNndnbzhKZUpZMmd4N2llMjItV29PS2h1eXR4QXVxMDFWd3VqM2VVV2JKUF9TR0Y4Y0kzSVdUaEZCNFUzN2NwSQ?oc=5",
-   "date": "2026-11-01T14:46:00.000Z"
-  },
-  {
    "src": "Cavaliers on SI",
    "title": "The Big Men Proved to Be Duo Cleveland Needed Against Milwaukee",
    "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNSDJnR1RRVTVkYi1fdS02ZE9MODQ3MEMxMThod2RrdERHY0VMOWNQcGo3dzFwaDNKbnhOZ1ctVFNMbUxXYnFOVjVuWDhsX3JrZzQ1R0x6Mm5FMGhYdEQ0OF9hd2JkVVVsWHFJakdKUGg3ajExM0E4QmtwQU9abmUtSVVBRlh3OVF3N1liUFpMajNabGYzNTFjazhXMzBsaXh5NlNBbms3Rm8xVk1YTmQyclRqZGY?oc=5",
@@ -353,6 +353,13 @@
   }
  ],
  "videos": [
+  {
+   "src": "Locked On Cavs",
+   "title": "CAVS POSTCAST: The Cleveland Cavaliers Begin NBA Cup Play vs LeBron James and the Philadelphia 76ers",
+   "link": "https://www.youtube.com/watch?v=bly6DfxpSKw",
+   "date": "2026-11-06T14:05:20.000Z",
+   "id": "bly6DfxpSKw"
+  },
   {
    "src": "Locked On Cavs",
    "title": "INJURY UPDATES: Cleveland Cavaliers Get GOOD NEWS Ahead of Showdown | Can they UNLOCK Peyton Watson?",
@@ -583,13 +590,6 @@
    "link": "https://www.youtube.com/watch?v=Sv9gAqxefZo",
    "date": "2026-11-01T16:37:22.000Z",
    "id": "Sv9gAqxefZo"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "REACTION: Cleveland Cavaliers DEMOLISH Milwaukee Bucks! | Evan Mobley and Jarrett Allen DOMINATE!",
-   "link": "https://www.youtube.com/watch?v=qq1kOWmjQxU",
-   "date": "2026-11-01T04:15:06.000Z",
-   "id": "qq1kOWmjQxU"
   },
   {
    "src": "The Chase Down Podcast",
