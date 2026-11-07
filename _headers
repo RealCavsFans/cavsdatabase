@@ -17,6 +17,10 @@
   Cache-Control: public, max-age=604800
 /nl/*
   Cache-Control: public, max-age=86400
+# Nov 7: the latest issue changes every game morning, so browsers check for a new one
+/nl/last-issue.html
+  ! Cache-Control
+  Cache-Control: public, max-age=300
 /sw.js
   Cache-Control: no-cache
 /a/*
