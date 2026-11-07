@@ -404,7 +404,7 @@ small.rk,span.rk{text-transform:none!important}
 .tsm-ch,.tsm-r{display:grid;grid-template-columns:1fr auto 2.8rem;gap:12px;align-items:baseline}
 .tsm-ch{font:700 0.65rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:6px}.tsm-ch span{text-align:right}
 .tsm-r{padding:8px 0;border-bottom:1px solid var(--line2);font-size:0.875rem}
-.tsm-r .v{text-align:right;font:600 0.9rem var(--mono)}.tsm-r .df{font:500 0.6875rem var(--mono);margin-left:6px}.tsm-r .df.u{color:var(--pos)}.tsm-r .df.d{color:var(--neg)}.tsm-r .df.n{color:var(--muted)}
+.tsm-r .v{text-align:right;font:600 0.9rem var(--mono)}.tsm-r .df{font:500 0.6875rem var(--mono);margin-left:6px}.tsm-r .v{display:grid;grid-template-columns:auto 3.2rem;align-items:baseline}.tsm-r .v .vn{text-align:right}.tsm-r .v .df{text-align:left}.tsm-r .df.u{color:var(--pos)}.tsm-r .df.d{color:var(--neg)}.tsm-r .df.n{color:var(--muted)}
 .tsm-r .rkw{text-align:right}.tsm-r .rkw small{display:inline;margin:0;font:500 0.72rem var(--mono);color:var(--muted)}.tsm-r .rkw small.g{color:var(--pos)}.tsm-r .rkw small.b{color:var(--neg)}
 .tsg{padding-top:12px}
 .tsgh{display:flex;justify-content:space-between;font:800 0.75rem var(--cond);letter-spacing:.1em;text-transform:uppercase;border-top:2px solid var(--fg);padding-top:6px}
@@ -714,7 +714,7 @@ details.stx{margin-top:10px;border-top:1px solid var(--line2)}details.stx>summar
 /* Nov 6 (Luka): the chart is only for the camera image; the page keeps its tables */.card>.tkc{display:none!important}
 /* in the light/wine camera image, always the light colors */
 .tps .tkc{--tc:#860038;--to:#9aa1a9;--tt:#e6e8eb;--tf:#101419;--tm:#5d646c;--tr:#860038;margin:4px 0 8px}
-</style>
+.clv-t{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.clv-t>div{background:var(--sub);padding:9px 11px 8px;display:flex;flex-direction:column;gap:3px;min-width:0}.clv-t>div.sc{box-shadow:inset 3px 0 0 var(--cf,#860038)}.clv-k small.rk{display:inline!important;margin:0!important;font:inherit;letter-spacing:inherit}.clv-t .k{font:700 .625rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.clv-t b{font:700 1.375rem/1.1 var(--mono);color:var(--fg)}.clv-t b .pmp{color:var(--pmp)}.clv-t b .pmn{color:var(--pmn)}.clv-t small{font:500 .6875rem var(--mono);color:var(--muted)}.clv-t small small.rk{margin:0}.clv-sb2{display:flex;gap:2px;height:6px;margin-top:6px}.clv-sb2 i.c{background:var(--cf,#860038)}.clv-sb2 i.o{background:#8a929c}@media(max-width:640px){.clv-t{grid-template-columns:repeat(2,minmax(0,1fr))}.clv-t b{font-size:1.125rem}}</style>
 <script>/* Nov 4: team logos drawn at the same visual size. Each mark is scaled by how much of its square image the artwork fills, relative to the Cavs C (made from img/tl by alpha bounding box). Applies to every logo from /img/tl or /img/tl5, also ones added later. */
 (function(){const SC=window.LOGO_SC={"atl":0.92,"bkn":0.92,"bos":0.92,"cha":0.92,"dal":0.92,"den":0.92,"det":0.92,"gs":0.92,"hou":1.07,"ind":0.96,"lac":0.92,"lal":1.18,"mem":0.95,"mia":0.95,"mil":1.06,"min":0.92,"no":1.25,"ny":1.04,"okc":1.23,"orl":1.1,"por":0.97,"sa":1.03,"tor":0.92,"utah":1.12,"wsh":0.92};const fit=im=>{const m=/\/img\/tl5?\/([a-z]+)\.png/.exec(im.getAttribute("src")||"");if(!m||im.dataset.lsc)return;im.dataset.lsc=1;const v=SC[m[1]];if(v)im.style.scale=String(v)};const all=r=>{if(r.tagName==="IMG")fit(r);else if(r.querySelectorAll)r.querySelectorAll("img").forEach(fit)};const go=()=>{all(document.body);new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(all))).observe(document.body,{childList:true,subtree:true})};if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();
 </script>
@@ -1392,7 +1392,7 @@ function teamStatsBody(D,ROWS){
       const h=el('div','tsm-gh');h.append(el('span',null,g),el('span','w','Better in '+gw+' of '+(gw+gl)));m.appendChild(h);
       const ch=el('div','tsm-ch');ch.append(el('span'),el('span',null,(side?'Opp':AB(F))+' · vs '+(side?AB(F):'opp')),el('span',null,'NBA'));m.appendChild(ch);
       rs.forEach(r=>{const a=fmt(r,side),o=fmt(r,1-side);const va=parseFloat(a),vo=parseFloat(o);const d=va-vo,k=Math.max(dec(a),dec(o),/%/.test(a)?0:1);
-        const cls=r.hib===null||r.better<0?'n':r.better===0?'u':'d';const row=el('div','tsm-r');const v=el('span','v',a);if(isFinite(d)&&r.lab!=='Pace'&&r.lab!=='NET RTG')v.appendChild(el('span','df '+cls,(d>=0?'+':'−')+Math.abs(d).toFixed(k)));
+        const cls=r.hib===null||r.better<0?'n':r.better===0?'u':'d';const row=el('div','tsm-r');const v=el('span','v');v.appendChild(el('span','vn',a));/* Nov 7 (Luka): every row keeps the gap column, empty or not, so the numbers line up */v.appendChild(isFinite(d)&&r.lab!=='Pace'&&r.lab!=='NET RTG'?el('span','df '+cls,(d>=0?'+':'−')+Math.abs(d).toFixed(k)):el('span','df'));
         const rk=el('span','rkw');rk.innerHTML=rkEl(side?r.ry:r.rx);const lb=el('span','l',r.lab);if(r.sx!=null)lb.appendChild(el('small','l2',side?r.sy:r.sx));row.append(lb,v,rk);m.appendChild(row)})});
     m.appendChild(el('p','note','Small number = the gap to the other side: wine when it favors '+AB(F)+', gray otherwise. NBA rank in wine when top 10 for '+F.abbr+', gray when bottom 10.'));
     w.appendChild(m)}
@@ -3131,11 +3131,15 @@ function seasonExtras(v,D,R){const J=S.sfull;const filt=!!((S.sf&&((S.sf.games&&
       /* clutch at a glance: game-by-game results, the clutch score as a split bar, and points scored vs allowed per 100 (Oct 28) */
       const cv=el('div','clv');
       {const r=el('div','clv-r');r.appendChild(el('div','clv-k',w+'–'+l+' in clutch games'));const pp=el('div','clv-g');QJ.cg.forEach(([i,pf,pa])=>{const G=J.games[i];if(!G)return;const W=G.cle>G.os;const x=el('div',W?'w':'l');x.append(el('b',null,W?'W':'L'),el('span',null,(G.ha==='home'?'vs ':'@ ')+G.opp),el('small',null,(pf!=null?pf+'–'+pa:'')));pp.appendChild(x)});r.appendChild(pp);cv.appendChild(r)}
-      {const r=el('div','clv-r');r.appendChild(el('div','clv-k','Clutch score · '+fmtMin(q.sec)+' played'));const tot=(q.pf+q.pa)||1;const sb=el('div','clv-sb');const a1=el('span','c',D.focus.abbr+' '+q.pf);a1.style.flex=String(q.pf/tot);const a2=el('span','o',q.pa+' OPP');a2.style.flex=String(q.pa/tot);sb.append(a1,a2);r.appendChild(sb);cv.appendChild(r)}
-      if(o!=null&&d!=null){const r=el('div','clv-r');const nt=Math.round(o-d);const k=el('div','clv-k');k.append('Per 100 possessions ',el('em',nt>0?'up':nt<0?'dn':'',(nt>0?'+':'')+nt+' net'));r.appendChild(k);const pr=el('div','clv-p');[['Scored',o],['Allowed',d]].forEach(([l2,v])=>{const x=el('div');x.append(el('b',null,n0(v)),el('span',null,l2));pr.appendChild(x)});r.appendChild(pr);cv.appendChild(r)}
+      /* Nov 7 (Luka): score and per-100 numbers as one row of tiles, each with its NBA rank under it, and a thin wine/gray split bar */
+      {const RK=(f,d2)=>{const rk=qRank(f,d2);return rk?rkEl(rk):''};const nt=o!=null&&d!=null?Math.round(o-d):null;const tl=el('div','clv-t');
+        const tile=(k,v,sub,cls)=>{const x=el('div',cls||'');x.innerHTML=`<span class="k">${esc(k)}</span><b>${v}</b><small>${sub}</small>`;tl.appendChild(x)};
+        tile('Clutch score',q.pf+'–'+q.pa,fmtMin(q.sec)+' played','sc');
+        if(o!=null)tile('Scored / 100',n0(o),RK(a=>lxOff(a.c),1)||'&nbsp;');if(d!=null)tile('Allowed / 100',n0(d),RK(a=>lxDef(a.c),-1)||'&nbsp;');
+        if(nt!=null)tile('Net / 100',`<span class="${nt>0?'pmp':nt<0?'pmn':''}">${nt>0?'+':nt<0?'−':''}${Math.abs(nt)}</span>`,RK(a=>lxNet(a.c),1)||'&nbsp;');
+        const r=el('div','clv-r');r.appendChild(tl);const tot=(q.pf+q.pa)||1;const sb=el('div','clv-sb2');const a1=el('i','c');a1.style.flex=String(q.pf/tot);const a2=el('i','o');a2.style.flex=String(q.pa/tot);sb.append(a1,a2);r.appendChild(sb);cv.appendChild(r);
+        const gk=qRank(a=>a.cg,0);if(gk){const k0=cv.querySelector('.clv-k');if(k0)k0.insertAdjacentHTML('beforeend',' · '+rkEl(gk)+' most')}}
       c.appendChild(cv);
-      {const R3=[['NET RTG',a=>lxNet(a.c),1],['ORTG',a=>lxOff(a.c),1],['DRTG',a=>lxDef(a.c),-1],['Clutch games',a=>a.cg,0]].map(([l,f,d])=>[l,qRank(f,d)]).filter(x=>x[1]);
-        if(R3.length){const r=el('div','clv-rk');r.appendChild(el('span','k','NBA rank'));R3.forEach(([l,rk])=>{const d2=el('span');d2.innerHTML=`${esc(l)} ${rkEl(rk)}`;r.appendChild(d2)});c.appendChild(r)}}
       const P=Object.entries(QF0?{}:J.pq||{}).filter(([,x])=>x.clutch&&x.clutch[0]>0).map(([id,x])=>({id,s:x.clutch})).sort((a,b)=>b.s[1]-a.s[1]||b.s[0]-a.s[0]).slice(0,6);
       if(P.length){const t=el('table','zt');t.style.marginTop='12px';t.classList.add('clv-pt');t.innerHTML='<tr><th>Player</th><th>Min</th><th>Pts</th><th>Ast</th><th>TO</th><th>FG</th><th>3PT</th><th>+/-</th></tr>';P.forEach(({id,s:x})=>{const tr=el('tr');tr.append(el('td',null,(J.P[id]||{}).short||id),el('td',null,fmtMin(x[0])),el('td',null,String(x[1])),el('td',null,x[8]==null?'–':String(x[8])),el('td',null,x[9]==null?'–':String(x[9])),el('td',null,x[2]+'-'+x[3]),el('td',null,x[4]+'-'+x[5]),el('td',pmCls(x[6]),sgn(x[6])));t.appendChild(tr)});const ww=el('div','tw');ww.appendChild(t);c.appendChild(ww)}}
     v.appendChild(c)}
