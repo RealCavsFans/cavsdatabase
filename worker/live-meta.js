@@ -60,9 +60,9 @@ async function liveNow(request, env, page, g) {
   const u = new URL(request.url); let gi = null; try { gi = await currentGame(g); } catch { gi = null; }
   if (!gi || !gi.state) return page;
   const { title, desc } = liveTags(gi);
-  /* picture: the game's own card (final) or its preview card (before and during) when the site has made one */
+  /* picture: the game's own card (final), its live-now card (during, Nov 7) or its preview card (before) when the site has made one */
   const et = new Date(new Date(gi.date).getTime() - 4 * 3600e3).toISOString().slice(0, 10), ab = (SITE_AB[gi.ab] || gi.ab).toLowerCase();
-  let img = null; for (const pth of gi.state === 'post' ? ['/og/g/' + et + '-' + ab + '.jpg', '/og/gp/' + et + '-' + ab + '.jpg'] : ['/og/gp/' + et + '-' + ab + '.jpg']) { const r = await env.ASSETS.fetch(new Request(u.origin + pth, { method: 'HEAD' })); if (r.ok) { img = pth; break; } }
+  let img = null; for (const pth of gi.state === 'post' ? ['/og/g/' + et + '-' + ab + '.jpg', '/og/gp/' + et + '-' + ab + '.jpg'] : gi.state === 'in' ? ['/og/gl/' + et + '-' + ab + '.jpg', '/og/gp/' + et + '-' + ab + '.jpg'] : ['/og/gp/' + et + '-' + ab + '.jpg']) { const r = await env.ASSETS.fetch(new Request(u.origin + pth, { method: 'HEAD' })); if (r.ok) { img = pth; break; } }
   const set = (attr, val) => ({ element(e) { e.setAttribute(attr, val); } });
   let rw = new HTMLRewriter().on('title', { element(e) { e.setInnerContent(title); } }).on('meta[property="og:title"]', set('content', title))
     .on('meta[name="twitter:title"]', set('content', title)).on('meta[name="description"]', set('content', desc)).on('meta[property="og:description"]', set('content', desc));

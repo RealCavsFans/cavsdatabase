@@ -58,7 +58,7 @@ body:after{content:'';position:absolute;left:0;right:0;bottom:0;height:10px;back
 .big{font:800 112px/0.92 'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:.5px}
 .chip{display:inline-block;background:rgba(255,255,255,.14);padding:7px 15px;font:700 21px Archivo;margin-right:8px}.chip.g{background:#F2B231;color:#4a0020}
 .n3{display:flex;gap:56px}.n3 b{display:block;font:800 64px/1 'Geist Mono',monospace}.n3 small{font:700 18px Archivo;letter-spacing:2px;color:#F4D6DD;text-transform:uppercase}`;
-const page = (css, body, path) => `<!doctype html><html><head><meta charset="utf-8"><style>${BASE}${css}</style></head><body>${body}<div class="ft"><span>cavsdatabase.com/${path}</span><span class="wm">${MARK}cavs<em>_db</em></span></div></body></html>`;
+const page = (css, body, path) => `<!doctype html><html><head><meta charset="utf-8"><style>${BASE}${css}</style></head><body>${body}<div class="ft"><span>cavsdatabase.com/${path}</span><span class="wm">${MARK}<span>cavs<em>_db</em></span></span></div></body></html>`;
 
 const LOGO_SC = {"atl": 0.92, "bkn": 0.92, "bos": 0.92, "cha": 0.92, "dal": 0.92, "den": 0.92, "det": 0.92, "gs": 0.92, "hou": 1.07, "ind": 0.96, "lac": 0.92, "lal": 1.18, "mem": 0.95, "mia": 0.95, "mil": 1.06, "min": 0.92, "no": 1.25, "ny": 1.04, "okc": 1.23, "orl": 1.1, "por": 0.97, "sa": 1.03, "tor": 0.92, "utah": 1.12, "wsh": 0.92};   // Nov 4: same per-logo scale as the site, so marks read the same size
 const lsc = f => LOGO_SC[f] ? ` style="scale:${LOGO_SC[f]}"` : '';
@@ -106,7 +106,7 @@ SCHEDULE.forEach((g, i) => {
   /* Oct 31: the next two games get a tale of the tape (ratings and NBA ranks) and who's out, so the link preview gives a reason to click.
      Later games keep the simple chips, so a finished game doesn't redraw every future card. */
   const nextIdx = SCHEDULE.findIndex((x, k) => !results[k] && !SCORES[x[0]] && x[0] >= todayET);
-  let rich = `<div class="row">${ser ? `<span class="chip g">${ser}</span>` : ''}<span class="chip">Tale of the tape</span><span class="chip">Injuries</span><span class="chip">How to watch</span></div>`;
+  let inj = '';let rich = `<div class="row">${ser ? `<span class="chip g">${ser}</span>` : ''}<span class="chip">Tale of the tape</span><span class="chip">Injuries</span><span class="chip">How to watch</span></div>`;
   const TT = TS || TSTATS_PREV, a = TT.CLE, b = TT[o];
   if (i <= nextIdx + 1 && a && b) {
     const all = Object.values(TT), rk = (v, f, hi) => 1 + all.filter(x => hi ? f(x) > v : f(x) < v).length;
@@ -126,7 +126,7 @@ SCHEDULE.forEach((g, i) => {
     const gl = L => { if (!L) return L; const g = L.filter(x => / \(G League\)$/.test(x)), h = L.filter(x => !/ \(G League\)$/.test(x)); const t = h.join(', ') + (g.length ? (h.length ? ' · ' : '') + g.length + ' in G League' : ''); return t ? [t] : []; };
     co = gl(co); oo = gl(oo);
     const long = (co.join(', ') + (oo || []).join(', ')).length > 62;
-    const inj = `<div class="inj${long ? ' sm' : ''}"><span><b>Out · CLE</b> ${co.length ? esc(co.join(', ')) : 'None'}</span>${oo ? `<span><b>Out · ${o}</b> ${oo.length ? esc(oo.join(', ')) : 'None'}</span>` : ''}</div>`;
+    inj = `<div class="inj${long ? ' sm' : ''}"><span><b>Out · CLE</b> ${co.length ? esc(co.join(', ')) : 'None'}</span>${oo ? `<span><b>Out · ${o}</b> ${oo.length ? esc(oo.join(', ')) : 'None'}</span>` : ''}</div>`;
     rich = `<style>.T .tm{font-size:0!important;line-height:0}.T .tm span{display:none}.T .tm img{width:140px;height:140px;object-fit:contain;display:block}.T .tm.r img{margin-left:auto}.T .tm{display:flex!important;align-items:center;gap:24px}.T .tm.r{flex-direction:row-reverse}.T .tm.r img{margin-left:0!important}.T .tm small{font:700 44px 'Geist Mono'!important;letter-spacing:0!important;color:#fff!important;line-height:1!important;margin-top:0!important}.T{top:72px!important;grid-template-columns:auto auto auto!important;justify-content:center;column-gap:72px}.when{top:222px!important}.tape{top:282px!important}.inj{top:448px!important}/* Nov 4: X lays the page title over the bottom of a link card, so the wordmark moves to the top right on these */.ft{top:30px;bottom:auto;justify-content:flex-end}.ft>span:first-child{display:none}</style><div class="tape"><div class="th">${TS ? '' : '2025–26 · '}NBA rank</div>${tape}</div>${inj}`;
   }
   cards.push([`og/gp/${d}-${o.toLowerCase()}.jpg`, page(`.T{position:absolute;left:64px;right:64px;top:80px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
@@ -141,6 +141,8 @@ SCHEDULE.forEach((g, i) => {
 <div class="when">${dl} <span>·</span> ${hm} PM ET <span>·</span> ${esc(net)}${CAVS_RADIO ? ` <span>·</span> ${esc(CAVS_RADIO.split(' · ')[0])}` : ''}</div>
 ${rich}`,
     'live')]);
+  /* Nov 7 (Luka): a "live now" version of the same card for link previews while the game is on (the worker switches to it at tip) */
+  if (inj) { const gp = cards[cards.length - 1]; cards.push([gp[0].replace('og/gp/', 'og/gl/'), gp[1].replace(kick, kick.replace('Game preview', 'Live now')).replace(inj, `<div class="inj"><span><b>Live</b> box score · shot chart · lineups · win probability</span><span class="sr">Follow along on cavs_db</span></div>`)]); }
 });
 
 /* cap */
@@ -190,14 +192,14 @@ const DRAWN = state._drawn || {}; const nowMs = Date.now();
 const far = f => { const m = f.match(/^og\/gp\/(\d{4}-\d\d-\d\d)-/); return m && Date.parse(m[1] + 'T12:00:00Z') - nowMs > 10 * 864e5; };
 /* a design change bumps LOOK so every card redraws once, far-off games included (Nov 2: /live footer) */
 const LOOK = 'live-footer-1', relook = state._look !== LOOK;
-const need = cards.filter(([f, h]) => (!process.env.OG_ONLY || new RegExp(process.env.OG_ONLY).test(f)) && (!state[f] || process.env.OG_ONLY || (relook && f.startsWith('og/gp/')) || (state[f] !== fp(h) && !(far(f) && DRAWN[f] && nowMs - DRAWN[f] < 7 * 864e5))));
+const need = cards.filter(([f, h]) => (!process.env.OG_ONLY || new RegExp(process.env.OG_ONLY).test(f)) && (!state[f] || process.env.OG_ONLY || (relook && /^og\/g[pl]\//.test(f)) || (state[f] !== fp(h) && !(far(f) && DRAWN[f] && nowMs - DRAWN[f] < 7 * 864e5))));
 if (!need.length) { console.log('og-live: nothing changed'); process.exit(0); }
 const { createRequire } = await import('node:module'); const require = createRequire(import.meta.url);
 const pw = (() => { for (const m of ['playwright-core', 'playwright']) { try { return require(m); } catch {} } return null; })();
 if (!pw) { console.log('og-live: playwright missing, skipped'); process.exit(0); }
 const opts = { headless: true }; if (process.env.CHROME_PATH) opts.executablePath = process.env.CHROME_PATH;
 const browser = await launch(pw, opts); const pg = await browser.newPage({ viewport: { width: 1200, height: 630 } });
-await mkdir(new URL('og/p/', root), { recursive: true }); await mkdir(new URL('og/gp/', root), { recursive: true });
+await mkdir(new URL('og/p/', root), { recursive: true }); await mkdir(new URL('og/gp/', root), { recursive: true }); await mkdir(new URL('og/gl/', root), { recursive: true });
 const tmp = new URL('og/_live.html', root);
 for (const [f, h] of need) {
   await writeFile(tmp, h); await pg.goto(tmp.href); await pg.evaluate(() => document.fonts.ready); await pg.waitForTimeout(60);
@@ -205,7 +207,7 @@ for (const [f, h] of need) {
 }
 await unlink(tmp).catch(() => {}); await browser.close();
 // forget cards for games that have been played (their final card in og/g takes over)
-for (const f of Object.keys(state)) if (f.startsWith('og/gp/') && !cards.some(([c]) => c === f)) { delete state[f]; delete DRAWN[f]; await unlink(new URL(f, root)).catch(() => {}); }
+for (const f of Object.keys(state)) if (/^og\/g[pl]\//.test(f) && !cards.some(([c]) => c === f)) { delete state[f]; delete DRAWN[f]; await unlink(new URL(f, root)).catch(() => {}); }
 for (const f of Object.keys(DRAWN)) if (!state[f]) delete DRAWN[f]; state._drawn = DRAWN; state._look = LOOK;
 await writeFile(new URL('og/live.json', root), JSON.stringify(state, null, 1) + '\n');
 console.log('og-live: drew', need.length, 'of', cards.length);
