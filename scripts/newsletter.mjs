@@ -177,7 +177,7 @@ const footer = (rule) => {
 <a href="${SITE}" style="text-decoration:none"><img src="${SITE}/nl/${FOOT_LOGO[0]}" width="${FOOT_LOGO[1]}" alt="cavs_db" style="display:block;width:${FOOT_LOGO[1]}px;height:auto;border:0;margin:0 auto 10px"></a>
 <div style="font:12.5px/1.8 ${F.sans}">${footLinks.map(([t, r]) => lk(`${SITE}/${r}`, t)).join(' &nbsp;·&nbsp; ')}</div>
 <div style="font:12.5px/1.8 ${F.sans};margin:6px 0 14px">${lk('https://buttondown.com/cavscoffee/?referral_code={{ subscriber.referral_code }}', 'Share with a Cavs fan &rarr;')} &nbsp;·&nbsp; ${lk('https://www.buymeacoffee.com/cavsdb', '&#9749; Buy cavs_db a coffee')}</div>
-<div style="font:600 11.5px/1.5 ${F.sans};color:#5D646C;margin:-6px 0 14px">Save us to your contacts so every issue skips the spam folder.</div>
+<div style="font:600 11.5px/1.5 ${F.sans};color:#5D646C;margin:-6px 0 14px;white-space:nowrap">Add us to your contacts to skip the spam folder.</div>
 <div style="border-top:1px dotted #D9D4CC;padding-top:10px;font:10.5px/1.7 ${F.sans};color:#8A8F96">Independent fan site, not affiliated with the Cavs or NBA.<br><span style="white-space:nowrap">Cavs Database · P.O.&zwnj; Box 151 · West Jeff&zwnj;erson, OH 43&zwnj;162</span><!--UNSUB--></div></td></tr></table></td></tr></table>`;
 };
 const T = (inner, attrs = '') => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" ${attrs}>${inner}</table>`;
