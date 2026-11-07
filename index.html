@@ -1707,11 +1707,11 @@ requestAnimationFrame(()=>{document.getElementById('fill').style.width=pct(TEAM_
 
 /* injuries — status: Out | Doubtful | Questionable | Probable | Game-time decision */
 const INJ_UPDATED='Nov 5';
-const INJURIES=[["Nae'Qwan Tomlin",'PF','Low back stress reaction','Out'],['Jaylon Tyson','SF','Right ankle sprain','Out'],['Jarrett Allen','C','Right knee contusion','Questionable'],['Tyrese Proctor','G','Left ankle sprain','Questionable'],['Peyton Watson','SF','Right hamstring injury management','Questionable']];
+const INJURIES=[["Nae'Qwan Tomlin",'PF','Low back stress reaction','Out'],['Jaylon Tyson','SF','Right ankle sprain','Out'],['Jarrett Allen','C','Right knee contusion','Out'],['Tyrese Proctor','G','Left ankle sprain','Questionable'],['Peyton Watson','SF','Right hamstring injury management','Questionable']];
 /* injury lists: Out first, then Doubtful, Questionable, Probable, game-time decisions */
 /* Nov 1: the league's own injury report for the next Cavs game (pdata/injury-report.json, read hourly on game days by
-   scripts/injury-report.py). OFFI() resolves to it while it's for a game that hasn't finished, else null. */
-const OFFI=()=>fJ('/pdata/injury-report.json').then(r=>r.ok?r.json():null).then(R=>R&&R.game&&R.teams&&Date.now()<new Date(R.game.tip).getTime()+3*36e5?R:null).catch(()=>null);
+   scripts/injury-report.py). OFFI() resolves to it until the morning after that game (Nov 6: was 3 hours, so statuses fell back to older ones the same night), else null. */
+const OFFI=()=>fJ('/pdata/injury-report.json').then(r=>r.ok?r.json():null).then(R=>R&&R.game&&R.teams&&Date.now()<new Date(R.game.tip).getTime()+18*36e5?R:null).catch(()=>null);
 const OFFI_LBL=R=>{const m=String(R.report||'').match(/(\d+)\/(\d+)\/\d+\s+0?(\d+):(\d\d)\s*(AM|PM)/);return 'Official report'+(m?' · '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m[1]-1]+' '+(+m[2])+', '+m[3]+(m[4]==='00'?'':':'+m[4])+' '+(m[5]==='AM'?'a.m.':'p.m.'):'')};
 const INJ_RANK=st=>{const x=String(st).toLowerCase();return x.startsWith('out')?0:x.startsWith('doubt')?1:x.startsWith('quest')?2:x.startsWith('prob')?3:4};
 INJURIES.sort((a,b)=>INJ_RANK(a[3])-INJ_RANK(b[3]));
@@ -4566,13 +4566,13 @@ window.renderPlayer=function(s){
           const tot=P.reduce((t,x)=>t+x[1],0),mx=Math.max(...P.map(x=>Math.abs(x[1])),1);
           const box=el('div','ppx-gs');const hd=el('div','ppx-gsh');hd.innerHTML=`<span>Game Score from this game<small>${tot>=20?'a big night':tot>=14?'a strong night':tot>=9?'a solid night':tot>=4?'a quiet night':'a rough night'} · 10 is an average NBA night</small></span>`;box.appendChild(hd);
           /* the wheel: outer ring = what added to his Game Score, inner ring = what took away, on the same scale; the number in the middle is what's left */
-          const pos=P.filter(x=>x[1]>0).sort((x,y)=>y[1]-x[1]),neg=P.filter(x=>x[1]<0).sort((x,y)=>x[1]-y[1]),gross=pos.reduce((t,x)=>t+x[1],0)||1;
+          const pos=P.filter(x=>x[1]>0).sort((x,y)=>y[1]-x[1]),neg=P.filter(x=>x[1]<0).sort((x,y)=>x[1]-y[1]),gross=Math.max(pos.reduce((t,x)=>t+x[1],0),neg.reduce((t,x)=>t-x[1],0))||1;/* Nov 6: both rings share the bigger side's scale, so a night where the minuses win fills the inner ring, not past it */
           const PAL=['#860038','#a8325c','#c25f80','#d98ea6','#e9b9c8','#f2d5df','#F2B231'],NPAL=['#5b6470','#7d858f','#9aa1a9','#b9bec5','#d0d4d9'];
           const arc=(r,a0,a1,w,col)=>{const p=a=>[100+r*Math.sin(a),100-r*Math.cos(a)];const [x0,y0]=p(a0),[x1,y1]=p(a1);return `<path d="M${x0.toFixed(2)} ${y0.toFixed(2)} A${r} ${r} 0 ${a1-a0>Math.PI?1:0} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}" stroke="${col}" stroke-width="${w}" fill="none"/>`};
           let sv='<svg viewBox="0 0 200 200" role="img" aria-label="Game Score wheel">'+`<circle cx="100" cy="100" r="84" stroke="var(--line2)" stroke-width="22" fill="none"/>`;let a0=0;
           pos.forEach((x,i)=>{const a1=a0+x[1]/gross*2*Math.PI;sv+=arc(84,a0,Math.max(a0+.001,a1-.012),22,PAL[i%PAL.length]);x.col=PAL[i%PAL.length];a0=a1});
           let b0=0;neg.forEach((x,i)=>{const b1=b0+(-x[1])/gross*2*Math.PI;sv+=arc(62,b0,Math.max(b0+.001,b1-.012),12,NPAL[i%NPAL.length]);x.col=NPAL[i%NPAL.length];b0=b1});
-          sv+=`<text x="100" y="104" text-anchor="middle" class="gw-n">${tot.toFixed(1)}</text><text x="100" y="124" text-anchor="middle" class="gw-k">GAME SCORE</text></svg>`;
+          sv+=`<text x="100" y="104" text-anchor="middle" class="gw-n">${tot<0?'−'+Math.abs(tot).toFixed(1):tot.toFixed(1)}</text><text x="100" y="124" text-anchor="middle" class="gw-k">GAME SCORE</text></svg>`;
           const wrap=el('div','ppx-gw');const wv=el('div','gw-svg');wv.innerHTML=sv;wrap.appendChild(wv);
           const leg=el('div','gw-leg');const sec=(t,arr,sign)=>{if(!arr.length)return;leg.appendChild(el('div','gw-h',t));arr.forEach(([lab,val,how,],i)=>{const r2=el('div');const sw=el('i');sw.style.background=arr[i].col;r2.append(sw,(()=>{const SL={'Offensive rebounds':'Off. rebounds','Defensive rebounds':'Def. rebounds','Missed free throws':'Missed FTs','Shot attempts':'Shot att.'}[lab];const x=el('span','l');if(SL)x.append(el('span','lg-l',lab),el('span','lg-s',SL));else x.textContent=lab;return x})(),el('b',null,(sign>0?'+':'−')+Math.abs(val).toFixed(1)),el('small',null,how));leg.appendChild(r2)})};
           sec('Added · outer ring',pos,1);sec('Took away · inner ring',neg,-1);wrap.appendChild(leg);box.appendChild(wrap);
