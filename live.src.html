@@ -418,7 +418,7 @@ small.rk,span.rk{text-transform:none!important}
 .tsr2 .l2 .rk{display:inline;margin:0}.tsr2 .eb::after{content:'';position:absolute;left:50%;top:-4px;bottom:-4px;width:1px;background:var(--fg)}
 .tsr2 .eb i{position:absolute;top:2px;bottom:2px}
 .tsr2 .eb{visibility:hidden}
-.ato{width:100%;border-collapse:collapse;margin-top:6px}.ato th{font:700 0.6875rem var(--cond);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right;padding:4px 0 6px;border-bottom:2px solid var(--fg)}.ato th:first-child{text-align:left}.ato td{font:600 0.9375rem var(--mono);text-align:right;white-space:nowrap;padding:9px 0 9px 12px;border-bottom:1px solid var(--line2)}.ato td:first-child{text-align:left;font:800 0.875rem var(--sans)}.ato td small{display:block;font:500 0.6875rem var(--sans);color:var(--muted)}.ato td.w{font-weight:800}
+.ato{width:100%;border-collapse:collapse;margin-top:6px}.ato th{font:700 0.6875rem var(--cond);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right;padding:4px 0 6px;border-bottom:2px solid var(--fg)}.ato th:first-child{text-align:left}.ato td{font:600 0.9375rem var(--mono);text-align:right;white-space:nowrap;padding:9px 0 9px 12px;border-bottom:1px solid var(--line2)}.ato td:first-child{text-align:left;font:800 0.875rem var(--sans)}.ato td small{display:block;font:500 0.6875rem var(--sans);color:var(--muted)}.ato td.w{font-weight:800}@media (max-width:640px){.ato th{font-size:.5938rem!important;padding:4px 0 5px}.ato td{font-size:.75rem!important;padding:6px 0 6px 8px!important}.ato td:first-child{font-size:.75rem!important}.ato td small{font-size:.625rem!important}.hps th,.hps td{padding:5px 8px!important}}
 @media (max-width:760px){.tsc{grid-template-columns:1fr}}
 
 a.plk{color:inherit;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--wt) 45%,transparent);text-underline-offset:3px}
@@ -1284,15 +1284,15 @@ function pbpTeamCards(){if(!pbpOK())return [];const T=PBT.T,O=PBT.O,out=[];
     const w=el('div','tw');w.appendChild(t);c.appendChild(w);c.appendChild(el('p','note','Cavs: 1st = fewest. Forced = what the Cavs defense caused, 1st = most. From pbpstats.'));out.push(c)}
   return out}
 function contextCard(D,R){
-  const c=el('div','card sec');head(c,'How possessions started',(S.season?'Season totals':perLabel(S.per))+' · possessions, points and points per possession');
+  const c=el('div','card sec');head(c,'How possessions started',(S.season?'Season totals':perLabel(S.per))+' · possessions and points per possession');
   const L=[['stl','After a steal'],['dreb','After a defensive rebound'],['to','After a dead-ball turnover'],['made','After an opponent score'],['start','Start of a quarter'],['oreb','Second chances']];
   const cell=(x,y,t)=>{const td=el('td','ppc',x==null?'–':x.toFixed(2));return td};/* Nov 2: one color rule in this table: only the NBA rank is colored (wine = top 10); points per possession stay plain *//* one color rule: only the Cavs side is colored */
-  const tb=el('table','zt hps');tb.innerHTML=`<tr><th></th><th>${esc(D.focus.abbr)}</th><th>Pts</th><th>Per</th><th>${esc(D.other.abbr)}</th><th>Pts</th><th>Per</th></tr>`;
+  const tb=el('table','zt hps');tb.innerHTML=`<tr><th></th><th>${esc(D.focus.abbr)}</th><th>Per</th><th>${esc(D.other.abbr)}</th><th>Per</th></tr>`;
   if(S.season)pbpLoad();const rkOn=!!(S.season&&pbpRank('stl','T',1));
-  L.forEach(([k,l])=>{const a=R.pc[D.focus.id][k],b=R.pc[D.other.id][k];const pa=a.n?a.pts/a.n:null,pb=b.n?b.pts/b.n:null;const tr=el('tr');const ca=cell(pa,pb,D.focus),cb=cell(pb,pa,D.other);if(rkOn&&k!=='to'&&k!=='start'){ca.insertAdjacentHTML('beforeend',rkEl(pbpRank(k,'T',1)));cb.insertAdjacentHTML('beforeend',rkEl(pbpRank(k,'O',-1)))}tr.append(el('td',null,l),el('td',null,String(a.n)),el('td',null,String(a.pts)),ca,el('td',null,String(b.n)),el('td',null,String(b.pts)),cb);tb.appendChild(tr)});
+  L.forEach(([k,l])=>{const a=R.pc[D.focus.id][k],b=R.pc[D.other.id][k];const pa=a.n?a.pts/a.n:null,pb=b.n?b.pts/b.n:null;const tr=el('tr');const ca=cell(pa,pb,D.focus),cb=cell(pb,pa,D.other);if(rkOn&&k!=='to'&&k!=='start'){ca.insertAdjacentHTML('beforeend',rkEl(pbpRank(k,'T',1)));cb.insertAdjacentHTML('beforeend',rkEl(pbpRank(k,'O',-1)))}tr.append(el('td',null,l),el('td',null,String(a.n)),ca,el('td',null,String(b.n)),cb);tb.appendChild(tr)});
   const A=R.cx?R.cx[D.focus.id]:ctxRows(R,D.focus.id),B=R.cx?R.cx[D.other.id]:ctxRows(R,D.other.id);
-  {const h=el('tr','sep');const td=el('td','hgh','Transition or halfcourt');td.colSpan=7;h.appendChild(td);tb.appendChild(h)}
-  [[1,'Transition'],[0,'Halfcourt']].forEach(([i,l])=>{const a=A[i],b=B[i];const tr=el('tr');tr.append(el('td',null,l),el('td',null,String(a.n)),el('td',null,String(a.pts)),cell(a.pp,b.pp,D.focus),el('td',null,String(b.n)),el('td',null,String(b.pts)),cell(b.pp,a.pp,D.other));tb.appendChild(tr)});
+  {const h=el('tr','sep');const td=el('td','hgh','Transition or halfcourt');td.colSpan=5;h.appendChild(td);tb.appendChild(h)}
+  [[1,'Transition'],[0,'Halfcourt']].forEach(([i,l])=>{const a=A[i],b=B[i];const tr=el('tr');tr.append(el('td',null,l),el('td',null,String(a.n)),cell(a.pp,b.pp,D.focus),el('td',null,String(b.n)),cell(b.pp,a.pp,D.other));tb.appendChild(tr)});
   if(S.season){const ch=tkPairs(L.map(([k,l])=>{const x=R.pc[D.focus.id][k],y=R.pc[D.other.id][k];const rk=rkOn&&k!=='to'&&k!=='start';return {l,c:x.n?x.pts/x.n:null,o:y.n?y.pts/y.n:null,rc:rk?rkTxt(rkEl(pbpRank(k,'T',1))):'',ro:rk?rkTxt(rkEl(pbpRank(k,'O',-1))):''}}),v=>v.toFixed(2));if(ch)c.appendChild(ch)}
   const w=el('div','tw');w.appendChild(tb);c.appendChild(w);
   if(rkOn)c.appendChild(el('p','note','Per = points per possession. Small number under it = NBA rank (1st = best for the Cavs: most scored under '+D.focus.abbr+', fewest allowed under '+D.other.abbr+'). Wine = top 10. Rows without a rank have no league count yet.'));
