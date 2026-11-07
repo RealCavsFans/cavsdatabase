@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "cleveland.com",
+   "title": "‘I wanted to come back’: Dean Wade opens up on free agency decision to leave Cavs",
+   "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNU2FOd0pOWS1tWExDdWFfWk9EdTJ3QXhTX3dUcEhBQU94UnBsRzJpN1RiZ0o3dUtMSDc2dnBCcklRcUpEcFBqX3F0Nm9ieV9zOUNGWl9ZQlQxU2VRUGZnOU9XT2NWWVVZYXNHN1ZnYTZkV0ZFd09SWHhaYnFUQjhzZkpKS1RJS3VNenllS184R1E0UmozSklKOUZ2RXQ2TVN0Tnk2R2FHLVJ1TjNibHM1V2VGdmY2dFI0c19hR2FfZw?oc=5",
+   "date": "2026-11-07T16:46:00.000Z"
+  },
+  {
    "src": "The Inside Shot",
    "title": "Game Night Observations: A Needed Win, A Perfect Blueprint and LeBron’s Return",
    "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTFA5WEdtSk5HeUhvX1N6TFNBNHNlbVo4bDRsWEs0ZjdoaTRQQkJBVWlBYmZ3ZzJGajduYkxvcDR0OEx2OGczRzltcHZtZ21VOW9mRHRGajUzVkVpY0RNSzVHdlBwMHA1OE5IVVhBSEdCUENDQnZjX3RyNA?oc=5",
@@ -179,12 +185,6 @@
    "title": "Game Night Observations: An Ugly Problem, Getting to the Rim and More Injuries",
    "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPQ2xQTTJfWXp4VVlEMFUxaHRRYnVpdi1EbW93TzM0TmlJeHJ2cWxVX1VGaWxSQV84WnJHdVdKSko2MExCQUtxcGVJb09rSFBnM1JzTWMtTzFwX0lRRW12ZXNfcHljQTBFTFVPWi04YnBrVEhrNDJvUDU2QkFRV1NNT01n?oc=5",
    "date": "2026-11-05T12:50:34.000Z"
-  },
-  {
-   "src": "cleveland.com",
-   "title": "Donovan Mitchell's slow start doesn't define his Cavs legacy",
-   "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOOTA0LTBleGZIRi1MMWE2UU9xZmFFMlJrcWtSU00wbzhSUzNGcGwtZGlxMDFackxPbTZOemJOSlJTUXlkTzRkU1JIUnVvamVFZzlBYm1fMHNoWFhGazc2MFBEY2ZaeXZDNi1XN0VKTUlHdldPejhHWnRjcjB1bnVBSDVicVloRWp1cFBzcEF0Vmd6ZWtIWk8xaGk2YXNQenk1Ym04bGJkemFwakpNdXFmX1BxaTYwcFVucGZPNHVobDg4dHJ3TGx5Z3hR?oc=5",
-   "date": "2026-11-05T11:00:00.000Z"
   },
   {
    "src": "cleveland.com",
@@ -378,6 +378,13 @@
  ],
  "videos": [
   {
+   "src": "Cavs Roundtable",
+   "title": "Cleveland Cavaliers Play INSPIRED Basketball, SPOIL LeBron James' Return With 119-95 Win Over 76ers",
+   "link": "https://www.youtube.com/watch?v=mPVF2SWdTrg",
+   "date": "2026-11-07T17:40:32.000Z",
+   "id": "mPVF2SWdTrg"
+  },
+  {
    "src": "It's Cavalier Podcast",
    "title": "Evan Mobley had a fantastic performance on both sides of the ball last night. #cavs #cavaliers",
    "link": "https://www.youtube.com/watch?v=dryUDe2-jMU",
@@ -411,13 +418,6 @@
    "link": "https://www.youtube.com/watch?v=52CwC57lLc4",
    "date": "2026-11-07T06:00:10.000Z",
    "id": "52CwC57lLc4"
-  },
-  {
-   "src": "Cavs Roundtable",
-   "title": "Cleveland Cavaliers Play INSPIRED Basketball, SPOIL LeBron James' Return With 119-95 Win Over 76ers",
-   "link": "https://www.youtube.com/watch?v=mPVF2SWdTrg",
-   "date": "2026-11-07T05:28:48.000Z",
-   "id": "mPVF2SWdTrg"
   },
   {
    "src": "Cavs Roundtable",
