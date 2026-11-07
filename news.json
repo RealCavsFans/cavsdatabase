@@ -1,10 +1,28 @@
 {
  "articles": [
   {
+   "src": "The Inside Shot",
+   "title": "Game Night Observations: A Needed Win, A Perfect Blueprint and LeBron’s Return",
+   "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTFA5WEdtSk5HeUhvX1N6TFNBNHNlbVo4bDRsWEs0ZjdoaTRQQkJBVWlBYmZ3ZzJGajduYkxvcDR0OEx2OGczRzltcHZtZ21VOW9mRHRGajUzVkVpY0RNSzVHdlBwMHA1OE5IVVhBSEdCUENDQnZjX3RyNA?oc=5",
+   "date": "2026-11-07T13:06:28.000Z"
+  },
+  {
    "src": "The Athletic",
    "title": "Cavs give 76ers their first real gut check: 'We’ve just got to be better'",
    "link": "https://www.nytimes.com/athletic/7760913/2026/11/07/cavs-give-76ers-their-first-real-gut-check-weve-just-got-to-be-better/",
    "date": "2026-11-07T11:00:45.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Cavs forward Dean Wade expected to be back in Cleveland this season",
+   "link": "https://www.fearthesword.com/cavs-features-profiles/54076/cavs-forward-dean-wade-expected-to-be-back-in-cleveland-this-season",
+   "date": "2026-11-07T11:00:00.000Z"
+  },
+  {
+   "src": "cleveland.com",
+   "title": "How Mitchell and Mobley are redefining the Cavs' offense",
+   "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPejZPTzhXTl90TUxYNVhhVm9zY0RzOXRtOTVTaW15TWVyOWFJbllVazBMb1IyaEpndG9JazQwQVYxVThnNzBvZTJPbU5RZVRlRDlPRVJkRU9NY05XSGN2eGp3ZzIxWThsNXROcDN6YW9rWDJ3bm1vQ18yNm9zMGJjam5TbHVVRnJLSFgyeUNEWUEyYlBYWE1oSjk0TjlEdUpsZUFGRmJYUEtIN0dmNE5DT3Rjc1M0cUQ2OUxuTHpBQ2RnN3dDbnlrM2Z3?oc=5",
+   "date": "2026-11-07T10:35:00.000Z"
   },
   {
    "src": "Fear The Sword",
@@ -98,6 +116,12 @@
   },
   {
    "src": "cleveland.com",
+   "title": "What would it take for Kenny Atkinson to lose his job? Hey, Chris! Wine and Gold Talk podcast",
+   "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxOekliSGxHUUJ6S0JkSV9YVzd5S3V5cGM2UVVFOWJCMVJwaWdaeENBVGdjWE4yYXlyMU1zb0ZISmVPVUxuSUw4NFBHcy13ekYwX0JTNldfTUJzRmc2Y2t1dmU1MmVnWjktdlA2blN3MF9xWEJINXR3RGlwalBvaUM1cG5xeGNkSU1rNm1WRFpwckZpRHhXdG1XaW5EN3ZBZ3lMS0pncFJ2N2F3djc0T3g4VVItRnNqS1JJeXNUT3VxN2tJalF5a1JMTFFnUnRldGM?oc=5",
+   "date": "2026-11-06T10:05:00.000Z"
+  },
+  {
+   "src": "cleveland.com",
    "title": "Cavs vs. 76ers: preview, odds, injury report, TV",
    "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQdzI1OXg3NlRabW02YUtjRlRFRUlUT3VtcFhHcTg1NUMzdmVhbVZxUm1fZDFNSk9qRzhrMklvbmx1NkIwbFpHeWhaSjNTenF4SlI4S0I2alR6b2RLSVZpUnFvSXBwbkZ1Q1FmNTBLN3NDdmxZVWY0dXZsTTF5X2VPZ3NPZ2dJQmpfUnozbUFXV2s?oc=5",
    "date": "2026-11-06T10:00:00.000Z"
@@ -119,12 +143,6 @@
    "title": "Cavs reportedly sign Norchad Omier to two-way deal; waive Riley Minix",
    "link": "https://www.fearthesword.com/cavs-news/53977/cavs-reportedly-sign-norchad-omier-to-two-way-deal-waive-riley-minix",
    "date": "2026-11-06T00:04:12.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cavs list multiple key players on injury report versus the 76ers",
-   "link": "https://www.fearthesword.com/cavs-injury-report/53974/cavs-list-multiple-key-players-on-injury-report-versus-the-76ers",
-   "date": "2026-11-05T23:51:14.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -235,12 +253,6 @@
    "date": "2026-11-03T17:15:00.000Z"
   },
   {
-   "src": "cleveland.com",
-   "title": "3 areas the Cavs must clean up before they can be considered legitimate contenders",
-   "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPMFQ4VjhOa1p5OVMyQlJtRUc2NURtRmE5WFRsMzM3Z2pMaVFkbVVNTC1VU0c3T1VwSUd5UDB2U1NsRUlRbmhKQ2wxZGdBUW8zZTZ3QjVidEszRnlkRmxJMW8xOEdwdGJORFg5c0MwWER5NnY4eUlCTjBxaWtUSDhRMEFGNFd2dXE5LU5VUWV6OG9saHFQSW5PSU1QNzBrdVdWSnM4RUwtamViYi04VnV1WE1GcHF2ODVQa3B0R05xZUx2aHNr?oc=5",
-   "date": "2026-11-03T16:31:00.000Z"
-  },
-  {
    "src": "Hoops Rumors",
    "title": "Central Notes: Pacers, Watson, Thomas, Claxton",
    "link": "https://www.hoopsrumors.com/2026/11/central-notes-pacers-watson-thomas-claxton.html",
@@ -257,12 +269,6 @@
    "title": "Game Night Observations: Rebounds, Lineups and a Bad Loss",
    "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE8wUXFSVHhKYXVpTEFfRVFaQWttNTRTVF9QNzZaNFVxZmpyUGp6TmI3NVhhbDA2QkY2ekR4WFZiNnFUMVlqYkFxa2dQdHZXdk9RS3RsV1dYRGtIUEh1T1BrZFNaekZzTHNYXzE0alpGdmJGa25oVnFFNQ?oc=5",
    "date": "2026-11-03T12:50:36.000Z"
-  },
-  {
-   "src": "cleveland.com",
-   "title": "Why does Kenny Atkinson keep benching Jarrett Allen when the Cavs need him most?",
-   "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNSkNWcDM4ek1TNks1Qm1vUmFWMFh0dXM5Tm5pbDBTQ0JIOVFuMVBnQlpzN1lNS1NKR3RLZVRlT2gtNDZyMFg2UzYzNDFkZ1dTSlJnZjJlMUdyWXZCOEphcFJfUGdrY0pHdHh4eGdyLVhKZk56M3RTazZPVUZCMjdWbnNfZ25veTlJWHdSYUY0V0M1S3NBbmpaVmY5elVNb3ZfQkJaMVE3ai1JbVdwSkpvbEp6TDhNdmtnaWxKTGxacHc?oc=5",
-   "date": "2026-11-03T12:45:00.000Z"
   },
   {
    "src": "Cavaliers on SI",
