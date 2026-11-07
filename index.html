@@ -688,7 +688,7 @@ ol.gd{align-items:flex-start}ol.gd>li.kd{padding:10px}
 /* Nov 6 (Luka): the next-game callout in the schedule is neutral, not pink: light gray band with a wine edge, preview body on the card color */
 tr.nextg td,.sched tr.nextg,.chs tr.nextg{background:var(--sub,#F5F6F3)!important}@media (min-width:761px){.sched tr.nextg td:first-child,.chs tr.nextg td:first-child{box-shadow:inset 3px 0 0 var(--wine-ink,#860038)}}
 .gprev td{background:var(--sub,#F5F6F3)!important}@media (max-width:760px){.sched tr.gprev{background:var(--sub,#F5F6F3)!important;box-shadow:inset 3px 0 0 var(--wine-ink,#860038)}.sched tr.nextg{box-shadow:inset 3px 0 0 var(--wine-ink,#860038)}}
-/* Nov 6 mock (Luka): desktop home keeps its columns even: when the side runs long (game day, a long injury report), Prospect pipeline moves under Cap position with Charge and drafted players side by side */
+/* Nov 6 (Luka): on game days the desktop home keeps its columns even: when the side runs long (game day, a long injury report), Prospect pipeline moves under Cap position with Charge and drafted players side by side */
 .col>.o-pipe.pipe-wide{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 32px;align-items:start}.col>.o-pipe.pipe-wide>.block-h{grid-column:1/-1}.col>.o-pipe.pipe-wide>.o-dp{margin-top:0!important;padding-top:0!important;border-top:0!important}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link,#dp-h{font:800 .9375rem var(--cond);text-transform:uppercase;letter-spacing:.06em;margin:0;color:var(--fg)}.pp-sub{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:2px 0 6px}.pp-sub>span{font-size:.8125rem;color:var(--muted)}/* Nov 4 audit: one kicker style, one rule weight, same name/meta sizes for the Charge game and drafted players */.o-pipe .cap-label{font:700 .6875rem var(--cond);font-stretch:normal;letter-spacing:.1em;margin-top:2px}.o-pipe .ch-next{font-size:.9375rem;margin-top:2px}.o-pipe .ch-meta{font-size:.8125rem}.o-pipe .ch-rec{font:700 .875rem var(--mono);color:var(--muted)}.o-pipe .pp-lk{font:400 .8125rem var(--sans);color:var(--wine-ink);text-decoration:none;white-space:nowrap}.ch-nrow{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.o-pipe .ch-nrow .ch-rec{font:600 .8125rem var(--mono);color:var(--muted)}.o-pipe .ch-nrow .ch-rec:before{content:'Record ';font:700 .625rem var(--cond);letter-spacing:.1em;text-transform:uppercase;margin-right:2px}.o-dp{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
@@ -5945,11 +5945,11 @@ setTimeout(()=>{const box=document.getElementById('dp-list'),sec=box&&box.closes
   let tm=0;const later=()=>{if(tm)return;tm=setTimeout(()=>{tm=0;scan()},120)};new MutationObserver(later).observe(document.body,{childList:true,subtree:true});
   addEventListener('popstate',()=>{seen=new WeakSet();later()});window.cdbBarsReset=()=>{seen=new WeakSet();later()};later()})();
 
-/* Nov 6 mock (Luka): balance the desktop home columns. Prospect pipeline sits wherever it leaves the two columns closest in height */
+/* Nov 6 (Luka): on game days, balance the desktop home columns. Prospect pipeline sits wherever it leaves the two columns closest in height */
 (function(){const col=document.querySelector('#view-home .home>.col'),side=document.querySelector('#view-home .home>.side'),pp=document.querySelector('#view-home .o-pipe');if(!col||!side||!pp)return;
   const home=side.nextElementSibling,mq=matchMedia('(min-width:1000px)');let busy=false;
-  const toSide=()=>{if(pp.parentElement!==side){side.appendChild(pp);pp.classList.remove('pipe-wide')}};
-  const fit=()=>{if(busy)return;busy=true;requestAnimationFrame(()=>{try{if(!mq.matches){toSide();return}
+  /* game days only (Luka, Nov 6) */const gd=()=>{const t=new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(new Date());return /[?&]gameday=/.test(location.search)||(typeof SCHEDULE!=='undefined'&&SCHEDULE.some(x=>x[0]===t))};const toSide=()=>{if(pp.parentElement!==side){side.appendChild(pp);pp.classList.remove('pipe-wide')}};
+  const fit=()=>{if(busy)return;busy=true;requestAnimationFrame(()=>{try{if(!mq.matches||!gd()){toSide();return}
     const inCol=pp.parentElement===col,ph=pp.offsetHeight,ch=col.offsetHeight-(inCol?ph:0),sh=side.offsetHeight-(inCol?0:ph);
     const gapSide=Math.abs(sh+ph-ch),gapCol=Math.abs(sh-(ch+ph*.6));/* the wide version is about 60% as tall */
     if(!inCol&&gapCol+60<gapSide){col.appendChild(pp);pp.classList.add('pipe-wide')}else if(inCol&&gapSide+60<gapCol)toSide()}finally{setTimeout(()=>busy=false,50)}})};
