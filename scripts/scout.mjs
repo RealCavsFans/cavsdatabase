@@ -1,0 +1,123 @@
+// Scouting report for the next Cavs opponent, shown on the site's game preview.
+// Finds the next Cavs regular-season game on ESPN, then rebuilds the opponent's last 5 finished games from
+// the NBA's own play-by-play (nba-data branch, Nov 3; ESPN's when the store doesn't have a game) with the same code as /live.html (live-core.js): results, pace, ratings, top scorers,
+// most-used five and shot locations against the NBA average. Writes pdata/scout.json. Exits 0 on any problem.
+import fs from 'fs';
+import path from 'path';
+import zlib from 'zlib';
+import { loadFixes, applyFixes } from './nba-fixes.mjs';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const C = require('../live-core.js');
+const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/';
+const OUT = 'pdata/scout.json';
+async function get(u) {
+  for (let i = 0; i < 3; i++) {
+    try { const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0 (cavsdatabase.com)' }, signal: AbortSignal.timeout(30000) }); if (r.ok) return r.json(); console.log('HTTP', r.status, u); }
+    catch (e) { console.log(String(e), u); }
+    await new Promise(r => setTimeout(r, 3000));
+  }
+  return null;
+}
+const now = new Date();
+const YR = now.getUTCMonth() >= 7 ? now.getUTCFullYear() + 1 : now.getUTCFullYear();   // ESPN names a season by the year it ends
+const etDay = d => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(d));
+const done = e => e.competitions?.[0]?.status?.type?.completed;
+
+/* 1) next Cavs game */
+let next = null;
+for (const y of [YR, YR + 1]) {
+  const s = await get(`${ESPN}teams/5/schedule?season=${y}&seasontype=2`);
+  next = (s?.events || []).find(e => !done(e) && Date.parse(e.date) > Date.now() - 6 * 36e5);
+  if (next) break;
+}
+if (!next) { console.log('scout: no upcoming Cavs game'); process.exit(0); }
+const opp = next.competitions[0].competitors.find(c => c.team.id !== '5').team;
+console.log('next game', next.id, etDay(next.date), 'vs', opp.abbreviation);
+
+/* 2) their last 5 finished regular-season games: this season as soon as they've played once, else last season */
+let ids = [], from = '', evs = {};
+for (const y of [YR, YR - 1]) {
+  const s = await get(`${ESPN}teams/${opp.id}/schedule?season=${y}&seasontype=2`);
+  const fin = (s?.events || []).filter(done).sort((a, b) => Date.parse(a.date) - Date.parse(b.date)); fin.forEach(e => { evs[e.id] = e; }); ids = fin.map(e => e.id);
+  from = (y - 1) + '-' + String(y).slice(2);
+  if (ids.length >= 1) break;   // once the season has started, this season's games only (Luka, Oct 23)
+}
+const allIds = ids.slice(); ids = ids.slice(-5);
+/* backup runs (scout.yml, ONLY_IF_STALE=1): do nothing when the saved report already covers this opponent's latest game */
+if (process.env.ONLY_IF_STALE) {
+  let prev0 = null; try { prev0 = JSON.parse(fs.readFileSync(OUT, 'utf8')); } catch {}
+  const lastId = allIds[allIds.length - 1];
+  if (prev0 && prev0.game && prev0.game.id === next.id && (!lastId || (prev0.ids || []).includes(lastId))) { console.log('scout: already up to date (morning run covered it)'); process.exit(0); }
+  console.log('scout: morning report is missing the latest game or the new opponent; rebuilding');
+}
+/* season shots for and against (Oct 31): per-game tallies cached in data/scout-cache.json so each game is fetched once */
+const SC_F = 'data/scout-cache.json'; let cache = {}; try { cache = JSON.parse(fs.readFileSync(SC_F, 'utf8')); } catch {}
+const sbox = () => ({ z: C.ZN.map(() => [0, 0]), cs: [[0, 0], [0, 0]], pt: C.PT.map(() => [0, 0]) });
+const tally = (b, q) => { if (q.hasXY) { b.z[q.zi][1]++; if (q.m) b.z[q.zi][0]++; if (q.zi === 3 && q.x != null) { const k = q.x < 25 ? 0 : 1; b.cs[k][1]++; if (q.m) b.cs[k][0]++; } } if (q.pt != null && b.pt[q.pt]) { b.pt[q.pt][0]++; if (q.m) b.pt[q.pt][1] += q.three ? 3 : 2; } };
+const gameShots = (R, tid) => { const f = sbox(), a = sbox(); R.shots.forEach(q => tally(q.t === tid ? f : a, q)); return { f, a }; };
+const ckey = id => YR + ':' + opp.id + ':' + id;
+/* Nov 3: each game from the NBA's own files when the NBA game store (nba-data branch) is checked out here and has it
+   (same date and teams, with the play-by-play corrections); ESPN's play-by-play otherwise */
+const NB = (() => { try { const se = (YR - 1) + '-' + String(YR).slice(2), dir = path.join(process.env.NBA_DIR || 'nba-data', se); const idx = JSON.parse(fs.readFileSync(path.join(dir, 'index.json'), 'utf8')); return { dir, idx }; } catch { return null; } })();
+const FIX = NB ? loadFixes(path.dirname(NB.dir)) : {}, TO_NBA = { GS: 'GSW', NO: 'NOP', NY: 'NYK', SA: 'SAS', UTAH: 'UTA', WSH: 'WAS' };
+let nbaUsed = 0;
+async function game(id) {
+  const e = evs[id];
+  if (NB && e) { const d = etDay(e.date).replace(/-/g, ''), ab = (e.competitions?.[0]?.competitors || []).map(c => TO_NBA[c.team.abbreviation] || c.team.abbreviation).sort().join();
+    const gid = Object.keys(NB.idx).find(g => NB.idx[g][0] === d && [NB.idx[g][1], NB.idx[g][2]].sort().join() === ab);
+    if (gid) try { const raw = applyFixes(JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(NB.dir, gid + '.json.gz')))), FIX[gid]); const G = C.prep(C.slimSummary(C.fromNBA({ game: raw.box }, { game: raw.pbp }))); if (G.plays.length) { nbaUsed++; return G; } } catch (err) { console.log('scout: NBA copy unreadable', gid, String(err)); } }
+  const d = await get(`${ESPN}summary?event=${id}`); return d && d.plays && d.plays.length ? C.prep(C.slimSummary(d)) : null;
+}
+const games = [], T = {}, O = {}, P = {}, L5 = {}, Z = C.ZN.map(() => [0, 0]), CN = [0, 0], CM = [0, 0];
+const add = (d, x) => { for (const k in x) if (typeof x[k] === 'number') d[k] = (d[k] || 0) + x[k]; };
+for (const id of ids) {
+  const G = await game(id); if (!G) continue;
+  const me = G.teams.find(t => t.abbr === opp.abbreviation), op = G.teams.find(t => t.abbr !== opp.abbreviation); if (!me || !op) continue;
+  G.focus = me; G.other = op;
+  const R = C.deriveCore(G, G.plays, 'all');
+  cache[ckey(id)] = gameShots(R, me.id);
+  const a = me.ha === 'home' ? R.hs : R.as, b = me.ha === 'home' ? R.as : R.hs;
+  games.push({ d: etDay(G.date), ha: me.ha, op: op.abbr, a, b });
+  add(T, R.T[me.id]); add(O, R.T[op.id]);
+  G.roster[me.id].forEach(i => { const x = R.B[i]; if (!(x.min > 0)) return; const p = P[G.P[i].name] = P[G.P[i].name] || { n: G.P[i].name, gp: 0, min: 0, pts: 0, reb: 0, ast: 0, stl: 0, blk: 0, pm: 0, fga: 0, fta: 0 }; p.gp++; p.min += x.min; p.pts += x.pts; p.reb += x.oreb + x.dreb; p.ast += x.ast; p.stl += x.stl || 0; p.blk += x.blk || 0; p.pm += x.pm || 0; p.fga += x.fga || 0; p.fta += x.fta || 0; });
+  Object.values(R.L[me.id][5]).forEach(l => { const k = l.ids.slice().sort().join(); const o = L5[k] = L5[k] || { n: l.ids.map(i => G.P[i].last), sec: 0, pm: 0, g: 0, pf: 0, pa: 0, po: 0 }; o.sec += l.sec; o.pm += l.pf - l.pa; o.g++; o.pf += l.pf; o.pa += l.pa; o.po += C.poss(l.o); o.pd = (o.pd || 0) + C.poss(l.d); });
+  R.shots.filter(q => q.t === me.id && q.hasXY).forEach(q => { Z[q.zi][1]++; if (q.m) Z[q.zi][0]++; if (q.zi === 3) { CN[q.x < 25 ? 0 : 1]++; if (q.m) CM[q.x < 25 ? 0 : 1]++; } });
+}
+if (!games.length) { console.log('scout: no games to scout'); process.exit(0); }
+for (const id of allIds) { if (cache[ckey(id)]) continue; const G = await game(id); if (!G) continue;
+  const me = G.teams.find(t => t.abbr === opp.abbreviation), op = G.teams.find(t => t.abbr !== opp.abbreviation); if (!me || !op) continue; G.focus = me; G.other = op;
+  cache[ckey(id)] = gameShots(C.deriveCore(G, G.plays, 'all'), me.id); }
+for (const k of Object.keys(cache)) if (!k.startsWith(YR + ':')) delete cache[k];
+fs.mkdirSync('data', { recursive: true }); fs.writeFileSync(SC_F, JSON.stringify(cache));
+const sumB = list => { const o = sbox(); list.forEach(b => { if (!b) return; b.z.forEach((v, i) => { o.z[i][0] += v[0]; o.z[i][1] += v[1]; }); b.cs.forEach((v, i) => { o.cs[i][0] += v[0]; o.cs[i][1] += v[1]; }); b.pt.forEach((v, i) => { o.pt[i][0] += v[0]; o.pt[i][1] += v[1]; }); }); return o; };
+const sAll = allIds.map(id => cache[ckey(id)]).filter(Boolean), sL5 = ids.map(id => cache[ckey(id)]).filter(Boolean);
+games.sort((x, y) => x.d < y.d ? -1 : 1);
+const P2 = t => C.poss({ fga: t.fga, oreb: (t.oreb || 0) + (t.toreb || 0), to: t.to, fta: t.fta });
+const r1 = x => Math.round(x * 10) / 10;
+const n = games.length;
+/* shot shares: rim, midrange (short + long), corner 3, above-the-break 3 */
+const share = z => { const t = z.reduce((s, v) => s + v[1], 0) || 1; return [z[0][1], z[1][1] + z[2][1], z[3][1], z[4][1]].map(v => r1(100 * v / t)); };
+let lgZ = C.ZN.map(([k]) => [C.LG[k][0] * 1000, C.LG[k][1] * 1000]);
+try { const b = JSON.parse(fs.readFileSync('live-base.json', 'utf8')); if (b.lg && b.lg.length === 5) lgZ = b.lg.map(([m, a]) => [m, a]); } catch {}
+const fgz = z => { const g = [[z[0][0], z[0][1]], [z[1][0] + z[2][0], z[1][1] + z[2][1]], [z[3][0], z[3][1]], [z[4][0], z[4][1]]]; return g.map(([m, a]) => a ? r1(100 * m / a) : null); };
+const zt = Z.reduce((s, v) => s + v[1], 0) || 1;
+const top5 = Object.values(L5).sort((a, b) => b.sec - a.sec)[0];
+const out = {
+  updated: now.toISOString(), ids, game: { id: next.id, d: etDay(next.date), opp: opp.abbreviation, name: opp.shortDisplayName || opp.name }, from,
+  games,
+  pace: r1((P2(T) + P2(O)) / 2 / (T.sec || 1) * 2880), off: r1(100 * T.pts / P2(T)), def: r1(100 * O.pts / P2(O)), tpr: Math.round(100 * T.tpa / (T.fga || 1)),
+  who: Object.values(P).map(p => ({ n: p.n, gp: p.gp, pts: r1(p.pts / p.gp), reb: r1(p.reb / p.gp), ast: r1(p.ast / p.gp), stl: r1(p.stl / p.gp), blk: r1(p.blk / p.gp), pm: r1(p.pm / p.gp), ts: p.fga + p.fta ? Math.round(p.pts / (2 * (p.fga + 0.44 * p.fta)) * 1000) / 10 : null })).sort((a, b) => b.pts - a.pts).slice(0, 4),
+  five: top5 ? { n: top5.n, min: Math.round(top5.sec / 60), pm: top5.pm, g: top5.g, ...(top5.po >= 1 && top5.pd >= 1 ? { o: r1(100 * top5.pf / top5.po), d: r1(100 * top5.pa / top5.pd) } : {}) } : null,
+  corners: CN.map(v => r1(100 * v / zt)),
+  zones: share(Z), lg: share(lgZ),
+  /* Nov 2: how well they shoot from each zone (FG%), against the NBA's FG% there; corners left and right */
+  fg: fgz(Z), lgfg: fgz(lgZ), cfg: CN.map((a, i) => a ? r1(100 * CM[i] / a) : null), za: [Z[0][1], Z[1][1] + Z[2][1], Z[3][1], Z[4][1]],
+  sh: { n: sAll.length, s: { f: sumB(sAll.map(x => x.f)), a: sumB(sAll.map(x => x.a)) }, l: { f: sumB(sL5.map(x => x.f)), a: sumB(sL5.map(x => x.a)) } }
+};
+fs.mkdirSync('data', { recursive: true });
+/* only rewrite when something other than the timestamp changed, so quiet days don't redeploy the site */
+let prev = null; try { prev = JSON.parse(fs.readFileSync(OUT, 'utf8')); } catch {}
+if (prev && JSON.stringify({ ...prev, updated: 0 }) === JSON.stringify({ ...out, updated: 0 })) { console.log('scout: no changes'); process.exit(0); }
+fs.writeFileSync(OUT, JSON.stringify(out));
+console.log(`scout: ${opp.abbreviation}, ${n} games (${from}), ${nbaUsed} from the NBA's own files`);

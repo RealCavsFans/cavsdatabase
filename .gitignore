@@ -1,0 +1,25 @@
+node_modules/
+# Nov 1: built output lives only on the 'deploy' branch (scripts/publish-deploy.mjs keeps the same list)
+/*.html
+!/index.html
+!/live.src.html
+/a/
+/embed/
+/games/
+/players/
+/history/
+/media/
+/og/g/
+/og/h/
+/og/p/
+/og/gp/
+/og/gl/
+/og/live.json
+/og/cap.jpg
+/og/schedule.jpg
+/og/assets.jpg
+/og/moves.jpg
+/og/history.jpg
+/sitemap.xml
+/data/prerender-hash.txt
+__pycache__/

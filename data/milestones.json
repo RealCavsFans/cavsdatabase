@@ -1,0 +1,490 @@
+{
+ "_how": "Regular season totals through 2025-26 from NBA.com (playercareerstats, franchiseplayers). The newsletter adds this season's games from box.json. Refresh each offseason.",
+ "through": "2025-26",
+ "players": {
+  "James Harden": {
+   "career": {
+    "GP": 1221,
+    "PTS": 29339,
+    "REB": 6809,
+    "AST": 8873
+   },
+   "cavs": {
+    "GP": 26,
+    "PTS": 534,
+    "REB": 124,
+    "AST": 199
+   }
+  },
+  "Thomas Bryant": {
+   "career": {
+    "GP": 393,
+    "PTS": 3328,
+    "REB": 1907,
+    "AST": 359
+   },
+   "cavs": {
+    "GP": 60,
+    "PTS": 370,
+    "REB": 205,
+    "AST": 33
+   }
+  },
+  "Evan Mobley": {
+   "career": {
+    "GP": 334,
+    "PTS": 5592,
+    "REB": 2994,
+    "AST": 1018
+   },
+   "cavs": {
+    "GP": 334,
+    "PTS": 5592,
+    "REB": 2994,
+    "AST": 1018
+   }
+  },
+  "Sam Merrill": {
+   "career": {
+    "GP": 225,
+    "PTS": 1796,
+    "REB": 456,
+    "AST": 371
+   },
+   "cavs": {
+    "GP": 189,
+    "PTS": 1682,
+    "REB": 419,
+    "AST": 346
+   }
+  },
+  "Peyton Watson": {
+   "career": {
+    "GP": 225,
+    "PTS": 1947,
+    "REB": 792,
+    "AST": 302
+   },
+   "cavs": {
+    "GP": 0,
+    "PTS": 0,
+    "REB": 0,
+    "AST": 0
+   }
+  },
+  "Craig Porter Jr.": {
+   "career": {
+    "GP": 166,
+    "PTS": 762,
+    "REB": 396,
+    "AST": 394
+   },
+   "cavs": {
+    "GP": 166,
+    "PTS": 762,
+    "REB": 396,
+    "AST": 394
+   }
+  },
+  "Jaylon Tyson": {
+   "career": {
+    "GP": 113,
+    "PTS": 1039,
+    "REB": 434,
+    "AST": 191
+   },
+   "cavs": {
+    "GP": 113,
+    "PTS": 1039,
+    "REB": 434,
+    "AST": 191
+   }
+  },
+  "Jarrett Allen": {
+   "career": {
+    "GP": 624,
+    "PTS": 8148,
+    "REB": 5715,
+    "AST": 1048
+   },
+   "cavs": {
+    "GP": 390,
+    "PTS": 5779,
+    "REB": 3859,
+    "AST": 759
+   }
+  },
+  "Mario Hezonja": {
+   "career": {
+    "GP": 330,
+    "PTS": 2284,
+    "REB": 1026,
+    "AST": 415
+   },
+   "cavs": {
+    "GP": 0,
+    "PTS": 0,
+    "REB": 0,
+    "AST": 0
+   }
+  },
+  "Nae'Qwan Tomlin": {
+   "career": {
+    "GP": 69,
+    "PTS": 410,
+    "REB": 207,
+    "AST": 55
+   },
+   "cavs": {
+    "GP": 69,
+    "PTS": 410,
+    "REB": 207,
+    "AST": 55
+   }
+  },
+  "Donovan Mitchell": {
+   "career": {
+    "GP": 609,
+    "PTS": 15272,
+    "REB": 2640,
+    "AST": 2928
+   },
+   "cavs": {
+    "GP": 264,
+    "PTS": 7038,
+    "REB": 1207,
+    "AST": 1386
+   }
+  }
+ },
+ "franchise": {
+  "GP": [
+   [
+    "LeBron James",
+    849
+   ],
+   [
+    "Zydrunas Ilgauskas",
+    771
+   ],
+   [
+    "Danny Ferry",
+    723
+   ],
+   [
+    "Bingo Smith",
+    720
+   ],
+   [
+    "Tristan Thompson",
+    708
+   ],
+   [
+    "Hot Rod Williams",
+    661
+   ],
+   [
+    "Austin Carr",
+    635
+   ],
+   [
+    "Anderson Varejao",
+    596
+   ],
+   [
+    "Mark Price",
+    582
+   ],
+   [
+    "Brad Daugherty",
+    548
+   ],
+   [
+    "Craig Ehlo",
+    513
+   ],
+   [
+    "Kevin Love",
+    489
+   ],
+   [
+    "Phil Hubbard",
+    469
+   ],
+   [
+    "Jim Brewer",
+    462
+   ],
+   [
+    "Terrell Brandon",
+    457
+   ],
+   [
+    "Larry Nance",
+    433
+   ],
+   [
+    "Foots Walker",
+    427
+   ],
+   [
+    "Campy Russell",
+    410
+   ],
+   [
+    "Darius Garland",
+    408
+   ],
+   [
+    "Cedi Osman",
+    404
+   ]
+  ],
+  "PTS": [
+   [
+    "LeBron James",
+    23119
+   ],
+   [
+    "Zydrunas Ilgauskas",
+    10616
+   ],
+   [
+    "Brad Daugherty",
+    10389
+   ],
+   [
+    "Austin Carr",
+    10265
+   ],
+   [
+    "Mark Price",
+    9543
+   ],
+   [
+    "Bingo Smith",
+    9513
+   ],
+   [
+    "Hot Rod Williams",
+    8504
+   ],
+   [
+    "Kyrie Irving",
+    8232
+   ],
+   [
+    "Darius Garland",
+    7671
+   ],
+   [
+    "Kevin Love",
+    7663
+   ],
+   [
+    "Larry Nance",
+    7257
+   ],
+   [
+    "Donovan Mitchell",
+    7038
+   ],
+   [
+    "Campy Russell",
+    6588
+   ],
+   [
+    "World Free",
+    6329
+   ],
+   [
+    "Tristan Thompson",
+    6069
+   ],
+   [
+    "Terrell Brandon",
+    5793
+   ],
+   [
+    "Jarrett Allen",
+    5779
+   ],
+   [
+    "Jim Chones",
+    5729
+   ],
+   [
+    "Danny Ferry",
+    5643
+   ],
+   [
+    "Evan Mobley",
+    5592
+   ]
+  ],
+  "REB": [
+   [
+    "LeBron James",
+    6190
+   ],
+   [
+    "Zydrunas Ilgauskas",
+    5904
+   ],
+   [
+    "Tristan Thompson",
+    5701
+   ],
+   [
+    "Brad Daugherty",
+    5227
+   ],
+   [
+    "Hot Rod Williams",
+    4669
+   ],
+   [
+    "Kevin Love",
+    4493
+   ],
+   [
+    "Anderson Varejao",
+    4454
+   ],
+   [
+    "Jarrett Allen",
+    3859
+   ],
+   [
+    "Jim Chones",
+    3790
+   ],
+   [
+    "Larry Nance",
+    3561
+   ],
+   [
+    "Jim Brewer",
+    3551
+   ],
+   [
+    "Bingo Smith",
+    3057
+   ],
+   [
+    "Evan Mobley",
+    2994
+   ],
+   [
+    "Tyrone Hill",
+    2785
+   ],
+   [
+    "Drew Gooden",
+    2522
+   ],
+   [
+    "Phil Hubbard",
+    2360
+   ],
+   [
+    "Craig Ehlo",
+    2267
+   ],
+   [
+    "Danny Ferry",
+    2162
+   ],
+   [
+    "Campy Russell",
+    2107
+   ],
+   [
+    "Austin Carr",
+    1929
+   ]
+  ],
+  "AST": [
+   [
+    "LeBron James",
+    6228
+   ],
+   [
+    "Mark Price",
+    4206
+   ],
+   [
+    "Darius Garland",
+    2738
+   ],
+   [
+    "John Bagley",
+    2311
+   ],
+   [
+    "Terrell Brandon",
+    2235
+   ],
+   [
+    "Kyrie Irving",
+    2115
+   ],
+   [
+    "Foots Walker",
+    2115
+   ],
+   [
+    "Brad Daugherty",
+    2028
+   ],
+   [
+    "Andre Miller",
+    2015
+   ],
+   [
+    "Austin Carr",
+    1820
+   ],
+   [
+    "Craig Ehlo",
+    1803
+   ],
+   [
+    "Geoff Huston",
+    1630
+   ],
+   [
+    "Bingo Smith",
+    1566
+   ],
+   [
+    "Jim Cleamons",
+    1550
+   ],
+   [
+    "Brevin Knight",
+    1441
+   ],
+   [
+    "Donovan Mitchell",
+    1386
+   ],
+   [
+    "Hot Rod Williams",
+    1366
+   ],
+   [
+    "Bob Sura",
+    1230
+   ],
+   [
+    "Ron Harper",
+    1158
+   ],
+   [
+    "Lenny Wilkens",
+    1150
+   ]
+  ]
+ }
+}
