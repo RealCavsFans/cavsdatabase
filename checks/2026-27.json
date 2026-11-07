@@ -1,9 +1,9 @@
 {
  "season": "2026-27",
- "checked": "2026-11-06T11:36:09.026Z",
+ "checked": "2026-11-07T06:06:11.598Z",
  "tally": {
-  "games": 123,
-  "clean": 117,
+  "games": 131,
+  "clean": 126,
   "nba": 0,
   "ours": 5,
   "poss": 1,
@@ -17,6 +17,10 @@
    "ours": [
     "A. Sengun (HOU): pm 3/2 (NBA/ours)",
     "S. Adams (HOU): pm 6/7 (NBA/ours)"
+   ],
+   "poss": [
+    "SAS: 97 possessions vs NBA's 104",
+    "HOU: 99 possessions vs NBA's 105"
    ]
   },
   "0022600096": {
@@ -25,13 +29,6 @@
    "ours": [
     "J. McDaniels (MIN): ast 3/4 (NBA/ours)",
     "A. Dosunmu (MIN): ast 10/9 (NBA/ours)"
-   ]
-  },
-  "0022600101": {
-   "d": "20261023",
-   "m": "MEM@GSW",
-   "poss": [
-    "teams 106 vs 99 possessions (more than 4 apart)"
    ]
   },
   "0022600102": {
