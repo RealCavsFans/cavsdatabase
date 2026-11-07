@@ -134,12 +134,6 @@
   },
   {
    "src": "cleveland.com",
-   "title": "What would it take for Kenny Atkinson to lose his job? Hey, Chris! Wine and Gold Talk podcast",
-   "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxOekliSGxHUUJ6S0JkSV9YVzd5S3V5cGM2UVVFOWJCMVJwaWdaeENBVGdjWE4yYXlyMU1zb0ZISmVPVUxuSUw4NFBHcy13ekYwX0JTNldfTUJzRmc2Y2t1dmU1MmVnWjktdlA2blN3MF9xWEJINXR3RGlwalBvaUM1cG5xeGNkSU1rNm1WRFpwckZpRHhXdG1XaW5EN3ZBZ3lMS0pncFJ2N2F3djc0T3g4VVItRnNqS1JJeXNUT3VxN2tJalF5a1JMTFFnUnRldGM?oc=5",
-   "date": "2026-11-06T10:05:00.000Z"
-  },
-  {
-   "src": "cleveland.com",
    "title": "Cavs vs. 76ers: preview, odds, injury report, TV",
    "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQdzI1OXg3NlRabW02YUtjRlRFRUlUT3VtcFhHcTg1NUMzdmVhbVZxUm1fZDFNSk9qRzhrMklvbmx1NkIwbFpHeWhaSjNTenF4SlI4S0I2alR6b2RLSVZpUnFvSXBwbkZ1Q1FmNTBLN3NDdmxZVWY0dXZsTTF5X2VPZ3NPZ2dJQmpfUnozbUFXV2s?oc=5",
    "date": "2026-11-06T10:00:00.000Z"
@@ -191,6 +185,12 @@
    "title": "The Cavs keep handing opponents one perfect quarter — and that won’t fly against real contenders",
    "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxONmQtbno2S0ViODhkamZsVXVsbFB2bjRxd0tRNHZudHR4U3lkdk5nSU8xZTRoVEk3UjZFaVpZTlhjbk5KYkY0OWI5RFhfU0tMaE1TamhKdzE3NkwwN0Z5NU1CYVJyMm5sMnRrVVoyaG1NU2tRTnBLdFhsT3Z1Tkg0YTFsNEoyWUctYkdKaGpEX1VkYmpPd0p4aUJFSHNzMUxWdmZvTTZZbFpTZnBSYlJsNUNSNkpweV96eEdyaVZyWUI1d1VSSTJMOC1rZjRQNWpCTTFB?oc=5",
    "date": "2026-11-05T11:30:00.000Z"
+  },
+  {
+   "src": "cleveland.com",
+   "title": "Donovan Mitchell's slow start doesn't define his Cavs legacy",
+   "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOOTA0LTBleGZIRi1MMWE2UU9xZmFFMlJrcWtSU00wbzhSUzNGcGwtZGlxMDFackxPbTZOemJOSlJTUXlkTzRkU1JIUnVvamVFZzlBYm1fMHNoWFhGazc2MFBEY2ZaeXZDNi1XN0VKTUlHdldPejhHWnRjcjB1bnVBSDVicVloRWp1cFBzcEF0Vmd6ZWtIWk8xaGk2YXNQenk1Ym04bGJkemFwakpNdXFmX1BxaTYwcFVucGZPNHVobDg4dHJ3TGx5Z3hR?oc=5",
+   "date": "2026-11-05T11:00:00.000Z"
   },
   {
    "src": "cleveland.com",
@@ -377,6 +377,13 @@
   }
  ],
  "videos": [
+  {
+   "src": "Locked On Cavs",
+   "title": "CAVS POSTCAST: The Cleveland Cavaliers Face the New York Knicks In Eastern Conference Finals Rematch",
+   "link": "https://www.youtube.com/watch?v=_Q-_yXh88Xg",
+   "date": "2026-11-07T21:07:01.000Z",
+   "id": "_Q-_yXh88Xg"
+  },
   {
    "src": "Cavs Roundtable",
    "title": "Cleveland Cavaliers Play INSPIRED Basketball, SPOIL LeBron James' Return With 119-95 Win Over 76ers",
@@ -607,13 +614,6 @@
    "link": "https://www.youtube.com/watch?v=YXTJ7eettoY",
    "date": "2026-11-03T15:26:44.000Z",
    "id": "YXTJ7eettoY"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "REACTION: Cleveland Cavaliers STUNNED By Oklahoma City Thunder! | Who Is to BLAME?!",
-   "link": "https://www.youtube.com/watch?v=J_d72XYipZc",
-   "date": "2026-11-03T05:20:06.000Z",
-   "id": "J_d72XYipZc"
   },
   {
    "src": "Cavs Roundtable",
