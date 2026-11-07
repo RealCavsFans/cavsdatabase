@@ -12,6 +12,7 @@ const PAGES = [
   ['og/charge.jpg', 'Cleveland Charge', 'Schedule, roster and staff of the Cavs’ G League team', '', 'charge'],
   ['og/media.jpg', 'Media', 'Press conferences, highlights and RealCavsFans articles', '', 'media'],
   ['og/resources.jpg', 'Resources', 'cavs_db approved sites for NBA and Cavs knowledge', '', 'resources'],
+  ['og/about.jpg', 'About cavs_db', 'Every Cavs fact. One place. No takes.', '', 'about'],
   ['og/roster-tree.jpg', 'How the Roster Was Built', 'Every player by how he arrived, and the trade trees back to 2017', '', 'roster-tree'],
   ['og/roster.jpg', 'Roster & Depth Chart', 'Bios, measurements, the depth chart and player comps', '', 'roster'],
   ['og/staff.jpg', 'Coaches & Front Office', 'Bios, records and career paths', '', 'staff'],
