@@ -32,6 +32,7 @@ jobs:
         with:
           sparse-checkout: |
             scripts/live-archive.mjs
+            scripts/box-check.mjs
             scripts/nba-store.mjs
             scripts/nba-fixes.mjs
             pdata/nba-fixes.json
@@ -69,6 +70,16 @@ jobs:
         if: steps.gate.outputs.go == '1'
         env:
           SEASON: ${{ github.event.inputs.season || '2026-27' }}
+      # Nov 7: the newly saved games against the official box score and line score; a push if anything is off
+      - name: Check against the official box score
+        if: steps.gate.outputs.go == '1'
+        env:
+          SEASON: ${{ github.event.inputs.season || '2026-27' }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          set +e; node scripts/box-check.mjs; code=$?; set -e
+          if [ "$code" = "2" ] && [ -n "$NTFY_TOPIC" ]; then curl -s -m 15 -H "Title: Saved game doesn't match the box score" -H "Tags: warning" --data-binary @data/box-check-alert.txt "https://ntfy.sh/$NTFY_TOPIC" || true; fi
+          rm -f data/box-check.json data/box-check-alert.txt; true
       # "Last time this happened" notes for the game page (rare numbers vs every Cavs game since 2000-01)
       - run: node scripts/last-time.mjs || true
         if: steps.gate.outputs.go == '1' && (github.event.inputs.season || '2026-27') == '2026-27'
