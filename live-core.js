@@ -161,6 +161,7 @@ function deriveCore(D,plays,F){
   /* counted possessions (each team's possessions in the stretch, not counting offensive-rebound continuations) */
   tid.forEach(t=>{T[t].np=PL.filter(q=>q.team===t&&q.how!=='oreb').length});
   /* Nov 6 (Luka): for a whole game, the NBA's own paint, second-chance, off-turnover and fast-break points (our play-by-play count can be 1-3 off) */if(F==='all'&&D.nbx&&D.nbx.t)tid.forEach(t=>{const o=D.nbx.t[t];if(o&&o.pip!=null&&T[t]){T[t].paint=o.pip;T[t].second=o.p2;T[t].offto=o.pot;T[t].fb=o.fb}});
+  /* Nov 7 (Luka): for a whole game, assists, steals, blocks and rebounds match the official box score (the play-by-play can miss or move a few; not mid-replay) */if(F==='all'&&plays===D.plays){const K=[['AST','ast'],['STL','stl'],['BLK','blk'],['OREB','oreb'],['DREB','dreb']];tid.forEach(t=>{if(!T[t]||!D.roster[t])return;const sum={};let ok=false;D.roster[t].forEach(id=>{const e=(D.P[id]||{}).espn;if(!e)return;K.forEach(([k,f])=>{const v=parseFloat(e[k]);if(isFinite(v)){ok=true;sum[f]=(sum[f]||0)+v;if(B[id])B[id][f]=v}})});if(ok)K.forEach(([,f])=>{if(sum[f]!=null)T[t][f]=sum[f]})})}
   const PLx=PL.filter(q=>q.first!=null||q.pts>0);
   return {PL:PLx,segs,curStint,dr,pmAll,pc,tf,to,ch,pfAll,wpS,lineAt,asts,plays,B,T,TQ,L,on,margin,runs,shots,stints,hs:lp?lp.hs:0,as:lp?lp.as:0,lp,lead,lc,ties,wp:lp&&D.wp[lp.id]!=null?D.wp[lp.id]:null,maxPer:lp?Math.max(4,lp.per):4};
 }
