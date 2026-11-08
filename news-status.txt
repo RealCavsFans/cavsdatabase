@@ -1,5 +1,5 @@
-2026-11-08T05:42:59.655Z
-NBA highlights: 8 new (YouTube API)
+2026-11-08T06:48:11.076Z
+NBA highlights: 9 new (YouTube API)
 Hoops Rumors: 10 from https://www.hoopsrumors.com/cleveland-cavaliers/feed
 Cavaliers on SI: 15 from https://news.google.com/rss/search?q=site%3Asi.com%2Fnba%2Fcavaliers&hl=en-US&gl=US&ceid=US:en
 cleveland.com: 15 from https://news.google.com/rss/search?q=site%3Acleveland.com%2Fcavs&hl=en-US&gl=US&ceid=US:en
