@@ -855,7 +855,7 @@ async function fetchGame(){
   else if(S.ev!=='b'&&++S.bkN%4===0){try{setData(await getJSON(ESPN+'summary?event='+S.ev),null);S.bk=null;S.fail=0;return}catch(e){}}
   try{const d=await getJSON('/pbp?d='+S.bk);if(!d.header)throw 0;setData(d,d.src==='schedule'?null:d.src||'backup')}catch(e){if(!S.data)S.err='Could not load the game. Retrying.'}
 }
-function startPoll(){clearInterval(S.poll);S.poll=setInterval(async()=>{if(document.hidden||S.replay)return;if(S.state==='post')return;if(S.state!=='in'&&Date.now()-S.fetched<60000)return;await fetchGame();render()},POLL)}
+function startPoll(){clearInterval(S.poll);S.poll=setInterval(async()=>{if(document.hidden||S.replay)return;if(S.state==='post'){/* Nov 8 (Luka): keep refreshing every 2 minutes for a few hours after tonight's final, while the NBA is still crediting assists, blocks and rebounds */const age=Date.now()-new Date((S.data||{}).date||0).getTime();if(!(age>0&&age<6*36e5)||Date.now()-S.fetched<120000)return}else if(S.state!=='in'&&Date.now()-S.fetched<60000)return;await fetchGame();render()},POLL)}
 setInterval(()=>{if(!S.replay)updLine()},1000);
 document.addEventListener('visibilitychange',async()=>{if(!document.hidden&&!S.replay&&S.state==='in'&&Date.now()-S.fetched>POLL){await fetchGame();render()}});
 
