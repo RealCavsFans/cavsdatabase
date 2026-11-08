@@ -2040,37 +2040,7 @@
   "status": "final",
   "score": "97-109",
   "result": "L",
-  "refs": [
-   [
-    "Crew chief",
-    "Kevin Scott",
-    "24"
-   ],
-   [
-    "Referee",
-    "JB DeRosa",
-    "14"
-   ],
-   [
-    "Umpire",
-    "Pat O'Connell",
-    "90"
-   ]
-  ],
-  "qs": {
-   "cle": [
-    27,
-    26,
-    17,
-    27
-   ],
-   "opp": [
-    26,
-    37,
-    25,
-    21
-   ]
-  },
+  "top": "Donovan Mitchell: 37 pts, 4 reb, 4 ast",
   "out": [
    "Jaylon Tyson",
    "Sam Merrill",
@@ -2249,7 +2219,37 @@
     "0"
    ]
   ],
-  "top": "Donovan Mitchell: 37 pts, 4 reb, 4 ast"
+  "qs": {
+   "cle": [
+    27,
+    26,
+    17,
+    27
+   ],
+   "opp": [
+    26,
+    37,
+    25,
+    21
+   ]
+  },
+  "refs": [
+   [
+    "Crew chief",
+    "Kevin Scott",
+    "24"
+   ],
+   [
+    "Referee",
+    "JB DeRosa",
+    "14"
+   ],
+   [
+    "Umpire",
+    "Pat O'Connell",
+    "90"
+   ]
+  ]
  },
  "2026-11-09": {
   "url": "https://www.nba.com/game/cle-vs-cha-0022600204/box-score",
