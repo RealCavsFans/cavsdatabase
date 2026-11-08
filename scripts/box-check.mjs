@@ -8,7 +8,7 @@
 //
 //   node scripts/box-check.mjs              the newest 3 archived games of the season
 //   node scripts/box-check.mjs all          every archived game of the season
-//   node scripts/box-check.mjs live         the Cavs game in progress, from ESPN (a check at each quarter break)
+//   node scripts/box-check.mjs live         the Cavs game in progress, from the NBA's own box score and play-by-play (what the live page uses)
 //
 // Writes data/box-check.json. Exits 2 when something is off (the workflow turns that into a phone alert).
 import fs from 'fs';
@@ -20,7 +20,6 @@ const C = require('../live-core.js');
 const SEASON = process.env.SEASON || '2026-27';
 const DIR = path.join('live-archive', SEASON);
 const MODE = process.argv[2] || 'recent';
-const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/';
 const STATS = [['PTS', 'pts'], ['FG', 'fgm', 'fga'], ['3PT', 'tpm', 'tpa'], ['FT', 'ftm', 'fta'], ['OREB', 'oreb'], ['DREB', 'dreb'], ['AST', 'ast'], ['STL', 'stl'], ['BLK', 'blk'], ['TO', 'to'], ['PF', 'pf']];
 /* stats the page already takes from the official box for a full game: a gap there is reported but doesn't alert */
 const CORRECTED = new Set(['OREB', 'DREB', 'AST', 'STL', 'BLK']);
@@ -35,7 +34,7 @@ function check(J, label) {
   for (const t of [D.focus, D.other]) {
     const tot = {}, off = {};
     for (const id of D.roster[t.id] || []) {
-      const P = D.P[id], e = P && P.espn; if (!e || P.dnp) continue; const b = R.B[id] || {};
+      const P = D.P[id], e = P && P.espn; if (!e || P.dnp) continue; const b = R.B[id] || {};   /* P.espn = the box score line; for NBA-built games it is the NBA box score (fromNBA keeps ESPN field names) */
       for (const [k, f, g] of STATS) {
         let want, have;
         if (g) { const [m, a] = pair(e[k]); want = [m, a]; have = [b[f] || 0, b[g] || 0]; }
@@ -52,24 +51,15 @@ function check(J, label) {
   return out;
 }
 
-/* the live page's own source first: the NBA's files through the site's /nba route, then ESPN */
+/* Nov 8 (Luka): NBA.com only: the NBA's box score and play-by-play through the site's /nba route, the same files the live page reads */
 async function nbaLive() {
   const d = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(Date.now() - 4 * 3600e3)).replace(/-/g, '');
   try { const r = await fetch(`https://cavsdatabase.com/nba?d=${d}&t=CLE`, { signal: AbortSignal.timeout(30000) }); if (!r.ok) return null; const j = await r.json();
     const w = x => x && (x.game ? x : { game: x }), box = w(j.box), pbp = w(j.pbp), g = box && box.game; if (!g || g.gameStatus !== 2) return null;
     return { J: C.fromNBA(box, pbp), label: `${g.awayTeam.teamTricode} @ ${g.homeTeam.teamTricode} · live, ${g.gameStatusText || ''} (NBA feed)` }; } catch { return null; }
 }
-async function espnLive() {
-  const get = async u => { const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0 (cavsdatabase.com)' }, signal: AbortSignal.timeout(30000) }); if (!r.ok) throw new Error(r.status + ' ' + u); return r.json(); };
-  const yr = +SEASON.slice(0, 4) + 1, s = await get(`${ESPN}teams/5/schedule?season=${yr}`);
-  const ev = (s.events || []).find(e => ((((e.competitions || [])[0] || {}).status || {}).type || {}).state === 'in');
-  if (!ev) return null;
-  const J = await get(`${ESPN}summary?event=${ev.id}`), st = ((J.header || {}).competitions || [{}])[0].status || {};
-  return { J, label: `${ev.shortName} · live, ${(st.type || {}).shortDetail || ''}` };
-}
-
 const games = [];
-if (MODE === 'live') { const g = (await nbaLive()) || (await espnLive().catch(e => { console.log('box-check: ESPN unavailable (' + e.message + ')'); return null; })); if (!g) { console.log('box-check: no Cavs game in progress'); process.exit(0); } games.push(g); }
+if (MODE === 'live') { const g = await nbaLive(); if (!g) { console.log('box-check: no Cavs game in progress'); process.exit(0); } games.push(g); }
 else {
   const ix = JSON.parse(fs.readFileSync(path.join(DIR, 'index.json'), 'utf8')).slice().sort((a, b) => a.date < b.date ? 1 : -1);
   for (const g of (MODE === 'all' ? ix : ix.slice(0, 3))) { const f = path.join(DIR, g.id + '.json'); if (fs.existsSync(f)) games.push({ J: JSON.parse(fs.readFileSync(f, 'utf8')), label: `${g.et} ${g.ha === 'home' ? 'vs' : '@'} ${g.opp}` }); }
