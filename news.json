@@ -1,6 +1,24 @@
 {
  "articles": [
   {
+   "src": "Fear The Sword",
+   "title": "Cavs vs. Knicks game thread",
+   "link": "https://www.fearthesword.com/cavs-game-previews/54039/cavs-vs-knicks-game-thread",
+   "date": "2026-11-08T01:00:00.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Cavs’ Kenny Atkinson clarifies his infamous quote vs Knicks: ‘they dominated us’",
+   "link": "https://www.fearthesword.com/cavs-features-profiles/54146/cavs-kenny-atkinson-clarifies-his-infamous-quote-vs-knicks-they-dominated-us",
+   "date": "2026-11-08T00:56:52.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Cavs have ‘level of concern’ for Sam Merrill’s injury",
+   "link": "https://www.fearthesword.com/cavs-news/54138/cavs-sam-merrill-injury-cleveland-cavaliers-kenny-atkinson",
+   "date": "2026-11-08T00:36:58.000Z"
+  },
+  {
    "src": "Hoops Rumors",
    "title": "Cavaliers Bring Back Riley Minix On Two-Way Deal, Waive Tristan Enaruna",
    "link": "https://www.hoopsrumors.com/2026/11/cavaliers-bring-back-riley-minix-on-two-way-deal-waive-tristan-enaruna.html",
@@ -103,34 +121,16 @@
    "date": "2026-11-07T00:30:00.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "Kenny Atkinson isn’t concerned about Donovan Mitchell’s scoring numbers",
-   "link": "https://www.fearthesword.com/cavs-features-profiles/54013/cavs-donovan-mitchell-kenny-atkinson-cleveland-cavaliers-detroit-pistons",
-   "date": "2026-11-07T00:18:17.000Z"
-  },
-  {
    "src": "cleveland.com",
    "title": "Cavs make injury announcement ahead of Friday’s game vs. 76ers",
    "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNNFgxd2ItcnVSOWd6ZUtZekJSQUFld0E5eV9iTVJYRi02Vkdxdm8xelNDa2x6dTFoc3k0UFZEZWNVY3FuRWtlMUZQa1hxaHNMNThicHdvcl9Bb21tUWh5aThPX0Z1MF85NmZMVG45VUFyS2xjcERhbV9aSXBiMVZscm9oVV8xOHhpY3ZSU2FiRWlQcm9OWmYyaE11Z3dZSTJrS0xhRTdVRQ?oc=5",
    "date": "2026-11-07T00:05:00.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "Donovan Mitchell needs to shoot more, not less",
-   "link": "https://www.fearthesword.com/cavs-analysis/53981/donovan-mitchell-needs-to-shoot-more-not-less",
-   "date": "2026-11-06T20:29:31.000Z"
-  },
-  {
    "src": "Hoops Rumors",
    "title": "Jarrett Allen's Knee Injury Isn't Considered Serious",
    "link": "https://www.hoopsrumors.com/2026/11/central-notes-d-robinson-allen-giannis-buzelis.html",
    "date": "2026-11-06T16:00:22.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cavs vs. 76ers: How to watch, odds, and injury report",
-   "link": "https://www.fearthesword.com/cavs-injury-report/53991/cavs-vs-76ers-how-to-watch-odds-and-injury-report",
-   "date": "2026-11-06T15:30:00.000Z"
   },
   {
    "src": "cleveland.com",
@@ -755,27 +755,6 @@
    "link": "https://www.youtube.com/watch?v=PJO8_pxOr08",
    "date": "2026-10-30T03:01:27.000Z",
    "id": "PJO8_pxOr08"
-  },
-  {
-   "src": "Cavs",
-   "title": "Cavs vs Wizards | Game Highlights | 10.28.2026",
-   "link": "https://www.youtube.com/watch?v=nq8aH8jUrb0",
-   "date": "2026-10-29T02:12:59.000Z",
-   "id": "nq8aH8jUrb0"
-  },
-  {
-   "src": "Cavs",
-   "title": "Cavs vs Wizards | Evan Mobley Highlights | 10.28.2026",
-   "link": "https://www.youtube.com/watch?v=-Zb-U1WDgI4",
-   "date": "2026-10-29T02:07:27.000Z",
-   "id": "-Zb-U1WDgI4"
-  },
-  {
-   "src": "NBA",
-   "title": "WIZARDS at CAVALIERS | FULL GAME HIGHLIGHTS | October 28, 2026",
-   "link": "https://www.youtube.com/watch?v=xWJfcKNc3AE",
-   "date": "2026-10-29T01:59:58.000Z",
-   "id": "xWJfcKNc3AE"
   }
  ]
 }
