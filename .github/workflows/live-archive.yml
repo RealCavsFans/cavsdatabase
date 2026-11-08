@@ -23,6 +23,8 @@ jobs:
         id: gate
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then echo "go=1" >> $GITHUB_OUTPUT; exit 0; fi
+          # Nov 8: the daily catch-up always runs, so a correction the NBA makes days after a game reaches the saved game and the season totals
+          if [ "${{ github.event.schedule }}" = "40 14 * * *" ]; then echo "go=1" >> $GITHUB_OUTPUT; exit 0; fi
           Y=$(date -u +%Y); M=$(date -u +%m); [ "$M" -ge 8 ] && Y=$((Y+1))
           N=$(curl -s -m 20 "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/5/schedule?season=$Y" | jq --arg c "$(date -u -d '36 hours ago' +%Y-%m-%dT%H:%MZ)" '[.events[]? | select(.competitions[0].status.type.completed and .date >= $c)] | length' 2>/dev/null || echo 1)
           echo "recent finals: $N"; [ "${N:-1}" -gt 0 ] && echo "go=1" >> $GITHUB_OUTPUT || true
