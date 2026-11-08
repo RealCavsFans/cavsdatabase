@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "Fear The Sword",
+   "title": "Player Grades: Cavs vs Knicks – Donovan Mitchell drops 37 points in loss",
+   "link": "https://www.fearthesword.com/cavs-analysis/54155/player-grades-cavs-vs-knicks-donovan-mitchell-drops-37-points-in-loss",
+   "date": "2026-11-08T05:59:24.000Z"
+  },
+  {
    "src": "Hoops Rumors",
    "title": "Central Notes: Wade, Duren, McConnell, Rivers, Lillard",
    "link": "https://www.hoopsrumors.com/2026/11/central-notes-wade-duren-mcconnell-rivers-lillard.html",
@@ -19,10 +25,34 @@
    "date": "2026-11-08T03:35:12.000Z"
   },
   {
+   "src": "Fear The Sword",
+   "title": "Cavs lose to Knicks 109-97 as Brunson and Towns combine for 60 points",
+   "link": "https://www.fearthesword.com/cavs-scores-results/54156/cavs-lose-to-knicks-109-97-as-brunson-and-towns-combine-for-60-points",
+   "date": "2026-11-08T03:24:43.000Z"
+  },
+  {
    "src": "The Athletic",
    "title": "Does Cavs coach regret his infamous ‘analytically’ we won comment vs. Knicks?",
    "link": "https://www.nytimes.com/athletic/7762322/2026/11/07/cavaliers-kenny-atkinson-analytically-comment-knicks/",
    "date": "2026-11-08T02:18:30.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Cavs vs. Knicks game thread",
+   "link": "https://www.fearthesword.com/cavs-game-previews/54039/cavs-vs-knicks-game-thread",
+   "date": "2026-11-08T01:00:00.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Cavs’ Kenny Atkinson clarifies his infamous quote vs Knicks: ‘they dominated us’",
+   "link": "https://www.fearthesword.com/cavs-features-profiles/54146/cavs-kenny-atkinson-clarifies-his-infamous-quote-vs-knicks-they-dominated-us",
+   "date": "2026-11-08T00:56:52.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Cavs have ‘level of concern’ for Sam Merrill’s injury",
+   "link": "https://www.fearthesword.com/cavs-news/54138/cavs-sam-merrill-injury-cleveland-cavaliers-kenny-atkinson",
+   "date": "2026-11-08T00:36:58.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -115,28 +145,10 @@
    "date": "2026-11-07T03:26:00.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "Cavs beat Sixers 119-95 behind Donovan Mitchell’s stellar performance",
-   "link": "https://www.fearthesword.com/cavs-scores-results/54027/cavs-beat-sixers-119-95-behind-donovan-mitchells-stellar-performance",
-   "date": "2026-11-07T03:14:49.000Z"
-  },
-  {
    "src": "The Athletic",
    "title": "LeBron suffers through one of his all-time worst games in return to Cleveland",
    "link": "https://www.nytimes.com/athletic/7760468/2026/11/06/lebron-james-return-cleveland-cavaliers-76ers/",
    "date": "2026-11-07T00:46:30.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cavs vs. 76ers game thread",
-   "link": "https://www.fearthesword.com/cavs-game-previews/53990/cavs-vs-76ers-game-thread",
-   "date": "2026-11-07T00:30:00.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Kenny Atkinson isn’t concerned about Donovan Mitchell’s scoring numbers",
-   "link": "https://www.fearthesword.com/cavs-features-profiles/54013/cavs-donovan-mitchell-kenny-atkinson-cleveland-cavaliers-detroit-pistons",
-   "date": "2026-11-07T00:18:17.000Z"
   },
   {
    "src": "cleveland.com",
@@ -145,22 +157,10 @@
    "date": "2026-11-07T00:05:00.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "Donovan Mitchell needs to shoot more, not less",
-   "link": "https://www.fearthesword.com/cavs-analysis/53981/donovan-mitchell-needs-to-shoot-more-not-less",
-   "date": "2026-11-06T20:29:31.000Z"
-  },
-  {
    "src": "Hoops Rumors",
    "title": "Jarrett Allen's Knee Injury Isn't Considered Serious",
    "link": "https://www.hoopsrumors.com/2026/11/central-notes-d-robinson-allen-giannis-buzelis.html",
    "date": "2026-11-06T16:00:22.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cavs vs. 76ers: How to watch, odds, and injury report",
-   "link": "https://www.fearthesword.com/cavs-injury-report/53991/cavs-vs-76ers-how-to-watch-odds-and-injury-report",
-   "date": "2026-11-06T15:30:00.000Z"
   },
   {
    "src": "cleveland.com",
@@ -392,13 +392,6 @@
    "link": "https://share.transistor.fm/s/fefd1ad8",
    "date": "2026-10-29T11:33:17.000Z",
    "dur": "33 min"
-  },
-  {
-   "src": "Wine and Gold Talk",
-   "title": "Could Evan Mobley’s shooting leap finally be real?",
-   "link": "https://pdst.fm/e/traffic.megaphone.fm/ADLM5567191384.mp3",
-   "date": "2026-10-29T08:45:00.000Z",
-   "dur": "41 min"
   }
  ],
  "videos": [
