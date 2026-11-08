@@ -71,7 +71,11 @@ function prep(D, g, score, top, boxLink, opts) {
     if (bx) { tn = bx.n; tl = `${bx.pts} pts, ${bx.reb} reb, ${bx.ast} ast`; } }
   const fresh = x => x.date && Date.parse(x.date) > opts.sinceTs;
   const rcfItems = opts.rcf?.items || [];
-  const recap = rcfItems.find(x => /recap/i.test(x.title) && x.date && x.date.slice(0, 10) >= g[0]);
+  /* Nov 8 (Luka): only a recap of THIS game, posted after its tip; if none is up yet, show none (never an older game's recap) */
+  const tipTs = (() => { const [h, m] = String(g[3] || '7:00').split(':').map(Number), noon = new Date(g[0] + 'T12:00:00Z');
+    const off = (Date.parse(noon.toLocaleString('en-US', { timeZone: 'UTC' })) - Date.parse(noon.toLocaleString('en-US', { timeZone: 'America/New_York' }))) / 36e5;
+    return Date.parse(g[0] + 'T00:00:00Z') + ((h % 12) + 12 + off) * 36e5 + (m || 0) * 6e4; })();
+  const recap = rcfItems.find(x => /recap/i.test(x.title) && x.date && Date.parse(x.date) > tipTs);
   const nickU = (NICK[g[1]] || '').toUpperCase();
   const hl = (opts.news?.highlights || []).find(x => x.date.slice(0, 10) >= g[0] && Date.parse(x.date) - Date.parse(g[0] + 'T12:00:00Z') < 3 * 864e5 && x.title.toUpperCase().includes(nickU)) || (/nba\.com\/game\//.test(boxLink) ? { link: boxLink.replace(/\/box-score$/, ''), nba: true } : null);
   const reads = [...rcfItems.filter(x => x !== recap && fresh(x)).map(x => ({ ...x, src: 'RealCavsFans' })), ...(opts.news?.articles || []).filter(fresh)].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 6);
@@ -157,10 +161,11 @@ function prep(D, g, score, top, boxLink, opts) {
     if (last) ch = { kind: 'res', d: last[0], o: last[1], ha: last[2], res: last[4], rec: D.CHARGE.record, box: last[6] || '', lines: last[7] || [] }, ch.nx = next && (Date.parse(next[0]) - Date.parse(issueDay)) / 864e5 <= 7 ? { d: next[0], o: next[1], ha: next[2], t: next[3] } : null;   // [7] = Cavs two-way and assignment players' lines [name, pts, reb, ast, min], kept by the daily update from the box score
     else if (next && (Date.parse(next[0]) - Date.parse(issueDay)) / 864e5 <= 7) ch = { kind: 'next', d: next[0], o: next[1], ha: next[2], t: next[3], rec: D.CHARGE.record, first: !G.some(z => z[4]), venue: next[5] || (next[2] === 'H' ? D.CHARGE.venue : '') };
     if (ch) { ch.assign = (D.INJ_ASSIGN || []).map(r => r[0]); ch.lines = ch.lines || []; } }
-  /* Nov 5 (Luka): drafted players' latest games, same as the home page's Prospect pipeline (last 10 days) */
+  /* Nov 5 (Luka): drafted players' latest games, same as the home page's Prospect pipeline */
   const dp = (D.DRAFT_LAST || []).map(([n, d, team, opp, ha, res, url, st]) => ({ n, d, team, opp, ha, res, url, st }));
   { const J = D.NIANG, L = J && J.last; if (L && !L.dnp) { const m = String(J.score || '').match(/^LSU (\d+), .* (\d+)$/); dp.push({ n: 'Saliou Niang', d: L.d, team: 'LSU', opp: L.opp, ha: '', res: m ? (+m[1] > +m[2] ? 'W ' : 'L ') + m[1] + '–' + m[2] : 'Final', url: J.url, st: { pts: L.pts, reb: L.reb, ast: L.ast, stl: L.stl, blk: L.blk } }); } }
-  const drafted = dp.filter(r => r.d && (Date.parse(issueDay) - Date.parse(r.d)) / 864e5 <= 10).sort((a, b) => a.d < b.d ? 1 : -1);
+  /* Nov 8 (Luka): only games played since the last issue (after the game it covered), never a repeat */
+  const drafted = dp.filter(r => r.d && r.d > opts.since && r.d <= issueDay).sort((a, b) => a.d < b.d ? 1 : -1);
   return { g, cs, os, win, issueDay, md, w, l, hasRec: rec.length > 0, tn, tl, recap, hl, reads, play, moves, week, otd, nx: nxInfo, tape, inj, injNote, gl, stand, meet, around, lu, ch, drafted, notes, tq: opts.trivia, shot: opts.milestone || '', sotn: opts.sotn || null, names: (D.PL || []).map(p => p[0]),
     pid: n => (D.PL.find(p => p[0] === n) || [])[1], qs: opts.qs || null, where: (g[2] === 'H' ? 'vs ' : 'at ') + D.TEAMS[g[1]], whereShort: g[2] === 'H' ? 'Rocket Arena' : 'at ' + D.TEAMS[g[1]].split(' ').slice(-1)[0], boxLink, preseason: opts.preseason, test: opts.test, TEAMS: D.TEAMS };
 }
