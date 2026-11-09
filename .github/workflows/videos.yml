@@ -17,6 +17,7 @@ concurrency:
 jobs:
   videos:
     runs-on: ubuntu-latest
+    timeout-minutes: 25   # Nov 9: normal runs take 1-7 minutes
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
@@ -94,7 +95,10 @@ jobs:
       - name: NBA-feed build check (locked test games and bad-data drills)
         run: node scripts/regress.mjs
       - name: Safety check (stops the commit if a page breaks)
-        run: node scripts/smoke.mjs
+        # Nov 9: a hung browser here stalled the job for 45 minutes until GitHub dropped the runner; normally ~30 seconds.
+        # One retry after a timeout, so a stuck Chrome doesn't block the next build.
+        timeout-minutes: 6
+        run: timeout 150 node scripts/smoke.mjs || { echo "::warning::smoke check hung or failed once; retrying"; timeout 150 node scripts/smoke.mjs; }
         env:
           CHROME_PATH: /usr/bin/google-chrome
       - name: Commit if changed
