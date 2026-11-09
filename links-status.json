@@ -1,14 +1,15 @@
 {
- "checked": "2026-11-02T11:42:09.140Z",
- "total": 814,
- "broken": [],
+ "checked": "2026-11-09T11:42:48.469Z",
+ "total": 816,
+ "broken": [
+  [
+   "https://www.nba.com/cavaliers/news/davis_110224.html",
+   404
+  ]
+ ],
  "unsure": [
   [
    "https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Transaction_History/2018",
-   403
-  ],
-  [
-   "https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Transactions",
    403
   ],
   [
@@ -16,7 +17,7 @@
    403
   ],
   [
-   "https://basketball.realgm.com/player/Ismael-Kamagate/Summary/132958",
+   "https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Transactions",
    403
   ],
   [
@@ -28,11 +29,15 @@
    403
   ],
   [
-   "https://basketball.realgm.com/player/wd/Summary/26545",
+   "https://basketball.realgm.com/player/Ismael-Kamagate/Summary/132958",
    403
   ],
   [
    "https://basketball.realgm.com/player/wd/Summary/121",
+   403
+  ],
+  [
+   "https://basketball.realgm.com/player/wd/Summary/26545",
    403
   ],
   [
@@ -44,7 +49,43 @@
    403
   ],
   [
+   "https://en.wikipedia.org/wiki/Terry_Furlow",
+   429
+  ],
+  [
+   "https://en.wikipedia.org/wiki/Timofey_Mozgov",
+   429
+  ],
+  [
+   "https://en.wikipedia.org/wiki/Tom_Nissalke",
+   429
+  ],
+  [
+   "https://en.wikipedia.org/wiki/Tyronn_Lue",
+   429
+  ],
+  [
+   "https://en.wikipedia.org/wiki/World_B._Free",
+   429
+  ],
+  [
+   "https://en.wikipedia.org/wiki/Zydrunas_Ilgauskas",
+   429
+  ],
+  [
+   "https://en.wikipedia.org/wiki/Walt_Wesley",
+   429
+  ],
+  [
+   "https://formsubmit.co/ajax/rcfwriter@gmail.com",
+   405
+  ],
+  [
    "https://theinsideshot.substack.com",
+   403
+  ],
+  [
+   "https://theanalyst.com/articles/the-biggest-blowouts-in-nba-history/",
    403
   ],
   [
@@ -62,10 +103,6 @@
   [
    "https://www.lkl.lt/tvarkarastis",
    403
-  ],
-  [
-   "https://formsubmit.co/ajax/rcfwriter@gmail.com",
-   "TimeoutError"
   ],
   [
    "https://www.nbadraft.net/players/arturas-gudaitis/",
