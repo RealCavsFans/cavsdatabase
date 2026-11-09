@@ -11,7 +11,8 @@ const grab = n => { const m = new RegExp('(^|[\\n;])const ' + n + '=').exec(html
 const [PLAYERS] = grab('PLAYERS'), [PRON, p0, p1] = grab('PRON'), [PRON_TX, t0, t1] = grab('PRON_TX');
 const d = new Date(), y = d.getUTCMonth() + 1 >= 8 ? d.getUTCFullYear() : d.getUTCFullYear() - 1, SEASON = y + '-' + String(y + 1).slice(2);
 const UA = { 'User-Agent': 'Mozilla/5.0 (cavsdatabase.com)' };
-const ok = async u => { try { const r = await fetch(u, { method: 'HEAD', headers: UA, signal: AbortSignal.timeout(15000) }); return r.ok; } catch { return false; } };
+const ok = async u => { try { const r = await fetch(u, { headers: { ...UA, Range: 'bytes=0-15' }, signal: AbortSignal.timeout(15000) }); const b = r.ok ? Buffer.from(await r.arrayBuffer()) : null; return !!b && b.slice(0, 4).toString() === 'RIFF'; } catch { return false; } };   /* a real WAV, not an error page */
+if (process.env.PROBE) { console.log('probe', await ok('https://cdn.nba.com/logos/nba/playername-audio/2025-26/cle/donovanMITCHELL_1628378.wav')); process.exit(0); }
 /* the guide's file names: first name in lowercase letters, last name in capitals, suffix kept (craigPORTER_JR_1641854) */
 const fileOf = (n, id) => { const parts = n.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^A-Za-z .-]/g, '').split(' '); const suf = /^(Jr\.?|Sr\.?|II|III|IV)$/i.test(parts[parts.length - 1]) ? parts.pop().replace('.', '').toUpperCase() : ''; const first = parts.shift().toLowerCase().replace(/[^a-z]/g, ''); return first + parts.join('').toUpperCase().replace(/[^A-Z]/g, '') + (suf ? '_' + suf : '') + '_' + id; };
 

@@ -24,6 +24,7 @@ jobs:
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
         with:
           node-version: 22
+      - run: PROBE=1 node scripts/pron-update.mjs   # last season's Mitchell clip must be found, or the lookup itself is broken
       - run: node scripts/pron-update.mjs
       - name: Commit if changed
         run: |
