@@ -47,7 +47,7 @@ async function fromESPN() {
     const grp = DRAW[ab(h)]; if (!grp || DRAW[ab(a)] !== grp) continue;
     out.push({ group: grp, home: ab(h), away: ab(a), hs: +h.score || 0, as: +a.score || 0, final: !!(c.status && c.status.type && c.status.type.completed) });
   }
-  return out.length >= 50 ? out : (console.log('nba-cup: ESPN has only', out.length, 'group games'), null);
+  return out.length ? out : (console.log('nba-cup: ESPN has no group games'), null);   /* ESPN lists games played so far (plus today's), not the whole group schedule */
 }
 
 let src = 'NBA.com schedule', games = await fromNBA();
