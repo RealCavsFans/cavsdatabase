@@ -30,10 +30,12 @@ async function fromNBA() {
 }
 async function fromESPN() {
   const y = now.getUTCMonth() >= 7 ? now.getUTCFullYear() : now.getUTCFullYear() - 1;
-  const j = await get(`https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=${y}1025-${y}1130&limit=1000`);
-  if (!j || !j.events) return null;
+  /* one day at a time (ESPN refuses long date ranges) */
+  const evs = []; for (let d = new Date(Date.UTC(y, 9, 25)); d <= new Date(Date.UTC(y, 10, 30)) && d <= now; d.setUTCDate(d.getUTCDate() + 1)) { const j = await get(`https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=${d.toISOString().slice(0, 10).replace(/-/g, '')}`); if (j && j.events) evs.push(...j.events); }
+  if (!evs.length) return null;
+  if (process.env.DEBUG) { const e = evs.find(x => /cup/i.test(JSON.stringify(x))); console.log('espn sample', e && JSON.stringify(((e.competitions || [])[0] || {}).notes), e && JSON.stringify(((e.competitions || [])[0] || {}).type)); }
   const out = [];
-  for (const e of j.events) {
+  for (const e of evs) {
     const c = (e.competitions || [])[0] || {}, txt = JSON.stringify(c.notes || []) + ' ' + JSON.stringify(c.type || {});
     const m = /(East|West)\s+Group\s+([A-C])/i.exec(txt); if (!m) continue;
     const h = c.competitors.find(x => x.homeAway === 'home'), a = c.competitors.find(x => x.homeAway === 'away'), ab = t => ESPN2NBA[t.team.abbreviation] || t.team.abbreviation;
