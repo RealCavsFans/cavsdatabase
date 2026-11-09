@@ -2052,9 +2052,11 @@ const CARDS={
       footer(x);return}
     const w=R.as===R.hs?null:(R.as>R.hs?D.away:D.home);frame(x,kick()+atLbl(D),S.state==='post'&&w?w.name+' win':(R.lp?pname(R.lp.per)+' '+R.lp.clock:'Score update'),D,R,84);
     lbl(x,'HOW IT PLAYED OUT',72,450,30);cMargin(x,R,D,72,470,936,200);
+    /* mock (Nov 9): a headshot beside every player named on the card */
+    const tops=[F,O].map(t=>top(t).slice(0,2)),himg=await Promise.all(tops.flat().map(id=>loadImg(hsUrl(D,id))));
     [F,O].forEach((t,ti)=>{const X0=72+ti*480;lbl(x,t.name.toUpperCase(),X0,752,34,ti?GREY:WINE);
-      top(t).slice(0,2).forEach((id,i)=>{const b=R.B[id],y=812+i*158;num(x,b.pts,X0,y+56,88,ti?GREY:WINE);lbl(x,'PTS',X0+4,y+92,26);const nx=X0+150;{let fz=38;x.font=`700 ${fz}px Archivo`;while(x.measureText(D.P[id].last).width>310&&fz>24){fz-=2;x.font=`700 ${fz}px Archivo`}txt(x,D.P[id].last,nx,y+20,fz,INK,700)}
-        x.font='700 28px "Geist Mono"';x.fillStyle=INK;[[b.oreb+b.dreb,'REB'],[b.ast,'AST'],[b.fgm+'-'+b.fga,'FG']].forEach(([v,l],k)=>{const cx=nx+k*96;x.fillStyle=INK;x.font='700 30px "Geist Mono"';x.fillText(String(v),cx,y+64);lbl(x,l,cx,y+92,24)})})});
+      tops[ti].forEach((id,i)=>{const b=R.B[id],y=812+i*158;head2(x,himg[ti*2+i],X0+46,y+44,44,null,initials(D.P[id].name));num(x,b.pts,X0+112,y+56,80,ti?GREY:WINE);lbl(x,'PTS',X0+116,y+92,26);const nx=X0+226;{let fz=36;x.font=`700 ${fz}px Archivo`;while(x.measureText(D.P[id].last).width>230&&fz>22){fz-=2;x.font=`700 ${fz}px Archivo`}txt(x,D.P[id].last,nx,y+20,fz,INK,700)}
+        x.font='700 28px "Geist Mono"';x.fillStyle=INK;[[b.oreb+b.dreb,'REB'],[b.ast,'AST'],[b.fgm+'-'+b.fga,'FG']].forEach(([v,l],k)=>{const cx=nx+k*80;x.fillStyle=INK;x.font='700 30px "Geist Mono"';x.fillText(String(v),cx,y+64);lbl(x,l,cx,y+92,24)})})});
     {const wn=wonNames(D,R);x.fillStyle=TC.panel;x.fillRect(72,1128,936,116);x.strokeStyle=TC.dash;x.setLineDash([5,5]);x.strokeRect(72,1128,936,116);x.setLineDash([]);x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText(`${F.abbr==='CLE'?'CAVS':F.abbr} WON ${wn.length} OF THE 4 FACTORS`,100,1176);x.fillStyle='#fff';x.font='600 32px Archivo';x.fillText(wn.length?wn.join(' · '):'None tonight',100,1222)}
   }},
   player:{label:'Player card',pick:'player',async draw(x,D,R,id){const p=D.P[id],b=R.B[id],t=D.teams.find(z=>z.id===p.team),o=D.teams.find(z=>z.id!==p.team);const img=await loadImg(hsUrl(D,id));
@@ -2452,6 +2454,7 @@ Object.assign(CARDS,{
       const fs=Fo.ha==='home'?R.hs:R.as,os=Fo.ha==='home'?R.as:R.hs;x.fillStyle=INK;x.font='800 44px "Saira Condensed"';const fl=(S.state==='post'?(fs>os?'WON ':'LOST '):'')+fs+'–'+os;ctr(x,fl,X+W/2,Y+H-22);}
     lNote(x,'Clutch time = the last 5 minutes of the 4th quarter or overtime with the score within 5 · bars = clutch points');brandBar(x,LW,LH)}},
   quarters:{label:'Quarter by quarter',w:LW,h:LH,async draw(x,D,R){const Fo=D.focus,Ot=D.other;const qs=Object.keys(R.TQ).map(Number).sort((a,b)=>a-b);
+    const QIMG={};for(const q of qs){const i0=R.plays.findIndex(p=>p.per===q),i1=R.plays.length-1-R.plays.slice().reverse().findIndex(p=>p.per===q);if(i0>=0)for(const [pid] of ptsIn(D,R,i0,i1,Fo.id).sort((u,v)=>v[1].pts-u[1].pts).slice(0,2))if(!(pid in QIMG))QIMG[pid]=await loadImg(hsUrl(D,pid))}
     lFrame(x);const TX=await lLogoHead(x,Fo);const won=qs.filter(q=>R.TQ[q][Fo.id]&&R.TQ[q][Ot.id]&&R.TQ[q][Fo.id].pts>R.TQ[q][Ot.id].pts).length;lTitle(x,TX,kick()+'Quarter by quarter · '+lKick(D),Fo.abbr+' won '+won+' of '+qs.length,lScore(D));
     const n=qs.length,gap=24,W=(LW-80-gap*(n-1))/n,H=560;
     qs.forEach((q,i)=>{const X=40+i*(W+gap);const a=R.TQ[q][Fo.id]||{pts:0,fgm:0,fga:0,tpm:0,tpa:0},b=R.TQ[q][Ot.id]||{pts:0};const m=a.pts-b.pts;lPanel(x,X,LY0,W,H,m>0?WINE:m<0?'#5b6470':GOLD);
@@ -2460,7 +2463,7 @@ Object.assign(CARDS,{
       const bw=W-60,c=X+30+bw/2;x.fillStyle=TC.track;tk(x,X+30,LY0+275,bw,20);x.fillStyle=m>=0?WINE:'#5b6470';const L=Math.min(bw/2,Math.abs(m)/12*bw/2);tk(x,m>=0?c:c-L,LY0+275,L,20);x.fillStyle=INK;x.fillRect(c-1,LY0+268,2,34);
       x.fillStyle=MUT;x.font='600 24px Archivo';x.fillText(Fo.abbr+' '+a.fgm+'–'+a.fga+' FG · '+a.tpm+'–'+a.tpa+' 3P',X+30,LY0+350);
       const i0=R.plays.findIndex(p=>p.per===q),i1=R.plays.length-1-R.plays.slice().reverse().findIndex(p=>p.per===q);const top=i0>=0?ptsIn(D,R,i0,i1,Fo.id).sort((u,v)=>v[1].pts-u[1].pts).slice(0,2):[];
-      lbl(x,'LED BY',X+30,LY0+420,22,MUT);top.forEach(([pid,v],j)=>{txt(x,D.P[pid].last,X+30,LY0+462+j*44,30,INK,700);x.fillStyle=INK;x.font='800 34px "Saira Condensed"';const s=v.pts+' pts';x.fillText(s,X+W-30-x.measureText(s).width,LY0+462+j*44)})});
+      lbl(x,'LED BY',X+30,LY0+420,22,MUT);top.forEach(([pid,v],j)=>{const im=QIMG[pid];head2(x,im,X+52,LY0+452+j*56,22,null,initials(D.P[pid].name));txt(x,D.P[pid].last,X+92,LY0+470+j*56,30,INK,700);x.fillStyle=INK;x.font='800 34px "Saira Condensed"';const s=v.pts+' pts';x.fillText(s,X+W-30-x.measureText(s).width,LY0+470+j*56)})});
     lPanel(x,40,LY0+H+24,LW-80,LBH-H-24,GOLD);lbl(x,'THE MARGIN, MINUTE BY MINUTE',72,LY0+H+80,26,MUT);cMargin(x,R,D,72,LY0+H+100,LW-144,LBH-H-24-130);
     lNote(x,'Wine = '+Fo.abbr+' ahead · gray = '+Ot.abbr+' ahead');brandBar(x,LW,LH)}},
   box:{label:'Box score card',w:LW,h:LH,async draw(x,D,R){const F=D.focus,O=D.other,T=R.T[F.id],season=!!S.season;
