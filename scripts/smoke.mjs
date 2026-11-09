@@ -26,7 +26,7 @@ const browser = await launch(pw, opts);
 const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
 await ctx.addInitScript(() => { try { localStorage.setItem('cdb-intro', '1'); sessionStorage.setItem('cdb-nl-seen', '1'); } catch {} });
 await ctx.route(u => !u.href.startsWith(base), r => r.abort());
-const ROUTES = ['/', '/schedule', '/roster', '/staff', '/cap', '/assets', '/moves', '/charge', '/history', '/history/2015-16', '/media', '/resources', '/players/donovan-mitchell', '/games/2026-10-22-phi'];
+const ROUTES = ['/', '/schedule', '/roster', '/staff', '/cap', '/assets', '/moves', '/charge', '/history', '/history/2015-16', '/media', '/resources', '/about', '/players/donovan-mitchell', '/games/2026-10-22-phi'];
 const bad = [];
 for (const r of ROUTES) {
   const page = await ctx.newPage(); const errs = [];

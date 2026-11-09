@@ -1,7 +1,6 @@
 // /nba: the NBA's own live game feed for the live page (Nov 2).
 // The NBA's files (box score, play-by-play, today's scoreboard) sit in an S3 bucket with no CORS headers and no CDN,
-// so the page asks us instead. One shared cached copy serves every visitor (8 seconds while a game is on, a day once
-// it's final), so the bucket sees a handful of requests a minute no matter how many people are watching.
+// so the page asks us instead. One shared cached copy serves every visitor (8 seconds while a game is on, 2 minutes for the first hours after the final while the NBA is still correcting, then a day), so the bucket sees a handful of requests a minute no matter how many people are watching.
 //
 //   GET /nba?d=YYYYMMDD&t=CLE      that team's game that day: {gameId, box, pbp}  (404 before tip-off: the files appear then)
 //   GET /nba?id=0022600158         the same, by NBA game ID
@@ -33,7 +32,11 @@ export async function nbaGame(ctx) {
   const hit = await caches.default.match(key); if (hit) return hit;
   const [box, pbp] = await Promise.all([s3('/liveData/boxscore/boxscore_' + id + '.json', 8), s3('/liveData/playbyplay/playbyplay_' + id + '.json', 8)]);
   if (!box || !pbp) return json({ error: 'not started', gameId: id }, 404, 30);
-  const fin = box.game && box.game.gameStatus === 3, ttl = fin ? 86400 : 8;
+  /* Nov 8 (Luka): the NBA keeps fixing the play-by-play for a while after the final (assists, blocks, rebounds credited
+     minutes later; Nov 7 vs NYK: two Cavs assists and a Knicks block came in 4-7 minutes after the buzzer). So a final game
+     is held for 2 minutes until its newest edit is 3 hours old, and only then for a day. */
+  const acts = (pbp.game && pbp.game.actions) || [], last = acts.reduce((m, a) => { const t = Date.parse(a.edited || a.timeActual || ''); return t > m ? t : m; }, 0);
+  const fin = box.game && box.game.gameStatus === 3, ttl = !fin ? 8 : (last && Date.now() - last < 3 * 3600e3 ? 120 : 86400);
   const body = JSON.stringify({ gameId: id, box, pbp });
   ctx.waitUntil(caches.default.put(key, new Response(body, { headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'public, max-age=' + ttl } })));
   return new Response(body, { headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'public, max-age=' + Math.min(ttl, 8) } });

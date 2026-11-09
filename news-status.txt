@@ -1,18 +1,18 @@
-2026-11-06T22:15:47.170Z
-NBA highlights: 6 new (YouTube API)
-Hoops Rumors: 9 from https://www.hoopsrumors.com/cleveland-cavaliers/feed
+2026-11-09T19:50:50.108Z
+NBA highlights: 8 new (YouTube API)
+Hoops Rumors: 10 from https://www.hoopsrumors.com/cleveland-cavaliers/feed
 Cavaliers on SI: 15 from https://news.google.com/rss/search?q=site%3Asi.com%2Fnba%2Fcavaliers&hl=en-US&gl=US&ceid=US:en
 cleveland.com: 15 from https://news.google.com/rss/search?q=site%3Acleveland.com%2Fcavs&hl=en-US&gl=US&ceid=US:en
 Fear The Sword: 10 from https://www.fearthesword.com/rss/current.xml
-The Athletic: 0 from https://www.nytimes.com/athletic/rss/nba/cavaliers/
+The Athletic: 3 from https://www.nytimes.com/athletic/rss/nba/cavaliers/
 The Inside Shot: 2 from https://news.google.com/rss/search?q=site%3Atheinsideshot.substack.com&hl=en-US&gl=US&ceid=US:en
 Wine and Gold Talk: 6 from https://feeds.megaphone.fm/wineandgoldtalk
 The Block The Shot The Stop: 0 from https://www.spreaker.com/show/6772702/episodes/feed
 Locked On Cavs: 10 (YouTube API)
-The Chase Down Podcast: 3 (YouTube API)
+The Chase Down Podcast: 1 (YouTube API)
 It's Cavalier Podcast: 10 (YouTube API)
 The Block, The Shot, The Stop: 0 (YouTube API)
 Fear The Fro: 1 from https://feeds.transistor.fm/fear-the-fro-with-bob-schmidt-a-cavs-podcast
 Fear The Fro: 0 (YouTube API)
 Ultimate Cleveland Sports Show: 10 (YouTube API)
-Cavs Roundtable: 10 (YouTube API)
+Cavs Roundtable: 9 (YouTube API)

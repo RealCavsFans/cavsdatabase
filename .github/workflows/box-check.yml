@@ -1,0 +1,47 @@
+name: Live box score check
+# Nov 7 (Luka): during Cavs games, every 15 minutes, rebuild the live page's numbers from the play-by-play and compare
+# them with the official box score and line score (scripts/box-check.mjs). Anything off sends a push to Luka's phone,
+# so a drift is caught at the next quarter break, not by a reader.
+on:
+  schedule:
+    - cron: '*/15 0-6 * * *'   # 7 p.m. to about 2 a.m. Eastern
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: box-check
+  cancel-in-progress: true
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # Gate: stop in a couple of seconds unless a Cavs game is on right now
+      - name: Cavs game in progress?
+        id: gate
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then echo "go=1" >> $GITHUB_OUTPUT; exit 0; fi
+          # Nov 8: the NBA's own scoreboard (gameStatus 2 = in progress)
+          N=$(curl -s -m 20 "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json" | jq '[.scoreboard.games[]? | select(.gameStatus == 2 and (.homeTeam.teamTricode == "CLE" or .awayTeam.teamTricode == "CLE"))] | length' 2>/dev/null || echo 0)
+          echo "live games: $N"; [ "${N:-0}" -gt 0 ] && echo "go=1" >> $GITHUB_OUTPUT || true
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+        if: steps.gate.outputs.go == '1'
+        with:
+          sparse-checkout: |
+            scripts/box-check.mjs
+            live-core.js
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
+        if: steps.gate.outputs.go == '1'
+        with:
+          node-version: 22
+      - name: Compare with the official box score
+        if: steps.gate.outputs.go == '1'
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          set +e; node scripts/box-check.mjs live; code=$?; set -e
+          if [ "$code" = "2" ] && [ -n "$NTFY_TOPIC" ]; then
+            curl -s -m 15 -H "Title: Live stats don't match the box score" -H "Tags: warning" -H "Click: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" --data-binary @data/box-check-alert.txt "https://ntfy.sh/$NTFY_TOPIC" || true
+          fi
+          [ "$code" = "1" ] && exit 1 || exit 0

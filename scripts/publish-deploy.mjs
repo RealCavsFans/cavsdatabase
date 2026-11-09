@@ -15,7 +15,7 @@ import { existsSync, rmSync } from 'node:fs';
 export const BUILT = [
   /^(?!index\.html$|live\.src\.html$)[^/]+\.html$/,
   /^(a|embed|games|players|history|media)\//,
-  /^og\/(g|h|p|gp)\//,
+  /^og\/(g|h|p|gp|gl)\//,
   /^og\/(live\.json|cap\.jpg|schedule\.jpg|assets\.jpg|moves\.jpg|history\.jpg)$/,
   /^sitemap\.xml$/,
   /^data\/prerender-hash\.txt$/,

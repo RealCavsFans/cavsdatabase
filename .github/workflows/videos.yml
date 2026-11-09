@@ -17,6 +17,7 @@ concurrency:
 jobs:
   videos:
     runs-on: ubuntu-latest
+    timeout-minutes: 25   # Nov 9: normal runs take 1-7 minutes
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
@@ -57,6 +58,7 @@ jobs:
           node scripts/team-stats.mjs
           node scripts/cle-rates.mjs
           node scripts/sos.mjs || true
+          node scripts/nba-cup.mjs || true   # Nov 9: NBA Cup group standings (NBA.com schedule first, ESPN backup) and SEASON.cup
       - run: node scripts/fetch-rcf.mjs
         if: github.event_name != 'push'
       # RealCavsFans YouTube uploads for the Media page only (Oct 31). Writes rcf-videos.json only when the list changes.
@@ -94,7 +96,10 @@ jobs:
       - name: NBA-feed build check (locked test games and bad-data drills)
         run: node scripts/regress.mjs
       - name: Safety check (stops the commit if a page breaks)
-        run: node scripts/smoke.mjs
+        # Nov 9: a hung browser here stalled the job for 45 minutes until GitHub dropped the runner; normally ~30 seconds.
+        # One retry after a timeout, so a stuck Chrome doesn't block the next build.
+        timeout-minutes: 6
+        run: timeout 150 node scripts/smoke.mjs || { echo "::warning::smoke check hung or failed once; retrying"; timeout 150 node scripts/smoke.mjs; }
         env:
           CHROME_PATH: /usr/bin/google-chrome
       - name: Commit if changed
@@ -102,7 +107,7 @@ jobs:
           git config user.name "cavsdatabase-bot"
           git config user.email "bot@cavsdatabase.com"
           # data only: the built pages and share images go to the 'deploy' branch (next step), not main
-          add(){ git add videos.json box.json rcf.json; for f in rcf-videos.json pdata/sos.json data/league-schedule.json data/rcf-first.json news.json news-status.txt niang.json pdata/niang-games.json cavs.ics box-status.txt pdata/league.json pdata/milestones.json pdata/league-shots.json pdata/cle-rates.json; do [ -f "$f" ] && git add "$f"; done; [ -d img ] && git add img; git add index.html; true; }
+          add(){ git add videos.json box.json rcf.json; for f in rcf-videos.json pdata/sos.json data/league-schedule.json data/rcf-first.json news.json news-status.txt niang.json pdata/niang-games.json cavs.ics box-status.txt pdata/league.json pdata/milestones.json pdata/league-shots.json pdata/cle-rates.json pdata/nba-cup.json; do [ -f "$f" ] && git add "$f"; done; [ -d img ] && git add img; git add index.html; true; }
           add
           if git diff --cached --quiet; then exit 0; fi
           # scheduled runs: skip commits that are only timestamps and rebuilt page copies (scripts/changed.mjs)
@@ -114,11 +119,11 @@ jobs:
             git stash 2>/dev/null || true
             if git pull --rebase origin main && git push; then exit 0; fi
             git rebase --abort 2>/dev/null || true
-            mkdir -p /tmp/keep && cp -r videos.json box.json rcf.json rcf-videos.json niang.json /tmp/keep/ 2>/dev/null || true; mkdir -p /tmp/keep/pdata && cp pdata/league.json pdata/niang-games.json pdata/league-shots.json pdata/sos.json /tmp/keep/pdata/ 2>/dev/null || true
+            mkdir -p /tmp/keep && cp -r videos.json box.json rcf.json rcf-videos.json niang.json /tmp/keep/ 2>/dev/null || true; mkdir -p /tmp/keep/pdata && cp pdata/league.json pdata/niang-games.json pdata/league-shots.json pdata/sos.json pdata/nba-cup.json /tmp/keep/pdata/ 2>/dev/null || true
             [ -d img ] && cp -r img /tmp/keep/ || true
             git fetch origin main && git reset --hard origin/main
             cp -r /tmp/keep/. . 2>/dev/null || true
-            node scripts/team-stats.mjs || true; node scripts/cle-rates.mjs || true
+            node scripts/team-stats.mjs || true; node scripts/cle-rates.mjs || true; node scripts/nba-cup.mjs || true
             CHROME_PATH=/usr/bin/google-chrome node scripts/build-pages.mjs --prerender
             add
             if git diff --cached --quiet; then exit 0; fi

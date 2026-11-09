@@ -1,0 +1,39 @@
+name: Season stats check
+# Nov 8 (Luka): once a day, after the morning game-archive refresh, hold the season totals the site shows to the NBA's latest
+# box scores and to the league feed (scripts/season-check.mjs). Anything off sends a push to Luka's phone.
+on:
+  schedule:
+    - cron: '20 15 * * *'   # 10:20 a.m. Eastern, after the 9:40 a.m. archive catch-up
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+        with:
+          sparse-checkout: |
+            scripts/season-check.mjs
+            live-archive/2026-27
+            pdata/league.json
+          sparse-checkout-cone-mode: false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+        with:
+          ref: nba-data
+          path: nba-data
+          sparse-checkout: |
+            2026-27
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
+        with:
+          node-version: 22
+      - name: Compare season totals
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          set +e; node scripts/season-check.mjs nba-data; code=$?; set -e
+          if [ "$code" = "2" ] && [ -n "$NTFY_TOPIC" ]; then
+            curl -s -m 15 -H "Title: Season stats don't match the box scores" -H "Tags: warning" -H "Click: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" --data-binary @data/season-check-alert.txt "https://ntfy.sh/$NTFY_TOPIC" || true
+          fi
+          [ "$code" = "1" ] && exit 1 || exit 0

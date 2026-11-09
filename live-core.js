@@ -38,7 +38,7 @@ function prep(d){d=unpackSlim(d);
     const s={};names.forEach((n,i)=>s[n]=a.stats?a.stats[i]:null);
     P[a.athlete.id]={id:a.athlete.id,name:a.athlete.displayName,short:a.athlete.shortName,last:lastName(a.athlete.displayName),pos:a.athlete.position&&a.athlete.position.abbreviation,team:tb.team.id,nba:!!a.athlete.nba,starter:!!a.starter,dnp:!!a.didNotPlay,reason:a.reason,espn:s};
     roster[tb.team.id].push(a.athlete.id)})});
-  const plays=(d.plays||[]).map(q=>({id:q.id,type:q.type.text.replace(/\n/g,' '),text:q.text,per:q.period.number,clock:q.clock.displayValue,t:gt(q.period.number,q.clock.displayValue),team:q.team&&q.team.id,ids:(q.participants||[]).map(x=>x.athlete.id),hs:q.homeScore,as:q.awayScore,sc:q.scoringPlay,val:q.scoreValue,shot:q.shootingPlay,pa:q.pointsAttempted,x:q.coordinate&&q.coordinate.x>-100?q.coordinate.x:null,y:q.coordinate&&q.coordinate.y>-100?q.coordinate.y:null,zh:q.zh}));
+  const plays=(d.plays||[]).map(q=>({id:q.id,type:q.type.text.replace(/\n/g,' '),text:q.text,per:q.period.number,clock:q.clock.displayValue,t:gt(q.period.number,q.clock.displayValue),team:q.team&&q.team.id,ids:(q.participants||[]).map(x=>x.athlete.id),hs:q.homeScore,as:q.awayScore,sc:q.scoringPlay,val:q.scoreValue,fbq:!!q.fbq,shot:q.shootingPlay,pa:q.pointsAttempted,x:q.coordinate&&q.coordinate.x>-100?q.coordinate.x:null,y:q.coordinate&&q.coordinate.y>-100?q.coordinate.y:null,zh:q.zh}));
   /* ESPN's running score on each play sometimes drifts (Oct 26 vs MIN: it ended 125-124 MIN, the real final was 127-125 CLE).
      Keep our own running tally from the scoring plays, and use it whenever it lands on the scoreboard's score. */
   {let h=0,a=0;const run=plays.map(p=>{if(p.sc&&p.val>0){const t=p.team||(P[p.ids[0]]||{}).team;if(t===home.id)h+=p.val;else if(t===away.id)a+=p.val}return [h,a]});
@@ -49,7 +49,7 @@ function prep(d){d=unpackSlim(d);
 }
 
 /* ---------- derive: one pass over the revealed plays ---------- */
-const zT=()=>({pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,oreb:0,dreb:0,toreb:0,tdreb:0,forb:0,fdrb:0,ast:0,stl:0,blk:0,to:0,pf:0,paint:0,second:0,offto:0,sec:0,stPts:0,bnPts:0,stSec:0,bnSec:0,and1:0,ftTrips:0,z:ZN.map(()=>[0,0])});
+const zT=()=>({pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,oreb:0,dreb:0,toreb:0,tdreb:0,forb:0,fdrb:0,ast:0,stl:0,blk:0,to:0,pf:0,paint:0,second:0,offto:0,sec:0,fbc:0,stPts:0,bnPts:0,stSec:0,bnSec:0,and1:0,ftTrips:0,z:ZN.map(()=>[0,0])});
 const zP=()=>({min:0,pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,oreb:0,dreb:0,ast:0,stl:0,blk:0,to:0,pf:0,pm:0,played:false,on:false});
 /* np = counted possessions (each ends when the other team gets the ball or the period ends); poss() uses it when present, the estimate formula otherwise */
 const zS=()=>({fga:0,oreb:0,to:0,fta:0,fgm:0,tpa:0,tpm:0,ftm:0,ast:0,dreb:0,np:0});const zL=ids=>({ids,sec:0,pf:0,pa:0,o:zS(),d:zS()});
@@ -133,7 +133,7 @@ function deriveCore(D,plays,F){
         if(inF){const st=ps[t],dt=p.t-st.t;const pt=/Putback|Tip/.test(ty)||(st.how==='oreb'&&dt<=3)?0:((st.how==='dreb'||st.how==='to'||st.how==='stl')&&dt<=7)?1:/Cutting|Alley Oop/.test(ty)?2:/Floating/.test(ty)?8:/Driving/.test(ty)?3:/Hook|Turnaround|Fade Away|Post/.test(ty)?4:/Pullup|Step Back/.test(ty)?5:/Jump Shot/.test(ty)?6:7;
           shots.push({t,on:[...on[t]].sort().join(','),od:[...on[opp(t)]].sort().join(','),id:a,x:p.x,y:p.y,hasXY:p.x!=null,m:!!p.sc,three,zi,pt,ast:!!(p.sc&&b&&/assists/.test(p.text)),per:p.per,clock:p.clock,text:p.text})}}}
     if(p.sc&&p.val>0){const t=p.team&&T[p.team]?p.team:teamOf(a);if(t){
-      if(inF&&a&&B[a])(B[a].pts+=p.val,pbA(a,'pts',p.val,ON));if(inF&&seg){seg.pts[t]+=p.val;if(a)seg.pp[a]=(seg.pp[a]||0)+p.val}if(inF&&pc[t][ps[t].how])pc[t][ps[t].how].pts+=p.val;if(ps[t])ps[t].pts+=p.val;lineAt[p.id]={[t]:[...ON[t]],[opp(t)]:[...ON[opp(t)]]};TT(t).forEach(x=>{x.pts+=p.val;if(a&&D.P[a]){if(D.P[a].starter)x.stPts+=p.val;else x.bnPts+=p.val}if(src[t].includes('2nd'))x.second+=p.val;if(src[t].includes('to'))x.offto+=p.val});
+      if(inF&&a&&B[a])(B[a].pts+=p.val,pbA(a,'pts',p.val,ON));if(inF&&seg){seg.pts[t]+=p.val;if(a)seg.pp[a]=(seg.pp[a]||0)+p.val}if(inF&&pc[t][ps[t].how])pc[t][ps[t].how].pts+=p.val;if(ps[t])ps[t].pts+=p.val;lineAt[p.id]={[t]:[...ON[t]],[opp(t)]:[...ON[opp(t)]]};TT(t).forEach(x=>{x.pts+=p.val;if(a&&D.P[a]){if(D.P[a].starter)x.stPts+=p.val;else x.bnPts+=p.val}if(src[t].includes('2nd'))x.second+=p.val;if(p.fbq)x.fbc+=p.val;if(src[t].includes('to'))x.offto+=p.val});
       const o=opp(t);ON[t].forEach(id=>{pmAll[id]+=p.val;if(inF)B[id].pm+=p.val});ON[o].forEach(id=>{pmAll[id]-=p.val;if(inF)B[id].pm-=p.val});
       if(inF){lu(t,ON[t],x=>x.pf+=p.val);lu(o,ON[o],x=>x.pa+=p.val)}
       if(!isFT||(/(\d) of \1/.test(ty)&&!ftKeep&&!/Technical|Flagrant/.test(ty))){src[o]='';newPoss(o,p.t,'made',inF)}}}
@@ -161,6 +161,7 @@ function deriveCore(D,plays,F){
   /* counted possessions (each team's possessions in the stretch, not counting offensive-rebound continuations) */
   tid.forEach(t=>{T[t].np=PL.filter(q=>q.team===t&&q.how!=='oreb').length});
   /* Nov 6 (Luka): for a whole game, the NBA's own paint, second-chance, off-turnover and fast-break points (our play-by-play count can be 1-3 off) */if(F==='all'&&D.nbx&&D.nbx.t)tid.forEach(t=>{const o=D.nbx.t[t];if(o&&o.pip!=null&&T[t]){T[t].paint=o.pip;T[t].second=o.p2;T[t].offto=o.pot;T[t].fb=o.fb}});
+  /* Nov 7 (Luka): for a whole game, assists, steals, blocks and rebounds match the official box score (the play-by-play can miss or move a few; not mid-replay) */if(F==='all'&&plays===D.plays){const K=[['AST','ast'],['STL','stl'],['BLK','blk'],['OREB','oreb'],['DREB','dreb']];tid.forEach(t=>{if(!T[t]||!D.roster[t])return;const sum={};let ok=false;D.roster[t].forEach(id=>{const e=(D.P[id]||{}).espn;if(!e)return;K.forEach(([k,f])=>{const v=parseFloat(e[k]);if(isFinite(v)){ok=true;sum[f]=(sum[f]||0)+v;if(B[id])B[id][f]=v}})});if(ok)K.forEach(([,f])=>{if(sum[f]!=null)T[t][f]=sum[f]})})}
   const PLx=PL.filter(q=>q.first!=null||q.pts>0);
   return {PL:PLx,segs,curStint,dr,pmAll,pc,tf,to,ch,pfAll,wpS,lineAt,asts,plays,B,T,TQ,L,on,margin,runs,shots,stints,hs:lp?lp.hs:0,as:lp?lp.as:0,lp,lead,lc,ties,wp:lp&&D.wp[lp.id]!=null?D.wp[lp.id]:null,maxPer:lp?Math.max(4,lp.per):4};
 }
@@ -260,7 +261,7 @@ function fromNBA(box,pbp,extra){extra=extra||{};const g=box.game,acts=((pbp&&pbp
   const boxscore={players,teams:[{team:{id:tid(H)},statistics:tstat(H)},{team:{id:tid(A)},statistics:tstat(A)}]};
   /* plays: one ESPN-style play per NBA action; steals and blocks ride on the turnover / missed shot (as ESPN writes them), substitutions pair each "out" with an "in" at the same moment */
   const plays=[];let hs=0,as=0;const mk=(a,type,text,ids,o)=>{const sh=+a.scoreHome||0,sa=+a.scoreAway||0;if(sh>hs)hs=sh;if(sa>as)as=sa;
-    plays.push(Object.assign({id:'n'+a.actionNumber+(o&&o.k||''),type:{text:type},text,period:{number:a.period},clock:{displayValue:nbaClock(a.clock)},team:a.teamId&&byNba[a.teamId]?{id:byNba[a.teamId]}:undefined,participants:ids.filter(x=>x).map(x=>({athlete:{id:String(x)}})),homeScore:hs,awayScore:as,scoringPlay:false,scoreValue:0,shootingPlay:false},o||{}))};
+    plays.push(Object.assign({id:'n'+a.actionNumber+(o&&o.k||''),type:{text:type},text,period:{number:a.period},clock:{displayValue:nbaClock(a.clock)},team:a.teamId&&byNba[a.teamId]?{id:byNba[a.teamId]}:undefined,participants:ids.filter(x=>x).map(x=>({athlete:{id:String(x)}})),homeScore:hs,awayScore:as,scoringPlay:false,scoreValue:0,shootingPlay:false,fbq:(a.qualifiers||[]).includes('fastbreak')},o||{}))};
   const subQ={};const flushSubs=()=>{Object.values(subQ).forEach(q=>{q.out.forEach((o,i)=>{const n=q.in[i];if(n)mk(n,'Substitution',N(n.personId)+' enters the game for '+N(o.personId),[n.personId,o.personId],{k:'s'+i,team:{id:byNba[n.teamId]}})})});for(const k in subQ)delete subQ[k]};
   let subKey=null;
   for(const a of acts){const t=a.actionType,sub=String(a.subType||'').toLowerCase(),desc=String(a.descriptor||'').toLowerCase();
