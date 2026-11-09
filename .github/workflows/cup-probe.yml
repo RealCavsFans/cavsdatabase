@@ -15,4 +15,4 @@ jobs:
           node-version: 22
       - run: FORCE=1 node scripts/nba-cup.mjs && node -e "const j=require('./pdata/nba-cup.json');console.log(j.source);for(const [g,r] of Object.entries(j.groups))console.log(g,r.map(x=>x.t+' '+x.w+'-'+x.l+' '+(x.pd>=0?'+':'')+x.pd).join(' | '));console.log('wild',JSON.stringify(j.wildcard))"
       - name: ESPN backup on its own
-        run: node -e "process.env.FORCE=1" ; sed -i 's/let src = .NBA.com schedule., games = await fromNBA();/let src = "x", games = null;/' scripts/nba-cup.mjs && DEBUG=1 FORCE=1 node scripts/nba-cup.mjs; node -e "const j=require('./pdata/nba-cup.json');console.log(j.source,JSON.stringify(j.cle))"
+        run: node -e "process.env.FORCE=1" ; sed -i 's/let src = .NBA.com schedule., games = await fromNBA();/let src = "x", games = null;/' scripts/nba-cup.mjs && DEBUG=1 FORCE=1 node scripts/nba-cup.mjs; node -e "const j=require('./pdata/nba-cup.json');console.log(j.source,JSON.stringify(j.cle));for(const [g,r] of Object.entries(j.groups))console.log(g,r.map(x=>x.t+\" \"+x.w+\"-\"+x.l+\" \"+x.pd).join(\" | \"))"

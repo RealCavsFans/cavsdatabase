@@ -28,18 +28,24 @@ async function fromNBA() {
   }
   return out.length >= 50 ? out : (console.log('nba-cup: NBA schedule has only', out.length, 'group games'), null);
 }
+/* the 2026 group draw, checked against the NBA's schedule on Nov 9, 2026; refreshed from the saved file whenever the NBA source has run */
+const DRAW = (() => { const d = {}; const add = (g, ts) => ts.forEach(t => d[t] = g);
+  try { const p = JSON.parse(fs.readFileSync(OUT, 'utf8')); if (p.source && /NBA/.test(p.source)) { for (const [g, r] of Object.entries(p.groups || {})) add(g, r.map(x => x.t)); if (Object.keys(d).length === 30) return d; } } catch {}
+  add('East Group A', ['DET', 'ORL', 'TOR', 'MIL', 'BKN']); add('East Group B', ['CLE', 'MIA', 'PHI', 'NYK', 'IND']); add('East Group C', ['BOS', 'ATL', 'WAS', 'CHI', 'CHA']);
+  add('West Group A', ['DAL', 'DEN', 'HOU', 'PHX', 'UTA']); add('West Group B', ['MIN', 'OKC', 'NOP', 'LAC', 'MEM']); add('West Group C', ['GSW', 'SAS', 'LAL', 'POR', 'SAC']); return d; })();
 async function fromESPN() {
   const y = now.getUTCMonth() >= 7 ? now.getUTCFullYear() : now.getUTCFullYear() - 1;
   /* one day at a time (ESPN refuses long date ranges) */
   const evs = []; for (let d = new Date(Date.UTC(y, 9, 25)); d <= new Date(Date.UTC(y, 10, 30)) && d <= now; d.setUTCDate(d.getUTCDate() + 1)) { const j = await get(`https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=${d.toISOString().slice(0, 10).replace(/-/g, '')}`); if (j && j.events) evs.push(...j.events); }
   if (!evs.length) return null;
-  if (process.env.DEBUG) { const e = evs.find(x => /cup/i.test(JSON.stringify(x))); console.log('espn sample', e && JSON.stringify(((e.competitions || [])[0] || {}).notes), e && JSON.stringify(((e.competitions || [])[0] || {}).type)); }
   const out = [];
   for (const e of evs) {
     const c = (e.competitions || [])[0] || {}, txt = JSON.stringify(c.notes || []) + ' ' + JSON.stringify(c.type || {});
-    const m = /(East|West)\s+Group\s+([A-C])/i.exec(txt); if (!m) continue;
+    /* ESPN only says "NBA Cup - Group Play", so each team's group comes from the draw (fixed for the season) */
+    if (!/cup/i.test(txt) || !/group/i.test(txt)) continue;
     const h = c.competitors.find(x => x.homeAway === 'home'), a = c.competitors.find(x => x.homeAway === 'away'), ab = t => ESPN2NBA[t.team.abbreviation] || t.team.abbreviation;
-    out.push({ group: `${m[1][0].toUpperCase()}${m[1].slice(1).toLowerCase()} Group ${m[2].toUpperCase()}`, home: ab(h), away: ab(a), hs: +h.score || 0, as: +a.score || 0, final: !!(c.status && c.status.type && c.status.type.completed) });
+    const grp = DRAW[ab(h)]; if (!grp || DRAW[ab(a)] !== grp) continue;
+    out.push({ group: grp, home: ab(h), away: ab(a), hs: +h.score || 0, as: +a.score || 0, final: !!(c.status && c.status.type && c.status.type.completed) });
   }
   return out.length >= 50 ? out : (console.log('nba-cup: ESPN has only', out.length, 'group games'), null);
 }
