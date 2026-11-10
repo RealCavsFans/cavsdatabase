@@ -1,5 +1,5 @@
-2026-11-10T02:02:21.191Z
-NBA highlights: 8 new (YouTube API)
+2026-11-10T02:45:12.131Z
+NBA highlights: 9 new (YouTube API)
 Hoops Rumors: 10 from https://www.hoopsrumors.com/cleveland-cavaliers/feed
 Cavaliers on SI: 15 from https://news.google.com/rss/search?q=site%3Asi.com%2Fnba%2Fcavaliers&hl=en-US&gl=US&ceid=US:en
 cleveland.com: 15 from https://news.google.com/rss/search?q=site%3Acleveland.com%2Fcavs&hl=en-US&gl=US&ceid=US:en
@@ -9,7 +9,7 @@ The Inside Shot: 2 from https://news.google.com/rss/search?q=site%3Atheinsidesho
 Wine and Gold Talk: 5 from https://feeds.megaphone.fm/wineandgoldtalk
 The Block The Shot The Stop: 0 from https://www.spreaker.com/show/6772702/episodes/feed
 Locked On Cavs: 10 (YouTube API)
-The Chase Down Podcast: 1 (YouTube API)
+The Chase Down Podcast: 2 (YouTube API)
 It's Cavalier Podcast: 10 (YouTube API)
 The Block, The Shot, The Stop: 0 (YouTube API)
 Fear The Fro: 1 from https://feeds.transistor.fm/fear-the-fro-with-bob-schmidt-a-cavs-podcast

@@ -2,6 +2,12 @@
  "articles": [
   {
    "src": "Fear The Sword",
+   "title": "Player Grades: Cavs vs Hornets – James Harden reaches DEFCON 1",
+   "link": "https://www.fearthesword.com/cavs-analysis/54227/player-grades-cavs-vs-hornets-james-harden-reaches-defcon-1",
+   "date": "2026-11-10T02:34:17.000Z"
+  },
+  {
+   "src": "Fear The Sword",
    "title": "Cavs at Hornets game thread",
    "link": "https://www.fearthesword.com/cavs-game-previews/54201/cavs-at-hornets-game-thread",
    "date": "2026-11-10T00:00:00.000Z"
@@ -155,12 +161,6 @@
    "title": "Cavs give 76ers their first real gut check: 'We’ve just got to be better'",
    "link": "https://www.nytimes.com/athletic/7760913/2026/11/07/cavs-give-76ers-their-first-real-gut-check-weve-just-got-to-be-better/",
    "date": "2026-11-07T11:00:45.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Former Cavs forward Dean Wade expected to be back in Cleveland this season",
-   "link": "https://www.fearthesword.com/cavs-features-profiles/54076/cavs-forward-dean-wade-expected-to-be-back-in-cleveland-this-season",
-   "date": "2026-11-07T11:00:00.000Z"
   },
   {
    "src": "cleveland.com",
@@ -377,25 +377,32 @@
  ],
  "videos": [
   {
-   "src": "It's Cavalier Podcast",
-   "title": "WELCOME BACK JARRETT ALLEN #cavs #clevelandcavaliers #cavaliers",
-   "link": "https://www.youtube.com/watch?v=nLFl843qNNE",
-   "date": "2026-11-10T00:16:25.000Z",
-   "id": "nLFl843qNNE"
+   "src": "Locked On Cavs",
+   "title": "CAVS POSTCAST: The Cleveland Cavaliers Are EMBARRASSED by the Hornets. Is this Rock Bottom?",
+   "link": "https://www.youtube.com/watch?v=S5uUUyM-qKQ",
+   "date": "2026-11-10T02:40:51.000Z",
+   "id": "S5uUUyM-qKQ"
+  },
+  {
+   "src": "The Chase Down Podcast",
+   "title": "Chase Down Podcast Live, presented by LECOM: Shorthanded Hornets Top Cavs",
+   "link": "https://www.youtube.com/watch?v=HBEkmA_XsWs",
+   "date": "2026-11-10T02:26:36.000Z",
+   "id": "HBEkmA_XsWs"
   },
   {
    "src": "It's Cavalier Podcast",
    "title": "REACTION: Cavs vs. Hornets",
    "link": "https://www.youtube.com/watch?v=dVNvM2uxOag",
-   "date": "2026-11-10T00:01:27.000Z",
+   "date": "2026-11-10T02:23:03.000Z",
    "id": "dVNvM2uxOag"
   },
   {
-   "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: The Cleveland Cavaliers Face an Extremely Short-Handed Charlotte Hornets Team",
-   "link": "https://www.youtube.com/watch?v=S5uUUyM-qKQ",
-   "date": "2026-11-09T21:14:15.000Z",
-   "id": "S5uUUyM-qKQ"
+   "src": "It's Cavalier Podcast",
+   "title": "WELCOME BACK JARRETT ALLEN #cavs #clevelandcavaliers #cavaliers",
+   "link": "https://www.youtube.com/watch?v=nLFl843qNNE",
+   "date": "2026-11-10T00:16:25.000Z",
+   "id": "nLFl843qNNE"
   },
   {
    "src": "Ultimate Cleveland Sports Show",
@@ -658,6 +665,13 @@
   }
  ],
  "highlights": [
+  {
+   "src": "NBA",
+   "title": "CAVALIERS at HORNETS | FULL GAME HIGHLIGHTS | November 9, 2026",
+   "link": "https://www.youtube.com/watch?v=2OZwNHo0o3Y",
+   "date": "2026-11-10T02:38:45.000Z",
+   "id": "2OZwNHo0o3Y"
+  },
   {
    "src": "NBA",
    "title": "EXTENDED: KNICKS at CAVALIERS | FULL GAME HIGHLIGHTS | November 7, 2026",
