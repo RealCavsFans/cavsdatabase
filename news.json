@@ -2,6 +2,24 @@
  "articles": [
   {
    "src": "Fear The Sword",
+   "title": "Hornets humiliate the Cavs 124-112",
+   "link": "https://www.fearthesword.com/cavs-scores-results/54231/hornets-humiliate-the-cavs-124-112",
+   "date": "2026-11-10T02:44:19.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Player Grades: Cavs vs Hornets – James Harden reaches DEFCON 1",
+   "link": "https://www.fearthesword.com/cavs-analysis/54227/player-grades-cavs-vs-hornets-james-harden-reaches-defcon-1",
+   "date": "2026-11-10T02:34:17.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Cavs at Hornets game thread",
+   "link": "https://www.fearthesword.com/cavs-game-previews/54201/cavs-at-hornets-game-thread",
+   "date": "2026-11-10T00:00:00.000Z"
+  },
+  {
+   "src": "Fear The Sword",
    "title": "Cavs at Hornets: How to watch, odds, and injury report",
    "link": "https://www.fearthesword.com/cavs-injury-report/54202/cavs-at-hornets-how-to-watch-odds-and-injury-report",
    "date": "2026-11-09T15:30:00.000Z"
@@ -139,34 +157,16 @@
    "date": "2026-11-07T13:06:28.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "LeBron James has become the king without a home",
-   "link": "https://www.fearthesword.com/cavs-features-profiles/54003/cavs-lebron-james-cleveland-cavaliers-philadelphia-76ers-sixers-los-angeles-lakers-donovan-mitchell",
-   "date": "2026-11-07T12:00:00.000Z"
-  },
-  {
    "src": "The Athletic",
    "title": "Cavs give 76ers their first real gut check: 'We’ve just got to be better'",
    "link": "https://www.nytimes.com/athletic/7760913/2026/11/07/cavs-give-76ers-their-first-real-gut-check-weve-just-got-to-be-better/",
    "date": "2026-11-07T11:00:45.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "Former Cavs forward Dean Wade expected to be back in Cleveland this season",
-   "link": "https://www.fearthesword.com/cavs-features-profiles/54076/cavs-forward-dean-wade-expected-to-be-back-in-cleveland-this-season",
-   "date": "2026-11-07T11:00:00.000Z"
-  },
-  {
    "src": "cleveland.com",
    "title": "How Mitchell and Mobley are redefining the Cavs' offense",
    "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPejZPTzhXTl90TUxYNVhhVm9zY0RzOXRtOTVTaW15TWVyOWFJbllVazBMb1IyaEpndG9JazQwQVYxVThnNzBvZTJPbU5RZVRlRDlPRVJkRU9NY05XSGN2eGp3ZzIxWThsNXROcDN6YW9rWDJ3bm1vQ18yNm9zMGJjam5TbHVVRnJLSFgyeUNEWUEyYlBYWE1oSjk0TjlEdUpsZUFGRmJYUEtIN0dmNE5DT3Rjc1M0cUQ2OUxuTHpBQ2RnN3dDbnlrM2Z3?oc=5",
    "date": "2026-11-07T10:35:00.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cavs vs. Knicks: How to watch, odds, and injury report",
-   "link": "https://www.fearthesword.com/cavs-injury-report/54035/cavs-vs-knicks-how-to-watch-odds-and-injury-report",
-   "date": "2026-11-07T10:00:00.000Z"
   },
   {
    "src": "cleveland.com",
@@ -314,15 +314,15 @@
   },
   {
    "src": "Cavaliers on SI",
-   "title": "Updated Cleveland Cavaliers Starting Lineup vs. Oklahoma City Thunder",
-   "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPSlZ6ZnZsTkJQa1BQTXR4YldmR0N2aVE1VlVGSlZGWnpPTTJXaHNzdUFsb1JILThmbU55ckZKYUZFMmx4N0NMS2JHcGlMYVM0SHZOSVJpeVI3WDhjRW1MNzVySEhHY2VJTnJpc0pYVGU5aEZPQ0lybVdLdnE0UEVQRFRGOWl1d1hIelRKLUVnUVFTT2NUY0E2bWVCZmt0bUNGZHRuVzJOUkM3NW5MbWpoaG90WmhscVlKTVVJ?oc=5",
-   "date": "2026-11-02T20:05:07.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
    "title": "Updated Cavs Injury Report for Monday Night Thunder Clash Sparks Concern",
    "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNMnhwUWJXZ3N3OW5NaEROWUdIaE9pYU5HRmw2eGJLRXVoWndYM3J5eG9LQ1Nlak56cThNd2QxdThuVzJFcXNyeEE5Q1pMMmtJV2h6eEpxZnZDLTk2YXU5eWMwZ2VpS0NieThKd2ZYUkY1WEJSZmhYS0pFaGgtSTVQZlEzLXIzMzdITG55WmNRS3Joa2NZOXp4ckViMnBOTWNCWU5IcXp0THZrVlRiWjVVanRocjV5S2pIejlYR1BJRUg?oc=5",
    "date": "2026-11-02T14:15:00.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "Updated Cleveland Cavaliers Starting Lineup vs. Oklahoma City Thunder",
+   "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPSlZ6ZnZsTkJQa1BQTXR4YldmR0N2aVE1VlVGSlZGWnpPTTJXaHNzdUFsb1JILThmbU55ckZKYUZFMmx4N0NMS2JHcGlMYVM0SHZOSVJpeVI3WDhjRW1MNzVySEhHY2VJTnJpc0pYVGU5aEZPQ0lybVdLdnE0UEVQRFRGOWl1d1hIelRKLUVnUVFTT2NUY0E2bWVCZmt0bUNGZHRuVzJOUkM3NW5MbWpoaG90WmhscVlKTVVJ?oc=5",
+   "date": "2026-11-02T08:00:00.000Z"
   },
   {
    "src": "Hoops Rumors",
