@@ -1713,8 +1713,8 @@ requestAnimationFrame(()=>{document.getElementById('fill').style.width=pct(TEAM_
  const h=document.querySelector('#apt thead th.cav');if(h)h.insertAdjacentHTML('beforeend','<span class="apt-cav">Cavs</span>')}
 
 /* injuries — status: Out | Doubtful | Questionable | Probable | Game-time decision */
-const INJ_UPDATED='Nov 8';
-const INJURIES=[["Nae'Qwan Tomlin",'PF','Low back stress reaction','Out'],['Jaylon Tyson','SF','Right ankle sprain','Out'],['Jarrett Allen','C','Right knee contusion','Questionable'],['Sam Merrill','G','Right elbow injury management','Out']];
+const INJ_UPDATED='Nov 9';
+const INJURIES=[["Nae'Qwan Tomlin",'PF','Low back stress reaction','Out'],['Jaylon Tyson','SF','Right ankle sprain','Out'],['Sam Merrill','G','Right elbow injury management','Out']];
 /* injury lists: Out first, then Doubtful, Questionable, Probable, game-time decisions */
 /* Nov 1: the league's own injury report for the next Cavs game (pdata/injury-report.json, read hourly on game days by
    scripts/injury-report.py). OFFI() resolves to it until the morning after that game (Nov 6: was 3 hours, so statuses fell back to older ones the same night), else null. */
@@ -1735,7 +1735,6 @@ const INJ_ASSIGN=[['Khalifa Diop','C']];
    No study: falls back to Hashtag Basketball's NBA injury log by injury type (INJ_HB, matched from the injury text or set with hb:'<type>'), labeled as not peer-reviewed. */
 const INJ_CTX={
   'Sam Merrill':{hist:'https://www.salaryswish.com/injury/players/sam-merrill',diag:'Right elbow injury management (the team is limiting load on a sore elbow), per the NBA official injury report, Nov 7',prior:'No prior elbow listings found in the first page of his Salary Swish log. Other past listings: hamstring (Mar 13–17, Mar 31–Apr 6, Apr 10–18 and May 7–9, 2026, all day to day), hand (Jan 16–28, 2026), ankle (Jan 2–4, 2026).'},
-  'Jarrett Allen':{hist:'https://www.salaryswish.com/injury/players/jarrett-allen',diag:'Right knee contusion (a bruise), per the NBA official injury report, Nov 8 (listed Questionable for Nov 9 at CHA)',prior:'No prior contusion listings found in the first page of his Salary Swish log. Other past listings: knee (Mar 8 and Mar 30–Apr 18, 2026, day to day, cleared Mar 31, Apr 6 and Apr 18), finger (Oct 31–Nov 5 and Nov 21–Dec 14, 2025).'},
   'Jaylon Tyson':{hist:'https://www.salaryswish.com/injury/players/jaylon-tyson',diag:'Right ankle sprain (a stretched or torn ligament), per the NBA official injury report, Nov 3',timeline:'Out for Nov 2 vs. OKC (per Luka, Nov 2)',prior:'Prior ankle listing: Mar 15–17, 2026 (day to day, cleared Mar 17). Other past listings: hip (Nov 2024), concussion (Nov 2025), toe (Mar 21, 2026).'},
   "Nae'Qwan Tomlin":{hist:'https://www.salaryswish.com/injury/players/naeqwan-tomlin',diag:'Stress reaction in his back (an early stage of bone stress, before a fracture)',prior:'No prior back listings found.',timeline:'Expected to be out until at least Nov 16 (Chris Fedor / Plain Dealer, Oct 20; CBS Sports)'}
 };
