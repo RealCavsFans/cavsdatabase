@@ -8,6 +8,8 @@ export default {
     const u = new URL(request.url);
     /* Nov 3: short sign-up links for Cavs & Coffee */
     if (u.pathname === '/coffee' || u.pathname === '/newsletter') return Response.redirect('https://buttondown.com/cavscoffee', 302);
+    /* Nov 9 (Luka): cavsdatabase.com/stats -> this season's stats on the live page (the season rolls over in August) */
+    if (/^\/stats\/?$/i.test(u.pathname)) { const d = new Date(), y = d.getUTCMonth() >= 7 ? d.getUTCFullYear() : d.getUTCFullYear() - 1; return Response.redirect(u.origin + '/live?g=s' + y + '-' + String(y + 1).slice(2), 302); }
     if (u.pathname === '/pbp' && request.method === 'GET') {
       try { return await onRequestGet({ request, env, waitUntil: p => ctx.waitUntil(p) }) }
       catch (e) { return new Response(JSON.stringify({ error: 'backup feed error' }), { status: 502, headers: { 'content-type': 'application/json' } }) }

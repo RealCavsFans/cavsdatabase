@@ -6,6 +6,6 @@
   "assets": {
     "directory": "./",
     "binding": "ASSETS",
-    "run_worker_first": ["/pbp", "/nba", "/live.html", "/live", "/coffee", "/newsletter"]
+    "run_worker_first": ["/pbp", "/nba", "/live.html", "/live", "/coffee", "/newsletter", "/stats", "/stats/"]
   }
 }
