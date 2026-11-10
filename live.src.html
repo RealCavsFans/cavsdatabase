@@ -1310,7 +1310,7 @@ function pbpTeamCards(){if(!pbpOK())return [];const T=PBT.T,O=PBT.O,out=[];
   return out}
 function contextCard(D,R){
   const c=el('div','card sec');head(c,'How possessions started',(S.season?'Season totals':perLabel(S.per))+' · possessions, points and points per possession');
-  const L=[['stl','After a live-ball turnover'],['to','After a dead-ball turnover'],['dreb','After a defensive rebound'],['made','After an opponent score'],['start','Start of a quarter'],['oreb','Second chances']];
+  const L=[['stl','After a live-ball turnover'],['to','After a dead-ball turnover'],['dreb','After a defensive rebound'],['made','After an opponent score'],['oreb','Second chances']];
   const cell=(x,y,t)=>{const td=el('td','ppc',x==null?'–':x.toFixed(2));return td};/* Nov 2: one color rule in this table: only the NBA rank is colored (wine = top 10); points per possession stay plain *//* one color rule: only the Cavs side is colored */
   const tb=el('table','zt hps');tb.innerHTML=`<tr><th></th><th>${esc(D.focus.abbr)}</th><th>Pts</th><th>Per</th><th>${esc(D.other.abbr)}</th><th>Pts</th><th>Per</th></tr>`;
   if(S.season)pbpLoad();const rkOn=!!(S.season&&pbpRank('stl','T',1));
