@@ -82,6 +82,7 @@ export async function liveMeta(request, env) {
   if (info.season) {
     title = 'Cavs ' + info.season.replace('-', '–') + ' season stats · cavs_db';
     desc = 'Every Cavaliers game this season in one place: team and player stats, lineups, on/off, shot charts and the four factors.';
+    img = '/og/stats.jpg'; /* Nov 10 (Luka): season links get their own picture, not the live tracker's (source: scripts/og-stats.html) */
   } else {
     const { x, ab } = info, nick = NICK[ab] || NICK[x.opp] || ab, won = x.cle > x.os;
     const d = new Date(x.et + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
@@ -89,7 +90,8 @@ export async function liveMeta(request, env) {
     desc = 'Final: box score, shot chart, lineups, on/off, assists and win probability for Cavaliers ' + (x.ha === 'home' ? 'vs ' : 'at ') + nick + ', ' + d + '.';
     img = info.img;
   }
-  const full = u.origin + '/live?g=' + encodeURIComponent(g);
+  const cy = new Date(), sy = cy.getUTCMonth() >= 7 ? cy.getUTCFullYear() : cy.getUTCFullYear() - 1, curS = sy + '-' + String(sy + 1).slice(2);
+  const full = info.season === curS ? u.origin + '/stats' : u.origin + '/live?g=' + encodeURIComponent(g);
   const set = (attr, val) => ({ element(e) { e.setAttribute(attr, val); } });
   let rw = new HTMLRewriter()
     .on('title', { element(e) { e.setInnerContent(title); } })
