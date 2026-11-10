@@ -142,7 +142,7 @@ function deriveCore(D,plays,F){
         /* Nov 6: a dead-ball team rebound (missed free throw that isn't the last) doesn't start a second chance */if(!(a&&B[a])&&deadReb){}
         else if(off){offStat(t,'oreb');src[t]=(src[t].includes('to')?'to':'')+'2nd';newPoss(t,p.t,'oreb',inF)}else{luStat(t,'dreb');src[t]='';newPoss(t,p.t,'dreb',inF)}}}
     if(/Turnover|^Traveling|Double Dribble|Discontinued? Dribble|Offensive Goaltending|Palming|Backcourt|3-Second Violation$|Inbound/.test(ty)&&!/^Kicked Ball|Defensive/.test(ty)){
-      const t=p.team||teamOf(a);if(T[t]){TT(t).forEach(x=>x.to++);if(inF&&a&&B[a]&&teamOf(a)===t)(B[a].to++,pbA(a,'to',1));offStat(t,'to');src[opp(t)]='to';newPoss(opp(t),p.t,b&&/steals/.test(p.text)?'stl':'to',inF)}
+      const t=p.team||teamOf(a);if(T[t]){TT(t).forEach(x=>x.to++);if(inF&&a&&B[a]&&teamOf(a)===t)(B[a].to++,pbA(a,'to',1));offStat(t,'to');src[opp(t)]='to';/* Nov 9 (Luka): live-ball = the ball stays in play: a steal, or a bad pass / lost ball the defense picks up without a steal credited (not out of bounds) */newPoss(opp(t),p.t,(b&&/steals/.test(p.text))||(/^(Bad Pass|Lost Ball)/i.test(ty)&&!/Out of Bounds/i.test(ty))?'stl':'to',inF)}
       if(b&&/steals/.test(p.text)&&B[b]){if(inF)(B[b].stl++,pbA(b,'stl',1));TT(teamOf(b)).forEach(x=>x.stl++)}}
     else if(/Foul|Offensive Charge/.test(ty)&&!/Technical|Double Technical/.test(ty)&&a&&B[a]){/* Nov 2: charges are personal fouls too */if(inF)B[a].pf++;pfAll[a]=(pfAll[a]||0)+1;TT(teamOf(a)).forEach(x=>x.pf++);
       if(!/Offensive/.test(ty)){const k=p.per,tt=teamOf(a);tf[k]=tf[k]||{};const q=tf[k][tt]=tf[k][tt]||{n:0,l2:0};q.n++;if(pstart(k)+plen(k)-p.t<=120)q.l2++}}
