@@ -4726,11 +4726,15 @@ window.renderPlayer=function(s){
       if(st.length)c.appendChild(note('Active streaks: '+st.join(' · ')+'.'))}
     ov.appendChild(c)}
   else waiting.push('Game by game heat map and recent form');
-  // rested vs tired
+  // splits (Nov 10, Luka: rested vs tired rolled in here): home/away, wins/losses, rest/back to back
   {const b2b=mine.filter(g=>{const i=reg.indexOf(g.d);if(i<1)return false;return (new Date(g.d)-new Date(reg[i-1]))/864e5===1}),rest=mine.filter(g=>!b2b.includes(g));
-    if(b2b.length>=2&&rest.length>=3){const c=card('Rested vs tired','Rest','How he plays on the second night of a back to back compared with a normal night’s rest. Tells you which nights to expect a dip.');
-      const av=(a,k)=>a.reduce((t,g)=>t+g.me[k],0)/a.length;const big=el('div','ppx-big2');[[f1(av(rest,'pts')),'Points with rest ('+rest.length+' games)'],[f1(av(b2b,'pts')),'Points on a back to back ('+b2b.length+')'],[f1(av(rest,'min')),'Minutes with rest'],[f1(av(b2b,'min')),'Minutes on a back to back']].forEach(([a,b])=>{const d2=el('div');d2.appendChild(el('b',null,a));d2.appendChild(el('span',null,b));big.appendChild(d2)});c.appendChild(big);ov.appendChild(c)}
-    /* rested vs tired: off (Oct 19) */}
+    const win=g=>/^W/i.test(String(g.res||''));
+    const SPL=[['Home',mine.filter(g=>g.ha==='H')],['Away',mine.filter(g=>g.ha==='A')],['Wins',mine.filter(win)],['Losses',mine.filter(g=>!win(g))],['With rest',b2b.length?rest:[]],['Back to back',b2b]].filter(([,a])=>a.length);
+    if(mine.length>=4&&SPL.length>=4){const c=card('Splits','Splits','His averages at home and away, in wins and losses, and with rest compared with the second night of a back to back.');
+      const tb=el('table','ppx-t');tb.innerHTML='<thead><tr><th></th><th>GP</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>FG%</th><th>3PT%</th><th>+/-</th></tr></thead>';const tbd=el('tbody');
+      const av=(a,k)=>a.reduce((t,g)=>t+g.me[k],0)/a.length,sm=(a,k)=>a.reduce((t,g)=>t+g.me[k],0),pct=(m,x)=>x?(m/x).toFixed(3).replace(/^0/,''):'—';
+      SPL.forEach(([lab,a])=>{const tr=el('tr');const pm=av(a,'pm');[lab,a.length,f1(av(a,'min')),f1(av(a,'pts')),f1(av(a,'reb')),f1(av(a,'ast')),pct(sm(a,'fgm'),sm(a,'fga')),pct(sm(a,'tpm'),sm(a,'tpa')),(pm>0?'+':pm<0?'−':'')+Math.abs(pm).toFixed(1)].forEach(v2=>tr.appendChild(el('td',null,String(v2))));tbd.appendChild(tr)});
+      tb.appendChild(tbd);const bx=el('div','ppx-tbx');bx.appendChild(tb);c.appendChild(bx);ov.appendChild(c)}}
   /* season shot chart and passing web, from the live game archive (live-archive/<season>/season.json); season toggle when he has more than one */
   {const c=card('Shots and passing','','Every shot he took, where it came from, and who he set up and who set him up. From our game archive, updated after every game.');const box=el('div','ppx-sp');box.appendChild(el('p','dim','Loading…'));c.appendChild(box);ov.appendChild(c);
     const nrm=x=>x.normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');const SEAS=['2026-27','2025-26'];
