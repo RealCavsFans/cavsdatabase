@@ -2,6 +2,12 @@
  "articles": [
   {
    "src": "Fear The Sword",
+   "title": "Hornets humiliate the Cavs 124-112",
+   "link": "https://www.fearthesword.com/cavs-scores-results/54231/hornets-humiliate-the-cavs-124-112",
+   "date": "2026-11-10T02:44:19.000Z"
+  },
+  {
+   "src": "Fear The Sword",
    "title": "Player Grades: Cavs vs Hornets – James Harden reaches DEFCON 1",
    "link": "https://www.fearthesword.com/cavs-analysis/54227/player-grades-cavs-vs-hornets-james-harden-reaches-defcon-1",
    "date": "2026-11-10T02:34:17.000Z"
@@ -149,12 +155,6 @@
    "title": "Game Night Observations: A Needed Win, A Perfect Blueprint and LeBron’s Return",
    "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTFA5WEdtSk5HeUhvX1N6TFNBNHNlbVo4bDRsWEs0ZjdoaTRQQkJBVWlBYmZ3ZzJGajduYkxvcDR0OEx2OGczRzltcHZtZ21VOW9mRHRGajUzVkVpY0RNSzVHdlBwMHA1OE5IVVhBSEdCUENDQnZjX3RyNA?oc=5",
    "date": "2026-11-07T13:06:28.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "LeBron James has become the king without a home",
-   "link": "https://www.fearthesword.com/cavs-features-profiles/54003/cavs-lebron-james-cleveland-cavaliers-philadelphia-76ers-sixers-los-angeles-lakers-donovan-mitchell",
-   "date": "2026-11-07T12:00:00.000Z"
   },
   {
    "src": "The Athletic",
@@ -377,25 +377,32 @@
  ],
  "videos": [
   {
-   "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: The Cleveland Cavaliers Are EMBARRASSED by the Hornets. Is this Rock Bottom?",
-   "link": "https://www.youtube.com/watch?v=S5uUUyM-qKQ",
-   "date": "2026-11-10T02:40:51.000Z",
-   "id": "S5uUUyM-qKQ"
-  },
-  {
    "src": "The Chase Down Podcast",
    "title": "Chase Down Podcast Live, presented by LECOM: Shorthanded Hornets Top Cavs",
    "link": "https://www.youtube.com/watch?v=HBEkmA_XsWs",
-   "date": "2026-11-10T02:26:36.000Z",
+   "date": "2026-11-10T03:19:01.000Z",
    "id": "HBEkmA_XsWs"
+  },
+  {
+   "src": "Locked On Cavs",
+   "title": "Did Kenny Atkinson's Seat Get WARMER as the Head Coach of the Cleveland Cavaliers?",
+   "link": "https://www.youtube.com/watch?v=7JbfrWV-4_4",
+   "date": "2026-11-10T03:03:35.000Z",
+   "id": "7JbfrWV-4_4"
   },
   {
    "src": "It's Cavalier Podcast",
    "title": "REACTION: Cavs vs. Hornets",
    "link": "https://www.youtube.com/watch?v=dVNvM2uxOag",
-   "date": "2026-11-10T02:23:03.000Z",
+   "date": "2026-11-10T02:59:56.000Z",
    "id": "dVNvM2uxOag"
+  },
+  {
+   "src": "Locked On Cavs",
+   "title": "CAVS POSTCAST: Cleveland Cavaliers COLLAPSE in Embarrassing Loss to Hornets, James Harden STRUGGLES",
+   "link": "https://www.youtube.com/watch?v=S5uUUyM-qKQ",
+   "date": "2026-11-10T02:45:36.000Z",
+   "id": "S5uUUyM-qKQ"
   },
   {
    "src": "It's Cavalier Podcast",
@@ -571,13 +578,6 @@
    "link": "https://www.youtube.com/watch?v=BBkUcOVIC3I",
    "date": "2026-11-05T20:13:29.000Z",
    "id": "BBkUcOVIC3I"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: Cavaliers’ Early DEFICIT Costly—Donovan Mitchell, James Harden NEED Big Answers",
-   "link": "https://www.youtube.com/watch?v=TLfxQJoYr8g",
-   "date": "2026-11-05T19:02:33.000Z",
-   "id": "TLfxQJoYr8g"
   },
   {
    "src": "Cavs Roundtable",

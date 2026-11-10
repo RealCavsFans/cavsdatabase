@@ -2256,37 +2256,7 @@
   "status": "final",
   "score": "112-124",
   "result": "L",
-  "refs": [
-   [
-    "Crew chief",
-    "Ray Acosta",
-    "54"
-   ],
-   [
-    "Referee",
-    "Aaron Smith",
-    "51"
-   ],
-   [
-    "Umpire",
-    "Suyash Mehta",
-    "47"
-   ]
-  ],
-  "qs": {
-   "cle": [
-    28,
-    25,
-    27,
-    32
-   ],
-   "opp": [
-    29,
-    40,
-    38,
-    17
-   ]
-  },
+  "top": "Meleek Thomas: 18 pts, 3 reb, 3 ast",
   "out": [
    "Sam Merrill",
    "Jaylon Tyson",
@@ -2498,7 +2468,37 @@
     "2"
    ]
   ],
-  "top": "Meleek Thomas: 18 pts, 3 reb, 3 ast"
+  "qs": {
+   "cle": [
+    28,
+    25,
+    27,
+    32
+   ],
+   "opp": [
+    29,
+    40,
+    38,
+    17
+   ]
+  },
+  "refs": [
+   [
+    "Crew chief",
+    "Ray Acosta",
+    "54"
+   ],
+   [
+    "Referee",
+    "Aaron Smith",
+    "51"
+   ],
+   [
+    "Umpire",
+    "Suyash Mehta",
+    "47"
+   ]
+  ]
  },
  "2026-11-11": {
   "url": "https://www.nba.com/game/cle-vs-nyk-0022600218/box-score",
