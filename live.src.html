@@ -2202,8 +2202,11 @@ const CARDS={
     const se=await lSeason(D).catch(()=>null);const ss=se?se.shots.filter(q=>q.hasXY&&(team||q.id===id)):[];const sm=ss.filter(q=>q.m),s3=ss.filter(q=>q.three);
     const sAvg=ss.length>=20?[Math.round(sm.length/ss.length*100)+'%',s3.length?Math.round(s3.filter(q=>q.m).length/s3.length*100)+'%':'–',(sm.reduce((a,q)=>a+(q.three?3:2),0)/ss.length).toFixed(2),(ss.reduce((a,q)=>a+Math.hypot(q.x-25,q.y),0)/ss.length).toFixed(1)+' ft']:null;
     const dY=TC.pc?66:0;[['FG',m+'-'+sh.length],['3PT',thm+'-'+th.length],['PTS/SHOT',sh.length?(pts/sh.length).toFixed(2):'–'],['AVG DISTANCE',dist==null?'–':dist.toFixed(1)+' ft']].forEach(([l,v],i)=>{const cx=60+i*245;x.fillStyle=TC.hi;let vz=54;x.font=`700 ${vz}px "Geist Mono"`;/* Nov 5 (Luka): each number shrinks to fit its column, so "15.8 ft" never runs off the card */while(x.measureText(v).width>215&&vz>34){vz-=2;x.font=`700 ${vz}px "Geist Mono"`}x.fillText(v,cx,1060+dY);x.fillStyle='#8d939d';x.font='800 30px "Saira Condensed"';x.fillText(l,cx+4,1100+dY);
-      if(sAvg){x.fillStyle='#8d939d';x.font='600 24px Archivo';x.fillText('season '+sAvg[i],cx+4,1136+dY)}});
-    x.font='800 28px "Saira Condensed"';const LY=(sAvg?1200:1170)+dY;x.fillStyle=TC.light?WINE:'#fff';x.fillText('● MADE 2',60,LY);x.fillStyle=TC.light?'#d9960f':GOLD;x.fillText('● MADE 3',230,LY);x.fillStyle='#8b929b';x.fillText('✕ MISSED',400,LY);
+      /* Nov 9 (Luka): on a season card the season line would repeat the big number, so it says something new: the percentages, true shooting, and the share of shots at the rim */
+      if(S.season&&sh.length){const bx=team?R.T[D.focus.id]:R.B[id],ts=bx&&(bx.fga+bx.fta)?bx.pts/(2*(bx.fga+.44*bx.fta))*100:null,rim=sh.filter(q=>q.zi===0).length;
+        const sub=[(m/sh.length*100).toFixed(1)+'%',th.length?(thm/th.length*100).toFixed(1)+'%':'–',ts==null?'':'TS% '+ts.toFixed(1),Math.round(rim/sh.length*100)+'% at the rim'][i];if(sub){x.fillStyle='#8d939d';x.font='600 24px Archivo';x.fillText(sub,cx+4,1136+dY)}}
+      else if(sAvg){x.fillStyle='#8d939d';x.font='600 24px Archivo';x.fillText('season '+sAvg[i],cx+4,1136+dY)}});
+    x.font='800 28px "Saira Condensed"';const LY=(sAvg||S.season?1200:1170)+dY;x.fillStyle=TC.light?WINE:'#fff';x.fillText('● MADE 2',60,LY);x.fillStyle=TC.light?'#d9960f':GOLD;x.fillText('● MADE 3',230,LY);x.fillStyle='#8b929b';x.fillText('✕ MISSED',400,LY);
     footer(x)}},
   quarters:{label:'Quarter by quarter',async draw(x,D,R){const F=D.focus,O=D.other;const qs=Object.keys(R.TQ).map(Number).sort((a,b)=>a-b);
     frame(x,atLbl(D),'Quarter by quarter',D,R);
