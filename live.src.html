@@ -1310,7 +1310,7 @@ function pbpTeamCards(){if(!pbpOK())return [];const T=PBT.T,O=PBT.O,out=[];
   return out}
 function contextCard(D,R){
   const c=el('div','card sec');head(c,'How possessions started',(S.season?'Season totals':perLabel(S.per))+' · possessions, points and points per possession');
-  const L=[['stl','After a steal'],['dreb','After a defensive rebound'],['to','After a dead-ball turnover'],['made','After an opponent score'],['start','Start of a quarter'],['oreb','Second chances']];
+  const L=[['stl','After a live-ball turnover (steal)'],['dreb','After a defensive rebound'],['to','After a dead-ball turnover'],['made','After an opponent score'],['start','Start of a quarter'],['oreb','Second chances']];
   const cell=(x,y,t)=>{const td=el('td','ppc',x==null?'–':x.toFixed(2));return td};/* Nov 2: one color rule in this table: only the NBA rank is colored (wine = top 10); points per possession stay plain *//* one color rule: only the Cavs side is colored */
   const tb=el('table','zt hps');tb.innerHTML=`<tr><th></th><th>${esc(D.focus.abbr)}</th><th>Pts</th><th>Per</th><th>${esc(D.other.abbr)}</th><th>Pts</th><th>Per</th></tr>`;
   if(S.season)pbpLoad();const rkOn=!!(S.season&&pbpRank('stl','T',1));
@@ -1816,7 +1816,7 @@ function wpCard(D,R){
 /* ---------- points per possession by how it started ---------- */
 function possCard(D,R){
   const f=el('div','card sec');head(f,'Points by how the possession started',perLabel(S.per));
-  const L=[['stl','After a steal'],['to','After a dead-ball turnover'],['dreb','After a defensive rebound'],['made','After an opponent score'],['oreb','Second chances (after an offensive rebound)']];
+  const L=[['stl','After a live-ball turnover (steal)'],['to','After a dead-ball turnover'],['dreb','After a defensive rebound'],['made','After an opponent score'],['oreb','Second chances (after an offensive rebound)']];
   const tb=el('table','zt');tb.innerHTML=`<tr><th>Started</th><th>${esc(D.focus.abbr)} poss</th><th>Pts per</th><th>${esc(D.other.abbr)} poss</th><th>Pts per</th></tr>`;
   L.forEach(([k,l])=>{const a=R.pc[D.focus.id][k],b=R.pc[D.other.id][k];const tr=el('tr');const pa=a.n?a.pts/a.n:null,pb=b.n?b.pts/b.n:null;
     const ca=el('td',null,pa==null?'–':pa.toFixed(2)),cb=el('td',null,pb==null?'–':pb.toFixed(2));if(pa!=null&&pb!=null&&pa!==pb){(pa>pb?ca:cb).style.fontWeight='800';(pa>pb?ca:cb).style.color=pa>pb?D.focus.c:D.other.c}
@@ -2830,7 +2830,7 @@ async function luDeep(D,l,box){const se=D.season,per=S.per||'all',key=l.ids.slic
   const cr=el('div','lud-courts');const c1=el('div');c1.innerHTML=zoneCourt(zo,own.length,'This group’s shots by zone',zt,'#860038');c1.appendChild(el('p','note','Its shooting vs the team’s season (wine = better)'));
   const c2=el('div');c2.innerHTML=zoneCourt(za,alw.length,'Shots allowed by zone',zta,'#860038');c2.appendChild(el('p','note','What opponents shot vs what they shoot on the Cavs overall (gray = opponents did better)'));cr.append(c1,c2);box.appendChild(cr);box.insertAdjacentHTML('beforeend',ZKEY);
   /* how its possessions started */
-  box.appendChild(el('h4','lud-h','How its possessions started'));const H=[['stl','After a steal'],['dreb','After a defensive rebound'],['to','After a dead-ball turnover'],['made','After an opponent score'],['oreb','Second chances']];
+  box.appendChild(el('h4','lud-h','How its possessions started'));const H=[['stl','After a live-ball turnover (steal)'],['dreb','After a defensive rebound'],['to','After a dead-ball turnover'],['made','After an opponent score'],['oreb','Second chances']];
   const sum=(L,f)=>{const q=L.filter(f);const p=q.reduce((s,x)=>s+x.pts,0);return [q.length,p,q.length?(p/q.length).toFixed(2):'–']};
   const t2=el('table','zt lud-t');t2.innerHTML='<tr><th></th><th>CLE</th><th>Pts</th><th>Per</th><th>Opp</th><th>Pts</th><th>Per</th></tr>';
   const row=(lab,f)=>{const a=sum(po,f),b=sum(pd,f);const tr=el('tr');tr.innerHTML=`<td>${lab}</td><td>${a[0]}</td><td>${a[1]}</td><td><b>${a[2]}</b></td><td>${b[0]}</td><td>${b[1]}</td><td>${b[2]}</td>`;t2.appendChild(tr)};
