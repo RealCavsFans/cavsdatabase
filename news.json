@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "Cavaliers on SI",
+   "title": "Important Cavs Contributor Faces Uncertain Future As Contract Guarantee Date Nears",
+   "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQUTN0XzJXblBSVmdqMzlrZGRnamJzb2VXa0tHOWd5ZURNSmZ5X1htM0tvWER4UWZ2MnAwdGc5V0RpRjFPaWJDUWJSR0NHYmowMUtwTTc0bHU2NjJLSHNaa0QxZWxXMUxYNlkyVndud0M0cU92aUNPd2JEVlBaS09iY2h0QWhIUVVzUEN3aHlEMTJhbk5DV3FqeGhGS3VsZjRFZkRreFBWTlZubmpLSms3WllWYThyd3hSNEZwMUpaWkNnVkxCaDVvTHBNUzdPdw?oc=5",
+   "date": "2026-11-10T15:30:00.000Z"
+  },
+  {
    "src": "The Inside Shot",
    "title": "Game Night Observations: Unacceptable Effort, Harden’s Awful Start And a Defining Stretch",
    "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBKV2I0M0FJdFNoWTlZVmxIMkZReTlYM2Q4YUlfMU40dTdzTFdwQjdQQy11R05RTEIwZldITzd5V0tWdnYwV2dfTGdVZ2YwVHlPdTJ1X3ZILXZvQ0RwY2k0MnJUQUU5aGRQdUVPZENkLXhocFp3T2J4alZEZDU3Zw?oc=5",
@@ -278,12 +284,6 @@
   },
   {
    "src": "Cavaliers on SI",
-   "title": "Cavs Got Meleek Thomas at a Second-Round Discount, But He's Showing First-Round Talent",
-   "link": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxPdE94Q1NvNTRFTG5jX3kwUjlkVVR4cTl3QW1kVkp6bEo0aFBNM1Bjd01vYzM5MnctQXJqQWNfVzlPYTFPNzk2NTJnT0t3VXQzV2VKbFluS3RFUFNKbXZ6bEdyc01qV2xiRlVxbGZ2bjZoTUl6TG9RakdFbDA0Z2pjU0V5aElST3ZnTnZWVS0xamhreGs0Z2ZqZmlpX29jVUpYSTRzMTVsanRwUGNVTEtYNWlwUDlRZldKWjBZZjNiSUFKYWh3MEpKT1J4cnRsQ2lsZkE?oc=5",
-   "date": "2026-11-03T21:06:43.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
    "title": "Tyrese Proctor Is Making Every Opportunity Count—and Giving the Cavs a Reason to Play Him More",
    "link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxOY2N5aWw1UGhCZzRyQ1g5ZVZaOVhTNS04T1ctc1hOYjZoNXF5YU02SEY4YW9CdnVWcVloWDRqVnN3UzQ2NlVWQTZCRlpCMVY1SjlwU3FRVm5tMHluSDZweUZjTWEzTFh3MjFzbDN1OXU2SDBXUmxIa1RuOEZxOHdmVEZBYldsaTdia2VHRTNCdFVyb3hnX1dNSnVyaE1KTTlibl9KUEp0MnJld1pBNmFjMEkwdGlZVHR0S3BEcjFVSzVtQndsSjNHaGFqb0E3YTlldmM0YnNIX3lNbDhnOXc?oc=5",
    "date": "2026-11-03T18:26:25.000Z"
@@ -384,18 +384,25 @@
  ],
  "videos": [
   {
-   "src": "Locked On Cavs",
-   "title": "REACTION: Cleveland Cavaliers EMBARRASSED By Charlotte Hornets! | Red Flags Are EVERYWHERE!",
-   "link": "https://www.youtube.com/watch?v=j1WLdWUPQiI",
-   "date": "2026-11-10T05:00:07.000Z",
-   "id": "j1WLdWUPQiI"
+   "src": "Ultimate Cleveland Sports Show",
+   "title": "The Cavaliers made some INEXCUSIBLE MISTAKES against the Hornets & there's no easy fix right now",
+   "link": "https://www.youtube.com/watch?v=TUMzWVMbGCE",
+   "date": "2026-11-10T16:00:44.000Z",
+   "id": "TUMzWVMbGCE"
   },
   {
    "src": "The Chase Down Podcast",
    "title": "Chase Down Podcast Live, presented by LECOM: Shorthanded Hornets Top Cavs",
    "link": "https://www.youtube.com/watch?v=HBEkmA_XsWs",
-   "date": "2026-11-10T03:19:01.000Z",
+   "date": "2026-11-10T15:33:05.000Z",
    "id": "HBEkmA_XsWs"
+  },
+  {
+   "src": "Locked On Cavs",
+   "title": "REACTION: Cleveland Cavaliers EMBARRASSED By Charlotte Hornets! | Red Flags Are EVERYWHERE!",
+   "link": "https://www.youtube.com/watch?v=j1WLdWUPQiI",
+   "date": "2026-11-10T05:00:07.000Z",
+   "id": "j1WLdWUPQiI"
   },
   {
    "src": "Locked On Cavs",
@@ -634,13 +641,6 @@
    "link": "https://www.youtube.com/watch?v=BG_wc-pi8dk",
    "date": "2026-11-03T16:25:51.000Z",
    "id": "BG_wc-pi8dk"
-  },
-  {
-   "src": "Ultimate Cleveland Sports Show",
-   "title": "Cleveland Cavaliers COLLAPSE Late Against Oklahoma City Thunder! What Went Wrong for the Cavs Team?",
-   "link": "https://www.youtube.com/watch?v=YXTJ7eettoY",
-   "date": "2026-11-03T15:26:44.000Z",
-   "id": "YXTJ7eettoY"
   },
   {
    "src": "Cavs Roundtable",
