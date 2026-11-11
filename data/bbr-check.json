@@ -129,7 +129,15 @@
    "url": "https://www.basketball-reference.com/boxscores/202611070CLE.html",
    "at": "2026-11-09T09:39:45.028Z",
    "players": 21
+  },
+  "0022600204": {
+   "et": "2026-11-09",
+   "opp": "CHA",
+   "status": "match",
+   "url": "https://www.basketball-reference.com/boxscores/202611090CHO.html",
+   "at": "2026-11-11T09:30:33.640Z",
+   "players": 22
   }
  },
- "checked": "2026-11-09T09:39:45.028Z"
+ "checked": "2026-11-11T09:30:33.640Z"
 }

@@ -59,6 +59,7 @@ jobs:
           node scripts/cle-rates.mjs
           node scripts/sos.mjs || true
           node scripts/nba-cup.mjs || true   # Nov 9: NBA Cup group standings (NBA.com schedule first, ESPN backup) and SEASON.cup
+          node scripts/charge-espn.mjs || true   # Nov 11: Cleveland Charge results, box links and Cavs players' lines from ESPN
       - run: node scripts/fetch-rcf.mjs
         if: github.event_name != 'push'
       # RealCavsFans YouTube uploads for the Media page only (Oct 31). Writes rcf-videos.json only when the list changes.
@@ -123,7 +124,7 @@ jobs:
             [ -d img ] && cp -r img /tmp/keep/ || true
             git fetch origin main && git reset --hard origin/main
             cp -r /tmp/keep/. . 2>/dev/null || true
-            node scripts/team-stats.mjs || true; node scripts/cle-rates.mjs || true; node scripts/nba-cup.mjs || true
+            node scripts/team-stats.mjs || true; node scripts/cle-rates.mjs || true; node scripts/nba-cup.mjs || true; node scripts/charge-espn.mjs || true
             CHROME_PATH=/usr/bin/google-chrome node scripts/build-pages.mjs --prerender
             add
             if git diff --cached --quiet; then exit 0; fi
