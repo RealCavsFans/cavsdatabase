@@ -2096,6 +2096,12 @@ const ord=n=>{const s=["th","st","nd","rd"],v=n%100;return n+(s[(v-20)%10]||s[v]
 const mkUsg=(R,tid,id)=>{const b=R.B[id];if(!b)return null;let f=0,t=0,o=0;Object.values(R.L[tid][5]||{}).forEach(l=>{if(l.ids.includes(id)&&l.o){f+=l.o.fga||0;t+=l.o.fta||0;o+=l.o.to||0}});const d=f+.44*t+o;return d>0?(b.fga+.44*b.fta+b.to)/d:null};
 const mkNum=(x,v,X,Y,sz,c=MK.ink)=>{x.fillStyle=c;x.font=`800 ${sz}px "Saira Condensed"`;x.fillText(String(v),X,Y);return x.measureText(String(v)).width};
 const mkLbl=(x,t,X,Y,sz=30,c=MK.mut)=>{x.fillStyle=c;x.font=`800 ${sz}px "Saira Condensed"`;if('letterSpacing' in x)x.letterSpacing='2px';x.fillText(t,X,Y);if('letterSpacing' in x)x.letterSpacing='0px'};
+/* Nov 11 (Luka): a player's season shooting against the league average at his position (G, F or C; 3+ games, 15+ minutes a game), pooled */
+let PAVG=null;async function posAvg(D,id){try{if(!PAVG)PAVG=await getJSON('/pdata/league.json')}catch(e){return null}const P=Object.values((PAVG&&PAVG.players)||{});if(!P.length)return null;
+  const nz=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z]/g,''),me=P.find(p=>nz(p.n)===nz(D.P[id].name)),pos=me?me.p:String(D.P[id].pos||'').charAt(0).toUpperCase();if(!/^[GFC]$/.test(pos))return null;
+  const TT={};Object.values(PAVG.tg||{}).forEach(g=>(g.t||[]).forEach(t=>{const o=TT[t.ab]||(TT[t.ab]={g:0,fga:0,fta:0,tov:0});o.g++;o.fga+=t.fga||0;o.fta+=t.fta||0;o.tov+=t.tov||0}));
+  const q=P.filter(p=>p.p===pos&&p.g>=3&&p.min/p.g>=15);if(q.length<10)return null;const s=k=>q.reduce((a,p)=>a+(p[k]||0),0);let un=0,ud=0;q.forEach(p=>{const t=TT[p.t];if(!t||!p.min)return;un+=(p.fga+.44*p.fta+p.tov)*t.g*48/(t.fga+.44*t.fta+t.tov);ud+=p.min});
+  return {pos,lab:{G:'guards',F:'forwards',C:'centers'}[pos],FG:s('fgm')/s('fga'),'3PT':s('tpm')/s('tpa'),FT:s('ftm')/s('fta'),'TS%':s('pts')/(2*(s('fga')+.44*s('fta'))),'USG%':ud?un/ud:null}}
 const MOCK_STATLINE={label:'Player card',pick:'player',async draw(x,D,R,id){const p=D.P[id],b=R.B[id];if(!p||!b)return;const n=S.season?(b.gp||1):1,pg=v=>S.season?(v/n).toFixed(1):String(v);
     const F=D.focus,O=D.other;const fs=F.ha==='home'?R.hs:R.as,os=F.ha==='home'?R.as:R.hs;
     const kicker=S.season?(D.season||'').replace('-','–')+' season · '+n+' games':(F.ha==='home'?'vs ':'at ')+O.abbr+(S.state==='post'?' · '+(fs>os?'W ':'L ')+fs+'–'+os:'');
@@ -2108,21 +2114,21 @@ const MOCK_STATLINE={label:'Player card',pick:'player',async draw(x,D,R,id){cons
     [['REB',b.oreb+b.dreb,'reb'],['AST',b.ast,'ast'],['STL',b.stl,'stl'],['BLK',b.blk,'blk']].forEach(([l,v,k],i)=>{const X=HX+HW+24+(i%2)*(tw+12),Y=HY+Math.floor(i/2)*(th+12);T(X,Y,tw,th,'#f2f3f5');const s=pg(v);fit(s,tw-40,104);x.fillStyle=MK.ink;x.fillText(s,X+24,Y+108);mkLbl(x,l,X+26,Y+146,28);
       const a=sav(k);if(a!=null){const up=v>a;x.font='600 20px "Geist Mono"';x.fillStyle=up?MK.wine:MK.mut;const t2=(up?'▲ ':'')+'avg '+a.toFixed(1);x.fillText(t2,X+tw-24-x.measureText(t2).width,Y+146)}});
     /* shooting: four columns, each a big makes/attempts, its percentage and a tick bar filled to that percentage */
-    const SY=HY+HH+(S.season?60:44),cw=(c.W-48)/5,pc=(m,a)=>a?m/a:null,tsf=z=>z.fga+z.fta?z.pts/(2*(z.fga+.44*z.fta)):null,ts=tsf(b),us=mkUsg(R,D.focus.id,id);
+    const SY=HY+HH+44,cw=(c.W-48)/5,pc=(m,a)=>a?m/a:null,tsf=z=>z.fga+z.fta?z.pts/(2*(z.fga+.44*z.fta)):null,ts=tsf(b),us=mkUsg(R,D.focus.id,id);
     /* Nov 11 (Luka): on a game card each shooting bar is a slider from his season average: wine to the right when he beat it, gray to the left when he didn't */
-    let SV=null;if(!S.season&&sb&&sg){const se=await lSeason(D).catch(()=>null),Fm=se&&se.F;SV={FG:pc(sb.fgm,sb.fga),'3PT':pc(sb.tpm,sb.tpa),FT:pc(sb.ftm,sb.fta),'TS%':tsf(sb),'USG%':Fm&&se.G&&sb.min?(sb.fga+.44*sb.fta+sb.to)*(se.G*2880)/(sb.min*(Fm.fga+.44*Fm.fta+Fm.to)):null}}
+    let SV=null,VS='vs avg',AV='avg';if(S.season){const pa=await posAvg(D,id);if(pa){SV=pa;VS='vs '+pa.pos;AV=pa.lab.slice(0,-1)+' avg'}}else if(sb&&sg){const se=await lSeason(D).catch(()=>null),Fm=se&&se.F;SV={FG:pc(sb.fgm,sb.fga),'3PT':pc(sb.tpm,sb.tpa),FT:pc(sb.ftm,sb.fta),'TS%':tsf(sb),'USG%':Fm&&se.G&&sb.min?(sb.fga+.44*sb.fta+sb.to)*(se.G*2880)/(sb.min*(Fm.fga+.44*Fm.fta+Fm.to)):null}}
     [['FG',b.fgm+'/'+b.fga,pc(b.fgm,b.fga)],['3PT',b.tpm+'/'+b.tpa,pc(b.tpm,b.tpa)],['FT',b.ftm+'/'+b.fta,pc(b.ftm,b.fta)],['TS%',ts==null?'–':(ts*100).toFixed(1)+'%',ts],['USG%',us==null?'–':(us*100).toFixed(1)+'%',us]].forEach(([l,v,f],i)=>{const X=c.X+i*(cw+12);
       fit(v,cw-10,92);x.fillStyle=MK.ink;x.fillText(v,X,SY+80);mkLbl(x,l+(!/%$/.test(l)&&f!=null?' · '+(f*100).toFixed(1)+'%':''),X+2,SY+120,l.length>3?24:28);
-      if(!S.season){const av=SV?SV[l]:null,bw=cw-10,cx=X+bw/2,Y=SY+142;x.fillStyle='#e3e6ea';x.fillRect(X,Y,bw,22);x.fillStyle=MK.ink;x.fillRect(cx-1,Y-8,3,38);x.font='600 20px "Geist Mono"';
-        if(f!=null&&av!=null){const d=(f-av)*100,L=Math.min(bw/2,Math.abs(d)/20*bw/2);x.fillStyle=d>=0?MK.wine:'#7b828c';x.fillRect(d>=0?cx:cx-L,Y,L,22);x.fillStyle=d>=0?MK.wine:MK.mut;x.fillText((d>=0?'▲ ':'▼ ')+Math.abs(d).toFixed(1)+' vs avg',X,Y+54);x.fillStyle=MK.mut;x.font='600 17px "Geist Mono"';x.fillText('avg '+(av*100).toFixed(1)+'%',X,Y+80)}
+      if(!S.season||SV){const av=SV?SV[l]:null,bw=cw-10,cx=X+bw/2,Y=SY+142;x.fillStyle='#e3e6ea';x.fillRect(X,Y,bw,22);x.fillStyle=MK.ink;x.fillRect(cx-1,Y-8,3,38);x.font='600 20px "Geist Mono"';
+        if(f!=null&&av!=null){const d=(f-av)*100,L=Math.min(bw/2,Math.abs(d)/20*bw/2);x.fillStyle=d>=0?MK.wine:'#7b828c';x.fillRect(d>=0?cx:cx-L,Y,L,22);x.fillStyle=d>=0?MK.wine:MK.mut;x.fillText((d>=0?'▲ ':'▼ ')+Math.abs(d).toFixed(1)+' '+VS,X,Y+54);x.fillStyle=MK.mut;x.font='600 17px "Geist Mono"';x.fillText(AV+' '+(av*100).toFixed(1)+'%',X,Y+80)}
         else{x.fillStyle=MK.mut;x.fillText(f==null?'no attempts':'no season avg',X,Y+54)}return}
       const nT=12,gw=(cw-10-(nT-1)*4)/nT,on=f==null?0:Math.round(Math.min(1,f)*nT);for(let t=0;t<nT;t++){x.fillStyle=t<on?(i>=3?MK.gold:MK.wine):'#e3e6ea';x.fillRect(X+t*(gw+4),SY+142,gw,26)}});
     /* Nov 11 (Luka): game cards end with three tiles: the Cavs offense and defense with him on the floor (against him off), and his plus-minus */
-    if(!S.season){const L5=Object.values(R.L[D.focus.id][5]||{}),has=l=>l.ids.includes(id),on=lRt(lSum(L5,has)),off=lRt(lSum(L5,l=>!has(l))),TY=SY+226,t3=(c.W-32)/3;
-      [['ORTG ON COURT',on.ortg,off.ortg,1],['DRTG ON COURT',on.drtg,off.drtg,0],['PLUS-MINUS',b.pm,null,1]].forEach(([l,v,o,hi],i)=>{const X=c.X+i*(t3+16);x.fillStyle='#f2f3f5';x.fillRect(X,TY,t3,150);mkLbl(x,l,X+24,TY+40,26);
-        const s=i===2?lsgi(v):lf1(v);fit(s,t3-44,84);x.fillStyle=i===2?(v>0?LGR:v<0?LRD:MK.ink):MK.ink;x.fillText(s,X+22,TY+112);
+    {const L5=Object.values(R.L[D.focus.id][5]||{}),has=l=>l.ids.includes(id),on=lRt(lSum(L5,has)),off=lRt(lSum(L5,l=>!has(l))),TY=SY+226,t3=(c.W-32)/3;
+      [['ORTG ON COURT',on.ortg,off.ortg,1],['DRTG ON COURT',on.drtg,off.drtg,0],[S.season?'+/− PER GAME':'PLUS-MINUS',S.season?b.pm/n:b.pm,null,1]].forEach(([l,v,o,hi],i)=>{const X=c.X+i*(t3+16);x.fillStyle='#f2f3f5';x.fillRect(X,TY,t3,150);mkLbl(x,l,X+24,TY+40,26);
+        const s=i===2?(S.season?lsg(v):lsgi(v)):lf1(v);fit(s,t3-44,84);x.fillStyle=i===2?(v>0?LGR:v<0?LRD:MK.ink):MK.ink;x.fillText(s,X+22,TY+112);
         if(i<2&&v!=null&&o!=null){const d=v-o,good=(d>0)===!!hi;x.font='600 20px "Geist Mono"';x.fillStyle=good?MK.wine:MK.mut;x.fillText(BSg(d)+' vs him off',X+24,TY+138)}})}
-    else{const LY=SY+250;x.fillStyle=MK.line;x.fillRect(c.X,LY-46,c.W,2);
+    if(0){const LY=SY+250;x.fillStyle=MK.line;x.fillRect(c.X,LY-46,c.W,2);
     const pm=S.season?b.pm/n:b.pm,pmS=(pm>0?'+':pm<0?'−':'')+(S.season?Math.abs(pm).toFixed(1):Math.abs(pm));x.font='700 40px "Geist Mono"';x.fillStyle=MK.wine;x.fillText('$',c.X,LY+10);x.fillStyle=MK.mut;x.fillText(' min',c.X+24,LY+10);let cx=c.X+24+x.measureText(' min ').width;x.fillStyle=MK.ink;const mn=S.season?(b.min/60/n).toFixed(1):String(Math.round(b.min/60));x.fillText(mn,cx,LY+10);cx+=x.measureText(mn+'   ').width;
     x.fillStyle=MK.mut;x.fillText('+/- ',cx,LY+10);cx+=x.measureText('+/- ').width;x.fillStyle=pm>0?'#1d7a3a':pm<0?'#a3122e':MK.ink;x.fillText(pmS,cx,LY+10);}
     /* context: against his own season, or where he ranks on the Cavs */let ctx='';if(!S.season&&sb&&sg){const d=b.pts-sb.pts/sg;ctx=Math.abs(d)<.5?'Right at his season average ('+(sb.pts/sg).toFixed(1)+' pts)':(Math.abs(d).toFixed(1)+(d>0?' points above':' points below')+' his season average ('+(sb.pts/sg).toFixed(1)+')')}
@@ -2162,7 +2168,7 @@ const MOCK_RESULT={label:'Game card',async draw(x,D,R){if(S.season)return;const 
 const MOCK_ONOFF={label:'On/off card',pick:'player',async draw(x,D,R,id){const p=D.P[id];if(!p)return;const L5=Object.values(R.L[D.focus.id][5]||{});
     const sum=f=>{const o={sec:0,pf:0,pa:0,o:{},d:{}};L5.filter(f).forEach(l=>{o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;for(const k in l.o)o.o[k]=(o.o[k]||0)+l.o[k];for(const k in l.d)o.d[k]=(o.d[k]||0)+l.d[k]});return o};
     const A=sum(l=>l.ids.includes(id)),B=sum(l=>!l.ids.includes(id));const M=X=>{const PO=poss(X.o),PD=poss(X.d);return {po:Math.round((PO+PD)/2),min:X.sec/60,off:PO>=1?X.pf/PO*100:null,def:PD>=1?X.pa/PD*100:null,net:PO>=1&&PD>=1?X.pf/PO*100-X.pa/PD*100:null,efg:X.o.fga?(X.o.fgm+.5*X.o.tpm)/X.o.fga*100:null}};const a=M(A),b=M(B);
-    const c=await mkFrame(x,'On/off · '+(S.season?(D.season||'').replace('-','–')+' season':'this game'),p.name,'Cavs per 100 possessions','',D,id);
+    const c=await mkFrame(x,S.season?sSea(D)+' season · '+sGames(D).length+' games':'',p.name,'Cavs per 100 possessions','',D,id);
     const T=(X,Y,W,H,bg)=>{x.fillStyle=bg;x.fillRect(X,Y,W,H)};const sg=v=>v==null?'–':(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1);
     /* three tiles: on, off, and the swing */const tw=(c.W-32)/3,th=290;[['ON THE FLOOR',a.net,MK.wine,'#fff',Math.round(a.min)+' min · '+a.po+' poss'],['ON THE BENCH',b.net,'#f2f3f5',MK.ink,Math.round(b.min)+' min · '+b.po+' poss'],['THE SWING',a.net!=null&&b.net!=null?a.net-b.net:null,MK.gold,MK.ink,'on minus off']].forEach(([l,v,bg,fg,sub],i)=>{const X=c.X+i*(tw+16);T(X,c.Y,tw,th,bg);mkLbl(x,l,X+24,c.Y+52,28,i===0?MK.gold:MK.mut);
       let sz=130;x.font=`800 ${sz}px "Saira Condensed"`;const s=sg(v);while(x.measureText(s).width>tw-40&&sz>60){sz-=6;x.font=`800 ${sz}px "Saira Condensed"`}x.fillStyle=fg;x.fillText(s,X+22,c.Y+200);x.font='600 22px "Geist Mono"';x.fillStyle=i===0?'rgba(255,255,255,.75)':MK.mut;x.fillText(sub,X+26,c.Y+252)});
@@ -2816,7 +2822,7 @@ const B_WF={label:'Win the factor card',async draw(x,D,R){const G=(D.games||[]).
 
 const B_SLEAD={label:'Leaders card',async draw(x,D,R){const ids=Object.keys(R.B).filter(i=>R.B[i].gp&&D.P[i]&&D.P[i].team===D.focus.id),mg=Math.max(1,...ids.map(i=>R.B[i].gp)),q=ids.filter(i=>R.B[i].gp>=Math.max(1,Math.ceil(mg*.5)));
   const cats=[['POINTS',b=>b.pts],['REBOUNDS',b=>b.oreb+b.dreb],['ASSISTS',b=>b.ast],['THREES',b=>b.tpm],['STEALS',b=>b.stl],['BLOCKS',b=>b.blk]];
-  const c=await mkFrame(x,sSea(D),'Per-game leaders','Min. '+Math.max(1,Math.ceil(mg*.5))+' games played','',D,null);const cw=(c.W-16)/2,ch=250;
+  const c=await mkFrame(x,sSea(D),'Per game leaders','Min. '+Math.max(1,Math.ceil(mg*.5))+' games played','',D,null);const cw=(c.W-16)/2,ch=250;
   for(let i=0;i<cats.length;i++){const [lab,f]=cats[i],X=c.X+(i%2)*(cw+16),Y=c.Y+Math.floor(i/2)*(ch+14),id=q.slice().sort((a,b)=>f(R.B[b])/R.B[b].gp-f(R.B[a])/R.B[a].gp)[0];if(!id)continue;const b=R.B[id];
     BT(x,X,Y,cw,ch,i===0?MK.wine:'#f2f3f5');const fg=i===0?'#fff':MK.ink;await BHead(x,D,id,X+cw-100,Y+120,78);BTxt(x,lab,X+26,Y+52,30,i===0?MK.gold:MK.mut);BTxt(x,(f(b)/b.gp).toFixed(1),X+24,Y+170,120,fg,cw-230);BTxt(x,(D.P[id].last||'').toUpperCase(),X+28,Y+218,32,fg)}}};
 
@@ -2829,8 +2835,7 @@ const B_LINEUP={label:'Lineup card',pick:'lineup',async draw(x,D,R,k){const F=D.
   [['OFFENSE · ORTG',o,1],['DEFENSE · DRTG',d,0]].forEach(([lab,v,hi],i)=>{const Y=c.Y+620+i*100;BTxt(x,lab,c.X,Y+40,32,MK.ink);BTxt(x,v==null?'–':v.toFixed(1),c.X+340,Y+50,70,hi?MK.wine:MK.ink);BTicks(x,c.X+520,Y+16,c.W-520,v==null?0:hi?(v-90)/50:(140-v)/50,hi?MK.wine:MK.gold,15,30)});
   mkCtx(x,c,Math.round((po+pd)/2)+' possessions together'+((po+pd)/2<25?' · small sample':''))}};
 
-/* the season versions of these stay as they were until Luka reviews the season set */const SKEEP={ff:CARDS.ff,lineup:CARDS.lineup,box:CARDS.box};
-Object.assign(CARDS,{ff:B_FF,run:B_RUN,quarters:B_QTR,podium:B_PODIUM,box:B_BOX,streak:B_REC,story:B_STORY,clutch:B_CLUTCH,milestone:B_MILE,lineup:B_LINEUP});
+Object.assign(CARDS,{ff:B_FF,run:B_RUN,quarters:B_QTR,podium:B_PODIUM,box:B_BOX,streak:B_REC,story:B_STORY,clutch:B_CLUTCH,milestone:B_MILE,lineup:B_LINEUP});Object.assign(SCARDS,{season:B_SEASON,wfactor:B_WF,sleaders:B_SLEAD,ff:B_FF,box:B_BOX,lineup:B_LINEUP});
 /* Nov 11 (Luka, batch 1 round 2): one banner for every card. Game cards: "GAME 82 · APR 12", the card's name, the final score big under it.
    Season cards: the season, the card's name, the Cavs record (or the last 10) under it. The Cavs C on the right. Cards he wanted kept as they
    were (four factors, lineup, season box score) are redrawn for the tall card so their text matches the rest. */
@@ -2860,7 +2865,7 @@ const BR=(x,s,Xr,y,font,col,max)=>{x.font=font;if(max){let sz=+/(\d+)px/.exec(fo
 const B_FF2={label:'Four factors card',async draw(x,D,R){const Fo=D.focus,Ot=D.other,A=R.T[Fo.id],B=R.T[Ot.id],fa=factors(A,B),fb=factors(B,A);
   let refA=null,refB=null;if(S.season){const lg=await lgFF().catch(()=>null);refA=refB=lg}else{const se=await lSeason(D).catch(()=>null);if(se){refA=factors(se.F,se.O);refB=factors(se.O,se.F)}}
   const cmp=(k,h)=>fa[k]!=null&&fb[k]!=null&&fa[k]!==fb[k]?((fa[k]>fb[k])===h):null;const won=FF.filter(([k,,,h])=>cmp(k,h)===true).length,lost=FF.filter(([k,,,h])=>cmp(k,h)===false).length;
-  const pf0=Fo.ha==='home'?R.hs:R.as,pa0=Fo.ha==='home'?R.as:R.hs;const c=await bFrame(x,D,BGK(D),'The four factors',S.season?BRec(D):S.state==='post'&&pf0!==pa0?[['CAVS ',BN,'#fff'],[pf0>pa0?'WIN':'LOSE',BN,'#fff']]:BScore(D,R),null);const tw=(c.W-16)/2,th=170,X2=c.X+tw+16;
+  const pf0=Fo.ha==='home'?R.hs:R.as,pa0=Fo.ha==='home'?R.as:R.hs;const c=await bFrame(x,D,BGK(D),'The four factors',S.season?'':S.state==='post'&&pf0!==pa0?[['CAVS ',BN,'#fff'],[pf0>pa0?'WIN':'LOSE',BN,'#fff']]:BScore(D,R),null);const tw=(c.W-16)/2,th=170,X2=c.X+tw+16;
   BT(x,c.X,c.Y,tw,th,MK.wine);BTxt(x,won+'–'+lost,c.X+28,c.Y+128,124,'#fff',200);BTxt(x,'CAVS FACTORS WON',c.X+240,c.Y+74,28,MK.gold);x.font='600 22px Archivo';x.fillStyle='rgba(255,255,255,.85)';x.fillText(won>lost?'won the factor battle':won<lost?'lost the factor battle':'split the factors',c.X+240,c.Y+112);
   BT(x,X2,c.Y,tw,th,'#f2f3f5');if(S.season){const [w,l]=sRec(D);BTxt(x,w+'–'+l,X2+28,c.Y+128,124,MK.ink,200);BTxt(x,'RECORD',X2+240,c.Y+74,28,MK.mut)}
   else{const pf=Fo.ha==='home'?R.hs:R.as,pa=Fo.ha==='home'?R.as:R.hs;BTxt(x,lsgi(pf-pa),X2+28,c.Y+128,124,pf>pa?LGR:pf<pa?LRD:MK.ink,200);BTxt(x,'FINAL MARGIN',X2+240,c.Y+74,28,MK.mut);x.font='600 22px Archivo';x.fillStyle=MK.mut;x.fillText('Cavs '+pf+', '+Ot.abbr+' '+pa,X2+240,c.Y+112)}
@@ -2883,7 +2888,7 @@ const B_LU2={label:'Lineup card',pick:'lineup',async draw(x,D,R,k){const F=D.foc
   const all=Object.values(L5).filter(z=>z.sec>=180).sort((a,b)=>(b.pf-b.pa)-(a.pf-a.pa));const best=all[0]===l&&all.length>1;
   const what=NW.toLowerCase()+'-man lineup';
   const line=[['CAVS ',BL,'#fff'],[String(l.pf),BN,'#fff'],[' – ',BD,'#fff'],[String(l.pa),BN,BSOFT],[' '+(S.season?'OPP':D.other.abbr),BL,'#fff'],['   in '+fmtMin(l.sec)+' together','600 30px Archivo',BSOFT]];
-  const c=await bFrame(x,D,S.season?sSea(D)+' season':gKick(D),what,line,null),Y=c.Y;
+  const c=await bFrame(x,D,BGK(D),what,line,null),Y=c.Y;
   /* the players */const hw=c.W/ids.length;for(let j=0;j<ids.length;j++){const cx=c.X+hw*(j+.5);await BHead(x,D,ids[j],cx,Y+48,48);BTag(x,(D.P[ids[j]].last||'').toUpperCase(),cx,Y+100,26);x.font='800 34px "Saira Condensed"';x.fillStyle=MK.ink;const t=String(PB[ids[j]]||0);const w1=x.measureText(t).width;x.font='800 22px "Saira Condensed"';const w2=x.measureText(' PTS').width;x.font='800 34px "Saira Condensed"';x.fillText(t,cx-(w1+w2)/2,Y+166);x.font='800 22px "Saira Condensed"';x.fillStyle=MK.mut;x.fillText(' PTS',cx-(w1+w2)/2+w1,Y+166)}
   /* net rating and plus-minus */const Y2=Y+186,NWd=c.W;BT(x,c.X,Y2,NWd,214,MK.wine);BTxt(x,'NET RATING',c.X+28,Y2+44,28,MK.gold);BTxt(x,A.net==null?'–':BSg(A.net),c.X+26,Y2+170,124,'#fff',280);
   if(A.net!=null&&Z.net!=null&&cmp){const d=A.net-Z.net;BT(x,c.X+360,Y2+40,220,62,'#fff');x.font='700 34px "Geist Mono"';x.fillStyle=d>=0?LBT:LWS;BCtr(x,BSg(d),c.X+470,Y2+83);x.font='600 22px Archivo';x.fillStyle='rgba(255,255,255,.85)';BCtr(x,'vs '+(S.season?'every other lineup':'the rest of the game'),c.X+470,Y2+138)}
@@ -2911,7 +2916,7 @@ const B_LU2={label:'Lineup card',pick:'lineup',async draw(x,D,R,k){const F=D.foc
 
 /* BOX SCORE (season kept, game merged): every stat from the old card, last names, one row per player */
 const B_BOX2={label:'Box score card',async draw(x,D,R){const F=D.focus,T=R.T[F.id],season=!!S.season;
-  const c=await bFrame(x,D,BGK(D),'Box score',season?BRec(D,'per game'):BScore(D,R),null);
+  const c=await bFrame(x,D,BGK(D),'Box score',season?'Per game':BScore(D,R),null);
   const ids=D.roster[F.id].filter(i=>R.B[i]&&R.B[i].min>0).sort((a,b)=>(D.P[b].starter-D.P[a].starter)||R.B[b].min-R.B[a].min).slice(0,season?12:13);
   const per=b=>season?(b.gp||1):1,pv=(b,k)=>b[k]/per(b),f0=v=>season?v.toFixed(1):String(Math.round(v)),N0=168,CW=69.5,col=i=>c.X+N0+CW*(i+1);
   const hy=c.Y+14,rh=Math.min(70,(c.H-150-hy+c.Y)/Math.max(1,ids.length)),M='"Geist Mono"';
@@ -2974,7 +2979,7 @@ const B_REC2=BWG({label:'Record card',async draw(x,D,R){const rc=recordThrough(D
 const B_WF2={label:'Win the factor card',async draw(x,D,R){const G=(D.games||[]).filter(g=>g.t&&g.u),z=y=>Object.assign({tdreb:0},sRow(y)),K=[['efg','Shooting','eFG%',1],['tov','Ball security','TOV%',0],['orb','Second chances','Offensive rebound rate',1],['ftr','Getting to the line','Free throw attempts per FGA',1]];
   const rec={};K.forEach(([k])=>rec[k]=[[0,0],[0,0]]);const byN=[[0,0],[0,0],[0,0]];
   G.forEach(g=>{const a=z(g.t),b=z(g.u),fa=factors(a,b),fb=factors(b,a),w=g.cle>g.os?0:1;let n=0;K.forEach(([k,,,hi])=>{if(fa[k]==null||fb[k]==null||fa[k]===fb[k])return;const won=hi?fa[k]>fb[k]:fa[k]<fb[k];if(won)n++;rec[k][won?0:1][w]++});byN[n>=3?0:n===2?1:2][w]++});
-  const c=await bFrame(x,D,'Win the factor · '+sSea(D),'Win the factor, win the game?',BRec(D,'when they win or lose each factor'),null);
+  const c=await bFrame(x,D,BGK(D),'Win the factor, win the game?','Record when they win or lose each factor',null);
   const NWd=300,cw=(c.W-NWd-16)/2,rs=v=>v[0]+'–'+v[1],pc=v=>v[0]+v[1]?v[0]/(v[0]+v[1]):null;
   BTxt(x,'WON IT',c.X+NWd,c.Y+4,28,MK.wine);BTxt(x,'LOST IT',c.X+NWd+cw+16,c.Y+4,28,MK.mut);
   K.forEach(([k,n,s],i)=>{const y=c.Y+22+i*138;BTxt(x,n.toUpperCase(),c.X,y+58,38,MK.ink,NWd-20);BFitF(x,s,'600 20px Archivo',NWd-20);x.fillStyle=MK.mut;x.fillText(s,c.X+2,y+90);
@@ -2983,10 +2988,10 @@ const B_WF2={label:'Win the factor card',async draw(x,D,R){const G=(D.games||[])
   mkCtx(x,c,'Each game counts the factors the Cavs won · lower TOV% wins')}};
 
 Object.assign(CARDS,{ff:B_FF2,run:BWG(B_RUN),quarters:B_QTR2,podium:B_POD2,box:B_BOX2,streak:B_REC2,story:BWG(B_STORY),clutch:BWG(B_CLUTCH),milestone:BWG(B_MILE),lineup:B_LU2});
-/* season cards: still under review (mock-batch1 branch) */
+Object.assign(SCARDS,{season:BWrap(B_SEASON,()=>'',D=>BGK(D)),wfactor:B_WF2,sleaders:BWrap(B_SLEAD,(D,R,s)=>s,D=>BGK(D)),ff:B_FF2,box:B_BOX2,lineup:B_LU2});
 
 /* season mode: the season cards plus the game cards that work on season totals */
-const shareCards=()=>S.season?Object.assign({},SCARDS,{ff:SKEEP.ff,onoff:CARDS.onoff,lineup:SKEEP.lineup,shotmap:CARDS.shotmap,box:SKEEP.box}):CARDS;
+const shareCards=()=>S.season?Object.assign({},SCARDS,{ff:CARDS.ff,onoff:CARDS.onoff,lineup:CARDS.lineup,shotmap:CARDS.shotmap,box:CARDS.box}):CARDS;
 /* live-game cards are light (quick reactions read better); season cards stay dark */
 function autoInk(x){const ft=x.fillText.bind(x),W=x.canvas.width,H=x.canvas.height;x.fillText=function(t,X,Y,mw){const c=String(x.fillStyle).toLowerCase();const wh=c==='#ffffff'||/^rgba\(255, 255, 255/.test(c),gd=c==='#f2b231';
   if(wh||gd){try{const fs=parseFloat((x.font.match(/([\d.]+)px/)||[])[1])||30;let sx=X;const tw=x.measureText(t).width;if(x.textAlign==='center')sx-=tw/2;else if(x.textAlign==='right'||x.textAlign==='end')sx-=tw;
