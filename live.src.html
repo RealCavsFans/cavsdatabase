@@ -2080,14 +2080,14 @@ function footer(x){brandBar(x,1080,1350)}
 const scoreLine=(D,R)=>{if(S.season){const g=D.games||[],w=g.filter(x=>x.cle>x.os).length;return [`CLE ${w}–${g.length-w}`,(D.season||'').replace('-','–')+' · '+g.length+' GAMES']}const fin=S.state==='post',per=R.lp?R.lp.per:1;return [`${D.away.abbr} ${R.as}  ${D.home.abbr} ${R.hs}`,fin?'FINAL'+(per>4?'/'+pname(per):''):pname(per)+' '+(R.lp?R.lp.clock:'')]};
 /* Nov 2: one matchup format on every card, Cavs first, with the date */
 const atLbl=D=>TC.pc&&!S.season?gKick(D):S.season?(D.season||'').replace('-','–')+' Cavs':D.focus.abbr+(D.focus.ha==='home'?' vs ':' at ')+D.other.abbr+' · '+gDay(D);
-/* Nov 10 MOCK (Luka): bigger, bolder share cards that keep the terminal look. A slim banner says what the card is; the terminal window
+/* Nov 11 (Luka): bigger, bolder share cards that keep the terminal look. A slim banner says what the card is; the terminal window
    below gives the numbers most of the card, a few at a time, very large. */
 const MK={page:'#eef0f3',ink:'#101419',mut:'#6b727c',line:'#dfe2e6',wine:'#860038',gold:'#F2B231',win:'#ffffff'};
 async function mkFrame(x,kicker,title,sub,cmd,D,photoId){const W=1080,H=1350;tBg(x,W,H);tMark(x,72,96);
   x.fillStyle=TC.acc;x.font='700 26px Archivo';if('letterSpacing' in x)x.letterSpacing='5px';x.fillText(kicker.toUpperCase(),72,170);if('letterSpacing' in x)x.letterSpacing='0px';
   let fs=124;x.font=`800 ${fs}px "Saira Condensed"`;const T=title.toUpperCase(),mw=photoId?600:640;while(x.measureText(T).width>mw&&fs>56){fs-=4;x.font=`800 ${fs}px "Saira Condensed"`}x.fillStyle=TC.hi;titleFx(x,T,72,278,fs);
   if(sub){x.font='600 30px Archivo';x.fillStyle=TC.soft;x.fillText(sub,74,334)}
-  if(photoId){const img=await loadImg(hsUrl(D,photoId));head2(x,img,872,200,150,null,initials(D.P[photoId].name))}else await cleMark(x,940,200,170);
+  if(photoId){const img=await loadImg(hsUrl(D,photoId));head2(x,img,872,200,150,null,initials(D.P[photoId].name))}else await cleMark(x,930,196,230);
   brandBar(x,W,H);return {X:72,Y:430,W:936,H:H-58-430-30}}
 /* twist 2: one factual line at the bottom of every card, in the terminal's comment voice */
 const mkCtx=(x,c,t)=>{if(!t)return;const Y=c.Y+c.H-6;x.fillStyle=MK.line;x.fillRect(c.X,Y-56,c.W,2);x.font='600 30px "Geist Mono"';x.fillStyle=MK.wine;x.fillText('#',c.X,Y);x.fillStyle=MK.ink;let s=t;x.font='600 30px Archivo';while(x.measureText(s).width>c.W-50&&s.length>10)s=s.slice(0,-2);if(s!==t)s=s.replace(/\s+\S*$/,'')+'…';x.fillText(s,c.X+36,Y)};
@@ -2096,7 +2096,7 @@ const ord=n=>{const s=["th","st","nd","rd"],v=n%100;return n+(s[(v-20)%10]||s[v]
 const mkUsg=(R,tid,id)=>{const b=R.B[id];if(!b)return null;let f=0,t=0,o=0;Object.values(R.L[tid][5]||{}).forEach(l=>{if(l.ids.includes(id)&&l.o){f+=l.o.fga||0;t+=l.o.fta||0;o+=l.o.to||0}});const d=f+.44*t+o;return d>0?(b.fga+.44*b.fta+b.to)/d:null};
 const mkNum=(x,v,X,Y,sz,c=MK.ink)=>{x.fillStyle=c;x.font=`800 ${sz}px "Saira Condensed"`;x.fillText(String(v),X,Y);return x.measureText(String(v)).width};
 const mkLbl=(x,t,X,Y,sz=30,c=MK.mut)=>{x.fillStyle=c;x.font=`800 ${sz}px "Saira Condensed"`;if('letterSpacing' in x)x.letterSpacing='2px';x.fillText(t,X,Y);if('letterSpacing' in x)x.letterSpacing='0px'};
-const MOCK_STATLINE={label:'Stat line (mock)',pick:'player',async draw(x,D,R,id){const p=D.P[id],b=R.B[id];if(!p||!b)return;const n=S.season?(b.gp||1):1,pg=v=>S.season?(v/n).toFixed(1):String(v);
+const MOCK_STATLINE={label:'Player card',pick:'player',async draw(x,D,R,id){const p=D.P[id],b=R.B[id];if(!p||!b)return;const n=S.season?(b.gp||1):1,pg=v=>S.season?(v/n).toFixed(1):String(v);
     const F=D.focus,O=D.other;const fs=F.ha==='home'?R.hs:R.as,os=F.ha==='home'?R.as:R.hs;
     const kicker=S.season?(D.season||'').replace('-','–')+' season · '+n+' games':(F.ha==='home'?'vs ':'at ')+O.abbr+(S.state==='post'?' · '+(fs>os?'W ':'L ')+fs+'–'+os:'');
     const c=await mkFrame(x,kicker,p.name,S.season?'Per game':(Math.round(b.min/60)+' minutes'),'',D,id);
@@ -2118,7 +2118,7 @@ const MOCK_STATLINE={label:'Stat line (mock)',pick:'player',async draw(x,D,R,id)
     /* context: against his own season, or where he ranks on the Cavs */let ctx='';if(!S.season&&sb&&sg){const d=b.pts-sb.pts/sg;ctx=Math.abs(d)<.5?'Right at his season average ('+(sb.pts/sg).toFixed(1)+' pts)':(Math.abs(d).toFixed(1)+(d>0?' points above':' points below')+' his season average ('+(sb.pts/sg).toFixed(1)+')')}
       else if(S.season){const ids=Object.keys(R.B).filter(i=>R.B[i].gp>=Math.max(1,n*.4)&&D.P[i]&&D.P[i].team===D.focus.id);const rk=k=>1+ids.filter(i=>R.B[i][k]/R.B[i].gp>b[k]/n).length;const r=[['pts','points'],['ast','assists'],['blk','blocks'],['stl','steals']].map(([k,l])=>[rk(k),l]).sort((a,b)=>a[0]-b[0])[0];ctx=r[0]===1?'Leads the Cavs in '+r[1]+' per game':ord(r[0])+' on the Cavs in '+r[1]+' per game'}
     mkCtx(x,c,ctx)}};
-const MOCK_TOPLU={label:'Top lineups (mock)',async draw(x,D,R){const F=D.focus.id;const minSec=S.season?12*60:4*60;
+const MOCK_TOPLU={label:'Best lineups card',async draw(x,D,R){const F=D.focus.id;const minSec=S.season?12*60:4*60;
     const rows=Object.values(R.L[F][5]||{}).filter(l=>l.sec>=minSec).map(l=>{const po=poss(l.o),pd=poss(l.d);return {l,net:po>=1&&pd>=1?l.pf/po*100-l.pa/pd*100:null,o:po>=1?l.pf/po*100:null,d:pd>=1?l.pa/pd*100:null}}).filter(r=>r.net!=null).sort((a,b)=>b.net-a.net).slice(0,5);
     const c=await mkFrame(x,S.season?(D.season||'').replace('-','–')+' season · min. 12 minutes':'This game · min. 4 minutes','Best 5-man lineups','Net rating per 100 possessions','--lineups --top '+rows.length,D,null);
     if(!rows.length){mkLbl(x,'No group has played enough minutes yet',c.X,c.Y+80,40);return}
@@ -2133,7 +2133,7 @@ const MOCK_TOPLU={label:'Top lineups (mock)',async draw(x,D,R){const F=D.focus.i
       x.font='600 21px "Geist Mono"';x.fillStyle=MK.mut;const sm=Math.round(r.l.sec/60)+' MIN · '+pz+' POSS';x.fillText(sm,c.X+c.W-x.measureText(sm).width,y+rh/2+50);const sp='OFF '+Math.round(r.o)+' · DEF '+Math.round(r.d);x.fillText(sp,c.X+c.W-x.measureText(sp).width,y+rh/2+78);x.restore()});
     if(tN!=null)mkCtx(x,c,'Cavs overall: '+(tN>0?'+':tN<0?'−':'')+Math.abs(tN).toFixed(1)+' net per 100 · faded = under '+(S.season?25:8)+' possessions')}};
 
-const MOCK_RESULT={label:'Result (mock)',async draw(x,D,R){if(S.season)return;const F=D.focus,O=D.other;const fs=F.ha==='home'?R.hs:R.as,os=F.ha==='home'?R.as:R.hs,fin=S.state==='post',won=fs>os;
+const MOCK_RESULT={label:'Game card',async draw(x,D,R){if(S.season)return;const F=D.focus,O=D.other;const fs=F.ha==='home'?R.hs:R.as,os=F.ha==='home'?R.as:R.hs,fin=S.state==='post',won=fs>os;
     const c=await mkFrame(x,(D.date?new Date(D.date).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'')+(fin?' · Final':''),fin?(won?'Cavs win':(O.name||O.abbr).split(' ').pop()+' win'):'Score update',(F.ha==='home'?'vs ':'at ')+(O.name||O.abbr),'',D,null);
     const T=(X,Y,W,H,bg)=>{x.fillStyle=bg;x.fillRect(X,Y,W,H)};
     /* the score: two big tiles, the winner in wine */const tw=(c.W-16)/2,th=200;const L1=await loadImg('/img/tl/cle.png'),L2=await loadImg('/img/tl/'+String(O.abbr).toLowerCase()+'.png');
@@ -2149,7 +2149,7 @@ const MOCK_RESULT={label:'Result (mock)',async draw(x,D,R){if(S.season)return;co
     FF.forEach(([k,n,full,hi],i)=>{const a=fa[k],bb=fb[k],w=a!=null&&bb!=null&&a!==bb&&((a>bb)===hi);const X=c.X+i*(fw+12);T(X,FY+16,fw,124,w?MK.gold:'#eceef1');x.font='800 24px "Saira Condensed"';x.fillStyle=MK.ink;x.fillText(({efg:'SHOOTING · EFG%',tov:'BALL SECURITY · TOV%',orb:'OFF. REB · OREB%',ftr:'FREE THROWS · FTR'})[k]||n.toUpperCase(),X+16,FY+50);
       x.font='800 54px "Saira Condensed"';x.fillStyle=MK.ink;const s1=a==null?'–':(a*100).toFixed(1);x.fillText(s1,X+16,FY+112);const w1=x.measureText(s1).width;x.font='600 22px "Geist Mono"';x.fillStyle=w?'#5a4500':MK.mut;x.fillText('vs '+(bb==null?'–':(bb*100).toFixed(1)),X+22+w1,FY+112)});
     /* context: the biggest run of the game */const rn=(R.runs||[]).slice().sort((p,q)=>q.pts-p.pts)[0];if(rn){const who=rn.t===F.id?'Cavs':O.abbr;mkCtx(x,c,'Biggest run: '+who+' '+rn.pts+'–0 ('+pname(rn.start.per)+' '+rn.start.clock+')')}}};
-const MOCK_ONOFF={label:'On/off (mock)',pick:'player',async draw(x,D,R,id){const p=D.P[id];if(!p)return;const L5=Object.values(R.L[D.focus.id][5]||{});
+const MOCK_ONOFF={label:'On/off card',pick:'player',async draw(x,D,R,id){const p=D.P[id];if(!p)return;const L5=Object.values(R.L[D.focus.id][5]||{});
     const sum=f=>{const o={sec:0,pf:0,pa:0,o:{},d:{}};L5.filter(f).forEach(l=>{o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;for(const k in l.o)o.o[k]=(o.o[k]||0)+l.o[k];for(const k in l.d)o.d[k]=(o.d[k]||0)+l.d[k]});return o};
     const A=sum(l=>l.ids.includes(id)),B=sum(l=>!l.ids.includes(id));const M=X=>{const PO=poss(X.o),PD=poss(X.d);return {po:Math.round((PO+PD)/2),min:X.sec/60,off:PO>=1?X.pf/PO*100:null,def:PD>=1?X.pa/PD*100:null,net:PO>=1&&PD>=1?X.pf/PO*100-X.pa/PD*100:null,efg:X.o.fga?(X.o.fgm+.5*X.o.tpm)/X.o.fga*100:null}};const a=M(A),b=M(B);
     const c=await mkFrame(x,'On/off · '+(S.season?(D.season||'').replace('-','–')+' season':'this game'),p.name,'Cavs per 100 possessions','',D,id);
@@ -2163,7 +2163,7 @@ const MOCK_ONOFF={label:'On/off (mock)',pick:'player',async draw(x,D,R,id){const
     /* context: where his swing ranks among Cavs with real minutes */{const pool=[...new Set(L5.flatMap(l=>l.ids))].filter(i=>{const s=sum(l=>l.ids.includes(i)).sec;return s>=(S.season?100*60:12*60)&&sum(l=>!l.ids.includes(i)).sec>=(S.season?60*60:6*60)});const sw=i=>{const p1=M(sum(l=>l.ids.includes(i))),p2=M(sum(l=>!l.ids.includes(i)));return p1.net!=null&&p2.net!=null?p1.net-p2.net:-999};
       if(pool.includes(id)){const my=sw(id),rk=1+pool.filter(i=>sw(i)>my).length;mkCtx(x,c,(rk===1?'Biggest':ord(rk)+' biggest')+' on/off swing on the Cavs (of '+pool.length+')')}}}};
 
-const CARDS={statline:MOCK_STATLINE,result:MOCK_RESULT,onoff2:MOCK_ONOFF,toplu:MOCK_TOPLU,
+const CARDS={
   game:{label:'Game card',async draw(x,D,R){const F=D.focus,O=D.other,fs=F.ha==='home'?R.hs:R.as,os=F.ha==='home'?R.as:R.hs;const cavsWin=S.state==='post'&&F.id==='5'&&fs>os;
     const top=t=>D.roster[t.id].filter(id=>R.B[id].min>0||R.B[id].pts).sort((a,b)=>R.B[b].pts-R.B[a].pts);
     if(cavsWin){/* the win version: full wine, giant W and a line for the occasion */
@@ -2406,7 +2406,7 @@ function sHead(x,D,title,sub,maxW=936){tBg(x,1080,1350);x.strokeStyle=TC.cline;x
   const n=sGames(D).length,[w,l]=sRec(D);x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText((kick()+sSea(D)+' CAVS · '+n+' GAME'+(n===1?'':'S')+' · '+w+'–'+l).toUpperCase(),72,100);
   x.fillStyle='#fff';let fs=120;x.font=`800 ${fs}px "Saira Condensed"`;while(x.measureText(title).width>maxW&&fs>56){fs-=6;x.font=`800 ${fs}px "Saira Condensed"`}x.fillText(title,72,220);
   if(sub){x.fillStyle='rgba(255,255,255,.8)';x.font='600 30px Archivo';x.fillText(sub,72,272)}}
-const SCARDS={statline:MOCK_STATLINE,onoff2:MOCK_ONOFF,toplu:MOCK_TOPLU,
+const SCARDS={
   season:{label:'Season card',async draw(x,D,R){const [w,l]=sRec(D),g=sGames(D),n=g.length;const A=R.T[D.focus.id],B=R.T[D.other.id];
     const P=t=>poss({fga:t.fga,oreb:t.oreb,to:t.to,fta:t.fta,np:t.np});const pa=P(A),pb=P(B),pp=(pa+pb)/2;
     sHead(x,D,'THE SEASON SO FAR',null);
@@ -2698,6 +2698,8 @@ Object.assign(SCARDS,{
         x.fillStyle=TC.track;x.fillRect(X+112,y+46,PW-260,14);x.fillStyle=i?'#b8b3ab':WINE;x.fillRect(X+112,y+46,(PW-260)*v/mx,14);x.fillStyle=INK;x.font='800 52px "Saira Condensed"';const s2=v.toFixed(1);x.fillText(s2,X+PW-30-x.measureText(s2).width,y+58)})});
     lNote(x,'Per game this season');brandBar(x,LW,LH)}}
 });
+/* Nov 11 (Luka): the bold cards replace the game, player and on/off cards, and add best lineups */
+Object.assign(CARDS,{game:MOCK_RESULT,player:MOCK_STATLINE,onoff:MOCK_ONOFF,toplu:MOCK_TOPLU});Object.assign(SCARDS,{player:MOCK_STATLINE,onoff:MOCK_ONOFF,toplu:MOCK_TOPLU});delete SCARDS.splayer;
 /* season mode: the season cards plus the game cards that work on season totals */
 const shareCards=()=>S.season?Object.assign({},SCARDS,{ff:CARDS.ff,onoff:CARDS.onoff,lineup:CARDS.lineup,shotmap:CARDS.shotmap,box:CARDS.box}):CARDS;
 /* live-game cards are light (quick reactions read better); season cards stay dark */
