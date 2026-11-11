@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "cleveland.com",
+   "title": "Cavs have a James Harden problem with no easy fix: Chris Fedor",
+   "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQanZYWFY4Qk9PclY3c1B4cVl4cG9SZVBPUDY1TThZMWlEN0t4dUNlR0Q2Wjk2c0QwU3NkM3BPSlRsTU85aDk5dHlGTURSMlJ4VjRLQWItRFRrUkt5QjFlR01VT1Y4ZFZmUkxoemdlT0szaVU1QTU1SUhoUThGeWRtaUZPbFlsVWxORWU0YzdmYzlhOGRjUEVOcmJpNUl3bXFUc25YTEV4UHM?oc=5",
+   "date": "2026-11-11T14:55:00.000Z"
+  },
+  {
    "src": "Fear The Sword",
    "title": "Cleveland Charge drop season opener 142-122 to Motor City",
    "link": "https://www.fearthesword.com/cleveland-charge/54262/cleveland-charge-g-league-cavaliers-cavs-motor-city-cruise-detroit-pistons-curtis-jones",
@@ -35,12 +41,6 @@
    "title": "Game Night Observations: Unacceptable Effort, Harden’s Awful Start And a Defining Stretch",
    "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBKV2I0M0FJdFNoWTlZVmxIMkZReTlYM2Q4YUlfMU40dTdzTFdwQjdQQy11R05RTEIwZldITzd5V0tWdnYwV2dfTGdVZ2YwVHlPdTJ1X3ZILXZvQ0RwY2k0MnJUQUU5aGRQdUVPZENkLXhocFp3T2J4alZEZDU3Zw?oc=5",
    "date": "2026-11-10T13:20:30.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "3 Potential Solutions To Fix The Fading Cleveland Cavaliers",
-   "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPMExlZVVCXzUtbXNFaVNKLWIwZnRPM0tlNDdiZ3NkZzdLeHktLVhndnl1SXUzb0lfRjN3ZzBIWE11aWNUdzF6WnFKZmxuUXUxRGpENlYtdVZ2TkVDM2EtdVVwaFlxcjhtc21hbWduTTdBVkpwYWdjbG1qMjVxbU5IUmtLc2pOQVdBRzh3ako4Vm0wOFA1YTB2d21YZVFtbXgxblZoTlNObklUVlhfeDc0?oc=5",
-   "date": "2026-11-10T12:00:01.000Z"
   },
   {
    "src": "Fear The Sword",
@@ -235,10 +235,10 @@
    "date": "2026-11-07T00:46:30.000Z"
   },
   {
-   "src": "cleveland.com",
-   "title": "Cavs make injury announcement ahead of Friday’s game vs. 76ers",
-   "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNNFgxd2ItcnVSOWd6ZUtZekJSQUFld0E5eV9iTVJYRi02Vkdxdm8xelNDa2x6dTFoc3k0UFZEZWNVY3FuRWtlMUZQa1hxaHNMNThicHdvcl9Bb21tUWh5aThPX0Z1MF85NmZMVG45VUFyS2xjcERhbV9aSXBiMVZscm9oVV8xOHhpY3ZSU2FiRWlQcm9OWmYyaE11Z3dZSTJrS0xhRTdVRQ?oc=5",
-   "date": "2026-11-07T00:05:00.000Z"
+   "src": "Cavaliers on SI",
+   "title": "Updated Cavs Injury Report Ahead Of Pivotal Sixers Clash",
+   "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQVWNlYi1SSE52d2tjOWEzS1ZzUWlJUHBPV2xFMHYzOEtVdzMtb3FBNGR1NHl4ekdPVGRBdWttZ0RoZ2pUeUs5ZmIxOFVwNWdMWFZOMGJaQWtRbnpESDVPd3FRR2N1NkpNX0YweVZuVVJueW1BX2xBQVhmLUZuU0FrTVVWb25xbzM0UGFkdnpGbUJpQklqZ001ODRqd21ULUpjdzlQa05ESmdxWlE?oc=5",
+   "date": "2026-11-06T17:00:00.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -263,6 +263,12 @@
    "title": "Cleveland's Latest Injury Report Includes Hopeful Update On Big Man Jarrett Allen",
    "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOMzMxcGxXWDZxZklqejF2alYyb2ZaYmVQQmV0Z2Jfc0Y3dTdaM1R3YTBkQjJHNjM1eUZzN3FYNjBCXzRWYnBLa3VLLUZxNFFHTXgyR19oWlBzb1VtSUtfV29QTDVib1duanBDOVpZbUpRc2dibmt6T0l5b2tabU1FTUY0MEFLbjZieTRodmxpVXVvVDZiZ3dFN3F1eFhhTEVmN3BfWl80N2wwY2diMkpjekdtQUtNS0swNnBCNUxEQTRWdkZucHMydEtaOHo?oc=5",
    "date": "2026-11-05T23:09:08.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "An Updated Look at Cavs Two-Way Contract Room Following Thursday's Transactions",
+   "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQZk1YV0VvM3NBMDRhb1ZvUENxOWtmR0xJN3VrYmVGYjBCVVFoNXN4N3pSV0wycEVfSHBsTk1ucnh6YnlRSjU4c25vQWJpWWhwZVZneDAwd3laMklyQ05GZUUwUE51Y25HQzY5RGNwYnhFbmM4clppSjAxcE82RDlMaUtyZC1VZHZ0c2Z5UE9pMG4wSFpybTRTUkxhVXJWZGthX245NmFKYVFiZEIwQTdzZnZ0ZW1pWDRfMEc2M0JHeEFWa3MzTmhtc3lB?oc=5",
+   "date": "2026-11-05T21:01:35.000Z"
   },
   {
    "src": "The Inside Shot",
@@ -299,12 +305,6 @@
    "title": "Central Notes: Thompson, Joe, Watson, Tyson, Buzelis",
    "link": "https://www.hoopsrumors.com/2026/11/central-notes-thompson-joe-watson-tyson-buzelis.html",
    "date": "2026-11-03T23:41:06.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Tyrese Proctor Is Making Every Opportunity Count—and Giving the Cavs a Reason to Play Him More",
-   "link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxOY2N5aWw1UGhCZzRyQ1g5ZVZaOVhTNS04T1ctc1hOYjZoNXF5YU02SEY4YW9CdnVWcVloWDRqVnN3UzQ2NlVWQTZCRlpCMVY1SjlwU3FRVm5tMHluSDZweUZjTWEzTFh3MjFzbDN1OXU2SDBXUmxIa1RuOEZxOHdmVEZBYldsaTdia2VHRTNCdFVyb3hnX1dNSnVyaE1KTTlibl9KUEp0MnJld1pBNmFjMEkwdGlZVHR0S3BEcjFVSzVtQndsSjNHaGFqb0E3YTlldmM0YnNIX3lNbDhnOXc?oc=5",
-   "date": "2026-11-03T18:26:25.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -397,6 +397,20 @@
   }
  ],
  "videos": [
+  {
+   "src": "It's Cavalier Podcast",
+   "title": "Can the Cavs Stop the Slide? Knicks Rematch Is a BIG Test",
+   "link": "https://www.youtube.com/watch?v=Rd7ehQeXYys",
+   "date": "2026-11-11T16:07:32.000Z",
+   "id": "Rd7ehQeXYys"
+  },
+  {
+   "src": "Ultimate Cleveland Sports Show",
+   "title": "What's at stake tonight for the Cleveland Cavaliers as they take on the NY Knicks on National TV?",
+   "link": "https://www.youtube.com/watch?v=hPA2AJb8Jew",
+   "date": "2026-11-11T15:48:47.000Z",
+   "id": "hPA2AJb8Jew"
+  },
   {
    "src": "Locked On Cavs",
    "title": "TROUBLING: Cleveland Cavaliers Exposed as James Harden's Early Season Numbers PLUMMET",
@@ -587,13 +601,6 @@
    "id": "QNxOclnmfo4"
   },
   {
-   "src": "It's Cavalier Podcast",
-   "title": "REACTION: Cavs vs. 76ers",
-   "link": "https://www.youtube.com/watch?v=v5L_yiBCjUk",
-   "date": "2026-11-07T02:29:00.000Z",
-   "id": "v5L_yiBCjUk"
-  },
-  {
    "src": "Ultimate Cleveland Sports Show",
    "title": "What will we learn about the Cleveland Cavaliers over the weekend in games vs. the 76ers & Knicks?",
    "link": "https://www.youtube.com/watch?v=3vhRomRbQl4",
@@ -648,13 +655,6 @@
    "link": "https://www.youtube.com/watch?v=PNjm1qtxzt0",
    "date": "2026-11-03T18:52:40.000Z",
    "id": "PNjm1qtxzt0"
-  },
-  {
-   "src": "Ultimate Cleveland Sports Show",
-   "title": "Should the Cleveland Cavaliers close out games with BOTH Evan Mobley & Jarrett Allen on the court?",
-   "link": "https://www.youtube.com/watch?v=BG_wc-pi8dk",
-   "date": "2026-11-03T16:25:51.000Z",
-   "id": "BG_wc-pi8dk"
   },
   {
    "src": "Cavs Roundtable",
