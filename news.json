@@ -2,7 +2,7 @@
  "articles": [
   {
    "src": "cleveland.com",
-   "title": "Cavs have a James Harden problem with no easy fix: Chris Fedor",
+   "title": "The Cavs have a James Harden problem with no easy fix: Chris Fedor",
    "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQanZYWFY4Qk9PclY3c1B4cVl4cG9SZVBPUDY1TThZMWlEN0t4dUNlR0Q2Wjk2c0QwU3NkM3BPSlRsTU85aDk5dHlGTURSMlJ4VjRLQWItRFRrUkt5QjFlR01VT1Y4ZFZmUkxoemdlT0szaVU1QTU1SUhoUThGeWRtaUZPbFlsVWxORWU0YzdmYzlhOGRjUEVOcmJpNUl3bXFUc25YTEV4UHM?oc=5",
    "date": "2026-11-11T14:55:00.000Z"
   },
@@ -398,8 +398,22 @@
  ],
  "videos": [
   {
+   "src": "Ultimate Cleveland Sports Show",
+   "title": "James Harden NEEDS to have a big game against the Knicks tonight to save the Cavaliers",
+   "link": "https://www.youtube.com/watch?v=LzJGK5ZFhO0",
+   "date": "2026-11-11T16:44:20.000Z",
+   "id": "LzJGK5ZFhO0"
+  },
+  {
+   "src": "Ultimate Cleveland Sports Show",
+   "title": "What's Meleek Thomas' NBA comparison? | Cavs rookie reminds McNuggets of a current All-NBA guard",
+   "link": "https://www.youtube.com/watch?v=Vs4t0sz4ovk",
+   "date": "2026-11-11T16:24:25.000Z",
+   "id": "Vs4t0sz4ovk"
+  },
+  {
    "src": "It's Cavalier Podcast",
-   "title": "Can the Cavs Stop the Slide? Knicks Rematch Is a BIG Test",
+   "title": "Knicks vs Cavs | ECF Rematch Part 2 – Who Wins at Madison Square Garden?",
    "link": "https://www.youtube.com/watch?v=Rd7ehQeXYys",
    "date": "2026-11-11T16:07:32.000Z",
    "id": "Rd7ehQeXYys"
@@ -634,20 +648,6 @@
    "link": "https://www.youtube.com/watch?v=f-1TseGDuS4",
    "date": "2026-11-05T15:29:35.000Z",
    "id": "f-1TseGDuS4"
-  },
-  {
-   "src": "Ultimate Cleveland Sports Show",
-   "title": "How should the Cavaliers guard Shai Gilgeous-Alexander tonight after he dropped 43 on Monday?",
-   "link": "https://www.youtube.com/watch?v=IWuS-vmI8oQ",
-   "date": "2026-11-04T16:30:52.000Z",
-   "id": "IWuS-vmI8oQ"
-  },
-  {
-   "src": "Ultimate Cleveland Sports Show",
-   "title": "Are you BUYING or SELLING these fan hot takes about the Cleveland Cavaliers 7 games into the season?",
-   "link": "https://www.youtube.com/watch?v=Mj6jSZaBm6A",
-   "date": "2026-11-04T15:58:03.000Z",
-   "id": "Mj6jSZaBm6A"
   },
   {
    "src": "The Chase Down Podcast",
