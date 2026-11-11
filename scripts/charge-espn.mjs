@@ -21,7 +21,8 @@ const isCharge = c => /charge/i.test(((c.team || {}).displayName || '') + ' ' + 
 let changed = 0;
 for (const g of games) {
   if (g[0] > today) continue;
-  const need = !g[4] || !g[6] || process.env.FORCE;
+  const recent = (Date.parse(today) - Date.parse(g[0])) / 864e5 <= 3;
+  const need = !g[4] || !g[6] || !g[7] || (recent && !(g[7] || []).length) || process.env.FORCE;
   if (!need) continue;
   const sb = await get(`${API}/scoreboard?dates=${g[0].replace(/-/g, '')}`);
   const ev = ((sb && sb.events) || []).find(e => ((e.competitions || [])[0] || {}).competitors?.some(isCharge));
@@ -46,6 +47,7 @@ for (const g of games) {
       }
     }
   }
+  if (!lines.length) { const seen = []; for (const tp of ((sum && sum.boxscore && sum.boxscore.players) || [])) seen.push(((tp.team || {}).displayName || '?') + ': ' + (tp.statistics || []).flatMap(s => (s.athletes || []).map(a => (a.athlete || {}).displayName)).slice(0, 18).join(', ')); console.log('charge-espn: box score players seen ->', seen.join(' | ') || 'none', '· looking for', names.join(', ')); }
   const before = JSON.stringify(g);
   g[4] = res; if (!g[5]) g[5] = ''; g[6] = g[6] || link; g[7] = lines;
   if (JSON.stringify(g) !== before) { changed++; console.log('charge-espn:', g[0], g[1], res, lines.length ? JSON.stringify(lines) : '(no Cavs players listed)'); }
