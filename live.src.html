@@ -2094,19 +2094,25 @@ const mkLbl=(x,t,X,Y,sz=30,c=MK.mut)=>{x.fillStyle=c;x.font=`800 ${sz}px "Saira 
 const MOCK_STATLINE={label:'Stat line (mock)',pick:'player',async draw(x,D,R,id){const p=D.P[id],b=R.B[id];if(!p||!b)return;const n=S.season?(b.gp||1):1,pg=v=>S.season?(v/n).toFixed(1):String(v);
     const F=D.focus,O=D.other;const fs=F.ha==='home'?R.hs:R.as,os=F.ha==='home'?R.as:R.hs;
     const kicker=S.season?(D.season||'').replace('-','–')+' season · '+n+' games':(F.ha==='home'?'vs ':'at ')+O.abbr+(S.state==='post'?' · '+(fs>os?'W ':'L ')+fs+'–'+os:'');
-    const c=await mkFrame(x,kicker,p.name,S.season?'Per game':(Math.round(b.min/60)+' minutes'),'--stat-line '+(p.last||'').toLowerCase(),D,id);
-    /* the big six: points first in wine, three to a row */
-    const big=[[pg(b.pts),'PTS',MK.wine],[pg(b.oreb+b.dreb),'REB'],[pg(b.ast),'AST'],[pg(b.stl),'STL'],[pg(b.blk),'BLK'],[S.season?((b.pm/n>=0?'+':'−')+Math.abs(b.pm/n).toFixed(1)):((b.pm>0?'+':b.pm<0?'−':'')+Math.abs(b.pm)),'+/−']];
-    let bz=170;x.font=`800 ${bz}px "Saira Condensed"`;while(big.some(([v])=>x.measureText(String(v)).width>c.W/3-40)&&bz>100){bz-=6;x.font=`800 ${bz}px "Saira Condensed"`}
-    big.forEach(([v,l,col],i)=>{const cx=c.X+(i%3)*(c.W/3),cy=c.Y+120+Math.floor(i/3)*230;mkNum(x,v,cx,cy,bz,col||MK.ink);mkLbl(x,l,cx+6,cy+48,34)});
-    x.fillStyle=MK.line;x.fillRect(c.X,c.Y+520,c.W,3);
-    /* shooting: makes/attempts big, the percentage under */
-    const pc=(m,a)=>a?(m/a*100).toFixed(1)+'%':'–',ts=b.fga+b.fta?(b.pts/(2*(b.fga+.44*b.fta))*100).toFixed(1)+'%':'–';
-    const sh=[[b.fgm+'/'+b.fga,'FG · '+pc(b.fgm,b.fga)],[b.tpm+'/'+b.tpa,'3PT · '+pc(b.tpm,b.tpa)],[b.ftm+'/'+b.fta,'FT · '+pc(b.ftm,b.fta)],[ts,'TS%']];
-    sh.forEach(([v,l],i)=>{const cx=c.X+i*(c.W/4);let sz=96;x.font=`800 ${sz}px "Saira Condensed"`;while(x.measureText(v).width>c.W/4-24&&sz>56){sz-=4;x.font=`800 ${sz}px "Saira Condensed"`}mkNum(x,v,cx,c.Y+660,sz);mkLbl(x,l,cx+4,c.Y+706,28)})}};
+    const c=await mkFrame(x,kicker,p.name,S.season?'Per game':(Math.round(b.min/60)+' minutes'),'',D,id);
+    /* his season, to compare a single game against */let sb=null;if(!S.season){const se=await lSeason(D).catch(()=>null);sb=se&&se.B?se.B(id):null}const sg=sb&&sb.gp?sb.gp:0,sav=k=>sg?(k==='reb'?(sb.oreb+sb.dreb)/sg:sb[k]/sg):null;
+    const T=(X,Y,W,H,bg)=>{x.fillStyle=bg;x.fillRect(X,Y,W,H)};const fit=(v,max,sz)=>{x.font=`800 ${sz}px "Saira Condensed"`;while(x.measureText(v).width>max&&sz>40){sz-=4;x.font=`800 ${sz}px "Saira Condensed"`}return sz};
+    /* points: the hero tile */const HX=c.X,HY=c.Y,HW=360,HH=330;T(HX,HY,HW,HH,MK.wine);const pv=pg(b.pts);const pz=fit(pv,HW-60,230);x.fillStyle='#fff';x.fillText(pv,HX+30,HY+230);mkLbl(x,'POINTS',HX+32,HY+284,34,MK.gold);
+    {const a=sav('pts');if(a!=null){x.font='600 24px "Geist Mono"';x.fillStyle='rgba(255,255,255,.75)';x.fillText('season avg '+a.toFixed(1),HX+32,HY+316)}}
+    /* four tiles beside it */const tw=(c.W-HW-24-12)/2,th=(HH-12)/2;
+    [['REB',b.oreb+b.dreb,'reb'],['AST',b.ast,'ast'],['STL',b.stl,'stl'],['BLK',b.blk,'blk']].forEach(([l,v,k],i)=>{const X=HX+HW+24+(i%2)*(tw+12),Y=HY+Math.floor(i/2)*(th+12);T(X,Y,tw,th,'#f2f3f5');const s=pg(v);fit(s,tw-40,104);x.fillStyle=MK.ink;x.fillText(s,X+24,Y+108);mkLbl(x,l,X+26,Y+146,28);
+      const a=sav(k);if(a!=null){const up=v>a;x.font='600 20px "Geist Mono"';x.fillStyle=up?MK.wine:MK.mut;const t2=(up?'▲ ':'')+'avg '+a.toFixed(1);x.fillText(t2,X+tw-24-x.measureText(t2).width,Y+146)}});
+    /* shooting: four columns, each a big makes/attempts, its percentage and a tick bar filled to that percentage */
+    const SY=HY+HH+60,cw=(c.W-36)/4,pc=(m,a)=>a?m/a:null,ts=b.fga+b.fta?b.pts/(2*(b.fga+.44*b.fta)):null;
+    [['FG',b.fgm+'/'+b.fga,pc(b.fgm,b.fga)],['3PT',b.tpm+'/'+b.tpa,pc(b.tpm,b.tpa)],['FT',b.ftm+'/'+b.fta,pc(b.ftm,b.fta)],['TS%',ts==null?'–':(ts*100).toFixed(1)+'%',ts]].forEach(([l,v,f],i)=>{const X=c.X+i*(cw+12);
+      fit(v,cw-10,92);x.fillStyle=MK.ink;x.fillText(v,X,SY+80);mkLbl(x,l+(l!=='TS%'&&f!=null?' · '+(f*100).toFixed(1)+'%':''),X+2,SY+120,28);
+      const nT=12,gw=(cw-10-(nT-1)*4)/nT,on=f==null?0:Math.round(Math.min(1,f)*nT);for(let t=0;t<nT;t++){x.fillStyle=t<on?(i===3?MK.gold:MK.wine):'#e3e6ea';x.fillRect(X+t*(gw+4),SY+142,gw,26)}});
+    /* last line: minutes and +/- in the terminal's voice */const LY=SY+250;x.fillStyle=MK.line;x.fillRect(c.X,LY-46,c.W,2);
+    const pm=S.season?b.pm/n:b.pm,pmS=(pm>0?'+':pm<0?'−':'')+(S.season?Math.abs(pm).toFixed(1):Math.abs(pm));x.font='700 40px "Geist Mono"';x.fillStyle=MK.wine;x.fillText('$',c.X,LY+10);x.fillStyle=MK.mut;x.fillText(' min',c.X+24,LY+10);let cx=c.X+24+x.measureText(' min ').width;x.fillStyle=MK.ink;const mn=S.season?(b.min/60/n).toFixed(1):String(Math.round(b.min/60));x.fillText(mn,cx,LY+10);cx+=x.measureText(mn+'   ').width;
+    x.fillStyle=MK.mut;x.fillText('+/- ',cx,LY+10);cx+=x.measureText('+/- ').width;x.fillStyle=pm>0?'#1d7a3a':pm<0?'#a3122e':MK.ink;x.fillText(pmS,cx,LY+10)}};
 const MOCK_TOPLU={label:'Top lineups (mock)',async draw(x,D,R){const F=D.focus.id;const minSec=S.season?12*60:4*60;
     const rows=Object.values(R.L[F][5]||{}).filter(l=>l.sec>=minSec).map(l=>{const po=poss(l.o),pd=poss(l.d);return {l,net:po>=1&&pd>=1?l.pf/po*100-l.pa/pd*100:null,o:po>=1?l.pf/po*100:null,d:pd>=1?l.pa/pd*100:null}}).filter(r=>r.net!=null).sort((a,b)=>b.net-a.net).slice(0,5);
-    const c=await mkFrame(x,S.season?(D.season||'').replace('-','–')+' season · min. 12 minutes':'This game · min. 4 minutes','Best 5-man lineups','Net rating: points scored minus allowed per 100 possessions','--lineups --top '+rows.length,D,null);
+    const c=await mkFrame(x,S.season?(D.season||'').replace('-','–')+' season · min. 12 minutes':'This game · min. 4 minutes','Best 5-man lineups','Net rating per 100 possessions','--lineups --top '+rows.length,D,null);
     if(!rows.length){mkLbl(x,'No group has played enough minutes yet',c.X,c.Y+80,40);return}
     const rh=Math.min(196,(c.H+20)/rows.length);const all=[...new Set(rows.flatMap(r=>r.l.ids))];const IM={};await Promise.all(all.map(async i=>IM[i]=await loadImg(hsUrl(D,i))));
     rows.forEach((r,k)=>{const y=c.Y-30+k*rh;if(k){x.fillStyle=MK.line;x.fillRect(c.X,y,c.W,2)}
