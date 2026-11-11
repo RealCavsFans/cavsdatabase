@@ -1,6 +1,18 @@
 {
  "articles": [
   {
+   "src": "Fear The Sword",
+   "title": "Cleveland Charge drop season opener 142-122 to Motor City",
+   "link": "https://www.fearthesword.com/cleveland-charge/54262/cleveland-charge-g-league-cavaliers-cavs-motor-city-cruise-detroit-pistons-curtis-jones",
+   "date": "2026-11-11T03:18:33.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Cavs at Knicks: How to watch, odds, and injury report",
+   "link": "https://www.fearthesword.com/cavs-injury-report/54253/cavs-at-knicks-how-to-watch-odds-and-injury-report",
+   "date": "2026-11-11T00:30:00.000Z"
+  },
+  {
    "src": "The Inside Shot",
    "title": "Weekly Notebook: The James Harden Problem for the Cleveland Cavaliers",
    "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9YVWc2VmR4SHFTS1hfMFg2T2F5eU5uLVBsckNTU2pmYk5yUjlpVTd2MGVfZW8ydlkyQU1qVjF5MVVwdzR2S3o5VFV4QzZ0U1hsWDI5LS1sYXMydHg3Q3JkQWcxRmk0c3JqTDZzTXdlRlRGTmt6Z0VMZA?oc=5",
@@ -115,12 +127,6 @@
    "date": "2026-11-08T11:00:00.000Z"
   },
   {
-   "src": "cleveland.com",
-   "title": "Why the Cavs keep losing the rebounding battle",
-   "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOQnpaeGF2cjdrSVFCbG9xQWxOODF0OG43RHYxT2VGNVNvS2JlMU5vYUdjY3R6YVgyeUk3d0FXZU9Rckl2Mkpmd1MzX3lNYklaVE1Mb0htVVduS1dnRmFQdXBjemxLaG1vYkxPSklxWmF4S1NkcFRCSExMSFBTLVA4TGkwRTJYWGlEektrZmVjcl9NNDVj?oc=5",
-   "date": "2026-11-08T10:30:00.000Z"
-  },
-  {
    "src": "Fear The Sword",
    "title": "Player Grades: Cavs vs Knicks – Donovan Mitchell drops 37 points in loss",
    "link": "https://www.fearthesword.com/cavs-analysis/54155/player-grades-cavs-vs-knicks-donovan-mitchell-drops-37-points-in-loss",
@@ -155,18 +161,6 @@
    "title": "Does Cavs coach regret his infamous ‘analytically’ we won comment vs. Knicks?",
    "link": "https://www.nytimes.com/athletic/7762322/2026/11/07/cavaliers-kenny-atkinson-analytically-comment-knicks/",
    "date": "2026-11-08T02:18:30.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cavs vs. Knicks game thread",
-   "link": "https://www.fearthesword.com/cavs-game-previews/54039/cavs-vs-knicks-game-thread",
-   "date": "2026-11-08T01:00:00.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cavs’ Kenny Atkinson clarifies his infamous quote vs Knicks: ‘they dominated us’",
-   "link": "https://www.fearthesword.com/cavs-features-profiles/54146/cavs-kenny-atkinson-clarifies-his-infamous-quote-vs-knicks-they-dominated-us",
-   "date": "2026-11-08T00:56:52.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -209,6 +203,12 @@
    "title": "How Mitchell and Mobley are redefining the Cavs' offense",
    "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPejZPTzhXTl90TUxYNVhhVm9zY0RzOXRtOTVTaW15TWVyOWFJbllVazBMb1IyaEpndG9JazQwQVYxVThnNzBvZTJPbU5RZVRlRDlPRVJkRU9NY05XSGN2eGp3ZzIxWThsNXROcDN6YW9rWDJ3bm1vQ18yNm9zMGJjam5TbHVVRnJLSFgyeUNEWUEyYlBYWE1oSjk0TjlEdUpsZUFGRmJYUEtIN0dmNE5DT3Rjc1M0cUQ2OUxuTHpBQ2RnN3dDbnlrM2Z3?oc=5",
    "date": "2026-11-07T10:35:00.000Z"
+  },
+  {
+   "src": "cleveland.com",
+   "title": "Cavs vs. Knicks: preview, odds, injury report, TV",
+   "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPNURIYW5mbGRKY0pVZkZzWGZCNzVFaHdnVncyd052c0tmNGYwcVBlOHV1aldGZmtNMk5NWHRTUGR2dnJ6Sl9KQ1o1SFdVb3g1bVhJYnpEekRTd2ZKTmFRbnBhR3M0dkdCYjNHUEdkUV9oaE5Wbmt6Z20wbkhzQkZwbWtWSDdTd3d4N3hWMkxFMjdZdw?oc=5",
+   "date": "2026-11-07T10:06:00.000Z"
   },
   {
    "src": "cleveland.com",
@@ -397,6 +397,13 @@
  ],
  "videos": [
   {
+   "src": "Locked On Cavs",
+   "title": "TROUBLING: Cleveland Cavaliers Exposed as James Harden's Early Season Numbers PLUMMET",
+   "link": "https://www.youtube.com/watch?v=sJYlsTSsnvo",
+   "date": "2026-11-11T03:40:07.000Z",
+   "id": "sJYlsTSsnvo"
+  },
+  {
    "src": "It's Cavalier Podcast",
    "title": "Is It Time For James Harden To Come Off The Bench?",
    "link": "https://www.youtube.com/watch?v=0OvGHouVdFk",
@@ -584,13 +591,6 @@
    "link": "https://www.youtube.com/watch?v=v5L_yiBCjUk",
    "date": "2026-11-07T02:29:00.000Z",
    "id": "v5L_yiBCjUk"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "PREVIEW: Cleveland Cavaliers Host LeBron James in NBA CUP Action! | Is it a MUST WIN!?",
-   "link": "https://www.youtube.com/watch?v=ILiscQLqDDo",
-   "date": "2026-11-06T17:00:10.000Z",
-   "id": "ILiscQLqDDo"
   },
   {
    "src": "Ultimate Cleveland Sports Show",
