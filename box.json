@@ -2502,7 +2502,24 @@
  },
  "2026-11-11": {
   "url": "https://www.nba.com/game/cle-vs-nyk-0022600218/box-score",
-  "status": "scheduled"
+  "status": "scheduled",
+  "refs": [
+   [
+    "Crew chief",
+    "Catherine Chang",
+    "30"
+   ],
+   [
+    "Referee",
+    "Kastine Evans",
+    "11"
+   ],
+   [
+    "Umpire",
+    "Billy McClatchy",
+    "31"
+   ]
+  ]
  },
  "2026-11-13": {
   "url": "https://www.nba.com/game/cle-vs-mia-0022600036/box-score",
