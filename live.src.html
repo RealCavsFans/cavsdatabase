@@ -306,7 +306,7 @@ td.pnm{font-weight:700;color:var(--fg)}body>main.wrap{min-height:100vh}b.ffv>sma
 .fl .btn{background:var(--wine);color:#fff;border-color:var(--wine)}
 .btn.ghost{background:var(--card);color:var(--wine-ink,#860038);border:1px solid var(--wine)}
 @media (max-width:760px){.cardout{grid-template-columns:1fr}}
-.gs{display:grid!important;grid-template-columns:auto auto auto auto;justify-content:space-between;gap:8px 10px;align-items:baseline}.gs .tt{display:contents}.gs .ft{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}.gs .ft b{flex-basis:100%}.gs .ft span{margin:0}
+.gs{display:grid!important;grid-template-columns:minmax(48px,auto) repeat(3,minmax(0,150px));justify-content:start;gap:6px 14px;align-items:center;max-width:640px}.gs .ft{grid-column:1/-1}.gs .gsh span{font:700 .6875rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.gs .tt em{font:800 1.5rem/1 'Saira Condensed',sans-serif;font-style:normal;color:var(--fg)}.gs .tt em.gsu{color:var(--muted)}.gs .tt b{font:800 1.125rem 'Saira Condensed',sans-serif}.gs .gsp{display:inline-flex;gap:2px;margin-left:8px;vertical-align:middle}.gs .gsp u{display:block;width:6px;height:14px;background:var(--line)}.gs .gsp u.on{background:var(--wine)}.gs .tt{display:contents}.gs .ft{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}.gs .ft b{flex-basis:100%}.gs .ft span{margin:0}
 .gs .tt span{white-space:nowrap}
 .gs .ft span{white-space:nowrap}
 .tm .th{display:flex;align-items:center;gap:10px;min-width:0}
@@ -1634,13 +1634,13 @@ function vTeam(v,D,R){
 
 /* ---------- game state: fouls, bonus, timeouts, challenges, foul trouble ---------- */
 function gameState(D,R){
-  const w=el('div','gs');const per=R.lp.per;const endT=pstart(per)+plen(per);const left=endT-R.lp.t;
+  const w=el('div','gs');const per=R.lp.per;/* Nov 11 (Luka): a tight grid with column labels instead of three spread-out words per row */{const hd=el('div','tt gsh');hd.innerHTML='<b></b><span>Fouls</span><span>Timeouts left</span><span>Challenge</span>';w.appendChild(hd)}const endT=pstart(per)+plen(per);const left=endT-R.lp.t;
   [D.away,D.home].forEach(t=>{const q=(R.tf[per]&&R.tf[per][t.id])||{n:0,l2:0};const bonus=q.n>=(per<=4?5:4)||(left<=120&&q.l2>=2);
     const tl=Math.max(0,7-R.to[t.id]);const c=R.ch[t.id];const chl=c.used===0?1:(c.used===1&&c.won>=1?1:0);
-    const d=el('div','tt');d.innerHTML=`<b>${esc(t.abbr)}</b><span>Fouls <em>${q.n}</em>${bonus?' <span class="bonus">Bonus</span>':''}</span><span>Timeouts <em>${tl}</em></span><span>Challenge <em>${chl?'yes':'used'}</em></span>`;w.appendChild(d)});
+    const d=el('div','tt');d.innerHTML=`<b>${esc(t.abbr==='CLE'?'CAVS':t.abbr)}</b><span><em>${q.n}</em>${bonus?' <span class="bonus">Bonus</span>':''}</span><span><em>${tl}</em><i class="gsp">${'<u class="on"></u>'.repeat(tl)}${'<u></u>'.repeat(Math.max(0,7-tl))}</i></span><span><em class="${chl?'':'gsu'}">${chl?'Yes':'Used'}</em></span>`;w.appendChild(d)});
   /* foul trouble: 2 in Q1, 3 by half, 4 in Q3, 5 any time */
   const lim=per===1?2:per===2?3:per===3?4:5;const tr=Object.entries(R.pfAll).filter(([id,n])=>n>=lim&&D.P[id]).sort((a,b)=>b[1]-a[1]);
-  if(tr.length){const ft=el('div','ft');ft.innerHTML='<b>Foul trouble</b> '+tr.map(([id,n])=>`<span>${esc(D.P[id].short)} (${esc(D.teams.find(t=>t.id===D.P[id].team).abbr)}) <i>${n} PF</i></span>`).join('');w.appendChild(ft)}
+  if(tr.length){const ft=el('div','ft');ft.innerHTML='<b>Foul trouble</b> '+tr.map(([id,n])=>`<span>${esc(D.P[id].short)} (${esc((a=>a==='CLE'?'CAVS':a)(D.teams.find(t=>t.id===D.P[id].team).abbr))}) <i>${n} PF</i></span>`).join('');w.appendChild(ft)}
   return w;
 }
 
