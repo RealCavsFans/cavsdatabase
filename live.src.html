@@ -1990,7 +1990,7 @@ const pcGrad=(x,W,H0)=>{const g=x.createLinearGradient(0,0,0,H0||372);g.addColor
 /* Nov 5 (mock): light player-card look: taller wine header, then the card body set inside a terminal window (tab, command line, frame) like the player page images */
 function pcWrap(A,slug){const W=A.width,H=A.height,land=W>1500,BH=land?340:372,FB=land?64:58,off=land?58:0,hk=land?1:.74,/* Nov 5 (Luka): shot maps cut the banner further so the court can be bigger */HB=Math.round(BH*hk)+off;/* Nov 5 (Luka): tall cards get a shorter banner so the content can be bigger */const B=document.createElement('canvas');B.width=W;B.height=H;const g=B.getContext('2d');
   g.fillStyle='#eef0f3';g.fillRect(0,0,W,H);g.fillStyle=pcGrad(g,W,HB);g.fillRect(0,0,W,HB);if(land)g.drawImage(A,0,0,W,BH,0,off,W,BH);else{/* split the banner at the widest empty column between the words and the photo, so the photo stays on the right edge */let sp=W;try{const d=A.getContext('2d').getImageData(0,0,W,BH).data;const emp=x=>{for(let y=40;y<BH-4;y+=3){const o=(y*W+x)*4,r=(y*W+20)*4;if(Math.abs(d[o]-d[r])+Math.abs(d[o+1]-d[r+1])+Math.abs(d[o+2]-d[r+2])>24)return false}return true};
-      let best=0,run=0,st=0;for(let xx=Math.round(W*.3);xx<W;xx+=2){if(emp(xx)){if(!run)st=xx;run+=2;if(run>best){best=run;sp=st+run/2}}else run=0}if(best<12)sp=W}catch(e){}
+      /* Nov 11 (Luka): split at the last gap before the photo/logo, not the widest one: with no gold line above the title, the space between a first and last name can be wider than the gap before the photo */const runs=[];let run=0,st=0;for(let xx=Math.round(W*.3);xx<W;xx+=2){if(emp(xx)){if(!run)st=xx;run+=2}else{if(run)runs.push([st,run]);run=0}}const ok=runs.filter(r=>r[1]>=12);sp=ok.length?ok[ok.length-1][0]+ok[ok.length-1][1]/2:W}catch(e){}
     g.drawImage(A,0,0,sp,BH,0,0,sp*hk,BH*hk);if(sp<W)g.drawImage(A,sp,0,W-sp,BH,W-(W-sp)*hk-(window.__heroInset??64),0,(W-sp)*hk,BH*hk)}if(land){const h0=TC.hi;TC.hi='#ffffff';tMark(g,60,off+4);TC.hi=h0}g.fillStyle='#F2B231';g.fillRect(0,HB,W,8);
   const M=land?44:36,ty=HB+8+(land?22:18),th=land?40:36,fz=land?21:19;g.font=`600 ${fz}px "Geist Mono"`;const tab='cavs_db · cavs · '+(S.season?String(S.season).replace('-','–')+' season':gKick(S.data||{}).toLowerCase());const tw=g.measureText(tab).width+(land?64:58);
   const r=14,wy=ty+th,wh=H-FB-(land?22:18)-wy;g.fillStyle='#e2e5e9';g.beginPath();g.moveTo(M,wy);g.lineTo(M,ty+10);g.quadraticCurveTo(M,ty,M+10,ty);g.lineTo(M+tw-10,ty);g.quadraticCurveTo(M+tw,ty,M+tw,ty+10);g.lineTo(M+tw,wy);g.fill();
@@ -2973,8 +2973,9 @@ const B_QTR2={label:'Quarter by quarter',async draw(x,D,R){const F=D.focus,O=D.o
     const bw=cw-40,cx=X+20+bw/2,L=Math.min(bw/2,Math.abs(m)/12*bw/2);BT(x,X+20,Y+234,bw,18,'#e3e6ea');BT(x,m>=0?cx:cx-L,Y+234,L,18,m>=0?MK.wine:'#5b6470');BT(x,cx-1,Y+227,2,32,MK.ink);
     x.font='600 22px Archivo';x.fillStyle=MK.mut;x.fillText('Cavs '+a.fgm+'–'+a.fga+' FG',X+20,Y+298);x.fillText(a.tpm+'–'+a.tpa+' 3PT',X+20,Y+328);
     const i0=R.plays.findIndex(p=>p.per===q),i1=R.plays.length-1-R.plays.slice().reverse().findIndex(p=>p.per===q),top=i0>=0?ptsIn(D,R,i0,i1,F.id).sort((u,v)=>v[1].pts-u[1].pts).slice(0,2):[];
-    BTxt(x,'LED BY',X+20,Y+372,20,MK.mut);
-    if(top[0]){await BHead(x,D,top[0][0],X+cw/2,Y+438,48);x.font='800 28px "Saira Condensed"';x.fillStyle=MK.ink;BCtr(x,(D.P[top[0][0]].last||'').toUpperCase()+' '+top[0][1].pts,X+cw/2,Y+508)}
+    BTxt(x,'LED BY',X+20,Y+364,20,MK.mut);
+    /* Nov 11 (Luka): the leader's photo grows with the block, so two or three quarters don't leave him small in empty space */
+    if(top[0]){const hr=Math.round(Math.min(68,Math.max(48,cw*.2))),hy=Y+374+hr*1.3+4;await BHead(x,D,top[0][0],X+cw/2,hy,hr);x.font=`800 ${hr>56?36:28}px "Saira Condensed"`;x.fillStyle=MK.ink;BCtr(x,(D.P[top[0][0]].last||'').toUpperCase()+' '+top[0][1].pts,X+cw/2,hy+hr+(hr>56?40:34))}
 }
   BTxt(x,'THE MARGIN, MINUTE BY MINUTE',c.X,c.Y+604,26,MK.mut);cMargin(x,R,D,c.X,c.Y+618,c.W,120);mkCtx(x,c,'Wine = Cavs ahead · gray = '+O.abbr+' ahead')}};
 
