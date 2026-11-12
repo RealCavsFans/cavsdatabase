@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "Cavaliers on SI",
+   "title": "Key Cog From Michigan's 2026 NCAA Championship Squad Acquired by Cleveland Charge",
+   "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxObTJpM0xialBjd2pIQmdKeW9fLURfaV82U0dIdFczdThsZmhQNExuU0tOVV9qRlRXTE50MW9ONndvS3hMajc5dlhsM2k3b1ZvMVduU1kxcWdHaWFGTEJwRmt2cWVmUnpxbEs3cjRIS2dlekpwQ01RdmQxU0pvOUlXcUNRT1ZWZ3gtbHhLRXc3aWxEaFpVdTBfczYxN2lpdXlYMzdyeHNkSGxVbVFZNF9iMlhCM2hRXzR1Yl9KclNZZ1BGZHlNR1d1Z0lYbWM?oc=5",
+   "date": "2026-11-12T16:42:47.000Z"
+  },
+  {
    "src": "The Inside Shot",
    "title": "Game Night Observations: James Harden’s Response, Kenny Atkinson’s Adjustments and Growing Role Players",
    "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNWDJ6a2IyaVQ1YkhYdGkwUjdydmlHdndQb0ZfT3QxazUwdFFKWkNwRVVhdG01X0R6OGRDNnQ4TDlMNVNlc0NGMUpVeWVBd0RXdVNiMVhrbFZaRldtYUctcHhKOENNd1dlXzRTT1N2WXpwM3l4b1ZIUVpxNnRycHA4R0lnMFM?oc=5",
@@ -155,12 +161,6 @@
    "title": "Cavs at Hornets game thread",
    "link": "https://www.fearthesword.com/cavs-game-previews/54201/cavs-at-hornets-game-thread",
    "date": "2026-11-10T00:00:00.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Evan Mobley May Lead in Total Touches, But Cavaliers’ Guards Still Control the Clock",
-   "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQOUphY3NtVVdxdkczQXFrVko3aWxvODVycE1Lc1B5WDJUMG5hbnM2SWpDZFVwTFE2bGJRSlp1cEFnTV9lc0tCOEdoZEMyNHBaWWhENUktUTBOOGxLS1VuMExnQnFiTlBwalRpQW5SLVdkcHhfUkk4VlpZR09oZEJUUnUtZnRXRUZyNlN2ZEdjdXZFNXVGdE1DalJMN1ctNmxJMUhSVXhmdlMwVWplaURHaE90TkFHeWtGVHFhVEdNbDNHTVIta1RCR0Z0em9EQQ?oc=5",
-   "date": "2026-11-09T20:00:02.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -430,6 +430,20 @@
  ],
  "videos": [
   {
+   "src": "Ultimate Cleveland Sports Show",
+   "title": "Is the best version of the Cleveland Cavaliers good enough to beat any team in the East?",
+   "link": "https://www.youtube.com/watch?v=leh-lC1pASY",
+   "date": "2026-11-12T16:56:39.000Z",
+   "id": "leh-lC1pASY"
+  },
+  {
+   "src": "Cavs Roundtable",
+   "title": "Cleveland Cavaliers Ride A VINTAGE James Harden Night To Top New York Knicks 115-107",
+   "link": "https://www.youtube.com/watch?v=rNoydyJ241I",
+   "date": "2026-11-12T16:44:33.000Z",
+   "id": "rNoydyJ241I"
+  },
+  {
    "src": "It's Cavalier Podcast",
    "title": "James Harden LED the Cavaliers to VICTORY last night. #cavs #cavaliers #clevelandcavaliers",
    "link": "https://www.youtube.com/watch?v=ACmWeftq-K4",
@@ -477,13 +491,6 @@
    "link": "https://www.youtube.com/watch?v=C9j1zgWF91A",
    "date": "2026-11-12T04:24:06.000Z",
    "id": "C9j1zgWF91A"
-  },
-  {
-   "src": "Cavs Roundtable",
-   "title": "Cleveland Cavaliers Ride A VINTAGE James Harden Night To Top New York Knicks 115-107",
-   "link": "https://www.youtube.com/watch?v=rNoydyJ241I",
-   "date": "2026-11-12T04:00:45.000Z",
-   "id": "rNoydyJ241I"
   },
   {
    "src": "Locked On Cavs",
@@ -680,13 +687,6 @@
    "link": "https://www.youtube.com/watch?v=L-4y2I6JSz8",
    "date": "2026-11-05T17:28:41.000Z",
    "id": "L-4y2I6JSz8"
-  },
-  {
-   "src": "Ultimate Cleveland Sports Show",
-   "title": "The Cavaliers have no shot this year unless Donovan Mitchell & James Harden start playing WAY better",
-   "link": "https://www.youtube.com/watch?v=G0ncYzcCcjM",
-   "date": "2026-11-05T16:36:48.000Z",
-   "id": "G0ncYzcCcjM"
   },
   {
    "src": "The Chase Down Podcast",
