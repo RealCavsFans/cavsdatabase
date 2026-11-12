@@ -1,6 +1,18 @@
 {
  "articles": [
   {
+   "src": "The Athletic",
+   "title": "'My name is James Harden': Former MVP erupts for season-high 32 points in Cavs' win over Knicks",
+   "link": "https://www.nytimes.com/athletic/7775173/2026/11/12/james-harden-cavs-knicks-skid/",
+   "date": "2026-11-12T05:16:28.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Diving deeper into Cavs 115-107 win over Knicks: James Harden showed why he’s integral to Cleveland’s success",
+   "link": "https://www.fearthesword.com/cavs-analysis/54284/cavs-diving-deeper-new-york-knicks-cleveland-cavaliers-james-harden-donovan-mitchell-meleek-thomas-peyton-watson",
+   "date": "2026-11-12T04:02:56.000Z"
+  },
+  {
    "src": "Fear The Sword",
    "title": "Player Grades: Cavs at Knicks – James Harden takes over",
    "link": "https://www.fearthesword.com/cavs-analysis/54285/player-grades-cavs-at-knicks-james-harden-takes-over",
@@ -73,6 +85,12 @@
    "date": "2026-11-10T13:20:30.000Z"
   },
   {
+   "src": "Cavaliers on SI",
+   "title": "3 Potential Solutions To Fix The Fading Cleveland Cavaliers",
+   "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPMExlZVVCXzUtbXNFaVNKLWIwZnRPM0tlNDdiZ3NkZzdLeHktLVhndnl1SXUzb0lfRjN3ZzBIWE11aWNUdzF6WnFKZmxuUXUxRGpENlYtdVZ2TkVDM2EtdVVwaFlxcjhtc21hbWduTTdBVkpwYWdjbG1qMjVxbU5IUmtLc2pOQVdBRzh3ako4Vm0wOFA1YTB2d21YZVFtbXgxblZoTlNObklUVlhfeDc0?oc=5",
+   "date": "2026-11-10T12:00:01.000Z"
+  },
+  {
    "src": "Fear The Sword",
    "title": "Charge want to be a pipeline for the Cavs: ‘We want the development to be in-house’",
    "link": "https://www.fearthesword.com/cleveland-charge/54147/cleveland-charge-g-league-cavs-cavaliers-riley-minix",
@@ -127,18 +145,6 @@
    "date": "2026-11-09T20:00:02.000Z"
   },
   {
-   "src": "Cavaliers on SI",
-   "title": "Three Key Storylines To Watch in Cavs vs. Hornets",
-   "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOZVZ5R29nSGFDdzduQjkwSUVRMXBPU0xjVGJpVDNHTkdLVjEwV2o2VXBpRTF1Y3hoX2FmRmJaU04zcGFVRXVhMTFsTmQtbmNvTmdaNnUwNWFucFhzZEY1aFBBRWZiZVpqZE5FczItbU8ybkluaEE4VmVnX2NtSTBLZElobDg5bFcyNEwtUU1ORy1aVlptQXNwWGtNam0xRjkz?oc=5",
-   "date": "2026-11-09T18:00:00.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cavs at Hornets: How to watch, odds, and injury report",
-   "link": "https://www.fearthesword.com/cavs-injury-report/54202/cavs-at-hornets-how-to-watch-odds-and-injury-report",
-   "date": "2026-11-09T15:30:00.000Z"
-  },
-  {
    "src": "cleveland.com",
    "title": "Cavs at Hornets: preview, odds, injury report, TV",
    "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPRUZPMmV0aXhHRzVuRUZRRldYUUNWTmVYNmRFa1Z3YmVIT2htV2xsVnJteWJKT2l3dzhia3pyMWprdzJEYm45bGlZU2ZrUVgyeEp6NXhNVW5vak5CYTA0NG5BMUJuSjlhSTlET3dFX2h0dXpaeE5tQjlkNTVZQl92S0FPSUNRb1FjSWxGeDkwTlV3c2M?oc=5",
@@ -155,12 +161,6 @@
    "title": "Cavs Coach Provides Harsh Reality Check After 5-5 Start",
    "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPOWZwVnBreHFyN2tMa2JMNlVmWE1rd0Z5amRVa0VmRmNSMjhBcEtQSXMtME15Mndzb2FPZ21lT0xvWmtSZjBxeVAxcmFlVzVoZVU2RFVycGNnZXNBUDBIeDk0c3ZCTkxMY0hfdkVrVTZYZGJIai1qNk1Ta1pudFp1Q21JNUgxSGtPQzZLcXo0SDlxR2JBb1ItREhGTEIxLVpqSEp3eTFIODRJdw?oc=5",
    "date": "2026-11-08T14:17:00.000Z"
-  },
-  {
-   "src": "cleveland.com",
-   "title": "Why the Cavs re-signed Thomas Bryant — and why it is costing them",
-   "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQMTRRcWxsR2pEeGI0WWxkNmhXWWlITElTNm1fNjZ0YW9MRERublVsTUROM2llNVVZLUd5enhsOHdGX25zcDE4X2VmSnI4MWlKVjFvekZjdEt0bUJQRGRGLXNQNGJleTdwZmM4SFFReGR3NWk4VjZpLW9DZkdES1hrZERCMllub21IRUVrOWIxUUlGZVhJOUtYc09QczU0cG5WMnR3bXFfN2g5NnM?oc=5",
-   "date": "2026-11-08T11:30:00.000Z"
   },
   {
    "src": "cleveland.com",
@@ -251,6 +251,12 @@
    "title": "LeBron suffers through one of his all-time worst games in return to Cleveland",
    "link": "https://www.nytimes.com/athletic/7760468/2026/11/06/lebron-james-return-cleveland-cavaliers-76ers/",
    "date": "2026-11-07T00:46:30.000Z"
+  },
+  {
+   "src": "cleveland.com",
+   "title": "Cavs make injury announcement ahead of Friday’s game vs. 76ers",
+   "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNNFgxd2ItcnVSOWd6ZUtZekJSQUFld0E5eV9iTVJYRi02Vkdxdm8xelNDa2x6dTFoc3k0UFZEZWNVY3FuRWtlMUZQa1hxaHNMNThicHdvcl9Bb21tUWh5aThPX0Z1MF85NmZMVG45VUFyS2xjcERhbV9aSXBiMVZscm9oVV8xOHhpY3ZSU2FiRWlQcm9OWmYyaE11Z3dZSTJrS0xhRTdVRQ?oc=5",
+   "date": "2026-11-07T00:05:00.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -404,6 +410,48 @@
  ],
  "videos": [
   {
+   "src": "It's Cavalier Podcast",
+   "title": "Peyton Watson’s Shot Isn’t Falling… But the Cavs NEED His Defense",
+   "link": "https://www.youtube.com/watch?v=U4AsJkBHrNc",
+   "date": "2026-11-12T05:15:57.000Z",
+   "id": "U4AsJkBHrNc"
+  },
+  {
+   "src": "It's Cavalier Podcast",
+   "title": "Meleek Thomas SHINED at MSG #cavs #cavaliers #clevelandcavaliers",
+   "link": "https://www.youtube.com/watch?v=DLl8o9Fhg40",
+   "date": "2026-11-12T04:56:16.000Z",
+   "id": "DLl8o9Fhg40"
+  },
+  {
+   "src": "Locked On Cavs",
+   "title": "REACTION: Cleveland Cavaliers TAKE DOWN The New York Knicks! | James Harden DOMINATES!",
+   "link": "https://www.youtube.com/watch?v=jwaLiQSGzFs",
+   "date": "2026-11-12T04:50:07.000Z",
+   "id": "jwaLiQSGzFs"
+  },
+  {
+   "src": "Locked On Cavs",
+   "title": "James Harden Provides VINTAGE Performance for the Cleveland Cavaliers on Wednesday night at MSG",
+   "link": "https://www.youtube.com/watch?v=C9j1zgWF91A",
+   "date": "2026-11-12T04:24:06.000Z",
+   "id": "C9j1zgWF91A"
+  },
+  {
+   "src": "Cavs Roundtable",
+   "title": "Cleveland Cavaliers Ride A VINTAGE James Harden Night To Top New York Knicks 115-107",
+   "link": "https://www.youtube.com/watch?v=rNoydyJ241I",
+   "date": "2026-11-12T04:00:45.000Z",
+   "id": "rNoydyJ241I"
+  },
+  {
+   "src": "Locked On Cavs",
+   "title": "CAVS POSTCAST: Cleveland Cavaliers SHOCK New York Knicks as James Harden DOMINATES at MSG",
+   "link": "https://www.youtube.com/watch?v=alCHdOvmFvE",
+   "date": "2026-11-12T03:57:07.000Z",
+   "id": "alCHdOvmFvE"
+  },
+  {
    "src": "Locked On Cavs",
    "title": "James Harden Leads the Cavs to HUGE Win Over the Knicks! #clevelandcavaliers #cavs #nba",
    "link": "https://www.youtube.com/watch?v=c6i6h9PDP-k",
@@ -411,25 +459,11 @@
    "id": "c6i6h9PDP-k"
   },
   {
-   "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: James Harden Leads the Cleveland Cavaliers to their BIGGEST Win of Season vs Knicks",
-   "link": "https://www.youtube.com/watch?v=alCHdOvmFvE",
-   "date": "2026-11-12T03:34:38.000Z",
-   "id": "alCHdOvmFvE"
-  },
-  {
    "src": "It's Cavalier Podcast",
-   "title": "REACTION: Cavs vs. Knicks",
+   "title": "James Harden FINALLY Responds! Drops 32 as Cavs Take Down Knicks",
    "link": "https://www.youtube.com/watch?v=V7M2PI1L51A",
    "date": "2026-11-12T03:30:48.000Z",
    "id": "V7M2PI1L51A"
-  },
-  {
-   "src": "Cavs Roundtable",
-   "title": "Cleveland Cavaliers Ride A VINTAGE James Harden Night To Top New York Knicks 115-107",
-   "link": "https://www.youtube.com/watch?v=rNoydyJ241I",
-   "date": "2026-11-12T03:15:32.000Z",
-   "id": "rNoydyJ241I"
   },
   {
    "src": "It's Cavalier Podcast",
@@ -565,13 +599,6 @@
    "id": "abahCmrms_A"
   },
   {
-   "src": "It's Cavalier Podcast",
-   "title": "Donovan Mitchell Drops 37… But Where’s the Help? | Cavs vs. Knicks Reaction",
-   "link": "https://www.youtube.com/watch?v=EjcKuX5LnrY",
-   "date": "2026-11-08T16:49:20.000Z",
-   "id": "EjcKuX5LnrY"
-  },
-  {
    "src": "Locked On Cavs",
    "title": "CAVS POSTCAST: The Cleveland Cavaliers CRUMBLE as Jalen Brunson Dominates",
    "link": "https://www.youtube.com/watch?v=_Q-_yXh88Xg",
@@ -584,27 +611,6 @@
    "link": "https://www.youtube.com/watch?v=mPVF2SWdTrg",
    "date": "2026-11-07T17:40:32.000Z",
    "id": "mPVF2SWdTrg"
-  },
-  {
-   "src": "It's Cavalier Podcast",
-   "title": "Evan Mobley had a fantastic performance on both sides of the ball last night. #cavs #cavaliers",
-   "link": "https://www.youtube.com/watch?v=dryUDe2-jMU",
-   "date": "2026-11-07T16:33:14.000Z",
-   "id": "dryUDe2-jMU"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: Cleveland Cavaliers HUMILIATE Philadelphia 76ers and LeBron James in NBA Cup Stunner",
-   "link": "https://www.youtube.com/watch?v=bly6DfxpSKw",
-   "date": "2026-11-07T16:19:07.000Z",
-   "id": "bly6DfxpSKw"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "PREVIEW: Can the Cleveland Cavaliers Win a SHOWDOWN With the New York Knicks?!",
-   "link": "https://www.youtube.com/watch?v=Sh1UeOejJzI",
-   "date": "2026-11-07T16:00:28.000Z",
-   "id": "Sh1UeOejJzI"
   },
   {
    "src": "Cavs Roundtable",
@@ -699,6 +705,27 @@
   }
  ],
  "highlights": [
+  {
+   "src": "NBA",
+   "title": "EXTENDED: CAVALIERS at KNICKS | FULL GAME HIGHLIGHTS | November 11, 2026",
+   "link": "https://www.youtube.com/watch?v=sSE9eMw5qkw",
+   "date": "2026-11-12T05:56:51.000Z",
+   "id": "sSE9eMw5qkw"
+  },
+  {
+   "src": "Cavs",
+   "title": "Cavs at Knicks | Game Highlights | 11.11.2026",
+   "link": "https://www.youtube.com/watch?v=wy_sX1P0vh4",
+   "date": "2026-11-12T04:15:27.000Z",
+   "id": "wy_sX1P0vh4"
+  },
+  {
+   "src": "Cavs",
+   "title": "Cavs at Knicks | James Harden Highlights | 11.11.2026",
+   "link": "https://www.youtube.com/watch?v=M45_-EPKwSc",
+   "date": "2026-11-12T04:09:39.000Z",
+   "id": "M45_-EPKwSc"
+  },
   {
    "src": "NBA",
    "title": "CAVALIERS at KNICKS | FULL GAME HIGHLIGHTS | November 11, 2026",

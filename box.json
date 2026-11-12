@@ -2505,37 +2505,7 @@
   "status": "final",
   "score": "115-107",
   "result": "W",
-  "refs": [
-   [
-    "Crew chief",
-    "Catherine Chang",
-    "30"
-   ],
-   [
-    "Referee",
-    "Kastine Evans",
-    "11"
-   ],
-   [
-    "Umpire",
-    "Billy McClatchy",
-    "31"
-   ]
-  ],
-  "qs": {
-   "cle": [
-    33,
-    26,
-    23,
-    33
-   ],
-   "opp": [
-    23,
-    30,
-    23,
-    31
-   ]
-  },
+  "top": "James Harden: 32 pts, 2 reb, 4 ast",
   "out": [
    "Sam Merrill",
    "Nae'Qwan Tomlin"
@@ -2695,7 +2665,37 @@
     "2"
    ]
   ],
-  "top": "James Harden: 32 pts, 2 reb, 4 ast"
+  "qs": {
+   "cle": [
+    33,
+    26,
+    23,
+    33
+   ],
+   "opp": [
+    23,
+    30,
+    23,
+    31
+   ]
+  },
+  "refs": [
+   [
+    "Crew chief",
+    "Catherine Chang",
+    "30"
+   ],
+   [
+    "Referee",
+    "Kastine Evans",
+    "11"
+   ],
+   [
+    "Umpire",
+    "Billy McClatchy",
+    "31"
+   ]
+  ]
  },
  "2026-11-13": {
   "url": "https://www.nba.com/game/cle-vs-mia-0022600036/box-score",
