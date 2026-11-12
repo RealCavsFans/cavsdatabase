@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "The Athletic",
+   "title": "'My name is James Harden': Former MVP erupts for season-high 32 points in Cavs' win over Knicks",
+   "link": "https://www.nytimes.com/athletic/7775173/2026/11/12/james-harden-cavs-knicks-skid/",
+   "date": "2026-11-12T05:16:28.000Z"
+  },
+  {
    "src": "Fear The Sword",
    "title": "Diving deeper into Cavs 115-107 win over Knicks: James Harden showed why he’s integral to Cleveland’s success",
    "link": "https://www.fearthesword.com/cavs-analysis/54284/cavs-diving-deeper-new-york-knicks-cleveland-cavaliers-james-harden-donovan-mitchell-meleek-thomas-peyton-watson",
@@ -404,6 +410,20 @@
  ],
  "videos": [
   {
+   "src": "It's Cavalier Podcast",
+   "title": "Peyton Watson’s Shot Isn’t Falling… But the Cavs NEED His Defense",
+   "link": "https://www.youtube.com/watch?v=U4AsJkBHrNc",
+   "date": "2026-11-12T05:15:57.000Z",
+   "id": "U4AsJkBHrNc"
+  },
+  {
+   "src": "It's Cavalier Podcast",
+   "title": "Meleek Thomas SHINED at MSG #cavs #cavaliers #clevelandcavaliers",
+   "link": "https://www.youtube.com/watch?v=DLl8o9Fhg40",
+   "date": "2026-11-12T04:56:16.000Z",
+   "id": "DLl8o9Fhg40"
+  },
+  {
    "src": "Locked On Cavs",
    "title": "REACTION: Cleveland Cavaliers TAKE DOWN The New York Knicks! | James Harden DOMINATES!",
    "link": "https://www.youtube.com/watch?v=jwaLiQSGzFs",
@@ -579,13 +599,6 @@
    "id": "abahCmrms_A"
   },
   {
-   "src": "It's Cavalier Podcast",
-   "title": "Donovan Mitchell Drops 37… But Where’s the Help? | Cavs vs. Knicks Reaction",
-   "link": "https://www.youtube.com/watch?v=EjcKuX5LnrY",
-   "date": "2026-11-08T16:49:20.000Z",
-   "id": "EjcKuX5LnrY"
-  },
-  {
    "src": "Locked On Cavs",
    "title": "CAVS POSTCAST: The Cleveland Cavaliers CRUMBLE as Jalen Brunson Dominates",
    "link": "https://www.youtube.com/watch?v=_Q-_yXh88Xg",
@@ -598,13 +611,6 @@
    "link": "https://www.youtube.com/watch?v=mPVF2SWdTrg",
    "date": "2026-11-07T17:40:32.000Z",
    "id": "mPVF2SWdTrg"
-  },
-  {
-   "src": "It's Cavalier Podcast",
-   "title": "Evan Mobley had a fantastic performance on both sides of the ball last night. #cavs #cavaliers",
-   "link": "https://www.youtube.com/watch?v=dryUDe2-jMU",
-   "date": "2026-11-07T16:33:14.000Z",
-   "id": "dryUDe2-jMU"
   },
   {
    "src": "Cavs Roundtable",
