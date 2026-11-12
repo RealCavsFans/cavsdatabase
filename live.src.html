@@ -2110,15 +2110,19 @@ const MOCK_STATLINE={label:'Player card',pick:'player',async draw(x,D,R,id){cons
     const T=(X,Y,W,H,bg)=>{x.fillStyle=bg;x.fillRect(X,Y,W,H)};const fit=(v,max,sz)=>{x.font=`800 ${sz}px "Saira Condensed"`;while(x.measureText(v).width>max&&sz>40){sz-=4;x.font=`800 ${sz}px "Saira Condensed"`}return sz};
     /* points: the hero tile */const HX=c.X,HY=c.Y,HW=360,HH=330;T(HX,HY,HW,HH,MK.wine);const pv=pg(b.pts);const pz=fit(pv,HW-60,230);x.fillStyle='#fff';x.fillText(pv,HX+30,HY+230);mkLbl(x,'POINTS',HX+32,HY+284,34,MK.gold);
     {const a=sav('pts');if(a!=null){x.font='600 24px "Geist Mono"';x.fillStyle='rgba(255,255,255,.75)';x.fillText('season avg '+a.toFixed(1),HX+32,HY+316)}}
-    /* four tiles beside it */const tw=(c.W-HW-24-12)/2,th=(HH-12)/2;
-    [['REB',b.oreb+b.dreb,'reb'],['AST',b.ast,'ast'],['STL',b.stl,'stl'],['BLK',b.blk,'blk']].forEach(([l,v,k],i)=>{const X=HX+HW+24+(i%2)*(tw+12),Y=HY+Math.floor(i/2)*(th+12);T(X,Y,tw,th,'#f2f3f5');const s=pg(v);fit(s,tw-40,104);x.fillStyle=MK.ink;x.fillText(s,X+24,Y+108);mkLbl(x,l,X+26,Y+146,28);
-      const a=sav(k);if(a!=null){const up=v>a;x.font='600 20px "Geist Mono"';x.fillStyle=up?MK.wine:MK.mut;const t2=(up?'▲ ':'')+'avg '+a.toFixed(1);x.fillText(t2,X+tw-24-x.measureText(t2).width,Y+146)}});
+    /* Nov 11 (Luka): six tiles beside it, three across: rebounds, assists, plus-minus; steals, blocks, net rating with him on */
+    const OL5=Object.values(R.L[D.focus.id][5]||{}),ohas=l=>l.ids.includes(id),oon=lRt(lSum(OL5,ohas)),ooff=lRt(lSum(OL5,l=>!ohas(l))),opm=S.season?b.pm/n:b.pm;
+    const tw=(c.W-HW-24-24)/3,th=(HH-12)/2;
+    [['REB',b.oreb+b.dreb,'reb'],['AST',b.ast,'ast'],['+/−',null,'pm'],['STL',b.stl,'stl'],['BLK',b.blk,'blk'],['NET ON',null,'net']].forEach(([l,v,k],i)=>{const X=HX+HW+24+(i%3)*(tw+12),Y=HY+Math.floor(i/3)*(th+12);T(X,Y,tw,th,'#f2f3f5');
+      const s=k==='pm'?(S.season?lsg(opm):lsgi(opm)):k==='net'?(oon.net==null?'–':BSg(oon.net)):pg(v);fit(s,tw-36,96);x.fillStyle=k==='pm'?(opm>0?LGR:opm<0?LRD:MK.ink):MK.ink;x.fillText(s,X+20,Y+108);mkLbl(x,l,X+22,Y+144,26);
+      let t2=null,col=MK.mut;if(k==='net'){if(oon.net!=null&&ooff.net!=null){const d=oon.net-ooff.net;t2=BSg(d)+' vs off';col=d>=0?MK.wine:MK.mut}}else if(k!=='pm'){const a=sav(k);if(a!=null){const up=v>a;t2=(up?'▲ ':'')+'avg '+a.toFixed(1);col=up?MK.wine:MK.mut}}
+      if(t2){x.font='600 17px "Geist Mono"';x.fillStyle=col;x.fillText(t2,X+tw-16-x.measureText(t2).width,Y+34)}});
     /* shooting: four columns, each a big makes/attempts, its percentage and a tick bar filled to that percentage */
     {/* Nov 11 (Luka): game and season player cards: shooting tiles, where he shot and his points by quarter, then plus-minus and net rating */
       const SSx=S.season?await seasonShots(D).catch(()=>({shots:[],runs:[]})):null,SHT=S.season?SSx.shots:R.shots,ma2=(m,a)=>S.season?(m/n).toFixed(1)+'/'+(a/n).toFixed(1):m+'/'+a,P1=(m,a)=>a?(m/a*100).toFixed(1)+'%':'–',tsv=b.fga+b.fta?(b.pts/(2*(b.fga+.44*b.fta))*100).toFixed(1)+'%':'–',usv=mkUsg(R,D.focus.id,id),SY=HY+HH+14,sw=(c.W-48)/5,SH2=110;
       [['FG',ma2(b.fgm,b.fga),P1(b.fgm,b.fga)],['3PT',ma2(b.tpm,b.tpa),P1(b.tpm,b.tpa)],['FT',ma2(b.ftm,b.fta),P1(b.ftm,b.fta)],['TS%',tsv,null],['USG%',usv==null?'–':(usv*100).toFixed(1)+'%',null]].forEach(([l,v,p2],i)=>{const X=c.X+i*(sw+12);T(X,SY,sw,SH2,'#f2f3f5');fit(v,sw-36,66);x.fillStyle=MK.ink;x.fillText(v,X+18,SY+66);mkLbl(x,l,X+20,SY+96,24);if(p2){x.font='700 20px "Geist Mono"';x.fillStyle=MK.ink;x.fillText(p2,X+sw-16-x.measureText(p2).width,SY+96)}});
       /* Nov 11 (Luka): the middle is drawn, not boxed: his shots on a half court, and his points by quarter as bars; then plus-minus and net rating on one line */
-      const PY=SY+SH2+20,pw=(c.W-24)/2,PH=226,F0=D.focus.id,shp=SHT.filter(q=>q.id===id);
+      const PY=SY+SH2+20,pw=(c.W-24)/2,PH=282,F0=D.focus.id,shp=SHT.filter(q=>q.id===id);
       {const X=c.X;mkLbl(x,'WHERE HE SHOT',X,PY+22,24);const zc=[[0,0],[0,0],[0,0]];shp.forEach(q=>{if(q.zi==null)return;const k=q.zi===0?0:q.zi<3?1:2;zc[k][1]++;if(q.m)zc[k][0]++});
         const zs=['RIM','MID','3PT'].map((l,k)=>l+' '+(S.season?(zc[k][0]/n).toFixed(1)+'/'+(zc[k][1]/n).toFixed(1):zc[k][0]+'/'+zc[k][1])).join(' · ');x.font='700 16px "Geist Mono"';x.fillStyle=MK.ink;x.fillText(zs,X+pw/2-x.measureText(zs).width/2,PY+PH+6);
         const s=Math.min(pw/50,(PH-50)/29.5),CW2=50*s,X0=X+(pw-CW2)/2,Y0=PY+36,Xf=v=>X0+v*s,Yf=v=>Y0+(v+5.25)*s,c3=Math.sqrt(23.75**2-22**2),Hc=29.5*s;
@@ -2134,10 +2138,6 @@ const MOCK_STATLINE={label:'Player card',pick:'player',async draw(x,D,R,id){cons
           x.font='800 36px "Saira Condensed"';x.fillStyle=best?MK.wine:MK.ink;const t=S.season?v.toFixed(1):String(v);x.fillText(t,BX+bw/2-x.measureText(t).width/2,base-hh-8);
           x.font='800 22px "Saira Condensed"';x.fillStyle=MK.mut;const ql=q<=4?'Q'+q:'OT'+(q-4);x.fillText(ql,BX+bw/2-x.measureText(ql).width/2,base+24);
           x.font='600 15px "Geist Mono"';x.fillStyle=MK.ink;const fg=S.season?(z.length?Math.round(zm/z.length*100)+'% FG':''):zm+'–'+z.length+' FG';x.fillText(fg,BX+bw/2-x.measureText(fg).width/2,base+44)})}
-      const BY=PY+PH+62,L5=Object.values(R.L[F0][5]||{}),has=l=>l.ids.includes(id),on=lRt(lSum(L5,has)),off=lRt(lSum(L5,l=>!has(l)));x.fillStyle='#dfe2e6';x.fillRect(c.X,BY-46,c.W,2);
-      {let X=c.X;const seg=(t,f,col)=>{x.font=f;x.fillStyle=col;x.fillText(t,X,BY);X+=x.measureText(t).width};const pmv=S.season?b.pm/n:b.pm;
-        seg(S.season?'+/− PER GAME  ':'PLUS-MINUS  ','800 26px "Saira Condensed"',MK.mut);seg(S.season?lsg(pmv):lsgi(pmv),'800 52px "Saira Condensed"',pmv>0?LGR:pmv<0?LRD:MK.ink);X+=48;
-        seg('NET RTG ON COURT  ','800 26px "Saira Condensed"',MK.mut);seg(on.net==null?'–':BSg(on.net),'800 52px "Saira Condensed"',MK.ink);if(on.net!=null&&off.net!=null){X+=14;seg(BSg(on.net-off.net)+' vs him off','700 20px "Geist Mono"',on.net-off.net>=0?MK.wine:MK.mut)}}
       let cx2='';if(S.season){const ids=Object.keys(R.B).filter(i=>R.B[i].gp>=Math.max(1,n*.4)&&D.P[i]&&D.P[i].team===D.focus.id);const rk=k=>1+ids.filter(i=>R.B[i][k]/R.B[i].gp>b[k]/n).length;const r=[['pts','points'],['ast','assists'],['blk','blocks'],['stl','steals']].map(([k,l])=>[rk(k),l]).sort((a,b)=>a[0]-b[0])[0];cx2=r[0]===1?'Leads the Cavs in '+r[1]+' per game':ord(r[0])+' on the Cavs in '+r[1]+' per game'}else if(sb&&sg){const d=b.pts-sb.pts/sg;cx2=Math.abs(d)<.5?'Right at his season average ('+(sb.pts/sg).toFixed(1)+' pts)':(Math.abs(d).toFixed(1)+(d>0?' points above':' points below')+' his season average ('+(sb.pts/sg).toFixed(1)+')')}mkCtx(x,c,cx2);return}
     const SY=HY+HH+44,cw=(c.W-48)/5,pc=(m,a)=>a?m/a:null,tsf=z=>z.fga+z.fta?z.pts/(2*(z.fga+.44*z.fta)):null,ts=tsf(b),us=mkUsg(R,D.focus.id,id);
     /* Nov 11 (Luka): on a game card each shooting bar is a slider from his season average: wine to the right when he beat it, gray to the left when he didn't */
