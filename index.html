@@ -131,6 +131,9 @@
 .lvsb .n{font:700 2.5rem var(--mono);text-align:center;font-variant-numeric:tabular-nums}.lvsb .n.o{color:rgba(255,255,255,.78)}
 .lvsb .clk{font:700 .8125rem var(--mono);text-align:center;color:rgba(255,255,255,.78);line-height:1.3}
 .lvst{padding:2px 16px 0;font:600 .875rem var(--sans);color:rgba(255,255,255,.78)}
+.lvsb .lvlg{width:56px;height:56px;object-fit:contain}
+.gdm-sb .gdm-lg{width:40px;height:40px;object-fit:contain;flex:none}.gdm-df{display:flex;align-items:baseline;gap:6px;margin-left:4px}.gdm-df span{font:800 .75rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted,#6b7079)}.gdm-df b{font:700 1.25rem var(--mono);color:var(--fg)}.gdm-df b.up{color:#860038}
+.lvst{display:flex;align-items:baseline;gap:8px}.lvst span{font:800 .8125rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7)}.lvst b{font:700 1.5rem var(--mono);color:#fff}.lvst b.up{color:#f2b231}
 .wpb{margin:12px 16px 0}.wpb .bar{height:6px;background:rgba(255,255,255,.18);position:relative}.wpb .bar i{position:absolute;left:0;top:0;bottom:0;background:#f2b231}
 .wpb .lb{display:flex;justify-content:space-between;font:700 .6875rem var(--sans);letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-top:5px}
 .lvld{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 16px 0}
@@ -3074,6 +3077,9 @@ const GALERT_ON=true;
 (function(){const n=document.getElementById('tabs');if(!n)return;const f=()=>{const m=n.scrollWidth-n.clientWidth;n.classList.toggle('fl',n.scrollLeft>4);n.classList.toggle('fr',m>4&&n.scrollLeft<m-4)};n.addEventListener('scroll',f,{passive:true});addEventListener('resize',f);setTimeout(f,300);f()})();
 /* game-day Home: on game days the top card leads with tip time and how to watch; the morning after it shows the final and the top stat line. ?gameday=day|after previews either one */
 /* the Cavs game on ESPN's scoreboard right now (home game-day card and game preview, during games only) */
+/* Nov 11 (Luka): game-day cards show team logos, not abbreviations (the abbreviation comes back if a logo fails) */
+function tmLogo(ab,cls){const i=document.createElement('img');i.className=cls;i.alt=ab==='CLE'?'Cavs':(TEAMS[ab]||ab);i.src='/img/tl/'+({GSW:'gs',NYK:'ny',NOP:'no',SAS:'sa',UTA:'utah',WAS:'wsh',CHO:'cha',BRK:'bkn',PHO:'phx'}[ab]||ab.toLowerCase())+'.png';const t=el('span','tm'+(ab==='CLE'?' c':''),ab==='CLE'?'CAVS':ab);i.onerror=()=>i.replaceWith(t);return i}
+const diffEl=d=>{const st=el('div','lvst');st.append(el('span',null,'The Diff'),el('b',d>0?'up':null,(d>0?'+':d<0?'−':'')+Math.abs(d)));return st};
 async function cavsLive(day){try{const r=await fetch('https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates='+day.replace(/-/g,''),{cache:'no-store'});if(!r.ok)return null;const j=await r.json();
   const e=(j.events||[]).find(x=>x.competitions&&x.competitions[0].competitors.some(c=>c.team&&c.team.id==='5'));if(!e)return null;
   const c=e.competitions[0],st=c.status||e.status||{},ty=st.type||{};const me=c.competitors.find(x=>x.team.id==='5'),op=c.competitors.find(x=>x.team.id!=='5');
@@ -3092,8 +3098,9 @@ function fitLogo(img){/* Nov 4: sizing now comes from the site-wide logo scale (
 
   /* during the game the game-day block becomes one live card (score, clock, win chance, leaders, last play) */
   function liveCard(g,Lv,first){const kk=el('span','gdm-live');kk.append(el('i'),(Lv.fin?'Final':'Live')+(first?' · season opener':''));/* Nov 4: no Preview link once the game is on; after the buzzer it points to the box score */const c=card('gdm-day',kk,Lv.fin?['Box score','/games/'+gslug(g),'games/'+gslug(g)]:null);
-    const sb=el('div','lvsb');sb.append(el('span','tm c','CAVS'),el('span','n',String(Lv.cs)));const ck=el('span','clk');if(Lv.fin)ck.textContent='Final';else ck.append(perName(Lv.per),el('br'),Lv.clock);sb.append(ck,el('span','n o',String(Lv.os)),el('span','tm',g[1]));c.appendChild(sb);
-    const d=Lv.cs-Lv.os;c.appendChild(el('div','lvst',Lv.fin?(d>0?'Cavs win by '+d:'Cavs lose by '+(-d)):d>0?'Cavs lead by '+d:d<0?'Cavs trail by '+(-d):'Tied'));
+    /* Nov 11 (Luka): team logos instead of abbreviations, and the margin as The Diff */const lgo=ab=>tmLogo(ab,'lvlg');
+    const sb=el('div','lvsb');sb.append(lgo('CLE'),el('span','n',String(Lv.cs)));const ck=el('span','clk');if(Lv.fin)ck.textContent='Final';else ck.append(perName(Lv.per),el('br'),Lv.clock);sb.append(ck,el('span','n o',String(Lv.os)),lgo(g[1]));c.appendChild(sb);
+    const d=Lv.cs-Lv.os;c.appendChild(diffEl(d));
     if(Lv.wp!=null&&!Lv.fin){const w=el('div','wpb'),bar=el('div','bar'),fill=el('i'),pc=Math.round(Lv.wp*100);fill.style.width=pc+'%';bar.appendChild(fill);const lb=el('div','lb');lb.append(el('span',null,'Win chance CAVS '+pc+'%'),el('span',null,g[1]+' '+(100-pc)+'%'));w.append(bar,lb);c.appendChild(w)}
     const ld=el('div','lvld');[['CAVS',Lv.ld[0]],[g[1],Lv.ld[1]]].forEach(([ab,x])=>{if(!x.pts)return;const dv=el('div');dv.append(el('span',null,ab+' LEADER'),el('b',null,x.pts.n),el('small',null,x.pts.v+' pts'+(x.reb&&x.reb.n===x.pts.n?' · '+x.reb.v+' reb':'')+(x.ast&&x.ast.n===x.pts.n?' · '+x.ast.v+' ast':'')));ld.appendChild(dv)});if(ld.childNodes.length)c.appendChild(ld);
     if(Lv.lp&&!Lv.fin){const p=el('div','lvlp');p.append(el('b',null,Lv.clock),Lv.lp);c.appendChild(p)}
@@ -3157,7 +3164,7 @@ function fitLogo(img){/* Nov 4: sizing now comes from the site-wide logo scale (
   function after(g,score,top,url,pre){{const ls=document.getElementById('last');if(ls)ls.hidden=true}const [cs,os]=score.split('-').map(Number);const c=card('',(pre?'Preseason final':'Final')+' · '+(g[2]==='H'?'vs '+TEAMS[g[1]]:'at '+TEAMS[g[1]]),['Box score','/live.html']);
     /* box score = our live game page for that game (ESPN game id looked up by date) */
     {const bl=c.querySelector('.gdm-k a');bl.removeAttribute('target');bl.removeAttribute('rel');bl.classList.add('gdm-bsl');cavsLive(g[0]).then(L=>{if(L&&L.id)c.querySelectorAll('a.gdm-bsl').forEach(x=>x.href='/live.html?g='+L.id)}).catch(()=>{})}
-    const sb=el('div','gdm-sb');sb.append(el('span','tm c','CAVS'),el('span','gdm-tl',String(cs)),el('span','gdm-dash'),el('span','gdm-tl o',String(os)),el('span','tm',g[1]),el('span','gdm-wl'+(cs>os?'':' l'),cs>os?'WIN':'LOSS'));const row=el('div','gdm-frow');row.appendChild(sb);c.appendChild(row);
+    const sb=el('div','gdm-sb');sb.append(tmLogo('CLE','gdm-lg'),el('span','gdm-tl',String(cs)),el('span','gdm-dash'),el('span','gdm-tl o',String(os)),tmLogo(g[1],'gdm-lg'),el('span','gdm-wl'+(cs>os?'':' l'),cs>os?'WIN':'LOSS'));{const df=diffEl(cs-os);df.className='gdm-df';sb.appendChild(df)}const row=el('div','gdm-frow');row.appendChild(sb);c.appendChild(row);
     if(top){const [nm,ln]=top.split(': ');const p=PLAYERS.find(x=>x[1]===nm);const t=el('div','gdm-top');if(p){const hs=el('div','gdm-hs');const im=el('img');im.src='https://cdn.nba.com/headshots/nba/latest/260x190/'+p[12]+'.png';im.alt='';im.onerror=()=>im.remove();hs.appendChild(im);t.appendChild(hs)}const tx=el('div');const lnE=el('div','gdm-ln');lnE.innerHTML=(ln||'').toUpperCase().replace(/, /g,' · ').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'})[c]).replace(/(\d+(?:-\d+)?)\s+([A-Z%]+)/g,'<b>$1</b> $2');tx.append(el('small',null,'TOP LINE'),el('b',null,nm),lnE);t.appendChild(tx);row.appendChild(t)}
     const lk=el('div','gdm-links');const rc=RC&&RC.items&&RC.items.find(x=>/recap/i.test(x.title)&&recapAfter(x,g));if(rc){const a=el('a',null,'Game analysis →');a.href=safeUrl(rc.link);a.target='_blank';a.rel='noopener';lk.appendChild(a);
       /* desktop: the recap link sits in the header next to Box score, so the card has no extra row */
