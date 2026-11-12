@@ -1866,7 +1866,7 @@ function advView(c,D,R,t){
       ast:(tFGM-b.fgm)>0?100*b.ast/(tFGM-b.fgm):null,stl:pd?100*b.stl/pd:null,blk:o2A>0?100*b.blk/o2A:null,
       tov:(tsa+b.ast+b.to)?100*b.to/(tsa+b.ast+b.to):null,usg:(tFGA+0.44*tFTA+tTO)?100*(tsa+b.to)/(tFGA+0.44*tFTA+tTO):null,ortg:po>=1?pf/po*100:null,drtg:pd>=1?pa/pd*100:null,net:po>=1&&pd>=1?pf/po*100-pa/pd*100:null,starter:D.P[id].starter}});
   const p3=k=>r=>r[k]==null?'–':r[k].toFixed(3).replace(/^0/,''),p1=k=>r=>r[k]==null?'–':r[k].toFixed(1),p0=k=>r=>r[k]==null?'–':r[k].toFixed(0);
-  c.appendChild(dtable('adv',[{h:'Player',k:'id',f:r=>{const sp=el('span');sp.appendChild(plink(D,r.id,D.P[r.id].short));if(r.starter)sp.appendChild(el('span','pos',D.P[r.id].pos||''));return sp}},{h:'MIN',k:'mp',f:r=>fmtMin(r.mp*60)},
+  c.appendChild(dtable('adv',[{h:'Player',k:'id',f:r=>{const sp=el('span');sp.appendChild(plink(D,r.id,D.P[r.id].short));return sp}},{h:'MIN',k:'mp',f:r=>fmtMin(r.mp*60)},
     {h:'TSA',k:'tsa',f:r=>r.tsa.toFixed(1),title:'True shot attempts: FGA + 0.44 × FTA'},{h:'TS%',k:'ts',f:p3('ts'),title:'TS%'},{h:'eFG%',k:'efg',f:p3('efg')},{h:'3PAr',k:'tpar',f:p3('tpar'),title:'Share of shots from three'},{h:'FTr',k:'ftr',f:p3('ftr'),title:'Free throw attempts per shot'},
     {h:'ORB%',k:'orb',f:p1('orb')},{h:'DRB%',k:'drb',f:p1('drb')},{h:'TRB%',k:'trb',f:p1('trb')},{h:'AST%',k:'ast',f:p1('ast'),title:'Share of teammates’ baskets he assisted while on the floor'},
     {h:'STL%',k:'stl',f:p1('stl'),title:'Steals per 100 opponent possessions while he was on the floor'},{h:'BLK%',k:'blk',f:p1('blk'),title:'Share of the opponent’s two-point tries he blocked while on the floor'},{h:'TOV%',k:'tov',f:p1('tov'),asc:true,title:'Turnovers per 100 of his plays (shots, free throw trips, assists and turnovers), the NBA.com way'},{h:'USG%',k:'usg',f:p1('usg'),title:'Share of team plays he used while on the floor'},
@@ -2566,7 +2566,7 @@ Object.assign(CARDS,{
     lNote(x,'Wine = won that factor · tick = '+(S.season?'NBA average this season':Fo.abbr+'’s season average (left) and what '+Fo.abbr+' opponents average (right)'));brandBar(x,LW,LH)}},
   player:{label:'Player card',pick:'player',w:LW,h:LH,async draw(x,D,R,id){const p=D.P[id],b=R.B[id];if(!p||!b)return;const t=D.teams.find(z=>z.id===p.team);
     lFrame(x);const TX=await lHero(x,D,id);const mn=Math.round((b.min||0)/60);
-    lTitle(x,TX,kick()+[t.abbr,p.pos,p.starter?'STARTER':'BENCH'].filter(Boolean).join(' · ')+' · '+(t.id===D.focus.id||S.season?lKick(D).replace(/^[A-Z]+ /,''):(t.ha==='home'?'VS ':'AT ')+D.focus.abbr+' · '+new Date(D.date).toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase()),p.name,[[String(b.pts),'800 104px "Saira Condensed"','#fff'],[' PTS  ','800 44px "Saira Condensed"','#fff'],[String(b.oreb+b.dreb),'800 104px "Saira Condensed"','#fff'],[' REB  ','800 44px "Saira Condensed"','#fff'],[String(b.ast),'800 104px "Saira Condensed"','#fff'],[' AST  ','800 44px "Saira Condensed"','#fff'],['in '+mn+' min','600 32px Archivo','rgba(255,255,255,.62)']]);
+    lTitle(x,TX,kick()+[t.abbr,p.starter?'STARTER':'BENCH'].filter(Boolean).join(' · ')+' · '+(t.id===D.focus.id||S.season?lKick(D).replace(/^[A-Z]+ /,''):(t.ha==='home'?'VS ':'AT ')+D.focus.abbr+' · '+new Date(D.date).toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase()),p.name,[[String(b.pts),'800 104px "Saira Condensed"','#fff'],[' PTS  ','800 44px "Saira Condensed"','#fff'],[String(b.oreb+b.dreb),'800 104px "Saira Condensed"','#fff'],[' REB  ','800 44px "Saira Condensed"','#fff'],[String(b.ast),'800 104px "Saira Condensed"','#fff'],[' AST  ','800 44px "Saira Condensed"','#fff'],['in '+mn+' min','600 32px Archivo','rgba(255,255,255,.62)']]);
     /* Game Score (Hollinger): the box score in one number; 10 = an average night, 40 = a great one. Top right of the header, with his rank tonight */
     {const gs=gmSc(b),RX=1860,BW=340,BX=RX-BW,BY=208,mx=40,P=v=>BX+BW*Math.max(0,Math.min(mx,v))/mx;
      x.textAlign='right';x.fillStyle='#fff';x.font='800 84px "Saira Condensed"';x.fillText(gs.toFixed(1),RX,180);const nw=x.measureText(gs.toFixed(1)).width;x.fillStyle=GOLD;x.font='800 28px "Saira Condensed"';x.fillText('GAME SCORE',RX-nw-18,178);
@@ -2698,7 +2698,7 @@ Object.assign(SCARDS,{
     lNote(x,'Ratings per 100 possessions'+(rk.t?' · NBA ranks from pbpstats possession counts':'')+' · games from the Cavs’ game archive');brandBar(x,LW,LH)}},
   splayer:{label:'Player season card',pick:'player',w:LW,h:LH,async draw(x,D,R,id){const p=D.P[id],b=R.B[id];if(!p||!b)return;const n=b.gp||0;const F=D.focus.id;
     lFrame(x);const TX=await lHero(x,D,id);
-    lTitle(x,TX,[D.focus.abbr,p.pos,sSea(D)+' SEASON',n+' GAME'+(n===1?'':'S')+(b.gs?' · '+b.gs+' START'+(b.gs===1?'':'S'):'')].filter(Boolean).join(' · '),p.name,[[pg(b.pts,n),'800 104px "Saira Condensed"','#fff'],[' PPG  ','800 44px "Saira Condensed"','#fff'],[pg(b.oreb+b.dreb,n),'800 104px "Saira Condensed"','#fff'],[' RPG  ','800 44px "Saira Condensed"','#fff'],[pg(b.ast,n),'800 104px "Saira Condensed"','#fff'],[' APG  ','800 44px "Saira Condensed"','#fff'],['in '+pg(b.min/60,n)+' min','600 32px Archivo','rgba(255,255,255,.62)']]);
+    lTitle(x,TX,[D.focus.abbr,sSea(D)+' SEASON',n+' GAME'+(n===1?'':'S')+(b.gs?' · '+b.gs+' START'+(b.gs===1?'':'S'):'')].filter(Boolean).join(' · '),p.name,[[pg(b.pts,n),'800 104px "Saira Condensed"','#fff'],[' PPG  ','800 44px "Saira Condensed"','#fff'],[pg(b.oreb+b.dreb,n),'800 104px "Saira Condensed"','#fff'],[' RPG  ','800 44px "Saira Condensed"','#fff'],[pg(b.ast,n),'800 104px "Saira Condensed"','#fff'],[' APG  ','800 44px "Saira Condensed"','#fff'],['in '+pg(b.min/60,n)+' min','600 32px Archivo','rgba(255,255,255,.62)']]);
     const lg=lgAvg();const ts=b.fga+b.fta?b.pts/(2*(b.fga+.44*b.fta)):null;
     /* left: shooting, against the NBA average */
     lPanel(x,LX1,LY0,LSW,LBH,WINE);lHeadline(x,LX1,LSW,LY0,'SHOOTING','TS%'+(lg?' · NBA avg '+Math.round(lg.ts*100)+'%':''),ts==null?'–':Math.round(ts*100)+'%',ts==null||!lg?null:ts>=lg.ts);
@@ -3106,7 +3106,7 @@ function pgCard(D,R,id){const p=D.P[id],b=R.B[id];if(!p||!b)return null;const t=
   const w=el('div','card pgc');w.id='pgc';
   /* header */
   const hd=el('div','pgc-h');const img=hsUrl(D,id);const av=el('div','pgc-av');if(img){const im=el('img');im.src=img;im.alt='';im.onerror=()=>{im.remove();av.textContent=initials(p.name)};av.appendChild(im)}else av.textContent=initials(p.name);
-  const nmw=el('div');nmw.append(el('small',null,[t.abbr,p.pos].filter(Boolean).join(' · ')+(p.starter?' · STARTER':' · OFF THE BENCH')),el('b',null,p.name));hd.append(av,nmw);
+  const nmw=el('div');nmw.append(el('small',null,t.abbr+(p.starter?' · STARTER':' · OFF THE BENCH')),el('b',null,p.name));hd.append(av,nmw);
   const x=el('button','pgc-x','×');x.type='button';x.setAttribute('aria-label','Close');x.onclick=()=>{S.f.pgc=null;renderView()};hd.appendChild(x);w.appendChild(hd);
   /* game line with previous / next game */
   {const gl=el('div','pgc-g');const se=S.src||CUR_SEASON,L=(ARCH[se]||[]).slice().sort((a,b2)=>a.date<b2.date?-1:1),i=L.findIndex(g=>g.id===S.ev);
@@ -3188,7 +3188,7 @@ function vPlayers(v,D,R){
     {/* on-court net rating: points per 100 possessions scored minus allowed with him on (same count as the Advanced view) */
       const onL=Object.values(R.L[t.id][5]).filter(l=>l.ids.includes(id));let po=onL.reduce((s2,l)=>s2+poss(l.o),0),pd=onL.reduce((s2,l)=>s2+poss(l.d),0);const pf=onL.reduce((s2,l)=>s2+l.pf,0),pa=onL.reduce((s2,l)=>s2+l.pa,0);r.net=po>=1&&pd>=1?pf/po*100-pa/pd*100:null}
     r._cls=R.B[id].on&&S.state==='in'?'':'';rows.push(r)});
-  const nm=r=>{const s=el('span');const dot=el('span','oc'+(R.B[r.name.id].on&&S.state==='in'?'':' off'));s.append(dot,plink(D,r.name.id,r.name.short||r.name.name));if(r.name.starter)s.appendChild(el('span','pos',r.name.pos||''));return s};
+  const nm=r=>{const s=el('span');const dot=el('span','oc'+(R.B[r.name.id].on&&S.state==='in'?'':' off'));s.append(dot,plink(D,r.name.id,r.name.short||r.name.name));return s};
   const d=x=>r=>r.dnp?'':x(r);
   const cols=[{h:'Player',k:'name',f:nm},{h:'MIN',k:'min',f:r=>r.dnp?'DNP':fmtMin(r.min)},{h:'PTS',k:'pts',f:d(r=>r.pts),cls:()=>'k'},
     {h:'FG',k:'fgm',f:d(r=>r.fgm+'-'+r.fga)},{h:'2P',k:'twm',sv:r=>r.dnp?null:r.fgm-r.tpm,f:d(r=>(r.fgm-r.tpm)+'-'+(r.fga-r.tpa))},{h:'3PT',k:'tpm',f:d(r=>r.tpm+'-'+r.tpa)},{h:'FT',k:'ftm',f:d(r=>r.ftm+'-'+r.fta)},{h:'TS%',k:'ts',f:d(r=>r.ts==null?'–':(r.ts*100).toFixed(0)+'%'),title:'TS%'},
