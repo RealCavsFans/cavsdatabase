@@ -1,11 +1,11 @@
 {
  "season": "2026-27",
- "checked": "2026-11-11T11:39:36.753Z",
+ "checked": "2026-11-12T06:22:41.446Z",
  "tally": {
-  "games": 160,
-  "clean": 157,
+  "games": 170,
+  "clean": 166,
   "nba": 0,
-  "ours": 3,
+  "ours": 4,
   "poss": 1,
   "espn": 0
  },
@@ -47,6 +47,14 @@
     "C. Johnson (BKN): pm 10/9 (NBA/ours)",
     "N. Traore (BKN): pm 8/9 (NBA/ours)",
     "K. Ellis (BKN): pm 1/0 (NBA/ours)"
+   ]
+  },
+  "0022600220": {
+   "d": "20261111",
+   "m": "SAS@CHI",
+   "ours": [
+    "J. Smith (CHI): pm -31/-32 (NBA/ours)",
+    "Z. Collins (CHI): pm 1/2 (NBA/ours)"
    ]
   }
  }
