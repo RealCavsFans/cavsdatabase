@@ -1,6 +1,24 @@
 {
  "articles": [
   {
+   "src": "Fear The Sword",
+   "title": "Player Grades: Cavs at Knicks – James Harden takes over",
+   "link": "https://www.fearthesword.com/cavs-analysis/54285/player-grades-cavs-at-knicks-james-harden-takes-over",
+   "date": "2026-11-12T03:05:00.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Vintage James Harden leads Cavs in 115-107 win over Knicks",
+   "link": "https://www.fearthesword.com/cavs-scores-results/54283/vintage-james-harden-leads-cavs-in-115-107-win-over-knicks",
+   "date": "2026-11-12T02:45:53.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Cavs at Knicks game thread",
+   "link": "https://www.fearthesword.com/cavs-game-previews/54252/cavs-at-knicks-game-thread",
+   "date": "2026-11-12T00:00:00.000Z"
+  },
+  {
    "src": "Hoops Rumors",
    "title": "Cavaliers Notes: Harden, Atkinson, Minix, Tyson",
    "link": "https://www.hoopsrumors.com/2026/11/cavaliers-notes-harden-atkinson-minix-tyson.html",
@@ -49,22 +67,10 @@
    "date": "2026-11-10T20:00:00.000Z"
   },
   {
-   "src": "Cavaliers on SI",
-   "title": "Important Cavs Contributor Faces Uncertain Future As Contract Guarantee Date Nears",
-   "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQUTN0XzJXblBSVmdqMzlrZGRnamJzb2VXa0tHOWd5ZURNSmZ5X1htM0tvWER4UWZ2MnAwdGc5V0RpRjFPaWJDUWJSR0NHYmowMUtwTTc0bHU2NjJLSHNaa0QxZWxXMUxYNlkyVndud0M0cU92aUNPd2JEVlBaS09iY2h0QWhIUVVzUEN3aHlEMTJhbk5DV3FqeGhGS3VsZjRFZkRreFBWTlZubmpLSms3WllWYThyd3hSNEZwMUpaWkNnVkxCaDVvTHBNUzdPdw?oc=5",
-   "date": "2026-11-10T15:30:00.000Z"
-  },
-  {
    "src": "The Inside Shot",
    "title": "Game Night Observations: Unacceptable Effort, Harden’s Awful Start And a Defining Stretch",
    "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBKV2I0M0FJdFNoWTlZVmxIMkZReTlYM2Q4YUlfMU40dTdzTFdwQjdQQy11R05RTEIwZldITzd5V0tWdnYwV2dfTGdVZ2YwVHlPdTJ1X3ZILXZvQ0RwY2k0MnJUQUU5aGRQdUVPZENkLXhocFp3T2J4alZEZDU3Zw?oc=5",
    "date": "2026-11-10T13:20:30.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "3 Potential Solutions To Fix The Fading Cleveland Cavaliers",
-   "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPMExlZVVCXzUtbXNFaVNKLWIwZnRPM0tlNDdiZ3NkZzdLeHktLVhndnl1SXUzb0lfRjN3ZzBIWE11aWNUdzF6WnFKZmxuUXUxRGpENlYtdVZ2TkVDM2EtdVVwaFlxcjhtc21hbWduTTdBVkpwYWdjbG1qMjVxbU5IUmtLc2pOQVdBRzh3ako4Vm0wOFA1YTB2d21YZVFtbXgxblZoTlNObklUVlhfeDc0?oc=5",
-   "date": "2026-11-10T12:00:01.000Z"
   },
   {
    "src": "Fear The Sword",
@@ -115,6 +121,18 @@
    "date": "2026-11-10T00:00:00.000Z"
   },
   {
+   "src": "Cavaliers on SI",
+   "title": "Evan Mobley May Lead in Total Touches, But Cavaliers’ Guards Still Control the Clock",
+   "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQOUphY3NtVVdxdkczQXFrVko3aWxvODVycE1Lc1B5WDJUMG5hbnM2SWpDZFVwTFE2bGJRSlp1cEFnTV9lc0tCOEdoZEMyNHBaWWhENUktUTBOOGxLS1VuMExnQnFiTlBwalRpQW5SLVdkcHhfUkk4VlpZR09oZEJUUnUtZnRXRUZyNlN2ZEdjdXZFNXVGdE1DalJMN1ctNmxJMUhSVXhmdlMwVWplaURHaE90TkFHeWtGVHFhVEdNbDNHTVIta1RCR0Z0em9EQQ?oc=5",
+   "date": "2026-11-09T20:00:02.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "Three Key Storylines To Watch in Cavs vs. Hornets",
+   "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOZVZ5R29nSGFDdzduQjkwSUVRMXBPU0xjVGJpVDNHTkdLVjEwV2o2VXBpRTF1Y3hoX2FmRmJaU04zcGFVRXVhMTFsTmQtbmNvTmdaNnUwNWFucFhzZEY1aFBBRWZiZVpqZE5FczItbU8ybkluaEE4VmVnX2NtSTBLZElobDg5bFcyNEwtUU1ORy1aVlptQXNwWGtNam0xRjkz?oc=5",
+   "date": "2026-11-09T18:00:00.000Z"
+  },
+  {
    "src": "Fear The Sword",
    "title": "Cavs at Hornets: How to watch, odds, and injury report",
    "link": "https://www.fearthesword.com/cavs-injury-report/54202/cavs-at-hornets-how-to-watch-odds-and-injury-report",
@@ -151,18 +169,6 @@
    "date": "2026-11-08T11:00:00.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "Diving deeper into Cavs 109-97 loss to Knicks: The more things change, the more they stay the same",
-   "link": "https://www.fearthesword.com/cavs-analysis/54153/cavs-diving-deeper-new-york-knicks-cleveland-cavaliers-donovan-mitchell-jalen-brunson-kenny-atkinson-evan-mobley",
-   "date": "2026-11-08T11:00:00.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Player Grades: Cavs vs Knicks – Donovan Mitchell drops 37 points in loss",
-   "link": "https://www.fearthesword.com/cavs-analysis/54155/player-grades-cavs-vs-knicks-donovan-mitchell-drops-37-points-in-loss",
-   "date": "2026-11-08T05:59:24.000Z"
-  },
-  {
    "src": "Hoops Rumors",
    "title": "Central Notes: Wade, Duren, McConnell, Rivers, Lillard",
    "link": "https://www.hoopsrumors.com/2026/11/central-notes-wade-duren-mcconnell-rivers-lillard.html",
@@ -179,12 +185,6 @@
    "title": "Two Cavs Players That Surprised Me In Disappointing Loss To Knicks",
    "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQeGkwZG5GZnhnVXJldlNPVlpzV0dOem4xWHBaTnoxNWxwRzFHZXB4TURTd0w0clRmMzc1aTZzcEVDWnJ0aVZ6TTllTUhTUDRNUzl4Z3FNMzZOY19fOV9FT2w3c0pXOXFMZWJoMlNrRWFlQ1BiSjNMZHZ3V2Vrc1BtRGV0Mzk4ZXBRaGViNWNxRXM3ZFJ3ZUZXcUgzYldlSnVOeFc1X2RGTXVZVUdCTTZWTDNESDNTM2Fo?oc=5",
    "date": "2026-11-08T03:35:12.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cavs lose to Knicks 109-97 as Brunson and Towns combine for 60 points",
-   "link": "https://www.fearthesword.com/cavs-scores-results/54156/cavs-lose-to-knicks-109-97-as-brunson-and-towns-combine-for-60-points",
-   "date": "2026-11-08T03:24:43.000Z"
   },
   {
    "src": "The Athletic",
@@ -230,6 +230,12 @@
   },
   {
    "src": "cleveland.com",
+   "title": "Cavs vs. Knicks: preview, odds, injury report, TV",
+   "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPNURIYW5mbGRKY0pVZkZzWGZCNzVFaHdnVncyd052c0tmNGYwcVBlOHV1aldGZmtNMk5NWHRTUGR2dnJ6Sl9KQ1o1SFdVb3g1bVhJYnpEekRTd2ZKTmFRbnBhR3M0dkdCYjNHUEdkUV9oaE5Wbmt6Z20wbkhzQkZwbWtWSDdTd3d4N3hWMkxFMjdZdw?oc=5",
+   "date": "2026-11-07T10:06:00.000Z"
+  },
+  {
+   "src": "cleveland.com",
    "title": "LeBron James reacts to mixed reception from hometown Cavs fans in Cleveland return",
    "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQci0xN1d3dEVJV04xdGdlV2lHeWwtbWg2Y0dyZzlld0VnTWRhUVN2NDNSeloxX2Jhd0IxaVdGekRudDhULWUzWVM2dWdkclIwbWdzdUpzS1FadDFTU0RoaXBZbUViZGw4NERnekRYN3laZjBqUkwtRF9XUUtQQ3ZhUnpMbldDa1pDNnQtYXNYNnJYdm5fYlpiLURIME9uU0VaNzA5aS16TXZwTHRmTGlUTEV1V2J4TG1WTFVqY1UwTF9VOFNG?oc=5",
    "date": "2026-11-07T06:06:00.000Z"
@@ -245,6 +251,12 @@
    "title": "LeBron suffers through one of his all-time worst games in return to Cleveland",
    "link": "https://www.nytimes.com/athletic/7760468/2026/11/06/lebron-james-return-cleveland-cavaliers-76ers/",
    "date": "2026-11-07T00:46:30.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "Updated Cavs Injury Report Ahead Of Pivotal Sixers Clash",
+   "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQVWNlYi1SSE52d2tjOWEzS1ZzUWlJUHBPV2xFMHYzOEtVdzMtb3FBNGR1NHl4ekdPVGRBdWttZ0RoZ2pUeUs5ZmIxOFVwNWdMWFZOMGJaQWtRbnpESDVPd3FRR2N1NkpNX0YweVZuVVJueW1BX2xBQVhmLUZuU0FrTVVWb25xbzM0UGFkdnpGbUJpQklqZ001ODRqd21ULUpjdzlQa05ESmdxWlE?oc=5",
+   "date": "2026-11-06T17:00:00.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -275,12 +287,6 @@
    "title": "Game Night Observations: An Ugly Problem, Getting to the Rim and More Injuries",
    "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPQ2xQTTJfWXp4VVlEMFUxaHRRYnVpdi1EbW93TzM0TmlJeHJ2cWxVX1VGaWxSQV84WnJHdVdKSko2MExCQUtxcGVJb09rSFBnM1JzTWMtTzFwX0lRRW12ZXNfcHljQTBFTFVPWi04YnBrVEhrNDJvUDU2QkFRV1NNT01n?oc=5",
    "date": "2026-11-05T12:50:34.000Z"
-  },
-  {
-   "src": "cleveland.com",
-   "title": "Cavs rolled by Thunder, 124-116, in wire-to-wire loss",
-   "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOMEFkM0d1UERxWUdiQXR3VjVBcFBuTDBvaUctVlNtU3pmRGFFRzdweTVmVHI4M0l1U2hvVU9Ic19qaHdUclV1aktlRmo2Smh0c3FMN1FkWnpDTEV2a0ltWEh1YWtaTUJueWxwbXRSQ09CR1FZRUhFUm02c3lLaUZTNjNUdU5xRmtZOWFENEtFM3pIWWxVT3Z5dGRWbw?oc=5",
-   "date": "2026-11-05T03:39:00.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -317,12 +323,6 @@
    "title": "Tyrese Proctor Is Making Every Opportunity Count—and Giving the Cavs a Reason to Play Him More",
    "link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxOY2N5aWw1UGhCZzRyQ1g5ZVZaOVhTNS04T1ctc1hOYjZoNXF5YU02SEY4YW9CdnVWcVloWDRqVnN3UzQ2NlVWQTZCRlpCMVY1SjlwU3FRVm5tMHluSDZweUZjTWEzTFh3MjFzbDN1OXU2SDBXUmxIa1RuOEZxOHdmVEZBYldsaTdia2VHRTNCdFVyb3hnX1dNSnVyaE1KTTlibl9KUEp0MnJld1pBNmFjMEkwdGlZVHR0S3BEcjFVSzVtQndsSjNHaGFqb0E3YTlldmM0YnNIX3lNbDhnOXc?oc=5",
    "date": "2026-11-03T08:00:00.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "3 Notable Takeaways from Cavs Head-Scratching Loss to Thunder at Home",
-   "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxQeThoaS1keHpQNFNIX1FnTWpJSnk3elE1clQ3dzBPb0ZGQU02RkY3b1JoTDhldURXRTh1UFkzZVBaN0p2eEtXaklPM0lNU1dtQnJIdUJ0UFJqZzk0aVEzLUVtR3NHOXVETWNwR2xOWmJLOEpzaGY1Ql9uVlM5REJWMnNUNllUR2VyZHhCeDVxeG1TdzhyRmt1MWl3V3pOR2NIMjQzRzdMUFgySkVpVTJDNTBFVXJfTTVWc2hFNw?oc=5",
-   "date": "2026-11-03T02:54:54.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -404,18 +404,39 @@
  ],
  "videos": [
   {
+   "src": "Locked On Cavs",
+   "title": "James Harden Leads the Cavs to HUGE Win Over the Knicks! #clevelandcavaliers #cavs #nba",
+   "link": "https://www.youtube.com/watch?v=c6i6h9PDP-k",
+   "date": "2026-11-12T03:37:22.000Z",
+   "id": "c6i6h9PDP-k"
+  },
+  {
+   "src": "Locked On Cavs",
+   "title": "CAVS POSTCAST: James Harden Leads the Cleveland Cavaliers to their BIGGEST Win of Season vs Knicks",
+   "link": "https://www.youtube.com/watch?v=alCHdOvmFvE",
+   "date": "2026-11-12T03:34:38.000Z",
+   "id": "alCHdOvmFvE"
+  },
+  {
+   "src": "It's Cavalier Podcast",
+   "title": "REACTION: Cavs vs. Knicks",
+   "link": "https://www.youtube.com/watch?v=V7M2PI1L51A",
+   "date": "2026-11-12T03:30:48.000Z",
+   "id": "V7M2PI1L51A"
+  },
+  {
+   "src": "Cavs Roundtable",
+   "title": "Cleveland Cavaliers Ride A VINTAGE James Harden Night To Top New York Knicks 115-107",
+   "link": "https://www.youtube.com/watch?v=rNoydyJ241I",
+   "date": "2026-11-12T03:15:32.000Z",
+   "id": "rNoydyJ241I"
+  },
+  {
    "src": "It's Cavalier Podcast",
    "title": "There is so much to talk about with this team. Both good and bad. #cavs # #clevelandcavaliers",
    "link": "https://www.youtube.com/watch?v=XmsHIfbZpnM",
    "date": "2026-11-11T20:07:15.000Z",
    "id": "XmsHIfbZpnM"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: The Cleveland Cavaliers Try to End Losing Skid vs the New York Knicks",
-   "link": "https://www.youtube.com/watch?v=alCHdOvmFvE",
-   "date": "2026-11-11T19:02:43.000Z",
-   "id": "alCHdOvmFvE"
   },
   {
    "src": "Ultimate Cleveland Sports Show",
@@ -586,20 +607,6 @@
    "id": "Sh1UeOejJzI"
   },
   {
-   "src": "It's Cavalier Podcast",
-   "title": "Donovan Mitchell put on a show vs the Philadelphia 76ers. #cavs #cavaliers #clevelandcavaliers",
-   "link": "https://www.youtube.com/watch?v=Sfcqrntv9-Y",
-   "date": "2026-11-07T15:22:42.000Z",
-   "id": "Sfcqrntv9-Y"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "REACTION: Cleveland Cavaliers Earn STATEMENT Win Over The Sixers! | Donovan Mitchell's BLUEPRINT!",
-   "link": "https://www.youtube.com/watch?v=52CwC57lLc4",
-   "date": "2026-11-07T06:00:10.000Z",
-   "id": "52CwC57lLc4"
-  },
-  {
    "src": "Cavs Roundtable",
    "title": "Cleveland Cavaliers: Evan Mobley, Donovan Mitchell Pinpoint STRONG START As Key To Win vs. 76ers",
    "link": "https://www.youtube.com/watch?v=6mgKU8-Ud5o",
@@ -692,6 +699,13 @@
   }
  ],
  "highlights": [
+  {
+   "src": "NBA",
+   "title": "CAVALIERS at KNICKS | FULL GAME HIGHLIGHTS | November 11, 2026",
+   "link": "https://www.youtube.com/watch?v=NLRiKoJ9Al0",
+   "date": "2026-11-12T02:54:48.000Z",
+   "id": "NLRiKoJ9Al0"
+  },
   {
    "src": "NBA",
    "title": "CAVALIERS at HORNETS | FULL GAME HIGHLIGHTS | November 9, 2026",
