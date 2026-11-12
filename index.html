@@ -3083,7 +3083,7 @@ const diffEl=d=>{const st=el('div','lvst');st.append(el('span',null,'The Diff'),
 async function cavsLive(day){try{const r=await fetch('https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates='+day.replace(/-/g,''),{cache:'no-store'});if(!r.ok)return null;const j=await r.json();
   const e=(j.events||[]).find(x=>x.competitions&&x.competitions[0].competitors.some(c=>c.team&&c.team.id==='5'));if(!e)return null;
   const c=e.competitions[0],st=c.status||e.status||{},ty=st.type||{};const me=c.competitors.find(x=>x.team.id==='5'),op=c.competitors.find(x=>x.team.id!=='5');
-  const ld=(t,k)=>{const L=(t.leaders||[]).find(x=>x.name===k);const a=L&&L.leaders&&L.leaders[0];return a&&a.athlete?{n:a.athlete.shortName||a.athlete.displayName||'',v:a.value!=null?a.value:+a.displayValue}:null};
+  const ld=(t,k)=>{const L=(t.leaders||[]).find(x=>x.name===k);const a=L&&L.leaders&&L.leaders[0];return a&&a.athlete?{n:a.athlete.shortName||a.athlete.displayName||'',full:a.athlete.displayName||a.athlete.fullName||'',v:a.value!=null?a.value:+a.displayValue}:null};
   const lp=c.situation&&c.situation.lastPlay;const hw=lp&&lp.probability&&lp.probability.homeWinPercentage;
   return {id:e.id,state:ty.state,fin:ty.state==='post',per:st.period||0,clock:st.displayClock||'',cs:+me.score||0,os:+op.score||0,wp:hw==null?null:(me.homeAway==='home'?hw:1-hw),lp:lp&&lp.text||'',ld:[me,op].map(t=>({pts:ld(t,'points'),reb:ld(t,'rebounds'),ast:ld(t,'assists')}))}}catch(_){return null}}
 const perName=p=>p<=4?'Q'+p:(p===5?'OT':'OT'+(p-4));
@@ -3159,7 +3159,10 @@ function fitLogo(img){/* Nov 4: sizing now comes from the site-wide logo scale (
     if(INJURIES.length&&window.cdbInjMove)window.cdbInjMove(row);
     if(row.children.length){if(row.children.length>1)row.classList.add('two');box.appendChild(row)}
     if(rec)rec.hidden=true;
-    const go=async()=>{if(Date.now()<t-15*6e4)return;const Lv=await cavsLive(g[0]);if(!Lv||Lv.state==='pre')return;LAST=Date.now();if(window.cdbInjBack)window.cdbInjBack();box.textContent='';box.appendChild(liveCard(g,Lv,first))};
+    const go=async()=>{if(Date.now()<t-15*6e4)return;const Lv=await cavsLive(g[0]);if(!Lv||Lv.state==='pre')return;LAST=Date.now();if(window.cdbInjBack)window.cdbInjBack();box.textContent='';
+      /* Nov 11 (Luka): at the final buzzer the small final card (WIN/LOSS, top line, box score) takes over right away, from ESPN's numbers until the saved box score lands */
+      if(Lv.fin){const L=Lv.ld[0]||{},p=L.pts;const top=p&&p.full?p.full+': '+p.v+' pts'+(L.reb&&L.reb.full===p.full?', '+L.reb.v+' reb':'')+(L.ast&&L.ast.full===p.full?', '+L.ast.v+' ast':''):'';after(g,Lv.cs+'-'+Lv.os,top,'/live.html?g='+Lv.id,false);clearInterval(lvt);return}
+      box.appendChild(liveCard(g,Lv,first))};
     go();clearInterval(lvt);lvt=setInterval(()=>{if(!document.hidden)go()},30000)}
   function after(g,score,top,url,pre){{const ls=document.getElementById('last');if(ls)ls.hidden=true}const [cs,os]=score.split('-').map(Number);const c=card('',(pre?'Preseason final':'Final')+' · '+(g[2]==='H'?'vs '+TEAMS[g[1]]:'at '+TEAMS[g[1]]),['Box score','/live.html']);
     /* box score = our live game page for that game (ESPN game id looked up by date) */
