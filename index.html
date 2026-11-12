@@ -1729,18 +1729,19 @@ INJURIES.sort((a,b)=>INJ_RANK(a[3])-INJ_RANK(b[3]));
 /* G League assignments (NBA official injury report lists them as "G League - On Assignment"): shown on the injury card but NOT injuries, so kept out of INJURIES (counts, alerts, newsletter). [name, pos] */
 const INJ_ASSIGN=[['Khalifa Diop','C']];
 /* INJURY REPORT STANDARD (every injured player gets an INJ_CTX entry with these fields; each shows as a stacked row):
-   diag     Diagnosis, in the team's or a named reporter's words, plus a plain-English gloss of any medical term. Omit if none announced (page says "None announced").
-   timeline Team timeline: the announced return plan with source and date (e.g. "Re-evaluation in 3–4 weeks (Chris Fedor / Plain Dealer, Oct 20)"). Omit for GTD/no timeline (page fills a default).
+   Nov 12 (Luka): no sourcing in the text (no reporter or person names, no "per the injury report", no "Salary Swish log"); the Full injury history link is enough.
+   diag     Diagnosis, plus a plain-English gloss of any medical term. Omit if none announced (page says "None announced").
+   timeline Team timeline: the announced return plan (e.g. "Re-evaluation in 3–4 weeks"). Omit for GTD/no timeline (page fills a default).
    type     Key into INJ_TYPICAL when the diagnosis matches a published study.
-   prior    History: earlier listings at the same body part with games missed and date ranges, how it ended, then one line on other past injuries (Salary Swish injury log).
+   prior    History: earlier listings at the same body part with games missed and date ranges, how it ended, then one line on other past injuries.
    hist     Salary Swish injury log URL.
    INJ_TYPICAL[type] = [text, source label, url]: average time missed for that exact diagnosis from a peer-reviewed study of NBA players
    (sample size, average, range, return rate), plus the player's own last return time for it if he had one.
    No study: falls back to Hashtag Basketball's NBA injury log by injury type (INJ_HB, matched from the injury text or set with hb:'<type>'), labeled as not peer-reviewed. */
 const INJ_CTX={
-  'Sam Merrill':{hist:'https://www.salaryswish.com/injury/players/sam-merrill',diag:'Right elbow injury management (the team is limiting load on a sore elbow), per the NBA official injury report, Nov 7',prior:'No prior elbow listings found in the first page of his Salary Swish log. Other past listings: hamstring (Mar 13–17, Mar 31–Apr 6, Apr 10–18 and May 7–9, 2026, all day to day), hand (Jan 16–28, 2026), ankle (Jan 2–4, 2026).'},
-  'Jaylon Tyson':{hist:'https://www.salaryswish.com/injury/players/jaylon-tyson',diag:'Right ankle sprain (a stretched or torn ligament), per the NBA official injury report, Nov 3',timeline:'Out for Nov 2 vs. OKC (per Luka, Nov 2)',prior:'Prior ankle listing: Mar 15–17, 2026 (day to day, cleared Mar 17). Other past listings: hip (Nov 2024), concussion (Nov 2025), toe (Mar 21, 2026).'},
-  "Nae'Qwan Tomlin":{hist:'https://www.salaryswish.com/injury/players/naeqwan-tomlin',diag:'Stress reaction in his back (an early stage of bone stress, before a fracture)',prior:'No prior back listings found.',timeline:'Expected to be out until at least Nov 16 (Chris Fedor / Plain Dealer, Oct 20; CBS Sports)'}
+  'Sam Merrill':{hist:'https://www.salaryswish.com/injury/players/sam-merrill',diag:'Right elbow injury management (the team is limiting load on a sore elbow)',prior:'No prior elbow listings. Other past listings: hamstring (Mar 13–17, Mar 31–Apr 6, Apr 10–18 and May 7–9, 2026, all day to day), hand (Jan 16–28, 2026), ankle (Jan 2–4, 2026).'},
+  'Jaylon Tyson':{hist:'https://www.salaryswish.com/injury/players/jaylon-tyson',diag:'Right ankle sprain (a stretched or torn ligament)',prior:'Prior ankle listing: Mar 15–17, 2026 (day to day, cleared Mar 17). Other past listings: hip (Nov 2024), concussion (Nov 2025), toe (Mar 21, 2026).'},
+  "Nae'Qwan Tomlin":{hist:'https://www.salaryswish.com/injury/players/naeqwan-tomlin',diag:'Stress reaction in his back (an early stage of bone stress, before a fracture)',prior:'No prior back listings.',timeline:'Expected out until at least Nov 16'}
 };
 /* fallback when no peer-reviewed NBA study fits: Hashtag Basketball's NBA injury log (2011–26), typical days out by injury type.
    [cases, typical days out, usual low, usual high]. Picked by INJ_CTX.hb, else matched from the injury text (see injHB). Not peer-reviewed; labeled as such. */
