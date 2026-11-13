@@ -132,6 +132,13 @@
 .lvsb .clk{font:700 .8125rem var(--mono);text-align:center;color:rgba(255,255,255,.78);line-height:1.3}
 .lvst{padding:2px 16px 0;font:600 .875rem var(--sans);color:rgba(255,255,255,.78)}
 .lvsb .lvlg{width:56px;height:56px;object-fit:contain}
+/* Nov 12 (Luka): wider labels where they're long (rim protection), always one line */.ppx-share.ppx-sw>div{grid-template-columns:16ch minmax(0,1fr) 54px}.ppx-share>div>span:first-child{white-space:nowrap}
+.dbt{margin-top:6px;font:500 .875rem var(--sans)}.dbt-h .show-sm{display:none}@media (max-width:600px){.dbt-h .show-sm{display:inline}}.dbt-h,.dbt-r{display:grid;grid-template-columns:minmax(120px,1.2fr) 80px 70px minmax(0,2fr);gap:12px;align-items:center}
+.dbt-h{font:700 .6875rem var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-bottom:6px;border-bottom:2px solid var(--fg)}.dbt-h span:nth-child(2),.dbt-h span:nth-child(3),.dbt-r b,.dbt-r .p{text-align:right}
+.dbt-g{margin-top:14px;font:800 .8125rem var(--cond);letter-spacing:.12em;text-transform:uppercase;color:var(--wine-ink);padding-bottom:4px;border-bottom:2px solid var(--gold,#F2B231)}
+.dbt-r{padding:8px 0;border-bottom:1px solid var(--line)}.dbt-r .l{font-weight:600}.dbt-r b{font:700 1.125rem var(--mono)}.dbt-r .p{font:600 .875rem var(--mono);color:var(--muted)}
+.dbt-r .rk{display:flex;align-items:center;gap:10px;font:500 .75rem var(--sans);color:var(--muted)}.dbt-r .rk .t{position:relative;flex:1;height:10px;background:var(--track,#2a2f37)}.dbt-r .rk .t i{position:absolute;left:0;top:0;bottom:0;background:var(--wine)}.dbt-r .rk .t i.hi{background:var(--gold,#F2B231)}.dbt-r .rk .t u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--fg);text-decoration:none}.dbt-r .rk b{font:800 1rem var(--cond);min-width:38px;text-align:right;color:var(--fg)}
+@media (max-width:600px){.dbt-h,.dbt-r{grid-template-columns:minmax(0,1fr) 54px 50px 96px;gap:8px}.dbt-h .hide-sm{display:none}.dbt-r .rk b{min-width:30px}}
 .ppx-tt .ln2{display:block;font:600 11px var(--mono);opacity:.85;margin-top:2px;white-space:nowrap}
 /* Nov 12 (Luka): shooting percentages under the makes read like the rest: upright mono, muted, same size as the labels */.ppx-lls i.ppx-pc,i.ppx-pc{display:block;font:600 .75rem var(--mono)!important;font-style:normal!important;letter-spacing:0;color:var(--muted)!important;margin-top:2px}
 /* Nov 12 (Luka): season series results all read the same: mono, plain text color, dotted underline; W or L carries the result */.gp-ser li>b,.gp-ser-prev b,.gp-ser-prev b.w{font:600 .7812rem var(--mono)!important;color:var(--fg)!important}.gp-ser li>b a,.gp-ser .gp-bx{color:var(--fg)!important;font:inherit!important}
@@ -4870,17 +4877,18 @@ window.renderPlayer=function(s){
   /* ===== 3 · defense and boards ===== */
   const stocks=cur&&cur.stl!=null&&cur.blk!=null?cur.stl+cur.blk:null;
   const df=chap('def','Defense & boards',stocks!=null?f1(stocks)+' stocks · '+f1(cur.reb)+' reb':'',false,'Defense');
-  if(stocks!=null){const c=card('Defense and boards',null,lgOK?`Where he ranks among NBA ${GN} this season, per 36 minutes (bar = percentile, 99th = best; black line = the middle). Per game numbers are behind the toggle.${RKN}`:'Per game this season. League ranks start once there are enough games to compare.');
-    const src=meL&&cur&&cur.src==='2026–27'?meL:null;const pg=k=>src?src[k]/src.g:null;
-    const rows=[['Rebounds','reb',cur.reb],['Def. rebounds','dreb',src?(src.reb-src.oreb)/src.g:null],['Steals','stl',cur.stl],['Blocks','blk',cur.blk],['Stocks','stk',stocks]];
-    const fnOf=k=>k==='dreb'?(x=>(x.reb-x.oreb)/x.g):k==='stk'?(x=>(x.stl+x.blk)/x.g):(x=>x[k]/x.g);
-    const g6=el('div','ppx-g6');rows.forEach(([lab,k,v])=>{if(v==null)return;const cell=el('div','ppx-cell');cell.appendChild(el('div','k')).appendChild(tip(lab));cell.appendChild(el('div','v',f1(v)));
-      const rk=lgOK?rankIn(fnOf(k)(meL),pool.filter(x=>x!==meL).map(fnOf(k))):null;if(rk){cell.appendChild(el('div','r',ord(rk.r)+' of '+rk.of+' '+GN));const pb=el('div','pct');const i2=el('i');i2.style.width=pc(rk.pct)+'%';pb.appendChild(i2);cell.appendChild(pb)}g6.appendChild(cell)});
-    /* one bold percentile chart per 36 minutes against his position; the per game numbers sit behind a toggle (Oct 30) */
-    if(lgOK){const p36=(x,k)=>x.min?(k==='dreb'?x.reb-x.oreb:k==='stk'?x.stl+x.blk:x[k])/x.min*36:null;const P36=[['Def. rebounds','dreb'],['Steals','stl'],['Blocks','blk'],['Stocks','stk']];
-      const pb=el('div','ppx-pb');P36.forEach(([lab,k])=>{const v=p36(meL,k);const rk=rankIn(v,pool.filter(x=>x!==meL).map(x=>p36(x,k)));if(!rk)return;const r=el('div');r.appendChild(el('span','l')).appendChild(tip(lab));const t=el('span','t');const i=el('i');i.style.width=Math.max(2,rk.pct)+'%';if(rk.pct>=80)i.className='hi';else if(rk.pct<=20)i.className='lo';const m=el('u');m.style.left='50%';t.append(i,m);r.appendChild(t);r.appendChild(el('b',null,ord(Math.max(1,Math.min(99,rk.pct)))));r.appendChild(el('small',null,v.toFixed(1)+' per 36 · '+ord(rk.r)+' of '+rk.of));pb.appendChild(r)});
-      c.appendChild(el('h4','ppx-h4','Percentile among NBA '+GN+' · per 36 minutes'));c.appendChild(pb);const dt=el('details','ppx-nums');dt.appendChild(el('summary',null,'Show the per game numbers'));dt.appendChild(g6);c.appendChild(dt)}else c.appendChild(g6);
-    if(gp>=3){const tm=k=>mine.reduce((t,g)=>t+g.team[k],0);const sh=el('div','ppx-share');sh.style.marginTop='12px';[['Rebounds',tot('reb')/Math.max(1,tm('reb'))],['Blocks',tot('blk')/Math.max(1,tm('blk'))],['Steals',tot('stl')/Math.max(1,tm('stl'))]].forEach(([l,v2])=>{const r2=el('div');r2.appendChild(el('span',null,l));const t2=el('span','t');const i2=el('i');i2.style.width=pc(v2*100)+'%';const u=el('u');u.style.left='20%';t2.append(i2,u);r2.appendChild(t2);r2.appendChild(el('b',null,Math.round(v2*100)+'%'));sh.appendChild(r2)});c.appendChild(sh);c.appendChild(note('His share of the Cavs’ totals in games he played. The black line is an even share (20%).'))}
+  if(stocks!=null){/* Nov 12 (Luka): one clear table in three groups (rebounding, defense, fouls): per game, per 36, and his percentile among NBA players at his position (per 36) */
+    const c=card('Defense and boards',null,lgOK?`Per game and per 36 minutes. Rank = his percentile among NBA ${GN} per 36 minutes (99th = best).`:'Per game and per 36 minutes. League ranks start once there are enough games to compare.');
+    const src=meL&&cur&&cur.src==='2026–27'?meL:null;const val=(x,k)=>k==='dreb'?x.reb-x.oreb:k==='stk'?x.stl+x.blk:x[k];const p36=(x,k)=>x&&x.min?val(x,k)/x.min*36:null;
+    const tb=el('div','dbt');tb.innerHTML='<div class="dbt-h"><span></span><span>Per game</span><span>Per 36</span><span><span class="hide-sm">Rank among NBA '+escH(GN)+'</span><span class="show-sm">Rank</span></span></div>';
+    const grp=(t,cls)=>{tb.appendChild(el('div','dbt-g',t));const g=el('div','dbt-b '+cls);tb.appendChild(g);return g};
+    const row=(g,lab,pgv,p36v,rk,fmt,lo)=>{const r=el('div','dbt-r');r.appendChild(el('span','l')).appendChild(tip(lab));r.appendChild(el('b',null,pgv==null?'–':fmt?fmt(pgv):f1(pgv)));r.appendChild(el('span','p',p36v==null?'–':(fmt?fmt(p36v):p36v.toFixed(1))));
+      const rc=el('span','rk');if(rk){const t=el('span','t');const i=el('i');const pc2=Math.max(1,Math.min(99,lo?100-rk.pct:rk.pct));i.style.width=Math.max(2,pc2)+'%';if(pc2>=80)i.className='hi';t.appendChild(i);const u=el('u');u.style.left='50%';t.appendChild(u);rc.append(t,el('b',null,ord(pc2)))}else rc.textContent='–';r.appendChild(rc);g.appendChild(r)};
+    const RK=k=>lgOK?rankIn(p36(meL,k),pool.filter(x=>x!==meL).map(x=>p36(x,k))):null;
+    const gR=grp('Rebounding','reb'),gD=grp('Defense','def');
+    [['Rebounds','reb',cur.reb],['Def. rebounds','dreb',src?(src.reb-src.oreb)/src.g:null]].forEach(([l,k,v])=>v!=null&&row(gR,l,v,src?p36(src,k):null,RK(k)));
+    [['Steals','stl',cur.stl],['Blocks','blk',cur.blk],['Stocks','stk',stocks]].forEach(([l,k,v])=>v!=null&&row(gD,l,v,src?p36(src,k):null,RK(k)));
+    c.appendChild(tb);c.__dbRow=row;c.__dbGrp=grp;
     c.id='ppx-db';df.appendChild(c)}
 
   /* ===== 4 · value to the Cavs ===== */
@@ -4943,9 +4951,11 @@ window.renderPlayer=function(s){
         const hisO=(on.o.oreb||0)+(on.d.dreb||0),hisD=(on.o.dreb||0)+(on.d.oreb||0);const host=df.querySelector('#ppx-db');const c=host||card('Defense and boards',null,'');
         const bars=(title,rows)=>{c.appendChild(el('h4','ppx-h4',title));const sh=el('div','ppx-share');rows.forEach(([lab,v,mx,tick,txt])=>{const r2=el('div');r2.appendChild(el('span',null,lab));const t2=el('span','t');const i2=el('i');i2.style.width=(v==null?0:Math.min(100,v/mx*100))+'%';t2.appendChild(i2);if(tick!=null){const u=el('u');u.style.left=Math.min(100,tick/mx*100)+'%';t2.appendChild(u)}r2.appendChild(t2);r2.appendChild(el('b',null,txt));sh.appendChild(r2)});c.appendChild(sh)};
         const oP=hisO?b.oreb/hisO*100:null,dP=hisD?b.dreb/hisD*100:null;
-        bars('Share of the defensive rebounds with him on',[['Defensive',dP,40,20,dP==null?'–':dP.toFixed(1)+'%']]);
-        const p36=k=>b.min>0?(b[k]||0)/b.min*2160:null;bars('Fouls per 36 minutes',[['Fouls',p36('pf'),6,null,p36('pf')==null?'–':p36('pf').toFixed(1)]]);
-        {const p2=el('p','ppx-why','Rebound share = his rebounds out of every one available while he played; the black line is an even share for five players (20%). '+note+'.');c.appendChild(p2)}if(!host)df.appendChild(c)}
+        const p36=k=>b.min>0?(b[k]||0)/b.min*2160:null;
+        if(c.__dbRow){const gR=c.querySelector('.dbt-b.reb');if(gR&&dP!=null)c.__dbRow(gR,'Def. reb share',null,null,null,v=>v.toFixed(1)+'%');if(gR&&dP!=null){const last=gR.lastChild;last.querySelector('b').textContent=dP.toFixed(1)+'%';last.querySelector('.p').textContent='';last.querySelector('.rk').textContent='of the defensive boards while he plays'}
+          const gF=c.__dbGrp('Fouls','fouls');const tb2=c.querySelector('.dbt');tb2.appendChild(gF.previousSibling);tb2.appendChild(gF);c.__dbRow(gF,'Fouls',gp?mine.reduce((t,g)=>t+(g.me.pf||0),0)/gp:null,p36('pf'),null);
+          c.appendChild(el('p','ppx-why',note+'.'))}
+        else{bars('Share of the defensive rebounds with him on',[['Defensive',dP,40,20,dP==null?'–':dP.toFixed(1)+'%']]);bars('Fouls per 36 minutes',[['Fouls',p36('pf'),6,null,p36('pf')==null?'–':p36('pf').toFixed(1)]])}if(!host)df.appendChild(c)}
       /* 5 · offense and defense visuals (Oct 30): usage vs efficiency, points created, true shooting trend, zone map vs the NBA; rim protection, block map, rebounds by miss type */
       {const ZNM=['At the rim','Short midrange','Long midrange','Corner 3','Above-the-break 3'],ZS=['Rim','Short mid','Long mid','Corner 3','Above break'];
         const SH=(A.shots||[]).filter(x=>x[0]===id),AS=(A.asts||[]),dx=(A.dx||{})[id];
