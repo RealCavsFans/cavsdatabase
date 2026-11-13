@@ -137,7 +137,15 @@
    "url": "https://www.basketball-reference.com/boxscores/202611090CHO.html",
    "at": "2026-11-11T09:30:33.640Z",
    "players": 22
+  },
+  "0022600218": {
+   "et": "2026-11-11",
+   "opp": "NY",
+   "status": "match",
+   "url": "https://www.basketball-reference.com/boxscores/202611110NYK.html",
+   "at": "2026-11-13T09:32:17.399Z",
+   "players": 19
   }
  },
- "checked": "2026-11-11T09:30:33.640Z"
+ "checked": "2026-11-13T09:32:17.400Z"
 }
