@@ -1044,7 +1044,7 @@ function capFoot(g,url,date,W,H,FT,pad,S,mono,wine,muted){const two=FT>45*S;g.te
   return out.length?'<div class="bx-ch">'+out.map(([t,c,hh])=>`<span${c?` class="${c}"`:''} style="display:inline-flex;align-items:center;gap:4px">${hh||''}${esc2(t)}</span>`).join('')+'</div>':''}
  /* any player / lineup / zone table as bold rows */
  function bxTable(tbl,esc2,o={}){const T=x=>String(x||'').replace(/\s+/g,' ').trim();const X=bxCtx();const all=[...tbl.rows];const hi=all.findIndex(r=>[...r.cells].some(c=>c.tagName==='TH'));if(hi<0)return '';const hr=all[hi];
-  const H=[...hr.cells].map(c=>T(c.textContent).replace(/[▼▲↓↑]/g,'').trim());const val=c=>{const cl=c.cloneNode(true);cl.querySelectorAll('.caphs,small.rk,.xbtn,input,.lck').forEach(x=>x.remove());return T(cl.textContent).replace(/^[▸▾▶▼]\s*/,'')};
+  const H=[...hr.cells].map(c=>T(c.textContent).replace(/[▼▲↓↑]/g,'').trim());const val=c=>{const cl=c.cloneNode(true);cl.querySelectorAll('.caphs,small.rk,small.ppn,.xbtn,input,.lck').forEach(x=>x.remove());return T(cl.textContent).replace(/^[▸▾▶▼]\s*/,'')};const ppn=c=>{const q=c&&c.querySelector&&c.querySelector('small.ppn');if(!q)return '';const t=T(q.textContent),n=parseInt(t);return `<small style="display:block;font:700 10px var(--mono);margin-top:2px;color:${n>=90?'#860038':'#8a8f97'}">${esc2(t)}</small>`};
   const rows=all.slice(hi+1).filter(r=>!r.classList.contains('xd')&&r.getClientRects().length&&r.cells.length>=2&&![...r.cells].some(c=>c.tagName==='TH'));
   let keep=H.map((h,i)=>i);if(o.cols)keep=keep.filter(i=>!i||o.cols.test(H[i]));
   const key=(()=>{for(const re of [/^pts$/i,/^on\s*[-–−]\s*off$/i,/^net( rtg)?$/i,/^fg%$/i])for(const i of keep)if(i&&re.test(H[i]))return i;return -1})();
@@ -1060,8 +1060,8 @@ function capFoot(g,url,date,W,H,FT,pad,S,mono,wine,muted){const two=FT>45*S;g.te
    if(tot)nm=`<span class="bx-nm"><i>${esc2(c0.replace(/\s*·.*$/,''))}</i></span>`;
    else if(lineup||c0.split(/\s*,\s*/).length>=2){const ps=c0.split(/\s*,\s*/);const ids=ps.map(X.find);nm=`<span class="bx-nm" style="flex-wrap:wrap;gap:4px 8px"><span class="bx-hds">${ids.map(id=>X.head(id)).join('')}</span><i style="font-size:13.5px;white-space:normal;line-height:1.15">${esc2(ps.map(p=>{const id=X.find(p);return id?X.lastOf(id):p}).join(', '))}</i></span>`}
    else{const id=X.find(c0.replace(/\s*\(.*$/,''));const sub=pos?[0,c0.slice(0,c0.length-pos.textContent.length).trim(),pos.textContent.trim()]:c0.match(/^(.*?)\s+(\d+\s*[–-]\s*\d+\s*ft|\d+\+\s*ft)$/i);nm=`<span class="bx-nm">${id?X.head(id):''}<i>${esc2(id?X.lastOf(id):(sub?sub[1]:c0))}${sub?`<small>${esc2(sub[2])}</small>`:''}</i></span>`}
-   const cells=keep.slice(1).map(i=>{const v=val(r.cells[i]||{textContent:''});const n=parseFloat(v.replace('−','-').replace('+',''));
-    if(i===key)return `<span class="bx-k${!tot&&n===top&&!sgn(i)?' tk':''}${sgn(i)&&/^[+−-]/.test(v)&&n?(n>0?' pu':' pd'):''}">${esc2(v)}</span>`;
+   const cells=keep.slice(1).map(i=>{let v=val(r.cells[i]||{textContent:''});if(/^min$/i.test(H[i])){const mm=v.match(/^(\d{2,}):(\d\d)$/);if(mm)v=String(Math.round(+mm[1]+mm[2]/60))}const pq=ppn(r.cells[i]);if(pq&&i!==key)return `<span class="bx-n" style="line-height:1.1">${esc2(v)}${pq}</span>`;const n=parseFloat(v.replace('−','-').replace('+',''));
+    if(i===key)return `<span class="bx-k${!tot&&n===top&&!sgn(i)?' tk':''}${sgn(i)&&/^[+−-]/.test(v)&&n?(n>0?' pu':' pd'):''}"${pq?' style="line-height:1"':''}>${esc2(v)}${pq}</span>`;
     if(shoot(i)){const m=v.match(/^(\d+)-(\d+)$/);return `<span class="bx-n">${esc2(v)}${m&&+m[2]&&!H.some(h=>/^fg%$/i.test(h))?`<small>${Math.round(100*m[1]/m[2])}%</small>`:''}</span>`}
     if(sgn(i)&&/^[+−-]/.test(v)&&n)return `<span class="bx-n ${n>0?'pu':'pd'}">${esc2(v)}</span>`;
     return `<span class="bx-n${/^min$/i.test(H[i])?' dim':''}">${esc2(v)}</span>`});
@@ -2223,7 +2223,7 @@ function advView(c,D,R,t){
       ast:(tFGM-b.fgm)>0?100*b.ast/(tFGM-b.fgm):null,stl:pd?100*b.stl/pd:null,blk:o2A>0?100*b.blk/o2A:null,
       tov:(tsa+b.ast+b.to)?100*b.to/(tsa+b.ast+b.to):null,usg:(tFGA+0.44*tFTA+tTO)?100*(tsa+b.to)/(tFGA+0.44*tFTA+tTO):null,ortg:po>=1?pf/po*100:null,drtg:pd>=1?pa/pd*100:null,net:po>=1&&pd>=1?pf/po*100-pa/pd*100:null,starter:D.P[id].starter}});
   const p3=k=>r=>r[k]==null?'–':r[k].toFixed(3).replace(/^0/,''),p1=k=>r=>r[k]==null?'–':r[k].toFixed(1),p0=k=>r=>r[k]==null?'–':r[k].toFixed(0);
-  c.appendChild(dtable('adv',[{h:'Player',k:'id',f:r=>{const sp=el('span');sp.appendChild(plink(D,r.id,D.P[r.id].short));return sp}},{h:'MIN',k:'mp',f:r=>fmtMin(r.mp*60)},
+  c.appendChild(dtable('adv',[{h:'Player',k:'id',f:r=>{const sp=el('span');sp.appendChild(plink(D,r.id,D.P[r.id].short));return sp}},{h:'MIN',k:'mp',f:r=>S.season?String(Math.round(r.mp)):fmtMin(r.mp*60)},/* Nov 13 (Luka): whole minutes on the season view */
     {h:'TSA',k:'tsa',f:r=>r.tsa.toFixed(1),title:'True shot attempts: FGA + 0.44 × FTA'},{h:'TS%',k:'ts',f:p3('ts'),title:'TS%'},{h:'eFG%',k:'efg',f:p3('efg')},{h:'3PAr',k:'tpar',f:p3('tpar'),title:'Share of shots from three'},{h:'FTr',k:'ftr',f:p3('ftr'),title:'Free throw attempts per shot'},
     {h:'ORB%',k:'orb',f:p1('orb')},{h:'DRB%',k:'drb',f:p1('drb')},{h:'TRB%',k:'trb',f:p1('trb')},{h:'AST%',k:'ast',f:p1('ast'),title:'Share of teammates’ baskets he assisted while on the floor'},
     {h:'STL%',k:'stl',f:p1('stl'),title:'Steals per 100 opponent possessions while he was on the floor'},{h:'BLK%',k:'blk',f:p1('blk'),title:'Share of the opponent’s two-point tries he blocked while on the floor'},{h:'TOV%',k:'tov',f:p1('tov'),asc:true,title:'Turnovers per 100 of his plays (shots, free throw trips, assists and turnovers), the NBA.com way'},{h:'USG%',k:'usg',f:p1('usg'),title:'Share of team plays he used while on the floor'},
