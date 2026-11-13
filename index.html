@@ -1787,7 +1787,7 @@ const INJ_ASSIGN=[['Khalifa Diop','C']];
    diag     Diagnosis, plus a plain-English gloss of any medical term. Omit if none announced (page says "None announced").
    timeline Team timeline: the announced return plan (e.g. "Re-evaluation in 3–4 weeks"). Omit for GTD/no timeline (page fills a default).
    type     Key into INJ_TYPICAL when the diagnosis matches a published study.
-   prior    History: earlier listings at the same body part with games missed and date ranges, how it ended, then one line on other past injuries.
+   prior    History: earlier listings at the same body part with games missed and date ranges, how it ended, (related injuries only: the same or a neighboring body part; Nov 13, Luka).
    hist     Salary Swish injury log URL.
    INJ_TYPICAL[type] = [text, source label, url]: average time missed for that exact diagnosis from a peer-reviewed study of NBA players
    (sample size, average, range, return rate), plus the player's own last return time for it if he had one.
@@ -1821,7 +1821,7 @@ INJURIES.forEach(([n,p,inj,st])=>{const li=el('li','ij');const d=document.create
   {const hb=ty?null:injHB(inj,c);if(ty)row('Typical return',ty[0],[ty[1],ty[2]]);
     else if(hb)row('Typical return',hb[0]+': '+hb[1][1]+' day'+(hb[1][1]===1?'':'s')+' out, usually '+hb[1][2]+' to '+hb[1][3]+' ('+hb[1][0].toLocaleString()+' NBA cases since 2011, not a peer-reviewed study)',['Hashtag Basketball injury log',INJ_HB_URL]);
     else row('Typical return',c.diag?'':'Not enough detail released for a reliable comparison')}
-  row('History',c.prior);
+  /* Nov 13 (Luka): history lists only related injuries (same or neighboring body part), not every past listing */row('History',String(c.prior||'').split(/Other past listings:/i)[0].trim());
   box.appendChild(dl);const ft=el('div','ij-ft');
   if(c.hist){const l=el('a','ij-hist',"Full injury history ↗");l.href=c.hist;l.target='_blank';l.rel='noopener';ft.appendChild(l)}
   {const sv=el('button','ij-sv');sv.type='button';sv.title='Save as image';sv.setAttribute('aria-label','Save '+n+' injury card as an image');sv.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';sv.onclick=()=>window.cdbCard&&window.cdbCard('injury',n,sv);ft.appendChild(sv);box.appendChild(ft)}
@@ -6372,11 +6372,11 @@ function injBody(inj,diag,prior){const V=window.__bodyV||'D';const cur=injSpot(i
     const tiles=[[String(miss),miss===1?'game missed':'games missed'],nx?[(nx[2]==='H'?'vs ':'at ')+nx[1],md(nx[0])+' · next game']:null,typ&&typ.length<=14?[typ,'typical time out']:null].filter(Boolean);
     const par=(c.diag||'').match(/\(([^)]+)\)/);const head=c.diag?c.diag.replace(/\s*\([^)]*\)/,''):inj;const gloss=par?par[1].replace(/^./,x=>x.toUpperCase()):'';
     const tlv=tl&&tl!=='No timeline given';
-    const pr=String(c.prior||'');const same=pr.split(/Other past listings:/i)[0].trim();const oth=(pr.match(/Other past listings:\s*(.*)$/i)||[])[1]||'';
+    const pr=String(c.prior||'');const same=pr.split(/Other past listings:/i)[0].trim();const oth='';/* Nov 13 (Luka): related injuries only */
     const chips=[];oth.replace(/\.$/,'').replace(/([a-z][a-z \-]*?)\s*\(([^)]*)\)/gi,(m,part,dates)=>{const nn=dates.replace(/,\s*\d{4}.*$/,'').split(/,\s*|\s+and\s+/).filter(x=>/\d/.test(x)).length;chips.push([part.trim(),dates.replace(/,\s*all day to day/,'').replace(/, (\d{4})/g,' $1'),nn]);return m});
     const K=t=>`<div style="font:800 17px 'Saira Condensed',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#860038;margin:0 0 10px">${t}</div>`;
     let h=`<div style="display:grid;grid-template-columns:repeat(${tiles.length},1fr);gap:12px">${tiles.map(([v,l],i)=>`<div style="background:${i?'#fff':'#860038'};color:${i?'#101419':'#fff'};${i?'box-shadow:inset 0 0 0 2px #e3e1dc;':''}padding:18px 18px 16px"><div style="font:800 ${v.length>8?40:56}px/1 'Saira Condensed',sans-serif">${esc2(v)}</div><div style="font:600 16px var(--mono);text-transform:uppercase;letter-spacing:.04em;margin-top:8px;opacity:.85">${esc2(l)}</div></div>`).join('')}</div>`;
-    const bd=injBody(inj,c.diag,c.prior);h+=`<div style="margin-top:22px;display:grid;grid-template-columns:${bd?(['C','E'].includes(window.__bodyV)?'200px ':(window.__bodyV||'D')==='D'?'150px ':'128px '):''}1fr;gap:34px;align-items:center">${bd}<div>${K('Diagnosis')}<div style="font:800 46px/1.08 'Saira Condensed',sans-serif;text-transform:uppercase;color:#101419">${esc2(head)}</div>${gloss?`<div style="font:500 24px/1.4 var(--sans);color:#4a4f57;margin-top:8px">${esc2(gloss)}</div>`:''}`;
+    const bd=injBody(inj,c.diag,same);h+=`<div style="margin-top:22px;display:grid;grid-template-columns:${bd?(['C','E'].includes(window.__bodyV)?'200px ':(window.__bodyV||'D')==='D'?'150px ':'128px '):''}1fr;gap:34px;align-items:center">${bd}<div>${K('Diagnosis')}<div style="font:800 46px/1.08 'Saira Condensed',sans-serif;text-transform:uppercase;color:#101419">${esc2(head)}</div>${gloss?`<div style="font:500 24px/1.4 var(--sans);color:#4a4f57;margin-top:8px">${esc2(gloss)}</div>`:''}`;
     /* the timeline as a track: out since → today → return date (or a question mark when none is given) */
     {const MO={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};const mm=[...String(tlv?tl:'').matchAll(/\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.? (\d{1,2})\b/g)].pop();const yr=new Date().getFullYear();
       const t0=since?new Date(since+'T12:00:00'):null,tn=new Date(),tr=mm?new Date(yr,MO[mm[1]],+mm[2],12):null;const end=tr&&tr>tn?tr:null;
