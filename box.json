@@ -2699,24 +2699,7 @@
  },
  "2026-11-13": {
   "url": "https://www.nba.com/game/cle-vs-mia-0022600036/box-score",
-  "status": "scheduled",
-  "refs": [
-   [
-    "Crew chief",
-    "John Goble",
-    "10"
-   ],
-   [
-    "Referee",
-    "Mark Lindsay",
-    "29"
-   ],
-   [
-    "Umpire",
-    "JD Ralls",
-    "80"
-   ]
-  ]
+  "status": "scheduled"
  },
  "2026-11-14": {
   "url": "https://www.nba.com/game/dal-vs-cle-0022600232/box-score",
