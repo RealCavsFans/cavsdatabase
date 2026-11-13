@@ -113,6 +113,8 @@ const out = {
   zones: share(Z), lg: share(lgZ),
   /* Nov 2: how well they shoot from each zone (FG%), against the NBA's FG% there; corners left and right */
   fg: fgz(Z), lgfg: fgz(lgZ), cfg: CN.map((a, i) => a ? r1(100 * CM[i] / a) : null), za: [Z[0][1], Z[1][1] + Z[2][1], Z[3][1], Z[4][1]],
+  /* Nov 13: the NBA's makes-attempts by the five zones, for the preview court (same as the full scouting report) */
+  lgz: lgZ.map(([m, a]) => [Math.round(m), Math.round(a)]),
   sh: { n: sAll.length, s: { f: sumB(sAll.map(x => x.f)), a: sumB(sAll.map(x => x.a)) }, l: { f: sumB(sL5.map(x => x.f)), a: sumB(sL5.map(x => x.a)) } }
 };
 fs.mkdirSync('data', { recursive: true });
