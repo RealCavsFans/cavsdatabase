@@ -3,6 +3,7 @@ node_modules/
 /*.html
 !/index.html
 !/live.src.html
+!/404.html
 /a/
 /embed/
 /games/

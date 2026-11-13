@@ -13,7 +13,7 @@ import { existsSync, rmSync } from 'node:fs';
 
 // Keep in step with .gitignore: everything a build writes.
 export const BUILT = [
-  /^(?!index\.html$|live\.src\.html$)[^/]+\.html$/,
+  /^(?!index\.html$|live\.src\.html$|404\.html$)[^/]+\.html$/,
   /^(a|embed|games|players|history|media)\//,
   /^og\/(g|h|p|gp|gl)\//,
   /^og\/(live\.json|cap\.jpg|schedule\.jpg|assets\.jpg|moves\.jpg|history\.jpg)$/,
@@ -50,7 +50,7 @@ for (let i = 1; i <= 6; i++) {
   sh('git rm -r -q --cached --ignore-unmatch .github', env);           // the site never needs the workflow files
   if (mode === 'worktree') {
     const have = ['a', 'embed', 'games', 'players', 'history', 'media', 'og', 'sitemap.xml', 'data/prerender-hash.txt'].filter(p => existsSync(p));
-    sh(`git add -f -- ${have.join(' ')} $(ls *.html | grep -v -x -e index.html -e live.src.html)`, env);
+    sh(`git add -f -- ${have.join(' ')} $(ls *.html | grep -v -x -e index.html -e live.src.html -e 404.html)`, env);
   } else {
     if (!base) { console.log('no deploy branch to take the built pages from; skipping'); process.exit(0); }
     execSync('git update-index --index-info', { input: builtIn(base).join('\n') + '\n', env: { ...process.env, ...env } });
