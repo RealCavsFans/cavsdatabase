@@ -6139,11 +6139,11 @@ setTimeout(()=>{const box=document.getElementById('dp-list'),sec=box&&box.closes
  const draw=rows=>{box.textContent='';rows.filter(r=>r&&fresh(r.d)).sort((a,b)=>a.d<b.d?1:-1).forEach(r=>{const w=el('div','dp-r');
    const h=el('div','dp-h');const nm=el('a','dp-n',r.n);nm.href='/assets#rights';h.appendChild(nm);h.appendChild(el('span','dp-t',r.team));w.appendChild(h);
    const g=el('div','dp-g');g.append(day(r.d)+' '+(r.ha==='A'?'at ':'vs ')+r.opp+' · ');const a=el('a','dp-res',r.res);if(r.url){a.href=r.url;a.target='_blank';a.rel='noopener'}g.appendChild(a);w.appendChild(g);
-   const st=el('div','dp-s');[['PTS',r.s.pts],['REB',r.s.reb],['AST',r.s.ast],['STL',r.s.stl],['BLK',r.s.blk],['+/−',r.s.pm]].forEach(([k,v])=>{const c=el('div');c.append(el('b',null,v==null?'–':(k==='+/−'&&v>0?'+':'')+v),el('span',null,k));st.appendChild(c)});w.appendChild(st);box.appendChild(w)});
+   const st=el('div','dp-s');/* Nov 12 (Luka): TS% instead of +/- (college box scores don't carry +/-) */const tsa=r.s.fga!=null&&r.s.fta!=null?r.s.fga+.44*r.s.fta:null,ts=tsa?Math.round(r.s.pts/(2*tsa)*100)+'%':null;[['PTS',r.s.pts],['REB',r.s.reb],['AST',r.s.ast],['STL',r.s.stl],['BLK',r.s.blk],['TS%',ts]].forEach(([k,v])=>{const c=el('div');c.append(el('b',null,v==null?'–':String(v)),el('span',null,k));st.appendChild(c)});w.appendChild(st);box.appendChild(w)});
    sec.hidden=!box.childNodes.length};
  const base=DRAFT_LAST.map(([n,d,team,opp,ha,res,url,s2])=>({n,d,team,opp,ha,res,url,s:s2}));draw(base);
  fetch('/niang.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(J=>{const L=J&&J.last;if(!L||L.dnp)return;const m=String(J.score||'').match(/^LSU (\d+), .* (\d+)$/);const res=m?((+m[1]>+m[2]?'W ':'L ')+m[1]+'–'+m[2]):'Final';
-   draw([{n:'Saliou Niang',d:L.d,team:'LSU',opp:L.opp,ha:'',res,url:J.url,s:{pts:L.pts,reb:L.reb,ast:L.ast,stl:L.stl,blk:L.blk,pm:null}},...base])})},0);window.cdbShare=share;window.cdbIcons=[I_L,I_C];
+   draw([{n:'Saliou Niang',d:L.d,team:'LSU',opp:L.opp,ha:'',res,url:J.url,s:{pts:L.pts,reb:L.reb,ast:L.ast,stl:L.stl,blk:L.blk,fga:L.fga,fta:L.fta}},...base])})},0);window.cdbShare=share;window.cdbIcons=[I_L,I_C];
  /* deep links: /assets#picks-owed, /roster#donovan-mitchell, /cap#donovan-mitchell */
  function jump(){const h=decodeURIComponent(location.hash.slice(1));if(!h)return;attach();
   const t=document.querySelector('[data-anchor="'+(window.CSS&&CSS.escape?CSS.escape(h):h.replace(/["\\]/g,''))+'"]')||document.getElementById(h)||document.getElementById('r-'+h)||document.getElementById('p-'+h)||document.getElementById('s-'+h)||document.getElementById('d-'+h)||document.getElementById('g-'+h);
