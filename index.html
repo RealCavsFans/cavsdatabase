@@ -1242,7 +1242,7 @@ const SECTIONS=[
   ['resources','Resources','RES','cavs_db approved sites for NBA and Cavs knowledge.'],
   ['about','About','ABT','What cavs_db is, what to know and how to contact us.']
 ];
-/* picks — RealGM future draft picks, Oct 14 2026. [draft, pick, plain-English status, how it's decided, trade-eligible?, why] */
+/* picks — RealGM future draft picks, Oct 14 2026. [draft, pick, plain-English status, how it's decided, trade eligible?, why] */
 /* picks the Cavs hold: [year, round, label, visual, can trade outright, can trade swap rights, status note, origin of the pick/routing]
    visual: ['own'] | ['frozen'] | ['pool', teams in the pool, [[rank, team], ...]] | ['to', team, protection] */
 const PICKS=[
@@ -2458,7 +2458,7 @@ const CONTRACTS={
   'Thomas Bryant':{sp:'23643/thomas-bryant',ag:'Todd Ramasar (Life Sports)',yos:9,deal:[1,3524948,'2026–27','Veteran minimum'],aav:3524948,rank:['C',67,115],rapm:[-0.9,288],
     lang:['He is paid $3,524,115, but only $2,449,421 counts on the cap. The league covers the difference on veteran minimum deals for one season.'],
     comps:[['Marvin Bagley III','DEN','',3.51,[-1.1,313]],['Drew Eubanks','NYK','',3.51,[-2.5,480]],['Tony Bradley','NYK','',3.51,[-1.4,350]]]},
-  'Mario Hezonja':{sp:'17833/mario-hezonja',ag:null,yos:5,deal:[1,2845883,'2026–27','Veteran minimum'],aav:2845883,rank:['SF',61,90],rapm:null,
+  'Mario Hezonja':{sp:'17833/mario-hezonja',ag:'Miško Ražnatović (BeoBasket)',yos:5,deal:[1,2845883,'2026–27','Veteran minimum'],aav:2845883,rank:['SF',61,90],rapm:null,
     lang:['Non-guaranteed until Nov 15, 2026. Cleveland can waive him before then without owing the rest.','He is paid $2,845,883, but only $2,449,421 counts on the cap.'],
     comps:[['Ziaire Williams','LAL','',2.85,[-2.4,462]],['Kenyon Martin Jr.','MIN','',2.85,null],['Simone Fontecchio','MIA','',2.63,[-0.6,249]]]},
   "Nae'Qwan Tomlin":{sp:'95599/naeqwan-tomlin',ag:null,yos:2,deal:[2,3129240,'2025–26 to 2026–27','Minimum'],aav:1564620,rank:['PF',85,97],rapm:[0.0,198],
@@ -2538,7 +2538,7 @@ ROSTER.forEach(([n,p,yrs,bird,fa,t])=>{
   const C=CONTRACTS[n];
   if(PP_ON&&onRoster(n)){const d=el('div','wide pp-capl');const a=el('a',null,'Full player page →');a.href='/players/'+slug(n);a.dataset.go='players/'+slug(n);d.appendChild(a);g.appendChild(d)}
   if(now)blk('This season',[el('b',null,now+'.')],'wide note');
-  {const te=TRADE_ELIG[n];if(te&&new Date(te[0]+'T23:59:59')>new Date())blk('Trade-eligible',[el('b',null,new Date(te[0]+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})),el('br'),te[1]+'. ',(()=>{const a=el('a',null,'Rule ↗');a.href='https://cbaguide.com/transactions/trades/traderules/';a.target='_blank';a.rel='noopener';return a})()])}
+  {const te=TRADE_ELIG[n];if(te&&new Date(te[0]+'T23:59:59')>new Date())blk('Trade eligible',[el('b',null,new Date(te[0]+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})),el('br'),te[1]+'. ',(()=>{const a=el('a',null,'Rule ↗');a.href='https://cbaguide.com/transactions/trades/traderules/';a.target='_blank';a.rel='noopener';return a})()])}
   if(C){const [len,total,span,how]=C.deal;
     blk('Contract',[el('b',null,len+(len===1?' year':' years')+', '+usd(total)),' · '+span,el('br'),'Average per year '+usd(C.aav),el('br'),'Signed with: '+how]);
     blk('Pay rank · '+C.rank[0],[el('b',null,ordn(C.rank[1])+' of '+C.rank[2]),' '+POSN[C.rank[0]]+' by average salary']);
