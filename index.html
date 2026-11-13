@@ -1324,7 +1324,7 @@ const el=(t,c,txt)=>{const e=document.createElement(t);if(c)e.className=c;if(txt
       rows.forEach(([lab,k,hi])=>{const x=a[k],y=b[k];if(x==null&&y==null)return;const df=x==null||y==null||!isFinite(x)||!isFinite(y)?null:x-y;const cls=hi==null||df==null||Math.abs(df)<.05?'n':((df>0)===!!hi?'g':'r');
         const tr=el('tr');tr.append(el('th',null,lab),el('td','on',fm(k,x)),el('td','off',fm(k,y)),el('td','df '+cls,df==null?'–':(df>0?'+':df<0?'−':'')+Math.abs(df).toFixed(1)));
         const bc=el('td','bc'),bar=el('span','oo2-bar');if(df!=null){const i=el('i',cls);const wd=Math.min(50,Math.abs(df)*(k==='ortg'||k==='drtg'||k==='net'?1.2:2.2));i.style.width=wd+'%';if(df>0)i.style.left='50%';else i.style.right='50%';bar.appendChild(i)}bc.appendChild(bar);tr.appendChild(bc);t.appendChild(tr)})});return t};
-  const cav=mk([['Scoring',[['ORTG','ortg',1],['DRTG','drtg',0],['NET RTG','net',1],['Pace','pace',null]]],['Shooting',[['eFG%','efg',1],['TS%','ts',1],['3PT%','tp',1],['3PT rate','tpar',null],['FT rate','ftr',1]]],['Possessions',[['TOV%','tov',0],['OREB%','orb',1],['DREB%','drb',1],['AST%','ast',null]]]]);
+  const cav=mk([['Scoring',[['ORTG','ortg',1],['DRTG','drtg',0],['NET RTG','net',1],['Pace','pace',null]]],['Shooting',[['eFG%','efg',1],['TS%','ts',1],['3PT%','tp',1],['3PT rate','tpar',null],['FT rate','ftr',1]]],['Possessions',[['AST%','ast',null],['TOV%','tov',0],['OREB%','orb',1],['DREB%','drb',1]]]]);
   const opp=mk([['What '+(o.oab||'opponents')+' did',[['Opp. effective FG%','oefg',0],['Opp. 3P%','otp',0],['Opp. 3PA rate','otpar',null],['Opp. turnover rate','otov',1],['Opp. FT rate','oftr',0]]]]);opp.hidden=true;
   const tg=el('div','oo2-tg');[[o.ab||'Team',cav],['Opponents',opp]].forEach(([l,tb],i)=>{const btn=el('button',null,l);btn.type='button';btn.setAttribute('aria-pressed',i===0);btn.onclick=()=>{cav.hidden=tb!==cav;opp.hidden=tb!==opp;tg.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===btn))};tg.appendChild(btn)});
   w.append(tg,cav,opp);
@@ -5133,6 +5133,10 @@ window.renderPlayer=function(s){
       bc.appendChild(c)}
   }}
 
+  /* Nov 12 (Luka): order: game log, game by game, his typical night, when he plays; splits sits right above by quarter */
+  {const RT=(()=>{let r=ov;while(r.parentNode&&r.parentNode.nodeType===1&&!r.parentNode.matches('main,body,[id^=view]'))r=r.parentNode;return r.parentNode&&r.parentNode.nodeType===1?r.parentNode:r})();const F=t=>[...RT.querySelectorAll('section.ppx-c')].find(c=>{const h=c.querySelector('.ppx-ch h2');return h&&h.textContent.trim().startsWith(t)});
+    const gl=F('Game log'),gg=F('Game by game'),tn=F('His typical night'),wp=F('When he plays'),sp=F('Splits'),bq=F('By quarter');
+    let at=gl;[gg,tn,wp].forEach(x=>{if(x&&at){at.after(x);at=x}});if(sp){let n=0;const go=()=>{const b2=F('By quarter');if(b2&&sp.isConnected){if(sp.nextElementSibling!==b2)b2.before(sp);return}if(++n<40)setTimeout(go,150)};go()}}
   /* ===== share card ===== */
   if(cur){const c=el('section','ppx-c ppx-sharec');c.appendChild(el('div','ppx-ch')).appendChild(el('h2',null,'Share card'));
     /* season share card: same look as the live page's cards (wine header, white panels, wine and gold footer) */
