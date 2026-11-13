@@ -56,5 +56,7 @@ for (const f of fs.readdirSync(DIR).filter(f => f.endsWith('.json.gz')).sort()) 
       let top = stack[stack.length - 1]; if (!top || top.ind !== ind) { top = { ind, keys: new Set() }; stack.push(top); }
       if (top.keys.has(m[3])) dup = `${f} line ${i + 1}: "${m[3]}" repeated`; top.keys.add(m[3]); });
     dup ? bad(`workflow: ${dup}`) : ok(`workflow ${f}: no repeated keys`); } }
+/* Nov 13 (Luka): wording rules: these are never hyphenated */
+{ const fs2 = await import('fs'); for (const f of ['index.html', 'live.src.html']) { let t = ''; try { t = fs2.readFileSync(f, 'utf8'); } catch {} const hit = (t.match(/\b(hard-cap\w*|most-used|trade-eligible)\b/gi) || []); hit.length ? bad(`wording in ${f}: ${[...new Set(hit)].join(', ')} should not be hyphenated`) : ok(`wording ${f}: no banned hyphens`); } }
 console.log(fails.length ? `\n${fails.length} failure(s)` : '\nall checks passed');
 process.exit(fails.length ? 1 : 0);
