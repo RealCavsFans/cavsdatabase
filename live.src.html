@@ -1928,6 +1928,10 @@ const SCOUT={};
 async function scoutData(tid){
   if(SCOUT[tid])return SCOUT[tid];
   return SCOUT[tid]=(async()=>{
+    /* Nov 13 (Luka): one source for both scouting reports. The daily scouting job (pdata/scout.json) rebuilds the opponent's last
+       games from the NBA's own files; when it covers this opponent, this page shows its numbers instead of rebuilding from ESPN */
+    try{const j=await getJSON('/pdata/scout.json');if(j&&j.full&&j.game&&String(j.game.tid)===String(tid)&&j.games&&j.games.length&&j.sh&&j.sh.l){const F=j.full;const L5={};F.L5.forEach((l,i)=>{L5[i]=l});
+      return {tid,FULL:1,games:j.games.map(s=>({s})),T:F.T,O:F.O,L5,P:Object.fromEntries(F.P.map(p=>[p.n,{...p,name:p.n}])),shots:[],SH:null,SS:j.sh,last:!!(j.from&&typeof CUR_SEASON!=='undefined'&&j.from!==CUR_SEASON)}}}catch(e){}
     const yr=new Date().getUTCMonth()>=7?new Date().getUTCFullYear()+1:new Date().getUTCFullYear();
     let evs=[],used=yr;for(const y of [yr,yr-1]){used=y;try{const sc=await getJSON(`${ESPN}teams/${tid}/schedule?season=${y}`);evs=(sc.events||[]).filter(e=>e.competitions&&e.competitions[0].status&&e.competitions[0].status.type.completed).map(e=>e.id)}catch(e){}if(evs.length>=1)break}/* this season once they have played a game; last season only before that */
     evs=evs.slice(-5);const games=[];
@@ -1950,7 +1954,7 @@ async function scoutData(tid){
 function scoutCard(D,X,team){
   const c=el('div','card sec');const n=X.games.length;head(c,'Scouting the '+team.name,n?(n>1?`Their last ${n} games`:'Their only game')+(X.last?' of 2025–26':' this season'):'No recent games to scout yet.');if(!n)return c;
   /* Nov 3 (Luka): their recent results as one row of small tiles (W/L, score, opponent, date) instead of wrapping pills */
-  const res=el('div','sc-l5');res.style.setProperty('--n',X.games.length);X.games.forEach(({G,R:RR})=>{const me=G.focus,op=G.other;const a=me.ha==='home'?RR.hs:RR.as,b=me.ha==='home'?RR.as:RR.hs;const d=new Date(G.date);const t=el('div',a>b?'w':'l');t.append(el('b',null,a>b?'W':'L'),el('span','s',a+'–'+b),el('span','o',(me.ha==='home'?'vs ':'@ ')+op.abbr),el('small',null,(d.getMonth()+1)+'/'+d.getDate()));res.appendChild(t)});c.appendChild(res);
+  const res=el('div','sc-l5');res.style.setProperty('--n',X.games.length);X.games.forEach(({G,R:RR,s:S0})=>{if(S0){/* from the scouting job */const a=S0.a,b=S0.b,[,mo,da]=S0.d.split('-').map(Number);const t=el('div',a>b?'w':'l');t.append(el('b',null,a>b?'W':'L'),el('span','s',a+'–'+b),el('span','o',(S0.ha==='home'?'vs ':'@ ')+S0.op),el('small',null,mo+'/'+da));res.appendChild(t);return}const me=G.focus,op=G.other;const a=me.ha==='home'?RR.hs:RR.as,b=me.ha==='home'?RR.as:RR.hs;const d=new Date(G.date);const t=el('div',a>b?'w':'l');t.append(el('b',null,a>b?'W':'L'),el('span','s',a+'–'+b),el('span','o',(me.ha==='home'?'vs ':'@ ')+op.abbr),el('small',null,(d.getMonth()+1)+'/'+d.getDate()));res.appendChild(t)});c.appendChild(res);
   /* pace and four factors */
   const T=X.T,O=X.O;const P2=t=>poss({fga:t.fga,oreb:(t.oreb||0),to:t.to,fta:t.fta,np:t.np});const pace=(P2(T)+P2(O))/2/(T.sec||1)*2880;const fa=factors(T,O);
   const g=el('div','ff scff');[['Pace',pace.toFixed(1),'Possessions per 48'],['Offense',(T.pts/P2(T)*100).toFixed(1),'ORTG'],['Defense',(O.pts/P2(O)*100).toFixed(1),'DRTG'],['3PT rate',Math.round(T.tpa/T.fga*100)+'%','Share of shots from three']].forEach(([a,b,cc])=>{const x=el('div','ffc');x.append(el('div','n',a));const r=el('div','row');r.appendChild(el('b',null,b));x.appendChild(r);x.appendChild(el('p','note',cc));x.dataset.k=a;g.appendChild(x)});c.appendChild(g);
@@ -1983,7 +1987,7 @@ function scoutCard(D,X,team){
   const mk=(k,opts)=>{const w=el('div','sc-seg');opts.forEach(([v,l])=>{const b=el('button',null,l);b.type='button';b.onclick=()=>{st[k]=v;draw()};b.dataset.k=k;b.dataset.v=v;w.appendChild(b)});tg.appendChild(w)};
   mk('side',[['f','Their shots'],['a','What they allow']]);if(X.SS)mk('rng',[['l','Last 5 games'],['s','Season ('+X.SS.n+' games)']]);
   const draw=()=>{tg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',st[b.dataset.k]===b.dataset.v));
-    const box=st.rng==='s'&&X.SS?X.SS.s[st.side]:null;const all=box?[]:X.SH.l[st.side];const xy=all.filter(q=>q.hasXY);
+    const box=X.SS&&(st.rng==='s'||X.FULL)?X.SS[st.rng][st.side]:null;const all=box?[]:X.SH.l[st.side];const xy=all.filter(q=>q.hasXY);
     let Z=ZN.map(()=>[0,0]);if(box){Z=box.z.map(v=>v.slice());if(box.cs&&box.cs[0][1]+box.cs[1][1]===Z[3][1])Z.cs=box.cs}else{xy.forEach(q=>{Z[q.zi][1]++;if(q.m)Z[q.zi][0]++});withCorners(Z,xy)}const nZ=Z.reduce((t,v)=>t+v[1],0);const BZ=(BLIVE&&BLIVE.lg)||ZN.map(([k])=>[LG[k][0]*1000,1000]);
     left.innerHTML=zoneCourt(Z,nZ,st.side==='f'?team.name+' shooting by zone':'Opponents’ shooting against '+team.name,BZ,'#860038',true);
     left.insertAdjacentHTML('beforeend',zLegend('#860038','NBA average','Numbers: makes-attempts, FG% and share of shots.',st.side!=='f')+ZKEY);

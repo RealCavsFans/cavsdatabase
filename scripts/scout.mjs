@@ -80,8 +80,9 @@ for (const id of ids) {
   const a = me.ha === 'home' ? R.hs : R.as, b = me.ha === 'home' ? R.as : R.hs;
   games.push({ d: etDay(G.date), ha: me.ha, op: op.abbr, a, b });
   add(T, R.T[me.id]); add(O, R.T[op.id]);
-  G.roster[me.id].forEach(i => { const x = R.B[i]; if (!(x.min > 0)) return; const p = P[G.P[i].name] = P[G.P[i].name] || { n: G.P[i].name, gp: 0, min: 0, pts: 0, reb: 0, ast: 0, stl: 0, blk: 0, pm: 0, fga: 0, fta: 0 }; p.gp++; p.min += x.min; p.pts += x.pts; p.reb += x.oreb + x.dreb; p.ast += x.ast; p.stl += x.stl || 0; p.blk += x.blk || 0; p.pm += x.pm || 0; p.fga += x.fga || 0; p.fta += x.fta || 0; });
-  Object.values(R.L[me.id][5]).forEach(l => { const k = l.ids.slice().sort().join(); const o = L5[k] = L5[k] || { n: l.ids.map(i => G.P[i].last), sec: 0, pm: 0, g: 0, pf: 0, pa: 0, po: 0 }; o.sec += l.sec; o.pm += l.pf - l.pa; o.g++; o.pf += l.pf; o.pa += l.pa; o.po += C.poss(l.o); o.pd = (o.pd || 0) + C.poss(l.d); });
+  /* Nov 13 (Luka): every box score number per player, so the full scouting report on /live.html shows the same NBA-based numbers as the preview */
+  G.roster[me.id].forEach(i => { const x = R.B[i]; if (!(x.min > 0)) return; const p = P[G.P[i].name] = P[G.P[i].name] || { n: G.P[i].name, short: G.P[i].short || G.P[i].name, gp: 0, gs: 0, min: 0, pts: 0, reb: 0, oreb: 0, dreb: 0, ast: 0, stl: 0, blk: 0, to: 0, pf: 0, pm: 0, tpm: 0, tpa: 0, fgm: 0, fga: 0, ftm: 0, fta: 0 }; p.gp++; if (G.P[i].starter) p.gs++; for (const k of ['min', 'pts', 'oreb', 'dreb', 'ast', 'stl', 'blk', 'to', 'pf', 'pm', 'tpm', 'tpa', 'fgm', 'fga', 'ftm', 'fta']) p[k] += +x[k] || 0; p.reb += (+x.oreb || 0) + (+x.dreb || 0); });
+  Object.values(R.L[me.id][5]).forEach(l => { const k = l.ids.slice().sort().join(); const o = L5[k] = L5[k] || { n: l.ids.map(i => G.P[i].last), sec: 0, pm: 0, g: 0, pf: 0, pa: 0, po: 0 }; o.sec += l.sec; o.pm += l.pf - l.pa; o.g++; o.pf += l.pf; o.pa += l.pa; o.po += C.poss(l.o); o.pd = (o.pd || 0) + C.poss(l.d); o.o = o.o || { fga: 0, oreb: 0, to: 0, fta: 0 }; o.d = o.d || { fga: 0, oreb: 0, to: 0, fta: 0 }; for (const k of ['fga', 'oreb', 'to', 'fta']) { o.o[k] += +l.o[k] || 0; o.d[k] += +l.d[k] || 0; } });
   R.shots.filter(q => q.t === me.id && q.hasXY).forEach(q => { Z[q.zi][1]++; if (q.m) Z[q.zi][0]++; if (q.zi === 3) { CN[q.x < 25 ? 0 : 1]++; if (q.m) CM[q.x < 25 ? 0 : 1]++; } });
 }
 if (!games.length) { console.log('scout: no games to scout'); process.exit(0); }
@@ -93,7 +94,8 @@ fs.mkdirSync('data', { recursive: true }); fs.writeFileSync(SC_F, JSON.stringify
 const sumB = list => { const o = sbox(); list.forEach(b => { if (!b) return; b.z.forEach((v, i) => { o.z[i][0] += v[0]; o.z[i][1] += v[1]; }); b.cs.forEach((v, i) => { o.cs[i][0] += v[0]; o.cs[i][1] += v[1]; }); b.pt.forEach((v, i) => { o.pt[i][0] += v[0]; o.pt[i][1] += v[1]; }); }); return o; };
 const sAll = allIds.map(id => cache[ckey(id)]).filter(Boolean), sL5 = ids.map(id => cache[ckey(id)]).filter(Boolean);
 games.sort((x, y) => x.d < y.d ? -1 : 1);
-const P2 = t => C.poss({ fga: t.fga, oreb: (t.oreb || 0) + (t.toreb || 0), to: t.to, fta: t.fta });
+/* Nov 13 (Luka): the same possession count as the full scouting report on /live.html */
+const P2 = t => C.poss({ fga: t.fga, oreb: (t.oreb || 0), to: t.to, fta: t.fta, np: t.np });
 const r1 = x => Math.round(x * 10) / 10;
 const n = games.length;
 /* shot shares: rim, midrange (short + long), corner 3, above-the-break 3 */
@@ -104,7 +106,7 @@ const fgz = z => { const g = [[z[0][0], z[0][1]], [z[1][0] + z[2][0], z[1][1] + 
 const zt = Z.reduce((s, v) => s + v[1], 0) || 1;
 const top5 = Object.values(L5).sort((a, b) => b.sec - a.sec)[0];
 const out = {
-  updated: now.toISOString(), ids, game: { id: next.id, d: etDay(next.date), opp: opp.abbreviation, name: opp.shortDisplayName || opp.name }, from,
+  updated: now.toISOString(), ids, game: { id: next.id, d: etDay(next.date), opp: opp.abbreviation, tid: opp.id, name: opp.shortDisplayName || opp.name }, from,
   games,
   pace: r1((P2(T) + P2(O)) / 2 / (T.sec || 1) * 2880), off: r1(100 * T.pts / P2(T)), def: r1(100 * O.pts / P2(O)), tpr: Math.round(100 * T.tpa / (T.fga || 1)),
   who: Object.values(P).map(p => ({ n: p.n, gp: p.gp, pts: r1(p.pts / p.gp), reb: r1(p.reb / p.gp), ast: r1(p.ast / p.gp), stl: r1(p.stl / p.gp), blk: r1(p.blk / p.gp), pm: r1(p.pm / p.gp), ts: p.fga + p.fta ? Math.round(p.pts / (2 * (p.fga + 0.44 * p.fta)) * 1000) / 10 : null })).sort((a, b) => b.pts - a.pts).slice(0, 4),
@@ -114,6 +116,8 @@ const out = {
   /* Nov 2: how well they shoot from each zone (FG%), against the NBA's FG% there; corners left and right */
   fg: fgz(Z), lgfg: fgz(lgZ), cfg: CN.map((a, i) => a ? r1(100 * CM[i] / a) : null), za: [Z[0][1], Z[1][1] + Z[2][1], Z[3][1], Z[4][1]],
   /* Nov 13: the NBA's makes-attempts by the five zones, for the preview court (same as the full scouting report) */
+  /* Nov 13 (Luka): the full scouting report on /live.html reads these instead of rebuilding the games from ESPN, so both reports match */
+  full: { T, O, P: Object.values(P), L5: Object.values(L5).filter(l => l.sec >= 120).sort((a, b) => b.sec - a.sec).slice(0, 25).map(l => ({ names: l.n, sec: l.sec, g: l.g, pf: l.pf, pa: l.pa, o: l.o, d: l.d })), dates: games.map(g => g.d) },
   lgz: lgZ.map(([m, a]) => [Math.round(m), Math.round(a)]),
   sh: { n: sAll.length, s: { f: sumB(sAll.map(x => x.f)), a: sumB(sAll.map(x => x.a)) }, l: { f: sumB(sL5.map(x => x.f)), a: sumB(sL5.map(x => x.a)) } }
 };
