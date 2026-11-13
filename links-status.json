@@ -1,15 +1,10 @@
 {
- "checked": "2026-11-09T11:42:48.469Z",
+ "checked": "2026-11-13T06:15:28.234Z",
  "total": 816,
- "broken": [
-  [
-   "https://www.nba.com/cavaliers/news/davis_110224.html",
-   404
-  ]
- ],
+ "broken": [],
  "unsure": [
   [
-   "https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Transaction_History/2018",
+   "https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Transactions",
    403
   ],
   [
@@ -17,7 +12,11 @@
    403
   ],
   [
-   "https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Transactions",
+   "https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Transaction_History/2018",
+   403
+  ],
+  [
+   "https://basketball.realgm.com/player/Ismael-Kamagate/Summary/132958",
    403
   ],
   [
@@ -26,10 +25,6 @@
   ],
   [
    "https://basketball.realgm.com/player/wd/Summary/120",
-   403
-  ],
-  [
-   "https://basketball.realgm.com/player/Ismael-Kamagate/Summary/132958",
    403
   ],
   [
@@ -49,43 +44,15 @@
    403
   ],
   [
-   "https://en.wikipedia.org/wiki/Terry_Furlow",
-   429
-  ],
-  [
-   "https://en.wikipedia.org/wiki/Timofey_Mozgov",
-   429
-  ],
-  [
-   "https://en.wikipedia.org/wiki/Tom_Nissalke",
-   429
-  ],
-  [
-   "https://en.wikipedia.org/wiki/Tyronn_Lue",
-   429
-  ],
-  [
-   "https://en.wikipedia.org/wiki/World_B._Free",
-   429
-  ],
-  [
-   "https://en.wikipedia.org/wiki/Zydrunas_Ilgauskas",
-   429
-  ],
-  [
-   "https://en.wikipedia.org/wiki/Walt_Wesley",
-   429
-  ],
-  [
    "https://formsubmit.co/ajax/rcfwriter@gmail.com",
    405
   ],
   [
-   "https://theinsideshot.substack.com",
+   "https://theanalyst.com/articles/the-biggest-blowouts-in-nba-history/",
    403
   ],
   [
-   "https://theanalyst.com/articles/the-biggest-blowouts-in-nba-history/",
+   "https://theinsideshot.substack.com",
    403
   ],
   [
@@ -109,11 +76,11 @@
    403
   ],
   [
-   "https://www.nbadraft.net/players/renaldas-seibutis/",
+   "https://www.nbadraft.net/players/ismael-kamagate/",
    403
   ],
   [
-   "https://www.nbadraft.net/players/ismael-kamagate/",
+   "https://www.nbadraft.net/players/renaldas-seibutis/",
    403
   ],
   [
