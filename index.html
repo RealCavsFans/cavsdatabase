@@ -5139,7 +5139,8 @@ window.renderPlayer=function(s){
   /* Nov 12 (Luka): order: game log, game by game, his typical night, when he plays; splits sits right above by quarter */
   {const RT=(()=>{let r=ov;while(r.parentNode&&r.parentNode.nodeType===1&&!r.parentNode.matches('main,body,[id^=view]'))r=r.parentNode;return r.parentNode&&r.parentNode.nodeType===1?r.parentNode:r})();const F=t=>[...RT.querySelectorAll('section.ppx-c')].find(c=>{const h=c.querySelector('.ppx-ch h2');return h&&h.textContent.trim().startsWith(t)});
     const gl=F('Game log'),gg=F('Game by game'),tn=F('His typical night'),wp=F('When he plays'),sp=F('Splits'),bq=F('By quarter');
-    let at=gl;[gg,tn,wp].forEach(x=>{if(x&&at){at.after(x);at=x}});if(sp){let n=0;const go=()=>{const b2=F('By quarter');if(b2&&sp.isConnected){if(sp.nextElementSibling!==b2)b2.before(sp);return}if(++n<40)setTimeout(go,150)};go()}}
+    let at=gl;[gg,tn,wp].forEach(x=>{if(x&&at){at.after(x);at=x}});/* Nov 12 (Luka): offense: shooting, then shot contest, then his zones (they may draw late, so keep trying a moment) */{let n2=0;const go2=()=>{const sh=F('Shooting'),sc=F('Shot contest'),zn=F('His zones vs the NBA');if(sh&&sc&&sh.nextElementSibling!==sc)sh.after(sc);if(sc&&zn&&sc.nextElementSibling!==zn)sc.after(zn);if((!sc||!zn)&&++n2<40)setTimeout(go2,150)};go2()}
+    if(sp){let n=0;const go=()=>{const b2=F('By quarter');if(b2&&sp.isConnected){if(sp.nextElementSibling!==b2)b2.before(sp);return}if(++n<40)setTimeout(go,150)};go()}}
   /* ===== share card ===== */
   if(cur){const c=el('section','ppx-c ppx-sharec');c.appendChild(el('div','ppx-ch')).appendChild(el('h2',null,'Share card'));
     /* season share card: same look as the live page's cards (wine header, white panels, wine and gold footer) */
