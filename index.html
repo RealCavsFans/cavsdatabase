@@ -4274,7 +4274,9 @@ function buildDepth(){
     ed.onclick=()=>{const on=ed.getAttribute('aria-pressed')!=='true';ed.setAttribute('aria-pressed',String(on));ed.textContent=on?'Done':'Shuffle it';sheet.classList.toggle('dnd',on);note.hidden=!on};
     const SLOT='#dv-chart .c1,#dv-chart .c2,#dv-chart .c3,#dv-chart .tw,#dv-pyr .pt-faces>a';
     let drag=null;
-    sheet.addEventListener('click',e=>{if(sheet.classList.contains('dnd')&&e.target.closest('#dv-chart a,#dv-pyr a'))e.preventDefault()},true);
+    /* Nov 12 (Luka): a drag never opens the player's page: while shuffling, and right after any drag, clicks on player links are stopped before the site's router sees them */
+    let dragAt=0;window.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('#dv-chart a,#dv-pyr a');if(a&&(sheet.classList.contains('dnd')||Date.now()-dragAt<600)){e.preventDefault();e.stopImmediatePropagation()}},true);
+    sheet.addEventListener('dragstart',e=>{if(e.target.closest&&e.target.closest('#dv-chart a,#dv-pyr a,#dv-chart img,#dv-pyr img'))e.preventDefault()});
     sheet.addEventListener('pointerdown',e=>{if(!sheet.classList.contains('dnd'))return;const sl=e.target.closest(SLOT);if(!sl||!sl.querySelector('img,b')&&!sl.matches('a'))return;e.preventDefault();
       const r=sl.getBoundingClientRect();const g=el('div','ds-ghost');const im=sl.querySelector('img');if(im){const i2=document.createElement('img');i2.src=im.src;i2.alt='';g.appendChild(i2)}g.appendChild(el('b',null,(sl.querySelector('b')?.childNodes[0]?.textContent||'').trim()));g.style.left=(e.clientX-24)+'px';g.style.top=(e.clientY-24)+'px';document.body.appendChild(g);
       drag={sl,g,dx:24,dy:24,over:null};sl.classList.add('ds-from');try{sl.setPointerCapture(e.pointerId)}catch(x){}});
@@ -4284,7 +4286,7 @@ function buildDepth(){
       if(t&&t!==sl){const pyr=sl.matches('a');if(pyr){if(t.matches('a')){const ph=document.createComment('');t.before(ph);sl.before(t);ph.replaceWith(sl)}else if(t.matches('.pt-band')&&!t.contains(sl))t.querySelector('.pt-faces').appendChild(sl)}
         else if(!t.matches('a,.pt-band')){const a=[...sl.childNodes],b=[...t.childNodes];sl.replaceChildren(...b);t.replaceChildren(...a);sl.classList.toggle('none',!sl.querySelector('img,b'));t.classList.toggle('none',!t.querySelector('img,b'))}
         const moved=sl.matches('a')?sl:t;moved.classList.add('ds-pop');setTimeout(()=>moved.classList.remove('ds-pop'),450)}
-      drag=null};
+      drag=null;dragAt=Date.now()};
     addEventListener('pointerup',end);addEventListener('pointercancel',end)}
 }
 /* announcement for each acquisition (NBA.com / NBA G League) */
