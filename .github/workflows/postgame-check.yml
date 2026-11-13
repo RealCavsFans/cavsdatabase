@@ -1,0 +1,73 @@
+name: Postgame stats check
+# Nov 13 (Luka): the night of a game, not just the next morning. Once a Cavs game is final and has landed in both the
+# game archive and the league feed (scripts/postgame-ready.mjs), run the full check once: the saved game against the
+# official box score (scripts/box-check.mjs) and the season totals the season and player pages show against every box
+# score and the league feed (scripts/season-check.mjs). Anything off sends a push to Luka's phone. The game id is then
+# written to data/postgame-check.json so the check runs once per game.
+on:
+  schedule:
+    - cron: '7,37 1-8 * * *'   # every 30 minutes, about 8 p.m. to 4 a.m. Eastern
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: postgame-check
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Gate: a Cavs game on today's NBA scoreboard that is final (gameStatus 3)
+      - name: Cavs final tonight?
+        id: final
+        run: |
+          G=$(curl -s -m 20 "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json" | jq -r '[.scoreboard.games[]? | select(.gameStatus == 3 and (.homeTeam.teamTricode == "CLE" or .awayTeam.teamTricode == "CLE")) | .gameId][0] // empty' 2>/dev/null || true)
+          echo "final: ${G:-none}"; [ -n "$G" ] && echo "id=$G" >> $GITHUB_OUTPUT || true
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+        if: steps.final.outputs.id != ''
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
+        if: steps.final.outputs.id != ''
+        with:
+          node-version: 22
+      - name: Game in the archive and the league feed yet?
+        id: ready
+        if: steps.final.outputs.id != ''
+        run: node scripts/postgame-ready.mjs "${{ steps.final.outputs.id }}" >> $GITHUB_OUTPUT
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+        if: steps.ready.outputs.ready == '1'
+        with:
+          ref: nba-data
+          path: nba-data
+          sparse-checkout: |
+            2026-27
+      - name: Check tonight's game and the season totals
+        if: steps.ready.outputs.ready == '1'
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          set +e
+          node scripts/box-check.mjs; b=$?
+          node scripts/season-check.mjs nba-data; s=$?
+          set -e
+          echo "box-check exit $b, season-check exit $s"
+          if [ "$b" = "2" ] || [ "$s" = "2" ]; then
+            : > /tmp/alert.txt
+            [ "$b" = "2" ] && [ -f data/box-check-alert.txt ] && { cat data/box-check-alert.txt; echo; } >> /tmp/alert.txt
+            [ "$s" = "2" ] && [ -f data/season-check-alert.txt ] && cat data/season-check-alert.txt >> /tmp/alert.txt
+            [ -n "$NTFY_TOPIC" ] && curl -s -m 15 -H "Title: Postgame check: stats don't match" -H "Tags: warning" -H "Click: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" --data-binary @/tmp/alert.txt "https://ntfy.sh/$NTFY_TOPIC" || true
+          fi
+          node -e "const fs=require('fs');const r=f=>{try{return JSON.parse(fs.readFileSync(f,'utf8'))}catch(e){return null}};fs.writeFileSync('data/postgame-check.json',JSON.stringify({game:process.argv[1],checked:new Date().toISOString(),box:r('data/box-check.json'),season:r('data/season-check.json')},null,1)+'\n')" "${{ steps.final.outputs.id }}"
+      - name: Remember this game was checked
+        if: steps.ready.outputs.ready == '1'
+        run: |
+          git config user.name "cavsdatabase-bot"
+          git config user.email "bot@cavsdatabase.com"
+          git add data/postgame-check.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Postgame stats check"
+          for i in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true; sleep $((RANDOM % 15 + i * 5))
+          done
+          exit 1
