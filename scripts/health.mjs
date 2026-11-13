@@ -50,11 +50,11 @@ else { if (days(LK.checked.slice(0, 10), today) > 9) problems.push(`The weekly l
   if (LK.broken && LK.broken.length) problems.push(`${LK.broken.length} broken outside link(s) as of ${LK.checked.slice(0, 10)}: ${LK.broken.slice(0, 5).map(([u, s]) => u + ' (' + s + ')').join(', ')}${LK.broken.length > 5 ? ', …' : ''}`);
   else notes.push(`links ok (${LK.total})`); }
 // 7. live page backup feed (/pbp): replay the latest finished Cavs game through each source, so a layout change
-// at CBS or Yahoo shows up here instead of during a game when ESPN is down. StatMuse is the last resort (Nov 2), so it only gets a note.
+// at CBS or Yahoo shows up here instead of during a game when ESPN is down. Nov 13: CBS and Yahoo are the two backups (StatMuse dropped).
 {
   const last = S.filter(([d]) => d < today && box[d] && box[d].status === 'final' && days(d, today) <= 10).pop();
   if (!last) notes.push('backup feed: no recent game to test');
-  else for (const src of ['cbs', 'yahoo', 'statmuse']) {
+  else for (const src of ['cbs', 'yahoo']) {
     const d = last[0].replace(/-/g, ''); let msg = null;
     // Nov 2: the site's health identifier gets past Cloudflare's bot screen (without it the test never reached the backups)
     try { const ask = () => fetch(`https://cavsdatabase.com/pbp?d=${d}&src=${src}`, { headers: { 'user-agent': 'cavsdatabase-health', 'cache-control': 'no-cache' }, signal: AbortSignal.timeout(45000) });
@@ -65,7 +65,6 @@ else { if (days(LK.checked.slice(0, 10), today) > 9) problems.push(`The weekly l
         if (j.plays.length < 150) msg = `only ${j.plays.length} plays`; else if (want && cav && +cav.score !== want) msg = `Cavs score ${cav.score}, box score says ${want}`; }
     } catch (e) { notes.push(`backup ${src}: could not check (${String(e.message || e).slice(0, 60)})`); continue; }
     if (!msg) notes.push(`backup ${src} ok`);
-    else if (src === 'statmuse') notes.push(`backup statmuse failed (${msg})`);   // Nov 2: last resort now
     else problems.push(`Live page backup feed: ${src} failed on the ${last[0]} game (${msg}). The live page still has the other backups; see MANUAL.md.`);
   }
 }

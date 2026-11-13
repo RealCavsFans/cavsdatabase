@@ -829,7 +829,7 @@ function oppColor(ab){const L=OCOL[OTAB[ab]||ab];const ok=h=>{const n=parseInt(h
 function applyOpp(D){const c=D&&D.other&&D.other.abbr&&D.other.abbr!=='OPP'?oppColor(D.other.abbr):'#9a6a00';let st=document.getElementById('co-team');if(!st){st=document.createElement('style');st.id='co-team';document.body.appendChild(st)}
   const dk=`color-mix(in srgb,${c} 55%,#fff)`;st.textContent=`:root{--co:${c};--cot:${c}}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--co:${dk}}}:root[data-theme=dark]{--co:${dk}}`}
 function setData(d,feed){S.data=prep(d);S.data.noSubs=!!d.noSubs;S.data.focus.c='var(--cf)';S.data.other.c='var(--co)';applyOpp(S.data);S.fetched=Date.now();S.err=null;S.feed=feed}
-/* live games: ESPN first. After two misses in a row, switch to the backup feed (/pbp: StatMuse, then CBS, then Yahoo),
+/* live games: ESPN first. After two misses in a row, switch to the backup feed (/pbp: CBS, then Yahoo),
    and check ESPN again every fourth refresh so the page returns to it once it's back. */
 /* Nov 2: the NBA's own feed first (box score + play-by-play through our /nba worker, the league's own player IDs), with ESPN's
    win probability laid over it by game clock. If the NBA's files aren't up yet (before tip) or anything fails, ESPN as before. */

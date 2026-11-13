@@ -1,6 +1,6 @@
 // Backup play-by-play sources for the live page, used by worker/pbp.js (Cloudflare) when ESPN's feed fails.
 // Each parser turns a public game page into the same shape as ESPN's summary feed (header, boxscore, plays),
-// so the live page works unchanged. Order: StatMuse (structured, has substitutions), CBS (every play, no locations), Yahoo (some plays missing, has locations).
+// so the live page works unchanged. Order: CBS (every play, no locations), then Yahoo (some plays missing, has locations). Nov 13: StatMuse dropped (its game page changed).
 
 // ESPN ids, abbreviations and logos, keyed by the common three-letter code
 const TEAMS = { ATL: [1, 'ATL', 'Hawks', 'Atlanta'], BOS: [2, 'BOS', 'Celtics', 'Boston'], BKN: [17, 'BKN', 'Nets', 'Brooklyn'], CHA: [30, 'CHA', 'Hornets', 'Charlotte'], CHI: [4, 'CHI', 'Bulls', 'Chicago'], CLE: [5, 'CLE', 'Cavaliers', 'Cleveland'], DAL: [6, 'DAL', 'Mavericks', 'Dallas'], DEN: [7, 'DEN', 'Nuggets', 'Denver'], DET: [8, 'DET', 'Pistons', 'Detroit'], GSW: [9, 'GS', 'Warriors', 'Golden State'], HOU: [10, 'HOU', 'Rockets', 'Houston'], IND: [11, 'IND', 'Pacers', 'Indiana'], LAC: [12, 'LAC', 'Clippers', 'LA'], LAL: [13, 'LAL', 'Lakers', 'Los Angeles'], MEM: [29, 'MEM', 'Grizzlies', 'Memphis'], MIA: [14, 'MIA', 'Heat', 'Miami'], MIL: [15, 'MIL', 'Bucks', 'Milwaukee'], MIN: [16, 'MIN', 'Timberwolves', 'Minnesota'], NOP: [3, 'NO', 'Pelicans', 'New Orleans'], NYK: [18, 'NY', 'Knicks', 'New York'], OKC: [25, 'OKC', 'Thunder', 'Oklahoma City'], ORL: [19, 'ORL', 'Magic', 'Orlando'], PHI: [20, 'PHI', '76ers', 'Philadelphia'], PHX: [21, 'PHX', 'Suns', 'Phoenix'], POR: [22, 'POR', 'Trail Blazers', 'Portland'], SAC: [23, 'SAC', 'Kings', 'Sacramento'], SAS: [24, 'SA', 'Spurs', 'San Antonio'], TOR: [28, 'TOR', 'Raptors', 'Toronto'], UTA: [26, 'UTAH', 'Jazz', 'Utah'], WAS: [27, 'WSH', 'Wizards', 'Washington'] };
@@ -27,54 +27,6 @@ export function shotName(t) {
   const mods = w.slice(i); if (base === 'Layup' || base === 'Dunk' || base === 'Hook') base += ' Shot';
   if (mods.includes('Tip') && /Layup/.test(base)) return 'Tip Shot';
   return [...mods, base].join(' ');
-}
-
-/* ---------- StatMuse: structured game state inside the page ---------- */
-const rv = v => { if (Array.isArray(v) && v.length >= 2 && typeof v[0] === 'number') { if (v[0] === 1) return v[1].map(rv); if (v[0] === 0) return ro(v[1]); return v[1] } return ro(v) };
-const ro = o => { if (o && typeof o === 'object' && !Array.isArray(o)) { const r = {}; for (const k in o) r[k] = rv(o[k]); return r } return o };
-export function fromStatMuse(html) {
-  const m = [...html.matchAll(/<astro-island[^>]*props="([^"]*playByPlay[^"]*)"/g)][0]; if (!m) throw new Error('statmuse: no game state');
-  const G = ro(JSON.parse(dec(m[1]))); const gd = G.gameData, pb = G.playByPlay, pl = G.players || {};
-  const ab = {}; for (const x of dec(html).matchAll(/"teamId":\[0,(\d+)\],"seasonYear":\[0,\d+\],"name":\[0,"[^"]*"\],"nickname":\[0,"[^"]*"\],"abbreviation":\[0,"([A-Z]+)"\]/g)) ab[x[1]] = x[2];
-  const tm = {}; [['home', gd.homeTeam], ['away', gd.awayTeam]].forEach(([ha, g]) => { tm[g.teamId] = { ha, code: teamCode(ab[g.teamId]) } });
-  const H = tm[gd.homeTeam.teamId].code, A = tm[gd.awayTeam.teamId].code;
-  if (!H || !A) throw new Error('statmuse: teams');
-  const tid = id => tm[id] ? String(TEAMS[tm[id].code][0]) : null;
-  const names = {}, pos = {}; for (const k in pl) { const x = pl[k]; if (x && x.longName) { names[k] = x.longName; pos[k] = (x.position || '').split('_').map(w => w[0]).join('').replace(/^PG$|^SG$|^SF$|^PF$|^C$/, y => y) } }
-  const pid = id => id == null ? null : 'sm' + id;
-  const teamOfP = {}; const ath = [gd.homeTeam, gd.awayTeam].map(g => ({ id: tid(g.teamId), ath: (g.players || []).map(p => { teamOfP[p.playerId] = tid(g.teamId); const nm = names[p.playerId] || 'Player ' + p.playerId; return { id: pid(p.playerId), name: nm, short: (pl[p.playerId] && pl[p.playerId].shortName) || short(nm), pos: pos[p.playerId], starter: p.starter, dnp: p.played === false, reason: p.notPlayedDescription || '' } }) }));
-  const N = id => names[id] || 'Player ' + id;
-  const plays = []; let seq = 0;
-  const add = (e, type, text, team, ids, extra = {}) => plays.push(Object.assign({ id: 'sm' + (e.eventSequence ?? ++seq) + (extra.k || ''), type: { text: type }, text, period: { number: e.period }, clock: { displayValue: pad(e.clock || '0:00') }, team: team ? { id: team } : undefined, participants: ids.filter(x => x != null).map(x => ({ athlete: { id: pid(x) } })), homeScore: e.homePoints, awayScore: e.awayPoints, scoringPlay: false, scoreValue: 0, shootingPlay: false, pointsAttempted: 0 }, extra));
-  const ev = pb.events || []; let prevH = 0, prevA = 0;
-  for (const e of ev) {
-    const team = tid(e.teamId ?? e.turnoverTeamId ?? e.foulTeamId);
-    switch (e.type) {
-      case 'lineupChange': { const ins = e.subbedInPlayerIds || [], outs = e.subbedOutPlayerIds || []; outs.forEach((o, i) => { if (ins[i] != null) add(e, 'Substitution', N(ins[i]) + ' enters the game for ' + N(o), team, [ins[i], o], { k: '-' + i }) }); break }
-      case 'fieldGoal': { const three = !!e.isThreePoint, v = three ? 3 : 2, ty = shotName(e.shotType); const d = e.distanceFeet != null ? Math.round(e.distanceFeet) + '-foot ' : '';
-        const txt = N(e.playerId) + (e.isMade ? ' makes ' : ' misses ') + d + (three ? 'three point ' : 'two point ') + ty.toLowerCase() + (e.isMade && e.assistPlayerId ? ' (' + N(e.assistPlayerId) + ' assists)' : '');
-        const blk = e.blockPlayerId ?? e.blockedByPlayerId; const c = e.coordinates || {};
-        add(e, ty, blk && !e.isMade ? N(blk) + ' blocks ' + N(e.playerId) + "'s " + (three ? 'three point' : 'two point') + ' shot' : txt, team, [e.playerId, e.isMade ? e.assistPlayerId : blk], { scoringPlay: !!e.isMade, scoreValue: e.isMade ? v : 0, shootingPlay: true, pointsAttempted: v, coordinate: c.x != null ? { x: Math.round((25 + c.x / 10) * 10) / 10, y: Math.round(c.y / 10 * 10) / 10 } : undefined }); break }
-      case 'freeThrow': { const tech = /tech/i.test(e.freeThrowType || ''); const ty = tech ? 'Free Throw - Technical' : 'Free Throw - ' + (e.attemptNumber || 1) + ' of ' + (e.totalGranted || 1);
-        add(e, ty, N(e.playerId) + (e.isMade ? ' makes ' : ' misses ') + 'free throw ' + (e.attemptNumber || 1) + ' of ' + (e.totalGranted || 1), team, [e.playerId], { scoringPlay: !!e.isMade, scoreValue: e.isMade ? 1 : 0, shootingPlay: true, pointsAttempted: 1 }); break }
-      case 'rebound': { const off = e.reboundType === 'offensive'; add(e, off ? 'Offensive Rebound' : 'Defensive Rebound', (e.playerId != null ? N(e.playerId) : TEAMS[tm[e.teamId].code][2]) + (off ? ' offensive' : ' defensive') + (e.playerId != null ? ' rebound' : ' team rebound'), team, [e.playerId]); break }
-      case 'turnover': { const w = (e.turnoverType || 'turnover').replace(/([a-z])([A-Z])/g, '$1 $2').replace(/^./, c => c.toUpperCase()).replace(/ Violation$/, '').replace(/ Of /, ' of ');
-        add(e, /^(Turnover|Traveling)$/.test(w) ? w : w + ' Turnover', (e.turnoverPlayerId != null ? N(e.turnoverPlayerId) : TEAMS[tm[e.turnoverTeamId]?.code || H][2]) + ' ' + w.toLowerCase() + (e.stealPlayerId ? ' (' + N(e.stealPlayerId) + ' steals)' : ''), team, [e.turnoverPlayerId, e.stealPlayerId]); break }
-      case 'foul': { const ft = e.foulType || 'personal'; const ty = ft === 'looseBall' ? 'Loose Ball Foul' : ft === 'technical' ? 'Technical Foul' : ft === 'flagrant1' || ft === 'flagrant2' ? 'Flagrant Foul Type ' + ft.slice(-1) : (ft[0].toUpperCase() + ft.slice(1).replace(/([a-z])([A-Z])/g, '$1 $2')) + ' Foul';
-        add(e, ty, (e.foulPlayerId != null ? N(e.foulPlayerId) : 'Team') + ' ' + ty.toLowerCase() + (e.foulDrawnPlayerId ? ' (' + N(e.foulDrawnPlayerId) + ' draws the foul)' : ''), team, [e.foulPlayerId, e.foulDrawnPlayerId]); break }
-      case 'teamTimeout': add(e, 'Full Timeout', TEAMS[tm[e.teamId]?.code || H][2] + ' timeout', team, []); break;
-      case 'officialTimeout': add(e, 'Official Timeout', 'Official timeout', null, []); break;
-      case 'review': add(e, /overturn/i.test(e.reviewType || '') ? "Coach's Challenge (Overturned)" : /challenge/i.test(e.reviewType || '') ? 'Challenge' : 'Review', 'Review', team, []); break;
-      case 'violation': add(e, (e.violationType || 'violation').replace(/([a-z])([A-Z])/g, '$1 $2').replace(/^./, c => c.toUpperCase()), (e.violationPlayerId != null ? N(e.violationPlayerId) + ' ' : '') + (e.violationType || 'violation'), team, [e.violationPlayerId]); break;
-      case 'openTip': case 'jumpBall': add(e, 'Jumpball', N(e.awayPlayerId) + ' vs. ' + N(e.homePlayerId) + ' (' + N(e.possessionPlayerId) + ' gains possession)', null, [e.awayPlayerId, e.homePlayerId, e.possessionPlayerId]); break;
-      case 'endPeriod': add(e, 'End Period', 'End of ' + (e.period > 4 ? 'OT' + (e.period - 4) : 'Q' + e.period), null, [], { clock: { displayValue: '0:00' } }); break;
-      default: break;
-    }
-    prevH = e.homePoints ?? prevH; prevA = e.awayPoints ?? prevA;
-  }
-  const st = /final|complete/i.test(gd.type + ' ' + gd.gameStatus) ? 'post' : /progress|half|live|end/i.test(gd.type + ' ' + gd.gameStatus) ? 'in' : 'pre';
-  const lp = ev[ev.length - 1] || {}; if (st === 'post' && plays.length) { const l = plays[plays.length - 1]; if (l.type.text === 'End Period') l.type.text = 'End Game' }
-  return { src: 'StatMuse', header: header(H, A, gd.homeTeam.score ?? prevH, gd.awayTeam.score ?? prevA, st, lp.period || 1, pad(lp.clock || (lp.type === 'endPeriod' ? '0:00' : '12:00')), gd.gameTimestamp), boxscore: box(ath), plays, winprobability: [], gameInfo: { venue: { fullName: (gd.venue && gd.venue.name) || '' } } };
 }
 
 /* ---------- text plays (Yahoo, CBS): turn sentences into ESPN-style plays ---------- */

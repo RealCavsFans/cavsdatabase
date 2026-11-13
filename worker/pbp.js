@@ -1,8 +1,8 @@
 // /pbp: backup play-by-play for the live page when ESPN's feed fails.
-// GET /pbp?d=YYYYMMDD returns the Cavs game that day in ESPN's summary shape, from CBS, then Yahoo, then StatMuse.
+// GET /pbp?d=YYYYMMDD returns the Cavs game that day in ESPN's summary shape, from CBS, then Yahoo (Nov 13: StatMuse dropped).
 // One shared cached copy serves every visitor (15 seconds while live), so each source sees about four requests a minute.
-// Tests: &away=PHI&home=NYK picks another game; &src=statmuse|yahoo|cbs forces one source; &sm=<statmuse game slug>.
-import { fromStatMuse, fromText, yahooRows, cbsRows, teamCode, shell } from '../scripts/pbp-sources.mjs';
+// Tests: &away=PHI&home=NYK picks another game; &src=yahoo|cbs forces one source.
+import { fromText, yahooRows, cbsRows, teamCode, shell } from '../scripts/pbp-sources.mjs';
 
 const UA = { 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36', 'accept-language': 'en-US,en;q=0.9' };
 const FULL = { ATL: 'atlanta-hawks', BOS: 'boston-celtics', BKN: 'brooklyn-nets', CHA: 'charlotte-hornets', CHI: 'chicago-bulls', CLE: 'cleveland-cavaliers', DAL: 'dallas-mavericks', DEN: 'denver-nuggets', DET: 'detroit-pistons', GSW: 'golden-state-warriors', HOU: 'houston-rockets', IND: 'indiana-pacers', LAC: 'clippers', LAL: 'lakers', MEM: 'memphis-grizzlies', MIA: 'miami-heat', MIL: 'milwaukee-bucks', MIN: 'minnesota-timberwolves', NOP: 'new-orleans-pelicans', NYK: 'new-york-knicks', OKC: 'oklahoma-city-thunder', ORL: 'orlando-magic', PHI: 'philadelphia-76ers', PHX: 'phoenix-suns', POR: 'portland-trail-blazers', SAC: 'sacramento-kings', SAS: 'san-antonio-spurs', TOR: 'toronto-raptors', UTA: 'utah-jazz', WAS: 'washington-wizards' };
@@ -27,23 +27,6 @@ const cityCode = s => { if (!s) return null; s = s.trim(); for (const k of Objec
 const iso = d => d.slice(0, 4) + '-' + d.slice(4, 6) + '-' + d.slice(6);
 
 const SRC = {
-  async statmuse(g, d, q, ctx) {
-    let slug = q.get('sm');
-    if (!slug) {
-      // Nov 2: StatMuse writes dates without leading zeros (11-2-2026), so build the date the same way
-      const md = (+d.slice(4, 6)) + '-' + (+d.slice(6)) + '-' + d.slice(0, 4); const yr = +d.slice(0, 4) + (+d.slice(4, 6) >= 8 ? 1 : 0);
-      const SU = 'https://www.statmuse.com/nba/team/cleveland-cavaliers-42/schedule/' + yr;
-      const find = h => [...h.matchAll(new RegExp('(?:^|[^0-9-])(' + md + '-([a-z]+)-at-([a-z]+)-\\d+)', 'g'))]   /* the game id can sit in a link or in the page's embedded data, so match it anywhere */
-        .filter(m => teamCode(m[2]) === g.away && teamCode(m[3]) === g.home).map(m => m[1])[0];
-      // the morning job saves every Cavs game's StatMuse id (StatMuse gives Cloudflare a short schedule without most games)
-      try { const ids = await (await ctx.env.ASSETS.fetch(new URL('/pdata/statmuse-games.json', ctx.request.url))).json(); const id = ids.games && ids.games[md]; if (id && find(' ' + id)) slug = id; } catch {}
-      if (slug) return fromStatMuse(await get('https://www.statmuse.com/nba/game/' + slug));
-      let sched = await get(SU, 21600); slug = find(sched);
-      if (!slug) { sched = await get(SU + '?d=' + d); slug = find(sched); }   // a cached copy from before the game was listed: ask for a fresh one (a new address skips the cache)   // a cached copy from before the game was listed: read it fresh once
-      if (!slug) throw new Error('statmuse: game not found (' + md + ', page ' + sched.length + ' bytes, ' + (sched.match(/\/nba\/game\//g) || []).length + ' game links, first ' + ((sched.match(/\/nba\/game\/[^"]{0,40}/) || [])[0] || '-') + ((sched.match(/<title>([^<]{0,60})/) || [])[1] ? ', "' + sched.match(/<title>([^<]{0,60})/)[1] + '"' : '') + ')');
-    }
-    return fromStatMuse(await get('https://www.statmuse.com/nba/game/' + slug));
-  },
   async yahoo(g, d) {
     const sb = await get('https://sports.yahoo.com/nba/scoreboard/?date=' + iso(d), 300);   // Nov 2: Yahoo now ignores dateRange and shows today
     const slug = [...new Set([...sb.matchAll(/\/nba\/([a-z0-9-]+-\d{10,12})\//g)].map(m => m[1]))].find(s => s.includes(FULL[g.home]) && s.includes(FULL[g.away]) && s.includes(d));
@@ -81,7 +64,7 @@ export async function onRequestGet(ctx) {
   let g = q.get('home') && q.get('away') ? { home: teamCode(q.get('home')), away: teamCode(q.get('away')) } : await cavsGame(ctx, d).catch(() => null);
   if (!g) return json({ error: 'no Cavs game that day' }, 404, 600, key, ctx);
   const errs = [];
-  for (const s of only ? [only] : ['cbs', 'yahoo', 'statmuse']) {   /* Nov 2: CBS and Yahoo first; StatMuse's game page changed and its reader needs rework */
+  for (const s of only ? [only] : ['cbs', 'yahoo']) {   /* Nov 13: CBS, then Yahoo; StatMuse dropped */
     try { const out = await SRC[s](g, d, q, ctx); if (!out.plays.length && out.header.competitions[0].status.type.state !== 'pre') throw new Error(s + ': empty'); out.tried = errs; const fin = out.header.competitions[0].status.type.state === 'post'; return json(out, 200, fin ? 600 : 15, key, ctx) }
     catch (e) { errs.push(String(e.message || e).slice(0, 120)) }
   }

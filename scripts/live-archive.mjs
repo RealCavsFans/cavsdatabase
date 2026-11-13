@@ -67,7 +67,7 @@ for (const id of finals) {
 }
 console.log(`${added} game file(s) written`);
 
-/* 2b) backup: a finished game ESPN never delivered comes from the site's /pbp backup (StatMuse, which has substitutions),
+/* 2b) backup: a finished game ESPN never delivered comes from the site's /pbp backup (CBS, then Yahoo),
    saved as b<YYYYMMDD>.json with players matched to their ESPN ids by name. An ESPN copy, once it exists, replaces it. */
 if (SEASON === '2026-27' && !process.env.SKIP_FETCH && !NBA_MODE) {
   const etOf = t => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(t));
@@ -81,12 +81,12 @@ if (SEASON === '2026-27' && !process.env.SKIP_FETCH && !NBA_MODE) {
     const bf = path.join(DIR, 'b' + d.replace(/-/g, '') + '.json');
     if (have.has(d)) { if (fs.existsSync(bf)) { fs.unlinkSync(bf); console.log('ESPN copy replaces backup', d); } continue; }
     if (fs.existsSync(bf) && Date.now() - Date.parse(d) > 3 * 864e5) continue;
-    const j = await get('https://cavsdatabase.com/pbp?d=' + d.replace(/-/g, '') + '&src=statmuse');
+    const j = await get('https://cavsdatabase.com/pbp?d=' + d.replace(/-/g, '') ); /* Nov 13: CBS, then Yahoo (it used to force StatMuse, which stopped working) */
     if (!j || !j.plays || !j.plays.length || j.header.competitions[0].status.type.state !== 'post') { console.log('backup: no final copy for', d); continue; }
     const map = {}; for (const tb of j.boxscore.players) for (const a of tb.statistics[0].athletes) { const e = byName[C.normName(a.athlete.displayName)]; if (e) map[a.athlete.id] = e; }
     for (const tb of j.boxscore.players) for (const a of tb.statistics[0].athletes) a.athlete.id = map[a.athlete.id] || a.athlete.id;
     for (const q of j.plays) for (const x of q.participants || []) x.athlete.id = map[x.athlete.id] || x.athlete.id;
-    const s = C.slimSummary(j); const D = C.prep(s), R = C.deriveCore(D, D.plays, 'all'); s.recap = C.recap(D, R); s.src = 'StatMuse';
+    const s = C.slimSummary(j); const D = C.prep(s), R = C.deriveCore(D, D.plays, 'all'); s.recap = C.recap(D, R); s.src = j.src || 'Backup';
     const next = JSON.stringify(s); if (!fs.existsSync(bf) || fs.readFileSync(bf, 'utf8') !== next) { fs.writeFileSync(bf, next); console.log('backup game saved', d); }
   }
 }
