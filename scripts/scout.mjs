@@ -1,7 +1,7 @@
 // Scouting report for the next Cavs opponent, shown on the site's game preview.
 // Finds the next Cavs regular-season game on ESPN, then rebuilds the opponent's last 5 finished games from
 // the NBA's own play-by-play (nba-data branch, Nov 3; ESPN's when the store doesn't have a game) with the same code as /live.html (live-core.js): results, pace, ratings, top scorers,
-// most-used five and shot locations against the NBA average. Writes pdata/scout.json. Exits 0 on any problem.
+// most used five and shot locations against the NBA average. Writes pdata/scout.json. Exits 0 on any problem.
 import fs from 'fs';
 import path from 'path';
 import zlib from 'zlib';
