@@ -132,6 +132,11 @@
 .lvsb .clk{font:700 .8125rem var(--mono);text-align:center;color:rgba(255,255,255,.78);line-height:1.3}
 .lvst{padding:2px 16px 0;font:600 .875rem var(--sans);color:rgba(255,255,255,.78)}
 .lvsb .lvlg{width:56px;height:56px;object-fit:contain}
+/* Nov 12 (Luka): games missed by player, terminal style */.gmt{margin-top:8px;font:500 .78rem var(--mono);--on:#860038;--off:#ece8e3}.gmt-c{color:var(--on);font-weight:600;margin-bottom:8px}.gmt-c span{color:var(--muted)}.gmt-c i{display:inline-block;width:6px;height:11px;background:var(--on);vertical-align:-1px;margin-left:3px}
+.gmt-h,.gmt-r{display:grid;grid-template-columns:9.5ch minmax(0,1fr) 22px 50px;gap:8px;align-items:center}.gmt-h{font-size:.625rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-bottom:5px;border-bottom:1px dashed var(--line)}.gmt-h span:nth-child(n+3),.gmt-r .g,.gmt-r b{text-align:right}
+.gmt-r{padding:6px 0;border-bottom:1px dashed var(--line)}.gmt-r .n{font-weight:700;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:clip}.gmt-r .g{color:var(--muted)}.gmt-r b{color:var(--fg);font-weight:700}
+.gmt .bk{display:flex;gap:2px;min-width:0;max-width:160px}.gmt .bk u,.gmt .bk s{display:block;flex:1 1 0;min-width:2px;max-width:8px;height:10px;text-decoration:none}.gmt .bk u{background:var(--on)}.gmt .bk s{background:var(--off)}.gmt-t{margin-top:7px;color:var(--muted);font-size:.6875rem}.gmt-t b{color:var(--on)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .gmt{--on:#F2B231;--off:#262b33}}:root[data-theme=dark] .gmt{--on:#F2B231;--off:#262b33}
 /* Nov 12 (Luka): desktop key dates: every block the same height */@media (min-width:900px){ol.gd{align-items:stretch!important}ol.gd>li.kd{align-self:stretch}}
 /* Nov 12 (Luka): the apron the Cavs are locked under stands out: a wine label with the lock, a thicker wine line, and the bar past it hatched (can't go there) */.ln.lock{border-left:4px solid var(--wine-ink)!important;z-index:2}.ln.lock span{background:var(--wine-ink);color:#fff!important;padding:4px 9px 5px;font-weight:800!important}.ln.lock span em{color:rgba(255,255,255,.85)!important}.ln.lock span svg,.ln.lock span i{color:#fff!important;fill:currentColor}
 /* Nov 12 (Luka): desktop: remaining SOS and the pace line a little bigger */@media (min-width:900px){.sos-l,.pace-l{font-size:.875rem!important}.sos-l b,.pace-l b{font-size:1rem!important}.sos-l small{font-size:.875rem}}
@@ -1823,7 +1828,11 @@ setTimeout(()=>{fJ('/box.json').then(r=>r.ok?r.json():null).catch(()=>null).then
     if(LT)tiles[1].appendChild(el('small','gm-rk',rk(Object.values(lost),lost.CLE)+' most of '+n));
     });
 
-  if(rows.length){const det=document.createElement('details');det.className='gm-d';const sm=document.createElement('summary');sm.textContent='By player';det.appendChild(sm);const ul=el('ul','gm-l');const gmax=rows[0][1];rows.forEach(([n,g,c])=>{const li=el('li');const nm=el('span','n');nm.append(n);const mb=el('i','mb');mb.style.width=(g/gmax*100)+'%';nm.appendChild(mb);li.append(nm,el('span','g',g+' game'+(g===1?'':'s')),el('b',null,c?fm(c):'—'));ul.appendChild(li)});det.appendChild(ul);w.appendChild(det)}
+  if(rows.length){const det=document.createElement('details');det.className='gm-d';const sm=document.createElement('summary');sm.textContent='By player';det.appendChild(sm);
+    /* Nov 12 (Luka): terminal style: one square per game played (each square a few games once the season is long), filled for games he missed */
+    const G=fin.length,per=Math.max(1,Math.ceil(G/20)),nb=Math.ceil(G/per);const t=el('div','gmt');t.innerHTML='<div class="gmt-c">&gt; cavs <span>--games-missed --by-player</span><i></i></div><div class="gmt-h"><span>Player</span><span>Out of '+G+(per>1?' (1 sq = '+per+')':'')+'</span><span>G</span><span>Salary</span></div>'+
+      rows.map(([n,g,c])=>{const f=Math.round(g/per);return '<div class="gmt-r"><span class="n">'+escH(n.replace(/ Jr\.$/,'').split(' ').slice(-1)[0].toUpperCase())+'</span><span class="bk">'+'<u></u>'.repeat(Math.min(nb,f))+'<s></s>'.repeat(Math.max(0,nb-f))+'</span><span class="g">'+g+'</span><b>'+(c?fm(c):'—')+'</b></div>'}).join('')+'<div class="gmt-t"># total <b>'+tg+'</b> games · <b>'+fm(tc)+'</b> in salary</div>';
+    det.appendChild(t);w.appendChild(det)}
   card.appendChild(w)})},0);
 
 /* Charge */
