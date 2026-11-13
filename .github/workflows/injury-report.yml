@@ -34,12 +34,19 @@ jobs:
           sparse-checkout-cone-mode: false
       - name: Due?
         id: due
-        run: CHECK=1 IR_GAME=${{ inputs.game }} FORCE=${{ inputs.force && '1' || '' }} python3 scripts/injury-report.py >> "$GITHUB_OUTPUT"
+        # Nov 13 audit: inputs reach the shell as environment values, never pasted into the command
+        env:
+          IR_GAME: ${{ inputs.game }}
+          FORCE: ${{ inputs.force && '1' || '' }}
+        run: CHECK=1 python3 scripts/injury-report.py >> "$GITHUB_OUTPUT"
       - name: Read the report
         if: steps.due.outputs.due == '1'
+        env:
+          IR_GAME: ${{ inputs.game }}
+          FORCE: ${{ inputs.force && '1' || '' }}
         run: |
           pip install -q pdfplumber==0.11.4
-          IR_GAME=${{ inputs.game }} FORCE=${{ inputs.force && '1' || '' }} python3 scripts/injury-report.py
+          python3 scripts/injury-report.py
       - name: Commit if changed
         if: steps.due.outputs.due == '1'
         run: |
