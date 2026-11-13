@@ -57,6 +57,7 @@ jobs:
           case "$(date -u +%H)" in 05|09) node scripts/backup-pbpstats.mjs || true;; esac
           node scripts/team-stats.mjs
           node scripts/cle-rates.mjs
+          node scripts/dunks.mjs || true
           node scripts/sos.mjs || true
           node scripts/nba-cup.mjs || true   # Nov 9: NBA Cup group standings (NBA.com schedule first, ESPN backup) and SEASON.cup
           node scripts/charge-espn.mjs || true   # Nov 11: Cleveland Charge results, box links and Cavs players' lines from ESPN
@@ -108,7 +109,7 @@ jobs:
           git config user.name "cavsdatabase-bot"
           git config user.email "bot@cavsdatabase.com"
           # data only: the built pages and share images go to the 'deploy' branch (next step), not main
-          add(){ git add videos.json box.json rcf.json; for f in rcf-videos.json pdata/sos.json data/league-schedule.json data/rcf-first.json news.json news-status.txt niang.json pdata/niang-games.json cavs.ics box-status.txt pdata/league.json pdata/milestones.json pdata/league-shots.json pdata/cle-rates.json pdata/nba-cup.json; do [ -f "$f" ] && git add "$f"; done; [ -d img ] && git add img; git add index.html; true; }
+          add(){ git add videos.json box.json rcf.json; for f in rcf-videos.json pdata/sos.json data/league-schedule.json data/rcf-first.json news.json news-status.txt niang.json pdata/niang-games.json cavs.ics box-status.txt pdata/league.json pdata/milestones.json pdata/league-shots.json pdata/cle-rates.json pdata/dunks.json pdata/nba-cup.json; do [ -f "$f" ] && git add "$f"; done; [ -d img ] && git add img; git add index.html; true; }
           add
           if git diff --cached --quiet; then exit 0; fi
           # scheduled runs: skip commits that are only timestamps and rebuilt page copies (scripts/changed.mjs)
@@ -124,7 +125,7 @@ jobs:
             [ -d img ] && cp -r img /tmp/keep/ || true
             git fetch origin main && git reset --hard origin/main
             cp -r /tmp/keep/. . 2>/dev/null || true
-            node scripts/team-stats.mjs || true; node scripts/cle-rates.mjs || true; node scripts/nba-cup.mjs || true; node scripts/charge-espn.mjs || true
+            node scripts/team-stats.mjs || true; node scripts/cle-rates.mjs || true; node scripts/dunks.mjs || true; node scripts/nba-cup.mjs || true; node scripts/charge-espn.mjs || true
             CHROME_PATH=/usr/bin/google-chrome node scripts/build-pages.mjs --prerender
             add
             if git diff --cached --quiet; then exit 0; fi
