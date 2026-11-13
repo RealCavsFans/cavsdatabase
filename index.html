@@ -4203,7 +4203,7 @@ onView('charge',()=>{(function(){const tb=document.getElementById('ch-sched');if
       /* phones: one small line under the name instead of six more columns (Oct 31) */{const ag2=ab.textContent.split(' · ')[0];const cm=el('small','chm');cm.append([pos,ht,ag2&&ag2!=='–'?'age '+ag2:null,col&&col!=='—'?col:null,dy?(dp?dy+' #'+dp:'Undrafted'):null].filter(Boolean).join(' · '));td.appendChild(cm)}
       tr.append(td,el('td','c',pos),el('td','mono',ht+' · '+wt),ab,el('td',null,col),dtd,el('td',null,acq==='Two-way'?'Cavs two-way':acq));bd.appendChild(tr)});
     tb.appendChild(bd);const box=el('div','tablebox');box.appendChild(tb);ro.appendChild(box)}
-  document.getElementById('ch-ros-n').textContent=n+' in training camp · camp opens Oct 27, final roster due Nov 5';
+  document.getElementById('ch-ros-n').textContent=n+' players';/* Nov 13 (Luka): no training camp wording now the season is on */
   const sf=document.getElementById('ch-staff');
   /* tenure: role start from the last Charge/Cavs path entry, team start from the earliest */
   const chY=s2=>{const m=String(s2).match(/(19|20)\d\d/);return m?+m[0]:0},chTen={};CH_STAFF.forEach(([,ps])=>ps.forEach(([nm])=>{const B=CH_BIOS[nm];if(!B||!B.path)return;const p=B.path.filter(x=>/Charge|Cavaliers|Cavs/.test(x[1]));const lt=p[p.length-1];const m=lt&&String(lt[0]).match(/((?:19|20)\d\d)\s*–\s*(\d\d)?/);if(!m)return;const r0=m[2]?+(m[1].slice(0,2)+m[2]):+m[1];chTen[nm]=[r0,Math.min(r0,...p.map(x=>chY(x[0])).filter(Boolean))]}));
