@@ -1,6 +1,18 @@
 {
  "articles": [
   {
+   "src": "Fear The Sword",
+   "title": "Evan Mobley out Friday with toe injury",
+   "link": "https://www.fearthesword.com/cavs-news/54329/evan-mobley-out-friday-with-toe-injury",
+   "date": "2026-11-12T23:14:03.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "James Harden Flashed Something People May Have Missed in Cavs Victory Over Knicks",
+   "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPX20wV1VSRUYwLTFWSHo2NzUyeDd5b1plZ0RVSXlEaVo1cXRIYU9EU19hcWxyd252LU5TdWVZdm1rX3hCcGpRcFQza0hDQXl5c1I1NEdLWjhGSldhQVVBTnowZ2NxR0dfNTBha0hOOFVrQjB1dTE1R1BPdVYtb09Dc1Q3RFZuejlCSnV0VkJ1TzAzeWJLSzdwMkNoa3FCNHB6cm5zeUphZkg3ZEVvWERTLVhiT3NhWTB5LVpyYnZyeWx1MS1wb0RIem8waw?oc=5",
+   "date": "2026-11-12T22:00:01.000Z"
+  },
+  {
    "src": "Cavaliers on SI",
    "title": "Key Cog From Michigan's 2026 NCAA Championship Squad Acquired by Cleveland Charge",
    "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxObTJpM0xialBjd2pIQmdKeW9fLURfaV82U0dIdFczdThsZmhQNExuU0tOVV9qRlRXTE50MW9ONndvS3hMajc5dlhsM2k3b1ZvMVduU1kxcWdHaWFGTEJwRmt2cWVmUnpxbEs3cjRIS2dlekpwQ01RdmQxU0pvOUlXcUNRT1ZWZ3gtbHhLRXc3aWxEaFpVdTBfczYxN2lpdXlYMzdyeHNkSGxVbVFZNF9iMlhCM2hRXzR1Yl9KclNZZ1BGZHlNR1d1Z0lYbWM?oc=5",
@@ -85,12 +97,6 @@
    "date": "2026-11-11T19:27:14.000Z"
   },
   {
-   "src": "cleveland.com",
-   "title": "The Cavs have a James Harden problem with no easy fix: Chris Fedor",
-   "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQanZYWFY4Qk9PclY3c1B4cVl4cG9SZVBPUDY1TThZMWlEN0t4dUNlR0Q2Wjk2c0QwU3NkM3BPSlRsTU85aDk5dHlGTURSMlJ4VjRLQWItRFRrUkt5QjFlR01VT1Y4ZFZmUkxoemdlT0szaVU1QTU1SUhoUThGeWRtaUZPbFlsVWxORWU0YzdmYzlhOGRjUEVOcmJpNUl3bXFUc25YTEV4UHM?oc=5",
-   "date": "2026-11-11T14:55:00.000Z"
-  },
-  {
    "src": "Fear The Sword",
    "title": "Cleveland Charge drop season opener 142-122 to Motor City",
    "link": "https://www.fearthesword.com/cleveland-charge/54262/cleveland-charge-g-league-cavaliers-cavs-motor-city-cruise-detroit-pistons-curtis-jones",
@@ -121,16 +127,16 @@
    "date": "2026-11-10T15:30:00.000Z"
   },
   {
+   "src": "Cavaliers on SI",
+   "title": "When Talent Alone Isn’t Enough: Why Was Cleveland So Awful Against Charlotte?",
+   "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNZ3JqQ2Z0TWhHZy01S2NKMWZPZWJTekVadWFVd2NOby1CV1cyczVSUGEwdEpYYnBuVjhLVTRPcnVDMzdXdUQxTzBjZ19MY1VNQXZnM0k2VXZKUWJlLXZmVEpEdG8tNk8zbzBjMmdETlZQdExpWl9zSndjczJCR0JtTUJBU3VibUJvaUZhaGJ2eGctYld3SWd5SXNPT1Z4Zno2WjBoUUpxX2NvZnZPZVI0ZTVINzRMNXFKZXRVRzBFMXhDazZv?oc=5",
+   "date": "2026-11-10T13:45:04.000Z"
+  },
+  {
    "src": "The Inside Shot",
    "title": "Game Night Observations: Unacceptable Effort, Harden’s Awful Start And a Defining Stretch",
    "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBKV2I0M0FJdFNoWTlZVmxIMkZReTlYM2Q4YUlfMU40dTdzTFdwQjdQQy11R05RTEIwZldITzd5V0tWdnYwV2dfTGdVZ2YwVHlPdTJ1X3ZILXZvQ0RwY2k0MnJUQUU5aGRQdUVPZENkLXhocFp3T2J4alZEZDU3Zw?oc=5",
    "date": "2026-11-10T13:20:30.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "3 Potential Solutions To Fix The Fading Cleveland Cavaliers",
-   "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPMExlZVVCXzUtbXNFaVNKLWIwZnRPM0tlNDdiZ3NkZzdLeHktLVhndnl1SXUzb0lfRjN3ZzBIWE11aWNUdzF6WnFKZmxuUXUxRGpENlYtdVZ2TkVDM2EtdVVwaFlxcjhtc21hbWduTTdBVkpwYWdjbG1qMjVxbU5IUmtLc2pOQVdBRzh3ako4Vm0wOFA1YTB2d21YZVFtbXgxblZoTlNObklUVlhfeDc0?oc=5",
-   "date": "2026-11-10T12:00:01.000Z"
   },
   {
    "src": "Fear The Sword",
@@ -167,12 +173,6 @@
    "title": "Player Grades: Cavs vs Hornets – James Harden reaches DEFCON 1",
    "link": "https://www.fearthesword.com/cavs-analysis/54227/player-grades-cavs-vs-hornets-james-harden-reaches-defcon-1",
    "date": "2026-11-10T02:34:17.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cavs at Hornets game thread",
-   "link": "https://www.fearthesword.com/cavs-game-previews/54201/cavs-at-hornets-game-thread",
-   "date": "2026-11-10T00:00:00.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -272,6 +272,12 @@
   },
   {
    "src": "cleveland.com",
+   "title": "Cavs vs. Knicks: preview, odds, injury report, TV",
+   "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPNURIYW5mbGRKY0pVZkZzWGZCNzVFaHdnVncyd052c0tmNGYwcVBlOHV1aldGZmtNMk5NWHRTUGR2dnJ6Sl9KQ1o1SFdVb3g1bVhJYnpEekRTd2ZKTmFRbnBhR3M0dkdCYjNHUEdkUV9oaE5Wbmt6Z20wbkhzQkZwbWtWSDdTd3d4N3hWMkxFMjdZdw?oc=5",
+   "date": "2026-11-07T10:06:00.000Z"
+  },
+  {
+   "src": "cleveland.com",
    "title": "LeBron James reacts to mixed reception from hometown Cavs fans in Cleveland return",
    "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQci0xN1d3dEVJV04xdGdlV2lHeWwtbWg2Y0dyZzlld0VnTWRhUVN2NDNSeloxX2Jhd0IxaVdGekRudDhULWUzWVM2dWdkclIwbWdzdUpzS1FadDFTU0RoaXBZbUViZGw4NERnekRYN3laZjBqUkwtRF9XUUtQQ3ZhUnpMbldDa1pDNnQtYXNYNnJYdm5fYlpiLURIME9uU0VaNzA5aS16TXZwTHRmTGlUTEV1V2J4TG1WTFVqY1UwTF9VOFNG?oc=5",
    "date": "2026-11-07T06:06:00.000Z"
@@ -311,18 +317,6 @@
    "title": "3 Players That Stand To Gain Most From Cavs Recent Injury Woes",
    "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPNU1MOXU0Z3k2b2swbG5hSF9zNXRQbUx4a09lUTNfeV8yWnFyNHh0NU1JcmZwY0RWcUF0T2c2T1lhS0xnS29hdFllMnU1RGNJRXBucVVjUzBXa3RzZ0FZWWpyV09GTk4tRFdQa3JXckgxVGdCNDVwcVV2akdYRHNQQWw3aXRYNURiX1UwSzA1VTg3X1NYcDdYUEtjTW5ocnZJM3FObGNvREl5OGpBRDNkdHhobw?oc=5",
    "date": "2026-11-05T21:00:01.000Z"
-  },
-  {
-   "src": "The Inside Shot",
-   "title": "Game Night Observations: An Ugly Problem, Getting to the Rim and More Injuries",
-   "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPQ2xQTTJfWXp4VVlEMFUxaHRRYnVpdi1EbW93TzM0TmlJeHJ2cWxVX1VGaWxSQV84WnJHdVdKSko2MExCQUtxcGVJb09rSFBnM1JzTWMtTzFwX0lRRW12ZXNfcHljQTBFTFVPWi04YnBrVEhrNDJvUDU2QkFRV1NNT01n?oc=5",
-   "date": "2026-11-05T12:50:34.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Evan Mobley’s 3-point surge creates more room for Cavaliers’ offense",
-   "link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNWnpqVTlHU0tHNTJpanU2Y1p6YXRwRnA1T08tMmgybm9KdDF3MjgwU2FwMWhkWGU0ZGgtNU5vTmw0YjFqbm5HVThTVENlbk5tNUVEWTgyQ0lxU3VadE4ydmo2U1FuMEo5cVVqZmNzU051VmdycWY5dmt1eXNyNzJQaTBsOUpCdFRGdWZHRDBGcXMwUXI4OVRxUUxBa2hEM3RHeVdrVzQxR3NOWG5meVZoSngyRXNEaFRIeVE?oc=5",
-   "date": "2026-11-04T21:30:00.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -423,6 +417,20 @@
   }
  ],
  "videos": [
+  {
+   "src": "Locked On Cavs",
+   "title": "UPDATE: Evan Mobley OUT With Toe Injury | Is This a BIG Concern for the Cleveland Cavaliers!?",
+   "link": "https://www.youtube.com/watch?v=abjiO7FIt6k",
+   "date": "2026-11-13T02:00:09.000Z",
+   "id": "abjiO7FIt6k"
+  },
+  {
+   "src": "Locked On Cavs",
+   "title": "NBA CUP PREVIEW: Can the Shorthanded Cleveland Cavaliers TAKE DOWN Giannis and The Miami Heat?!",
+   "link": "https://www.youtube.com/watch?v=u79zzqGECyM",
+   "date": "2026-11-13T01:34:33.000Z",
+   "id": "u79zzqGECyM"
+  },
   {
    "src": "Ultimate Cleveland Sports Show",
    "title": "Is the best version of the Cleveland Cavaliers good enough to beat any team in the East?",
@@ -618,20 +626,6 @@
    "link": "https://www.youtube.com/watch?v=qioa3cLXyNw",
    "date": "2026-11-09T16:19:26.000Z",
    "id": "qioa3cLXyNw"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "STRUGGLE: Where James Harden's SLOW START Has HURT The Cleveland Cavaliers! | BIG Week Upcoming!",
-   "link": "https://www.youtube.com/watch?v=HsWImosoc_g",
-   "date": "2026-11-09T12:15:07.000Z",
-   "id": "HsWImosoc_g"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: The Cleveland Cavaliers CRUMBLE as Jalen Brunson Dominates",
-   "link": "https://www.youtube.com/watch?v=_Q-_yXh88Xg",
-   "date": "2026-11-08T03:51:23.000Z",
-   "id": "_Q-_yXh88Xg"
   },
   {
    "src": "Cavs Roundtable",
