@@ -45,7 +45,6 @@ jobs:
       - name: NBA game ids (the live page reads the NBA's own play-by-play through them)
         run: node scripts/nba-ids.mjs
         continue-on-error: true
-        continue-on-error: true
       - name: Basketball Reference player ids
         run: node scripts/bbr-ids.mjs
         continue-on-error: true

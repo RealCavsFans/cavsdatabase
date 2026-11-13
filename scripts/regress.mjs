@@ -46,5 +46,15 @@ for (const f of fs.readdirSync(DIR).filter(f => f.endsWith('.json.gz')).sort()) 
   drill('no plays yet', r => { r.pbp.actions = []; });
   drill('a play with no player', r => { const a = r.pbp.actions.find(a => a.actionType === 'turnover' && a.personId); a.personId = 0; delete a.playerName; delete a.playerNameI; });
 }
+/* Nov 13 audit: GitHub refuses a workflow file with the same key twice in one block (it then fails with "No jobs were run"
+   on every push), so check every workflow for repeated keys at the same level */
+{ const fs2 = await import('node:fs'); const dir = new URL('../.github/workflows/', import.meta.url);
+  for (const f of fs2.readdirSync(dir).filter(x => /\.ya?ml$/.test(x))) {
+    const lines = fs2.readFileSync(new URL(f, dir), 'utf8').split('\n'); const stack = []; let dup = null;
+    lines.forEach((ln, i) => { if (dup || /^\s*(#|$)/.test(ln)) return; const m = ln.match(/^(\s*)(- )?([A-Za-z_][\w-]*):(\s|$)/); if (!m) return;
+      const ind = m[1].length + (m[2] ? 2 : 0); while (stack.length && (stack[stack.length - 1].ind > ind || (m[2] && stack[stack.length - 1].ind >= ind))) stack.pop();
+      let top = stack[stack.length - 1]; if (!top || top.ind !== ind) { top = { ind, keys: new Set() }; stack.push(top); }
+      if (top.keys.has(m[3])) dup = `${f} line ${i + 1}: "${m[3]}" repeated`; top.keys.add(m[3]); });
+    dup ? bad(`workflow: ${dup}`) : ok(`workflow ${f}: no repeated keys`); } }
 console.log(fails.length ? `\n${fails.length} failure(s)` : '\nall checks passed');
 process.exit(fails.length ? 1 : 0);
