@@ -6155,7 +6155,7 @@ function capFoot(g,url,date,W,H,FT,pad,S,mono,wine,muted){const two=FT>45*S;g.te
  const ordS=n=>{const x=['th','st','nd','rd'],v=n%100;return n+(x[(v-20)%10]||x[v]||x[0])};
  const frame=(kicker,route,body)=>{const d=document.createElement('div');d.className='scd';const now=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
   d.innerHTML=`<div class="hd"><div class="lg">cavs<b>_db</b></div><div class="kk">${esc2(kicker)}</div></div><div class="bd">${body}</div><div class="ft">cavsdatabase.com${route?'/'+route:''}<span>${now}</span></div>`;return d};
- const lines=(ls,X)=>ls.map(([l,v],i)=>`<div class="ln" style="left:${X(v)}%"><span style="${i%2?'bottom':'top'}:0">${({'1st apron':'1ST','2nd apron':'2ND'})[l]||l.toUpperCase()}</span></div>`).join('');
+ const lines=(ls,X)=>ls.map(([l,v],i)=>`<div class="ln" style="left:${X(v)}%"><span style="${i%2?'bottom':'top'}:0;background:#101419;color:#fff;padding:4px 8px 3px;font:800 18px/1 'Saira Condensed',sans-serif;letter-spacing:.06em;opacity:1;white-space:nowrap">${({'1st apron':'1ST','2nd apron':'2ND'})[l]||l.toUpperCase()}</span></div>`).join('');
  const lineKey=ls=>`<div style="font:600 18px var(--mono);color:#6b7078;margin:-6px 0 22px">${ls.map(([l,v])=>l+' '+M1(v)).join(' · ')}</div>`;
  const TH=(k,i)=>THRESH.find(x=>x[0]===k)[1][i];
  const sv=y=>typeof y==='number'?y:Array.isArray(y)?y[0]:null;
