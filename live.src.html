@@ -829,6 +829,8 @@ html.rfx #view *,html.rfx #view *::before,html.rfx #view *::after,html.rfx #sb *
 /* Nov 14 (Luka): team game log: the Game column only as wide as its text, so every stat fits without swiping on desktop */.glt table{table-layout:auto;width:100%}.glt th:first-child,.glt td:first-child{width:1%;white-space:nowrap;padding-right:14px}.glt th,.glt td{padding-left:6px;padding-right:6px}
 
 .pp-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:-4px 0 10px}.pp-row .pp-pos{margin:0;max-width:none;width:auto;flex:none}.pp-row .pp-pos button{white-space:nowrap;padding-left:16px;padding-right:16px}.pp-hint{font:500 .75rem var(--sans);color:var(--muted)}
+
+.scnba{display:block;font:500 .6875rem var(--mono);color:var(--muted);margin-top:2px}td.ptgd{color:var(--pmp);font-weight:700}td.ptbd{color:var(--pmn);font-weight:700}td.ptgd .scnba,td.ptbd .scnba{color:var(--muted);font-weight:500}
 </style>
 <script>/* Nov 4: team logos drawn at the same visual size. Each mark is scaled by how much of its square image the artwork fills, relative to the Cavs C (made from img/tl by alpha bounding box). Applies to every logo from /img/tl or /img/tl5, also ones added later. */
 (function(){const SC=window.LOGO_SC={"atl":0.92,"bkn":0.92,"bos":0.92,"cha":0.92,"dal":0.92,"den":0.92,"det":0.92,"gs":0.92,"hou":1.07,"ind":0.96,"lac":0.92,"lal":1.18,"mem":0.95,"mia":0.95,"mil":1.06,"min":0.92,"no":1.25,"ny":1.04,"okc":1.23,"orl":1.1,"por":0.97,"sa":1.03,"tor":0.92,"utah":1.12,"wsh":0.92};const fit=im=>{const m=/\/img\/tl5?\/([a-z]+)\.png/.exec(im.getAttribute("src")||"");if(!m||im.dataset.lsc)return;im.dataset.lsc=1;const v=SC[m[1]];if(v)im.style.scale=String(v)};const all=r=>{if(r.tagName==="IMG")fit(r);else if(r.querySelectorAll)r.querySelectorAll("img").forEach(fit)};const go=()=>{all(document.body);new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(all))).observe(document.body,{childList:true,subtree:true})};if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();
@@ -2343,7 +2345,11 @@ function scoutCard(D,X,team){
     left.innerHTML=zoneCourt(Z,nZ,st.side==='f'?team.name+' shooting by zone':'Opponents’ shooting against '+team.name,BZ,'#860038',true);
     left.insertAdjacentHTML('beforeend',zLegend('#860038','NBA average','Numbers: makes-attempts, FG% and share of shots.',st.side!=='f')+ZKEY);
     right.textContent='';const ptT=box?box.pt.reduce((t,v)=>t+v[0],0):all.length;const pr=PT.map(([k,l],i)=>{if(box){const [a,pts]=box.pt[i]||[0,0];return {l,a,fr:ptT?a/ptT:0,pps:a?pts/a:null}}const q=all.filter(x=>x.pt===i),m=q.filter(x=>x.m);return {l,a:q.length,fr:all.length?q.length/all.length:0,pps:q.length?m.reduce((s2,x)=>s2+(x.three?3:2),0)/q.length:null}}).filter(r=>r.a);
-    right.appendChild(dtable('sc_t',[{h:'Shot type',k:'l'},{h:'FREQ',k:'fr',f:r=>Math.round(r.fr*100)+'%'},{h:'PTS/SHOT',k:'pps',f:r=>r.pps==null?'–':r.pps.toFixed(2)}],pr,{def:'fr'}))};
+    /* Nov 14 (Luka): the NBA average under each number (every team's games this season, pdata/league-shots.json) */
+    const LA=lgPtAvg();const sub=(v,t)=>{const sp=el('span');sp.append(v);if(t)sp.appendChild(el('small','scnba',t));return sp};
+    pr.forEach(r=>{r.i=PT.findIndex(x=>x[1]===r.l)});
+    right.appendChild(dtable('sc_t',[{h:'Shot type',k:'l'},{h:'FREQ',k:'fr',f:r=>sub(Math.round(r.fr*100)+'%',LA&&LA[r.i]&&LA[r.i].fr!=null?'NBA '+Math.round(LA[r.i].fr*100)+'%':'')},{h:'PTS/SHOT',k:'pps',f:r=>sub(r.pps==null?'–':r.pps.toFixed(2),LA&&LA[r.i]&&LA[r.i].pps!=null?'NBA '+LA[r.i].pps.toFixed(2):''),cls:r=>{const l=LA&&LA[r.i];if(!l||r.pps==null||r.a<5)return '';const d=r.pps-l.pps;return st.side==='f'?(d>=.05?'ptgd':d<=-.05?'ptbd':''):(d<=-.05?'ptgd':d>=.05?'ptbd':'')}}],pr,{def:'fr'}));
+    if(LA)right.appendChild(el('p','note','Small numbers = the NBA average this season: share of all shots and points per shot for each type. '+(st.side==='f'?'Green / red = more or fewer points per shot than the NBA.':'Green / red = they allow fewer or more points per shot than the NBA.')))};
   c.appendChild(tg);draw();
   g2.append(left,right);c.appendChild(g2);return c;
 }
@@ -4020,6 +4026,10 @@ function dotCourt(sh,col){const Sx=8,W=50*Sx,Hh=36*Sx/* Nov 14 (Luka): not to ha
 const SHC={};
 /* every team's shots by type and zone, game by game (pdata/league-shots.json, written by fetch-league): a team's own season line */
 let LSH=null,LSHq=false;
+/* Nov 14 (Luka): the NBA's share of shots and points per shot for each shot type this season, from every team's games */
+let LPTA=null;function lgPtAvg(){if(LPTA)return LPTA;if(!LSH){if(!LSHq){LSHq=true;getJSON('/pdata/league-shots.json').then(j=>{LSH=j;renderView()}).catch(()=>{LSH={g:{}}})}return null}
+  if(LSH.season!==CUR_SEASON)return null;const A=PT.map(()=>({a:0,pts:0,tot:0}));Object.values(LSH.g||{}).forEach(g=>Object.values(g.t||{}).forEach(v=>{const nP=(v.length-2-ZN.length*2)/4;PT.forEach((_,i)=>{if(i>=nP)return;const k=2+i*4;A[i].a+=v[k+1];A[i].pts+=v[k+2];A[i].tot+=v[0]})}));
+  return LPTA=A.map(x=>({fr:x.tot?x.a/x.tot:null,pps:x.a?x.pts/x.a:null}))}
 function lshLine(ab,key,zoneOnly){const se=S.src||CUR_SEASON;if(S.season)return null;
   if(!LSH){if(!LSHq){LSHq=true;getJSON('/pdata/league-shots.json').then(j=>{LSH=j;renderView()}).catch(()=>{LSH={g:{}}})}return null}
   if(LSH.season!==se||(zoneOnly&&S.f.shType!=='all'))return null;
