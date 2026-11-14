@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "cleveland.com",
+   "title": "‘This is unprecedented’: Donovan Mitchell wants Saturday’s game cancelled with Cavs grounded in Miami",
+   "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxQdG16Zlpudm9ad013STNRU0JxQlZKN0hVSU5CaUVuV2dBQkctMGpGRlZiTG84aHFXM2JKLWRmY1dnUFRtdFJrVXpOcHpYWTA0bHhTcHVReXU1RHI0Ri1HVll4aGtBRnFaYXowWl82bkgwMkZ3VUVDdXlTMUJzdGwxeDhGcTdqMVZQZjJoTGFfdkdRQXRaQVpkTUJwMUd6aUFwSGlSOGtMT3RQeFRIS05BMFQzenhOZTcyVS1ST1F6OWxJVXRCUUZMM0ZLaldaN1NBNGNZbU5nMlo?oc=5",
+   "date": "2026-11-14T05:44:00.000Z"
+  },
+  {
    "src": "Hoops Rumors",
    "title": "Injury Notes: Lakers, Mobley, Nets, Missi, Butler",
    "link": "https://www.hoopsrumors.com/2026/11/injury-notes-lakers-mobley-nets-missi-butler.html",
@@ -107,6 +113,12 @@
    "title": "Cavs former All-Star to miss matchup with Giannis Antetokounmpo and Heat",
    "link": "https://www.fearthesword.com/cavs-news/54329/evan-mobley-out-friday-with-toe-injury",
    "date": "2026-11-12T23:14:03.000Z"
+  },
+  {
+   "src": "cleveland.com",
+   "title": "Cavs to be without main frontcourt piece due to a familiar injury",
+   "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNamZhR0NvazJfS2s5M0w5Q082VzlVTWYySFNDYW0wdjRNN1NvemJpNUoxaE9XdmFIc2dRQ05hWWxLVWl4ZGJwZ0VVd3JWVlhkdlZaeWJNZjl6MDNzNmlrV0tydkxPcVd3VlUwWHZwc295ZTNkSGxQbXBMZjlMNWRUa3VqSmc0QUpZcXdWemo5bVZDZ0lhV2p5UlZaUi1BclNSWjFQRmZPYUNjV0tJN3c?oc=5",
+   "date": "2026-11-12T22:40:00.000Z"
   },
   {
    "src": "cleveland.com",
@@ -296,21 +308,9 @@
   },
   {
    "src": "cleveland.com",
-   "title": "How Mitchell and Mobley are redefining the Cavs' offense",
-   "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPejZPTzhXTl90TUxYNVhhVm9zY0RzOXRtOTVTaW15TWVyOWFJbllVazBMb1IyaEpndG9JazQwQVYxVThnNzBvZTJPbU5RZVRlRDlPRVJkRU9NY05XSGN2eGp3ZzIxWThsNXROcDN6YW9rWDJ3bm1vQ18yNm9zMGJjam5TbHVVRnJLSFgyeUNEWUEyYlBYWE1oSjk0TjlEdUpsZUFGRmJYUEtIN0dmNE5DT3Rjc1M0cUQ2OUxuTHpBQ2RnN3dDbnlrM2Z3?oc=5",
-   "date": "2026-11-07T10:35:00.000Z"
-  },
-  {
-   "src": "cleveland.com",
    "title": "LeBron James reacts to mixed reception from hometown Cavs fans in Cleveland return",
    "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQci0xN1d3dEVJV04xdGdlV2lHeWwtbWg2Y0dyZzlld0VnTWRhUVN2NDNSeloxX2Jhd0IxaVdGekRudDhULWUzWVM2dWdkclIwbWdzdUpzS1FadDFTU0RoaXBZbUViZGw4NERnekRYN3laZjBqUkwtRF9XUUtQQ3ZhUnpMbldDa1pDNnQtYXNYNnJYdm5fYlpiLURIME9uU0VaNzA5aS16TXZwTHRmTGlUTEV1V2J4TG1WTFVqY1UwTF9VOFNG?oc=5",
    "date": "2026-11-07T06:06:00.000Z"
-  },
-  {
-   "src": "cleveland.com",
-   "title": "Cavs ruin LeBron James’ homecoming with 119-95 rout of Philadelphia 76ers",
-   "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNcnZKekVodUVzRFN2MDZKMnQ1OTUwSFpHNHJSazZBM1Q5N2dqUjFTV3ctOFF1VUZOb1NwdzNOS2hXZ3pTNm1DUHg2dlNkV2x6N0pnY0VURGI4RkxvMWpCMlo4ZGI0cmRRY3J4ZmNVX3daSU1wTTBtS2VKTXpjOS1aTHc0eFhDbVVyOGIwZTc3ZDk2OUZNYzZDdm1GVVFZSmhHUEZydFl1eXFvOEctV3ZXQ2xsalpKZ3c?oc=5",
-   "date": "2026-11-07T03:26:00.000Z"
   },
   {
    "src": "The Athletic",
@@ -350,6 +350,13 @@
   }
  ],
  "podcasts": [
+  {
+   "src": "Wine and Gold Talk",
+   "title": "Why the Cavs’ end-of-game “fight” can’t be the baseline for a team too pricey and too talented to underachieve",
+   "link": "https://pdst.fm/e/traffic.megaphone.fm/ADLM3559659502.mp3",
+   "date": "2026-11-14T09:31:00.000Z",
+   "dur": "36 min"
+  },
   {
    "src": "Wine and Gold Talk",
    "title": "How involved is Dan Gilbert with this high-stakes Cavs team? Hey, Chris!",
@@ -429,6 +436,20 @@
   }
  ],
  "videos": [
+  {
+   "src": "Locked On Cavs",
+   "title": "REACTION: Cleveland Cavaliers CRUSHED By Miami Heat! | What Went WRONG?!",
+   "link": "https://www.youtube.com/watch?v=yosSRohrJZk",
+   "date": "2026-11-14T05:45:10.000Z",
+   "id": "yosSRohrJZk"
+  },
+  {
+   "src": "Locked On Cavs",
+   "title": "Malik Thomas at 20 looks fearless on both ends",
+   "link": "https://www.youtube.com/watch?v=ltKw_x97oM8",
+   "date": "2026-11-14T05:44:18.000Z",
+   "id": "ltKw_x97oM8"
+  },
   {
    "src": "It's Cavalier Podcast",
    "title": "Tyrese Proctor was a bright spot for the Cavs #cavs #cavaliers #clevelandcavaliers",
@@ -561,20 +582,6 @@
    "link": "https://www.youtube.com/watch?v=C9j1zgWF91A",
    "date": "2026-11-12T04:24:06.000Z",
    "id": "C9j1zgWF91A"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: Cleveland Cavaliers SHOCK New York Knicks as James Harden DOMINATES at MSG",
-   "link": "https://www.youtube.com/watch?v=alCHdOvmFvE",
-   "date": "2026-11-12T03:57:07.000Z",
-   "id": "alCHdOvmFvE"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "James Harden Leads the Cavs to HUGE Win Over the Knicks! #clevelandcavaliers #cavs #nba",
-   "link": "https://www.youtube.com/watch?v=c6i6h9PDP-k",
-   "date": "2026-11-12T03:37:22.000Z",
-   "id": "c6i6h9PDP-k"
   },
   {
    "src": "It's Cavalier Podcast",

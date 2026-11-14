@@ -2702,37 +2702,7 @@
   "status": "final",
   "score": "121-133",
   "result": "L",
-  "refs": [
-   [
-    "Crew chief",
-    "John Goble",
-    "10"
-   ],
-   [
-    "Referee",
-    "Mark Lindsay",
-    "29"
-   ],
-   [
-    "Umpire",
-    "JD Ralls",
-    "80"
-   ]
-  ],
-  "qs": {
-   "cle": [
-    27,
-    30,
-    34,
-    30
-   ],
-   "opp": [
-    29,
-    25,
-    38,
-    41
-   ]
-  },
+  "top": "James Harden: 20 pts, 6 reb, 8 ast",
   "out": [
    "Evan Mobley",
    "Sam Merrill",
@@ -2910,7 +2880,37 @@
     "2"
    ]
   ],
-  "top": "James Harden: 20 pts, 6 reb, 8 ast"
+  "qs": {
+   "cle": [
+    27,
+    30,
+    34,
+    30
+   ],
+   "opp": [
+    29,
+    25,
+    38,
+    41
+   ]
+  },
+  "refs": [
+   [
+    "Crew chief",
+    "John Goble",
+    "10"
+   ],
+   [
+    "Referee",
+    "Mark Lindsay",
+    "29"
+   ],
+   [
+    "Umpire",
+    "JD Ralls",
+    "80"
+   ]
+  ]
  },
  "2026-11-14": {
   "url": "https://www.nba.com/game/dal-vs-cle-0022600232/box-score",
