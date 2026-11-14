@@ -3914,7 +3914,7 @@ const ZOPP='opp',ZG='#d0393f',ZR='#2f9a5b';
 function zLegend(TC,base,cap,allow){const op=TC===ZOPP,lo=op?ZG:'#c9a227',hi=op?ZR:TC;if(op)allow=true;const g=`linear-gradient(90deg,color-mix(in srgb,${lo} ${op?75:57}%,var(--card)),color-mix(in srgb,${lo} 12%,var(--card)) 45%,color-mix(in srgb,${hi} 18%,var(--card)) 55%,color-mix(in srgb,${hi} 88%,var(--card)))`;
   return `<div class="zleg"><div class="zleg-r"><span>${allow?'Opponents shoot worse':'Worse'}</span><i style="background:${g}"></i><span>${allow?'Opponents shoot better':'Better'}</span></div><div class="zleg-c">Zone color = FG% there vs ${esc(base)} (full color at 15 points either way). Zones with fewer than 3 shots stay unshaded.${cap?' '+cap:''}</div></div>`}
 function zoneCourt(Z,tot,label,BZ,TC,FQ){TC=TC||'#860038';const op=TC===ZOPP,LO=op?ZG:'#c9a227';if(op)TC=ZR;const fq=a=>FQ&&tot?' · '+Math.round(a/tot*100)+'% of shots':'';const av=i=>BZ[i][1]?BZ[i][0]/BZ[i][1]:LG[ZN[i][0]][0];
-  const Sx=8,W=50*Sx,Hh=36*Sx,x=v=>v*Sx,y=v=>(v+5.25)*Sx;
+  const Sx=8,W=50*Sx,Hh=47*Sx/* Nov 13 (Luka): the full half court */,x=v=>v*Sx,y=v=>(v+5.25)*Sx;
   const col=(i,ma)=>{const[m,a]=ma||Z[i];if(a<3)return'var(--track)';const t=Math.max(-1,Math.min(1,(m/a-av(i))/.15));return t>=0?`color-mix(in srgb,${TC} ${Math.round(18+t*70)}%,var(--card))`:`color-mix(in srgb,${LO} ${Math.round(12-t*(op?63:45))}%,var(--card))`};
   const fcOf=i=>{const[m,a]=Z[i];return a>=3&&(m/a-av(i))>.09?'#fff':'var(--fg)'};
   const lab=(i,cx,cy,small)=>{const[m,a]=Z[i];if(!a)return'';const df=(m/a-av(i))*100;const fc=fcOf(i);
@@ -3927,16 +3927,16 @@ function zoneCourt(Z,tot,label,BZ,TC,FQ){TC=TC||'#860038';const op=TC===ZOPP,LO=
   <rect width="${W}" height="${Hh}" fill="${col(4)}"/><rect x="0" y="0" width="${x(3)}" height="${y(C3)}" fill="${col(3,Z.cs&&Z.cs[0])}"/><rect x="${x(47)}" y="0" width="${x(3)}" height="${y(C3)}" fill="${col(3,Z.cs&&Z.cs[1])}"/>
   <path d="${arc}" fill="${col(2)}"/><circle cx="${x(25)}" cy="${y(0)}" r="${14*Sx}" fill="${col(1)}" clip-path="url(#in3)"/><path d="${rim}" fill="${col(0)}"/>
   <g fill="none" stroke="var(--card)" stroke-width="2.5"><path d="${arc}"/><circle cx="${x(25)}" cy="${y(0)}" r="${14*Sx}" clip-path="url(#in3)"/><path d="${rim}"/></g>
-  <g ${ln}><rect x="${x(17)}" y="0" width="${16*Sx}" height="${19*Sx}"/><path d="M${x(19)} ${19*Sx} A${6*Sx} ${6*Sx} 0 0 0 ${x(31)} ${19*Sx}"/></g>
+  <g ${ln}><rect x="${x(17)}" y="0" width="${16*Sx}" height="${19*Sx}"/><path d="M${x(19)} ${19*Sx} A${6*Sx} ${6*Sx} 0 0 0 ${x(31)} ${19*Sx}"/><path d="M0 ${Hh} H${W} M${x(19)} ${Hh} A${6*Sx} ${6*Sx} 0 0 1 ${x(31)} ${Hh}"/></g>
   <line x1="${x(22)}" x2="${x(28)}" y1="${y(-1.25)}" y2="${y(-1.25)}" stroke="${fcOf(0)}" stroke-width="2.5"/><circle cx="${x(25)}" cy="${y(0)}" r="${0.75*Sx}" fill="none" stroke="${fcOf(0)}" stroke-width="2"/>
-  ${lab(0,x(25),y(2.3),true)}${lab(1,x(25),y(9.6))}${lab(2,x(25),y(17.5))}${lab(4,x(25),y(28))}
+  ${lab(0,x(25),y(2.3),true)}${lab(1,x(25),y(9.6))}${lab(2,x(25),y(17.5))}${lab(4,x(25),y(31))}
   ${(()=>{const t=(cx,ma,lab)=>ma[1]?`<text x="${(FQ&&tot?cx-5:cx)}" y="${(y(-1.5)+y(C3))/2}" text-anchor="middle" dominant-baseline="central" style="fill:${ma[1]>=3&&ma[0]/ma[1]-av(3)>.09?'#fff':'var(--fg)'};font:700 11px var(--mono)" transform="rotate(-90 ${(FQ&&tot?cx-5:cx)} ${(y(-1.5)+y(C3))/2})">${ma[0]}-${ma[1]} · ${Math.round(ma[0]/ma[1]*100)}%${lab}</text>`+(FQ&&tot?`<text x="${cx+6}" y="${(y(-1.5)+y(C3))/2}" text-anchor="middle" dominant-baseline="central" style="fill:var(--fg);font:500 9px var(--mono)" transform="rotate(-90 ${cx+6} ${(y(-1.5)+y(C3))/2})">${Math.round(ma[1]/tot*100)}% of shots</text>`:''):'';
     /* each corner its own numbers when the split is known, else both corners together on the left strip */
     return Z.cs?t(x(1.5),Z.cs[0],'')+t(x(48.5),Z.cs[1],''):t(x(1.5),cz,' both')})()}</svg>`;
 }
 
-function dotCourt(sh,col){const Sx=8,W=50*Sx,Hh=36*Sx,x=v=>v*Sx,y=v=>(v+5.25)*Sx,T0=y(-1.5);/* Nov 13 (Luka): the view starts just behind the hoop */
-  let s=`<svg viewBox="0 ${T0} ${W} ${Hh-T0}" role="img" aria-label="Shot chart, ${sh.length} shots"><rect width="${W}" height="${Hh}" fill="var(--sub)"/><g fill="none" stroke="var(--line)" stroke-width="2"><rect x="${x(17)}" y="0" width="${16*Sx}" height="${19*Sx}"/><circle cx="${x(25)}" cy="${y(13.75)}" r="${6*Sx}"/><path d="M${x(3)} 0 V${y(C3)} A${23.75*Sx} ${23.75*Sx} 0 0 0 ${x(47)} ${y(C3)} V0"/><path d="M${x(21)} ${y(0)} A${4*Sx} ${4*Sx} 0 0 0 ${x(29)} ${y(0)}"/></g><circle cx="${x(25)}" cy="${y(0)}" r="${0.75*Sx}" fill="none" stroke="var(--muted)" stroke-width="2"/>`;
+function dotCourt(sh,col){const Sx=8,W=50*Sx,Hh=47*Sx/* Nov 13 (Luka): the full half court */,x=v=>v*Sx,y=v=>(v+5.25)*Sx,T0=y(-1.5);/* Nov 13 (Luka): the view starts just behind the hoop */
+  let s=`<svg viewBox="0 ${T0} ${W} ${Hh-T0}" role="img" aria-label="Shot chart, ${sh.length} shots"><rect width="${W}" height="${Hh}" fill="var(--sub)"/><g fill="none" stroke="var(--line)" stroke-width="2"><rect x="${x(17)}" y="0" width="${16*Sx}" height="${19*Sx}"/><circle cx="${x(25)}" cy="${y(13.75)}" r="${6*Sx}"/><path d="M${x(3)} 0 V${y(C3)} A${23.75*Sx} ${23.75*Sx} 0 0 0 ${x(47)} ${y(C3)} V0"/><path d="M${x(21)} ${y(0)} A${4*Sx} ${4*Sx} 0 0 0 ${x(29)} ${y(0)}"/><path d="M0 ${Hh} H${W} M${x(19)} ${Hh} A${6*Sx} ${6*Sx} 0 0 1 ${x(31)} ${Hh}"/></g><circle cx="${x(25)}" cy="${y(0)}" r="${0.75*Sx}" fill="none" stroke="var(--muted)" stroke-width="2"/>`;
   sh.forEach(q=>{if(q.y>30.5)return;const a=Math.max(.4,Math.min(49.6,q.x)),b=Math.max(-1,q.y);s+=q.m?`<circle cx="${x(a)}" cy="${y(b)}" r="4" fill="${col}" opacity=".85"><title>${esc(q.text)} · ${pname(q.per)} ${q.clock}</title></circle>`:`<path d="M${x(a)-3} ${y(b)-3}l6 6M${x(a)+3} ${y(b)-3}l-6 6" stroke="var(--miss)" stroke-width="1.8"><title>${esc(q.text)} · ${pname(q.per)} ${q.clock}</title></path>`});
   return s+'</svg>'}
 
