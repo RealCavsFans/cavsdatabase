@@ -845,6 +845,20 @@ html.rfx #view *,html.rfx #view *::before,html.rfx #view *::after,html.rfx #sb *
 
 /* Nov 14 (Luka): Who led on phones: compact tiles, values on one line */
 @media(max-width:640px){#view .ldt-g{gap:4px!important}#view .ldt-g>div{padding:5px 7px!important}#view .ldt-g span{font-size:.5rem!important;letter-spacing:.04em;line-height:1.2}#view .ldt-g>div>b{font-size:.875rem!important;white-space:nowrap;display:block;margin-top:2px}#view .ldt-k{font-size:.625rem!important}#view .ldt>*{font-size:.75rem}}
+
+/* Nov 14 (Luka): ONE terminal bar style across the site. Every segmented bar is the same blocks: 9px block, 3px gap, 12px tall
+   (7px / 2px / 10px on phones), the same light track, and fills snap to whole blocks (script below). Colors still say whose number it is. */
+:root{--tbm:repeating-linear-gradient(90deg,#000 0 9px,transparent 9px 12px);--tbmr:repeating-linear-gradient(270deg,#000 0 9px,transparent 9px 12px);--tbh:12px;--tbt:color-mix(in srgb,var(--muted) 22%,transparent)}
+@media(max-width:640px){:root{--tbm:repeating-linear-gradient(90deg,#000 0 7px,transparent 7px 9px);--tbmr:repeating-linear-gradient(270deg,#000 0 7px,transparent 7px 9px);--tbh:10px}}
+.ppx .pct,.wp i,.gb-b,.wf-bar,.tkc-tk,.tkc-h,.tsnap .tick-t,.gtb.tkb{height:var(--tbh)!important;-webkit-mask:var(--tbm)!important;mask:var(--tbm)!important;border-radius:0!important}
+.gb-b.l,.gtb.tkb.l{-webkit-mask:var(--tbmr)!important;mask:var(--tbmr)!important}
+.ppx .pct,.wp i,.gb-b,.wf-bar,.gtb.tkb{background:var(--tbt)!important}
+.dbt .rk .t,.ppx-pb .t,.ppx-share .t,.ppx-elig,.ppx-ar .b{height:var(--tbh)!important;background:transparent!important}
+.dbt .rk .t::before,.ppx-pb .t::before,.ppx-share .t::before,.ppx-elig::before,.ppx-ar .b::before{background:var(--tbt)!important;-webkit-mask:var(--tbm)!important;mask:var(--tbm)!important}
+.dbt .rk .t i,.ppx-pb .t i,.ppx-share .t i,.ppx-elig i,.ppx-ar .b i{-webkit-mask:var(--tbm)!important;mask:var(--tbm)!important;height:100%!important}
+.gtb.tk2{height:var(--tbh)!important;gap:3px!important}.gtb.tk2>u,.gtb.tk2>s{flex:1 1 0!important;max-width:9px;min-width:5px;border-radius:0!important}.gtb.tk2>s{background:var(--tbt)!important}
+.gmt .bk{gap:3px!important}.gmt .bk u,.gmt .bk s{height:var(--tbh)!important;max-width:9px!important}.gmt .bk s{background:var(--tbt)!important}
+@media(max-width:640px){.gtb.tk2,.gmt .bk{gap:2px!important}.gtb.tk2>u,.gtb.tk2>s,.gmt .bk u,.gmt .bk s{max-width:7px!important}}
 </style>
 <script>/* Nov 4: team logos drawn at the same visual size. Each mark is scaled by how much of its square image the artwork fills, relative to the Cavs C (made from img/tl by alpha bounding box). Applies to every logo from /img/tl or /img/tl5, also ones added later. */
 (function(){const SC=window.LOGO_SC={"atl":0.92,"bkn":0.92,"bos":0.92,"cha":0.92,"dal":0.92,"den":0.92,"det":0.92,"gs":0.92,"hou":1.07,"ind":0.96,"lac":0.92,"lal":1.18,"mem":0.95,"mia":0.95,"mil":1.06,"min":0.92,"no":1.25,"ny":1.04,"okc":1.23,"orl":1.1,"por":0.97,"sa":1.03,"tor":0.92,"utah":1.12,"wsh":0.92};const fit=im=>{const m=/\/img\/tl5?\/([a-z]+)\.png/.exec(im.getAttribute("src")||"");if(!m||im.dataset.lsc)return;im.dataset.lsc=1;const v=SC[m[1]];if(v)im.style.scale=String(v)};const all=r=>{if(r.tagName==="IMG")fit(r);else if(r.querySelectorAll)r.querySelectorAll("img").forEach(fit)};const go=()=>{all(document.body);new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(all))).observe(document.body,{childList:true,subtree:true})};if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();
@@ -4709,5 +4723,9 @@ function prevPicker(){let w=document.getElementById('prevpk');if(w){w.remove()}w
 /* Nov 13 UX audit: a game-picker list that would run past the right edge of a small phone shifts left to fit */
 (function(){const fit=()=>document.querySelectorAll('.sgp-l').forEach(l=>{if(!l.offsetParent)return;l.style.marginLeft='';const r=l.getBoundingClientRect(),o=r.right-(innerWidth-8);if(o>0)l.style.marginLeft=(-o)+'px'});addEventListener('click',()=>requestAnimationFrame(fit),true);addEventListener('resize',fit);setTimeout(fit,1500)})();
 </script>
+<script>/* Nov 14 (Luka): terminal bar fills snap to whole blocks, so no bar ends in a sliver of a block */
+(function(){const SEL='.ppx .pct>i,.dbt .rk .t>i,.ppx-pb .t>i,.ppx-share .t>i,.ppx-elig>i,.ppx-ar .b>i,.wf-bar>i,.tkc-tk>i,.tkc-h>i';
+ const snap=()=>{const pitch=matchMedia('(max-width:640px)').matches?9:12;/* the width stays as set (share images read it); min/max-width hold the snapped size */document.querySelectorAll(SEL).forEach(i=>{const w=i.style.width;if(!/%$/.test(w))return;const p=parseFloat(w);const W=i.parentElement.getBoundingClientRect().width;if(!W)return;const n=p>0?Math.max(1,Math.round(W*p/100/pitch)):0;const px=n*pitch+'px';if(i.style.maxWidth!==px){i.style.maxWidth=px;i.style.minWidth=px}})};
+ let t=0;const go=()=>{clearTimeout(t);t=setTimeout(snap,80)};new MutationObserver(go).observe(document.body,{childList:true,subtree:true});addEventListener('resize',go);go()})();</script>
 </body>
 </html>
