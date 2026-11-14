@@ -714,7 +714,7 @@ details.stx{margin-top:10px;border-top:1px solid var(--line2)}details.stx>summar
 /* Nov 6 (Luka): the chart is only for the camera image; the page keeps its tables */.card>.tkc{display:none!important}
 /* in the light/wine camera image, always the light colors */
 .tps .tkc{--tc:#860038;--to:#9aa1a9;--tt:#e6e8eb;--tf:#101419;--tm:#5d646c;--tr:#860038;margin:4px 0 8px}
-</style>
+.p2w{margin:8px 0 0;padding:8px 12px;border-left:5px solid #F2B231;background:var(--sub);display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;align-items:center}.p2w>b{font:800 1.75rem/1 var(--cond);color:var(--wine-ink,#860038)}.p2w>span{font:500 .8125rem/1.35 var(--sans)}.p2w-b{grid-column:1/-1;height:8px;background:var(--track);position:relative}.p2w-b i{position:absolute;left:0;top:0;bottom:0;background:#860038}.p2w-b u{position:absolute;top:-4px;bottom:-4px;width:3px;background:#F2B231}.la-f{display:grid;gap:6px}.la-r{border-left:4px solid #860038;background:var(--sub);padding:8px 10px;font-size:.875rem}.la-r.dn{border-left-color:var(--muted)}.la-r small{display:block;font:600 .6875rem var(--mono);color:var(--muted);margin-bottom:2px}.la-one{margin:0 0 12px}.la-go{margin-top:6px;background:none;border:0;padding:0;font:700 .8125rem var(--sans);color:var(--wine-ink,#860038);cursor:pointer}.hh-c{display:flex;flex-wrap:wrap;gap:6px}.hh-c span{font:600 .8125rem var(--mono);padding:6px 8px;background:var(--sub)}.hh-c span.h{background:#860038;color:#fff}.hh-c span.c{background:var(--muted);color:var(--bg)}.hh-c i{font-style:normal;opacity:.75;font-size:.75rem}</style>
 <script>/* Nov 4: team logos drawn at the same visual size. Each mark is scaled by how much of its square image the artwork fills, relative to the Cavs C (made from img/tl by alpha bounding box). Applies to every logo from /img/tl or /img/tl5, also ones added later. */
 (function(){const SC=window.LOGO_SC={"atl":0.92,"bkn":0.92,"bos":0.92,"cha":0.92,"dal":0.92,"den":0.92,"det":0.92,"gs":0.92,"hou":1.07,"ind":0.96,"lac":0.92,"lal":1.18,"mem":0.95,"mia":0.95,"mil":1.06,"min":0.92,"no":1.25,"ny":1.04,"okc":1.23,"orl":1.1,"por":0.97,"sa":1.03,"tor":0.92,"utah":1.12,"wsh":0.92};const fit=im=>{const m=/\/img\/tl5?\/([a-z]+)\.png/.exec(im.getAttribute("src")||"");if(!m||im.dataset.lsc)return;im.dataset.lsc=1;const v=SC[m[1]];if(v)im.style.scale=String(v)};const all=r=>{if(r.tagName==="IMG")fit(r);else if(r.querySelectorAll)r.querySelectorAll("img").forEach(fit)};const go=()=>{all(document.body);new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(all))).observe(document.body,{childList:true,subtree:true})};if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();
 </script>
@@ -893,7 +893,8 @@ function renderSB(D,R){
   if(R.wp!=null&&S.state!=='pre'){const fp=Math.round((D.focus===D.home?R.wp:1-R.wp)*100);const w=el('div','wp');const h=el('div','wp-h');h.innerHTML='<span>Win probability</span><span>'+esc(D.focus.abbr)+' <b>'+fp+'%</b></span>';const bar=el('div','wp-bar');const a=el('i');a.style.width=fp+'%';a.style.background=D.focus.c;const b=el('i');b.style.width=(100-fp)+'%';b.style.background='var(--track)';bar.append(a,b);w.append(h,bar);sb.appendChild(w)}
   /* live: a run of 8–0 or more still going, or a 3-minute field goal drought still going */
   if(S.state==='in'){const bits=[];const run=(R.runs||[]).find(r=>r.open);if(run){const t=D.teams.find(x=>x.id===run.t);bits.push(t.abbr+' on a '+run.pts+'–0 run')}(R.dr||[]).filter(x=>x.open&&x.to-x.from>=180).forEach(x=>{const t=D.teams.find(y=>y.id===x.t);bits.push(t.abbr+' '+fmtMin(x.to-x.from)+' without a field goal')});if(bits.length)sb.appendChild(el('div','sbrun',bits.join(' · ')))}
-  if(S.state==='in'&&R.lp)sb.appendChild(gameState(D,R));/* fouls, timeouts and challenges only matter while it's being played */
+  if(S.state==='in'&&R.lp)sb.appendChild(gameState(D,R));
+  {const p2=paceToWin(D,R);if(p2)sb.appendChild(p2)}/* fouls, timeouts and challenges only matter while it's being played */
   /* phones, finished or replayed games: a one-line scoreboard with a real line score; ▾ opens the full one (Oct 28) */
   {const cmpOn=(fin||S.replay)&&!S.f.sbOpen;sb.classList.toggle('cmp',cmpOn);document.body.classList.toggle('sbcmp',cmpOn);
     if(fin||S.replay){const c=el('div','sbc');const top=el('div','sbc-top');const stx=fin?'Final'+(per>4?'/'+pname(per):''):(R.lp&&R.lp.type==='End Period'?(per===2?'Half':'End '+pname(per)):pname(per)+' '+(R.lp?R.lp.clock:''));top.appendChild(el('div','sbc-st',stx));
@@ -965,6 +966,7 @@ function renderView(){
   if(S.state==='pre'&&!R.plays.length){const c=el('div','card');c.append(el('h2',null,D.away.abbr+' at '+D.home.abbr),el('p',null,'Tip-off '+new Date(D.date).toLocaleString([],{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+(D.venue?' · '+D.venue:'')+(D.bc.length?' · '+D.bc.join(', '):'')+'.'),el('p','note pre-n','Team and player stats, lineups, shots, four factors and rotations fill in once the game starts. The page refreshes every 15 seconds during the game.'));v.appendChild(c);
     const opp=D.other;const holder=el('div');holder.appendChild(el('p','note','Loading the scouting report…'));v.appendChild(holder);scoutData(opp.id).then(X=>{if(S.data!==D)return;holder.innerHTML='';holder.appendChild(scoutCard(D,X,opp))});return}
   ({season:vSeason,share:vShare,ast:vAst,team:vTeam,players:vPlayers,lineups:vLuHub,shots:vShots,flow:vFlow,ff:vFF,plays:vPlays})[S.tab](v,D,R);
+  if(!S.season){const x=S.tab==='lineups'?liveAlertCard(D,R):S.tab==='team'?liveAlertCard(D,R,true):S.tab==='shots'?hotHand(D,R):null;if(x)v.prepend(x)}
   teamHeads(v,D);
   /* game view: no green/red for now, so drop the sentences that explain them (also for notes added a moment later) */
   if(!S.season&&S.tab!=='lineups'){const strip=root=>root.querySelectorAll('p.note').forEach(n=>{if(!/\b(Wine|wine|Green|green|red|Wine|wine)\b/.test(n.textContent)||n.children.length>1)return;const t=n.textContent.split(/(?<=\.)\s+/).filter(x=>!/\b(Wine|wine|Green|green|red|Wine|wine)\b/.test(x)).join(' ');if(t.trim())n.textContent=t;else n.remove()});strip(v);clearTimeout(S.gnT);S.gnT=setTimeout(()=>strip(v),1500)}
@@ -2024,6 +2026,27 @@ function vTeam(v,D,R){
 
 
 /* ---------- game state: fouls, bonus, timeouts, challenges, foul trouble ---------- */
+/* Nov 13 (Luka): live game extras. Pace to win (under the scoreboard), lineup alerts (Lineups tab, latest one on Team), hot hand (Shots tab) */
+function liveSecLeft(R){const lp=R.lp;if(!lp)return null;const per=lp.per,c=csec(lp.clock);return per<=4?(4-per)*720+c:c}
+function paceToWin(D,R){try{if(S.season||S.state!=='in'||!R.lp||D.focus.id!==CLE)return null;const per=R.lp.per;if(per<4)return null;const left=liveSecLeft(R);if(left==null||left<20)return null;
+  const F=D.focus,O=D.other,fs=scoreOf(F,R),os=scoreOf(O,R),df=fs-os;if(Math.abs(df)>10||df===0&&left>600)return null;const A=R.T[F.id],B=R.T[O.id];const pA=poss(A),pB=poss(B);const el0=pstart(per)+ (per<=4?720:300)-csec(R.lp.clock);if(el0<600||pA<10)return null;
+  const rate=(pA+pB)/2/el0;const pl=Math.max(1,rate*left);const oP=B.pts!=null?B.pts/pB:os/pB,fP=A.pts!=null?A.pts/pA:fs/pA;
+  const J=gameSeasonCtx();let se=null;if(J&&J.L&&J.L['5']){let pf=0,po=0;Object.values(J.L['5']).forEach(l=>{pf+=l.pf;po+=poss(l.o)});se=po?pf/po:null}
+  const w=el('div','p2w');const trail=df<0;const need=trail?(oP*pl+(-df)+1)/pl:null;const oNeed=!trail?(fP*pl+df+1)/pl:null;
+  w.innerHTML=trail?`<b>${need.toFixed(2)}</b><span>points per possession the Cavs need over about ${Math.round(pl)} possessions left, if ${esc(O.abbr)} keeps scoring ${oP.toFixed(2)} like tonight.${se?` Their season: ${se.toFixed(2)}.`:''}</span>`:`<b>${oNeed.toFixed(2)}</b><span>points per possession ${esc(O.abbr)} needs over about ${Math.round(pl)} possessions left to pass the Cavs, if the Cavs keep scoring ${fP.toFixed(2)} like tonight.</span>`;
+  if(trail&&se){const mx=Math.max(need,se)*1.15;w.insertAdjacentHTML('beforeend',`<div class="p2w-b"><i style="width:${Math.min(100,se/mx*100)}%"></i><u style="left:${Math.min(100,need/mx*100)}%"></u></div>`)}return w}catch(e){return null}}
+function lineupAlerts(D,R){try{if(S.season||D.focus.id!==CLE)return [];const J=gameSeasonCtx();if(!J||!J.L||!J.L['5'])return [];const T=((R.L||{})[CLE]||{})[5]||{};const onNow=S.state==='in'&&R.on&&R.on[CLE]?[...R.on[CLE]].map(String).sort().join(','):null;const inc=(J.games||[]).some(g=>String(g.id)===String(D.id||S.ev||''));
+  const out=[];Object.entries(T).forEach(([k,l])=>{let s=J.L['5'][k];if(s&&inc){/* the season file already has this game: take it out so tonight is compared with the rest */const sub=(a,b)=>{const o={};for(const x in a)o[x]=(a[x]||0)-((b||{})[x]||0);return o};s={sec:s.sec-l.sec,pf:s.pf-l.pf,pa:s.pa-l.pa,o:sub(s.o,l.o),d:sub(s.d,l.d)}}if(!s||s.sec<300||l.sec<90)return;const sp=(poss(s.o)+poss(s.d))/2;if(sp<10)return;const sn=(s.pf/poss(s.o)-s.pa/poss(s.d))*100;const tp=(poss(l.o)+poss(l.d))/2;const pm=l.pf-l.pa,exp=sn/100*tp;const off=pm-exp;const now=k===onNow;
+    if(Math.abs(off)>=6||now)out.push({k,l,pm,sn,off,now,smin:Math.round(s.sec/60)})});
+  return out.sort((a,b)=>(b.now-a.now)||Math.abs(b.off)-Math.abs(a.off))}catch(e){return []}}
+function liveAlertCard(D,R,short){const A=lineupAlerts(D,R);if(!A.length)return null;const nm=k=>k.split(',').map(id=>(D.P[id]||{}).last||'').join(', ');const sg=x=>(x>0?'+':x<0?'−':'')+Math.abs(Math.round(x));
+  const line=a=>`<div class="la-r${a.off<0?' dn':''}"><small>${a.now?'On the floor now':'Tonight'} · ${fmtMin(a.l.sec)} together</small>${esc(nm(a.k))}: <b>${sg(a.pm)}</b> tonight · ${sg(a.sn)} per 100 this season (${a.smin} min)</div>`;
+  if(short){const a=A[0];if(!a.now&&Math.abs(a.off)<6)return null;const d=el('div','la-one');d.innerHTML=line(a)+'<button type="button" class="la-go">All lineup alerts →</button>';d.querySelector('.la-go').onclick=()=>{S.tab='lineups';renderNav(S.R);renderView();scrollTo({top:0})};return d}
+  const c=el('div','card sec la');head(c,'Lineup alerts','Five-man groups running well above or below their season pace tonight');c.insertAdjacentHTML('beforeend','<div class="la-f">'+A.slice(0,6).map(line).join('')+'</div>');return c}
+function hotHand(D,R){try{if(S.season||D.focus.id!==CLE)return null;const J=gameSeasonCtx();if(!J||!J.pz)return null;const me={};(R.shots||[]).filter(q=>q.t===CLE&&q.hasXY&&q.id).forEach(q=>{const k=q.id+'|'+q.zi;const x=me[k]=me[k]||[0,0];x[1]++;if(q.m)x[0]++});
+  const out=[];Object.entries(me).forEach(([k,[m,a]])=>{if(a<3)return;const [id,zi]=k.split('|');const pz=J.pz[id];if(!pz)return;let sm=0,sa=0;Object.values(pz).forEach(g=>{const z=g[+zi];if(z){sm+=z[0];sa+=z[1]}});if(sa<10)return;const d=m/a-sm/sa;if(Math.abs(d)<.2)return;out.push({id,zi:+zi,m,a,s:sm/sa,d})});
+  if(!out.length)return null;out.sort((a,b)=>Math.abs(b.d)-Math.abs(a.d));const c=el('div','card sec hh');head(c,'Hot hand','Tonight by zone against his season · 3+ shots in the zone');
+  c.insertAdjacentHTML('beforeend','<div class="hh-c">'+out.slice(0,8).map(x=>`<span class="${x.d>0?'h':'c'}"><b>${esc((D.P[x.id]||{}).last||'')}</b> ${x.m}-${x.a} ${esc(ZN[x.zi][1].toLowerCase())} <i>season ${(x.s*100).toFixed(0)}%</i></span>`).join('')+'</div>');return c}catch(e){return null}}
 function gameState(D,R){
   const w=el('div','gs');const per=R.lp.per;/* Nov 11 (Luka): a tight grid with column labels instead of three spread-out words per row */{const hd=el('div','tt gsh');hd.innerHTML='<b></b><span>Fouls<i class="gsl">&nbsp;to bonus</i></span><span>Timeouts<i class="gsl">&nbsp;left</i></span><span>Challenge</span>';w.appendChild(hd)}const endT=pstart(per)+plen(per);const left=endT-R.lp.t;
   [D.away,D.home].forEach(t=>{const q=(R.tf[per]&&R.tf[per][t.id])||{n:0,l2:0};const bonus=q.n>=(per<=4?5:4)||(left<=120&&q.l2>=2);
@@ -2189,15 +2212,6 @@ function ftCard(D,R){
   f.appendChild(el('p','note','ESPN’s play-by-play doesn’t name who drew each foul, so trips to the line stand in for fouls drawn.'));return f;
 }
 /* ---------- mockups: fatigue, lineup alert, droughts ---------- */
-function alertCard(D,R){
-  const f=el('div','card sec');f.style.borderTop='3px solid var(--gold)';head(f,'Lineup alert · mockup','The five on the floor for '+D.focus.abbr+' right now');
-  const ids=[...R.on[D.focus.id]].sort();const k=ids.join(',');const l=R.L[D.focus.id][5][k];
-  if(!l||ids.length<5){f.appendChild(el('p','empty','No full lineup on the floor right now.'));return f}
-  let po=poss(l.o),pd=poss(l.d);const net=po>=1&&pd>=1?l.pf/po*100-l.pa/pd*100:null;
-  const box=el('div','ffc');box.style.borderLeft='4px solid '+(l.pf-l.pa<0?'var(--pmn)':'var(--pmp)');
-  box.innerHTML=`<div class="n">${esc(ids.map(id=>D.P[id].last).join(', '))}</div><div class="row"><span>Tonight</span><b>${fmtMin(l.sec)} · ${sgn(l.pf-l.pa)}</b></div><div class="row"><span>Season</span><b>— once the archive has games</b></div>`+(l.pf-l.pa<=-6?`<div class="edge" style="color:var(--pmn)">Alert: outscored by ${l.pa-l.pf} in ${fmtMin(l.sec)} tonight</div>`:'');
-  f.appendChild(box);f.appendChild(el('p','note','Shows an alert when the current five is down 6 or more tonight, or below −5 net per 100 over the season (from the game archive).'));return f;
-}
 function droughtCard(D,R){
   const f=el('div','card sec');f.style.borderTop='3px solid var(--gold)';head(f,'Droughts · mockup','Stretches of 3+ minutes without a made field goal');
   const T=pstart(R.maxPer)+plen(R.maxPer);const X=t=>(t/T*100).toFixed(2)+'%';
