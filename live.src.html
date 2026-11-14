@@ -2581,7 +2581,7 @@ const loadImg=src=>{const m=src&&/cdn\.nba\.com\/headshots\/nba\/latest\/260x190
 const loadImg0=src=>new Promise(r=>{if(!src)return r(null);const im=new Image();if(/^https?:/.test(src))im.crossOrigin='anonymous';im.onload=()=>r(im);im.onerror=()=>r(null);im.src=src});
 /* headshots: our own copies for Cavs players, ESPN's image server for everyone else (by ESPN player id); a failed load falls back to initials */
 const hsUrl=(D,id)=>{const p=D.P[id];const k=p&&HS[normName(p.name)];return k?'/img/h/'+k+'.png':p&&p.nba?'https://cdn.nba.com/headshots/nba/latest/260x190/'+id+'.png':(p&&/^\d+$/.test(id)?'https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/'+id+'.png&w=240&h=175':null)};
-function head2(x,img,cx,cy,r,ring='#F2B231',label){x.save();x.beginPath();x.rect(cx-r*1.4,cy-r*1.3,r*2.8,r*2.3);x.closePath();if(!img){x.fillStyle=TC.hsbg;x.fill()}x.clip();
+function head2(x,img,cx,cy,r,ring='#F2B231',label){/* Nov 13 (Luka): a banner headshot sits exactly on the bottom of the wine banner, not floating above it */if(TC.pc&&x.canvas){const W=x.canvas.width,BH=W>1500?340:372;if(cy<BH&&cy+r<BH&&cy+r>BH-80)cy+=BH-(cy+r)}x.save();x.beginPath();x.rect(cx-r*1.4,cy-r*1.3,r*2.8,r*2.3);x.closePath();if(!img){x.fillStyle=TC.hsbg;x.fill()}x.clip();
   if(img){const ar=img.width/img.height,h=r*2.15,w=h*ar;x.drawImage(img,cx-w/2,cy-r*1.02,w,h)}else if(label){x.fillStyle='#860038';x.font=`800 ${Math.round(r*.8)}px "Saira Condensed"`;const t=label;x.fillText(t,cx-x.measureText(t).width/2,cy+r*.28)}
   x.restore()}
 const initials=n=>n.split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('');
