@@ -82,7 +82,7 @@ export async function liveMeta(request, env) {
   if (info.season) {
     title = 'Cavs ' + info.season.replace('-', '–') + ' season stats · cavs_db';
     desc = 'Every Cavaliers game this season in one place: team and player stats, lineups, on/off, shot charts and the four factors.';
-    img = '/og/stats.jpg'; /* Nov 10 (Luka): season links get their own picture, not the live tracker's (source: scripts/og-stats.html) */
+    img = '/og/stats.jpg?v=2'; /* Nov 14: versioned so X fetches it fresh. Nov 10 (Luka): season links get their own picture, not the live tracker's (source: scripts/og-stats.html) */
   } else {
     const { x, ab } = info, nick = NICK[ab] || NICK[x.opp] || ab, won = x.cle > x.os;
     const d = new Date(x.et + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
