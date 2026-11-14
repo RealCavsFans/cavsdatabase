@@ -138,7 +138,6 @@ if (NBA_MODE) {
 }
 
 /* 3) season totals from every archived game */
-const GBX = [];
 const files = fs.readdirSync(DIR).filter(f => /^(\d+|b\d{8})\.json$/.test(f));
 /* season files: the whole game (season.json) plus one per period, so the live page's quarter, half and clutch buttons load one small file */
 function build(per, file) {
@@ -168,7 +167,6 @@ function build(per, file) {
         : { min: b.min, pts: b.pts, fgm: b.fgm, fga: b.fga, tpm: b.tpm, tpa: b.tpa, ftm: b.ftm, fta: b.fta, oreb: b.oreb, dreb: b.dreb, ast: b.ast, stl: b.stl, blk: b.blk, to: b.to, pf: b.pf, pm: b.pm };
       /* Nov 6: possessions he played (NBA.com style, from the play-by-play) for his on-floor ratings */row.po = b && b.po || 0; row.pd = b && b.pd || 0;
       gp[id] = (gp[id] || 0) + 1; B[id] = B[id] || {}; addObj(B[id], row);
-      if (per === 'all') GBX.push([etd, id, row]);   // Nov 13: each Cav's game line, for the weekly recap (week.json)
       if (p.starter) B[id].gs = (B[id].gs || 0) + 1;
     }
     for (const n of [2, 3, 4, 5]) for (const [k, l] of Object.entries(R.L['5'][n])) {
@@ -281,36 +279,3 @@ for (const [key, per] of [['h1', [1, 2]], ['h2', [3, 4]], ['q1', [1]], ['q2', [2
   for (const f of fs.readdirSync(PD)) if (!keep.has(f)) fs.unlinkSync(path.join(PD, f));
 }
 
-/* Nov 13 (Luka): the weekly recap for the home page: live-archive/<season>/week.json, the last full Monday-Sunday week (US Eastern) with games.
-   Record and results, team ratings per 100 counted possessions, the top scorers, the best single game and the best five-man group of the week. */
-{
-  const et = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date());
-  const d0 = new Date(et + 'T12:00:00Z'), dow = (d0.getUTCDay() + 6) % 7;   // 0 = Monday
-  const day = n => new Date(d0.getTime() + n * 864e5).toISOString().slice(0, 10);
-  let mon = day(-dow - 7), sun = day(-dow - 1);
-  const inWk = g => g.et >= mon && g.et <= sun;
-  let G = ALL.games.filter(inWk);
-  if (!G.length) { const last = ALL.games[ALL.games.length - 1]; if (last) { const ld = new Date(last.et + 'T12:00:00Z'), w = (ld.getUTCDay() + 6) % 7; mon = new Date(ld.getTime() - w * 864e5).toISOString().slice(0, 10); sun = new Date(ld.getTime() + (6 - w) * 864e5).toISOString().slice(0, 10); G = ALL.games.filter(inWk); } }
-  const wf = path.join(DIR, 'week.json');
-  if (G.length) {
-    const W = G.filter(g => +g.cle > +g.os).length;
-    const sum = (k, i) => G.reduce((a, g) => a + (+(g[k] || [])[i] || 0), 0);
-    const pf = sum('t', 0), pa = sum('u', 0), po = sum('t', 12), pd = sum('u', 12);
-    const r1 = v => Math.round(v * 10) / 10;
-    const rows = GBX.filter(([d]) => d >= mon && d <= sun);
-    const per = {}; for (const [, id, r] of rows) { const o = per[id] = per[id] || { gp: 0, min: 0, pts: 0, reb: 0, ast: 0, fga: 0, fta: 0 }; o.gp++; o.min += r.min || 0; o.pts += r.pts || 0; o.reb += (r.oreb || 0) + (r.dreb || 0); o.ast += r.ast || 0; o.fga += r.fga || 0; o.fta += r.fta || 0; }
-    const top = Object.entries(per).filter(([, o]) => o.gp >= Math.min(2, G.length) || G.length === 1).sort((a, b) => b[1].pts / b[1].gp - a[1].pts / a[1].gp).slice(0, 3)
-      .map(([id, o]) => [id, ALL.P[id].name, o.gp, r1(o.pts / o.gp), r1(o.reb / o.gp), r1(o.ast / o.gp), o.fga + o.fta ? r1(o.pts / (2 * (o.fga + .44 * o.fta)) * 100) : null]);
-    const hiR = rows.slice().sort((a, b) => (b[2].pts || 0) - (a[2].pts || 0))[0];
-    const hiG = hiR && G.find(g => g.et === hiR[0]);
-    const hi = hiR ? [hiR[1], ALL.P[hiR[1]].name, hiR[2].pts, (hiR[2].oreb || 0) + (hiR[2].dreb || 0), hiR[2].ast || 0, hiR[0], hiG ? (hiG.ha === 'home' ? 'vs ' : 'at ') + hiG.opp : ''] : null;
-    const L = {}; for (const g of G) for (const r of (g.l5 || [])) { const o = L[r[0]] = L[r[0]] || [0, 0, 0, 0, 0]; o[0] += r[1]; o[1] += r[2]; o[2] += r[3]; o[3] += r[12] || 0; o[4] += r[13] || 0; }
-    const five = Object.entries(L).filter(([, o]) => o[0] >= 600).sort((a, b) => (b[1][1] - b[1][2]) - (a[1][1] - a[1][2]))[0];
-    const out = { season: SEASON, mon, sun, made: new Date().toISOString(),
-      g: G.map(g => [g.et, g.opp, g.ha, +g.cle, +g.os]), w: W, l: G.length - W,
-      ortg: po ? r1(pf / po * 100) : null, drtg: pd ? r1(pa / pd * 100) : null, net: po && pd ? r1(pf / po * 100 - pa / pd * 100) : null,
-      top, hi, five: five ? [five[0].split(',').map(id => ALL.P[id] ? ALL.P[id].last || ALL.P[id].name : id), Math.round(five[1][0]), five[1][1] - five[1][2]] : null,
-      rec: [ALL.games.filter(g => g.et <= sun && +g.cle > +g.os).length, ALL.games.filter(g => g.et <= sun && +g.cle < +g.os).length] };
-    const next = JSON.stringify(out); if (!fs.existsSync(wf) || fs.readFileSync(wf, 'utf8').replace(/"made":"[^"]*",?/, '') !== next.replace(/"made":"[^"]*",?/, '')) { fs.writeFileSync(wf, next); console.log('week.json', mon, sun, G.length, 'games'); }
-  }
-}
