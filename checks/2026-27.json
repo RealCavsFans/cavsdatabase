@@ -1,11 +1,11 @@
 {
  "season": "2026-27",
- "checked": "2026-11-13T11:39:24.529Z",
+ "checked": "2026-11-14T12:19:38.841Z",
  "tally": {
-  "games": 174,
-  "clean": 170,
+  "games": 183,
+  "clean": 178,
   "nba": 0,
-  "ours": 4,
+  "ours": 5,
   "poss": 1,
   "espn": 0
  },
@@ -21,6 +21,14 @@
    "poss": [
     "SAS: 97 possessions vs NBA's 104",
     "HOU: 99 possessions vs NBA's 105"
+   ]
+  },
+  "0022600036": {
+   "d": "20261113",
+   "m": "CLE@MIA",
+   "ours": [
+    "B. Portis Jr. (MIA): pm -1/-2 (NBA/ours)",
+    "S. Fontecchio (MIA): pm 11/12 (NBA/ours)"
    ]
   },
   "0022600124": {
