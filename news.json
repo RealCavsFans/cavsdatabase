@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "Fear The Sword",
+   "title": "Cavs vs. Mavericks: How to watch, odds, and injury report",
+   "link": "https://www.fearthesword.com/cavs-injury-report/54428/cavs-vs-mavericks-how-to-watch-odds-and-injury-report",
+   "date": "2026-11-14T18:10:21.000Z"
+  },
+  {
    "src": "The Inside Shot",
    "title": "Game Night Observations: Defensive Woes and Travel Delays",
    "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1kZ1hrNGR5bkdJWlhBSXN2S0lhdEtpRjhVVjZhcGhqdm9pWEtpbFJVZzB6WkpFdFBSMlZyLVRKX3BqRi1YWTJqVG5vc0N6Z1JMTUVjUTVsNWk3aG9DdTVLZFVndWxLM1ZGb0ZmX1RFajFEdzFUUDBrUXdTR19nRTg?oc=5",
@@ -191,12 +197,6 @@
    "title": "Cavs, James Harden respond to challenge in 115-107 win over New York Knicks",
    "link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNNUljUUNnTlpwWVZFQmtfSTV3V1Rqam1pN0VIY3JFcURTTmJWLTlqcThTXzZlSnFhYVkzTS11VnN4UVpBYUVUU2dIaE5VOERoZjBmUTduWnFGdVUxYzJ3M3RkVWRJSVQ4cGFEamhpUGw1bDd5V1JsN1pHOUF4RDJtTXFJVTlJS3hva2FMbGgydWJEb1lRNmpYNElhRzFPcmttZWc5ZWpKVzFQRERwUzdsT1BkOGNIWmFUM2c?oc=5",
    "date": "2026-11-12T02:51:00.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Vintage James Harden leads Cavs in 115-107 win over Knicks",
-   "link": "https://www.fearthesword.com/cavs-scores-results/54283/vintage-james-harden-leads-cavs-in-115-107-win-over-knicks",
-   "date": "2026-11-12T02:45:53.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -443,6 +443,13 @@
  ],
  "videos": [
   {
+   "src": "It's Cavalier Podcast",
+   "title": "Proctor Catches FIRE… But the Cavs’ Defense Falls Apart vs. Heat",
+   "link": "https://www.youtube.com/watch?v=_Gbf3mqQVCQ",
+   "date": "2026-11-14T18:03:34.000Z",
+   "id": "_Gbf3mqQVCQ"
+  },
+  {
    "src": "Locked On Cavs",
    "title": "CAVS POSTCAST: Cavs' Donovan Mitchell, James Harden Can’t Deliver, Offense STALLS in Miami Loss",
    "link": "https://www.youtube.com/watch?v=gu2zeYlx0E8",
@@ -483,13 +490,6 @@
    "link": "https://www.youtube.com/watch?v=75mB4Z5TJ4Y",
    "date": "2026-11-14T04:46:25.000Z",
    "id": "75mB4Z5TJ4Y"
-  },
-  {
-   "src": "It's Cavalier Podcast",
-   "title": "Proctor Catches FIRE… But the Cavs’ Defense Falls Apart vs. Heat",
-   "link": "https://www.youtube.com/watch?v=_Gbf3mqQVCQ",
-   "date": "2026-11-14T04:44:59.000Z",
-   "id": "_Gbf3mqQVCQ"
   },
   {
    "src": "It's Cavalier Podcast",
