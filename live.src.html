@@ -815,6 +815,11 @@ html.rfx #view *,html.rfx #view *::before,html.rfx #view *::after,html.rfx #sb *
 .tps .rot .ln b.pmx,.capmode .rot .ln b.pmx{font:800 .9375rem 'Saira Condensed',sans-serif!important;text-shadow:none!important}
 .tps .rot .mn,.capmode .rot .mn{font:600 .625rem var(--mono)!important;color:var(--muted)!important}
 .tps .rot .ax,.capmode .rot .ax{font:800 .875rem 'Saira Condensed',sans-serif!important;margin-top:8px!important}.tps .rot .ax div,.capmode .rot .ax div{height:18px!important}
+.rot .rgrp{font:800 .6875rem 'Saira Condensed',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:8px 0 2px;padding-top:4px;border-top:1px solid var(--line2)}.rot .ln u{width:2px!important;background:#101419!important;opacity:.55;z-index:1}
+.rot .ax em{font-weight:800}
+/* Nov 14 (Luka): game +/- beside each player's minutes */
+.rot .mn{display:flex;flex-direction:column;align-items:flex-end;line-height:1.05}.rot .mn .rpm{font:800 .9375rem 'Saira Condensed',sans-serif;color:var(--fg)}.rot .mn .rpm.p{color:var(--pmp,#1f8a4c)}.rot .mn .rpm.n{color:var(--pmn,#c8283c)}.rot .mn small{font:500 .625rem var(--mono);color:var(--muted)}
+.tps .rot .mn .rpm,.capmode .rot .mn .rpm{font-size:1.25rem!important}.tps .rot .r,.tps .rot .ax,.capmode .rot .r,.capmode .rot .ax{grid-template-columns:96px 1fr 48px!important}
 </style>
 <script>/* Nov 4: team logos drawn at the same visual size. Each mark is scaled by how much of its square image the artwork fills, relative to the Cavs C (made from img/tl by alpha bounding box). Applies to every logo from /img/tl or /img/tl5, also ones added later. */
 (function(){const SC=window.LOGO_SC={"atl":0.92,"bkn":0.92,"bos":0.92,"cha":0.92,"dal":0.92,"den":0.92,"det":0.92,"gs":0.92,"hou":1.07,"ind":0.96,"lac":0.92,"lal":1.18,"mem":0.95,"mia":0.95,"mil":1.06,"min":0.92,"no":1.25,"ny":1.04,"okc":1.23,"orl":1.1,"por":0.97,"sa":1.03,"tor":0.92,"utah":1.12,"wsh":0.92};const fit=im=>{const m=/\/img\/tl5?\/([a-z]+)\.png/.exec(im.getAttribute("src")||"");if(!m||im.dataset.lsc)return;im.dataset.lsc=1;const v=SC[m[1]];if(v)im.style.scale=String(v)};const all=r=>{if(r.tagName==="IMG")fit(r);else if(r.querySelectorAll)r.querySelectorAll("img").forEach(fit)};const go=()=>{all(document.body);new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(all))).observe(document.body,{childList:true,subtree:true})};if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();
@@ -4473,11 +4478,12 @@ function vRot(v,D,R){
   const ids=D.roster[t.id].filter(id=>R.stints[id]&&R.stints[id].length).sort((a,b)=>(D.P[b].starter-D.P[a].starter)||(R.stints[a][0][0]-R.stints[b][0][0]));
   const now=R.lp?R.lp.t:0;
   const wrap=el('div','rot');
-  ids.forEach(id=>{const r=el('div','r');r.appendChild((n=>{n.append(el('span','rf',D.P[id].short),el('span','rl',D.P[id].last||D.P[id].short));return n})(el('div','nm')));const ln=el('div','ln');
+  let lastSt=null;
+  ids.forEach(id=>{/* Nov 14 (Luka): Starters and Bench labels */if(lastSt!==!!D.P[id].starter){lastSt=!!D.P[id].starter;wrap.appendChild(el('div','rgrp',lastSt?'Starters':'Bench'))}const r=el('div','r');r.appendChild((n=>{n.append(el('span','rf',D.P[id].short),el('span','rl',D.P[id].last||D.P[id].short));return n})(el('div','nm')));const ln=el('div','ln');
     for(let p=2;p<=R.maxPer;p++){const u=el('u');u.style.left=X(pstart(p));ln.appendChild(u)}
     let tot=0;R.stints[id].filter(([a,b])=>b-a>=1).forEach(([a,b,pm])=>{tot+=b-a;const bb=el('b');bb.style.left=X(a);bb.style.width=X(Math.max(b-a,6));/* one color rule: green = good for the Cavs, red = bad; darker = bigger margin; the stint's +/- written in when it fits */const good=t.id===CLE?pm:-pm;const op=Math.min(100,35+Math.abs(pm)*6);bb.style.background=good>0?`color-mix(in srgb,var(--pmp) ${op}%,var(--card))`:good<0?`color-mix(in srgb,var(--pmn) ${op}%,var(--card))`:'#c3c6cb';if((b-a)/T>.07){bb.textContent=sgn(pm);bb.classList.add('pmx')}bb.title=`${pname(perAt(a))} · ${fmtMin(b-a)} on the floor · ${sgn(pm)}`;ln.appendChild(bb)});
     if(now<T){const sh=el('s');sh.style.left=X(now);sh.style.width=X(T-now);ln.appendChild(sh)}
-    r.append(ln,el('div','mn',fmtMin(tot)));wrap.appendChild(r)});
+    /* Nov 14 (Luka): each player's game +/- next to his minutes */{const pm=(R.B[id]||{}).pm;const mn=el('div','mn');const g=pm==null?null:(t.id===CLE?pm:-pm);mn.append(el('b','rpm'+(g>0?' p':g<0?' n':''),pm==null?'–':sgn(pm)),el('small',null,fmtMin(tot)));r.append(ln,mn)}wrap.appendChild(r)});
   const ax=el('div','ax');ax.appendChild(el('span'));const ad=el('div');for(let p=1;p<=R.maxPer;p++){const s=el('em',null,pname(p));s.style.left=X(pstart(p)+plen(p)/2);ad.appendChild(s)}ax.append(ad,el('span'));wrap.appendChild(ax);
   c.appendChild(wrap);
   const k=el('div','key');k.innerHTML=`<span><i style="background:var(--pmp)"></i>Good for the Cavs</span><span><i style="background:var(--pmn)"></i>Bad for the Cavs</span><span><i style="background:#c3c6cb"></i>Even</span><span>Number = ${esc(t.abbr)} +/- in that stint · darker = bigger margin</span>`;c.appendChild(k);
