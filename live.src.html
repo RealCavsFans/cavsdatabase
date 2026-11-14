@@ -766,6 +766,17 @@ html.rfx #view *,html.rfx #view *::before,html.rfx #view *::after,html.rfx #sb *
 .ltg-f.txt{width:52px;height:44px;align-items:center;justify-content:center;font:800 .625rem var(--cond);letter-spacing:.08em;color:var(--muted);background:var(--track)}
 .ltg-b{min-width:0;flex:1;margin-left:6px}.ltg-l{font:700 .8125rem var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ltg-n{display:flex;gap:16px;margin:2px 0}.ltg-n span{display:flex;align-items:baseline;gap:4px}.ltg-n b{font:700 1.125rem/1.1 var(--mono)}.ltg-n b.p{color:#1f8a4c}.ltg-n b.n{color:#c8283c}.ltg-n small{font:700 .625rem var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}.ltg-m{font:500 .6875rem var(--mono);color:var(--muted)}
 [data-theme=dark] .ltg-n b.p{color:#4ade80}[data-theme=dark] .ltg-n b.n{color:#ff6b6b}
+/* Nov 13 (Luka): smaller last-play banner */
+#sb .lastp{padding:4px 10px!important;border-radius:6px!important;font-size:.8125rem!important;line-height:1.3!important;gap:8px!important}#sb .lp-k{font-size:.625rem!important}
+/* Nov 13 (Luka): phones: fouls, timeouts and challenge in one grid, then On pace for on one line, then win probability on one line */
+@media (max-width:600px){
+ .gs{grid-template-columns:auto repeat(3,minmax(0,1fr))!important;column-gap:10px!important}
+ .gs .gsop{grid-column:1/-1!important;grid-row:auto!important;justify-self:stretch!important;border-left:0!important;padding:6px 0 0!important;margin:4px 0 0!important;border-top:1px solid var(--line2)!important;flex-direction:row!important;flex-wrap:wrap;align-items:baseline;gap:4px 8px!important;text-align:left!important}
+ .gs .gsop-v b{font-size:.75rem!important}.gs .gsop-v em{font-size:.875rem!important}.gs .gsop small{font-size:.625rem!important}
+ .gs .gswp{grid-column:1/-1!important;grid-row:auto!important;border-left:0!important;padding:0!important;margin:2px 0 0!important;display:grid!important;grid-template-columns:auto 1fr auto;align-items:center;gap:8px}
+ .gs .gswp .wp-h{display:contents!important}.gs .gswp .wp-h span:first-child{grid-column:1;grid-row:1}.gs .gswp .wp-h span:last-child{grid-column:3;grid-row:1;font-size:.8125rem!important}.gs .gswp .wp-bar{grid-column:2;grid-row:1;height:6px!important}
+ .gs .ft{margin-top:4px!important}
+}
 </style>
 <script>/* Nov 4: team logos drawn at the same visual size. Each mark is scaled by how much of its square image the artwork fills, relative to the Cavs C (made from img/tl by alpha bounding box). Applies to every logo from /img/tl or /img/tl5, also ones added later. */
 (function(){const SC=window.LOGO_SC={"atl":0.92,"bkn":0.92,"bos":0.92,"cha":0.92,"dal":0.92,"den":0.92,"det":0.92,"gs":0.92,"hou":1.07,"ind":0.96,"lac":0.92,"lal":1.18,"mem":0.95,"mia":0.95,"mil":1.06,"min":0.92,"no":1.25,"ny":1.04,"okc":1.23,"orl":1.1,"por":0.97,"sa":1.03,"tor":0.92,"utah":1.12,"wsh":0.92};const fit=im=>{const m=/\/img\/tl5?\/([a-z]+)\.png/.exec(im.getAttribute("src")||"");if(!m||im.dataset.lsc)return;im.dataset.lsc=1;const v=SC[m[1]];if(v)im.style.scale=String(v)};const all=r=>{if(r.tagName==="IMG")fit(r);else if(r.querySelectorAll)r.querySelectorAll("img").forEach(fit)};const go=()=>{all(document.body);new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(all))).observe(document.body,{childList:true,subtree:true})};if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();
@@ -907,7 +918,7 @@ async function fetchGame(){
   else if(S.ev!=='b'&&++S.bkN%4===0){try{setData(await getJSON(ESPN+'summary?event='+S.ev),null);S.bk=null;S.fail=0;return}catch(e){}}
   try{const d=await getJSON('/pbp?d='+S.bk);if(!d.header)throw 0;setData(d,d.src==='schedule'?null:d.src||'backup')}catch(e){if(!S.data)S.err='Could not load the game. Retrying.'}
 }
-function startPoll(){clearInterval(S.poll);S.poll=setInterval(async()=>{if(document.hidden||S.replay)return;if(S.state==='post')return;if(S.state!=='in'&&Date.now()-S.fetched<60000)return;await fetchGame();render()},POLL)}
+function startPoll(){clearInterval(S.poll);S.poll=setInterval(async()=>{if(document.hidden||S.replay)return;if(S.state==='post')return;if(S.state!=='in'&&Date.now()-S.fetched<60000)return;await fetchGame();/* Nov 13 (Luka): nothing new since the last refresh = nothing redrawn */{const D=S.data;const sig=D?[D.plays.length,(D.status&&D.status.type||{}).state,JSON.stringify(D.status&&D.status.displayClock||''),S.err||''].join('|'):'';if(sig&&sig===S.__sig){updLine();return}S.__sig=sig}render()},POLL)}
 setInterval(()=>{if(!S.replay)updLine()},1000);
 document.addEventListener('visibilitychange',async()=>{if(!document.hidden&&!S.replay&&S.state==='in'&&Date.now()-S.fetched>POLL){await fetchGame();render()}});
 
@@ -1023,10 +1034,19 @@ function capAnchor(){if(S.__anc)return;const v=$('view');if(!v)return;const ck=c
   const open=new Set([...document.querySelectorAll('#view details[open],#sb details[open]')].map(d=>{const c=d.closest('.card,#sb');return (c?ck(c):'')+'|'+((d.querySelector('summary')||{}).textContent||'')}));
   let anc=null,off=0;for(const c of v.querySelectorAll('.card')){const r=c.getBoundingClientRect();if(r.bottom>70){anc=ck(c);off=r.top;break}}
   S.__anc={k:vKey(),open,anc,off,y:scrollY,h:v.offsetHeight}}
-function restAnchor(v){const A=S.__anc;S.__anc=null;if(!A||A.k!==vKey()){document.documentElement.classList.remove('rfx');return}
+let LASTIN=0;['touchstart','touchmove','wheel','keydown','pointerdown'].forEach(e=>addEventListener(e,()=>{LASTIN=Date.now()},{capture:true,passive:true}));
+function restAnchor(v){const A=S.__anc;S.__anc=null;if(A&&Date.now()-LASTIN<900){document.documentElement.classList.toggle('rfx',A.k===vKey());return}/* Nov 13: never fight a finger that's scrolling */if(!A||A.k!==vKey()){document.documentElement.classList.remove('rfx');return}
   document.querySelectorAll('#view details,#sb details').forEach(d=>{const c=d.closest('.card,#sb');const k=(c?((c.querySelector('h2')||{}).textContent||''):'')+'|'+((d.querySelector('summary')||{}).textContent||'');if(A.open.has(k))d.open=true});
-  if(A.anc!=null){const c=[...v.querySelectorAll('.card')].find(x=>((x.querySelector('h2')||{}).textContent||'')===A.anc);if(c){const d=c.getBoundingClientRect().top-A.off;if(Math.abs(d)>1)scrollBy(0,d);return}}
+  if(A.anc!=null){const c=[...v.querySelectorAll('.card')].find(x=>((x.querySelector('h2')||{}).textContent||'')===A.anc);if(c){const d=c.getBoundingClientRect().top-A.off;if(Math.abs(d)>1)scrollBy(0,d);pinAnchor(v,A);return}}
   if(Math.abs(scrollY-A.y)>1)scrollTo(0,A.y)}
+/* Nov 13 (Luka): images, fonts and late cards keep changing heights for a moment after a redraw; for 4 seconds any change in size
+   puts the same card back in the same spot, unless you scroll, tap or type yourself */
+let PIN=null;function pinAnchor(v,A){if(PIN)PIN.stop();if(!window.ResizeObserver)return;let alive=true;const find=()=>[...v.querySelectorAll('.card')].find(x=>((x.querySelector('h2')||{}).textContent||'')===A.anc);
+  const fix=()=>{if(!alive||Date.now()-LASTIN<900)return;const c=find();if(!c)return;const d=c.getBoundingClientRect().top-A.off;if(Math.abs(d)>1)scrollBy(0,d)};
+  const ro=new ResizeObserver(()=>requestAnimationFrame(fix));[document.body,v,$('sb')].forEach(x=>x&&ro.observe(x));
+  const stop=()=>{if(!alive)return;alive=false;ro.disconnect();['wheel','touchstart','keydown','pointerdown'].forEach(e=>removeEventListener(e,stop,true));clearTimeout(tm)};
+  ['wheel','touchstart','keydown','pointerdown'].forEach(e=>addEventListener(e,stop,{capture:true,passive:true}));const tm=setTimeout(stop,4000);PIN={stop};
+  document.querySelectorAll('#view img,#sb img').forEach(im=>{if(!im.complete)im.addEventListener('load',()=>requestAnimationFrame(fix),{once:true})})}
 function renderView(){
   capAnchor();const v=$('view'),D=S.data,R=S.R;{const same=S.__anc&&S.__anc.k===vKey();document.documentElement.classList.toggle('rfx',!!same);if(same)v.style.minHeight=S.__anc.h+'px'}v.innerHTML='';v.classList.toggle('gm',!S.season&&S.tab!=='lineups');v.classList.toggle('gmp',S.tab==='players');/* keep green/red for lineups and for +/- in the box score *//* game view: no green/red on stats for now (Luka, Oct 28) */
   if(S.state==='pre'&&!R.plays.length){const c=el('div','card');c.append(el('h2',null,D.away.abbr+' at '+D.home.abbr),el('p',null,'Tip-off '+new Date(D.date).toLocaleString([],{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+(D.venue?' · '+D.venue:'')+(D.bc.length?' · '+D.bc.join(', '):'')+'.'),el('p','note pre-n','Team and player stats, lineups, shots, four factors and rotations fill in once the game starts. The page refreshes every 15 seconds during the game.'));v.appendChild(c);
@@ -1985,14 +2005,16 @@ function vFlow(v,D,R){
 }
 
 /* tonight vs the season: the Cavs' rates tonight next to their season averages (this season once it has 10 games, else last season) */
-let SEASONT=null;const seasonTotals=()=>SEASONT||(SEASONT=getJSON('/pdata/cle-rates.json').catch(()=>null));
+let SEASONT=null,SEASONTV;const seasonTotals=()=>SEASONT||(SEASONT=getJSON('/pdata/cle-rates.json').catch(()=>null).then(x=>(SEASONTV=x,x)));
+/* Nov 13 (Luka): once loaded, the refresh draws it at once (no 'Loading…' line popping in and out) */
+const whenSeason=fn=>SEASONTV!==undefined?fn(SEASONTV):seasonTotals().then(fn);
 /* tonight in the same box-score terms as the season numbers (Basketball Reference formulas) */
 function rateRows(A,B,X){const P=t=>poss({fga:t.fga,oreb:t.oreb,to:t.to,fta:t.fta,np:t.np});/* Nov 11 (Luka): tonight counts the same play-by-play possessions as Team stats (the season numbers are NBA.com's, which count real possessions too); the box estimate ran 5 or 6 high for some opponents, so ORTG and pace disagreed between the two cards */const pa=P(A),pb=P(B);
   const now=[A.sec?((pa+pb)/2)/A.sec*2880:null,pa?A.pts/pa*100:null,pb?B.pts/pb*100:null,A.fga?100*(A.fgm+0.5*A.tpm)/A.fga:null,100*A.to/((A.fga+0.44*A.fta+A.to)||1),(A.oreb+B.dreb)?100*A.oreb/(A.oreb+B.dreb):null,A.fga?100*A.ftm/A.fga:null,B.fga?100*(B.fgm+0.5*B.tpm)/B.fga:null];
   const sea=X?[X.pace,X.ortg,X.drtg,X.efg,X.tov,X.orb,X.ftr,X.oefg]:[];
   return [['Pace',0],['ORTG',1],['DRTG',-1],['eFG%',1],['TOV%',-1],['Off. rebound rate',1],['FT rate',1],['Opp. effective FG%',-1]].map(([n,good],i)=>[n,now[i],sea[i],good])}
 function tvsCard(D,R){if(S.season||D.focus.id!==CLE)return null;const c=el('div','card sec tvsc');head(c,'Tonight vs the season',perLabel(S.per));const body=el('div');body.appendChild(el('p','note','Loading season averages…'));c.appendChild(body);
-  seasonTotals().then(X=>{body.textContent='';if(!X){body.appendChild(el('p','empty','Season averages aren’t available yet.'));return}
+  if(SEASONTV!==undefined)body.textContent='';whenSeason(X=>{body.textContent='';if(!X){body.appendChild(el('p','empty','Season averages aren’t available yet.'));return}
     subOf(c).textContent=perLabel(S.per)+' · '+(X.season===CUR_SEASON?'this season ('+X.g+' games)':'vs '+X.season.replace('-','–')+' until 10 games in');
     const rows=rateRows(R.T[D.focus.id],R.T[D.other.id],X);const hd=el('div','tvs h');hd.innerHTML='<span></span><span>Tonight</span><span>Season</span><span>Diff</span>';body.appendChild(hd);
     rows.forEach(([n,x,y,good])=>{const r=el('div','tvs');const df=x==null||y==null?null:x-y;const bt=!good||df==null||Math.abs(df)<.5?0:((df>0)===(good>0)?1:-1);
