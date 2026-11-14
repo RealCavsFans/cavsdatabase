@@ -145,7 +145,15 @@
    "url": "https://www.basketball-reference.com/boxscores/202611110NYK.html",
    "at": "2026-11-13T09:32:17.399Z",
    "players": 19
+  },
+  "0022600036": {
+   "et": "2026-11-13",
+   "opp": "MIA",
+   "status": "match",
+   "url": "https://www.basketball-reference.com/boxscores/202611130MIA.html",
+   "at": "2026-11-14T15:19:26.588Z",
+   "players": 20
   }
  },
- "checked": "2026-11-13T09:32:17.400Z"
+ "checked": "2026-11-14T15:19:26.588Z"
 }
