@@ -6576,7 +6576,7 @@ function injBody(inj,diag,prior){const V=window.__bodyV||'D';const cur=injSpot(i
  window.cdbAttachX=attach;window.cdbCap=capture;
 /* Nov 4: drafted players' latest games on the home rail */
 setTimeout(()=>{const box=document.getElementById('dp-list'),sec=box&&box.closest('.o-dp');if(!box)return;
- const day=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});const fresh=d=>(Date.now()-new Date(d+'T12:00:00'))/864e5<=10;
+ const day=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});/* Nov 14 (Luka): a drafted player's line shows for 48 hours after his game, then drops off */const fresh=d=>(Date.now()-new Date(d+'T23:00:00-05:00'))/36e5<=48;
  const draw=rows=>{box.textContent='';rows.filter(r=>r&&fresh(r.d)).sort((a,b)=>a.d<b.d?1:-1).forEach(r=>{const w=el('div','dp-r');
    const h=el('div','dp-h');const nm=el('a','dp-n',r.n);nm.href='/assets#rights';h.appendChild(nm);h.appendChild(el('span','dp-t',r.team));w.appendChild(h);
    const g=el('div','dp-g');g.append(day(r.d)+' '+(r.ha==='A'?'at ':'vs ')+r.opp+' · ');const a=el('a','dp-res',r.res);if(r.url){a.href=r.url;a.target='_blank';a.rel='noopener'}g.appendChild(a);w.appendChild(g);
