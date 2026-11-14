@@ -299,6 +299,7 @@ td.pnm{font-weight:700;color:var(--fg)}body>main.wrap{min-height:100vh}b.ffv>sma
 .sw small{font:500 0.75rem var(--mono);color:var(--muted)}
 .sw b{font:700 0.8125rem var(--mono)}
 .vsn{font-size:0.6875rem;margin-left:4px;font-weight:600}
+.bld-g{margin-top:10px}.bld-g .k{font:800 .6875rem var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .cardout{margin-top:12px;display:grid;grid-template-columns:minmax(0,320px) 1fr;gap:16px;align-items:start}
 .cardout img{width:100%;border:1px solid var(--line)}
 .cardout .acts{display:flex;flex-direction:column;gap:8px}
@@ -3444,8 +3445,35 @@ const B_MILE2={label:'Milestone card',async draw(x,D,R){milestoneCard(D,R);const
 Object.assign(CARDS,{ff:B_FF2,run:BWG(B_RUN),quarters:B_QTR2,podium:B_POD2,box:B_BOX2,streak:B_REC2,story:BWG(B_STORY),clutch:BWG(B_CLUTCH),milestone:B_MILE2,lineup:B_LU2,shotmap:B_SHOT2});
 Object.assign(SCARDS,{season:BWrap(B_SEASON,()=>'',D=>BGK(D)),wfactor:B_WF2,sleaders:BWrap(B_SLEAD,(D,R,s)=>s,D=>BGK(D)),ff:B_FF2,box:B_BOX2,lineup:B_LU2});
 
+/* Nov 13 (Luka): Build your own: pick 2 or 3 players and up to 4 stats; side by side or bars, in the house style. Season = per game, a game = that game's totals */
+const BLD_ST=[['pts','PTS'],['reb','REB'],['ast','AST'],['stl','STL'],['blk','BLK'],['to','TO'],['tpm','3PM'],['fg','FG%'],['tp','3P%'],['ft','FT%'],['ts','TS%'],['pm','+/-'],['min','MIN']];
+function bldVal(b,k){const n=S.season?(b.gp||1):1,pg=v=>v/n;const r=(m,a)=>a?m/a*100:null;
+  switch(k){case 'reb':return pg((b.oreb||0)+(b.dreb||0));case 'fg':return r(b.fgm||0,b.fga||0);case 'tp':return r(b.tpm||0,b.tpa||0);case 'ft':return r(b.ftm||0,b.fta||0);case 'ts':{const q=(b.fga||0)+.44*(b.fta||0);return q?(b.pts||0)/(2*q)*100:null}case 'min':return pg((b.min||0)/60);default:return pg(b[k]||0)}}
+const bldFmt=(k,v)=>v==null||!isFinite(v)?'–':/^(fg|tp|ft|ts)$/.test(k)?v.toFixed(1)+'%':k==='pm'?(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(S.season?1:0):S.season?v.toFixed(1):String(Math.round(v));
+const bldSub=(b,k)=>{const n=S.season?(b.gp||1):1,f=v=>S.season?(v/n).toFixed(1):String(v);return k==='fg'?f(b.fgm||0)+'–'+f(b.fga||0):k==='tp'?f(b.tpm||0)+'–'+f(b.tpa||0):k==='ft'?f(b.ftm||0)+'–'+f(b.fta||0):''};
+const B_BUILD={label:'Build your own',pick:'build',async draw(x,D,R,arg){let o={};try{o=JSON.parse(arg||'{}')}catch(e){}const ids=(o.p||[]).filter(id=>R.B[id]&&D.P[id]).slice(0,3),ks=(o.s||[]).filter(k=>BLD_ST.some(z=>z[0]===k)).slice(0,4);
+  if(ids.length<2||!ks.length)return;const lab=k=>BLD_ST.find(z=>z[0]===k)[1],lo=k=>k==='to';const two=new Set(ids.map(id=>D.P[id].team)).size>1;
+  const ln=id=>(D.P[id].last||D.P[id].name).toUpperCase();const ttl=ids.map(id=>D.P[id].last||D.P[id].name).join(' vs ');
+  const c=await bFrame(x,D,BGK(D),ttl,S.season?'Per game':(S.state==='post'?'Final':'So far tonight'),null);
+  const N=ids.length,V=ks.map(k=>ids.map(id=>bldVal(R.B[id],k)));const best=V.map((r,i)=>{const z=r.filter(v=>v!=null);if(z.length<2)return null;const m=lo(ks[i])?Math.min(...z):Math.max(...z);return z.filter(v=>v===m).length===1?m:null});
+  /* players across the top */const PH=250;const cw=(c.W-(N-1)*16)/N;
+  for(let j=0;j<N;j++){const X=c.X+j*(cw+16),id=ids[j],b=R.B[id];BT(x,X,c.Y,cw,PH,'#f2f3f5');await BHead(x,D,id,X+cw/2,c.Y+96,76);x.textAlign='center';BFit(x,ln(id),cw-30,52);x.fillStyle=MK.ink;x.fillText(ln(id),X+cw/2,c.Y+214);
+    x.font='600 22px "Geist Mono"';x.fillStyle=MK.mut;const sub=[two?(D.teams.find(t=>t.id===D.P[id].team)||{}).abbr:null,S.season?(b.gp||0)+' GP':Math.round((b.min||0)/60)+' MIN'].filter(Boolean).join(' · ').replace(/\bCLE\b/,'CAVS');x.fillText(sub,X+cw/2,c.Y+242);x.textAlign='left'}
+  const Y0=c.Y+PH+20,H0=c.Y+c.H-Y0,rh=Math.min(200,(H0-(ks.length-1)*12)/ks.length);
+  if(o.l!=='bars'){/* side by side: one band per stat, each player's number in his column, the leader in wine */
+    ks.forEach((k,i)=>{const Y=Y0+i*(rh+12);for(let j=0;j<N;j++){const X=c.X+j*(cw+16),v=V[i][j],top=best[i]!=null&&v===best[i];BT(x,X,Y,cw,rh,top?MK.wine:'#f2f3f5');x.textAlign='center';
+        x.font='800 26px "Saira Condensed"';x.fillStyle=top?MK.gold:MK.mut;x.fillText(lab(k),X+cw/2,Y+38);const t=bldFmt(k,v);BFit(x,t,cw-40,Math.min(96,rh*.48));x.fillStyle=top?'#fff':MK.ink;x.fillText(t,X+cw/2,Y+(rh>150?rh*.68:rh*.8)+8);
+        const sb=bldSub(R.B[ids[j]],k);if(sb&&rh>150){x.font='600 22px "Geist Mono"';x.fillStyle=top?'rgba(255,255,255,.75)':MK.mut;x.fillText(sb,X+cw/2,Y+rh-20)}x.textAlign='left'}})}
+  else{/* bars: one block per stat, a bar per player on the same scale */
+    ks.forEach((k,i)=>{const Y=Y0+i*(rh+12);BT(x,c.X,Y,c.W,rh,'#f2f3f5');BTxt(x,lab(k),c.X+28,Y+42,30,MK.mut);const vals=V[i],mx=Math.max(...vals.map(v=>Math.abs(v||0)),/^(fg|tp|ft|ts)$/.test(k)?0:1e-9)||1;
+      const bh=Math.min(40,(rh-70-(N-1)*10)/N);vals.forEach((v,j)=>{const y=Y+62+j*(bh+10),top=best[i]!=null&&v===best[i];x.font='800 26px "Saira Condensed"';x.fillStyle=MK.ink;x.fillText(ln(ids[j]),c.X+28,y+bh*.75);
+        const bx=c.X+230,bw=c.W-230-170;x.fillStyle='#e3e6ea';x.fillRect(bx,y,bw,bh);const f=/^(fg|tp|ft|ts)$/.test(k)?(v||0)/100:Math.abs(v||0)/mx;x.fillStyle=top?MK.wine:'#9aa1a9';x.fillRect(bx,y,Math.max(2,bw*Math.min(1,f)),bh);
+        const t=bldFmt(k,v);x.font=`800 ${Math.round(bh*1.05)}px "Saira Condensed"`;x.fillStyle=top?MK.wine:MK.ink;x.fillText(t,c.X+c.W-28-x.measureText(t).width,y+bh*.82)})})}
+}};
+CARDS.build=B_BUILD;SCARDS.build=B_BUILD;
+
 /* season mode: the season cards plus the game cards that work on season totals */
-const shareCards=()=>S.season?Object.assign({},SCARDS,{ff:CARDS.ff,onoff:CARDS.onoff,lineup:CARDS.lineup,shotmap:CARDS.shotmap,box:CARDS.box}):CARDS;
+const shareCards=()=>S.season?Object.assign({},SCARDS,{ff:CARDS.ff,onoff:CARDS.onoff,lineup:CARDS.lineup,shotmap:CARDS.shotmap,box:CARDS.box,build:B_BUILD}):CARDS;
 /* Nov 12 (Luka): the player page's share card is this page's season player card. The player page loads this page hidden and asks for the image by name. */
 window.__pcard=async nm=>{const ok=()=>S.season&&S.data&&S.data.P&&S.R&&S.R.B;for(let i=0;i<150&&!ok();i++)await new Promise(r=>setTimeout(r,200));if(!ok())return null;const D=S.data,R=S.R,nz=t=>String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z]/g,'');
   const id=Object.keys(D.P).find(k=>R.B[k]&&nz(D.P[k].name)===nz(nm));if(!id)return null;const bl=await renderCard('player',id,D,R);return bl?await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.onerror=()=>r(null);fr.readAsDataURL(bl)}):null};
@@ -3484,8 +3512,19 @@ function vShare(v,D,R){
       if(luBox)luBox.disabled=!l;S.f.luN=n};
     ids.forEach(id=>{const b=el('button',null,D.P[id].short||D.P[id].name);b.type='button';b.dataset.id=id;b.onclick=()=>{const a=S.f.luPk;const i2=a.indexOf(id);if(i2>=0)a.splice(i2,1);else a.push(id);upd()};wrap.appendChild(b)});
     c.append(wrap,msg);luBox={get value(){return key()},disabled:false};setTimeout(upd)}
-  if(C.pick==='lineup')sel=luBox;
-  else if(C.pick){sel=el('select');sel.setAttribute('aria-label','Pick');
+  if(C.pick==='build'){/* Nov 13 (Luka): build your own: tick players and stats, pick a layout */
+    const Fi=D.focus.id,pool=Object.keys(R.B).filter(id=>D.P[id]&&(S.season?R.B[id].gp&&D.P[id].team===Fi:R.B[id].min>0)).sort((a,b)=>(D.P[a].team===Fi?0:1)-(D.P[b].team===Fi?0:1)||(R.B[b].min||0)-(R.B[a].min||0));
+    const B0=S.f.bd||{};if(!B0.p||!B0.p.every(id=>pool.includes(id)))B0.p=pool.filter(id=>D.P[id].team===Fi).slice(0,2);if(!B0.s||!B0.s.length)B0.s=['pts','reb','ast','ts'];B0.l=B0.l||'side';S.f.bd=B0;
+    const msg=el('p','note');const grp=(t,items,on,max)=>{const w=el('div','bld-g');w.appendChild(el('div','k',t));const f=el('div','fl');items.forEach(([v,l])=>{const b=el('button',null,l);b.type='button';b.dataset.v=v;b.onclick=()=>on(v);f.appendChild(b)});w.appendChild(f);c.appendChild(w);return f};
+    const ab=id=>{const t=D.teams.find(z=>z.id===D.P[id].team);return t&&t.id!==Fi?' · '+t.abbr:''};
+    const fP=grp('Players · 2 or 3',pool.map(id=>[id,(D.P[id].short||D.P[id].name)+ab(id)]),v=>{const a=B0.p,i=a.indexOf(v);if(i>=0)a.splice(i,1);else if(a.length<3)a.push(v);upd()});
+    const fS=grp('Stats · up to 4',BLD_ST.map(z=>[z[0],z[1]]),v=>{const a=B0.s,i=a.indexOf(v);if(i>=0)a.splice(i,1);else if(a.length<4)a.push(v);upd()});
+    const fL=grp('Layout',[['side','Side by side'],['bars','Bars']],v=>{B0.l=v;upd()});c.appendChild(msg);
+    const upd=()=>{fP.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',B0.p.includes(b.dataset.v)));fS.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',B0.s.includes(b.dataset.v)));fL.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',B0.l===b.dataset.v));
+      const ok=B0.p.length>=2&&B0.s.length>=1;msg.textContent=ok?B0.p.length+' players · '+B0.s.length+' stat'+(B0.s.length>1?'s':'')+(S.season?' · per game this season':' · this game'):B0.p.length<2?'Pick 2 or 3 players.':'Pick at least one stat.';bldSel.disabled=!ok};
+    var bldSel={get value(){return JSON.stringify(B0)},disabled:false};sel=bldSel;setTimeout(upd)}
+  else if(C.pick==='lineup')sel=luBox;
+  else if(C.pick&&C.pick!=='build'){sel=el('select');sel.setAttribute('aria-label','Pick');
     const opts=C.pick==='shooter'?[['team','Whole team']].concat(Object.keys(R.B).filter(id=>D.P[id].team===D.focus.id&&R.B[id].fga).sort((a,b)=>R.B[b].fga-R.B[a].fga).map(id=>[id,D.P[id].name+' · '+R.B[id].fga+' FGA'])):C.pick==='player'?(S.season?Object.keys(R.B).filter(id=>R.B[id].gp).sort((a,b)=>R.B[b].pts/R.B[b].gp-R.B[a].pts/R.B[a].gp).map(id=>[id,D.P[id].name+' · '+(R.B[id].pts/R.B[id].gp).toFixed(1)+' ppg']):Object.keys(R.B).filter(id=>(R.B[id].min>0||R.B[id].pts)&&(S.f.card!=='onoff'||D.P[id].team===D.focus.id)).sort((a,b)=>(D.P[a].team===D.focus.id?0:1)-(D.P[b].team===D.focus.id?0:1)||R.B[b].pts-R.B[a].pts).map(id=>[id,D.P[id].name+' · '+R.B[id].pts+' pts'])):
       C.pick==='run'?R.runs.map((r,i)=>[String(i),D.teams.find(t=>t.id===r.t).abbr+' '+r.pts+'–0 · '+pname(r.start.per)+' '+r.start.clock]).reverse():
       Object.entries(R.L[D.focus.id][R.L[D.focus.id][S.f.luN]?S.f.luN:5]).filter(([k,l])=>l.sec>=60).sort((a,b)=>b[1].sec-a[1].sec).map(([k,l])=>[k,l.ids.map(id=>D.P[id].last).join(', ')+' · '+fmtMin(l.sec)]);
@@ -3493,7 +3532,7 @@ function vShare(v,D,R){
     S.f.pk=S.f.pk||{};const keep=S.f.pk[S.f.card];opts.forEach(([val,l])=>{const o=el('option',null,l);o.value=val;if(val===keep)o.selected=true;sel.appendChild(o)});sel.onchange=()=>{S.f.pk[S.f.card]=sel.value;go.click()};f2.appendChild(sel)}
   const go=el('button','btn','Make card');go.type='button';f2.appendChild(go);c.appendChild(f2);
   const out=el('div','cardout');c.appendChild(out);
-  go.onclick=async()=>{if(sel&&sel===luBox&&luBox.disabled)return;const arg=sel?sel.value:null;if(sel){S.f.pk=S.f.pk||{};S.f.pk[S.f.card]=arg}const blob=await renderCard(S.f.card,arg,D,R);const url=URL.createObjectURL(blob);out.innerHTML='';const img=el('img');img.src=url;img.alt=C.label;
+  go.onclick=async()=>{if(sel&&sel.disabled)return;const arg=sel?sel.value:null;if(sel){S.f.pk=S.f.pk||{};S.f.pk[S.f.card]=arg}const blob=await renderCard(S.f.card,arg,D,R);const url=URL.createObjectURL(blob);out.innerHTML='';const img=el('img');img.src=url;img.alt=C.label;
     const acts=el('div','acts');const fn=('cavsdb-'+S.f.card+'-'+(S.season?'season-'+S.season:D.away.abbr+'-'+D.home.abbr)).toLowerCase().replace(/[^a-z0-9-]/g,'')+'.png';
     const dl=el('a','btn','Download image');dl.href=url;dl.download=fn;acts.appendChild(dl);
     try{const file=new File([blob],fn,{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[file]})){const sh=el('button','btn ghost','Share');sh.type='button';sh.onclick=()=>capShare(file);acts.appendChild(sh)}}catch(e){}
