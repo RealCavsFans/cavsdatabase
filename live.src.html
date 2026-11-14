@@ -750,6 +750,15 @@ details.howc{margin-top:8px}details.howc summary{cursor:pointer;font:600 .75rem 
 @media (max-width:600px){.gs{grid-template-columns:auto repeat(3,auto)!important}}
 /* Nov 13 (Luka): no animations or transitions on the 15-second refresh redraws */
 html.rfx #view *,html.rfx #view *::before,html.rfx #view *::after,html.rfx #sb *{animation:none!important;transition:none!important}
+/* Nov 13 (Luka): type audit. One scale for every card: title 17px (slim strips 14px), subtitle 13px, tables and body 13px,
+   notes 12px, small labels and ranks 11px, and one size (18px) for the big numbers in stat tiles */
+#view .card h2{font-size:1.0625rem}#view .card.msw h2,#view .card.hh h2{font-size:.875rem!important}
+#view .tsh{font-size:.9375rem!important}#view .tsh b{font-size:inherit!important}
+#view .ffv,#view .slc .lc b,#view .pbt b,#view .clv-p b,#view .clv-tm b,#view .wcs b{font-size:1.125rem!important}
+#view table.ato td,#view table.ato th{font-size:.8125rem!important}#view table.ato td small{font-size:.6875rem!important}#view table.ato tr>th{font-size:.8125rem!important}
+#view th{min-height:0}#view .card th{font-size:max(.6875rem,1em)}#view .card td small{font-size:.6875rem}
+#view .an th,#view .anet th,#view .asn th{font-size:.6875rem!important}
+#view .tiles>div>b,#view .ldt-g>div>b{font-size:1.125rem!important}#view .zkey b,#view .zkey span{font-size:.6875rem!important}#view .zbr .ab{font-size:.8125rem!important}
 </style>
 <script>/* Nov 4: team logos drawn at the same visual size. Each mark is scaled by how much of its square image the artwork fills, relative to the Cavs C (made from img/tl by alpha bounding box). Applies to every logo from /img/tl or /img/tl5, also ones added later. */
 (function(){const SC=window.LOGO_SC={"atl":0.92,"bkn":0.92,"bos":0.92,"cha":0.92,"dal":0.92,"den":0.92,"det":0.92,"gs":0.92,"hou":1.07,"ind":0.96,"lac":0.92,"lal":1.18,"mem":0.95,"mia":0.95,"mil":1.06,"min":0.92,"no":1.25,"ny":1.04,"okc":1.23,"orl":1.1,"por":0.97,"sa":1.03,"tor":0.92,"utah":1.12,"wsh":0.92};const fit=im=>{const m=/\/img\/tl5?\/([a-z]+)\.png/.exec(im.getAttribute("src")||"");if(!m||im.dataset.lsc)return;im.dataset.lsc=1;const v=SC[m[1]];if(v)im.style.scale=String(v)};const all=r=>{if(r.tagName==="IMG")fit(r);else if(r.querySelectorAll)r.querySelectorAll("img").forEach(fit)};const go=()=>{all(document.body);new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(all))).observe(document.body,{childList:true,subtree:true})};if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();
