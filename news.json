@@ -1,8 +1,44 @@
 {
  "articles": [
   {
+   "src": "Hoops Rumors",
+   "title": "Injury Notes: Lakers, Mobley, Nets, Missi, Butler",
+   "link": "https://www.hoopsrumors.com/2026/11/injury-notes-lakers-mobley-nets-missi-butler.html",
+   "date": "2026-11-14T05:01:06.000Z"
+  },
+  {
    "src": "Fear The Sword",
-   "title": "James Harden is foundational to the Cavs’ Success",
+   "title": "Diving deeper into Cavs 133-121 loss to Heat: Supporting players shine in losing effort",
+   "link": "https://www.fearthesword.com/cavs-analysis/54382/cavs-diving-deeper-cleveland-cavaliers-miami-heat-giannis-antetokounmpo-donovan-mitchell-tyrese-proctor",
+   "date": "2026-11-14T05:00:00.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Giannis Antetokounmpo and Bam Adebayo dominate Cavaliers in 133-121 loss in Miami",
+   "link": "https://www.fearthesword.com/cavs-scores-results/54384/giannis-antetokounmpo-and-bam-adebayo-dominate-cavaliers-in-133-121-loss-in-miami",
+   "date": "2026-11-14T03:55:35.000Z"
+  },
+  {
+   "src": "Hoops Rumors",
+   "title": "Multiple Teams' Travel Impacted By FAA Ground Stop",
+   "link": "https://www.hoopsrumors.com/2026/11/multiple-teams-travel-impacted-by-faa-ground-stop.html",
+   "date": "2026-11-14T01:04:33.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Cavs at Heat game thread",
+   "link": "https://www.fearthesword.com/cavs-game-previews/54324/cavs-at-heat-game-thread",
+   "date": "2026-11-14T01:00:00.000Z"
+  },
+  {
+   "src": "cleveland.com",
+   "title": "Cavs’ Kenny Atkinson gives injury update on Evan Mobley’s toe",
+   "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNX25xalFPb3B2WEJPekdrSmVrTk56ZjhnaUs2Vm1MYXEyelczbXpuSml5YUttbjU0dGhSdmN5TnAxdWVWM204UVFQaGFiZGowdVV0Sl9IS0o0N090a0RJTE1kNDV2U3BEdU1CUE16OGFwVGVwdWsyOHNzT1N5bVpjdGxQZ0hpc0tPQVdsZHc1bnZWYTNzQmpjQm05LW9vZlRvbDRTVHlB?oc=5",
+   "date": "2026-11-14T00:37:00.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "James Harden is foundational to the Cavs’ success",
    "link": "https://www.fearthesword.com/cavs-analysis/54367/james-harden-is-foundational-to-the-cavs-success",
    "date": "2026-11-13T20:11:26.000Z"
   },
@@ -35,6 +71,12 @@
    "title": "Friday Mailbag: Where Is the Panic Meter in Cleveland?",
    "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE1CSDE5TWFTYnlSLXRqM0hHMEROUzJBb0J0RFdvSkhsUWx2UnZza0loUmhlUWJjcGVBX0Jacnk0Y0hGYTY0alBiZXg3NThYTEF2ZnJydEJlWGJPaVdCZ05RNkNMbDF0blFNS2N3eENtWmlTbG5DVU1nNV9B?oc=5",
    "date": "2026-11-13T12:56:30.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "Cavaliers’ Slow Start Is a James Harden Problem",
+   "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPLXlkcGM0anNvaDlhUm1hRWg3VVlXRlVnY2ZjWnh2aFlDdmMyUy0xT1pBNzRRbHkxWUhDWlRxX05ZTHJLUDl1cGU5azZQQmF0M0xxZGZvTGZsbllndDA1ZmI3WU02VmNQVnlfMmRtWmoxZHlaUEVHVUE0bkhwdU00c0RPUHZ0dw?oc=5",
+   "date": "2026-11-13T12:25:03.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -91,12 +133,6 @@
    "date": "2026-11-12T11:30:00.000Z"
   },
   {
-   "src": "cleveland.com",
-   "title": "Not ‘Houston James’: Cavs’ James Harden ‘still trying to figure it out’ amid slow start",
-   "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPOEprSUI5X19OcFp5Z183TTBTVENaMjJNVk90am1wcC12QV9nWkFZZWt5Q0dVb094aVNwNDkzOTh0VHltOWRac0REYy0wLVI4VHZzSEpPRTNoTkdGamlHd3RxMktIOEF6MUw2VHgzWjJaekRmeGNZVWVUWlRFUmNpREt2OHhJRC1aekcwM2xhMGktQlZvNG5KQUd1cExlUGZvczVWMkpFQ0ZfN1VVQW9fRU9mRFR3SnZyX1FVSVdLN0FxTXNlT19Pdw?oc=5",
-   "date": "2026-11-12T06:52:00.000Z"
-  },
-  {
    "src": "The Athletic",
    "title": "'My name is James Harden': Former MVP erupts for season-high 32 points in Cavs' win over Knicks",
    "link": "https://www.nytimes.com/athletic/7775173/2026/11/12/james-harden-cavs-knicks-skid/",
@@ -127,12 +163,6 @@
    "date": "2026-11-12T02:45:53.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "Cavs at Knicks game thread",
-   "link": "https://www.fearthesword.com/cavs-game-previews/54252/cavs-at-knicks-game-thread",
-   "date": "2026-11-12T00:00:00.000Z"
-  },
-  {
    "src": "Hoops Rumors",
    "title": "Cavaliers Notes: Harden, Atkinson, Minix, Tyson",
    "link": "https://www.hoopsrumors.com/2026/11/cavaliers-notes-harden-atkinson-minix-tyson.html",
@@ -149,18 +179,6 @@
    "title": "3 Young Cavaliers Who Could Earn Much Bigger Roles As The Season Progresses",
    "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxOZEVxaC1TNjFqUnRBa2dyLXBIcEVuQWo5cFJ3eThab0tCTjFVOXZkYjZIWF9wX1lta1NmYjFIZzRhWEZSdmc2V3ZLemxQTmJpTG5YSGVqclNxSXFPMlVja1B3NFhzR0ZTZHg0RHVFODdsbVdaMVhQeTdzQVkxcURyd1NTQ3AxQllYdFF2dkRiekdsTUhjR0tSQ0lTNmpRTTJuUWd2ampTVjZpX2hKT0VmSGp1N3d5UkFHZ0prX3NmaVNJcTNU?oc=5",
    "date": "2026-11-11T19:27:14.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cleveland Charge drop season opener 142-122 to Motor City",
-   "link": "https://www.fearthesword.com/cleveland-charge/54262/cleveland-charge-g-league-cavaliers-cavs-motor-city-cruise-detroit-pistons-curtis-jones",
-   "date": "2026-11-11T03:18:33.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cavs at Knicks: How to watch, odds, and injury report",
-   "link": "https://www.fearthesword.com/cavs-injury-report/54253/cavs-at-knicks-how-to-watch-odds-and-injury-report",
-   "date": "2026-11-11T00:30:00.000Z"
   },
   {
    "src": "The Inside Shot",
@@ -325,22 +343,10 @@
    "date": "2026-11-05T23:09:08.000Z"
   },
   {
-   "src": "Cavaliers on SI",
-   "title": "3 Players That Stand To Gain Most From Cavs Recent Injury Woes",
-   "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPNU1MOXU0Z3k2b2swbG5hSF9zNXRQbUx4a09lUTNfeV8yWnFyNHh0NU1JcmZwY0RWcUF0T2c2T1lhS0xnS29hdFllMnU1RGNJRXBucVVjUzBXa3RzZ0FZWWpyV09GTk4tRFdQa3JXckgxVGdCNDVwcVV2akdYRHNQQWw3aXRYNURiX1UwSzA1VTg3X1NYcDdYUEtjTW5ocnZJM3FObGNvREl5OGpBRDNkdHhobw?oc=5",
-   "date": "2026-11-05T21:00:01.000Z"
-  },
-  {
    "src": "The Inside Shot",
    "title": "Game Night Observations: An Ugly Problem, Getting to the Rim and More Injuries",
    "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPQ2xQTTJfWXp4VVlEMFUxaHRRYnVpdi1EbW93TzM0TmlJeHJ2cWxVX1VGaWxSQV84WnJHdVdKSko2MExCQUtxcGVJb09rSFBnM1JzTWMtTzFwX0lRRW12ZXNfcHljQTBFTFVPWi04YnBrVEhrNDJvUDU2QkFRV1NNT01n?oc=5",
    "date": "2026-11-05T12:50:34.000Z"
-  },
-  {
-   "src": "Hoops Rumors",
-   "title": "Injury Notes: Leonard, Pacers, Caruso, Embiid, Aldama",
-   "link": "https://www.hoopsrumors.com/2026/11/injury-notes-leonard-pacers-caruso-embiid-aldama.html",
-   "date": "2026-11-04T03:45:08.000Z"
   }
  ],
  "podcasts": [
@@ -425,17 +431,45 @@
  "videos": [
   {
    "src": "It's Cavalier Podcast",
+   "title": "Tyrese Proctor was a bright spot for the Cavs #cavs #cavaliers #clevelandcavaliers",
+   "link": "https://www.youtube.com/watch?v=NpLp_iY7cuU",
+   "date": "2026-11-14T05:03:43.000Z",
+   "id": "NpLp_iY7cuU"
+  },
+  {
+   "src": "Locked On Cavs",
+   "title": "Chasity Melvin Calls for a CHANGE in the Cleveland Cavaliers Starting Lineup",
+   "link": "https://www.youtube.com/watch?v=75mB4Z5TJ4Y",
+   "date": "2026-11-14T04:46:25.000Z",
+   "id": "75mB4Z5TJ4Y"
+  },
+  {
+   "src": "It's Cavalier Podcast",
+   "title": "REACTION: Cavs vs. Heat",
+   "link": "https://www.youtube.com/watch?v=_Gbf3mqQVCQ",
+   "date": "2026-11-14T04:44:59.000Z",
+   "id": "_Gbf3mqQVCQ"
+  },
+  {
+   "src": "Locked On Cavs",
+   "title": "CAVS POSTCAST: Cavs' Donovan Mitchell, James Harden Can’t Deliver, Offense STALLS in Miami Loss",
+   "link": "https://www.youtube.com/watch?v=gu2zeYlx0E8",
+   "date": "2026-11-14T04:10:59.000Z",
+   "id": "gu2zeYlx0E8"
+  },
+  {
+   "src": "It's Cavalier Podcast",
+   "title": "Tyrese Proctor caught FIRE 🔥 in the 1st QTR #cavs #cavaliers #clevelandcavaliers",
+   "link": "https://www.youtube.com/watch?v=GW1t7l3-W7I",
+   "date": "2026-11-14T01:49:37.000Z",
+   "id": "GW1t7l3-W7I"
+  },
+  {
+   "src": "It's Cavalier Podcast",
    "title": "Is Tyrese Proctor Making Sam Merrill Expendable for the Cavs?",
    "link": "https://www.youtube.com/watch?v=gWPf9mgYzzY",
    "date": "2026-11-13T19:50:19.000Z",
    "id": "gWPf9mgYzzY"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: Donovan Mitchell and the Cleveland Cavaliers Face Giannis Antetokounmpo & the Heat",
-   "link": "https://www.youtube.com/watch?v=gu2zeYlx0E8",
-   "date": "2026-11-13T18:48:31.000Z",
-   "id": "gu2zeYlx0E8"
   },
   {
    "src": "Locked On Cavs",
@@ -571,39 +605,11 @@
    "id": "Vs4t0sz4ovk"
   },
   {
-   "src": "It's Cavalier Podcast",
-   "title": "Cavs Face the Knicks Again… Are They FINALLY Ready to Bounce Back?",
-   "link": "https://www.youtube.com/watch?v=Rd7ehQeXYys",
-   "date": "2026-11-11T16:07:32.000Z",
-   "id": "Rd7ehQeXYys"
-  },
-  {
    "src": "Ultimate Cleveland Sports Show",
    "title": "What's at stake tonight for the Cleveland Cavaliers as they take on the NY Knicks on National TV?",
    "link": "https://www.youtube.com/watch?v=hPA2AJb8Jew",
    "date": "2026-11-11T15:48:47.000Z",
    "id": "hPA2AJb8Jew"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "TROUBLING: Cleveland Cavaliers Exposed as James Harden's Early Season Numbers PLUMMET",
-   "link": "https://www.youtube.com/watch?v=sJYlsTSsnvo",
-   "date": "2026-11-11T03:40:07.000Z",
-   "id": "sJYlsTSsnvo"
-  },
-  {
-   "src": "It's Cavalier Podcast",
-   "title": "Is It Time for the Cavs to Move On From James Harden?",
-   "link": "https://www.youtube.com/watch?v=0OvGHouVdFk",
-   "date": "2026-11-10T22:11:01.000Z",
-   "id": "0OvGHouVdFk"
-  },
-  {
-   "src": "It's Cavalier Podcast",
-   "title": "The Cavs Can’t Grab a Rebound… And It’s Costing Them Games",
-   "link": "https://www.youtube.com/watch?v=smc7vRYbO9M",
-   "date": "2026-11-10T17:11:20.000Z",
-   "id": "smc7vRYbO9M"
   },
   {
    "src": "Ultimate Cleveland Sports Show",
@@ -684,6 +690,13 @@
   }
  ],
  "highlights": [
+  {
+   "src": "NBA",
+   "title": "CAVALIERS AT HEAT | EMIRATES NBA CUP 🏆 | FULL GAME HIGHLIGHTS | November 13, 2026",
+   "link": "https://www.youtube.com/watch?v=UM4WvtmbJGM",
+   "date": "2026-11-14T04:00:52.000Z",
+   "id": "UM4WvtmbJGM"
+  },
   {
    "src": "NBA",
    "title": "EXTENDED: CAVALIERS at KNICKS | FULL GAME HIGHLIGHTS | November 11, 2026",
