@@ -825,6 +825,8 @@ tr.nextg td,.sched tr.nextg,.chs tr.nextg{background:var(--sub,#F5F6F3)!importan
 @media(max-width:760px){.ab2-pipe summary{display:grid!important;grid-template-columns:22px 1fr;column-gap:8px}.ab2-pipe summary b{grid-row:span 2;padding-top:3px}.ab2-pipe summary em{grid-column:2}}
 
 .dp-lab{margin:8px 0 0!important}
+
+@media (min-width:761px){.gdm-row.two.long{grid-template-columns:1fr}.gdm-row.long #inj{display:grid;grid-template-columns:1fr 1fr;column-gap:32px}.gdm-row.long .gdm-tape,.gdm-row.long>*:first-child{max-width:none}}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link,#dp-h{font:800 .9375rem var(--cond);text-transform:uppercase;letter-spacing:.06em;margin:0;color:var(--fg)}.pp-sub{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:2px 0 6px}.pp-sub>span{font-size:.8125rem;color:var(--muted)}/* Nov 4 audit: one kicker style, one rule weight, same name/meta sizes for the Charge game and drafted players */.o-pipe .cap-label{font:700 .6875rem var(--cond);font-stretch:normal;letter-spacing:.1em;margin-top:2px}.o-pipe .ch-next{font-size:.9375rem;margin-top:2px}.o-pipe .ch-meta{font-size:.8125rem}.o-pipe .ch-rec{font:700 .875rem var(--mono);color:var(--muted)}.o-pipe .pp-lk{font:400 .8125rem var(--sans);color:var(--wine-ink);text-decoration:none;white-space:nowrap}.ch-nrow{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.o-pipe .ch-nrow .ch-rec{font:600 .8125rem var(--mono);color:var(--muted)}.o-pipe .ch-nrow .ch-rec:before{content:'Record ';font:700 .625rem var(--cond);letter-spacing:.1em;text-transform:uppercase;margin-right:2px}.o-dp{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
@@ -3317,7 +3319,7 @@ function fitLogo(img){/* Nov 4: sizing now comes from the site-wide logo scale (
         const io=new IntersectionObserver(es=>{if(es.some(x=>x.isIntersecting)){io.disconnect();run()}},{threshold:.4});io.observe(tp)}}
     /* game day: the Cavs injury report moves up next to the tale of the tape (its usual home is the side rail / under the 82-game strip) */
     if(INJURIES.length&&window.cdbInjMove)window.cdbInjMove(row);
-    if(row.children.length){if(row.children.length>1)row.classList.add('two');box.appendChild(row)}
+    if(row.children.length){if(row.children.length>1)row.classList.add('two');/* Nov 14 (Luka): a long injury report (6+ names) goes full width under the tape, in two columns, so the row doesn't leave a big gap */if(row.children.length>1)setTimeout(()=>{const ij=document.getElementById('inj');if(!ij)return;const chk=()=>row.classList.toggle('long',ij.querySelectorAll(':scope>li').length>=6);chk();new MutationObserver(chk).observe(ij,{childList:true})},0);box.appendChild(row)}
     if(rec)rec.hidden=true;
     const go=async()=>{if(Date.now()<t-15*6e4)return;const Lv=await cavsLive(g[0]);if(!Lv||Lv.state==='pre')return;LAST=Date.now();if(window.cdbInjBack)window.cdbInjBack();box.textContent='';
       /* Nov 11 (Luka): at the final buzzer the small final card (WIN/LOSS, top line, box score) takes over right away, from ESPN's numbers until the saved box score lands */
