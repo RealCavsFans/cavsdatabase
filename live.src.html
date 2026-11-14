@@ -748,6 +748,8 @@ details.howc{margin-top:8px}details.howc summary{cursor:pointer;font:600 .75rem 
 /* Nov 13 (Luka): the strip fills the full width: fouls, timeouts and challenge share it evenly with On pace for and Win probability */
 .gs{grid-template-columns:auto repeat(3,minmax(0,1fr)) minmax(0,1.3fr) minmax(0,1.6fr)!important;column-gap:18px!important;width:100%}.gs .gsop{justify-self:stretch!important;margin-left:0!important;padding-left:18px!important}.gs .gswp{justify-self:stretch;padding-left:18px!important;margin-left:0!important}.gs .gswp .wp-bar{width:100%}
 @media (max-width:600px){.gs{grid-template-columns:auto repeat(3,auto)!important}}
+/* Nov 13 (Luka): no animations or transitions on the 15-second refresh redraws */
+html.rfx #view *,html.rfx #view *::before,html.rfx #view *::after,html.rfx #sb *{animation:none!important;transition:none!important}
 </style>
 <script>/* Nov 4: team logos drawn at the same visual size. Each mark is scaled by how much of its square image the artwork fills, relative to the Cavs C (made from img/tl by alpha bounding box). Applies to every logo from /img/tl or /img/tl5, also ones added later. */
 (function(){const SC=window.LOGO_SC={"atl":0.92,"bkn":0.92,"bos":0.92,"cha":0.92,"dal":0.92,"den":0.92,"det":0.92,"gs":0.92,"hou":1.07,"ind":0.96,"lac":0.92,"lal":1.18,"mem":0.95,"mia":0.95,"mil":1.06,"min":0.92,"no":1.25,"ny":1.04,"okc":1.23,"orl":1.1,"por":0.97,"sa":1.03,"tor":0.92,"utah":1.12,"wsh":0.92};const fit=im=>{const m=/\/img\/tl5?\/([a-z]+)\.png/.exec(im.getAttribute("src")||"");if(!m||im.dataset.lsc)return;im.dataset.lsc=1;const v=SC[m[1]];if(v)im.style.scale=String(v)};const all=r=>{if(r.tagName==="IMG")fit(r);else if(r.querySelectorAll)r.querySelectorAll("img").forEach(fit)};const go=()=>{all(document.body);new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(all))).observe(document.body,{childList:true,subtree:true})};if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();
@@ -902,6 +904,7 @@ if(S.tab==='onoff'||S.tab==='rot'){S.lu=S.tab;S.tab='lineups'}
 try{const l=localStorage.getItem('cdb-live-lu');if(l)S.lu=S.lu||l}catch(e){}
 S.lu=S.lu||'groups';
 function render(){
+  if($('view')&&$('view').children.length)capAnchor();
   if(S.season){if(!S.data){$('sb').innerHTML='<div class="empty">'+(S.err||'Loading…')+'</div>';return}renderSeasonSB();renderNav(S.R);renderView();$('upd').textContent='Season totals from the game archive';return}
   if(!S.data){$('sb').innerHTML='<div class="empty">'+(S.err||'Loading…')+'</div>';return}
   const D=S.data;S.state=S.replay?(S.cur>=D.plays.length?'post':'in'):(D.status.type||{}).state;
@@ -997,8 +1000,19 @@ function teamHeads(v,D){if(!D||!D.focus||!D.other)return;const F=D.focus.abbr,O=
     {const fi=[...r0.cells].findIndex(c=>c.classList.contains('thf'));if(fi>1&&oi>0)oi-=fi-1}if(oi>1&&[...r0.cells].some(c=>c.classList.contains('thf')))[...t.rows].forEach(r=>{const c=r.cells[oi];if(c&&r.cells.length===r0.cells.length)c.classList.add('ogrp')});
     [...t.rows].slice(1).forEach(r=>{const c=r.cells[0];if(!c)return;const x=c.textContent.trim();if(x===F)c.classList.add('thf');else if(x===O)c.classList.add('tho')})});
   run();setTimeout(run,600);setTimeout(run,2000)}
+/* Nov 13 (Luka): refreshes keep your place. Before a re-render of the same view: remember which drop-downs are open and which card is at the
+   top of the screen; after it, reopen them and scroll so that card sits exactly where it was. Animations and transitions are off for these redraws. */
+const vKey=()=>[S.ev||'',S.season||'',S.tab,S.per||'all',S.lu||''].join('|');
+function capAnchor(){if(S.__anc)return;const v=$('view');if(!v)return;const ck=c=>{const h=(c.querySelector('h2')||{}).textContent||'';return h};
+  const open=new Set([...document.querySelectorAll('#view details[open],#sb details[open]')].map(d=>{const c=d.closest('.card,#sb');return (c?ck(c):'')+'|'+((d.querySelector('summary')||{}).textContent||'')}));
+  let anc=null,off=0;for(const c of v.querySelectorAll('.card')){const r=c.getBoundingClientRect();if(r.bottom>70){anc=ck(c);off=r.top;break}}
+  S.__anc={k:vKey(),open,anc,off,y:scrollY,h:v.offsetHeight}}
+function restAnchor(v){const A=S.__anc;S.__anc=null;if(!A||A.k!==vKey()){document.documentElement.classList.remove('rfx');return}
+  document.querySelectorAll('#view details,#sb details').forEach(d=>{const c=d.closest('.card,#sb');const k=(c?((c.querySelector('h2')||{}).textContent||''):'')+'|'+((d.querySelector('summary')||{}).textContent||'');if(A.open.has(k))d.open=true});
+  if(A.anc!=null){const c=[...v.querySelectorAll('.card')].find(x=>((x.querySelector('h2')||{}).textContent||'')===A.anc);if(c){const d=c.getBoundingClientRect().top-A.off;if(Math.abs(d)>1)scrollBy(0,d);return}}
+  if(Math.abs(scrollY-A.y)>1)scrollTo(0,A.y)}
 function renderView(){
-  const v=$('view'),D=S.data,R=S.R;v.innerHTML='';v.classList.toggle('gm',!S.season&&S.tab!=='lineups');v.classList.toggle('gmp',S.tab==='players');/* keep green/red for lineups and for +/- in the box score *//* game view: no green/red on stats for now (Luka, Oct 28) */
+  capAnchor();const v=$('view'),D=S.data,R=S.R;{const same=S.__anc&&S.__anc.k===vKey();document.documentElement.classList.toggle('rfx',!!same);if(same)v.style.minHeight=S.__anc.h+'px'}v.innerHTML='';v.classList.toggle('gm',!S.season&&S.tab!=='lineups');v.classList.toggle('gmp',S.tab==='players');/* keep green/red for lineups and for +/- in the box score *//* game view: no green/red on stats for now (Luka, Oct 28) */
   if(S.state==='pre'&&!R.plays.length){const c=el('div','card');c.append(el('h2',null,D.away.abbr+' at '+D.home.abbr),el('p',null,'Tip-off '+new Date(D.date).toLocaleString([],{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+(D.venue?' · '+D.venue:'')+(D.bc.length?' · '+D.bc.join(', '):'')+'.'),el('p','note pre-n','Team and player stats, lineups, shots, four factors and rotations fill in once the game starts. The page refreshes every 15 seconds during the game.'));v.appendChild(c);
     const opp=D.other;const holder=el('div');holder.appendChild(el('p','note','Loading the scouting report…'));v.appendChild(holder);scoutData(opp.id).then(X=>{if(S.data!==D)return;holder.innerHTML='';holder.appendChild(scoutCard(D,X,opp))});return}
   ({season:vSeason,share:vShare,ast:vAst,team:vTeam,players:vPlayers,lineups:vLuHub,shots:vShots,flow:vFlow,ff:vFF,plays:vPlays})[S.tab](v,D,R);
@@ -1010,6 +1024,7 @@ function renderView(){
   /* game view: no green/red for now, so drop the sentences that explain them (also for notes added a moment later) */
   if(!S.season&&S.tab!=='lineups'){const strip=root=>root.querySelectorAll('p.note').forEach(n=>{if(!/\b(Wine|wine|Green|green|red|Wine|wine)\b/.test(n.textContent)||n.children.length>1)return;const t=n.textContent.split(/(?<=\.)\s+/).filter(x=>!/\b(Wine|wine|Green|green|red|Wine|wine)\b/.test(x)).join(' ');if(t.trim())n.textContent=t;else n.remove()});strip(v);clearTimeout(S.gnT);S.gnT=setTimeout(()=>strip(v),1500)}
   /* table bars removed everywhere (Oct 28) */
+  {try{foldNotes()}catch(e){}const A=S.__anc;restAnchor(v);if(A&&A.k===vKey()){[0,150,600].forEach(ms=>setTimeout(()=>{try{foldNotes()}catch(e){}S.__anc=A;restAnchor(v)},ms));setTimeout(()=>{v.style.minHeight=''},1500)}else v.style.minHeight=''}
 }
 /* small bars inside the plain tables: net and +/- columns get a bar left or right of center, records a win-share bar, shares and per-possession numbers a length bar */
 function vizTables(v){v.querySelectorAll('table.zt:not(.shmini)').forEach(t=>{const rows=[...t.rows];if(rows.length<2)return;const hd=[...rows[0].cells].map(c=>c.textContent.trim().toLowerCase());
@@ -4504,7 +4519,7 @@ function prevPicker(){let w=document.getElementById('prevpk');if(w){w.remove()}w
   let seen=new WeakSet();const io=new IntersectionObserver(es=>{es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const t=e.target,v=t.dataset.bgv;
     t.animate(v?[{transform:'scaleY(0)'},{transform:'scaleY(1)'}]:[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{duration:750,easing:'cubic-bezier(.2,.75,.25,1)',delay:Math.min(240,(+t.dataset.bgi||0)*40),fill:'backwards'})})},{threshold:.2});
   const scan=()=>{let k=0;document.querySelectorAll('[style*="width"],[style*="height"]').forEach(x=>{if(seen.has(x))return;const s=x.style;const w=/%$/.test(s.width),h=/%$/.test(s.height)&&!w;if(!w&&!h)return;
-    if(x.closest('[hidden],.cap-stage,.shot-stage')||x.textContent.trim().length>6)return;const r=x.getBoundingClientRect();if(!r.width&&!r.height)return;if(w&&r.height>28)return;if(h&&r.width>60)return;
+    if(x.closest('[hidden],.cap-stage,.shot-stage')||x.textContent.trim().length>6)return;if(document.documentElement.classList.contains('rfx')&&x.closest('#view,#sb')){seen.add(x);return}/* Nov 13 (Luka): refresh redraws don't regrow the bars */const r=x.getBoundingClientRect();if(!r.width&&!r.height)return;if(w&&r.height>28)return;if(h&&r.width>60)return;
     seen.add(x);x.style.transformOrigin=h?'bottom':'left';if(h)x.dataset.bgv=1;x.dataset.bgi=k++%8;io.observe(x)})};
   let tm=0;const later=()=>{if(tm)return;tm=setTimeout(()=>{tm=0;scan()},120)};new MutationObserver(later).observe(document.body,{childList:true,subtree:true});
   addEventListener('popstate',()=>{seen=new WeakSet();later()});window.cdbBarsReset=()=>{seen=new WeakSet();later()};later()})();
