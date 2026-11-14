@@ -1,0 +1,51 @@
+# security headers on every page: no framing by other sites (embeds excepted below), no MIME sniffing, HTTPS only, no camera/mic/location
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
+/embed/*
+  ! X-Frame-Options
+
+/img/*
+  Cache-Control: public, max-age=604800
+/og/*
+  Cache-Control: public, max-age=86400
+/icon-*
+  Cache-Control: public, max-age=604800
+/nl/*
+  Cache-Control: public, max-age=86400
+# Nov 7: the latest issue changes every game morning, so browsers check for a new one
+/nl/last-issue.html
+  ! Cache-Control
+  Cache-Control: public, max-age=300
+/sw.js
+  Cache-Control: no-cache
+/a/*
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# data files: Google may fetch them to render pages, but they shouldn't show up in search
+/pdata/*
+  X-Robots-Tag: noindex
+/live-archive/*
+  X-Robots-Tag: noindex
+/data/*
+  X-Robots-Tag: noindex
+/box.json
+  X-Robots-Tag: noindex
+/news.json
+  X-Robots-Tag: noindex
+/videos.json
+  X-Robots-Tag: noindex
+/rcf.json
+  X-Robots-Tag: noindex
+/niang.json
+  X-Robots-Tag: noindex
+/live-base.json
+  X-Robots-Tag: noindex
+/links-status.json
+  X-Robots-Tag: noindex

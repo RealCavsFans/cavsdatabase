@@ -1,0 +1,86 @@
+{
+ "0022500379": [
+  {
+   "action": 307,
+   "set": {
+    "personId": 203994,
+    "playerName": "Nurkić",
+    "playerNameI": "J. Nurkić"
+   },
+   "was": "K. Love",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022500476": [
+  {
+   "action": 736,
+   "set": {
+    "personId": 1641716,
+    "playerName": "Walker",
+    "playerNameI": "J. Walker"
+   },
+   "was": "J. Furphy",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022500542": [
+  {
+   "action": 616,
+   "set": {
+    "personId": 1641772,
+    "playerName": "Tomlin",
+    "playerNameI": "N. Tomlin"
+   },
+   "was": "S. Merrill",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022500737": [
+  {
+   "action": 333,
+   "set": {
+    "personId": 1628970,
+    "playerName": "Bridges",
+    "playerNameI": "M. Bridges"
+   },
+   "was": "T. Mann",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022500773": [
+  {
+   "action": 507,
+   "set": {
+    "personId": 1630230,
+    "playerName": "Marshall",
+    "playerNameI": "N. Marshall"
+   },
+   "was": "D. Powell",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022500912": [
+  {
+   "action": 671,
+   "set": {
+    "personId": 1642345,
+    "playerName": "Ighodaro",
+    "playerNameI": "O. Ighodaro"
+   },
+   "was": "K. Maluach",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022501097": [
+  {
+   "action": 596,
+   "set": {
+    "personId": 1641717,
+    "playerName": "Wallace",
+    "playerNameI": "C. Wallace"
+   },
+   "was": "C. Holmgren",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ]
+}

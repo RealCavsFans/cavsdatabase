@@ -1,0 +1,115 @@
+// Staleness check: is the site's data actually updating? Prints each problem and exits 1 if any (0 when healthy).
+// Checks the daily data (SITE_UPDATED), the 30-minute job (last bot commit), box scores for finished games,
+// the league feed, the news feed and the weekly outside-link check. Run by the daily health scheduled task, which pushes Luka a note only on problems.
+import { readFile } from 'node:fs/promises';
+import { execSync } from 'node:child_process';
+const root = new URL('../', import.meta.url);
+const html = await readFile(new URL('index.html', root), 'utf8');
+const J = async f => { try { return JSON.parse(await readFile(new URL(f, root), 'utf8')); } catch { return null; } };
+const etDay = (d = new Date()) => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(d);
+const days = (a, b) => (Date.parse(b) - Date.parse(a)) / 864e5;
+const today = etDay(), now = Date.now(), problems = [], notes = [];
+const grab = re => { const m = html.match(re); return m ? Function('return ' + m[1])() : null; };
+const S = grab(/const SCHEDULE=(\[[\s\S]*?\]);\n/) || [];
+const inSeason = S.length && today >= S[0][0] && today <= S[S.length - 1][0];
+// 1. daily data task
+const upd = (html.match(/const SITE_UPDATED='(\d{4}-\d\d-\d\d)'/) || [])[1];
+if (!upd) problems.push('SITE_UPDATED is missing from index.html');
+else if (days(upd, today) > (inSeason ? 2 : 6)) problems.push(`Daily data hasn't changed since ${upd} (${days(upd, today)} days). The daily update may be failing.`);
+else notes.push('daily data ' + upd);
+// 2. the 30-minute job: newest commit by the bot
+try { const t = +execSync('git -C ' + root.pathname + ' log -1 --format=%ct --author=cavsdatabase-bot', { encoding: 'utf8' }).trim() * 1000;
+  const h = (now - t) / 36e5; if (!t) problems.push('No commits from the 30-minute job found.'); else if (h > 6) problems.push(`The 30-minute job hasn't committed in ${h.toFixed(0)} hours. Check GitHub Actions.`); else notes.push(`30-min job ${h.toFixed(1)}h ago`);
+} catch { notes.push('git log unavailable'); }
+// 3. box scores: every regular-season game more than 6 hours past tip should be final with a box
+const box = await J('box.json') || {};
+const tipOf = (d, t) => { let h = 19, m = 0; if (t && /^\d{1,2}:\d{2}/.test(t)) { [h, m] = t.split(':').map(x => parseInt(x)); if (!/AM/i.test(t) && h < 12) h += 12; } return Date.parse(`${d}T${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:00-05:00`); };
+const missing = S.filter(([d, , , t]) => { const tip = tipOf(d, t); return now - tip > 6 * 36e5 && !(box[d] && box[d].status === 'final' && (box[d].box || []).length); }).map(g => g[0] + ' ' + g[1]);
+if (missing.length) problems.push(`Box scores missing for ${missing.length} finished game(s): ${missing.slice(-5).join(', ')}`);
+// 4. league feed (players' league-wide ranks)
+const L = await J('pdata/league.json');
+if (inSeason && S.some(g => days(g[0], today) >= 2)) { if (!L || !L.updated) problems.push('League feed (pdata/league.json) has never updated.'); else if ((now - Date.parse(L.updated)) / 36e5 > 30) problems.push(`League feed last updated ${L.updated.slice(0, 16)}.`); else notes.push(`league feed ${L.games.length} games`); }
+// 4b. team stats job (scripts/team-stats.mjs): once games are in the league feed, the Cavs scores and standings should follow within a day
+if (L && L.tg && Object.keys(L.tg).length) {
+  const played = Object.values(L.tg).filter(g => (g.t || []).some(t => t.ab === 'CLE') && days(g.d, today) >= 1).length;
+  const scores = (html.match(/const SCORES=(\{[^\n]*?\});/) || [])[1] || '{}';
+  const have = (scores.match(/'\d{4}-|"\d{4}-/g) || []).length;
+  if (played > have) problems.push(`Team stats job is behind: ${played} Cavs games in the league feed but ${have} scores on the site. Check the "Team stats" GitHub job.`);
+  else notes.push(`team stats ${have} games`);
+}
+// 5. news feed
+const N = await J('news.json');
+const newest = N ? [...(N.articles || []), ...(N.videos || []), ...(N.podcasts || [])].map(x => x.date).sort().pop() : null;
+if (!newest) problems.push('News feed (news.json) is empty or missing.');
+else if (days(newest.slice(0, 10), today) > 3) problems.push(`Newest news item is from ${newest.slice(0, 10)}. The news fetch may be failing.`);
+else notes.push('news ' + newest.slice(0, 10));
+// 6. weekly outside-link check (.github/workflows/links.yml)
+const LK = await J('links-status.json');
+if (!LK) notes.push('link check not run yet');
+else { if (days(LK.checked.slice(0, 10), today) > 9) problems.push(`The weekly link check hasn't run since ${LK.checked.slice(0, 10)}. Check GitHub Actions.`);
+  if (LK.broken && LK.broken.length) problems.push(`${LK.broken.length} broken outside link(s) as of ${LK.checked.slice(0, 10)}: ${LK.broken.slice(0, 5).map(([u, s]) => u + ' (' + s + ')').join(', ')}${LK.broken.length > 5 ? ', …' : ''}`);
+  else notes.push(`links ok (${LK.total})`); }
+// 7. live page backup feed (/pbp): replay the latest finished Cavs game through each source, so a layout change
+// at CBS or Yahoo shows up here instead of during a game when ESPN is down. Nov 13: CBS and Yahoo are the two backups (StatMuse dropped).
+{
+  const last = S.filter(([d]) => d < today && box[d] && box[d].status === 'final' && days(d, today) <= 10).pop();
+  if (!last) notes.push('backup feed: no recent game to test');
+  else for (const src of ['cbs', 'yahoo']) {
+    const d = last[0].replace(/-/g, ''); let msg = null;
+    // Nov 2: the site's health identifier gets past Cloudflare's bot screen (without it the test never reached the backups)
+    try { const ask = () => fetch(`https://cavsdatabase.com/pbp?d=${d}&src=${src}`, { headers: { 'user-agent': 'cavsdatabase-health', 'cache-control': 'no-cache' }, signal: AbortSignal.timeout(45000) });
+      let r = await ask(); if (!/json/.test(r.headers.get('content-type') || '')) { await new Promise(z => setTimeout(z, 4000)); r = await ask(); }   // the bot screen sometimes answers the first try
+      const j = await r.json();
+      if (!r.ok || !j.plays) msg = (j.error || r.status) + (j.tried && j.tried.length ? ': ' + j.tried.join('; ') : '');
+      else { const cav = j.header.competitions[0].competitors.find(c => c.id === '5'); const want = +String(box[last[0]].score || '').split('-')[0];
+        if (j.plays.length < 150) msg = `only ${j.plays.length} plays`; else if (want && cav && +cav.score !== want) msg = `Cavs score ${cav.score}, box score says ${want}`; }
+    } catch (e) { notes.push(`backup ${src}: could not check (${String(e.message || e).slice(0, 60)})`); continue; }
+    if (!msg) notes.push(`backup ${src} ok`);
+    else problems.push(`Live page backup feed: ${src} failed on the ${last[0]} game (${msg}). The live page still has the other backups; see MANUAL.md.`);
+  }
+}
+// 8. possession accuracy: our play-by-play counts vs pbpstats for every archived game (scripts/check-poss.mjs)
+{ const pc = await J('data/poss-check.json'); if (pc && pc.games) { const G = Object.values(pc.games).filter(x => (x.nba || x.pb) && x.ours);
+  /* Nov 6 (Luka): NBA.com's official counts first (data/poss-nba.json, within 2), pbpstats for the rest (within 3: it differs from NBA.com by up to 3 itself) */
+  const off = G.filter(x => { const r = x.nba || x.pb, tol = x.nba ? 2 : 3; return !x.reviewed && (Math.abs(x.ours.cle[0] - r.cle[0]) > tol || Math.abs(x.ours.opp[0] - r.opp[0]) > tol || x.ours.cle[1] !== r.cle[1] || x.ours.opp[1] !== r.opp[1]); });
+  if (off.length) problems.push(`Possession or point counts differ in ${off.length} game(s): ${off.slice(-3).map(x => { const r = x.nba || x.pb; return x.et + ' ' + x.opp + ' (possessions/points, Cavs then ' + x.opp + ': ours ' + x.ours.cle.join('/') + ' · ' + x.ours.opp.join('/') + ', ' + (x.nba ? 'NBA.com ' : 'pbpstats ') + r.cle.join('/') + ' · ' + r.opp.join('/') + ')'; }).join('; ')}`);
+  else notes.push('possessions match NBA.com (' + G.filter(x => x.nba).length + ' games) and pbpstats (' + G.filter(x => !x.nba).length + ' more)'); } }
+// 10. box score accuracy (Nov 1): scripts/bbr-check.mjs compares each finished game with Basketball Reference
+{ const bc = await J('data/bbr-check.json'); if (bc && bc.games) { const G = Object.values(bc.games), off = G.filter(x => x.status === 'diff'), miss = G.filter(x => x.status !== 'diff' && x.status !== 'match' && (now - Date.parse(x.et)) / 864e5 > 3);
+  if (off.length) problems.push(`Box score differs from Basketball Reference in ${off.length} game(s): ${off.slice(-3).map(x => x.et + ' ' + x.opp + ' (' + (x.diffs || []).slice(0, 3).join('; ') + (x.diffs && x.diffs.length > 3 ? '; +' + (x.diffs.length - 3) + ' more' : '') + ')').join(' · ')}`);
+  else notes.push('box scores match Basketball Reference (' + G.filter(x => x.status === 'match').length + ' games)');
+  if (miss.length) problems.push(`Couldn't compare ${miss.length} game(s) with Basketball Reference: ${miss.map(x => x.et + ' ' + x.opp + ' (' + x.status + ')').join(', ')}`); } }
+// 9. the live site itself (Nov 1): cavsdatabase.com answers, and it serves the newest build (catches a stuck Cloudflare deploy)
+try {
+  const r = await fetch('https://cavsdatabase.com/', { headers: { 'cache-control': 'no-cache', 'user-agent': 'cavsdatabase-health' } });
+  if (!r.ok) problems.push(`cavsdatabase.com answered ${r.status}`);
+  else {
+    const live = ((await r.text()).match(/\/a\/app\.([0-9a-f]{10})\.js/) || [])[1];
+    let built = null, age = 0;
+    try { built = (execSync('git -C ' + root.pathname + ' show origin/deploy:home.html 2>/dev/null || cat ' + root.pathname + 'home.html', { encoding: 'utf8', shell: '/bin/bash' }).match(/\/a\/app\.([0-9a-f]{10})\.js/) || [])[1];
+      // the build time is the second line of the hash file on 'deploy' (Nov 1: main no longer stores the pages)
+      age = (now - +execSync('git -C ' + root.pathname + ' show origin/deploy:data/prerender-hash.txt', { encoding: 'utf8' }).trim().split('\n')[1]) / 36e5; } catch {}
+    if (!(age >= 0)) age = 0;
+    if (live && built && live !== built && age > 2) problems.push(`The live site still serves an older build (app.${live}.js; newest is app.${built}.js, ${age.toFixed(0)} h old). Cloudflare may not be deploying.`);
+    else notes.push('live site ok');
+  }
+} catch (e) { problems.push('cavsdatabase.com did not answer: ' + String(e.message || e).slice(0, 80)); }
+// 11. Cloudflare build minutes (Nov 2): the free plan includes 3,000 a month and Cloudflare shows no counter for free usage.
+// Every publish to the 'deploy' branch is one build, so count this month's pushes there (about 45 seconds each, a safe estimate).
+if (process.env.GH_TOKEN) { try {
+  const repo = process.env.GITHUB_REPOSITORY || 'RealCavsFans/cavsdatabase', m0 = new Date().toISOString().slice(0, 7);
+  // Nov 3: this endpoint pages with a cursor ('after' in the Link header); a page number just repeats page 1, which read as 2,000 builds
+  let n = 0, after = '';
+  for (let pg = 1; pg <= 60; pg++) {
+    const r = await fetch(`https://api.github.com/repos/${repo}/activity?ref=refs/heads/deploy&time_period=month&per_page=100${after ? '&after=' + after : ''}`, { headers: { authorization: 'Bearer ' + process.env.GH_TOKEN, accept: 'application/vnd.github+json' } });
+    if (!r.ok) throw new Error('GitHub ' + r.status); const a = await r.json();
+    n += a.filter(x => String(x.timestamp).slice(0, 7) === m0).length;
+    const nx = /[?&]after=([^&>]+)[^>]*>;\s*rel="next"/.exec(r.headers.get('link') || ''); if (!nx || !a.length) break; after = nx[1];
+  }
+  const d = new Date(), day = d.getUTCDate() - 1 + d.getUTCHours() / 24, dim = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0)).getUTCDate();
+  const used = Math.round(n * 0.75), pace = day >= 1 ? Math.round(n * 0.75 / day * dim) : used;
+  if (pace > 2500) problems.push(`Cloudflare builds are on pace for about ${pace} of the 3,000 free minutes this month (${n} builds so far). Builds would pause if it runs out; ask Claude to cut down on publishes.`);
+  else notes.push(`builds this month ${n} (~${used} of 3,000 min, on pace for ~${pace})`);
+} catch (e) { notes.push('build count unavailable: ' + String(e.message || e).slice(0, 40)); } }
+if (problems.length) { console.log('PROBLEMS:\n- ' + problems.join('\n- ')); console.log('ok: ' + notes.join(' · ')); process.exit(1); }
+console.log('HEALTHY: ' + notes.join(' · '));

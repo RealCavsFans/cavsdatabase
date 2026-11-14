@@ -1,0 +1,12 @@
+/  /home  200
+/video /media 301
+/rcf /media 301
+/data/* / 302
+/tools/* / 302
+/logos/* / 302
+/scripts/* / 302
+/README.md / 302
+/box-status.txt / 302
+/media/rcf /media 301
+/.claude/* / 302
+/live.src.html /live.html 301
