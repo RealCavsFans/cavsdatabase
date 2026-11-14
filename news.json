@@ -1,6 +1,18 @@
 {
  "articles": [
   {
+   "src": "The Inside Shot",
+   "title": "Game Night Observations: Defensive Woes and Travel Delays",
+   "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1kZ1hrNGR5bkdJWlhBSXN2S0lhdEtpRjhVVjZhcGhqdm9pWEtpbFJVZzB6WkpFdFBSMlZyLVRKX3BqRi1YWTJqVG5vc0N6Z1JMTUVjUTVsNWk3aG9DdTVLZFVndWxLM1ZGb0ZmX1RFajFEdzFUUDBrUXdTR19nRTg?oc=5",
+   "date": "2026-11-14T12:44:27.000Z"
+  },
+  {
+   "src": "cleveland.com",
+   "title": "Why the Cavs’ end-of-game ‘fight’ can’t be the baseline for a team too pricey and too talented to underachieve: Wine and Gold Talk podcast",
+   "link": "https://news.google.com/rss/articles/CBMiiAJBVV95cUxQZFpXRjE5TGZKT0VMR0FjX2JZZ1MxbzdpYWlnaWEwejJOeWEzZS1OU05JaWNxSTNDQXNqT0hZVTJ4QTh4bEtYOGVGYlRQbVBTU0xObHdESjJQbXNzSzlNZVdBN2Y4NWlBMjlfOTBDdDd4NkdWNDloZ1JoWFI2NXc0M21sT3JCNnZhUFVKOEtDR2xGY1FvVzBfQnhJaExmRllvZ0UtMkZwaG5xcW0tZVBOZVJSZEVpaDc4bUNIQ3BLMmNyeVREOExWcFZvSGt5bmk3alNOMFM3Um9pdGxqU2F5REZaNXZVM2sxMUVqeF9xYUMzT0dmR3NmMTFQMXRDSUFyVXppU0s2U3I?oc=5",
+   "date": "2026-11-14T10:00:00.000Z"
+  },
+  {
    "src": "cleveland.com",
    "title": "‘This is unprecedented’: Donovan Mitchell wants Saturday’s game cancelled with Cavs grounded in Miami",
    "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxQdG16Zlpudm9ad013STNRU0JxQlZKN0hVSU5CaUVuV2dBQkctMGpGRlZiTG84aHFXM2JKLWRmY1dnUFRtdFJrVXpOcHpYWTA0bHhTcHVReXU1RHI0Ri1HVll4aGtBRnFaYXowWl82bkgwMkZ3VUVDdXlTMUJzdGwxeDhGcTdqMVZQZjJoTGFfdkdRQXRaQVpkTUJwMUd6aUFwSGlSOGtMT3RQeFRIS05BMFQzenhOZTcyVS1ST1F6OWxJVXRCUUZMM0ZLaldaN1NBNGNZbU5nMlo?oc=5",
@@ -8,7 +20,7 @@
   },
   {
    "src": "Hoops Rumors",
-   "title": "Injury Notes: Lakers, Mobley, Nets, Missi, Butler",
+   "title": "Injury Notes: Lakers, Mobley, Nets, Missi",
    "link": "https://www.hoopsrumors.com/2026/11/injury-notes-lakers-mobley-nets-missi-butler.html",
    "date": "2026-11-14T05:01:06.000Z"
   },
@@ -289,12 +301,6 @@
    "date": "2026-11-08T00:23:44.000Z"
   },
   {
-   "src": "cleveland.com",
-   "title": "Cavs bring back Riley Minix on two-way contract",
-   "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNdzdLYlAxc2N2dmZNTHZ3dHJkSC1lNzh0Vm5adG5CVlBiU19TTXpoOHlKbzF2aFBHT29saVNkLWFQR1RtV2lMMEE5eTdfUFc5UVpmak12NU1WSWpTbW9ibEhyblVwWFRLeENjc2VRd2RTNVhCdGFGemlSd1pvLUxNd0tlVVppdkgtZEFpQU8tVl8xcjRTOUE?oc=5",
-   "date": "2026-11-08T00:22:00.000Z"
-  },
-  {
    "src": "Cavaliers on SI",
    "title": "Three Reasons Battle with Knicks Is Cavs Most Important Game Of Season So Far",
    "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQWEVvd0s2YWhHUGQ3ZzdFclZQWUFJZ04tQnVzVXl2WVpWZ1F5V1N2b2lVN0cxa05KcGVsM0toMVpsd2hQLTM4blNSSGtvVlFlMHNNLTV6emhIRHN6Rm53OER2eFNsYzRfZzRGbGEzNkdWd1dHeHFZSVhFeXpvOUN6MDJ5NDhPVms3UG5tWjVhdURTRktIQ1BVRXVSeXhKMm5ZZXBhX0Z1ZXpDLWFZTDAzYXY0eXpnVjVhUHJISVM0alAtSHQydklV?oc=5",
@@ -466,7 +472,7 @@
   },
   {
    "src": "It's Cavalier Podcast",
-   "title": "REACTION: Cavs vs. Heat",
+   "title": "Proctor Catches FIRE… But the Cavs’ Defense Falls Apart vs. Heat",
    "link": "https://www.youtube.com/watch?v=_Gbf3mqQVCQ",
    "date": "2026-11-14T04:44:59.000Z",
    "id": "_Gbf3mqQVCQ"
