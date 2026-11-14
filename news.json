@@ -1,12 +1,6 @@
 {
  "articles": [
   {
-   "src": "Fear The Sword",
-   "title": "Cavs vs. Mavericks: How to watch, odds, and injury report",
-   "link": "https://www.fearthesword.com/cavs-injury-report/54428/cavs-vs-mavericks-how-to-watch-odds-and-injury-report",
-   "date": "2026-11-14T18:10:21.000Z"
-  },
-  {
    "src": "The Inside Shot",
    "title": "Game Night Observations: Defensive Woes and Travel Delays",
    "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1kZ1hrNGR5bkdJWlhBSXN2S0lhdEtpRjhVVjZhcGhqdm9pWEtpbFJVZzB6WkpFdFBSMlZyLVRKX3BqRi1YWTJqVG5vc0N6Z1JMTUVjUTVsNWk3aG9DdTVLZFVndWxLM1ZGb0ZmX1RFajFEdzFUUDBrUXdTR19nRTg?oc=5",
@@ -191,6 +185,12 @@
    "title": "Cavs, James Harden respond to challenge in 115-107 win over New York Knicks",
    "link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNNUljUUNnTlpwWVZFQmtfSTV3V1Rqam1pN0VIY3JFcURTTmJWLTlqcThTXzZlSnFhYVkzTS11VnN4UVpBYUVUU2dIaE5VOERoZjBmUTduWnFGdVUxYzJ3M3RkVWRJSVQ4cGFEamhpUGw1bDd5V1JsN1pHOUF4RDJtTXFJVTlJS3hva2FMbGgydWJEb1lRNmpYNElhRzFPcmttZWc5ZWpKVzFQRERwUzdsT1BkOGNIWmFUM2c?oc=5",
    "date": "2026-11-12T02:51:00.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Vintage James Harden leads Cavs in 115-107 win over Knicks",
+   "link": "https://www.fearthesword.com/cavs-scores-results/54283/vintage-james-harden-leads-cavs-in-115-107-win-over-knicks",
+   "date": "2026-11-12T02:45:53.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -443,6 +443,13 @@
  ],
  "videos": [
   {
+   "src": "Locked On Cavs",
+   "title": "CAVS POSTCAST: The Cleveland Cavaliers Return Home to Face the Dallas Mavericks",
+   "link": "https://www.youtube.com/watch?v=KN9UlwULTcI",
+   "date": "2026-11-14T21:21:22.000Z",
+   "id": "KN9UlwULTcI"
+  },
+  {
    "src": "It's Cavalier Podcast",
    "title": "Proctor Catches FIRE… But the Cavs’ Defense Falls Apart vs. Heat",
    "link": "https://www.youtube.com/watch?v=_Gbf3mqQVCQ",
@@ -581,13 +588,6 @@
    "link": "https://www.youtube.com/watch?v=DLl8o9Fhg40",
    "date": "2026-11-12T04:56:16.000Z",
    "id": "DLl8o9Fhg40"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "REACTION: Cleveland Cavaliers TAKE DOWN The New York Knicks! | James Harden DOMINATES!",
-   "link": "https://www.youtube.com/watch?v=jwaLiQSGzFs",
-   "date": "2026-11-12T04:50:07.000Z",
-   "id": "jwaLiQSGzFs"
   },
   {
    "src": "It's Cavalier Podcast",
