@@ -1675,7 +1675,7 @@ function dtable(id,cols,rows,opt={}){
   const w=el('div','tw');const tb=el('table','dt');if(opt.minW)tb.style.minWidth=opt.minW+'px';
   const hr=el('tr');cols.forEach((c,i)=>{const th=el('th');if(i===0||c.ns){th.textContent=c.h}else{const b=el('button',null,c.h);b.onclick=()=>{if(st.k===c.k)st.asc=!st.asc;else{st.k=c.k;st.asc=!!c.asc}renderView()};th.appendChild(b);if(st.k===c.k){th.classList.add('on');if(st.asc)th.classList.add('asc')}}
     if(c.title)th.title=c.title;hr.appendChild(th)});tb.appendChild(hr);
-  let rs=rows.slice();if(st.k){const c=cols.find(x=>x.k===st.k);if(c){rs.sort((a,b)=>{const va=c.sv?c.sv(a):a[c.k],vb=c.sv?c.sv(b):b[c.k];const d=(va==null?-1e9:va)-(vb==null?-1e9:vb);return st.asc?d:-d})}}
+  let rs=rows.slice();if(st.k){const c=cols.find(x=>x.k===st.k);if(c){rs.sort((a,b)=>{/* Nov 13 (Luka): players who didn't play stay at the bottom either way */if(!!a.dnp!==!!b.dnp)return a.dnp?1:-1;const va=c.sv?c.sv(a):a[c.k],vb=c.sv?c.sv(b):b[c.k];const d=(va==null?-1e9:va)-(vb==null?-1e9:vb);return st.asc?d:-d})}}
   rs.forEach(r=>{const tr=el('tr',r._cls||'');cols.forEach(c=>{const td=el('td',c.cls?c.cls(r):null);const v=c.f?c.f(r):r[c.k];if(v instanceof Node)td.appendChild(v);else td.textContent=v==null?'':String(v);tr.appendChild(td)});tb.appendChild(tr);
     /* optional: tap a row to open a detail row under it */
     if(opt.onRow&&!r.dnp){tr.classList.add('xr','xrc');tr.tabIndex=0;tr.onclick=e=>{if(e.target.closest('a,button'))return;opt.onRow(r)};tr.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();opt.onRow(r)}}}
