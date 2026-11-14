@@ -323,7 +323,9 @@ const DRY = process.env.NL_DRY === '1';
 if (!KEY && !DRY) { console.log('::warning::BUTTONDOWN_API_KEY missing, nothing to do'); process.exit(0); }
 const today = process.env.NL_TODAY || etDate(); // NL_TODAY: preview a given morning (dry runs)
 /* Issues go out at 6:19 AM ET, for June 19, 2016. Runs start between 5 and 8 AM ET; an early run builds the issue, then waits for 6:19 to send. */
-if (MODE === 'auto' && (etHour() < 5 || etHour() > 7)) { console.log('outside the 5–8 AM ET window, skipping'); process.exit(0); }
+/* Nov 14: GitHub skipped every scheduled run from about 3:30 to 7:40 AM ET, so no issue went out. Late beats never: a missed issue
+   still goes out until noon ET (the 6:19 wait only applies before 6:19), and never twice. */
+if (MODE === 'auto' && (etHour() < 5 || etHour() > 11)) { console.log('outside the 5 AM–noon ET window, skipping'); process.exit(0); }
 const msTo619 = () => { const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false }).formatToParts(new Date()).map(x => [x.type, +x.value])); return ((6 * 60 + 19) * 60 - (p.hour * 3600 + p.minute * 60 + p.second)) * 1000; };
 
 /* Nov 1: an early run used to build the issue at ~5:15 and then sit for an hour, so anything posted before 6:19 missed

@@ -3,7 +3,11 @@ on:
   schedule:
     - cron: '37 9 * * *'   # 5:37 AM EDT / 4:37 EST: builds the issue, then waits to send at 6:19 AM ET (June 19, 2016)
     - cron: '37 10 * * *'  # 5:37 AM EST / 6:37 EDT: backup if the first run was late or skipped
-    - cron: '7 11 * * *'   # last backup; the script only acts 5–8 AM ET and never sends an issue twice
+    - cron: '7 11 * * *'   # backup; the script never sends an issue twice
+    # Nov 14: GitHub dropped every scheduled run from ~3:30 to 7:40 AM ET, so later catch-ups (the script sends a missed issue until noon ET)
+    - cron: '23 12 * * *'  # 7:23 AM EST / 8:23 EDT
+    - cron: '53 13 * * *'  # 8:53 AM EST / 9:53 EDT
+    - cron: '41 15 * * *'  # 10:41 AM EST / 11:41 EDT
   workflow_dispatch:
     inputs:
       mode:
