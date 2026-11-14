@@ -25,6 +25,14 @@ try {
   }
   const day = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(ev.date));
   const out = { date: day, score: `${us[0]} ${us[1]}, ${them[0]} ${them[1]}`, line, url: `https://www.espn.com/mens-college-basketball/game/_/gameId/${ev.id}` };
+  /* Nov 14 (Luka): LSU's next games for the home Prospect pipeline (date, opponent, home/away/neutral, tip time ET, TV) */
+  out.next = (sch.events || []).filter(e => !e.competitions?.[0]?.status?.type?.completed && e.competitions?.[0]?.status?.type?.state !== 'in').sort((a, b) => a.date < b.date ? -1 : 1).slice(0, 3).map(e => {
+    const c = e.competitions[0], me = c.competitors.find(x => +x.team.id === LSU) || {}, op = c.competitors.find(x => +x.team.id !== LSU) || {};
+    const dt = new Date(e.date), tv = [...new Set((c.broadcasts || []).flatMap(b => b.names || (b.media ? [b.media.shortName] : [])).filter(Boolean))].join(', ');
+    const tbd = c.timeValid === false || e.timeValid === false;
+    return { d: new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(dt), opp: op.team?.location || op.team?.shortDisplayName || op.team?.displayName || '', ha: c.neutralSite ? 'N' : me.homeAway === 'home' ? 'H' : 'A',
+      t: tbd ? '' : new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit' }).format(dt) + ' ET', tv };
+  });
   /* season totals: every completed LSU game he played (exhibitions left out), for his draft-rights card. Each game's line is kept in
      pdata/niang-games.json so a finished game is read once. */
   const G = await readFile('pdata/niang-games.json', 'utf8').then(JSON.parse).catch(() => ({}));
