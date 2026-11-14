@@ -5,13 +5,6 @@
  "url": "https://www.espn.com/mens-college-basketball/game/_/gameId/401921810",
  "next": [
   {
-   "d": "2026-11-14",
-   "opp": "Gonzaga",
-   "ha": "A",
-   "t": "3:30 PM ET",
-   "tv": "USA Net"
-  },
-  {
    "d": "2026-11-18",
    "opp": "UL Monroe",
    "ha": "H",
@@ -24,6 +17,13 @@
    "ha": "H",
    "t": "",
    "tv": "SECN+"
+  },
+  {
+   "d": "2026-11-25",
+   "opp": "Arizona State",
+   "ha": "N",
+   "t": "2:00 PM ET",
+   "tv": ""
   }
  ],
  "season": {
