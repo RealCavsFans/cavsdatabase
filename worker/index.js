@@ -3,7 +3,10 @@
 import { onRequestGet } from './pbp.js';
 import { liveMeta } from './live-meta.js';
 import { nbaGame } from './nba.js';
+import { runTimer } from './timer.js';
 export default {
+  /* Nov 14 (Luka): every 5 minutes, start the GitHub jobs that are due (worker/timer.js) */
+  async scheduled(event, env, ctx) { ctx.waitUntil(runTimer(event, env)); },
   async fetch(request, env, ctx) {
     const u = new URL(request.url);
     /* Nov 3: short sign-up links for Cavs & Coffee */
