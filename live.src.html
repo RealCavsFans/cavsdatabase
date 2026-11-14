@@ -792,6 +792,8 @@ html.rfx #view *,html.rfx #view *::before,html.rfx #view *::after,html.rfx #sb *
 @media (max-width:600px){#view .card.msw{padding:4px 12px!important;min-height:0}}
 /* Nov 13 (Luka): Challenge column centered (label and Yes/Used) */
 .gs .tt>span:nth-child(4),.gs .gsh>span:nth-child(4){justify-content:center!important;text-align:center!important;display:flex!important}
+/* Nov 13 (Luka): Team stats subtitle tucks up under the title, with room before "won xx of 23 categories" */
+#view .card:has(.tsx)>h2{margin-bottom:0!important}#view .card:has(.tsx)>p.sub,#view .card:has(.tsx)>p.lgn{margin:0 0 2px!important}#view .tsx .tsh{margin-top:12px!important}
 </style>
 <script>/* Nov 4: team logos drawn at the same visual size. Each mark is scaled by how much of its square image the artwork fills, relative to the Cavs C (made from img/tl by alpha bounding box). Applies to every logo from /img/tl or /img/tl5, also ones added later. */
 (function(){const SC=window.LOGO_SC={"atl":0.92,"bkn":0.92,"bos":0.92,"cha":0.92,"dal":0.92,"den":0.92,"det":0.92,"gs":0.92,"hou":1.07,"ind":0.96,"lac":0.92,"lal":1.18,"mem":0.95,"mia":0.95,"mil":1.06,"min":0.92,"no":1.25,"ny":1.04,"okc":1.23,"orl":1.1,"por":0.97,"sa":1.03,"tor":0.92,"utah":1.12,"wsh":0.92};const fit=im=>{const m=/\/img\/tl5?\/([a-z]+)\.png/.exec(im.getAttribute("src")||"");if(!m||im.dataset.lsc)return;im.dataset.lsc=1;const v=SC[m[1]];if(v)im.style.scale=String(v)};const all=r=>{if(r.tagName==="IMG")fit(r);else if(r.querySelectorAll)r.querySelectorAll("img").forEach(fit)};const go=()=>{all(document.body);new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(all))).observe(document.body,{childList:true,subtree:true})};if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();
