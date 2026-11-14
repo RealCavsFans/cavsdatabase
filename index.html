@@ -771,6 +771,33 @@ tr.nextg td,.sched tr.nextg,.chs tr.nextg{background:var(--sub,#F5F6F3)!importan
 /* Nov 14 (Luka): game preview tape on desktop: blocky squares like the full tale of the tape */@media (min-width:601px){.gp-teams .gp-tape .gtr.gb{grid-template-columns:78px 1fr minmax(96px,auto) 1fr 78px!important;gap:10px!important}.gp-teams .gp-tape .gtb.tk2{height:13px!important;gap:3px!important;background:none!important;-webkit-mask:none!important;mask:none!important}.gp-teams .gp-tape .gtb.tk2>s{background:color-mix(in srgb,var(--muted) 30%,transparent)!important}.gp-teams .gp-tape .gtb.tk2>u{background:var(--muted)!important}.gp-teams .gp-tape .gtb.tk2.l>u.w{background:var(--wine-ink)!important}.gp-teams .gp-tape .gtb.tk2.r>u.w{background:var(--fg)!important}}
 
 /* Nov 14 (Luka): games missed by player: no command line, smaller names, easier to read */.gmt{font-size:.8125rem}.gmt-r .n{font-size:.75rem;letter-spacing:.02em}.gmt-h{font-size:.6875rem;font-weight:700;color:var(--fg);opacity:.7}.gmt-r{padding:7px 0}.gmt-r .g{color:var(--fg);font-weight:600}.gmt-r b{font-size:.8125rem}.gmt-t{font-size:.75rem;color:var(--fg);opacity:.8;margin-top:9px}.gmt .bk u,.gmt .bk s{height:11px}
+
+/* Nov 14 (Luka): softer tale of the tape: sans numbers, quieter ranks and labels, rounded blocks, softer ink for the opponent */
+.gp-tape .gtv{font:600 .9375rem var(--sans)!important;letter-spacing:0;font-variant-numeric:tabular-nums}.gp-tape .gtv.lo,.gp-tape .gtv.nt{font-weight:500!important;color:color-mix(in srgb,var(--fg) 78%,var(--bg))}
+.gp-tape .gtv small{font:500 .6875rem var(--sans)!important;color:color-mix(in srgb,var(--muted) 85%,var(--bg))!important}
+.gp-tape .gtl{font:600 .6875rem var(--sans)!important;letter-spacing:.07em;color:color-mix(in srgb,var(--muted) 90%,var(--bg))!important}
+.gp-tape .gtb.tk2{gap:3px!important;height:12px!important}
+.gp-tape .gtb.tk2>u,.gp-tape .gtb.tk2>s{border-radius:2px}
+.gp-tape .gtb.tk2>s{background:color-mix(in srgb,var(--muted) 16%,transparent)!important}
+.gp-tape .gtb.tk2>u{background:color-mix(in srgb,var(--muted) 48%,var(--bg))!important}
+.gp-tape .gtb.tk2.l>u.w{background:color-mix(in srgb,var(--wine-ink) 82%,var(--bg))!important}
+.gp-tape .gtb.tk2.r>u.w{background:color-mix(in srgb,var(--fg) 70%,var(--bg))!important}
+.gp-tape .gtkey{font-family:var(--sans)!important;color:var(--muted)}
+.gp-tape .gtkey i.c{background:color-mix(in srgb,var(--wine-ink) 82%,var(--bg))!important}.gp-tape .gtkey i.o{background:color-mix(in srgb,var(--fg) 70%,var(--bg))!important}
+/* same, beating the desktop block rules */: sans numbers, quieter ranks and labels, rounded blocks, softer ink for the opponent */
+.gp-teams .gp-tape .gtv{font:600 .9375rem var(--sans)!important;letter-spacing:0;font-variant-numeric:tabular-nums}.gp-teams .gp-tape .gtv.lo,.gp-teams .gp-tape .gtv.nt{font-weight:500!important;color:color-mix(in srgb,var(--fg) 78%,var(--bg))}
+.gp-teams .gp-tape .gtv small{font:500 .6875rem var(--sans)!important;color:color-mix(in srgb,var(--muted) 85%,var(--bg))!important}
+.gp-teams .gp-tape .gtl{font:600 .6875rem var(--sans)!important;letter-spacing:.07em;color:color-mix(in srgb,var(--muted) 90%,var(--bg))!important}
+.gp-teams .gp-tape .gtb.tk2{gap:3px!important;height:12px!important}
+.gp-teams .gp-tape .gtb.tk2>u,.gp-teams .gp-tape .gtb.tk2>s{border-radius:2px}
+.gp-teams .gp-tape .gtb.tk2>s{background:color-mix(in srgb,var(--muted) 16%,transparent)!important}
+.gp-teams .gp-tape .gtb.tk2>u{background:color-mix(in srgb,var(--muted) 48%,var(--bg))!important}
+.gp-teams .gp-tape .gtb.tk2.l>u.w{background:color-mix(in srgb,var(--wine-ink) 82%,var(--bg))!important}
+.gp-teams .gp-tape .gtb.tk2.r>u.w{background:color-mix(in srgb,var(--fg) 70%,var(--bg))!important}
+.gp-teams .gp-tape .gtkey{font-family:var(--sans)!important;color:var(--muted)}
+.gp-teams .gp-tape .gtkey i.c{background:color-mix(in srgb,var(--wine-ink) 82%,var(--bg))!important}.gp-teams .gp-tape .gtkey i.o{background:color-mix(in srgb,var(--fg) 70%,var(--bg))!important}
+
+.gp-teams .gp-t span{font-family:var(--sans)!important;color:var(--muted)}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link,#dp-h{font:800 .9375rem var(--cond);text-transform:uppercase;letter-spacing:.06em;margin:0;color:var(--fg)}.pp-sub{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:2px 0 6px}.pp-sub>span{font-size:.8125rem;color:var(--muted)}/* Nov 4 audit: one kicker style, one rule weight, same name/meta sizes for the Charge game and drafted players */.o-pipe .cap-label{font:700 .6875rem var(--cond);font-stretch:normal;letter-spacing:.1em;margin-top:2px}.o-pipe .ch-next{font-size:.9375rem;margin-top:2px}.o-pipe .ch-meta{font-size:.8125rem}.o-pipe .ch-rec{font:700 .875rem var(--mono);color:var(--muted)}.o-pipe .pp-lk{font:400 .8125rem var(--sans);color:var(--wine-ink);text-decoration:none;white-space:nowrap}.ch-nrow{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.o-pipe .ch-nrow .ch-rec{font:600 .8125rem var(--mono);color:var(--muted)}.o-pipe .ch-nrow .ch-rec:before{content:'Record ';font:700 .625rem var(--cond);letter-spacing:.1em;text-transform:uppercase;margin-right:2px}.o-dp{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
