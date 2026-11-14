@@ -827,6 +827,15 @@ tr.nextg td,.sched tr.nextg,.chs tr.nextg{background:var(--sub,#F5F6F3)!importan
 .dp-lab{margin:8px 0 0!important}
 
 @media (min-width:761px){.gdm-row.two.long{grid-template-columns:1fr}.gdm-row.long #inj{display:grid;grid-template-columns:1fr 1fr;column-gap:32px}.gdm-row.long .gdm-tape,.gdm-row.long>*:first-child{max-width:none}}
+
+/* Nov 14 (Luka): Prospect pipeline: one type scale. Section heads 15px, player names 14px, opponents 13px, dates 12px, small labels 9px; even spacing */
+.side .rail.o-pipe .dp-r{padding:12px 0!important;border-top:1px solid var(--line2)}.side .rail.o-pipe .dp-n{font:800 .875rem var(--sans)!important}.side .rail.o-pipe .dp-t{font-size:.625rem!important;letter-spacing:.1em}
+.side .rail.o-pipe .cap-label,.side .rail.o-pipe .dp-lab{font:700 .5625rem var(--cond)!important;letter-spacing:.1em!important;text-transform:uppercase;color:var(--muted);margin:10px 0 0!important}
+.side .rail.side .rail.o-pipe .dp-h+.dp-lab{margin-top:6px!important}.side .rail.o-pipe .ch-next{font:700 .8125rem/1.35 var(--sans)!important;margin-top:2px!important}.side .rail.o-pipe .ch-meta{font-size:.75rem!important;margin-top:1px!important}
+.side .rail.o-pipe .ch-last{margin-top:10px!important}.side .rail.o-pipe .dp-s{margin-top:6px!important}.side .rail.o-pipe .o-dp{margin-top:14px;padding-top:12px}
+
+.side .rail.o-pipe .ch-next~.ch-meta,.side .rail.o-pipe .ch-meta{font-size:.75rem!important}
+.o-pipe .cap-label,.o-pipe .dp-lab{font:700 .5625rem var(--cond)!important}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link,#dp-h{font:800 .9375rem var(--cond);text-transform:uppercase;letter-spacing:.06em;margin:0;color:var(--fg)}.pp-sub{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:2px 0 6px}.pp-sub>span{font-size:.8125rem;color:var(--muted)}/* Nov 4 audit: one kicker style, one rule weight, same name/meta sizes for the Charge game and drafted players */.o-pipe .cap-label{font:700 .6875rem var(--cond);font-stretch:normal;letter-spacing:.1em;margin-top:2px}.o-pipe .ch-next{font-size:.9375rem;margin-top:2px}.o-pipe .ch-meta{font-size:.8125rem}.o-pipe .ch-rec{font:700 .875rem var(--mono);color:var(--muted)}.o-pipe .pp-lk{font:400 .8125rem var(--sans);color:var(--wine-ink);text-decoration:none;white-space:nowrap}.ch-nrow{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.o-pipe .ch-nrow .ch-rec{font:600 .8125rem var(--mono);color:var(--muted)}.o-pipe .ch-nrow .ch-rec:before{content:'Record ';font:700 .625rem var(--cond);letter-spacing:.1em;text-transform:uppercase;margin-right:2px}.o-dp{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
 /* phone home order, Oct 22: injury report right under the 82-game strip, this day in Cavs history last */
@@ -6692,8 +6701,8 @@ setTimeout(()=>{const box=document.getElementById('dp-list'),sec=box&&box.closes
   names.forEach(n=>{const r=last[n],nx=nextOf(n);const w=el('div','dp-r');const h=el('div','dp-h');const nm=el('a','dp-n',n);nm.href='/assets#rights';h.appendChild(nm);h.appendChild(el('span','dp-t',r?r.team:(INTL_NEXT[n]||{}).team||''));w.appendChild(h);
    if(nx){w.appendChild(el('div','cap-label dp-lab',nx.d===tdy?'Tonight':'Next game'));w.appendChild(el('div','ch-next',(nx.ha==='A'?'at ':nx.ha==='N'?'vs ':'vs ')+nx.opp));w.appendChild(el('div','ch-meta',[wd(nx.d),nx.info].filter(Boolean).join(' · ')))}
    if(r)drawLast(w,r);box.appendChild(w)});sec.hidden=!box.childNodes.length};
- const drawLast=(w,r)=>{w.appendChild(el('div','cap-label dp-lab','Last game'));
-   const g=el('div','dp-g');g.append(day(r.d)+' '+(r.ha==='A'?'at ':'vs ')+r.opp+' · ');const a=el('a','dp-res',r.res);if(r.url){a.href=r.url;a.target='_blank';a.rel='noopener'}g.appendChild(a);w.appendChild(g);
+ const drawLast=(w,r)=>{/* Nov 14 (Luka): the same layout as the Charge's last game: label with the date, then the result and opponent */w.appendChild(el('div','cap-label dp-lab','Last game · '+new Date(r.d+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})));
+   const g=el('div','ch-next ch-res');const a=el('a',null,String(r.res).replace('-','–'));if(r.url){a.href=r.url;a.target='_blank';a.rel='noopener'}g.append(a,' '+(r.ha==='A'?'at ':'vs ')+r.opp);w.appendChild(g);
    const st=el('div','dp-s');/* Nov 12 (Luka): TS% instead of +/- (college box scores don't carry +/-) */const tsa=r.s.fga!=null&&r.s.fta!=null?r.s.fga+.44*r.s.fta:null,ts=tsa?Math.round(r.s.pts/(2*tsa)*100)+'%':null;[['PTS',r.s.pts],['REB',r.s.reb],['AST',r.s.ast],['STL',r.s.stl],['BLK',r.s.blk],['TS%',ts]].forEach(([k,v])=>{const c=el('div');c.append(el('b',null,v==null?'–':String(v)),el('span',null,k));st.appendChild(c)});w.appendChild(st)};
  const base=DRAFT_LAST.map(([n,d,team,opp,ha,res,url,s2])=>({n,d,team,opp,ha,res,url,s:s2}));draw(base);
  fetch('/niang.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(J=>{NJ=J;const L=J&&J.last;if(!L||L.dnp){draw(base);return}const m=String(J.score||'').match(/^LSU (\d+), .* (\d+)$/);const res=m?((+m[1]>+m[2]?'W ':'L ')+m[1]+'–'+m[2]):'Final';
