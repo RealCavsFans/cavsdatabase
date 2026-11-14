@@ -3879,6 +3879,25 @@ const INTENTS=[
   [/\b(record|standing|standings|rank|ranked|seed|net rating)\b/,['home'],'Season'],
   [/\b(video|highlight|presser|press conference|youtube)\b/,['video'],'Video']
 ];
+/* Nov 13 (Luka): stats questions in the search box ("Mobley with Harden off", "vs top 10 since Nov 1", "Q4 last 10") open the stats page with those filters set */
+function statsQuery(raw){const names=[...ROSTER.filter(r=>r[1]!=='—').map(r=>r[0]),...TWOWAY.map(t=>t[0])];const last=n=>n.split(' ').slice(1).join(' ').replace(/ (jr|sr|ii|iii)\.?$/i,'');const lc=fold(raw);
+  const toks=lc.replace(/[,]/g,' ').split(/\s+/);const found=[];names.forEach(n=>{const L=fold(last(n)),F=fold(n);const i=lc.indexOf(F)>=0?lc.indexOf(F):lc.search(new RegExp('\\b'+L.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b'));if(i>=0)found.push([i,n,L])});found.sort((a,b)=>a[0]-b[0]);
+  const on=[],off=[];found.forEach(([i,n,L])=>{const after=lc.slice(i+L.length,i+L.length+14),before=lc.slice(Math.max(0,i-12),i);const isOff=/^\s*(off|out|sitting|benched)\b/.test(after)||/\b(without|no|minus|w\/o)\s+$/.test(before);(isOff?off:on).push(n)});
+  const f={};const lab=[];
+  let m;if(m=lc.match(/\b(vs|against)\s+(top|bottom)\s*(5|10|15)\b/)){f.tier=(m[2]==='top'?'t':'b')+m[3];if(f.tier==='b5'||f.tier==='b15')f.tier='b10';lab.push('vs '+m[2]+' '+(f.tier==='b10'?'10':m[3]))}
+  if(m=lc.match(/\blast\s+(\d{1,2})( games)?\b/)){f.last=m[1];lab.push('last '+m[1]+' games')}
+  if(m=lc.match(/\bsince\s+([a-z]{3,9})\.?\s+(\d{1,2})\b/)){const mo=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'].indexOf(m[1].slice(0,3));if(mo>=0){f.since=(mo+1)+'-'+m[2];lab.push('since '+m[1].slice(0,1).toUpperCase()+m[1].slice(1,3)+' '+m[2])}}
+  if(m=lc.match(/\b(q|quarter\s*)([1-4])\b|\b([1-4])(st|nd|rd|th) quarter\b/)){f.per='q'+(m[2]||m[3]);lab.push('Q'+(m[2]||m[3]))}
+  else if(/\b(clutch|crunch)\b/.test(lc)){f.per='clutch';lab.push('clutch')}
+  else if(/\b(1st|first) half\b/.test(lc)){f.per='h1';lab.push('1st half')}else if(/\b(2nd|second) half\b/.test(lc)){f.per='h2';lab.push('2nd half')}
+  else if(/\b(no|without) garbage\b/.test(lc)){f.per='nogt';lab.push('no garbage time')}
+  const statsy=/\b(lineup|lineups|together|with|without|on\/off|on off|net|rating|ortg|drtg|stats|splits|shooting|shots|shot chart|assists)\b/.test(lc);
+  if(!on.length&&!off.length&&!Object.keys(f).length)return null;if(!statsy&&!off.length&&!Object.keys(f).length)return null;
+  f.tab=/\b(shot|shots|shooting|shot chart)\b/.test(lc)?'shots':/\bassist/.test(lc)?'ast':(on.length||off.length)?'lineups':'season';
+  if(on.length)f.on=on.map(last).join(',');if(off.length)f.off=off.map(last).join(',');
+  const who=[...on.map(n=>last(n)+' on'),...off.map(n=>last(n)+' off')];const t='Showing: '+[...who,...lab].join(', ');
+  const y=+SCHEDULE[0][0].slice(0,4);const qs=new URLSearchParams(Object.assign({g:'s'+y+'-'+String(y+1).slice(2)},f,{sqt:t}));
+  return {title:t.replace(/^Showing: /,'Stats: '),sub:{lineups:'Lineups tab',shots:'Shot chart',ast:'Assist network',season:'Season tab'}[f.tab]+' with these filters set',kind:'Stats',href:'/live?'+qs.toString()}}
 function runSearch(){
   const raw=fold(q.value.trim());
   sres.textContent='';
@@ -3898,6 +3917,7 @@ function runSearch(){
     if(x.kind==='Player'&&pages.has('cap'))sc+=1;if(x.kind==='Player bio'&&pages.has('roster'))sc+=2;if(x.kind==='Glossary'&&/mean|define|definition|what is|whats/.test(raw))sc+=2;
     return [x,sc]}).filter(Boolean).sort((a,b)=>b[1]-a[1]);
   let hits=scored.slice(0,8).map(x=>x[0]);
+  {const sq=statsQuery(q.value.trim());if(sq)hits=[sq,...hits].slice(0,8)}
   /* a question with no name in it: offer the page it's about */
   if(!terms.length&&pages.size&&IDX.some(x=>x.kind==='Game'&&x.title.startsWith('Next game')&&pages.has('schedule')))hits=[IDX.find(x=>x.title.startsWith('Next game'))];
   if(isQ&&pages.size){const PG={schedule:['Schedule','All games, TV and radio'],home:['Home','Record, next game, injuries, cap position'],cap:['Salary Cap','Cap sheet and CBA glossary'],assets:['Assets','Picks and exceptions'],moves:['Transactions','Every move since 2017'],staff:['Coaches & Front Office','Bios and career paths'],charge:['Cleveland Charge','Schedule, roster and staff'],roster:['Roster','Bios and measurements'],video:['Video','Press conferences and highlights']};
@@ -3911,6 +3931,7 @@ function runSearch(){
 function goTo(x){
   sres.hidden=true;q.setAttribute('aria-expanded','false');q.value='';q.blur();
   if(x.url){window.open(x.url,'_blank','noopener');return}
+  if(x.href){location.href=x.href;return}
   go(x.go);
   if(!x.id)return;
   requestAnimationFrame(()=>{const t=document.getElementById(x.id);if(!t)return;

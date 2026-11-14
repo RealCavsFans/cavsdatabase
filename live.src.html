@@ -4348,6 +4348,18 @@ function prevPicker(){let w=document.getElementById('prevpk');if(w){w.remove()}w
     /* ?pl=<player slug> (from a player page): open season mode on him, lineups he was in and his on/off */
     {const pc=new URLSearchParams(location.search).get('pc');if(pc&&S.data&&!S.season){const id=Object.keys(S.data.P).find(k=>PP[ppKey(S.data.P[k].name)]===pc);if(id){S.tab='players';S.f.plTeam=S.data.focus.id;S.f.pgc=id;renderNav(S.R);renderView();setTimeout(()=>{const e=document.getElementById('pgc');if(e)e.scrollIntoView({block:'start'})},200);return}}}
     {/* Nov 5: ?tab=players and so on opens that tab (newsletter box score link) */const tb=new URLSearchParams(location.search).get('tab');if(tb&&S.data&&!S.season&&TABS.some(t=>t[0]===tb)){S.tab=tb;renderNav(S.R);renderView()}}
+    /* Nov 13 (Luka): a stats question from the site search (?tab, on, off, tier, per, since, last, sqt) opens the season with those filters set */
+    {const U=new URLSearchParams(location.search);if(S.season&&(U.get('on')||U.get('off')||U.get('tier')||U.get('per')||U.get('since')||U.get('last'))){(async()=>{try{
+      const G=(S.sfull&&S.sfull.games)||[];const f={};if(U.get('tier')&&TIERS.some(t=>t[0]===U.get('tier')))f.tier=U.get('tier');
+      let gs=null;if(U.get('since')){const [mo,dd]=U.get('since').split('-').map(Number);const y0=+S.season.slice(0,4);const d0=new Date(Date.UTC(mo>=8?y0:y0+1,mo-1,dd));gs=G.filter(g=>new Date(g.date||g.d)>=d0).map(g=>g.id)}
+      if(U.get('last')){const n=+U.get('last');const base=gs?G.filter(g=>gs.includes(g.id)):G;gs=base.slice(-n).map(g=>g.id)}
+      if(gs)f.games=gs;S.sf=f;const per=U.get('per');if(per){S.per=per==='clutch'||per==='nogt'?per:per==='h1'?[1,2]:per==='h2'?[3,4]:/^q[1-4]$/.test(per)?[+per[1]]:'all'}
+      await loadSeason(S.season);const tb=U.get('tab');if(tb&&SEASON_TABS.includes(tb))S.tab=tb;
+      const byLast=L=>Object.keys(S.data.P).find(k=>S.data.P[k].team==='5'&&(S.data.P[k].last||'').toLowerCase()===L.toLowerCase());
+      const pk={};(U.get('on')||'').split(',').filter(Boolean).forEach(L=>{const id=byLast(L);if(id)pk[id]=1});(U.get('off')||'').split(',').filter(Boolean).forEach(L=>{const id=byLast(L);if(id)pk[id]=-1});
+      if(Object.keys(pk).length){S.f.luPick=pk;S.lu='groups';if(S.tab==='shots'){const on1=Object.keys(pk).find(k=>pk[k]===1);if(on1)S.f.shPl=on1}}
+      render();const t=U.get('sqt');if(t){const n=el('p','sqn',t+' · from your search');n.style.cssText='margin:8px 0;padding:8px 12px;border-left:4px solid #860038;background:var(--sub);font:600 13px var(--sans)';const v=document.getElementById('view')||document.querySelector('main');if(v)v.prepend(n)}
+    }catch(e){console.warn('sq',e)}})();return}}
     const pl=new URLSearchParams(location.search).get('pl');if(!pl||!S.data)return;const id=Object.keys(S.data.P).find(k=>PP[ppKey(S.data.P[k].name)]===pl);if(!id)return;
     S.tab='lineups';S.lu='groups';S.f.luPick={[id]:1};S.f.ooA=id;renderNav(S.R);renderView()})})();
 /* Nov 5 (Luka): CAVS, not CLE, in every label: one pass over the page's text whenever it changes (the data keeps CLE for lookups) */
