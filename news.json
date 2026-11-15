@@ -2,6 +2,12 @@
  "articles": [
   {
    "src": "Fear The Sword",
+   "title": "Cavs beat Mavericks 127-117 behind Tyrese Proctor’s triple double",
+   "link": "https://www.fearthesword.com/cavs-scores-results/54445/cavs-beat-mavericks-127-117-behind-tyrese-proctors-triple-double",
+   "date": "2026-11-15T03:01:03.000Z"
+  },
+  {
+   "src": "Fear The Sword",
    "title": "Cavs vs. Mavs game thread",
    "link": "https://www.fearthesword.com/cavs-game-previews/54427/cavs-vs-mavs-game-thread",
    "date": "2026-11-15T00:30:00.000Z"
@@ -203,12 +209,6 @@
    "title": "'My name is James Harden': Former MVP erupts for season-high 32 points in Cavs' win over Knicks",
    "link": "https://www.nytimes.com/athletic/7775173/2026/11/12/james-harden-cavs-knicks-skid/",
    "date": "2026-11-12T05:16:28.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Diving deeper into Cavs 115-107 win over Knicks: James Harden showed why he’s integral to Cleveland’s success",
-   "link": "https://www.fearthesword.com/cavs-analysis/54284/cavs-diving-deeper-new-york-knicks-cleveland-cavaliers-james-harden-donovan-mitchell-meleek-thomas-peyton-watson",
-   "date": "2026-11-12T04:02:56.000Z"
   },
   {
    "src": "cleveland.com",
@@ -450,6 +450,20 @@
  "videos": [
   {
    "src": "Locked On Cavs",
+   "title": "CAVS POSTCAST: Tyrese Proctor Leads Cleveland Cavaliers to a SURPRISE Victory over Dallas Mavericks",
+   "link": "https://www.youtube.com/watch?v=KN9UlwULTcI",
+   "date": "2026-11-15T03:24:57.000Z",
+   "id": "KN9UlwULTcI"
+  },
+  {
+   "src": "It's Cavalier Podcast",
+   "title": "REACTION: Cavs vs. Mavericks",
+   "link": "https://www.youtube.com/watch?v=Py09SgfkNAw",
+   "date": "2026-11-15T03:07:40.000Z",
+   "id": "Py09SgfkNAw"
+  },
+  {
+   "src": "Locked On Cavs",
    "title": "Cavs center minutes were mismatched. Here’s why it matters",
    "link": "https://www.youtube.com/watch?v=byzfjX8rtUY",
    "date": "2026-11-15T02:45:33.000Z",
@@ -457,24 +471,10 @@
   },
   {
    "src": "It's Cavalier Podcast",
-   "title": "REACTION: Cavs vs. Mavericks",
-   "link": "https://www.youtube.com/watch?v=Py09SgfkNAw",
-   "date": "2026-11-15T01:45:06.000Z",
-   "id": "Py09SgfkNAw"
-  },
-  {
-   "src": "It's Cavalier Podcast",
    "title": "Is Kenny Atkinson Delusional About What’s Wrong With the Cavs?",
    "link": "https://www.youtube.com/watch?v=Ksu8_hDgUn4",
    "date": "2026-11-14T22:43:06.000Z",
    "id": "Ksu8_hDgUn4"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: Tyrese Proctor Leads Cleveland Cavaliers to a SURPRISE Victory over Dallas Mavericks",
-   "link": "https://www.youtube.com/watch?v=KN9UlwULTcI",
-   "date": "2026-11-14T21:21:22.000Z",
-   "id": "KN9UlwULTcI"
   },
   {
    "src": "It's Cavalier Podcast",
@@ -709,6 +709,13 @@
   }
  ],
  "highlights": [
+  {
+   "src": "NBA",
+   "title": "MAVERICKS at CAVALIERS | FULL GAME HIGHLIGHTS | November 14, 2026",
+   "link": "https://www.youtube.com/watch?v=q1grkFp0K8I",
+   "date": "2026-11-15T03:27:14.000Z",
+   "id": "q1grkFp0K8I"
+  },
   {
    "src": "NBA",
    "title": "CAVALIERS AT HEAT | EMIRATES NBA CUP 🏆 | FULL GAME HIGHLIGHTS | November 13, 2026",
