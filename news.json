@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "Hoops Rumors",
+   "title": "Central Notes: Zubac, Bulls, Swain, Robinson, Kyrie",
+   "link": "https://www.hoopsrumors.com/2026/11/central-notes-zubac-bulls-swain-robinson-kyrie.html",
+   "date": "2026-11-15T16:39:40.000Z"
+  },
+  {
    "src": "The Inside Shot",
    "title": "Game Night Observations: A Special Win, A Long Day and A Nice Moment",
    "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTFB1anp5ZlRPUDZMczVETFBCVkZlV0RsNU5SNHkxa0xmX3pHVGNRUlVvQmdoVnF4SUdjUThtYVdQb1JFVjk3UTdZLTBBNENMR21qMVg1bWRnc29KNUxLbi1qQWtIN3JrSG5pLTBvNjdXOEZkX3VXWlNIamt3?oc=5",
@@ -200,12 +206,6 @@
   },
   {
    "src": "cleveland.com",
-   "title": "Harden, Giannis face the same challenge on different teams",
-   "link": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxONUZDZTUwaS1jbXk3VUF3MjBkVVIxb0draXQ0N1F3SjBHWkNlNFBuRHBTWGN3VEdfQ01mUkh5YUdWRXZuN1RDLW93NEl6Q0Q2ekJWcmV1S2FqcGJVUWlPMkp4OGh6bThNY2lNVFF2SnhIckRObWR3VWt4TDZQZElDU09GQ3A0U2d2Z3pSNHgzRTFkYWtBRHJRMkRsZzZwcVR4NzJyUmI3YXJsVGRBb0hfSkg1cEtOOWQzckl3djUwd2tKNDRYUkwxYkNSVVN6Rll0M19MWDVqdmdDaTRsZ09wenhodUJ1Uk5CNXpLMlJn?oc=5",
-   "date": "2026-11-13T10:05:00.000Z"
-  },
-  {
-   "src": "cleveland.com",
    "title": "Cavs to be without main frontcourt piece due to a familiar injury",
    "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNamZhR0NvazJfS2s5M0w5Q082VzlVTWYySFNDYW0wdjRNN1NvemJpNUoxaE9XdmFIc2dRQ05hWWxLVWl4ZGJwZ0VVd3JWVlhkdlZaeWJNZjl6MDNzNmlrV0tydkxPcVd3VlUwWHZwc295ZTNkSGxQbXBMZjlMNWRUa3VqSmc0QUpZcXdWemo5bVZDZ0lhV2p5UlZaUi1BclNSWjFQRmZPYUNjV0tJN3c?oc=5",
    "date": "2026-11-12T22:40:00.000Z"
@@ -299,6 +299,12 @@
    "title": "Cavs embarrassed by short-handed Hornets in 124-112 loss at Charlotte",
    "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPN2ZTYUZhTnBQbDNIekc3LThuTTF1ZkFMd1dfQVdoMVlKb2stSUVzMDA1QTU3dlhhMk1ldzVkVk5Nb2QyVFEyRmp5MkQ2WnNETUgtYW5qeVIwd25nUVJLRmpuaW9mQ0xxcEtzVGVFb3JBbkJxTjJoR2FFYjhNbHZvanBwY2dUZDkzeDctVmNaUjUwWDlfdVN5YmpVVV9LZDFKVnBXVUlvYVhKWDIwamw0Vm9kRQ?oc=5",
    "date": "2026-11-10T02:35:00.000Z"
+  },
+  {
+   "src": "cleveland.com",
+   "title": "Cavs at Hornets: preview, odds, injury report, TV",
+   "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPRUZPMmV0aXhHRzVuRUZRRldYUUNWTmVYNmRFa1Z3YmVIT2htV2xsVnJteWJKT2l3dzhia3pyMWprdzJEYm45bGlZU2ZrUVgyeEp6NXhNVW5vak5CYTA0NG5BMUJuSjlhSTlET3dFX2h0dXpaeE5tQjlkNTVZQl92S0FPSUNRb1FjSWxGeDkwTlV3c2M?oc=5",
+   "date": "2026-11-09T10:00:00.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -455,6 +461,13 @@
  "videos": [
   {
    "src": "It's Cavalier Podcast",
+   "title": "Mario Hezonja HOOPED against Dallas Mavericks #cavs #clevelandcavaliers #cavaliers",
+   "link": "https://www.youtube.com/watch?v=7d3vRAD1LjY",
+   "date": "2026-11-15T16:47:00.000Z",
+   "id": "7d3vRAD1LjY"
+  },
+  {
+   "src": "It's Cavalier Podcast",
    "title": "Norchad Omier made the most of his opportunity! #cavs #clevelandcavaliers #cavaliers",
    "link": "https://www.youtube.com/watch?v=EqS9cdw0XlM",
    "date": "2026-11-15T16:26:03.000Z",
@@ -599,13 +612,6 @@
    "link": "https://www.youtube.com/watch?v=rNoydyJ241I",
    "date": "2026-11-12T16:44:33.000Z",
    "id": "rNoydyJ241I"
-  },
-  {
-   "src": "It's Cavalier Podcast",
-   "title": "James Harden LED the Cavaliers to VICTORY last night. #cavs #cavaliers #clevelandcavaliers",
-   "link": "https://www.youtube.com/watch?v=ACmWeftq-K4",
-   "date": "2026-11-12T16:14:05.000Z",
-   "id": "ACmWeftq-K4"
   },
   {
    "src": "Ultimate Cleveland Sports Show",
