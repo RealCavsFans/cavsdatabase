@@ -2917,37 +2917,7 @@
   "status": "final",
   "score": "127-117",
   "result": "W",
-  "refs": [
-   [
-    "Crew chief",
-    "John Goble",
-    "10"
-   ],
-   [
-    "Referee",
-    "Mark Lindsay",
-    "29"
-   ],
-   [
-    "Umpire",
-    "JD Ralls",
-    "80"
-   ]
-  ],
-  "qs": {
-   "cle": [
-    33,
-    38,
-    34,
-    22
-   ],
-   "opp": [
-    33,
-    20,
-    38,
-    26
-   ]
-  },
+  "top": "Tyrese Proctor: 24 pts, 11 reb, 10 ast",
   "out": [
    "Jarrett Allen",
    "Peyton Watson",
@@ -3095,7 +3065,37 @@
     "4"
    ]
   ],
-  "top": "Tyrese Proctor: 24 pts, 11 reb, 10 ast"
+  "qs": {
+   "cle": [
+    33,
+    38,
+    34,
+    22
+   ],
+   "opp": [
+    33,
+    20,
+    38,
+    26
+   ]
+  },
+  "refs": [
+   [
+    "Crew chief",
+    "John Goble",
+    "10"
+   ],
+   [
+    "Referee",
+    "Mark Lindsay",
+    "29"
+   ],
+   [
+    "Umpire",
+    "JD Ralls",
+    "80"
+   ]
+  ]
  },
  "2026-11-16": {
   "url": "https://www.nba.com/game/chi-vs-cle-0022600246/box-score",
