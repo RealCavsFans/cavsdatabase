@@ -2513,7 +2513,7 @@ function advView(c,D,R,t){
     let po=b.po!=null&&b.po>0?b.po:onL.reduce((s2,l)=>s2+poss(l.o),0),pd=b.pd!=null&&b.pd>0?b.pd:onL.reduce((s2,l)=>s2+poss(l.d),0);
     /* Nov 15 (Luka): the on-floor rebound counts include team rebounds; player rebound rates use players' rebounds only (as Basketball Reference and NBA.com do), so scale each side by its player share */const tFGM=sm('o','fgm'),tFGA=sm('o','fga'),tFTA=sm('o','fta'),tTO=sm('o','to'),tORB=sm('o','oreb')*shTO,tDRB=sm('o','dreb')*shTD,oORB=sm('d','oreb')*shOO,oDRB=sm('d','dreb')*shOD,o2A=sm('d','fga')-sm('d','tpa');
     const tsa=b.fga+0.44*b.fta;return {id,mp,tsa,ts:tsa?b.pts/(2*tsa):null,efg:b.fga?(b.fgm+.5*b.tpm)/b.fga:null,tpar:b.fga?b.tpa/b.fga:null,ftr:b.fga?b.fta/b.fga:null,
-      orb:(tORB+oDRB)?100*b.oreb/(tORB+oDRB):null,drb:(tDRB+oORB)?100*b.dreb/(tDRB+oORB):null,trb:(tORB+tDRB+oORB+oDRB)?100*(b.oreb+b.dreb)/(tORB+tDRB+oORB+oDRB):null,
+      /* a share can't pass 100% (a few minutes of scaled counts can) */orb:(tORB+oDRB)?Math.min(100,100*b.oreb/Math.max(tORB+oDRB,b.oreb)):null,drb:(tDRB+oORB)?Math.min(100,100*b.dreb/Math.max(tDRB+oORB,b.dreb)):null,trb:(tORB+tDRB+oORB+oDRB)?Math.min(100,100*(b.oreb+b.dreb)/Math.max(tORB+tDRB+oORB+oDRB,b.oreb+b.dreb)):null,
       ast:(tFGM-b.fgm)>0?100*b.ast/(tFGM-b.fgm):null,stl:pd?100*b.stl/pd:null,blk:o2A>0?100*b.blk/o2A:null,
       tov:(tsa+b.to)?100*b.to/(tsa+b.to):null,usg:(tFGA+0.44*tFTA+tTO)?100*(tsa+b.to)/(tFGA+0.44*tFTA+tTO):null,ortg:po>=1?pf/po*100:null,drtg:pd>=1?pa/pd*100:null,net:po>=1&&pd>=1?pf/po*100-pa/pd*100:null,starter:D.P[id].starter}});
   const p3=k=>r=>r[k]==null?'–':r[k].toFixed(3).replace(/^0/,''),p1=k=>r=>r[k]==null?'–':r[k].toFixed(1),p0=k=>r=>r[k]==null?'–':r[k].toFixed(0);
