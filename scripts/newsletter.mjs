@@ -99,7 +99,8 @@ function prep(D, g, score, top, boxLink, opts) {
      its statuses win and anyone else the Cavs listed is added (G League assignments aren't injuries, so they stay off) */
   try {
     const R = JSON.parse(readFileSync(new URL('../pdata/injury-report.json', import.meta.url), 'utf8')), t = R.teams && R.teams.CLE;
-    if (nx && t && t.filed && R.game && R.game.date === nx[0]) {
+    /* Nov 15 (Luka): the label names the report it came from, so a report for last night's game is listed in full too (not only the Cavs' own list) */
+    if (t && t.filed && R.game && ((nx && R.game.date === nx[0]) || (g && R.game.date === g[0]))) {
       const off = t.rows.filter(r => !/^G League/.test(r[2])), by = Object.fromEntries(off.map(r => [r[0], r]));
       gl = t.rows.filter(r => r[2] === 'G League assignment').map(r => r[0]);   /* Nov 3: assignments get their own short line */
       inj = inj.map(([n, what, st]) => by[n] ? [n, what, by[n][1]] : [n, what, st])
