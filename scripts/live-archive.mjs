@@ -227,7 +227,7 @@ function build(per, file) {
   const order = games.map((g, i) => [g.date, i]).sort().map(x => x[1]);
   const remap = {}; order.forEach((old, ni) => remap[old] = ni);
   const gs = order.map(i => games[i]);
-  shots.forEach(s => s[8] = remap[s[8]]); for (const v of Object.values(dx)) v.blk.forEach(b => b[3] = remap[b[3]]); for (const v of Object.values(rot)) v.forEach(x => x[0] = remap[x[0]]); oshots.forEach(s => s[7] = remap[s[7]]); asts.forEach(a => a[3] = remap[a[3]]);
+  shots.forEach(s => s[8] = remap[s[8]]); for (const v of Object.values(dx)) v.blk.forEach(b => b[3] = remap[b[3]]); for (const v of Object.values(rot)) v.forEach(x => x[0] = remap[x[0]]); for (const v of Object.values(gu)) v.forEach(x => x[0] = remap[x[0]]); oshots.forEach(s => s[7] = remap[s[7]]); asts.forEach(a => a[3] = remap[a[3]]);
   const pz2 = {}; for (const [id, z] of Object.entries(pz)) { pz2[id] = {}; for (const [g, v] of Object.entries(z)) pz2[id][remap[g]] = v; }
   /* game highs (Nov 1): each game against this season's earlier games and the Basketball Reference history (pdata/highs-hist.json) */
   if (per === 'all' && C.highsL) {
