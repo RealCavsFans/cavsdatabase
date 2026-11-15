@@ -1715,7 +1715,7 @@ async function termSeason(ms,sh,title,hid,card){title=String(title||"").replace(
  async function shot(card0,title,btn){/* Nov 13 (Luka): the other team's shot chart is titled and branded as theirs */window.__capLogo=null;window.__capHead=null;if(/^Shot chart/i.test(title||'')&&S.data&&S.f&&S.f.shTeam&&S.data.focus&&S.f.shTeam!==S.data.focus.id){const o=S.data.other||{};title=(o.abbr||'OPP')+' shot chart';if(!S.season&&o.abbr)window.__capLogo=String(o.abbr).toLowerCase()}
   /* Nov 14 (Luka): a player's shot chart is titled with his name and carries his headshot */if(/^Shot chart/i.test(title||'')&&S.data&&S.f&&S.f.shPl&&S.f.shPl!=='all'&&!String(S.f.shPl).startsWith('on:')&&S.data.P[S.f.shPl]){const p=S.data.P[S.f.shPl];title=(p.last||p.name)+' shot chart';window.__capHead=hsUrl(S.data,S.f.shPl)}
   /* Nov 4: play-by-play shares a stretch, not the whole quarter: no stretch picked yet, so start picking */
-  const pbp=/^Play-by-play/i.test(title||'');if(pbp){const ST=S.f.st||{};if(ST.a==null||ST.b==null){S.f.st={on:true,a:null,b:null};renderView();toast('Pick a stretch to share: tap the first play, then the last, then tap the camera again');return}}if(pbp){const sj=card0.querySelector('.st-card');if(sj&&sj.dataset.j){const J=JSON.parse(sj.dataset.j);title='CAVS '+J.fp+'–'+J.op+' stretch'}}
+  const pbp=/^Play-by-play/i.test(title||'');if(pbp){const ST=S.f.st||{};if(ST.a==null||ST.b==null){S.f.st={on:true,a:null,b:null};renderView();toast('Pick a stretch to share: tap the first play, then the last, then tap the camera again');return}}if(pbp&&card0.querySelector('.st-card')){btn.disabled=true;toast('Making the image…');try{const blob=await renderCard('stretch',null,S.data,S.R);const name='cavsdb-stretch-'+(S.data.away.abbr+'-'+S.data.home.abbr).toLowerCase()+'.png';const file=new File([blob],name,{type:'image/png'});if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]})){capShare(file,'Stretch | cavs_db')}else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Image saved')}}catch(e){toast('Couldn’t make the image. Try again.')}finally{btn.disabled=false}return}
   btn.disabled=true;toast('Making the image…');
   /* the image is made from a copy of the card, and a copy only keeps a dropdown's choice if it's written as an attribute */
   card0.querySelectorAll('select').forEach(sl=>[...sl.options].forEach(o=>o.toggleAttribute('selected',o.selected)));
@@ -2927,6 +2927,20 @@ const CARDS={
     x.fillStyle=TC.line;x.fillRect(72,top+260,936,2);
     [['Pace','pace',null,0],['eFG%','efg',1,1],['TOV%','tov',0,1],['OREB%','orb',1,1],['FT rate','ftr',1,1],['Opp. effective FG%','oefg',0,1],['Opp. turnover rate','otov',1,1]].forEach(([l,k,h,pc],i)=>row(l,k,h,top+330+i*58,36,32,pc));
     x.fillStyle=MUT;x.font='600 26px Archivo';x.fillText(fmtMin(A.sec)+' on ('+Math.round(a.po)+' possessions) · '+fmtMin(B.sec)+' off ('+Math.round(b.po)+')'+(S.per!=='all'?' · '+perLabel(S.per):''),72,S.season?1205:1215);if(S.season)footer(x)}},
+  /* Nov 14 (Luka): a stretch picked on Plays, drawn like the run card: the stretch score big, who stood out, where it happened, the team numbers */
+  stretch:{label:'Stretch card',async draw(x,D,R){const sc=document.querySelector('.st-card');if(!sc||!sc.dataset.j)return;const J=JSON.parse(sc.dataset.j);
+    frame(x,kick()+atLbl(D),D.focus.name+' stretch',D,R);const sco=J.fp+'–'+J.op;num(x,sco,72,610,Math.min(190,Math.round(480/(sco.length*.6))),J.d>0?WINE:J.d<0?GREY:INK);
+    txt(x,J.when,72,690,38,INK,700);txt(x,J.len+(J.d?' · '+(J.d>0?'+':'')+J.d:''),72,736,30,MUT,500);
+    const cl=J.cl.slice(0,3);if(cl.length===1){const c0=cl[0];const img=await loadImg(hsUrl(D,c0.id));x.fillStyle=MUT;x.font='800 30px "Saira Condensed"';ctr(x,'STOOD OUT',830,462);head2(x,img,830,575,95,null,initials(D.P[c0.id].name));
+      x.fillStyle=INK;x.font='800 40px "Saira Condensed"';ctr(x,String(c0.last).toUpperCase(),830,712);x.font='700 34px "Geist Mono"';ctr(x,c0.n+' '+c0.k,830,756)}
+    else if(cl.length){x.fillStyle=MUT;x.font='800 30px "Saira Condensed"';x.fillText('STOOD OUT',620,462);const imgs=await Promise.all(cl.map(c=>loadImg(hsUrl(D,c.id))));
+      cl.forEach((c,k)=>{const cy=540+k*110;head2(x,imgs[k],668,cy,46,null,initials(D.P[c.id].name));x.fillStyle=INK;x.font='800 36px "Saira Condensed"';x.fillText(String(c.last).toUpperCase(),734,cy-6);x.fillStyle=TC.light?WINE:'#F2B231';x.font='700 30px "Geist Mono"';x.fillText(c.n+' '+c.k,734,cy+32)})}
+    lbl(x,'WHERE IT HAPPENED',72,818,30);cMargin(x,R,D,72,836,936,160,[J.ta,J.tb]);
+    /* the two teams' numbers in the stretch */const pick=['FG','3PT','Rebounds','Assists','Turnovers'],hd=['FG','3PT','REB','AST','TO'];const rows=pick.map(l=>J.rows.find(r=>r[0]===l)).filter(Boolean);
+    const cw=(936-120)/rows.length,X0=72+120;x.fillStyle=MUT;x.font='800 28px "Saira Condensed"';rows.forEach((r,k)=>ctr(x,hd[pick.indexOf(r[0])],X0+cw*(k+.5),1092));
+    [[D.focus,1],[D.other,2]].forEach(([t,j],ri)=>{const y=1152+ri*62;x.fillStyle=ri?INK:(TC.light?WINE:'#F2B231');x.font='800 36px "Saira Condensed"';x.fillText(t.abbr==='CLE'?'CAVS':t.abbr,72,y);
+      rows.forEach((r,k)=>{const win=r[3]===ri,tie=r[3]===-1;x.fillStyle=win||tie?(ri?INK:(TC.light?WINE:'#F2B231')):MUT;x.font='700 34px "Geist Mono"';ctr(x,r[j][0],X0+cw*(k+.5),y)})});
+    footer(x)}},
   run:{label:'Run card',pick:'run',async draw(x,D,R,i){const r=R.runs[+i];if(!r)return;const t=D.teams.find(z=>z.id===r.t);frame(x,kick()+atLbl(D),t.name+' run',D,R);
     num(x,r.pts+'–0',72,640,230,t===D.focus?WINE:GREY);
     txt(x,`${pname(r.start.per)} ${r.start.clock} → ${r.end.per!==r.start.per?pname(r.end.per)+' ':''}${r.end.clock}`,72,710,38,INK,700);txt(x,`in ${fmtMin(r.end.t-r.start.t)} of game time`,72,756,30,MUT,500);
@@ -3754,8 +3768,8 @@ async function renderCard(type,arg,D,R){await cardFonts();tTheme(window.__lightC
 function vShare(v,D,R){
   const CARDS0=shareCards();const c=el('div','card');head(c,'Share cards',(S.season?'Season so far':perLabel(S.per))+' · images sized for X and Instagram');
   const fl=el('div','fl');if(!S.f.card||!CARDS0[S.f.card])S.f.card=S.season?'season':'game';
-  const avail={clutch:()=>deriveCore(D,R.plays,'clutch').T[D.focus.id].sec>0,milestone:()=>(milestoneCard(D,R),MSH.length>0),streak:()=>D.focus.id===CLE&&S.state==='post'};if(S.f.card&&avail[S.f.card]&&!avail[S.f.card]())S.f.card='game';
-  Object.entries(CARDS0).forEach(([k,o])=>{if(!S.season&&avail[k]&&!avail[k]())return;const b=el('button',null,o.label);b.type='button';b.setAttribute('aria-pressed',S.f.card===k);b.onclick=()=>{S.f.card=k;renderView()};fl.appendChild(b)});c.appendChild(fl);
+  const avail={stretch:()=>!!document.querySelector('.st-card'),clutch:()=>deriveCore(D,R.plays,'clutch').T[D.focus.id].sec>0,milestone:()=>(milestoneCard(D,R),MSH.length>0),streak:()=>D.focus.id===CLE&&S.state==='post'};if(S.f.card&&avail[S.f.card]&&!avail[S.f.card]())S.f.card='game';
+  Object.entries(CARDS0).forEach(([k,o])=>{if(k==='stretch')return;if(!S.season&&avail[k]&&!avail[k]())return;const b=el('button',null,o.label);b.type='button';b.setAttribute('aria-pressed',S.f.card===k);b.onclick=()=>{S.f.card=k;renderView()};fl.appendChild(b)});c.appendChild(fl);
   const C=CARDS0[S.f.card];const f2=el('div','fl');let sel=null;
   let luBox=null;if(C.pick==='lineup'){/* lineup card: tick 2 to 5 players instead of scrolling a list (Oct 31) */
     const F=D.focus.id,ids=Object.keys(R.B).filter(id=>D.P[id].team===F&&(R.B[id].min>0||R.B[id].gp)).sort((a,b)=>(R.B[b].min||0)-(R.B[a].min||0));
@@ -4648,11 +4662,11 @@ function stretchCard(D,R,ia,ib){const P0=R.plays[ia],P1=R.plays[ib];const sub=D.
   /* Cavs standouts: up to 4 who did a lot in the stretch (5+ points, 3+ assists, 4+ rebounds, 2+ offensive rebounds or 2+ steals/blocks), most impact first */
   const cav=rows.filter(r=>r.T.id===D.focus.id);cav.forEach(r=>r.sc=r.pts+1.5*r.ast+r.reb+.5*r.oreb+2*(r.stl+r.blk)-1.5*r.to);
   let pk=cav.filter(r=>r.pts>=5||r.ast>=3||r.reb>=4||r.oreb>=2||r.stl+r.blk>=2).sort((x,y)=>y.sc-x.sc).slice(0,4);if(!pk.length)pk=cav.filter(r=>r.sc>0).sort((x,y)=>y.sc-x.sc).slice(0,1);
-  const CL=pk.map(r=>{const top=r.stl+r.blk>=3&&r.stl+r.blk>=r.pts/2?['stk',r.stl+r.blk,r.stl&&r.blk?'STL+BLK':r.stl?'STL':'BLK']:r.pts>=r.ast*2&&r.pts>=r.reb*1.5?['pts',r.pts,'PTS']:r.ast>=r.reb?['ast',r.ast,'AST']:['reb',r.reb,'REB'];
+  const CL=pk.map(r=>{/* the headline is the biggest thing that made him a standout */const sb=r.stl+r.blk,C2=[['pts',r.pts,'PTS',r.pts>=5,r.pts],['ast',r.ast,'AST',r.ast>=3,r.ast*2],['reb',r.reb,'REB',r.reb>=4||r.oreb>=2,r.reb*1.5],['stk',sb,r.stl&&r.blk?'STL+BLK':r.stl?'STL':'BLK',sb>=2,sb*2.5]];const q=C2.filter(z=>z[3]).sort((a,b)=>b[4]-a[4]);const top=q[0]||C2.filter(z=>z[1]).sort((a,b)=>b[4]-a[4])[0]||C2[0];
     const d=[];if(r.pts&&top[0]!=='pts')d.push(r.pts+' pts');if(r.fga)d.push(r.fg+' FG');if(r.tpa)d.push(r.tp+' 3PT');if(r.reb&&top[0]!=='reb')d.push(r.reb+' reb'+(r.oreb?' ('+r.oreb+' off)':''));else if(top[0]==='reb'&&r.oreb)d.push(r.oreb+' off reb');
     if(r.ast&&top[0]!=='ast')d.push(r.ast+' ast');if(top[0]!=='stk'){if(r.stl)d.push(r.stl+' stl');if(r.blk)d.push(r.blk+' blk')}if(r.to)d.push(r.to+' to');
     return {id:r.id,nm:D.P[r.id].short,last:D.P[r.id].last||D.P[r.id].short,n:top[1],k:top[2],d:d.join(' · '),pm:r.sec?(r.pm>0?'+':'')+r.pm+' on the floor in '+fmtMin(r.sec):''}});
-  c.dataset.j=JSON.stringify({fp,op,d,when:lab(P0)+' → '+lab(P1),len:fmtMin(Math.max(0,tb-ta))+' of game time',rows:TR,cl:CL});c.dataset.sub=lab(P0)+' → '+lab(P1)+' · '+fmtMin(Math.max(0,tb-ta))+' of game time';
+  c.dataset.j=JSON.stringify({fp,op,d,ta,tb,when:lab(P0)+' → '+lab(P1),len:fmtMin(Math.max(0,tb-ta))+' of game time',rows:TR,cl:CL});c.dataset.sub=lab(P0)+' → '+lab(P1)+' · '+fmtMin(Math.max(0,tb-ta))+' of game time';
   const bd=el('div','st-bd');const w=el('div','tw st-tw');w.appendChild(t);bd.appendChild(w);c.appendChild(bd);
   if(CL.length){const sd=el('div','st-sd');bd.appendChild(sd);sd.appendChild(el('div','st-clh',esc(D.focus.abbr==='CLE'?'Cavs':D.focus.abbr)+' standouts'));const g=el('div','st-cl');CL.forEach(x=>{const tl=el('div','st-ct');const u=hsUrl(D,x.id);tl.innerHTML=(u?`<img src="${esc(u)}" alt="" loading="lazy">`:'<span class="st-ni"></span>')+`<div><b>${esc(x.nm)}</b><p><em>${x.n}</em> ${x.k}</p><small>${esc(x.d)}</small>${x.pm?`<small class="pm">${esc(x.pm)}</small>`:''}</div>`;g.appendChild(tl)});sd.appendChild(g)}
   const pt=el('table','zt st-p');pt.innerHTML='<tr><th>Player</th><th>MIN</th><th>PTS</th><th>FG</th><th>3PT</th><th>REB</th><th>OREB</th><th>AST</th><th>TO</th><th>STL</th><th>BLK</th><th>+/-</th></tr>';
