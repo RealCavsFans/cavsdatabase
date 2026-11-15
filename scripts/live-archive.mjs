@@ -171,7 +171,7 @@ function build(per, file) {
     }
     for (const n of [2, 3, 4, 5]) for (const [k, l] of Object.entries(R.L['5'][n])) {
       const o = L[n][k] = L[n][k] || { ids: l.ids, sec: 0, pf: 0, pa: 0, o: {}, d: {}, g: 0 };
-      o.sec += l.sec; o.pf += l.pf; o.pa += l.pa; o.g++; for (const x in l.o) { o.o[x] = (o.o[x] || 0) + l.o[x]; o.d[x] = (o.d[x] || 0) + (l.d[x] || 0); }
+      o.sec += l.sec; o.pf += l.pf; o.pa += l.pa; o.g++; for (const x in l.o) o.o[x] = (o.o[x] || 0) + l.o[x]; for (const x in l.d) o.d[x] = (o.d[x] || 0) + l.d[x];   // Nov 15: each side's own keys (a count only one side had was dropped)
       if (l.pb) { o.pb = o.pb || {}; for (const [id, q] of Object.entries(l.pb)) { const z = o.pb[id] = o.pb[id] || {}; for (const k in q) z[k] = (z[k] || 0) + q[k]; } }   // players' own numbers inside 2- and 5-man units (every period file too, so the quarter, clutch and garbage-time buttons keep them)
     }
     if (per === 'all') for (const id of D.roster['5']) { const u = Object.values(R0.L['5'][5] || {}).filter(l => l.ids.includes(id)); if (!u.length) continue; const sm = k => u.reduce((t, l) => t + ((l.o || {})[k] || 0), 0); (gu[id] = gu[id] || []).push([gi, sm('fga'), sm('fta'), sm('to')]); }
