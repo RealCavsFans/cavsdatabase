@@ -1,16 +1,22 @@
 {
  "articles": [
   {
+   "src": "Cavaliers on SI",
+   "title": "Unexpected Travel Issues Opened the Door for This Cavs Player Against Mavericks",
+   "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOZnl0WFRRTVBqV3VpUVZBMGw5eF8wNlJiX0ZNb3VzV0owaUgtQk1vaG0taUVyNzdqaDJ0N0o1cHRjMm1OWlp0ZTY5NkpxcFY4RTRpZHNtYnlBcS0yNi1JNWJWUWQxZ3A0b0stQUNZdjhadWpYSkZyQ0h2M3R2dUZTVnFSeWJuc3BsZkRVZDBxWWM3Z0k2NjNTaENkNGRUUlZvTU1XbG4xNERhVWxPaUk1UWV1VG5WRXYzQTlwUUlsLUllZ1NUbUpNS1Rn?oc=5",
+   "date": "2026-11-15T04:07:11.000Z"
+  },
+  {
    "src": "The Athletic",
    "title": "After flight delay, Donovan Mitchell wanted game postponed. The Cavs bench stepped up instead",
    "link": "https://www.nytimes.com/athletic/7782495/2026/11/14/cavaliers-mavericks-faa-flight-delay-donovan-mitchell/",
    "date": "2026-11-15T03:41:15.000Z"
   },
   {
-   "src": "cleveland.com",
-   "title": "Cavs’ young guns make statement in impressive win over Mavericks, 127-117",
-   "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOOXpiTjN0N1JRVVZkSnlRbEttSmhqU0dZRHdLS0hwODJraV82dXdDYWQzWDVrVjFyZmw2STUzSXFoWlNQbVctVERGeVJLdUlmYkNGcFdHUFBSVlJmanBtcU9GSDRPNFZtd2RVeU1YcWd1bGNBeXA3VnBOUXlyNUhnSExPMGxISkpRajc5aENYR2dEeURRaW8zVlgxSDBMcW15dEhmNWZZaGhBUHB5dTV5UzktRVJVZw?oc=5",
-   "date": "2026-11-15T03:05:00.000Z"
+   "src": "Fear The Sword",
+   "title": "Cavs beat Mavericks 127-117 behind Tyrese Proctor’s triple double",
+   "link": "https://www.fearthesword.com/cavs-scores-results/54445/cavs-beat-mavericks-127-117-behind-tyrese-proctors-triple-double",
+   "date": "2026-11-15T03:01:03.000Z"
   },
   {
    "src": "Fear The Sword",
@@ -29,6 +35,12 @@
    "title": "Cavaliers Resting Four Starters Due To Flight Issues",
    "link": "https://www.hoopsrumors.com/2026/11/cavaliers-resting-four-starters-due-to-flight-issues.html",
    "date": "2026-11-14T23:25:25.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "Cavaliers vs. Mavericks: How to Watch, Starting Lineups, Injury Report and More",
+   "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNMkUzTEJLSGtEWV9xa2RVZEEzR3dURGNnWUtKQnE0TWlLM1BsTGFnM0pwZlgweDUxaFpiNWcxUmoxdnR0TTY1LTB6cWVMc2hDQWlSVlExUm1VMnU1eFVWa2FraVZkTWRvUkFsUDU5SlhwUWpCZnA5MU1zU0pmeFhXMVJMRDhvVy1rWExxNXVfSVBqSWktUnphWW9PYjQxQmNwX2tCZXBoTUJqOVUzSHN5T2pwYnprYTQzX0hZU3lfT0VZblN1?oc=5",
+   "date": "2026-11-14T19:35:30.000Z"
   },
   {
    "src": "Fear The Sword",
@@ -181,12 +193,6 @@
    "date": "2026-11-12T22:40:00.000Z"
   },
   {
-   "src": "Cavaliers on SI",
-   "title": "James Harden Flashed Something People May Have Missed in Cavs Victory Over Knicks",
-   "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPX20wV1VSRUYwLTFWSHo2NzUyeDd5b1plZ0RVSXlEaVo1cXRIYU9EU19hcWxyd252LU5TdWVZdm1rX3hCcGpRcFQza0hDQXl5c1I1NEdLWjhGSldhQVVBTnowZ2NxR0dfNTBha0hOOFVrQjB1dTE1R1BPdVYtb09Dc1Q3RFZuejlCSnV0VkJ1TzAzeWJLSzdwMkNoa3FCNHB6cm5zeUphZkg3ZEVvWERTLVhiT3NhWTB5LVpyYnZyeWx1MS1wb0RIem8waw?oc=5",
-   "date": "2026-11-12T22:00:01.000Z"
-  },
-  {
    "src": "cleveland.com",
    "title": "‘Chuck ain’t here’: Donovan Mitchell fires back at Charles Barkley following Cavs’ win vs. Knicks",
    "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNNlNGbzUzelJkWmktN3BMejlfMXNkalctSzJBN0pyeUluVUs0RV8wZWlvNVhiemktSFhvZXhvN0xBOWJXVkNIYzNJeUptd2ZwM3ZMeFBfb2ZlelNhYkc2M3lSRmNYbUFBcDFxOVdnWlNSallXVF9DYXNVRjdTYnJZZU5zamZESU13YXd2NTFMdjgtQWFCWkw3ZWs4VnlueWlmWVB6TzR3OUd4UjB4Z1JMeHZib1RlcEN3VU1n?oc=5",
@@ -215,12 +221,6 @@
    "title": "'My name is James Harden': Former MVP erupts for season-high 32 points in Cavs' win over Knicks",
    "link": "https://www.nytimes.com/athletic/7775173/2026/11/12/james-harden-cavs-knicks-skid/",
    "date": "2026-11-12T05:16:28.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Diving deeper into Cavs 115-107 win over Knicks: James Harden showed why he’s integral to Cleveland’s success",
-   "link": "https://www.fearthesword.com/cavs-analysis/54284/cavs-diving-deeper-new-york-knicks-cleveland-cavaliers-james-harden-donovan-mitchell-meleek-thomas-peyton-watson",
-   "date": "2026-11-12T04:02:56.000Z"
   },
   {
    "src": "cleveland.com",
@@ -266,6 +266,12 @@
   },
   {
    "src": "cleveland.com",
+   "title": "Cleveland’s stars have to hold themselves accountable",
+   "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNSmFibjFwMnVqVHY3Y0VUSkZGT3VZaXdGTmhJOFAyMHA0VWhyTnYweUVtdHRaQVZGdkdpZFYtR3duanhtM3ZLcHNLQVd4V3RFUFZFcURfUXItS1N2TjdzeGNlb2NsOWlOZnRVaDFYSTBlRTFvQ19Ta2NfNC1qNEdfR2RPUUNyU3ZKXzA3VFJIUEVWVndmLTNlNFNUbHJvZXBBajN1bGk5ZEhLZ2E2RG9mV1pEeng3WXRGVGotdTl3dVVlaTNpRGxn?oc=5",
+   "date": "2026-11-10T11:00:00.000Z"
+  },
+  {
+   "src": "cleveland.com",
    "title": "The Cavs’ bench reserves exposed everything wrong with Cleveland’s starters",
    "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOUFctdjUwOFBTOXdaU1F0V1lNemZkSHNVMldNOFZKWnRmQXJ6M1Fpb21XZG5QNzJydUxQUnBtZHJKSl9KVzZNbFFOalFnOEsxUjlHMXJUZDJTVEZOMlJEVjkzWEFyRjJKY3FTc0tKaElQYWFKaGlFQkJLdXlMdTJRbldOVml1RUN1bVR5QmRoVVZqaDNydHNGZHpPZmhaSkpKQjNZZnF2UFpqd29INHdUSGdRbUw2UFZL?oc=5",
    "date": "2026-11-10T10:30:00.000Z"
@@ -275,12 +281,6 @@
    "title": "Cavs embarrassed by short-handed Hornets in 124-112 loss at Charlotte",
    "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPN2ZTYUZhTnBQbDNIekc3LThuTTF1ZkFMd1dfQVdoMVlKb2stSUVzMDA1QTU3dlhhMk1ldzVkVk5Nb2QyVFEyRmp5MkQ2WnNETUgtYW5qeVIwd25nUVJLRmpuaW9mQ0xxcEtzVGVFb3JBbkJxTjJoR2FFYjhNbHZvanBwY2dUZDkzeDctVmNaUjUwWDlfdVN5YmpVVV9LZDFKVnBXVUlvYVhKWDIwamw0Vm9kRQ?oc=5",
    "date": "2026-11-10T02:35:00.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Three Key Storylines To Watch in Cavs vs. Hornets",
-   "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOZVZ5R29nSGFDdzduQjkwSUVRMXBPU0xjVGJpVDNHTkdLVjEwV2o2VXBpRTF1Y3hoX2FmRmJaU04zcGFVRXVhMTFsTmQtbmNvTmdaNnUwNWFucFhzZEY1aFBBRWZiZVpqZE5FczItbU8ybkluaEE4VmVnX2NtSTBLZElobDg5bFcyNEwtUU1ORy1aVlptQXNwWGtNam0xRjkz?oc=5",
-   "date": "2026-11-09T18:00:00.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -458,7 +458,7 @@
    "src": "It's Cavalier Podcast",
    "title": "REACTION: Cavs vs. Mavericks",
    "link": "https://www.youtube.com/watch?v=Py09SgfkNAw",
-   "date": "2026-11-15T04:01:08.000Z",
+   "date": "2026-11-15T04:06:38.000Z",
    "id": "Py09SgfkNAw"
   },
   {
