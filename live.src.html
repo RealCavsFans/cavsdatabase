@@ -2510,7 +2510,7 @@ function advView(c,D,R,t){
   const rows=D.roster[t.id].filter(id=>R.B[id].min>0).map(id=>{const b=R.B[id],mp=b.min/60,f=(tmMP/5)/mp;
     /* Nov 6 (Luka): NBA.com formulas, from what happened while he was on the floor (his five-man units) */
     const onL=L5.filter(l=>l.ids.includes(id));const sm=(sd,k)=>onL.reduce((s2,l)=>s2+((l[sd]||{})[k]||0),0);let pf=onL.reduce((s2,l)=>s2+l.pf,0),pa=onL.reduce((s2,l)=>s2+l.pa,0);
-    let po=b.po!=null&&b.po>0?b.po:onL.reduce((s2,l)=>s2+poss(l.o),0),pd=b.pd!=null&&b.pd>0?b.pd:onL.reduce((s2,l)=>s2+poss(l.d),0);
+    /* Nov 15 (Luka): possessions from the same five-man units as the points (his own tally ran a possession apart), so ON ORTG/DRTG match the On/off tab and his player page */let po=onL.reduce((s2,l)=>s2+poss(l.o),0),pd=onL.reduce((s2,l)=>s2+poss(l.d),0);
     /* Nov 15 (Luka): the on-floor rebound counts include team rebounds; player rebound rates use players' rebounds only (as Basketball Reference and NBA.com do), so scale each side by its player share */const tFGM=sm('o','fgm'),tFGA=sm('o','fga'),tFTA=sm('o','fta'),tTO=sm('o','to'),tORB=sm('o','oreb')*shTO,tDRB=sm('o','dreb')*shTD,oORB=sm('d','oreb')*shOO,oDRB=sm('d','dreb')*shOD,o2A=sm('d','fga')-sm('d','tpa');
     const tsa=b.fga+0.44*b.fta;return {id,mp,tsa,ts:tsa?b.pts/(2*tsa):null,efg:b.fga?(b.fgm+.5*b.tpm)/b.fga:null,tpar:b.fga?b.tpa/b.fga:null,ftr:b.fga?b.fta/b.fga:null,
       /* a share can't pass 100% (a few minutes of scaled counts can) */orb:(tORB+oDRB)?Math.min(100,100*b.oreb/Math.max(tORB+oDRB,b.oreb)):null,drb:(tDRB+oORB)?Math.min(100,100*b.dreb/Math.max(tDRB+oORB,b.dreb)):null,trb:(tORB+tDRB+oORB+oDRB)?Math.min(100,100*(b.oreb+b.dreb)/Math.max(tORB+tDRB+oORB+oDRB,b.oreb+b.dreb)):null,
