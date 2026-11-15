@@ -1,13 +1,13 @@
 {
  "season": "2026-27",
- "checked": "2026-11-14T16:45:12.611Z",
+ "checked": "2026-11-15T05:21:12.242Z",
  "tally": {
-  "games": 183,
-  "clean": 178,
+  "games": 188,
+  "clean": 182,
   "nba": 0,
   "ours": 5,
   "poss": 1,
-  "espn": 0
+  "espn": 1
  },
  "how": "nba = the NBA box score does not add up on its own; ours = our play-by-play build differs from the NBA box score; poss = possession count off from the NBA markers; espn = the NBA and ESPN box scores disagree (Cavs games)",
  "games": {
@@ -63,6 +63,13 @@
    "ours": [
     "J. Smith (CHI): pm -31/-32 (NBA/ours)",
     "Z. Collins (CHI): pm 1/2 (NBA/ours)"
+   ]
+  },
+  "0022600232": {
+   "d": "20261114",
+   "m": "DAL@CLE",
+   "espn": [
+    "P. Washington Jr.: reb 3/4, FG 3-9/3-10 (NBA/ESPN)"
    ]
   }
  }
