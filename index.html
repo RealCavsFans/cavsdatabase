@@ -828,7 +828,7 @@ tr.nextg td,.sched tr.nextg,.chs tr.nextg{background:var(--sub,#F5F6F3)!importan
 
 @media (min-width:761px){.gdm-row.two.long{grid-template-columns:1fr}.gdm-row.long #inj{display:grid;grid-template-columns:1fr 1fr;column-gap:32px}.gdm-row.long .gdm-tape,.gdm-row.long>*:first-child{max-width:none}}
 
-/* Nov 14 (Luka): Charge season leaders only in the wide pipeline */.o-pipe:not(.pipe-wide) #ch-lead{display:none!important}#ch-lead{margin-top:14px}#ch-lead .dp-s.ch-ls{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;width:100%}#ch-lead .ch-ls small{display:block;margin-top:2px;font:600 .625rem var(--sans);color:var(--fg2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Nov 14 (Luka): Charge season leaders only in the wide pipeline */.o-pipe:not(.pipe-wide) #pp-chlead{display:none!important}#pp-chlead{margin-top:14px}#pp-chlead .dp-s.ch-ls{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;width:100%}#pp-chlead .ch-ls small{display:block;margin-top:2px;font:600 .625rem var(--sans);color:var(--fg2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* Nov 14 (Luka): Prospect pipeline: one type scale. Section heads 15px, player names 14px, opponents 13px, dates 12px, small labels 9px; even spacing */
 .side .rail.o-pipe .dp-r{padding:12px 0!important;border-top:1px solid var(--line2)}.side .rail.o-pipe .dp-n{font:800 .875rem var(--sans)!important}.side .rail.o-pipe .dp-t{font-size:.625rem!important;letter-spacing:.1em}
 .side .rail.o-pipe .cap-label,.side .rail.o-pipe .dp-lab{font:700 .5625rem var(--cond)!important;letter-spacing:.1em!important;text-transform:uppercase;color:var(--muted);margin:10px 0 0!important}
@@ -1067,7 +1067,7 @@ tr.nextg td,.sched tr.nextg,.chs tr.nextg{background:var(--sub,#F5F6F3)!importan
       <div class="ch-meta" id="ch-meta"></div>
       <ul class="kv plain" id="ch-kv" style="margin-top:10px"></ul>
       <div class="ch-last" id="ch-last" hidden></div>
-      <div class="ch-lead" id="ch-lead" hidden></div>
+      <div class="ch-lead" id="pp-chlead" hidden></div>
       </div>
       <div class="o-dp" hidden>
         <div class="pp-sub"><h3 id="dp-h">Drafted players</h3><a class="pp-lk" href="/assets#rights" id="dp-more">More Players →</a></div>
@@ -6744,7 +6744,7 @@ setTimeout(()=>{const box=document.getElementById('dp-list'),sec=box&&box.closes
   addEventListener('popstate',()=>{seen=new WeakSet();later()});window.cdbBarsReset=()=>{seen=new WeakSet();later()};later()})();
 
 /* Nov 14 (Luka): when Prospect pipeline sits wide (game days), the Charge half shows the season leaders per game so it isn't left blank */
-(function(){try{const el2=document.getElementById('ch-lead');if(!el2||typeof CH_STATS==='undefined'||!CH_STATS.length)return;const mg=Math.max(...CH_STATS.map(r=>r[1]));const pool=CH_STATS.filter(r=>r[1]>=Math.ceil(mg*.5));if(!pool.length)return;
+(function(){try{const el2=document.getElementById('pp-chlead');if(!el2||typeof CH_STATS==='undefined'||!CH_STATS.length)return;const mg=Math.max(...CH_STATS.map(r=>r[1]));const pool=CH_STATS.filter(r=>r[1]>=Math.ceil(mg*.5));if(!pool.length)return;
   const last=n=>String(n).split(' ').slice(1).join(' ')||n;const cells=[[3,'PTS'],[4,'REB'],[5,'AST'],[6,'STL'],[7,'BLK']].map(([i,k])=>{const t=pool.slice().sort((a,b)=>b[i]-a[i])[0];return `<div><b>${t[i].toFixed(1)}</b><span>${k}</span><small>${last(t[0]).replace(/[&<>]/g,'')}</small></div>`}).join('');
   el2.innerHTML=`<div class="cap-label">Season leaders · per game</div><div class="dp-s ch-ls">${cells}</div>`;el2.hidden=false}catch(e){}})();
 /* Nov 6 (Luka): on game days, balance the desktop home columns. Prospect pipeline sits wherever it leaves the two columns closest in height */
