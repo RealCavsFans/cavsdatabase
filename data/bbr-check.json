@@ -154,7 +154,15 @@
    "at": "2026-11-15T08:46:03.651Z",
    "second": true,
    "players": 20
+  },
+  "0022600232": {
+   "et": "2026-11-14",
+   "opp": "DAL",
+   "status": "match",
+   "url": "https://www.basketball-reference.com/boxscores/202611140CLE.html",
+   "at": "2026-11-15T15:51:23.653Z",
+   "players": 18
   }
  },
- "checked": "2026-11-15T08:46:03.651Z"
+ "checked": "2026-11-15T15:51:23.654Z"
 }
