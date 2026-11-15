@@ -1,0 +1,42 @@
+name: History pull (1970-2000 box scores)
+# Nov 15 (Luka): run by hand. Pulls every Cavs regular-season box score from 1970-71 through 1999-2000 from Basketball Reference
+# (resumable; about 3.5 seconds a request, so a full pull takes a little over two hours), then rebuilds the
+# "This day in Cavs history" box-score facts (scripts/hist-facts.mjs). Run it again if it stops early; it picks up where it left off.
+on:
+  workflow_dispatch:
+    inputs:
+      from: { description: 'First season end year', default: '1971' }
+      to: { description: 'Last season end year', default: '2000' }
+permissions:
+  contents: write
+concurrency:
+  group: hist-old
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
+        with:
+          node-version: 22
+      - run: node scripts/hist-old.mjs
+        env:
+          FROM: ${{ inputs.from }}
+          TO: ${{ inputs.to }}
+          MINUTES: '320'
+      - run: node scripts/hist-facts.mjs
+      - name: Commit if changed
+        if: always()
+        run: |
+          git config user.name "cavsdatabase-bot"
+          git config user.email "bot@cavsdatabase.com"
+          git add data/hist-old.json index.html
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "History: 1970-2000 box scores and this-day facts"
+          for i in 1 2 3 4 5 6; do
+            if git pull --rebase -X theirs origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true; sleep $((RANDOM % 20 + i * 10))
+          done
+          exit 1
