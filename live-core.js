@@ -138,7 +138,7 @@ function deriveCore(D,plays,F){
       if(inF){lu(t,ON[t],x=>x.pf+=p.val);lu(o,ON[o],x=>x.pa+=p.val)}
       if(!isFT||(/(\d) of \1/.test(ty)&&!ftKeep&&!/Technical|Flagrant/.test(ty))){src[o]='';newPoss(o,p.t,'made',inF)}}}
     if(/Rebound/.test(ty)){const off=/Offensive/.test(ty);const t=a&&B[a]?teamOf(a):p.team;
-      if(t&&T[t]){if(a&&B[a]){if(inF)(B[a][off?'oreb':'dreb']++,pbA(a,off?'oreb':'dreb',1));TT(t).forEach(x=>x[off?'oreb':'dreb']++)}else TT(t).forEach(x=>x[off?'toreb':'tdreb']++);if((a&&B[a])||!deadReb)TT(t).forEach(x=>x[off?'forb':'fdrb']++);
+      if(t&&T[t]){if(a&&B[a]){if(inF)(B[a][off?'oreb':'dreb']++,pbA(a,off?'oreb':'dreb',1));TT(t).forEach(x=>x[off?'oreb':'dreb']++);/* Nov 15 (Luka): players' own rebounds in each unit too, so player rebound rates use player rebounds only (as BBR and NBA.com do) */luStat(t,off?'poreb':'pdreb')}else TT(t).forEach(x=>x[off?'toreb':'tdreb']++);if((a&&B[a])||!deadReb)TT(t).forEach(x=>x[off?'forb':'fdrb']++);
         /* Nov 6: a dead-ball team rebound (missed free throw that isn't the last) doesn't start a second chance */if(!(a&&B[a])&&deadReb){}
         else if(off){offStat(t,'oreb');src[t]=(src[t].includes('to')?'to':'')+'2nd';newPoss(t,p.t,'oreb',inF)}else{luStat(t,'dreb');src[t]='';newPoss(t,p.t,'dreb',inF)}}}
     if(/Turnover|^Traveling|Double Dribble|Discontinued? Dribble|Offensive Goaltending|Palming|Backcourt|3-Second Violation$|Inbound/.test(ty)&&!/^Kicked Ball|Defensive/.test(ty)){
