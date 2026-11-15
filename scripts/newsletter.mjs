@@ -49,7 +49,7 @@ async function siteData() {
       TS: (typeof TSTATS === 'object' && TSTATS.CLE && TSTATS.CLE[0] + TSTATS.CLE[1] >= 1) ? TSTATS : (typeof TSTATS_PREV === 'object' ? TSTATS_PREV : {}), TS_CUR: !!(typeof TSTATS === 'object' && TSTATS.CLE && TSTATS.CLE[0] + TSTATS.CLE[1] >= 1),
       STANDINGS: typeof STANDINGS === 'object' ? STANDINGS : [], REST: typeof REST === 'object' ? REST : {}, INJ_UPDATED: typeof INJ_UPDATED === 'string' ? INJ_UPDATED : '',
       OTD: window.otdFacts ? window.otdFacts(md).slice(0, 1).map(f => [md, String(f.y), f.t]) : [],
-      WOW: [...(typeof HIST_X === 'object' ? HIST_X.filter(x => ['highlight', 'perf', 'title'].includes(x[2])).map(x => [x[0], x[1], x[3]]) : []), ...HISTORY.map(h => [h[0], h[1], h[2]])] };
+      WOW: [...(typeof HIST_X === 'object' ? HIST_X.filter(x => ['highlight', 'perf', 'title'].includes(x[2])).map(x => [x[0], x[1], x[3]]) : []), ...HISTORY.map(h => [h[0], h[1], h[2]]), ...(typeof HIST_P === 'object' ? HIST_P.map(x => [x[0].slice(0, 2) + '-' + x[0].slice(2), x[1], x[2], 'p']) : [])] };   /* Nov 15 (Luka): standout nights from every era too */
   }, md);
   await browser.close(); server.close();
   return d;
@@ -84,7 +84,11 @@ function prep(D, g, score, top, boxLink, opts) {
   const moves = D.TX.filter(x => x.d > opts.since && x.d <= issueDay).sort((a, b) => a.d.localeCompare(b.d)).map(x => [md2(x.d), txText(x) + (x.note ? ' · ' + x.note : '')]);
   const tg = D.SCHEDULE.find(x => x[0] === issueDay), nx = tg || D.SCHEDULE.find(x => x[0] > g[0] && x[0] > issueDay);
   const week = D.DATES.filter(x => x[0] >= issueDay && x[0] <= etDate(new Date(Date.parse(issueDay + 'T12:00:00Z') + 6 * 864e5)) && !(nx && x[0] === nx[0] && /opener|vs |at /i.test(x[1]))).slice(0, 3).map(x => [wkd(x[0]), md2(x[0]), x[1]]);
-  const otd = (() => { const used = new Set(opts.usedOtd || []); for (let k = 0; k <= 14; k++) for (const sg of k ? [-1, 1] : [0]) { const d = new Date(issueDay + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + sg * k); const m = d.toISOString().slice(5, 10); const f = (D.WOW || []).filter(x => x[0] === m && !used.has(x[0] + '|' + x[1])).sort((a, b) => b[1] - a[1])[0]; if (f) return [f[0], String(f[1]), f[2], k]; } return null; })();
+  /* Nov 15 (Luka): mix the eras. Recent issues' seasons are marked down (one storyline or season shouldn't run day after day),
+     seasons far from the last few picks and older ones get a lift; curated moments rank ahead of box-score nights at the same spot. */
+  const lastY = (opts.usedOtd || []).slice(-6).map(k => +String(k).split('|')[1]).filter(Boolean);
+  const sc = x => (x[3] === 'p' ? 0 : 12) - (lastY.includes(+x[1]) ? 40 : 0) + Math.min(20, lastY.length ? Math.min(...lastY.map(y => Math.abs(y - x[1]))) / 2 : 0) + (x[1] < 1990 ? 10 : x[1] < 2000 ? 8 : x[1] < 2010 ? 4 : 0) - (/straight win|in a row|\d+–0 start/i.test(x[2]) && lastY.includes(+x[1]) ? 40 : 0);
+  const otd = (() => { const used = new Set(opts.usedOtd || []); for (let k = 0; k <= 14; k++) for (const sg of k ? [-1, 1] : [0]) { const d = new Date(issueDay + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + sg * k); const m = d.toISOString().slice(5, 10); const f = (D.WOW || []).filter(x => x[0] === m && !used.has(x[0] + '|' + x[1])).sort((a, b) => sc(b) - sc(a))[0]; if (f) return [f[0], String(f[1]), f[2], k]; } return null; })();
   // up next: records and ratings with league ranks, then any injuries as one line
   let tape = [], nxInfo = null;
   if (nx) {
@@ -409,7 +413,12 @@ function milestone() {
   if (hits.length) return hits.sort((x, y) => y[0] - x[0])[0][1];
   return watch.length ? watch.sort((x, y) => x[0] - y[0])[0][1] : '';
 }
-const tq = trivia.length ? trivia[Object.keys(sent).length % trivia.length] : null;
+/* Nov 15 (Luka): every other issue, a history question from the box scores of a game near this date (data/trivia-hist.json, every era) */
+let triviaH = []; try { triviaH = JSON.parse(await readFile(new URL('data/trivia-hist.json', root), 'utf8')); } catch {}
+const nIss = Object.keys(sent).length;
+const tqH = (() => { if (!triviaH.length || nIss % 2 === 0) return null; const md0 = today.slice(5, 7) + today.slice(8, 10); const dd = m => { const a = new Date('2001-' + m.slice(0, 2) + '-' + m.slice(2) + 'T12:00:00Z'), b = new Date('2001-' + md0.slice(0, 2) + '-' + md0.slice(2) + 'T12:00:00Z'); return Math.abs(a - b) / 864e5; };
+  const near = triviaH.filter(x => dd(x.md) <= 7).sort((a, b) => dd(a.md) - dd(b.md) || a.y - b.y); return near.length ? near[Math.floor(nIss / 2) % near.length] : null; })();
+const tq = tqH || (trivia.length ? trivia[Math.floor(nIss / (triviaH.length ? 2 : 1)) % trivia.length] : null);
 const otdKey = (() => { const x = prep(D, g, score, b.top || '', b.url || D.box[g[0]] || SITE + '/schedule', { issueDay: today, rcf, news, trivia: null, since, sinceTs, usedOtd: Object.values(sent).map(v => v.otd).filter(Boolean).slice(-60) }); return x.otd ? x.otd[0] + '|' + x.otd[1] : null; })();
 // stat of the night: removed Oct 29 (Luka's call)
 const sotn = null;

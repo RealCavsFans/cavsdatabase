@@ -31,15 +31,28 @@ for (const g of games) {
     if (blk >= 8) c.push([95 + blk * 3, `${nm} blocked ${blk} shots in ${res}.`]);
     if (stl >= 7) c.push([95 + stl * 3, `${nm} had ${stl} steals in ${res}.`]);
     if (tpm >= 8) c.push([95 + tpm * 3, `${nm} made ${tpm} threes and scored ${pts} points in ${res}.`]);
-    for (const x of c) if (!best || x[0] > best[0]) best = x;
+    for (const x of c) if (!best || x[0] > best[0]) best = [x[0], x[1], nm];
   }
-  if (best) rows.push({ md: g.d.slice(5, 7) + g.d.slice(8, 10), y: +g.d.slice(0, 4), sc: best[0], t: best[1], u: g.src });
+  if (best) rows.push({ md: g.d.slice(5, 7) + g.d.slice(8, 10), y: +g.d.slice(0, 4), d: g.d, sc: best[0], t: best[1], u: g.src, who: best[2], mates: g.pl.map(r => FULL[r[0]] || r[0]).filter(n => n !== best[2]).sort((a, b) => ((g.pl.find(r => (FULL[r[0]] || r[0]) === b) || [])[1] || 0) - ((g.pl.find(r => (FULL[r[0]] || r[0]) === a) || [])[1] || 0)) });
 }
 /* at most 4 per calendar day, the best ones, different seasons first */
 const byDay = {}; for (const r of rows) (byDay[r.md] = byDay[r.md] || []).push(r);
 const out = [];
 for (const [md, l] of Object.entries(byDay)) { l.sort((a, b) => b.sc - a.sc); const pick = [], ys = new Set(); for (const r of l) { if (pick.length >= 4) break; if (ys.has(r.y)) continue; pick.push(r); ys.add(r.y) } pick.forEach(r => out.push([md, r.y, r.t, r.u])) }
 out.sort((a, b) => a[0].localeCompare(b[0]) || a[1] - b[1]);
+/* trivia from the same nights (Cavs & Coffee): "Which Cav …", the answer and three teammates from that game */
+const MON = ['Jan.', 'Feb.', 'March', 'April', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.'];
+const hsh = s2 => [...s2].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) >>> 0, 7);
+const TQ = [];
+for (const r of rows) {
+  if (!r.who || !r.t.startsWith(r.who) || r.mates.length < 3) continue;
+  const wrong = r.mates.slice(0, 3); const at = hsh(r.d + r.who) % 4; const c = wrong.slice(); c.splice(at, 0, r.who);
+  const dt = MON[+r.d.slice(5, 7) - 1] + ' ' + (+r.d.slice(8, 10)) + ', ' + r.d.slice(0, 4);
+  TQ.push({ md: r.md, y: r.y, q: 'Which Cav' + r.t.slice(r.who.length).replace(/\.$/, '') + ' on ' + dt + '?', c, a: at, src: r.u });
+}
+TQ.sort((a, b) => a.md.localeCompare(b.md) || a.y - b.y);
+await writeFile(new URL('data/trivia-hist.json', root), JSON.stringify(TQ));
+console.log('hist-facts:', TQ.length, 'history trivia questions');
 const html = await readFile(new URL('index.html', root), 'utf8');
 const next = 'const HIST_P=' + JSON.stringify(out) + ';';
 const m = /const HIST_P=\[[\s\S]*?\];/.exec(html);
