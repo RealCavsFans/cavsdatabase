@@ -846,18 +846,18 @@ html.rfx #view *,html.rfx #view *::before,html.rfx #view *::after,html.rfx #sb *
 /* Nov 14 (Luka): Who led on phones: compact tiles, values on one line */
 @media(max-width:640px){#view .ldt-g{gap:4px!important}#view .ldt-g>div{padding:5px 7px!important}#view .ldt-g span{font-size:.5rem!important;letter-spacing:.04em;line-height:1.2}#view .ldt-g>div>b{font-size:.875rem!important;white-space:nowrap;display:block;margin-top:2px}#view .ldt-k{font-size:.625rem!important}#view .ldt>*{font-size:.75rem}}
 
-/* Nov 14 (Luka): ONE terminal bar style across the site. Every segmented bar is the same blocks: 9px block, 3px gap, 12px tall
+/* Nov 14 (Luka): ONE terminal bar style across the site (option B: rounded blocks). Every segmented bar is the same blocks: 9px block, 3px gap, 12px tall
    (7px / 2px / 10px on phones), the same light track, and fills snap to whole blocks (script below). Colors still say whose number it is. */
-:root{--tbm:repeating-linear-gradient(90deg,#000 0 9px,transparent 9px 12px);--tbmr:repeating-linear-gradient(270deg,#000 0 9px,transparent 9px 12px);--tbh:12px;--tbt:color-mix(in srgb,var(--muted) 22%,transparent)}
-@media(max-width:640px){:root{--tbm:repeating-linear-gradient(90deg,#000 0 7px,transparent 7px 9px);--tbmr:repeating-linear-gradient(270deg,#000 0 7px,transparent 7px 9px);--tbh:10px}}
+:root{--tbm:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Crect width='9' height='12' rx='2'/%3E%3C/svg%3E") left top/12px 100% repeat-x;--tbmr:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Crect width='9' height='12' rx='2'/%3E%3C/svg%3E") right top/12px 100% repeat-x;--tbh:12px;--tbt:color-mix(in srgb,var(--muted) 22%,transparent)}
+@media(max-width:640px){:root{--tbm:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='12'%3E%3Crect width='7' height='12' rx='2'/%3E%3C/svg%3E") left top/9px 100% repeat-x;--tbmr:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='12'%3E%3Crect width='7' height='12' rx='2'/%3E%3C/svg%3E") right top/9px 100% repeat-x;--tbh:10px}}
 .ppx .pct,.wp i,.gb-b,.wf-bar,.tkc-tk,.tkc-h,.tsnap .tick-t,.gtb.tkb{height:var(--tbh)!important;-webkit-mask:var(--tbm)!important;mask:var(--tbm)!important;border-radius:0!important}
 .gb-b.l,.gtb.tkb.l{-webkit-mask:var(--tbmr)!important;mask:var(--tbmr)!important}
 .ppx .pct,.wp i,.gb-b,.wf-bar,.gtb.tkb{background:var(--tbt)!important}
 .dbt .rk .t,.ppx-pb .t,.ppx-share .t,.ppx-elig,.ppx-ar .b{height:var(--tbh)!important;background:transparent!important}
 .dbt .rk .t::before,.ppx-pb .t::before,.ppx-share .t::before,.ppx-elig::before,.ppx-ar .b::before{background:var(--tbt)!important;-webkit-mask:var(--tbm)!important;mask:var(--tbm)!important}
 .dbt .rk .t i,.ppx-pb .t i,.ppx-share .t i,.ppx-elig i,.ppx-ar .b i{-webkit-mask:var(--tbm)!important;mask:var(--tbm)!important;height:100%!important}
-.gtb.tk2{height:var(--tbh)!important;gap:3px!important}.gtb.tk2>u,.gtb.tk2>s{flex:1 1 0!important;max-width:9px;min-width:5px;border-radius:0!important}.gtb.tk2>s{background:var(--tbt)!important}
-.gmt .bk{gap:3px!important}.gmt .bk u,.gmt .bk s{height:var(--tbh)!important;max-width:9px!important}.gmt .bk s{background:var(--tbt)!important}
+.gtb.tk2{height:var(--tbh)!important;gap:3px!important}.gtb.tk2>u,.gtb.tk2>s{flex:1 1 0!important;max-width:9px;min-width:5px;border-radius:2px!important}.gtb.tk2>s{background:var(--tbt)!important}
+.gmt .bk{gap:3px!important}.gmt .bk u,.gmt .bk s{height:var(--tbh)!important;max-width:9px!important;border-radius:2px}.gmt .bk s{background:var(--tbt)!important}
 @media(max-width:640px){.gtb.tk2,.gmt .bk{gap:2px!important}.gtb.tk2>u,.gtb.tk2>s,.gmt .bk u,.gmt .bk s{max-width:7px!important}}
 </style>
 <script>/* Nov 4: team logos drawn at the same visual size. Each mark is scaled by how much of its square image the artwork fills, relative to the Cavs C (made from img/tl by alpha bounding box). Applies to every logo from /img/tl or /img/tl5, also ones added later. */

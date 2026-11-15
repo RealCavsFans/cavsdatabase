@@ -837,18 +837,18 @@ tr.nextg td,.sched tr.nextg,.chs tr.nextg{background:var(--sub,#F5F6F3)!importan
 .side .rail.o-pipe .ch-next~.ch-meta,.side .rail.o-pipe .ch-meta{font-size:.75rem!important}
 .o-pipe .cap-label,.o-pipe .dp-lab{font:700 .5625rem var(--cond)!important}
 
-/* Nov 14 (Luka): ONE terminal bar style across the site. Every segmented bar is the same blocks: 9px block, 3px gap, 12px tall
+/* Nov 14 (Luka): ONE terminal bar style across the site (option B: rounded blocks). Every segmented bar is the same blocks: 9px block, 3px gap, 12px tall
    (7px / 2px / 10px on phones), the same light track, and fills snap to whole blocks (script below). Colors still say whose number it is. */
-:root{--tbm:repeating-linear-gradient(90deg,#000 0 9px,transparent 9px 12px);--tbmr:repeating-linear-gradient(270deg,#000 0 9px,transparent 9px 12px);--tbh:12px;--tbt:color-mix(in srgb,var(--muted) 22%,transparent)}
-@media(max-width:640px){:root{--tbm:repeating-linear-gradient(90deg,#000 0 7px,transparent 7px 9px);--tbmr:repeating-linear-gradient(270deg,#000 0 7px,transparent 7px 9px);--tbh:10px}}
+:root{--tbm:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Crect width='9' height='12' rx='2'/%3E%3C/svg%3E") left top/12px 100% repeat-x;--tbmr:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Crect width='9' height='12' rx='2'/%3E%3C/svg%3E") right top/12px 100% repeat-x;--tbh:12px;--tbt:color-mix(in srgb,var(--muted) 22%,transparent)}
+@media(max-width:640px){:root{--tbm:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='12'%3E%3Crect width='7' height='12' rx='2'/%3E%3C/svg%3E") left top/9px 100% repeat-x;--tbmr:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='12'%3E%3Crect width='7' height='12' rx='2'/%3E%3C/svg%3E") right top/9px 100% repeat-x;--tbh:10px}}
 .ppx .pct,.wp i,.gb-b,.wf-bar,.tkc-tk,.tkc-h,.tsnap .tick-t,.gtb.tkb{height:var(--tbh)!important;-webkit-mask:var(--tbm)!important;mask:var(--tbm)!important;border-radius:0!important}
 .gb-b.l,.gtb.tkb.l{-webkit-mask:var(--tbmr)!important;mask:var(--tbmr)!important}
 .ppx .pct,.wp i,.gb-b,.wf-bar,.gtb.tkb{background:var(--tbt)!important}
 .dbt .rk .t,.ppx-pb .t,.ppx-share .t,.ppx-elig,.ppx-ar .b{height:var(--tbh)!important;background:transparent!important}
 .dbt .rk .t::before,.ppx-pb .t::before,.ppx-share .t::before,.ppx-elig::before,.ppx-ar .b::before{background:var(--tbt)!important;-webkit-mask:var(--tbm)!important;mask:var(--tbm)!important}
 .dbt .rk .t i,.ppx-pb .t i,.ppx-share .t i,.ppx-elig i,.ppx-ar .b i{-webkit-mask:var(--tbm)!important;mask:var(--tbm)!important;height:100%!important}
-.gtb.tk2{height:var(--tbh)!important;gap:3px!important}.gtb.tk2>u,.gtb.tk2>s{flex:1 1 0!important;max-width:9px;min-width:5px;border-radius:0!important}.gtb.tk2>s{background:var(--tbt)!important}
-.gmt .bk{gap:3px!important}.gmt .bk u,.gmt .bk s{height:var(--tbh)!important;max-width:9px!important}.gmt .bk s{background:var(--tbt)!important}
+.gtb.tk2{height:var(--tbh)!important;gap:3px!important}.gtb.tk2>u,.gtb.tk2>s{flex:1 1 0!important;max-width:9px;min-width:5px;border-radius:2px!important}.gtb.tk2>s{background:var(--tbt)!important}
+.gmt .bk{gap:3px!important}.gmt .bk u,.gmt .bk s{height:var(--tbh)!important;max-width:9px!important;border-radius:2px}.gmt .bk s{background:var(--tbt)!important}
 @media(max-width:640px){.gtb.tk2,.gmt .bk{gap:2px!important}.gtb.tk2>u,.gtb.tk2>s,.gmt .bk u,.gmt .bk s{max-width:7px!important}}
 </style>
 <style>[hidden]{display:none!important}#chg-h,#chg-h .h-link,#dp-h{font:800 .9375rem var(--cond);text-transform:uppercase;letter-spacing:.06em;margin:0;color:var(--fg)}.pp-sub{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:2px 0 6px}.pp-sub>span{font-size:.8125rem;color:var(--muted)}/* Nov 4 audit: one kicker style, one rule weight, same name/meta sizes for the Charge game and drafted players */.o-pipe .cap-label{font:700 .6875rem var(--cond);font-stretch:normal;letter-spacing:.1em;margin-top:2px}.o-pipe .ch-next{font-size:.9375rem;margin-top:2px}.o-pipe .ch-meta{font-size:.8125rem}.o-pipe .ch-rec{font:700 .875rem var(--mono);color:var(--muted)}.o-pipe .pp-lk{font:400 .8125rem var(--sans);color:var(--wine-ink);text-decoration:none;white-space:nowrap}.ch-nrow{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.o-pipe .ch-nrow .ch-rec{font:600 .8125rem var(--mono);color:var(--muted)}.o-pipe .ch-nrow .ch-rec:before{content:'Record ';font:700 .625rem var(--cond);letter-spacing:.1em;text-transform:uppercase;margin-right:2px}.o-dp{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
