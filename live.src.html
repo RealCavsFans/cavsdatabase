@@ -2342,7 +2342,7 @@ async function scoutData(tid){
     /* Nov 13 (Luka): one source for both scouting reports. The daily scouting job (pdata/scout.json) rebuilds the opponent's last
        games from the NBA's own files; when it covers this opponent, this page shows its numbers instead of rebuilding from ESPN */
     try{const j=await getJSON('/pdata/scout.json');if(j&&j.full&&j.game&&String(j.game.tid)===String(tid)&&j.games&&j.games.length&&j.sh&&j.sh.l){const F=j.full;const L5={};F.L5.forEach((l,i)=>{L5[i]=l});
-      return {tid,FULL:1,games:j.games.map(s=>({s})),T:F.T,O:F.O,L5,P:Object.fromEntries(F.P.map(p=>[p.n,{...p,name:p.n}])),shots:[],SH:null,SS:j.sh,last:!!(j.from&&typeof CUR_SEASON!=='undefined'&&j.from!==CUR_SEASON)}}}catch(e){}
+      return {tid,FULL:1,games:j.games.map(s=>({s})),T:F.T,O:F.O,L5,P:Object.fromEntries(F.P.map(p=>[p.n,{...p,name:p.n}])),shots:[],SH:null,SS:j.sh,SEA:F.season&&F.season.n?F.season:null,last:!!(j.from&&typeof CUR_SEASON!=='undefined'&&j.from!==CUR_SEASON)}}}catch(e){}
     const yr=new Date().getUTCMonth()>=7?new Date().getUTCFullYear()+1:new Date().getUTCFullYear();
     let evs=[],used=yr;for(const y of [yr,yr-1]){used=y;try{const sc=await getJSON(`${ESPN}teams/${tid}/schedule?season=${y}`);evs=(sc.events||[]).filter(e=>e.competitions&&e.competitions[0].status&&e.competitions[0].status.type.completed).map(e=>e.id)}catch(e){}if(evs.length>=1)break}/* this season once they have played a game; last season only before that */
     evs=evs.slice(-5);const games=[];
@@ -2376,7 +2376,9 @@ function scoutCard(D,X,team){
       const p=el('p','sc-rk');p.title=f[3];p.append('Season '+f[2](v)+' · ',el('span',(x.dataset.k==='Offense'||x.dataset.k==='Defense')&&r<=10?'sc-top':null,ord2(r)+' in NBA'));x.appendChild(p)})}).catch(()=>{});
   /* who to watch */
   /* four factors: their offense, and what their opponents did against them (Oct 31) */
-  {c.appendChild(el('h3',null,'Four factors · last 5 games'));const fo=factors(T,O),fd=factors(O,T);const pc=v=>v==null?'–':(v*100).toFixed(1);
+  /* Nov 16 (Luka): four factors and most used lineups cover the whole season (from the scouting job); last 5 games only until it has the season */
+  const SEA=X.SEA,sTag=SEA?' · season ('+SEA.n+' game'+(SEA.n>1?'s':'')+')':' · last '+n+' games';
+  {const fT=SEA?SEA.T:T,fO=SEA?SEA.O:O;c.appendChild(el('h3',null,'Four factors'+sTag));const fo=factors(fT,fO),fd=factors(fO,fT);const pc=v=>v==null?'–':(v*100).toFixed(1);
     c.appendChild(dtable('sc_f',[{h:'Factor',k:'l'},{h:'Offense',k:'o',f:r=>pc(r.o)},{h:'Opponents',k:'d',f:r=>pc(r.d)}],FF.map(([k,,l])=>({l,o:fo[k],d:fd[k]})),{def:null}));
     c.appendChild(el('p','note','Offense is how '+team.name+' did; Opponents is what teams did against them. Turnover rate and offensive rebound rate are percentages; free throw rate is made free throws per 100 shots.'))}
   c.appendChild(el('h3',null,'Who to watch (per game)'));
@@ -2388,8 +2390,8 @@ function scoutCard(D,X,team){
     const tg=el('div','sc-tg');[['Key stats',0],['All stats',1]].forEach(([l,v])=>{const b=el('button',(!!v)===all?'on':'',l);b.type='button';b.onclick=()=>{S.f.scAll=!!v;renderView()};tg.appendChild(b)});c.appendChild(tg);
     const tw=dtable('sc_p',keys.map(k=>C[k]),rows,{def:'ppg',minW:all?900:0});tw.classList.add('sc-pt');if(!all)tw.classList.add('key');c.appendChild(tw)}
   /* lineups */
-  c.appendChild(el('h3',null,'Their most used lineups'));
-  const lu=Object.values(X.L5).filter(l=>l.sec>=120).map(l=>{let po=poss(l.o),pd=poss(l.d);return {names:l.names.join(', '),sec:l.sec,g:l.g,pm:l.pf-l.pa,net:po>=1&&pd>=1?l.pf/po*100-l.pa/pd*100:null}});
+  c.appendChild(el('h3',null,'Their most used lineups'+sTag));
+  const lu=Object.values(SEA?SEA.L5:X.L5).filter(l=>l.sec>=120).map(l=>{let po=poss(l.o),pd=poss(l.d);return {names:l.names.join(', '),sec:l.sec,g:l.g,pm:l.pf-l.pa,net:po>=1&&pd>=1?l.pf/po*100-l.pa/pd*100:null}});
   c.appendChild(dtable('sc_l',[{h:'Lineup',k:'names'},{h:'GAMES',k:'g'},{h:'MIN',k:'sec',f:r=>fmtMin(r.sec)},{h:'+/-',k:'pm',f:r=>sgn(r.pm),cls:r=>pmCls(r.pm)},{h:'NET RTG',k:'net',f:r=>r.net==null?'–':sgn(Math.round(r.net)),cls:r=>r.net==null?'':pmCls(r.net)}],lu.slice(0,10),{def:'sec',minW:520}));
   /* where they shoot */
   c.appendChild(el('h3',null,'Where they shoot'));

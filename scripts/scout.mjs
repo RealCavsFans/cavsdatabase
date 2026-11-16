@@ -56,6 +56,12 @@ const SC_F = 'data/scout-cache.json'; let cache = {}; try { cache = JSON.parse(f
 const sbox = () => ({ z: C.ZN.map(() => [0, 0]), cs: [[0, 0], [0, 0]], pt: C.PT.map(() => [0, 0]) });
 const tally = (b, q) => { if (q.hasXY) { b.z[q.zi][1]++; if (q.m) b.z[q.zi][0]++; if (q.zi === 3 && q.x != null) { const k = q.x < 25 ? 0 : 1; b.cs[k][1]++; if (q.m) b.cs[k][0]++; } } if (q.pt != null && b.pt[q.pt]) { b.pt[q.pt][0]++; if (q.m) b.pt[q.pt][1] += q.three ? 3 : 2; } };
 const gameShots = (R, tid) => { const f = sbox(), a = sbox(); R.shots.forEach(q => tally(q.t === tid ? f : a, q)); return { f, a }; };
+/* Nov 16 (Luka): season-long four factors and most used lineups on the full scouting report. Each cached game also keeps the
+   team's and its opponents' box numbers (t, o) and every five-man unit (lu: [key, last names, sec, pf, pa, o, d]) */
+const nums = x => { const o = {}; for (const k in x) if (typeof x[k] === 'number') o[k] = x[k]; return o; };
+const LUK = ['fga', 'oreb', 'to', 'fta', 'np'];
+const gameEntry = (R, G, me, op) => ({ ...gameShots(R, me.id), t: nums(R.T[me.id]), o: nums(R.T[op.id]),
+  lu: Object.values(R.L[me.id][5]).map(l => [l.ids.slice().sort().join(), l.ids.map(i => G.P[i].last), l.sec, l.pf, l.pa, LUK.map(k => +l.o[k] || 0), LUK.map(k => +l.d[k] || 0)]) });
 const ckey = id => YR + ':' + opp.id + ':' + id;
 /* Nov 3: each game from the NBA's own files when the NBA game store (nba-data branch) is checked out here and has it
    (same date and teams, with the play-by-play corrections); ESPN's play-by-play otherwise */
@@ -76,7 +82,7 @@ for (const id of ids) {
   const me = G.teams.find(t => t.abbr === opp.abbreviation), op = G.teams.find(t => t.abbr !== opp.abbreviation); if (!me || !op) continue;
   G.focus = me; G.other = op;
   const R = C.deriveCore(G, G.plays, 'all');
-  cache[ckey(id)] = gameShots(R, me.id);
+  cache[ckey(id)] = gameEntry(R, G, me, op);
   const a = me.ha === 'home' ? R.hs : R.as, b = me.ha === 'home' ? R.as : R.hs;
   games.push({ d: etDay(G.date), ha: me.ha, op: op.abbr, a, b });
   add(T, R.T[me.id]); add(O, R.T[op.id]);
@@ -86,10 +92,14 @@ for (const id of ids) {
   R.shots.filter(q => q.t === me.id && q.hasXY).forEach(q => { Z[q.zi][1]++; if (q.m) Z[q.zi][0]++; if (q.zi === 3) { CN[q.x < 25 ? 0 : 1]++; if (q.m) CM[q.x < 25 ? 0 : 1]++; } });
 }
 if (!games.length) { console.log('scout: no games to scout'); process.exit(0); }
-for (const id of allIds) { if (cache[ckey(id)]) continue; const G = await game(id); if (!G) continue;
+for (const id of allIds) { if (cache[ckey(id)] && cache[ckey(id)].lu) continue; const G = await game(id); if (!G) continue;
   const me = G.teams.find(t => t.abbr === opp.abbreviation), op = G.teams.find(t => t.abbr !== opp.abbreviation); if (!me || !op) continue; G.focus = me; G.other = op;
-  cache[ckey(id)] = gameShots(C.deriveCore(G, G.plays, 'all'), me.id); }
-for (const k of Object.keys(cache)) if (!k.startsWith(YR + ':')) delete cache[k];
+  cache[ckey(id)] = gameEntry(C.deriveCore(G, G.plays, 'all'), G, me, op); }
+/* season sums for this opponent, before other teams' lineups are trimmed */
+const ST = {}, SO = {}, SLU = {}; let sN = 0;
+for (const id of allIds) { const c = cache[ckey(id)]; if (!c || !c.t) continue; sN++; add(ST, c.t); add(SO, c.o);
+  (c.lu || []).forEach(([k, n, sec, pf, pa, lo, ld]) => { const o = SLU[k] = SLU[k] || { names: n, sec: 0, g: 0, pf: 0, pa: 0, o: Object.fromEntries(LUK.map(x => [x, 0])), d: Object.fromEntries(LUK.map(x => [x, 0])) }; o.sec += sec; o.g++; o.pf += pf; o.pa += pa; LUK.forEach((x, i) => { o.o[x] += lo[i]; o.d[x] += ld[i]; }); }); }
+for (const k of Object.keys(cache)) { if (!k.startsWith(YR + ':')) delete cache[k]; else if (!k.startsWith(YR + ':' + opp.id + ':')) delete cache[k].lu; }
 fs.mkdirSync('data', { recursive: true }); fs.writeFileSync(SC_F, JSON.stringify(cache));
 const sumB = list => { const o = sbox(); list.forEach(b => { if (!b) return; b.z.forEach((v, i) => { o.z[i][0] += v[0]; o.z[i][1] += v[1]; }); b.cs.forEach((v, i) => { o.cs[i][0] += v[0]; o.cs[i][1] += v[1]; }); b.pt.forEach((v, i) => { o.pt[i][0] += v[0]; o.pt[i][1] += v[1]; }); }); return o; };
 const sAll = allIds.map(id => cache[ckey(id)]).filter(Boolean), sL5 = ids.map(id => cache[ckey(id)]).filter(Boolean);
@@ -117,7 +127,8 @@ const out = {
   fg: fgz(Z), lgfg: fgz(lgZ), cfg: CN.map((a, i) => a ? r1(100 * CM[i] / a) : null), za: [Z[0][1], Z[1][1] + Z[2][1], Z[3][1], Z[4][1]],
   /* Nov 13: the NBA's makes-attempts by the five zones, for the preview court (same as the full scouting report) */
   /* Nov 13 (Luka): the full scouting report on /live.html reads these instead of rebuilding the games from ESPN, so both reports match */
-  full: { T, O, P: Object.values(P), L5: Object.values(L5).filter(l => l.sec >= 120).sort((a, b) => b.sec - a.sec).slice(0, 25).map(l => ({ names: l.n, sec: l.sec, g: l.g, pf: l.pf, pa: l.pa, o: l.o, d: l.d })), dates: games.map(g => g.d) },
+  full: { T, O, P: Object.values(P), L5: Object.values(L5).filter(l => l.sec >= 120).sort((a, b) => b.sec - a.sec).slice(0, 25).map(l => ({ names: l.n, sec: l.sec, g: l.g, pf: l.pf, pa: l.pa, o: l.o, d: l.d })), dates: games.map(g => g.d),
+    season: sN ? { n: sN, T: ST, O: SO, L5: Object.values(SLU).filter(l => l.sec >= 120).sort((a, b) => b.sec - a.sec).slice(0, 25) } : null },
   lgz: lgZ.map(([m, a]) => [Math.round(m), Math.round(a)]),
   sh: { n: sAll.length, s: { f: sumB(sAll.map(x => x.f)), a: sumB(sAll.map(x => x.a)) }, l: { f: sumB(sL5.map(x => x.f)), a: sumB(sL5.map(x => x.a)) } }
 };
