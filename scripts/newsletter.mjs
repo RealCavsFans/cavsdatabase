@@ -422,14 +422,18 @@ const tq = tqH || (trivia.length ? trivia[Math.floor(nIss / (triviaH.length ? 2 
 const otdKey = (() => { const x = prep(D, g, score, b.top || '', b.url || D.box[g[0]] || SITE + '/schedule', { issueDay: today, rcf, news, trivia: null, since, sinceTs, usedOtd: Object.values(sent).map(v => v.otd).filter(Boolean).slice(-60) }); return x.otd ? x.otd[0] + '|' + x.otd[1] : null; })();
 // stat of the night: removed Oct 29 (Luka's call)
 const sotn = null;
+let arcRows = null;
 let ourBox = preseason ? (b.url || D.box[g[0]] || SITE + '/schedule') : `${SITE}/games/${g[0]}-${String(g[1]).toLowerCase()}`;
 /* Nov 5 (Luka): Box score opens the live game page's box score (players tab) when the game is in the live archive */
 if (!preseason) { try { const y = +g[0].slice(0, 4), mo = +g[0].slice(5, 7), s0 = mo >= 8 ? y : y - 1, se = s0 + '-' + String(s0 + 1).slice(2);
   const IX = JSON.parse(await readFile(new URL(`live-archive/${se}/index.json`, root), 'utf8')); const hit = IX.find(z => etDate(new Date(z.date)) === g[0]);
-  if (hit) ourBox = `${SITE}/live.html?g=a${se}:${hit.id}&tab=players`; } catch {} }
-const html = build(D, g, score, b.top || '', ourBox, { issueDay: today, boxRows: b.box, rcf, news, trivia: tq, since, sinceTs, qs: b.qs, milestone: milestone(), sotn, usedOtd: Object.values(sent).map(v => v.otd).filter(Boolean).slice(-60), test: !(LIVE && MODE !== 'test'), preseason });
+  if (hit) ourBox = `${SITE}/live.html?g=a${se}:${hit.id}&tab=players`;
+  /* Nov 16 (Luka): who led the Cavs comes from the NBA's own final box score in the game archive (s.nb), like every other number here; ESPN's box.json only as the backup */
+  if (hit) { const s = JSON.parse(await readFile(new URL(`live-archive/${se}/${hit.id}.json`, root), 'utf8')); const Cc = createRequire(import.meta.url)('../live-core.js'), Dg = Cc.prep(s);
+    if (s.nb) arcRows = (Dg.roster['5'] || []).map(id => { const v = s.nb[id]; return v && v[0] > 0 ? [Dg.P[id].name, Math.round(v[0] / 60), v[1], v[8] + v[9], v[10]] : null; }).filter(Boolean); } } catch {} }
+const html = build(D, g, score, b.top || '', ourBox, { issueDay: today, boxRows: arcRows && arcRows.length ? arcRows : b.box, rcf, news, trivia: tq, since, sinceTs, qs: b.qs, milestone: milestone(), sotn, usedOtd: Object.values(sent).map(v => v.otd).filter(Boolean).slice(-60), test: !(LIVE && MODE !== 'test'), preseason });
 const [cs, os] = score.split('-').map(Number);
-const topBit = b.top ? b.top.split(':')[0].split(' ').slice(-1)[0] + ' ' + (b.top.match(/(\d+) pts/) || [])[1] : '';
+const topBit = (() => { const t = arcRows && arcRows.length ? arcRows.slice().sort((x, y) => y[2] - x[2])[0] : null; if (t) return t[0].split(' ').filter(w => !/^(Jr\.?|Sr\.?|II|III|IV)$/.test(w)).slice(-1)[0] + ' ' + t[2]; return b.top ? b.top.split(':')[0].split(' ').slice(-1)[0] + ' ' + (b.top.match(/(\d+) pts/) || [])[1] : ''; })();
 const msBit = (() => { const m = (milestone() || '').match(/^(?!Milestone watch)(\S+ )?(\S+) (reached [\d,]+ career \w+|passed .+? for \d+\w+ on the Cavs' all-time \w+)/); return m ? `${m[2]} ${m[3].replace(/^reached/, 'hits').replace(/ on the Cavs' all-time (\w+)/, ' in Cavs $1').replace(/^passed .+? for/, 'moves to')}` : ''; })();
 /* subject is just the score so it fits on one line in phone mail apps; the top scorer is already in the preview text (Oct 30) */
 /* winner first, then the Cavs' record after the game, e.g. "Hawks 114, Cavs 111 (3–3)" (Oct 30) */
