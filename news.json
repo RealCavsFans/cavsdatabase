@@ -448,11 +448,25 @@
  ],
  "videos": [
   {
+   "src": "Ultimate Cleveland Sports Show",
+   "title": "The Cleveland Cavaliers backups beat the Mavericks & proved a point to Kenny Atkinson & his staff",
+   "link": "https://www.youtube.com/watch?v=8fa_fNjZY3o",
+   "date": "2026-11-16T16:11:05.000Z",
+   "id": "8fa_fNjZY3o"
+  },
+  {
    "src": "Locked On Cavs",
    "title": "Cavs win without stars and after an 8-hour turnaround",
    "link": "https://www.youtube.com/watch?v=ueW_xoF7Chk",
    "date": "2026-11-16T12:43:40.000Z",
    "id": "ueW_xoF7Chk"
+  },
+  {
+   "src": "Locked On Cavs",
+   "title": "PREVIEW: Can the Cleveland Cavaliers GET RIGHT Against the Chicago Bulls!?",
+   "link": "https://www.youtube.com/watch?v=r48knv6Wmjg",
+   "date": "2026-11-16T05:10:02.000Z",
+   "id": "r48knv6Wmjg"
   },
   {
    "src": "Locked On Cavs",
@@ -558,13 +572,6 @@
    "link": "https://www.youtube.com/watch?v=gu2zeYlx0E8",
    "date": "2026-11-14T17:23:21.000Z",
    "id": "gu2zeYlx0E8"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "PREVIEW: Can the Cleveland Cavaliers OVERCOME Issues Against the Dallas Mavericks!?",
-   "link": "https://www.youtube.com/watch?v=2jh6G-LhqNE",
-   "date": "2026-11-14T17:00:09.000Z",
-   "id": "2jh6G-LhqNE"
   },
   {
    "src": "It's Cavalier Podcast",
