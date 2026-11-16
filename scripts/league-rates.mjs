@@ -1,0 +1,51 @@
+// Nov 16 (Luka): every NBA player's rate stats counted on the floor, the same way the Cavs' are (live-core.js five-man units),
+// from the NBA's own play-by-play in the NBA game store (nba-data branch). Replaces the Basketball Reference style estimates
+// (minute share of team totals) in the league percentiles, so a Cav's number and the pool he's ranked in are counted alike.
+// Each game is read once and its per-player sums cached in data/league-rates-cache.json; the store re-checks the last 7 days,
+// so a game whose saved copy changed is read again. Writes pdata/league-rates.json:
+//   { season, updated, games, cols, p: { "<NBA person id>": [name, team, ...cols] } }   (sums for the season, regular season only)
+// Usage: node scripts/league-rates.mjs <nba-data dir>. Exits 0 on any problem and leaves the old file alone.
+import fs from 'fs';
+import path from 'path';
+import zlib from 'zlib';
+import { createRequire } from 'module';
+import { loadFixes, applyFixes } from './nba-fixes.mjs';
+const C = createRequire(import.meta.url)('../live-core.js');
+const SEASON = process.env.SEASON || '2026-27', ROOT = process.argv[2] || 'nba-data', DIR = path.join(ROOT, SEASON);
+const OUT = 'pdata/league-rates.json', CACHE = 'data/league-rates-cache.json';
+// per player per game: his own numbers, then what his team and the opponent did while he was on the floor
+const COLS = ['g', 'sec', 'fgm', 'fga', 'fta', 'to', 'ast', 'stl', 'blk', 'oreb', 'dreb', 'tFGM', 'tFGA', 'tFTA', 'tTO', 'tORB', 'tDRB', 'oORB', 'oDRB', 'o2A', 'po', 'pd'];
+let idx; try { idx = JSON.parse(fs.readFileSync(path.join(DIR, 'index.json'), 'utf8')); } catch { console.log('league-rates: no NBA store here'); process.exit(0); }
+let cache = {}; try { const c = JSON.parse(fs.readFileSync(CACHE, 'utf8')); if (c.season === SEASON) cache = c.g || {}; } catch {}
+const FIX = loadFixes(ROOT);
+let read = 0, failed = 0;
+for (const [gid, row] of Object.entries(idx)) {
+  if (!/^002/.test(gid)) continue;                        // regular season (NBA Cup group games included); no preseason, play-in or playoffs
+  const stamp = String(row[5] || ''), hit = cache[gid];
+  if (hit && hit.s === stamp) continue;
+  try {
+    const raw = applyFixes(JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(DIR, gid + '.json.gz')))), FIX[gid]);
+    const D = C.prep(C.slimSummary(C.fromNBA({ game: raw.box }, { game: raw.pbp }))); if (!D.plays.length) continue;
+    const R = C.deriveCore(D, D.plays, 'all'), out = {};
+    for (const t of D.teams) {
+      const L5 = Object.values((R.L[t.id] || {})[5] || {});
+      for (const id of D.roster[t.id]) {
+        const b = R.B[id]; if (!b || !(b.min > 0)) continue;
+        const on = L5.filter(l => l.ids.includes(id)), sm = (sd, k) => on.reduce((s, l) => s + ((l[sd] || {})[k] || 0), 0);
+        out[id] = [D.P[id].name, t.abbr, 1, Math.round(b.min), b.fgm, b.fga, b.fta, b.to, b.ast, b.stl, b.blk, b.oreb, b.dreb,
+          sm('o', 'fgm'), sm('o', 'fga'), sm('o', 'fta'), sm('o', 'to'), sm('o', 'poreb'), sm('o', 'pdreb'), sm('d', 'poreb'), sm('d', 'pdreb'), sm('d', 'fga') - sm('d', 'tpa'),
+          Math.round(on.reduce((s, l) => s + C.poss(l.o), 0) * 10) / 10, Math.round(on.reduce((s, l) => s + C.poss(l.d), 0) * 10) / 10];
+      }
+    }
+    cache[gid] = { s: stamp, p: out }; read++;
+  } catch (e) { failed++; console.log('league-rates: could not read', gid, String(e).slice(0, 120)); }
+}
+for (const g of Object.keys(cache)) if (!idx[g]) delete cache[g];
+const P = {};
+for (const { p } of Object.values(cache)) for (const [id, r] of Object.entries(p)) {
+  const o = P[id] || (P[id] = [r[0], r[1], ...COLS.map(() => 0)]); o[0] = r[0]; o[1] = r[1];   // latest team
+  for (let i = 0; i < COLS.length; i++) o[2 + i] = Math.round((o[2 + i] + r[2 + i]) * 10) / 10;
+}
+fs.mkdirSync('data', { recursive: true }); fs.writeFileSync(CACHE, JSON.stringify({ season: SEASON, g: cache }));
+fs.writeFileSync(OUT, JSON.stringify({ season: SEASON, updated: new Date().toISOString(), games: Object.keys(cache).length, cols: COLS, p: P }));
+console.log(`league-rates: ${read} games read${failed ? ', ' + failed + ' failed' : ''}; ${Object.keys(cache).length} games, ${Object.keys(P).length} players`);
