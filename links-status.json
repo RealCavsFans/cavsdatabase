@@ -1,6 +1,6 @@
 {
- "checked": "2026-11-13T06:15:28.234Z",
- "total": 816,
+ "checked": "2026-11-16T11:02:06.807Z",
+ "total": 989,
  "broken": [],
  "unsure": [
   [
@@ -8,11 +8,11 @@
    403
   ],
   [
-   "https://basketball.realgm.com/player/Chu-Maduabum/NBA/24596",
+   "https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Transaction_History/2018",
    403
   ],
   [
-   "https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Transaction_History/2018",
+   "https://basketball.realgm.com/player/Chu-Maduabum/NBA/24596",
    403
   ],
   [
@@ -44,6 +44,26 @@
    403
   ],
   [
+   "https://en.wikipedia.org/wiki/Terry_Furlow",
+   429
+  ],
+  [
+   "https://en.wikipedia.org/wiki/Timofey_Mozgov",
+   429
+  ],
+  [
+   "https://en.wikipedia.org/wiki/Tom_Nissalke",
+   429
+  ],
+  [
+   "https://en.wikipedia.org/wiki/Walt_Wesley",
+   429
+  ],
+  [
+   "https://en.wikipedia.org/wiki/Zydrunas_Ilgauskas",
+   429
+  ],
+  [
    "https://formsubmit.co/ajax/rcfwriter@gmail.com",
    405
   ],
@@ -62,10 +82,6 @@
   [
    "https://www.cleveland.com/cavs/",
    403
-  ],
-  [
-   "https://www.euroleaguebasketball.net/de/euroleague/players/saliou-niang/profile/012687",
-   429
   ],
   [
    "https://www.lkl.lt/tvarkarastis",
