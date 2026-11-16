@@ -11,11 +11,14 @@ try {
   const groups = [];
   const walk = g => { if (g?.standings?.entries) groups.push(g); (g?.children || []).forEach(walk); };
   walk(j);
-  const east = groups.find(g => /east/i.test(g.name || g.abbreviation || ''));
-  if (!east) { console.log('no East group'); process.exit(0); }
+  console.log('groups:', groups.map(g => (g.name || g.abbreviation) + ' (' + g.standings.entries.length + ')').join(' | '));
+  /* Nov 16: match the Charge by name, place or abbreviation, in whichever group holds them (the East group's name varies by season phase) */
+  const isMe = e => /charge|cleveland/i.test([e.team?.displayName, e.team?.name, e.team?.location, e.team?.shortDisplayName].join(' ')) || e.team?.abbreviation === 'CLC';
+  const east = groups.find(g => /east/i.test(g.name || g.abbreviation || '') && g.standings.entries.some(isMe)) || groups.find(g => g.standings.entries.some(isMe));
+  if (!east) { console.log('Charge not in any group; teams seen:', groups.flatMap(g => g.standings.entries.map(e => e.team?.abbreviation || e.team?.displayName)).join(',')); process.exit(0); }
   const st = (e, n) => { const s = (e.stats || []).find(x => x.name === n || x.type === n); return s ? +s.value : null; };
   const rows = east.standings.entries.map(e => ({ n: e.team?.displayName || '', w: st(e, 'wins') || 0, l: st(e, 'losses') || 0, seed: st(e, 'playoffSeed'), pct: st(e, 'winPercent') }));
-  const me = rows.find(x => /charge/i.test(x.n));
+  const me = rows[east.standings.entries.findIndex(isMe)];
   if (!me) { console.log('Charge not found'); process.exit(0); }
   let east_rank = null;
   if (me.w + me.l > 0) {
