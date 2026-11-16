@@ -42,6 +42,10 @@ jobs:
       - name: Scouting report for the next opponent
         run: node scripts/scout.mjs
         continue-on-error: true
+      # Nov 16 (Luka): the NBA game store checked against ESPN's box scores (last 4 days), plus sanity checks on the counted league rates
+      - name: NBA store vs ESPN box score check
+        run: node scripts/espn-check.mjs nba-data
+        continue-on-error: true
       - name: NBA game ids (the live page reads the NBA's own play-by-play through them)
         run: node scripts/nba-ids.mjs
         continue-on-error: true
@@ -61,7 +65,7 @@ jobs:
         run: |
           git config user.name "cavsdatabase-bot"
           git config user.email "bot@cavsdatabase.com"
-          for f in pdata/nba-games.json live-base.json pdata/pbp-teams.json pdata/pbp-starts.json pdata/scout.json data/scout-cache.json pdata/bbr-ids.json pdata/league-injuries.json data/poss-check.json pdata/charge.json pdata/positions.json; do [ -f "$f" ] && git add "$f"; done
+          for f in pdata/nba-games.json live-base.json pdata/pbp-teams.json pdata/pbp-starts.json pdata/scout.json data/scout-cache.json pdata/bbr-ids.json pdata/league-injuries.json data/poss-check.json data/espn-check.json pdata/charge.json pdata/positions.json; do [ -f "$f" ] && git add "$f"; done
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Morning data: baselines, scouting, player ids, injuries"
           for i in 1 2 3 4 5 6; do   # Nov 1: six tries with a random wait, so two jobs saving at once both get through

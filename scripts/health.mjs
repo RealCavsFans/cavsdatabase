@@ -69,6 +69,10 @@ else { if (days(LK.checked.slice(0, 10), today) > 9) problems.push(`The weekly l
   }
 }
 // 8. possession accuracy: our play-by-play counts vs pbpstats for every archived game (scripts/check-poss.mjs)
+/* Nov 16 (Luka): the NBA game store vs ESPN's box scores (scripts/espn-check.mjs), and sanity checks on the counted league rates */
+{ const ec = await J('data/espn-check.json'); if (ec && ec.games) { const bad = Object.values(ec.games).filter(x => x.diffs && x.diffs.length);
+  if (bad.length) problems.push(`NBA box score differs from ESPN's in ${bad.length} game(s): ${bad.slice(-3).map(x => x.d + ' ' + x.g + ' (' + x.diffs.slice(0, 2).join('; ') + ')').join(', ')}`);
+  if (ec.sanity && ec.sanity.length) problems.push(`League rate sanity check: ${ec.sanity.slice(0, 3).join('; ')}${ec.sanity.length > 3 ? ' and ' + (ec.sanity.length - 3) + ' more' : ''}`); } }
 { const pc = await J('data/poss-check.json'); if (pc && pc.games) { const G = Object.values(pc.games).filter(x => (x.nba || x.pb) && x.ours);
   /* Nov 6 (Luka): NBA.com's official counts first (data/poss-nba.json, within 2), pbpstats for the rest (within 3: it differs from NBA.com by up to 3 itself) */
   const off = G.filter(x => { const r = x.nba || x.pb, tol = x.nba ? 2 : 3; return !x.reviewed && (Math.abs(x.ours.cle[0] - r.cle[0]) > tol || Math.abs(x.ours.opp[0] - r.opp[0]) > tol || x.ours.cle[1] !== r.cle[1] || x.ours.opp[1] !== r.opp[1]); });
