@@ -34,7 +34,12 @@ players.forEach(r => {
   const f = key => r1((r[key] || 0) / g);
   s[k] = [g, f('Minutes'), f('Points'), f('Rebounds'), f('Assists'), f('Steals'), f('Blocks'), f('Turnovers'), f('FG3M'), Math.round((r.TsPct || 0) * 1000) / 1000];
 });
-const lg = Z.map((z, i) => { let m = 0, a = 0; Object.values(t).forEach(v => { m += v[i][0]; a += v[i][1]; }); return [m, a]; });
+let lg = Z.map((z, i) => { let m = 0, a = 0; Object.values(t).forEach(v => { m += v[i][0]; a += v[i][1]; }); return [m, a]; });
+/* Nov 16 (Luka): the NBA average by zone from every game's located shots in the NBA's own files (pdata/league-shots.json), the same
+   shots and zone lines as the rest of the site's expected-points model; pbpstats' totals stay only if that file is missing */
+try { const LS = JSON.parse(fs.readFileSync('pdata/league-shots.json', 'utf8')); if (LS && LS.season === SEASON && LS.g) { const C = (await import('module')).createRequire(import.meta.url)('../live-core.js'); const Z0 = 2 + C.PT.length * 4, acc = C.ZN.map(() => [0, 0]);
+  for (const g of Object.values(LS.g)) for (const v of Object.values(g.t || {})) C.ZN.forEach((_, z) => { acc[z][0] += v[Z0 + 2 * z] || 0; acc[z][1] += v[Z0 + 2 * z + 1] || 0; });
+  if (acc.every(x => x[1] > 200) && acc.length === lg.length) lg = acc; } } catch (e) { console.log('live-base: league-shots not used', String(e).slice(0, 80)); }
 const games = Math.max(...teams.map(r => r.GamesPlayed || 0));
 fs.writeFileSync('live-base.json', JSON.stringify({ season: SEASON, updated: new Date().toISOString(), games, lg, t, p, s, u }));
 // every team's full pbpstats totals, its own and what opponents did against it, for NBA ranks on the live page's play-by-play stats
