@@ -116,7 +116,7 @@ SCHEDULE.forEach((g, i) => {
     const tape = R.map(([l, f, hi, fm]) => { const cb = hi ? f(a) > f(b) : f(a) < f(b); return cell(a, f, hi, fm, cb) + `<div class="l">${l}</div>` + cell(b, f, hi, fm, !cb && f(a) !== f(b)); }).join('');
     const last = n => n.split(' ').filter(w => !/^(Jr\.|Sr\.|II|III|IV)$/.test(w)).pop();
     /* "Out until at least Nov 4" and "Out 8–10 weeks" count as out too (the old exact match showed "None" for OKC) */
-    const outs = L => L.filter(r => /^out\b/i.test(r[r.length - 1])).map(r => last(r[0]));
+    const outs = L => L.filter(r => /^(out\b|G League)/i.test(r[r.length - 1])).map(r => last(r[0]) + (/^G League/i.test(r[r.length - 1]) ? ' (G League)' : ''));   // Nov 16 (Luka): G League players count for the opponent too, as for the Cavs
     const ir = IR.game && IR.game.date === d && IR.game.opp === o ? IR.teams : null;
     const offi = ab => { const t = ir && ir[ab]; if (!t || !t.filed) return null; return t.rows.filter(r => /^out$/i.test(r[1])).map(r => last(r[0]) + (/^G League/.test(r[2]) ? ' (G League)' : '')); };
     const oi = OPP_INJ[o];
