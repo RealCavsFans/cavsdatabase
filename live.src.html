@@ -1925,7 +1925,12 @@ function pbr(f,dir,src){const T=src||PBT.T;const v=f(T.CLE);if(v==null)return nu
 const pcs=x=>x==null?'–':Math.round(x*100)+'%';
 /* Nov 16 (Luka): expected eFG% (an average NBA shooter's make rate in each zone × the shot's value) and actual eFG% on located shots, for every team's
    offense, or what each team allowed (op), from every NBA game's shots this season (pdata/league-shots.json). One model for the whole site. */
-function zoneQuality(op){if(!LSH){if(!LSHq){LSHq=true;getJSON('/pdata/league-shots.json').then(j=>{LSH=j;renderView()}).catch(()=>{LSH={g:{}}})}return null}
+/* Nov 16 (Luka): expected shots with context (pdata/xshot.json, scripts/xshot.mjs, after Darryl Blackport's model): each zone's NBA make rate
+   adjusted for putbacks, transition and how deep into the play the shot came. Same league total as the plain zone model. */
+let XSH=null;getJSON('/pdata/xshot.json').then(j=>{if(j&&j.p&&j.season===CUR_SEASON){XSH=j;if(S.tab==='shots'||S.tab==='team')renderView()}}).catch(()=>{});
+function xCtx(q){return q.pt===0?0:q.pt===1?1:q.dt==null?null:q.dt<=10?2:q.dt<=17?3:4}
+function xRate(q,se){if(!XSH||(se&&se!==XSH.season)||q.zi==null)return null;const c=xCtx(q);return c==null?null:XSH.p[q.zi][c]}
+function zoneQuality(op){if(XSH&&XSH.t&&XSH.t.CLE){const src=op?XSH.o:XSH.t,out={};for(const [k,v] of Object.entries(src)){if(v[0]<100)continue;out[k]={ShotQualityAvg:v[1]/(2*v[0]),EfgPct:v[2]/(2*v[0])}}if(out.CLE)return out}if(!LSH){if(!LSHq){LSHq=true;getJSON('/pdata/league-shots.json').then(j=>{LSH=j;renderView()}).catch(()=>{LSH={g:{}}})}return null}
   const Z0=2+PT.length*4,acc={},lg=ZN.map(()=>[0,0]);Object.values(LSH.g||{}).forEach(g=>{const ks=Object.keys(g.t||{});if(ks.length!==2)return;ks.forEach((k,i)=>{const v=g.t[k],who=op?ks[1-i]:k;const a=acc[who]=acc[who]||ZN.map(()=>[0,0]);ZN.forEach((_,z)=>{const m=v[Z0+2*z]||0,n=v[Z0+2*z+1]||0;a[z][0]+=m;a[z][1]+=n;if(!op){lg[z][0]+=m;lg[z][1]+=n}})})});
   if(op)Object.values(acc).forEach(a=>a.forEach((x,z)=>{lg[z][0]+=x[0];lg[z][1]+=x[1]}));const val=z=>z>=3?3:2,out={};
   for(const [k,a] of Object.entries(acc)){const n=a.reduce((s2,x)=>s2+x[1],0);if(n<100)continue;const xp=a.reduce((s2,x,z)=>s2+x[1]*(lg[z][1]?lg[z][0]/lg[z][1]:0)*val(z),0),ap=a.reduce((s2,x,z)=>s2+x[0]*val(z),0);out[k==='CLE'?'CLE':k]={ShotQualityAvg:xp/(2*n),EfgPct:ap/(2*n)}}
@@ -1952,7 +1957,7 @@ function pbpShotCards(op){if(!pbpOK())return [];/* op: the Cavs' opponents (what
     g+=`<text x="${pl+(W-pl-pr)/2}" y="${H-6}" text-anchor="middle" font-size="10" fill="var(--muted)" ${F}>Shot quality${op?' allowed':''} (expected eFG%) →</text><text transform="translate(12 ${pt+(H-pb-pt)/2}) rotate(-90)" text-anchor="middle" font-size="10" fill="var(--muted)" ${F}>${op?'Opponent eFG%':'Actual eFG%'} →</text>`;
     const c=el('div','card sec');head(c,op?'Shot quality allowed':'Shot quality vs shot making',op?'Every NBA defense: the shots it allows vs how opponents make them':'Every NBA offense: shots it gets vs how it makes them');c.insertAdjacentHTML('beforeend',`<svg viewBox="0 0 ${W} ${H}" width="100%" style="${mobQ?'width:calc(100% + 24px);max-width:none;margin:0 -12px':'max-width:'+W+'px;margin:0 auto'};display:block" role="img" aria-label="Shot quality against effective field goal percentage for every NBA team">${g}</svg>`);
     const tl=el('div','pbt pbt3');[['Shot quality'+(op?' allowed':''),ZT.CLE.ShotQualityAvg,x=>x.ShotQualityAvg,0],[op?'Opponent eFG%':'Actual eFG%',ZT.CLE.EfgPct,x=>x.EfgPct,0],[op?'Opponents made vs expected':'Made vs expected',ZT.CLE.EfgPct-ZT.CLE.ShotQualityAvg,x=>x.EfgPct-x.ShotQualityAvg,1]].forEach(([l,v,f,dd])=>{const d=el('div');d.append(el('b',null,dd?((v>0?'+':v<0?'−':'')+Math.abs(v*100).toFixed(1)+' pts'):(v*100).toFixed(1)+'%'),el('span',null,l));d.insertAdjacentHTML('beforeend',rkEl(op?pbr(f,-1,ZT):pbr(f,1,ZT)));tl.appendChild(d)});c.appendChild(tl);
-    c.appendChild(el('p','note','Shot quality = the eFG% an average NBA shooter would get on the same shots: the NBA’s make rate in each of the five zones, times the shot’s value, the same model as the zone tables. From every NBA game’s located shots this season. Above the dashed line = making more than the shots deserve.'));out.push(c)}}
+    c.appendChild(el('p','note','Shot quality = the eFG% an average NBA shooter would get on the same shots: the NBA’s make rate in each of the five zones, adjusted for putbacks, transition and how many seconds into the play the shot came (after Darryl Blackport’s model), times the shot’s value. From every NBA game’s shots this season. Above the dashed line = making more than the shots deserve.'));out.push(c)}}
   return out}
 function pbpPaceCard(){if(!pbpOK())return null;const T=PBT.T,O=PBT.O;const c=el('div','card sec');head(c,'How fast they play','Average seconds per possession, against every NBA team');const tl=el('div','pbt pbt3');
   [['Offense',T,x=>x.SecondsPerPossOff,-1],['Offense, not counting putbacks',T,x=>x.SecondsExcludingORebsPerPossOff,-1],['Opponents',O,x=>x.SecondsPerPossOff,1]].forEach(([l,src,f,d])=>{const v=f(src.CLE);const x=el('div');x.append(el('b',null,v==null?'–':v.toFixed(1)+'s'),el('span',null,l));const rk=pbr(f,d,src);if(rk)rk.dir=0;/* style, not good or bad: gray */x.insertAdjacentHTML('beforeend',rkEl(rk));tl.appendChild(x)});c.appendChild(tl);
@@ -2250,7 +2255,7 @@ function vTeam(v,D,R){
   row('Points in the paint',a.paint,b.paint);row('Second-chance points',a.second,b.second);
   const live=!S.replay&&S.per==='all'&&D.esp[D.focus.id]&&D.esp[D.other.id];
   /* ESPN's turnoverPoints is what a team gave up off its own turnovers, so each side reads the other's number */
-  /* Nov 6: the NBA's own numbers when the game has them (a.fb set = official), then ESPN's, then our count */const off=a.fb!=null&&b.fb!=null;const pa2=!off&&live&&D.esp[D.other.id].pot!=null?D.esp[D.other.id].pot:a.offto,pb2=!off&&live&&D.esp[D.focus.id].pot!=null?D.esp[D.focus.id].pot:b.offto;row('Points off turnovers',pa2,pb2);
+  /* Nov 6: the NBA's own numbers when the game has them (a.fb set = official), then ESPN's, then our count */const off=a.fb!=null&&b.fb!=null;const pa2=!off&&live&&D.esp[D.other.id].pot!=null?D.esp[D.other.id].pot:a.offto,pb2=!off&&live&&D.esp[D.focus.id].pot!=null?D.esp[D.focus.id].pot:b.offto;row('Points off turnovers',pa2,pb2);{/* Nov 16 (Luka): points off steals: the part of points off turnovers that came on live-ball turnovers (the ones that lead to runouts), after Darryl Blackport */const ps2=id=>{const q=R.pc&&R.pc[id]&&R.pc[id].stl;return q&&q.n?q.pts/(S.season?Math.max(1,(D.games||[]).length):1):null};const s1=ps2(D.focus.id),s2=ps2(D.other.id);if(s1!=null&&s2!=null)row('Points off steals',s1,s2)}
   if(off)row('Fast-break points',a.fb,b.fb);else if(live&&D.esp[D.focus.id].fb!=null&&D.esp[D.other.id].fb!=null)row('Fast-break points',D.esp[D.focus.id].fb,D.esp[D.other.id].fb);row('Bench points',a.bnPts,b.bnPts);row('Starters points',a.stPts,b.stPts);
   grp('Possessions');
   /* Nov 1: each rate sits right under its count (shares of the available chances; TOV % = turnovers per possession, fewer is better) */
@@ -4254,7 +4259,7 @@ function vShots(v,D,R){
   right.appendChild(dual(S.season?'▸ Tap a row to split it by wins and losses'+(isCle?' and games vs top-10 teams':''):isCle?'▸ Tap a row to compare with the season and with games vs similar teams':'▸ Tap a row to compare with '+t.abbr+'’s season and the Cavs defense',S.season?'▸ Tap a row: wins/losses'+(isCle?', vs top 10':''):isCle?'▸ Tap a row: season, similar teams':'▸ Tap a row: '+t.abbr+' season, Cavs D','tap-hint'));
   /* shot quality: what an average NBA shooter would score on these same shots (league FG% in each zone) */
   const LZ=(()=>{const se=S.season||S.src||CUR_SEASON;const b=BLIVE&&BLIVE.lg&&BLIVE.season===se?BLIVE.lg:null;return ZN.map(([k],i)=>b&&b[i][1]?b[i][0]/b[i][1]:LG[k][0])})();
-  const zv=i=>i>=3?3:2,exp=xy.reduce((a,q)=>a+LZ[q.zi]*zv(q.zi),0),act=xy.reduce((a,q)=>a+(q.m?zv(q.zi):0),0);
+  const zv=i=>i>=3?3:2,xse=S.season||S.src||CUR_SEASON,exp=xy.reduce((a,q)=>{const xr=xRate(q,xse);return a+(xr!=null?xr:LZ[q.zi])*zv(q.zi)},0),act=xy.reduce((a,q)=>a+(q.m?zv(q.zi):0),0);
   if(xy.length>=5){const g2=el('div','tiles');g2.style.margin='4px 0 10px';[[(exp/xy.length).toFixed(2),'Expected pts per shot · '+xy.length+' shots'],[(act-exp>=0?'+':'−')+Math.abs(act-exp).toFixed(1),'Shot making: '+act+' pts vs '+exp.toFixed(1)+' exp.']].forEach(([a,b],i)=>{const d=el('div');const bb=el('b',null,a);if(i===1&&Math.abs(act-exp)>=1)bb.style.color=act>exp?'var(--pmp)':'var(--pmn)';const sh=i===0?'xPts per shot · '+xy.length+' FGA':act+' pts vs '+exp.toFixed(1)+' exp.';const sp=el('span');sp.append(el('span','lg-l',b),el('span','lg-s',sh));d.append(bb,sp);g2.appendChild(d)});right.insertBefore(g2,right.lastChild)}
   const zt=el('table','zt');zt.innerHTML=`<tr><th>Zone</th><th>FG</th><th>FG%</th><th>Share</th><th title="Points above or below what an average NBA shooter scores on these shots">Vs NBA</th></tr>`;
   ZN.forEach(([k,n,dsc],i)=>{const[m,a]=Z[i];const tr=el('tr');const nn=el('td');nn.append(n);if(dsc)nn.appendChild(el('span','pos',dsc));
@@ -4510,12 +4515,12 @@ async function seasonFiltered(se,full){const f=S.sf||{};const gsel=f.games&&f.ga
   const games=full.games.filter(g=>(!gsel||gsel.has(g.id))&&inTier(NR.rk[g.opp],NR.n,f.tier));S.sfN=games.length;if(!games.length)return Object.assign({},full,{games:[],P:full.P,B:{},gp:{},L:{2:{},3:{},4:{},5:{}},shots:[],asts:[],pz:{},T:{cle:{z:ZN.map(()=>[0,0])},opp:{z:ZN.map(()=>[0,0])}},pc:{}});
   const files=await Promise.all(games.map(g=>ARCHF[g.id]||(ARCHF[g.id]=getJSON('/live-archive/'+se+'/'+g.id+'.json'))));return seasonFrom(se,files,games,per)}
 /* the ready-made season file for a period (live-archive/<season>/season-p-<key>.json); combinations without one are built from the game files */
-const perKey=p=>p==='clutch'?'clutch':p==='nogt'?'nogt':Array.isArray(p)?(eqSet(p,[1,2])?'h1':eqSet(p,[3,4])?'h2':p.length===1&&p[0]<=4?'q'+p[0]:null):null;
+const perKey=p=>p==='clutch'?'clutch':p==='nogt'?'nogt':p==='hilev'||p==='lolev'?p:Array.isArray(p)?(eqSet(p,[1,2])?'h1':eqSet(p,[3,4])?'h2':p.length===1&&p[0]<=4?'q'+p[0]:null):null;
 /* Nov 13 (Luka): the season filters in force (games picked, opponent strength, garbage time, period), for share images */
 function seasonChips(){if(!S.season)return [];const f=S.sf||{},D=S.data||{},G=D.games||[],out=[];
   if(f.games&&f.games.length)out.push(G.length&&G.length<=4?G.map(g=>(g.ha==='home'?'vs ':'@ ')+g.opp).join(', '):G.length+' games picked');
   if(f.tier){const t=(TIERS.find(x=>x[0]===f.tier)||['',''])[1].toLowerCase();out.push(G.length+' game'+(G.length===1?'':'s')+' vs '+t)}
-  if(S.per&&S.per!=='all'){try{out.push(S.per==='nogt'?'No garbage time':perLabel(S.per))}catch(e){}}
+  if(S.per&&S.per!=='all'){try{out.push(S.per==='nogt'?'No garbage time':S.per==='hilev'?'High leverage':S.per==='lolev'?'Low leverage':perLabel(S.per))}catch(e){}}
   return out}
 /* the filter bar under the season scoreboard */
 function seasonFilterBar(){const D=S.data;const f=S.sf=S.sf||{};const w=el('div','sfb');w.appendChild(el('span','lab','Filter'));
@@ -4529,9 +4534,10 @@ function seasonFilterBar(){const D=S.data;const f=S.sf=S.sf||{};const w=el('div'
   const ts=el('select');ts.setAttribute('aria-label','Opponent strength');TIERS.forEach(([k,l])=>{const o=el('option',null,l);o.value=k;if((f.tier||'')===k)o.selected=true;ts.appendChild(o)});
   const go=async()=>{f.games=[...pnl.querySelectorAll('input:checked')].map(c=>c.value);delete f.opp;f.tier=ts.value;w.classList.add('busy');await loadSeason(S.season);render()};ap.onclick=go;ts.onchange=go;w.append(os,ts);
   /* garbage time: in or out (out = the season-p-nogt file, or rebuilt from the game files when other filters are on) */
-  {const gs=el('select');gs.setAttribute('aria-label','Garbage time');[['all','All minutes'],['nogt','No garbage time']].forEach(([k,l])=>{const o=el('option',null,l);o.value=k;if((S.per==='nogt'?'nogt':'all')===k)o.selected=true;gs.appendChild(o)});
-    gs.onchange=async()=>{S.per=gs.value==='nogt'?'nogt':'all';w.classList.add('busy');await loadSeason(S.season);render()};w.appendChild(gs)}
+  {/* Nov 16 (Luka): the minutes select also picks possessions by leverage (how much each one could move the chance of winning, after Darryl Blackport) */const gs=el('select');gs.setAttribute('aria-label','Minutes');const MK=['nogt','hilev','lolev'];[['all','All minutes'],['nogt','No garbage time'],['hilev','High leverage'],['lolev','Low leverage']].forEach(([k,l])=>{const o=el('option',null,l);o.value=k;if((MK.includes(S.per)?S.per:'all')===k)o.selected=true;gs.appendChild(o)});
+    gs.onchange=async()=>{S.per=MK.includes(gs.value)?gs.value:'all';w.classList.add('busy');await loadSeason(S.season);render()};w.appendChild(gs)}
   if((f.games&&f.games.length)||f.tier){const n=(D.games||[]).length;w.appendChild(el('span','sfn',n+' game'+(n===1?'':'s')+(f.tier?' vs '+TIERS.find(x=>x[0]===f.tier)[1].toLowerCase().replace(' net rating',''):'')));const x=el('button','clr','Clear');x.type='button';x.onclick=async()=>{S.sf={};await loadSeason(S.season);render()};w.appendChild(x)}
+  if(S.per==='hilev'||S.per==='lolev')w.appendChild(el('span','sfn dim',(S.per==='hilev'?'High leverage = the 20% of NBA possessions that can move the chance of winning the most (close games late, mostly)':'Low leverage = the half of NBA possessions that can move it the least (big leads)')+'. Leverage = how much the possession’s result could swing the chance of winning, from the score and time left, after Darryl Blackport (pbpstats).'));
   if(S.per==='nogt')w.appendChild(el('span','sfn dim','Garbage time = 4th quarter with a lead of 25+ and 9–12 minutes left, 20+ with 6–9 left, or 15+ with under 6 left. Overtime never counts.'));
   if(f.tier)w.appendChild(el('span','sfn dim','Strength = '+(S.season===CUR_SEASON?'net rating rank among all 30 teams so far this season, on counted possessions':'final '+S.season.replace('-','–')+' net rating (Basketball Reference)')));
   return w}
@@ -4543,7 +4549,7 @@ async function loadSeason(se){
   const D={season:se,teams:[focus,other],focus,other,home:focus,away:other,P,roster:{'5':ids,opp:[]},plays:[],wp:{},esp:{},games:j.games};
   const B={};Object.keys(P).forEach(id=>B[id]=Object.assign({min:0,pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,oreb:0,dreb:0,ast:0,stl:0,blk:0,to:0,pf:0,pm:0,gs:0},j.B[id]||{},{gp:j.gp[id]||0}));
   const fill=t=>Object.assign({pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,oreb:0,dreb:0,toreb:0,tdreb:0,ast:0,stl:0,blk:0,to:0,pf:0,sec:0},t);
-  const shots=j.shots.map(([id,x,y,m,th,zi,pt,ast,gi])=>({t:'5',id,x,y,hasXY:x!=null,m:!!m,three:!!th,zi,pt,ast:!!ast,gi,per:0,clock:'',text:''})).concat((j.oshots||[]).map(([x,y,m,th,zi,pt,ast,gi,od])=>({t:'opp',id:null,od:od||'',x,y,hasXY:x!=null,m:!!m,three:!!th,zi,pt,ast:!!ast,gi,per:0,clock:'',text:''})));
+  const shots=j.shots.map(([id,x,y,m,th,zi,pt,ast,gi,dt])=>({t:'5',id,x,y,hasXY:x!=null,m:!!m,three:!!th,zi,pt,ast:!!ast,gi,dt:dt==null?null:dt,per:0,clock:'',text:''})).concat((j.oshots||[]).map(([x,y,m,th,zi,pt,ast,gi,od,dt])=>({t:'opp',id:null,od:od||'',x,y,hasXY:x!=null,m:!!m,three:!!th,zi,pt,ast:!!ast,gi,dt:dt==null?null:dt,per:0,clock:'',text:''})));
   const R={B,L:{'5':j.L,opp:{2:{},3:{},4:{},5:{}}},T:{'5':fill(j.T.cle),opp:fill(j.T.opp)},shots,asts:j.asts.map(([p,s2,v,gi,z])=>({t:'5',p,s:s2,v,gi,z})),on:{'5':new Set(),opp:new Set()},plays:[],runs:[],pc:{'5':j.pc,opp:j.pcO||null},cx:j.cx?(()=>{const mk=c=>[{n:c.h[0],pts:c.h[1],pp:c.h[0]?c.h[1]/c.h[0]:null},{n:c.t[0],pts:c.t[1],pp:c.t[0]?c.t[1]/c.t[0]:null}];return {'5':mk(j.cx.cle),opp:mk(j.cx.opp)}})():null,pz:j.pz,lp:null,maxPer:4};
   S.data=D;S.R=R;S.state='post';S.err=null;
 }
@@ -4835,7 +4841,7 @@ function prevPicker(){let w=document.getElementById('prevpk');if(w){w.remove()}w
       const G=(S.sfull&&S.sfull.games)||[];const f={};if(U.get('tier')&&TIERS.some(t=>t[0]===U.get('tier')))f.tier=U.get('tier');
       let gs=null;if(U.get('since')){const [mo,dd]=U.get('since').split('-').map(Number);const y0=+S.season.slice(0,4);const d0=new Date(Date.UTC(mo>=8?y0:y0+1,mo-1,dd));gs=G.filter(g=>new Date(g.date||g.d)>=d0).map(g=>g.id)}
       if(U.get('last')){const n=+U.get('last');const base=gs?G.filter(g=>gs.includes(g.id)):G;gs=base.slice(-n).map(g=>g.id)}
-      if(gs)f.games=gs;S.sf=f;const per=U.get('per');if(per){S.per=per==='clutch'||per==='nogt'?per:per==='h1'?[1,2]:per==='h2'?[3,4]:/^q[1-4]$/.test(per)?[+per[1]]:'all'}
+      if(gs)f.games=gs;S.sf=f;const per=U.get('per');if(per){S.per=per==='clutch'||per==='nogt'||per==='hilev'||per==='lolev'?per:per==='h1'?[1,2]:per==='h2'?[3,4]:/^q[1-4]$/.test(per)?[+per[1]]:'all'}
       await loadSeason(S.season);const tb=U.get('tab');if(tb&&SEASON_TABS.includes(tb))S.tab=tb;
       const byLast=L=>Object.keys(S.data.P).find(k=>S.data.P[k].team==='5'&&(S.data.P[k].last||'').toLowerCase()===L.toLowerCase());
       const pk={};(U.get('on')||'').split(',').filter(Boolean).forEach(L=>{const id=byLast(L);if(id)pk[id]=1});(U.get('off')||'').split(',').filter(Boolean).forEach(L=>{const id=byLast(L);if(id)pk[id]=-1});

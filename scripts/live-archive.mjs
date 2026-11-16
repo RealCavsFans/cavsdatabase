@@ -143,6 +143,8 @@ const files = fs.readdirSync(DIR).filter(f => /^(\d+|b\d{8})\.json$/.test(f));
 function build(per, file) {
   const games = [];
   const P = {}, B = {}, gp = {}, L = { 2: {}, 3: {}, 4: {}, 5: {} }, shots = [], oshots = [], asts = [], pz = {}, rot = {}, dx = {}, gu = {};   // gu (Nov 15): each Cav's on-floor team FGA, FTA and turnovers game by game, for his per-game usage on the player page   // dx: each Cav's defense and boards from the play-by-play (rim on/off, blocks, rebounds by miss type)   // rot: each Cav's stints game by game [gi, [[start sec, end sec, +/-], ...]]
+  const mh = {}, ad = {};   // ad (Nov 16): opponents' possessions by how the Cavs' possession before ended: [possessions, points]
+    // Nov 16 (Luka): possessions at each score margin (Cavs view, -30 to +30): [Cavs offense, Cavs defense]
   const T = { cle: null, opp: null }, pc = {}, pcO = {}, cx = { cle: { t: [0, 0], h: [0, 0] }, opp: { t: [0, 0], h: [0, 0] } };
   const isT = q => (q.how === 'stl' || q.how === 'dreb' || q.how === 'to') && q.first != null && q.first <= 7;
   const addObj = (a, b) => { for (const k in b) { if (typeof b[k] === 'number') a[k] = (a[k] || 0) + b[k]; } };
@@ -156,6 +158,7 @@ function build(per, file) {
   for (const f of files) {
     const s = JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8'));
     const D = C.prep(s); const R0 = C.deriveCore(D, D.plays, 'all'); const R = per === 'all' ? R0 : C.deriveCore(D, D.plays, per);
+    let adCur = null; if (per === 'all') for (const q of R0.PL || []) { if (q.how === 'oreb') { if (q.team !== '5' && adCur) adCur[1] += q.pts || 0; } else if (q.team !== '5') { const k = q.how === 'dreb' ? 'z' + (q.mz == null ? 'x' : q.mz) : q.how, v = ad[k] = ad[k] || [0, 0]; v[0]++; v[1] += q.pts || 0; adCur = v; } if (q.mg == null || q.how === 'oreb') continue; const k = Math.max(-30, Math.min(30, q.mg)), v = mh[k] = mh[k] || [0, 0]; v[q.team === '5' ? 0 : 1]++; }
     if (D.focus.id !== '5') continue;
     const gi = games.length;
     const opp = D.other;
@@ -185,9 +188,9 @@ function build(per, file) {
     if (per === 'all') for (const id of D.roster['5']) { const u = Object.values(R0.L['5'][5] || {}).filter(l => l.ids.includes(id)); if (!u.length) continue; const sm = k => u.reduce((t, l) => t + ((l.o || {})[k] || 0), 0); (gu[id] = gu[id] || []).push([gi, sm('fga'), sm('fta'), sm('to'), sm('fgm')]); }   // Nov 16 (Luka): + team FGM on the floor, for his assist rate in the role change tracker
     if (per === 'all') for (const [id, st] of Object.entries(R0.stints || {})) if (D.P[id] && D.P[id].team === '5' && st.length) (rot[id] = rot[id] || []).push([gi, st.map(([a, b, pm]) => [Math.round(a), Math.round(b), pm])]);
     /* opponents' shots too, so the season Shots tab can show what the Cavs allow */
-    for (const q of R.shots) if (q.t !== '5') oshots.push([q.hasXY ? q.x : null, q.hasXY ? q.y : null, q.m ? 1 : 0, q.three ? 1 : 0, q.zi, q.pt, q.ast ? 1 : 0, gi, q.od || '']); // [8]: the Cavs on the floor (Nov 5: filter what opponents shoot by who was on)
+    for (const q of R.shots) if (q.t !== '5') oshots.push([q.hasXY ? q.x : null, q.hasXY ? q.y : null, q.m ? 1 : 0, q.three ? 1 : 0, q.zi, q.pt, q.ast ? 1 : 0, gi, q.od || '', q.dt != null ? q.dt : null]);   // [9] (Nov 16): seconds since the play started, for the expected shot model // [8]: the Cavs on the floor (Nov 5: filter what opponents shoot by who was on)
     for (const q of R.shots) if (q.t === '5') {
-      shots.push([q.id, q.hasXY ? q.x : null, q.hasXY ? q.y : null, q.m ? 1 : 0, q.three ? 1 : 0, q.zi, q.pt, q.ast ? 1 : 0, gi]);
+      shots.push([q.id, q.hasXY ? q.x : null, q.hasXY ? q.y : null, q.m ? 1 : 0, q.three ? 1 : 0, q.zi, q.pt, q.ast ? 1 : 0, gi, q.dt != null ? q.dt : null]);   // [9] (Nov 16): seconds since the play started
       if (q.hasXY) { const z = (pz[q.id] = pz[q.id] || {}); const g = (z[gi] = z[gi] || C.ZN.map(() => [0, 0])); g[q.zi][1]++; if (q.m) g[q.zi][0]++; }
     }
     for (const a of R.asts) if (a.t === '5') asts.push([a.p, a.s, a.v, gi, a.z]);
@@ -244,14 +247,14 @@ function build(per, file) {
     gs.forEach((g, i) => { if (!lines[i]) return; const prior = lines.slice(0, i).filter(Boolean); for (const [l, t] of C.highsL(lines[i], prior, H)) g.rc.push([l, t]); });
     fs.writeFileSync(path.join(DIR, 'highs.json'), JSON.stringify(lines.filter(Boolean)));
   }
-  const out = { season: SEASON, per, updated: new Date().toISOString(), games: gs.map(({ recap, rc, hl, ...g }) => g), P, B, gp, L, shots, oshots, asts, pz: pz2, T, pc, pcO, cx, ...(per === 'all' ? { rot, dx, gu } : {}) };
+  const out = { season: SEASON, per, updated: new Date().toISOString(), games: gs.map(({ recap, rc, hl, ...g }) => g), P, B, gp, L, shots, oshots, asts, pz: pz2, T, pc, pcO, cx, ...(per === 'all' ? { rot, dx, gu, mh, ad } : {}) };
   fs.writeFileSync(path.join(DIR, file), JSON.stringify(out));
   if (per === 'all') fs.writeFileSync(path.join(DIR, 'index.json'), JSON.stringify(gs.map(g => ({ id: g.id, espn: g.espn, date: g.date, et: g.et, opp: g.opp, ha: g.ha, cle: g.cle, os: g.os, rc: g.rc }))));
   console.log(`${file}: ${gs.length} games, ${shots.length} shots, ${Object.keys(L[5]).length} five-man lineups`);
   return out;
 }
 const ALL = build('all', 'season.json'), OUT = {};
-for (const [key, per] of [['h1', [1, 2]], ['h2', [3, 4]], ['q1', [1]], ['q2', [2]], ['q3', [3]], ['q4', [4]], ['clutch', 'clutch'], ['nogt', 'nogt']]) OUT[key] = build(per, 'season-p-' + key + '.json');
+for (const [key, per] of [['h1', [1, 2]], ['h2', [3, 4]], ['q1', [1]], ['q2', [2]], ['q3', [3]], ['q4', [4]], ['clutch', 'clutch'], ['nogt', 'nogt'], ['hilev', 'hilev'], ['lolev', 'lolev']]) OUT[key] = build(per, 'season-p-' + key + '.json');
 /* small summaries in season.json, so player pages and the Season tab don't need the period files:
    pq  each player by quarter and in the clutch: [seconds, pts, fgm, fga, tpm, tpa, +/-, games, ast, to, reb, fta, ftm, team plays with him on] (ast and to added Nov 4; the rest Nov 12)
    tq  the team by quarter and in the clutch: points for and against, counted possessions, seconds

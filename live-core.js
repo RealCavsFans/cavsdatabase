@@ -19,7 +19,7 @@ const sgn=v=>(v>0?'+':v<0?'−':'')+Math.abs(v);
 const PERS=[['all','Game'],['h1','1st half'],['h2','2nd half'],null,['1','Q1'],['2','Q2'],['3','Q3'],['4','Q4'],['ot','OT'],null,['clutch','Clutch']];
 const eqSet=(a,b)=>a.length===b.length&&a.every(x=>b.includes(x));
 const inPer=(f,p)=>Array.isArray(f)?f.includes(Math.min(p,5)):f==='all'||f==='nogt'||(f==='h1'&&p<=2)||(f==='h2'&&p>=3)||(f==='ot'&&p>4)||String(p)===f;
-const perLabel=f=>Array.isArray(f)?(eqSet(f,[1,2])?'1st half':eqSet(f,[3,4,5])||eqSet(f,[3,4])?'2nd half':f.length===1?(f[0]===5?'Overtime':'Quarter '+f[0]):f.slice().sort().map(p=>p===5?'OT':'Q'+p).join(' + ')):({all:'Full game',h1:'1st half',h2:'2nd half (incl. OT)',ot:'Overtime',clutch:'Clutch: last 5 minutes, score within 5',nogt:'Without garbage time'})[f]||'Quarter '+f;
+const perLabel=f=>Array.isArray(f)?(eqSet(f,[1,2])?'1st half':eqSet(f,[3,4,5])||eqSet(f,[3,4])?'2nd half':f.length===1?(f[0]===5?'Overtime':'Quarter '+f[0]):f.slice().sort().map(p=>p===5?'OT':'Q'+p).join(' + ')):({all:'Full game',h1:'1st half',h2:'2nd half (incl. OT)',ot:'Overtime',clutch:'Clutch: last 5 minutes, score within 5',nogt:'Without garbage time',hilev:'High leverage possessions',lolev:'Low leverage possessions'})[f]||'Quarter '+f;
 
 /* ---------- prepare ---------- */
 /* Nov 16 (Luka): the NBA feed's short name can be misspelled ('E. Mobely'); trust it only when its surname matches the full name */
@@ -61,6 +61,14 @@ const zS=()=>({fga:0,oreb:0,to:0,fta:0,fgm:0,tpa:0,tpm:0,ftm:0,ast:0,dreb:0,np:0
 const poss=o=>o.np!=null&&o.np>0?o.np:o.fga-o.oreb+o.to+0.44*o.fta;
 function zoneOf(x,y,three){const d=Math.hypot(x-25,y);if(three)return y<=C3?3:4;if(d<4)return 0;if(d<14)return 1;return 2}
 function combos(a,k){const r=[];const f=(s,c)=>{if(c.length===k){r.push(c.slice());return}for(let i=s;i<a.length;i++){c.push(a[i]);f(i+1,c);c.pop()}};f(0,[]);return r}
+/* Nov 16 (Luka): leverage, after Darryl Blackport (pbpstats): how much one possession can move the chance of winning. Win chance from
+   the margin and time left (normal model, 13 points of spread over a full game); leverage = the spread of that chance over the
+   possession's usual results (0-4 points, league frequencies), averaged over either team having the ball. Buckets: LEV_CUT */
+const LEV_F=[.48,.03,.33,.14,.02],LEV_SD=13;
+function wpNorm(m,tr){if(tr<=0)return m>0?1:m<0?0:.5;const z=m/(LEV_SD*Math.sqrt(tr/2880));const t=1/(1+.3275911*Math.abs(z)/Math.SQRT2),y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-.284496736)*t+.254829592)*t*Math.exp(-z*z/2);return .5*(1+(z<0?-y:y))}
+function levOf(per,t,m){const end=per<=4?2880:2880+300*(per-4),tr=Math.max(0,end-t),tn=Math.max(0,tr-15),w0=wpNorm(m,tr);let s2=0;[1,-1].forEach(sd=>{let v=0;LEV_F.forEach((f,k)=>{const d=wpNorm(m+sd*k,tn)-w0;v+=f*d*d});s2+=Math.sqrt(v)});return s2/2}
+let LEV_CUT=[.050,.063,.097];   /* low / medium / high / very high (set from every NBA possession this season, scripts/leverage-cut.mjs) */
+function levBucket(l){return l<LEV_CUT[0]?0:l<LEV_CUT[1]?1:l<LEV_CUT[2]?2:3}
 function deriveCore(D,plays,F){
   const tid=[D.home.id,D.away.id],opp=t=>t===tid[0]?tid[1]:tid[0];
   const teamOf=id=>D.P[id]&&D.P[id].team;
@@ -85,13 +93,13 @@ function deriveCore(D,plays,F){
   const lineKeys=(t,set)=>{const ids=[...set].sort();const k=t+'|'+ids.join(',');if(lkCache[k])return lkCache[k];const out=[];[2,3,4,5].forEach(n=>{if(ids.length>=n)combos(ids,n).forEach(c=>out.push([n,c.join(','),c]))});return lkCache[k]=out};
   const lu=(t,set,fn)=>lineKeys(t,set).forEach(([n,k,c])=>{const o=L[t][n][k]=L[t][n][k]||zL(c);fn(o)});
   const stints={},enter={},pmAll={};Object.keys(D.P).forEach(id=>pmAll[id]=0);
-  let last=0,curPer=0,snap=null;const src={},ps={},pc={},tf={},to={},ch={},pfAll={};let clutchNow=false,mgNow=0;const wpS=[],lineAt={};
+  let last=0,curPer=0,snap=null;const src={},ps={},pc={},tf={},to={},ch={},pfAll={};let clutchNow=false,mgNow=0,levNow=0,prevMiss=null;/* Nov 16 (Luka): the last miss before a defensive rebound: zone 0-4, 5 = blocked, 6 = free throw */const wpS=[],lineAt={};
   const HOW=['stl','to','dreb','made','oreb','start'];tid.forEach(t=>{src[t]='';ps[t]={t:0,how:'start'};pc[t]={};HOW.forEach(h=>pc[t][h]={n:0,pts:0});to[t]=0;ch[t]={used:0,won:0}});
   /* garbage time (published rule): 4th quarter, a lead of 25+ with 9–12 minutes left, 20+ with 6–9 left, or 15+ with under 6 left; overtime never counts */
   let gtNow=false;const isGT=(per,t,m)=>{if(per!==4)return false;const left=2880-t,a=Math.abs(m);return left>540?a>=25:left>360?a>=20:a>=15};
-  const inFx=per=>F==='clutch'?clutchNow:F==='nogt'?!gtNow:inPer(F,per);
+  const inFx=per=>F==='clutch'?clutchNow:F==='nogt'?!gtNow:F==='hilev'?levBucket(levNow)>=2:F==='lolev'?levBucket(levNow)===0:inPer(F,per);
   /* a possession that ends on free throws belongs to the ten players on the floor at the foul, like the points (Oct 31) */let hold=null,curON=null;const endPoss=(t,inF)=>{if(!inF||!t)return;/* Nov 6: NBA.com player possessions: every player on the floor at any point in the possession gets it */const pp=ps[t]&&ps[t].part;if(pp)pp.forEach(id=>{if(!B[id])return;const k=teamOf(id)===t?'po':'pd';B[id][k]=(B[id][k]||0)+1});const W=curON||on;if(seg)seg.o[t].np++;lu(t,W[t],o=>o.o.np++);lu(opp(t),W[opp(t)],o=>o.d.np++)};
-  const PL=[];let lastFGA=null,seq=0;const newPoss=(t,tt,how,inF)=>{if(ps[t]&&ps[t].t===tt&&ps[t].how===how&&how!=='oreb')return;/* Nov 6: a team that already has the ball can't start a new possession unless the other team has shot since (an and-one's free throw, made or missed and rebounded, is the same trip) */if(how!=='start'&&how!=='oreb'&&hold===t&&ps[t]&&!(lastFGA&&lastFGA.team===opp(t)&&lastFGA.seq>(ps[t].seq||0)))return;/* Nov 6: nothing starts with no time left (a rebound or steal at the buzzer), as on NBA.com */if(how!=='start'&&curPer&&tt>=pstart(curPer)+plen(curPer))return;if(how!=='start'){if(how!=='oreb'&&hold===opp(t))endPoss(opp(t),inF);hold=t}const part=how==='oreb'&&ps[t]&&ps[t].part?ps[t].part:new Set([...(on[t]||[]),...(on[opp(t)]||[])]);ps[t]={seq,part,t:tt,how,pts:0,first:null,inF,on:on[t]?[...on[t]].sort().join(','):'',od:on[opp(t)]?[...on[opp(t)]].sort().join(','):''};if(inF){pc[t][how].n++;PL.push(Object.assign(ps[t],{team:t}))}};
+  const PL=[];let lastFGA=null,seq=0;const newPoss=(t,tt,how,inF)=>{if(ps[t]&&ps[t].t===tt&&ps[t].how===how&&how!=='oreb')return;/* Nov 6: a team that already has the ball can't start a new possession unless the other team has shot since (an and-one's free throw, made or missed and rebounded, is the same trip) */if(how!=='start'&&how!=='oreb'&&hold===t&&ps[t]&&!(lastFGA&&lastFGA.team===opp(t)&&lastFGA.seq>(ps[t].seq||0)))return;/* Nov 6: nothing starts with no time left (a rebound or steal at the buzzer), as on NBA.com */if(how!=='start'&&curPer&&tt>=pstart(curPer)+plen(curPer))return;if(how!=='start'){if(how!=='oreb'&&hold===opp(t))endPoss(opp(t),inF);hold=t}const part=how==='oreb'&&ps[t]&&ps[t].part?ps[t].part:new Set([...(on[t]||[]),...(on[opp(t)]||[])]);ps[t]={seq,part,t:tt,how,pts:0,first:null,inF,mg:mgNow,lev:levNow,mz:how==='dreb'?prevMiss:null,on:on[t]?[...on[t]].sort().join(','):'',od:on[opp(t)]?[...on[opp(t)]].sort().join(','):''};if(inF){pc[t][how].n++;PL.push(Object.assign(ps[t],{team:t}))}};
   const margin=[[0,0]];let lc=0,ties=0,prevSign=0;const lead={};tid.forEach(t=>lead[t]=0);
   const shots=[],asts=[];const lastFG={},lastPt={},dr=[];let lastMade=null;
   /* segments: every stretch with the same ten players on the floor (for player-vs-opponent on/off) */
@@ -103,7 +111,7 @@ function deriveCore(D,plays,F){
   plays.forEach(p=>{curON=null;seq++;
     if(p.per!==curPer){if(curPer){addTime(pstart(curPer)+plen(curPer));endPoss(hold,inFx(curPer));hold=null;tid.forEach(t=>on[t].forEach(id=>leave(id,pstart(curPer)+plen(curPer))))}
       curPer=p.per;last=pstart(p.per);tid.forEach(t=>{on[t]=new Set(startFive[p.per][t]||[]);on[t].forEach(id=>{B[id].played=true;join(id,last)});src[t]='';ps[t]={t:last,how:'init',pts:0,first:null,inF:false,on:'',od:''}});newSeg()}
-    clutchNow=p.per>=4&&(p.per>4||p.t>=2580)&&Math.abs(mgNow)<=5;gtNow=isGT(p.per,p.t,mgNow);
+    clutchNow=p.per>=4&&(p.per>4||p.t>=2580)&&Math.abs(mgNow)<=5;gtNow=isGT(p.per,p.t,mgNow);levNow=levOf(p.per,p.t,mgNow);
     addTime(p.t);
     const inF=inFx(p.per);/* each player's own box score inside his 2-man and 5-man units (pb) */const pbA=(id,k,v,ONx)=>{if(!inF||!id||!D.P[id])return;const t=teamOf(id);if(!T[t])return;lu(t,(ONx||on)[t],o=>{if(o.ids.length!==2&&o.ids.length!==5)return;const q=(o.pb=o.pb||{})[id]=(o.pb[id]||{});q[k]=(q[k]||0)+v})};const ty=p.type,a=p.ids[0],b=p.ids[1];
     if(D.wp[p.id]!=null)wpS.push([p.t,D.wp[p.id],p]);
@@ -120,7 +128,7 @@ function deriveCore(D,plays,F){
     {const tt=p.team&&T[p.team]?p.team:teamOf(a);if(tt&&ps[tt]&&ps[tt].first==null&&(p.shot||/Turnover|Foul|^Traveling|Double Dribble|Discontinued? Dribble|Offensive Goaltending|Palming|Backcourt|3-Second Violation$|Inbound/.test(ty)))ps[tt].first=p.t-ps[tt].t}
     /* Nov 6: free throws for a technical, flagrant or clear-path foul don't hand the ball over (the shooting team keeps it, or play goes back to whoever had it) */if(/Foul/.test(ty))ftKeep=/Technical|Flagrant|Clear Path|Defensive 3 Second|Delay/i.test(ty);
     if(/Foul/.test(ty)&&!/Offensive|Technical/.test(ty)){snap={t:p.t,per:p.per,on:{}};tid.forEach(x=>snap.on[x]=new Set(on[x]))}
-    const ftSnap=isFT&&!/Technical/.test(ty)&&snap&&snap.t===p.t&&snap.per===p.per;const ON=ftSnap?snap.on:on;curON=ftSnap?snap.on:null;
+    const ftSnap=isFT&&!/Technical/.test(ty)&&snap&&snap.t===p.t&&snap.per===p.per;if(isFT&&!p.sc)prevMiss=6;const ON=ftSnap?snap.on:on;curON=ftSnap?snap.on:null;
     /* a blocked heave isn't a shot attempt, but the NBA still credits the block (Nov 3) */
     if(p.shot&&/Heave/.test(ty)&&!p.sc&&/blocks/.test(p.text||'')){const hb=(p.ids||[]).length>1?b:a;if(hb&&B[hb]){if(inF)(B[hb].blk++,pbA(hb,'blk',1));TT(teamOf(hb)).forEach(x=>x.blk++)}}
     if(p.shot&&!isFT&&!/Heave/.test(ty)){const ft=p.team&&T[p.team]?p.team:teamOf(a);if(ft)lastFGA={team:ft,t:p.t,seq}}
@@ -135,7 +143,7 @@ function deriveCore(D,plays,F){
         if(p.sc&&b&&/assists/.test(p.text)&&B[b]){if(inF){(B[b].ast++,pbA(b,'ast',1));asts.push({t,p:b,s:a,v:three?3:2,z:zi})}TT(t).forEach(x=>x.ast++)}
         else if(!p.sc&&b&&/blocks/.test(p.text)&&B[b]){if(inF)(B[b].blk++,pbA(b,'blk',1));TT(teamOf(b)).forEach(x=>x.blk++)}
         if(inF){const st=ps[t],dt=p.t-st.t;const pt=/Putback|Tip/.test(ty)||(st.how==='oreb'&&dt<=3)?0:((st.how==='dreb'||st.how==='stl')&&dt<=7)?1/* Nov 16: no dead-ball turnovers in transition */:/Cutting|Alley Oop/.test(ty)?2:/Floating/.test(ty)?8:/Driving/.test(ty)?3:/Hook|Turnaround|Fade Away|Post/.test(ty)?4:/Pullup|Step Back/.test(ty)?5:/Jump Shot/.test(ty)?6:7;
-          shots.push({t,on:[...on[t]].sort().join(','),od:[...on[opp(t)]].sort().join(','),id:a,x:p.x,y:p.y,hasXY:p.x!=null,m:!!p.sc,three,zi,pt,ast:!!(p.sc&&b&&/assists/.test(p.text)),per:p.per,clock:p.clock,text:p.text})}}}
+          prevMiss=p.sc?null:/blocks|BLOCK/.test(p.text||'')?5:zi;shots.push({t,on:[...on[t]].sort().join(','),od:[...on[opp(t)]].sort().join(','),id:a,x:p.x,y:p.y,hasXY:p.x!=null,m:!!p.sc,three,zi,pt,dt:Math.round(p.t-ps[t].t),ast:!!(p.sc&&b&&/assists/.test(p.text)),per:p.per,clock:p.clock,text:p.text})}}}
     if(p.sc&&p.val>0){const t=p.team&&T[p.team]?p.team:teamOf(a);if(t){
       if(inF&&a&&B[a])(B[a].pts+=p.val,pbA(a,'pts',p.val,ON));if(inF&&seg){seg.pts[t]+=p.val;if(a)seg.pp[a]=(seg.pp[a]||0)+p.val}if(inF&&pc[t][ps[t].how])pc[t][ps[t].how].pts+=p.val;if(ps[t])ps[t].pts+=p.val;lineAt[p.id]={[t]:[...ON[t]],[opp(t)]:[...ON[opp(t)]]};TT(t).forEach(x=>{x.pts+=p.val;if(a&&D.P[a]){if(D.P[a].starter)x.stPts+=p.val;else x.bnPts+=p.val}if(src[t].includes('2nd'))x.second+=p.val;if(p.fbq)x.fbc+=p.val;if(src[t].includes('to'))x.offto+=p.val});
       const o=opp(t);ON[t].forEach(id=>{pmAll[id]+=p.val;if(inF)B[id].pm+=p.val});ON[o].forEach(id=>{pmAll[id]-=p.val;if(inF)B[id].pm-=p.val});
@@ -215,7 +223,7 @@ function highsL(cur,prior,H){
 /* one game's line for highsL, from a derived game */
 function highLine(D,R){const t=R.T[D.focus.id];const p={};D.roster[D.focus.id].forEach(id=>{const b=R.B[id];if(!(b.min>0))return;p[id]={n:D.P[id].name,pts:b.pts,reb:b.oreb+b.dreb,ast:b.ast,fgm:b.fgm,tpm:b.tpm,stl:b.stl,blk:b.blk}});
   return {et:new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(new Date(D.date)),opp:D.other.abbr,t:{pts:t.pts,reb:t.oreb+t.dreb,ast:t.ast,fgm:t.fgm,tpm:t.tpm,stl:t.stl,blk:t.blk},p}}
-if(typeof module!=='undefined')module.exports={fromNBA,nbaClock,highsL,highLine,unpackSlim,prep,deriveCore,factors,poss,ZN,PT,LG,normName,pname,fmtMin,inPer,pstart,plen};
+if(typeof module!=='undefined')module.exports={levOf,levBucket,wpNorm,setLevCut:c=>{LEV_CUT=c},getLevCut:()=>LEV_CUT,fromNBA,nbaClock,highsL,highLine,unpackSlim,prep,deriveCore,factors,poss,ZN,PT,LG,normName,pname,fmtMin,inPer,pstart,plen};
 
 /* ---------- NBA.com live feed (Nov 2) ----------
    The NBA's own JSON (nba-prod-us-east-1-mediaops-stats.s3.amazonaws.com/NBA/liveData/{boxscore,playbyplay}/..._{gameId}.json),
