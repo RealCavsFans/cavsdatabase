@@ -3430,7 +3430,7 @@ Object.assign(SCARDS,{
       G2.forEach((z,i)=>{const m=z.cle-z.os,h=Math.max(6,hh*Math.abs(m)/mx),cx=X+36+i*bw;x.fillStyle=m>0?WINE:'#8a929c';x.fillRect(cx+10,m>0?mid-h:mid,bw-20,h);
         const sm=bw<64;x.fillStyle=m>0?WINE:'#5b6470';x.font=`700 ${sm?20:26}px "Geist Mono"`;ctr(x,(m>0?'+':'−')+Math.abs(m),cx+bw/2,m>0?mid-h-12:mid+h+32);
         x.fillStyle=INK;x.font=`800 ${sm?22:28}px "Saira Condensed"`;ctr(x,(z.ha==='home'?'':'@')+z.opp,cx+bw/2,Y+H-26)})}
-    lNote(x,'Ratings per 100 possessions'+(rk.t?' · NBA ranks from pbpstats possession counts':'')+' · games from the Cavs’ game archive');brandBar(x,LW,LH)}},
+    lNote(x,'Ratings per 100 possessions'+(rk.t?' · NBA ranks on counted possessions':'')+' · games from the Cavs’ game archive');brandBar(x,LW,LH)}},
   splayer:{label:'Player season card',pick:'player',w:LW,h:LH,async draw(x,D,R,id){const p=D.P[id],b=R.B[id];if(!p||!b)return;const n=b.gp||0;const F=D.focus.id;
     lFrame(x);const TX=await lHero(x,D,id);
     lTitle(x,TX,[D.focus.abbr,sSea(D)+' SEASON',n+' GAME'+(n===1?'':'S')+(b.gs?' · '+b.gs+' START'+(b.gs===1?'':'S'):'')].filter(Boolean).join(' · '),p.name,[[pg(b.pts,n),'800 104px "Saira Condensed"','#fff'],[' PPG  ','800 44px "Saira Condensed"','#fff'],[pg(b.oreb+b.dreb,n),'800 104px "Saira Condensed"','#fff'],[' RPG  ','800 44px "Saira Condensed"','#fff'],[pg(b.ast,n),'800 104px "Saira Condensed"','#fff'],[' APG  ','800 44px "Saira Condensed"','#fff'],['in '+pg(b.min/60,n)+' min','600 32px Archivo','rgba(255,255,255,.62)']]);
