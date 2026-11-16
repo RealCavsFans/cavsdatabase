@@ -369,6 +369,13 @@
  ],
  "podcasts": [
   {
+   "src": "Fear The Fro",
+   "title": "TYRESE PROCTOR TRIPLE-DOUBLE PARTY!",
+   "link": "https://share.transistor.fm/s/ac6b46dc",
+   "date": "2026-11-16T12:45:18.000Z",
+   "dur": "34 min"
+  },
+  {
    "src": "Wine and Gold Talk",
    "title": "Why the Cavs’ end-of-game “fight” can’t be the baseline for a team too pricey and too talented to underachieve",
    "link": "https://pdst.fm/e/traffic.megaphone.fm/ADLM3559659502.mp3",
@@ -440,6 +447,13 @@
   }
  ],
  "videos": [
+  {
+   "src": "Locked On Cavs",
+   "title": "Cavs win without stars and after an 8-hour turnaround",
+   "link": "https://www.youtube.com/watch?v=ueW_xoF7Chk",
+   "date": "2026-11-16T12:43:40.000Z",
+   "id": "ueW_xoF7Chk"
+  },
   {
    "src": "Locked On Cavs",
    "title": "Cavs have a window to stack wins this week.",
@@ -551,13 +565,6 @@
    "link": "https://www.youtube.com/watch?v=2jh6G-LhqNE",
    "date": "2026-11-14T17:00:09.000Z",
    "id": "2jh6G-LhqNE"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "REACTION: Cleveland Cavaliers CRUSHED By Miami Heat! | What Went WRONG?!",
-   "link": "https://www.youtube.com/watch?v=yosSRohrJZk",
-   "date": "2026-11-14T05:45:10.000Z",
-   "id": "yosSRohrJZk"
   },
   {
    "src": "It's Cavalier Podcast",
