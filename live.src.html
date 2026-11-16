@@ -4533,7 +4533,7 @@ function seasonFilterBar(){const D=S.data;const f=S.sf=S.sf||{};const w=el('div'
     gs.onchange=async()=>{S.per=gs.value==='nogt'?'nogt':'all';w.classList.add('busy');await loadSeason(S.season);render()};w.appendChild(gs)}
   if((f.games&&f.games.length)||f.tier){const n=(D.games||[]).length;w.appendChild(el('span','sfn',n+' game'+(n===1?'':'s')+(f.tier?' vs '+TIERS.find(x=>x[0]===f.tier)[1].toLowerCase().replace(' net rating',''):'')));const x=el('button','clr','Clear');x.type='button';x.onclick=async()=>{S.sf={};await loadSeason(S.season);render()};w.appendChild(x)}
   if(S.per==='nogt')w.appendChild(el('span','sfn dim','Garbage time = 4th quarter with a lead of 25+ and 9–12 minutes left, 20+ with 6–9 left, or 15+ with under 6 left. Overtime never counts.'));
-  if(f.tier)w.appendChild(el('span','sfn dim','Strength = '+(S.season===CUR_SEASON?'net rating rank among all 30 teams so far this season, on counted possessions':'final '+S.season.replace('-','–')+' net rating (Basketball Reference)')));
+  if(f.tier)w.appendChild(el('span','sfn dim','Strength = '+(S.season===CUR_SEASON?'net rating rank among all 30 teams so far this season, on counted possessions':'final '+S.season.replace('-','–')+' net rating rank among all 30 teams, on counted possessions')));
   return w}
 async function loadSeason(se){
   let j;try{if(!S.sfull||S.sfull.season!==se){S.sfull=await getJSON('/live-archive/'+se+'/season.json');if(!SEASONTAB_ON)S.sf={}}j=SEASONTAB_ON?await seasonFiltered(se,S.sfull):S.sfull}catch(e){S.err='Could not load the season archive.';return}

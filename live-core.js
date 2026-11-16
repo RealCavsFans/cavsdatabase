@@ -2,7 +2,7 @@
    Shared by /live.html, /embed/live.html and the nightly archive job (scripts/live-archive.mjs). */
 'use strict';
 /* league FG% and shot share by zone, 2025–26 (pbpstats team totals) */
-const LG={AtRim:[.6726,.2805],ShortMidRange:[.444,.2267],LongMidRange:[.4118,.0747],Corner3:[.3868,.107],Arc3:[.3445,.311]};
+/* Nov 16 (Luka): last season's NBA make rate and share of shots by zone, from our own count of every 2025-26 game's located shots (same zone lines and source as this season) */const LG={AtRim:[.6709,.2842],ShortMidRange:[.4439,.2262],LongMidRange:[.4116,.0746],Corner3:[.3863,.1085],Arc3:[.3502,.3066]};
 const normName=n=>n.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');
 const PT=[['putback','Putbacks and tip-ins'],['trans','Transition'],['cut','Cuts and lobs'],['drive','Drives'],['post','Post-ups, turnarounds and fadeaways'],['pull','Pull-ups and step-backs'],['spot','Spot-up jumpers'],['fin','Other layups and dunks'],['float','Floaters']];   /* Nov 3: floaters get their own row (index 8, so saved season numbers keep their places) */
 const ZN=[['AtRim','At the rim','0–4 ft'],['ShortMidRange','Short midrange','4–14 ft'],['LongMidRange','Long midrange','14+ ft'],['Corner3','Corner 3',''],['Arc3','Above-the-break 3','']];
