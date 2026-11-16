@@ -9,6 +9,7 @@ import path from 'path';
 import zlib from 'zlib';
 const SEASON = process.env.SEASON || '2026-27', DIR = path.join(process.argv[2] || 'nba-data', SEASON), OUT = 'data/espn-check.json', DAYS = +(process.env.DAYS || 4);
 const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/';
+const ini = n => { const w = String(n || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b\.?/g, '').replace(/[^a-z ]/g, '').trim().split(/\s+/); return w[0][0] + w[w.length - 1]; };   // Cam / Cameron Johnson
 const nm = n => String(n || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g, '').replace(/[^a-z]/g, '');
 const ESPN_AB = { NYK: 'NY', GSW: 'GS', SAS: 'SA', NOP: 'NO', UTA: 'UTAH', WAS: 'WSH' };
 async function get(u) { for (let i = 0; i < 3; i++) { try { const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0 (cavsdatabase.com)' }, signal: AbortSignal.timeout(30000) }); if (r.ok) return r.json(); } catch {} await new Promise(r => setTimeout(r, 2000)); } return null; }
@@ -32,10 +33,10 @@ for (const [gid, row] of Object.entries(idx)) {
     const sum = await get(ESPN + 'summary?event=' + ev.id); const ES = {};
     for (const tb of sum?.boxscore?.players || []) { const st = tb.statistics?.[0] || {}, N = st.names || st.labels || [], ix = k => N.indexOf(k);
       for (const a of st.athletes || []) { if (!a.stats || !a.stats.length) continue; const v = k => { const i = ix(k); return i < 0 ? null : +String(a.stats[i]).split('-')[0]; };
-        ES[nm(a.athlete.displayName)] = { min: v('MIN'), pts: v('PTS'), reb: v('REB'), ast: v('AST'), stl: v('STL'), blk: v('BLK'), to: v('TO') }; } }
+        const o = { min: v('MIN'), pts: v('PTS'), reb: v('REB'), ast: v('AST'), stl: v('STL'), blk: v('BLK'), to: v('TO') }; ES[nm(a.athlete.displayName)] = o; ES['~' + ini(a.athlete.displayName)] = ES['~' + ini(a.athlete.displayName)] ? 'dup' : o; } }
     if (!Object.keys(ES).length) { out.games[gid] = { d, g: row[1] + '@' + row[2], s: row[5], status: 'ESPN box not ready' }; continue; }
     const diffs = [];
-    for (const [k, a] of Object.entries(NB)) { const b = ES[k]; if (!b) { if (a.min >= 3) diffs.push(`${a.n}: in NBA box, not ESPN's`); continue; }
+    for (const [k, a] of Object.entries(NB)) { let b = ES[k]; if (!b) { const x = ES['~' + ini(a.n)]; if (x && x !== 'dup') b = x; } if (!b) { if (a.min >= 3) diffs.push(`${a.n}: in NBA box, not ESPN's`); continue; }
       for (const f of ['pts', 'reb', 'ast', 'stl', 'blk', 'to']) if (b[f] != null && a[f] !== b[f]) diffs.push(`${a.n} ${f.toUpperCase()} NBA ${a[f]} vs ESPN ${b[f]}`);
       if (b.min != null && Math.abs(a.min - b.min) > 1) diffs.push(`${a.n} MIN NBA ${a.min} vs ESPN ${b.min}`); }
     out.games[gid] = { d, g: row[1] + '@' + row[2], s: row[5], status: 'ok', espn: ev.id, diffs };
