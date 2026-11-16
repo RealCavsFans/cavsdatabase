@@ -5025,7 +5025,7 @@ window.renderPlayer=function(s){
       const byT={},all={};Object.entries(SJ.teams).forEach(([t,o])=>Object.entries(o).forEach(([k,v])=>{(byT[t]=byT[t]||{})[nm(k)]=v;(all[nm(k)]=all[nm(k)]||[]).push(v)}));
       const salOf=x=>{const t=byT[ESPB[x.t]||x.t]||{},k=nm(x.n);if(t[k]!=null)return t[k];const a2=all[k];return a2&&a2.length===1?a2[0]:null};
       const gs=x=>(x.pts+.4*x.fgm-.7*x.fga-.4*(x.fta-x.ftm)+.7*x.oreb+.3*(x.reb-x.oreb)+x.stl+.7*x.ast+.7*x.blk-.4*(x.pf||0)-x.tov)/x.g;/* Nov 6: with fouls (Hollinger) */
-      const P=LP.filter(x=>x.g>=Math.max(3,maxG*0.4)&&x.min/x.g>=10).map(x=>({x,s:salOf(x),v:gs(x)})).filter(o=>o.s!=null&&o.s>0);
+      const P=LP.filter(x=>x.g>=Math.max(3,Math.ceil(maxG*0.5))&&x.min/x.g>=10/* Nov 16: same pool as every other rank */).map(x=>({x,s:salOf(x),v:gs(x)})).filter(o=>o.s!=null&&o.s>0);
       const me=P.find(o=>o.x===meL);if(!me||P.length<40){c.remove();return}
       /* his pay band: the 30 players paid closest to him */
       const band=P.slice().sort((a2,b2)=>Math.abs(a2.s-me.s)-Math.abs(b2.s-me.s)).slice(0,31);const rk=k=>1+band.filter(o=>k(o)>k(me)).length;
