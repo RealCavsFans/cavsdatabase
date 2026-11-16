@@ -12,11 +12,18 @@ const SEASON = process.env.SEASON || '2026-27';
 const NBA = { NY: 'NYK', GS: 'GSW', SA: 'SAS', NO: 'NOP', UTAH: 'UTA', WSH: 'WAS' };
 const MIN_GAP = +(process.env.MIN_GAP || 60);   // only report a feat if it last happened at least this many games ago
 const H = JSON.parse(await readFile(new URL('data/hist-cle.json', root), 'utf8'));
-const FIRST = H.from;   // first season in the logs, e.g. 2000-01
+/* Nov 16 (Luka): back to 1970. data/hist-old.json = every Cavs box score 1970-71 to 1999-2000 from Basketball Reference
+   (pl rows [name, pts, reb, ast, 3pm, stl, blk]). Steals and blocks were first kept in 1973-74 and threes came in 1979-80,
+   so those are null before then; team turnovers only exist in the 2000-01 on logs. Each feat says how far back its stat goes. */
+let OLD = []; try { OLD = JSON.parse(await readFile(new URL('data/hist-old.json', root), 'utf8')).games; } catch {}
+const oldG = OLD.map(g => { const st = g.s >= '1973-74', tp = g.s >= '1979-80'; const pl = (g.pl || []).filter(r => r[0] && r[0] !== 'Player').map(r => [r[0], r[1], r[2], r[3], tp ? r[4] : null, st ? r[5] : null, st ? r[6] : null]);
+  return { d: g.d, s: g.s, o: g.o, p: g.p, op: g.op, tpm: tp ? pl.reduce((a, r) => a + (r[4] || 0), 0) : null, ast: pl.reduce((a, r) => a + (r[3] || 0), 0), to: null, pl }; });
+const FIRST = OLD.length ? OLD[0].s : H.from;   // first season in the logs, e.g. 1970-71
+const SINCE = { threes: '1979-80', steals: '1973-74', blocks: '1973-74', turnovers: H.from };   // stats not kept from the start
 
 // history games, oldest first: {d, s, o, home?, p, op, tpm, ast, reb, to, pl:[[name, pts, reb, ast, tpm, stl, blk]]}
 const DEMO = process.env.DEMO;   // e.g. DEMO=2025-26 replays a past season from the logs (for testing)
-const G = H.games.filter(g => !DEMO || g.s < DEMO);
+const G = oldG.concat(H.games).filter(g => !DEMO || g.s < DEMO);
 let idx = []; try { idx = JSON.parse(await readFile(new URL(`live-archive/${SEASON}/index.json`, root), 'utf8')); } catch {}
 if (DEMO) idx = [];
 idx.sort((a, b) => a.et < b.et ? -1 : 1);
@@ -44,12 +51,12 @@ for (const g of cur) {
   const ag = p => (p.o ? 'against ' + p.o + ', ' : '') + fmtD(p.d);
   const href = p => p.s === SEASON ? 'games/' + p.d + '-' + String(p.o).toLowerCase() : 'history/' + p.s;
   const lk = p => ({ h: href(p), a: ag(p) });
-  const feat = (score, v, better, n, l, prevTxt) => {
+  const feat = (score, v, better, n, l, prevTxt, from) => {
     if (v == null) return;
     let k = 0, hit = null;
     for (const p of past) { const pv = score(p); if (pv != null && (better > 0 ? pv >= v : pv <= v)) { hit = { p, pv }; break; } k++; }
     if (k < MIN_GAP) return;
-    notes.push({ gap: hit ? k : 1e6, n, l, ...(hit ? lk(hit.p) : {}), t: hit ? prevTxt(hit.p, hit.pv) : 'The ' + (better > 0 ? 'most' : 'fewest') + ' in any Cavs game since at least ' + seasonLab(FIRST) + ', as far back as these logs go' });
+    notes.push({ gap: hit ? k : 1e6, n, l, ...(hit ? lk(hit.p) : {}), t: hit ? prevTxt(hit.p, hit.pv) : 'The ' + (better > 0 ? 'most' : 'fewest') + ' in any Cavs game since at least ' + seasonLab(from || FIRST) + ', as far back as ' + (from && from !== FIRST ? 'the league kept that stat' : 'these logs go') });
   };
   const win = g.p > g.op, m = g.p - g.op;
   feat(p => p.p, g.p, 1, g.p, 'points', (p, v) => `Most since scoring ${v} ${ag(p)}`);
@@ -57,15 +64,15 @@ for (const g of cur) {
   feat(p => p.op, g.op, 1, g.op, 'points allowed', (p, v) => `Most since allowing ${v} ${ag(p)}`);
   if (win) feat(p => p.p - p.op, m, 1, '+' + m, 'win margin', (p, v) => `Biggest win since a ${v}-point win ${ag(p)}`);
   else feat(p => p.op - p.p, -m, 1, '−' + (-m), 'loss margin', (p, v) => `Worst loss since a ${v}-point loss ${ag(p)}`);
-  feat(p => p.tpm, g.tpm, 1, g.tpm, 'threes', (p, v) => `Most since making ${v} ${ag(p)}`);
+  feat(p => p.tpm, g.tpm, 1, g.tpm, 'threes', (p, v) => `Most since making ${v} ${ag(p)}`, SINCE.threes);
   feat(p => p.ast, g.ast, 1, g.ast, 'assists', (p, v) => `Most since ${v} ${ag(p)}`);
-  feat(p => p.to, g.to, -1, g.to, 'turnovers', (p, v) => `Fewest since ${v} ${ag(p)}`);
+  feat(p => p.to, g.to, -1, g.to, 'turnovers', (p, v) => `Fewest since ${v} ${ag(p)}`, SINCE.turnovers);
   // players: best single-game number by any Cav
   const cats = [[1, 'points'], [2, 'rebounds'], [3, 'assists'], [4, 'threes'], [5, 'steals'], [6, 'blocks']];
   for (const [c, lab] of cats) {
     const best = g.pl.reduce((a, r) => (!a || r[c] > a[c] ? r : a), null); if (!best || !best[c]) continue;
-    feat(p => Math.max(...(p.pl || []).map(r => r[c]), -1), best[c], 1, best[c], best[0].split(' ').slice(-1)[0] + ' ' + lab,
-      (p, v) => { const r = p.pl.find(x => x[c] === v); return `${best[0]}: most by a Cav since ${r[0] === best[0] ? 'his own' : r[0] + '’s'} ${v} ${ag(p)}`; });
+    feat(p => { const v = (p.pl || []).map(r => r[c]).filter(x => x != null); return v.length ? Math.max(...v) : null; }, best[c], 1, best[c], best[0].split(' ').slice(-1)[0] + ' ' + lab,
+      (p, v) => { const r = p.pl.find(x => x[c] === v); return `${best[0]}: most by a Cav since ${r[0] === best[0] ? 'his own' : r[0] + '’s'} ${v} ${ag(p)}`; }, SINCE[lab]);
   }
   // triple-doubles
   const td = g.pl.filter(r => [r[1], r[2], r[3], r[5], r[6]].filter(x => x >= 10).length >= 3);
