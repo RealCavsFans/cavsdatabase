@@ -4835,7 +4835,7 @@ window.renderPlayer=function(s){
   const pool=LP.filter(x=>x.g>=Math.max(3,Math.ceil(maxG*0.5))&&x.min/x.g>=12&&(RG?X.roleOf(x.n)===RG:lgGrp(x.p)===G));/* Nov 14 (Luka): same pool as the season stats page: 12+ minutes, half the games, his role group */
   const meL=LP.find(x=>x.n===n&&x.t==='CLE');
   const per=(x,k)=>x[k]/x.g;
-  const rankIn=(val,arr,hi=true)=>{if(val==null||!arr.length)return null;const better=arr.filter(v2=>hi?v2>val:v2<val).length;return {r:better+1,of:arr.length+1,pct:Math.round(100*(arr.filter(v2=>hi?v2<val:v2>val).length)/Math.max(1,arr.length))}};
+  const rankIn=(val,arr,hi=true)=>{if(val==null||!arr.length)return null;const better=arr.filter(v2=>hi?v2>val:v2<val).length;return {r:better+1,of:arr.length+1,pct:Math.round(100*(arr.filter(v2=>hi?v2<val:v2>val).length)/Math.max(1,arr.length+1))}};/* Nov 16 (Luka): he counts in his own pool (N includes him), so the percentile and "Nth of N" use the same pool */
   const lgOK=meL&&meL.g>=3&&pool.length>=15;  /* Nov 14: like the season stats page, any Cav with 3+ games is placed against the qualified pool */
   const lgRank=(k,fn)=>{if(!lgOK)return null;const f=fn||(x=>per(x,k));const arr=pool.filter(x=>x!==meL).map(f);return rankIn(f(meL),arr)};
   // Cavs rank this season (players with 3+ games)
