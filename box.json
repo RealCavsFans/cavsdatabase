@@ -3099,7 +3099,24 @@
  },
  "2026-11-16": {
   "url": "https://www.nba.com/game/chi-vs-cle-0022600246/box-score",
-  "status": "scheduled"
+  "status": "scheduled",
+  "refs": [
+   [
+    "Crew chief",
+    "Curtis Blair",
+    "74"
+   ],
+   [
+    "Referee",
+    "Ray Acosta",
+    "54"
+   ],
+   [
+    "Umpire",
+    "Rodney Mott",
+    "71"
+   ]
+  ]
  },
  "2026-11-18": {
   "url": "https://www.nba.com/game/mem-vs-cle-0022600258/box-score",
