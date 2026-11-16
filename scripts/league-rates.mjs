@@ -22,7 +22,7 @@ let read = 0, failed = 0;
 for (const [gid, row] of Object.entries(idx)) {
   if (!/^002/.test(gid)) continue;                        // regular season (NBA Cup group games included); no preseason, play-in or playoffs
   const stamp = String(row[5] || ''), hit = cache[gid];
-  if (hit && hit.s === stamp) continue;
+  if (hit && hit.s === stamp && hit.t) continue;
   try {
     const raw = applyFixes(JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(DIR, gid + '.json.gz')))), FIX[gid]);
     const D = C.prep(C.slimSummary(C.fromNBA({ game: raw.box }, { game: raw.pbp }))); if (!D.plays.length) continue;
@@ -37,7 +37,10 @@ for (const [gid, row] of Object.entries(idx)) {
           Math.round(on.reduce((s, l) => s + C.poss(l.o), 0) * 10) / 10, Math.round(on.reduce((s, l) => s + C.poss(l.d), 0) * 10) / 10];
       }
     }
-    cache[gid] = { s: stamp, p: out }; read++;
+    /* Nov 16 (Luka): each team's counted possessions too (offense and defense), so team ratings, net rating ranks and tiers use the same count */
+    const tm = {}; const d8 = String(row[0] || ''), day = d8.slice(0, 4) + '-' + d8.slice(4, 6) + '-' + d8.slice(6, 8);
+    for (const t of D.teams) { const o = D.teams.find(x => x !== t), A = R.T[t.id], B = R.T[o.id]; if (!(A.np > 0) || !(B.np > 0)) continue; tm[t.abbr] = [day, A.np, B.np, A.pts, B.pts, A.sec || 2880]; }
+    cache[gid] = { s: stamp, p: out, t: tm }; read++;
   } catch (e) { failed++; console.log('league-rates: could not read', gid, String(e).slice(0, 120)); }
 }
 for (const g of Object.keys(cache)) if (!idx[g]) delete cache[g];
@@ -47,5 +50,7 @@ for (const { p } of Object.values(cache)) for (const [id, r] of Object.entries(p
   for (let i = 0; i < COLS.length; i++) o[2 + i] = Math.round((o[2 + i] + r[2 + i]) * 10) / 10;
 }
 fs.mkdirSync('data', { recursive: true }); fs.writeFileSync(CACHE, JSON.stringify({ season: SEASON, g: cache }));
-fs.writeFileSync(OUT, JSON.stringify({ season: SEASON, updated: new Date().toISOString(), games: Object.keys(cache).length, cols: COLS, p: P }));
+const TM = {}; for (const { t } of Object.values(cache)) for (const [ab, r] of Object.entries(t || {})) (TM[ab] = TM[ab] || []).push(r);
+for (const k in TM) TM[k].sort((a, b) => a[0] < b[0] ? -1 : 1);
+fs.writeFileSync(OUT, JSON.stringify({ season: SEASON, updated: new Date().toISOString(), games: Object.keys(cache).length, cols: COLS, p: P, tcols: ['d', 'poss', 'opp_poss', 'pts', 'opp_pts', 'sec'], t: TM }));
 console.log(`league-rates: ${read} games read${failed ? ', ' + failed + ' failed' : ''}; ${Object.keys(cache).length} games, ${Object.keys(P).length} players`);

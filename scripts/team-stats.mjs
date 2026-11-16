@@ -31,6 +31,10 @@ for (const g of games) {
   rows.push({ d: g.d, per: g.per, me: a, op: b }, { d: g.d, per: g.per, me: b, op: a });
 }
 rows.sort((x, y) => x.d < y.d ? -1 : x.d > y.d ? 1 : 0);
+/* Nov 16 (Luka): first choice, possessions counted from the NBA's own play-by-play for every team (scripts/league-rates.mjs),
+   the same count the season stats page uses; pbpstats next; the box score estimate last */
+let CT = {}; try { const j = JSON.parse(await readFile(new URL('pdata/league-rates.json', root), 'utf8')); for (const [k, v] of Object.entries(j.t || {})) CT[ab(k)] = v; } catch {}
+const ctDay = {}; for (const [k, v] of Object.entries(CT)) for (const r of v) ctDay[k + '|' + r[0]] = r;
 const possOf = (t, o) => t.fga + 0.4 * t.fta - 1.07 * (t.orb / ((t.orb + o.drb) || 1)) * (t.fga - t.fgm) + t.tov;
 
 const F = ['pts', 'fgm', 'fga', 'tpm', 'tpa', 'ftm', 'fta', 'orb', 'drb', 'tov'];
@@ -39,7 +43,8 @@ for (const r of rows) {
   const a = A[r.me.ab] || (A[r.me.ab] = { g: 0, w: 0, mp: 0, res: [], ...Object.fromEntries(F.flatMap(f => [[f, 0], ['o' + f, 0]])) });
   a.g++; if (r.me.pts > r.op.pts) a.w++; a.mp += 240 + 25 * Math.max(0, r.per - 4);
   for (const f of F) { a[f] += r.me[f]; a['o' + f] += r.op[f]; }
-  a.res.push({ d: r.d, w: r.me.pts > r.op.pts, net: r.me.pts - r.op.pts, poss: 0.5 * (possOf(r.me, r.op) + possOf(r.op, r.me)) });
+  { const c = ctDay[r.me.ab + '|' + r.d], cp = c && c[3] === r.me.pts && c[4] === r.op.pts ? 0.5 * (c[1] + c[2]) : null;
+    a.res.push({ d: r.d, w: r.me.pts > r.op.pts, net: r.me.pts - r.op.pts, poss: cp != null ? cp : 0.5 * (possOf(r.me, r.op) + possOf(r.op, r.me)) }); }
 }
 const TSTATS = {}, FFR = {}, NRTG = {}, L14 = {}, OPP_FORM = {};
 /* season ratings from pbpstats' play-by-play possession counts (the way NBA.com counts them) when pbpstats is caught up
@@ -51,7 +56,9 @@ for (const [k, a] of Object.entries(A)) {
   const g = a.g, me = Object.fromEntries(F.map(f => [f, a[f]])), op = Object.fromEntries(F.map(f => [f, a['o' + f]]));
   const P = 0.5 * (possOf(me, op) + possOf(op, me));
   let ortg = 100 * a.pts / P, drtg = 100 * a.opts / P, pace = 48 * (2 * P) / (2 * (a.mp / 5));
-  { const x = PBT && PBT[PBK[k]]; if (x && x.GamesPlayed === g && x.OffPoss > 0 && x.DefPoss > 0 && x.Points === a.pts && x.OpponentPoints === a.opts) { ortg = 100 * x.Points / x.OffPoss; drtg = 100 * x.OpponentPoints / x.DefPoss; if (x.Pace) pace = x.Pace; } }
+  const cl = CT[k] || [], cPts = cl.reduce((s, r) => s + r[3], 0), cOpts = cl.reduce((s, r) => s + r[4], 0);
+  if (cl.length === g && cPts === a.pts && cOpts === a.opts) { const po = cl.reduce((s, r) => s + r[1], 0), pd = cl.reduce((s, r) => s + r[2], 0); ortg = 100 * a.pts / po; drtg = 100 * a.opts / pd; pace = 48 * ((po + pd) / 2) / (a.mp / 5); }
+  else { const x = PBT && PBT[PBK[k]]; if (x && x.GamesPlayed === g && x.OffPoss > 0 && x.DefPoss > 0 && x.Points === a.pts && x.OpponentPoints === a.opts) { ortg = 100 * x.Points / x.OffPoss; drtg = 100 * x.OpponentPoints / x.DefPoss; if (x.Pace) pace = x.Pace; } }
   TSTATS[k] = [a.w, g - a.w, r1(a.pts / g), r1(a.opts / g), r1(ortg), r1(drtg), r1(pace), r1(100 * a.tpm / (a.tpa || 1))];
   FFR[k] = ['fgm', 'fga', 'tpm', 'ftm', 'fta', 'orb', 'drb', 'tov', 'ofgm', 'ofga', 'otpm', 'oftm', 'ofta', 'oorb', 'odrb', 'otov'].map(f => r1(a[f] / g));
   NRTG[k] = [r1(ortg - drtg), g];
