@@ -5195,15 +5195,18 @@ window.renderPlayer=function(s){
   const stocks=cur&&cur.stl!=null&&cur.blk!=null?cur.stl+cur.blk:null;
   const df=chap('def','Defense & boards',stocks!=null?f1(stocks)+' stocks · '+f1(cur.reb)+' reb':'',false,'Defense');
   if(stocks!=null){/* Nov 12 (Luka): one clear table in three groups (rebounding, defense, fouls): per game, per 36, and his percentile among NBA players at his position (per 36) */
-    const c=card('Defense and boards',null,lgOK?`Per game and per 36 minutes. Rank = his percentile among NBA ${GN}, per game like the season stats page (99th = best).`:'Per game and per 36 minutes. League ranks start once there are enough games to compare.');
-    const src=meL&&cur&&cur.src==='2026–27'?meL:null;const val=(x,k)=>k==='dreb'?x.reb-x.oreb:k==='stk'?x.stl+x.blk:x[k];const p36=(x,k)=>x&&x.min?val(x,k)/x.min*36:null;
-    const tb=el('div','dbt');tb.innerHTML='<div class="dbt-h"><span></span><span>Per game</span><span>Per 36</span><span><span class="hide-sm">Rank among NBA '+escH(GN)+'</span><span class="show-sm">Rank</span></span></div>';
+    const c=card('Defense and boards',null,lgOK?`Per game and per 100 possessions he was on the floor. Rank = his percentile among NBA ${GN} on the rate (share of the rebounds, steals per opponent possession, blocks per opponent 2-point try; 99th = best).`:'Per game and per 100 possessions. League ranks start once there are enough games to compare.');
+    const src=meL&&cur&&cur.src==='2026–27'?meL:null;const val=(x,k)=>k==='dreb'?x.reb-x.oreb:k==='stk'?x.stl+x.blk:x[k];/* Nov 16 (Luka): per 100 possessions (his on-floor count, pdata/league-rates.json) instead of per 36, and ranks on the rates */
+    const LRr=x=>{const J=PPD.lrates;if(!J||!J.p||!J.cols)return null;if(!LRr.m){LRr.m={};const nk=v=>String(v).normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');LRr.k=nk;Object.values(J.p).forEach(a=>{const r={};J.cols.forEach((c2,i)=>r[c2]=a[2+i]);LRr.m[nk(a[0])]=r})}return x&&x.n?LRr.m[LRr.k(x.n)]||null:null};
+    const p36=(x,k)=>{const r=LRr(x);if(!r)return null;const P=(r.po+r.pd)/2;if(!(P>=1))return null;const v=k==='reb'?r.oreb+r.dreb:k==='dreb'?r.dreb:k==='stk'?r.stl+r.blk:r[k];return v==null?null:v/P*100};
+    const RATE={reb:r=>(r.tORB+r.tDRB+r.oORB+r.oDRB)>0?(r.oreb+r.dreb)/(r.tORB+r.tDRB+r.oORB+r.oDRB):null,dreb:r=>(r.tDRB+r.oORB)>0?r.dreb/(r.tDRB+r.oORB):null,stl:r=>r.pd>0?r.stl/r.pd:null,blk:r=>r.o2A>0?r.blk/r.o2A:null,stk:r=>r.pd>0&&r.o2A>0?r.stl/r.pd+r.blk/r.o2A:null};
+    const tb=el('div','dbt');tb.innerHTML='<div class="dbt-h"><span></span><span>Per game</span><span>Per 100</span><span><span class="hide-sm">Rank among NBA '+escH(GN)+'</span><span class="show-sm">Rank</span></span></div>';
     const grp=(t,cls)=>{tb.appendChild(el('div','dbt-g',t));const g=el('div','dbt-b '+cls);tb.appendChild(g);return g};
     const row=(g,lab,pgv,p36v,rk,fmt,lo)=>{const r=el('div','dbt-r');r.appendChild(el('span','l')).appendChild(tip(lab));r.appendChild(el('b',null,pgv==null?'–':fmt?fmt(pgv):f1(pgv)));r.appendChild(el('span','p',p36v==null?'–':(fmt?fmt(p36v):p36v.toFixed(1))));
       const rc=el('span','rk');if(rk){const t=el('span','t');const i=el('i');const pc2=Math.max(1,Math.min(99,lo?100-rk.pct:rk.pct));i.style.width=Math.max(2,pc2)+'%';if(pc2>=80)i.className='hi';t.appendChild(i);const u=el('u');u.style.left='50%';t.appendChild(u);rc.append(t,el('b',null,ord(pc2)))}else rc.textContent='–';r.appendChild(rc);g.appendChild(r)};
-    const pg=(x,k)=>x&&x.g?val(x,k)/x.g:null;const RK=k=>lgOK?rankIn(pg(meL,k),pool.filter(x=>x!==meL).map(x=>pg(x,k))):null;
+    const pg=(x,k)=>x&&x.g?val(x,k)/x.g:null;const RK=k=>{if(!lgOK)return null;const f=x=>{const r=LRr(x);return r&&RATE[k]?RATE[k](r):null};const mv=f(meL);if(mv!=null)return rankIn(mv,pool.filter(x=>x!==meL).map(f).filter(v2=>v2!=null));return rankIn(pg(meL,k),pool.filter(x=>x!==meL).map(x=>pg(x,k)))};
     const gR=grp('Rebounding','reb'),gD=grp('Defense','def');
-    [['Rebounds','reb',cur.reb],['Def. rebounds','dreb',src?(src.reb-src.oreb)/src.g:null]].forEach(([l,k,v])=>v!=null&&row(gR,l,v,src?p36(src,k):null,RK(k)));
+    [['Rebounds','reb',cur.reb],['Def. rebounds','dreb',src?(src.reb-src.oreb)/src.g:null]].forEach(([l,k,v])=>v!=null&&row(gR,l,v,src?p36(src,k):null,RK(k)));/* p36() now returns per 100 possessions */
     [['Steals','stl',cur.stl],['Blocks','blk',cur.blk],['Stocks','stk',stocks]].forEach(([l,k,v])=>v!=null&&row(gD,l,v,src?p36(src,k):null,RK(k)));
     c.appendChild(tb);c.__dbRow=row;c.__dbGrp=grp;
     c.id='ppx-db';df.appendChild(c)}
@@ -5283,11 +5286,11 @@ window.renderPlayer=function(s){
         const hisO=(on.o.oreb||0)+(on.d.dreb||0),hisD=(on.o.dreb||0)+(on.d.oreb||0);const host=df.querySelector('#ppx-db');const c=host||card('Defense and boards',null,'');
         const bars=(title,rows)=>{c.appendChild(el('h4','ppx-h4',title));const sh=el('div','ppx-share');rows.forEach(([lab,v,mx,tick,txt])=>{const r2=el('div');r2.appendChild(el('span',null,lab));const t2=el('span','t');const i2=el('i');i2.style.width=(v==null?0:Math.min(100,v/mx*100))+'%';t2.appendChild(i2);if(tick!=null){const u=el('u');u.style.left=Math.min(100,tick/mx*100)+'%';t2.appendChild(u)}r2.appendChild(t2);r2.appendChild(el('b',null,txt));sh.appendChild(r2)});c.appendChild(sh)};
         const oP=hisO?b.oreb/hisO*100:null,dP=hisD?b.dreb/hisD*100:null;
-        const p36=k=>b.min>0?(b[k]||0)/b.min*2160:null;
+        const p36=k=>{const P=((b.po||0)+(b.pd||0))/2;return P>=1?(b[k]||0)/P*100:null};/* Nov 16 (Luka): per 100 possessions, like the rest of the card */
         if(c.__dbRow){const gR=c.querySelector('.dbt-b.reb');if(gR&&dP!=null)c.__dbRow(gR,'Def. reb share',null,null,null,v=>v.toFixed(1)+'%');if(gR&&dP!=null){const last=gR.lastChild;last.querySelector('b').textContent=dP.toFixed(1)+'%';last.querySelector('.p').textContent='';last.querySelector('.rk').textContent='of the defensive boards while he plays'}
           const gF=c.__dbGrp('Fouls','fouls');const tb2=c.querySelector('.dbt');tb2.appendChild(gF.previousSibling);tb2.appendChild(gF);c.__dbRow(gF,'Fouls',gp?mine.reduce((t,g)=>t+(g.me.pf||0),0)/gp:null,p36('pf'),null);
           c.appendChild(el('p','ppx-why',note+'.'))}
-        else{bars('Share of the defensive rebounds with him on',[['Defensive',dP,40,20,dP==null?'–':dP.toFixed(1)+'%']]);bars('Fouls per 36 minutes',[['Fouls',p36('pf'),6,null,p36('pf')==null?'–':p36('pf').toFixed(1)]])}if(!host)df.appendChild(c)}
+        else{bars('Share of the defensive rebounds with him on',[['Defensive',dP,40,20,dP==null?'–':dP.toFixed(1)+'%']]);bars('Fouls per 100 possessions',[['Fouls',p36('pf'),6,null,p36('pf')==null?'–':p36('pf').toFixed(1)]])}if(!host)df.appendChild(c)}
       /* 5 · offense and defense visuals (Oct 30): usage vs efficiency, points created, true shooting trend, zone map vs the NBA; rim protection, block map, rebounds by miss type */
       {const ZNM=['At the rim','Short midrange','Long midrange','Corner 3','Above-the-break 3'],ZS=['Rim','Short mid','Long mid','Corner 3','Above break'];
         const SH=(A.shots||[]).filter(x=>x[0]===id),AS=(A.asts||[]),dx=(A.dx||{})[id];
