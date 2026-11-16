@@ -2431,12 +2431,7 @@ function scoutCard(D,X,team){
       xs.forEach(x=>{const o=os==='o'?x.oOpp:x.dOpp,cv=cs==='o'?x.oCle:x.dCle,ol=os==='o'?x.ol:x.dl,cl=cs==='o'?x.ol:x.dl;const r=el('div','edg4-r');r.appendChild(el('span','edg4-l',x.lab));
         /* Nov 16 (Luka): softer: one quiet line per factor, two small rank pills */const pill=(who,cls,lab,v)=>{const s2=el('span','edg4-p '+cls);s2.title=who+' '+lab+': '+x.fm(v.v)+' ('+ord2(v.r)+' in the NBA)';s2.append(el('b',null,who),' '+ord2(v.r));return s2};
         const ps=el('span','edg4-ps');ps.append(pill(me,'opp',ol,o),pill('CLE','cle',cl,cv));r.append(ps);const dl=el('small','edg4-d',me+' '+ol+' '+x.fm(o.v)+' · Cavs '+cl+' '+x.fm(cv.v));r.appendChild(dl);d.appendChild(r)});gr.appendChild(d)});
-    eg.appendChild(el('p','note','Each factor pairs one team’s offense with the other’s defense on the same thing. Ranks are among all 30 teams this season (1st = best). Two per box, the biggest gaps; “nothing stands out” when there isn’t a clear one. Possessions are our own count; shooting splits from pbpstats.'))}).catch(()=>{})}
-  /* Nov 2: each tile also shows their full-season number and NBA rank (pbpstats possession counts, all 30 teams) */
-  pbpTeamsJ().then(pb=>{const TT=pb&&pb.T,me=TT&&TT[team.abbr];if(!me||pb.season!==CUR_SEASON)return;const ab=Object.keys(TT).filter(k=>TT[k].OffPoss&&TT[k].DefPoss);
-    const F={'Pace':[t=>t.Pace,1,v=>v.toFixed(1),'1st = fastest'],'Offense':[t=>t.Points/t.OffPoss*100,1,v=>v.toFixed(1),'1st = best'],'Defense':[t=>t.OpponentPoints/t.DefPoss*100,0,v=>v.toFixed(1),'1st = best'],'3PT rate':[t=>t.FG3A/((t.FG2A+t.FG3A)||1),1,v=>Math.round(v*100)+'%','1st = most threes']};
-    g.querySelectorAll('.ffc[data-k]').forEach(x=>{const f=F[x.dataset.k];if(!f)return;const v=f[0](me);if(v==null||!isFinite(v))return;const r=1+ab.filter(k=>k!==team.abbr&&(f[1]?f[0](TT[k])>v:f[0](TT[k])<v)).length;
-      const p=el('p','sc-rk');p.title=f[3];p.append('Season '+f[2](v)+' · ',el('span',(x.dataset.k==='Offense'||x.dataset.k==='Defense')&&r<=10?'sc-top':null,ord2(r)+' in NBA'));x.appendChild(p)})}).catch(()=>{});
+    /* Nov 16 (Luka): no footnote */x.appendChild(p)})}).catch(()=>{});
   /* who to watch */
   /* four factors: their offense, and what their opponents did against them (Oct 31) */
   /* Nov 16 (Luka): four factors and most used lineups cover the whole season (from the scouting job); last 5 games only until it has the season */
