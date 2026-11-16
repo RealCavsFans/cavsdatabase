@@ -54,6 +54,16 @@ try { const J = JSON.parse(fs.readFileSync('pdata/league-rates.json', 'utf8')), 
   for (const [gid, g] of Object.entries(cache)) { const byT = {}; for (const r of Object.values(g.p || {})) byT[r[1]] = (byT[r[1]] || 0) + r[3];
     for (const [t, sec] of Object.entries(byT)) { const len = (g.t && g.t[t] && g.t[t][5]) || 2880; if (Math.abs(sec - 5 * len) > 90) out.sanity.push(`${gid} ${t}: player minutes add to ${(sec / 60).toFixed(1)}, game is ${(5 * len / 60).toFixed(0)}`); } }
 } catch (e) { out.sanity.push('could not run: ' + String(e).slice(0, 80)); }
+/* Nov 16 (Luka): our play-by-play +/- (the live box score, live-core.js) against the NBA's final box for the same games. A free throw
+   around a substitution can move 1 point (about 1 in 200 player games, the NBA's own feed order); anything bigger is flagged */
+out.pm = { games: 0, players: 0, off1: 0, flags: [] };
+try { const { createRequire } = await import('module'); const C2 = createRequire(import.meta.url)('../live-core.js'); const { loadFixes, applyFixes } = await import('./nba-fixes.mjs'); const FX = loadFixes(path.dirname(DIR));
+  for (const [gid, row] of Object.entries(idx)) { if (!/^002/.test(gid) || row[0] < cut) continue; const f = path.join(DIR, gid + '.json.gz'); if (!fs.existsSync(f)) continue;
+    const raw = applyFixes(JSON.parse(zlib.gunzipSync(fs.readFileSync(f))), FX[gid]); const D = C2.prep(C2.slimSummary(C2.fromNBA({ game: raw.box }, { game: raw.pbp }))); if (!D.plays.length) continue;
+    const R = C2.deriveCore(D, D.plays, 'all'), bx = raw.box.game || raw.box, off = {}; out.pm.games++;
+    for (const t of ['homeTeam', 'awayTeam']) for (const q of (bx[t] || {}).players || []) off[String(q.personId)] = q.statistics && q.statistics.plusMinusPoints;
+    for (const [id, b] of Object.entries(R.B)) { if (!(b.min > 0) || off[id] == null) continue; out.pm.players++; const d = Math.round(b.pm) - Math.round(off[id]); if (d === 0) continue; if (Math.abs(d) === 1) out.pm.off1++; else out.pm.flags.push(`${gid} ${D.P[id].name}: ours ${b.pm}, NBA ${off[id]}`); } } } catch (e) { out.pm.flags.push('could not run: ' + String(e).slice(0, 80)); }
+console.log(`espn-check: +/- vs NBA box: ${out.pm.players} player games, ${out.pm.off1} off by 1, ${out.pm.flags.length} flags`);
 fs.mkdirSync('data', { recursive: true }); fs.writeFileSync(OUT, JSON.stringify(out, null, 1));
 const G = Object.values(out.games), bad = G.filter(x => x.diffs && x.diffs.length);
 console.log(`espn-check: ${G.filter(x => x.status === 'ok').length} games compared, ${bad.length} with differences, ${out.sanity.length} sanity flags`);
