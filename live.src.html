@@ -2393,7 +2393,7 @@ function scoutCard(D,X,team){
   const SEA=X.SEA,sTag=SEA?' · season':' · last '+n+' games';
   {const fT=SEA?SEA.T:T,fO=SEA?SEA.O:O;c.appendChild(el('h3',null,'Four factors'+sTag));const fo=factors(fT,fO),fd=factors(fO,fT);const pc=v=>v==null?'–':(v*100).toFixed(1);
     c.appendChild(dtable('sc_f',[{h:'Factor',k:'l'},{h:'Offense',k:'o',f:r=>pc(r.o)},{h:'Opponents',k:'d',f:r=>pc(r.d)}],FF.map(([k,,l])=>({l,o:fo[k],d:fd[k]})),{def:null}));
-    c.appendChild(el('p','note','Offense is how '+team.name+' did; Opponents is what teams did against them. Turnover rate and offensive rebound rate are percentages; free throw rate is made free throws per 100 shots.'))}
+    c.appendChild(el('p','note','Offense is how '+team.name+' did; Opponents is what teams did against them. Turnover rate and offensive rebound rate are percentages; free throw rate is free throw attempts per shot attempt (FTA ÷ FGA).'))}
   c.appendChild(el('h3',null,'Who to watch (per game)'));
   const rows=Object.values(X.P).map(p=>{const g=p.gp,a=k=>p[k]/g;return {...p,mpg:p.min/60/g,ppg:a('pts'),fgmg:a('fgm'),fgag:a('fga'),twmg:a('fgm')-a('tpm'),twag:a('fga')-a('tpa'),tpmg:a('tpm'),tpag:a('tpa'),ftmg:a('ftm'),ftag:a('fta'),ts:p.fga+p.fta?p.pts/(2*(p.fga+0.44*p.fta)):null,rpg:a('reb'),orpg:a('oreb'),drpg:a('dreb'),apg:a('ast'),topg:a('to'),spg:a('stl'),bpg:a('blk'),pfpg:a('pf'),pmg:a('pm')}});
   const f1=v=>v.toFixed(1),ma=(m,at)=>r=>f1(r[m])+'-'+f1(r[at]);
