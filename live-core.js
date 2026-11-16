@@ -22,6 +22,10 @@ const inPer=(f,p)=>Array.isArray(f)?f.includes(Math.min(p,5)):f==='all'||f==='no
 const perLabel=f=>Array.isArray(f)?(eqSet(f,[1,2])?'1st half':eqSet(f,[3,4,5])||eqSet(f,[3,4])?'2nd half':f.length===1?(f[0]===5?'Overtime':'Quarter '+f[0]):f.slice().sort().map(p=>p===5?'OT':'Q'+p).join(' + ')):({all:'Full game',h1:'1st half',h2:'2nd half (incl. OT)',ot:'Overtime',clutch:'Clutch: last 5 minutes, score within 5',nogt:'Without garbage time'})[f]||'Quarter '+f;
 
 /* ---------- prepare ---------- */
+/* Nov 16 (Luka): the NBA feed's short name can be misspelled ('E. Mobely'); trust it only when its surname matches the full name */
+/* names the feed misspelled, by NBA person id (the Nov 15 Dallas game file had 'Marcus Sassar') */
+const NAME_FIX={'1631204':'Marcus Sasser'};
+function shortOk(sn,dn){dn=dn||'';if(sn&&dn.indexOf(String(sn).replace(/^\S+\s+/,''))>=0)return sn;return dn.replace(/^(\S)\S*\s+/,'$1. ')||sn||'';}
 function lastName(n){const p=n.replace(/ (Jr\.|Sr\.|II|III|IV)$/,'').split(' ');return p.length>1?p.slice(1).join(' '):n}
 /* archived games store plays and win probability as compact rows (pv:2, from slimSummary); turn them back into ESPN's shape */
 function unpackSlim(d){if(!d||d.pv!==2)return d;const o=Object.assign({},d);delete o.pv;
@@ -36,7 +40,7 @@ function prep(d){d=unpackSlim(d);
   const P={},roster={};teams.forEach(t=>roster[t.id]=[]);
   (d.boxscore&&d.boxscore.players||[]).forEach(tb=>{const st=tb.statistics[0]||{};const names=st.names||[];(st.athletes||[]).forEach(a=>{
     const s={};names.forEach((n,i)=>s[n]=a.stats?a.stats[i]:null);
-    P[a.athlete.id]={id:a.athlete.id,name:a.athlete.displayName,short:a.athlete.shortName,last:lastName(a.athlete.displayName),pos:a.athlete.position&&a.athlete.position.abbreviation,team:tb.team.id,nba:!!a.athlete.nba,starter:!!a.starter,dnp:!!a.didNotPlay,reason:a.reason,espn:s};
+    const dn=NAME_FIX[a.athlete.id]||a.athlete.displayName;P[a.athlete.id]={id:a.athlete.id,name:dn,short:shortOk(a.athlete.shortName,dn),last:lastName(dn),pos:a.athlete.position&&a.athlete.position.abbreviation,team:tb.team.id,nba:!!a.athlete.nba,starter:!!a.starter,dnp:!!a.didNotPlay,reason:a.reason,espn:s};
     roster[tb.team.id].push(a.athlete.id)})});
   const plays=(d.plays||[]).map(q=>({id:q.id,type:q.type.text.replace(/\n/g,' '),text:q.text,per:q.period.number,clock:q.clock.displayValue,t:gt(q.period.number,q.clock.displayValue),team:q.team&&q.team.id,ids:(q.participants||[]).map(x=>x.athlete.id),hs:q.homeScore,as:q.awayScore,sc:q.scoringPlay,val:q.scoreValue,fbq:!!q.fbq,shot:q.shootingPlay,pa:q.pointsAttempted,x:q.coordinate&&q.coordinate.x>-100?q.coordinate.x:null,y:q.coordinate&&q.coordinate.y>-100?q.coordinate.y:null,zh:q.zh}));
   /* ESPN's running score on each play sometimes drifts (Oct 26 vs MIN: it ended 125-124 MIN, the real final was 127-125 CLE).
