@@ -1,6 +1,6 @@
 {
- "checked": "2026-11-16T11:02:06.807Z",
- "total": 989,
+ "checked": "2026-11-16T12:16:07.386Z",
+ "total": 986,
  "broken": [],
  "unsure": [
   [
@@ -8,11 +8,11 @@
    403
   ],
   [
-   "https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Transaction_History/2018",
+   "https://basketball.realgm.com/player/Chu-Maduabum/NBA/24596",
    403
   ],
   [
-   "https://basketball.realgm.com/player/Chu-Maduabum/NBA/24596",
+   "https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Transaction_History/2018",
    403
   ],
   [
@@ -32,40 +32,16 @@
    403
   ],
   [
-   "https://basketball.realgm.com/player/wd/Summary/26545",
+   "https://basketball.realgm.com/player/wd/Summary/1639",
    403
   ],
   [
-   "https://basketball.realgm.com/player/wd/Summary/1639",
+   "https://basketball.realgm.com/player/wd/Summary/26545",
    403
   ],
   [
    "https://dailycaller.com/2010/05/02/lebron-james-wins-mvp-award-in-landslide-vote",
    403
-  ],
-  [
-   "https://en.wikipedia.org/wiki/Terry_Furlow",
-   429
-  ],
-  [
-   "https://en.wikipedia.org/wiki/Timofey_Mozgov",
-   429
-  ],
-  [
-   "https://en.wikipedia.org/wiki/Tom_Nissalke",
-   429
-  ],
-  [
-   "https://en.wikipedia.org/wiki/Walt_Wesley",
-   429
-  ],
-  [
-   "https://en.wikipedia.org/wiki/Zydrunas_Ilgauskas",
-   429
-  ],
-  [
-   "https://formsubmit.co/ajax/rcfwriter@gmail.com",
-   405
   ],
   [
    "https://theanalyst.com/articles/the-biggest-blowouts-in-nba-history/",
@@ -88,11 +64,15 @@
    403
   ],
   [
-   "https://www.nbadraft.net/players/arturas-gudaitis/",
-   403
+   "https://formsubmit.co/ajax/rcfwriter@gmail.com",
+   522
   ],
   [
    "https://www.nbadraft.net/players/ismael-kamagate/",
+   403
+  ],
+  [
+   "https://www.nbadraft.net/players/arturas-gudaitis/",
    403
   ],
   [
