@@ -863,6 +863,18 @@ tr.nextg td,.sched tr.nextg,.chs tr.nextg{background:var(--sub,#F5F6F3)!importan
 @media (max-width:520px){.chl-hs{width:50px;height:40px}}
 details.cp-fd>summary{cursor:pointer;list-style:none}details.cp-fd>summary::-webkit-details-marker{display:none}details.cp-fd>summary::after{content:' ▾';color:var(--muted)}details.cp-fd[open]>summary::after{content:' ▴'}
 .capmode .xa,.tcap .xa{display:none}/* Nov 16: no link arrows on share images */
+/* Nov 16: season pace + heartbeat (schedule) */
+#sp-pace{margin:18px 0 6px}@media (max-width:760px){#sp-pace{display:none!important}}/* Nov 16 (Luka): desktop only, too clunky on phones */.pace-ld{margin:8px 0 10px;font-size:.8125rem;line-height:1.5;color:var(--fg2)}.pace-ld b{color:var(--fg)}
+.hbeat{display:grid;grid-template-columns:repeat(82,minmax(0,1fr));gap:1px;height:56px;align-items:stretch;position:relative;border-top:0;margin:4px 0 0}
+.hbeat::after{content:'';position:absolute;left:0;right:0;top:50%;border-top:1px solid var(--line)}
+.hbeat .hb{position:relative;display:block}.hbeat .hb::before{content:'';position:absolute;left:0;right:0;height:calc(var(--h) / 2)}
+.hbeat .hb.w::before{bottom:50%;background:var(--wine-ink,#860038)}.hbeat .hb.l::before{top:50%;background:#8A929C}
+.hbeat .hb-x::before{content:'';display:block;margin:calc(50% + 0px) auto 0;width:2px;height:2px;border-radius:50%;background:var(--line);position:relative;top:calc(50% - 1px)}
+.hbeat a.hb:hover::before{opacity:.75}
+.hb-k{margin:4px 0 12px;font-size:.6875rem;color:var(--muted)}
+.pace-svg{display:block;width:100%;height:auto}
+.pace-ft{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;margin:4px 0 0;font-size:.6875rem;color:var(--muted)}
+.pace-all{appearance:none;background:none;border:1px solid var(--line);padding:4px 9px;font:700 .6875rem var(--sans);color:var(--fg2);cursor:pointer}
 /* Nov 16: record on this date + vs this franchise (game preview scouting) */
 .sc-otd{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:10px 0 4px}.sc-otd:empty{display:none}
 .sc-otc{border:1px solid var(--line);border-top:3px solid var(--wine);padding:9px 11px;display:flex;flex-direction:column;gap:2px;min-width:0}
@@ -1191,6 +1203,7 @@ details.cp-fd>summary{cursor:pointer;list-style:none}details.cp-fd>summary::-web
         <div class="calmenu" id="calmenu" hidden><a href="webcal://cavsdatabase.com/cavs.ics">Apple Calendar (iPhone, Mac)</a><a href="https://calendar.google.com/calendar/render?cid=webcal%3A%2F%2Fcavsdatabase.com%2Fcavs.ics" target="_blank" rel="noopener">Google Calendar</a><a href="https://outlook.live.com/calendar/0/addfromweb?url=https%3A%2F%2Fcavsdatabase.com%2Fcavs.ics&amp;name=Cavs%202026%E2%80%9327" target="_blank" rel="noopener">Outlook</a><button type="button" id="calcopy">Copy the calendar link</button><small>Each game includes TV and radio. Time and channel changes update on their own (calendar apps re-check every few hours).</small></div></div></div>
     </div>
     <section id="sp-std"></section>
+    <section id="sp-pace" hidden></section>
     <section id="sp-rest"></section>
     <div id="sched"></div>
     <p class="dim" style="margin:0;font-size:0.8125rem">Local TV: DAZN, plus 15 free over-the-air games on WOIO 19 and WUAB 43 (also on Rock Entertainment Sports Network). Games on ESPN, ABC, NBC, Peacock or Prime Video are national broadcasts and may not air locally.</p>
@@ -3061,6 +3074,35 @@ const cavWL=f=>{let w=0,l=0;SCHEDULE.forEach((g,i)=>{const sc=SCORES[g[0]];if(!s
 const CAV_TZ=(()=>{const z={};'ATL BOS BKN CHA CLE DET IND MIA NYK ORL PHI TOR WAS'.split(' ').forEach(t=>z[t]=0);'CHI DAL HOU MEM MIL MIN NOP OKC SAS'.split(' ').forEach(t=>z[t]=1);'DEN UTA PHX'.split(' ').forEach(t=>z[t]=2);'GSW LAC LAL POR SAC'.split(' ').forEach(t=>z[t]=3);return z})();
 /* schedule page */
 /* schedule load report card */
+/* Nov 16 (Luka): season pace + heartbeat on the schedule page. Wins game by game against the Cavs seasons that started the same way
+   (every regular season since 1970-71, pdata/hist-games.json), and one bar per game sized by the margin. */
+onView('schedule',()=>{(async function(){const box=document.getElementById('sp-pace');if(!box||box.dataset.on)return;box.dataset.on=1;
+  const cur=SCHEDULE.filter(g=>SCORES[g[0]]).map(g=>{const [p,op]=SCORES[g[0]].split('-').map(Number);return {d:g[0],o:g[1],ha:g[2],p,op,w:p>op}});const n=cur.length;if(n<3)return;
+  const H=await fJ('/pdata/hist-games.json').then(r=>r.ok?r.json():null).catch(()=>null);if(!H||!H.s)return;
+  const run=a=>{let w=0;return a.map(x=>w+=x)};const cr=run(cur.map(g=>g.w?1:0)),cw=cr[n-1];const sd=s=>s.replace('-','–');
+  const S=Object.entries(H.s).filter(([,g])=>g.length>=n).map(([k,g])=>{const r=run(g.map(x=>x[2]>x[3]?1:0));const fw=r[r.length-1];return {k,r,w:r[n-1],fw,fl:g.length-fw,d:r.slice(0,n).reduce((a,v,i)=>a+Math.abs(v-cr[i]),0)}});
+  const near=S.slice().sort((a,b)=>Math.abs(a.w-cw)-Math.abs(b.w-cw)||a.d-b.d||b.k.localeCompare(a.k)).slice(0,3);const better=S.filter(x=>x.w>cw).length,same=S.filter(x=>x.w===cw).length;
+  const h=el('div','block-h');h.append(el('h2',null,'Season pace'),el('span','upd-tag','Through '+n+' games'));box.appendChild(h);
+  const ld=el('p','pace-ld');ld.innerHTML=`<b>${cw}–${n-cw}</b> through ${n} games. ${better?better+' of '+S.length+' Cavs seasons since '+sd(H.from)+' started better':'The best start of any Cavs season since '+sd(H.from)}${same?', '+same+' the same':''}. Closest starts: ${near.map(x=>`<b>${sd(x.k)}</b> (finished ${x.fw}–${x.fl})`).join(', ')}.`;box.appendChild(ld);
+  /* heartbeat: one bar per game, up = win, down = loss, height = margin */
+  {const ix=await fJ('/live-archive/2026-27/index.json').then(r=>r.ok?r.json():null).catch(()=>null)||[];const mx=Math.max(15,...cur.map(g=>Math.abs(g.p-g.op)));
+    const hb=el('div','hbeat');hb.setAttribute('role','img');hb.setAttribute('aria-label','Game by game margins: '+cur.map(g=>(g.w?'W':'L')+' by '+Math.abs(g.p-g.op)).join(', '));
+    for(let i=0;i<Math.max(82,n);i++){const g=cur[i];if(!g){hb.appendChild(el('span','hb-x'));continue}const e=ix.find(x=>x.et===g.d);const a=el(e?'a':'span','hb '+(g.w?'w':'l'));if(e){a.href='/live.html?g=a2026-27:'+e.id}a.title=(g.w?'W ':'L ')+g.p+'–'+g.op+(g.ha==='H'?' vs ':' at ')+g.o+' · '+g.d;a.style.setProperty('--h',(Math.abs(g.p-g.op)/mx*100).toFixed(0)+'%');hb.appendChild(a)}
+    box.appendChild(hb);const k=el('p','hb-k');k.textContent='One bar per game: up = win, down = loss, taller = bigger margin. Tap a bar for the game.';box.appendChild(k)}
+  /* pace chart */
+  const mob=innerWidth<=640,W=mob?360:640,Hh=mob?200:190,pl=26,pr=mob?78:92,pt=8,pb=20;const all=el('button','pace-all','Show every season');all.type='button';
+  const draw=showAll=>{const top=Math.max(cw,...near.map(x=>x.fw),showAll?Math.max(...S.map(x=>x.fw)):0);const yMax=Math.ceil((top+2)/10)*10;const X=i=>pl+(W-pl-pr)*i/82,Y=v=>Hh-pb-(Hh-pb-pt)*v/yMax;
+    const path=r=>'M'+X(0)+' '+Y(0)+r.map((v,i)=>' L'+X(i+1).toFixed(1)+' '+Y(v).toFixed(1)).join('');let g='';
+    for(let v=0;v<=yMax;v+=10)g+=`<line x1="${pl}" x2="${W-pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line2,#e6e6e2)"/><text x="${pl-5}" y="${Y(v)+3}" text-anchor="end" font-size="9" fill="var(--muted)" font-family="var(--mono)">${v}</text>`;
+    [20,41,61,82].forEach(i=>g+=`<text x="${X(i)}" y="${Hh-6}" text-anchor="middle" font-size="9" fill="var(--muted)" font-family="var(--mono)">${i===82?'G82':'G'+i}</text>`);
+    g+=`<line x1="${X(0)}" y1="${Y(0)}" x2="${X(82)}" y2="${Y(41)}" stroke="var(--muted)" stroke-dasharray="3 3" stroke-opacity=".6"/><text x="${X(82)+4}" y="${Y(41)+3}" font-size="9" fill="var(--muted)" font-family="var(--mono)">.500</text>`;
+    if(showAll)S.forEach(x=>{if(!near.includes(x))g+=`<path d="${path(x.r)}" fill="none" stroke="var(--muted)" stroke-opacity=".22" stroke-width="1"><title>${sd(x.k)}: ${x.fw}–${x.fl}</title></path>`});
+    /* end labels, spaced so they don't overlap */const labs=near.map(x=>({y:Y(x.r[x.r.length-1]),t:sd(x.k).replace(/^(\d\d)(\d\d)/,'’$2')+' '+x.fw+'–'+x.fl,x}));labs.sort((a,b)=>a.y-b.y);for(let i=1;i<labs.length;i++)if(labs[i].y-labs[i-1].y<11)labs[i].y=labs[i-1].y+11;
+    near.forEach(x=>g+=`<path d="${path(x.r)}" fill="none" stroke="var(--muted)" stroke-width="1.5"/>`);labs.forEach(l=>g+=`<text x="${X(l.x.r.length)+4}" y="${l.y+3}" font-size="9.5" fill="var(--fg2)" font-family="var(--mono)">${l.t}</text>`);
+    g+=`<path d="${path(cr)}" fill="none" stroke="var(--wine-ink,#860038)" stroke-width="3" stroke-linejoin="round"/><circle cx="${X(n)}" cy="${Y(cw)}" r="4.5" fill="var(--wine-ink,#860038)"/><text x="${X(n)+7}" y="${Y(cw)-6}" font-size="11" font-weight="700" fill="var(--wine-ink,#860038)" stroke="var(--bg,#fff)" stroke-width="4" paint-order="stroke" font-family="var(--mono)">CAVS ${cw}–${n-cw}</text>`;
+    return `<svg class="pace-svg" viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Cavs wins game by game this season against the closest Cavs starts since ${sd(H.from)}">${g}</svg>`};
+  const ch=el('div','pace-ch');ch.innerHTML=draw(false);box.appendChild(ch);let on=false;all.onclick=()=>{on=!on;ch.innerHTML=draw(on);all.textContent=on?'Show the closest starts only':'Show every season'};
+  const ft=el('div','pace-ft');ft.append(all,el('span',null,'Wins after each game. Gray lines: the Cavs seasons whose first '+n+' games went most like this one. Every regular season since '+sd(H.from)+'.'));box.appendChild(ft);box.hidden=false})()});
 onView('schedule',()=>{{const box=document.getElementById('sp-rest');const L=REST_LG,C=L.CLE;if(box&&C){
   const h=el('div','block-h');h.append(el('h2',null,'Schedule load'),el('span',null,'Rank of 30 · 1st = toughest · (W–L) = Cavs so far'));box.appendChild(h);
   const T=Object.values(L);const rk=(i,hi)=>{const v=C[i];const n=1+T.filter(r=>hi?r[i]>v:r[i]<v).length,tie=T.filter(r=>r[i]===v).length>1;return (tie?'T-':'')+ord(n)};

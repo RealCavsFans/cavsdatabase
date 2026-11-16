@@ -148,6 +148,11 @@ function build(per, file) {
   const addObj = (a, b) => { for (const k in b) { if (typeof b[k] === 'number') a[k] = (a[k] || 0) + b[k]; } };
   const zT = () => ({ z: C.ZN.map(() => [0, 0]) });
   T.cle = zT(); T.opp = zT();
+  /* Nov 16 (Luka): how stressful each game was, from ESPN's win probability (Cavs side): total swing in points of win
+     probability, lowest and highest Cavs chance, and how many times the favorite flipped. Feeds the most stressful games share card. */
+  const wpStress = (s, D) => { const w = (s.winprobability || []).map(x => Array.isArray(x) ? x[1] : x.homeWinPercentage).filter(v => typeof v === 'number'); if (w.length < 20) return undefined;
+    const home = D.focus.ha === 'home', v = w.map(x => home ? x : 1 - x); let sw = 0, cr = 0; for (let i = 1; i < v.length; i++) { sw += Math.abs(v[i] - v[i - 1]); if ((v[i] - .5) * (v[i - 1] - .5) < 0) cr++; }
+    const u = v.slice(0, -1); return [Math.round(sw * 100), Math.round(Math.min(...u) * 100), Math.round(Math.max(...u) * 100), cr]; };
   for (const f of files) {
     const s = JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8'));
     const D = C.prep(s); const R0 = C.deriveCore(D, D.plays, 'all'); const R = per === 'all' ? R0 : C.deriveCore(D, D.plays, per);
@@ -155,7 +160,10 @@ function build(per, file) {
     const gi = games.length;
     const opp = D.other;
     const etd = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(D.date));
-    games.push({ id: f.slice(0, -5), espn: s.espn, src: s.src, date: D.date, et: etd, opp: opp.abbr, ha: D.focus.ha, cle: D.focus.ha === 'home' ? R0.hs : R0.as, os: D.focus.ha === 'home' ? R0.as : R0.hs, recap: s.recap || [], rc: C.recapL ? C.recapL(D, R0) : [], hl: per === 'all' && C.highLine ? C.highLine(D, R0) : null });
+    games.push({ id: f.slice(0, -5), espn: s.espn, src: s.src, date: D.date, et: etd, opp: opp.abbr, ha: D.focus.ha, cle: D.focus.ha === 'home' ? R0.hs : R0.as, os: D.focus.ha === 'home' ? R0.as : R0.hs, recap: s.recap || [], rc: C.recapL ? C.recapL(D, R0) : [], hl: per === 'all' && C.highLine ? C.highLine(D, R0) : null, wp: per === 'all' ? wpStress(s, D) : undefined,
+      /* Nov 16 (Luka): who played (pl) and who was in the box score but didn't play (dn), for the who played when share card */
+      pl: per === 'all' ? D.roster['5'].filter(id => { const nb = s.nb && s.nb[id]; return nb ? nb[0] > 0 : R0.B[id] && R0.B[id].min > 0; }) : undefined,
+      dn: per === 'all' ? D.roster['5'].filter(id => { const nb = s.nb && s.nb[id]; return !(nb ? nb[0] > 0 : R0.B[id] && R0.B[id].min > 0); }) : undefined });
     for (const id of D.roster['5']) {
       const p = D.P[id], b = R.B[id];
       P[id] = { name: p.name, short: p.short, last: p.last, pos: p.pos };
