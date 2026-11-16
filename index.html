@@ -5105,7 +5105,7 @@ window.renderPlayer=function(s){
   {const c=card('Shots and passing','','Every shot he took, where it came from, and who he set up and who set him up. From our game archive, updated after every game.');const box=el('div','ppx-sp');box.appendChild(el('p','dim','Loading…'));c.appendChild(box);ov.appendChild(c);
     const nrm=x=>x.normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');const SEAS=['2026-27','2025-26'];
     PPD.arch=PPD.arch||{};const gj=u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);/* his own small file per season; the whole season.json only if that's missing */
-    Promise.all(SEAS.map(se=>PPD.arch[se+'|'+nrm(n)]?0:gj('/live-archive/'+se+'/p/'+nrm(n)+'.json').then(j=>j||gj('/live-archive/'+se+'/season.json')).then(j=>{PPD.arch[se+'|'+nrm(n)]=j||{}}))).then(()=>{
+    Promise.all(SEAS.map(se=>PPD.arch[se+'|'+nrm(n)]?0:gj('/live-archive/'+se+'/p/'+nrm(n)+'.json').then(j=>j||gj('/live-archive/'+se+'/season.json')).then(j=>{PPD.arch[se+'|'+nrm(n)]=j||{}}))).then(()=>{if(window.__dbPrev)setTimeout(window.__dbPrev);
       const have=SEAS.filter(se=>{const A=PPD.arch[se+'|'+nrm(n)];const id=A.P&&Object.keys(A.P).find(k=>nrm(A.P[k].name)===nrm(n));return id&&(A.shots||[]).some(x=>x[0]===id)});
       if(!have.length){c.remove();return}let cur=have[0];
       let ptSel=null;   /* shot diet: tap a tile to show only that kind of shot on the court */
@@ -5206,11 +5206,15 @@ window.renderPlayer=function(s){
     const tb=el('div','dbt');tb.innerHTML='<div class="dbt-h"><span></span><span>Per game</span><span>Per 100</span><span><span class="hide-sm">Rank among NBA '+escH(GN)+'</span><span class="show-sm">Rank</span></span></div>';
     const grp=(t,cls)=>{tb.appendChild(el('div','dbt-g',t));const g=el('div','dbt-b '+cls);tb.appendChild(g);return g};
     const row=(g,lab,pgv,p36v,rk,fmt,lo)=>{const r=el('div','dbt-r');r.appendChild(el('span','l')).appendChild(tip(lab));r.appendChild(el('b',null,pgv==null?'–':fmt?fmt(pgv):f1(pgv)));r.appendChild(el('span','p',p36v==null?'–':(fmt?fmt(p36v):p36v.toFixed(1))));
-      const rc=el('span','rk');if(rk){const t=el('span','t');const i=el('i');const pc2=Math.max(1,Math.min(99,lo?100-rk.pct:rk.pct));i.style.width=Math.max(2,pc2)+'%';if(pc2>=80)i.className='hi';t.appendChild(i);const u=el('u');u.style.left='50%';t.appendChild(u);rc.append(t,el('b',null,ord(pc2)))}else rc.textContent='–';r.appendChild(rc);g.appendChild(r)};
+      const rc=el('span','rk');if(rk){const t=el('span','t');const i=el('i');const pc2=Math.max(1,Math.min(99,lo?100-rk.pct:rk.pct));i.style.width=Math.max(2,pc2)+'%';if(pc2>=80)i.className='hi';t.appendChild(i);const u=el('u');u.style.left='50%';t.appendChild(u);rc.append(t,el('b',null,ord(pc2)))}else rc.textContent='–';r.appendChild(rc);g.appendChild(r);return r};
     const pg=(x,k)=>x&&x.g?val(x,k)/x.g:null;const RK=k=>{if(!lgOK)return null;const f=x=>{const r=LRr(x);return r&&RATE[k]?RATE[k](r):null};const mv=f(meL);if(mv!=null)return rankIn(mv,pool.filter(x=>x!==meL).map(f).filter(v2=>v2!=null));return rankIn(pg(meL,k),pool.filter(x=>x!==meL).map(x=>pg(x,k)))};
     const gR=grp('Rebounding','reb'),gD=grp('Defense','def');
-    [['Rebounds','reb',cur.reb],['Def. rebounds','dreb',src?(src.reb-src.oreb)/src.g:null]].forEach(([l,k,v])=>v!=null&&row(gR,l,v,src?p36(src,k):null,RK(k)));/* p36() now returns per 100 possessions */
-    [['Steals','stl',cur.stl],['Blocks','blk',cur.blk],['Stocks','stk',stocks]].forEach(([l,k,v])=>v!=null&&row(gD,l,v,src?p36(src,k):null,RK(k)));
+    /* Nov 16 (Luka): shown with last season's line (before his first game this season): per 100 from his 2025-26 game archive, counted on the floor like this season */
+    const P100A=k=>{if(src||!cur||cur.src!=='2025–26')return null;const A=Object.entries(PPD.arch||{}).find(([kk,v])=>kk.startsWith('2025-26|')&&v&&v.B&&v.B[pid]);if(!A)return null;const b=A[1].B[pid],P=((b.po||0)+(b.pd||0))/2;if(!(P>=1))return null;const v=k==='reb'?b.oreb+b.dreb:k==='dreb'?b.dreb:k==='stk'?b.stl+b.blk:b[k];return v==null?null:v/P*100};
+    const R100=[];const keep=(r,k)=>{if(r){r.dataset.k=k;R100.push(r)}};
+    window.__dbPrev=()=>R100.forEach(r=>{const v=P100A(r.dataset.k);const p=r.querySelector('.p');if(v!=null&&p&&p.textContent==='–')p.textContent=v.toFixed(1)});
+    [['Rebounds','reb',cur.reb],['Def. rebounds','dreb',src?(src.reb-src.oreb)/src.g:null]].forEach(([l,k,v])=>v!=null&&keep(row(gR,l,v,src?p36(src,k):P100A(k),RK(k)),k));/* p36() now returns per 100 possessions */
+    [['Steals','stl',cur.stl],['Blocks','blk',cur.blk],['Stocks','stk',stocks]].forEach(([l,k,v])=>v!=null&&keep(row(gD,l,v,src?p36(src,k):P100A(k),RK(k)),k));
     c.appendChild(tb);c.__dbRow=row;c.__dbGrp=grp;
     c.id='ppx-db';df.appendChild(c)}
   /* Nov 13 (Luka): matchup log: who he guarded this season and what they did against him (NBA.com matchup tracking, pdata/matchups.json, refreshed daily) */
