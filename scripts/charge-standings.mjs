@@ -25,7 +25,7 @@ try {
     if (me.seed) east_rank = me.seed;
     else { const p = x => x.w + x.l ? x.w / (x.w + x.l) : 0; east_rank = 1 + rows.filter(x => p(x) > p(me)).length; }
   }
-  const out = { east: east_rank, w: me.w, l: me.l, saved: new Date().toISOString() };
+  const out = { east: east_rank, grp: east.name || east.abbreviation || '', w: me.w, l: me.l, saved: new Date().toISOString() };   // Nov 16: ESPN's groups are divisions this season, so the page names the group
   fs.writeFileSync(OUT, JSON.stringify(out) + '\n');
   console.log(out);
 } catch (e) { console.log(String(e)); }
