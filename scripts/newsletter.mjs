@@ -214,7 +214,7 @@ function tastingNotes(rc, opp) {
     let s2 = dot(t).replace(/^(?:CLE|CAVS|Cavs) won (\d) of 4(?: factors)?: ([^.]*)\.\s*/, (m, n, w) => `Cavs won ${n} of 4 (${w}) · `).replace(/^(?:CLE|CAVS|Cavs) won 0 of 4(?: factors)?\.?\s*/, 'Cavs won 0 of 4 · ');
     s2 = s2.replace(/Effective FG% ([\d.]+) to ([\d.]+)/, (m, a, b) => +a >= +b ? `Shooting: Cavs ${a}–${b} eFG%` : `Shooting: ${opp || 'Opp'} ${b}–${a} eFG%`);
     out.push(['Four Factors', s2]); });
-  get(/^Best lineup/).filter(([, t]) => /: \+\d/.test(t)).forEach(([, t]) => out.push(['Best five', dot(t).replace(/: \+/, ' · +').replace(/: -/, ' · -')]));
+  get(/^Best lineup/).forEach(([, t]) => out.push(['Best five', dot(t).replace(/: \+/, ' · +').replace(/: -/, ' · -').replace(/: 0 in/, ' · 0 in') + ' (of fives with 4+ min together)']));   /* Nov 17 (Luka): always shown, with the 4-minute floor stated */
   // highs and records share one row: last name, short stat, and what kind of high in parentheses
   const AB = [[/made field goals?/, 'FGM'], [/made threes?/, '3PM'], [/made free throws?/, 'FTM'], [/points?/, 'pts'], [/rebounds?/, 'reb'], [/offensive reb/, 'oreb'], [/assists?/, 'ast'], [/steals?/, 'stl'], [/blocks?/, 'blk'], [/turnovers?/, 'tov']];
   /* Nov 17 (Luka): biggest first, up to three: Cavs records, then career highs (and ties), then "most since", then players' season highs (points first), then team season highs */
