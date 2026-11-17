@@ -3102,37 +3102,7 @@
   "status": "final",
   "score": "126-115",
   "result": "W",
-  "refs": [
-   [
-    "Crew chief",
-    "Curtis Blair",
-    "74"
-   ],
-   [
-    "Referee",
-    "Ray Acosta",
-    "54"
-   ],
-   [
-    "Umpire",
-    "Rodney Mott",
-    "71"
-   ]
-  ],
-  "qs": {
-   "cle": [
-    25,
-    32,
-    31,
-    38
-   ],
-   "opp": [
-    31,
-    17,
-    31,
-    36
-   ]
-  },
+  "top": "Donovan Mitchell: 39 pts, 4 reb, 4 ast",
   "out": [
    "Peyton Watson",
    "Jaylon Tyson",
@@ -3312,7 +3282,37 @@
     "2"
    ]
   ],
-  "top": "Donovan Mitchell: 39 pts, 4 reb, 4 ast"
+  "qs": {
+   "cle": [
+    25,
+    32,
+    31,
+    38
+   ],
+   "opp": [
+    31,
+    17,
+    31,
+    36
+   ]
+  },
+  "refs": [
+   [
+    "Crew chief",
+    "Curtis Blair",
+    "74"
+   ],
+   [
+    "Referee",
+    "Ray Acosta",
+    "54"
+   ],
+   [
+    "Umpire",
+    "Rodney Mott",
+    "71"
+   ]
+  ]
  },
  "2026-11-18": {
   "url": "https://www.nba.com/game/mem-vs-cle-0022600258/box-score",
