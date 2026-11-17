@@ -1389,7 +1389,7 @@ function runView(v){if(VDONE[v])return;VDONE[v]=1;const go=()=>{const q=VQ[v]||[
 /* player pages (/players/<name>): built and parked. true = live everywhere; ?pp=preview shows them without linking anything */
 const PP_ON=true;
 /* how each shot zone is defined, shown under every zone map and table (Nov 1) */
-const ZKEY='<div class="zkey"><b>At the rim</b><span>within 4 ft of the hoop</span><b>Short midrange</b><span>2s from 4–14 ft</span><b>Long midrange</b><span>2s from 14 ft out to the 3-point line</span><b>Corner 3</b><span>3s along the baseline, where the line is 22 ft</span><b>Above-the-break 3</b><span>every other 3, where the arc is 23&nbsp;ft&nbsp;9&nbsp;in</span></div>';
+const ZKEY='<div class="zkey"><b>At the rim</b><span>within 4 ft</span><b>Short midrange</b><span>2s, 4–14 ft</span><b>Long midrange</b><span>2s, 14 ft to the arc</span><b>Corner 3</b><span>along the baseline, 22 ft</span><b>Above-the-break 3</b><span>the rest of the arc, 23&nbsp;ft&nbsp;9&nbsp;in</span></div>';
 const PP_VIS=PP_ON||/[?&]pp=preview/.test(location.search);
 if(PP_ON)document.documentElement.classList.add('pp-on');
 /* prerendered page copies: swap the original section back in before drawing */
