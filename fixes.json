@@ -1,0 +1,14 @@
+{
+ "0022600247": [
+  {
+   "action": 85,
+   "set": {
+    "personId": 1643409,
+    "playerName": "Boozer",
+    "playerNameI": "C. Boozer"
+   },
+   "was": "O. Prosper",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ]
+}
