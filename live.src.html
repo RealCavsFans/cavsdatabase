@@ -1011,7 +1011,7 @@ function oppColor(ab){const L=OCOL[OTAB[ab]||ab];const ok=h=>{const n=parseInt(h
   const mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn;let hu=0;if(d){hu=mx===r?((g-b)/d)%6:mx===g?(b-r)/d+2:(r-g)/d+4;hu=(hu*60+360)%360}const sat=mx?d/mx:0;
   if(Y<.035)return false;if(1.05/(Y+.05)<3)return false;if(sat>.45&&(hu>=325||hu<=15))return false;return true};
   return (L&&L.find(ok))||'#9a6a00'}
-function applyOpp(D){const c=D&&D.other&&D.other.abbr&&D.other.abbr!=='OPP'?oppColor(D.other.abbr):'#9a6a00';let st=document.getElementById('co-team');if(!st){st=document.createElement('style');st.id='co-team';document.body.appendChild(st)}
+function applyOpp(D){const c=D&&D.other&&D.other.abbr&&D.other.abbr!=='OPP'?oppColor(D.other.abbr):'#9c5a00';let st=document.getElementById('co-team');if(!st){st=document.createElement('style');st.id='co-team';document.body.appendChild(st)}
   const dk=`color-mix(in srgb,${c} 55%,#fff)`;st.textContent=`:root{--co:${c};--cot:${c}}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--co:${dk}}}:root[data-theme=dark]{--co:${dk}}`}
 function setData(d,feed){S.data=prep(d);S.data.noSubs=!!d.noSubs;S.data.focus.c='var(--cf)';S.data.other.c='var(--co)';applyOpp(S.data);S.fetched=Date.now();S.err=null;S.feed=feed}
 /* live games: ESPN first. After two misses in a row, switch to the backup feed (/pbp: CBS, then Yahoo),
@@ -1143,7 +1143,7 @@ function renderNav(R){setTimeout(moreHint,0);{const a1=document.getElementById('
 function scrollHints(){document.querySelectorAll('#view .tw').forEach(w=>{const over=w.scrollWidth>w.clientWidth+4;let h=w.previousElementSibling;if(!(h&&h.classList.contains('swh'))){if(!over)return;h=el('div','swh');h.innerHTML='Swipe for more <i>→</i>';w.before(h);w.addEventListener('scroll',()=>{const end=w.scrollLeft+w.clientWidth>=w.scrollWidth-4;w.classList.toggle('more',!end);if(w.scrollLeft>8)h.classList.add('gone')},{passive:true})}
   const end=w.scrollLeft+w.clientWidth>=w.scrollWidth-4;w.classList.toggle('more',over&&!end);h.style.display=over?'':'none'})}
 /* Nov 3: on phones the long how-to-read notes fold into one "Stats explained" drop-down at the bottom of each card */
-function foldNotes(){/* Nov 4 (Luka): long explainers fold into Stats explained on desktop too */const mob=matchMedia('(max-width:640px)').matches;document.querySelectorAll('#view .card').forEach(c=>{const ns=[...c.querySelectorAll('p.note')].filter(n=>!n.closest('details.stx')&&n.textContent.length>=(mob?90:280)&&!/Loading/.test(n.textContent));if(!ns.length)return;let d=[...c.children].find(x=>x.matches('details.stx'));if(!d){d=document.createElement('details');d.className='stx';const sm=document.createElement('summary');sm.textContent='Stats explained';d.appendChild(sm);c.appendChild(d)}ns.forEach(n=>d.appendChild(n))})}
+function foldNotes(){/* Nov 4 (Luka): long explainers fold into Stats explained on desktop too */const mob=matchMedia('(max-width:640px)').matches;document.querySelectorAll('#view .card').forEach(c=>{const ns=[...c.querySelectorAll('p.note')].filter(n=>!n.closest('details.stx')&&(n.classList.contains('hown')||n.textContent.length>=(mob?90:280))&&!/Loading/.test(n.textContent));if(!ns.length)return;let d=[...c.children].find(x=>x.matches('details.stx'));if(!d){d=document.createElement('details');d.className='stx';const sm=document.createElement('summary');sm.textContent='Stats explained';d.appendChild(sm);c.appendChild(d)}ns.forEach(n=>d.appendChild(n))})}
 let _shT;new MutationObserver(()=>{clearTimeout(_shT);_shT=setTimeout(()=>{scrollHints();foldNotes()},60)}).observe(document.getElementById('view')||document.body,{childList:true,subtree:true});
 addEventListener('resize',()=>{clearTimeout(_shT);_shT=setTimeout(scrollHints,120)});
 /* team names in table headers and row labels take the team's color, and a thin line splits the two teams' columns (Oct 30) */
@@ -1931,7 +1931,7 @@ function pbpCmpLine(){const se=S.src||S.season||CUR_SEASON;if(!PBT||!PBS||PBT.se
 function ctxLine(t){return el('p','note ctxl',t)}
 /* Nov 13 (Luka): season averages as two plain lines (CAVS, OPP), and the counting rules tucked into a drop-down */
 function avgLines(c,cv,op){[['CAVS avg',cv],['OPP avg',op]].forEach(([k,t])=>{if(!t)return;const p=el('p','note ctxl avl');p.append(el('b',null,k),' '+t);c.appendChild(p)})}
-function howTo(c,t){const d=document.createElement('details');d.className='howc';const sm=document.createElement('summary');sm.textContent='How they’re counted';d.append(sm,el('p','note',t));c.appendChild(d)}
+/* Nov 17 (Luka): the counting rules go straight into the card's Stats explained, no separate How they're counted drop-down */function howTo(c,t){const p=el('p','note hown',t);c.appendChild(p)}
 function pbpRank(k,side,dir){if(!PBT||!PBS||!lgOK()||PBT.season!==S.season)return null;const v=pbpVal('CLE',side,k);if(v==null)return null;const o=Object.keys(PBT.T||{}).filter(a=>a!=='CLE').map(a=>pbpVal(a,side,k));return lgRank(v,o,dir)}
 /* ---------- league-ranked pbpstats cards (season view, current full season): shot diet, quality vs making, pace lens, offensive rebounds by miss, turnover type (Oct 28) ---------- */
 function pbpOK(){pbpLoad();return !!(PBT&&PBT.T&&PBT.T.CLE&&PBT.season===S.season&&lgOK())}
