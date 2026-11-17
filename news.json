@@ -2,6 +2,18 @@
  "articles": [
   {
    "src": "Fear The Sword",
+   "title": "Donovan Mitchell’s 39 points help push Cavaliers past Bulls 126-115",
+   "link": "https://www.fearthesword.com/cavs-analysis/54579/donovan-mitchells-39-points-help-push-cavaliers-past-bulls-126-115",
+   "date": "2026-11-17T02:42:54.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Player Grades: Cavs vs Bulls – Donovan Mitchell scores 39 points",
+   "link": "https://www.fearthesword.com/cavs-analysis/54569/player-grades-cavs-vs-bulls-donovan-mitchell-scores-39-points",
+   "date": "2026-11-17T02:34:20.000Z"
+  },
+  {
+   "src": "Fear The Sword",
    "title": "Cavs announce injury update for Evan Mobley",
    "link": "https://www.fearthesword.com/cavs-injury-report/54565/cavs-announce-injury-update-for-evan-mobley",
    "date": "2026-11-17T00:19:45.000Z"
@@ -139,12 +151,6 @@
    "date": "2026-11-15T03:01:03.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "Cavs vs. Mavs game thread",
-   "link": "https://www.fearthesword.com/cavs-game-previews/54427/cavs-vs-mavs-game-thread",
-   "date": "2026-11-15T00:30:00.000Z"
-  },
-  {
    "src": "cleveland.com",
    "title": "Cavs will be without entire starting lineup against Mavericks after travel nightmare creates opportunity for young players",
    "link": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxQMjlqY3l4WXNjTEFURVRrQWpNaFJZX1lUcFhXT0ROMFpGVDdjbmNTVkM3elVscmV2UE8tcWR5SUJiRFhjWXdNVUFIS3FSakxxRUZydXBfZlByWGNDejVSUEY5bTREX3FnaFRMdEtRUWZOY2M5SHRZb0x6dDlNcjJTNlFpNVVtYi0yN3dwWHhpRXR5UlBfM1RpR0Rmd3IzSmcyeGx5LW54alcxNGhQN1I1c2dvdkE1RnEzeGZhTXNWZTFzbnB5S2FyVlZWYjhaNU9IUXFLZF82cnFlM1k3UnZWREp4TkZ5VE5UTThpeWZ0SHpxd2ZNOGF1N2NR?oc=5",
@@ -155,12 +161,6 @@
    "title": "Cavaliers Resting Four Starters Due To Flight Issues",
    "link": "https://www.hoopsrumors.com/2026/11/cavaliers-resting-four-starters-due-to-flight-issues.html",
    "date": "2026-11-14T23:25:25.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cavs vs. Mavericks: How to watch, odds, and injury report",
-   "link": "https://www.fearthesword.com/cavs-injury-report/54428/cavs-vs-mavericks-how-to-watch-odds-and-injury-report",
-   "date": "2026-11-14T18:10:21.000Z"
   },
   {
    "src": "The Inside Shot",
@@ -460,25 +460,25 @@
  ],
  "videos": [
   {
-   "src": "It's Cavalier Podcast",
-   "title": "Donovan Mitchell throws it DOWN! #cavs #clevelandcavaliers #cavaliers",
-   "link": "https://www.youtube.com/watch?v=qJ-14CClQzY",
-   "date": "2026-11-17T01:38:18.000Z",
-   "id": "qJ-14CClQzY"
+   "src": "Locked On Cavs",
+   "title": "CAVS POSTCAST: Donovan Mitchell Goes NUCLEAR In Helping the Cleveland Cavaliers Beat Chicago Bulls",
+   "link": "https://www.youtube.com/watch?v=vscp_11evig",
+   "date": "2026-11-17T02:43:31.000Z",
+   "id": "vscp_11evig"
   },
   {
    "src": "It's Cavalier Podcast",
    "title": "REACTION: Cavs vs. Bulls",
    "link": "https://www.youtube.com/watch?v=xC_hq052pIU",
-   "date": "2026-11-17T01:18:44.000Z",
+   "date": "2026-11-17T02:39:02.000Z",
    "id": "xC_hq052pIU"
   },
   {
-   "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: The Cleveland Cavaliers Face the Chicago Bulls to Start the Week",
-   "link": "https://www.youtube.com/watch?v=vscp_11evig",
-   "date": "2026-11-16T21:21:32.000Z",
-   "id": "vscp_11evig"
+   "src": "It's Cavalier Podcast",
+   "title": "Donovan Mitchell throws it DOWN! #cavs #clevelandcavaliers #cavaliers",
+   "link": "https://www.youtube.com/watch?v=qJ-14CClQzY",
+   "date": "2026-11-17T01:38:18.000Z",
+   "id": "qJ-14CClQzY"
   },
   {
    "src": "Locked On Cavs",
