@@ -4612,6 +4612,7 @@ const COMBINE={
  'Jaylon Tyson':[2024,77.5,null,80,102.5,218.2,null,8.25,9.5,'NBA combine'],
  'Tyrese Proctor':[2025,76.25,null,79.25,100.5,183.2,null,8.25,9,'NBA combine'],
  'Meleek Thomas':[2026,75,null,78.75,100,189.6,null,8,7.5,'NBA combine'],
+ 'Norchad Omier':[2025,77.5,null,83.5,105.5,245.6,null,null,null,'G League Elite Camp'],/* Nov 17 (Luka): 2025 G League Elite Camp, barefoot */
  'Evan Mobley':[null,null,null,88,null,null,null,null,null,'Crafted'],
  'Sam Merrill':[null,null,null,77,null,null,null,null,null,'Crafted'],
  'Craig Porter Jr.':[null,null,null,76,null,null,null,null,null,'Crafted']
@@ -4638,7 +4639,7 @@ const COMBINE={
       rb.appendChild(tr);
       const c=COMBINE[n];const mr=el('tr');
       if(c){const listed=htIn(ht),base=c[1]??listed;const wd=c[3]!=null&&base?c[3]-base:null;
-        mr._k=[n,c[1],c[2],c[3],wd,c[4],c[5],c[6],c[7]?c[7]+c[8]/100:null,c[0]];mr.append(el('td','pl',n),el('td','m',ftin(c[1])),el('td','m',ftin(c[2])),el('td','m',ftin(c[3])),el('td','m',wd==null?'—':(wd>=0?'+':'−')+Math.abs(+wd.toFixed(2))+'″'),el('td','m',ftin(c[4])),el('td','r m',c[5]?c[5]+' lb':'—'),el('td','r m',c[6]!=null?c[6]+'%':'—'),el('td','m',c[7]?c[7]+'″ × '+c[8]+'″':'—'),(()=>{const td=el('td','dim');const a=el('a','dlink',c[9]==='Crafted'?'CraftedNBA':c[9]+' '+c[0]);a.href=c[9]==='Crafted'?'https://craftednba.com':'https://www.nba.com/stats/draft/combine-anthro?SeasonYear='+c[0]+'-'+String(c[0]+1).slice(2);a.target='_blank';a.rel='noopener';a.title=c[9]==='Crafted'?'CraftedNBA':'Full '+c[0]+' combine measurements on NBA.com';td.appendChild(a);return td})())}
+        mr._k=[n,c[1],c[2],c[3],wd,c[4],c[5],c[6],c[7]?c[7]+c[8]/100:null,c[0]];mr.append(el('td','pl',n),el('td','m',ftin(c[1])),el('td','m',ftin(c[2])),el('td','m',ftin(c[3])),el('td','m',wd==null?'—':(wd>=0?'+':'−')+Math.abs(+wd.toFixed(2))+'″'),el('td','m',ftin(c[4])),el('td','r m',c[5]?c[5]+' lb':'—'),el('td','r m',c[6]!=null?c[6]+'%':'—'),el('td','m',c[7]?c[7]+'″ × '+c[8]+'″':'—'),(()=>{const td=el('td','dim');if(c[9]==='G League Elite Camp'){td.textContent=c[9]+' '+c[0];return td}/* Nov 17: no NBA.com combine page for the Elite Camp */const a=el('a','dlink',c[9]==='Crafted'?'CraftedNBA':c[9]+' '+c[0]);a.href=c[9]==='Crafted'?'https://craftednba.com':'https://www.nba.com/stats/draft/combine-anthro?SeasonYear='+c[0]+'-'+String(c[0]+1).slice(2);a.target='_blank';a.rel='noopener';a.title=c[9]==='Crafted'?'CraftedNBA':'Full '+c[0]+' combine measurements on NBA.com';td.appendChild(a);return td})())}
       else{mr._k=[n];mr.append(el('td','pl',n));const td=el('td','dim','No combine data');td.colSpan=9;mr.appendChild(td)}
       mb.appendChild(mr);
       const mc=MCOMP[n];if(mc){const td0=mr.firstChild;td0.textContent='';const bt=el('button','pbtn',n);bt.type='button';bt.setAttribute('aria-expanded','false');bt.title='Players with similar measurements';td0.appendChild(bt);
