@@ -58,5 +58,10 @@ for (const f of fs.readdirSync(DIR).filter(f => f.endsWith('.json.gz')).sort()) 
     dup ? bad(`workflow: ${dup}`) : ok(`workflow ${f}: no repeated keys`); } }
 /* Nov 13 (Luka): wording rules: these are never hyphenated */
 { const fs2 = await import('fs'); for (const f of ['index.html', 'live.src.html']) { let t = ''; try { t = fs2.readFileSync(f, 'utf8'); } catch {} const hit = (t.match(/\b(hard-cap\w*|most-used|trade-eligible)\b/gi) || []); hit.length ? bad(`wording in ${f}: ${[...new Set(hit)].join(', ')} should not be hyphenated`) : ok(`wording ${f}: no banned hyphens`); } }
+/* Nov 16 (Luka): every inline script on the main and live pages must parse, or the page sits on "Loading…" */
+{ const fs2 = await import('node:fs'), vm = await import('node:vm');
+  for (const f of ['index.html', 'live.src.html']) { let t = ''; try { t = fs2.readFileSync(f, 'utf8'); } catch { continue; } let n = 0, err = '';
+    for (const m of t.matchAll(/<script(?![^>]*\bsrc=)(?![^>]*type="(?:application\/(?:ld\+)?json|text\/template)")[^>]*>([\s\S]*?)<\/script>/g)) { n++; try { new vm.Script(m[1], { filename: f }); } catch (e) { err = `script ${n}: ${e.message}`; break; } }
+    err ? bad(`syntax in ${f}: ${err}`) : ok(`syntax ${f}: ${n} inline scripts parse`); } }
 console.log(fails.length ? `\n${fails.length} failure(s)` : '\nall checks passed');
 process.exit(fails.length ? 1 : 0);

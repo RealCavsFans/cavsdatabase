@@ -18,6 +18,8 @@ export async function buildLive(root = new URL('../', import.meta.url)) {
   const h = s => createHash('sha1').update(s).digest('hex').slice(0, 10);
   const hc = h(sm[1]), hj = h(jm[1]);
   let css = sm[1], js = jm[1];
+  // Nov 16: refuse to ship a live page whose script does not parse (a stray brace once left it stuck on "Loading…")
+  { const vm = await import('node:vm'); try { new vm.Script(jm[1], { filename: 'live.src.html' }); } catch (e) { throw new Error('live.src.html script has a syntax error: ' + e.message + ' (' + (e.stack.split('\n')[0]) + ')'); } }
   try { const { transform } = await import('esbuild');
     js = (await transform(jm[1], { loader: 'js', minify: true, target: 'es2020', legalComments: 'none' })).code;
     css = (await transform(sm[1], { loader: 'css', minify: true })).code;
