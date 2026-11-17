@@ -2501,7 +2501,9 @@
  },
  "2026-11-11": {
   "url": "https://www.nba.com/game/cle-vs-nyk-0022600218/box-score",
-  "status": "scheduled",
+  "status": "final",
+  "score": "115-107",
+  "result": "W",
   "refs": [
    [
     "Crew chief",
