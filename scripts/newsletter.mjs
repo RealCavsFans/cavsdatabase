@@ -214,10 +214,12 @@ function tastingNotes(rc, opp) {
     let s2 = dot(t).replace(/^(?:CLE|CAVS|Cavs) won (\d) of 4(?: factors)?: ([^.]*)\.\s*/, (m, n, w) => `Cavs won ${n} of 4 (${w}) · `).replace(/^(?:CLE|CAVS|Cavs) won 0 of 4(?: factors)?\.?\s*/, 'Cavs won 0 of 4 · ');
     s2 = s2.replace(/Effective FG% ([\d.]+) to ([\d.]+)/, (m, a, b) => +a >= +b ? `Shooting: Cavs ${a}–${b} eFG%` : `Shooting: ${opp || 'Opp'} ${b}–${a} eFG%`);
     out.push(['Four Factors', s2]); });
-  get(/^Best lineup/).forEach(([, t]) => out.push(['Best five', dot(t).replace(/: \+/, ' · +').replace(/: -/, ' · -')]));
+  get(/^Best lineup/).filter(([, t]) => /: \+\d/.test(t)).forEach(([, t]) => out.push(['Best five', dot(t).replace(/: \+/, ' · +').replace(/: -/, ' · -')]));
   // highs and records share one row: last name, short stat, and what kind of high in parentheses
   const AB = [[/made field goals?/, 'FGM'], [/made threes?/, '3PM'], [/made free throws?/, 'FTM'], [/points?/, 'pts'], [/rebounds?/, 'reb'], [/offensive reb/, 'oreb'], [/assists?/, 'ast'], [/steals?/, 'stl'], [/blocks?/, 'blk'], [/turnovers?/, 'tov']];
-  const hi = get(/high|Milestone|Record|First|Most since/i).filter(([l]) => !/^(Cavs|Their) high/.test(l)).slice(0, 2).map(([l, t]) => {
+  /* Nov 17 (Luka): biggest first, up to three: Cavs records, then career highs (and ties), then "most since", then players' season highs (points first), then team season highs */
+  const rankHi = ([l, t]) => /^Cavs record/.test(l) ? 0 : /^Ties record/.test(l) ? 1 : /^Career high/.test(l) ? (/tying/.test(t) ? 3 : 2) : /Milestone|First/i.test(l) ? 4 : /most since/.test(t) ? 5 : /^Season high/.test(l) ? (/^[A-Z][^:]*: /.test(t) ? (/ points?,/.test(t) ? 6 : 7) : 8) : 9;
+  const hi = get(/high|Milestone|Record|First|Most since/i).filter(([l]) => !/^(Cavs|Their) high/.test(l)).map((r, i) => [r, rankHi(r), i]).sort((a, b) => a[1] - b[1] || a[2] - b[2]).slice(0, 3).map(([r]) => r).map(([l, t]) => {
     const m = /^(?:(.+?): )?(\d+) ([a-z ]+?), (.*?)\.?$/i.exec(t); if (!m) return dot(t);
     const who = m[1] ? m[1].replace(/ (Jr\.|Sr\.|II|III|IV)$/, '').split(' ').slice(-1)[0] : 'Cavs', st = (AB.find(([re]) => re.test(m[3])) || [, m[3]])[1];
     const kind = /tying/.test(m[4]) ? 'ties career high' : /^Career high/.test(l) ? 'career high' : /^Ties record/.test(l) ? 'ties Cavs record' : /^Cavs record/.test(l) ? 'Cavs record'
