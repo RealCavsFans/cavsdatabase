@@ -62,6 +62,8 @@ try {
       if (!g.box || recent) g.box = (st.athletes || []).filter(a => a.stats?.length && !a.didNotPlay).map(a => [a.athlete.displayName, String(a.stats[keys.indexOf('MIN')] ?? ''), String(n(a, 'PTS')), String(n(a, 'REB')), String(n(a, 'AST')), String(a.stats[keys.indexOf('+/-')] ?? ''), a.starter ? 1 : 0, ...['FG', '3PT', 'FT'].map(k => { const i = keys.indexOf(k); return i < 0 ? '' : String(a.stats[i] ?? ''); }), String(n(a, 'STL')), String(n(a, 'BLK')), String(n(a, 'TO')), String(n(a, 'OREB')), String(n(a, 'PF'))]).sort((x, y) => y[6] - x[6] || (parseFloat(y[1]) || 0) - (parseFloat(x[1]) || 0));
       // officials from ESPN, if the NBA page wasn't caught on game day
       if (!g.refs && sum.gameInfo?.officials?.length) g.refs = sum.gameInfo.officials.map(o => [o.position?.displayName || 'Official', o.displayName || o.fullName, String(o.jerseyNumber || '')]).filter(x => x[1]);
+      /* Nov 17 audit: a player with minutes in the box score did not miss the game (the out list can be made before ESPN's box is complete) */
+      if (g.out && g.box) g.out = g.out.filter(nm => !g.box.some(r => r[0] === nm && parseFloat(r[1]) > 0));
       if (best && (!g.top || recent)) g.top = `${best.athlete.displayName}: ${n(best, 'PTS')} pts, ${n(best, 'REB')} reb, ${n(best, 'AST')} ast`;
     } catch (e) { console.warn('top line unavailable for', date, e.message); }
   }
