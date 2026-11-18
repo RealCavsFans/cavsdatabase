@@ -1,0 +1,34 @@
+name: Career stats
+on:
+  # weekly: every Cavs player's season-by-season career line from Basketball Reference (Nov 17)
+  schedule:
+    - cron: '41 10 * * 2'
+  workflow_dispatch:
+  # runs once when the script or this file changes, so a fix shows up without waiting a week
+  push:
+    branches: [main]
+    paths: ['scripts/careers.mjs', '.github/workflows/careers.yml']
+permissions:
+  contents: write
+concurrency:
+  group: careers
+  cancel-in-progress: false
+jobs:
+  careers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
+        with:
+          node-version: 22
+      - run: node scripts/careers.mjs
+      - name: Commit if changed
+        run: |
+          git config user.name "cavsdatabase-bot"
+          git config user.email "bot@cavsdatabase.com"
+          git add pdata/careers.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Career stats"
+          for i in 1 2 3 4 5 6; do  git pull --rebase -q -X theirs origin main && git push -q origin HEAD:main && exit 0; sleep $((RANDOM % 15 + i * 5)); done
+          exit 1
