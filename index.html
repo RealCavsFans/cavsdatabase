@@ -2046,7 +2046,7 @@ setTimeout(()=>{fJ('/box.json').then(r=>r.ok?r.json():null).catch(()=>null).then
   if(last&&last[4]&&(Date.now()-tip(last))<4*864e5){const box=document.getElementById('ch-last');box.hidden=false;
     box.appendChild(el('div','cap-label','Last game · '+shortFmt.format(tip(last))));
     const r=el('div','ch-next ch-res');const res=last[4].replace('-','–');if(last[6]){const a=el('a',null,res);a.href=last[6];a.target='_blank';a.rel='noopener';r.appendChild(a)}else r.appendChild(el('b',null,res));r.append(' ',el('span','ch-opp',(last[2]==='H'?'vs ':'at ')+last[1]));box.appendChild(r);
-    const L=last[7]||[];if(L.length)setTimeout(()=>{/* after the roster lists exist (names link to player pages) */const ul=el('ul','ch-pl');L.forEach(([n,p,rb,as,mi])=>{const li=el('li');let nm=el('b',null,n);if(PP_ON&&onRoster(n)){nm=el('a',null,n);nm.href='/players/'+slug(n);nm.dataset.go='players/'+slug(n)}li.append(nm,' '+p+' pts, '+rb+' reb, '+as+' ast',el('span',null,' · '+mi+' min'));ul.appendChild(li)});box.appendChild(ul)},0)}
+    const L=last[7]||[];if(L.length)setTimeout(()=>{/* after the roster lists exist (names link to player pages) *//* Nov 18 (Luka): each Charge player laid out like the drafted players: name, then the stat line in columns */L.forEach(([n,p,rb,as,mi])=>{const w=el('div','dp-r ch-pr');const h=el('div','dp-h');let nm=el('span','dp-n',n);if(PP_ON&&onRoster(n)){nm=el('a','dp-n',n);nm.href='/players/'+slug(n);nm.dataset.go='players/'+slug(n)}h.appendChild(nm);w.appendChild(h);const st=el('div','dp-s');[['PTS',p],['REB',rb],['AST',as],['MIN',mi]].forEach(([k,v])=>{const c=el('div');c.append(el('b',null,v==null?'–':String(v)),el('span',null,k));st.appendChild(c)});w.appendChild(st);box.appendChild(w)})},0)}
 
 })();
 
