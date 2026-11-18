@@ -1034,8 +1034,8 @@ function oppColor(ab){const L=OCOL[OTAB[ab]||ab];const ok=h=>{const n=parseInt(h
   const mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn;let hu=0;if(d){hu=mx===r?((g-b)/d)%6:mx===g?(b-r)/d+2:(r-g)/d+4;hu=(hu*60+360)%360}const sat=mx?d/mx:0;
   if(Y<.035)return false;if(1.05/(Y+.05)<3)return false;if(sat>.45&&(hu>=325||hu<=15))return false;return true};
   return (L&&L.find(ok))||'#9a6a00'}
-function applyOpp(D){const c=D&&D.other&&D.other.abbr&&D.other.abbr!=='OPP'?oppColor(D.other.abbr):'#D99A12';/* Nov 17 (Luka): season OPP is the site's gold */let st=document.getElementById('co-team');if(!st){st=document.createElement('style');st.id='co-team';document.body.appendChild(st)}
-  const dk=c==='#D99A12'?'#F2B231':`color-mix(in srgb,${c} 55%,#fff)`;st.textContent=`:root{--co:${c};--cot:${c}}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--co:${dk}}}:root[data-theme=dark]{--co:${dk}}`}
+function applyOpp(D){const c=D&&D.other&&D.other.abbr&&D.other.abbr!=='OPP'?oppColor(D.other.abbr):'#F2B231';/* Nov 17 (Luka): season OPP is the site's gold */let st=document.getElementById('co-team');if(!st){st=document.createElement('style');st.id='co-team';document.body.appendChild(st)}
+  const dk=c==='#F2B231'?'#F2B231':`color-mix(in srgb,${c} 55%,#fff)`;st.textContent=`:root{--co:${c};--cot:${c}}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--co:${dk}}}:root[data-theme=dark]{--co:${dk}}`}
 function setData(d,feed){S.data=prep(d);S.data.noSubs=!!d.noSubs;S.data.focus.c='var(--cf)';S.data.other.c='var(--co)';applyOpp(S.data);S.fetched=Date.now();S.err=null;S.feed=feed}
 /* live games: ESPN first. After two misses in a row, switch to the backup feed (/pbp: CBS, then Yahoo),
    and check ESPN again every fourth refresh so the page returns to it once it's back. */
@@ -2065,11 +2065,11 @@ function oppCard(D,R){
   const a=st(D.focus),b=st(D.other);const mx=Math.max(a.pos+a.orb,b.pos+b.orb)||1;
   const stripe=col=>`repeating-linear-gradient(135deg,var(--card) 0 4px,color-mix(in srgb,${col} 32%,var(--card)) 4px 8px)`;
   const wrap=el('div','sc2');const left=el('div');left.appendChild(el('h3',null,'Chances'));
-  [[D.focus,a],[D.other,b]].forEach(([t,x])=>{const r=el('div','scr');const wu=x.used/mx*100,wt=x.to/mx*100,wo=x.orb/mx*100;r.innerHTML=`<span class="ab">${esc(t.abbr)}</span><div class="scb"><i style="width:${wu}%;background:${t.c}">${wu>=40?pg(x.used)+' used':wu>=14?pg(x.used):''}</i><i class="tv" style="width:${wt}%;background:${stripe(t.c)}"></i><i style="width:${wo}%;background:color-mix(in srgb,${t.c} 60%,#101419)"></i></div><span class="tot">${pg(x.opp)}<small>chances</small></span>`;left.appendChild(r);
+  [[D.focus,a],[D.other,b]].forEach(([t,x])=>{const r=el('div','scr');const wu=x.used/mx*100,wt=x.to/mx*100,wo=x.orb/mx*100;r.innerHTML=`<span class="ab">${esc(t.abbr)}</span><div class="scb"><i style="width:${wu}%;background:${t.c};${t.id!==D.focus.id&&t.abbr==='OPP'?'color:#101419':''}">${wu>=40?pg(x.used)+' used':wu>=14?pg(x.used):''}</i><i class="tv" style="width:${wt}%;background:${stripe(t.c)}"></i><i style="width:${wo}%;background:color-mix(in srgb,${t.c} 60%,#101419)"></i></div><span class="tot">${pg(x.opp)}<small>chances</small></span>`;left.appendChild(r);
     left.appendChild(el('div','sceq',`${pg(x.pos)} poss − ${pg(x.to)} turnovers + ${pg(x.orb)} second chances`))});
   left.insertAdjacentHTML('beforeend',`<div class="sck"><span><i style="background:${D.focus.c}"></i>Shot or free throws</span><span><i style="background:${stripe(D.focus.c)}"></i>Turned it over</span><span><i style="background:color-mix(in srgb,${D.focus.c} 60%,#101419)"></i>Second chance</span></div>`);
   const right=el('div');right.appendChild(el('h3',null,'Points per chance'));const me=Math.max(a.opp?a.pts/a.opp:0,b.opp?b.pts/b.opp:0,1.4);
-  [[D.focus,a],[D.other,b]].forEach(([t,x])=>{const ppo=x.opp?x.pts/x.opp:0;const r=el('div','scr');r.innerHTML=`<span class="ab">${esc(t.abbr)}</span><div class="scb" style="background:var(--sub)"><i style="width:${ppo/me*100}%;background:${t.c}">${ppo.toFixed(2)}</i></div><span class="tot">${x.ts==null?'–':(x.ts*2).toFixed(2)}<small>pts per shot · TS% ${x.ts==null?'–':Math.round(x.ts*100)+'%'}</small></span>`;right.appendChild(r)});
+  [[D.focus,a],[D.other,b]].forEach(([t,x])=>{const ppo=x.opp?x.pts/x.opp:0;const r=el('div','scr');r.innerHTML=`<span class="ab">${esc(t.abbr)}</span><div class="scb" style="background:var(--sub)"><i style="width:${ppo/me*100}%;background:${t.c};${t.id!==D.focus.id&&t.abbr==='OPP'?'color:#101419':''}">${ppo.toFixed(2)}</i></div><span class="tot">${x.ts==null?'–':(x.ts*2).toFixed(2)}<small>pts per shot · TS% ${x.ts==null?'–':Math.round(x.ts*100)+'%'}</small></span>`;right.appendChild(r)});
   wrap.append(left,right);c.appendChild(wrap);return c;
 }
 
