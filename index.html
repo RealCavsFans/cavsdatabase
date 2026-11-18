@@ -4802,7 +4802,6 @@ const ppLoad=()=>Promise.all([['stats','/pdata/players.json'],['box','/box.json'
     'FG%':'Field goal percentage: shots made out of shots taken, threes included.','3PT%':'Three point percentage.','FT%':'Free throw percentage.',
     'Pts/shot':'Points per shot: total points divided by field goal attempts. It rewards efficient scorers and players who get to the line.',
     Stocks:'Steals plus blocks per game. The quickest read on how disruptive a defender is.',
-    Fingerprint:'Each bar is a percentile among NBA players at his position group with real minutes. 90th means he’s ahead of 90% of them.',
     Performance:'A single score for each game (John Hollinger’s Game Score): points and makes add, misses and turnovers subtract, with rebounds, assists, steals and blocks added in. 10 is a solid night; 20+ is a top night for anyone.',
     Typical:'His median line: half his games are above it and half below. Unlike an average, one huge night doesn’t pull it up.',
     Share:'His slice of the Cavs’ total in games he played. 20% is an even share for one of five players on the floor.',
@@ -5036,33 +5035,7 @@ const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3PT%','tp'],['FG%','f
     const row=(lab,x)=>{if(!x)return;const tr=el('tr');[lab,x.gp,f1(x.min),f1(x.pts),f1(x.reb),f1(x.ast),f3(x.fg),f3(x.tp)].forEach((v2,i)=>tr.appendChild(el('td',null,v2==null?'—':String(v2))));tbd.appendChild(tr)};
     if(pre&&!(cur&&cur.base==='pre'))row((pre.team||'')+' '+(pre.season||''),pre);if(gl)row((gl.team||'G League')+' '+(gl.season||'2025–26'),gl);tb.appendChild(tbd);const bx=el('div','ppx-tbx');bx.appendChild(tb);c.appendChild(bx);
     if(pre&&pre.note&&!(cur&&cur.base==='pre'))c.appendChild(note(pre.note));ov.appendChild(c)}
-  // fingerprint
-  const SK=[['Scoring','Offense',x=>x.pts/x.min],['Efficiency','Offense',x=>{const d2=2*(x.fga+0.44*x.fta);return d2?x.pts/d2:0}],['Shooting','Offense',x=>x.tpa/x.g>=1?x.tpm/x.tpa+x.tpm/x.min:x.tpm/x.min],['Playmaking','Offense',x=>x.ast/x.min],['Rim protection','Defense & boards',x=>x.blk/x.min],['Steals','Defense & boards',x=>x.stl/x.min],['Rebounding','Defense & boards',x=>x.reb/x.min],['Durability','Defense & boards',x=>x.min/Math.max(1,maxG)]];
-  /* where he sits in the league: one row per stat, a gray dot for every NBA player in his position group, wine dot for him */
-  /* Nov 12 (Luka): removed from player pages (repeats what the other cards show) */if(false&&lgOK&&meL.g>=10){const c=card('Where he sits in the league','Fingerprint',`Every number ranked against NBA ${GN} with real minutes. The bar shows his percentile; the dashed line is the middle of the group.${RKN}`);
-    const ts=x=>{const d2=2*(x.fga+0.44*x.fta);return d2?x.pts/d2:null};
-    /* team season totals from every team game line, for the rate stats (usage, assist %, rebound %, steal %, block %) */
-    const TT={};Object.values(L.tg||{}).forEach(gm=>{const z=gm.t||[];if(z.length!==2||gm.cupFinal)return;z.forEach((a2,i)=>{const b2=z[1-i];const o=TT[a2.ab]||(TT[a2.ab]={min:0,fgm:0,fga:0,fta:0,tov:0,orb:0,drb:0,oorb:0,odrb:0,oposs:0,o2a:0});o.min+=240+Math.max(0,(gm.per||4)-4)*25;o.fgm+=a2.fgm;o.fga+=a2.fga;o.fta+=a2.fta;o.tov+=a2.tov;o.orb+=a2.orb;o.drb+=a2.drb;o.oorb+=b2.orb;o.odrb+=b2.drb;o.oposs+=b2.fga-b2.orb+b2.tov+.44*b2.fta;o.o2a+=b2.fga-b2.tpa})});
-    const ESP={NYK:'NY',GSW:'GS',SAS:'SA',NOP:'NO',UTA:'UTAH',WAS:'WSH'};const tt=x=>TT[x.t]||TT[ESP[x.t]];
-    const rt=(x,f)=>{const t=tt(x);if(!t||!x.min)return null;const sh=x.min/(t.min/5);return f(t,sh)};
-    const q=(n2,d2)=>d2>0?n2/d2:null,pc1=v=>(v*100).toFixed(1)+'%';
-    const WS=[['Scoring',[['Points',x=>x.pts/x.g,v=>f1(v)],['Usage',x=>lrOr(x,r=>q(r.fga+.44*r.fta+r.to,r.tFGA+.44*r.tFTA+r.tTO),()=>rt(x,(t,sh)=>q(x.fga+.44*x.fta+x.tov,sh*(t.fga+.44*t.fta+t.tov)))),pc1],['TS%',ts,pc1],['eFG%',x=>q(x.fgm+.5*x.tpm,x.fga),pc1],['Threes made',x=>x.tpm/x.g,v=>f1(v)],['Free throw rate',x=>x.fga?x.fta/x.fga:null,v=>v.toFixed(3).replace(/^0/,'')]]],
-      ['Playmaking',[['Assists',x=>x.ast/x.g,v=>f1(v)],['Assist rate',x=>lrOr(x,r=>q(r.ast,r.tFGM-r.fgm),()=>rt(x,(t,sh)=>q(x.ast,sh*t.fgm-x.fgm))),pc1],['Assist to turnover',x=>x.tov?x.ast/x.tov:null,v=>v.toFixed(1)],['TOV%',x=>{const d2=x.fga+0.44*x.fta+x.tov;return d2?x.tov/d2:null},pc1,1]]],
-      ['Defense and boards',[['Rebounds',x=>x.reb/x.g,v=>f1(v)],['Offensive rebounds',x=>x.oreb/x.g,v=>f1(v)],['Off. rebound rate',x=>lrOr(x,r=>q(r.oreb,r.tORB+r.oDRB),()=>rt(x,(t,sh)=>q(x.oreb,sh*(t.orb+t.odrb)))),pc1],['Def. rebound rate',x=>lrOr(x,r=>q(r.dreb,r.tDRB+r.oORB),()=>rt(x,(t,sh)=>q(x.reb-x.oreb,sh*(t.drb+t.oorb)))),pc1],['Steals',x=>x.stl/x.g,v=>f1(v)],['Steal rate',x=>lrOr(x,r=>q(r.stl,r.pd),()=>rt(x,(t,sh)=>q(x.stl,sh*t.oposs))),pc1],['Blocks',x=>x.blk/x.g,v=>f1(v)],['Block rate',x=>lrOr(x,r=>q(r.blk,r.o2A),()=>rt(x,(t,sh)=>q(x.blk,sh*t.o2a))),pc1]]]];
-    const others=pool.filter(x=>x!==meL);const out=[];const grid=el('div','ppx-fp');
-    WS.forEach(([grp,rows])=>{const col=el('div','ppx-fg');const hd=el('div','ppx-fgh');col.appendChild(hd);const pcs=[];
-      rows.forEach(([lab,fn,fmt,low])=>{const mv=fn(meL);if(mv==null)return;const vals=others.map(x=>fn(x)).filter(v2=>v2!=null);if(vals.length<10)return;
-        const pct=Math.round(100*vals.filter(v2=>low?v2>mv:v2<mv).length/vals.length);pcs.push(pct);out.push([lab,pct]);
-        const srt=vals.slice().sort((u,w)=>u-w),med=srt[Math.floor(srt.length/2)];
-        const r2=el('div','ppx-fr'+(pct>=90?' top':pct<=10?' low':''));r2.appendChild(el('span','n',lab));const vv=el('span','v',fmt(mv));r2.appendChild(vv);
-        const br=el('span','bar');const fi=el('i');fi.style.width=Math.max(2,pct)+'%';br.appendChild(fi);r2.appendChild(br);r2.appendChild(el('span','p',ord(Math.max(1,Math.min(99,pct)))));
-        r2.title=`${lab}: ${fmt(mv)} · middle of his group ${fmt(med)}`;col.appendChild(r2)});
-      if(!pcs.length)return;const avgp=Math.round(pcs.reduce((u,w)=>u+w,0)/pcs.length);
-      hd.innerHTML=`<span class="k">${grp}</span><span class="s"><b>${ord(Math.max(1,Math.min(99,avgp)))}</b> avg</span>`;grid.appendChild(col)});
-    c.appendChild(grid);
-    if(out.length>2){out.sort((a,b)=>b[1]-a[1]);c.appendChild(ctx(`Best: ${out[0][0].toLowerCase()} (${ord(out[0][1])} percentile). Room to grow: ${out[out.length-1][0].toLowerCase()} (${ord(out[out.length-1][1])}).`))}
-    c.appendChild(note('Bar = percentile in his position group (players with 10+ minutes a game): fuller is better, gold = top 10%. Turnover rate counts lower as better. Rates use his team’s totals from every box score this season.'));ov.appendChild(c)}
-  /* Nov 17: the fingerprint card is off, so it isn't listed as coming */
+  /* Nov 17 (Luka): the fingerprint card (Where he sits in the league) is deleted from player pages */
   // value for his contract: production against pay, every NBA player with real minutes (league box scores + league salaries)
   if(meL&&meL.g>=3&&meL.min/meL.g>=10){const c=card('Value for his contract',null,'Production (Game Score a night: John Hollinger’s box score summary) against salary, every NBA player with 10+ minutes a game. How the ranks work: “in his pay range” means the 30 players paid closest to him, every position, who play 10+ minutes a game and have played at least 40% of the most games anyone has so far. 1st = best.');c.id='ppx-valc';c.classList.add('ppx-sm');const box=el('div','ppx-val');box.appendChild(el('p','dim','Loading…'));c.appendChild(box);ov.appendChild(c);
     const nm=x=>String(x).normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');
