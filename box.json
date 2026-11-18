@@ -3140,7 +3140,24 @@
  },
  "2026-11-18": {
   "url": "https://www.nba.com/game/mem-vs-cle-0022600258/box-score",
-  "status": "scheduled"
+  "status": "scheduled",
+  "refs": [
+   [
+    "Crew chief",
+    "Ken Jones",
+    "40"
+   ],
+   [
+    "Referee",
+    "Leah Lanie",
+    "37"
+   ],
+   [
+    "Umpire",
+    "Fatri Abazi",
+    "6"
+   ]
+  ]
  },
  "2026-11-20": {
   "url": "https://www.nba.com/game/ind-vs-cle-0022600045/box-score",
