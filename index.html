@@ -5062,7 +5062,7 @@ const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3PT%','tp'],['FG%','f
     c.appendChild(grid);
     if(out.length>2){out.sort((a,b)=>b[1]-a[1]);c.appendChild(ctx(`Best: ${out[0][0].toLowerCase()} (${ord(out[0][1])} percentile). Room to grow: ${out[out.length-1][0].toLowerCase()} (${ord(out[out.length-1][1])}).`))}
     c.appendChild(note('Bar = percentile in his position group (players with 10+ minutes a game): fuller is better, gold = top 10%. Turnover rate counts lower as better. Rates use his team’s totals from every box score this season.'));ov.appendChild(c)}
-  else waiting.push('Player fingerprint (after 10 games)');
+  /* Nov 17: the fingerprint card is off, so it isn't listed as coming */
   // value for his contract: production against pay, every NBA player with real minutes (league box scores + league salaries)
   if(meL&&meL.g>=3&&meL.min/meL.g>=10){const c=card('Value for his contract',null,'Production (Game Score a night: John Hollinger’s box score summary) against salary, every NBA player with 10+ minutes a game. How the ranks work: “in his pay range” means the 30 players paid closest to him, every position, who play 10+ minutes a game and have played at least 40% of the most games anyone has so far. 1st = best.');c.id='ppx-valc';c.classList.add('ppx-sm');const box=el('div','ppx-val');box.appendChild(el('p','dim','Loading…'));c.appendChild(box);ov.appendChild(c);
     const nm=x=>String(x).normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');
