@@ -1,7 +1,8 @@
 // Cleveland Charge results from ESPN (Nov 11, 2026, Luka). For every Charge game on or before today with no result yet,
 // reads ESPN's G League scoreboard for that date, and when the game is final writes into CHARGE.games in index.html:
 //   [4] result from the Charge's side ('W 118–110'), [6] the ESPN game link, [7] the lines of Cavs two-way and assignment players
-//   who played ([[name, pts, reb, ast, min]]), and the Charge record.
+//   who played ([[name, pts, reb, ast, min, stl, blk, fga, fta]]), and the Charge record.
+//   Nov 18: lines carry steals, blocks, FGA and FTA too (the home page shows PTS, REB, AST, STL, BLK, TS%); older games are refilled once.
 // Also fills a missing box link or player lines for games that already have a result. Exits 0 on any problem.
 //   node scripts/charge-espn.mjs            FORCE=1 to also re-check finished games
 import fs from 'node:fs';
@@ -22,7 +23,7 @@ let changed = 0;
 for (const g of games) {
   if (g[0] > today) continue;
   const recent = (Date.parse(today) - Date.parse(g[0])) / 864e5 <= 3;
-  const need = !g[4] || !g[6] || !g[7] || (recent && !(g[7] || []).length) || process.env.FORCE;
+  const need = !g[4] || !g[6] || !g[7] || (recent && !(g[7] || []).length) || (g[7] || []).some(l => l.length < 9 || l[8] == null) || process.env.FORCE;
   if (!need) continue;
   const sb = await get(`${API}/scoreboard?dates=${g[0].replace(/-/g, '')}`);
   const ev = ((sb && sb.events) || []).find(e => ((e.competitions || [])[0] || {}).competitors?.some(isCharge));
@@ -43,12 +44,15 @@ for (const g of games) {
       for (const ath of grp.athletes || []) {
         const nm = (ath.athlete || {}).displayName; if (!ours.has(norm(nm)) || !ath.stats || !ath.stats.length) continue;
         const v = k => { const i = ix(k); return i < 0 ? 0 : parseInt(ath.stats[i], 10) || 0; };
-        lines.push([nm, v('PTS'), v('REB'), v('AST'), v('MIN')]);
+        const att = k => { const i = ix(k); if (i < 0) return null; const x = /^(\d+)\s*-\s*(\d+)$/.exec(String(ath.stats[i] || '').trim()); return x ? +x[2] : null; };
+        lines.push([nm, v('PTS'), v('REB'), v('AST'), v('MIN'), v('STL'), v('BLK'), att('FG'), att('FT')]);
       }
     }
   }
   if (!lines.length) { const seen = []; for (const tp of ((sum && sum.boxscore && sum.boxscore.players) || [])) seen.push(((tp.team || {}).displayName || '?') + ': ' + (tp.statistics || []).flatMap(s => (s.athletes || []).map(a => (a.athlete || {}).displayName)).slice(0, 18).join(', ')); console.log('charge-espn: box score players seen ->', seen.join(' | ') || 'none', '· looking for', names.join(', ')); }
   const before = JSON.stringify(g);
+  /* keep the lines of players who were Cavs at the time but aren't any more (a waived two-way) */
+  for (const l of (g[7] || [])) if (!ours.has(norm(l[0])) && !lines.some(x => norm(x[0]) === norm(l[0]))) lines.push(l);
   g[4] = res; if (!g[5]) g[5] = ''; g[6] = g[6] || link; g[7] = lines;
   if (JSON.stringify(g) !== before) { changed++; console.log('charge-espn:', g[0], g[1], res, lines.length ? JSON.stringify(lines) : '(no Cavs players listed)'); }
 }

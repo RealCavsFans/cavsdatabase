@@ -2,7 +2,7 @@
 // For every Charge game that has a result and an ESPN game link (charge-espn.mjs writes both), reads ESPN's G League box score once
 // and keeps every Charge player's line in pdata/charge-box.json (keyed by ESPN game id, so later runs only read new games).
 // Then adds them up into per-game averages:
-//   CH_STATS rows: [name, games, minutes, points, rebounds, assists, steals, blocks, FGM, FGA, 3PM, 3PA, PER]
+//   CH_STATS rows: [name, games, minutes, points, rebounds, assists, steals, blocks, FGM, FGA, 3PM, 3PA, FTM, FTA, PER] (FTM and FTA added Nov 18)
 // (PER is left empty: the Leaders section skips a category with no numbers.) Writes index.html only when the numbers change.
 // Exits 0 on any problem and leaves the old numbers alone.
 //   node scripts/charge-stats.mjs            FORCE=1 to re-read every game
@@ -23,7 +23,7 @@ try {
   for (const g of games) {
     if (!/^[WL] /.test(g[4] || '') || !g[6]) continue;
     const id = (/gameId\/(\d+)/.exec(g[6]) || [])[1]; if (!id) continue;
-    if (box[id] && !process.env.FORCE) continue;
+    if (box[id] && box[id].lines.every(l => l.length >= 13) && !process.env.FORCE) continue;
     const sum = await get(`${API}/summary?event=${id}`);
     const lines = [];
     for (const tp of ((sum && sum.boxscore && sum.boxscore.players) || [])) {
@@ -35,8 +35,8 @@ try {
           const n = k => { const i = ix(k); return i < 0 ? 0 : parseInt(ath.stats[i], 10) || 0; };
           const p = k => { const i = ix(k); return i < 0 ? [0, 0] : pair(ath.stats[i]); };
           const mn = n('MIN'); if (!mn && !n('PTS') && !p('FG')[1]) continue;
-          const [fgm, fga] = p('FG'), [tpm, tpa] = p('3PT');
-          lines.push([nm, mn, n('PTS'), n('REB'), n('AST'), n('STL'), n('BLK'), fgm, fga, tpm, tpa]);
+          const [fgm, fga] = p('FG'), [tpm, tpa] = p('3PT'), [ftm, fta] = p('FT');
+          lines.push([nm, mn, n('PTS'), n('REB'), n('AST'), n('STL'), n('BLK'), fgm, fga, tpm, tpa, ftm, fta]);
         }
       }
     }
@@ -47,7 +47,7 @@ try {
   if (read) { fs.mkdirSync(new URL('../pdata/', import.meta.url), { recursive: true }); fs.writeFileSync(BOX, JSON.stringify(box)); }
   /* season per-game averages, every Charge player who played */
   const T = {};
-  for (const { lines } of Object.values(box)) for (const [nm, ...v] of lines) { const t = T[nm] || (T[nm] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]); t[0]++; v.forEach((x, i) => t[i + 1] += x); }
+  for (const { lines } of Object.values(box)) for (const [nm, ...v] of lines) { const t = T[nm] || (T[nm] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]); t[0]++; v.forEach((x, i) => t[i + 1] += x); }
   const r1 = x => Math.round(x * 10) / 10;
   const rows = Object.entries(T).map(([nm, t]) => { const g = t[0]; return [nm, g, ...t.slice(1).map(x => r1(x / g)), null]; }).sort((a, b) => b[3] - a[3]);
   const ser = r => '[' + r.map(v => v == null ? 'null' : typeof v === 'number' ? String(v) : JSON.stringify(v)).join(',') + ']';
