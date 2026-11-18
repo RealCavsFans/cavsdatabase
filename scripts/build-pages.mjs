@@ -64,7 +64,6 @@ let shell = html; let CHMAP = {};
       try { const { transform } = await import('esbuild'); code = (await transform(code, { loader: 'js', minify: true, target: 'es2020', legalComments: 'none' })).code; } catch (e) {}
       const h = ch('sha1').update(code).digest('hex').slice(0, 10); const f = `c-${n}.${h}.js`; await writeFile(new URL('a/' + f, root), code); CH[n] = '/a/' + f; keepC.add(f); }
     mainJs = 'window.__CH=' + JSON.stringify(CH) + ';\n' + mainJs; CHMAP = CH;
-    for (const f of await readdir(new URL('a/', root))) if (/^c-[\w-]+\.[0-9a-f]{10}\.js$/.test(f) && !keepC.has(f)) await unlink(new URL('a/' + f, root));
     const hc = ch('sha1').update(sm[1]).digest('hex').slice(0, 10), hj = ch('sha1').update(mainJs).digest('hex').slice(0, 10);
     // minify the shared files when esbuild is installed (the Action installs it); the hashes come from the source, so names only change when the source does
     let cssOut = sm[1], jsOut = mainJs;
@@ -73,13 +72,20 @@ let shell = html; let CHMAP = {};
       cssOut = (await transform(sm[1], { loader: 'css', minify: true })).code;
     } catch (e) { if (!/Cannot find (package|module)/.test(e.message)) console.warn('minify skipped:', e.message.split('\n')[0]); }
     await writeFile(new URL(`a/app.${hc}.css`, root), cssOut); await writeFile(new URL(`a/app.${hj}.js`, root), jsOut);
-    for (const f of await readdir(new URL('a/', root))) if (/^app\.[0-9a-f]{10}\.(css|js)$/.test(f) && f !== `app.${hc}.css` && f !== `app.${hj}.js`) await unlink(new URL('a/' + f, root));
+    keepC.add(`app.${hc}.css`); keepC.add(`app.${hj}.js`);
     shell = html.replace(sm[0], () => `<link rel="stylesheet" href="/a/app.${hc}.css"><link rel="preload" href="/a/app.${hj}.js" as="script">`).replace(jm[0], () => `<script src="/a/app.${hj}.js"></script>`);
     // other big inline scripts (share links + save-as-image, ~36 KB) also move to cached files, in the same spot so they run in the same order
     for (const m of [...shell.matchAll(/<script>([\s\S]*?)<\/script>/g)]) { if (m[1].length < 5000) continue; let code = m[1];
       try { const { transform } = await import('esbuild'); code = (await transform(code, { loader: 'js', minify: true, target: 'es2020', legalComments: 'none' })).code; } catch (e) {}
       const f = `s-${ch('sha1').update(code).digest('hex').slice(0, 10)}.js`; await writeFile(new URL('a/' + f, root), code); keepC.add(f); shell = shell.replace(m[0], () => `<script src="/a/${f}"></script>`); }
-    for (const f of await readdir(new URL('a/', root))) if (/^s-[0-9a-f]{10}\.js$/.test(f) && !keepC.has(f)) await unlink(new URL('a/' + f, root));
+    // Nov 18 (Luka): old app and chunk files stay 3 days after a build stops using them, so a page opened before an update (an open tab,
+    // the offline copy) can still load its player-page file instead of hanging. a/.old.json remembers when each one was last current.
+    { let old = {}; try { old = JSON.parse(await readFile(new URL('a/.old.json', root), 'utf8')); } catch (e) {}
+      const now = Date.now(), keepMs = 3 * 864e5;
+      for (const f of await readdir(new URL('a/', root))) { if (!/^(c-[\w-]+\.[0-9a-f]{10}\.js|app\.[0-9a-f]{10}\.(css|js)|s-[0-9a-f]{10}\.js)$/.test(f)) continue;
+        if (keepC.has(f)) { delete old[f]; continue; }
+        if (!old[f]) old[f] = now; else if (now - old[f] > keepMs) { await unlink(new URL('a/' + f, root)); delete old[f]; } }
+      await writeFile(new URL('a/.old.json', root), JSON.stringify(old)); }
     // the small second <style> block stays inline in every page; minify it too (drops its comments and spacing)
     try { const { transform } = await import('esbuild');
       for (const m of [...shell.matchAll(/<style>([\s\S]*?)<\/style>/g)]) { const c = (await transform(m[1], { loader: 'css', minify: true })).code.trim(); shell = shell.replace(m[0], () => `<style>${c}</style>`); }
