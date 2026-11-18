@@ -4913,7 +4913,7 @@ window.renderPlayer=function(s){
   const waiting=[];
 
   /* ===== 1 · overview ===== */
-  const ov=chap('ov','Overview',cur?(cur.src==='2026–27'?gp+' games':'Season starts Oct 22'):'',true);
+  const ov=chap('ov','Overview',cur?(cur.src==='2026–27'?gp+' games':(new Date()>=new Date('2026-10-22T12:00:00')?'No NBA games yet':'Season starts Oct 22')):'',true);/* Nov 18: no games yet once the season has started */
   /* Nov 3: G League games with the Charge (two-ways and assignments), from the lines the daily update saves on each Charge game */
   {const nk=x=>String(x).normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z]/g,'');const GL=(typeof CHARGE!=='undefined'&&CHARGE.games||[]).map(g=>{const l=(g[7]||[]).find(x=>nk(x[0])===nk(n));return l?{g,l}:null}).filter(Boolean);
     if(GL.length||stt==='TW'){const c=card('G League · Cleveland Charge',null,GL.length?'His games with the Charge this season, from each Charge box score.':null);
