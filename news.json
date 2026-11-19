@@ -104,12 +104,6 @@
   },
   {
    "src": "cleveland.com",
-   "title": "Cavs vs. Grizzlies: preview, odds, injury report, TV",
-   "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQSDlpU0xPSXBrcTI3RGg1MWZockhITmRnUFlrUnVmelJNQ1FOUGUyNURkdVNORjZMZXZ3VUUtUThCUHVGZkQ3RzJyU1lMakE3ZS1aYTkxNVRzWEhVSlhFQ1VLSzJ5UjdETzJnbno5czI2MXdZaHIwZkFIZ05YcG01YU1YXzJFNHRFbGpuT0paVElRcDFTY0E?oc=5",
-   "date": "2026-11-18T10:05:00.000Z"
-  },
-  {
-   "src": "cleveland.com",
    "title": "Was Ty Jerome’s injury history really why the Cavs let him walk? A closer look at Cleveland’s roster decisions: Wine and Gold Talk podcast",
    "link": "https://news.google.com/rss/articles/CBMiigJBVV95cUxPRDdWeGdoeXJFYVJYTWdPd2YyLTkyZ3VFZjVpNjZETU5tUXl5UFFFMW5fQnM4TDhUTE5wcm10M1RJYnBzUmhlWHdSazRnNFhmWG52VEs2OXNFT2lpOW54UkhaaVBBbnlQSUFZa1Bua0taQXl2UEtmaUFLdUpJa0FYUGQwbDM3U0U5TFgtNFpQR2xLSi1OTjJfVWtkdThKX1JrT09JQm83bWZGX2xSSTZOeWxJWUROWUk4TW02N3BaMXoyT1ljX05YN0llaU1WT0VzMTRwN3JOTzd6dzJGVS1qX0p1c0Z3cTBXYVpscGUwa3liNVBEMWFIOFR0NGRiTkw0aVZ0ZTAzZmxTQQ?oc=5",
    "date": "2026-11-18T10:02:00.000Z"
@@ -313,6 +307,12 @@
    "date": "2026-11-14T12:44:27.000Z"
   },
   {
+   "src": "cleveland.com",
+   "title": "‘This is unprecedented’: Donovan Mitchell wants Saturday’s game cancelled with Cavs grounded in Miami",
+   "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxQdG16Zlpudm9ad013STNRU0JxQlZKN0hVSU5CaUVuV2dBQkctMGpGRlZiTG84aHFXM2JKLWRmY1dnUFRtdFJrVXpOcHpYWTA0bHhTcHVReXU1RHI0Ri1HVll4aGtBRnFaYXowWl82bkgwMkZ3VUVDdXlTMUJzdGwxeDhGcTdqMVZQZjJoTGFfdkdRQXRaQVpkTUJwMUd6aUFwSGlSOGtMT3RQeFRIS05BMFQzenhOZTcyVS1ST1F6OWxJVXRCUUZMM0ZLaldaN1NBNGNZbU5nMlo?oc=5",
+   "date": "2026-11-14T05:44:00.000Z"
+  },
+  {
    "src": "Hoops Rumors",
    "title": "Injury Notes: Lakers, Mobley, Nets, Missi",
    "link": "https://www.hoopsrumors.com/2026/11/injury-notes-lakers-mobley-nets-missi-butler.html",
@@ -465,6 +465,13 @@
   }
  ],
  "videos": [
+  {
+   "src": "Ultimate Cleveland Sports Show",
+   "title": "Will Peyton Watson find his 3PT shot this year? + Will Norchad Omier force his way into the lineup?",
+   "link": "https://www.youtube.com/watch?v=8IDz6HngDEo",
+   "date": "2026-11-19T16:00:18.000Z",
+   "id": "8IDz6HngDEo"
+  },
   {
    "src": "Ultimate Cleveland Sports Show",
    "title": "Sam Merrill misses 2 FT late; Cavaliers lose to Griz in what Donovan Mitchell calls a \"good loss\"",
@@ -709,13 +716,6 @@
    "link": "https://www.youtube.com/watch?v=Vs4t0sz4ovk",
    "date": "2026-11-11T16:24:25.000Z",
    "id": "Vs4t0sz4ovk"
-  },
-  {
-   "src": "Ultimate Cleveland Sports Show",
-   "title": "What's at stake tonight for the Cleveland Cavaliers as they take on the NY Knicks on National TV?",
-   "link": "https://www.youtube.com/watch?v=hPA2AJb8Jew",
-   "date": "2026-11-11T15:48:47.000Z",
-   "id": "hPA2AJb8Jew"
   }
  ],
  "highlights": [
