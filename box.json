@@ -4,20 +4,7 @@
   "status": "final",
   "score": "113-124",
   "result": "L",
-  "qs": {
-   "cle": [
-    29,
-    33,
-    34,
-    17
-   ],
-   "opp": [
-    32,
-    39,
-    28,
-    25
-   ]
-  },
+  "top": "Craig Porter Jr.: 5 pts, 3 reb, 10 ast",
   "out": [
    "Nae'Qwan Tomlin"
   ],
@@ -312,6 +299,20 @@
     "0"
    ]
   ],
+  "qs": {
+   "cle": [
+    29,
+    33,
+    34,
+    17
+   ],
+   "opp": [
+    32,
+    39,
+    28,
+    25
+   ]
+  },
   "refs": [
    [
     "Referee",
@@ -328,28 +329,14 @@
     "Kastine Evans",
     ""
    ]
-  ],
-  "top": "Craig Porter Jr.: 5 pts, 3 reb, 10 ast"
+  ]
  },
  "2026-10-11": {
   "url": "https://www.nba.com/game/orl-vs-cle-0012600041/box-score",
   "status": "final",
   "score": "119-105",
   "result": "W",
-  "qs": {
-   "cle": [
-    32,
-    29,
-    29,
-    29
-   ],
-   "opp": [
-    28,
-    22,
-    25,
-    30
-   ]
-  },
+  "top": "James Harden: 24 pts, 4 reb, 2 ast",
   "out": [
    "Nae'Qwan Tomlin"
   ],
@@ -593,6 +580,20 @@
     "2"
    ]
   ],
+  "qs": {
+   "cle": [
+    32,
+    29,
+    29,
+    29
+   ],
+   "opp": [
+    28,
+    22,
+    25,
+    30
+   ]
+  },
   "refs": [
    [
     "Referee",
@@ -609,28 +610,14 @@
     "Tre Maddox",
     ""
    ]
-  ],
-  "top": "James Harden: 24 pts, 4 reb, 2 ast"
+  ]
  },
  "2026-10-13": {
   "url": "https://www.nba.com/game/cle-vs-orl-0012600045/box-score",
   "status": "final",
   "score": "116-132",
   "result": "L",
-  "qs": {
-   "cle": [
-    28,
-    24,
-    31,
-    33
-   ],
-   "opp": [
-    35,
-    37,
-    36,
-    24
-   ]
-  },
+  "top": "Donovan Mitchell: 15 pts, 2 reb, 8 ast",
   "out": [
    "Nae'Qwan Tomlin"
   ],
@@ -857,6 +844,20 @@
     "0"
    ]
   ],
+  "qs": {
+   "cle": [
+    28,
+    24,
+    31,
+    33
+   ],
+   "opp": [
+    35,
+    37,
+    36,
+    24
+   ]
+  },
   "refs": [
    [
     "Referee",
@@ -873,8 +874,7 @@
     "Intae Hwang",
     ""
    ]
-  ],
-  "top": "Donovan Mitchell: 15 pts, 2 reb, 8 ast"
+  ]
  },
  "2026-10-22": {
   "url": "https://www.nba.com/game/cle-vs-phi-0022600006/box-score",
@@ -3363,37 +3363,7 @@
   "status": "final",
   "score": "115-107",
   "result": "W",
-  "refs": [
-   [
-    "Crew chief",
-    "Catherine Chang",
-    "30"
-   ],
-   [
-    "Referee",
-    "Kastine Evans",
-    "11"
-   ],
-   [
-    "Umpire",
-    "Billy McClatchy",
-    "31"
-   ]
-  ],
-  "qs": {
-   "cle": [
-    33,
-    26,
-    23,
-    33
-   ],
-   "opp": [
-    23,
-    30,
-    23,
-    31
-   ]
-  },
+  "top": "James Harden: 32 pts, 2 reb, 4 ast",
   "out": [
    "Nae'Qwan Tomlin"
   ],
@@ -3552,7 +3522,37 @@
     "2"
    ]
   ],
-  "top": "James Harden: 32 pts, 2 reb, 4 ast"
+  "qs": {
+   "cle": [
+    33,
+    26,
+    23,
+    33
+   ],
+   "opp": [
+    23,
+    30,
+    23,
+    31
+   ]
+  },
+  "refs": [
+   [
+    "Crew chief",
+    "Catherine Chang",
+    "30"
+   ],
+   [
+    "Referee",
+    "Kastine Evans",
+    "11"
+   ],
+   [
+    "Umpire",
+    "Billy McClatchy",
+    "31"
+   ]
+  ]
  },
  "2026-11-13": {
   "url": "https://www.nba.com/game/cle-vs-mia-0022600036/box-score",
