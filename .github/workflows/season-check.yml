@@ -16,8 +16,11 @@ jobs:
         with:
           sparse-checkout: |
             scripts/season-check.mjs
+            scripts/data-check.mjs
             live-archive/2026-27
-            pdata/league.json
+            pdata
+            box.json
+            index.html
           sparse-checkout-cone-mode: false
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
         with:
@@ -35,5 +38,16 @@ jobs:
           set +e; node scripts/season-check.mjs nba-data; code=$?; set -e
           if [ "$code" = "2" ] && [ -n "$NTFY_TOPIC" ]; then
             curl -s -m 15 -H "Title: Season stats don't match the box scores" -H "Tags: warning" -H "Click: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" --data-binary @data/season-check-alert.txt "https://ntfy.sh/$NTFY_TOPIC" || true
+          fi
+          [ "$code" = "1" ] && exit 1 || exit 0
+      # Nov 19 (Luka, audit): every feed fresh, and the player-page box scores, league feed, league rates, dunks and Charge
+      # box scores in step with the game archive (scripts/data-check.mjs). Anything off sends a push to Luka's phone.
+      - name: Feeds fresh and in step
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          set +e; node scripts/data-check.mjs; code=$?; set -e
+          if [ "$code" = "2" ] && [ -n "$NTFY_TOPIC" ]; then
+            curl -s -m 15 -H "Title: A data feed is stale or out of step" -H "Tags: warning" -H "Click: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" --data-binary @data/data-check-alert.txt "https://ntfy.sh/$NTFY_TOPIC" || true
           fi
           [ "$code" = "1" ] && exit 1 || exit 0
