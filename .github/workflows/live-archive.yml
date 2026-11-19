@@ -42,6 +42,7 @@ jobs:
             data/hist-cle.json
             data/last-time.json
             live-core.js
+            pdata/highs-hist.json
             live-archive
             cavs.ics
           sparse-checkout-cone-mode: false
