@@ -933,6 +933,7 @@ html body .wf-r{padding:6px 0!important;gap:2px 12px!important}html body .wf-n b
 .ss-tag{display:inline-block;margin-left:6px;padding:0 4px;font:700 .5625rem var(--mono);letter-spacing:.04em;color:var(--muted);border:1px solid var(--line);vertical-align:middle;white-space:nowrap}
 .upd-tag{display:inline-flex;align-items:center;gap:6px;font:700 .75rem var(--cond);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;color:var(--muted)}.upd-tag:before{content:'';width:6px;height:6px;border-radius:50%;background:#F2B231;flex:none}
 .ss-tag::after{content:attr(data-t)}
+@media(max-width:640px){/* Nov 19 (Luka): season averages under game numbers a size smaller on phones */html body small.avin,html body .avin{font-size:.5625rem!important;letter-spacing:0}}
 </style>
 <script>
 /* Nov 19 (Luka): small sample tag; the words come from CSS so share images and table text don't pick them up */function ssT(t){const e=document.createElement('small');e.className='ss-tag';e.dataset.t=t;return e}
