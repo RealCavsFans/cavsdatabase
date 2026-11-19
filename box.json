@@ -3143,37 +3143,7 @@
   "status": "final",
   "score": "121-124",
   "result": "L",
-  "refs": [
-   [
-    "Crew chief",
-    "Ken Jones",
-    "40"
-   ],
-   [
-    "Referee",
-    "Leah Lanie",
-    "37"
-   ],
-   [
-    "Umpire",
-    "Fatri Abazi",
-    "6"
-   ]
-  ],
-  "qs": {
-   "cle": [
-    37,
-    35,
-    27,
-    22
-   ],
-   "opp": [
-    30,
-    41,
-    29,
-    24
-   ]
-  },
+  "top": "Donovan Mitchell: 34 pts, 4 reb, 3 ast",
   "out": [
    "Peyton Watson",
    "Jaylon Tyson",
@@ -3352,7 +3322,37 @@
     "1"
    ]
   ],
-  "top": "Donovan Mitchell: 34 pts, 4 reb, 3 ast"
+  "qs": {
+   "cle": [
+    37,
+    35,
+    27,
+    22
+   ],
+   "opp": [
+    30,
+    41,
+    29,
+    24
+   ]
+  },
+  "refs": [
+   [
+    "Crew chief",
+    "Ken Jones",
+    "40"
+   ],
+   [
+    "Referee",
+    "Leah Lanie",
+    "37"
+   ],
+   [
+    "Umpire",
+    "Fatri Abazi",
+    "6"
+   ]
+  ]
  },
  "2026-11-20": {
   "url": "https://www.nba.com/game/ind-vs-cle-0022600045/box-score",
