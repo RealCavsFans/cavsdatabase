@@ -5,13 +5,6 @@
  "url": "https://www.espn.com/mens-college-basketball/game/_/gameId/401921689",
  "next": [
   {
-   "d": "2026-11-18",
-   "opp": "UL Monroe",
-   "ha": "H",
-   "t": "8:00 PM ET",
-   "tv": "SECN+"
-  },
-  {
    "d": "2026-11-21",
    "opp": "Queens University",
    "ha": "H",
@@ -23,6 +16,13 @@
    "opp": "Arizona State",
    "ha": "N",
    "t": "2:00 PM ET",
+   "tv": "CBSSN"
+  },
+  {
+   "d": "2026-11-26",
+   "opp": "SMU",
+   "ha": "N",
+   "t": "7:00 PM ET",
    "tv": "CBSSN"
   }
  ],
