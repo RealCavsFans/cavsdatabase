@@ -4825,7 +4825,9 @@ window.renderPlayer=function(s){
   {const bc=el('div','dim');bc.style.fontSize='13px';const a1=el('a',null,'Home');a1.href='/';a1.dataset.go='home';const a2=el('a',null,'Roster');a2.href='/roster';a2.dataset.go='roster';bc.append(a1,' / ',a2,' / '+n);w.appendChild(bc)}
   const body=el('div','ppx-body');w.appendChild(body);
   {const sk=el('div','skel-wrap');sk.setAttribute('aria-label','Loading');sk.innerHTML='<div class="skel skel-band"></div><div class="skel-row"><div class="skel skel-b"></div><div class="skel skel-b"></div></div><div class="skel skel-card"></div><div class="skel skel-card"></div>';body.appendChild(sk)}
-  Promise.all([ppLoad(),needChunk('pp')]).then(()=>{body.innerHTML='';try{ppBuild(p,body)}catch(e){console.error(e);body.appendChild(el('p','dim','Something went wrong loading this page.'))}
+  /* Nov 19 audit: his own game-archive file loads with the page, so this season's numbers come from the archive (the same counting as the season stats page) */const nk0=String(n).normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,''),AK='2026-27|'+nk0;
+  const ppArch=()=>{PPD.arch=PPD.arch||{};if(PPD.arch[AK])return Promise.resolve();return fetch('/live-archive/2026-27/p/'+nk0+'.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(j=>{if(j)PPD.arch[AK]=j})};
+  Promise.all([ppLoad(),needChunk('pp'),ppArch()]).then(()=>{body.innerHTML='';try{ppBuild(p,body)}catch(e){console.error(e);body.appendChild(el('p','dim','Something went wrong loading this page.'))}
     /* links like /players/evan-mobley#ch-his open that chapter */
     const h=location.hash;if(/^#ch-[a-z]+$/.test(h)){const d=document.querySelector(h);if(d){d.open=true;setTimeout(()=>d.scrollIntoView({block:'start'}),150)}}}).catch(e=>{/* Nov 18 (Luka): never leave the loading boxes up forever */console.warn('player page',e);body.innerHTML='';const m=el('p','dim','This page didn’t load. ');const b=el('button','oo2-more','Try again');b.type='button';b.onclick=()=>location.reload();m.appendChild(b);body.appendChild(m)});
   return true};
@@ -4867,13 +4869,16 @@ window.renderPlayer=function(s){
   const cur=gp?{src:'2026–27',gp,min:avg('min'),pts:avg('pts'),reb:avg('reb'),ast:avg('ast'),stl:avg('stl'),blk:avg('blk'),fg:tot('fga')?tot('fgm')/tot('fga'):null,tp:tot('tpa')?tot('tpm')/tot('tpa'):null,ft:tot('fta')?tot('ftm')/tot('fta'):null,pps:tot('fga')?tot('pts')/tot('fga'):null}
     :lastNba?{src:'2025–26',base:'nba',gp:lastNba[2],min:lastNba[4],pts:lastNba[5],reb:lastNba[6],ast:lastNba[7],stl:lastNba[8],blk:lastNba[9],fg:lastNba[11],tp:lastNba[12],ft:lastNba[13]}
     :pre?{src:pre.season,base:'pre',gp:pre.gp,min:pre.min,pts:pre.pts,reb:pre.reb,ast:pre.ast,stl:pre.stl,blk:pre.blk,fg:pre.fg,tp:pre.tp,ft:pre.ft}:null;
+  /* Nov 19 audit: this season's line from the game archive (exact seconds, every game, the same counts as the season stats page); the box-score average above only if the archive doesn't have him */
+  const ARx=(()=>{try{const nk1=String(n).normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');const A=(PPD.arch||{})['2026-27|'+nk1];if(!A||!A.B)return null;const id=A.player&&A.B[A.player]?A.player:Object.keys(A.P||{}).find(k=>A.P[k].name===n);const b=id&&A.B[id],g=id&&(A.gp||{})[id];return b&&g?{b,g}:null}catch(e){return null}})();
+  if(ARx&&cur&&cur.src==='2026–27'){const b=ARx.b,g=ARx.g;Object.assign(cur,{gp:g,min:b.min/60/g,pts:b.pts/g,reb:(b.oreb+b.dreb)/g,ast:b.ast/g,stl:b.stl/g,blk:b.blk/g,fg:b.fga?b.fgm/b.fga:null,tp:b.tpa?b.tpm/b.tpa:null,ft:b.fta?b.ftm/b.fta:null,pps:b.fga?b.pts/b.fga:null})}
   const career=S.career||null;
 
   /* ---------- league feed: same position group, real minutes ---------- */
   const LP=Object.values(L.players||{});const maxG=LP.reduce((m,x)=>Math.max(m,x.g),0);
   const lgGrp=a=>/^(PG|SG|G)$/.test(a)?'G':/^(PF|C|FC|F-C|C-F)$/.test(a)?'B':'W';
   const pool=LP.filter(x=>x.g>=Math.max(3,Math.ceil(maxG*0.5))&&x.min/x.g>=10&&(RG?X.roleOf(x.n)===RG:lgGrp(x.p)===G));/* Nov 14 (Luka): same pool as the season stats page: 10+ minutes, half the games, his role group */
-  const meL=LP.find(x=>x.n===n&&x.t==='CLE');
+  const meL=LP.find(x=>x.n===n&&x.t==='CLE');/* Nov 19 audit: his own line in the rank pool is the archive's (the league feed can be a game behind the morning after) */if(meL&&ARx&&ARx.g>=meL.g){const b=ARx.b;Object.assign(meL,{g:ARx.g,gs:b.gs!=null?b.gs:meL.gs,min:b.min/60,pts:b.pts,reb:b.oreb+b.dreb,oreb:b.oreb,ast:b.ast,stl:b.stl,blk:b.blk,tov:b.to,fgm:b.fgm,fga:b.fga,tpm:b.tpm,tpa:b.tpa,ftm:b.ftm,fta:b.fta,pf:b.pf})}
   const per=(x,k)=>x[k]/x.g;
   const rankIn=(val,arr,hi=true)=>{if(val==null||!arr.length)return null;const better=arr.filter(v2=>hi?v2>val:v2<val).length;return {r:better+1,of:arr.length+1,tie:arr.some(v2=>v2===val),pct:Math.round(100*(arr.filter(v2=>hi?v2<val:v2>val).length)/Math.max(1,arr.length+1))}};/* Nov 16 (Luka): he counts in his own pool (N includes him), so the percentile and "Nth of N" use the same pool */
   const lgOK=meL&&meL.g>=3&&pool.length>=15;  /* Nov 14: like the season stats page, any Cav with 3+ games is placed against the qualified pool */
