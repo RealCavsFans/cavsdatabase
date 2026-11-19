@@ -144,7 +144,7 @@ function build(per, file) {
   const games = [];
   const P = {}, B = {}, gp = {}, L = { 2: {}, 3: {}, 4: {}, 5: {} }, shots = [], oshots = [], asts = [], pz = {}, rot = {}, dx = {}, gu = {};   // gu (Nov 15): each Cav's on-floor team FGA, FTA and turnovers game by game, for his per-game usage on the player page   // dx: each Cav's defense and boards from the play-by-play (rim on/off, blocks, rebounds by miss type)   // rot: each Cav's stints game by game [gi, [[start sec, end sec, +/-], ...]]
   const T = { cle: null, opp: null }, pc = {}, pcO = {}, cx = { cle: { t: [0, 0], h: [0, 0] }, opp: { t: [0, 0], h: [0, 0] } };
-  const isT = q => (q.how === 'stl' || q.how === 'dreb' || q.how === 'to') && q.first != null && q.first <= 7;
+  const isT = q => (q.how === 'stl' || q.how === 'dreb') && q.first != null && q.first <= 7;   // Nov 19 audit: same rule as the game view (steal or defensive rebound, within 7 seconds; dead-ball turnovers don't count)
   const addObj = (a, b) => { for (const k in b) { if (typeof b[k] === 'number') a[k] = (a[k] || 0) + b[k]; } };
   const zT = () => ({ z: C.ZN.map(() => [0, 0]) });
   T.cle = zT(); T.opp = zT();

@@ -37,7 +37,7 @@ try {
   for (const [date, g] of Object.entries(out)) {
     // the last two days are re-read on every run, so stat corrections the league makes after a game get picked up
     const recent = Date.now() - Date.parse(date + 'T12:00:00Z') < 2 * 864e5;
-    if (g.status !== 'final' || (!recent && g.top && g.out && g.box && g.qs) || Date.now() - Date.parse(date + 'T12:00:00Z') > 3 * 864e5) continue;
+    if (g.status !== 'final' || (!recent && g.top && g.out && g.box && g.qs) || (Date.now() - Date.parse(date + 'T12:00:00Z') > 3 * 864e5 && (g.box || []).length)) continue;   // Nov 19 audit: an older final with no box score is retried until it has one (Nov 11 at NY was missing)
     try {
       const sb = await (await fetch(`${ESPN}/scoreboard?dates=${date.replace(/-/g, '')}`)).json();
       const ev = (sb.events || []).find(e => e.competitions?.[0]?.competitors?.some(c => c.team?.abbreviation === 'CLE'));
