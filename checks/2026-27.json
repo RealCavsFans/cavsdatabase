@@ -1,11 +1,11 @@
 {
  "season": "2026-27",
- "checked": "2026-11-18T19:07:40.580Z",
+ "checked": "2026-11-19T05:21:11.358Z",
  "tally": {
-  "games": 210,
-  "clean": 205,
+  "games": 220,
+  "clean": 213,
   "nba": 0,
-  "ours": 5,
+  "ours": 7,
   "poss": 1,
   "espn": 0
  },
@@ -63,6 +63,22 @@
    "ours": [
     "J. Smith (CHI): pm -31/-32 (NBA/ours)",
     "Z. Collins (CHI): pm 1/2 (NBA/ours)"
+   ]
+  },
+  "0022600259": {
+   "d": "20261118",
+   "m": "HOU@IND",
+   "ours": [
+    "J. Huff (IND): pm -1/0 (NBA/ours)",
+    "L. Nance Jr. (IND): pm -7/-8 (NBA/ours)"
+   ]
+  },
+  "0022600264": {
+   "d": "20261118",
+   "m": "DET@NOP",
+   "ours": [
+    "J. Fears (NOP): pm -13/-14 (NBA/ours)",
+    "J. Pierre Jr. (NOP): pm 2/3 (NBA/ours)"
    ]
   }
  }
