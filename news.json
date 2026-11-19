@@ -2,6 +2,18 @@
  "articles": [
   {
    "src": "Fear The Sword",
+   "title": "Player Grades: Cavs vs. Grizzlies – Cleveland loses back-and-forth affair",
+   "link": "https://www.fearthesword.com/cavs-analysis/54674/player-grades-cavs-vs-grizzlies-cleveland-loses-back-and-forth-affair",
+   "date": "2026-11-19T03:40:08.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "3 Key Takeaways in the Cleveland Cavaliers 124-121 Loss to the Memphis Grizzlies",
+   "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOeEFQQUE2N3FvY1pLWUg2ajNSOUVQdnA1ajY5SktPX09taFA3b25vTWlCUDBMQkhTNE55dlZvMHJ3X3JLa1h5UjN2YXQxUEJlUHpMMXZtZXoyTFN2TFlSRWpnOThrVnFnbVZrcGs2ZEZGVVhyd2oyTTE5dnZzRkJYMXNZcXlOSFBCTHB3SzFQbE5PRHJzWkRmZm5DWjFzYjhzWWUzYS1oMXdnQllYZTU4MVliZlJXVG13Um5QNEtoX1BUV0daSTQ5cGZDWQ?oc=5",
+   "date": "2026-11-19T03:30:29.000Z"
+  },
+  {
+   "src": "Fear The Sword",
    "title": "Cavs lose 124-121 to Grizzlies despite Donovan Mitchell’s 34 points",
    "link": "https://www.fearthesword.com/cavs-scores-results/54660/cavs-lose-124-121-to-grizzlies-despite-donovan-mitchells-34-points",
    "date": "2026-11-19T02:32:39.000Z"
@@ -181,12 +193,6 @@
    "date": "2026-11-16T19:00:00.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "Cavs vs. Bulls: How to watch, odds, and injury report",
-   "link": "https://www.fearthesword.com/cavs-injury-report/54538/cavs-vs-bulls-how-to-watch-odds-and-injury-report",
-   "date": "2026-11-16T15:30:00.000Z"
-  },
-  {
    "src": "Hoops Rumors",
    "title": "Mario Hezonja's Contract Becomes Fully Guaranteed",
    "link": "https://www.hoopsrumors.com/2026/11/mario-hezonjas-contract-becomes-fully-guaranteed.html",
@@ -239,12 +245,6 @@
    "title": "Proctor's career night lifts Cavs past shorthanded challenge",
    "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxOSTMxSTRyRkI5Z2JGZnM1Zk9aU1h1UDhSVldWVEIybzNTRHJvUlFZaElMeFNoTzNrV1lDbjVPVGYxOUhkRWEtYVZ6QWVKaWxsZjBySDlnNThFQjFyTm5sLTJQdExaUjIwcFJ4OFNBSDdybmVZM2tWMk9jUkpxRTdhSVAwLXZPQWpPMkhOaFJVOGJSWUV0MGstUTJnd3VQaUZIMGMwOERuTVlfcnYxSWxnRUM5Ni1MMVdfQU91a2oxT2djTEwzSDNYSEMtZXRZX0NhMTdkZnZjaXk?oc=5",
    "date": "2026-11-15T08:35:00.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Title: All Articles & News Stories | Cleveland Cavaliers On SI - Page 233",
-   "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1SRWV1SWl4VmgtdFJNa2s4Y2ZHeHZRRHFKUGNKUzB6b0JpN2tQYjktWXJILXVOcDgyUTlXekRYMTNQSUlGcUJsX3BHWEdVZktkcGE4MWU1RnE0STRtQ3RjUi1IX3dOOU1ReHc?oc=5",
-   "date": "2026-11-15T07:37:52.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -453,6 +453,27 @@
  ],
  "videos": [
   {
+   "src": "Cavs Roundtable",
+   "title": "Cleveland Cavaliers: Meleek Thomas — Cavs Left It All Out There, ECHOES Donovan Mitchell's Message",
+   "link": "https://www.youtube.com/watch?v=EPt7s3762sE",
+   "date": "2026-11-19T03:54:02.000Z",
+   "id": "EPt7s3762sE"
+  },
+  {
+   "src": "Locked On Cavs",
+   "title": "The Cleveland Cavaliers Should've Closed Wednesdays Game with Meleek Thomas on the Floor",
+   "link": "https://www.youtube.com/watch?v=_JsilxpaRHw",
+   "date": "2026-11-19T03:50:39.000Z",
+   "id": "_JsilxpaRHw"
+  },
+  {
+   "src": "Cavs Roundtable",
+   "title": "Cleveland Cavaliers: Kenny Atkinson Displeased With Cavs Perimeter Defense, But Encouraged By ENERGY",
+   "link": "https://www.youtube.com/watch?v=yz_-sGIv6jM",
+   "date": "2026-11-19T03:49:29.000Z",
+   "id": "yz_-sGIv6jM"
+  },
+  {
    "src": "Locked On Cavs",
    "title": "CAVS POSTCAST: Cavs' Defensive FAILURES Cost Game Despite Donovan Mitchell's Scoring Explosion",
    "link": "https://www.youtube.com/watch?v=xzLyvbtr0r4",
@@ -577,13 +598,6 @@
    "link": "https://www.youtube.com/watch?v=YBMeoh-aIrs",
    "date": "2026-11-16T03:34:54.000Z",
    "id": "YBMeoh-aIrs"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "Tyrese Proctor just proved he belongs in the NBA",
-   "link": "https://www.youtube.com/watch?v=MLrJqPaiWek",
-   "date": "2026-11-16T03:33:41.000Z",
-   "id": "MLrJqPaiWek"
   },
   {
    "src": "It's Cavalier Podcast",
