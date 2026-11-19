@@ -172,7 +172,15 @@
    "at": "2026-11-18T08:46:05.370Z",
    "second": true,
    "players": 23
+  },
+  "0022600258": {
+   "et": "2026-11-18",
+   "opp": "MEM",
+   "status": "match",
+   "url": "https://www.basketball-reference.com/boxscores/202611180CLE.html",
+   "at": "2026-11-19T17:36:57.877Z",
+   "players": 22
   }
  },
- "checked": "2026-11-18T08:46:05.370Z"
+ "checked": "2026-11-19T17:36:57.877Z"
 }
