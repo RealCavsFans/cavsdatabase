@@ -54,9 +54,24 @@ function check(J, label) {
 /* Nov 8 (Luka): NBA.com only: the NBA's box score and play-by-play through the site's /nba route, the same files the live page reads */
 async function nbaLive() {
   const d = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(Date.now() - 4 * 3600e3)).replace(/-/g, '');
-  try { const r = await fetch(`https://cavsdatabase.com/nba?d=${d}&t=CLE`, { signal: AbortSignal.timeout(30000) }); if (!r.ok) return null; const j = await r.json();
-    const w = x => x && (x.game ? x : { game: x }), box = w(j.box), pbp = w(j.pbp), g = box && box.game; if (!g || g.gameStatus !== 2) return null;
-    return { J: C.fromNBA(box, pbp), label: `${g.awayTeam.teamTricode} @ ${g.homeTeam.teamTricode} · live, ${g.gameStatusText || ''} (NBA feed)` }; } catch { return null; }
+  /* Nov 19 audit: straight from the NBA's S3 bucket (GitHub can reach it; Cloudflare blocks GitHub from cavsdatabase.com, so the old
+     /nba route returned nothing and every run said "no game in progress"). When the schedule says the Cavs play today but the
+     feed can't be read, that is an alert, not a quiet pass. */
+  const S3 = 'https://nba-prod-us-east-1-mediaops-stats.s3.amazonaws.com/NBA';
+  const get = async u => { const r = await fetch(u, { signal: AbortSignal.timeout(30000) }); if (r.status === 403 || r.status === 404) return null; if (!r.ok) throw new Error('NBA ' + r.status + ' ' + u.split('/').pop()); return JSON.parse(await r.text()); };
+  let id = null; try { id = JSON.parse(fs.readFileSync('pdata/nba-games.json', 'utf8')).d[d].CLE; } catch {}
+  try {
+    const sb = await get(S3 + '/liveData/scoreboard/todaysScoreboard_00.json');
+    if (!sb && id) throw new Error('scoreboard unreadable');
+    const x = sb && sb.scoreboard && (sb.scoreboard.games || []).find(x => (x.homeTeam.teamTricode === 'CLE' || x.awayTeam.teamTricode === 'CLE'));
+    if (!id && x && String(x.gameCode || '').startsWith(d)) id = x.gameId;
+    if (!id) return null;
+    const live = x && x.gameId === id && x.gameStatus === 2;
+    const [box, pbp] = await Promise.all([get(S3 + '/liveData/boxscore/boxscore_' + id + '.json'), get(S3 + '/liveData/playbyplay/playbyplay_' + id + '.json')]);
+    if (live && (!box || !pbp)) throw new Error('game is live on the scoreboard but its box score or play-by-play is unreadable');
+    const g = box && box.game; if (!g || g.gameStatus !== 2) return null;
+    return { J: C.fromNBA(box, pbp), label: `${g.awayTeam.teamTricode} @ ${g.homeTeam.teamTricode} · live, ${g.gameStatusText || ''} (NBA feed)` };
+  } catch (e) { if (id) { fs.mkdirSync('data', { recursive: true }); fs.writeFileSync('data/box-check-alert.txt', `Live check could not read the NBA feed for today's Cavs game (${id}): ${e.message}`); console.log('box-check: NBA feed unreadable for', id, e.message); process.exit(2); } return null; }
 }
 const games = [];
 if (MODE === 'live') { const g = await nbaLive(); if (!g) { console.log('box-check: no Cavs game in progress'); process.exit(0); } games.push(g); }
