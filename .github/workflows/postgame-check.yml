@@ -21,8 +21,13 @@ jobs:
       # Gate: a Cavs game on today's NBA scoreboard that is final (gameStatus 3)
       - name: Cavs final tonight?
         id: final
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
         run: |
-          G=$(curl -s -m 20 "https://nba-prod-us-east-1-mediaops-stats.s3.amazonaws.com/NBA/liveData/scoreboard/todaysScoreboard_00.json" | jq -r '[.scoreboard.games[]? | select(.gameStatus == 3 and (.homeTeam.teamTricode == "CLE" or .awayTeam.teamTricode == "CLE")) | .gameId][0] // empty' 2>/dev/null || true)
+          # Nov 19 audit: the NBA's S3 scoreboard (GitHub can't reach cdn.nba.com or our own site); an unreadable scoreboard alerts instead of passing quietly
+          SB=$(curl -sf -m 20 "https://nba-prod-us-east-1-mediaops-stats.s3.amazonaws.com/NBA/liveData/scoreboard/todaysScoreboard_00.json" || true)
+          if ! echo "$SB" | jq -e '.scoreboard.games' >/dev/null 2>&1; then echo "scoreboard unreadable"; [ -n "$NTFY_TOPIC" ] && curl -s -m 15 -H "Title: Postgame check can't read the NBA scoreboard" -H "Tags: warning" -d "The postgame check couldn't read the NBA's scoreboard, so tonight's game won't be checked. Tap to open the run." -H "Click: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "https://ntfy.sh/$NTFY_TOPIC" || true; exit 0; fi
+          G=$(echo "$SB" | jq -r '[.scoreboard.games[]? | select(.gameStatus == 3 and (.homeTeam.teamTricode == "CLE" or .awayTeam.teamTricode == "CLE")) | .gameId][0] // empty' 2>/dev/null || true)
           echo "final: ${G:-none}"; [ -n "$G" ] && echo "id=$G" >> $GITHUB_OUTPUT || true
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
         if: steps.final.outputs.id != ''
@@ -49,12 +54,14 @@ jobs:
           set +e
           node scripts/box-check.mjs; b=$?
           node scripts/season-check.mjs nba-data; s=$?
+          node scripts/data-check.mjs; c=$?   # Nov 19 audit: the player-page box scores and every feed in step the same night
           set -e
           echo "box-check exit $b, season-check exit $s"
-          if [ "$b" = "2" ] || [ "$s" = "2" ]; then
+          if [ "$b" = "2" ] || [ "$s" = "2" ] || [ "$c" = "2" ]; then
             : > /tmp/alert.txt
             [ "$b" = "2" ] && [ -f data/box-check-alert.txt ] && { cat data/box-check-alert.txt; echo; } >> /tmp/alert.txt
-            [ "$s" = "2" ] && [ -f data/season-check-alert.txt ] && cat data/season-check-alert.txt >> /tmp/alert.txt
+            [ "$s" = "2" ] && [ -f data/season-check-alert.txt ] && { cat data/season-check-alert.txt; echo; } >> /tmp/alert.txt
+            [ "$c" = "2" ] && [ -f data/data-check-alert.txt ] && cat data/data-check-alert.txt >> /tmp/alert.txt
             [ -n "$NTFY_TOPIC" ] && curl -s -m 15 -H "Title: Postgame check: stats don't match" -H "Tags: warning" -H "Click: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" --data-binary @/tmp/alert.txt "https://ntfy.sh/$NTFY_TOPIC" || true
           fi
           node -e "const fs=require('fs');const r=f=>{try{return JSON.parse(fs.readFileSync(f,'utf8'))}catch(e){return null}};fs.writeFileSync('data/postgame-check.json',JSON.stringify({game:process.argv[1],checked:new Date().toISOString(),box:r('data/box-check.json'),season:r('data/season-check.json')},null,1)+'\n')" "${{ steps.final.outputs.id }}"
