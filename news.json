@@ -2,6 +2,12 @@
  "articles": [
   {
    "src": "Fear The Sword",
+   "title": "Diving deeper into Cavs last-second loss to Grizzlies: Progression isn’t always measured in final result",
+   "link": "https://www.fearthesword.com/cavs-analysis/54663/cavs-digging-deeper-cleveland-cavaliers-memphis-grizzlies-donovan-mitchell-james-harden-mario-hezonja-kenny-atkinson",
+   "date": "2026-11-19T05:24:57.000Z"
+  },
+  {
+   "src": "Fear The Sword",
    "title": "Cavs react to Sam Merrill’s tough missed free throws: ‘We all trust him’",
    "link": "https://www.fearthesword.com/cavs-features-profiles/54688/cavs-react-to-sam-merrills-tough-missed-free-throws-we-all-trust-him",
    "date": "2026-11-19T03:52:35.000Z"
@@ -163,12 +169,6 @@
    "date": "2026-11-17T02:34:20.000Z"
   },
   {
-   "src": "Fear The Sword",
-   "title": "Cavs announce injury update for Evan Mobley",
-   "link": "https://www.fearthesword.com/cavs-injury-report/54565/cavs-announce-injury-update-for-evan-mobley",
-   "date": "2026-11-17T00:19:45.000Z"
-  },
-  {
    "src": "Hoops Rumors",
    "title": "Evan Mobley Out At Least A Week With Sprained Toe",
    "link": "https://www.hoopsrumors.com/2026/11/evan-mobley-out-at-least-a-week-with-great-toe-sprain.html",
@@ -215,12 +215,6 @@
    "title": "Central Notes: Zubac, Bulls, Swain, Robinson, Kyrie",
    "link": "https://www.hoopsrumors.com/2026/11/central-notes-zubac-bulls-swain-robinson-kyrie.html",
    "date": "2026-11-15T16:39:40.000Z"
-  },
-  {
-   "src": "The Inside Shot",
-   "title": "Game Night Observations: A Special Win, A Long Day and A Nice Moment",
-   "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTFB1anp5ZlRPUDZMczVETFBCVkZlV0RsNU5SNHkxa0xmX3pHVGNRUlVvQmdoVnF4SUdjUThtYVdQb1JFVjk3UTdZLTBBNENMR21qMVg1bWRnc29KNUxLbi1qQWtIN3JrSG5pLTBvNjdXOEZkX3VXWlNIamt3?oc=5",
-   "date": "2026-11-15T12:57:27.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -380,6 +374,13 @@
   }
  ],
  "podcasts": [
+  {
+   "src": "Wine and Gold Talk",
+   "title": "How much longer can the Cavs rely on lineups that leave them defensively vulnerable?",
+   "link": "https://pdst.fm/e/traffic.megaphone.fm/ADLM5205582662.mp3",
+   "date": "2026-11-19T09:30:00.000Z",
+   "dur": "39 min"
+  },
   {
    "src": "Wine and Gold Talk",
    "title": "Was Ty Jerome's injury history really why the Cavs let him walk? A closer look at Cleveland's roster decisions",
