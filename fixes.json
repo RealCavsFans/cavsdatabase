@@ -10,5 +10,17 @@
    "was": "O. Prosper",
    "why": "substitution named the wrong player (minutes then match the NBA box score)"
   }
+ ],
+ "0022600268": [
+  {
+   "action": 360,
+   "set": {
+    "personId": 1630559,
+    "playerName": "Reaves",
+    "playerNameI": "A. Reaves"
+   },
+   "was": "J. LaRavia",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
  ]
 }
