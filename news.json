@@ -1,12 +1,6 @@
 {
  "articles": [
   {
-   "src": "Fear The Sword",
-   "title": "Player Grades: Cavs vs. Grizzlies – Cleveland loses back-and-forth affair",
-   "link": "https://www.fearthesword.com/cavs-analysis/54674/player-grades-cavs-vs-grizzlies-cleveland-loses-back-and-forth-affair",
-   "date": "2026-11-19T03:40:08.000Z"
-  },
-  {
    "src": "Cavaliers on SI",
    "title": "3 Key Takeaways in the Cleveland Cavaliers 124-121 Loss to the Memphis Grizzlies",
    "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOeEFQQUE2N3FvY1pLWUg2ajNSOUVQdnA1ajY5SktPX09taFA3b25vTWlCUDBMQkhTNE55dlZvMHJ3X3JLa1h5UjN2YXQxUEJlUHpMMXZtZXoyTFN2TFlSRWpnOThrVnFnbVZrcGs2ZEZGVVhyd2oyTTE5dnZzRkJYMXNZcXlOSFBCTHB3SzFQbE5PRHJzWkRmZm5DWjFzYjhzWWUzYS1oMXdnQllYZTU4MVliZlJXVG13Um5QNEtoX1BUV0daSTQ5cGZDWQ?oc=5",
@@ -191,6 +185,12 @@
    "title": "Cavaliers vs. Bulls: A Deep Dive into Another Central Division Matchup",
    "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQQWlOeEdycVJENzVNY1IzVHVVTC1Fc29QWWtydG9BVHh0RkhQbHREMGI3OUM4Rzg2SGxTTGVMRDBVLUgxTVU4SHBCQVFFY0hFWmpiblkyZGZtM1RJeHBTa2k1c1FvcXZqcHJrTDJBc2I2TzFCU3J3cnhJdGdscnNVdl9MYU90bXBjQWtMUkpLSENPbVZIZVU1S0dGQTRSSDE3TmhJMUpsY2dQNTRidXNWVllBUVQtUlBHY3JB?oc=5",
    "date": "2026-11-16T19:00:00.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Cavs vs. Bulls: How to watch, odds, and injury report",
+   "link": "https://www.fearthesword.com/cavs-injury-report/54538/cavs-vs-bulls-how-to-watch-odds-and-injury-report",
+   "date": "2026-11-16T15:30:00.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -452,6 +452,20 @@
   }
  ],
  "videos": [
+  {
+   "src": "Cavs Roundtable",
+   "title": "Cleveland Cavaliers: Donovan Mitchell — Cavs Can Learn From 'GOOD LOSS' vs. Grizzlies",
+   "link": "https://www.youtube.com/watch?v=LvrFbqkjQOY",
+   "date": "2026-11-19T04:12:15.000Z",
+   "id": "LvrFbqkjQOY"
+  },
+  {
+   "src": "Cavs Roundtable",
+   "title": "Cleveland Cavaliers: Mario Hezonja DISAPPOINTED In Cavs Loss To Grizzlies Despite Improved Energy",
+   "link": "https://www.youtube.com/watch?v=4Jo5rGMqTiA",
+   "date": "2026-11-19T04:05:39.000Z",
+   "id": "4Jo5rGMqTiA"
+  },
   {
    "src": "Cavs Roundtable",
    "title": "Cleveland Cavaliers: Meleek Thomas — Cavs Left It All Out There, ECHOES Donovan Mitchell's Message",
