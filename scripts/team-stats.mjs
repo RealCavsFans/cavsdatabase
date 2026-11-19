@@ -35,6 +35,8 @@ rows.sort((x, y) => x.d < y.d ? -1 : x.d > y.d ? 1 : 0);
    the same count the season stats page uses; pbpstats next; the box score estimate last */
 let CT = {}; try { const j = JSON.parse(await readFile(new URL('pdata/league-rates.json', root), 'utf8')); for (const [k, v] of Object.entries(j.t || {})) CT[ab(k)] = v; } catch {}
 const ctDay = {}; for (const [k, v] of Object.entries(CT)) for (const r of v) ctDay[k + '|' + r[0]] = r;
+/* the Cavs' counted possessions from the game archive (live-archive/<season>/season.json, five-man rows) */
+let ARCH = null; try { const S = JSON.parse(await readFile(new URL('live-archive/2026-27/season.json', root), 'utf8')); let pf = 0, pa = 0, po = 0, pd = 0; for (const l of Object.values((S.L || {})[5] || {})) { pf += l.pf; pa += l.pa; po += (l.o || {}).np || 0; pd += (l.d || {}).np || 0; } if (po && pd) ARCH = { g: (S.games || []).length, pf, pa, po, pd }; } catch {}
 const possOf = (t, o) => t.fga + 0.4 * t.fta - 1.07 * (t.orb / ((t.orb + o.drb) || 1)) * (t.fga - t.fgm) + t.tov;
 
 const F = ['pts', 'fgm', 'fga', 'tpm', 'tpa', 'ftm', 'fta', 'orb', 'drb', 'tov'];
@@ -57,7 +59,12 @@ for (const [k, a] of Object.entries(A)) {
   const P = 0.5 * (possOf(me, op) + possOf(op, me));
   let ortg = 100 * a.pts / P, drtg = 100 * a.opts / P, pace = 48 * (2 * P) / (2 * (a.mp / 5));
   const cl = CT[k] || [], cPts = cl.reduce((s, r) => s + r[3], 0), cOpts = cl.reduce((s, r) => s + r[4], 0);
-  if (cl.length === g && cPts === a.pts && cOpts === a.opts) { const po = cl.reduce((s, r) => s + r[1], 0), pd = cl.reduce((s, r) => s + r[2], 0); ortg = 100 * a.pts / po; drtg = 100 * a.opts / pd; pace = 48 * ((po + pd) / 2) / (a.mp / 5); }
+  /* Nov 19 audit: game by game, counted possessions wherever the NBA play-by-play has the game and the estimate only for a game it
+     doesn't have yet (it used to drop the whole team to the estimate when one game was missing, e.g. the morning after a game);
+     the Cavs use the game archive's own count, the exact number the season stats page shows */
+  let cnt = 0, po = 0, pd = 0; for (const r of rows.filter(r => r.me.ab === k)) { const c = ctDay[k + '|' + r.d]; if (c && c[3] === r.me.pts && c[4] === r.op.pts) { po += c[1]; pd += c[2]; cnt++; } else { po += possOf(r.me, r.op); pd += possOf(r.op, r.me); } }
+  if (k === 'CLE' && ARCH && ARCH.g === g && ARCH.pf === a.pts && ARCH.pa === a.opts) { po = ARCH.po; pd = ARCH.pd; cnt = g; }
+  if (cnt) { ortg = 100 * a.pts / po; drtg = 100 * a.opts / pd; pace = 48 * ((po + pd) / 2) / (a.mp / 5); }
   else { const x = PBT && PBT[PBK[k]]; if (x && x.GamesPlayed === g && x.OffPoss > 0 && x.DefPoss > 0 && x.Points === a.pts && x.OpponentPoints === a.opts) { ortg = 100 * x.Points / x.OffPoss; drtg = 100 * x.OpponentPoints / x.DefPoss; if (x.Pace) pace = x.Pace; } }
   TSTATS[k] = [a.w, g - a.w, r1(a.pts / g), r1(a.opts / g), r1(ortg), r1(drtg), r1(pace), r1(100 * a.tpm / (a.tpa || 1))];
   FFR[k] = ['fgm', 'fga', 'tpm', 'ftm', 'fta', 'orb', 'drb', 'tov', 'ofgm', 'ofga', 'otpm', 'oftm', 'ofta', 'oorb', 'odrb', 'otov'].map(f => r1(a[f] / g));
