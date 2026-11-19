@@ -5138,7 +5138,7 @@ const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3PT%','tp'],['FG%','f
     const SPL=[['Home',mine.filter(g=>g.ha==='H')],['Away',mine.filter(g=>g.ha==='A')],['Wins',mine.filter(win)],['Losses',mine.filter(g=>!win(g))],['With rest',b2b.length?rest:[]],['Back to back',b2b]].filter(([,a])=>a.length);
     if(mine.length>=4&&SPL.length>=4){const c=card('Splits','Splits','His averages at home and away, in wins and losses, and with rest compared with the second night of a back to back.');
       const tb=el('table','ppx-t');tb.innerHTML='<thead><tr><th></th><th>GP</th><th>MIN</th><th>PTS</th><th>FGA</th><th>REB</th><th>AST</th><th>TO</th><th>2P%</th><th>3PT%</th><th>USG%</th><th>+/-</th></tr></thead>';const tbd=el('tbody');/* Nov 13 (Luka): turnovers after assists */
-      const av=(a,k)=>a.reduce((t,g)=>t+g.me[k],0)/a.length,sm=(a,k)=>a.reduce((t,g)=>t+g.me[k],0),pct=(m,x)=>x?(m/x).toFixed(3).replace(/^0/,''):'—';
+      const av=(a,k)=>a.reduce((t,g)=>t+g.me[k],0)/a.length,sm=(a,k)=>a.reduce((t,g)=>t+g.me[k],0),pct=(m,x)=>x?(m/x*100).toFixed(1)+'%':'—';
       SPL.forEach(([lab,a])=>{const tr=el('tr');const pm=av(a,'pm');[lab,a.length,f1(av(a,'min')),f1(av(a,'pts')),f1(av(a,'fga')),f1(av(a,'reb')),f1(av(a,'ast')),f1(av(a,'tov')),pct(sm(a,'fgm')-sm(a,'tpm'),sm(a,'fga')-sm(a,'tpa')),pct(sm(a,'tpm'),sm(a,'tpa')),usgOf(a),(pm>0?'+':pm<0?'−':'')+Math.abs(pm).toFixed(1)].forEach(v2=>tr.appendChild(el('td',null,String(v2))));tbd.appendChild(tr)});
       tb.appendChild(tbd);const bx=el('div','ppx-tbx');bx.appendChild(tb);c.appendChild(bx);ov.appendChild(c)}}
   /* season shot chart and passing web, from the live game archive (live-archive/<season>/season.json); season toggle when he has more than one */
