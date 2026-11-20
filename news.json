@@ -2,6 +2,12 @@
  "articles": [
   {
    "src": "Fear The Sword",
+   "title": "NBA changes start time for upcoming Cavs game",
+   "link": "https://www.fearthesword.com/cavs-news/54735/nba-cavs-cleveland-cavaliers-schedule-miami-heat-giannis-antetokounmpo-donovan-mitchell",
+   "date": "2026-11-20T19:10:28.000Z"
+  },
+  {
+   "src": "Fear The Sword",
    "title": "Evan Mobley hosted annual gala to raise money for underserved youth",
    "link": "https://www.fearthesword.com/cavs-features-profiles/54739/cavs-evan-mobley-cleveland-cavaliers-mobley-foundation",
    "date": "2026-11-20T17:00:00.000Z"
@@ -182,6 +188,12 @@
   },
   {
    "src": "cleveland.com",
+   "title": "How pace control can help the Cavs fix one of their biggest weaknesses: Wine and Gold Talk podcast",
+   "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxQQnpnU2JlMGtGZFZVQnNzbENjbVdVdDNMbEpnLVphR2xnbTMtTVJlWFVFeEVmRUFmb1RSby1MaWRMSnFhdVJyd2hvYVpCWGN2SVhVczd1TkdZaTVZSVRUcHN5VXlLNFhYLUdaYnRzSFdBeUhhb2JaRkdDZW9DbUg4TXo0MDdKWl85X0o1aEpZcW9uTzUwUWxnYUdycGJnRi1wR1NwaGVKR1o4eHp6cXdCWm4zTl80SGVSV0xpMkZwOVJ3cFJHSE43Mkx4d195cnQ5blFTRjA4aGY?oc=5",
+   "date": "2026-11-17T09:48:00.000Z"
+  },
+  {
+   "src": "cleveland.com",
    "title": "Cavs’ Peyton Watson leaves win vs. Bulls after scary fall",
    "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPcUxubGhIbm00dmhGZmJoU0ZPU3V2VS1aaHg2bkRQLXZNYWRvc01hODUxTVd2Tm9GN3RXNUpMOV82dHgzUlZmOWNval9OVzVodUtERlR5S3E0ZFN4VVVOZWtLbG9mS2JMYzBXNnFIbDg1Z3NfMW1FWmZFNXNndWdMZmJKSmRJbFRVRkZqY0lIOHJlNGdHZEhzWUUtUGRtY1NW?oc=5",
    "date": "2026-11-17T06:28:00.000Z"
@@ -191,12 +203,6 @@
    "title": "3 Game-Changing Numbers From Cavaliers Win Against Chicago Bulls",
    "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPR2N6RlR2aGljNlJjeGx2bHY0TmoyYlVMeWhzd3ZjWGFSSjloN2N0WkxJMDhjT2hJeE52VklQQy05OFhVWGhjNFN2c1kwc0xiUWowbFZ3dGZ3RzdyckpDRWZGOW8tejJqZ2kzbk5QZno3RXpBSlpOd0ZJSkFIck81bl9OV1lWUFVwa0dwZUJ1TXZQc1piaE1qcDdHZ1JQR2VKUTMtbDFkQUlmVTZWWGlrOVRJM2Q0UQ?oc=5",
    "date": "2026-11-17T03:41:54.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Diving deeper into Cavs 126-115 win over Bulls: Cavaliers are discovering hidden depth",
-   "link": "https://www.fearthesword.com/cavs-analysis/54562/cavs-diving-deeper-chicago-bulls-cleveland-cavaliers-donovan-mitchell-tyrese-proctor-norchad-omier",
-   "date": "2026-11-17T03:30:00.000Z"
   },
   {
    "src": "cleveland.com",
@@ -311,12 +317,6 @@
    "title": "Game Night Observations: Defensive Woes and Travel Delays",
    "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1kZ1hrNGR5bkdJWlhBSXN2S0lhdEtpRjhVVjZhcGhqdm9pWEtpbFJVZzB6WkpFdFBSMlZyLVRKX3BqRi1YWTJqVG5vc0N6Z1JMTUVjUTVsNWk3aG9DdTVLZFVndWxLM1ZGb0ZmX1RFajFEdzFUUDBrUXdTR19nRTg?oc=5",
    "date": "2026-11-14T12:44:27.000Z"
-  },
-  {
-   "src": "cleveland.com",
-   "title": "‘This is unprecedented’: Donovan Mitchell wants Saturday’s game cancelled with Cavs grounded in Miami",
-   "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxQdG16Zlpudm9ad013STNRU0JxQlZKN0hVSU5CaUVuV2dBQkctMGpGRlZiTG84aHFXM2JKLWRmY1dnUFRtdFJrVXpOcHpYWTA0bHhTcHVReXU1RHI0Ri1HVll4aGtBRnFaYXowWl82bkgwMkZ3VUVDdXlTMUJzdGwxeDhGcTdqMVZQZjJoTGFfdkdRQXRaQVpkTUJwMUd6aUFwSGlSOGtMT3RQeFRIS05BMFQzenhOZTcyVS1ST1F6OWxJVXRCUUZMM0ZLaldaN1NBNGNZbU5nMlo?oc=5",
-   "date": "2026-11-14T05:44:00.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -452,6 +452,13 @@
   }
  ],
  "videos": [
+  {
+   "src": "It's Cavalier Podcast",
+   "title": "Is Sam Merrill the Odd Man Out? Proctor & Thomas Are Changing the Cavs",
+   "link": "https://www.youtube.com/watch?v=PRJ-_U1Uud0",
+   "date": "2026-11-20T19:15:42.000Z",
+   "id": "PRJ-_U1Uud0"
+  },
   {
    "src": "Ultimate Cleveland Sports Show",
    "title": "Will the Cleveland Cavaliers finish the season as a top-four seed in the Eastern Conference?",
@@ -682,13 +689,6 @@
    "link": "https://www.youtube.com/watch?v=0J3Y6v1gVyw",
    "date": "2026-11-15T05:34:39.000Z",
    "id": "0J3Y6v1gVyw"
-  },
-  {
-   "src": "It's Cavalier Podcast",
-   "title": "Proctor’s TRIPLE-DOUBLE Leads Cavs Past Kyrie & the Mavericks!",
-   "link": "https://www.youtube.com/watch?v=Py09SgfkNAw",
-   "date": "2026-11-15T04:06:38.000Z",
-   "id": "Py09SgfkNAw"
   },
   {
    "src": "Ultimate Cleveland Sports Show",
