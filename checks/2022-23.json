@@ -1,0 +1,49 @@
+{
+ "season": "2022-23",
+ "checked": "2026-11-20T20:52:28.376Z",
+ "tally": {
+  "games": 87,
+  "clean": 83,
+  "nba": 0,
+  "ours": 4,
+  "poss": 0,
+  "espn": 0
+ },
+ "how": "nba = the NBA box score does not add up on its own; ours = our play-by-play build differs from the NBA box score; poss = possession count off from the NBA markers; espn = the NBA and ESPN box scores disagree (Cavs games)",
+ "games": {
+  "0022200225": {
+   "d": "20221118",
+   "m": "CHA@CLE",
+   "ours": [
+    "T. Rozier (CHA): fga 32/33, tpa 17/18 (NBA/ours)"
+   ]
+  },
+  "0022200248": {
+   "d": "20221121",
+   "m": "ATL@CLE",
+   "ours": [
+    "T. Young (ATL): tpa 7/8 (NBA/ours)"
+   ]
+  },
+  "0022200779": {
+   "d": "20230202",
+   "m": "MEM@CLE",
+   "ours": [
+    "D. Mitchell (CLE): pm -3/-2 (NBA/ours)",
+    "D. Wade (CLE): pm -3/-4 (NBA/ours)",
+    "D. Brooks (MEM): pm -10/-11 (NBA/ours)",
+    "J. Konchar (MEM): pm -11/-10 (NBA/ours)"
+   ]
+  },
+  "0022201218": {
+   "d": "20230409",
+   "m": "CHA@CLE",
+   "ours": [
+    "R. Lopez (CLE): pm -17/-15 (NBA/ours)",
+    "M. Diakite (CLE): pm -2/-4 (NBA/ours)",
+    "S. Mykhailiuk (CHA): pm 3/5 (NBA/ours)",
+    "J. Bouknight (CHA): pm -1/-3 (NBA/ours)"
+   ]
+  }
+ }
+}
