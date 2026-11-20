@@ -107,12 +107,15 @@ const nbaKeys = new Set();
     const { loadFixes, applyFixes } = await import('./nba-fixes.mjs');
     const FIX = loadFixes(NBA_DIR), idx = JSON.parse(fsx.readFileSync(idxF, 'utf8')), AB = { GSW: 'GS', NOP: 'NO', NYK: 'NY', SAS: 'SA', UTA: 'UTAH', WAS: 'WSH' };
     let nN = 0, nS = 0;
+    /* Nov 20: a change to live-core.js (how possessions are counted) recounts every game's np/forb/fdrb, so the league feed and the game archive never count the same game two ways */
+    const coreV = (await import('node:crypto')).createHash('sha1').update(fsx.readFileSync(new URL('../live-core.js', import.meta.url))).digest('hex').slice(0, 12);
+    const recount = L.coreV !== coreV; L.coreV = coreV;
     for (const [gid, row] of Object.entries(idx)) {
       if (!gid.startsWith('002')) continue;                                     // regular season (NBA Cup group games are 002; the Cup final is 006)
       const k = 'n' + gid, d = row[0].slice(0, 4) + '-' + row[0].slice(4, 6) + '-' + row[0].slice(6, 8);
       const haveT = L.tg[k] && L.tg[k].t && L.tg[k].t[0].fb != null && L.tg[k].t[0].np != null, haveS = SH.g[k] && SH.g[k].x;   // Nov 6: np = counted possessions
       const recent = (Date.parse(today) - Date.parse(d)) / 864e5 <= 7;           // the store re-checks a week back for NBA corrections
-      if (haveT && haveS && !recent) { nbaKeys.add(gkey(L.tg[k])); continue; }
+      if (haveT && haveS && !recent && !recount) { nbaKeys.add(gkey(L.tg[k])); continue; }
       let raw; try { raw = JSON.parse(zlib.gunzipSync(fsx.readFileSync(path.join(NBA_DIR, SEASON, gid + '.json.gz')))); } catch { continue; }
       applyFixes(raw, FIX[gid]);
       const B = raw.box, S2 = t => t.statistics || {}, ab = t => AB[t.teamTricode] || t.teamTricode;
