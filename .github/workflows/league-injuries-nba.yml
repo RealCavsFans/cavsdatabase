@@ -1,0 +1,39 @@
+name: League games missed (official report)
+# Nov 20 audit: every team's games missed to injury from the official NBA injury report (scripts/league-injuries-nba.py),
+# so the Cavs' league rank uses the same source as the Cavs' own count. Early each morning, after the night's games.
+on:
+  schedule:
+    - cron: '41 9 * * *'   # 4:41 a.m. Eastern (5:41 in daylight time)
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: league-injuries-nba
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+        with:
+          sparse-checkout: |
+            scripts/injury-report.py
+            scripts/league-injuries-nba.py
+            pdata/league-injuries-nba.json
+          sparse-checkout-cone-mode: false
+      - run: |
+          pip install -q pdfplumber==0.11.4
+          python3 scripts/league-injuries-nba.py
+      - name: Commit if changed
+        run: |
+          [ -f pdata/league-injuries-nba.json ] || exit 0
+          git config user.name "cavsdatabase-bot"
+          git config user.email "bot@cavsdatabase.com"
+          git add pdata/league-injuries-nba.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "League games missed (official injury report)"
+          for i in 1 2 3 4 5 6; do
+            if git pull --rebase -X theirs origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true; sleep $((RANDOM % 20 + i * 10))
+          done
+          exit 1
