@@ -1,0 +1,61 @@
+{
+ "season": "2021-22",
+ "checked": "2026-11-20T20:51:08.343Z",
+ "tally": {
+  "games": 82,
+  "clean": 77,
+  "nba": 0,
+  "ours": 5,
+  "poss": 0,
+  "espn": 0
+ },
+ "how": "nba = the NBA box score does not add up on its own; ours = our play-by-play build differs from the NBA box score; poss = possession count off from the NBA markers; espn = the NBA and ESPN box scores disagree (Cavs games)",
+ "games": {
+  "0022100108": {
+   "d": "20211103",
+   "m": "POR@CLE",
+   "ours": [
+    "E. Mobley (CLE): pm -11/-10 (NBA/ours)",
+    "D. Windler (CLE): pm 2/1 (NBA/ours)"
+   ]
+  },
+  "0022100224": {
+   "d": "20211118",
+   "m": "GSW@CLE",
+   "ours": [
+    "E. Davis (CLE): pm -2/-4 (NBA/ours)",
+    "R. Rubio (CLE): pm -9/-11 (NBA/ours)",
+    "K. Love (CLE): pm -13/-11 (NBA/ours)",
+    "D. Windler (CLE): pm -13/-11 (NBA/ours)",
+    "K. Looney (GSW): pm -17/-15 (NBA/ours)",
+    "S. Curry (GSW): pm 8/10 (NBA/ours)",
+    "G. Payton II (GSW): pm -2/-4 (NBA/ours)",
+    "N. Bjelica (GSW): pm 22/20 (NBA/ours)"
+   ]
+  },
+  "0022100417": {
+   "d": "20211215",
+   "m": "HOU@CLE",
+   "ours": [
+    "D. Augustin (HOU): pm -18/-16 (NBA/ours)",
+    "J. Christopher (HOU): pm -22/-24 (NBA/ours)"
+   ]
+  },
+  "0022100624": {
+   "d": "20220112",
+   "m": "CLE@UTA",
+   "ours": [
+    "J. Ingles (UTA): pm -13/-12 (NBA/ours)",
+    "E. Paschall (UTA): pm 0/-1 (NBA/ours)"
+   ]
+  },
+  "0022100962": {
+   "d": "20220306",
+   "m": "TOR@CLE",
+   "ours": [
+    "G. Trent Jr. (TOR): pm 6/4 (NBA/ours)",
+    "D. Banton (TOR): pm -9/-7 (NBA/ours)"
+   ]
+  }
+ }
+}
