@@ -95,6 +95,22 @@ if (DK.games != null && DK.games < ix.length) issues.push(`Dunks counted from ${
     if (off.length) issues.push(`League feed and game archive count different possessions or rebounds for: ${off.join(', ')}`); else ok.push('one number, one value');
   } }
 
+/* Nov 20 (Luka): career totals = locked history (Basketball Reference through last season) + this season from our archive.
+   (1) the locked games count agrees with the hand-checked career line in pdata/players.json; (2) where Basketball Reference's
+   own line for this season has caught up to ours (same games), it must agree on points, rebounds and assists. */
+{ const CJ = J('pdata/careers.json'), PJ = J('pdata/players.json') || {};
+  if (CJ && CJ.players) {
+    const nk = x => x.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g, '').replace(/[^a-z]/g, '');
+    const byName = {}; for (const [id, p] of Object.entries(SJ.P || {})) byName[nk(p.name)] = id;
+    const bad = []; let n = 0;
+    for (const [k, c] of Object.entries(CJ.players)) { if (!c.past) continue; n++;
+      const pj = PJ[c.name]; if (pj && Array.isArray(pj.career) && pj.career[0] != null && pj.career[0] !== c.past.games) bad.push(`${c.name}: ${c.past.games} career games through 2025-26 on Basketball Reference, ${pj.career[0]} in players.json`);
+      const id = byName[k], b = id && (SJ.B || {})[id], g = id && (SJ.gp || {})[id];
+      if (c.cur && b && g) { if (c.cur.games > g) bad.push(`${c.name}: Basketball Reference has ${c.cur.games} games this season, our archive ${g}`);
+        else if (c.cur.games === g && (c.cur.pts !== b.pts || c.cur.trb !== b.oreb + b.dreb || c.cur.ast !== b.ast)) bad.push(`${c.name}: this season ${c.cur.pts}/${c.cur.trb}/${c.cur.ast} pts/reb/ast on Basketball Reference, ${b.pts}/${b.oreb + b.dreb}/${b.ast} in our archive`); } }
+    if (bad.length) issues.push('Career totals: ' + bad.join('; ')); else if (n) ok.push(`career totals agree (${n} players)`);
+  } }
+
 const out = { checked: new Date().toISOString(), issues, ok };
 fs.mkdirSync('data', { recursive: true });
 fs.writeFileSync('data/data-check.json', JSON.stringify(out, null, 1) + '\n');

@@ -4808,7 +4808,7 @@ const PPD={};
    Cavs' are; the box score estimate (minute share of team totals) only for a player that file doesn't have */
 let LRCX=null;const lrOr=(x,f,est)=>{if(LRCX===null){LRCX={};const J=typeof PPD!=='undefined'&&PPD.lrates;if(J&&J.p&&J.cols){const nk=v=>String(v).normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');LRCX.k=nk;Object.values(J.p).forEach(a=>{const r={};J.cols.forEach((c,i)=>r[c]=a[2+i]);LRCX[nk(a[0])]=r})}}
   const r=LRCX.k&&x&&x.n?LRCX[LRCX.k(x.n)]:null;if(r&&r.sec>0){const v=f(r);if(v!=null)return v}return est()};
-const ppLoad=()=>Promise.all([['stats','/pdata/players.json'],['box','/box.json'],['league','/pdata/league.json'],['news','/news.json'],['ms','/pdata/milestones.json'],['greats','/pdata/greats.json'],['pos','/pdata/positions.json'],['lrates','/pdata/league-rates.json']]
+const ppLoad=()=>Promise.all([['stats','/pdata/players.json'],['box','/box.json'],['league','/pdata/league.json'],['news','/news.json'],['ms','/pdata/milestones.json'],['greats','/pdata/greats.json'],['pos','/pdata/positions.json'],['lrates','/pdata/league-rates.json'],['car','/pdata/careers.json']]
   .map(([k,u])=>PPD[k]?0:fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():{}).catch(()=>({})).then(j=>{PPD[k]=j||{}})));
 /*@chunk:pp*/const PPX={
   grpOf:n=>{const w=WPCT[n];if(w)return w[0];const p=(PLAYERS.find(x=>x[1]===n)||[])[2]||'';return /^C/.test(p)?'B':/^G$/.test(p)?'G':'W'},
@@ -5566,6 +5566,15 @@ const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3PT%','tp'],['FG%','f
   {const B=PBIO[n];if(B){const bc=chap('bio','Bio, career highs and honors','',false,'Bio');
     const fd=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
     if(B.birthplace||B.hs){const c=card('Bio',null,'');[['Born',[bd?fd(bd):'',B.birthplace].filter(Boolean).join(' · ')],['High school',B.hs]].forEach(([k,v2])=>{if(!v2)return;const rr=el('div','ppx-rr');rr.append(el('span',null,k),el('b','pbio-v',v2));c.appendChild(rr)});bc.appendChild(c)}
+    /* Nov 20 (Luka): career totals, current every night. Past seasons are locked history (Basketball Reference's totals through 2025–26,
+       pdata/careers.json "past"); this season comes from our game archive (the NBA's box scores), the same counts as his season line. */
+    {const nk3=String(n).normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');const CP=((PPD.car||{}).players||{})[nk3],pa=CP&&CP.past;
+      if(pa&&(pa.games>0||ARx)){const b=ARx?ARx.b:{},g=ARx?ARx.g:0,t={g:pa.games+g,pts:pa.pts+(b.pts||0),reb:pa.trb+(b.oreb||0)+(b.dreb||0),ast:pa.ast+(b.ast||0),stl:pa.stl+(b.stl||0),blk:pa.blk+(b.blk||0),tpm:pa.fg3+(b.tpm||0),fgm:pa.fg+(b.fgm||0),fga:pa.fga+(b.fga||0),tpa:pa.fg3a+(b.tpa||0),ftm:pa.ft+(b.ftm||0),fta:pa.fta+(b.fta||0)};
+        if(t.g>0){const fmt=v=>Math.round(v).toLocaleString('en-US'),pg=v=>(v/t.g).toFixed(1),pc=(m,a)=>a?(100*m/a).toFixed(1)+'%':'–';
+          const c=card('Career totals',null,'Regular season. Through 2025–26 from Basketball Reference'+(g?', plus his '+g+' game'+(g===1?'':'s')+' this season from the NBA’s box scores, so it’s current through his last game.':'. He hasn’t played this season.'));
+          const tb=el('table','ppx-t pbio-t');tb.innerHTML='<thead><tr><th></th><th>Total</th><th>Per game</th></tr></thead>';const bd3=el('tbody');
+          [['Games',fmt(t.g),''],['Points',fmt(t.pts),pg(t.pts)],['Rebounds',fmt(t.reb),pg(t.reb)],['Assists',fmt(t.ast),pg(t.ast)],['Steals',fmt(t.stl),pg(t.stl)],['Blocks',fmt(t.blk),pg(t.blk)],['3-pointers',fmt(t.tpm),pg(t.tpm)],['FG%',pc(t.fgm,t.fga),''],['3P%',pc(t.tpm,t.tpa),''],['FT%',pc(t.ftm,t.fta),'']].forEach(([k,v1,v2])=>{const tr=el('tr');tr.append(el('th',null,k),el('td',null,v1),el('td',null,v2));bd3.appendChild(tr)});
+          tb.appendChild(bd3);c.appendChild(tb);bc.appendChild(c)}}}
     const H=B.highs||{},R0=H.reg||{},P0=H.post||{};const KS=[['PTS','Points','pts'],['REB','Rebounds','reb'],['AST','Assists','ast'],['STL','Steals','stl'],['BLK','Blocks','blk'],['3PM','3-pointers','tpm']];
     const live=k=>{let b=null;mine.forEach(g=>{const v2=g.me[k];if(v2>0&&(!b||v2>b.v))b={v:v2,g}});return b};
     if(Object.keys(R0).length||mine.length){const c=card('Career highs',null,'Regular season and playoffs, his whole NBA career.');const tb=el('table','ppx-t pbio-t');tb.innerHTML='<thead><tr><th></th><th>Regular season</th><th>Playoffs</th></tr></thead>';const bd2=el('tbody');
