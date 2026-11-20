@@ -1,22 +1,214 @@
 {
  "season": "2024-25",
- "checked": "2026-11-20T20:49:53.493Z",
+ "checked": "2026-11-20T21:11:22.936Z",
  "tally": {
-  "games": 91,
-  "clean": 90,
-  "nba": 0,
-  "ours": 1,
+  "games": 1314,
+  "clean": 1293,
+  "nba": 1,
+  "ours": 16,
   "poss": 0,
-  "espn": 0
+  "espn": 5
  },
  "how": "nba = the NBA box score does not add up on its own; ours = our play-by-play build differs from the NBA box score; poss = possession count off from the NBA markers; espn = the NBA and ESPN box scores disagree (Cavs games)",
  "games": {
+  "0022400024": {
+   "d": "20241119",
+   "m": "NOP@DAL",
+   "ours": [
+    "J. Hardy (DAL): fga 12/11 (NBA/ours)"
+   ]
+  },
+  "0022400051": {
+   "d": "20241203",
+   "m": "WAS@CLE",
+   "espn": [
+    "A. Sarr: not in ESPN's box score",
+    "C. Carrington: not in ESPN's box score"
+   ]
+  },
+  "0022400061": {
+   "d": "20241022",
+   "m": "NYK@BOS",
+   "nba": [
+    "BOS: player minutes 244.3 vs 240"
+   ],
+   "ours": [
+    "BOS: lineup time 69.7 min vs game 48"
+   ]
+  },
+  "0022400067": {
+   "d": "20241023",
+   "m": "CLE@TOR",
+   "espn": [
+    "J. Pöltl: not in ESPN's box score"
+   ]
+  },
+  "0022400090": {
+   "d": "20241026",
+   "m": "CLE@WAS",
+   "espn": [
+    "A. Sarr: not in ESPN's box score",
+    "C. Carrington: not in ESPN's box score"
+   ]
+  },
+  "0022400252": {
+   "d": "20241120",
+   "m": "NOP@CLE",
+   "espn": [
+    "J. Green: FG 3-8/3-7 (NBA/ESPN)",
+    "Y. Missi: FG 4-8/4-9 (NBA/ESPN)"
+   ]
+  },
+  "0022400303": {
+   "d": "20241130",
+   "m": "GSW@PHX",
+   "ours": [
+    "K. Durant (PHX): pm 2/4 (NBA/ours)",
+    "D. Booker (PHX): pm 3/1 (NBA/ours)",
+    "B. Podziemski (GSW): pm 5/7 (NBA/ours)",
+    "G. Payton II (GSW): pm -14/-12 (NBA/ours)",
+    "J. Kuminga (GSW): pm -14/-12 (NBA/ours)",
+    "K. Looney (GSW): pm 1/-1 (NBA/ours)",
+    "P. Spencer (GSW): pm -8/-10 (NBA/ours)",
+    "L. Waters III (GSW): pm -6/-8 (NBA/ours)"
+   ]
+  },
+  "0022400337": {
+   "d": "20241206",
+   "m": "SAC@SAS",
+   "ours": [
+    "Z. Collins (SAS): pm 3/1 (NBA/ours)",
+    "C. Bassey (SAS): pm -26/-24 (NBA/ours)"
+   ]
+  },
+  "0022400368": {
+   "d": "20241219",
+   "m": "LAC@DAL",
+   "ours": [
+    "K. Dunn (LAC): pm 11/10 (NBA/ours)",
+    "N. Batum (LAC): pm 5/6 (NBA/ours)"
+   ]
+  },
+  "0022400394": {
+   "d": "20241223",
+   "m": "SAS@PHI",
+   "ours": [
+    "J. Embiid (PHI): pm 1/3 (NBA/ours)",
+    "T. Maxey (PHI): pm 7/5 (NBA/ours)"
+   ]
+  },
+  "0022400421": {
+   "d": "20241227",
+   "m": "SAS@BKN",
+   "ours": [
+    "N. Clowney (BKN): pm -13/-12 (NBA/ours)",
+    "T. Martin (BKN): pm -9/-10 (NBA/ours)"
+   ]
+  },
   "0022400554": {
    "d": "20250114",
    "m": "CLE@IND",
    "ours": [
     "B. Mathurin (IND): pm -10/-8 (NBA/ours)",
     "T. McConnell (IND): pm 3/1 (NBA/ours)"
+   ]
+  },
+  "0022400625": {
+   "d": "20250123",
+   "m": "DAL@OKC",
+   "ours": [
+    "L. Dort (OKC): pm -20/-21 (NBA/ours)",
+    "A. Wiggins (OKC): pm -3/-2 (NBA/ours)",
+    "K. Edwards (DAL): pm -7/-6 (NBA/ours)",
+    "Q. Grimes (DAL): pm 3/2 (NBA/ours)"
+   ]
+  },
+  "0022400771": {
+   "d": "20250212",
+   "m": "IND@WAS",
+   "ours": [
+    "A. Sarr (WAS): min 31.6/33.1, pm 0/-3 (NBA/ours)",
+    "J. Poole (WAS): min 40.6/30.5, pm -8/0 (NBA/ours)",
+    "C. Kispert (WAS): min 26.8/23.2, pm 3/12 (NBA/ours)",
+    "WSH: lineup time 42.8 min vs game 53"
+   ]
+  },
+  "0022400850": {
+   "d": "20250228",
+   "m": "DEN@DET",
+   "ours": [
+    "T. Harris (DET): pm -27/-26 (NBA/ours)",
+    "J. Duren (DET): pm -15/-14 (NBA/ours)",
+    "C. Cunningham (DET): pm -20/-19 (NBA/ours)",
+    "I. Stewart (DET): pm -4/-6 (NBA/ours)",
+    "S. Fontecchio (DET): pm 12/11 (NBA/ours)"
+   ]
+  },
+  "0022400861": {
+   "d": "20250301",
+   "m": "BKN@DET",
+   "ours": [
+    "M. Beasley (DET): pm 4/5 (NBA/ours)",
+    "D. Schröder (DET): pm 0/-1 (NBA/ours)",
+    "C. Johnson (BKN): pm -17/-16 (NBA/ours)",
+    "Z. Williams (BKN): pm -22/-23 (NBA/ours)"
+   ]
+  },
+  "0022400863": {
+   "d": "20250301",
+   "m": "SAS@MEM",
+   "ours": [
+    "J. Jackson Jr. (MEM): pm 10/9 (NBA/ours)",
+    "Z. Edey (MEM): pm -5/-4 (NBA/ours)",
+    "L. Kennard (MEM): pm -5/-4 (NBA/ours)",
+    "L. Stevens (MEM): pm 6/5 (NBA/ours)",
+    "B. Biyombo (SAS): pm 3/2 (NBA/ours)",
+    "J. Sochan (SAS): pm -1/0 (NBA/ours)"
+   ]
+  },
+  "0022400919": {
+   "d": "20250308",
+   "m": "DET@GSW",
+   "ours": [
+    "D. Green (GSW): pm 9/11 (NBA/ours)",
+    "Q. Post (GSW): pm -2/1 (NBA/ours)",
+    "S. Curry (GSW): pm 11/10 (NBA/ours)",
+    "K. Looney (GSW): pm -5/-7 (NBA/ours)",
+    "G. Santos (GSW): pm 14/12 (NBA/ours)",
+    "J. Duren (DET): pm -16/-15 (NBA/ours)",
+    "C. Cunningham (DET): pm 4/3 (NBA/ours)"
+   ]
+  },
+  "0022400986": {
+   "d": "20250317",
+   "m": "IND@MIN",
+   "ours": [
+    "R. Gobert (MIN): pm 0/-1 (NBA/ours)",
+    "N. Reid (MIN): pm 5/6 (NBA/ours)",
+    "J. Walker (IND): pm 2/3 (NBA/ours)",
+    "A. Nembhard (IND): pm 6/7 (NBA/ours)",
+    "T. McConnell (IND): pm -4/-5 (NBA/ours)",
+    "E. Freeman (IND): pm 0/-1 (NBA/ours)"
+   ]
+  },
+  "0022401027": {
+   "d": "20250322",
+   "m": "MIL@SAC",
+   "ours": [
+    "D. DeRozan (SAC): pm -9/-10 (NBA/ours)",
+    "J. Valančiūnas (SAC): pm 3/4 (NBA/ours)",
+    "Z. LaVine (SAC): pm 2/3 (NBA/ours)",
+    "T. Lyles (SAC): pm -9/-10 (NBA/ours)",
+    "K. Kuzma (MIL): pm 3/4 (NBA/ours)",
+    "T. Prince (MIL): pm 0/-1 (NBA/ours)"
+   ]
+  },
+  "0022401208": {
+   "d": "20241213",
+   "m": "WAS@CLE",
+   "espn": [
+    "A. Sarr: not in ESPN's box score",
+    "C. Carrington: not in ESPN's box score"
    ]
   }
  }

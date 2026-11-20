@@ -1,4 +1,100 @@
 {
+ "0022400079": [
+  {
+   "action": 658,
+   "set": {
+    "personId": 1629631,
+    "playerName": "Hunter",
+    "playerNameI": "D. Hunter"
+   },
+   "was": "D. Daniels",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022400289": [
+  {
+   "action": 45,
+   "set": {
+    "personId": 1629632,
+    "playerName": "White",
+    "playerNameI": "C. White"
+   },
+   "was": "N. Vučević",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022400320": [
+  {
+   "action": 535,
+   "set": {
+    "personId": 1627783,
+    "playerName": "Siakam",
+    "playerNameI": "P. Siakam"
+   },
+   "was": "O. Toppin",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022400436": [
+  {
+   "action": 662,
+   "set": {
+    "personId": 1629661,
+    "playerName": "Johnson",
+    "playerNameI": "C. Johnson"
+   },
+   "was": "K. Johnson",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022400903": [
+  {
+   "action": 711,
+   "set": {
+    "personId": 1628969,
+    "playerName": "Bridges",
+    "playerNameI": "M. Bridges"
+   },
+   "was": "K. Towns",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022400916": [
+  {
+   "action": 128,
+   "set": {
+    "personId": 203952,
+    "playerName": "Wiggins",
+    "playerNameI": "A. Wiggins"
+   },
+   "was": "T. Rozier",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022400926": [
+  {
+   "action": 140,
+   "set": {
+    "personId": 1631101,
+    "playerName": "Sharpe",
+    "playerNameI": "S. Sharpe"
+   },
+   "was": "J. Grant",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022400992": [
+  {
+   "action": 361,
+   "set": {
+    "personId": 1642384,
+    "playerName": "Crawford",
+    "playerNameI": "I. Crawford"
+   },
+   "was": "K. Ellis",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
  "0022600247": [
   {
    "action": 85,
