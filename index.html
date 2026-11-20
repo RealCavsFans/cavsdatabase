@@ -2036,7 +2036,7 @@ setTimeout(()=>{Promise.all([fJ('/box.json').then(r=>r.ok?r.json():null).catch((
       const f=S2.filter(([u])=>u.length&&u[0][0]===t[0][0]&&ed1(u[u.length-1],t[t.length-1]));return f.length===1?f[0][1]:null};
     for(const [ab,x] of Object.entries(T)){if(!LT||!LT[ab]){games[ab]=x.missed;lost[ab]=0;continue}const S2=Object.entries(LT[ab]).map(([nm,v])=>[tk(nm),v]);let g0=0,c0=0;
       for(const [nm,g] of Object.entries(x.players)){const v=sv(S2,nm);if(v==null)continue;g0+=g;c0+=v/82*g}games[ab]=g0;lost[ab]=c0}
-    /* Nov 20 audit: the Cavs ranked by the numbers shown above (official report), not the ESPN count used for the other teams; no denominator (a team rank is out of 30) */games.CLE=tg;lost.CLE=tc;
+    /* Nov 20 audit: ranked like for like, every team (the Cavs too) from the same ESPN injury lists, so the order is fair even where the Cavs' own count above (official report) runs a game higher; no denominator (a team rank is out of 30) */
     tiles[0].appendChild(el('small','gm-rk',rk(Object.values(games),games.CLE)+' most'));
     if(LT)tiles[1].appendChild(el('small','gm-rk',rk(Object.values(lost),lost.CLE)+' most'));
     });
