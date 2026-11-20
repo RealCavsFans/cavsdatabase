@@ -277,6 +277,16 @@ td.pnm{font-weight:700;color:var(--fg)}body>main.wrap{min-height:100vh}b.ffv>sma
 .rot .ax{display:grid;grid-template-columns:116px 1fr 44px;gap:8px;font:600 0.6875rem var(--mono);color:var(--muted);margin-top:4px}
 .rot .ax div{position:relative;height:14px}
 .rot .ax em{position:absolute;transform:translateX(-50%);font-style:normal}
+.rot{position:relative}
+/* Nov 20 (Luka): score margin strip and a scrubber over the rotation (hover or drag): who's on the floor at that moment */
+.rot .r.rmg .ln{height:44px;background:none}.rot .r.rmg svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.rot .r.rmg .nm{font:700 .625rem var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:normal;line-height:1.2}
+.rot .r.rmg .mn{font:700 .75rem var(--mono)}
+.rot .ln{touch-action:pan-y;cursor:crosshair}
+.rot .scx[hidden]{display:none!important}.rot .scx{position:absolute;top:0;bottom:18px;width:2px;margin-left:-1px;background:var(--fg);pointer-events:none;opacity:.85;z-index:3}
+.rot.rscrub .r:not(.rmg):not(.on) .nm,.rot.rscrub .r:not(.rmg):not(.on) .ln b,.rot.rscrub .r:not(.rmg):not(.on) .mn{opacity:.3}
+.rsb{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;min-height:40px;margin:8px 0;padding:8px 10px;border:1px solid var(--line2);border-radius:8px;background:var(--sub);font:500 .8125rem var(--sans)}
+.rsb .t{font:800 .8125rem var(--mono)}.rsb .sc{font:700 .8125rem var(--mono)}.rsb .five{font-weight:700}.rsb .tg{font:600 .75rem var(--mono);color:var(--muted)}.rsb .tg b.p{color:var(--pmp)}.rsb .tg b.n{color:var(--pmn)}.rsb .hint{color:var(--muted)}
 .plays{list-style:none;margin:0;padding:0}
 .plays li{display:grid;grid-template-columns:52px 6px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line2);font-size:0.875rem}
 .plays .t{font:500 0.75rem var(--mono);color:var(--muted)}
@@ -959,10 +969,11 @@ html body .wf-r{padding:6px 0!important;gap:2px 12px!important}html body .wf-n b
 <li><b>Possessions:</b> counted play by play, the way NBA.com counts them. A possession ends on a made basket, a defensive rebound, a turnover or the end of a period; an offensive rebound continues it. Every game is checked each morning against NBA.com’s official count (pbpstats until NBA.com has it).</li>
 <li><b>Pace:</b> 48 × (both teams’ possessions ÷ 2) ÷ (minutes ÷ 5).</li>
 <li><b>ORTG / DRTG / NET RTG:</b> points scored per 100 of the Cavs’ possessions, points allowed per 100 of the opponent’s possessions, and ORTG minus DRTG.</li>
-<li><b>TS% (true shooting):</b> points ÷ (2 × (FGA + 0.44 × FTA)). <b>eFG%:</b> (FGM + 0.5 × 3PM) ÷ FGA. <b>FT rate:</b> free throw attempts ÷ FGA. <b>3PT rate:</b> threes ÷ FGA.</li>
+<li><b>TS% (true shooting):</b> points ÷ (2 × (FGA + 0.44 × FTA)). <b>eFG%:</b> (FGM + 0.5 × 3PM) ÷ FGA. <b>Relative TS% (rTS%):</b> TS% minus the league’s TS% this season. <b>FT rate:</b> free throw attempts ÷ FGA. <b>3PT rate:</b> threes ÷ FGA.</li>
 <li><b>TOV%:</b> turnovers per possession. <b>AST%:</b> assisted share of made shots. <b>STL%:</b> steals per 100 opponent possessions. <b>BLK%:</b> share of opponent twos blocked.</li>
 <li><b>Rebounds:</b> REB, OREB and DREB in box scores are players’ rebounds, matching the NBA box score. <b>OREB%, DREB% and REB%</b> use every rebound of a missed shot, team rebounds included (a miss that goes out of bounds), as NBA.com counts them.</li>
 <li><b>Transition:</b> a shot, foul or turnover within 7 seconds of a steal or defensive rebound; dead-ball turnovers don’t start one. It won’t always match the NBA’s fast break points, which are scored by hand.</li>
+<li><b>Garbage time</b> (the “No garbage time” view): 4th quarter or overtime, a lead of 25+ with 9–12 minutes left, 20+ with 6–9 left or 10+ with 6 or fewer left, and no more than two of the 10 starters on the floor. Only the last unbroken stretch to the final buzzer counts, the Cleaning the Glass rule. That view also leaves out possessions that start with under 2 seconds left in the 1st–3rd quarters. End-of-quarter heaves are never shot attempts in our counts.</li>
 <li><b>Shot zones:</b> at the rim within 4 ft; short midrange 4–14 ft; long midrange 14 ft to the arc; corner 3; above-the-break 3. Every shot, garbage time included.</li>
 <li><b>Averages over several games:</b> every rate is figured from the totals of those games (all points ÷ all possessions, all rebounds ÷ all chances), never an average of each game’s rate, so the game log, team stats and splits agree. Percentages are shown to one decimal.</li>
 <li><b>NBA ranks:</b> every team’s ratings, pace, rebound rates and box-score stats come from the NBA’s own box scores and play-by-play, counted the same way as the Cavs’. A few play-by-play splits (how possessions started) use pbpstats.</li>
@@ -2127,6 +2138,7 @@ function oppCard(D,R){
 /* team stats: who won how many, a square per stat, the biggest edges, then every stat with a bar pointing to the winner */
 /* ---------- NBA ranks for season stats: every team's games from /pdata/league.json (ESPN box scores, refreshed daily) ---------- */
 let LGS=null,LGP=null;
+/* Nov 20 (Luka): the league's true shooting this season (every team's points ÷ 2 × (FGA + 0.44 × FTA), NBA box scores), for relative TS% */const lgTS=()=>{if(!LGS||!LGS.T)return null;let p=0,f=0,t=0;Object.values(LGS.T).forEach(x=>{const a=x.A||x;p+=a.pts||0;f+=a.fga||0;t+=a.fta||0});return f?p/(2*(f+.44*t)):null};
 /* Nov 14 (Luka): position groups for positional percentiles: Basketball Reference's play-by-play position estimate (where he plays the most minutes:
    G = PG/SG, F = SF/PF, C), from pdata/positions.json (scripts/bbr-pos.mjs, daily); the NBA's listed position when a player isn't there yet */
 let POS=null,POSP=null;const posLoad=()=>POSP||(POSP=getJSON('/pdata/positions.json').then(j=>{POS=(j&&j.P)||{};return POS}).catch(()=>{POS={};return POS}));
@@ -2704,7 +2716,7 @@ function advView(c,D,R,t){
     const onL=L5.filter(l=>l.ids.includes(id));const sm=(sd,k)=>onL.reduce((s2,l)=>s2+((l[sd]||{})[k]||0),0);let pf=onL.reduce((s2,l)=>s2+l.pf,0),pa=onL.reduce((s2,l)=>s2+l.pa,0);
     /* Nov 15 (Luka): possessions from the same five-man units as the points (his own tally ran a possession apart), so ON ORTG/DRTG match the On/off tab and his player page */let po=onL.reduce((s2,l)=>s2+poss(l.o),0),pd=onL.reduce((s2,l)=>s2+poss(l.d),0);
     /* Nov 15 (Luka): player rebound rates use players' rebounds only (as Basketball Reference and NBA.com do): the units' own player-rebound counts (poreb/pdreb), or, in files built before those existed, the units' counts scaled by each side's player share */const tFGM=sm('o','fgm'),tFGA=sm('o','fga'),tFTA=sm('o','fta'),tTO=sm('o','to'),hasP=onL.some(l=>l.o&&(l.o.poreb!=null||l.o.pdreb!=null)),tORB=hasP?sm('o','poreb'):sm('o','oreb')*shTO,tDRB=hasP?sm('o','pdreb'):sm('o','dreb')*shTD,oORB=hasP?sm('d','poreb'):sm('d','oreb')*shOO,oDRB=hasP?sm('d','pdreb'):sm('d','dreb')*shOD,o2A=sm('d','fga')-sm('d','tpa');
-    const tsa=b.fga+0.44*b.fta;return {id,mp,tsa,ts:tsa?b.pts/(2*tsa):null,efg:b.fga?(b.fgm+.5*b.tpm)/b.fga:null,tpar:b.fga?b.tpa/b.fga:null,ftr:b.fga?b.fta/b.fga:null,
+    const tsa=b.fga+0.44*b.fta;const lts=lgTS();return {id,mp,tsa,ts:tsa?b.pts/(2*tsa):null,rts:tsa&&lts!=null?b.pts/(2*tsa)-lts:null,efg:b.fga?(b.fgm+.5*b.tpm)/b.fga:null,tpar:b.fga?b.tpa/b.fga:null,ftr:b.fga?b.fta/b.fga:null,
       /* a share can't pass 100% (a few minutes of scaled counts can) */orb:(tORB+oDRB)?Math.min(100,100*b.oreb/Math.max(tORB+oDRB,b.oreb)):null,drb:(tDRB+oORB)?Math.min(100,100*b.dreb/Math.max(tDRB+oORB,b.dreb)):null,trb:(tORB+tDRB+oORB+oDRB)?Math.min(100,100*(b.oreb+b.dreb)/Math.max(tORB+tDRB+oORB+oDRB,b.oreb+b.dreb)):null,
       ast:(tFGM-b.fgm)>0?100*b.ast/(tFGM-b.fgm):null,stl:pd?100*b.stl/pd:null,blk:o2A>0?100*b.blk/o2A:null,
       tov:(tsa+b.to)?100*b.to/(tsa+b.to):null,usg:(tFGA+0.44*tFTA+tTO)?100*(tsa+b.to)/(tFGA+0.44*tFTA+tTO):null,ortg:po>=1?pf/po*100:null,drtg:pd>=1?pa/pd*100:null,net:po>=1&&pd>=1?pf/po*100-pa/pd*100:null,starter:D.P[id].starter}});
@@ -2726,7 +2738,7 @@ function advView(c,D,R,t){
       advP=(k,r)=>{const v=val(k,r);if(v==null||isNaN(v))return null;const g=S.f.pctPos?advG(r):null;if(S.f.pctPos&&!g)return null;const meN=normName(D.P[r.id].name);const arr=(g?Q.filter(q=>q.grp===g):Q).filter(q=>q.nn!==meN).map(q=>q[lk[k]||k]).filter(x=>x!=null&&!isNaN(x));if(arr.length<20)return null;const low=k==='tov';return Math.round(arr.filter(x=>low?x>v:x<v).length/(arr.length+1)*100/* Nov 16 (Luka): he counts in his own pool */)}}}}
   const advPctCols=cols=>!advP?cols:cols.map(col=>col.k==='id'?Object.assign({},col,{f:r=>{const sp=col.f(r);const t=advTag(r);if(t)sp.appendChild(t);return sp}}):['mp','tsa','ts','efg','tpar','ftr','orb','drb','trb','ast','stl','blk','tov','usg'].includes(col.k)?Object.assign({},col,{cls:r=>{const p=advP(col.k,r);return (col.cls?col.cls(r)+' ':'')+(p==null?'':'pp'+Math.min(4,Math.floor(p/20)))},f:r=>{const v=col.f?col.f(r):r[col.k];const p=advP(col.k,r);if(p==null)return v;const sp=el('span');sp.append(String(v),el('small','ppn',ord2(Math.max(1,Math.min(99,p)))));return sp}}):col);
   c.appendChild(dtable('adv',advPctCols([{h:'Player',k:'id',f:r=>{const sp=el('span');sp.appendChild(plink(D,r.id,D.P[r.id].short));return sp}},{h:'MIN',k:'mp',f:r=>S.season?String(Math.round(r.mp)):fmtMin(r.mp*60)},/* Nov 13 (Luka): whole minutes on the season view */
-    {h:'TSA',k:'tsa',f:r=>r.tsa.toFixed(1),title:'True shot attempts: FGA + 0.44 × FTA'},{h:'TS%',k:'ts',f:p3('ts'),title:'TS%'},{h:'eFG%',k:'efg',f:p3('efg')},{h:'3PAr',k:'tpar',f:p3('tpar'),title:'Share of shots from three'},{h:'FTr',k:'ftr',f:p3('ftr'),title:'Free throw attempts per shot'},
+    {h:'TSA',k:'tsa',f:r=>r.tsa.toFixed(1),title:'True shot attempts: FGA + 0.44 × FTA'},{h:'TS%',k:'ts',f:p3('ts'),title:'TS%'},{h:'rTS%',k:'rts',f:r=>r.rts==null?'–':(Math.round(r.rts*1000)>0?'+':Math.round(r.rts*1000)<0?'−':'')+Math.abs(r.rts*100).toFixed(1),title:'Relative true shooting: his TS% minus the league’s TS% this season'},{h:'eFG%',k:'efg',f:p3('efg')},{h:'3PAr',k:'tpar',f:p3('tpar'),title:'Share of shots from three'},{h:'FTr',k:'ftr',f:p3('ftr'),title:'Free throw attempts per shot'},
     {h:'ORB%',k:'orb',f:p1('orb')},{h:'DRB%',k:'drb',f:p1('drb')},{h:'TRB%',k:'trb',f:p1('trb')},{h:'AST%',k:'ast',f:p1('ast'),title:'Share of teammates’ baskets he assisted while on the floor'},
     {h:'STL%',k:'stl',f:p1('stl'),title:'Steals per 100 opponent possessions while he was on the floor'},{h:'BLK%',k:'blk',f:p1('blk'),title:'Share of the opponent’s two-point tries he blocked while on the floor'},{h:'TOV%',k:'tov',f:p1('tov'),asc:true,title:'Turnovers per 100 of his plays (shots, free throw trips and turnovers)'},{h:'USG%',k:'usg',f:p1('usg'),title:'Share of team plays he used while on the floor'},
     {h:'ON ORTG',k:'ortg',f:p0('ortg'),title:'Team points per 100 possessions with him on'},{h:'ON DRTG',k:'drtg',f:p0('drtg'),asc:true,title:'Opponent points per 100 possessions with him on'},{h:'ON NET',k:'net',f:r=>r.net==null?'–':sgd(r.net),cls:r=>r.net==null?'':pmCls(r.net)}]),rows,{def:'mp',minW:980}));
@@ -4750,7 +4762,7 @@ function seasonFilterBar(){const D=S.data;const f=S.sf=S.sf||{};const w=el('div'
   {const gs=el('select');gs.setAttribute('aria-label','Garbage time');[['all','All minutes'],['nogt','No garbage time']].forEach(([k,l])=>{const o=el('option',null,l);o.value=k;if((S.per==='nogt'?'nogt':'all')===k)o.selected=true;gs.appendChild(o)});
     gs.onchange=async()=>{S.per=gs.value==='nogt'?'nogt':'all';w.classList.add('busy');await loadSeason(S.season);render()};w.appendChild(gs)}
   if((f.games&&f.games.length)||f.tier){const n=(D.games||[]).length;w.appendChild(el('span','sfn',n+' game'+(n===1?'':'s')+(f.tier?' vs '+TIERS.find(x=>x[0]===f.tier)[1].toLowerCase().replace(' net rating',''):'')));const x=el('button','clr','Clear');x.type='button';x.onclick=async()=>{S.sf={};await loadSeason(S.season);render()};w.appendChild(x)}
-  if(S.per==='nogt')w.appendChild(el('span','sfn dim','Garbage time = 4th quarter with a lead of 25+ and 9–12 minutes left, 20+ with 6–9 left, or 15+ with under 6 left. Overtime never counts.'));
+  if(S.per==='nogt')w.appendChild(el('span','sfn dim','Garbage time = 4th quarter or overtime, a lead of 25+ with 9–12 minutes left, 20+ with 6–9 left or 10+ with 6 or fewer left, and no more than two of the 10 starters on the floor. Only the last unbroken stretch to the final buzzer counts (the Cleaning the Glass rule). Also left out: possessions that start with under 2 seconds left in the 1st–3rd quarters.'));
   if(f.tier)w.appendChild(el('span','sfn dim','Strength = '+(S.season===CUR_SEASON?'net rating rank among all 30 teams so far this season, on counted possessions':'final '+S.season.replace('-','–')+' net rating rank among all 30 teams, on counted possessions')));
   return w}
 async function loadSeason(se){
@@ -4905,18 +4917,43 @@ function vRot(v,D,R){
   const ids=D.roster[t.id].filter(id=>R.stints[id]&&R.stints[id].length).sort((a,b)=>(D.P[b].starter-D.P[a].starter)||(R.stints[a][0][0]-R.stints[b][0][0]));
   const now=R.lp?R.lp.t:0;
   const wrap=el('div','rot');
+  /* Nov 20 (Luka): the score margin on the same clock as the stints, and a bar that says who's on the floor wherever you hover or drag */
+  const sg=t.id===D.focus.id?1:-1,MG=(R.margin||[[0,0]]).map(([x,m])=>[x,m*sg]);const mAt=x=>{let m=0;for(const [x0,m0] of MG){if(x0>x)break;m=m0}return m};
+  const scAt=x=>{let h=0,a=0;for(const p of R.plays){if(p.t>x)break;h=p.hs;a=p.as}const me=D.home.id===t.id?h:a,op=D.home.id===t.id?a:h;return [me,op]};
+  const rsb=el('div','rsb noshot');c.appendChild(rsb);
+  {const mr=el('div','r rmg');mr.appendChild(el('div','nm','Score margin'));const ln=el('div','ln');const end=Math.min(now||T,T);const mx=Math.max(5,...MG.map(z=>Math.abs(z[1])));
+    const W=1000,H=44,yy=m=>(H/2-m/mx*(H/2-3)).toFixed(1);let d='M0 '+yy(0);let prev=0;MG.forEach(([x,m])=>{if(x>end)return;const xx=(x/T*W).toFixed(1);d+=' L'+xx+' '+yy(prev)+' L'+xx+' '+yy(m);prev=m});d+=' L'+(end/T*W).toFixed(1)+' '+yy(prev);
+    let qs='';for(let p=2;p<=R.maxPer;p++)qs+=`<line x1="${(pstart(p)/T*W).toFixed(1)}" x2="${(pstart(p)/T*W).toFixed(1)}" y1="0" y2="${H}" stroke="var(--line)" stroke-width="1" vector-effect="non-scaling-stroke"/>`;
+    ln.innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">${qs}<line x1="0" x2="${W}" y1="${yy(0)}" y2="${yy(0)}" stroke="var(--muted)" stroke-dasharray="3 3" stroke-width="1" vector-effect="non-scaling-stroke"/><path d="${d}" fill="none" stroke="var(--fg)" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`;
+    const fin=mAt(end);mr.append(ln,el('div','mn',sgn(fin)));wrap.appendChild(mr)}
   /* Nov 16 (Luka): stint tooltip: points scored and allowed, possessions, ORTG and DRTG for that stretch */
   {let tp=null;const hide=()=>{if(tp){tp.remove();tp=null}};const show=bb=>{hide();let v;try{v=JSON.parse(bb.dataset.tip)}catch(e){return}const [q,mn,pmS,f,a2,o,d]=v;tp=el('div','rtip');
     const rt=(p,n)=>n>0?(p/n*100).toFixed(1):'–';tp.innerHTML=`<small>${esc(q)} · ${esc(mn)} on the floor · ${esc(pmS)}</small>`+(o!=null?`<div><span>ORTG</span><b>${rt(f,o)}</b><em>${f} pts · ${o} poss</em></div><div><span>DRTG</span><b>${rt(a2,d)}</b><em>${a2} pts · ${d} poss</em></div>`+((o+d)<10?'<i>Short stretch, so the ratings swing a lot</i>':''):'');
     document.body.appendChild(tp);const r=bb.getBoundingClientRect(),w=tp.offsetWidth,h=tp.offsetHeight;let x=r.left+r.width/2-w/2;x=Math.max(8,Math.min(innerWidth-w-8,x));let y=r.top-h-8;if(y<8)y=r.bottom+8;tp.style.left=x+'px';tp.style.top=y+'px'};
-    wrap.addEventListener('mouseover',e=>{const bb=e.target.closest('.ln b');if(bb)show(bb)});wrap.addEventListener('mouseout',e=>{if(e.target.closest('.ln b'))hide()});
+    /* Nov 20: hover and drag now drive the scrubber; a stint's numbers open on a click or tap */
     wrap.addEventListener('click',e=>{const bb=e.target.closest('.ln b');if(bb){e.stopPropagation();show(bb)}else hide()});addEventListener('scroll',hide,{passive:true})}
   let lastSt=null;
-  ids.forEach(id=>{/* Nov 14 (Luka): Starters and Bench labels */if(lastSt!==!!D.P[id].starter){lastSt=!!D.P[id].starter;wrap.appendChild(el('div','rgrp',lastSt?'Starters':'Bench'))}const r=el('div','r');r.appendChild((n=>{n.append(el('span','rf',D.P[id].short),el('span','rl',D.P[id].last||D.P[id].short));return n})(el('div','nm')));const ln=el('div','ln');
+  ids.forEach(id=>{/* Nov 14 (Luka): Starters and Bench labels */if(lastSt!==!!D.P[id].starter){lastSt=!!D.P[id].starter;wrap.appendChild(el('div','rgrp',lastSt?'Starters':'Bench'))}const r=el('div','r');r.dataset.id=id;r.appendChild((n=>{n.append(el('span','rf',D.P[id].short),el('span','rl',D.P[id].last||D.P[id].short));return n})(el('div','nm')));const ln=el('div','ln');
     for(let p=2;p<=R.maxPer;p++){const u=el('u');u.style.left=X(pstart(p));ln.appendChild(u)}
     let tot=0;R.stints[id].filter(([a,b])=>b-a>=1).forEach(([a,b,pm,sf,sa,so,sd])=>{tot+=b-a;const bb=el('b');bb.style.left=X(a);bb.style.width=X(Math.max(b-a,6));/* one color rule: green = good for the Cavs, red = bad; darker = bigger margin; the stint's +/- written in when it fits */const good=t.id===CLE?pm:-pm;/* Nov 14 (Luka): stronger colors: small margins start at 65%, full color by +/-7 */const op=Math.min(100,65+Math.abs(pm)*5);bb.style.background=good>0?`color-mix(in srgb,var(--pmp) ${op}%,var(--card))`:good<0?`color-mix(in srgb,var(--pmn) ${op}%,var(--card))`:'#c3c6cb';if((b-a)/T>.07){bb.textContent=sgn(pm);bb.classList.add('pmx')}/* Nov 16 (Luka): hover (or tap) a stint for its ORTG and DRTG */bb.dataset.tip=JSON.stringify([pname(perAt(a)),fmtMin(b-a),sgn(pm),sf,sa,so,sd]);bb.setAttribute('aria-label',`${pname(perAt(a))}, ${fmtMin(b-a)} on the floor, ${sgn(pm)}`);ln.appendChild(bb)});
     if(now<T){const sh=el('s');sh.style.left=X(now);sh.style.width=X(T-now);ln.appendChild(sh)}
     /* Nov 14 (Luka): each player's game +/- next to his minutes */{const pm=(R.B[id]||{}).pm;const mn=el('div','mn');const g=pm==null?null:(t.id===CLE?pm:-pm);mn.append(el('b','rpm'+(g>0?' p':g<0?' n':''),pm==null?'–':sgn(pm)),el('small',null,fmtMin(tot)));r.append(ln,mn)}wrap.appendChild(r)});
+  /* the scrubber: the five on the floor at that moment, how long that five had been together and its +/- so far */
+  {const line=el('div','scx noshot');line.hidden=true;wrap.appendChild(line);const rowsBy={};wrap.querySelectorAll('.r[data-id]').forEach(r=>rowsBy[r.dataset.id]=r);
+    const on5=x=>ids.filter(id=>R.stints[id].some(([a,b])=>a<=x&&x<b));const lim=()=>now&&now<T?now:T;
+    const idle=()=>{wrap.classList.remove('rscrub');line.hidden=true;Object.values(rowsBy).forEach(r=>r.classList.remove('on'));rsb.innerHTML='';rsb.appendChild(el('span','hint',(matchMedia('(hover:hover)').matches?'Hover':'Drag')+' along the chart to see who was on the floor at any moment.'))};
+    const at=x=>{x=Math.max(0,Math.min(lim()-.5,x));const five=on5(x);const p=perAt(x),left=pstart(p)+plen(p)-x;
+      let a0=0,b0=T;five.forEach(id=>{const st=R.stints[id].find(([a,b])=>a<=x&&x<b);if(st){a0=Math.max(a0,st[0]);b0=Math.min(b0,st[1])}});const upto=Math.min(b0,lim());
+      const pm=mAt(upto)-mAt(a0),[me,op]=scAt(x),mg=me-op;
+      wrap.classList.add('rscrub');Object.entries(rowsBy).forEach(([id,r])=>r.classList.toggle('on',five.includes(id)));
+      const ref=wrap.querySelector('.r.rmg .ln').getBoundingClientRect(),wr=wrap.getBoundingClientRect();line.hidden=false;line.style.left=(ref.left-wr.left+x/T*ref.width)+'px';
+      rsb.innerHTML='';rsb.append(el('span','t',pname(p)+' '+fmtMin(left)),el('span','sc',t.abbr+' '+me+'–'+op+(mg?' ('+sgn(mg)+')':'')),el('span','five',five.map(id=>D.P[id].last||D.P[id].short).join(', ')||'–'));
+      if(five.length===5){const tg=el('span','tg');tg.append('together '+fmtMin(upto-a0)+' · ');tg.appendChild(el('b',pm>0?'p':pm<0?'n':'',sgn(pm)));rsb.appendChild(tg)}/* the bar never shrinks while you scrub, so the chart doesn't jump under the pointer */rsb.style.minHeight=Math.max(parseFloat(rsb.style.minHeight)||0,rsb.offsetHeight)+'px'};
+    const xOf=e=>{const ref=wrap.querySelector('.r.rmg .ln').getBoundingClientRect();return (e.clientX-ref.left)/ref.width*T};
+    let drag=false;wrap.addEventListener('pointermove',e=>{if(e.pointerType==='mouse'||drag){if(e.target.closest('.ln'))at(xOf(e))}});
+    wrap.addEventListener('pointerdown',e=>{if(e.target.closest('.ln')){drag=e.pointerType!=='mouse';at(xOf(e))}});
+    addEventListener('pointerup',()=>{drag=false},{passive:true});/* leaving the chart: checked on the page's own pointer moves (Chrome sends a stray pointerleave when the chart restyles under the pointer) */{const off=e=>{if(!wrap.isConnected){removeEventListener('pointermove',off);return}if(e.pointerType!=='mouse'||!wrap.classList.contains('rscrub'))return;const r=wrap.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom){wrap.classList.remove('rscrub');line.hidden=true}};addEventListener('pointermove',off,{passive:true})}
+    /* size the bar for a full line-up once it's on the page, so it doesn't grow under the pointer on the first hover */requestAnimationFrame(()=>{if(!wrap.isConnected)return;at(lim()/2);idle();addEventListener('resize',()=>{rsb.style.minHeight='';if(wrap.isConnected){at(lim()/2);idle()}},{once:true})});idle()}
   const ax=el('div','ax');ax.appendChild(el('span'));const ad=el('div');for(let p=1;p<=R.maxPer;p++){const s=el('em',null,pname(p));s.style.left=X(pstart(p)+plen(p)/2);ad.appendChild(s)}ax.append(ad,el('span'));wrap.appendChild(ax);
   c.appendChild(wrap);
   const k=el('div','key');k.innerHTML=`<span><i style="background:var(--pmp)"></i>Good for the Cavs</span><span><i style="background:var(--pmn)"></i>Bad for the Cavs</span><span><i style="background:#c3c6cb"></i>Even</span><span>Number = ${esc(t.abbr)} +/- in that stint · darker = bigger margin</span>`;c.appendChild(k);

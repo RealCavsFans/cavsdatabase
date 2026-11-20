@@ -87,9 +87,14 @@ function deriveCore(D,plays,F){
   const stints={},enter={},pmAll={},pfA={},paA={},poA={},pdA={};/* Nov 16 (Luka): team points and possessions per player, so each rotation stint gets its own ORTG/DRTG */Object.keys(D.P).forEach(id=>pmAll[id]=0);
   let last=0,curPer=0,snap=null;const src={},ps={},pc={},tf={},to={},ch={},pfAll={};let clutchNow=false,mgNow=0;const wpS=[],lineAt={};
   const HOW=['stl','to','dreb','made','oreb','start'];tid.forEach(t=>{src[t]='';ps[t]={t:0,how:'start'};pc[t]={};HOW.forEach(h=>pc[t][h]={n:0,pts:0});to[t]=0;ch[t]={used:0,won:0}});
-  /* garbage time (published rule): 4th quarter, a lead of 25+ with 9–12 minutes left, 20+ with 6–9 left, or 15+ with under 6 left; overtime never counts */
-  let gtNow=false;const isGT=(per,t,m)=>{if(per!==4)return false;const left=2880-t,a=Math.abs(m);return left>540?a>=25:left>360?a>=20:a>=15};
-  const inFx=per=>F==='clutch'?clutchNow:F==='nogt'?!gtNow:inPer(F,per);
+  /* Nov 20 (Luka): garbage time aligned with Cleaning the Glass and Hoops Junkie: 4th quarter or overtime, a lead of 25+ with 9–12 minutes
+     left, 20+ with 6–9 left, 10+ with 6 or fewer left, AND no more than two of the game's ten starters on the floor (both teams together).
+     Only the final unbroken stretch to the end of the game counts: if either condition breaks, everything before it is back in.
+     The no-garbage view also leaves out possessions that start with under 2 seconds left in the 1st-3rd quarters (Darryl Blackport's rule).
+     Heaves are never field goal attempts in our counts (player or team), so nothing more is needed for them. */
+  let gtNow=false,scNow=false;const gtC=[];const isGT=(per,t,m)=>{if(per<4)return false;const left=pstart(per)+plen(per)-t,a=Math.abs(m);if(!(left>540?a>=25:left>360?a>=20:a>=10))return false;let st=0;tid.forEach(x=>on[x].forEach(id=>{if(D.P[id]&&D.P[id].starter)st++}));return st<=2};
+  let GTM=null;if(F==='nogt'){const c=deriveCore(D,plays,'all').gtC||[];let k=c.length;while(k>0&&c[k-1])k--;GTM=k}
+  const inFx=per=>F==='clutch'?clutchNow:F==='nogt'?!gtNow&&!scNow:inPer(F,per);
   /* a possession that ends on free throws belongs to the ten players on the floor at the foul, like the points (Oct 31) */let hold=null,curON=null;const EC={};const endPoss=(t,inF)=>{if(!inF||!t)return;EC[t]=(EC[t]||0)+1;/* Nov 6: NBA.com player possessions: every player on the floor at any point in the possession gets it */const pp=ps[t]&&ps[t].part;if(pp)pp.forEach(id=>{if(!B[id])return;const k=teamOf(id)===t?'po':'pd';B[id][k]=(B[id][k]||0)+1});const W=curON||on;if(seg)seg.o[t].np++;W[t].forEach(id=>poA[id]=(poA[id]||0)+1);W[opp(t)].forEach(id=>pdA[id]=(pdA[id]||0)+1);lu(t,W[t],o=>o.o.np++);lu(opp(t),W[opp(t)],o=>o.d.np++)};
   const PL=[];let lastFGA=null,seq=0;const newPoss=(t,tt,how,inF)=>{if(ps[t]&&ps[t].t===tt&&ps[t].how===how&&how!=='oreb')return;/* Nov 6: a team that already has the ball can't start a new possession unless the other team has shot since (an and-one's free throw, made or missed and rebounded, is the same trip) */if(how!=='start'&&how!=='oreb'&&hold===t&&ps[t]&&!(lastFGA&&lastFGA.team===opp(t)&&lastFGA.seq>(ps[t].seq||0)))return;/* Nov 6: nothing starts with no time left (a rebound or steal at the buzzer), as on NBA.com */if(how!=='start'&&curPer&&tt>=pstart(curPer)+plen(curPer))return;if(how!=='start'){if(how!=='oreb'&&hold===opp(t))endPoss(opp(t),inF);hold=t}const part=how==='oreb'&&ps[t]&&ps[t].part?ps[t].part:new Set([...(on[t]||[]),...(on[opp(t)]||[])]);ps[t]={seq,part,t:tt,how,pts:0,first:null,inF,on:on[t]?[...on[t]].sort().join(','):'',od:on[opp(t)]?[...on[opp(t)]].sort().join(','):''};if(inF){pc[t][how].n++;PL.push(Object.assign(ps[t],{team:t}))}};
   const margin=[[0,0]];let lc=0,ties=0,prevSign=0;const lead={};tid.forEach(t=>lead[t]=0);
@@ -103,7 +108,7 @@ function deriveCore(D,plays,F){
   plays.forEach((p,pi)=>{curON=null;seq++;
     if(p.per!==curPer){if(curPer){addTime(pstart(curPer)+plen(curPer));endPoss(hold,inFx(curPer));hold=null;tid.forEach(t=>on[t].forEach(id=>leave(id,pstart(curPer)+plen(curPer))))}
       curPer=p.per;last=pstart(p.per);tid.forEach(t=>{on[t]=new Set(startFive[p.per][t]||[]);on[t].forEach(id=>{B[id].played=true;join(id,last)});src[t]='';ps[t]={t:last,how:'init',pts:0,first:null,inF:false,on:'',od:''}});newSeg()}
-    clutchNow=p.per>=4&&(p.per>4||p.t>=2580)&&Math.abs(mgNow)<=5;gtNow=isGT(p.per,p.t,mgNow);
+    clutchNow=p.per>=4&&(p.per>4||p.t>=2580)&&Math.abs(mgNow)<=5;gtC[pi]=isGT(p.per,p.t,mgNow);gtNow=GTM!=null?pi>=GTM:gtC[pi];if(F==='nogt'){const lt=Math.max(...tid.map(x=>ps[x]&&ps[x].how!=='init'?ps[x].t:-1));scNow=p.per<=3&&lt>=pstart(p.per)+plen(p.per)-2}else scNow=false;
     addTime(p.t);
     const inF=inFx(p.per);/* each player's own box score inside his 2-man and 5-man units (pb) */const pbA=(id,k,v,ONx)=>{if(!inF||!id||!D.P[id])return;const t=teamOf(id);if(!T[t])return;lu(t,(ONx||on)[t],o=>{if(o.ids.length!==2&&o.ids.length!==5)return;const q=(o.pb=o.pb||{})[id]=(o.pb[id]||{});q[k]=(q[k]||0)+v})};const ty=p.type,a=p.ids[0],b=p.ids[1];
     if(D.wp[p.id]!=null)wpS.push([p.t,D.wp[p.id],p]);
@@ -168,7 +173,7 @@ function deriveCore(D,plays,F){
   /* Nov 6 (Luka): for a whole game, the NBA's own paint, second-chance, off-turnover and fast-break points (our play-by-play count can be 1-3 off) */if(F==='all'&&D.nbx&&D.nbx.t)tid.forEach(t=>{const o=D.nbx.t[t];if(o&&o.pip!=null&&T[t]){T[t].paint=o.pip;T[t].second=o.p2;T[t].offto=o.pot;T[t].fb=o.fb}});
   /* Nov 7 (Luka): for a whole game, assists, steals, blocks and rebounds match the official box score (the play-by-play can miss or move a few; not mid-replay) */if(F==='all'&&plays===D.plays){const K=[['AST','ast'],['STL','stl'],['BLK','blk'],['OREB','oreb'],['DREB','dreb']];tid.forEach(t=>{if(!T[t]||!D.roster[t])return;const sum={};let ok=false;D.roster[t].forEach(id=>{const e=(D.P[id]||{}).espn;if(!e)return;K.forEach(([k,f])=>{const v=parseFloat(e[k]);if(isFinite(v)){ok=true;sum[f]=(sum[f]||0)+v;if(B[id])B[id][f]=v}})});if(ok)K.forEach(([,f])=>{if(sum[f]!=null)T[t][f]=sum[f]})})}
   const PLx=PL.filter(q=>q.first!=null||q.pts>0);
-  return {PL:PLx,segs,curStint,dr,pmAll,pc,tf,to,ch,pfAll,wpS,lineAt,asts,plays,B,T,TQ,L,on,margin,runs,shots,stints,hs:lp?lp.hs:0,as:lp?lp.as:0,lp,lead,lc,ties,wp:lp&&D.wp[lp.id]!=null?D.wp[lp.id]:null,maxPer:lp?Math.max(4,lp.per):4};
+  return {gtC,PL:PLx,segs,curStint,dr,pmAll,pc,tf,to,ch,pfAll,wpS,lineAt,asts,plays,B,T,TQ,L,on,margin,runs,shots,stints,hs:lp?lp.hs:0,as:lp?lp.as:0,lp,lead,lc,ties,wp:lp&&D.wp[lp.id]!=null?D.wp[lp.id]:null,maxPer:lp?Math.max(4,lp.per):4};
 }
 
 /* NBA.com definitions: TOV% = TOV / possessions; FTA rate = FTA / FGA; OREB% = offensive rebounds of missed field goals, team rebounds included / all rebounds of those misses (Nov 6; falls back to player rebounds when the play-by-play counts aren't there) */
