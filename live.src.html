@@ -3644,7 +3644,7 @@ Object.assign(SCARDS,{
       [['ORTG','ortg',true],['DRTG','drtg',false],['Net','net',true]].forEach(([lab,k,hi],i)=>{const y=Y+150+i*62;txt(x,lab,X+30,y,24,INK,600);const v=on[k],w=off[k];const good=v==null||w==null||Math.abs(v-w)<.05?null:(v>w)===hi;
         x.font='800 40px "Saira Condensed"';x.fillStyle=good==null?INK:good?LBT:LWS;const s1=k==='net'?lsg(v):lf1(v);x.fillText(s1,c1-x.measureText(s1).width,y+4);x.fillStyle=MUT;const s2=k==='net'?lsg(w):lf1(w);x.fillText(s2,c2-x.measureText(s2).width,y+4)})}
     lNote(x,'Season so far · NBA averages from every game this season · team ratings with him on vs off the floor');brandBar(x,LW,LH)}},
-  wfactor:{label:'Win the factor card',w:LW,h:LH,async draw(x,D,R){const G=(D.games||[]).filter(g=>g.t&&g.u);const z=y=>Object.assign({tdreb:0},sRow(y));const K=[['efg','Shooting','eFG%',1],['tov','Ball security','TOV%',0],['orb','Second chances','Offensive rebound rate',1],['ftr','Getting to the line','Free throw attempts per FGA',1]];
+  wfactor:{label:'Win the factor card',w:LW,h:LH,async draw(x,D,R){const G=(D.games||[]).filter(g=>g.t&&g.u);const z=y=>Object.assign({tdreb:0},sRow(y));const K=[['efg','Shooting','eFG%',1],['tov','Ball security','TOV%',0],['orb','Second chances','Offensive rebound rate',1],['ftr','Getting to the line','Free throw rate',1]];
     const rec={};K.forEach(([k])=>rec[k]=[[0,0],[0,0]]);const byN=[[0,0],[0,0],[0,0]];
     G.forEach(g=>{const a=z(g.t),b=z(g.u),fa=factors(a,b),fb=factors(b,a),w=g.cle>g.os?0:1;let n=0;K.forEach(([k,,,hi])=>{if(fa[k]==null||fb[k]==null||fa[k]===fb[k])return;const won=hi?fa[k]>fb[k]:fa[k]<fb[k];if(won)n++;rec[k][won?0:1][w]++});byN[n>=3?0:n===2?1:2][w]++});
     lFrame(x);const TX=await lLogoHead(x,D.focus);const [W0,L0]=sRec(D);lTitle(x,TX,'Win the factor · '+sSea(D),'Win the factor, win the game?',[[D.focus.abbr+' ','800 44px "Saira Condensed"','#fff'],[W0+'–'+L0,'800 104px "Saira Condensed"','#fff'],['   record when they win or lose each factor','600 32px Archivo','rgba(255,255,255,.62)']]);
@@ -3930,7 +3930,7 @@ const B_REC2=BWG({label:'Record card',async draw(x,D,R){const rc=recordThrough(D
   mkCtx(x,c,net==null?'':'Net rating '+BSg(net)+' per 100 possessions this season')}});
 
 /* WIN THE FACTOR (merged): the old banner and the full description of each factor, in the big tiles, then the record by factors won */
-const B_WF2={label:'Win the factor card',async draw(x,D,R){const G=(D.games||[]).filter(g=>g.t&&g.u),z=y=>Object.assign({tdreb:0},sRow(y)),K=[['efg','Shooting','eFG%',1],['tov','Ball security','TOV%',0],['orb','Second chances','Offensive rebound rate',1],['ftr','Getting to the line','Free throw attempts per FGA',1]];
+const B_WF2={label:'Win the factor card',async draw(x,D,R){const G=(D.games||[]).filter(g=>g.t&&g.u),z=y=>Object.assign({tdreb:0},sRow(y)),K=[['efg','Shooting','eFG%',1],['tov','Ball security','TOV%',0],['orb','Second chances','Offensive rebound rate',1],['ftr','Getting to the line','Free throw rate',1]];
   const rec={};K.forEach(([k])=>rec[k]=[[0,0],[0,0]]);const byN=[[0,0],[0,0],[0,0]];
   G.forEach(g=>{const a=z(g.t),b=z(g.u),fa=factors(a,b),fb=factors(b,a),w=g.cle>g.os?0:1;let n=0;K.forEach(([k,,,hi])=>{if(fa[k]==null||fb[k]==null||fa[k]===fb[k])return;const won=hi?fa[k]>fb[k]:fa[k]<fb[k];if(won)n++;rec[k][won?0:1][w]++});byN[n>=3?0:n===2?1:2][w]++});
   const c=await bFrame(x,D,BGK(D),'Win the factor, win the game?','Record when they win or lose each factor',null);
@@ -4920,7 +4920,7 @@ function vAst(v,D,R){
 
 /* Four factors tab, season mode: the Cavs' record when they win or lose each factor, by how many they won, and which combinations show up in wins and losses */
 function wfCard(v,D){const G=(D.games||[]).filter(g=>g.t&&g.u);if(!G.length)return;const z=x=>Object.assign({tdreb:0},sRow(x));
-  const K=[['efg','Shooting','eFG%',1],['tov','Ball security','TOV% (lower wins)',0],['orb','Second chances','Offensive rebound rate',1],['ftr','Getting to the line','Free throw attempts per FGA',1]];const SN={efg:'Shooting',tov:'Ball security',orb:'Second chances',ftr:'Getting to the line'};
+  const K=[['efg','Shooting','eFG%',1],['tov','Ball security','TOV% (lower wins)',0],['orb','Second chances','Offensive rebound rate',1],['ftr','Getting to the line','Free throw rate',1]];const SN={efg:'Shooting',tov:'Ball security',orb:'Second chances',ftr:'Getting to the line'};
   const rec={};K.forEach(([k])=>rec[k]=[[0,0],[0,0]]);const byN=[[0,0],[0,0],[0,0]],combo=[{},{}];
   G.forEach(g=>{const a=z(g.t),b=z(g.u),fa=factors(a,b),fb=factors(b,a),w=g.cle>g.os?0:1;let n=0;const wk=[];K.forEach(([k,,,hi])=>{if(fa[k]==null||fb[k]==null||fa[k]===fb[k])return;const won=hi?fa[k]>fb[k]:fa[k]<fb[k];if(won){n++;wk.push(SN[k])}rec[k][won?0:1][w]++});byN[n>=3?0:n===2?1:2][w]++;const ck=wk.length?wk.join(' + '):'Won no factors';combo[w][ck]=(combo[w][ck]||0)+1});
   const c=el('div','card sec');head(c,'Win the factor, win the game?',G.length+' game'+(G.length===1?'':'s')+' · Cavs’ record when they win or lose each factor');
