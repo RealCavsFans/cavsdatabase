@@ -36,17 +36,18 @@ rows.sort((x, y) => x.d < y.d ? -1 : x.d > y.d ? 1 : 0);
 let CT = {}; try { const j = JSON.parse(await readFile(new URL('pdata/league-rates.json', root), 'utf8')); for (const [k, v] of Object.entries(j.t || {})) CT[ab(k)] = v; } catch {}
 const ctDay = {}; for (const [k, v] of Object.entries(CT)) for (const r of v) ctDay[k + '|' + r[0]] = r;
 /* the Cavs' counted possessions from the game archive (live-archive/<season>/season.json, five-man rows) */
-let ARCH = null; try { const S = JSON.parse(await readFile(new URL('live-archive/2026-27/season.json', root), 'utf8')); let pf = 0, pa = 0, po = 0, pd = 0; for (const l of Object.values((S.L || {})[5] || {})) { pf += l.pf; pa += l.pa; po += (l.o || {}).np || 0; pd += (l.d || {}).np || 0; } if (po && pd) ARCH = { g: (S.games || []).length, pf, pa, po, pd }; } catch {}
+let ARCH = null; try { const S = JSON.parse(await readFile(new URL('live-archive/2026-27/season.json', root), 'utf8')); /* Nov 19 audit: each game's team possession count (games[].t[12] / u[12]), the number the season page and game log divide by; the five-man units' sum ran 1 to 3 short (a possession across a substitution) */ let pf = 0, pa = 0, po = 0, pd = 0; for (const g of S.games || []) { if (!g.t || !g.u) continue; pf += g.t[0]; pa += g.u[0]; po += g.t[12] || 0; pd += g.u[12] || 0; } if (po && pd && (S.games || []).every(g => g.t && g.t[12] > 0 && g.u[12] > 0)) ARCH = { g: (S.games || []).length, pf, pa, po, pd }; } catch {}
 const possOf = (t, o) => t.fga + 0.4 * t.fta - 1.07 * (t.orb / ((t.orb + o.drb) || 1)) * (t.fga - t.fgm) + t.tov;
 
-const F = ['pts', 'fgm', 'fga', 'tpm', 'tpa', 'ftm', 'fta', 'orb', 'drb', 'tov'];
+const F = ['pts', 'fgm', 'fga', 'tpm', 'tpa', 'ftm', 'fta', 'orb', 'drb', 'tov', 'forb', 'fdrb'];   /* forb/fdrb (Nov 19 audit): rebounds of missed shots with team rebounds, NBA.com's OREB%/DREB% */
 const A = {};
 for (const r of rows) {
   const a = A[r.me.ab] || (A[r.me.ab] = { g: 0, w: 0, mp: 0, res: [], ...Object.fromEntries(F.flatMap(f => [[f, 0], ['o' + f, 0]])) });
   a.g++; if (r.me.pts > r.op.pts) a.w++; a.mp += 240 + 25 * Math.max(0, r.per - 4);
-  for (const f of F) { a[f] += r.me[f]; a['o' + f] += r.op[f]; }
-  { const c = ctDay[r.me.ab + '|' + r.d], cp = c && c[3] === r.me.pts && c[4] === r.op.pts ? 0.5 * (c[1] + c[2]) : null;
-    a.res.push({ d: r.d, w: r.me.pts > r.op.pts, net: r.me.pts - r.op.pts, poss: cp != null ? cp : 0.5 * (possOf(r.me, r.op) + possOf(r.op, r.me)) }); }
+  for (const f of F) { a[f] += r.me[f] ?? (f === 'forb' ? NaN : f === 'fdrb' ? NaN : 0); a['o' + f] += r.op[f] ?? (f === 'forb' || f === 'fdrb' ? NaN : 0); }
+  { const c = ctDay[r.me.ab + '|' + r.d], ok = c && c[3] === r.me.pts && c[4] === r.op.pts;
+    /* Nov 19 audit: each side's own possessions, so a stretch's net rating is ORTG minus DRTG the way the season number is */
+    a.res.push({ d: r.d, w: r.me.pts > r.op.pts, net: r.me.pts - r.op.pts, pf: r.me.pts, pa: r.op.pts, po: ok ? c[1] : possOf(r.me, r.op), pd: ok ? c[2] : possOf(r.op, r.me) }); }
 }
 const TSTATS = {}, FFR = {}, NRTG = {}, L14 = {}, OPP_FORM = {};
 /* season ratings from pbpstats' play-by-play possession counts (the way NBA.com counts them) when pbpstats is caught up
@@ -67,12 +68,14 @@ for (const [k, a] of Object.entries(A)) {
   if (cnt) { ortg = 100 * a.pts / po; drtg = 100 * a.opts / pd; pace = 48 * ((po + pd) / 2) / (a.mp / 5); }
   else { const x = PBT && PBT[PBK[k]]; if (x && x.GamesPlayed === g && x.OffPoss > 0 && x.DefPoss > 0 && x.Points === a.pts && x.OpponentPoints === a.opts) { ortg = 100 * x.Points / x.OffPoss; drtg = 100 * x.OpponentPoints / x.DefPoss; if (x.Pace) pace = x.Pace; } }
   TSTATS[k] = [a.w, g - a.w, r1(a.pts / g), r1(a.opts / g), r1(ortg), r1(drtg), r1(pace), r1(100 * a.tpm / (a.tpa || 1))];
-  FFR[k] = ['fgm', 'fga', 'tpm', 'ftm', 'fta', 'orb', 'drb', 'tov', 'ofgm', 'ofga', 'otpm', 'oftm', 'ofta', 'oorb', 'odrb', 'otov'].map(f => r1(a[f] / g));
+  /* Nov 19 audit: the rebound slots hold rebounds of missed shots with team rebounds when every game has them (the live page's and NBA.com's OREB%), box score otherwise */
+  const fr = [a.forb, a.fdrb, a.oforb, a.ofdrb].every(Number.isFinite), rb = f => fr ? ({ orb: 'forb', drb: 'fdrb', oorb: 'oforb', odrb: 'ofdrb' }[f] || f) : f;
+  FFR[k] = ['fgm', 'fga', 'tpm', 'ftm', 'fta', 'orb', 'drb', 'tov', 'ofgm', 'ofga', 'otpm', 'oftm', 'ofta', 'oorb', 'odrb', 'otov'].map(f => r1(a[rb(f)] / g));
   NRTG[k] = [r1(ortg - drtg), g];
   /* last 14 days (ending yesterday): points margin per 100 possessions over those games, i.e. the pace-weighted mean of game net ratings */
   const w = a.res.filter(x => x.d >= from14 && x.d < today);
   /* when the window holds every game so far, use the season number so the two match (same possession count) */
-  if (w.length) L14[k] = [w.length === g ? r1(ortg - drtg) : r1(100 * w.reduce((s, x) => s + x.net, 0) / w.reduce((s, x) => s + x.poss, 0)), w.length];
+  if (w.length) L14[k] = [w.length === g ? r1(ortg - drtg) : r1(100 * (w.reduce((s, x) => s + x.pf, 0) / w.reduce((s, x) => s + x.po, 0) - w.reduce((s, x) => s + x.pa, 0) / w.reduce((s, x) => s + x.pd, 0))), w.length];
   OPP_FORM[k] = a.res.slice(-5).map(x => x.w ? 'W' : 'L').join('');
 }
 const STANDINGS = Object.entries(A).map(([k, a]) => [k, EAST.includes(k) ? 'E' : 'W', a.w, a.g - a.w]);

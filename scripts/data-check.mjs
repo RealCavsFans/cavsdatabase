@@ -67,6 +67,26 @@ if (DK.games != null && DK.games < ix.length) issues.push(`Dunks counted from ${
     const lack = ids.filter(id => !CB[id]); if (lack.length) issues.push(`Charge: ${lack.length} finished game(s) without a saved box score`); else ok.push(`Charge ${ids.length} games`);
     const old = Object.values(CB).filter(g => (g.lines || []).some(l => l.length < 13)).length; if (old) issues.push(`Charge: ${old} saved game(s) without free throws (TS% can't be shown)`); } }
 
+/* 3. one number, one value (Nov 19 audit): the Cavs' season rates are figured once, from the game archive's totals (every point over
+   every counted possession; rebounds of missed shots with team rebounds), and every copy elsewhere must match it */
+{ const gs = (SJ.games || []).filter(g => g.t && g.u), sum = (k, i) => gs.reduce((t, g) => t + (+g[k][i] || 0), 0);
+  if (gs.length && gs.every(g => g.t[12] > 0 && g.u[12] > 0)) {
+    const A = { ortg: 100 * sum('t', 0) / sum('t', 12), drtg: 100 * sum('u', 0) / sum('u', 12) };
+    const fr = gs.every(g => g.t.length > 14 && g.u.length > 14);
+    if (fr) A.orb = 100 * sum('t', 13) / (sum('t', 13) + sum('u', 14));
+    const near = (a, b) => a != null && b != null && Math.abs(a - b) < 0.051, r1 = x => Math.round(x * 10) / 10;
+    const html = fs.readFileSync('index.html', 'utf8'), cst = n => { const m = new RegExp('const ' + n + '=(\\{[\\s\\S]*?\\});').exec(html); try { return m ? JSON.parse(m[1]) : null; } catch { return null; } };
+    const TS = cst('TSTATS'), FF = cst('FFR'), CR = J('pdata/cle-rates.json');
+    const cmp = (lab, have, want) => { if (!near(have, r1(want))) issues.push(`${lab} is ${have}, the game archive's totals give ${r1(want).toFixed(1)}`); };
+    if (TS && TS.CLE && TS.CLE[0] + TS.CLE[1] === gs.length) { cmp('Team stats ORTG (index.html TSTATS)', TS.CLE[4], A.ortg); cmp('Team stats DRTG (index.html TSTATS)', TS.CLE[5], A.drtg); }
+    if (CR && CR.season === SEASON && CR.g === gs.length) { cmp('Tonight vs the season ORTG (cle-rates)', CR.ortg, A.ortg); cmp('Tonight vs the season DRTG (cle-rates)', CR.drtg, A.drtg); if (A.orb != null) cmp('Tonight vs the season OREB% (cle-rates)', CR.orb, A.orb); }
+    if (FF && FF.CLE && fr && TS && TS.CLE && TS.CLE[0] + TS.CLE[1] === gs.length) { const o = FF.CLE[5], od = FF.CLE[14]; if (!near(r1(100 * o / (o + od)), r1(A.orb)) && Math.abs(100 * o / (o + od) - A.orb) > 0.3) issues.push(`Four factors preview OREB% (index.html FFR) is ${(100 * o / (o + od)).toFixed(1)}, the game archive gives ${A.orb.toFixed(1)}`); }
+    /* the league feed's Cavs games count the same possessions and rebounds as the archive, game by game */
+    const lgBy = {}; Object.values(L.tg || {}).forEach(x => { const z = x.t || [], i = z.findIndex(y => y.ab === 'CLE'); if (i >= 0 && z.length === 2) lgBy[x.d] = [z[i], z[1 - i]]; });
+    const off = gs.filter(g => { const p = lgBy[g.et]; return p && p[0].np != null && (p[0].pts !== g.t[0] || p[1].pts !== g.u[0] || p[0].np !== g.t[12] || p[1].np !== g.u[12] || (fr && p[0].forb != null && (p[0].forb !== g.t[13] || p[0].fdrb !== g.t[14]))); }).map(g => g.et);
+    if (off.length) issues.push(`League feed and game archive count different possessions or rebounds for: ${off.join(', ')}`); else ok.push('one number, one value');
+  } }
+
 const out = { checked: new Date().toISOString(), issues, ok };
 fs.mkdirSync('data', { recursive: true });
 fs.writeFileSync('data/data-check.json', JSON.stringify(out, null, 1) + '\n');
