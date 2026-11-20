@@ -2011,19 +2011,21 @@ OFFI().then(R=>{const t=R&&R.teams.CLE;if(!t||!t.filed)return;const by={};t.rows
   window.cdbInjMove=row=>{row.appendChild(sec);sec.classList.add('in-gdm');window.cdbGmPlace();[400,1500,4000].forEach(t=>setTimeout(window.cdbGmPlace,t))};
   window.cdbInjBack=()=>{if(sec.parentNode!==home){home.insertBefore(sec,nx&&nx.parentNode===home?nx:null);sec.classList.remove('in-gdm')}window.cdbGmPlace()}}
 /* games missed this season: Cavs players out of a regular-season game for injury or illness (from each final box score), and the salary paid for those games (2026–27 salary ÷ 82) */
-setTimeout(()=>{Promise.all([fJ('/box.json').then(r=>r.ok?r.json():null).catch(()=>null),fJ('/pdata/injury-history.json').then(r=>r.ok?r.json():{}).catch(()=>({}))]).then(([B,IH])=>{if(!B)return;window.__BOXJ=B;const reg=new Set(SCHEDULE.map(g=>g[0]));const fin=Object.entries(B).filter(([d,g])=>reg.has(d)&&g.status==='final');if(!fin.length)return;
+setTimeout(()=>{Promise.all([fJ('/box.json').then(r=>r.ok?r.json():null).catch(()=>null),fJ('/pdata/injury-history.json').then(r=>r.ok?r.json():{}).catch(()=>({})),fJ('/pdata/league-injuries-nba.json').then(r=>r.ok?r.json():null).catch(()=>null)]).then(([B,IH,LN])=>{if(!B)return;window.__BOXJ=B;const reg=new Set(SCHEDULE.map(g=>g[0]));const fin=Object.entries(B).filter(([d,g])=>reg.has(d)&&g.status==='final');if(!fin.length)return;
   /* Nov 20 audit: games with the official NBA injury report saved (pdata/injury-history.json, the last report before tip) count from it: listed Out for an injury or illness and didn't play.
      G League assignments, two-way stints, suspensions and personal reasons aren't injuries. Earlier games use ESPN's list. */
   const NOTINJ=/G League|two-way|assignment|suspen|personal|not with team|league suspension/i;
   const outOf=(d,g)=>{const h=IH&&IH[d];if(!h)return g.out||[];const pl=new Set((g.box||[]).filter(r=>parseFloat(r[1])>0).map(r=>r[0]));return h.rows.filter(r=>/^Out$/i.test(r[1])&&!NOTINJ.test(r[2]||'')&&!pl.has(r[0])).map(r=>r[0])};
-  const M={};fin.forEach(([d,g])=>outOf(d,g).forEach(n=>{if(!TWOWAY.some(t=>t[0]===n))M[n]=(M[n]||0)+1}));  /* two-way players don't count */
+  /* Nov 20: every game read from the official report itself (pdata/league-injuries-nba.json: the last report before each tip, Out for an injury or illness, didn't play), the same file the league rank uses */
+  const LNG=LN&&LN.teams&&LN.teams.CLE?Object.values(LN.games||{}).filter(x=>x.t.includes('CLE')):null;const lnD=new Set((LNG||[]).map(x=>x.d));
+  const M={};fin.forEach(([d,g])=>(lnD.has(d)?LNG.filter(x=>x.d===d).flatMap(x=>(x.out.CLE||[]).map(r=>r[0])):outOf(d,g)).forEach(n=>{if(!TWOWAY.some(t=>t[0]===n))M[n]=(M[n]||0)+1}));  /* two-way players don't count */
   const sal=n=>{const r=ROSTER.find(x=>x[0]===n);if(!r)return 0;const v=r[2][0];return typeof v==='number'?v:Array.isArray(v)?v[0]:0};
   const rows=Object.entries(M).map(([n,g])=>[n,g,sal(n)/82*g]).sort((a,b)=>b[1]-a[1]||b[2]-a[2]);const tg=rows.reduce((a,r)=>a+r[1],0),tc=rows.reduce((a,r)=>a+r[2],0);
   const fm=v=>v>=1e6?'$'+(v/1e6).toFixed(2)+'M':v>=1e3?'$'+Math.round(v/1e3)+'K':v?'$'+Math.round(v):'$0';
   const card=document.getElementById('inj').closest('section');const w=el('div','gmw');w.appendChild(el('div','gm-k','Season to date · '+fin.length+' game'+(fin.length===1?'':'s')));
   const dl=el('div','gm-tiles');[['Games missed',String(tg),'g2'],['Salary of games missed',fm(tc),'g2']].forEach(([k,v,c])=>{const d=el('div','gm-tile '+c);d.append(el('b',null,v),el('span',null,k));dl.appendChild(d)});w.appendChild(dl);
   /* league rank: games missed to injury by every team (pdata/league-injuries.json, ESPN injury lists); salary of games missed once league salaries are saved (pdata/league-salaries.json) */
-  Promise.all(['/pdata/league-injuries.json','/pdata/league-salaries.json'].map(u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null))).then(([LI,LS])=>{const T=LI&&LI.teams;if(!T||!T.CLE)return;const ord2=n=>n+(n%100>=11&&n%100<=13?'th':['th','st','nd','rd'][n%10]||'th');
+  Promise.all(['/pdata/league-injuries.json','/pdata/league-salaries.json'].map(u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null))).then(([LI,LS])=>{const T=(LNG&&LN.teams)||(LI&&LI.teams);if(!T||!T.CLE)return;const ord2=n=>n+(n%100>=11&&n%100<=13?'th':['th','st','nd','rd'][n%10]||'th');
     const rk=(vals,me)=>{const hi=vals.filter(v=>v>me).length,tie=vals.filter(v=>v===me).length>1;return (tie?'T-':'')+ord2(hi+1)};const tiles=dl.querySelectorAll('.gm-tile');const n=Object.keys(T).length;
     /* with league salaries saved, a team's games and salary count only players on that team's salary sheet: two-way players
        (no salary shown) and players ESPN lists under the wrong team are left out. Names match exactly, or else by first
@@ -2035,7 +2037,7 @@ setTimeout(()=>{Promise.all([fJ('/box.json').then(r=>r.ok?r.json():null).catch((
       const f=S2.filter(([u])=>u.length&&u[0][0]===t[0][0]&&ed1(u[u.length-1],t[t.length-1]));return f.length===1?f[0][1]:null};
     for(const [ab,x] of Object.entries(T)){if(!LT||!LT[ab]){games[ab]=x.missed;lost[ab]=0;continue}const S2=Object.entries(LT[ab]).map(([nm,v])=>[tk(nm),v]);let g0=0,c0=0;
       for(const [nm,g] of Object.entries(x.players)){const v=sv(S2,nm);if(v==null)continue;g0+=g;c0+=v/82*g}games[ab]=g0;lost[ab]=c0}
-    /* Nov 20 audit: ranked like for like, every team (the Cavs too) from the same ESPN injury lists, so the order is fair even where the Cavs' own count above (official report) runs a game higher; no denominator (a team rank is out of 30) */
+    /* Nov 20: ranked like for like, every team (the Cavs too) from the official NBA injury report (ESPN's lists only if that file is missing); no denominator (a team rank is out of 30) */
     tiles[0].appendChild(el('small','gm-rk',rk(Object.values(games),games.CLE)+' most'));
     if(LT)tiles[1].appendChild(el('small','gm-rk',rk(Object.values(lost),lost.CLE)+' most'));
     });
