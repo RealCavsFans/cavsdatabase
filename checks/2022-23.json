@@ -1,21 +1,105 @@
 {
  "season": "2022-23",
- "checked": "2026-11-20T20:52:28.376Z",
+ "checked": "2026-11-20T21:24:36.077Z",
  "tally": {
-  "games": 87,
-  "clean": 83,
+  "games": 1314,
+  "clean": 1277,
   "nba": 0,
-  "ours": 4,
+  "ours": 27,
   "poss": 0,
-  "espn": 0
+  "espn": 11
  },
  "how": "nba = the NBA box score does not add up on its own; ours = our play-by-play build differs from the NBA box score; poss = possession count off from the NBA markers; espn = the NBA and ESPN box scores disagree (Cavs games)",
  "games": {
+  "0022200055": {
+   "d": "20221025",
+   "m": "GSW@PHX",
+   "ours": [
+    "D. Ayton (PHX): pm 2/1 (NBA/ours)",
+    "J. Landale (PHX): pm 27/28 (NBA/ours)",
+    "K. Thompson (GSW): pm -12/-11 (NBA/ours)",
+    "J. Poole (GSW): pm -15/-16 (NBA/ours)"
+   ]
+  },
+  "0022200056": {
+   "d": "20221026",
+   "m": "ORL@CLE",
+   "espn": [
+    "E. Mobley: pts 22/20, FT 4-6/2-4 (NBA/ESPN)",
+    "C. LeVert: pts 10/12, FT 1-4/3-6 (NBA/ESPN)",
+    "F. Wagner: FG 10-19/10-20 (NBA/ESPN)",
+    "W. Carter Jr.: reb 9/8 (NBA/ESPN)",
+    "C. Anthony: reb 5/6 (NBA/ESPN)",
+    "C. Houstan: FG 1-2/1-1 (NBA/ESPN)"
+   ]
+  },
+  "0022200060": {
+   "d": "20221026",
+   "m": "BKN@MIL",
+   "ours": [
+    "R. O'Neale (BKN): pm -3/-2 (NBA/ours)",
+    "E. Sumner (BKN): pm -7/-8 (NBA/ours)"
+   ]
+  },
+  "0022200068": {
+   "d": "20221027",
+   "m": "MIA@GSW",
+   "ours": [
+    "D. Green (GSW): pm 9/8 (NBA/ours)",
+    "K. Thompson (GSW): pm 7/6 (NBA/ours)",
+    "J. Poole (GSW): pm -1/0 (NBA/ours)",
+    "J. Green (GSW): pm 4/5 (NBA/ours)"
+   ]
+  },
+  "0022200072": {
+   "d": "20221028",
+   "m": "CLE@BOS",
+   "espn": [
+    "D. Mitchell: FG 15-26/15-25 (NBA/ESPN)"
+   ]
+  },
+  "0022200081": {
+   "d": "20221029",
+   "m": "MIA@SAC",
+   "ours": [
+    "D. Fox (SAC): pf 4/5 (NBA/ours)"
+   ]
+  },
+  "0022200117": {
+   "d": "20221102",
+   "m": "NOP@LAL",
+   "ours": [
+    "M. Ryan (LAL): min 18.3/12.9, pm -7/-5 (NBA/ours)",
+    "K. Nunn (LAL): min 0.0/12.0, pm 0/-3 (NBA/ours)",
+    "LAL: lineup time 86.1 min vs game 53"
+   ]
+  },
+  "0022200126": {
+   "d": "20221104",
+   "m": "LAC@SAS",
+   "ours": [
+    "K. Bates-Diop (SAS): pm -4/-3 (NBA/ours)",
+    "D. McDermott (SAS): pm 5/4 (NBA/ours)"
+   ]
+  },
+  "0022200193": {
+   "d": "20221113",
+   "m": "MIN@CLE",
+   "espn": [
+    "D. Russell: ast 12/11 (NBA/ESPN)",
+    "J. Nowell: ast 1/2 (NBA/ESPN)"
+   ]
+  },
   "0022200225": {
    "d": "20221118",
    "m": "CHA@CLE",
    "ours": [
     "T. Rozier (CHA): fga 32/33, tpa 17/18 (NBA/ours)"
+   ],
+   "espn": [
+    "L. Stevens: reb 4/3 (NBA/ESPN)",
+    "M. Plumlee: reb 5/6 (NBA/ESPN)",
+    "T. Rozier: 3PT 5-17/5-16 (NBA/ESPN)"
    ]
   },
   "0022200248": {
@@ -23,6 +107,138 @@
    "m": "ATL@CLE",
    "ours": [
     "T. Young (ATL): tpa 7/8 (NBA/ours)"
+   ]
+  },
+  "0022200296": {
+   "d": "20221127",
+   "m": "MEM@NYK",
+   "ours": [
+    "J. Randle (NYK): pm -2/-3 (NBA/ours)",
+    "O. Toppin (NYK): pm -2/-1 (NBA/ours)"
+   ]
+  },
+  "0022200317": {
+   "d": "20221130",
+   "m": "MEM@MIN",
+   "ours": [
+    "D. Russell (MIN): pm 18/17 (NBA/ours)",
+    "A. Rivers (MIN): pm -4/-3 (NBA/ours)",
+    "D. Brooks (MEM): pm -14/-13 (NBA/ours)",
+    "J. Konchar (MEM): pm 3/2 (NBA/ours)",
+    "J. Morant (MEM): pm -9/-8 (NBA/ours)",
+    "D. Roddy (MEM): pm 13/12 (NBA/ours)"
+   ]
+  },
+  "0022200325": {
+   "d": "20221201",
+   "m": "DAL@DET",
+   "ours": [
+    "D. Finney-Smith (DAL): pm -9/-10 (NBA/ours)",
+    "S. Dinwiddie (DAL): pm 7/6 (NBA/ours)",
+    "J. Green (DAL): pm -5/-4 (NBA/ours)",
+    "R. Bullock (DAL): pm 8/9 (NBA/ours)"
+   ]
+  },
+  "0022200341": {
+   "d": "20221203",
+   "m": "OKC@MIN",
+   "ours": [
+    "W. Moore Jr. (MIN): pm -2/-3 (NBA/ours)",
+    "D. Russell (MIN): pm -16/-15 (NBA/ours)",
+    "J. Giddey (OKC): pm 8/9 (NBA/ours)",
+    "K. Williams (OKC): pm 12/11 (NBA/ours)"
+   ]
+  },
+  "0022200381": {
+   "d": "20221209",
+   "m": "SAC@CLE",
+   "espn": [
+    "E. Mobley: pts 16/17, FT 6-8/7-9 (NBA/ESPN)",
+    "D. Garland: pts 19/18, FT 2-2/1-1 (NBA/ESPN)"
+   ]
+  },
+  "0022200392": {
+   "d": "20221210",
+   "m": "BOS@GSW",
+   "ours": [
+    "D. Green (GSW): pm 9/8 (NBA/ours)",
+    "K. Looney (GSW): pm 19/18 (NBA/ours)",
+    "K. Thompson (GSW): pm 9/8 (NBA/ours)",
+    "D. DiVincenzo (GSW): pm 20/19 (NBA/ours)",
+    "J. Kuminga (GSW): pm -3/-2 (NBA/ours)",
+    "M. Moody (GSW): pm 2/3 (NBA/ours)",
+    "A. Lamb (GSW): pm -2/-1 (NBA/ours)",
+    "T. Jerome (GSW): pm -2/-1 (NBA/ours)",
+    "J. Tatum (BOS): pm -13/-12 (NBA/ours)",
+    "G. Williams (BOS): pm -6/-5 (NBA/ours)",
+    "J. Brown (BOS): pm -9/-8 (NBA/ours)",
+    "M. Smart (BOS): pm -6/-5 (NBA/ours)",
+    "L. Kornet (BOS): pm -9/-10 (NBA/ours)",
+    "D. White (BOS): pm -14/-13 (NBA/ours)",
+    "S. Hauser (BOS): pm -7/-8 (NBA/ours)",
+    "P. Pritchard (BOS): pm -4/-5 (NBA/ours)",
+    "N. Vonleh (BOS): pm 2/1 (NBA/ours)",
+    "J. Jackson (BOS): pm 2/1 (NBA/ours)"
+   ]
+  },
+  "0022200452": {
+   "d": "20221219",
+   "m": "UTA@CLE",
+   "espn": [
+    "C. LeVert: reb 3/4 (NBA/ESPN)",
+    "L. Bolmaro: FG 1-3/1-4 (NBA/ESPN)"
+   ]
+  },
+  "0022200484": {
+   "d": "20221223",
+   "m": "TOR@CLE",
+   "espn": [
+    "J. Allen: min 27.9/31 (NBA/ESPN)",
+    "C. LeVert: min 20.6/18 (NBA/ESPN)",
+    "O. Anunoby: FG 10-17/10-16 (NBA/ESPN)",
+    "T. Young: FG 1-1/1-2 (NBA/ESPN)"
+   ]
+  },
+  "0022200548": {
+   "d": "20230101",
+   "m": "WAS@MIL",
+   "ours": [
+    "B. Portis (MIL): pm -11/-10 (NBA/ours)",
+    "S. Mamukelashvili (MIL): pm -10/-11 (NBA/ours)",
+    "K. Porzingis (WAS): pm 14/13 (NBA/ours)",
+    "D. Gafford (WAS): pm 14/15 (NBA/ours)"
+   ]
+  },
+  "0022200615": {
+   "d": "20230110",
+   "m": "PHX@GSW",
+   "ours": [
+    "A. Iguodala (GSW): pm 2/3 (NBA/ours)",
+    "A. Lamb (GSW): pm -7/-8 (NBA/ours)"
+   ]
+  },
+  "0022200630": {
+   "d": "20230112",
+   "m": "DAL@LAL",
+   "ours": [
+    "C. Wood (DAL): pm 19/16 (NBA/ours)",
+    "S. Dinwiddie (DAL): pm 5/8 (NBA/ours)"
+   ]
+  },
+  "0022200733": {
+   "d": "20230126",
+   "m": "CLE@HOU",
+   "espn": [
+    "K. Martin Jr.: not in ESPN's box score",
+    "E. Mobley: FG 6-17/6-16 (NBA/ESPN)"
+   ]
+  },
+  "0022200771": {
+   "d": "20230201",
+   "m": "POR@MEM",
+   "ours": [
+    "J. Jackson Jr. (MEM): pm 2/1 (NBA/ours)",
+    "S. Aldama (MEM): pm -15/-14 (NBA/ours)"
    ]
   },
   "0022200779": {
@@ -35,6 +251,93 @@
     "J. Konchar (MEM): pm -11/-10 (NBA/ours)"
    ]
   },
+  "0022200790": {
+   "d": "20230203",
+   "m": "ORL@MIN",
+   "ours": [
+    "J. McDaniels (MIN): pm 0/1 (NBA/ours)",
+    "D. Russell (MIN): pm -9/-10 (NBA/ours)",
+    "T. Prince (MIN): pm 1/2 (NBA/ours)",
+    "J. Nowell (MIN): pm -13/-14 (NBA/ours)",
+    "N. Knight (MIN): pm -10/-11 (NBA/ours)",
+    "A. Rivers (MIN): pm -3/-2 (NBA/ours)",
+    "J. Isaac (ORL): pm -9/-10 (NBA/ours)",
+    "J. Suggs (ORL): pm 6/5 (NBA/ours)",
+    "B. Bol (ORL): pm 5/6 (NBA/ours)",
+    "K. Harris (ORL): pm -1/0 (NBA/ours)"
+   ]
+  },
+  "0022200809": {
+   "d": "20230206",
+   "m": "CLE@WAS",
+   "espn": [
+    "D. Wright: FG 0-4/0-3, 3PT 0-2/0-1 (NBA/ESPN)",
+    "W. Barton: FG 6-12/6-13, 3PT 1-4/1-5 (NBA/ESPN)"
+   ]
+  },
+  "0022200822": {
+   "d": "20230208",
+   "m": "DET@CLE",
+   "espn": [
+    "J. Allen: reb 15/16 (NBA/ESPN)",
+    "R. Rubio: FG 3-5/3-6, 3PT 0-2/0-3 (NBA/ESPN)"
+   ]
+  },
+  "0022200916": {
+   "d": "20230226",
+   "m": "MIN@GSW",
+   "ours": [
+    "K. Thompson (GSW): pm 4/2 (NBA/ours)",
+    "P. Baldwin Jr. (GSW): pm -2/0 (NBA/ours)"
+   ]
+  },
+  "0022200921": {
+   "d": "20230227",
+   "m": "BOS@NYK",
+   "ours": [
+    "J. Tatum (BOS): pm -18/-17 (NBA/ours)",
+    "D. White (BOS): pm 0/-1 (NBA/ours)"
+   ]
+  },
+  "0022201040": {
+   "d": "20230315",
+   "m": "DAL@SAS",
+   "ours": [
+    "M. Branham (SAS): pm 3/1 (NBA/ours)",
+    "D. Barlow (SAS): pm 10/12 (NBA/ours)"
+   ]
+  },
+  "0022201107": {
+   "d": "20230325",
+   "m": "IND@ATL",
+   "ours": [
+    "T. Young (ATL): pm -8/-7 (NBA/ours)",
+    "A. Griffin (ATL): pm 25/24 (NBA/ours)"
+   ]
+  },
+  "0022201117": {
+   "d": "20230326",
+   "m": "HOU@CLE",
+   "espn": [
+    "K. Martin Jr.: not in ESPN's box score"
+   ]
+  },
+  "0022201152": {
+   "d": "20230331",
+   "m": "UTA@BOS",
+   "ours": [
+    "S. Fontecchio (UTA): pm -3/-4 (NBA/ours)",
+    "K. Dunn (UTA): pm -7/-6 (NBA/ours)"
+   ]
+  },
+  "0022201187": {
+   "d": "20230404",
+   "m": "OKC@GSW",
+   "ours": [
+    "J. Poole (GSW): pm 6/5 (NBA/ours)",
+    "S. Curry (GSW): pm 13/14 (NBA/ours)"
+   ]
+  },
   "0022201218": {
    "d": "20230409",
    "m": "CHA@CLE",
@@ -43,6 +346,16 @@
     "M. Diakite (CLE): pm -2/-4 (NBA/ours)",
     "S. Mykhailiuk (CHA): pm 3/5 (NBA/ours)",
     "J. Bouknight (CHA): pm -1/-3 (NBA/ours)"
+   ]
+  },
+  "0042200304": {
+   "d": "20230523",
+   "m": "BOS@MIA",
+   "ours": [
+    "C. Martin (MIA): pm -10/-11 (NBA/ours)",
+    "C. Zeller (MIA): pm 2/3 (NBA/ours)",
+    "J. Brown (BOS): pm 9/11 (NBA/ours)",
+    "J. Champagnie (BOS): pm 2/0 (NBA/ours)"
    ]
   }
  }

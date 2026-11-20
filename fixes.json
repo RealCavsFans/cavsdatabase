@@ -1,4 +1,110 @@
 {
+ "0022200038": [
+  {
+   "action": 331,
+   "set": {
+    "personId": 1630547,
+    "playerName": "Bouknight",
+    "playerNameI": "J. Bouknight"
+   },
+   "was": "D. Smith Jr.",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022200061": [
+  {
+   "action": 471,
+   "set": {
+    "personId": 1630174,
+    "playerName": "Nesmith",
+    "playerNameI": "A. Nesmith"
+   },
+   "was": "C. Duarte",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022200226": [
+  {
+   "action": 474,
+   "set": {
+    "personId": 1627863,
+    "playerName": "House Jr.",
+    "playerNameI": "D. House Jr."
+   },
+   "was": "D. Melton",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022200252": [
+  {
+   "action": 562,
+   "set": {
+    "personId": 1628997,
+    "playerName": "Martin",
+    "playerNameI": "C. Martin"
+   },
+   "was": "M. Strus",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  },
+  {
+   "action": 82,
+   "set": {
+    "personId": 1629622,
+    "playerName": "Strus",
+    "playerNameI": "M. Strus"
+   },
+   "was": "C. Martin",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022200400": [
+  {
+   "action": 615,
+   "set": {
+    "personId": 1630172,
+    "playerName": "Williams",
+    "playerNameI": "P. Williams"
+   },
+   "was": "Z. LaVine",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022200426": [
+  {
+   "action": 674,
+   "set": {
+    "personId": 202685,
+    "playerName": "Valanciunas",
+    "playerNameI": "J. Valanciunas"
+   },
+   "was": "L. Nance Jr.",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022200619": [
+  {
+   "action": 526,
+   "set": {
+    "personId": 1630166,
+    "playerName": "Avdija",
+    "playerNameI": "D. Avdija"
+   },
+   "was": "M. Morris",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022200697": [
+  {
+   "action": 292,
+   "set": {
+    "personId": 1628969,
+    "playerName": "Bridges",
+    "playerNameI": "M. Bridges"
+   },
+   "was": "D. Washington Jr.",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
  "0022300011": [
   {
    "action": 476,
@@ -198,6 +304,30 @@
     "playerNameI": "A. Reaves"
    },
    "was": "J. LaRavia",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0042200217": [
+  {
+   "action": 66,
+   "set": {
+    "personId": 200782,
+    "playerName": "Tucker",
+    "playerNameI": "P. Tucker"
+   },
+   "was": "T. Harris",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0042200224": [
+  {
+   "action": 484,
+   "set": {
+    "personId": 1629028,
+    "playerName": "Ayton",
+    "playerNameI": "D. Ayton"
+   },
+   "was": "K. Durant",
    "why": "substitution named the wrong player (minutes then match the NBA box score)"
   }
  ],
