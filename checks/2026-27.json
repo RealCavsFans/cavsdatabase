@@ -1,11 +1,11 @@
 {
  "season": "2026-27",
- "checked": "2026-11-20T10:51:09.508Z",
+ "checked": "2026-11-20T14:10:20.717Z",
  "tally": {
   "games": 226,
-  "clean": 219,
+  "clean": 224,
   "nba": 0,
-  "ours": 7,
+  "ours": 2,
   "poss": 1,
   "espn": 0
  },
@@ -19,66 +19,18 @@
     "S. Adams (HOU): pm 6/7 (NBA/ours)"
    ],
    "poss": [
-    "SAS: 97 possessions vs NBA's 104",
-    "HOU: 99 possessions vs NBA's 105"
-   ]
-  },
-  "0022600036": {
-   "d": "20261113",
-   "m": "CLE@MIA",
-   "ours": [
-    "B. Portis Jr. (MIA): pm -1/-2 (NBA/ours)",
-    "S. Fontecchio (MIA): pm 11/12 (NBA/ours)"
-   ]
-  },
-  "0022600124": {
-   "d": "20261026",
-   "m": "PHX@OKC",
-   "ours": [
-    "I. Hartenstein (OKC): pm -1/-2 (NBA/ours)",
-    "B. Stirtz (OKC): pm 1/2 (NBA/ours)",
-    "A. Mara (OKC): pm 13/14 (NBA/ours)",
-    "J. Dix (OKC): pm -7/-8 (NBA/ours)",
-    "K. Maluach (PHX): pm -2/-3 (NBA/ours)",
-    "J. Green (PHX): pm -10/-11 (NBA/ours)",
-    "D. Booker (PHX): pm -11/-12 (NBA/ours)",
-    "C. Gillespie (PHX): pm -16/-15 (NBA/ours)",
-    "L. Kennard (PHX): pm -6/-5 (NBA/ours)",
-    "R. Dunn (PHX): pm 5/6 (NBA/ours)"
-   ]
-  },
-  "0022600155": {
-   "d": "20261101",
-   "m": "BKN@IND",
-   "ours": [
-    "J. Randle (BKN): pm 17/18 (NBA/ours)",
-    "C. Johnson (BKN): pm 10/9 (NBA/ours)",
-    "N. Traore (BKN): pm 8/9 (NBA/ours)",
-    "K. Ellis (BKN): pm 1/0 (NBA/ours)"
-   ]
-  },
-  "0022600220": {
-   "d": "20261111",
-   "m": "SAS@CHI",
-   "ours": [
-    "J. Smith (CHI): pm -31/-32 (NBA/ours)",
-    "Z. Collins (CHI): pm 1/2 (NBA/ours)"
+    "SAS: 98 possessions vs NBA's 104",
+    "HOU: 97 possessions vs NBA's 105"
    ]
   },
   "0022600259": {
    "d": "20261118",
    "m": "HOU@IND",
    "ours": [
-    "J. Huff (IND): pm -1/0 (NBA/ours)",
-    "L. Nance Jr. (IND): pm -7/-8 (NBA/ours)"
-   ]
-  },
-  "0022600264": {
-   "d": "20261118",
-   "m": "DET@NOP",
-   "ours": [
-    "J. Fears (NOP): pm -13/-14 (NBA/ours)",
-    "J. Pierre Jr. (NOP): pm 2/3 (NBA/ours)"
+    "K. Durant (HOU): pm 14/15 (NBA/ours)",
+    "J. Smith Jr. (HOU): pm 15/14 (NBA/ours)",
+    "A. Sengun (HOU): pm 17/16 (NBA/ours)",
+    "S. Adams (HOU): pm -5/-4 (NBA/ours)"
    ]
   }
  }
