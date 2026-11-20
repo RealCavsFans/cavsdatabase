@@ -27,6 +27,7 @@ const FRESH = [
   ['Matchups (NBA tracking, nightly from Luka\'s computer)', 'pdata/matchups.json', 54, j => j.updated + 'T23:59:00-05:00', true],
   ['Comparable seasons', 'pdata/comps.json', 8 * 24, j => j.updated + 'T23:59:00-05:00', true],
   ['Career stats (Basketball Reference, weekly)', 'pdata/careers.json', 8 * 24 + 12, j => j.updated, false],
+  ['Player careers (play-by-play, nightly)', 'pdata/careers-pbp.json', 50, j => j.updated, false],
 ];
 for (const [lab, f, max, ts, seasonal] of FRESH) {
   if (seasonal && !inSeason) continue;

@@ -1,0 +1,48 @@
+name: Player careers (play-by-play)
+# Nov 20 (Luka): every player-page player's seasons since 2020-21 (any team) from the NBA's own game files on the nba-data
+# branch: his NBA box line, on-floor rates, shot zones and on/off (scripts/player-careers.mjs -> pdata/careers-pbp.json).
+# Nightly after the game store; also on demand.
+on:
+  schedule:
+    - cron: '17 12 * * *'   # 7:17 a.m. Eastern (8:17 in daylight time), after the morning game store run
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: player-careers
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+        with:
+          sparse-checkout: |
+            scripts/player-careers.mjs
+            scripts/nba-fixes.mjs
+            pdata/nba-fixes.json
+            pdata/careers-pbp.json
+            live-core.js
+            index.html
+          sparse-checkout-cone-mode: false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+        with:
+          ref: nba-data
+          path: nba-data
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
+        with:
+          node-version: 22
+      - run: NBA_DIR=nba-data node scripts/player-careers.mjs
+      - name: Commit if changed
+        run: |
+          git config user.name "cavsdatabase-bot"
+          git config user.email "bot@cavsdatabase.com"
+          git add pdata/careers-pbp.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Player careers (play-by-play)"
+          for i in 1 2 3 4 5 6; do
+            if git pull --rebase -X theirs origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true; sleep $((RANDOM % 20 + i * 10))
+          done
+          exit 1
