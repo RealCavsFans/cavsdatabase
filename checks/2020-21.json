@@ -1,16 +1,150 @@
 {
  "season": "2020-21",
- "checked": "2026-11-20T20:49:16.534Z",
+ "checked": "2026-11-20T21:38:05.254Z",
  "tally": {
-  "games": 72,
-  "clean": 70,
+  "games": 1165,
+  "clean": 1120,
   "nba": 0,
-  "ours": 2,
-  "poss": 0,
-  "espn": 0
+  "ours": 34,
+  "poss": 1,
+  "espn": 11
  },
  "how": "nba = the NBA box score does not add up on its own; ours = our play-by-play build differs from the NBA box score; poss = possession count off from the NBA markers; espn = the NBA and ESPN box scores disagree (Cavs games)",
  "games": {
+  "0022000013": {
+   "d": "20201223",
+   "m": "WAS@PHI",
+   "ours": [
+    "T. Harris (PHI): pm -7/-5 (NBA/ours)",
+    "M. Scott (PHI): pm 13/11 (NBA/ours)"
+   ]
+  },
+  "0022000062": {
+   "d": "20201231",
+   "m": "CLE@IND",
+   "espn": [
+    "M. Brogdon: reb 3/4 (NBA/ESPN)",
+    "C. Osman: reb 3/2 (NBA/ESPN)"
+   ]
+  },
+  "0022000086": {
+   "d": "20210103",
+   "m": "WAS@BKN",
+   "ours": [
+    "J. Harris (BKN): pm 9/11 (NBA/ours)",
+    "K. Durant (BKN): pm 9/11 (NBA/ours)",
+    "T. Luwawu-Cabarrot (BKN): pm 8/10 (NBA/ours)",
+    "T. Prince (BKN): pm -12/-14 (NBA/ours)",
+    "L. Shamet (BKN): pm -15/-17 (NBA/ours)",
+    "C. LeVert (BKN): pm -3/-5 (NBA/ours)"
+   ]
+  },
+  "0022000093": {
+   "d": "20210104",
+   "m": "CLE@ORL",
+   "espn": [
+    "A. Drummond: reb 14/13, FG 5-15/5-14 (NBA/ESPN)"
+   ]
+  },
+  "0022000098": {
+   "d": "20210104",
+   "m": "DAL@HOU",
+   "ours": [
+    "C. Wood (HOU): pm -18/-19 (NBA/ours)",
+    "D. Cousins (HOU): pm 5/6 (NBA/ours)",
+    "M. Kleber (DAL): pm 16/17 (NBA/ours)",
+    "W. Cauley-Stein (DAL): pm 18/17 (NBA/ours)"
+   ]
+  },
+  "0022000119": {
+   "d": "20210107",
+   "m": "CLE@MEM",
+   "espn": [
+    "B. Clarke: reb 9/8 (NBA/ESPN)",
+    "D. Brooks: reb 1/2 (NBA/ESPN)"
+   ]
+  },
+  "0022000124": {
+   "d": "20210108",
+   "m": "WAS@BOS",
+   "ours": [
+    "D. Theis (BOS): pm -4/-3 (NBA/ours)",
+    "T. Fall (BOS): pm 13/12 (NBA/ours)",
+    "T. Bryant (WAS): pm -12/-13 (NBA/ours)",
+    "I. Smith (WAS): pm 11/12 (NBA/ours)"
+   ]
+  },
+  "0022000137": {
+   "d": "20210109",
+   "m": "CLE@MIL",
+   "espn": [
+    "I. Okoro: FG 2-8/2-9 (NBA/ESPN)"
+   ]
+  },
+  "0022000146": {
+   "d": "20210110",
+   "m": "LAL@HOU",
+   "ours": [
+    "M. Morris (LAL): pm -4/-5 (NBA/ours)",
+    "T. Horton-Tucker (LAL): pm 7/8 (NBA/ours)"
+   ]
+  },
+  "0022000159": {
+   "d": "20210112",
+   "m": "UTA@CLE",
+   "espn": [
+    "Y. Ferrell: reb 4/5 (NBA/ESPN)",
+    "M. Bolden: reb 3/2 (NBA/ESPN)"
+   ]
+  },
+  "0022000210": {
+   "d": "20210118",
+   "m": "DAL@TOR",
+   "ours": [
+    "T. Hardaway Jr. (DAL): pm -12/-13 (NBA/ours)",
+    "K. Porzingis (DAL): pm -9/-10 (NBA/ours)",
+    "J. Brunson (DAL): pm -3/-4 (NBA/ours)",
+    "J. Johnson (DAL): pm -20/-19 (NBA/ours)",
+    "W. Iwundu (DAL): pm -8/-7 (NBA/ours)",
+    "J. Green (DAL): pm -16/-15 (NBA/ours)"
+   ]
+  },
+  "0022000227": {
+   "d": "20210121",
+   "m": "NOP@UTA",
+   "ours": [
+    "R. O'Neale (UTA): pm 15/13 (NBA/ours)",
+    "D. Mitchell (UTA): pm 16/14 (NBA/ours)",
+    "M. Conley (UTA): pm 23/25 (NBA/ours)",
+    "G. Niang (UTA): pm -4/-2 (NBA/ours)",
+    "B. Ingram (NOP): pm -15/-13 (NBA/ours)",
+    "Z. Williamson (NOP): pm -21/-23 (NBA/ours)"
+   ]
+  },
+  "0022000257": {
+   "d": "20210125",
+   "m": "PHI@DET",
+   "ours": [
+    "S. Milton (PHI): pm -5/-6 (NBA/ours)",
+    "F. Korkmaz (PHI): pm 1/2 (NBA/ours)"
+   ]
+  },
+  "0022000310": {
+   "d": "20210131",
+   "m": "BKN@WAS",
+   "ours": [
+    "K. Durant (BKN): pm 5/6 (NBA/ours)",
+    "R. Perry (BKN): pm -10/-11 (NBA/ours)"
+   ]
+  },
+  "0022000369": {
+   "d": "20210208",
+   "m": "TOR@MEM",
+   "ours": [
+    "J. Valanciunas (MEM): pm 4/3 (NBA/ours)",
+    "G. Dieng (MEM): pm -9/-8 (NBA/ours)"
+   ]
+  },
   "0022000388": {
    "d": "20210210",
    "m": "CLE@DEN",
@@ -19,12 +153,294 @@
     "C. Sexton (CLE): pm -27/-26 (NBA/ours)"
    ]
   },
+  "0022000404": {
+   "d": "20210212",
+   "m": "CLE@POR",
+   "espn": [
+    "E. Kanter: not in ESPN's box score"
+   ]
+  },
+  "0022000509": {
+   "d": "20210226",
+   "m": "LAC@MEM",
+   "ours": [
+    "J. Morant (MEM): pm -11/-9 (NBA/ours)",
+    "T. Jones (MEM): pm -9/-11 (NBA/ours)"
+   ]
+  },
+  "0022000513": {
+   "d": "20210227",
+   "m": "CLE@PHI",
+   "espn": [
+    "D. Green: FG 3-9/3-8 (NBA/ESPN)",
+    "J. Allen: reb 10/9 (NBA/ESPN)"
+   ]
+  },
+  "0022000542": {
+   "d": "20210302",
+   "m": "PHX@LAL",
+   "ours": [
+    "D. Booker (PHX): pm 13/15 (NBA/ours)",
+    "C. Johnson (PHX): pm 8/6 (NBA/ours)"
+   ]
+  },
+  "0022000559": {
+   "d": "20210202",
+   "m": "POR@WAS",
+   "ours": [
+    "M. Wagner (WAS): pm -6/-5 (NBA/ours)",
+    "A. Len (WAS): pm 13/12 (NBA/ours)",
+    "R. Hood (POR): pm 14/15 (NBA/ours)",
+    "C. Anthony (POR): pm -4/-5 (NBA/ours)"
+   ]
+  },
+  "0022000597": {
+   "d": "20210314",
+   "m": "CLE@ATL",
+   "espn": [
+    "J. Collins: reb 12/13 (NBA/ESPN)",
+    "N. Knight: FG 3-4/3-5 (NBA/ESPN)"
+   ]
+  },
+  "0022000638": {
+   "d": "20210319",
+   "m": "MIN@PHX",
+   "ours": [
+    "D. Ayton (PHX): pm 12/11 (NBA/ours)",
+    "D. Booker (PHX): pm 18/17 (NBA/ours)",
+    "A. Nader (PHX): pm -6/-5 (NBA/ours)",
+    "D. Saric (PHX): pm -1/0 (NBA/ours)",
+    "J. Okogie (MIN): pm -15/-14 (NBA/ours)",
+    "J. Vanderbilt (MIN): pm 5/4 (NBA/ours)"
+   ]
+  },
+  "0022000657": {
+   "d": "20210322",
+   "m": "TOR@HOU",
+   "ours": [
+    "D. House Jr. (HOU): pm 14/15 (NBA/ours)",
+    "B. McLemore (HOU): pm 8/7 (NBA/ours)",
+    "P. Siakam (TOR): pm -14/-15 (NBA/ours)",
+    "F. VanVleet (TOR): pm -4/-5 (NBA/ours)",
+    "P. Watson (TOR): pm -8/-7 (NBA/ours)",
+    "D. Bembry (TOR): pm 4/5 (NBA/ours)"
+   ]
+  },
+  "0022000671": {
+   "d": "20210324",
+   "m": "CLE@CHI",
+   "espn": [
+    "D. Windler: FG 1-5/1-4, 3PT 0-4/0-3 (NBA/ESPN)"
+   ]
+  },
+  "0022000711": {
+   "d": "20210329",
+   "m": "TOR@DET",
+   "ours": [
+    "G. Trent Jr. (TOR): pm -9/-8 (NBA/ours)",
+    "F. VanVleet (TOR): pm -10/-9 (NBA/ours)",
+    "M. Flynn (TOR): pm 2/1 (NBA/ours)",
+    "R. Hood (TOR): pm -11/-12 (NBA/ours)"
+   ]
+  },
+  "0022000761": {
+   "d": "20210404",
+   "m": "ORL@DEN",
+   "ours": [
+    "J. Ennis III (ORL): pm -11/-13 (NBA/ours)",
+    "C. Okeke (ORL): pm -20/-18 (NBA/ours)",
+    "R. Hampton (ORL): pm -15/-13 (NBA/ours)",
+    "C. Randle (ORL): pm 7/5 (NBA/ours)"
+   ]
+  },
+  "0022000885": {
+   "d": "20210421",
+   "m": "GSW@WAS",
+   "ours": [
+    "A. Len (WAS): pm 9/8 (NBA/ours)",
+    "R. Westbrook (WAS): pm 10/9 (NBA/ours)",
+    "I. Smith (WAS): pm -14/-13 (NBA/ours)",
+    "D. Gafford (WAS): pm 12/13 (NBA/ours)",
+    "D. Green (GSW): pm -5/-7 (NBA/ours)",
+    "K. Looney (GSW): pm -7/-6 (NBA/ours)",
+    "K. Bazemore (GSW): pm 7/5 (NBA/ours)",
+    "S. Curry (GSW): pm -23/-21 (NBA/ours)",
+    "K. Oubre Jr. (GSW): pm 6/5 (NBA/ours)",
+    "M. Mulder (GSW): pm -9/-7 (NBA/ours)",
+    "J. Poole (GSW): pm 6/8 (NBA/ours)",
+    "G. Payton II (GSW): pm -1/-3 (NBA/ours)"
+   ]
+  },
+  "0022000894": {
+   "d": "20210422",
+   "m": "PHI@MIL",
+   "ours": [
+    "D. Green (PHI): pm -18/-19 (NBA/ours)",
+    "G. Hill (PHI): pm -15/-16 (NBA/ours)",
+    "S. Milton (PHI): pm 2/3 (NBA/ours)",
+    "M. Thybulle (PHI): pm 5/6 (NBA/ours)"
+   ]
+  },
+  "0022000943": {
+   "d": "20210429",
+   "m": "DAL@DET",
+   "ours": [
+    "D. Powell (DAL): pm 10/7 (NBA/ours)",
+    "W. Cauley-Stein (DAL): pm -4/-1 (NBA/ours)"
+   ]
+  },
+  "0022000948": {
+   "d": "20210429",
+   "m": "TOR@DEN",
+   "ours": [
+    "P. Siakam (TOR): pm -15/-13 (NBA/ours)",
+    "S. Johnson (TOR): pm -3/-1 (NBA/ours)",
+    "F. Gillespie (TOR): pm 0/-2 (NBA/ours)",
+    "J. Harris (TOR): pm 13/11 (NBA/ours)"
+   ]
+  },
+  "0022000968": {
+   "d": "20210502",
+   "m": "POR@BOS",
+   "ours": [
+    "M. Smart (BOS): pm -13/-12 (NBA/ours)",
+    "P. Pritchard (BOS): pm 8/7 (NBA/ours)"
+   ]
+  },
+  "0022000970": {
+   "d": "20210502",
+   "m": "SAC@DAL",
+   "ours": [
+    "L. Doncic (DAL): pm 4/5 (NBA/ours)",
+    "J. Redick (DAL): pm 14/13 (NBA/ours)"
+   ]
+  },
+  "0022000971": {
+   "d": "20210502",
+   "m": "NYK@HOU",
+   "ours": [
+    "A. Bradley (HOU): pm -10/-9 (NBA/ours)",
+    "A. Lamb (HOU): pm -1/-2 (NBA/ours)"
+   ]
+  },
+  "0022000980": {
+   "d": "20210503",
+   "m": "NYK@MEM",
+   "ours": [
+    "G. Allen (MEM): pm 9/6 (NBA/ours)",
+    "J. Morant (MEM): pm 0/3 (NBA/ours)"
+   ]
+  },
+  "0022000991": {
+   "d": "20210505",
+   "m": "POR@CLE",
+   "espn": [
+    "E. Kanter: not in ESPN's box score"
+   ]
+  },
+  "0022000995": {
+   "d": "20210505",
+   "m": "NYK@DEN",
+   "ours": [
+    "R. Barrett (NYK): min 28.0/31.9, pm -5/-9 (NBA/ours)",
+    "A. Burks (NYK): min 15.5/11.6, pm -20/-16 (NBA/ours)"
+   ]
+  },
+  "0022001034": {
+   "d": "20210511",
+   "m": "LAC@TOR",
+   "ours": [
+    "S. Johnson (TOR): pm -10/-9 (NBA/ours)",
+    "K. Birch (TOR): pm -17/-16 (NBA/ours)",
+    "G. Trent Jr. (TOR): pm -12/-11 (NBA/ours)",
+    "M. Flynn (TOR): pm -14/-13 (NBA/ours)",
+    "Y. Watanabe (TOR): pm -6/-7 (NBA/ours)",
+    "F. Gillespie (TOR): pm -13/-14 (NBA/ours)",
+    "J. Harris (TOR): pm -8/-9 (NBA/ours)",
+    "D. Bembry (TOR): pm -5/-6 (NBA/ours)",
+    "K. Leonard (LAC): pm 12/11 (NBA/ours)",
+    "M. Morris Sr. (LAC): pm 13/12 (NBA/ours)",
+    "I. Zubac (LAC): pm 23/22 (NBA/ours)",
+    "P. Beverley (LAC): pm 11/10 (NBA/ours)",
+    "R. Jackson (LAC): pm 6/7 (NBA/ours)",
+    "R. Rondo (LAC): pm -4/-3 (NBA/ours)",
+    "D. Cousins (LAC): pm -3/-2 (NBA/ours)",
+    "N. Batum (LAC): pm 1/2 (NBA/ours)"
+   ]
+  },
+  "0022001049": {
+   "d": "20210513",
+   "m": "ORL@ATL",
+   "ours": [
+    "S. Hill (ATL): pm 22/20 (NBA/ours)",
+    "J. Collins (ATL): pm 26/25 (NBA/ours)",
+    "K. Huerter (ATL): pm 0/2 (NBA/ours)",
+    "D. Gallinari (ATL): pm -3/-2 (NBA/ours)",
+    "D. Bacon (ORL): pm -17/-15 (NBA/ours)",
+    "M. Wagner (ORL): pm -27/-26 (NBA/ours)",
+    "W. Carter Jr. (ORL): pm -27/-26 (NBA/ours)",
+    "G. Harris (ORL): pm -26/-24 (NBA/ours)",
+    "S. Thornwell (ORL): pm 4/2 (NBA/ours)",
+    "R. Hampton (ORL): pm -7/-9 (NBA/ours)",
+    "I. Brazdeikis (ORL): pm 4/3 (NBA/ours)",
+    "D. Hall (ORL): pm 4/3 (NBA/ours)"
+   ]
+  },
   "0022001067": {
    "d": "20210516",
    "m": "CLE@BKN",
    "ours": [
     "C. Sexton (CLE): pm -5/-7 (NBA/ours)",
     "D. Dotson (CLE): pm -6/-4 (NBA/ours)"
+   ],
+   "espn": [
+    "N. Claxton: not in ESPN's box score"
+   ]
+  },
+  "0042000135": {
+   "d": "20210602",
+   "m": "ATL@NYK",
+   "ours": [
+    "R. Barrett (NYK): min 39.5/31.0, pm -13/-9 (NBA/ours)",
+    "N. Noel (NYK): min 15.6/22.5, pm 1/-6 (NBA/ours)",
+    "D. Hunter (ATL): min 34.5/25.3, pm 19/13 (NBA/ours)",
+    "S. Hill (ATL): min 6.5/15.7, pm -4/2 (NBA/ours)",
+    "NY: lineup time 46.3 min vs game 48"
+   ]
+  },
+  "0042000165": {
+   "d": "20210601",
+   "m": "POR@DEN",
+   "poss": [
+    "DEN: 111 possessions vs NBA's 117"
+   ]
+  },
+  "0042000234": {
+   "d": "20210613",
+   "m": "PHX@DEN",
+   "ours": [
+    "N. Jokic (DEN): pm -10/-12 (NBA/ours)",
+    "W. Barton (DEN): pm 2/0 (NBA/ours)",
+    "F. Campazzo (DEN): pm 1/3 (NBA/ours)",
+    "J. McGee (DEN): pm 5/7 (NBA/ours)"
+   ]
+  },
+  "0042000311": {
+   "d": "20210620",
+   "m": "LAC@PHX",
+   "ours": [
+    "C. Payne (PHX): pm 14/13 (NBA/ours)",
+    "E. Moore (PHX): pm -6/-5 (NBA/ours)",
+    "T. Mann (LAC): pm 5/6 (NBA/ours)",
+    "P. Beverley (LAC): pm -5/-6 (NBA/ours)"
+   ]
+  },
+  "0042000316": {
+   "d": "20210630",
+   "m": "PHX@LAC",
+   "ours": [
+    "P. Beverley (LAC): pm -16/-15 (NBA/ours)",
+    "L. Kennard (LAC): pm -8/-9 (NBA/ours)"
    ]
   }
  }

@@ -1,4 +1,28 @@
 {
+ "0022000129": [
+  {
+   "action": 372,
+   "set": {
+    "personId": 201572,
+    "playerName": "Lopez",
+    "playerNameI": "B. Lopez"
+   },
+   "was": "G. Antetokounmpo",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
+ "0022000389": [
+  {
+   "action": 591,
+   "set": {
+    "personId": 1627854,
+    "playerName": "Forbes",
+    "playerNameI": "B. Forbes"
+   },
+   "was": "D. DiVincenzo",
+   "why": "substitution named the wrong player (minutes then match the NBA box score)"
+  }
+ ],
  "0022100126": [
   {
    "action": 304,
