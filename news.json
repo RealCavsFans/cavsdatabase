@@ -2,6 +2,12 @@
  "articles": [
   {
    "src": "Fear The Sword",
+   "title": "Evan Mobley hosted annual gala to raise money for underserved youth",
+   "link": "https://www.fearthesword.com/cavs-features-profiles/54739/cavs-evan-mobley-cleveland-cavaliers-mobley-foundation",
+   "date": "2026-11-20T17:00:00.000Z"
+  },
+  {
+   "src": "Fear The Sword",
    "title": "Cavs vs. Pacers: How to watch, odds, and injury report",
    "link": "https://www.fearthesword.com/cavs-injury-report/54727/cavs-vs-pacers-how-to-watch-odds-and-injury-report",
    "date": "2026-11-20T14:30:00.000Z"
@@ -197,12 +203,6 @@
    "title": "Most of Cavs’ starters return, overwhelm Chicago Bulls in 126-115 win",
    "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQaWRkUXJKM0w5eE43VTIyek9RWHF5UE5RYUluNWJLTlJ1YXVKN01PaUhrY0lGLXN5b0N6OWJFcTg4WDkxOEhDdk5wdk1LQlNGSEZ5dDc3dENHSUY1Z3dEamc5bE1DRmxyZk9PbFBvWDB1eFVmS3JtSzh5Q1lVUFNJUUtPSFYtcXZyV1YzTzljWmdvUmppcHd4d3JnU0NWQi0xSEk4dUZ3bG9RbVNWdWVOTA?oc=5",
    "date": "2026-11-17T02:44:00.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Donovan Mitchell’s 39 points help push Cavaliers past Bulls 126-115",
-   "link": "https://www.fearthesword.com/cavs-analysis/54579/donovan-mitchells-39-points-help-push-cavaliers-past-bulls-126-115",
-   "date": "2026-11-17T02:42:54.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -453,6 +453,13 @@
  ],
  "videos": [
   {
+   "src": "Locked On Cavs",
+   "title": "PREVIEW: Can the Cleveland Cavaliers Win CRUCIAL NBA Cup Game Against the Indiana Pacers!?",
+   "link": "https://www.youtube.com/watch?v=pImdxu2FeFY",
+   "date": "2026-11-20T16:18:51.000Z",
+   "id": "pImdxu2FeFY"
+  },
+  {
    "src": "The Chase Down Podcast",
    "title": "Chase Down Podcast Live, presented by LECOM: Cavs Drop Tough Loss to Memphis",
    "link": "https://www.youtube.com/watch?v=zibROQu0zV4",
@@ -633,13 +640,6 @@
    "link": "https://www.youtube.com/watch?v=qB08WkSwELI",
    "date": "2026-11-16T17:04:16.000Z",
    "id": "qB08WkSwELI"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "PREVIEW: Can the Cleveland Cavaliers GET RIGHT Against the Chicago Bulls!?",
-   "link": "https://www.youtube.com/watch?v=r48knv6Wmjg",
-   "date": "2026-11-16T17:00:06.000Z",
-   "id": "r48knv6Wmjg"
   },
   {
    "src": "Ultimate Cleveland Sports Show",
