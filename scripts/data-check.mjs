@@ -50,6 +50,14 @@ for (const g of ix) {
   { const sg = (SJ.games || []).find(x => x.id === g.id); if (sg && sg.pl) { const A = new Set(sg.pl.map(id => (SJ.P[id] || {}).name)), Bx = new Set(b.box.filter(r => parseFloat(r[1]) > 0).map(r => r[0]));
       const onlyA = [...A].filter(x => !Bx.has(x)), onlyB = [...Bx].filter(x => !A.has(x));
       if (onlyA.length || onlyB.length) issues.push(`box.json: ${d} ${g.opp} players differ from the archive (${[...onlyA.map(x => 'archive only: ' + x), ...onlyB.map(x => 'box only: ' + x)].slice(0, 4).join(', ')})`); } }
+  /* Nov 20 audit: every column of every Cavs row against the NBA's own box score saved in the archive (nb) */
+  { const gf = J(`live-archive/${SEASON}/${g.id}.json`), sg = (SJ.games || []).find(x => x.id === g.id);
+    if (gf && gf.nb && sg && sg.pl) { const off = [];
+      for (const id of sg.pl) { const n = gf.nb[id], nm = (SJ.P[id] || {}).name, r = b.box.find(x => x[0] === nm); if (!n || !r) continue;
+        const want = [n[1], n[8] + n[9], n[10], n[15], `${n[2]}-${n[3]}`, `${n[4]}-${n[5]}`, `${n[6]}-${n[7]}`, n[11], n[12], n[13], n[8], n[14]], have = [r[2], r[3], r[4], r[5], r[7], r[8], r[9], r[10], r[11], r[12], r[13], r[14]].map(String);
+        const lab = ['pts', 'reb', 'ast', '+/-', 'fg', '3pt', 'ft', 'stl', 'blk', 'to', 'oreb', 'pf'];
+        want.forEach((w, i) => { if (String(w).replace(/^\+/, '') !== String(have[i]).replace(/^\+/, '')) off.push(`${nm} ${lab[i]} ${have[i]} (NBA ${w})`); }); }
+      if (off.length) issues.push(`box.json: ${d} ${g.opp} differs from the NBA box: ${off.slice(0, 3).join(', ')}${off.length > 3 ? ` (+${off.length - 3} more)` : ''}`); } }
   boxOk++;
 }
 ok.push(`box.json ${boxOk}/${ix.length} games`);

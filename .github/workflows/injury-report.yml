@@ -31,6 +31,7 @@ jobs:
             scripts/injury-report.py
             index.html
             pdata/injury-report.json
+            pdata/injury-history.json
           sparse-checkout-cone-mode: false
       - name: Due?
         id: due
@@ -53,7 +54,7 @@ jobs:
           [ -f pdata/injury-report.json ] || exit 0
           git config user.name "cavsdatabase-bot"
           git config user.email "bot@cavsdatabase.com"
-          git add pdata/injury-report.json
+          git add pdata/injury-report.json; [ -f pdata/injury-history.json ] && git add pdata/injury-history.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Official injury report"
           for i in 1 2 3 4 5 6; do

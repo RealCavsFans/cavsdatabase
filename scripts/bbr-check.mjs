@@ -15,17 +15,18 @@ const norm = n => n.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().repl
 const BR = { BKN: 'BRK', CHA: 'CHO', PHX: 'PHO', WSH: 'WAS', GS: 'GSW', NO: 'NOP', NY: 'NYK', SA: 'SAS', UTAH: 'UTA' };
 const br = a => BR[a] || a;
 
-let C = { how: 'Each finished Cavs game compared with Basketball Reference: per player PTS, REB, AST, FG, 3P, FT made/attempted, minutes (within 1), and the final score.', games: {} };
-try { C = { ...C, ...JSON.parse(fs.readFileSync(OUT, 'utf8')) }; } catch {}
+let C = { how: 'Each finished Cavs game compared with Basketball Reference: per player PTS, REB, AST, FG, 3P, FT made/attempted, STL, BLK, TO, OREB, PF, minutes (within 1), and the final score.', games: {} };
+try { const how = C.how; C = { ...C, ...JSON.parse(fs.readFileSync(OUT, 'utf8')), how }; } catch {}
 let idx = [];
 try { idx = JSON.parse(fs.readFileSync(new URL(`live-archive/${SEASON}/index.json`, root), 'utf8')); } catch { console.log('no live archive index'); process.exit(0); }
 
 const now = Date.now();
+/* Nov 20 audit: only games still in the archive (old ESPN-id entries were left behind after the NBA-feed switch) */{ const keep = new Set(idx.map(g => g.id)); for (const id of Object.keys(C.games || {})) if (!keep.has(id)) delete C.games[id]; }
 const todo = idx.filter(g => {
   const age = (now - Date.parse(g.date)) / 864e5;
   if (age < 0.4) return false;                                   // give Basketball Reference the night to post
   const c = C.games[g.id];
-  return !c || (c.status !== 'match' && age < 3) || (c.status === 'match' && age < 1.5 && !c.second);
+  return !c || (c.status !== 'match' && age < 3) || (c.status === 'match' && age < 1.5 && !c.second) || (c.status === 'match' && c.v !== 2);   // v2 (Nov 20 audit): recheck every game once with the added columns
 }).slice(-6);
 if (!todo.length) { console.log('nothing to check'); process.exit(0); }
 
@@ -47,7 +48,7 @@ function brTeam(html, code) {
     const c = cellsOf(m[1]);
     if (!c.player || c.player === 'Starters' || c.player === 'Reserves' || c.player === 'Team Totals' || !c.mp || /Did Not|Not With|Inactive|Suspended/i.test(c.mp + (c.reason || ''))) continue;
     const [mm, ss] = c.mp.split(':').map(Number);
-    players[norm(c.player)] = { name: c.player, min: mm + (ss || 0) / 60, pts: +c.pts, reb: +c.trb, ast: +c.ast, fg: `${c.fg}-${c.fga}`, '3p': `${c.fg3}-${c.fg3a}`, ft: `${c.ft}-${c.fta}` };
+    players[norm(c.player)] = { name: c.player, min: mm + (ss || 0) / 60, pts: +c.pts, reb: +c.trb, ast: +c.ast, fg: `${c.fg}-${c.fga}`, '3p': `${c.fg3}-${c.fg3a}`, ft: `${c.ft}-${c.fta}`, stl: +c.stl, blk: +c.blk, to: +c.tov, oreb: +c.orb, pf: +c.pf };
   }
   const tot = (t.match(/<tfoot>([\s\S]*?)<\/tfoot>/) || [])[1];
   return { players, pts: tot ? +cellsOf(tot).pts : null };
@@ -60,7 +61,7 @@ function ourTeam(box, cle) {
     if (a.didNotPlay || !a.stats || !a.stats.length) continue;
     const v = k => a.stats[at(k)];
     if (!+v('MIN') && v('MIN') !== '0') continue;
-    players[norm(a.athlete.displayName)] = { name: a.athlete.displayName, min: +v('MIN'), pts: +v('PTS'), reb: +v('REB'), ast: +v('AST'), fg: v('FG'), '3p': v('3PT'), ft: v('FT') };
+    players[norm(a.athlete.displayName)] = { name: a.athlete.displayName, min: +v('MIN'), pts: +v('PTS'), reb: +v('REB'), ast: +v('AST'), fg: v('FG'), '3p': v('3PT'), ft: v('FT'), stl: +v('STL'), blk: +v('BLK'), to: +v('TO'), oreb: +v('OREB'), pf: +v('PF') };
   }
   return { players };
 }
@@ -68,7 +69,7 @@ function compare(label, ours, theirs, diffs) {
   for (const [k, b] of Object.entries(theirs.players)) {
     const a = ours.players[k];
     if (!a) { if (b.min >= 1) diffs.push(`${label}: ${b.name} played ${Math.round(b.min)} min on Basketball Reference but isn't in our box score`); continue; }
-    for (const f of ['pts', 'reb', 'ast', 'fg', '3p', 'ft']) if (String(a[f]) !== String(b[f])) diffs.push(`${b.name} ${f.toUpperCase()}: ours ${a[f]}, Basketball Reference ${b[f]}`);
+    /* Nov 20 audit: steals, blocks, turnovers, offensive rebounds and fouls too (a steal credited to the wrong player went unnoticed) */for (const f of ['pts', 'reb', 'ast', 'fg', '3p', 'ft', 'stl', 'blk', 'to', 'oreb', 'pf']) if (!(b[f] == null || Number.isNaN(b[f]) || a[f] == null || Number.isNaN(a[f])) && String(a[f]) !== String(b[f])) diffs.push(`${b.name} ${f.toUpperCase()}: ours ${a[f]}, Basketball Reference ${b[f]}`);
     if (Math.abs(a.min - b.min) > 1.01) diffs.push(`${b.name} minutes: ours ${a.min}, Basketball Reference ${b.min.toFixed(1)}`);
   }
   for (const [k, a] of Object.entries(ours.players)) if (!theirs.players[k] && a.min >= 1) diffs.push(`${label}: ${a.name} is in our box score but not on Basketball Reference's`);
@@ -79,17 +80,17 @@ for (const g of todo) {
   const url = `https://www.basketball-reference.com/boxscores/${g.et.replace(/-/g, '')}0${home}.html`;
   const html = await page(url); await sleep(3600);
   const prev = C.games[g.id];
-  if (!html) { C.games[g.id] = { et: g.et, opp: g.opp, status: 'missing', url, at: new Date().toISOString() }; console.log(g.et, g.opp, 'not on Basketball Reference yet'); continue; }
+  if (!html) { C.games[g.id] = { v: 2, et: g.et, opp: g.opp, status: 'missing', url, at: new Date().toISOString() }; console.log(g.et, g.opp, 'not on Basketball Reference yet'); continue; }
   let game = null;
   try { game = JSON.parse(fs.readFileSync(new URL(`live-archive/${SEASON}/${g.id}.json`, root), 'utf8')); } catch {}
   const box = game && game.boxscore; if (!box) { console.log(g.et, 'no saved box score'); continue; }
   const bc = brTeam(html, 'CLE'), bo = brTeam(html, opp), oc = ourTeam(box, true), oo = ourTeam(box, false);
-  if (!bc || !bo || !oc || !oo) { C.games[g.id] = { et: g.et, opp: g.opp, status: 'unreadable', url, at: new Date().toISOString() }; console.log(g.et, g.opp, 'could not read a box score'); continue; }
+  if (!bc || !bo || !oc || !oo) { C.games[g.id] = { v: 2, et: g.et, opp: g.opp, status: 'unreadable', url, at: new Date().toISOString() }; console.log(g.et, g.opp, 'could not read a box score'); continue; }
   const diffs = [];
   if (bc.pts != null && bc.pts !== g.cle) diffs.push(`Cavs final score: ours ${g.cle}, Basketball Reference ${bc.pts}`);
   if (bo.pts != null && bo.pts !== g.os) diffs.push(`${g.opp} final score: ours ${g.os}, Basketball Reference ${bo.pts}`);
   compare('Cavs', oc, bc, diffs); compare(g.opp, oo, bo, diffs);
-  C.games[g.id] = { et: g.et, opp: g.opp, status: diffs.length ? 'diff' : 'match', diffs: diffs.length ? diffs : undefined, url, at: new Date().toISOString(),
+  C.games[g.id] = { v: 2, et: g.et, opp: g.opp, status: diffs.length ? 'diff' : 'match', diffs: diffs.length ? diffs : undefined, url, at: new Date().toISOString(),
     second: prev && prev.status === 'match' ? true : undefined, players: Object.keys(bc.players).length + Object.keys(bo.players).length };
   console.log(g.et, g.opp, diffs.length ? diffs.length + ' differences' : 'match', diffs.slice(0, 5).join(' | '));
 }

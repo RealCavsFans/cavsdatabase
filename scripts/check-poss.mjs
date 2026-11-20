@@ -34,6 +34,7 @@ for (const g of idx) {
   prev.games[g.id] = Object.assign(prev.games[g.id] || {}, { et: g.et, opp: g.opp, ours, pb: { cle: pb(cleSide), opp: pb(oppSide) } });
   n++;
 }
+/* Nov 20 audit: drop games no longer in the archive (entries keyed by ESPN ids from before the NBA-feed switch kept old counts) */{ const keep = new Set(idx.map(g => g.id)); for (const id of Object.keys(prev.games)) if (!keep.has(id)) delete prev.games[id]; }
 /* NBA.com's own counts, where we have them */let NBAC = {}; try { NBAC = JSON.parse(await readFile(new URL('data/poss-nba.json', root), 'utf8')).games || {}; } catch {}
 for (const [id, x] of Object.entries(prev.games)) { const q = NBAC[id]; if (q) x.nba = { cle: q.cle, opp: q.opp_ }; }
 prev.updated = new Date().toISOString(); prev.debug.miss = miss;

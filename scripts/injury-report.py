@@ -180,6 +180,15 @@ def main():
                'game': {'date': d, 'opp': opp, 'home': ha == 'H', 'tip': tip.isoformat(timespec='minutes')}, 'teams': teams},
               open(OUT, 'w'), separators=(',', ':'))
     log('wrote', OUT)
+    # Nov 20 audit: keep the last Cavs report filed before each tip (pdata/injury-history.json), so games missed for injury
+    # can be counted from the official report after the game, not just from ESPN's list
+    if teams.get('CLE', {}).get('filed') and now <= tip:
+        HIST = os.path.join(ROOT, 'pdata', 'injury-history.json')
+        try: hist = json.load(open(HIST))
+        except Exception: hist = {}
+        hist[d] = {'report': title, 'url': url, 'rows': teams['CLE']['rows']}
+        json.dump(dict(sorted(hist.items())), open(HIST, 'w'), separators=(',', ':'))
+        log('history', d)
 
 
 if __name__ == '__main__':

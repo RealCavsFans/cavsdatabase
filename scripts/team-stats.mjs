@@ -67,7 +67,7 @@ for (const [k, a] of Object.entries(A)) {
   if (k === 'CLE' && ARCH && ARCH.g === g && ARCH.pf === a.pts && ARCH.pa === a.opts) { po = ARCH.po; pd = ARCH.pd; cnt = g; }
   if (cnt) { ortg = 100 * a.pts / po; drtg = 100 * a.opts / pd; pace = 48 * ((po + pd) / 2) / (a.mp / 5); }
   else { const x = PBT && PBT[PBK[k]]; if (x && x.GamesPlayed === g && x.OffPoss > 0 && x.DefPoss > 0 && x.Points === a.pts && x.OpponentPoints === a.opts) { ortg = 100 * x.Points / x.OffPoss; drtg = 100 * x.OpponentPoints / x.DefPoss; if (x.Pace) pace = x.Pace; } }
-  TSTATS[k] = [a.w, g - a.w, r1(a.pts / g), r1(a.opts / g), r1(ortg), r1(drtg), r1(pace), r1(100 * a.tpm / (a.tpa || 1))];
+  TSTATS[k] = [a.w, g - a.w, r1(a.pts / g), r1(a.opts / g), r1(ortg), r1(drtg), r1(pace), r1(100 * a.tpm / (a.tpa || 1)), r1(ortg - drtg)];   // [8] (Nov 20 audit): net rating from the exact ratings, not the two rounded ones
   /* Nov 19 audit: the rebound slots hold rebounds of missed shots with team rebounds when every game has them (the live page's and NBA.com's OREB%), box score otherwise */
   const fr = [a.forb, a.fdrb, a.oforb, a.ofdrb].every(Number.isFinite), rb = f => fr ? ({ orb: 'forb', drb: 'fdrb', oorb: 'oforb', odrb: 'ofdrb' }[f] || f) : f;
   FFR[k] = ['fgm', 'fga', 'tpm', 'ftm', 'fta', 'orb', 'drb', 'tov', 'ofgm', 'ofga', 'otpm', 'oftm', 'ofta', 'oorb', 'odrb', 'otov'].map(f => r1(a[rb(f)] / g));
