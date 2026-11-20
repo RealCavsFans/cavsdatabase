@@ -1,0 +1,31 @@
+{
+ "season": "2020-21",
+ "checked": "2026-11-20T20:49:16.534Z",
+ "tally": {
+  "games": 72,
+  "clean": 70,
+  "nba": 0,
+  "ours": 2,
+  "poss": 0,
+  "espn": 0
+ },
+ "how": "nba = the NBA box score does not add up on its own; ours = our play-by-play build differs from the NBA box score; poss = possession count off from the NBA markers; espn = the NBA and ESPN box scores disagree (Cavs games)",
+ "games": {
+  "0022000388": {
+   "d": "20210210",
+   "m": "CLE@DEN",
+   "ours": [
+    "I. Okoro (CLE): pm -22/-23 (NBA/ours)",
+    "C. Sexton (CLE): pm -27/-26 (NBA/ours)"
+   ]
+  },
+  "0022001067": {
+   "d": "20210516",
+   "m": "CLE@BKN",
+   "ours": [
+    "C. Sexton (CLE): pm -5/-7 (NBA/ours)",
+    "D. Dotson (CLE): pm -6/-4 (NBA/ours)"
+   ]
+  }
+ }
+}
