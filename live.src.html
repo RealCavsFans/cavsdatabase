@@ -266,6 +266,14 @@ td.pnm{font-weight:700;color:var(--fg)}body>main.wrap{min-height:100vh}b.ffv>sma
 .ffq td.e{font-weight:800}
 .chip{display:inline-block;width:8px;height:8px;margin-right:6px}
 /* rotation */
+.sixf{margin-top:16px;border-top:1px solid var(--line2);padding-top:12px}.sixf h4{margin:0 0 2px;font:800 .875rem var(--cond);letter-spacing:.08em;text-transform:uppercase}
+.sixf .sx-s{margin-top:10px}.sixf .sx-h{font:800 .6875rem var(--cond);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.sx-t{width:100%;border-collapse:collapse;font:500 .8125rem var(--sans)}.sx-t th,.sx-t td{padding:5px 4px;border-bottom:1px solid var(--line2);text-align:right;white-space:nowrap}.sx-t thead th{font:700 .625rem var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.sx-t tbody th{text-align:left;font-weight:600;white-space:normal}.sx-t td{font-family:var(--mono);font-size:.75rem}.sx-t td.v{font-weight:800;font-size:.8125rem}.sx-t td.v.p{color:var(--pmp)}.sx-t td.v.n{color:var(--pmn)}
+.sx-t td.bar{width:34%;position:relative;padding:0}.sx-t td.bar i{position:absolute;top:30%;bottom:30%}.sx-t td.bar i.p{background:var(--pmp)}.sx-t td.bar i.n{background:var(--pmn)}.sx-t tbody tr:not(.tot) td.bar:before{content:'';position:absolute;left:50%;top:15%;bottom:15%;width:1px;background:var(--line)}
+.sx-t tr.tot th,.sx-t tr.tot td{border-bottom:2px solid var(--fg);font-weight:800}
+.sx-net{display:flex;justify-content:space-between;align-items:baseline;margin-top:10px;font:700 .875rem var(--sans)}.sx-net b{font:800 1.125rem var(--mono)}.sx-net b.p{color:var(--pmp)}.sx-net b.n{color:var(--pmn)}
+@media(max-width:640px){.sx-t td.bar{width:22%}.sx-t th,.sx-t td{padding:5px 2px}}
 .rot{font:500 0.75rem var(--sans)}
 .rot .r{display:grid;grid-template-columns:116px 1fr 44px;gap:8px;align-items:center;padding:3px 0}
 .rot .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600;font-size:0.8125rem}
@@ -2782,6 +2790,37 @@ function ooBox(o){const a=o.a,b=o.b,w=el('div','oo2');const pct=new Set(['efg','
   if(o.fewer){/* player pages: the Scoring rows show, the rest open with a button */const rest=[...cav.querySelectorAll('tr')].slice(6);rest.forEach(r=>r.hidden=true);const mb=el('button','oo2-more','Show every advanced number ▾');mb.type='button';
     mb.onclick=()=>{const op=mb.getAttribute('aria-expanded')!=='true';rest.forEach(r=>r.hidden=!op);mb.setAttribute('aria-expanded',String(op));mb.textContent=op?'Show fewer ▴':'Show every advanced number ▾'};w.appendChild(mb)}
   w.appendChild(el('p','oo2-n',o.note||''));return w}
+/* MOCKUP (Nov 20, Luka): the on/off gap split into the four factors, offense and defense.
+   Points per 100 possessions = 100 × (2 × eFG% + FT rate × FT%) ÷ (1 + 0.44 × FT rate + turnovers per shot − offensive rebounds per shot),
+   every rate per field goal attempt. The last row is the gap between that formula's possessions and the ones we count play by play: mostly
+   possessions that end with the clock running out and no shot (ends of quarters), which the formula can't see, plus free throw rounding. Each factor's share of the on-minus-off gap is
+   its average effect over every order the four can change in (Shapley), so the four add up exactly; what's left is the difference between
+   that estimate of possessions and our play-by-play count. */
+function sixF(A,B,ab){const g=(x,k)=>x[k]||0;
+  const vec=s=>{const f=g(s,'fga');if(!f||s.fgm==null)return null;return {e:(g(s,'fgm')+.5*g(s,'tpm'))/f,f:g(s,'fta')/f,p:g(s,'fta')?g(s,'ftm')/g(s,'fta'):0,c:.44,t:g(s,'to')/f,o:g(s,'oreb')/f}};
+  const RT=v=>100*(2*v.e+v.f*v.p)/(1+v.c*v.f+v.t-v.o);
+  const GR={sh:['e'],to:['t'],or:['o'],ft:['f','p']},K=Object.keys(GR);
+  const perms=a=>a.length<=1?[a]:a.flatMap((x,i)=>perms(a.slice(0,i).concat(a.slice(i+1))).map(r=>[x].concat(r)));const PM=perms(K);
+  const split=(on,off)=>{const out={};K.forEach(k=>out[k]=0);PM.forEach(order=>{const v={...off};let prev=RT(v);order.forEach(k=>{GR[k].forEach(z=>v[z]=on[z]);const nx=RT(v);out[k]+=nx-prev;prev=nx})});K.forEach(k=>out[k]/=PM.length);return out};
+  const oA=vec(A.o),oB=vec(B.o),dA=vec(A.d),dB=vec(B.d);if(!oA||!oB||!dA||!dB)return null;
+  const rt=(x,side)=>{const n=g(x[side],'np');return n?(side==='o'?x.pf:x.pa)/n*100:null};
+  const O=split(oA,oB),Dd=split(dA,dB);const oAct=rt(A,'o')-rt(B,'o'),dAct=rt(A,'d')-rt(B,'d');
+  const oRes=oAct-K.reduce((s2,k)=>s2+O[k],0),dRes=dAct-K.reduce((s2,k)=>s2+Dd[k],0);
+  const pc=v=>(v*100).toFixed(1)+'%',sg1=v=>(Math.round(v*10)>0?'+':Math.round(v*10)<0?'−':'')+Math.abs(v).toFixed(1);
+  const orb=x=>{const a=g(x.o,'oreb'),b=g(x.d,'dreb');return a+b?a/(a+b):null},drb=x=>{const a=g(x.o,'dreb'),b=g(x.d,'oreb');return a+b?a/(a+b):null};
+  const tovp=(x,side)=>{const n=g(x[side],'np');return n?g(x[side],'to')/n:null};
+  const w=el('div','sixf');w.appendChild(el('h4',null,'Why the gap: the four factors'));
+  w.appendChild(el('p','note','How many points per 100 possessions each factor added to (or took from) the '+ab+' net rating with him on, compared with him off.'));
+  const mx=Math.max(1,...K.map(k=>Math.abs(O[k])),...K.map(k=>Math.abs(Dd[k])));
+  const sec=(title,rows,tot,totLab)=>{const s2=el('div','sx-s');s2.appendChild(el('div','sx-h',title));const t=el('table','sx-t');t.innerHTML='<thead><tr><th></th><th>On</th><th>Off</th><th class="bar"></th><th>Pts/100</th></tr></thead>';const tb=el('tbody');
+    rows.forEach(([lab,on,off,v])=>{const tr=el('tr');tr.appendChild(el('th',null,lab));tr.append(el('td',null,on),el('td',null,off));const bt=el('td','bar');const bi=el('i',v>0?'p':v<0?'n':'');bi.style.width=(Math.abs(v)/mx*50).toFixed(1)+'%';bi.style[v>=0?'left':'right']='50%';bt.appendChild(bi);tr.appendChild(bt);tr.appendChild(el('td','v '+(v>.05?'p':v<-.05?'n':''),sg1(v)));tb.appendChild(tr)});
+    const tr=el('tr','tot');tr.appendChild(el('th',null,totLab));tr.append(el('td'),el('td'),el('td','bar'),el('td','v '+(tot>.05?'p':tot<-.05?'n':''),sg1(tot)));tb.appendChild(tr);t.appendChild(tb);s2.appendChild(t);return s2};
+  /* offense: positive = more points scored with him on. Defense: shown as what it did to the net rating (fewer points allowed = positive) */
+  w.appendChild(sec(ab+' offense',[['Shooting (eFG%)',pc(oA.e),pc(oB.e),O.sh],['Turnovers (TOV%)',pc(tovp(A,'o')),pc(tovp(B,'o')),O.to],['Off. rebounds (OREB%)',pc(orb(A)),pc(orb(B)),O.or],['Free throws (FT rate)',pc(oA.f),pc(oB.f),O.ft],['Clock-run-out possessions',' ',' ',oRes]],oAct,'ORTG on − off'));
+  w.appendChild(sec(ab+' defense',[['Opp. shooting (eFG%)',pc(dA.e),pc(dB.e),-Dd.sh],['Turnovers forced',pc(tovp(A,'d')),pc(tovp(B,'d')),-Dd.to],['Def. rebounds (DREB%)',pc(drb(A)),pc(drb(B)),-Dd.or],['Opp. free throws (FT rate)',pc(dA.f),pc(dB.f),-Dd.ft],['Clock-run-out possessions',' ',' ',-dRes]],-dAct,'DRTG off − on'));
+  const net=oAct-dAct;const nb=el('div','sx-net');nb.append(el('span',null,'Net rating on − off'),el('b',net>.05?'p':net<-.05?'n':'',sg1(net)));w.appendChild(nb);
+  w.appendChild(el('p','note sx-how','Each factor’s number is its average effect over every order the four could change in, so they add up exactly. The four factors only see shots, free throws, turnovers and rebounds; “clock-run-out possessions” is the rest of the gap: possessions we count that end with no shot attempt (the clock running out, or a heave at the buzzer, which isn’t a shot attempt), plus free throw rounding.'));
+  return w}
 function vOnOff(v,D,R){
   if(!S.f.ooTeam)S.f.ooTeam=D.focus.id;const t=D.teams.find(x=>x.id===S.f.ooTeam);
   const Ls=Object.values(R.L[t.id][5]);const sum=f=>{const o={sec:0,pf:0,pa:0,o:{fga:0,oreb:0,to:0,fta:0,np:0},d:{fga:0,oreb:0,to:0,fta:0,np:0}};Ls.filter(f).forEach(l=>{o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;['fga','oreb','to','fta','np'].forEach(k=>{o.o[k]+=l.o[k];o.d[k]+=l.d[k]})});let po=poss(o.o),pd=poss(o.d);o.net=po>=1&&pd>=1?o.pf/po*100-o.pa/pd*100:null;o.ortg=po>=1?o.pf/po*100:null;o.drtg=pd>=1?o.pa/pd*100:null;o.pm=o.pf-o.pa;o.poss=(po+pd)/2;return o};
@@ -2798,7 +2837,7 @@ function vOnOff(v,D,R){
         tov:pc(g(o,'to'),PO),orb:has?pc(g(o,'oreb'),g(o,'oreb')+g(d,'dreb')):null,drb:has?pc(g(o,'dreb'),g(o,'dreb')+g(d,'oreb')):null,ftr:has?pc(g(o,'fta'),g(o,'fga')):null,ast:has?pc(g(o,'ast'),g(o,'fgm')):null,
         oefg:has?pc(g(d,'fgm')+.5*g(d,'tpm'),g(d,'fga')):null,otov:pc(g(d,'to'),PD),otpar:has?pc(g(d,'tpa'),g(d,'fga')):null,oftr:has?pc(g(d,'fta'),g(d,'fga')):null,otp:has?pc(g(d,'tpm'),g(d,'tpa')):null}};
     const a=M(A),b=M(B);a.sec=A.sec;a.pm=A.pf-A.pa;b.sec=B.sec;b.pm=B.pf-B.pa;
-    w.appendChild(ooBox({name:D.P[id].name,img:hsUrl(D,id),ab:t.abbr,oab:(t.id===D.focus.id?D.other:D.focus).abbr,a,b,sub:(S.season?'Season':perLabel(S.per))+' · how '+t.abbr+' did with him and without him',note:'Diff = on minus off. Wine = better for '+t.abbr+' with him on. Who was on the floor comes from the starters and every substitution in the play-by-play. Possessions are counted play by play, so ratings can differ a little from NBA.com, which counts them its own way'+(a.efg==null?'; shooting splits fill in for games after Oct 23':'')+'.'}));return w};
+    w.appendChild(ooBox({name:D.P[id].name,img:hsUrl(D,id),ab:t.abbr,oab:(t.id===D.focus.id?D.other:D.focus).abbr,a,b,sub:(S.season?'Season':perLabel(S.per))+' · how '+t.abbr+' did with him and without him',note:'Diff = on minus off. Wine = better for '+t.abbr+' with him on. Who was on the floor comes from the starters and every substitution in the play-by-play. Possessions are counted play by play, so ratings can differ a little from NBA.com, which counts them its own way'+(a.efg==null?'; shooting splits fill in for games after Oct 23':'')+'.'}));/* MOCKUP Nov 20: why the gap, factor by factor */try{const sx=sixF(A,B,t.abbr);if(sx)w.appendChild(sx)}catch(e){console.warn(e)}return w};
   rows.forEach(r=>{r._open=S.f.ooOpen===r.id;r.key=r.id});
   {const th=el('p','tap-hint');th.append('▸ ',el('span','th-l','Tap any player row to see every advanced number with him on vs off'),el('span','th-s','Tap a player for full on/off'));c.appendChild(th)}
   c.appendChild(dtable('oo',[{h:'Player',k:'id',f:r=>{const sp=el('span');sp.appendChild(plink(D,r.id,D.P[r.id].short));return sp}},{h:'MIN',k:'min',f:r=>fmtMin(r.min)},{h:'ON +/-',k:'onpm',f:r=>sgn(r.onpm),cls:r=>pmCls(r.onpm),title:'Team +/- with him on the floor'},{h:'OFF +/-',k:'offpm',f:r=>sgn(r.offpm),cls:r=>pmCls(r.offpm),title:'Team +/- with him on the bench'},{h:'ON − OFF',k:'dpm',f:r=>sgn(r.dpm),cls:r=>pmCls(r.dpm),title:'On +/- minus off +/-: how much better (or worse) the team did with him on than with him off'},{h:'ORTG',k:'ortg',f:r=>r.ortg==null?'–':r.ortg.toFixed(1),title:'Team points per 100 possessions with him on'},{h:'DRTG',k:'drtg',asc:true,f:r=>r.drtg==null?'–':r.drtg.toFixed(1),title:'Opponent points per 100 possessions with him on'},{h:'NET RTG',k:'onnet',f:r=>r.onnet==null?'–':(r.onnet>0.05?'+':r.onnet<-0.05?'−':'')+Math.abs(r.onnet).toFixed(1),cls:r=>r.onnet==null?'':pmCls(r.onnet),title:'Off rating minus def rating with him on'}],rows,{def:'min',minW:560,toggle:r=>{S.f.ooOpen=S.f.ooOpen===r.id?null:r.id;renderView()},expand:r=>ooSpread(r.id)}));
