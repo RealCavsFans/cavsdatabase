@@ -43,7 +43,7 @@ async function siteData() {
   const d = await page.evaluate(async md => {
     const tvw = d => { const t = tvFor(d); return [t.nat, t.loc].filter(Boolean)[0] || ''; };
     const NIANG = await fetch('/niang.json').then(r => r.ok ? r.json() : null).catch(() => null);
-    return { DRAFT_LAST: typeof DRAFT_LAST === 'object' ? DRAFT_LAST : [], NIANG, SCHEDULE, SCORES, SEASON, PRESEASON, TEAMS, INJURIES, INJ_ASSIGN: typeof INJ_ASSIGN !== "undefined" ? INJ_ASSIGN : [], CHARGE: typeof CHARGE !== "undefined" ? CHARGE : null, HISTORY, L14, TX: TX.slice(0, 60), DATES,
+    return { DRAFT_LAST: typeof DRAFT_LAST === 'object' ? DRAFT_LAST : [], NIANG, SCHEDULE, SCORES, SEASON, PRESEASON, TEAMS, INJURIES, INJ_ASSIGN: typeof INJ_ASSIGN !== "undefined" ? INJ_ASSIGN : [], CHARGE: typeof CHARGE !== "undefined" ? CHARGE : null, TW: typeof TWOWAY !== 'undefined' ? TWOWAY.map(x => x[0]) : null, HISTORY, L14, TX: TX.slice(0, 60), DATES,
       PL: PLAYERS.map(p => [p[1], p[12]]), tv: Object.fromEntries(SCHEDULE.map(g => [g[0], tvw(g[0])])), radio: (radioFor(SCHEDULE[0][0]).cavs || '').split(' · ')[0],
       box: Object.fromEntries(SCHEDULE.map(g => [g[0], boxUrl(g[0])])), tips: Object.fromEntries(SCHEDULE.map(g => [g[0], tipOf(g).toISOString()])),
       TS: (typeof TSTATS === 'object' && TSTATS.CLE && TSTATS.CLE[0] + TSTATS.CLE[1] >= 1) ? TSTATS : (typeof TSTATS_PREV === 'object' ? TSTATS_PREV : {}), TS_CUR: !!(typeof TSTATS === 'object' && TSTATS.CLE && TSTATS.CLE[0] + TSTATS.CLE[1] >= 1),
@@ -163,7 +163,7 @@ function prep(D, g, score, top, boxLink, opts) {
   let ch = null;
   if (D.CHARGE && process.env.NL_CH_EXAMPLE) D.CHARGE = { ...D.CHARGE, record: '1–0', games: [['2026-11-02', 'Motor City Cruise', 'H', '7:00', 'W 118–110', '', 'https://www.basketball-reference.com/gleague/boxscores/', [['Khalifa Diop', 16, 11, 2, 28], ['Ernest Udeh Jr.', 9, 8, 1, 22]]], ...(D.CHARGE.games || [])] };   // mockup only
   if (D.CHARGE) { const G = D.CHARGE.games || [], last = G.filter(z => z[4] && z[0] <= issueDay && z[0] >= g[0]).pop(), next = G.find(z => z[0] >= issueDay && !z[4]);
-    if (last) ch = { kind: 'res', d: last[0], o: last[1], ha: last[2], res: last[4], rec: D.CHARGE.record, box: last[6] || '', lines: last[7] || [] }, ch.nx = next && (Date.parse(next[0]) - Date.parse(issueDay)) / 864e5 <= 7 ? { d: next[0], o: next[1], ha: next[2], t: next[3] } : null;   // [7] = Cavs two-way and assignment players' lines [name, pts, reb, ast, min], kept by the daily update from the box score
+    if (last) ch = { kind: 'res', d: last[0], o: last[1], ha: last[2], res: last[4], rec: D.CHARGE.record, box: last[6] || '', lines: (last[7] || []).filter(r => !D.TW || D.TW.includes(r[0])) }   /* Nov 20 (Luka): only the Cavs' two-way players */, ch.nx = next && (Date.parse(next[0]) - Date.parse(issueDay)) / 864e5 <= 7 ? { d: next[0], o: next[1], ha: next[2], t: next[3] } : null;   // [7] = Cavs two-way and assignment players' lines [name, pts, reb, ast, min], kept by the daily update from the box score
     else if (next && (Date.parse(next[0]) - Date.parse(issueDay)) / 864e5 <= 7) ch = { kind: 'next', d: next[0], o: next[1], ha: next[2], t: next[3], rec: D.CHARGE.record, first: !G.some(z => z[4]), venue: next[5] || (next[2] === 'H' ? D.CHARGE.venue : '') };
     if (ch) { ch.assign = (D.INJ_ASSIGN || []).map(r => r[0]); ch.lines = ch.lines || []; } }
   /* Nov 5 (Luka): drafted players' latest games, same as the home page's Prospect pipeline */
