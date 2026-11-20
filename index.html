@@ -4809,7 +4809,7 @@ const PPD={};
    Cavs' are; the box score estimate (minute share of team totals) only for a player that file doesn't have */
 let LRCX=null;const lrOr=(x,f,est)=>{if(LRCX===null){LRCX={};const J=typeof PPD!=='undefined'&&PPD.lrates;if(J&&J.p&&J.cols){const nk=v=>String(v).normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');LRCX.k=nk;Object.values(J.p).forEach(a=>{const r={};J.cols.forEach((c,i)=>r[c]=a[2+i]);LRCX[nk(a[0])]=r})}}
   const r=LRCX.k&&x&&x.n?LRCX[LRCX.k(x.n)]:null;if(r&&r.sec>0){const v=f(r);if(v!=null)return v}return est()};
-const ppLoad=()=>Promise.all([['stats','/pdata/players.json'],['box','/box.json'],['league','/pdata/league.json'],['news','/news.json'],['ms','/pdata/milestones.json'],['greats','/pdata/greats.json'],['pos','/pdata/positions.json'],['lrates','/pdata/league-rates.json'],['car','/pdata/careers.json'],['cpbp','/pdata/careers-pbp.json']]
+const ppLoad=()=>Promise.all([['stats','/pdata/players.json'],['box','/box.json'],['league','/pdata/league.json'],['news','/news.json'],['ms','/pdata/milestones.json'],['greats','/pdata/greats.json'],['pos','/pdata/positions.json'],['lrates','/pdata/league-rates.json'],['car','/pdata/careers.json'],['cpbp','/pdata/careers-pbp.json'],['trk','/pdata/tracking-career.json']]
   .map(([k,u])=>PPD[k]?0:fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():{}).catch(()=>({})).then(j=>{PPD[k]=j||{}})));
 /*@chunk:pp*/const PPX={
   grpOf:n=>{const w=WPCT[n];if(w)return w[0];const p=(PLAYERS.find(x=>x[1]===n)||[])[2]||'';return /^C/.test(p)?'B':/^G$/.test(p)?'G':'W'},
@@ -5550,6 +5550,15 @@ const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3PT%','tp'],['FG%','f
     drop(root.querySelector('.ppx-adv'),1,'Career by season · advanced');
     drop(byTitle('His zones')||byTitle('Shooting'),2,'Career by season · shot zones');
     drop(byTitle('On/off'),3,'Career by season · on/off')}}
+  /* Nov 20 (Luka): tracking history (NBA.com, pulled once; past seasons don't change): shot contest from 2013-14, who he guarded from 2017-18, any team */
+  {const pid=String(p[12]||''),TK=PPD.trk||{},CT=TK.contest,MU=TK.matchups;const by=t=>[...root.querySelectorAll('section.ppx-c')].find(c=>{const h=c.querySelector('.ppx-ch h2');return h&&h.textContent.trim().toLowerCase().startsWith(t.toLowerCase())});
+   const pc=v=>v==null||!isFinite(v)?'–':(v*100).toFixed(1);
+   const dd=(host,lab,build)=>{if(!host)return;const d=document.createElement('details');d.className='car-dd';const sm=document.createElement('summary');sm.append(el('span',null,lab),el('i',null,'▾'));d.appendChild(sm);let b=false;d.addEventListener('toggle',()=>{if(d.open&&!b){b=true;d.appendChild(build())}});host.appendChild(d)};
+   const tbl=(heads,rows,note)=>{const w=el('div','ppx-carw');const t=el('table','ppx-t ppx-car');t.innerHTML='<thead><tr>'+heads.map((h,i)=>'<th'+(i<2?' style="text-align:left"':'')+'>'+h+'</th>').join('')+'</tr></thead>';const tb=el('tbody');rows.forEach(r=>{const tr=el('tr');r.forEach((v,i)=>{const td=el('td',null,String(v));if(i<2)td.style.textAlign='left';tr.appendChild(td)});tb.appendChild(tr)});t.appendChild(tb);w.append(t,el('p','note',note));return w};
+   const cs=CT?Object.keys(CT.s).filter(se=>CT.s[se].p[pid]).sort().reverse():[];
+   if(cs.length)dd(by('Shot contest'),'Career by season · shot contest',()=>tbl(['Season','Team','GP','Very tight','Tight','Open','Wide open'],cs.map(se=>{const x=CT.s[se].p[pid],tot=x.r.reduce((t,r)=>t+r[1],0);return [se.replace('-','–'),x.t,x.gp,...x.r.map(r=>tot?pc(r[1]/tot)+'% · '+(r[1]?pc(r[0]/r[1]):'–'):'–')]}),'Share of his shots with the nearest defender that close · his FG% on them. NBA.com player tracking, regular season, 2013–14 on (tracking starts then). Team = his last team that season.'));
+   const ms=MU?Object.keys(MU.s).filter(se=>MU.s[se][pid]).sort().reverse():[];
+   if(ms.length)dd(by('Matchup log'),'Career by season · who he guarded',()=>tbl(['Season','Team','Poss','Pts/100','FG% vs','3P% vs','Most guarded'],ms.map(se=>{const x=MU.s[se][pid],t=x.t,tm=CT&&CT.s[se]&&CT.s[se].p[pid]?CT.s[se].p[pid].t:'',top=x.top[0];return [se.replace('-','–'),tm,Math.round(t[0]),t[0]?(t[1]/t[0]*100).toFixed(1):'–',t[3]?pc(t[2]/t[3]):'–',t[5]?pc(t[4]/t[5]):'–',top?top[0]+' ('+Math.round(top[1])+')':'–']}),'When he was the closest defender: partial possessions, points his man scored per 100 of them, and how his man shot. Most guarded = the player he defended on the most possessions. NBA.com matchup tracking, regular season, 2017–18 on.'))}
   const hs=chap('his','In the news','',false,'News');const hsH=[];
   // ladder
   {const F=(PPD.ms||{}).franchise||{};const cats=[['PTS','Points','pts'],['REB','Rebounds','reb'],['AST','Assists','ast'],['GP','Games','gp']].filter(([k])=>(F[k]||[]).some(x=>x[0]===n));
