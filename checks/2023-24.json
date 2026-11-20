@@ -1,16 +1,106 @@
 {
  "season": "2023-24",
- "checked": "2026-11-20T20:53:30.547Z",
+ "checked": "2026-11-20T21:17:15.614Z",
  "tally": {
-  "games": 94,
-  "clean": 92,
+  "games": 1311,
+  "clean": 1285,
   "nba": 0,
-  "ours": 2,
+  "ours": 23,
   "poss": 0,
-  "espn": 0
+  "espn": 3
  },
  "how": "nba = the NBA box score does not add up on its own; ours = our play-by-play build differs from the NBA box score; poss = possession count off from the NBA markers; espn = the NBA and ESPN box scores disagree (Cavs games)",
  "games": {
+  "0022300088": {
+   "d": "20231028",
+   "m": "CHI@DET",
+   "ours": [
+    "Z. LaVine (CHI): to 4/3 (NBA/ours)",
+    "A. Caruso (CHI): to 0/1 (NBA/ours)"
+   ]
+  },
+  "0022300130": {
+   "d": "20231102",
+   "m": "ORL@UTA",
+   "ours": [
+    "P. Banchero (ORL): pm -5/3 (NBA/ours)",
+    "M. Wagner (ORL): pm 0/2 (NBA/ours)",
+    "A. Black (ORL): pm 6/-4 (NBA/ours)"
+   ]
+  },
+  "0022300152": {
+   "d": "20231106",
+   "m": "UTA@CHI",
+   "ours": [
+    "K. Olynyk (UTA): to 1/0 (NBA/ours)",
+    "O. Agbaji (UTA): to 1/2 (NBA/ours)"
+   ]
+  },
+  "0022300155": {
+   "d": "20231106",
+   "m": "ATL@OKC",
+   "ours": [
+    "C. Holmgren (OKC): pm 3/4 (NBA/ours)",
+    "J. Giddey (OKC): pm 7/8 (NBA/ours)",
+    "J. Williams (OKC): fga 4/5, tpa 1/2 (NBA/ours)",
+    "I. Joe (OKC): pm 6/5 (NBA/ours)",
+    "C. Wallace (OKC): pm 4/3 (NBA/ours)"
+   ]
+  },
+  "0022300165": {
+   "d": "20231108",
+   "m": "DET@MIL",
+   "ours": [
+    "G. Antetokounmpo (MIL): pm 5/4 (NBA/ours)",
+    "B. Lopez (MIL): pm 5/6 (NBA/ours)",
+    "I. Stewart (DET): pm -4/-3 (NBA/ours)",
+    "K. Hayes (DET): pm -3/-4 (NBA/ours)",
+    "M. Sasser (DET): pm 5/4 (NBA/ours)",
+    "J. Rhoden (DET): pm 10/11 (NBA/ours)"
+   ]
+  },
+  "0022300320": {
+   "d": "20231214",
+   "m": "CHI@MIA",
+   "ours": [
+    "D. Robinson (MIA): to 1/2 (NBA/ours)"
+   ]
+  },
+  "0022300417": {
+   "d": "20231227",
+   "m": "MIL@BKN",
+   "ours": [
+    "D. Sharpe (BKN): pm 2/1 (NBA/ours)",
+    "T. Watford (BKN): pm -15/-16 (NBA/ours)",
+    "K. Johnson (BKN): pm -18/-17 (NBA/ours)",
+    "A. Brooks (BKN): pm -12/-13 (NBA/ours)",
+    "N. Clowney (BKN): pm -19/-18 (NBA/ours)",
+    "D. Whitehead (BKN): pm -16/-15 (NBA/ours)"
+   ]
+  },
+  "0022300465": {
+   "d": "20240103",
+   "m": "WAS@CLE",
+   "espn": [
+    "T. Thompson: FG 3-7/3-6 (NBA/ESPN)",
+    "M. Muscala: ast 2/3 (NBA/ESPN)"
+   ]
+  },
+  "0022300469": {
+   "d": "20240103",
+   "m": "BKN@HOU",
+   "ours": [
+    "J. Smith Jr. (HOU): to 0/1 (NBA/ours)"
+   ]
+  },
+  "0022300497": {
+   "d": "20240107",
+   "m": "SAS@CLE",
+   "espn": [
+    "D. Vassell: ast 2/3 (NBA/ESPN)",
+    "T. Jones: ast 5/4 (NBA/ESPN)"
+   ]
+  },
   "0022300527": {
    "d": "20240111",
    "m": "BKN@CLE",
@@ -21,6 +111,31 @@
     "D. Mitchell (CLE): pm 11/12 (NBA/ours)",
     "G. Niang (CLE): pm 1/0 (NBA/ours)",
     "T. Thompson (CLE): pm 3/2 (NBA/ours)"
+   ]
+  },
+  "0022300558": {
+   "d": "20240115",
+   "m": "DET@WAS",
+   "ours": [
+    "K. Kuzma (WAS): pm -17/-16 (NBA/ours)",
+    "A. Gill (WAS): pm 1/0 (NBA/ours)",
+    "J. Duren (DET): pm 8/9 (NBA/ours)",
+    "A. Thompson (DET): pm 9/8 (NBA/ours)"
+   ]
+  },
+  "0022300610": {
+   "d": "20240122",
+   "m": "CHA@MIN",
+   "ours": [
+    "A. Edwards (MIN): tpa 5/4 (NBA/ours)"
+   ]
+  },
+  "0022300625": {
+   "d": "20240124",
+   "m": "PHX@DAL",
+   "ours": [
+    "G. Williams (DAL): pm 5/6 (NBA/ours)",
+    "T. Hardaway Jr. (DAL): pm -21/-22 (NBA/ours)"
    ]
   },
   "0022300703": {
@@ -35,6 +150,102 @@
     "D. Wade (CLE): pm 6/5 (NBA/ours)",
     "G. Niang (CLE): pm 5/4 (NBA/ours)",
     "S. Merrill (CLE): pm -8/-9 (NBA/ours)"
+   ]
+  },
+  "0022300732": {
+   "d": "20240207",
+   "m": "DET@SAC",
+   "ours": [
+    "K. Huerter (SAC): pm -10/-8 (NBA/ours)",
+    "T. Lyles (SAC): pm 5/3 (NBA/ours)"
+   ]
+  },
+  "0022300782": {
+   "d": "20240214",
+   "m": "IND@TOR",
+   "ours": [
+    "I. Jackson (IND): pm 6/7 (NBA/ours)",
+    "O. Toppin (IND): pm 2/1 (NBA/ours)"
+   ]
+  },
+  "0022300810": {
+   "d": "20240223",
+   "m": "MIA@NOP",
+   "ours": [
+    "J. Jaquez Jr. (MIA): min 26.9/14.9, pm 8/1 (NBA/ours)",
+    "T. Bryant (MIA): min 0.0/12.0, pm 0/7 (NBA/ours)"
+   ]
+  },
+  "0022300820": {
+   "d": "20240225",
+   "m": "CLE@WAS",
+   "espn": [
+    "K. Kuzma: reb 7/6 (NBA/ESPN)",
+    "M. Bagley III: reb 9/10 (NBA/ESPN)"
+   ]
+  },
+  "0022301006": {
+   "d": "20240321",
+   "m": "CHI@HOU",
+   "ours": [
+    "D. Brooks (HOU): pm 9/10 (NBA/ours)",
+    "J. Landale (HOU): pm -1/-2 (NBA/ours)",
+    "D. DeRozan (CHI): pm -14/-15 (NBA/ours)",
+    "A. Drummond (CHI): pm -3/-2 (NBA/ours)"
+   ]
+  },
+  "0022301016": {
+   "d": "20240322",
+   "m": "IND@GSW",
+   "ours": [
+    "T. Jackson-Davis (GSW): pm -9/-10 (NBA/ours)",
+    "C. Paul (GSW): pm -2/-1 (NBA/ours)"
+   ]
+  },
+  "0022301049": {
+   "d": "20240327",
+   "m": "GSW@ORL",
+   "ours": [
+    "D. Green (GSW): pm -2/-1 (NBA/ours)",
+    "M. Moody (GSW): pm 7/6 (NBA/ours)"
+   ]
+  },
+  "0022301089": {
+   "d": "20240401",
+   "m": "BKN@IND",
+   "ours": [
+    "J. Smith (IND): pm 5/4 (NBA/ours)",
+    "I. Jackson (IND): pm 0/1 (NBA/ours)"
+   ]
+  },
+  "0022301195": {
+   "d": "20240414",
+   "m": "LAL@NOP",
+   "ours": [
+    "C. McCollum (NOP): pm -9/-11 (NBA/ours)",
+    "L. Nance Jr. (NOP): pm 0/2 (NBA/ours)",
+    "D. Russell (LAL): pm 26/24 (NBA/ours)",
+    "G. Vincent (LAL): pm 10/12 (NBA/ours)"
+   ]
+  },
+  "0022301224": {
+   "d": "20231208",
+   "m": "HOU@DEN",
+   "ours": [
+    "J. Murray (DEN): pm 4/5 (NBA/ours)",
+    "C. Braun (DEN): pm -9/-10 (NBA/ours)"
+   ]
+  },
+  "0042300173": {
+   "d": "20240426",
+   "m": "LAC@DAL",
+   "ours": [
+    "D. Jones Jr. (DAL): pm 12/13 (NBA/ours)",
+    "P. Washington (DAL): pm 23/22 (NBA/ours)",
+    "D. Gafford (DAL): pm 9/10 (NBA/ours)",
+    "J. Green (DAL): pm -3/-4 (NBA/ours)",
+    "I. Zubac (LAC): pm -5/-6 (NBA/ours)",
+    "R. Westbrook (LAC): pm -2/-1 (NBA/ours)"
    ]
   }
  }
