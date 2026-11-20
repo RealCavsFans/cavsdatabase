@@ -1,5 +1,5 @@
 {
- "how": "Each finished Cavs game compared with Basketball Reference: per player PTS, REB, AST, FG, 3P, FT made/attempted, minutes (within 1), and the final score.",
+ "how": "Each finished Cavs game compared with Basketball Reference: per player PTS, REB, AST, FG, 3P, FT made/attempted, STL, BLK, TO, OREB, PF, minutes (within 1), and the final score.",
  "games": {
   "0022600006": {
    "et": "2026-10-22",
@@ -82,56 +82,68 @@
    "players": 21
   },
   "0022600204": {
+   "v": 2,
    "et": "2026-11-09",
    "opp": "CHA",
-   "status": "match",
+   "status": "diff",
+   "diffs": [
+    "Coby White TO: ours 3, Basketball Reference 2"
+   ],
    "url": "https://www.basketball-reference.com/boxscores/202611090CHO.html",
-   "at": "2026-11-11T09:30:33.640Z",
+   "at": "2026-11-20T08:46:05.200Z",
+   "second": true,
    "players": 22
   },
   "0022600218": {
+   "v": 2,
    "et": "2026-11-11",
    "opp": "NY",
    "status": "match",
    "url": "https://www.basketball-reference.com/boxscores/202611110NYK.html",
-   "at": "2026-11-13T09:32:17.399Z",
+   "at": "2026-11-20T08:46:08.946Z",
+   "second": true,
    "players": 19
   },
   "0022600036": {
+   "v": 2,
    "et": "2026-11-13",
    "opp": "MIA",
    "status": "match",
    "url": "https://www.basketball-reference.com/boxscores/202611130MIA.html",
-   "at": "2026-11-15T08:46:03.651Z",
+   "at": "2026-11-20T08:46:12.695Z",
    "second": true,
    "players": 20
   },
   "0022600232": {
+   "v": 2,
    "et": "2026-11-14",
    "opp": "DAL",
    "status": "match",
    "url": "https://www.basketball-reference.com/boxscores/202611140CLE.html",
-   "at": "2026-11-16T08:46:03.752Z",
+   "at": "2026-11-20T08:46:16.430Z",
    "second": true,
    "players": 18
   },
   "0022600246": {
+   "v": 2,
    "et": "2026-11-16",
    "opp": "CHI",
    "status": "match",
    "url": "https://www.basketball-reference.com/boxscores/202611160CLE.html",
-   "at": "2026-11-18T08:46:05.370Z",
+   "at": "2026-11-20T08:46:20.159Z",
    "second": true,
    "players": 23
   },
   "0022600258": {
+   "v": 2,
    "et": "2026-11-18",
    "opp": "MEM",
    "status": "match",
    "url": "https://www.basketball-reference.com/boxscores/202611180CLE.html",
-   "at": "2026-11-19T17:36:57.877Z",
+   "at": "2026-11-20T08:46:23.799Z",
+   "second": true,
    "players": 22
   }
  },
- "checked": "2026-11-19T17:36:57.877Z"
+ "checked": "2026-11-20T08:46:23.799Z"
 }
