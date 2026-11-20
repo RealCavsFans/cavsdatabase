@@ -34,51 +34,63 @@
    "players": 19
   },
   "0022600144": {
+   "v": 2,
    "et": "2026-10-29",
    "opp": "ATL",
    "status": "match",
    "url": "https://www.basketball-reference.com/boxscores/202610290ATL.html",
-   "at": "2026-11-03T09:27:32.946Z",
+   "at": "2026-11-20T17:13:52.692Z",
+   "second": true,
    "players": 19
   },
   "0022600151": {
+   "v": 2,
    "et": "2026-10-31",
    "opp": "MIL",
    "status": "match",
    "url": "https://www.basketball-reference.com/boxscores/202610310MIL.html",
-   "at": "2026-11-03T09:27:36.611Z",
+   "at": "2026-11-20T17:13:56.341Z",
+   "second": true,
    "players": 25
   },
   "0022600158": {
+   "v": 2,
    "et": "2026-11-02",
    "opp": "OKC",
    "status": "match",
    "url": "https://www.basketball-reference.com/boxscores/202611020CLE.html",
-   "at": "2026-11-04T09:30:05.426Z",
+   "at": "2026-11-20T17:13:59.990Z",
+   "second": true,
    "players": 20
   },
   "0022600180": {
+   "v": 2,
    "et": "2026-11-04",
    "opp": "OKC",
    "status": "match",
    "url": "https://www.basketball-reference.com/boxscores/202611040OKC.html",
-   "at": "2026-11-06T09:30:23.927Z",
+   "at": "2026-11-20T17:14:03.635Z",
+   "second": true,
    "players": 21
   },
   "0022600027": {
+   "v": 2,
    "et": "2026-11-06",
    "opp": "PHI",
    "status": "match",
    "url": "https://www.basketball-reference.com/boxscores/202611060CLE.html",
-   "at": "2026-11-08T09:24:18.592Z",
+   "at": "2026-11-20T17:14:07.284Z",
+   "second": true,
    "players": 24
   },
   "0022600191": {
+   "v": 2,
    "et": "2026-11-07",
    "opp": "NY",
    "status": "match",
    "url": "https://www.basketball-reference.com/boxscores/202611070CLE.html",
-   "at": "2026-11-09T09:39:45.028Z",
+   "at": "2026-11-20T17:14:10.933Z",
+   "second": true,
    "players": 21
   },
   "0022600204": {
@@ -145,5 +157,5 @@
    "players": 22
   }
  },
- "checked": "2026-11-20T08:46:23.799Z"
+ "checked": "2026-11-20T17:14:10.933Z"
 }
