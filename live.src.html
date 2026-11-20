@@ -1010,6 +1010,7 @@ const ESPN='https://site.api.espn.com/apis/site/v2/sports/basketball/nba/';
 (function(){const b=()=>document.getElementById('theme');let m='auto';try{m=localStorage.getItem('cdb-theme')||'auto'}catch(e){}
   const ap=()=>{if(m==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.setAttribute('data-theme',m);const x=b();if(x)x.textContent=m==='auto'?'Auto':m==='dark'?'Dark':'Light'};ap();
   addEventListener('DOMContentLoaded',()=>{ap();b().onclick=()=>{m=m==='auto'?'dark':m==='dark'?'light':'auto';try{localStorage.setItem('cdb-theme',m)}catch(e){}ap()}})})();
+/* Nov 20 (Luka): every season with a Cavs game archive, newest first (the NBA's own game files go back to 2020-21) */const ARCH_SEASONS=['2026-27','2025-26','2024-25','2023-24','2022-23','2021-22','2020-21'];
 const ARCH={},SEASON_TABS=['season','team','players','lineups','shots','ast','ff','share'];
 const POLL=15000;
 const $=id=>document.getElementById(id);
@@ -1040,7 +1041,7 @@ evs.sort((a,b)=>(isCavs(b)-isCavs(a))||(rank(a)-rank(b)));
   {const ce=evs.filter(isCavs);if(ce.length){const g=el('optgroup');g.label='Today';ce.forEach(e=>{const st=e.status.type;const o=el('option',null,e.shortName+' · '+(st.state==='in'?'LIVE '+e.status.displayClock+' '+pname(e.status.period):st.shortDetail));o.value=e.id;g.appendChild(o)});sel.appendChild(g)}}
   const gl=g=>{const d=new Date(g.date);const w=g.cle>g.os?'W':'L';return (d.getMonth()+1)+'/'+d.getDate()+' '+(g.ha==='home'?'vs':'@')+' '+g.opp+' · '+w+' '+Math.max(g.cle,g.os)+'–'+Math.min(g.cle,g.os)};
   const cur=ARCH['2026-27']||[];if(cur.length){const g=el('optgroup');g.label='2026–27 Cavs games';cur.slice().reverse().forEach(x=>{const o=el('option',null,gl(x));o.value='a2026-27:'+x.id;g.appendChild(o)});sel.appendChild(g)}
-  const sg=el('optgroup');sg.label='Season totals';[['2026-27',cur.length],['2025-26',(ARCH['2025-26']||[]).length]].forEach(([se,n])=>{if(!n)return;const o=el('option',null,se.replace('-','–')+' season · '+n+' games');o.value='s'+se;sg.appendChild(o)});if(sg.children.length)sel.appendChild(sg);
+  const sg=el('optgroup');sg.label='Season totals';ARCH_SEASONS.map(se=>[se,(ARCH[se]||[]).length]).forEach(([se,n])=>{if(!n)return;const o=el('option',null,se.replace('-','–')+' season · '+n+' games');o.value='s'+se;sg.appendChild(o)});if(sg.children.length)sel.appendChild(sg);
   /* 2025–26 replays: one entry here; picking it opens a month and game picker next to the menu, so the list stays short */
   {const rg=el('optgroup');rg.label='2025–26 replays';const o=el('option',null,'Replay a 2025–26 game…');o.value='pickprev';rg.appendChild(o);
    if(S.ev&&String(S.ev).length&&(ARCH['2025-26']||[]).some(x=>x.id===String(S.ev))&&S.replay){const x=ARCH['2025-26'].find(x=>x.id===String(S.ev));const c=el('option',null,'Replay · '+gl(x));c.value='r'+x.id;rg.insertBefore(c,o)}
@@ -5075,7 +5076,7 @@ function vPlays(v,D,R){
 }
 
 /* ---------- boot ---------- */
-(async()=>{msLoad().then(()=>{if(S.data&&!S.season&&S.tab==='team')renderView()});await Promise.all(['2026-27','2025-26'].map(async se=>{try{const r=await fetch('/live-archive/'+se+'/index.json',{cache:'no-store'});if(r.ok)ARCH[se]=await r.json()}catch(e){}}));
+(async()=>{msLoad().then(()=>{if(S.data&&!S.season&&S.tab==='team')renderView()});await Promise.all(ARCH_SEASONS.map(async se=>{try{const r=await fetch('/live-archive/'+se+'/index.json',{cache:ARCH_SEASONS.indexOf(se)<2?'no-store':'default'});/* finished seasons don't change */if(r.ok)ARCH[se]=await r.json()}catch(e){}}));
   try{const r=await fetch('/live-base.json',{cache:'no-store'});if(r.ok){const j=await r.json();if(j&&j.t&&j.games>0&&j.season!=='2025-26')BLIVE=j}}catch(e){}
   const evs=await loadScoreboard();$('gsel').onchange=e=>{if(e.target.value==='pickprev'){prevPicker();return}const pp=document.getElementById('prevpk');if(pp)pp.remove();choose(e.target.value,true)};
 
