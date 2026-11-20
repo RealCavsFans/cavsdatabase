@@ -1,0 +1,41 @@
+{
+ "season": "2023-24",
+ "checked": "2026-11-20T20:53:30.547Z",
+ "tally": {
+  "games": 94,
+  "clean": 92,
+  "nba": 0,
+  "ours": 2,
+  "poss": 0,
+  "espn": 0
+ },
+ "how": "nba = the NBA box score does not add up on its own; ours = our play-by-play build differs from the NBA box score; poss = possession count off from the NBA markers; espn = the NBA and ESPN box scores disagree (Cavs games)",
+ "games": {
+  "0022300527": {
+   "d": "20240111",
+   "m": "BKN@CLE",
+   "ours": [
+    "I. Okoro (CLE): pm 6/5 (NBA/ours)",
+    "D. Wade (CLE): pm 8/9 (NBA/ours)",
+    "J. Allen (CLE): pm 6/7 (NBA/ours)",
+    "D. Mitchell (CLE): pm 11/12 (NBA/ours)",
+    "G. Niang (CLE): pm 1/0 (NBA/ours)",
+    "T. Thompson (CLE): pm 3/2 (NBA/ours)"
+   ]
+  },
+  "0022300703": {
+   "d": "20240203",
+   "m": "CLE@SAS",
+   "ours": [
+    "Z. Collins (SAS): pm -28/-29 (NBA/ours)",
+    "C. Osman (SAS): pm -12/-11 (NBA/ours)",
+    "M. Strus (CLE): pm 11/12 (NBA/ours)",
+    "D. Mitchell (CLE): pm 22/23 (NBA/ours)",
+    "C. LeVert (CLE): pm 20/21 (NBA/ours)",
+    "D. Wade (CLE): pm 6/5 (NBA/ours)",
+    "G. Niang (CLE): pm 5/4 (NBA/ours)",
+    "S. Merrill (CLE): pm -8/-9 (NBA/ours)"
+   ]
+  }
+ }
+}
