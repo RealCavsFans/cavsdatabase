@@ -4404,7 +4404,24 @@
  },
  "2026-11-20": {
   "url": "https://www.nba.com/game/ind-vs-cle-0022600045/box-score",
-  "status": "scheduled"
+  "status": "scheduled",
+  "refs": [
+   [
+    "Crew chief",
+    "Sean Wright",
+    "4"
+   ],
+   [
+    "Referee",
+    "Nick Buchert",
+    "3"
+   ],
+   [
+    "Umpire",
+    "Tyler Ricks",
+    "95"
+   ]
+  ]
  },
  "2026-11-23": {
   "url": "https://www.nba.com/game/cle-vs-chi-0022600292/box-score",
