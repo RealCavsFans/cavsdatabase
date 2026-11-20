@@ -1,0 +1,23 @@
+{
+ "season": "2024-25",
+ "checked": "2026-11-20T20:49:53.493Z",
+ "tally": {
+  "games": 91,
+  "clean": 90,
+  "nba": 0,
+  "ours": 1,
+  "poss": 0,
+  "espn": 0
+ },
+ "how": "nba = the NBA box score does not add up on its own; ours = our play-by-play build differs from the NBA box score; poss = possession count off from the NBA markers; espn = the NBA and ESPN box scores disagree (Cavs games)",
+ "games": {
+  "0022400554": {
+   "d": "20250114",
+   "m": "CLE@IND",
+   "ours": [
+    "B. Mathurin (IND): pm -10/-8 (NBA/ours)",
+    "T. McConnell (IND): pm 3/1 (NBA/ours)"
+   ]
+  }
+ }
+}
