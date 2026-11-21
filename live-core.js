@@ -370,11 +370,14 @@ function recapL(D,R){
    the first possession after each team's own timeout, and the first 3 minutes of each quarter (points and possessions) */
 function extras(D,R){const tid=[D.home.id,D.away.id],out={tim:{},ato:{},qs:{}};
   const grp={};tid.forEach(t=>{const g=[];R.PL.filter(q=>q.team===t).forEach(q=>{if(q.how==='oreb'&&g.length)g[g.length-1].push(q);else g.push([q])});grp[t]=g;
-    const tm=[[0,0],[0,0],[0,0]];g.forEach(x=>{const q=x[0];if(q.first==null&&!q.pts)return;const s=q.first==null?99:q.first;const b=s<=8?0:s<=16?1:2;tm[b][0]++;tm[b][1]+=x.reduce((a,y)=>a+y.pts,0)});out.tim[t]=tm;out.ato[t]=[0,0,0]});
+    const tm=[[0,0],[0,0],[0,0]];g.forEach(x=>{const q=x[0];if(q.first==null&&!q.pts)return;const s=q.first==null?99:q.first;const b=s<=8?0:s<=16?1:2;tm[b][0]++;tm[b][1]+=x.reduce((a,y)=>a+y.pts,0)});out.tim[t]=tm;out.ato[t]=[0,0,0];out.atl=out.atl||{};out.atl[t]=[]});
   const starts=R.PL.filter(q=>q.how!=='oreb');
   (R.plays||[]).forEach(p=>{if(!/Timeout/.test(p.type)||/Official/.test(p.type)||!out.ato[p.team])return;const t=p.team;let tgt=null;
     for(let i=starts.length-1;i>=0;i--)if(starts[i].t<=p.t){tgt=starts[i].team===t?starts[i]:null;break}
-    if(!tgt)tgt=starts.find(q=>q.team===t&&q.t>p.t);if(!tgt)return;const g=grp[t].find(x=>x[0]===tgt);if(!g)return;const pts=g.reduce((a,y)=>a+y.pts,0);const o=out.ato[t];o[0]++;o[1]+=pts;if(pts>0)o[2]++});
+    if(!tgt)tgt=starts.find(q=>q.team===t&&q.t>p.t);if(!tgt)return;const g=grp[t].find(x=>x[0]===tgt);if(!g)return;const pts=g.reduce((a,y)=>a+y.pts,0);const o=out.ato[t];o[0]++;o[1]+=pts;if(pts>0)o[2]++;
+    /* Nov 20 (Luka): how each scored possession scored (a 2, a 3, free throws), from the made baskets in it */
+    if(pts>0){const nx=starts.find(q=>q.team!==t&&q.t>tgt.t),t0=tgt.t,t1=nx?nx.t:Infinity;let n2=0,n3=0,ft=0;(R.plays||[]).forEach(q=>{if(!q.sc||!(q.val>0)||q.t<t0||q.t>t1)return;const qt=q.team&&out.ato[q.team]?q.team:(D.P[(q.ids||[])[0]]||{}).team;if(qt!==t)return;if(/Free Throw/.test(q.type||''))ft+=q.val;else if(q.val===3)n3++;else n2++});
+      out.atl[t].push([...Array(n3).fill('3'),...Array(n2).fill('2'),...(ft?[ft+' FT']:[])].join(' + ')||String(pts))}});
   tid.forEach(t=>{out.qs[t]=[1,2,3,4].map(()=>[0,0])});
   [1,2,3,4].forEach(per=>{const st=pstart(per),en=st+180;(R.plays||[]).forEach(p=>{if(p.per!==per||!(p.sc&&p.val>0)||p.t>en)return;const t=p.team&&out.qs[p.team]?p.team:(D.P[p.ids[0]]||{}).team;if(out.qs[t])out.qs[t][per-1][0]+=p.val});
     starts.forEach(q=>{if(q.t>=st&&q.t<en&&out.qs[q.team])out.qs[q.team][per-1][1]++})});
