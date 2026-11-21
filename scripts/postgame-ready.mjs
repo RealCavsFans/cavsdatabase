@@ -17,5 +17,10 @@ const S = read(`live-archive/${SEASON}/season.json`) || {};
 const g = (S.games || []).find(x => x.id === id);
 const L = read('pdata/league.json') || {};
 const inLeague = g && g.espn && (L.games || []).map(String).includes(String(g.espn));
-console.error(`postgame-ready ${id}: archive ${g ? 'yes' : 'no'}, league feed ${inLeague ? 'yes' : 'no'}`);
-console.log(`ready=${g && inLeague ? 1 : 0}`);
+/* Nov 21: the league feed lists tonight's game before the NBA's player season totals catch up (Harden's 51 vs IND was
+   missing from his line for over an hour), so also wait until every Cavs player who played tonight has the same number of
+   games in the league feed as in the archive. */
+const P = L.players || {};
+const behind = g && inLeague ? (g.pl || []).filter(pid => { const nm = ((S.P || {})[pid] || {}).name; const all = Object.values(P); const l = P[pid] || all.find(x => x.n === nm && x.t === 'CLE') || all.find(x => x.n === nm); if (!l) return false; const n = (S.games || []).filter(x => (x.pl || []).includes(pid)).length; return (l.g || 0) < n; }) : [];
+console.error(`postgame-ready ${id}: archive ${g ? 'yes' : 'no'}, league feed ${inLeague ? 'yes' : 'no'}, player totals ${behind.length ? behind.length + ' players a game behind' : 'in step'}`);
+console.log(`ready=${g && inLeague && !behind.length ? 1 : 0}`);
