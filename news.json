@@ -1,6 +1,18 @@
 {
  "articles": [
   {
+   "src": "Fear The Sword",
+   "title": "Harden’s 51 points leads Cavs over the Pacers",
+   "link": "https://www.fearthesword.com/cavs-scores-results/54760/hardens-51-points-leads-cavs-over-the-pacers",
+   "date": "2026-11-21T05:35:40.000Z"
+  },
+  {
+   "src": "Hoops Rumors",
+   "title": "Eastern Notes: Harden, Pacers, Okongwu, Daniels",
+   "link": "https://www.hoopsrumors.com/2026/11/eastern-notes-harden-pacers-okongwu-daniels.html",
+   "date": "2026-11-21T05:22:25.000Z"
+  },
+  {
    "src": "Hoops Rumors",
    "title": "And-Ones: Top Rookies, Thibodeau, Luis",
    "link": "https://www.hoopsrumors.com/2026/11/and-ones-top-rookies-thibodeau-luis.html",
@@ -137,12 +149,6 @@
    "title": "Cavaliers vs. Grizzlies: How to Watch, Starting Lineups, Injury Report and More",
    "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQSWhWcFQ2T01NMWRYWjRSM1hvOUdRelFqNzdIUFppZmRlUHEySGFPRE1QdVRESVVBanZYNVJVR002cEhIUWJhM0lxQVlHMlJhVUZFdFQ1ZFhuaFhSMDJDRDV5dTdTRzNlbUdqcHVyRjgteFJBTnhiQkZ0dFBJajktS3ZTOVM0TG5UNXVIbXpLLUhIVUcyZFhGSmZVb2UzQS1jUjhwYk5FQ3E5MGZkTmNycEdPYTdldW5LM3hrbzVDcHRCUU9p?oc=5",
    "date": "2026-11-18T22:53:22.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cavs sign sharpshooting wing to two-way deal",
-   "link": "https://www.fearthesword.com/cavs-news/54652/cavs-sign-zack-austin-cleveland-cavaliers-charge-g-league-riley-minix",
-   "date": "2026-11-18T16:51:34.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -371,12 +377,6 @@
    "title": "'My name is James Harden': Former MVP erupts for season-high 32 points in Cavs' win over Knicks",
    "link": "https://www.nytimes.com/athletic/7775173/2026/11/12/james-harden-cavs-knicks-skid/",
    "date": "2026-11-12T05:16:28.000Z"
-  },
-  {
-   "src": "Hoops Rumors",
-   "title": "Cavaliers Notes: Harden, Atkinson, Minix, Tyson",
-   "link": "https://www.hoopsrumors.com/2026/11/cavaliers-notes-harden-atkinson-minix-tyson.html",
-   "date": "2026-11-11T22:45:52.000Z"
   }
  ],
  "podcasts": [
@@ -452,6 +452,13 @@
   }
  ],
  "videos": [
+  {
+   "src": "Cavs Roundtable",
+   "title": "James Harden Drops A 50-BURGER As Cleveland Cavaliers Take Down Indiana Pacers In NBA Cup Matchup",
+   "link": "https://www.youtube.com/watch?v=9_OOwEelyPU",
+   "date": "2026-11-21T05:54:02.000Z",
+   "id": "9_OOwEelyPU"
+  },
   {
    "src": "Locked On Cavs",
    "title": "James Harden with VINTAGE Performance! Beard Gets 51! #clevelandcavaliers #cavs #nba",
