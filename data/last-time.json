@@ -89,6 +89,19 @@
    "d": "2026-11-18",
    "o": "MEM",
    "notes": []
+  },
+  "0022600045": {
+   "d": "2026-11-20",
+   "o": "IND",
+   "notes": [
+    {
+     "n": "51",
+     "l": "Harden points",
+     "t": "James Harden: most by a Cav since Donovan Mitchell’s 71 against CHI, Jan 2, 2023",
+     "h": "history/2022-23",
+     "a": "against CHI, Jan 2, 2023"
+    }
+   ]
   }
  }
 }
