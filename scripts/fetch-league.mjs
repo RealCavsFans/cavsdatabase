@@ -5,6 +5,7 @@
 // and keeps running season totals per player in pdata/league.json. Safe to run every 30 minutes: finished games are
 // remembered by id, so each run only reads new finals (at most MAX per run, so a backfill spreads over a few runs).
 //   pdata/league.json = { season, updated, games: [espn event ids], players: { espnId: { n, t, p, g, gs, min, pts, reb, oreb, ast, stl, blk, tov, fgm, fga, tpm, tpa, ftm, fta, dd, b2b } } }
+import { CUR_SEASON, datesOf } from './season.mjs';   // Nov 21: the season from one place
 import { readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 // every team's shots by type and zone, game by game (pdata/league-shots.json), sorted with the live page's own code,
@@ -14,7 +15,7 @@ const SFILE = new URL('../pdata/league-shots.json', import.meta.url);
 
 const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba';
 const FILE = new URL('../pdata/league.json', import.meta.url);
-const SEASON = '2026-27', START = '2026-10-21', MAX = 40;
+const SEASON = CUR_SEASON, START = SEASON === '2026-27' ? '2026-10-21' : datesOf(SEASON)[0], MAX = 40;
 const etDate = (d = new Date()) => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(d);
 
 let L = { season: SEASON, updated: null, games: [], players: {} };

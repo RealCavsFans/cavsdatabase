@@ -10,13 +10,14 @@
 //        Cleveland Charge                   every Charge game with a result has its box score in pdata/charge-box.json
 // Writes data/data-check.json and data/data-check-alert.txt (when something is off). Exits 2 when something is off.
 //   node scripts/data-check.mjs
+import { CUR_SEASON, PREV_SEASON, START, END } from './season.mjs';   // Nov 21: the season from one place
 import fs from 'node:fs';
-const SEASON = '2026-27', NOW = Date.now(), H = 36e5;
+const SEASON = CUR_SEASON, NOW = Date.now(), H = 36e5;
 const J = p => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return null; } };
 const issues = [], ok = [];
 const age = (ts) => { const t = Date.parse(ts || ''); return isNaN(t) ? null : (NOW - t) / H; };
 const etToday = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date());
-const inSeason = etToday >= '2026-10-20' && etToday <= '2027-04-12';
+const inSeason = etToday >= START && etToday <= END;
 
 /* 1. freshness: [label, file, max hours, how to read the timestamp, in-season only] */
 const FRESH = [
@@ -126,6 +127,14 @@ if (DK.games != null && DK.games < ix.length) issues.push(`Dunks counted from ${
   if (bad.length) issues.push('Career by season row for this season differs from his season line: ' + bad.join('; '));
   if (lag.length && age > 12) issues.push(`Career by season rows ${Math.round(age)}h old and a game behind for: ${lag.join(', ')}`);
   if (!bad.length && n) ok.push(lag.length ? `career rows catching up (${lag.length} a game behind)` : `career rows match the season lines (${n} players)`); } }
+
+/* Nov 21 (Luka): one season everywhere. The scripts read it from scripts/season.mjs (it turns over Aug 1); the pages and a few
+   workflow paths still name it, so this flags any that didn't move with it. */
+{ const bad = [], html = fs.readFileSync('index.html', 'utf8'), live = fs.readFileSync('live.src.html', 'utf8');
+  const s0 = (/const SEASONS=\['(\d{4})–(\d\d)'/.exec(html) || []).slice(1).join('-'); if (s0 !== CUR_SEASON) bad.push(`index.html SEASONS starts with ${s0 || '?'}`);
+  const a0 = (/const ARCH_SEASONS=\['([\d-]+)'/.exec(live) || [])[1]; if (a0 !== CUR_SEASON) bad.push(`live.src.html ARCH_SEASONS starts with ${a0 || '?'}`);
+  for (const f of fs.readdirSync('.github/workflows')) { const t = fs.readFileSync('.github/workflows/' + f, 'utf8'); const seen = [...new Set([...t.matchAll(/\b(20\d\d-\d\d)\b/g)].map(m => m[1]))].filter(x => +x.slice(2, 4) + 1 === +x.slice(5) % 100 || x.slice(5) === String(+x.slice(2, 4) + 1).padStart(2, '0')); const top = seen.sort().pop(); if (top && top !== CUR_SEASON && top >= PREV_SEASON) bad.push(`${f} names ${top}`); }
+  if (bad.length) issues.push(`Season is ${CUR_SEASON} but: ` + bad.join('; ')); else ok.push('one season everywhere (' + CUR_SEASON + ')'); }
 
 const out = { checked: new Date().toISOString(), issues, ok };
 fs.mkdirSync('data', { recursive: true });

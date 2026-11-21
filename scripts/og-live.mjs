@@ -5,6 +5,7 @@
 // og/live.json keeps a fingerprint of each card (so unchanged cards are skipped) and the version that
 // build-pages.mjs adds to the image address, so X, iMessage and Slack fetch the new picture after a change.
 // Run by .github/workflows/videos.yml before build-pages. Needs playwright-core and Chrome (CHROME_PATH); skips if missing.
+import { CUR_SEASON, PREV_SEASON, dash } from './season.mjs';   // Nov 21: the season from one place
 import { launch } from './launch.mjs';
 import { readFile, writeFile, mkdir, unlink } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -68,11 +69,11 @@ const cards = [];   // [file, html]
 for (const P of PLAYERS) {
   const [num, name, pos, ht, , , age, exp, , , draft, tw, id] = P;
   const rs = (PJ[name] && PJ[name].rs) || [];
-  const cur = rs.filter(r => r[0] === '2026–27').reduce((a, r) => (!a || r[2] > a[2] ? r : a), null);
-  const prev = rs.filter(r => r[0] === '2025–26').reduce((a, r) => (!a || r[2] > a[2] ? r : a), null);
+  const cur = rs.filter(r => r[0] === dash(CUR_SEASON)).reduce((a, r) => (!a || r[2] > a[2] ? r : a), null);
+  const prev = rs.filter(r => r[0] === dash(PREV_SEASON)).reduce((a, r) => (!a || r[2] > a[2] ? r : a), null);
   /* this season's averages as soon as he has played a game (league feed), else last season */
   const lp = LGP.find(x => x.n === name && x.t === 'CLE' && x.g > 0);
-  const now = lp ? ['2026–27', 'CLE', lp.g, 0, 0, lp.pts / lp.g, lp.reb / lp.g, lp.ast / lp.g] : null;
+  const now = lp ? [dash(CUR_SEASON), 'CLE', lp.g, 0, 0, lp.pts / lp.g, lp.reb / lp.g, lp.ast / lp.g] : null;
   const row = now || (cur && cur[2] >= 1 ? cur : prev), season = row && row[0];
   const R = ROSTER.find(x => x[0] === name), y = R ? R[2] : null;
   const sal = y ? (Array.isArray(y[0]) ? y[0][0] : y[0]) : null;
@@ -93,7 +94,7 @@ for (const P of PLAYERS) {
 /* upcoming games */
 const LG5 = { GSW: 'gs', NYK: 'ny', NOP: 'no', SAS: 'sa', UTA: 'utah', WAS: 'wsh' };
 const TS = (TSTATS.CLE && TSTATS.CLE[0] + TSTATS.CLE[1] > 0) ? TSTATS : null;
-const recOf = a => { const s = STANDINGS.find(x => x[0] === a); if (s && s[2] + s[3] > 0) return ['2026–27', s[2] + '–' + s[3]]; const t = TSTATS_PREV[a]; return t ? ['2025–26', t[0] + '–' + t[1]] : ['', '']; };
+const recOf = a => { const s = STANDINGS.find(x => x[0] === a); if (s && s[2] + s[3] > 0) return [dash(CUR_SEASON), s[2] + '–' + s[3]]; const t = TSTATS_PREV[a]; return t ? [dash(PREV_SEASON), t[0] + '–' + t[1]] : ['', '']; };
 SCHEDULE.forEach((g, i) => {
   const [d, o, ha, hm] = g; if (results[i] || SCORES[d] || d < todayET) return;
   const met = SCHEDULE.slice(0, i).map((x, k) => [x, results[k]]).filter(([x, r]) => x[1] === o && r);
@@ -153,7 +154,7 @@ ${rich}`,
   const roomTxt = room >= 1 ? '$' + room.toFixed(1) + 'M' : room > 0 ? '$' + Math.round(room * 1000) + 'K' : '$0';
   cards.push(['og/cap.jpg', page(`.L{position:absolute;left:64px;top:56px}.n3{margin-top:26px}
 .bar{position:absolute;left:64px;right:64px;top:388px;height:34px;background:rgba(255,255,255,.12)}.bar i{position:absolute;left:0;top:0;bottom:0;background:#F2B231}.bar s{position:absolute;top:-12px;bottom:-12px;width:3px;background:#fff}.bar s em{position:absolute;top:60px;left:-55px;width:113px;font:700 17px 'Geist Mono';font-style:normal;color:#F4D6DD;text-align:center}`,
-    `<div class="L"><div class="k">2026–27 Salary cap</div><div class="big" style="font-size:96px;margin-top:10px">Cavs cap sheet</div><div class="n3"><div><b>$${TEAM_SALARY.toFixed(1)}M</b><small>Team salary</small></div><div><b>$${TAX_BILL.toFixed(1)}M</b><small>Tax bill</small></div><div><b>${roomTxt}</b><small>Under hard cap</small></div></div></div>
+    `<div class="L"><div class="k">${dash(CUR_SEASON)} Salary cap</div><div class="big" style="font-size:96px;margin-top:10px">Cavs cap sheet</div><div class="n3"><div><b>$${TEAM_SALARY.toFixed(1)}M</b><small>Team salary</small></div><div><b>$${TAX_BILL.toFixed(1)}M</b><small>Tax bill</small></div><div><b>${roomTxt}</b><small>Under hard cap</small></div></div></div>
 <div class="bar"><i style="width:${pct(TEAM_SALARY)}%"></i>${Object.keys(lab).filter(k => L[k]).map(k => `<s style="left:${pct(L[k])}%"><em>${lab[k]}</em></s>`).join('')}</div>`, 'cap')]);
 }
 
@@ -164,7 +165,7 @@ ${rich}`,
   const strip = SCHEDULE.slice(0, 82).map((g, i) => `<i class="${results[i] === 'W' ? 'w' : results[i] === 'L' ? 'l' : ''}"></i>`).join('');
   cards.push(['og/schedule.jpg', page(`.L{position:absolute;left:64px;top:56px;right:64px}.n3{margin-top:22px;gap:48px}.n3 b{font-size:52px}.nx{position:absolute;right:0;top:150px;text-align:right;font:700 30px Archivo}.nx span{color:#F2B231;font:700 20px 'Geist Mono';letter-spacing:3px;display:block;margin-bottom:6px}
 .st{position:absolute;left:64px;right:64px;top:440px;display:flex;gap:3px;height:34px;align-items:flex-end}.st i{flex:1;height:14px;background:rgba(255,255,255,.18)}.st i.w{height:34px;background:#F2B231}.st i.l{height:24px;background:rgba(255,255,255,.55)}`,
-    `<div class="L"><div class="k">Every game · TV and radio</div><div class="big" style="font-size:96px;margin-top:10px">2026–27 Schedule</div><div class="n3"><div><b>${rec(results)}</b><small>Record</small></div><div><b>${played}/82</b><small>Played</small></div><div><b>${esc(SEASON.eastRank || '—')}</b><small>East</small></div></div><div class="nx"><span>${played ? 'NEXT GAME' : 'SEASON OPENER'}</span>${nxt}</div></div><div class="st">${strip}</div>`, 'schedule')]);
+    `<div class="L"><div class="k">Every game · TV and radio</div><div class="big" style="font-size:96px;margin-top:10px">${dash(CUR_SEASON)} Schedule</div><div class="n3"><div><b>${rec(results)}</b><small>Record</small></div><div><b>${played}/82</b><small>Played</small></div><div><b>${esc(SEASON.eastRank || '—')}</b><small>East</small></div></div><div class="nx"><span>${played ? 'NEXT GAME' : 'SEASON OPENER'}</span>${nxt}</div></div><div class="st">${strip}</div>`, 'schedule')]);
 }
 
 /* assets */

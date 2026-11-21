@@ -4,10 +4,11 @@
 // the final score. Writes data/bbr-check.json; the daily health check reports any game that differs.
 // Games are rechecked for three days after they're played (stat corrections land late), then left alone.
 // Exits 0 on any problem.
+import { CUR_SEASON } from './season.mjs';   // Nov 21: the season from one place
 import fs from 'node:fs';
 const root = new URL('../', import.meta.url);
 const OUT = new URL('data/bbr-check.json', root);
-const SEASON = '2026-27';
+const SEASON = CUR_SEASON;
 const UA = { 'user-agent': 'Mozilla/5.0 (compatible; cavsdatabase.com facts-only Cavs reference)' };
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const norm = n => n.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g, '').replace(/[^a-z]/g, '');

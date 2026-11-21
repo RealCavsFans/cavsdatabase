@@ -4,10 +4,11 @@
 // (pdata/league-rates.json): each team's minutes add up to the game's length and no rate passes 100%.
 // Writes data/espn-check.json; scripts/health.mjs reports any difference. Usage: node scripts/espn-check.mjs <nba-data dir>.
 // Exits 0 on any problem (the next run catches up).
+import { CUR_SEASON } from './season.mjs';   // Nov 21: the season from one place
 import fs from 'fs';
 import path from 'path';
 import zlib from 'zlib';
-const SEASON = process.env.SEASON || '2026-27', DIR = path.join(process.argv[2] || 'nba-data', SEASON), OUT = 'data/espn-check.json', DAYS = +(process.env.DAYS || 4);
+const SEASON = process.env.SEASON || CUR_SEASON, DIR = path.join(process.argv[2] || 'nba-data', SEASON), OUT = 'data/espn-check.json', DAYS = +(process.env.DAYS || 4);
 const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/';
 const ini = n => { const w = String(n || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b\.?/g, '').replace(/[^a-z ]/g, '').trim().split(/\s+/); return w[0][0] + w[w.length - 1]; };   // Cam / Cameron Johnson
 const nm = n => String(n || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g, '').replace(/[^a-z]/g, '');

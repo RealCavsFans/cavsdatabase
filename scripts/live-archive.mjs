@@ -7,6 +7,7 @@
 //
 // SEASON=2026-27 node scripts/live-archive.mjs          (default: the current season)
 // SEASON=2025-26 node scripts/live-archive.mjs          (backfill a past season)
+import { CUR_SEASON } from './season.mjs';   // Nov 21: the season from one place
 import { loadFixes, applyFixes as applyFixesTo } from './nba-fixes.mjs';
 import fs from 'fs';
 import path from 'path';
@@ -14,7 +15,7 @@ import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const C = require('../live-core.js');
 
-const SEASON = process.env.SEASON || '2026-27';
+const SEASON = process.env.SEASON || CUR_SEASON;
 const ESPN_YEAR = +SEASON.slice(0, 4) + 1;           // ESPN names a season by the year it ends
 const DIR = path.join('live-archive', SEASON);
 const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/';
@@ -69,7 +70,7 @@ console.log(`${added} game file(s) written`);
 
 /* 2b) backup: a finished game ESPN never delivered comes from the site's /pbp backup (CBS, then Yahoo),
    saved as b<YYYYMMDD>.json with players matched to their ESPN ids by name. An ESPN copy, once it exists, replaces it. */
-if (SEASON === '2026-27' && !process.env.SKIP_FETCH && !NBA_MODE) {
+if (SEASON === CUR_SEASON && !process.env.SKIP_FETCH && !NBA_MODE) {
   const etOf = t => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(t));
   const espnFiles = fs.readdirSync(DIR).filter(f => /^\d+\.json$/.test(f));
   const have = new Set(), byName = {};

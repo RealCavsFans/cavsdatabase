@@ -5,8 +5,9 @@
 // Row layout kept: [name, min, pts, reb, ast, +/-, starter, fg, 3pt, ft, stl, blk, to, oreb, pf]. The starter flag is kept from the
 // existing row (the NBA box has it too: the five with a starting position in the archive's game file).
 //   node scripts/box-nba.mjs            (after fetch-boxscores.mjs)
+import { CUR_SEASON } from './season.mjs';   // Nov 21: the season from one place
 import fs from 'node:fs';
-const SEASON = process.env.SEASON || '2026-27', DIR = `live-archive/${SEASON}`;
+const SEASON = process.env.SEASON || CUR_SEASON, DIR = `live-archive/${SEASON}`;
 const J = p => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return null; } };
 const box = J('box.json'), ix = J(`${DIR}/index.json`), S = J(`${DIR}/season.json`);
 if (!box || !ix || !S) { console.log('box-nba: missing box.json or the game archive'); process.exit(0); }

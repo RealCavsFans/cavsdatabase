@@ -18,6 +18,7 @@ jobs:
         with:
           sparse-checkout: |
             scripts/bbr-check.mjs
+            scripts/season.mjs
             live-archive/2026-27
             data/bbr-check.json
           sparse-checkout-cone-mode: false

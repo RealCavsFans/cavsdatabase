@@ -4,11 +4,12 @@
 // 2 possessions off NBA.com (3 off pbpstats, which itself differs from NBA.com by up to 3) or off on points.
 // Nov 6: our side is recounted every run, so a fix to live-core.js shows up the next morning.
 // Runs in morning.yml after the game archive. Exits 0 on network problems (the next run catches up).
+import { CUR_SEASON } from './season.mjs';   // Nov 21: the season from one place
 import { readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const C = require('../live-core.js');
-const SEASON = process.env.SEASON || '2026-27';
+const SEASON = process.env.SEASON || CUR_SEASON;
 const root = new URL('../', import.meta.url);
 const OUT = new URL('data/poss-check.json', root);
 const NBA = { NY: 'NYK', GS: 'GSW', SA: 'SAS', NO: 'NOP', UTAH: 'UTA', WSH: 'WAS' };   // ESPN → NBA abbreviations

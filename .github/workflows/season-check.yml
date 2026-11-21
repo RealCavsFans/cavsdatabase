@@ -16,6 +16,7 @@ jobs:
         with:
           sparse-checkout: |
             scripts/season-check.mjs
+            scripts/season.mjs
             scripts/data-check.mjs
             live-archive/2026-27
             pdata

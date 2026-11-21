@@ -11,13 +11,14 @@
 //   node scripts/box-check.mjs live         the Cavs game in progress, from the NBA's own box score and play-by-play (what the live page uses)
 //
 // Writes data/box-check.json. Exits 2 when something is off (the workflow turns that into a phone alert).
+import { CUR_SEASON } from './season.mjs';   // Nov 21: the season from one place
 import fs from 'fs';
 import path from 'path';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const C = require('../live-core.js');
 
-const SEASON = process.env.SEASON || '2026-27';
+const SEASON = process.env.SEASON || CUR_SEASON;
 const DIR = path.join('live-archive', SEASON);
 const MODE = process.argv[2] || 'recent';
 const STATS = [['PTS', 'pts'], ['FG', 'fgm', 'fga'], ['3PT', 'tpm', 'tpa'], ['FT', 'ftm', 'fta'], ['OREB', 'oreb'], ['DREB', 'dreb'], ['AST', 'ast'], ['STL', 'stl'], ['BLK', 'blk'], ['TO', 'to'], ['PF', 'pf']];

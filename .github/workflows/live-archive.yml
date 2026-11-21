@@ -34,6 +34,7 @@ jobs:
         with:
           sparse-checkout: |
             scripts/live-archive.mjs
+            scripts/season.mjs
             scripts/box-check.mjs
             scripts/nba-store.mjs
             scripts/nba-fixes.mjs

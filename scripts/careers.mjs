@@ -3,12 +3,13 @@
 //   { updated, how, players: { normName: { name, bbr, pg:[row...], adv:[row...], po:[row...] } } }
 // Each row keeps Basketball Reference's own column names (data-stat), as numbers where they are numbers.
 // Seasons through the current one; a player traded mid-season has a 2TM/3TM total row plus one row per team.
+import { CUR_SEASON, PREV_SEASON } from './season.mjs';   // Nov 21: the season from one place
 import fs from 'node:fs';
 const root = new URL('../', import.meta.url);
 const OUT = new URL('pdata/careers.json', root);
 const norm = n => n.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g, '').replace(/[^a-z]/g, '');
 const UA = { 'user-agent': 'Mozilla/5.0 (compatible; cavsdatabase.com facts-only Cavs reference)' };
-const SEASON_BBR = '2026-27', PREV_BBR = '2025-26';
+const SEASON_BBR = CUR_SEASON, PREV_BBR = PREV_SEASON;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 let calls = 0;
 async function page(u) {
@@ -38,7 +39,7 @@ const pick = (html, ids) => { for (const id of ids) { const r = table(html, id);
 const names = new Set();
 const idx = fs.readFileSync(new URL('index.html', root), 'utf8');
 { const i = idx.indexOf('const PLAYERS=['), j = idx.indexOf('];', i); for (const m of idx.slice(i, j).matchAll(/^\s*\['[^']*','([^']+)'/gm)) names.add(m[1]); }
-try { const S = JSON.parse(fs.readFileSync(new URL('live-archive/2026-27/season.json', root), 'utf8')); for (const pid of Object.keys(S.gp || {})) names.add(S.P[pid].name); } catch {}
+try { const S = JSON.parse(fs.readFileSync(new URL(`live-archive/${CUR_SEASON}/season.json`, root), 'utf8')); for (const pid of Object.keys(S.gp || {})) names.add(S.P[pid].name); } catch {}
 const ids = JSON.parse(fs.readFileSync(new URL('pdata/bbr-ids.json', root), 'utf8'));
 
 let C = { how: 'Season by season from Basketball Reference player pages: per game, advanced and playoffs.', players: {} };

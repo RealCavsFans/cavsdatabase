@@ -4,6 +4,7 @@
 // (a "staircase"), which is all the recap needs to say "most since <date>" or "career high".
 // Writes pdata/highs-hist.json. History stops at the end of last season; this season's games come from the live archive.
 // Players already in the file are skipped unless FULL=1, so the weekly run only fetches new Cavs.
+import { CUR_SEASON } from './season.mjs';   // Nov 21: the season from one place
 import fs from 'node:fs';
 const root = new URL('../', import.meta.url);
 const OUT = new URL('pdata/highs-hist.json', root);
@@ -48,7 +49,7 @@ if (!H.team || process.env.FULL) {
 }
 
 /* players: everyone who has played for the Cavs this season */
-const S = JSON.parse(fs.readFileSync(new URL('live-archive/2026-27/season.json', root), 'utf8'));
+const S = JSON.parse(fs.readFileSync(new URL(`live-archive/${CUR_SEASON}/season.json`, root), 'utf8'));
 const ids = JSON.parse(fs.readFileSync(new URL('pdata/bbr-ids.json', root), 'utf8'));
 for (const pid of Object.keys(S.gp || {})) {
   const name = S.P[pid].name, k = norm(name); if (H.players[k] && !process.env.FULL) continue;

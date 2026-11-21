@@ -8,11 +8,12 @@
 //
 //   node scripts/season-check.mjs [nba-data dir]
 // Writes data/season-check.json. Exits 2 when something is off (the workflow turns that into a phone alert).
+import { CUR_SEASON } from './season.mjs';   // Nov 21: the season from one place
 import fs from 'fs';
 import path from 'path';
 import zlib from 'zlib';
 
-const SEASON = process.env.SEASON || '2026-27';
+const SEASON = process.env.SEASON || CUR_SEASON;
 const ND = process.argv[2] || 'nba-data';
 const DIR = path.join('live-archive', SEASON);
 const S = JSON.parse(fs.readFileSync(path.join(DIR, 'season.json'), 'utf8'));

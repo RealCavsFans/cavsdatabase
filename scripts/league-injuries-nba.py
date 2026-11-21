@@ -20,7 +20,11 @@ spec = importlib.util.spec_from_file_location('ir', os.path.join(os.path.dirname
 ir = importlib.util.module_from_spec(spec); spec.loader.exec_module(ir)
 ET = ZoneInfo('America/New_York')
 OUT = os.path.join(ROOT, 'pdata', 'league-injuries-nba.json')
-SEASON, START = '2026-27', '2026-10-20'
+def _season():   # Nov 21: same rule as scripts/season.mjs (turns over Aug 1, Eastern); add a row to _DATES with each new schedule
+    _DATES = {'2025-26': '2025-10-21', '2026-27': '2026-10-20'}
+    d = dt.datetime.now(ET).date(); y = d.year if d.month >= 8 else d.year - 1; se = f'{y}-{str(y + 1)[2:]}'
+    return se, _DATES.get(se, f'{y}-10-01')
+SEASON, START = _season()
 ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/'
 TO_ESPN = {'GSW': 'GS', 'NOP': 'NO', 'NYK': 'NY', 'SAS': 'SA', 'UTA': 'UTAH', 'WAS': 'WSH'}
 NOTINJ = re.compile(r'G League|two-way|assignment|suspen|personal|not with team', re.I)

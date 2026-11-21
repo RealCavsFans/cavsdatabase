@@ -5,13 +5,14 @@
 // so a game whose saved copy changed is read again. Writes pdata/league-rates.json:
 //   { season, updated, games, cols, p: { "<NBA person id>": [name, team, ...cols] } }   (sums for the season, regular season only)
 // Usage: node scripts/league-rates.mjs <nba-data dir>. Exits 0 on any problem and leaves the old file alone.
+import { CUR_SEASON } from './season.mjs';   // Nov 21: the season from one place
 import fs from 'fs';
 import path from 'path';
 import zlib from 'zlib';
 import { createRequire } from 'module';
 import { loadFixes, applyFixes } from './nba-fixes.mjs';
 const C = createRequire(import.meta.url)('../live-core.js');
-const SEASON = process.env.SEASON || '2026-27', ROOT = process.argv[2] || 'nba-data', DIR = path.join(ROOT, SEASON);
+const SEASON = process.env.SEASON || CUR_SEASON, ROOT = process.argv[2] || 'nba-data', DIR = path.join(ROOT, SEASON);
 const OUT = 'pdata/league-rates.json', CACHE = 'data/league-rates-cache.json';
 // per player per game: his own numbers, then what his team and the opponent did while he was on the floor
 const COLS = ['g', 'sec', 'fgm', 'fga', 'fta', 'to', 'ast', 'stl', 'blk', 'oreb', 'dreb', 'tFGM', 'tFGA', 'tFTA', 'tTO', 'tORB', 'tDRB', 'oORB', 'oDRB', 'o2A', 'po', 'pd'];

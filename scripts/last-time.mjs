@@ -3,12 +3,13 @@
 // History: data/hist-cle.json (Cavs regular-season game logs back to 2000–01 from pbpstats, one-time pull,
 // pulled once in Oct 2026; players' lines checked to add up to the team's points in every game) plus this season's archived games. Writes data/last-time.json, read by the
 // game page (Team tab, under the Recap) and the newsletter.
+import { CUR_SEASON } from './season.mjs';   // Nov 21: the season from one place
 import { readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const C = require('../live-core.js');
 const root = new URL('../', import.meta.url);
-const SEASON = process.env.SEASON || '2026-27';
+const SEASON = process.env.SEASON || CUR_SEASON;
 const NBA = { NY: 'NYK', GS: 'GSW', SA: 'SAS', NO: 'NOP', UTAH: 'UTA', WSH: 'WAS' };
 const MIN_GAP = +(process.env.MIN_GAP || 60);   // only report a feat if it last happened at least this many games ago
 const H = JSON.parse(await readFile(new URL('data/hist-cle.json', root), 'utf8'));

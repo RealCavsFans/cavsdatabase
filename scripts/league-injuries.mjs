@@ -4,10 +4,11 @@
 // that day (the latest list saved before tip) and didn't play. Days before we started saving lists are backfilled
 // from each game's ESPN summary (its injury section, plus players marked did-not-play for a reason other than a coach's decision).
 // Writes pdata/league-injuries.json. Exits 0 on any problem.
+import { CUR_SEASON, START } from './season.mjs';   // Nov 21: the season from one place
 import fs from 'fs';
 const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/';
 const OUT = 'pdata/league-injuries.json';
-const SEASON = '2026-27', START = '2026-10-20';
+const SEASON = CUR_SEASON;
 async function get(u) {
   for (let i = 0; i < 3; i++) {
     try { const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0 (cavsdatabase.com)' }, signal: AbortSignal.timeout(30000) }); if (r.ok) return r.json(); console.log('HTTP', r.status, u); }

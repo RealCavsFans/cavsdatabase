@@ -29,6 +29,7 @@ jobs:
         with:
           sparse-checkout: |
             scripts/box-check.mjs
+            scripts/season.mjs
             live-core.js
             pdata/nba-games.json
           sparse-checkout-cone-mode: false

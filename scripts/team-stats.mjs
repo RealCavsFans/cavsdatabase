@@ -4,6 +4,7 @@
 // Ratings use Basketball Reference's possession formula; checked against BBRef's 2025-26 finals
 // (per-game stats and four-factor inputs matched exactly; ratings within 0.2).
 // Leaves everything alone before the first regular-season game. Exits 0 on any problem (keeps the old data).
+import { CUR_SEASON } from './season.mjs';   // Nov 21: the season from one place
 import { readFile, writeFile } from 'node:fs/promises';
 const root = new URL('../', import.meta.url);
 const html0 = await readFile(new URL('index.html', root), 'utf8');
@@ -36,7 +37,7 @@ rows.sort((x, y) => x.d < y.d ? -1 : x.d > y.d ? 1 : 0);
 let CT = {}; try { const j = JSON.parse(await readFile(new URL('pdata/league-rates.json', root), 'utf8')); for (const [k, v] of Object.entries(j.t || {})) CT[ab(k)] = v; } catch {}
 const ctDay = {}; for (const [k, v] of Object.entries(CT)) for (const r of v) ctDay[k + '|' + r[0]] = r;
 /* the Cavs' counted possessions from the game archive (live-archive/<season>/season.json, five-man rows) */
-let ARCH = null; try { const S = JSON.parse(await readFile(new URL('live-archive/2026-27/season.json', root), 'utf8')); /* Nov 19 audit: each game's team possession count (games[].t[12] / u[12]), the number the season page and game log divide by; the five-man units' sum ran 1 to 3 short (a possession across a substitution) */ let pf = 0, pa = 0, po = 0, pd = 0; for (const g of S.games || []) { if (!g.t || !g.u) continue; pf += g.t[0]; pa += g.u[0]; po += g.t[12] || 0; pd += g.u[12] || 0; } if (po && pd && (S.games || []).every(g => g.t && g.t[12] > 0 && g.u[12] > 0)) ARCH = { g: (S.games || []).length, pf, pa, po, pd }; } catch {}
+let ARCH = null; try { const S = JSON.parse(await readFile(new URL(`live-archive/${CUR_SEASON}/season.json`, root), 'utf8')); /* Nov 19 audit: each game's team possession count (games[].t[12] / u[12]), the number the season page and game log divide by; the five-man units' sum ran 1 to 3 short (a possession across a substitution) */ let pf = 0, pa = 0, po = 0, pd = 0; for (const g of S.games || []) { if (!g.t || !g.u) continue; pf += g.t[0]; pa += g.u[0]; po += g.t[12] || 0; pd += g.u[12] || 0; } if (po && pd && (S.games || []).every(g => g.t && g.t[12] > 0 && g.u[12] > 0)) ARCH = { g: (S.games || []).length, pf, pa, po, pd }; } catch {}
 const possOf = (t, o) => t.fga + 0.4 * t.fta - 1.07 * (t.orb / ((t.orb + o.drb) || 1)) * (t.fga - t.fgm) + t.tov;
 
 const F = ['pts', 'fgm', 'fga', 'tpm', 'tpa', 'ftm', 'fta', 'orb', 'drb', 'tov', 'forb', 'fdrb'];   /* forb/fdrb (Nov 19 audit): rebounds of missed shots with team rebounds, NBA.com's OREB%/DREB% */

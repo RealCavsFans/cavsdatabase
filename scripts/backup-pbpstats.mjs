@@ -3,9 +3,10 @@
 // standings, ratings and four factors from them. This fills in any finished game ESPN hasn't delivered within a day
 // from pbpstats.com instead (key "pb<GameId>"), so the team numbers keep updating. team-stats.mjs prefers ESPN's
 // line when both exist. Reads at most MAX games per run and exits 0 on any problem.
+import { CUR_SEASON } from './season.mjs';   // Nov 21: the season from one place
 import { readFile, writeFile } from 'node:fs/promises';
 const FILE = new URL('../pdata/league.json', import.meta.url);
-const SEASON = process.env.SEASON || '2026-27', MAX = 40;
+const SEASON = process.env.SEASON || CUR_SEASON, MAX = 40;
 let L; try { L = JSON.parse(await readFile(FILE, 'utf8')); } catch { console.log('backup: no league.json yet'); process.exit(0); }
 if (L.season !== SEASON) { console.log('backup: league.json is for another season'); process.exit(0); }
 L.tg = L.tg || {};

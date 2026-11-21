@@ -3,6 +3,7 @@
 // The original empty section is kept in a <template>; the site's script swaps it back in and redraws on load,
 // so visitors get exactly the same page. Also adds per-page structured data (breadcrumbs, games, players).
 // Called by build-pages.mjs --prerender (the GitHub Action). Needs Playwright or playwright-core + Chrome.
+import { CUR_SEASON, dash } from './season.mjs';   // Nov 21: the season from one place
 import { launch } from './launch.mjs';
 import { readFile, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
@@ -34,7 +35,7 @@ const game = g => { const [d, o, ha, t] = g; const home = ha === 'H' ? 'CLE' : o
   else { const c = CITY[o]; if (c) e.location = { '@type': 'Place', name: `${NICK[o]} home arena, ${c[0]}`, address: { '@type': 'PostalAddress', addressLocality: c[0], addressRegion: c[1], addressCountry: c[2] } }; }
   if (/T/.test(e.startDate)) { const en = new Date(new Date(e.startDate).getTime() + 150 * 60000); const P = Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(en).map(x => [x.type, x.value])); const dd = `${P.year}-${P.month}-${P.day}`; e.endDate = `${dd}T${P.hour}:${P.minute}:00${etOffset(dd)}`; }
   e.eventAttendanceMode = 'https://schema.org/OfflineEventAttendanceMode';
-  e.description = `${NICK[away]} at ${NICK[home]}, 2026–27 NBA regular season.`;
+  e.description = `${NICK[away]} at ${NICK[home]}, ${dash(CUR_SEASON)} NBA regular season.`;
   e.image = SITE + '/og/schedule.jpg';
   e.organizer = { '@type': 'SportsOrganization', name: 'NBA', url: 'https://www.nba.com' };
   e.performer = [team(away), team(home)];
@@ -104,7 +105,7 @@ export default async function prerender(root, META) {
     const dt = iso => iso.replace(/[-:]/g, '').replace(/\.\d+Z$/, 'Z');
     const fold = l => { const o = []; let x = l; while (x.length > 74) { o.push(x.slice(0, 74)); x = ' ' + x.slice(74); } o.push(x); return o.join('\r\n'); };
     const stamp = dt(new Date().toISOString());
-    const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//cavsdatabase.com//Cavs schedule//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:Cavs 2026–27 (cavs_db)', 'X-WR-CALDESC:Every Cavaliers game with TV and radio. From cavsdatabase.com', 'X-WR-TIMEZONE:America/New_York', 'REFRESH-INTERVAL;VALUE=DURATION:PT4H', 'X-PUBLISHED-TTL:PT4H'];
+    const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//cavsdatabase.com//Cavs schedule//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:Cavs ' + dash(CUR_SEASON) + ' (cavs_db)', 'X-WR-CALDESC:Every Cavaliers game with TV and radio. From cavsdatabase.com', 'X-WR-TIMEZONE:America/New_York', 'REFRESH-INTERVAL;VALUE=DURATION:PT4H', 'X-PUBLISHED-TTL:PT4H'];
     for (const g of G) {
       const vs = g.ha === 'H' ? 'vs' : 'at'; let sum = `🏀 Cavs ${vs} ${g.opp}`;
       if (g.sc) { const [c, o] = g.sc.split('-').map(Number); sum = `🏀 ${c > o ? 'W' : 'L'} ${c}–${o} ${vs} ${g.opp}`; }

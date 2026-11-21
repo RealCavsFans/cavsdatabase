@@ -1,8 +1,9 @@
 // Made dunks this season for every player, counted from the play-by-play saved in live-archive/<season>/<game>.json
 // (the NBA's own feed: each made shot's text says "dunk"). Writes pdata/dunks.json {season, games, p:{nbaId: dunks}} for the player pages.
+import { CUR_SEASON } from './season.mjs';   // Nov 21: the season from one place
 import { readFile, writeFile } from 'node:fs/promises';
 const root = new URL('../', import.meta.url);
-const se = '2026-27';
+const se = CUR_SEASON;
 let ix = []; try { ix = JSON.parse(await readFile(new URL(`live-archive/${se}/index.json`, root), 'utf8')); } catch {}
 const p = {}; let games = 0;
 for (const g of ix) {

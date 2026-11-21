@@ -1,5 +1,6 @@
 // Builds niang.json: Saliou Niang's most recent LSU game (score and his stat line) from ESPN's public
 // college basketball feed, for the site's "final" game alert. On any failure it keeps the existing file.
+import { CUR_SEASON, dash } from './season.mjs';   // Nov 21: the season from one place
 import { readFile, writeFile } from 'node:fs/promises';
 const BASE = 'https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball';
 const LSU = +(process.env.TEAM || 99), NAME = new RegExp(process.env.PLAYER || 'niang', 'i'), SEASON = process.env.SEASON ? `?season=${process.env.SEASON}` : '';
@@ -62,7 +63,7 @@ try {
   await writeFile('pdata/niang-games.json', JSON.stringify(G) + '\n');
   const pl = Object.values(G).filter(g => !g.dnp); const sum2 = k => pl.reduce((s3, g) => s3 + (g[k] || 0), 0);
   const K = ['min', 'pts', 'reb', 'oreb', 'dreb', 'ast', 'stl', 'blk', 'to', 'pf', 'fgm', 'fga', 'tpm', 'tpa', 'ftm', 'fta'];
-  if (pl.length) { out.season = { season: process.env.SEASON ? `${process.env.SEASON - 1}–${String(process.env.SEASON).slice(2)}` : '2026–27', gp: pl.length, ...Object.fromEntries(K.map(k => [k, sum2(k)])) };
+  if (pl.length) { out.season = { season: process.env.SEASON ? `${process.env.SEASON - 1}–${String(process.env.SEASON).slice(2)}` : dash(CUR_SEASON), gp: pl.length, ...Object.fromEntries(K.map(k => [k, sum2(k)])) };
     /* team and opponent totals over the games he played (for ratings), every shot, and his latest game */
     const both = pl.filter(g => g.tm && g.op); if (both.length) out.season.gpt = both.length, ['tm', 'op'].forEach(sd => { out.season[sd] = Object.fromEntries(K.map(k => [k, both.reduce((a3, g) => a3 + (g[sd][k] || 0), 0)])); });
     out.shots = pl.flatMap(g => g.sh || []);

@@ -2,8 +2,9 @@
 // plus player per-game averages, from pbpstats. Writes /live-base.json once the season has games.
 // The page compares tonight's shooting with these numbers; replays of older games keep the
 // 2025–26 numbers built into the page.
+import { CUR_SEASON } from './season.mjs';   // Nov 21: the season from one place
 import fs from 'fs';
-const SEASON = process.env.SEASON || '2026-27';
+const SEASON = process.env.SEASON || CUR_SEASON;
 const Z = ['AtRim', 'ShortMidRange', 'LongMidRange', 'Corner3', 'Arc3'];
 const ESPN_ABBR = { SAS: 'SA', NYK: 'NY', GSW: 'GS', UTA: 'UTAH', WAS: 'WSH', NOP: 'NO' };
 const norm = n => n.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g, '').replace(/[^a-z]/g, '');

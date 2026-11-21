@@ -5,10 +5,11 @@
 //
 //   node scripts/postgame-ready.mjs <NBA game id>
 // Prints ready=1 or ready=0 (and done=1 when this game was already checked) for $GITHUB_OUTPUT.
+import { CUR_SEASON } from './season.mjs';   // Nov 21: the season from one place
 import fs from 'fs';
 
 const id = process.argv[2];
-const SEASON = process.env.SEASON || '2026-27';
+const SEASON = process.env.SEASON || CUR_SEASON;
 const read = f => { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch (e) { return null; } };
 if (!id) { console.log('ready=0'); process.exit(0); }
 const done = read('data/postgame-check.json');
