@@ -219,13 +219,17 @@ function tastingNotes(rc, opp) {
   const AB = [[/made field goals?/, 'FGM'], [/made threes?/, '3PM'], [/made free throws?/, 'FTM'], [/points?/, 'pts'], [/rebounds?/, 'reb'], [/offensive reb/, 'oreb'], [/assists?/, 'ast'], [/steals?/, 'stl'], [/blocks?/, 'blk'], [/turnovers?/, 'tov']];
   /* Nov 17 (Luka): biggest first, up to three: Cavs records, then career highs (and ties), then "most since", then players' season highs (points first), then team season highs */
   const rankHi = ([l, t]) => /^Cavs record/.test(l) ? 0 : /^Ties record/.test(l) ? 1 : /^Career high/.test(l) ? (/tying/.test(t) ? 3 : 2) : /Milestone|First/i.test(l) ? 4 : /most since/.test(t) ? 5 : /^Season high/.test(l) ? (/tying/.test(t) ? 8.5 : /^[A-Z][^:]*: /.test(t) ? (/ points?,/.test(t) ? 6 : 7) : 8) : 9;
-  const hi = get(/high|Milestone|Record|First|Most since/i).filter(([l]) => !/^(Cavs|Their) high/.test(l)).map((r, i) => [r, rankHi(r), i]).sort((a, b) => a[1] - b[1] || a[2] - b[2]).slice(0, 3).map(([r]) => r).map(([l, t]) => {
-    const m = /^(?:(.+?): )?(\d+) ([a-z ]+?), (.*?)\.?$/i.exec(t); if (!m) return dot(t);
+  const hi = get(/high|Milestone|Record|First|Most since/i).filter(([l]) => !/^(Cavs|Their) high/.test(l)).map((r, i) => [r, rankHi(r), i]).sort((a, b) => a[1] - b[1] || a[2] - b[2]).map(([r]) => r).map(([l, t]) => {
+    const m = /^(?:(.+?): )?(\d+) ([a-z ]+?), (.*?)\.?$/i.exec(t); if (!m) return { s: dot(t) };
     const who = m[1] ? m[1].replace(/ (Jr\.|Sr\.|II|III|IV)$/, '').split(' ').slice(-1)[0] : 'Cavs', st = (AB.find(([re]) => re.test(m[3])) || [, m[3]])[1];
     const kind = /tying .*this season/.test(m[4]) ? 'ties season high' : /tying/.test(m[4]) ? 'ties career high' : /^Career high/.test(l) ? 'career high' : /^Ties record/.test(l) ? 'ties Cavs record' : /^Cavs record/.test(l) ? 'Cavs record'
       : /most since/.test(m[4]) ? m[4].replace(/^(his|the Cavs’) /, '').replace(/,.*$/, '') : /^Season high/.test(l) ? 'season high' : l.toLowerCase();
-    return `${who} ${m[2]} ${st} (${kind})`; });
-  if (hi.length) out.push(['Highs', hi.join(' · ')]);
+    return { who, n: m[2], st, kind }; });
+  /* Nov 21 (Luka): one entry per player and kind, so a big night (Harden 51, 15 FGM, 7 threes) doesn't push out a teammate's high
+     (Thomas's 4 steals): "Harden 51 pts, 15 FGM, 7 3PM (season highs)", then up to three entries */
+  const grp = []; hi.forEach(h => { const g2 = h.who && grp.find(x => x.who === h.who && x.kind === h.kind); if (g2) g2.items.push(h.n + ' ' + h.st); else grp.push(h.who ? { who: h.who, kind: h.kind, items: [h.n + ' ' + h.st] } : { s: h.s }); });
+  const hiTxt = grp.slice(0, 3).map(g2 => g2.s || `${g2.who} ${g2.items.join(', ')} (${g2.items.length > 1 ? g2.kind.replace(/high$/, 'highs') : g2.kind})`);
+  if (hiTxt.length) out.push(['Highs', hiTxt.join(' · ')]);
   return out.slice(0, 6);
 }
 function roast(x) {
