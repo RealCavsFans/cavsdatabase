@@ -112,6 +112,21 @@ if (DK.games != null && DK.games < ix.length) issues.push(`Dunks counted from ${
     if (bad.length) issues.push('Career totals: ' + bad.join('; ')); else if (n) ok.push(`career totals agree (${n} players)`);
   } }
 
+/* Nov 21 (Luka): the 'Career by season' row for this season (pdata/careers-pbp.json, NBA box score) must match the season line
+   (the game archive) for every Cavs player: same games, same totals. A row a game behind is still catching up (the game store
+   and player careers run after each final); past 12 hours behind, or different totals for the same games, is an issue. */
+{ const CP = J('pdata/careers-pbp.json'); if (CP && CP.players) { const bad = [], lag = []; let n = 0;
+  const age = (Date.now() - Date.parse(CP.updated || 0)) / 36e5;
+  for (const [id, b] of Object.entries(SJ.B || {})) { const g = (SJ.gp || {})[id], c = ((CP.players[id] || {}).s || {})[SEASON]; if (!c || !g) continue; const l = c.CLE || Object.values(c).find(x => x.gp >= g); if (!l) continue; n++;
+    const nm = ((SJ.P || {})[id] || {}).name || id;
+    if (l.gp < g) { lag.push(nm); continue; }
+    const k = [['pts', 'pts'], ['fgm', 'fgm'], ['fga', 'fga'], ['tpm', 'tpm'], ['tpa', 'tpa'], ['ftm', 'ftm'], ['fta', 'fta'], ['oreb', 'oreb'], ['dreb', 'dreb'], ['ast', 'ast'], ['stl', 'stl'], ['blk', 'blk'], ['tov', 'to'], ['gs', 'gs']].filter(([a, z]) => (l[a] || 0) !== (b[z] || 0)).map(([a, z]) => `${a} ${l[a] || 0} vs ${b[z] || 0}`);
+    if (l.gp > g) k.unshift(`games ${l.gp} vs ${g}`); if (Math.abs(l.sec - b.min) > 60 * l.gp) k.push(`minutes ${Math.round(l.sec / 60)} vs ${Math.round(b.min / 60)}`);
+    if (k.length) bad.push(`${nm} (${k.join(', ')})`); }
+  if (bad.length) issues.push('Career by season row for this season differs from his season line: ' + bad.join('; '));
+  if (lag.length && age > 12) issues.push(`Career by season rows ${Math.round(age)}h old and a game behind for: ${lag.join(', ')}`);
+  if (!bad.length && n) ok.push(lag.length ? `career rows catching up (${lag.length} a game behind)` : `career rows match the season lines (${n} players)`); } }
+
 const out = { checked: new Date().toISOString(), issues, ok };
 fs.mkdirSync('data', { recursive: true });
 fs.writeFileSync('data/data-check.json', JSON.stringify(out, null, 1) + '\n');

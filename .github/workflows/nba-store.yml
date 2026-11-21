@@ -17,6 +17,7 @@ on:
         default: ''
 permissions:
   contents: write
+  actions: write     # Nov 21: starts the player careers run after new games are saved
 concurrency:
   group: nba-store
   cancel-in-progress: false
@@ -64,8 +65,12 @@ jobs:
           cd nba-data; git config user.name "cavsdatabase-bot"; git config user.email "bot@cavsdatabase.com"; git add -A
           if git diff --cached --quiet; then echo "no new games"; exit 0; fi
           git commit -q -m "NBA games $(date -u +%Y-%m-%dT%H:%MZ)"
-          for i in 1 2 3 4; do git push -q origin HEAD:nba-data && exit 0; sleep $((i * 15)); git pull -q --rebase origin nba-data || git rebase --abort; done
-          exit 1
+          for i in 1 2 3 4; do git push -q origin HEAD:nba-data && break; [ "$i" = 4 ] && exit 1; sleep $((i * 15)); git pull -q --rebase origin nba-data || git rebase --abort; done
+          # Nov 21 (Luka): the 'Career by season' rows on player pages come from these games, so rebuild them right away (not the next morning)
+          [ -n "$IN_SEASON" ] || gh api -X POST repos/${{ github.repository }}/actions/workflows/player-careers.yml/dispatches -f ref=main || echo "::warning::could not start player careers"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          IN_SEASON: ${{ github.event.inputs.season }}
       # Nov 3: a push to Luka's phone (ntfy app, private channel in the NTFY_TOPIC secret) when this job fails
       - name: Alert on failure
         if: failure()

@@ -10,6 +10,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  actions: write     # Nov 21: starts the Cavs-only game store so the player pages' career rows include tonight
 concurrency:
   group: postgame-check
   cancel-in-progress: false
@@ -46,6 +47,12 @@ jobs:
           path: nba-data
           sparse-checkout: |
             2026-27
+      # Nov 21 (Luka): save tonight's NBA game files now (Cavs only, a minute or two) instead of at 1:20 a.m.; the store then rebuilds the career rows
+      - name: Store tonight's game
+        if: steps.ready.outputs.ready == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST repos/${{ github.repository }}/actions/workflows/nba-store.yml/dispatches -f ref=main -f 'inputs[team]=CLE' || echo "::warning::could not start the game store"
       - name: Check tonight's game and the season totals
         if: steps.ready.outputs.ready == '1'
         env:
