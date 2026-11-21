@@ -20,6 +20,9 @@ jobs:
         with:
           sparse-checkout: |
             scripts/player-careers.mjs
+            scripts/refs.mjs
+            scripts/season.mjs
+            pdata/refs.json
             scripts/nba-fixes.mjs
             pdata/nba-fixes.json
             pdata/careers-pbp.json
@@ -34,11 +37,13 @@ jobs:
         with:
           node-version: 22
       - run: NBA_DIR=nba-data node scripts/player-careers.mjs
+      # Nov 21 (Luka): referee numbers since 2020-21 from the same NBA game files
+      - run: NBA_DIR=nba-data node scripts/refs.mjs
       - name: Commit if changed
         run: |
           git config user.name "cavsdatabase-bot"
           git config user.email "bot@cavsdatabase.com"
-          git add pdata/careers-pbp.json
+          git add pdata/careers-pbp.json pdata/refs.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Player careers (play-by-play)"
           for i in 1 2 3 4 5 6; do

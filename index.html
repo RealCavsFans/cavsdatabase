@@ -1021,6 +1021,11 @@ li.ij summary>span:last-child{text-transform:uppercase}/* Nov 17 (Luka): one sta
 <script>/* Nov 4: team logos drawn at the same visual size. Each mark is scaled by how much of its square image the artwork fills, relative to the Cavs C (made from img/tl by alpha bounding box). Applies to every logo from /img/tl or /img/tl5, also ones added later. */
 (function(){const SC=window.LOGO_SC={"atl":0.92,"bkn":0.92,"bos":0.92,"cha":0.92,"dal":0.92,"den":0.92,"det":0.92,"gs":0.92,"hou":1.07,"ind":0.96,"lac":0.92,"lal":1.18,"mem":0.95,"mia":0.95,"mil":1.06,"min":0.92,"no":1.25,"ny":1.04,"okc":1.23,"orl":1.1,"por":0.97,"sa":1.03,"tor":0.92,"utah":1.12,"wsh":0.92};const fit=im=>{const m=/\/img\/tl5?\/([a-z]+)\.png/.exec(im.getAttribute("src")||"");if(!m||im.dataset.lsc)return;im.dataset.lsc=1;const v=SC[m[1]];if(v)im.style.scale=String(v)};const all=r=>{if(r.tagName==="IMG")fit(r);else if(r.querySelectorAll)r.querySelectorAll("img").forEach(fit)};const go=()=>{all(document.body);new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(all))).observe(document.body,{childList:true,subtree:true})};if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();
 </script>
+<style id="ref-stats">/* Nov 21 (Luka): referee numbers under each official on the game page */
+.gp-ref .gp-rst{flex-basis:100%;display:flex;flex-wrap:wrap;justify-content:flex-start;gap:2px 0;font:600 .75rem var(--mono);color:var(--muted);margin:3px 0 0;padding:0;border:0}
+.gp-ref .gp-rst span+span::before{content:'·';margin:0 8px;color:var(--muted)}
+.gp-ref>div{flex-wrap:wrap}.gp-ref .gp-rst span{font:600 .75rem var(--mono);letter-spacing:0;text-transform:none;color:var(--muted);margin:0!important;align-self:auto}
+</style>
 <style id="tap-targets">/* Nov 21 audit: comfortable tap targets on phones (24px minimum): the Career by season drop-downs and the footer's About link */
 .car-dd>summary{padding:7px 0;min-height:32px}
 .ftip{display:inline-block;padding:7px 4px;margin:-7px -4px}
@@ -3989,7 +3994,13 @@ window.renderGame=function(sl){if(SCHEDULE.findIndex(g=>gslug(g)===sl)<0)return 
     if(!fin)note();
     fJ('/box.json').then(x=>x.ok?x.json():null).catch(()=>null).then(B=>{const rf=B&&B[g[0]]&&B[g[0]].refs;if(!rf||!rf.length){if(fin)c.remove();return}d.textContent='';
       /* Nov 4: each official links to his or her Basketball Reference page (ids are the first 5 letters of the last name + first 2 of the first + 99r) */const brRef=n=>{const q=n.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(Jr|Sr|II|III|IV)\.?$/i,'').trim().split(/\s+/);if(q.length<2)return null;const ln=q.slice(1).join('').toLowerCase().replace(/[^a-z]/g,''),fn=q[0].toLowerCase().replace(/[^a-z]/g,'');return 'https://www.basketball-reference.com/referees/'+ln.slice(0,5)+fn.slice(0,2)+'99r.html'};
-      rf.forEach(([role,nm,no])=>{const x=el('div');const u=brRef(nm);const b=el('b',null);if(u){const a=el('a','gp-rfl',nm);a.href=u;a.target='_blank';a.rel='noopener';a.title='Career on Basketball Reference';b.appendChild(a)}else b.textContent=nm;x.appendChild(b);if(no)x.appendChild(el('small',null,' #'+no));x.appendChild(el('span',null,role));d.appendChild(x)})})}
+      rf.forEach(([role,nm,no])=>{const x=el('div');const u=brRef(nm);const b=el('b',null);if(u){const a=el('a','gp-rfl',nm);a.href=u;a.target='_blank';a.rel='noopener';a.title='Career on Basketball Reference';b.appendChild(a)}else b.textContent=nm;x.appendChild(b);if(no)x.appendChild(el('small',null,' #'+no));x.appendChild(el('span',null,role));x.dataset.rn=nm;d.appendChild(x)});
+      /* Nov 21 (Luka): each official's numbers since 2020-21, from the NBA's own box scores (pdata/refs.json, built nightly) */
+      fJ('/pdata/refs.json').then(r=>r.ok?r.json():null).catch(()=>null).then(J=>{if(!J||!J.r||!J.lg)return;const nk=x=>String(x).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');
+        const by={};Object.values(J.r).forEach(v=>{by[nk(v[0])]=v});const L=J.lg,lf=L.pf/L.g,lh=L.hw/L.g*100;let any=false;
+        d.querySelectorAll('[data-rn]').forEach(x=>{const v=by[nk(x.dataset.rn)];if(!v||!v[1])return;any=true;const f=v[3]/v[1],h=v[2]/v[1]*100;
+          const s2=el('p','gp-rst');s2.append(el('span',null,v[1]+' games'),el('span',null,'Cavs '+v[5]+'–'+v[6]),el('span',f>=lf?'hi':'lo',f.toFixed(1)+' fouls a game'),el('span',null,'Home teams '+h.toFixed(1)+'%'));x.appendChild(s2)});
+        if(any)d.appendChild(el('p','gp-rn','Since 2020–21, regular season, every team’s games, from the NBA’s own box scores. Fouls are both teams combined (NBA average '+lf.toFixed(1)+'); home teams win '+lh.toFixed(1)+'% of all games.'))})})}
   /* Nov 16 (Luka): the Full preview on NBA.com / All Cavs games links are gone */if(false&&!fin){const lk=el('section','gpc gp-lk');const pv=gameUrl&&gameUrl(g[0]);const a=el('a');a.append('Full preview on NBA.com',el('span',null,'↗'));a.href=pv||'https://www.nba.com/cavaliers/schedule';a.target='_blank';a.rel='noopener';const b2=el('a');b2.append('All Cavs games',el('span',null,'→'));b2.href='/schedule';b2.dataset.go='schedule';lk.append(a,b2);Rr.appendChild(lk)}
   if(hlCard)Rr.appendChild(hlCard);
   /* prev / next */
