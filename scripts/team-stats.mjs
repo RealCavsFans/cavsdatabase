@@ -47,7 +47,11 @@ for (const r of rows) {
   for (const f of F) { a[f] += r.me[f] ?? (f === 'forb' ? NaN : f === 'fdrb' ? NaN : 0); a['o' + f] += r.op[f] ?? (f === 'forb' || f === 'fdrb' ? NaN : 0); }
   { const c = ctDay[r.me.ab + '|' + r.d], ok = c && c[3] === r.me.pts && c[4] === r.op.pts;
     /* Nov 19 audit: each side's own possessions, so a stretch's net rating is ORTG minus DRTG the way the season number is */
-    a.res.push({ d: r.d, w: r.me.pts > r.op.pts, net: r.me.pts - r.op.pts, pf: r.me.pts, pa: r.op.pts, po: ok ? c[1] : possOf(r.me, r.op), pd: ok ? c[2] : possOf(r.op, r.me) }); }
+    a.res.push({ d: r.d, w: r.me.pts > r.op.pts, net: r.me.pts - r.op.pts, pf: r.me.pts, pa: r.op.pts, po: ok ? c[1] : possOf(r.me, r.op), pd: ok ? c[2] : possOf(r.op, r.me) });
+    /* Nov 21 (Luka: keep it consistent): the four factors only from games whose rebounds of missed shots (team rebounds included) are
+       counted, so a game the play-by-play hasn't reached yet (the night of it) never flips a team back to box-score rebounds */
+    if ([r.me.forb, r.me.fdrb, r.op.forb, r.op.fdrb].every(Number.isFinite)) { const q = a.ff || (a.ff = { g: 0, po: 0, pd: 0, ...Object.fromEntries(F.flatMap(f => [[f, 0], ['o' + f, 0]])) });
+      q.g++; q.po += ok ? c[1] : possOf(r.me, r.op); q.pd += ok ? c[2] : possOf(r.op, r.me); for (const f of F) { q[f] += r.me[f] || 0; q['o' + f] += r.op[f] || 0; } } }
 }
 const TSTATS = {}, FFR = {}, NRTG = {}, L14 = {}, OPP_FORM = {};
 /* season ratings from pbpstats' play-by-play possession counts (the way NBA.com counts them) when pbpstats is caught up
@@ -69,8 +73,10 @@ for (const [k, a] of Object.entries(A)) {
   else { const x = PBT && PBT[PBK[k]]; if (x && x.GamesPlayed === g && x.OffPoss > 0 && x.DefPoss > 0 && x.Points === a.pts && x.OpponentPoints === a.opts) { ortg = 100 * x.Points / x.OffPoss; drtg = 100 * x.OpponentPoints / x.DefPoss; if (x.Pace) pace = x.Pace; } }
   TSTATS[k] = [a.w, g - a.w, r1(a.pts / g), r1(a.opts / g), r1(ortg), r1(drtg), r1(pace), r1(100 * a.tpm / (a.tpa || 1)), r1(ortg - drtg)];   // [8] (Nov 20 audit): net rating from the exact ratings, not the two rounded ones
   /* Nov 19 audit: the rebound slots hold rebounds of missed shots with team rebounds when every game has them (the live page's and NBA.com's OREB%), box score otherwise */
-  const fr = [a.forb, a.fdrb, a.oforb, a.ofdrb].every(Number.isFinite), rb = f => fr ? ({ orb: 'forb', drb: 'fdrb', oorb: 'oforb', odrb: 'ofdrb' }[f] || f) : f;
-  FFR[k] = ['fgm', 'fga', 'tpm', 'ftm', 'fta', 'orb', 'drb', 'tov', 'ofgm', 'ofga', 'otpm', 'oftm', 'ofta', 'oorb', 'odrb', 'otov'].map(f => r1(a[rb(f)] / g));
+  /* [16] games counted, [17] [18] counted possessions per game on offense and defense over those games (TOV% uses them) */
+  const q = a.ff, rb = f => q ? ({ orb: 'forb', drb: 'fdrb', oorb: 'oforb', odrb: 'ofdrb' }[f] || f) : f, src = q || a, n = q ? q.g : g;
+  FFR[k] = ['fgm', 'fga', 'tpm', 'ftm', 'fta', 'orb', 'drb', 'tov', 'ofgm', 'ofga', 'otpm', 'oftm', 'ofta', 'oorb', 'odrb', 'otov'].map(f => r1(src[rb(f)] / n));
+  if (q) FFR[k].push(q.g, r1(q.po / q.g), r1(q.pd / q.g));
   NRTG[k] = [r1(ortg - drtg), g];
   /* last 14 days (ending yesterday): points margin per 100 possessions over those games, i.e. the pace-weighted mean of game net ratings */
   const w = a.res.filter(x => x.d >= from14 && x.d < today);
