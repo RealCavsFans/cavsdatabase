@@ -1040,7 +1040,7 @@ async function loadScoreboard(){
 evs.sort((a,b)=>(isCavs(b)-isCavs(a))||(rank(a)-rank(b)));
   {const ce=evs.filter(isCavs);if(ce.length){const g=el('optgroup');g.label='Today';ce.forEach(e=>{const st=e.status.type;const o=el('option',null,e.shortName+' · '+(st.state==='in'?'LIVE '+e.status.displayClock+' '+pname(e.status.period):st.shortDetail));o.value=e.id;g.appendChild(o)});sel.appendChild(g)}}
   const gl=g=>{const d=new Date(g.date);const w=g.cle>g.os?'W':'L';return (d.getMonth()+1)+'/'+d.getDate()+' '+(g.ha==='home'?'vs':'@')+' '+g.opp+' · '+w+' '+Math.max(g.cle,g.os)+'–'+Math.min(g.cle,g.os)};
-  const cur=ARCH['2026-27']||[];if(cur.length){const g=el('optgroup');g.label='2026–27 Cavs games';cur.slice().reverse().forEach(x=>{const o=el('option',null,gl(x));o.value='a2026-27:'+x.id;g.appendChild(o)});sel.appendChild(g)}
+  const cur=ARCH[ARCH_SEASONS[0]]||[];if(cur.length){const g=el('optgroup');g.label=ARCH_SEASONS[0].replace('-','–')+' Cavs games';cur.slice().reverse().forEach(x=>{const o=el('option',null,gl(x));o.value='a'+ARCH_SEASONS[0]+':'+x.id;g.appendChild(o)});sel.appendChild(g)}
   const sg=el('optgroup');sg.label='Season totals';ARCH_SEASONS.map(se=>[se,(ARCH[se]||[]).length]).forEach(([se,n])=>{if(!n)return;const o=el('option',null,se.replace('-','–')+' season · '+n+' games');o.value='s'+se;sg.appendChild(o)});if(sg.children.length)sel.appendChild(sg);
   /* 2025–26 replays: one entry here; picking it opens a month and game picker next to the menu, so the list stays short */
   {const rg=el('optgroup');rg.label='2025–26 replays';const o=el('option',null,'Replay a 2025–26 game…');o.value='pickprev';rg.appendChild(o);
@@ -2482,13 +2482,13 @@ function gameState(D,R){
 let MS=null,SEAS=null;const MSH=[];
 /* game highs in the recap (Nov 1): this game against the season's earlier games (highs.json) and Basketball Reference history (highs-hist.json) */
 let HIP=null;function hiRecap(D,R,ul){if(D.focus.id!=='5'||typeof highsL!=='function')return;const cur=highLine(D,R);if(cur.et<'2026-10-01')return;
-  HIP=HIP||Promise.all([getJSON('/live-archive/2026-27/highs.json').catch(()=>[]),getJSON('/pdata/highs-hist.json').catch(()=>null)]);
+  HIP=HIP||Promise.all([getJSON('/live-archive/'+ARCH_SEASONS[0]+'/highs.json').catch(()=>[]),getJSON('/pdata/highs-hist.json').catch(()=>null)]);
   HIP.then(([G,H])=>{const prior=(G||[]).filter(g=>g.et<cur.et);highsL(cur,prior,H).forEach(([l,t])=>{const li=el('li','hi-l');li.style.gridTemplateColumns='1fr';const s=el('span');s.append(el('b',null,l+' · '),t);li.appendChild(s);ul.appendChild(li)})}).catch(()=>{})}
-async function msLoad(){if(MS)return;try{MS=await getJSON('/pdata/milestones.json')}catch(e){}try{SEAS=await getJSON('/live-archive/2026-27/season.json')}catch(e){SEAS=null}}
+async function msLoad(){if(MS)return;try{MS=await getJSON('/pdata/milestones.json')}catch(e){}try{SEAS=await getJSON('/live-archive/'+ARCH_SEASONS[0]+'/season.json')}catch(e){SEAS=null}}
 function milestoneCard(D,R){
   if(!MS||D.focus.id!=='5'||!R.lp)return null;
   const byName={};Object.keys(MS.players).forEach(n=>byName[normName(n)]=n);
-  const preview=S.replay&&S.src!=='2026-27';
+  const preview=S.replay&&S.src!==ARCH_SEASONS[0];
   const W={PTS:'points',REB:'rebounds',AST:'assists'},LIST={PTS:'scoring',REB:'rebounding',AST:'assists'};
   const step={PTS:v=>v<10000?1000:5000,REB:v=>v<2000?500:v<5000?1000:2500,AST:v=>v<2000?500:v<5000?1000:2500},near={PTS:25,REB:10,AST:10};
   const fmt=n=>n.toLocaleString('en-US'),ord=n=>n+(n%100>=11&&n%100<=13?'th':['th','st','nd','rd'][n%10]||'th');
@@ -2867,7 +2867,7 @@ function vOnOff(v,D,R){
 }
 
 const CSCHED=/*@SCHED*/null;
-function recordThrough(D,R){const se=S.src||(S.replay?'2025-26':'2026-27');const ix=(ARCH[se]||[]).slice().sort((a,b)=>a.date<b.date?-1:1);
+function recordThrough(D,R){const se=S.src||(S.replay?ARCH_SEASONS[1]:ARCH_SEASONS[0]);const ix=(ARCH[se]||[]).slice().sort((a,b)=>a.date<b.date?-1:1);
   const cut=ix.findIndex(g=>g.id===S.ev);const prior=(cut>=0?ix.slice(0,cut):ix.filter(g=>g.date<D.date));const fs=D.focus.ha==='home'?R.hs:R.as,os=D.focus.ha==='home'?R.as:R.hs;
   const res=prior.map(g=>g.cle>g.os?'W':'L').concat(S.state==='post'?[fs>os?'W':'L']:[]);const games=prior.map(g=>({date:g.date,ha:g.ha,opp:g.opp,cle:g.cle,os:g.os})).concat(S.state==='post'?[{date:D.date,ha:D.focus.ha,opp:D.other.abbr,cle:fs,os,now:1}]:[]);const w=res.filter(x=>x==='W').length,l=res.length-w;let k=0;const last=res[res.length-1];for(let i=res.length-1;i>=0&&res[i]===last;i--)k++;return {w,l,last,k,res,se,games}}
 /* Nov 4 (mock): share-card palette; dark terminal by default, light terminal when TC.light */
@@ -4385,7 +4385,7 @@ function lshLine(ab,key,zoneOnly){const se=S.src||CUR_SEASON;if(S.season)return 
     if(key.pt!=null){const k=2+key.pt*4;m+=v[k];a+=v[k+1];pts+=v[k+2];as+=v[k+3];tot+=v[0]}else{const k=Z0+key.zi*2;m+=v[k];a+=v[k+1];pts+=v[k]*(key.zi>=3?3:2);tot+=v[1]}});
   if(!n)return null;return {lab:ab+' season ('+n+'g)',n,m:m/n,a:a/n,fr:tot?a/tot:null,fg:a?m/a:null,pps:a?pts/a:null,as:m?as/m:null}}
 function shCmp(D,t){const se=S.season||S.src||CUR_SEASON;const key=se;
-  if(!SHC[key]){SHC[key]={loading:true};(async()=>{try{const J=await getJSON('/live-archive/'+se+'/season.json');const prev=se==='2026-27'?'2025-26':null;const useCur=true/* Nov 4: this season's ratings from game one (was last season's until 15 games) */;
+  if(!SHC[key]){SHC[key]={loading:true};(async()=>{try{const J=await getJSON('/live-archive/'+se+'/season.json');const prev=se===ARCH_SEASONS[0]?ARCH_SEASONS[1]:null;const useCur=true/* Nov 4: this season's ratings from game one (was last season's until 15 games) */;
       const NR=await netRanks(useCur?se:prev);SHC[key]={J,NR,rkLab:useCur?(se.replace('-','–')+' net rating'):('last season’s net rating, until 15 games in')}}catch(e){SHC[key]={err:true}}renderView()})()}
   const c=SHC[key];if(c.loading||c.err)return c;
   const et=S.season?null:new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(new Date(D.date));const other=new Set();(c.J.games||[]).forEach((g,i)=>{if(S.season||g.et!==et)other.add(i)});
@@ -4493,7 +4493,7 @@ function vShots(v,D,R){
    Built from the per-game rows in live-archive/<season>/season.json (games[].t / .u team totals, .l5 five-man units).
    On since Oct 24 (SEASONTAB_ON). */
 const SEASONTAB_ON=true;/* live for everyone since Oct 24 */
-const CUR_SEASON='2026-27';
+const CUR_SEASON=ARCH_SEASONS[0];   /* Nov 21 audit: one place for the current season (ARCH_SEASONS) */
 const sRow=a=>({pts:a[0],fgm:a[1],fga:a[2],tpm:a[3],tpa:a[4],ftm:a[5],fta:a[6],oreb:a[7],toreb:a[8],dreb:a[9],to:a[10],sec:a[11],np:a[12]||0,...(a.length>14?{forb:a[13],fdrb:a[14]}:{})});/* Nov 19 audit: rebounds of missed shots with team rebounds, so per-game four factors match the Four Factors card */
 const sPoss=t=>poss({fga:t.fga,oreb:t.oreb,to:t.to,fta:t.fta,np:t.np});
 /* team numbers for a set of games: per 100 possessions, both sides averaged like the rest of the page */
@@ -5082,8 +5082,8 @@ function vPlays(v,D,R){
 
 /* ---------- game picker (Nov 1 mock): replaces the long game menu ---------- */
 (function(){const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const box=document.getElementById('gp2');if(!box)return;
-  let cur=null,open=false,se='2026-27',team=null,mon=null;
-  const val=(s2,g)=>s2==='2026-27'?'a2026-27:'+g.id:'r'+g.id;
+  let cur=null,open=false,se=ARCH_SEASONS[0],team=null,mon=null;
+  /* Nov 21 audit: 'r' is the old 2025-26 replay name; every other season is 'a<season>:<id>' */const val=(s2,g)=>s2==='2025-26'?'r'+g.id:'a'+s2+':'+g.id;
   const games=s2=>(ARCH[s2]||[]).slice().sort((a,b)=>a.date<b.date?-1:1);
   const logo=ab=>{const i=el('img');i.alt='';i.loading='lazy';i.src='/img/tl/'+String(ab).toLowerCase()+'.png';i.onerror=()=>i.remove();return i};
   const dlab=g=>{const d=new Date(g.date);return MON[d.getMonth()]+' '+d.getDate()};
@@ -5108,7 +5108,7 @@ function vPlays(v,D,R){
     const G=games(se);const opps=[...new Set(G.map(g=>g.opp))].sort();pn.appendChild(el('div','gp2-h',team?'Every game vs '+team+' · tap again for all':'Opponents · tap one for every game against them'));
     const tm=el('div','gp2-tm');opps.forEach(ab=>{const x=el('button',team===ab?'on':null);x.type='button';x.title=ab;x.setAttribute('aria-label','Games against '+ab);x.appendChild(logo(ab));if(!x.querySelector('img'))x.textContent=ab;x.onclick=()=>{team=team===ab?null:ab;draw()};tm.appendChild(x)});pn.appendChild(tm);
     const tile=(s2,g)=>{const v=val(s2,g);const x=el('button','gp2-t '+(g.cle>g.os?'w':'l')+(v===cur?' on':''));x.type='button';const o=el('span','o');o.append(g.ha==='home'?'vs':'@',logo(g.opp),g.opp);const r2=el('span','r');r2.append(el('b',null,g.cle>g.os?'W':'L'),' '+Math.max(g.cle,g.os)+'–'+Math.min(g.cle,g.os));x.append(el('span','d',dlab(g)),o,r2);x.onclick=()=>go(v);return x};
-    if(team){['2026-27','2025-26'].forEach(s2=>{const L2=games(s2).filter(g=>g.opp===team);if(!L2.length)return;pn.appendChild(el('div','gp2-h',s2.replace('-','–')+' · '+L2.length+' game'+(L2.length===1?'':'s')));const gr=el('div','gp2-g');L2.forEach(g=>gr.appendChild(tile(s2,g)));pn.appendChild(gr)})}
+    if(team){ARCH_SEASONS.forEach(s2=>{const L2=games(s2).filter(g=>g.opp===team);if(!L2.length)return;pn.appendChild(el('div','gp2-h',s2.replace('-','–')+' · '+L2.length+' game'+(L2.length===1?'':'s')));const gr=el('div','gp2-g');L2.forEach(g=>gr.appendChild(tile(s2,g)));pn.appendChild(gr)})}
     else{const mk=g=>{const d=new Date(g.date);return d.getFullYear()+'-'+d.getMonth()};const ms=[...new Set(G.map(mk))];if(!ms.includes(mon))mon=ms[ms.length-1];
       const mo=el('div','gp2-mo');ms.forEach(m=>{const [y,mm]=m.split('-').map(Number);const n=G.filter(g=>mk(g)===m);const w=n.filter(g=>g.cle>g.os).length;const x=el('button',m===mon?'on':null,MON[mm]+' '+w+'–'+(n.length-w));x.type='button';x.onclick=()=>{mon=m;draw()};mo.appendChild(x)});pn.appendChild(mo);
       const gr=el('div','gp2-g');G.filter(g=>mk(g)===mon).forEach(g=>gr.appendChild(tile(se,g)));pn.appendChild(gr)}

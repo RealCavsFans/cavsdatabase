@@ -2606,6 +2606,7 @@ function confetti(){const c=document.createElement('canvas');c.id='confetti';doc
    Each season: dollars | [dollars,'P'] player option | [dollars,'T'] team option | 'UFA' / 'RFA' (free agent that summer) | null.
    Salaries: Capsheets (2026-27, the official figures), Spotrac for later seasons Capsheets doesn't show. Bird rights: Salary Swish. */
 const SEASONS=['2026–27','2027–28','2028–29','2029–30','2030–31'];
+/* Nov 21 audit: the current season's archive name, read from SEASONS, so the game archive paths roll over with it */const CUR_SE=SEASONS[0].replace('–','-'),PREV_SE=(+CUR_SE.slice(0,4)-1)+'-'+CUR_SE.slice(2,4);
 const ROSTER=[
   ['Donovan Mitchell','G',[50105628,61600000,66528000,71456000,[76384000,'P']],'Full Bird','2031 UFA',''],
   ['Evan Mobley','F/C',[50105628,53817156,57528684,61240212,'UFA'],'Full Bird','2030 UFA',''],
@@ -3130,7 +3131,7 @@ onView('schedule',()=>{(async function(){const box=document.getElementById('sp-p
   const h=el('div','block-h');h.append(el('h2',null,'Season pace'),el('span','upd-tag','Through '+n+' games'));box.appendChild(h);
   const ld=el('p','pace-ld');ld.innerHTML=`<b>${cw}–${n-cw}</b> through ${n} games. ${better?better+' of '+S.length+' Cavs seasons since '+sd(H.from)+' started better':'The best start of any Cavs season since '+sd(H.from)}${same?', '+same+' the same':''}. Closest starts: ${near.map(x=>`<b>${sd(x.k)}</b> (finished ${x.fw}–${x.fl})`).join(', ')}.`;box.appendChild(ld);
   /* heartbeat: one bar per game, up = win, down = loss, height = margin */
-  {const ix=await fJ('/live-archive/2026-27/index.json').then(r=>r.ok?r.json():null).catch(()=>null)||[];const mx=Math.max(15,...cur.map(g=>Math.abs(g.p-g.op)));
+  {const ix=await fJ('/live-archive/'+CUR_SE+'/index.json').then(r=>r.ok?r.json():null).catch(()=>null)||[];const mx=Math.max(15,...cur.map(g=>Math.abs(g.p-g.op)));
     const hb=el('div','hbeat');hb.setAttribute('role','img');hb.setAttribute('aria-label','Game by game margins: '+cur.map(g=>(g.w?'W':'L')+' by '+Math.abs(g.p-g.op)).join(', '));
     for(let i=0;i<Math.max(82,n);i++){const g=cur[i];if(!g){hb.appendChild(el('span','hb-x'));continue}const e=ix.find(x=>x.et===g.d);const a=el(e?'a':'span','hb '+(g.w?'w':'l'));if(e){a.href='/live.html?g=a2026-27:'+e.id}a.title=(g.w?'W ':'L ')+g.p+'–'+g.op+(g.ha==='H'?' vs ':' at ')+g.o+' · '+g.d;a.style.setProperty('--h',(Math.abs(g.p-g.op)/mx*100).toFixed(1)+'%');hb.appendChild(a)}
     box.appendChild(hb);const k=el('p','hb-k');k.textContent='One bar per game: up = win, down = loss, taller = bigger margin. Tap a bar for the game.';box.appendChild(k)}
@@ -4846,7 +4847,7 @@ window.renderPlayer=function(s){
   const body=el('div','ppx-body');w.appendChild(body);
   {const sk=el('div','skel-wrap');sk.setAttribute('aria-label','Loading');sk.innerHTML='<div class="skel skel-band"></div><div class="skel-row"><div class="skel skel-b"></div><div class="skel skel-b"></div></div><div class="skel skel-card"></div><div class="skel skel-card"></div>';body.appendChild(sk)}
   /* Nov 19 audit: his own game-archive file loads with the page, so this season's numbers come from the archive (the same counting as the season stats page) */const nk0=String(n).normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,''),AK='2026-27|'+nk0;
-  const ppArch=()=>{PPD.arch=PPD.arch||{};if(PPD.arch[AK])return Promise.resolve();return fetch('/live-archive/2026-27/p/'+nk0+'.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(j=>{if(j)PPD.arch[AK]=j})};
+  const ppArch=()=>{PPD.arch=PPD.arch||{};if(PPD.arch[AK])return Promise.resolve();return fetch('/live-archive/'+CUR_SE+'/p/'+nk0+'.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(j=>{if(j)PPD.arch[AK]=j})};
   Promise.all([ppLoad(),needChunk('pp'),ppArch()]).then(()=>{body.innerHTML='';try{ppBuild(p,body)}catch(e){console.error(e);body.appendChild(el('p','dim','Something went wrong loading this page.'))}
     /* links like /players/evan-mobley#ch-his open that chapter */
     const h=location.hash;if(/^#ch-[a-z]+$/.test(h)){const d=document.querySelector(h);if(d){d.open=true;setTimeout(()=>d.scrollIntoView({block:'start'}),150)}}}).catch(e=>{/* Nov 18 (Luka): never leave the loading boxes up forever */console.warn('player page',e);body.innerHTML='';const m=el('p','dim','This page didn’t load. ');const b=el('button','oo2-more','Try again');b.type='button';b.onclick=()=>location.reload();m.appendChild(b);body.appendChild(m)});
@@ -5009,7 +5010,7 @@ window.renderPlayer=function(s){
   // when he plays: where his stints fall in the game, season vs his last 5, from the play-by-play archive (Oct 30)
   if(gp>=2){const c=card('When he plays',null,'Where his minutes come in a game. Darker = on the floor in more games at that minute. Below: each of his last 5 games, stint by stint, with the Cavs’ +/− in that stint.');const box=el('div','ppx-rot');box.appendChild(el('p','dim','Loading…'));c.appendChild(box);ov.appendChild(c);
     const nk=x=>x.normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');
-    fetch('/live-archive/2026-27/p/'+nk(n)+'.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(J=>{box.innerHTML='';const id=J&&J.player;const G=J&&J.rot&&J.rot[id];if(!G||G.length<2){c.remove();return}
+    fetch('/live-archive/'+CUR_SE+'/p/'+nk(n)+'.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(J=>{box.innerHTML='';const id=J&&J.player;const G=J&&J.rot&&J.rot[id];if(!G||G.length<2){c.remove();return}
       const RG=G.filter(([,st])=>st.length).sort((a,b)=>a[0]-b[0]);const last=RG.slice(-5);const M=48;
       const share=list=>{const on=Array(M).fill(0);list.forEach(([,st])=>{for(let m=0;m<M;m++){const a=m*60,b=a+60;let o=0;st.forEach(([s0,s1])=>{o+=Math.max(0,Math.min(b,s1)-Math.max(a,s0))});if(o>=30)on[m]++}});return on.map(v=>v/list.length)};
       const SS=share(RG),SL=share(last);
@@ -5083,7 +5084,7 @@ const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3PT%','tp'],['FG%','f
           Object.entries(R).forEach(([l,v])=>setV('.ppx-adv',l,P1(v)));if(R['TS%']!=null&&window.__LTS!=null){const v=R['TS%']-window.__LTS;setV('.ppx-adv','Relative TS%',(Math.round(v*1000)>0?'+':Math.round(v*1000)<0?'−':'')+Math.abs(v*100).toFixed(1))}setV('.ppx-adv','Free throw rate',b.fga?(b.fta/b.fga*100).toFixed(1)+'%':null);
           /* game log: usage counted from the plays he was on the floor for, as on the live game */const GU=(A.gu||{})[id]||[];const GL=document.getElementById('ppx-glc');if(GL&&GU.length){let nT=0,dT=0,all=true;GL.querySelectorAll('tbody tr[data-d]').forEach(tr=>{const gi=(A.games||[]).findIndex(x=>x.et===tr.dataset.d);const u=GU.find(z=>z[0]===gi);const td=tr.querySelector('td.glu');if(!td||!tr.dataset.u)return;if(!u){all=false;return}const [fa,ft,tv]=tr.dataset.u.split(',').map(Number);const d=u[1]+.44*u[2]+u[3];if(d>0){td.textContent=(100*(fa+.44*ft+tv)/d).toFixed(1)+'%';nT+=fa+.44*ft+tv;dT+=d}});const ft2=GL.querySelector('tfoot td.glu');if(ft2&&all&&dT>0)ft2.textContent=(100*nT/dT).toFixed(1)+'%'}
         }catch(e){}};
-        if(PPD.arch&&PPD.arch[K2])setTimeout(()=>{runA(PPD.arch[K2]);if(window.__glTabs)window.__glTabs()});else fetch('/live-archive/2026-27/p/'+K2.split('|')[1]+'.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(j=>{if(j){PPD.arch=PPD.arch||{};PPD.arch[K2]=j;setTimeout(()=>{runA(j);if(window.__roleRedo)window.__roleRedo();if(window.__glTabs)window.__glTabs()})}})}
+        if(PPD.arch&&PPD.arch[K2])setTimeout(()=>{runA(PPD.arch[K2]);if(window.__glTabs)window.__glTabs()});else fetch('/live-archive/'+CUR_SE+'/p/'+K2.split('|')[1]+'.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(j=>{if(j){PPD.arch=PPD.arch||{};PPD.arch[K2]=j;setTimeout(()=>{runA(j);if(window.__roleRedo)window.__roleRedo();if(window.__glTabs)window.__glTabs()})}})}
       if(cur.src!=='2026–27')c.appendChild(note(cur.base==='pre'?`${pre.gp||'—'} games at ${pre.team}${pre.note?'. '+pre.note:''}.`:`${cur.gp} games in 2025–26. This switches to 2026–27 after his first game.`))}
     {const gl=document.getElementById('ppx-glc');if(gl&&gl.parentElement===ov)ov.insertBefore(c,gl);else ov.appendChild(c)}}/* season line sits above the game log (Oct 30) */
   // before the NBA: college or overseas, plus G League (rookies and second year players, two-ways)
@@ -5176,7 +5177,7 @@ const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3PT%','tp'],['FG%','f
       tb.appendChild(tbd);const bx=el('div','ppx-tbx');bx.appendChild(tb);c.appendChild(bx);ov.appendChild(c)}}
   /* season shot chart and passing web, from the live game archive (live-archive/<season>/season.json); season toggle when he has more than one */
   {const c=card('Shots and passing','','Every shot he took, where it came from, and who he set up and who set him up. From our game archive, updated after every game.');const box=el('div','ppx-sp');box.appendChild(el('p','dim','Loading…'));c.appendChild(box);ov.appendChild(c);
-    const nrm=x=>x.normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');const SEAS=['2026-27','2025-26'];
+    const nrm=x=>x.normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');const SEAS=[CUR_SE,PREV_SE];
     PPD.arch=PPD.arch||{};const gj=u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);/* his own small file per season; the whole season.json only if that's missing */
     Promise.all(SEAS.map(se=>PPD.arch[se+'|'+nrm(n)]?0:gj('/live-archive/'+se+'/p/'+nrm(n)+'.json').then(j=>j||gj('/live-archive/'+se+'/season.json')).then(j=>{PPD.arch[se+'|'+nrm(n)]=j||{}}))).then(()=>{if(window.__dbPrev)setTimeout(window.__dbPrev);
       const have=SEAS.filter(se=>{const A=PPD.arch[se+'|'+nrm(n)];const id=A.P&&Object.keys(A.P).find(k=>nrm(A.P[k].name)===nrm(n));return id&&(A.shots||[]).some(x=>x[0]===id)});
@@ -5311,7 +5312,7 @@ const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3PT%','tp'],['FG%','f
   /* ===== 4 · value to the Cavs ===== */
   const sal=R?(v2=>typeof v2==='number'?v2:Array.isArray(v2)?v2[0]:0)(R[2][0]):0;
   /* deeper season numbers from the game archive (live-archive/<season>/season.json): on/off, lineups, how he scores, defense and boards with him on vs off. Preview: ?ppx=1 */
-  {/* on for everyone since Oct 26 */const SE='2026-27';const nrm=x=>x.normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');
+  {/* on for everyone since Oct 26 */const SE=CUR_SE;const nrm=x=>x.normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');
     PPD.arch=PPD.arch||{};const go=A=>{const id=A&&A.P&&Object.keys(A.P).find(k=>nrm(A.P[k].name)===nrm(n));if(!id||!A.B||!A.B[id])return;const b=A.B[id],gp=(A.gp||{})[id]||0;
       const add=(x,y)=>{for(const k in y)if(typeof y[k]==='number')x[k]=(x[k]||0)+y[k];return x};const on={sec:0,pf:0,pa:0,o:{},d:{}};const L5=Object.values((A.L||{})[5]||{});
       L5.filter(l=>l.ids.includes(id)).forEach(l=>{on.sec+=l.sec;on.pf+=l.pf;on.pa+=l.pa;add(on.o,l.o);add(on.d,l.d)});
@@ -5603,7 +5604,7 @@ const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3PT%','tp'],['FG%','f
       /* Nov 16 (Luka): his own row uses his season so far from the site's game archive (same counting as his season line), so it's never a few games behind; the past seasons stay NBA.com's */
       {const K3='2026-27|'+String(n).normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,''),slug2=K3.split('|')[1];const K2=PPD.arch&&PPD.arch[K3]?K3:null;const use=A=>{try{const b=A&&A.B&&A.B[pid],gu=A.gu&&A.gu[pid],gp=A.gp&&A.gp[pid];if(!b||!(b.po>0))return;const P100=(b.po+(b.pd||b.po))/2;/* Nov 16 (Luka): USG% stays NBA.com's (same source as the matches) */const v=[b.pts/P100*100,(b.oreb+b.dreb)/P100*100,b.ast/P100*100,b.fga+b.fta?b.pts/(2*(b.fga+.44*b.fta))*100:null,me.me[4]];
         tr0.innerHTML=`<td><b>${esc(n)}</b><small>${ss(M.season)} · CAVS${gp?' · '+gp+' games':''}</small></td><td>${me.a}</td>`+v.map(x=>`<td>${x==null?'–':x.toFixed(1)}</td>`).join('')}catch(e){}};
-        if(K2)use(PPD.arch[K2]);else if(slug2)fetch('/live-archive/2026-27/p/'+slug2+'.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(j=>{if(j){PPD.arch=PPD.arch||{};PPD.arch[K3]=j;use(j)}})}
+        if(K2)use(PPD.arch[K2]);else if(slug2)fetch('/live-archive/'+CUR_SE+'/p/'+slug2+'.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(j=>{if(j){PPD.arch=PPD.arch||{};PPD.arch[K3]=j;use(j)}})}
       me.m.forEach(r=>{const tr=el('tr');tr.innerHTML=`<td><a href="https://www.nba.com/player/${+r[0]}" target="_blank" rel="noopener"><b>${esc(r[1])}<span class="xa"> ↗</span></b></a><small>${ss(r[2])} · ${esc(r[3])}</small></td><td>${r[4]}</td>`+r.slice(5,10).map(v=>`<td>${(+v).toFixed(1)}</td>`).join('');bd.appendChild(tr)});
       tb.appendChild(bd);const w=el('div','ppx-tbx');w.appendChild(tb);c.appendChild(w);c.appendChild(note('Not per game: PTS, REB and AST are per 100 possessions he’s on the floor, so a 35 minute player and a 25 minute player compare fairly. Regular seasons with 500+ minutes; his season counts once he passes 100 minutes. Closest match first. His row is his season through his latest game, except USG%, which is NBA.com’s for every row so all six compare the same way; the matches are from NBA.com, updated '+(M.updated||'')+'.'))})}
   // in the news
@@ -6024,7 +6025,7 @@ onView('cap',()=>{(function(){const B=document.getElementById('sm-b');if(!B)retu
   let last=null;const paint=()=>{const r=route();const g=grpOf(r);const lv=liveNow();const key=r+'|'+lv;if(key===last)return;last=key;
     bar.querySelectorAll('a').forEach(a=>{const on=a.dataset.g===g;a.classList.toggle('on',on);if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');let d=a.querySelector('.dot');if(a.dataset.g===(STATS_ON?'stats':'schedule')&&lv){if(!d)a.appendChild(el('i','dot'))}else if(d)d.remove()});
     if(g==='home'){sub.hidden=true;return}sub.hidden=false;sub.textContent='';
-    G[g].forEach(([k,l])=>{const a=el('a');if(k==='alerts'){if(!window.cdbAlerts)return;a.href='#';a.onclick=e=>{e.preventDefault();window.cdbAlerts()};a.append(l);sub.appendChild(a);return}if(k==='live'){a.href='/live.html';if(lv)a.appendChild(el('i','lv'))}else if(k==='season'){/* Nov 5 (Luka): season totals get their own tab */a.href='/live.html?g=s'+String(SEASONS[0]||'2026-27').replace('–','-')}else{a.href='/'+k;a.dataset.go=k}a.append(l);if(k===r||(k==='roster'&&/^players\//.test(r))||(k==='schedule'&&/^games\//.test(r))||(k==='history'&&/^history\//.test(r)))a.classList.add('on');sub.appendChild(a)})};
+    G[g].forEach(([k,l])=>{const a=el('a');if(k==='alerts'){if(!window.cdbAlerts)return;a.href='#';a.onclick=e=>{e.preventDefault();window.cdbAlerts()};a.append(l);sub.appendChild(a);return}if(k==='live'){a.href='/live.html';if(lv)a.appendChild(el('i','lv'))}else if(k==='season'){/* Nov 5 (Luka): season totals get their own tab */a.href='/live.html?g=s'+CUR_SE}else{a.href='/'+k;a.dataset.go=k}a.append(l);if(k===r||(k==='roster'&&/^players\//.test(r))||(k==='schedule'&&/^games\//.test(r))||(k==='history'&&/^history\//.test(r)))a.classList.add('on');sub.appendChild(a)})};
   const ps=history.pushState,rs=history.replaceState;history.pushState=function(){const x=ps.apply(this,arguments);setTimeout(paint,0);return x};history.replaceState=function(){const x=rs.apply(this,arguments);setTimeout(paint,0);return x};
   addEventListener('popstate',()=>setTimeout(paint,0));setInterval(paint,60000);paint()})();
 
