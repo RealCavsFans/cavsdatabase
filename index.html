@@ -7099,6 +7099,41 @@ setTimeout(()=>{const box=document.getElementById('dp-list'),sec=box&&box.closes
  const snap=()=>{const pitch=matchMedia('(max-width:640px)').matches?9:12;/* the width stays as set (share images read it); min/max-width hold the snapped size */document.querySelectorAll(SEL).forEach(i=>{const w=i.style.width;if(!/%$/.test(w))return;const p=parseFloat(w);const W=i.parentElement.getBoundingClientRect().width;if(!W)return;const n=p>0?Math.max(1,Math.round(W*p/100/pitch)):0;const px=n*pitch+'px';if(i.style.maxWidth!==px){i.style.maxWidth=px;i.style.minWidth=px}})};
  let t=0;const go=()=>{clearTimeout(t);t=setTimeout(snap,80)};new MutationObserver(go).observe(document.body,{childList:true,subtree:true});addEventListener('resize',go);go()})();</script>
 <script>/* Nov 17 audit: tables that scroll sideways can be reached and scrolled with the keyboard */(function(){let t=0;const f=()=>{t=0;document.querySelectorAll('.tablebox:not([tabindex])').forEach(b=>{if(b.scrollWidth>b.clientWidth+1){b.tabIndex=0;if(!b.hasAttribute('role')){b.setAttribute('role','region');const h=b.querySelector('caption')||b.closest('section,.ppx-c')?.querySelector('h2,h3');b.setAttribute('aria-label',(h&&h.textContent.trim())||'Table')}}})};try{new MutationObserver(()=>{if(!t)t=setTimeout(f,400)}).observe(document.body,{childList:true,subtree:true})}catch(e){}addEventListener('resize',()=>{if(!t)t=setTimeout(f,400)});f()})();</script>
+<style id="pgx">/* Nov 21 (Luka, mock): related player-page cards share one card with tabs, named as before, so the page is shorter without anything going missing */
+.pgx{position:relative}.pgx>.ppx-ch{display:flex;align-items:baseline;gap:10px}.pgx>.ppx-ch .xact,.pgx>.ppx-ch>button{display:none!important}.pgx .pgx-n{font:600 .75rem var(--sans);color:var(--muted)}
+.pgx-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 10px}
+.pgx-p>section.ppx-c{border:0;padding:0;margin:0;background:none;box-shadow:none}
+.pgx-p>section.ppx-c>.ppx-ch{border:0;padding:0;margin:0;position:absolute;top:12px;right:14px;min-height:0}
+.pgx-p>section.ppx-c>.ppx-ch>h2,.pgx-p>section.ppx-c>.ppx-ch>h3,.pgx-p>section.ppx-c>.ppx-ch .pf-sub,.pgx-p>section.ppx-c>.ppx-ch .pf-tg{display:none!important}.pgx-p>section.ppx-c>.ppx-ch .xact{display:flex!important}
+@media (max-width:640px){.pgx-tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:-14px;padding-right:14px}.pgx-tabs::-webkit-scrollbar{display:none}.pgx-tabs button{flex:none}.pgx-p>section.ppx-c>.ppx-ch{top:10px;right:10px}}
+</style>
+<script>/* Nov 21 (Luka, mock): groups of related player-page cards become one card with tabs (Overview stays as it is: its cards already fold to one line each). Each tab keeps the card's own
+   name, link and camera; a link to any old card (e.g. #on-off) opens its tab. Cards that come in late join their group. */
+(function(){const G=[
+  ['His shooting',['shooting','shot-contest']],
+  ['His part in the offense',['share-of-the-offense','usage-vs-efficiency','points-he-creates']],
+  ['Team defense',['with-him-on-defense','ppx-db','rebounds-by-the-kind-of-miss']],
+  ['At the rim',['rim-protection','block-map']],
+  ['His contract',['ppx-valc','what-his-contract-buys']],
+  ['Outlook',['on-pace-for','awards-watch','ppx-cmp']],
+  ['Career',['career-totals','career-highs','honors']]];
+ const name=s=>((s.querySelector(':scope>.ppx-ch h2,:scope>.ppx-ch h3')||{}).textContent||'').trim();
+ const show=(w,id)=>{w.querySelectorAll(':scope>.pgx-tabs>button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.id===id));w.querySelectorAll(':scope>.pgx-p').forEach(p=>p.hidden=p.dataset.id!==id)};
+ const run=()=>{const v=document.getElementById('view-player');if(!v||v.hidden)return;
+  G.forEach(([title,ids])=>{const have=ids.map(id=>document.getElementById(id)).filter(s=>s&&s.matches('section.ppx-c'));let w=v.querySelector('.pgx[data-g="'+title+'"]');
+   if(!w){if(have.length<2)return;w=document.createElement('section');w.className='ppx-c pgx';w.dataset.g=title;const hd=document.createElement('div');hd.className='ppx-ch';const h=document.createElement('h2');h.textContent=title;hd.appendChild(h);const tb=document.createElement('div');tb.className='pgx-tabs ppx-tabs';tb.setAttribute('role','tablist');w.append(hd,tb);have[0].before(w)}
+   const tb=w.querySelector(':scope>.pgx-tabs');let added=false;
+   ids.forEach(id=>{const s=document.getElementById(id);if(!s||!s.matches('section.ppx-c')||s.parentElement.classList.contains('pgx-p'))return;
+    const p=document.createElement('div');p.className='pgx-p';p.dataset.id=id;s.classList.remove('pfold');s.dataset.pf=1;p.appendChild(s);
+    const b=document.createElement('button');b.type='button';b.dataset.id=id;b.textContent=name(s)||id;b.onclick=()=>show(w,id);
+    const order=ids.indexOf(id);const after=[...tb.children].find(x=>ids.indexOf(x.dataset.id)>order);if(after){tb.insertBefore(b,after);w.insertBefore(p,w.querySelector(':scope>.pgx-p[data-id="'+after.dataset.id+'"]'))}else{tb.appendChild(b);w.appendChild(p)}added=true});
+   if(added){const cur=tb.querySelector('[aria-pressed=true]');show(w,cur?cur.dataset.id:tb.firstElementChild.dataset.id)}});
+  /* a link to a card that now sits in a tab opens that tab */
+  const h=decodeURIComponent((location.hash||'').slice(1));if(h){const t=document.getElementById(h);const p=t&&t.closest('.pgx-p');if(p&&p.hidden){show(p.parentElement,p.dataset.id);setTimeout(()=>p.parentElement.scrollIntoView({block:'start'}),0)}}};
+ let q=0;const kick=()=>{if(q)return;q=requestAnimationFrame(()=>{q=0;run()})};
+ try{new MutationObserver(kick).observe(document.body,{childList:true,subtree:true})}catch(e){setInterval(run,1000)}addEventListener('hashchange',run);
+ document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[href^="#"]');if(a)setTimeout(run,0)});})();
+</script>
 <script>/* Nov 17 (Luka): player pages: a slim bar with his name, season line and the chapter links stays at the top once you scroll past his banner; lower-use cards start folded (tap to open) */
 (function(){const FOLD=[/* Nov 17 (Luka): When he plays stays open */['by-quarter','His per-game numbers by quarter and in the clutch'],['on-off','The Cavs with him on and off the floor'],['[id^=his-most][id$=lineups]','Five-man groups he played in, by minutes'],['with-and-without','His numbers with and without each teammate']];let io=null;
  const build=()=>{const v=document.getElementById('view-player');if(!v||v.hidden)return;const band=v.querySelector('.ppx-band');if(!band)return;
