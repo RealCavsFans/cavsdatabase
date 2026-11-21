@@ -5,13 +5,6 @@
  "url": "https://www.espn.com/mens-college-basketball/game/_/gameId/401917982",
  "next": [
   {
-   "d": "2026-11-21",
-   "opp": "Queens University",
-   "ha": "H",
-   "t": "1:00 PM ET",
-   "tv": "SECN+"
-  },
-  {
    "d": "2026-11-25",
    "opp": "Arizona State",
    "ha": "N",
@@ -24,6 +17,13 @@
    "ha": "N",
    "t": "7:00 PM ET",
    "tv": "CBSSN"
+  },
+  {
+   "d": "2026-12-01",
+   "opp": "Wake Forest",
+   "ha": "H",
+   "t": "9:00 PM ET",
+   "tv": "SEC Network"
   }
  ],
  "season": {
