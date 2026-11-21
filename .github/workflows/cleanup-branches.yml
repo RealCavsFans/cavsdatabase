@@ -1,6 +1,7 @@
 name: Delete old mockup branches
 on:
-  # run by hand: deletes mockup and probe branches (mock-*, probe-*) and finished experiments; main and deploy stay
+  # run by hand: deletes mockup and probe branches (mock-*, probe-*) and finished experiments; main and deploy stay.
+  # Nov 21 (Luka): only branches already merged into main, so a mockup that never went live is never lost
   workflow_dispatch:
 permissions:
   contents: write
@@ -10,8 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
         with:
-          fetch-depth: 1
+          fetch-depth: 0
       - run: |
           for b in $(git ls-remote --heads origin | awk '{print $2}' | sed 's#refs/heads/##' | grep -E '^(mock-|probe-injury|probe-nba$|probe-draft$|css-cleanup$|speed-1$)'); do
-            git push origin --delete "$b" && echo "deleted $b"
+            if git merge-base --is-ancestor "origin/$b" origin/main; then git push origin --delete "$b" && echo "deleted $b"; else echo "kept $b (not merged into main)"; fi
           done
