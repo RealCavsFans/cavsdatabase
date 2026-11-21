@@ -1970,14 +1970,14 @@ function trkTeamCard(){const T=trkData();if(!T)return null;const O=T.pt.t.off,Df
   c.appendChild(el('p','note','Left: the Cavs on offense. Right: what opponents scored against the Cavs on the same kind of play (NBA.com doesn’t track every type on defense). Rank among 30 teams on points a possession; on defense, 1st = the fewest allowed. Regular season, updated '+trkUpd(T)+'.'));return c}
 function trkPlayersCard(){const T=trkData();if(!T)return null;
   const tm=T.t.CLE,g=tm.gp;const trk=(k,i,lowBest)=>{const v=Object.entries(T.t).map(([ab,x])=>[ab,x[k][i]/x.gp]).sort((a,b)=>lowBest?a[1]-b[1]:b[1]-a[1]);return ord2(v.findIndex(x=>x[0]==='CLE')+1)};
-  const ef=x=>x[1]?(x[0]+.5*x[2])/x[1]*100:null;
-  const rows=Object.entries(T.p).filter(([,p])=>p.gp>0&&p.hu).map(([id,p])=>{const n=p.gp;return {n:p.n,g:n,mpg:p.min/n,dr:p.dr[0]/n,tc:p.to[0]/n,cs:ef(p.cs),pu:ef(p.pu),dfl:p.hu[2]/n,con:p.hu[0]/n,lb:p.hu[6]/n,box:p.hu[7]/n,scr:p.hu[4]/n,chg:p.hu[3]}});
+  const ef=x=>x[1]?(x[0]+.5*x[2])/x[1]*100:null,ef10=x=>x[1]>=10?ef(x):null;
+  const rows=Object.entries(T.p).filter(([,p])=>p.gp>0&&p.hu).map(([id,p])=>{const n=p.gp;return {n:p.n,g:n,mpg:p.min/n,dr:p.dr[0]/n,tc:p.to[0]/n,cs:ef10(p.cs),pu:ef10(p.pu),dfl:p.hu[2]/n,con:p.hu[0]/n,lb:p.hu[6]/n,box:p.hu[7]/n,scr:p.hu[4]/n,chg:p.hu[3]}});
   const f1=v=>v==null?'–':v.toFixed(1),pc=v=>v==null?'–':v.toFixed(1)+'%';
   const c=el('div','card sec');head(c,'Hustle and tracking','Per game · NBA.com hustle stats and player tracking');
   const cols=[{h:'Player',k:'n'},{h:'G',k:'g'},{h:'Drives',k:'dr',f:r=>f1(r.dr)},{h:'Touches',k:'tc',f:r=>f1(r.tc)},{h:'C&S eFG%',k:'cs',f:r=>pc(r.cs)},{h:'Pull-up eFG%',k:'pu',f:r=>pc(r.pu)},{h:'Deflections',k:'dfl',f:r=>f1(r.dfl)},{h:'Contests',k:'con',f:r=>f1(r.con)},{h:'Loose balls',k:'lb',f:r=>f1(r.lb)},{h:'Box outs',k:'box',f:r=>f1(r.box)},{h:'Screen ast',k:'scr',f:r=>f1(r.scr)},{h:'Charges',k:'chg'}];
   const ft=el('tr','tot');[['CAVS',''],[String(g),''],[f1(tm.dr[0]/g),trk('dr',0)],[f1(tm.to[0]/g),trk('to',0)],[pc(ef(tm.cs)),''],[pc(ef(tm.pu)),''],[f1(tm.hu[2]/g),trk('hu',2)],[f1(tm.hu[0]/g),trk('hu',0)],[f1(tm.hu[6]/g),trk('hu',6)],[f1(tm.hu[7]/g),trk('hu',7)],[f1(tm.hu[4]/g),trk('hu',4)],[String(tm.hu[3]),trk('hu',3)]].forEach(([v,r])=>{const td=el('td',null,v);if(r)td.appendChild(el('small','rk',r));ft.appendChild(td)});
-  c.appendChild(dtable('trk-hu',cols,rows,{def:'mpg',minW:820,foot:ft}));
-  c.appendChild(el('p','note','Drives = dribbling from 20+ feet to within 10 feet of the rim. C&S = catch-and-shoot jumpers; pull-up = jumpers off the dribble (eFG% counts a three as 1.5 makes). Contests = shots he had a hand up on. Screen ast = his screen freed a teammate for a made shot. Charges are totals. CAVS row: team per game with its NBA rank among 30 teams. Regular season, updated '+trkUpd(T)+'.'));return c}
+  c.appendChild(dtable('trk-hu',cols,rows,{def:'tc',minW:820,foot:ft}));
+  c.appendChild(el('p','note','Drives = dribbling from 20+ feet to within 10 feet of the rim. C&S = catch-and-shoot jumpers; pull-up = jumpers off the dribble (eFG% counts a three as 1.5 makes; – = fewer than 10 tries). Contests = shots he had a hand up on. Screen ast = his screen freed a teammate for a made shot. Charges are totals. CAVS row: team per game with its NBA rank among 30 teams. Regular season, updated '+trkUpd(T)+'.'));return c}
 /* Nov 5 (Luka): season charts above the tables (see .tkc) */
 const rkTxt=h=>{if(!h)return '';const d=document.createElement('div');d.innerHTML=h;return d.textContent.trim()};
 const tkW=f=>{const k=Math.round(Math.max(0,Math.min(1,f))*30);return k?`calc(${(k/30*100).toFixed(3)}% - 2px)`:'0'};/* whole ticks only */

@@ -25,6 +25,7 @@ const FRESH = [
   ['League rates (usage, rates, counted possessions)', 'pdata/league-rates.json', 30, j => j.updated, true],
   ['Game archive (season stats, player season lines)', `live-archive/${SEASON}/season.json`, 30, j => j.updated, true],
   ['Shot contest (NBA tracking, nightly from Luka\'s computer)', 'pdata/defender.json', 54, j => j.updated + 'T23:59:00-05:00', true],
+  ['Play types, hustle and tracking (NBA.com, nightly from Luka\'s computer)', 'pdata/tracking.json', 54, j => j.updated + 'T23:59:00-05:00', true],
   ['Matchups (NBA tracking, nightly from Luka\'s computer)', 'pdata/matchups.json', 54, j => j.updated + 'T23:59:00-05:00', true],
   ['Comparable seasons', 'pdata/comps.json', 8 * 24, j => j.updated + 'T23:59:00-05:00', true],
   ['Career stats (Basketball Reference, weekly)', 'pdata/careers.json', 8 * 24 + 12, j => j.updated, false],
