@@ -4407,37 +4407,7 @@
   "status": "final",
   "score": "128-119",
   "result": "W",
-  "refs": [
-   [
-    "Crew chief",
-    "Sean Wright",
-    "4"
-   ],
-   [
-    "Referee",
-    "Nick Buchert",
-    "3"
-   ],
-   [
-    "Umpire",
-    "Tyler Ricks",
-    "95"
-   ]
-  ],
-  "qs": {
-   "cle": [
-    29,
-    33,
-    43,
-    23
-   ],
-   "opp": [
-    29,
-    32,
-    22,
-    36
-   ]
-  },
+  "top": "James Harden: 51 pts, 6 reb, 6 ast",
   "out": [
    "Jaylon Tyson",
    "Nae'Qwan Tomlin",
@@ -4615,7 +4585,37 @@
     "0"
    ]
   ],
-  "top": "James Harden: 51 pts, 6 reb, 6 ast"
+  "qs": {
+   "cle": [
+    29,
+    33,
+    43,
+    23
+   ],
+   "opp": [
+    29,
+    32,
+    22,
+    36
+   ]
+  },
+  "refs": [
+   [
+    "Crew chief",
+    "Sean Wright",
+    "4"
+   ],
+   [
+    "Referee",
+    "Nick Buchert",
+    "3"
+   ],
+   [
+    "Umpire",
+    "Tyler Ricks",
+    "95"
+   ]
+  ]
  },
  "2026-11-23": {
   "url": "https://www.nba.com/game/cle-vs-chi-0022600292/box-score",
