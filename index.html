@@ -2625,7 +2625,7 @@ const ROSTER=[
   ['Ricky Rubio','—',[424672,null,null,null,null],'—','—','Dead money']
 ];
 const TW_BIRD_NOW={};/* Nov 6: Enaruna's Cavs seasons are 2025–26 and 2026–27 (Boston camp deal in 2024–25), so he has Early Bird when the deal ends (CBA Art. I: Full Bird needs three straight seasons with the team) */ /* rights earned so far, when they differ from the rights at contract expiry (Salary Swish) */
-/* Nov 18: Zack Austin signed to a two-way, Riley Minix waived (Cavs release). Austin's deal length isn't reported yet */const TWOWAY=[['Zack Austin','Non-Bird','RFA'],['Ernest Udeh Jr.','Non-Bird','2027 RFA'],['Norchad Omier','Non-Bird','2028 RFA']];
+/* Nov 18: Zack Austin signed to a two-way, Riley Minix waived (Cavs release). Nov 21: Spotrac (league source) reported Austin's two-way runs two years, through 2027–28 */const TWOWAY=[['Zack Austin','Non-Bird','2028 RFA'],['Ernest Udeh Jr.','Non-Bird','2027 RFA'],['Norchad Omier','Non-Bird','2028 RFA']];
 const onRoster=n=>ROSTER.some(r=>r[0]===n&&r[1]!=='—')||TWOWAY.some(t=>t[0]===n);
 const CAMP=[];
 /* every 2026–27 Exhibit 10 signing: [name, pos, signed, waived or '', note]. Salary Swish, RealGM transactions. */
@@ -2685,7 +2685,7 @@ const CONTRACTS={
     comps:[['Isaiah Evans','MIN','4 yrs / $9.3M',2.32,null],['Justin Edwards','PHI','3 yrs / $7.1M',2.36,[-2.8,501]],['Micah Peavy','MEM','4 yrs / $8.7M',2.17,[-0.5,239]]]}
 };
 /* two-way: [name, contract years, through, years of service, Spotrac id/slug, agent] */
-const TW_DEAL={'Zack Austin':[null,null,0,null,'Wilmer Jackson'],'Riley Minix':[2,'2027–28',2,'95269/riley-minix','Andre Buck, Brandon Wood'],'Ernest Udeh Jr.':[1,'2026–27',0,'108828/ernest-udeh-jr','Todd Ramasar (Life Sports)'],'Norchad Omier':[2,'2027–28',1,'101248/norchad-omier','Bill Neff']};/* Nov 5: Omier signed after Minix was waived. Nov 12: Keith Smith (Spotrac) reported both Minix's and Omier's two-way deals run two years, through 2027–28 */
+const TW_DEAL={'Zack Austin':[2,'2027–28',0,null,'Wilmer Jackson'],'Riley Minix':[2,'2027–28',2,'95269/riley-minix','Andre Buck, Brandon Wood'],'Ernest Udeh Jr.':[1,'2026–27',0,'108828/ernest-udeh-jr','Todd Ramasar (Life Sports)'],'Norchad Omier':[2,'2027–28',1,'101248/norchad-omier','Bill Neff']};/* Nov 5: Omier signed after Minix was waived. Nov 12: Keith Smith (Spotrac) reported both Minix's and Omier's two-way deals run two years, through 2027–28 */
 /* seasons on a Cavs two-way, counting 2026–27 (Basketball Reference transactions): Enaruna since Jan 2026, Minix since Feb 2026 */
 const TW_CLE={'Zack Austin':1,'Riley Minix':2,'Ernest Udeh Jr.':1,'Norchad Omier':1};
 /* cap holds — unrenounced free agents (Capsheets) */
