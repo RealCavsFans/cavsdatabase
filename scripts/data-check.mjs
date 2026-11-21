@@ -130,10 +130,10 @@ if (DK.games != null && DK.games < ix.length) issues.push(`Dunks counted from ${
 
 /* Nov 21 (Luka): one season everywhere. The scripts read it from scripts/season.mjs (it turns over Aug 1); the pages and a few
    workflow paths still name it, so this flags any that didn't move with it. */
-{ const bad = [], html = fs.readFileSync('index.html', 'utf8'), live = fs.readFileSync('live.src.html', 'utf8');
-  const s0 = (/const SEASONS=\['(\d{4})–(\d\d)'/.exec(html) || []).slice(1).join('-'); if (s0 !== CUR_SEASON) bad.push(`index.html SEASONS starts with ${s0 || '?'}`);
-  const a0 = (/const ARCH_SEASONS=\['([\d-]+)'/.exec(live) || [])[1]; if (a0 !== CUR_SEASON) bad.push(`live.src.html ARCH_SEASONS starts with ${a0 || '?'}`);
-  for (const f of fs.readdirSync('.github/workflows')) { const t = fs.readFileSync('.github/workflows/' + f, 'utf8'); const seen = [...new Set([...t.matchAll(/\b(20\d\d-\d\d)\b/g)].map(m => m[1]))].filter(x => +x.slice(2, 4) + 1 === +x.slice(5) % 100 || x.slice(5) === String(+x.slice(2, 4) + 1).padStart(2, '0')); const top = seen.sort().pop(); if (top && top !== CUR_SEASON && top >= PREV_SEASON) bad.push(`${f} names ${top}`); }
+{ const rd = f => { try { return fs.readFileSync(f, 'utf8') } catch { return null } }, bad = [], html = rd('index.html') || '', live = rd('live.src.html');   /* a sparse checkout may not have every file: check what's there */
+  if (html) { const s0 = (/const SEASONS=\['(\d{4})–(\d\d)'/.exec(html) || []).slice(1).join('-'); if (s0 !== CUR_SEASON) bad.push(`index.html SEASONS starts with ${s0 || '?'}`); }
+  if (live) { const a0 = (/const ARCH_SEASONS=\['([\d-]+)'/.exec(live) || [])[1]; if (a0 !== CUR_SEASON) bad.push(`live.src.html ARCH_SEASONS starts with ${a0 || '?'}`); }
+  let wf = []; try { wf = fs.readdirSync('.github/workflows') } catch {} for (const f of wf) { const t = fs.readFileSync('.github/workflows/' + f, 'utf8'); const seen = [...new Set([...t.matchAll(/\b(20\d\d-\d\d)\b/g)].map(m => m[1]))].filter(x => +x.slice(2, 4) + 1 === +x.slice(5) % 100 || x.slice(5) === String(+x.slice(2, 4) + 1).padStart(2, '0')); const top = seen.sort().pop(); if (top && top !== CUR_SEASON && top >= PREV_SEASON) bad.push(`${f} names ${top}`); }
   if (bad.length) issues.push(`Season is ${CUR_SEASON} but: ` + bad.join('; ')); else ok.push('one season everywhere (' + CUR_SEASON + ')'); }
 
 const out = { checked: new Date().toISOString(), issues, ok };

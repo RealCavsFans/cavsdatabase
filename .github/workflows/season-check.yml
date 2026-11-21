@@ -18,6 +18,8 @@ jobs:
             scripts/season-check.mjs
             scripts/season.mjs
             scripts/data-check.mjs
+            live.src.html
+            .github/workflows
             live-archive/2026-27
             pdata
             box.json
