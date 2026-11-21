@@ -1,34 +1,10 @@
 {
  "articles": [
   {
-   "src": "Fear The Sword",
-   "title": "Cavs vs. Pacers game thread",
-   "link": "https://www.fearthesword.com/cavs-game-previews/54726/cavs-vs-pacers-game-thread",
-   "date": "2026-11-21T00:30:00.000Z"
-  },
-  {
    "src": "Cavaliers on SI",
    "title": "Cavaliers vs. Pacers: How to Watch, Starting Lineups, Injury Report and More",
    "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOZmhJelN5MlVxcThYMXVzYWRaUjVZZU5KU0tjdWI1anZINFFDY3UzYUlYVFNZZEF4UTJnWXl4bmxxVHl6NnhZclM2LXJkbUlIQkxuSnA3N0dGTnRUZWZkekE5R1BqWHBNX3J1WFZfLXNITURTRVhocU9DeHJyUlB0RGdBbkJMUFpFWENaeTdiWTZXQ3hDdXhhRzBtZkRSTklKdjVSMmlVQ3duNlpMamotLXdxN25XMlZLLW1DaFpuUGk?oc=5",
    "date": "2026-11-20T20:00:01.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "NBA changes start time for upcoming Cavs game",
-   "link": "https://www.fearthesword.com/cavs-news/54735/nba-cavs-cleveland-cavaliers-schedule-miami-heat-giannis-antetokounmpo-donovan-mitchell",
-   "date": "2026-11-20T19:10:28.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Evan Mobley hosted annual gala to raise money for underserved youth",
-   "link": "https://www.fearthesword.com/cavs-features-profiles/54739/cavs-evan-mobley-cleveland-cavaliers-mobley-foundation",
-   "date": "2026-11-20T17:00:00.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cavs vs. Pacers: How to watch, odds, and injury report",
-   "link": "https://www.fearthesword.com/cavs-injury-report/54727/cavs-vs-pacers-how-to-watch-odds-and-injury-report",
-   "date": "2026-11-20T14:30:00.000Z"
   },
   {
    "src": "cleveland.com",
@@ -133,6 +109,12 @@
    "date": "2026-11-18T16:51:34.000Z"
   },
   {
+   "src": "Fear The Sword",
+   "title": "Cavs vs. Grizzlies: How to watch, odds, and injury report",
+   "link": "https://www.fearthesword.com/cavs-injury-report/54633/cavs-vs-grizzlies-how-to-watch-odds-and-injury-report",
+   "date": "2026-11-18T16:24:55.000Z"
+  },
+  {
    "src": "Hoops Rumors",
    "title": "Cavaliers Sign Zack Austin To Two-Way Contract",
    "link": "https://www.hoopsrumors.com/2026/11/cavaliers-sign-zack-austin-to-two-way-contract.html",
@@ -199,10 +181,28 @@
    "date": "2026-11-17T03:41:54.000Z"
   },
   {
+   "src": "Fear The Sword",
+   "title": "Diving deeper into Cavs 126-115 win over Bulls: Cavaliers are discovering hidden depth",
+   "link": "https://www.fearthesword.com/cavs-analysis/54562/cavs-diving-deeper-chicago-bulls-cleveland-cavaliers-donovan-mitchell-tyrese-proctor-norchad-omier",
+   "date": "2026-11-17T03:30:00.000Z"
+  },
+  {
    "src": "cleveland.com",
    "title": "Most of Cavs’ starters return, overwhelm Chicago Bulls in 126-115 win",
    "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQaWRkUXJKM0w5eE43VTIyek9RWHF5UE5RYUluNWJLTlJ1YXVKN01PaUhrY0lGLXN5b0N6OWJFcTg4WDkxOEhDdk5wdk1LQlNGSEZ5dDc3dENHSUY1Z3dEamc5bE1DRmxyZk9PbFBvWDB1eFVmS3JtSzh5Q1lVUFNJUUtPSFYtcXZyV1YzTzljWmdvUmppcHd4d3JnU0NWQi0xSEk4dUZ3bG9RbVNWdWVOTA?oc=5",
    "date": "2026-11-17T02:44:00.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Donovan Mitchell’s 39 points help push Cavaliers past Bulls 126-115",
+   "link": "https://www.fearthesword.com/cavs-analysis/54579/donovan-mitchells-39-points-help-push-cavaliers-past-bulls-126-115",
+   "date": "2026-11-17T02:42:54.000Z"
+  },
+  {
+   "src": "Fear The Sword",
+   "title": "Player Grades: Cavs vs Bulls – Donovan Mitchell scores 39 points",
+   "link": "https://www.fearthesword.com/cavs-analysis/54569/player-grades-cavs-vs-bulls-donovan-mitchell-scores-39-points",
+   "date": "2026-11-17T02:34:20.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -447,8 +447,15 @@
  ],
  "videos": [
   {
+   "src": "It's Cavalier Podcast",
+   "title": "REACTION: Cavs vs. Pacers",
+   "link": "https://www.youtube.com/watch?v=YRaQkFKRQSU",
+   "date": "2026-11-21T02:49:55.000Z",
+   "id": "YRaQkFKRQSU"
+  },
+  {
    "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: The Cleveland Cavaliers Face the Indiana Pacers in NBA Cup Action",
+   "title": "CAVS POSTCAST: James Harden Scores 51 in VINTAGE Performances for the Cavaliers in Win vs Pacers",
    "link": "https://www.youtube.com/watch?v=1PckZIIfirc",
    "date": "2026-11-20T21:10:26.000Z",
    "id": "1PckZIIfirc"
@@ -676,13 +683,6 @@
    "link": "https://www.youtube.com/watch?v=n9oeYRovfts",
    "date": "2026-11-15T13:26:47.000Z",
    "id": "n9oeYRovfts"
-  },
-  {
-   "src": "It's Cavalier Podcast",
-   "title": "Tyrese Proctor dropped a Triple Double on the Mavericks. #cavs #cavaliers #clevelandcavaliers",
-   "link": "https://www.youtube.com/watch?v=0J3Y6v1gVyw",
-   "date": "2026-11-15T05:34:39.000Z",
-   "id": "0J3Y6v1gVyw"
   },
   {
    "src": "Ultimate Cleveland Sports Show",
