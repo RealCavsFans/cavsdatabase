@@ -51,7 +51,8 @@ self.addEventListener('fetch', e => {
     /* app files and fonts never change under the same name: cache first. Other images: show the saved copy, refresh it in the background. */
     const fixed = /^\/(a|fonts)\//.test(u.pathname);
     e.respondWith(caches.open(STATIC).then(c => c.match(r).then(m => {
-      const net = fetch(r).then(res => { if (res.ok) { c.put(r, res.clone()); trim(STATIC, MAX_STATIC); } return res; });
+      /* Nov 21: the background refresh asks the server (cheap when unchanged), so a replaced headshot shows on the next visit instead of up to a week later */
+      const net = fetch(r, fixed ? {} : { cache: 'no-cache' }).then(res => { if (res.ok) { c.put(r, res.clone()); trim(STATIC, MAX_STATIC); } return res; });
       if (m) { if (!fixed) e.waitUntil(net.catch(() => null)); return m; }
       return net;
     })));
