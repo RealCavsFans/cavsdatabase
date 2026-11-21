@@ -5441,6 +5441,37 @@ const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3PT%','tp'],['FG%','f
             R.forEach((x,i)=>{const p2=pc(x[0],x[1]),l=pc(D.lg[i][0],D.lg[i][1]);const tr=el('tr');const t0=el('td',null,LB[i][0]);t0.appendChild(el('small',null,LB[i][1]));const r2=p2==null?null:Math.round(p2*100)-Math.round(l*100);tr.append(t0,el('td',null,x[0]+'-'+x[1]),el('td',r2>0?'up':r2<0?'dn':null,f0(p2)),el('td','dim',f0(l)),el('td',null,x[3]?x[2]+'-'+x[3]:'–'),el('td',null,(x[1]/fga*100).toFixed(1)+'%'));bd.appendChild(tr)});tb.appendChild(bd);bx.appendChild(tb);
             const cm=R[0][0]+R[1][0],ca=R[0][1]+R[1][1],lm=D.lg[0][0]+D.lg[1][0],la=D.lg[0][1]+D.lg[1][1],lt=D.lg.reduce((t,x)=>t+x[1],0);
             bx.appendChild(el('p','ppx-why','Contested (a defender within 4 ft): '+(ca/fga*100).toFixed(1)+'% of his shots (NBA '+(la/lt*100).toFixed(1)+'%), '+f0(pc(cm,ca))+' on them (NBA '+f0(pc(lm,la))+'). '+v[1]+' game'+(v[1]===1?'':'s')+' · updated '+new Date(D.updated+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})+'. Tracking counts can differ slightly from the box score.'))})}
+        /* Nov 21 (Luka): play types, drives and touches, catch and shoot vs pull-up, hustle, and the play types he guards. NBA.com (Synergy play types, hustle stats, Second Spectrum tracking), saved daily to pdata/tracking.json by the tracking task */
+        {const PTN={Isolation:'Isolation',Transition:'Transition',PRBallHandler:'Pick and roll, handler',PRRollman:'Pick and roll, roll man',Postup:'Post up',Spotup:'Spot up',Handoff:'Handoff',Cut:'Cut',OffScreen:'Off screen',OffRebound:'Putback',Misc:'Other'};
+          const cP=card('Play types',null,'How his possessions end: a shot, a turnover or a trip to the line, by the kind of play. NBA.com (Synergy).'),cD=card('Drives and touches',null,'How often he has the ball and what he does with it, from NBA.com player tracking. Per game.'),
+            cC=card('Catch and shoot vs pull-up',null,'His jump shots straight off a pass against the ones he takes off the dribble, from NBA.com player tracking.'),cH=card('Hustle',null,'The effort plays the box score misses, from NBA.com hustle stats. Per game.'),cG=card('Play types he guards',null,'How the players he guarded did, by the kind of play. NBA.com (Synergy).');
+          of.append(cP,cD,cC);df.append(cH,cG);
+          (PPD.ptk?Promise.resolve(PPD.ptk):fJ('/pdata/tracking.json').then(r=>r.ok?r.json():null).catch(()=>null).then(j=>PPD.ptk=j||{})).then(T=>{
+            const all=[cP,cD,cC,cH,cG];if(!T||T.season!==SE||!T.p){all.forEach(c=>c.remove());return}
+            const nk=x=>String(x).normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');const fid=O=>O[pid]?pid:Object.keys(O).find(k=>nk(O[k].n)===nk(n));
+            const k=fid(T.p),v=k&&T.p[k],g=v&&v.gp,rk=(v&&v.rk)||{},q=T.q,upd=new Date(T.updated+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});
+            const f1=x=>x==null||!isFinite(x)?'–':x.toFixed(1),pc=(m,a)=>a?(m/a*100).toFixed(1)+'%':'–',R=key=>rk[key]?ord(rk[key]):'–';
+            const tbl=(cls,hd,rows)=>{const t=el('table','ppx-t '+cls);t.innerHTML='<thead><tr>'+hd.map(h=>'<th>'+h+'</th>').join('')+'</tr></thead>';const b=el('tbody');rows.forEach(r=>{const tr=el('tr');r.forEach((x,i)=>{const td=el('td',x&&x.c||null,x&&x.t!=null?x.t:x);if(x&&x.s)td.appendChild(el('small',null,x.s));tr.appendChild(td)});b.appendChild(tr)});t.appendChild(b);return t};
+            const foot=(c,s)=>c.appendChild(el('p','ppx-why',s));const rkNote=Object.keys(rk).length?' NBA rank is per game, among the '+q+' players with 15+ minutes a game in at least half the games.':' He hasn’t played enough yet for an NBA rank (15+ minutes a game in at least half the games).';
+            const pct=x=>({t:ord(x),c:x>=60?'up':x<=40?'dn':null});
+            /* play types, his offense and what he allowed */
+            const pt=(c,O,def)=>{const id=fid(O),P=id&&O[id];const ty=P?Object.keys(PTN).filter(t=>P[t]):[];const tot=ty.reduce((s,t)=>s+P[t][1],0);if(tot<25){c.remove();return}
+              ty.sort((a,b)=>P[b][1]-P[a][1]);c.appendChild(tbl('ppx-pt',['Play','Poss','Share',def?'Pts allowed':'Pts','FG%','NBA %ile'],ty.map(t=>{const x=P[t];return [{t:PTN[t],s:f1(x[1]/x[0])+' a game'},String(x[1]),(x[1]/tot*100).toFixed(1)+'%',(x[2]/x[1]).toFixed(2)+' a poss',x[4]?pc(x[3],x[4]):'–',pct(x[8])]})));
+              foot(c,(def?'Points a possession the man he guarded scored on that play (lower is better). NBA %ile: higher = better defense, among players NBA.com lists for that play. ':'NBA %ile: where his points a possession rank among players NBA.com lists for that play. ')+'Plays with fewer than 10 possessions aren’t listed by NBA.com. Updated '+upd+'.')};
+            pt(cP,T.pt.p.off,false);pt(cG,T.pt.p.def,true);
+            if(!v||!g){[cD,cC,cH].forEach(c=>c.remove());return}
+            /* drives and touches */
+            {const d=v.dr,t=v.to,a=v.pa;if(!d||!t||t[0]<40)cD.remove();else{const big=el('div','ppx-big3');[[f1(d[0]/g),'Drives · '+R('drv')],[f1(t[0]/g),'Touches · '+R('tch')],[f1(t[2]/g),'Minutes with the ball · '+R('top')]].forEach(([x,l])=>{const e=el('div');e.append(el('b',null,x),el('span',null,l));big.appendChild(e)});cD.appendChild(big);
+              cD.appendChild(tbl('ppx-dt',['A game','','NBA rank'],[['Points on drives',f1(d[4]/g),R('drp')],['FG% on drives',d[2]?pc(d[1],d[2]):'–',''],['Passes out of drives',d[0]?(d[5]/d[0]*100).toFixed(1)+'% of drives':'–',''],['Turnovers on drives',f1(d[7]/g),''],['Touches in the paint',f1(t[5]/g),''],['Post-ups / elbow touches',f1(t[4]/g)+' / '+f1(t[3]/g),''],['Potential assists',f1(a[1]/g),R('pot')],['Points from his assists',f1(a[2]/g),R('apc')]]));
+              foot(cD,'A drive is a dribble from 20+ feet out to within 10 feet of the rim. Potential assists = passes that led to a shot, made or not.'+rkNote+' Updated '+upd+'.')}}
+            /* catch and shoot vs pull-up */
+            {const C2=v.cs,P2=v.pu;if(!C2||!P2||C2[1]+P2[1]<15)cC.remove();else{const ef=x=>x[1]?((x[0]+.5*(x[2]||0))/x[1]*100).toFixed(1)+'%':'–';
+              cC.appendChild(tbl('ppx-cs',['Shot','FG','FG%','3PT','3P%','eFG%','Pts','NBA rank'],[[C2,'Catch and shoot','csp'],[P2,'Pull-up','pup']].map(([x,l,key])=>[{t:l,s:f1(x[1]/g)+' tries a game'},x[0]+'-'+x[1],pc(x[0],x[1]),(x[2]||0)+'-'+(x[3]||0),x[3]?pc(x[2],x[3]):'–',ef(x),f1(x[4]/g),R(key)])));
+              const sh=C2[1]+P2[1];foot(cC,'Catch and shoot: '+(C2[1]/sh*100).toFixed(1)+'% of these jumpers. Jump shots only, from 10+ feet; layups and floaters aren’t in either. Pts and NBA rank are per game.'+rkNote+' Updated '+upd+'.')}}
+            /* hustle */
+            {const h=v.hu;if(!h||g<3)cH.remove();else{cH.appendChild(tbl('ppx-hu',['A game','','NBA rank'],[['Shots contested',f1(h[0]/g),R('con')],['Deflections',f1(h[2]/g),R('dfl')],['Loose balls recovered',f1(h[6]/g),R('lb')],['Box outs',f1(h[7]/g),R('box')],['Charges drawn',String(h[3])+' total',R('chg')],['Screen assists',f1(h[4]/g)+' · '+f1(h[5]/g)+' pts',R('scr')]]));
+              foot(cH,'Contested = he had a hand up on the shot ('+h[1]+' of his '+h[0]+' were threes). Screen assists = his screen freed a teammate for a made shot; pts = what those shots were worth.'+rkNote+' Updated '+upd+'.')}}
+          })}
         /* points he creates: his own points plus the points his assists set up, by where the shot came from */
         if(gp>=1&&SH.length){const own=ZNM.map(()=>0),ast=ZNM.map(()=>0);SH.forEach(x=>{if(x[3]&&x[5]!=null)own[x[5]]+=x[4]?3:2});AS.filter(a=>a[0]===id).forEach(a=>{if(a[4]!=null)ast[a[4]]+=a[2]});
           const ft=b.ftm||0,tot=own.reduce((s,v)=>s+v,0)+ft+ast.reduce((s,v)=>s+v,0);if(tot>0){const c=card('Points he creates',null,'His own points plus the points his assists set up, by where the shot came from. Per game, '+gp+' game'+(gp===1?'':'s')+'.');
@@ -7130,9 +7161,9 @@ setTimeout(()=>{const box=document.getElementById('dp-list'),sec=box&&box.closes
 <script>/* Nov 21 (Luka, mock): groups of related player-page cards become one card with tabs (Overview stays as it is: its cards already fold to one line each). Each tab keeps the card's own
    name, link and camera; a link to any old card (e.g. #on-off) opens its tab. Cards that come in late join their group. */
 (function(){const G=[
-  ['His shooting',['shooting','shot-contest']],
-  ['His part in the offense',['share-of-the-offense','usage-vs-efficiency','points-he-creates']],
-  ['Team defense',['with-him-on-defense','ppx-db','rebounds-by-the-kind-of-miss']],
+  ['His shooting',['shooting','shot-contest','catch-and-shoot-vs-pull-up']],
+  ['His part in the offense',['share-of-the-offense','play-types','drives-and-touches','usage-vs-efficiency','points-he-creates']],
+  ['Team defense',['with-him-on-defense','ppx-db','hustle','play-types-he-guards','rebounds-by-the-kind-of-miss']],
   ['At the rim',['rim-protection','block-map']],
   ['His contract',['ppx-valc','what-his-contract-buys']],
   ['Outlook',['on-pace-for','awards-watch','ppx-cmp']],
