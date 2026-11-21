@@ -1,0 +1,31 @@
+{
+ "game": "0022600045",
+ "checked": "2026-11-21T05:41:10.354Z",
+ "box": {
+  "checked": "2026-11-21T05:41:10.028Z",
+  "mode": "recent",
+  "games": [
+   {
+    "game": "2026-11-20 vs IND",
+    "issues": [],
+    "notes": []
+   },
+   {
+    "game": "2026-11-18 vs MEM",
+    "issues": [],
+    "notes": []
+   },
+   {
+    "game": "2026-11-16 vs CHI",
+    "issues": [],
+    "notes": []
+   }
+  ]
+ },
+ "season": {
+  "checked": "2026-11-21T05:41:10.179Z",
+  "season": "2026-27",
+  "games": 17,
+  "issues": []
+ }
+}

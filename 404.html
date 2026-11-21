@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Page not found | cavs_db</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+/* Nov 13 audit: a broken or old link lands here instead of a blank browser error */
+:root{--bg:#ffffff;--fg:#101419;--mut:#5d646c;--wine:#860038;--gold:#F2B231;--line:#e3e5e0}
+@media (prefers-color-scheme:dark){:root{--bg:#101419;--fg:#f5f6f3;--mut:#9aa0a8;--line:#2a3038}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:500 17px/1.5 Archivo,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh;display:flex;flex-direction:column}
+header{background:linear-gradient(90deg,#9a0a45,#6e002e);border-bottom:6px solid var(--gold);padding:28px 16px}
+.in{max-width:760px;margin:0 auto;width:100%}
+.mk{display:flex;align-items:center;gap:10px;color:#fff;font:700 18px "Geist Mono",ui-monospace,monospace;text-decoration:none}
+.mk b{color:var(--gold);font-weight:700}
+h1{margin:22px 0 0;color:#fff;font:800 clamp(40px,9vw,72px)/.95 "Saira Condensed","Arial Narrow",sans-serif;text-transform:uppercase;letter-spacing:.01em}
+main{padding:32px 16px 48px;flex:1}
+.cmd{font:600 15px "Geist Mono",ui-monospace,monospace;color:var(--mut);margin:0 0 18px}
+.cmd span{color:var(--wine)}
+p{margin:0 0 22px;max-width:56ch}
+.go{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.go a{display:block;padding:14px 16px;border:2px solid var(--line);color:var(--fg);text-decoration:none;font:800 18px "Saira Condensed","Arial Narrow",sans-serif;text-transform:uppercase;letter-spacing:.04em}
+.go a:first-child{background:var(--wine);border-color:var(--wine);color:#fff}
+.go a:hover,.go a:focus-visible{border-color:var(--gold);outline:none}
+</style>
+</head>
+<body>
+<header><div class="in"><a class="mk" href="/"><svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/></svg>cavs<b>_db</b></a><h1>Page not found</h1></div></header>
+<main><div class="in">
+<p class="cmd"><span>&gt; cavs</span> --find <span id="u"></span></p>
+<p>That link doesn’t go anywhere on cavsdatabase.com. It may be an old address, or a typo. These are good places to start:</p>
+<nav class="go" aria-label="Pages">
+<a href="/">Home →</a><a href="/schedule">Schedule →</a><a href="/roster">Roster →</a><a href="/cap">Salary cap →</a><a href="/stats">Stats →</a><a href="/history">History →</a>
+</nav>
+</div></main>
+<script>try{document.getElementById('u').textContent=location.pathname}catch(e){}</script>
+</body>
+</html>
