@@ -29,6 +29,7 @@ jobs:
           SB=$(curl -sf -m 20 "https://nba-prod-us-east-1-mediaops-stats.s3.amazonaws.com/NBA/liveData/scoreboard/todaysScoreboard_00.json" || true)
           if ! echo "$SB" | jq -e '.scoreboard.games' >/dev/null 2>&1; then echo "scoreboard unreadable"; [ -n "$NTFY_TOPIC" ] && curl -s -m 15 -H "Title: Postgame check can't read the NBA scoreboard" -H "Tags: warning" -d "The postgame check couldn't read the NBA's scoreboard, so tonight's game won't be checked. Tap to open the run." -H "Click: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "https://ntfy.sh/$NTFY_TOPIC" || true; exit 0; fi
           G=$(echo "$SB" | jq -r '[.scoreboard.games[]? | select(.gameStatus == 3 and (.homeTeam.teamTricode == "CLE" or .awayTeam.teamTricode == "CLE")) | .gameId][0] // empty' 2>/dev/null || true)
+          [[ "$G" =~ ^00[0-9]{8}$ ]] || G=""   # Nov 21 security sweep: only a real NBA game id goes on to later steps
           echo "final: ${G:-none}"; [ -n "$G" ] && echo "id=$G" >> $GITHUB_OUTPUT || true
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
         if: steps.final.outputs.id != ''
