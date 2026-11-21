@@ -1,6 +1,18 @@
 {
  "articles": [
   {
+   "src": "Hoops Rumors",
+   "title": "And-Ones: Top Rookies, Thibodeau, Luis",
+   "link": "https://www.hoopsrumors.com/2026/11/and-ones-top-rookies-thibodeau-luis.html",
+   "date": "2026-11-21T04:13:13.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "James Harden Powers Cavaliers Past Pacers With 51-Point performance",
+   "link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQeDJlNzVDX0I4ZVNpRjhSOGNvQXhXU1pGalFneTB4bmJKRUx1alo4aGFfdnFOVlFhRkotN1ZJTW9VSWx4QnMwSWx6cU1YdHMxME5SVWVxOFFuR29HQk90OE1IbXNBNndIVFBjWFFDa2lBOVE2cFRwbVZXVDhJdnVaX0JZc19VcTFYUTJDc2t0Ry1BdTE4VFJWcWFmRXJEMGdkZXhBRHdwM1pIVDdpM2EyeWc0MjIxNjdmLVE?oc=5",
+   "date": "2026-11-21T04:06:19.000Z"
+  },
+  {
    "src": "Fear The Sword",
    "title": "Cavs vs. Pacers game thread",
    "link": "https://www.fearthesword.com/cavs-game-previews/54726/cavs-vs-pacers-game-thread",
@@ -119,6 +131,12 @@
    "title": "Cavs vs. Grizzlies game thread",
    "link": "https://www.fearthesword.com/cavs-game-previews/54632/cavs-vs-grizzlies-game-thread",
    "date": "2026-11-19T00:00:00.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "Cavaliers vs. Grizzlies: How to Watch, Starting Lineups, Injury Report and More",
+   "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQSWhWcFQ2T01NMWRYWjRSM1hvOUdRelFqNzdIUFppZmRlUHEySGFPRE1QdVRESVVBanZYNVJVR002cEhIUWJhM0lxQVlHMlJhVUZFdFQ1ZFhuaFhSMDJDRDV5dTdTRzNlbUdqcHVyRjgteFJBTnhiQkZ0dFBJajktS3ZTOVM0TG5UNXVIbXpLLUhIVUcyZFhGSmZVb2UzQS1jUjhwYk5FQ3E5MGZkTmNycEdPYTdldW5LM3hrbzVDcHRCUU9p?oc=5",
+   "date": "2026-11-18T22:53:22.000Z"
   },
   {
    "src": "Fear The Sword",
@@ -343,22 +361,10 @@
    "date": "2026-11-13T12:25:03.000Z"
   },
   {
-   "src": "Cavaliers on SI",
-   "title": "Key Cog From Michigan's 2026 NCAA Championship Squad Acquired by Cleveland Charge",
-   "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxObTJpM0xialBjd2pIQmdKeW9fLURfaV82U0dIdFczdThsZmhQNExuU0tOVV9qRlRXTE50MW9ONndvS3hMajc5dlhsM2k3b1ZvMVduU1kxcWdHaWFGTEJwRmt2cWVmUnpxbEs3cjRIS2dlekpwQ01RdmQxU0pvOUlXcUNRT1ZWZ3gtbHhLRXc3aWxEaFpVdTBfczYxN2lpdXlYMzdyeHNkSGxVbVFZNF9iMlhCM2hRXzR1Yl9KclNZZ1BGZHlNR1d1Z0lYbWM?oc=5",
-   "date": "2026-11-12T16:42:47.000Z"
-  },
-  {
    "src": "The Inside Shot",
    "title": "Game Night Observations: James Harden’s Response, Kenny Atkinson’s Adjustments and Growing Role Players",
    "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNWDJ6a2IyaVQ1YkhYdGkwUjdydmlHdndQb0ZfT3QxazUwdFFKWkNwRVVhdG01X0R6OGRDNnQ4TDlMNVNlc0NGMUpVeWVBd0RXdVNiMVhrbFZaRldtYUctcHhKOENNd1dlXzRTT1N2WXpwM3l4b1ZIUVpxNnRycHA4R0lnMFM?oc=5",
    "date": "2026-11-12T12:49:30.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "3 Reasons The Cavs Saved Themselves With Tonight’s Inspired Performance Against Knicks",
-   "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQMGE1RzdYc1pSUkxJT0JEWnR3TGVzTDM1c0NfeVU4LVRGMS1abkZDeWh0aFRYN1FqNVJtd0pNVjRwWEszVDJDYUZ4UVU1NFc5QUN5UmNQY1owNWprV2pORXlDTkFEM1VBbDZ3T0hWTTRWUnlDRTU0Uk9HeWdkeGV3TDJNZUJ4Z1FZTjl3WTdUb3ZQS1pIeTZLVDhiWU1mdWVPRlNMSG10djY3WE81Ykd6dVJjb0ctLVZVOE9Lb0dXdFB1eWV4S01hMGw3dXN6RmUwN1ZB?oc=5",
-   "date": "2026-11-12T12:44:34.000Z"
   },
   {
    "src": "The Athletic",
@@ -446,6 +452,20 @@
   }
  ],
  "videos": [
+  {
+   "src": "Locked On Cavs",
+   "title": "James Harden with VINTAGE Performance! Beard Gets 51! #clevelandcavaliers #cavs #nba",
+   "link": "https://www.youtube.com/watch?v=uuJvycCPG3s",
+   "date": "2026-11-21T05:00:20.000Z",
+   "id": "uuJvycCPG3s"
+  },
+  {
+   "src": "Cavs Roundtable",
+   "title": "Cleveland Cavaliers: Donovan Mitchell Puts James Harden's 51-point Performance in Perspective",
+   "link": "https://www.youtube.com/watch?v=MgR2norfiPI",
+   "date": "2026-11-21T04:04:06.000Z",
+   "id": "MgR2norfiPI"
+  },
   {
    "src": "It's Cavalier Podcast",
    "title": "James Harden ERUPTS for 51! Cavs Survive Late Scare vs. Pacers",
@@ -627,13 +647,6 @@
    "link": "https://www.youtube.com/watch?v=iXWpaT0mNk8",
    "date": "2026-11-18T04:45:08.000Z",
    "id": "iXWpaT0mNk8"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: Cleveland Cavaliers Dominate as Donovan Mitchell EXPLODES for 39 Points vs Bulls",
-   "link": "https://www.youtube.com/watch?v=vscp_11evig",
-   "date": "2026-11-17T17:00:17.000Z",
-   "id": "vscp_11evig"
   },
   {
    "src": "Ultimate Cleveland Sports Show",
