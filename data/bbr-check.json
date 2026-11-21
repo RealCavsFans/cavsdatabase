@@ -2,35 +2,43 @@
  "how": "Each finished Cavs game compared with Basketball Reference: per player PTS, REB, AST, FG, 3P, FT made/attempted, STL, BLK, TO, OREB, PF, minutes (within 1), and the final score.",
  "games": {
   "0022600006": {
+   "v": 2,
    "et": "2026-10-22",
    "opp": "PHI",
    "status": "match",
    "url": "https://www.basketball-reference.com/boxscores/202610220PHI.html",
-   "at": "2026-11-03T09:27:18.034Z",
+   "at": "2026-11-21T08:46:03.579Z",
+   "second": true,
    "players": 19
   },
   "0022600105": {
+   "v": 2,
    "et": "2026-10-24",
    "opp": "BKN",
    "status": "match",
    "url": "https://www.basketball-reference.com/boxscores/202610240CLE.html",
-   "at": "2026-11-03T09:27:21.782Z",
+   "at": "2026-11-21T08:46:07.271Z",
+   "second": true,
    "players": 21
   },
   "0022600120": {
+   "v": 2,
    "et": "2026-10-26",
    "opp": "MIN",
    "status": "match",
    "url": "https://www.basketball-reference.com/boxscores/202610260CLE.html",
-   "at": "2026-11-03T09:27:25.510Z",
+   "at": "2026-11-21T08:46:10.961Z",
+   "second": true,
    "players": 19
   },
   "0022600133": {
+   "v": 2,
    "et": "2026-10-28",
    "opp": "WSH",
    "status": "match",
    "url": "https://www.basketball-reference.com/boxscores/202610280CLE.html",
-   "at": "2026-11-03T09:27:29.204Z",
+   "at": "2026-11-21T08:46:14.654Z",
+   "second": true,
    "players": 19
   },
   "0022600144": {
@@ -157,5 +165,5 @@
    "players": 22
   }
  },
- "checked": "2026-11-20T17:14:10.933Z"
+ "checked": "2026-11-21T08:46:14.655Z"
 }
