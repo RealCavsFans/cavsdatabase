@@ -660,7 +660,7 @@ tr.xs td:first-child{white-space:nowrap}@media (max-width:600px){tr.xs td:first-
 .gp2-cur .c{flex:none;color:var(--wine-ink,#860038);font-size:.75rem}
 .gp2-pn{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:40;background:var(--card);border:1px solid var(--line);box-shadow:0 12px 32px rgba(16,20,25,.18);padding:12px;max-height:min(72vh,620px);overflow:auto}
 .gp2-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
-.gp2-seg{display:inline-flex;border:1px solid var(--line)}.gp2-seg button{font:700 .75rem var(--sans);padding:7px 11px;border:0;background:var(--card);color:var(--fg2);cursor:pointer}.gp2-seg button.on{background:var(--wine);color:#fff}
+.gp2-seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--line);max-width:100%}@media (max-width:640px){.gp2-seg{display:grid;grid-template-columns:repeat(4,1fr);width:100%}.gp2-seg button{padding:7px 4px}}.gp2-seg button{font:700 .75rem var(--sans);padding:7px 11px;border:0;background:var(--card);color:var(--fg2);cursor:pointer}.gp2-seg button.on{background:var(--wine);color:#fff}
 .gp2-tot{margin-left:auto;font:600 .75rem var(--sans);color:var(--wine-ink,#860038);background:none;border:1px solid var(--line);padding:7px 10px;cursor:pointer}
 .gp2-today{display:flex;align-items:center;gap:8px;width:100%;font:600 .8125rem var(--sans);padding:8px 10px;margin-bottom:10px;border:1px solid var(--gold);background:color-mix(in srgb,var(--gold) 12%,var(--card));color:var(--fg);cursor:pointer;text-align:left}
 .gp2-today b{font:700 .6875rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--wine-ink,#860038)}
@@ -5089,18 +5089,18 @@ function vPlays(v,D,R){
   const dlab=g=>{const d=new Date(g.date);return MON[d.getMonth()]+' '+d.getDate()};
   const res=g=>(g.cle>g.os?'W ':'L ')+Math.max(g.cle,g.os)+'–'+Math.min(g.cle,g.os);
   const today=()=>{const o=[];const sel=$('gsel');[...sel.querySelectorAll('optgroup')].filter(gp=>gp.label==='Today').forEach(gp=>[...gp.children].forEach(x=>o.push([x.value,x.textContent])));return o};
-  const order=()=>{const L=[];['2025-26','2026-27'].forEach(s2=>games(s2).forEach(g=>L.push(val(s2,g))));today().forEach(([v])=>{if(!L.includes(v))L.push(v)});return L};
+  /* Nov 21 (Luka): every archived season, oldest first, so the arrows walk back through all of them */const order=()=>{const L=[];ARCH_SEASONS.slice().reverse().forEach(s2=>games(s2).forEach(g=>L.push(val(s2,g))));today().forEach(([v])=>{if(!L.includes(v))L.push(v)});return L};
   const find=v=>{let m=/^a(\d{4}-\d\d):(\d+)$/.exec(v);if(m)return [m[1],(ARCH[m[1]]||[]).find(g=>g.id===m[2])];m=/^r(\d+)$/.exec(v);if(m)return ['2025-26',(ARCH['2025-26']||[]).find(g=>g.id===m[1])];return [null,null]};
   const label=v=>{if(!v)return '';if(v[0]==='s')return [v.slice(1).replace('-','–')+' season','Season totals · '+((ARCH[v.slice(1)]||[]).length)+' games'];const [s2,g]=find(v);if(g)return [s2.replace('-','–'),dlab(g)+' '+(g.ha==='home'?'vs':'at')+' '+g.opp+' · '+res(g)];const t=today().find(x=>x[0]===v);return ['Today',t?t[1]:'Live game']};
   const go=v=>{open=false;draw();choose(v,true)};
-  function draw(){box.textContent='';const L=order(),i=L.indexOf(cur);
-    const pv=el('button','gp2-nav','‹');pv.type='button';pv.setAttribute('aria-label','Previous game');pv.disabled=!(i>0);pv.onclick=()=>go(L[i-1]);
-    const nx=el('button','gp2-nav','›');nx.type='button';nx.setAttribute('aria-label','Next game');nx.disabled=!(i>=0&&i<L.length-1);nx.onclick=()=>go(L[i+1]);
+  function draw(){box.textContent='';/* Nov 21 (Luka): on a season's totals the arrows step season to season */const L=cur&&cur[0]==='s'?ARCH_SEASONS.filter(s2=>(ARCH[s2]||[]).length).reverse().map(s2=>'s'+s2):order(),i=L.indexOf(cur);
+    const pv=el('button','gp2-nav','‹');pv.type='button';pv.setAttribute('aria-label',cur&&cur[0]==='s'?'Previous season':'Previous game');pv.disabled=!(i>0);pv.onclick=()=>go(L[i-1]);
+    const nx=el('button','gp2-nav','›');nx.type='button';nx.setAttribute('aria-label',cur&&cur[0]==='s'?'Next season':'Next game');nx.disabled=!(i>=0&&i<L.length-1);nx.onclick=()=>go(L[i+1]);
     const [k,t]=label(cur)||['',''];const b=el('button','gp2-cur');b.type='button';b.setAttribute('aria-expanded',open);b.append(el('span','k',k||'Game'),el('span','t',t||'Pick a game'),el('span','c',open?'▴':'▾'));b.onclick=e=>{e.stopPropagation();open=!open;if(open){const [s2,g]=find(cur);if(s2)se=s2;if(g){const d=new Date(g.date);mon=d.getFullYear()+'-'+d.getMonth()}}draw()};
     box.append(pv,b,nx);if(!open)return;
     const pn=el('div','gp2-pn');pn.onclick=e=>e.stopPropagation();
     /* season switch and season totals */
-    const r1=el('div','gp2-row');const seg=el('div','gp2-seg');['2026-27','2025-26'].forEach(s2=>{if(!(ARCH[s2]||[]).length)return;const x=el('button',s2===se?'on':null,s2.replace('-','–'));x.type='button';x.onclick=()=>{se=s2;mon=null;draw()};seg.appendChild(x)});
+    const r1=el('div','gp2-row');const seg=el('div','gp2-seg');/* Nov 21 (Luka): every archived season, not just this one and last */ARCH_SEASONS.forEach(s2=>{if(!(ARCH[s2]||[]).length)return;const x=el('button',s2===se?'on':null,s2.replace('-','–'));x.type='button';x.onclick=()=>{se=s2;mon=null;draw()};seg.appendChild(x)});
     const tot=el('button','gp2-tot',se.replace('-','–')+' season totals →');tot.type='button';tot.onclick=()=>go('s'+se);r1.append(seg,tot);pn.appendChild(r1);
     /* today's game */
     today().forEach(([v,t2])=>{const x=el('button','gp2-today');x.type='button';x.append(el('b',null,'Today'),el('span',null,t2));x.onclick=()=>go(v);pn.appendChild(x)});
