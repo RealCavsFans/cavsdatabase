@@ -47,7 +47,7 @@ const rec = s => { const w = [...s].filter(x => x === 'W').length; return w + 'â
 const ord = n => n + (n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] || 'th');
 
 const MARK = `<svg viewBox="0 0 100 100" width="34" height="34"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#860038" stroke-width="2.5" fill="none"/></svg>`;
-const BASE = `@font-face{font-family:Archivo;src:url(../fonts/archivo-latin-wdth-normal.woff2);font-weight:100 900;font-stretch:62% 125%}
+const BASE = `@font-face{font-family:Archivo;src:url(../fonts/archivo-latin-wdth-normal.woff2);font-weight:400 900;font-stretch:100% 125%}
 @font-face{font-family:'Geist Mono';src:url(../fonts/geist-mono-latin-wght-normal.woff2);font-weight:100 900}
 @font-face{font-family:'Saira Condensed';src:url(../fonts/saira-condensed-latin-800-normal.woff2);font-weight:800}
 @font-face{font-family:'Saira Condensed';src:url(../fonts/saira-condensed-latin-600-normal.woff2);font-weight:600}

@@ -19,7 +19,7 @@ const PAGES = [
 ];
 const esc = t => t.replace(/&/g, '&amp;');
 const page = ([, title, sub, sub2, path]) => `<!doctype html><html><head><meta charset="utf-8"><style>
-@font-face{font-family:Archivo;src:url(../fonts/archivo-latin-wdth-normal.woff2);font-weight:100 900;font-stretch:62% 125%}
+@font-face{font-family:Archivo;src:url(../fonts/archivo-latin-wdth-normal.woff2);font-weight:400 900;font-stretch:100% 125%}
 @font-face{font-family:'Geist Mono';src:url(../fonts/geist-mono-latin-wght-normal.woff2);font-weight:100 900}
 *{margin:0;box-sizing:border-box}body{width:1200px;height:630px;background:radial-gradient(900px 520px at 50% 45%,#9b0a45,#860038 55%,#6a002c);color:#fff;font-family:Archivo,sans-serif;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 ${title ? 140 : 40}px}
 body:after{content:'';position:absolute;left:0;right:0;bottom:0;height:10px;background:#F2B231}

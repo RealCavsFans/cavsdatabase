@@ -28,7 +28,7 @@ const card = (i, x) => {
     return `<i style="height:${h}px;background:${v === 6 ? '#F2B231' : 'rgba(255,255,255,' + (0.16 + v * 0.12) + ')'};${j === i ? 'outline:3px solid #F2B231;outline-offset:3px;' : ''}"></i>`; }).join('');
   const ld = x.lead || {}, lead = [['pts', 'PPG'], ['reb', 'RPG'], ['ast', 'APG']].filter(([k]) => ld[k]).map(([k, u]) => `<div><small>${u}</small>${esc(ld[k][0])} <b>${ld[k][1].toFixed(1)}</b></div>`).join('');
   return `<!doctype html><html><head><meta charset="utf-8"><style>
-@font-face{font-family:Archivo;src:url(../fonts/archivo-latin-wdth-normal.woff2);font-weight:100 900;font-stretch:62% 125%}
+@font-face{font-family:Archivo;src:url(../fonts/archivo-latin-wdth-normal.woff2);font-weight:400 900;font-stretch:100% 125%}
 @font-face{font-family:'Geist Mono';src:url(../fonts/geist-mono-latin-wght-normal.woff2);font-weight:100 900}
 @font-face{font-family:'Saira Condensed';src:url(../fonts/saira-condensed-latin-800-normal.woff2);font-weight:800}
 @font-face{font-family:'Saira Condensed';src:url(../fonts/saira-condensed-latin-700-normal.woff2);font-weight:700}

@@ -70,7 +70,10 @@ for (const [dev, vp] of SIZES) {
         }
         return { sw: document.documentElement.scrollWidth, W, h: Math.round(main.getBoundingClientRect().height), out: out.slice(0, 6) };
       });
+      /* Nov 22: a page that keeps rebuilding itself with nobody touching it (two bits of code fighting over a card) */
+      const churn = await page.evaluate(() => new Promise(res => { let k = 0; const mo = new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(n => { if (n.nodeType === 1) k++; }))); mo.observe(document.body, { childList: true, subtree: true }); setTimeout(() => { mo.disconnect(); res(k); }, 3000); })).catch(() => 0);
       const m = await scan();
+      if (churn > 150) m.out.unshift(`keeps changing itself (${churn} pieces added in 3 seconds with nobody touching it)`);
       /* then every drop-down open (their insides are built when opened), and look again */
       const nOpen = await page.evaluate(() => { const ds = [...document.querySelectorAll('main:not([hidden]) details:not([open])')].slice(0, 60); ds.forEach(d => { d.open = true; }); return ds.length; }).catch(() => 0);
       if (nOpen) { await page.waitForTimeout(1200); const m2 = await scan(); m2.out.forEach(x => { if (!m.out.includes(x)) m.out.push(x + ' (with drop-downs open)'); }); if (m2.sw > m.sw) m.sw = m2.sw; }
