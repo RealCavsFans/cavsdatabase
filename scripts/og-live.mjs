@@ -187,10 +187,7 @@ ${rich}`,
   const Mx = v => '$' + (v / 1e6).toFixed(v >= 1e7 ? 1 : 2).replace(/\.0+$/, '') + 'M';
   cards.push(['og/trade-exceptions.jpg', page(`.L{position:absolute;left:64px;top:56px;right:64px}.rows{position:absolute;left:64px;right:64px;top:250px}.rows div{display:flex;align-items:baseline;gap:22px;padding:14px 0;border-top:2px solid rgba(255,255,255,.16)}.rows b{font:800 46px 'Geist Mono';color:#F2B231;min-width:270px}.rows span{font:700 30px Archivo;flex:1}.rows em{font:600 22px 'Geist Mono';font-style:normal;color:#F4D6DD}`,
     `<div class="L"><div class="k">${dash(CUR_SEASON)} · amount left · expires</div><div class="big" style="font-size:96px;margin-top:10px">Cavs trade exceptions</div></div><div class="rows">${tpe.slice(0, 3).map(e => `<div><b>${Mx(e[1])}</b><span>${esc(e[0])}</span><em>${esc(e[2])}</em></div>`).join('')}</div>`, 'trade-exceptions')]);
-  const INJ = grab('INJURIES'), ord = s => ({ Out: 0, Doubtful: 1, Questionable: 2, Probable: 3 }[s] ?? 4);
-  const inj = INJ.slice().sort((a, b) => ord(a[3]) - ord(b[3])).slice(0, 4);
-  cards.push(['og/injury-report.jpg', page(`.L{position:absolute;left:64px;top:56px;right:64px}.rows{position:absolute;left:64px;right:64px;top:250px}.rows div{display:flex;align-items:baseline;gap:22px;padding:13px 0;border-top:2px solid rgba(255,255,255,.16)}.rows b{font:800 30px 'Geist Mono';color:#F2B231;min-width:220px;text-transform:uppercase}.rows span{font:700 32px Archivo;min-width:330px}.rows em{font:500 24px Archivo;font-style:normal;color:#F4D6DD;flex:1}`,
-    `<div class="L"><div class="k">From the NBA's official report</div><div class="big" style="font-size:96px;margin-top:10px">Cavs injury report</div></div><div class="rows">${inj.length ? inj.map(r => `<div><b>${esc(r[3])}</b><span>${esc(r[0])}</span><em>${esc(r[2])}</em></div>`).join('') : '<div><span>No Cavs on the injury report</span></div>'}</div>`, 'injury-report')]);
+  /* Nov 22 (Luka): no injury report page, so no card */
 }
 
 /* Nov 22 (Luka): the remaining main pages get live cards too (they were title-only) */

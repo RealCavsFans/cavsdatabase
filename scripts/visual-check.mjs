@@ -26,7 +26,7 @@ await new Promise(r => server.listen(0, '127.0.0.1', r));
 const base = 'http://127.0.0.1:' + server.address().port;
 const opts = { headless: true }; if (process.env.CHROME_PATH) opts.executablePath = process.env.CHROME_PATH;
 const browser = await launch(pw, opts);
-const ROUTES = ['/', '/schedule', '/roster', '/staff', '/cap', '/assets', '/moves', '/charge', '/history', '/media', '/resources', '/about', '/draft-picks', '/trade-exceptions', '/injury-report', '/players/donovan-mitchell', '/players/donovan-mitchell/2025-26', '/games/2026-10-22-phi'];
+const ROUTES = ['/', '/schedule', '/roster', '/staff', '/cap', '/assets', '/moves', '/charge', '/history', '/media', '/resources', '/about', '/draft-picks', '/trade-exceptions', '/players/donovan-mitchell', '/players/donovan-mitchell/2025-26', '/games/2026-10-22-phi'];
 const SIZES = [['phone', { width: 390, height: 844 }], ['desktop', { width: 1366, height: 900 }]];
 let last = {}; try { last = JSON.parse(await readFile(new URL('data/visual-check.json', root), 'utf8')).h || {}; } catch {}
 const H = {}, warn = [];
