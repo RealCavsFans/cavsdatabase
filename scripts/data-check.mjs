@@ -19,24 +19,36 @@ const age = (ts) => { const t = Date.parse(ts || ''); return isNaN(t) ? null : (
 const etToday = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date());
 const inSeason = etToday >= START && etToday <= END;
 
-/* 1. freshness: [label, file, max hours, how to read the timestamp, in-season only] */
+/* 1. freshness: [label, file, max hours, how to read the timestamp, in-season only, after-game]
+   Nov 22 audit: the jobs that run on Luka's computer only save (and only move their date) when NBA.com's numbers change,
+   so a stretch with no Cavs game used to look stale. With after-game set, the limit counts from the newest archived Cavs
+   game the file hasn't caught up to: no game since its date means it is current. */
+const ARCH = J(`live-archive/${SEASON}/index.json`) || [];
+const lastEt = ARCH.map(g => g.et).filter(Boolean).sort().pop() || null;
 const FRESH = [
   ['League feed (ranks, team lines)', 'pdata/league.json', 30, j => j.updated, true],
   ['League rates (usage, rates, counted possessions)', 'pdata/league-rates.json', 30, j => j.updated, true],
   ['Game archive (season stats, player season lines)', `live-archive/${SEASON}/season.json`, 30, j => j.updated, true],
-  ['Shot contest (NBA tracking, nightly from Luka\'s computer)', 'pdata/defender.json', 54, j => j.updated + 'T23:59:00-05:00', true],
-  ['Play types, hustle and tracking (NBA.com, nightly from Luka\'s computer)', 'pdata/tracking.json', 54, j => j.updated + 'T23:59:00-05:00', true],
-  ['Matchups (NBA tracking, nightly from Luka\'s computer)', 'pdata/matchups.json', 54, j => j.updated + 'T23:59:00-05:00', true],
+  ['Shot contest (NBA tracking, nightly from Luka\'s computer)', 'pdata/defender.json', 54, j => j.updated + 'T23:59:00-05:00', true, true],
+  ['Play types, hustle and tracking (NBA.com, nightly from Luka\'s computer)', 'pdata/tracking.json', 54, j => j.updated + 'T23:59:00-05:00', true, true],
+  ['Matchups (NBA tracking, nightly from Luka\'s computer)', 'pdata/matchups.json', 54, j => j.updated + 'T23:59:00-05:00', true, true],
   ['Comparable seasons', 'pdata/comps.json', 8 * 24, j => j.updated + 'T23:59:00-05:00', true],
   ['Career stats (Basketball Reference, weekly)', 'pdata/careers.json', 8 * 24 + 12, j => j.updated, false],
   ['Player careers (play-by-play, nightly)', 'pdata/careers-pbp.json', 50, j => j.updated, false],
+  ['Referees (NBA box scores, nightly)', 'pdata/refs.json', 50, j => j.updated, true],
+  ['League games missed (official injury report, daily)', 'pdata/league-injuries-nba.json', 54, j => j.updated, true],
 ];
-for (const [lab, f, max, ts, seasonal] of FRESH) {
+for (const [lab, f, max, ts, seasonal, afterGame] of FRESH) {
   if (seasonal && !inSeason) continue;
   const j = J(f); if (!j) { issues.push(`${lab}: ${f} missing or unreadable`); continue; }
-  const a = age(ts(j)); if (a == null) { issues.push(`${lab}: no timestamp in ${f}`); continue; }
-  if (a > max) issues.push(`${lab}: last updated ${Math.round(a)} hours ago (limit ${max})`); else ok.push(`${lab} ${Math.round(a)}h`);
+  let a = age(ts(j)); if (a == null) { issues.push(`${lab}: no timestamp in ${f}`); continue; }
+  if (afterGame && lastEt) { a = String(j.updated).slice(0, 10) >= lastEt ? 0 : age(lastEt + 'T23:59:00-05:00'); }
+  if (a > max) issues.push(`${lab}: ${afterGame ? 'not updated since the ' + lastEt + ' game, ' : 'last updated '}${Math.round(a)} hours ago (limit ${max})`); else ok.push(`${lab} ${Math.round(age(ts(j)))}h`);
 }
+/* Nov 22 audit: NBA.com possessions (nightly from Luka's computer) only commits when a game is added, so check coverage:
+   every archived game more than two days old has NBA.com's count */
+{ const P = J('data/poss-nba.json'); if (inSeason && P && P.games) { const late = ARCH.filter(g => !P.games[g.id] && age(g.et + 'T23:59:00-05:00') > 54).map(g => g.et);
+  late.length ? issues.push(`NBA.com possessions (nightly from Luka's computer): no count for ${late.length} game${late.length > 1 ? 's' : ''} (${late.slice(-3).join(', ')})`) : ok.push(`NBA.com possessions ${Object.keys(P.games).length} games`); } }
 
 /* 2. in step with the game archive */
 const ix = J(`live-archive/${SEASON}/index.json`) || [];
