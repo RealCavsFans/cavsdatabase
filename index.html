@@ -1036,6 +1036,7 @@ li.ij summary>span:last-child{text-transform:uppercase}/* Nov 17 (Luka): one sta
 tr.mark td,tr.mark.cupm td,.sched tr.mark td,.sched tr.mark.cupm td,.rc3-adv .rc3-bw.up,.rc3-adv .rc3-bw.dn,.tx-hit,tr.hx-pl td:first-child,tr.hx-w td:first-child,tr.hx-l td:first-child{box-shadow:none!important}
 </style>
 <style id="a11y-search">/* Nov 22 a11y: the search box shows where the keyboard is */.sh-s:focus-within{border-color:#f2b231!important;box-shadow:0 0 0 2px #f2b231}</style>
+<style id="home-browse">@media (min-width:1100px){.home{grid-template-areas:"col side" "browse side"}.home>.col{grid-area:col}.home>.side{grid-area:side;grid-row:1/span 2}.home>.home-browse{grid-area:browse}.home>.home-browse .block-h{margin-top:4px!important}}</style>
 </head>
 <body>
 <script>/* Nov 21 (Luka): site rule: a percentage whose decimal is zero drops it (61.0% -> 61%, 100.0% -> 100%; 61.4% stays).
@@ -1150,11 +1151,10 @@ tr.mark td,tr.mark.cupm td,.sched tr.mark td,.sched tr.mark.cupm td,.rc3-adv .rc
       </div>
     </section>
     </div>
-  </div>
-
-  <div class="wrap">
-    <div class="block-h" style="margin-top:12px"><h2>Browse the database</h2></div>
-    <nav class="index" id="index" aria-label="All sections"></nav>
+    <div class="home-browse"><!-- Nov 22 (Luka): on wide screens Browse the database sits under Cap position, filling the gap beside the side rail -->
+      <div class="block-h" style="margin-top:12px"><h2>Browse the database</h2></div>
+      <nav class="index" id="index" aria-label="All sections"></nav>
+    </div>
   </div>
 </main>
 
@@ -2569,7 +2569,7 @@ function confetti(){const c=document.createElement('canvas');c.id='confetti';doc
     else t+='. '+(+sw>+sl?'The Cavs led the series '+sw+'–'+sl:+sw<+sl?'The Cavs trailed '+sl+'–'+sw:'The series was tied '+sw+'–'+sl)+'.';
     return t};
   const TXP=['trade','draft','ext','sign','fa','twoway','option','other','waive'];
-  const txText=t=>{if(t.k==='trade'){const g=(t.got||[]).filter(x=>!/^(Cash|Trade exception)$/.test(x));return 'The Cavs traded for '+(g.join(', ')||'cash considerations')+'.'}return 'The Cavs '+t.t.charAt(0).toLowerCase()+t.t.slice(1)+'.'};
+  const txText=t=>{if(t.k==='trade'){const g=(t.got||[]).filter(x=>!/^(Cash|Trade exception)$/.test(x));const pk=s=>s.replace(/^(\d{4}) 2nd \((\w+)\)$/,'a $1 second-round pick ($2)').replace(/^(\d{4}) 1st \((\w+)\)$/,'a $1 first-round pick ($2)');return 'The Cavs traded for '+(g.map(pk).join(', ')||'cash considerations')+'.'}/* Nov 22: a line that starts with a player's name stays as written ("Andre Drummond picked up his player option") */return /^(Signed|Traded|Waived|Released|Claimed|Acquired|Drafted|Exercised|Declined|Converted|Extended|Re-signed|Selected|Sent|Received)\b/.test(t.t)?'The Cavs '+t.t.charAt(0).toLowerCase()+t.t.slice(1)+'.':t.t.replace(/\.$/,'')+'.'};
   const XTAG={title:'Championship',highlight:'Moment',perf:'Performance',staff:'Front office & bench',passing:'In memoriam',owner:'Ownership'};
   const XORD=['title','highlight','perf','staff','owner','passing'];
   const host=u=>{try{const h=new URL(u).hostname.replace(/^www\./,'');return {'basketball-reference.com':'Basketball Reference','en.wikipedia.org':'Wikipedia','nba.com':'NBA.com','espn.com':'ESPN','cleveland.com':'cleveland.com'}[h]||h}catch(e){return 'Source'}};
@@ -2597,12 +2597,19 @@ function confetti(){const c=document.createElement('canvas');c.id='confetti';doc
     if(/buzzer|Game 7|NBA Finals|lottery|\b(5\d|6\d|7\d) points/i.test(x.t))v+=10;
     if(x.tag==='game'&&/Finals|Game|playoff/i.test(x.t))v+=12;
     const pts=+((x.t.match(/(\d{2}) points/)||[])[1]||0);if(pts>=70)v+=40;else if(pts>=55)v+=16;
-    if(/straight|final 25|in a row|0–15|15–0/i.test(x.t))v+=12;return v};
+    if(/straight|final 25|in a row|0–15|15–0/i.test(x.t))v+=12;
+    /* Nov 22 (Luka: "three LeBron facts in a row and none of them that intriguing"): an ordinary scoring night (under 45, no
+       record, no milestone) is routine whatever its tag; rare lines (18+ assists, 25+ rebounds, 7+ steals, 8+ blocks) step up */
+    if(/^[A-Z][^ ]+ [A-Z][^ ]+(?: Jr\.)? scored \d+ points in an? [\d–]+ (win|loss)/.test(x.t)&&pts<45&&!/record|first|youngest|career|history/i.test(x.t))v-=34;
+    const nOf=re=>+((x.t.match(re)||[])[1]||0);if(nOf(/(\d+) assists/)>=18)v+=14;if(nOf(/(\d+) assists/)>=20)v+=8;if(/ loss (to|at) /.test(x.t))v-=6;if(nOf(/(\d+) rebounds/)>=25)v+=14;if(nOf(/(\d+) steals/)>=7)v+=8;if(nOf(/(\d+) blocks/)>=8)v+=10;
+    return v};
+  /* Nov 22: the same player shouldn't headline day after day */
+  const who=x=>((x.t.match(/^([A-Z][\w.'’-]+(?: [A-Z][\w.'’-]+){1,2}) (?:scored|had|handed|grabbed|became|blocked|made|hit|set|recorded|posted)/)||[])[1]||'');
   /* Nov 15 (Luka): variety. One storyline (a win streak told game by game) or one season shouldn't fill the card day after day:
      walk the last 7 days' picks and mark down a fact from the same streak (-80) or the same season as a recent pick (-20); older history gets a small lift. */
   const story=x=>/straight win|in a row|\d+–0 start|winning streak/i.test(x.t)?'streak'+x.y:x.y+'|'+x.t;
-  const score=(x,av)=>wow(x)-(av.k.has(story(x))?80:0)-(av.y.includes(x.y)?20:0)+(x.y<2000?8:x.y<2010?4:0);
-  const av={k:new Set(),y:[]};for(let i=7;i>=1;i--){const d=new Date(now);d.setDate(d.getDate()-i);const kk=key(d);let l=cool(kk);if(!l.length)l=factsFor(kk);if(!l.length)continue;const best=l.slice().sort((a,b)=>score(b,av)-score(a,av))[0];av.k.add(story(best));av.y.push(best.y);if(av.y.length>3)av.y.shift()}
+  const score=(x,av)=>wow(x)-(av.k.has(story(x))?80:0)-(av.y.includes(x.y)?20:0)-(who(x)&&av.n.includes(who(x))?45:0)+(x.y<2000?8:x.y<2010?4:0);
+  const av={k:new Set(),y:[],n:[]};for(let i=7;i>=1;i--){const d=new Date(now);d.setDate(d.getDate()-i);const kk=key(d);let l=cool(kk);if(!l.length)l=factsFor(kk);if(!l.length)continue;const best=l.slice().sort((a,b)=>score(b,av)-score(a,av))[0];av.k.add(story(best));av.y.push(best.y);if(av.y.length>3)av.y.shift();if(who(best)){av.n.push(who(best));if(av.n.length>3)av.n.shift()}}
   if(fk===md){const all=factsFor(md);if(all.length>list.length)list=all}/* the day's other facts can step in when the top one repeats a recent story */
   list.sort((a,b)=>score(b,av)-score(a,av));
   const f=list[0];
@@ -4092,7 +4099,7 @@ function vCard(v){
   const b=el('button','vplay');b.type='button';b.setAttribute('aria-label','Play: '+v.title);b.appendChild(el('span'));
   b.addEventListener('click',()=>{const f=el('iframe');f.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(v.id)+'?autoplay=1&rel=0';f.title=v.title;f.allow='autoplay; encrypted-media; picture-in-picture';f.allowFullscreen=true;th.textContent='';th.appendChild(f)});
   th.append(img,b);c.append(th,el('b',null,v.title),el('small',null,vDate.format(new Date(v.published))));return c}
-/* RealCavsFans YouTube (Oct 31): Media page only, never the home video box. rcf-videos.json is written by scripts/fetch-rcf-videos.mjs; loaded only when the section scrolls into view */
+/* RealCavsFans YouTube (Oct 31): Media page section. Nov 22 (Luka): the home video box also shows an RCF upload when it is the newest. rcf-videos.json is written by scripts/fetch-rcf-videos.mjs; loaded only when the section scrolls into view */
 (function(){const sec=document.getElementById('rcfyt');if(!sec)return;let done=0;const go=()=>{if(done)return;done=1;fJ('/rcf-videos.json').then(r=>r.ok?r.json():[]).catch(()=>[]).then(L=>{if(!L||!L.length)return;const vs=L.slice(0,5),g=el('div','vgrid');vs.forEach(v=>g.appendChild(vCard(v)));const w=document.getElementById('rcfyt-g');w.textContent='';w.appendChild(g);if(vs.length>2){const mb=el('button','vmore','Show '+(vs.length-2)+' more');mb.type='button';mb.onclick=()=>{g.classList.add('all');mb.remove()};w.appendChild(mb)}sec.hidden=false})};
   const pv=document.getElementById('view-video');const chk=()=>{if(pv&&!pv.hidden)go()};chk();if(pv&&!done)new MutationObserver((m,o)=>{chk();if(done)o.disconnect()}).observe(pv,{attributes:true,attributeFilter:['hidden']})})();
 function renderVideo(list){
@@ -4100,7 +4107,7 @@ function renderVideo(list){
   /* home: one video, the latest upload */
   const one=el('div','vone');const txt=el('div','vone-txt');
   if(!list||!list.length){one.appendChild(posters([VLINKS[0]]).firstChild);txt.append(el('b',null,'Latest from the Cavs'),el('p',null,'Press conferences, practice availability and highlights from the official channel.'))}
-  else{const v=list[0];one.appendChild(vCard(v));txt.append(el('b',null,v.title),el('p',null,vDate.format(new Date(v.published))))}
+  else{/* Nov 22 (Luka): the home box shows the newest video from the Cavs or RealCavsFans channel */const r0=(window.__RCFV||[])[0];const v=r0&&Date.parse(r0.published)>Date.parse(list[0].published)?r0:list[0];one.appendChild(vCard(v));txt.append(el('b',null,v.title),el('p',null,(v===r0?'RealCavsFans · ':'')+vDate.format(new Date(v.published))))}
   const more=el('a',null,'More press conferences and video →');more.href='/media';more.dataset.go='media';more.style.cssText='display:inline-block;margin-top:10px;font-size:14px';txt.appendChild(more);
   one.appendChild(txt);home.appendChild(one);
   if(!list||!list.length){page.appendChild(posters(VLINKS));return}
@@ -4108,7 +4115,7 @@ function renderVideo(list){
     const sec=el('section');const h=el('div','block-h');h.appendChild(el('h2',null,name));if(name==='Latest uploads'){const a=el('a',null,'Cavs YouTube channel ↗');a.href='https://www.youtube.com/@cavs';a.target='_blank';a.rel='noopener';h.appendChild(a)}sec.appendChild(h);const gg=el('div','vgrid');vs.forEach(v=>gg.appendChild(vCard(v)));sec.appendChild(gg);if(vs.length>2){const mb=el('button','vmore','Show '+(vs.length-2)+' more');mb.type='button';mb.onclick=()=>{gg.classList.add('all');mb.remove()};sec.appendChild(mb)}page.appendChild(sec)});
 }
 renderVideo(null);
-if(ON_DOMAIN)fJ('/videos.json').then(r=>r.ok?r.json():null).then(d=>{if(d&&d.length)renderVideo(d)}).catch(()=>{});
+if(ON_DOMAIN)Promise.all([fJ('/videos.json').then(r=>r.ok?r.json():null).catch(()=>null),fJ('/rcf-videos.json').then(r=>r.ok?r.json():null).catch(()=>null)]).then(([d,rv])=>{if(Array.isArray(rv))window.__RCFV=rv.slice().sort((a,b)=>Date.parse(b.published)-Date.parse(a.published));if(d&&d.length)renderVideo(d)}).catch(()=>{});
 
 /* search — everything on the site is already in the page, so it searches locally */
 const fold=t=>String(t).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
