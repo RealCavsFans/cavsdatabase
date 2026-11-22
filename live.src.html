@@ -4333,7 +4333,7 @@ function vLineups(v,D,R){
   const c=el('div','card');head(c,t.abbr+' lineups',perLabel(S.per)+' · every group used · tap a column to sort');
   const fl=teamBtns(D,'luTeam');fl.appendChild(el('span','lab','  Group'));
   [[5,'5-man'],[4,'4-man'],[3,'3-man'],[2,'2-man']].forEach(([n,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',S.f.luSize===n);b.onclick=()=>{S.f.luSize=n;renderView()};fl.appendChild(b)});
-  const ms=el('select');ms.setAttribute('aria-label','Minimum minutes');[[0,'All minutes'],[2,'2+ min'],[5,'5+ min']].forEach(([m,l])=>{const o=el('option',null,l);o.value=m;if(S.f.luMin===m)o.selected=true;ms.appendChild(o)});ms.onchange=()=>{S.f.luMin=+ms.value;renderView()};fl.appendChild(ms);
+  const ms=el('select');ms.setAttribute('aria-label','Minimum minutes');[[0,'All minutes'],[2,'2+ min'],[5,'5+ min'],[10,'10+ min'],[20,'20+ min']].forEach(([m,l])=>{const o=el('option',null,l);o.value=m;if(S.f.luMin===m)o.selected=true;ms.appendChild(o)});ms.onchange=()=>{S.f.luMin=+ms.value;renderView()};fl.appendChild(ms);
   fl.classList.add('lufl');c.appendChild(fl);
   /* pick players: tap once = must be in the group, twice = must be out */
   const pk=S.f.luPick=S.f.luPick||{};const pool=D.roster[t.id].filter(id=>Object.values(R.L[t.id][5]).some(l=>l.ids.includes(id))).sort((a,b)=>R.B[b].min-R.B[a].min);
