@@ -16,7 +16,7 @@ export const BUILT = [
   /^(?!index\.html$|live\.src\.html$|404\.html$)[^/]+\.html$/,
   /^(a|embed|games|players|history|media)\//,
   /^og\/(g|h|p|gp|gl)\//,
-  /^og\/(live\.json|cap\.jpg|schedule\.jpg|assets\.jpg|moves\.jpg|history\.jpg)$/,
+  /^og\/(live\.json|cap\.jpg|schedule\.jpg|assets\.jpg|moves\.jpg|history\.jpg|draft-picks\.jpg|trade-exceptions\.jpg|injury-report\.jpg|roster\.jpg|staff\.jpg|roster-tree\.jpg|media\.jpg|resources\.jpg|about\.jpg|charge\.jpg)$/,  // Nov 22: the search-page and main-page cards
   /^sitemap\.xml$/,
   /^data\/prerender-hash\.txt$/,
 ];
