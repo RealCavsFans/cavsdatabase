@@ -4316,7 +4316,7 @@ async function luDeep(D,l,box){const se=D.season,per=S.per||'all',key=l.ids.slic
   /* how its possessions started */
   box.appendChild(el('h4','lud-h','How its possessions started'));const H=[['stl','After a live-ball turnover'],['to','After a dead-ball turnover'],['dreb','After a defensive rebound'],['made','After an opponent score'],['oreb','Second chances']];
   const sum=(L,f)=>{const q=L.filter(f);const p=q.reduce((s,x)=>s+x.pts,0);return [q.length,p,q.length?(p/q.length).toFixed(2):'–']};
-  const t2=el('table','zt lud-t');t2.innerHTML='<tr><th></th><th>CLE</th><th>Pts</th><th>Per</th><th>Opp</th><th>Pts</th><th>Per</th></tr>';
+  const t2=el('table','zt lud-t');t2.innerHTML='<tr><th></th><th>CAVS</th><th>Pts</th><th>Per</th><th>Opp</th><th>Pts</th><th>Per</th></tr>';
   const row=(lab,f)=>{const a=sum(po,f),b=sum(pd,f);const tr=el('tr');tr.innerHTML=`<td>${lab}</td><td>${a[0]}</td><td>${a[1]}</td><td><b>${a[2]}</b></td><td>${b[0]}</td><td>${b[1]}</td><td>${b[2]}</td>`;t2.appendChild(tr)};
   H.forEach(([k,lab])=>row(lab,q=>q.how===k));row('Transition',isTrans);row('Halfcourt',q=>q.how!=='oreb'&&!isTrans(q));
   const w2=el('div','tw');w2.appendChild(t2);box.appendChild(w2);box.appendChild(el('p','note','Counted play by play while these five were on the floor. Transition = a shot, foul or turnover within 7 seconds of a live-ball turnover (steal) or defensive rebound.'))}

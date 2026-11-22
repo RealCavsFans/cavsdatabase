@@ -56,8 +56,24 @@ for (const f of fs.readdirSync(DIR).filter(f => f.endsWith('.json.gz')).sort()) 
       let top = stack[stack.length - 1]; if (!top || top.ind !== ind) { top = { ind, keys: new Set() }; stack.push(top); }
       if (top.keys.has(m[3])) dup = `${f} line ${i + 1}: "${m[3]}" repeated`; top.keys.add(m[3]); });
     dup ? bad(`workflow: ${dup}`) : ok(`workflow ${f}: no repeated keys`); } }
-/* Nov 13 (Luka): wording rules: these are never hyphenated */
-{ const fs2 = await import('fs'); for (const f of ['index.html', 'live.src.html']) { let t = ''; try { t = fs2.readFileSync(f, 'utf8'); } catch {} const hit = (t.match(/\b(hard-cap\w*|most-used|trade-eligible)\b/gi) || []); hit.length ? bad(`wording in ${f}: ${[...new Set(hit)].join(', ')} should not be hyphenated`) : ok(`wording ${f}: no banned hyphens`); } }
+/* Nov 13 (Luka): wording rules: these are never hyphenated. Nov 22 house style check: every source page, the newsletter and
+   share-image scripts, not just the two main pages. Also: no pink (named pinks, or a new light wine tint not already
+   approved), no ASCII "->" arrows in what readers see, and no "61.0%"-style zero decimals typed into page text. */
+{ const fs2 = await import('fs'), { execSync } = await import('child_process');
+  let files = []; try { files = execSync('git ls-files "*.html" "*.mjs" "*.js" "*.css"', { encoding: 'utf8' }).split('\n').filter(f => f && !/^(history|tests|node_modules)\//.test(f) && f !== 'scripts/regress.mjs'); } catch { files = ['index.html', 'live.src.html']; }
+  const noComments = s => s.replace(/\/\*[\s\S]*?\*\//g, '').replace(/<!--[\s\S]*?-->/g, '').replace(/(^|[^:'"`\\])\/\/[^\n]*/g, '$1');
+  const OKTINT = new Set('f7e6ea f4d6dd e7c6ce f3d9e3 e8c9d3 d98ea6 e9b9c8 f2d5df c98aa3 d08ea2 d9a9b8 e3c4ce ff4d4d ff6b6b ff9b9b'.split(' '));
+  const hsl = h => { const r = parseInt(h.slice(0, 2), 16) / 255, g = parseInt(h.slice(2, 4), 16) / 255, b = parseInt(h.slice(4, 6), 16) / 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn; if (!d) return [0, 0, l]; let H = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; H *= 60; if (H < 0) H += 360; return [H, d / (1 - Math.abs(2 * l - 1)), l]; };
+  const probs = [];
+  for (const f of files) { let t = ''; try { t = fs2.readFileSync(f, 'utf8'); } catch { continue; } const c = noComments(t);
+    const hy = c.match(/\b(hard-cap\w*|most-used|trade-eligible)\b/gi); if (hy) probs.push(`${f}: ${[...new Set(hy)].join(', ')} should not be hyphenated`);
+    const pk = c.match(/(?:[:,(]\s*|['\"])(?:hot|deep|light)?pink\b(?![|\w])/gi); if (pk) probs.push(`${f}: pink color (${[...new Set(pk)].join(', ')})`);
+    const nt = [...new Set([...c.matchAll(/#([0-9a-f]{6})\b/gi)].map(m => m[1].toLowerCase()).filter(h => { const [H, s, l] = hsl(h); return (H >= 290 || H <= 8) && s > .35 && l > .62 && !OKTINT.has(h); }))];
+    if (nt.length) probs.push(`${f}: new pink-looking color${nt.length > 1 ? 's' : ''} #${nt.join(', #')} (wine tints read pink; use gray or an approved tint)`);
+    if (/\.html$/.test(f)) { const vis = c.replace(/<(script|style)[\s\S]*?<\/\1>/gi, '').replace(/<[^>]+>/g, ' ');
+      if (/\s-(>|&gt;)\s/.test(vis)) probs.push(`${f}: ASCII "->" in page text (use → or ↗)`);
+      const z = vis.match(/\b\d+\.0%/g); if (z) probs.push(`${f}: zero decimal percentage typed in page text (${[...new Set(z)].slice(0, 3).join(', ')})`); } }
+  probs.length ? probs.forEach(p => bad('house style: ' + p)) : ok(`house style: ${files.length} source files (hyphens, pink, arrows, zero decimals)`); }
 /* Nov 16 (Luka): every inline script on the main and live pages must parse, or the page sits on "Loading…" */
 { const fs2 = await import('node:fs'), vm = await import('node:vm');
   for (const f of ['index.html', 'live.src.html']) { let t = ''; try { t = fs2.readFileSync(f, 'utf8'); } catch { continue; } let n = 0, err = '';
