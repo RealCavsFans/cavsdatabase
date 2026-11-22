@@ -23,6 +23,7 @@ export const JOBS = [
   ['pron.yml', ['35 13 * * *']],
   ['highs-hist.yml', ['17 9 * * 1']],
   ['links.yml', ['23 10 * * 1']],
+  ['capsheets.yml', ['29 11 * * 1']],
 ];
 function field(spec, v) {
   return spec.split(',').some(part => {

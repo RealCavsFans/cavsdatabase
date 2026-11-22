@@ -36,6 +36,7 @@ const FRESH = [
   ['Career stats (Basketball Reference, weekly)', 'pdata/careers.json', 8 * 24 + 12, j => j.updated, false],
   ['Player careers (play-by-play, nightly)', 'pdata/careers-pbp.json', 50, j => j.updated, false],
   ['Referees (NBA box scores, nightly)', 'pdata/refs.json', 50, j => j.updated, true],
+  ['League salaries (Capsheets, weekly)', 'pdata/league-salaries.json', 8 * 24 + 12, j => j.updated + 'T23:59:00-05:00', true],
   ['League games missed (official injury report, daily)', 'pdata/league-injuries-nba.json', 54, j => j.updated, true],
 ];
 for (const [lab, f, max, ts, seasonal, afterGame] of FRESH) {
