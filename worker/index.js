@@ -31,9 +31,9 @@ export default {
     if ((u.pathname === '/live.html' || u.pathname === '/live') && request.method === 'GET') {
       try { return await liveMeta(request, env); } catch (e) { return env.ASSETS.fetch(request); }
     }
-    /* Nov 22 (Luka): a player page for someone no longer on the roster (no longer in the sitemap) sends people to the roster */
+    /* Nov 22 (Luka): a player page for someone no longer on the roster (no longer in the sitemap) sends people to the roster; 302 so a player who comes back gets his page again right away */
     if (request.method === 'GET' && /^\/players\/[a-z0-9-]+\/?$/.test(u.pathname)) {
-      try { const s = u.pathname.split('/')[2]; if (!(await sitemapSlugs(env, u)).has(s)) return Response.redirect(u.origin + '/roster', 301); } catch (e) {}
+      try { const s = u.pathname.split('/')[2]; if (!(await sitemapSlugs(env, u)).has(s)) return Response.redirect(u.origin + '/roster', 302); } catch (e) {}
       return env.ASSETS.fetch(request);
     }
     /* Nov 3: vanity links for share images: cavsdatabase.com/tyson, /jaylontyson or /jtyson -> that player's page (players from the sitemap) */

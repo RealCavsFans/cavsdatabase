@@ -437,7 +437,7 @@ if (!preseason) { try { const y = +g[0].slice(0, 4), mo = +g[0].slice(5, 7), s0 
   /* Nov 16 (Luka): who led the Cavs comes from the NBA's own final box score in the game archive (s.nb), like every other number here; ESPN's box.json only as the backup */
   if (hit) { const s = JSON.parse(await readFile(new URL(`live-archive/${se}/${hit.id}.json`, root), 'utf8')); const Cc = createRequire(import.meta.url)('../live-core.js'), Dg = Cc.prep(s);
     if (s.nb) arcRows = (Dg.roster['5'] || []).map(id => { const v = s.nb[id]; return v && v[0] > 0 ? [Dg.P[id].name, Math.round(v[0] / 60), v[1], v[8] + v[9], v[10]] : null; }).filter(Boolean); } } catch {} }
-/* MOCK (Nov 22, Luka asked for a dark mode mockup): mail apps that honor dark mode (Apple Mail, Outlook) get the site's dark
+/* Nov 22 (Luka approved the dark mode mockup): mail apps that honor dark mode (Apple Mail, Outlook) get the site's dark
    colors, with gold in place of wine. Each colored element gets a class named for its light color; a dark-mode style block
    remaps those classes. Mail apps that ignore it keep showing the light issue exactly as before. */
 const DARK = { '#F7F3EC': ['bg', '#14181D'], '#FFFDF8': ['bg', '#1B2027'], '#EEF0F2': ['bg', '#0E1114'], '#101419': ['fg', '#F1EEE8', '#2A3038'],
