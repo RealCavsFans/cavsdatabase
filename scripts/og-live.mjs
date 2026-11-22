@@ -252,7 +252,8 @@ const DRAWN = state._drawn || {}; const nowMs = Date.now();
 const far = f => { const m = f.match(/^og\/gp\/(\d{4}-\d\d-\d\d)-/); return m && Date.parse(m[1] + 'T12:00:00Z') - nowMs > 10 * 864e5; };
 /* a design change bumps LOOK so every card redraws once, far-off games included (Nov 2: /live footer) */
 const LOOK = 'live-footer-1', relook = state._look !== LOOK;
-const need = cards.filter(([f, h]) => (!process.env.OG_ONLY || new RegExp(process.env.OG_ONLY).test(f)) && (!state[f] || process.env.OG_ONLY || (relook && /^og\/g[pl]\//.test(f)) || (state[f] !== fp(h) && !(far(f) && DRAWN[f] && nowMs - DRAWN[f] < 7 * 864e5))));
+const { existsSync: ex } = await import('node:fs');
+const need = cards.filter(([f, h]) => (!process.env.OG_ONLY || new RegExp(process.env.OG_ONLY).test(f)) && (!state[f] || !ex(new URL(f, root)) || process.env.OG_ONLY || (relook && /^og\/g[pl]\//.test(f)) || (state[f] !== fp(h) && !(far(f) && DRAWN[f] && nowMs - DRAWN[f] < 7 * 864e5))));
 if (!need.length) { console.log('og-live: nothing changed'); process.exit(0); }
 const { createRequire } = await import('node:module'); const require = createRequire(import.meta.url);
 const pw = (() => { for (const m of ['playwright-core', 'playwright']) { try { return require(m); } catch {} } return null; })();
