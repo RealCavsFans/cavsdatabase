@@ -91,7 +91,7 @@ export async function liveMeta(request, env) {
     img = info.img;
   }
   const cy = new Date(), sy = cy.getUTCMonth() >= 7 ? cy.getUTCFullYear() : cy.getUTCFullYear() - 1, curS = sy + '-' + String(sy + 1).slice(2);
-  const full = info.season === curS ? u.origin + '/stats' : u.origin + '/live?g=' + encodeURIComponent(g);
+  const full = info.season ? u.origin + '/stats/' + info.season : u.origin + '/live?g=' + encodeURIComponent(g);
   const set = (attr, val) => ({ element(e) { e.setAttribute(attr, val); } });
   let rw = new HTMLRewriter()
     .on('title', { element(e) { e.setInnerContent(title); } })
@@ -99,9 +99,39 @@ export async function liveMeta(request, env) {
     .on('meta[name="description"]', set('content', desc))
     .on('meta[property="og:description"]', set('content', desc))
     .on('meta[property="og:url"]', set('content', full));
+  if (info.season) rw = rw.on('head', { element(e) { e.append('<link rel="canonical" href="' + full + '">', { html: true }); } });
   if (img) rw = rw.on('meta[property="og:image"]', set('content', u.origin + img))
     .on('meta[name="twitter:image"]', set('content', u.origin + img))
     .on('meta[property="og:image:alt"]', set('content', title));
   const out = rw.transform(page);
   return out;
+}
+
+/* Nov 22 (Luka): /stats/<season> is the season stats page with its own title, description, share picture and canonical
+   address, and open to search engines (the live tracker itself stays out of search) */
+export async function seasonPage(request, env) {
+  const u = new URL(request.url), se = /^\/stats\/(\d{4}-\d\d)/.exec(u.pathname)[1];
+  const idx = await env.ASSETS.fetch(new Request(u.origin + '/live-archive/' + se + '/index.json'));
+  if (!idx.ok) { const nf = await env.ASSETS.fetch(new Request(u.origin + '/404.html')); return new Response(nf.body, { status: 404, headers: nf.headers }); }
+  const page = await env.ASSETS.fetch(new Request(u.origin + '/live.html'));
+  if (!page.ok) return page;
+  const n = ((await idx.json().catch(() => [])) || []).length, sd = se.replace('-', '–'), url = u.origin + '/stats/' + se;
+  const title = 'Cavaliers ' + sd + ' Stats: Team & Player Stats, Lineups, On/Off | cavs_db';
+  const desc = 'Cleveland Cavaliers ' + sd + ' season stats' + (n ? ' through ' + n + ' game' + (n > 1 ? 's' : '') : '') + ': team and player stats, lineups, on/off, shot charts, four factors and league ranks, from the NBA\u2019s own box scores.';
+  const img = u.origin + '/og/stats.jpg?v=2';
+  const set = (attr, val) => ({ element(e) { e.setAttribute(attr, val); } });
+  const out = new HTMLRewriter()
+    .on('meta[name="robots"]', set('content', 'index,follow'))
+    .on('title', { element(e) { e.setInnerContent(title); } })
+    .on('meta[property="og:title"]', set('content', title))
+    .on('meta[name="description"]', set('content', desc))
+    .on('meta[property="og:description"]', set('content', desc))
+    .on('meta[property="og:url"]', set('content', url))
+    .on('meta[property="og:image"]', set('content', img))
+    .on('meta[name="twitter:image"]', set('content', img))
+    .on('meta[property="og:image:alt"]', set('content', 'Cavaliers ' + sd + ' season stats on cavs_db'))
+    .on('head', { element(e) { e.append('<link rel="canonical" href="' + url + '"><meta name="twitter:title" content="' + title.replace(/&/g, '&amp;') + '"><meta name="twitter:description" content="' + desc.replace(/&/g, '&amp;') + '">', { html: true }); } })
+    .transform(page);
+  const h = new Headers(out.headers); h.set('cache-control', 'public, max-age=300'); h.delete('x-robots-tag');
+  return new Response(out.body, { status: 200, headers: h });
 }

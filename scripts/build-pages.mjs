@@ -134,6 +134,8 @@ if (PRE) {
   if (await prerender(root, META)) {
     const day = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date());
     const urls = Object.keys(META).map(r => `  <url><loc>https://cavsdatabase.com/${r === 'home' ? '' : r}</loc><lastmod>${(modDates() && modDates()(r)) || day}</lastmod><changefreq>daily</changefreq></url>`);
+    /* Nov 22 (Luka): the season stats pages (/stats/<season>, served by the Worker from the live page) */
+    try { const { readdirSync } = await import('node:fs'); readdirSync(new URL('live-archive/', root)).filter(s => /^\d{4}-\d\d$/.test(s) && existsSync(new URL('live-archive/' + s + '/index.json', root))).sort().reverse().forEach((s, i) => urls.push(`  <url><loc>https://cavsdatabase.com/stats/${s}</loc>${i ? '' : `<lastmod>${day}</lastmod>`}<changefreq>${i ? 'monthly' : 'daily'}</changefreq></url>`)); } catch {}
     await writeFile(new URL('sitemap.xml', root), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`);
     await mkdir(new URL('data/', root), { recursive: true });
     await writeFile(HASHF, hash + '\n' + Date.now() + '\n');

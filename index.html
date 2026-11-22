@@ -1569,7 +1569,7 @@ const STATS_ON=true;/* on for everyone since Oct 26 */
 const statsLive=()=>{try{const t=Date.now();return SCHEDULE.some(g=>{const tp=tipOf(g).getTime();return t>=tp-30*6e4&&t<=tp+3.2*36e5})}catch(_){return false}};
 /* Nov 2: the Stats tab goes back to the stats view you left (same game or season, tab, period and scroll spot) for 2 hours */
 const statsBack=()=>{try{const b=JSON.parse(localStorage.getItem('cdb-stats-back')||'null');return b&&Date.now()-b.t<2*36e5&&/^\/live(\.html)?\?g=/.test(b.u)?b:null}catch(_){return null}};
-const statsHref=()=>{const b=statsBack();if(b&&!statsLive())return b.u+'&resume=1';return statsLive()?'/live.html':'/live.html?g=s2026-27'};
+const statsHref=()=>{const b=statsBack();if(b&&!statsLive())return b.u+'&resume=1';return statsLive()?'/live.html':'/stats/'+seNow()};function seNow(){/* Nov 22: the season for /stats/<season> links, turning over Aug 1 like the rest of the site */const d=new Date(),y=d.getMonth()>=7?d.getFullYear():d.getFullYear()-1;return y+'-'+String(y+1).slice(2)}
 const SHORT={cap:'Cap',staff:'Staff',charge:'Charge',media:'Media',resources:'Resources',moves:'Transactions'};
 SECTIONS.forEach(([id,l])=>{if(id==='about')return;/* About lives in Browse the database, not the tab bar */const b=el('a',null,SHORT[id]||l);b.title=l;b.href=id==='home'?'/':'/'+id;b.dataset.go=id;tabs.appendChild(b);
   if(STATS_ON&&id==='schedule'){const lv=statsLive();const a=el('a','nav-stats'+(lv?' lv':''));if(lv)a.appendChild(el('i','dot'));a.append(lv?'Live':'Stats');a.href=statsHref();a.title=lv?'Live game stats':'Season stats: team, players, lineups, shots';tabs.appendChild(a)}});
@@ -4978,7 +4978,7 @@ window.renderPlayer=function(s){
     lk.append(ilink('Bio & Measurements','roster','r-'+slug(n)));if(R||stt)lk.append(ilink('Contract','cap','p-'+slug(n)));lk.append(ilink('Depth Chart','roster'),ilink('Transactions','moves'));
     if(stt==='TW')lk.append(ilink('Charge','charge'));
     /* season on/off and lineups: the live page's season mode, opened on him (shows once the season has a game in the archive) */
-    if(Object.keys(SCORES).length){const a2=el('a',null,'Season on/off');a2.href='/live.html?g=s2026-27&pl='+slug(n);lk.append(a2)}
+    if(Object.keys(SCORES).length){const a2=el('a',null,'Season on/off');a2.href='/stats/'+seNow()+'?pl='+slug(n);lk.append(a2)}
     root.appendChild(lk)}
 
   /* ---------- chapters ---------- */
@@ -5370,7 +5370,7 @@ const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3PT%','tp'],['FG%','f
           efg:efg(o),ts:q(x.pf,2*(g(o,'fga')+.44*g(o,'fta'))),tpar:q(g(o,'tpa'),g(o,'fga')),tp:q(g(o,'tpm'),g(o,'tpa')),tov:tov(o),orb:orb(o,d),drb:q(g(o,'dreb'),g(o,'dreb')+g(d,'oreb')),ftr:q(g(o,'ftm'),g(o,'fga')),ast:q(g(o,'ast'),g(o,'fgm')),
           oefg:efg(d),otov:tov(d),otpar:q(g(d,'tpa'),g(d,'fga')),oftr:q(g(d,'ftm'),g(d,'fga')),otp:q(g(d,'tpm'),g(d,'tpa'))}};
         const a=M(on),z=M(off);a.sec=on.sec;a.pm=on.pf-on.pa;z.sec=off.sec;z.pm=off.pf-off.pa;
-        c.appendChild(ooBox({name:n,img:(()=>{const pp=PLAYERS.find(x=>x[1]===n);return pp&&pp[12]?'/img/h/'+pp[12]+'.png':null})(),ab:'Cavs',oab:'opponents',a,b:z,sub:gp+' game'+(gp===1?'':'s')+' this season · small samples swing hard',fewer:true,note:'Diff is on minus off. Green is better for the Cavs with him on, red is worse. Possessions are counted play by play, so ratings can differ a little from NBA.com.'}));{const lk=el('a',null,'Lineups, on/off and his full season breakdown →');lk.href='/live.html?g=s'+SE+'&pl='+slug(n);c.appendChild(el('p','ppx-more')).appendChild(lk)}ov.appendChild(c)}
+        c.appendChild(ooBox({name:n,img:(()=>{const pp=PLAYERS.find(x=>x[1]===n);return pp&&pp[12]?'/img/h/'+pp[12]+'.png':null})(),ab:'Cavs',oab:'opponents',a,b:z,sub:gp+' game'+(gp===1?'':'s')+' this season · small samples swing hard',fewer:true,note:'Diff is on minus off. Green is better for the Cavs with him on, red is worse. Possessions are counted play by play, so ratings can differ a little from NBA.com.'}));{const lk=el('a',null,'Lineups, on/off and his full season breakdown →');lk.href='/stats/'+SE+'?pl='+slug(n);c.appendChild(el('p','ppx-more')).appendChild(lk)}ov.appendChild(c)}
       /* 2 · lineups (overview) */
       {const rows=L5.filter(l=>l.ids.includes(id)&&l.sec>=60).sort((a,b)=>b.sec-a.sec).slice(0,6);if(rows.length){const c=card('His most used lineups',null,'Five-man groups he played in this season, by minutes. Off, Def and Net are points scored and allowed per 100 possessions.');
         c.appendChild(tbl(rows.map(l=>{const r=rt(l);return [l.ids.filter(x=>x!==id).map(x=>(A.P[x]||{}).last||'').join(', '),fmtMinS(l.sec),(l.pf-l.pa>0?'+':l.pf-l.pa<0?'−':'')+Math.abs(l.pf-l.pa),r?f1(r.o):'–',r?f1(r.d):'–',r?sg(r.n):'–']}),['Min','+/-','Off','Def','Net']));c.querySelector('thead th').textContent='With';
@@ -6097,7 +6097,7 @@ onView('cap',()=>{(function(){const B=document.getElementById('sm-b');if(!B)retu
   let last=null;const paint=()=>{const r=route();const g=grpOf(r);const lv=liveNow();const key=r+'|'+lv;if(key===last)return;last=key;
     bar.querySelectorAll('a').forEach(a=>{const on=a.dataset.g===g;a.classList.toggle('on',on);if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');let d=a.querySelector('.dot');if(a.dataset.g===(STATS_ON?'stats':'schedule')&&lv){if(!d)a.appendChild(el('i','dot'))}else if(d)d.remove()});
     if(g==='home'){sub.hidden=true;return}sub.hidden=false;sub.textContent='';
-    G[g].forEach(([k,l])=>{const a=el('a');if(k==='alerts'){if(!window.cdbAlerts)return;a.href='#';a.onclick=e=>{e.preventDefault();window.cdbAlerts()};a.append(l);sub.appendChild(a);return}if(k==='live'){a.href='/live.html';if(lv)a.appendChild(el('i','lv'))}else if(k==='season'){/* Nov 5 (Luka): season totals get their own tab */a.href='/live.html?g=s'+CUR_SE}else{a.href='/'+k;a.dataset.go=k}a.append(l);if(k===r||(k==='roster'&&/^players\//.test(r))||(k==='schedule'&&/^games\//.test(r))||(k==='history'&&/^history\//.test(r)))a.classList.add('on');sub.appendChild(a)})};
+    G[g].forEach(([k,l])=>{const a=el('a');if(k==='alerts'){if(!window.cdbAlerts)return;a.href='#';a.onclick=e=>{e.preventDefault();window.cdbAlerts()};a.append(l);sub.appendChild(a);return}if(k==='live'){a.href='/live.html';if(lv)a.appendChild(el('i','lv'))}else if(k==='season'){/* Nov 5 (Luka): season totals get their own tab */a.href='/stats/'+seNow()}else{a.href='/'+k;a.dataset.go=k}a.append(l);if(k===r||(k==='roster'&&/^players\//.test(r))||(k==='schedule'&&/^games\//.test(r))||(k==='history'&&/^history\//.test(r)))a.classList.add('on');sub.appendChild(a)})};
   const ps=history.pushState,rs=history.replaceState;history.pushState=function(){const x=ps.apply(this,arguments);setTimeout(paint,0);return x};history.replaceState=function(){const x=rs.apply(this,arguments);setTimeout(paint,0);return x};
   addEventListener('popstate',()=>setTimeout(paint,0));setInterval(paint,60000);paint()})();
 
