@@ -87,7 +87,17 @@ function prep(D, g, score, top, boxLink, opts) {
   /* Nov 15 (Luka): mix the eras. Recent issues' seasons are marked down (one storyline or season shouldn't run day after day),
      seasons far from the last few picks and older ones get a lift; curated moments rank ahead of box-score nights at the same spot. */
   const lastY = (opts.usedOtd || []).slice(-6).map(k => +String(k).split('|')[1]).filter(Boolean);
-  const sc = x => (x[3] === 'p' ? 0 : 12) - (lastY.includes(+x[1]) ? 40 : 0) + Math.min(20, lastY.length ? Math.min(...lastY.map(y => Math.abs(y - x[1]))) / 2 : 0) + (x[1] < 1990 ? 10 : x[1] < 2000 ? 8 : x[1] < 2010 ? 4 : 0) - (/straight win|in a row|\d+–0 start/i.test(x[2]) && lastY.includes(+x[1]) ? 40 : 0);
+  /* Nov 22 (Luka: too many ordinary LeBron nights): the same rules as the site's on-this-day card. An ordinary scoring night
+     (under 45, no record or milestone) is routine; rare lines step up; a player featured in the last six issues steps back */
+  const who = s => ((String(s).match(/^([A-Z][\w.'’-]+(?: [A-Z][\w.'’-]+){1,2}) (?:scored|had|handed|grabbed|became|blocked|made|hit|set|recorded|posted)/) || [])[1] || '');
+  const usedNames = (opts.usedOtd || []).slice(-6).map(k => { const [m, y] = String(k).split('|'); const w = (D.WOW || []).find(x => x[0] === m && String(x[1]) === y); return w ? who(w[2]) : ''; }).filter(Boolean);
+  const nOf = (s, re) => +((String(s).match(re) || [])[1] || 0);
+  const wow2 = s => { let v = 0; const pts = nOf(s, /(\d{2}) points/);
+    if (/^[A-Z][^ ]+ [A-Z][^ ]+(?: Jr\.)? scored \d+ points in an? [\d–]+ (win|loss)/.test(s) && pts < 45 && !/record|first|youngest|career|history/i.test(s)) v -= 30;
+    if (/record|first|youngest|only|never|history|franchise/i.test(s)) v += 12; if (pts >= 55) v += 14;
+    if (nOf(s, /(\d+) assists/) >= 18) v += 12; if (nOf(s, /(\d+) assists/) >= 20) v += 8; if (nOf(s, /(\d+) rebounds/) >= 25) v += 12; if (nOf(s, /(\d+) steals/) >= 7) v += 8; if (nOf(s, /(\d+) blocks/) >= 8) v += 10;
+    if (/ loss (to|at) /.test(s)) v -= 6; if (who(s) && usedNames.includes(who(s))) v -= 40; return v; };
+  const sc = x => wow2(x[2]) + (x[3] === 'p' ? 0 : 12) - (lastY.includes(+x[1]) ? 40 : 0) + Math.min(20, lastY.length ? Math.min(...lastY.map(y => Math.abs(y - x[1]))) / 2 : 0) + (x[1] < 1990 ? 10 : x[1] < 2000 ? 8 : x[1] < 2010 ? 4 : 0) - (/straight win|in a row|\d+–0 start/i.test(x[2]) && lastY.includes(+x[1]) ? 40 : 0);
   const otd = (() => { const used = new Set(opts.usedOtd || []); for (let k = 0; k <= 14; k++) for (const sg of k ? [-1, 1] : [0]) { const d = new Date(issueDay + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + sg * k); const m = d.toISOString().slice(5, 10); const f = (D.WOW || []).filter(x => x[0] === m && !used.has(x[0] + '|' + x[1])).sort((a, b) => sc(b) - sc(a))[0]; if (f) return [f[0], String(f[1]), f[2], k]; } return null; })();
   // up next: records and ratings with league ranks, then any injuries as one line
   let tape = [], nxInfo = null;
