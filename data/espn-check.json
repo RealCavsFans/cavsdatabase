@@ -1,5 +1,5 @@
 {
- "checked": "2026-11-22T10:50:35.948Z",
+ "checked": "2026-11-22T18:09:14.057Z",
  "games": {
   "0022600034": {
    "d": "20261113",
@@ -593,12 +593,20 @@
     "Saddiq Bey REB NBA 4 vs ESPN 5",
     "Yves Missi REB NBA 14 vs ESPN 13"
    ]
+  },
+  "0022600279": {
+   "d": "20261121",
+   "g": "BOS@SAC",
+   "s": "2026-11-22T10:51",
+   "status": "ok",
+   "espn": "401910028",
+   "diffs": []
   }
  },
  "sanity": [],
  "pm": {
-  "games": 30,
-  "players": 653,
+  "games": 31,
+  "players": 675,
   "off1": 4,
   "flags": []
  }
