@@ -27,3 +27,10 @@ node_modules/
 /sitemap.xml
 /data/prerender-hash.txt
 __pycache__/
+/og/about.jpg
+/og/charge.jpg
+/og/media.jpg
+/og/resources.jpg
+/og/roster-tree.jpg
+/og/roster.jpg
+/og/staff.jpg

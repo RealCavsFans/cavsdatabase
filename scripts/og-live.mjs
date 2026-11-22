@@ -193,6 +193,49 @@ ${rich}`,
     `<div class="L"><div class="k">From the NBA's official report</div><div class="big" style="font-size:96px;margin-top:10px">Cavs injury report</div></div><div class="rows">${inj.length ? inj.map(r => `<div><b>${esc(r[3])}</b><span>${esc(r[0])}</span><em>${esc(r[2])}</em></div>`).join('') : '<div><span>No Cavs on the injury report</span></div>'}</div>`, 'injury-report')]);
 }
 
+/* Nov 22 (Luka): the remaining main pages get live cards too (they were title-only) */
+{
+  const R = (n, x) => n === 1 ? x : x + 's', cur = dash(CUR_SEASON);
+  const STAFF = grab('STAFF'), ATK = grab('ATK'), ACQ = grab('ACQ'), CHARGE = grab('CHARGE');
+  const W = (SEASON.results || '').split('').filter(r => r === 'W').length, Lr = (SEASON.results || '').split('').filter(r => r === 'L').length;
+  const rows = (css2, list) => `<div class="rows">${list.map(([a, b, c]) => `<div><b>${a}</b><span>${b}</span>${c ? `<em>${c}</em>` : ''}</div>`).join('')}</div>`;
+  const ROWS = `.L{position:absolute;left:64px;top:56px;right:64px}.rows{position:absolute;left:64px;right:64px;top:258px}.rows div{display:flex;align-items:baseline;gap:22px;padding:13px 0;border-top:2px solid rgba(255,255,255,.16)}.rows b{font:800 22px 'Geist Mono';letter-spacing:2px;color:#F2B231;min-width:250px;text-transform:uppercase}.rows span{font:700 34px Archivo;flex:1}.rows em{font:600 22px 'Geist Mono';font-style:normal;color:#F4D6DD}`;
+  /* roster */
+  { const ages = PLAYERS.map(p => +p[6]).filter(Boolean), inch = PLAYERS.map(p => { const m = /^(\d+)-(\d+)$/.exec(p[3] || ''); return m ? +m[1] * 12 + +m[2] : 0; }).filter(Boolean);
+    const avgA = ages.reduce((a, b) => a + b, 0) / ages.length, avgH = Math.round(inch.reduce((a, b) => a + b, 0) / inch.length);
+    const top = ROSTER.slice(0, 6).map(r => esc(String(r[0]).split(' ').filter(w => !/^(Jr\.|Sr\.|II|III|IV)$/.test(w)).slice(-1)[0])).join(' · ');
+    cards.push(['og/roster.jpg', page(`.L{position:absolute;left:64px;top:56px;right:64px}.n3{margin-top:26px}.nm{position:absolute;left:64px;right:64px;top:420px;font:700 30px Archivo;color:#fff;border-top:2px solid rgba(255,255,255,.16);padding-top:18px}.nm span{color:#F2B231;font:700 18px 'Geist Mono';letter-spacing:3px;display:block;margin-bottom:8px}`,
+      `<div class="L"><div class="k">${cur} · bios, measurements, depth chart</div><div class="big" style="font-size:96px;margin-top:10px">Cavs roster</div><div class="n3"><div><b>${PLAYERS.length}</b><small>Players</small></div><div><b>${avgA.toFixed(1)}</b><small>Average age</small></div><div><b>${Math.floor(avgH / 12)}-${avgH % 12}</b><small>Average height</small></div></div></div><div class="nm"><span>TOP SALARIES</span>${top}</div>`, 'roster')]); }
+  /* staff */
+  { const S = STAFF.flatMap(g => g[1]), f = re => S.find(x => re.test(x[1])), gm = f(/^General Manager$/), ch = f(/^Chairman$/);
+    const cw = ATK.filter(r => r[1] === 'CLE').reduce((a, r) => [a[0] + r[2], a[1] + r[3]], [W, Lr]);
+    cards.push(['og/staff.jpg', page(ROWS, `<div class="L"><div class="k">Coaches &amp; front office · bios and records</div><div class="big" style="font-size:96px;margin-top:10px">Cavs staff</div></div>` + rows('', [
+      ['Head coach', 'Kenny Atkinson', `${cw[0]}–${cw[1]} with CLE`], ['President', 'Koby Altman', 'Since 2022'], ...(gm ? [['General manager', esc(gm[0]), 'Since ' + esc(gm[2])]] : []), ...(ch ? [['Chairman', esc(ch[0]), 'Since ' + esc(ch[2])]] : [])].slice(0, 4)), 'staff')]); }
+  /* roster tree */
+  { const how = PLAYERS.map(p => (ACQ[p[1]] || [''])[0]), cnt = re => how.filter(h => re.test(h)).length;
+    const dr = cnt(/^Draft/), tr = cnt(/trade/i), fa = cnt(/free agent|two-way|exhibit|10-day/i);
+    cards.push(['og/roster-tree.jpg', page(`.L{position:absolute;left:64px;top:56px;right:64px}.n3{margin-top:30px}.sub{position:absolute;left:64px;right:64px;top:430px;font:600 26px Archivo;color:#F4D6DD;border-top:2px solid rgba(255,255,255,.16);padding-top:18px}`,
+      `<div class="L"><div class="k">Every player by how he arrived</div><div class="big" style="font-size:96px;margin-top:10px">How the roster was built</div><div class="n3"><div><b>${dr}</b><small>Drafted</small></div><div><b>${tr}</b><small>${R(tr, 'Trade')}</small></div><div><b>${fa}</b><small>Free agents</small></div></div></div><div class="sub">Trade trees back to 2017</div>`, 'roster-tree')]); }
+  /* media */
+  { let v = null, a = null; try { v = JSON.parse(await readFile(new URL('videos.json', root), 'utf8'))[0]; } catch {} try { a = JSON.parse(await readFile(new URL('rcf.json', root), 'utf8')).items[0]; } catch {}
+    const cut = (s, n) => { s = String(s || ''); return s.length > n ? s.slice(0, n - 1).replace(/\s+\S*$/, '').replace(/[\s|,:;·–-]+$/, '') + '…' : s; };
+    cards.push(['og/media.jpg', page(`.L{position:absolute;left:64px;top:56px;right:64px}.it{margin-top:34px;border-left:6px solid #F2B231;padding-left:22px}.it+.it{margin-top:26px}.it span{display:block;font:700 18px 'Geist Mono';letter-spacing:3px;color:#F2B231}.it b{display:block;font:700 34px/1.18 Archivo;margin-top:6px}`,
+      `<div class="L"><div class="k">Press conferences · highlights · RCF articles</div><div class="big" style="font-size:96px;margin-top:10px">Cavs media</div>${v ? `<div class="it"><span>LATEST VIDEO</span><b>${esc(cut(v.title, 88))}</b></div>` : ''}${a ? `<div class="it"><span>REALCAVSFANS</span><b>${esc(cut(a.title, 88))}</b></div>` : ''}</div>`, 'media')]); }
+  /* resources */
+  { const RS = grab('RES'), n = RS.reduce((t2, g) => t2 + g[1].length, 0);
+    cards.push(['og/resources.jpg', page(`.L{position:absolute;left:64px;top:56px;right:64px}.n3{margin-top:26px}.ch{position:absolute;left:64px;right:64px;top:420px}.ch .chip{margin-bottom:10px}`,
+      `<div class="L"><div class="k">cavs_db approved sites</div><div class="big" style="font-size:96px;margin-top:10px">Resources</div><div class="n3"><div><b>${n}</b><small>Sites</small></div><div><b>${RS.length}</b><small>Categories</small></div></div></div><div class="ch">${RS.map(g => `<span class="chip">${esc(g[0])}</span>`).join('')}</div>`, 'resources')]); }
+  /* about */
+  { let seasons = 0; try { seasons = JSON.parse(await readFile(new URL('pdata/history.json', root), 'utf8')).seasons.length; } catch {}
+    cards.push(['og/about.jpg', page(`.L{position:absolute;left:64px;top:56px;right:64px}.n3{margin-top:30px}.tg{position:absolute;left:64px;right:64px;top:430px;font:700 34px Archivo;border-top:2px solid rgba(255,255,255,.16);padding-top:18px}.tg em{font-style:normal;color:#F2B231}`,
+      `<div class="L"><div class="k">A facts-only Cavs reference</div><div class="big" style="font-size:96px;margin-top:10px">About cavs_db</div><div class="n3">${seasons ? `<div><b>${seasons}</b><small>Seasons</small></div>` : ''}<div><b>${TX.length}</b><small>Transactions</small></div><div><b>${PLAYERS.length}</b><small>Player pages</small></div></div></div><div class="tg">Every Cavs fact. One place. <em>No takes.</em></div>`, 'about')]); }
+  /* charge */
+  { const nx = CHARGE.games.find(g => !g[4]), last = [...CHARGE.games].reverse().find(g => g[4]);
+    const dl = d => new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' });
+    cards.push(['og/charge.jpg', page(ROWS, `<div class="L"><div class="k">The Cavs' G League team · ${esc(CHARGE.record || '')}</div><div class="big" style="font-size:96px;margin-top:10px">Cleveland Charge</div></div>` + rows('', [
+      ...(last ? [['Last game', (last[2] === 'H' ? 'vs ' : 'at ') + esc(last[1]), esc(last[4])]] : []), ...(nx ? [['Next game', (nx[2] === 'H' ? 'vs ' : 'at ') + esc(nx[1]), dl(nx[0]) + ' · ' + esc(nx[3])]] : []), ['Roster', grab('CH_ROSTER').length + ' players', '']]), 'charge')]); }
+}
+
 /* transactions */
 {
   const t = [...TX].sort((a, b) => b.d.localeCompare(a.d))[0], n = TX.length;
