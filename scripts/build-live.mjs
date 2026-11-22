@@ -29,6 +29,7 @@ export async function buildLive(root = new URL('../', import.meta.url)) {
   for (const f of await readdir(new URL('a/', root))) if (/^live\.[0-9a-f]{10}\.(css|js)$/.test(f) && f !== `live.${hc}.css` && f !== `live.${hj}.js`) await unlink(new URL('a/' + f, root));
   const out = src.replace(sm[0], () => `<link rel="stylesheet" href="/a/live.${hc}.css">`).replace(jm[0], () => `<script src="/a/live.${hj}.js"></script>`);
   await writeFile(new URL('live.html', root), out);
+  await writeFile(new URL('live-version.json', root), JSON.stringify({ v: hj }) + '\n');  // Nov 22 (Luka): stale-page check, like app-version.json
   return `live.html: ${src.length} bytes -> ${out.length} shell + a/live.${hc}.css + a/live.${hj}.js`;
 }
 if (import.meta.url === `file://${process.argv[1]}`) console.log(await buildLive());

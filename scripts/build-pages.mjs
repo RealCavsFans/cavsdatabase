@@ -78,6 +78,8 @@ let shell = html; let CHMAP = {};
     } catch (e) { if (!/Cannot find (package|module)/.test(e.message)) console.warn('minify skipped:', e.message.split('\n')[0]); }
     await writeFile(new URL(`a/app.${hc}.css`, root), cssOut); await writeFile(new URL(`a/app.${hj}.js`, root), jsOut);
     keepC.add(`app.${hc}.css`); keepC.add(`app.${hj}.js`);
+    // Nov 22 (Luka): the app version, so a page left open on a phone can tell it's out of date and reload itself (see index.html, 'app-version')
+    await writeFile(new URL('app-version.json', root), JSON.stringify({ v: hj }) + '\n');
     shell = html.replace(sm[0], () => `<link rel="stylesheet" href="/a/app.${hc}.css"><link rel="preload" href="/a/app.${hj}.js" as="script">`).replace(jm[0], () => `<script src="/a/app.${hj}.js"></script>`);
     // other big inline scripts (share links + save-as-image, ~36 KB) also move to cached files, in the same spot so they run in the same order
     for (const m of [...shell.matchAll(/<script>([\s\S]*?)<\/script>/g)]) { if (m[1].length < 5000) continue; let code = m[1];

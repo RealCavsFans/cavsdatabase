@@ -7394,5 +7394,13 @@ document.addEventListener('click',e=>{const th=e.target.closest&&e.target.closes
   rows.sort((a,b)=>{if(out(a)!==out(b))return out(a)?1:-1;if(ci===0||out(a))return ci===0&&dir==='ascending'?b.dataset.o-a.dataset.o:a.dataset.o-b.dataset.o;const x=num(a.cells[ci]&&a.cells[ci].textContent),y=num(b.cells[ci]&&b.cells[ci].textContent);if(x==null&&y==null)return a.dataset.o-b.dataset.o;if(x==null)return 1;if(y==null)return -1;return (x-y)*sg||a.dataset.o-b.dataset.o});
   rows.forEach(r=>bd.appendChild(r))})})();</script>
 <style>table.ppx-gl thead th{cursor:pointer;user-select:none;-webkit-user-select:none}table.ppx-gl thead th[aria-sort]{color:var(--wine,#860038)}table.ppx-gl thead th[aria-sort=descending]::after{content:' ▾'}table.ppx-gl thead th[aria-sort=ascending]::after{content:' ▴'}.ppx-glw>.ps-links{margin:14px 0 0}</style>
+<script>/* Nov 22 (Luka): a page left open on a phone (a background tab, the home-screen app) can sit on an old version for hours.
+   Each build writes /app-version.json with the app file's name; when the page comes back to the front after 2+ minutes, or every 20
+   minutes while open, it checks, and if a newer version is out it reloads (right away when it returns to the front, otherwise on the next tap to another page). */
+(function(){const s=document.querySelector('script[src^="/a/app."]');if(!s||!window.fetch)return;const cur=(s.getAttribute('src').match(/app\.([0-9a-f]+)\.js/)||[])[1];if(!cur)return;
+ let stale=false,hidAt=0,last=0;const chk=()=>{last=Date.now();return fetch('/app-version.json?t='+last,{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.v&&j.v!==cur)stale=true;return stale}).catch(()=>false)};
+ document.addEventListener('visibilitychange',()=>{if(document.hidden){hidAt=Date.now();return}if(hidAt&&Date.now()-hidAt>12e4)chk().then(x=>{if(x)location.reload()})});
+ setInterval(()=>{if(!document.hidden&&Date.now()-last>12e5)chk()},6e4);setTimeout(chk,15e3);
+ const ps=history.pushState;history.pushState=function(){const r=ps.apply(this,arguments);if(stale)setTimeout(()=>location.reload(),0);return r}})();</script>
 </body>
 </html>

@@ -36,7 +36,7 @@ const OFFLINE = '<!doctype html><meta charset="utf-8"><meta name="viewport" cont
 self.addEventListener('fetch', e => {
   const r = e.request; if (r.method !== 'GET') return;
   const u = new URL(r.url); if (u.origin !== location.origin) return;
-  if (u.pathname === '/sw.js') return;
+  if (u.pathname === '/sw.js' || /^\/(app|live)-version\.json$/.test(u.pathname)) return;  /* Nov 22: the version check always asks the server */
   /* season archive files (season.json, the period files, per-player files): fresh from the network; the saved copy only when offline or slow */
   if (/^\/live-archive\/[^/]+\/(season(-p-[a-z0-9]+)?\.json|p\/[^/]+\.json)$/.test(u.pathname)) {
     const key = new Request(u.origin + u.pathname);

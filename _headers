@@ -51,3 +51,7 @@
   X-Robots-Tag: noindex
 /links-status.json
   X-Robots-Tag: noindex
+/app-version.json
+  Cache-Control: no-store
+/live-version.json
+  Cache-Control: no-store

@@ -35,3 +35,7 @@ __pycache__/
 /og/roster-tree.jpg
 /og/roster.jpg
 /og/staff.jpg
+
+# Nov 22: written by build-pages (the app version for stale-page reloads)
+/app-version.json
+/live-version.json

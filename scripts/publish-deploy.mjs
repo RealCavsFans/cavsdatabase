@@ -18,6 +18,7 @@ export const BUILT = [
   /^og\/(g|h|p|gp|gl)\//,
   /^og\/(live\.json|cap\.jpg|schedule\.jpg|assets\.jpg|moves\.jpg|history\.jpg|draft-picks\.jpg|trade-exceptions\.jpg|injury-report\.jpg|roster\.jpg|staff\.jpg|roster-tree\.jpg|media\.jpg|resources\.jpg|about\.jpg|charge\.jpg)$/,  // Nov 22: the search-page and main-page cards
   /^sitemap\.xml$/,
+  /^(app|live)-version\.json$/,
   /^data\/prerender-hash\.txt$/,
 ];
 const isBuilt = p => BUILT.some(r => r.test(p));
@@ -49,7 +50,7 @@ for (let i = 1; i <= 6; i++) {
   sh(`git read-tree ${main}`, env);                                   // main's source and data, as of right now
   sh('git rm -r -q --cached --ignore-unmatch .github', env);           // the site never needs the workflow files
   if (mode === 'worktree') {
-    const have = ['a', 'embed', 'games', 'players', 'history', 'media', 'vs', 'og', 'sitemap.xml', 'data/prerender-hash.txt'].filter(p => existsSync(p));
+    const have = ['a', 'embed', 'games', 'players', 'history', 'media', 'vs', 'og', 'sitemap.xml', 'app-version.json', 'live-version.json', 'data/prerender-hash.txt'].filter(p => existsSync(p));
     sh(`git add -f -- ${have.join(' ')} $(ls *.html | grep -v -x -e index.html -e live.src.html -e 404.html)`, env);
   } else {
     if (!base) { console.log('no deploy branch to take the built pages from; skipping'); process.exit(0); }

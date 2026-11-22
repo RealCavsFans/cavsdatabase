@@ -5252,5 +5252,13 @@ function prevPicker(){let w=document.getElementById('prevpk');if(w){w.remove()}w
  m.querySelectorAll('canvas:not([aria-hidden]):not([role])').forEach(c=>{const card=c.closest('section,.card,details,figure');const h=card&&card.querySelector('h2,h3,summary');if(h&&h.textContent.trim()){c.setAttribute('role','img');c.setAttribute('aria-label',h.textContent.trim().replace(/\s+/g,' ').slice(0,80)+' chart')}else c.setAttribute('aria-hidden','true')})};
  new MutationObserver(()=>{if(!t0)t0=setTimeout(run,600)}).observe(document.body,{childList:true,subtree:true});run()})();
 </script>
+<script>/* Nov 22 (Luka): a page left open on a phone (a background tab, the home-screen app) can sit on an old version for hours.
+   Each build writes /app-version.json with the app file's name; when the page comes back to the front after 2+ minutes, or every 20
+   minutes while open, it checks, and if a newer version is out it reloads (right away when it returns to the front, otherwise on the next tap to another page). */
+(function(){const s=document.querySelector('script[src^="/a/live."]');if(!s||!window.fetch)return;const cur=(s.getAttribute('src').match(/live\.([0-9a-f]+)\.js/)||[])[1];if(!cur)return;
+ let stale=false,hidAt=0,last=0;const chk=()=>{last=Date.now();return fetch('/live-version.json?t='+last,{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.v&&j.v!==cur)stale=true;return stale}).catch(()=>false)};
+ document.addEventListener('visibilitychange',()=>{if(document.hidden){hidAt=Date.now();return}if(hidAt&&Date.now()-hidAt>12e4)chk().then(x=>{if(x)location.reload()})});
+ setInterval(()=>{if(!document.hidden&&Date.now()-last>12e5)chk()},6e4);setTimeout(chk,15e3);
+ const ps=history.pushState;history.pushState=function(){const r=ps.apply(this,arguments);if(stale)setTimeout(()=>location.reload(),0);return r}})();</script>
 </body>
 </html>
