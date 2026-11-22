@@ -10,6 +10,8 @@ export default {
   async fetch(request, env, ctx) {
     const u = new URL(request.url);
     /* Nov 3: short sign-up links for Cavs & Coffee */
+    /* Nov 22 (Luka): cavsdatabase.com/records -> the franchise records on the History page */
+    if (/^\/records\/?$/i.test(u.pathname)) return Response.redirect(u.origin + '/history#hx-rec', 301);
     if (u.pathname === '/coffee' || u.pathname === '/newsletter') return Response.redirect('https://buttondown.com/cavscoffee', 302);
     /* Nov 9 (Luka): cavsdatabase.com/stats -> this season's stats. Nov 22: each season has its own address that search
        engines can index, /stats/2026-27 (the live page, told its season by the path; see seasonPage in live-meta.js) */

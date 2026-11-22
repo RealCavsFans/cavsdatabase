@@ -5827,6 +5827,7 @@ function show(route){setTimeout(()=>statsBackChip(route),0);if(route==='home'){c
   if(id==='video'){loadRcf();if(toArt){try{history.replaceState({p:'media'},'','/media')}catch(_){}}if(toArt)setTimeout(()=>{const a=document.getElementById('articles');if(a)a.scrollIntoView({block:'start'})},60)}
   if(id==='roster-tree'&&window.rtDraw)setTimeout(rtDraw,30);
   if(id==='history'&&window.hxLoad)hxLoad();
+  /* Nov 22: a link to a section (/history#hx-rec) scrolls there once the page has drawn it */if(location.hash&&/^#[a-z][\w-]*$/.test(location.hash)){const hh=location.hash;[500,1500].forEach(ms=>setTimeout(()=>{const e=document.querySelector(hh);if(e&&location.hash===hh&&e.getBoundingClientRect().top>innerHeight*.6)e.scrollIntoView({block:'start'})},ms))}
   if(id==='resources'&&window.loadCovers)loadCovers();
   cdbFocus(fxr?route:null);
   if(window.cdbA11y)cdbA11y(id);
