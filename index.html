@@ -1037,6 +1037,7 @@ tr.mark td,tr.mark.cupm td,.sched tr.mark td,.sched tr.mark.cupm td,.rc3-adv .rc
 </style>
 <style id="a11y-search">/* Nov 22 a11y: the search box shows where the keyboard is */.sh-s:focus-within{border-color:#f2b231!important;box-shadow:0 0 0 2px #f2b231}</style>
 <style id="home-browse">@media (min-width:1100px){.home{grid-template-areas:"col side" "browse side"}.home>.col{grid-area:col}.home>.side{grid-area:side;grid-row:1/span 2}.home>.home-browse{grid-area:browse}.home>.home-browse .block-h{margin-top:4px!important}}</style>
+<style id="fx-pages">.fx-hide{display:none!important}.fx-head{padding:20px 0 6px;max-width:760px}.fx-head h1{font:800 2.25rem/1.05 var(--cond);text-transform:uppercase;margin:0 0 8px}.fx-head p{margin:0 0 8px;color:var(--muted);font-size:.9375rem;line-height:1.5}.fx-head a{font-size:.875rem;color:var(--wine-ink)}main[data-fx="injury-report"] .inj-more{display:none}main[data-fx="injury-report"] .home{display:block!important}main[data-fx="injury-report"] .home>.side{display:block!important;max-width:720px}main[data-fx] .fx-head{padding-left:20px;padding-right:20px}@media(min-width:721px){main[data-fx] .fx-head{padding-left:0;padding-right:0;margin:0 auto;max-width:1160px}}</style>
 </head>
 <body>
 <script>/* Nov 21 (Luka): site rule: a percentage whose decimal is zero drops it (61.0% -> 61%, 100.0% -> 100%; 61.4% stays).
@@ -1131,7 +1132,7 @@ tr.mark td,tr.mark.cupm td,.sched tr.mark td,.sched tr.mark.cupm td,.rc3-adv .rc
     <section class="rail o-inj" aria-labelledby="inj-h">
       <div class="block-h"><h2 id="inj-h">Injury report</h2><span id="inj-count"></span></div>
       <ul class="ginj" id="inj"></ul>
-      <div class="inj-note" id="inj-note"></div>
+      <div class="inj-note" id="inj-note"></div><a class="inj-more" href="/injury-report" data-go="injury-report" style="display:inline-block;margin-top:8px;font-size:.8125rem;color:var(--wine-ink)">Full injury report →</a>
     </section>
     <section class="rail o-pipe" aria-labelledby="pipe-h">
       <div class="block-h"><h2 id="pipe-h">Prospect pipeline</h2></div>
@@ -4826,6 +4827,9 @@ function loadRcf(){if(rcfLoaded)return;rcfLoaded=true;
 })();
 /* page titles and descriptions (browser tab, search results, link previews); scripts/build-pages.mjs bakes them into per-page copies */
 const PAGE_META={
+'draft-picks':['Cavs Draft Picks 2027–2033: Every Pick Owned & Owed, With Protections | Cavs Database','Every first- and second-round pick the Cleveland Cavaliers own and owe through 2033: protections, swaps, the Stepien Rule and the frozen 2033 first, plus the players they have drafted.'],
+'trade-exceptions':['Cavs Trade Exceptions 2026–27: Amounts, Expiration Dates & How They Work | Cavs Database','Every trade exception the Cleveland Cavaliers hold: how much is left, when each one expires, the trade that created it and what has been used, plus the mid-level and bi-annual exceptions.'],
+'injury-report':['Cavs Injury Report Today: Who Is Out, Questionable & Probable | Cavs Database','The Cleveland Cavaliers injury report from the NBA\u2019s official filings: who is out, questionable or probable, G League assignments, games missed this season and each player\u2019s injury history.'],
  'home':['Cleveland Cavaliers Schedule, Roster & Salary Cap 2026–27 | Cavs Database','Everything Cavaliers. Everything you need. The Cavs record, next game and TV, key dates, injuries, salary cap and the Cleveland Charge, updated daily.'],
  'schedule':['Cavs Schedule & Standings 2026–27: How to Watch & Listen | Cavs Database','All 82 Cavs games with how to watch and listen to each, results, East standings and the playoff race. National TV, DAZN, free over-the-air and radio for every game.'],
  'roster':['Cavs Roster 2026–27: Depth Chart, Heights & Wingspans | Cavs Database','Every Cavs player with height, wingspan, age, college, how he was acquired and his socials, plus the depth chart and combine measurements.'],
@@ -5797,7 +5801,7 @@ function show(route){setTimeout(()=>statsBackChip(route),0);if(route==='home'){c
   if(window.cdbAlView)window.cdbAlView();
   if(window.cdbAttachX)setTimeout(window.cdbAttachX,60);
   {const cur=document.querySelector('.wm-term s');if(cur&&!matchMedia('(prefers-reduced-motion: reduce)').matches){cur.style.animation='none';void cur.offsetWidth;cur.style.animation=''}}
-  let id=route.split('/')[0];const toArt=route==='media/rcf';if(toArt)route='media';if(id==='media')id='video';
+  let id=route.split('/')[0];const fxr=FOCUS[route];if(fxr)id=fxr[0];const toArt=route==='media/rcf';if(toArt)route='media';if(id==='media')id='video';
   if(id==='history'&&route.split('/')[1]){id='season';window.renderSeason&&renderSeason(route.split('/')[1])}
   if(id==='games'){id='game';if(!window.renderGame||!renderGame(route.split('/')[1]||'')){id='home';route='home'}}
   if(id==='players'){id='player';if(!PP_VIS||!window.renderPlayer||!renderPlayer(route.split('/')[1]||'')){id='home';route='home'}}
@@ -5815,9 +5819,27 @@ function show(route){setTimeout(()=>statsBackChip(route),0);if(route==='home'){c
   if(id==='roster-tree'&&window.rtDraw)setTimeout(rtDraw,30);
   if(id==='history'&&window.hxLoad)hxLoad();
   if(id==='resources'&&window.loadCovers)loadCovers();
+  cdbFocus(fxr?route:null);
   if(window.cdbA11y)cdbA11y(id);
   if(id==='home'&&window.resetCal){resetCal();const c=document.getElementById('dcal');if(c&&c.getBoundingClientRect().top<innerHeight){c.dataset.done=1;setTimeout(()=>c.classList.add('rip'),500)}}
 }
+/* Nov 22 (Luka): pages for what people search ("Cavs draft picks", "Cavs trade exceptions", "Cavs injury report"). Each is
+   one part of an existing page shown on its own, with its own title, heading and intro; the full page is a link away.
+   [view, h2 headings to keep, page heading, intro, link to the full page] */
+const FOCUS={
+  'draft-picks':['assets',['Draft picks','Drafted players'],'Cavs draft picks','Every pick the Cavs own and owe through 2033, with protections and how each one moved, plus the players they have drafted.',['assets','All Cavs assets']],
+  'trade-exceptions':['assets',['Exceptions'],'Cavs trade exceptions','Every trade exception the Cavs hold, what is left of it, when it expires and the trade that created it, plus the mid-level and bi-annual.',['cap','Full cap sheet']],
+  'injury-report':['home',['Injury report'],'Cavs injury report','From the NBA’s official injury report: who is out, questionable or probable, G League assignments, games missed this season and each player’s injury history.',['roster','Cavs roster']]
+};
+function cdbFocus(r){
+  document.querySelectorAll('.fx-hide').forEach(e=>e.classList.remove('fx-hide'));document.querySelectorAll('.fx-head').forEach(e=>e.remove());document.querySelectorAll('main[data-fx]').forEach(m=>delete m.dataset.fx);
+  if(!r||!FOCUS[r])return;const [v,keep,h,intro,[lr,ll]]=FOCUS[r],m=document.getElementById('view-'+(v==='media'?'video':v));if(!m)return;m.dataset.fx=r;
+  const hd=el('header','fx-head');hd.append(el('h1',null,h),el('p',null,intro));const a=el('a',null,ll+' →');a.href='/'+lr;a.dataset.go=lr;hd.appendChild(a);m.prepend(hd);
+  const apply=()=>{if(m.dataset.fx!==r)return;const ks=[...m.querySelectorAll('h2')].filter(x=>keep.includes(x.textContent.trim())).map(x=>{let s=x;while(s.parentElement&&s.parentElement!==m&&!/^(SECTION)$/.test(s.tagName))s=s.parentElement;return s});if(!ks.length)return;
+    const want=new Set();ks.forEach(k=>{for(let e=k;e&&e!==m;e=e.parentElement)want.add(e)});
+    want.forEach(e=>{const p=e.parentElement;if(!p)return;[...p.children].forEach(c=>{if(!want.has(c)&&!c.classList.contains('fx-head')&&!ks.some(k=>c.contains(k)||k.contains(c)))c.classList.add('fx-hide')})});
+    ks.forEach(k=>k.querySelectorAll('.fx-hide').forEach(x=>x.classList.remove('fx-hide')))};
+  [0,200,800,2000,4500].forEach(ms=>setTimeout(apply,ms))}
 /* accessibility: announce page changes, move focus to the new page's heading, Escape closes pop-ups, focus stays inside dialogs, table and heading semantics */
 (function(){const live=document.createElement('div');live.className='sr';live.setAttribute('role','status');live.setAttribute('aria-live','polite');document.body.appendChild(live);
  let first=true;const vis=()=>[...document.querySelectorAll('main')].find(m=>!m.hidden);

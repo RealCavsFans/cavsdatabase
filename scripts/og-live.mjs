@@ -177,6 +177,22 @@ ${rich}`,
 <div class="yrs">${Array.from({ length: 7 }, (_, k) => 2027 + k).map(y => `<span class="${firsts.some(p => +p[0] === y) ? 'h' : ''}">${y}</span>`).join('')}</div>`, 'assets')]);
 }
 
+/* Nov 22 (Luka): the search pages (/draft-picks, /trade-exceptions, /injury-report) get their own cards */
+{
+  const firsts = PICKS.filter(p => p[1] === '1st'), seconds = PICKS.filter(p => p[1] === '2nd');
+  cards.push(['og/draft-picks.jpg', page(`.L{position:absolute;left:64px;top:56px;right:64px}.n3{margin-top:26px}.yrs{position:absolute;left:64px;right:64px;top:400px;display:flex;gap:10px}.yrs span{flex:1;padding:16px 0;text-align:center;font:800 34px 'Geist Mono';background:rgba(255,255,255,.12)}.yrs span.h{background:#F2B231;color:#4a0020}`,
+    `<div class="L"><div class="k">Owned &amp; owed · with protections</div><div class="big" style="font-size:96px;margin-top:10px">Cavs draft picks</div><div class="n3"><div><b>${firsts.length}</b><small>Firsts held</small></div><div><b>${seconds.length}</b><small>${seconds.length === 1 ? 'Second held' : 'Seconds held'}</small></div><div><b>2027–33</b><small>Every draft</small></div></div></div>
+<div class="yrs">${Array.from({ length: 7 }, (_, k) => 2027 + k).map(y => `<span class="${firsts.some(p => +p[0] === y) ? 'h' : ''}">${y}</span>`).join('')}</div>`, 'draft-picks')]);
+  const tpe = EXC.filter(e => /^Trade exception/.test(e[0])).map(e => [e[0].replace(/^Trade exception \((.*)\)$/, '$1'), e[1] - (e[4] || []).reduce((a, u) => a + u[2], 0), e[2]]).filter(e => e[1] > 0).sort((a, b) => b[1] - a[1]);
+  const Mx = v => '$' + (v / 1e6).toFixed(v >= 1e7 ? 1 : 2).replace(/\.0+$/, '') + 'M';
+  cards.push(['og/trade-exceptions.jpg', page(`.L{position:absolute;left:64px;top:56px;right:64px}.rows{position:absolute;left:64px;right:64px;top:250px}.rows div{display:flex;align-items:baseline;gap:22px;padding:14px 0;border-top:2px solid rgba(255,255,255,.16)}.rows b{font:800 46px 'Geist Mono';color:#F2B231;min-width:270px}.rows span{font:700 30px Archivo;flex:1}.rows em{font:600 22px 'Geist Mono';font-style:normal;color:#F4D6DD}`,
+    `<div class="L"><div class="k">${dash(CUR_SEASON)} · amount left · expires</div><div class="big" style="font-size:96px;margin-top:10px">Cavs trade exceptions</div></div><div class="rows">${tpe.slice(0, 3).map(e => `<div><b>${Mx(e[1])}</b><span>${esc(e[0])}</span><em>${esc(e[2])}</em></div>`).join('')}</div>`, 'trade-exceptions')]);
+  const INJ = grab('INJURIES'), ord = s => ({ Out: 0, Doubtful: 1, Questionable: 2, Probable: 3 }[s] ?? 4);
+  const inj = INJ.slice().sort((a, b) => ord(a[3]) - ord(b[3])).slice(0, 4);
+  cards.push(['og/injury-report.jpg', page(`.L{position:absolute;left:64px;top:56px;right:64px}.rows{position:absolute;left:64px;right:64px;top:250px}.rows div{display:flex;align-items:baseline;gap:22px;padding:13px 0;border-top:2px solid rgba(255,255,255,.16)}.rows b{font:800 30px 'Geist Mono';color:#F2B231;min-width:220px;text-transform:uppercase}.rows span{font:700 32px Archivo;min-width:330px}.rows em{font:500 24px Archivo;font-style:normal;color:#F4D6DD;flex:1}`,
+    `<div class="L"><div class="k">From the NBA's official report</div><div class="big" style="font-size:96px;margin-top:10px">Cavs injury report</div></div><div class="rows">${inj.length ? inj.map(r => `<div><b>${esc(r[3])}</b><span>${esc(r[0])}</span><em>${esc(r[2])}</em></div>`).join('') : '<div><span>No Cavs on the injury report</span></div>'}</div>`, 'injury-report')]);
+}
+
 /* transactions */
 {
   const t = [...TX].sort((a, b) => b.d.localeCompare(a.d))[0], n = TX.length;
