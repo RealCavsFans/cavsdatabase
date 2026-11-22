@@ -6222,7 +6222,7 @@ onView('cap',()=>{(function(){const B=document.getElementById('sm-b');if(!B)retu
   const G={schedule:[['schedule','Schedule'],['live','Live Game'],['season','Season Stats']],team:[['roster','Roster'],['staff','Coaches & Front Office'],['charge','Charge']],cap:[['cap','Salary Cap'],['assets','Assets'],['moves','Transactions']],more:[['history','History'],['media','Media'],['resources','Resources'],['about','About'],['alerts','Game alerts']]};
   const FIRST={schedule:'schedule',team:'roster',cap:'cap',more:'history'};
   const route=()=>{const r=location.pathname.replace(/^\/|\.html$|\/$/g,'');return r||'home'};
-  const grpOf=r=>{if(r==='home')return 'home';if(/^games\//.test(r))return 'schedule';if(/^players\//.test(r))return 'team';if(/^history\//.test(r))return 'more';for(const [g,L] of Object.entries(G))if(L.some(([k])=>k===r))return g;return 'home'};
+  const grpOf=r=>{if(r==='home')return 'home';if(/^games\//.test(r))return 'schedule';if(/^players\//.test(r))return 'team';if(/^(history\/|vs\/)/.test(r))return 'more';/* Nov 22: the vs pages are part of History (the bottom bar lit Home) */for(const [g,L] of Object.entries(G))if(L.some(([k])=>k===r))return g;return 'home'};
   const bar=el('nav','mbar');bar.setAttribute('aria-label','Sections');
   [['home','Home'],['schedule','Schedule']].concat(STATS_ON?[['stats','Stats']]:[],[['team','Team'],['cap','Cap'],['more','More']]).forEach(([k,l])=>{const a=el('a');
     if(k==='stats'){const lv=statsLive();a.href=statsHref();a.dataset.g='stats';a.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>';a.append(lv?'Live':l);if(lv)a.appendChild(el('i','dot'));bar.appendChild(a);return}
