@@ -1038,6 +1038,7 @@ tr.mark td,tr.mark.cupm td,.sched tr.mark td,.sched tr.mark.cupm td,.rc3-adv .rc
 <style id="a11y-search">/* Nov 22 a11y: the search box shows where the keyboard is */.sh-s:focus-within{border-color:#f2b231!important;box-shadow:0 0 0 2px #f2b231}</style>
 <style id="home-browse">@media (min-width:1100px){.home{grid-template-areas:"col side" "browse side"}.home>.col{grid-area:col}.home>.side{grid-area:side;grid-row:1/span 2}.home>.home-browse{grid-area:browse}.home>.home-browse .block-h{margin-top:4px!important}}</style>
 <style id="fx-pages">.fx-hide{display:none!important}.fx-head{padding:20px 0 6px;max-width:760px}.fx-head h1{font:800 2.25rem/1.05 var(--cond);text-transform:uppercase;margin:0 0 8px}.fx-head p{margin:0 0 8px;color:var(--muted);font-size:.9375rem;line-height:1.5}.fx-head a{font-size:.875rem;color:var(--wine-ink)}main[data-fx="injury-report"] .inj-more{display:none}main[data-fx="injury-report"] .home{display:block!important}main[data-fx="injury-report"] .home>.side{display:block!important;max-width:720px}main[data-fx] .fx-head{padding-left:20px;padding-right:20px}@media(min-width:721px){main[data-fx] .fx-head{padding-left:0;padding-right:0;margin:0 auto;max-width:1160px}}</style>
+<style id="ps-pages">.ps-hd{margin:6px 0 14px}.ps-hd h1{margin:6px 0 4px}.ps-hd .ps-se{margin-left:10px;color:var(--wine-ink)}.ps .gpc{margin-bottom:14px}.ps-sub{margin:0 0 8px;font-size:.75rem;color:var(--muted)}.ps-tiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.ps-tiles div{border:1px solid var(--line);padding:10px 12px}.ps-tiles b{display:block;font:700 1.375rem var(--mono)}.ps-tiles small{font:800 .625rem var(--sans);letter-spacing:.08em;color:var(--muted)}.ps-tiles+.ps-sub{margin-top:10px}.ps-t tbody th{text-align:left;font:600 .75rem var(--sans);text-transform:none;letter-spacing:0;color:var(--fg);white-space:nowrap}.ps-t td{text-align:right;padding:5px 7px}.ps-links{font-size:.8125rem;margin:6px 0 14px}.ps-links span{color:var(--muted)}.ps-links a{color:var(--wine-ink)}@media(max-width:600px){.ps-tiles{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}.ps-tiles div{padding:8px 4px;text-align:center}.ps-tiles b{font-size:1rem}}</style>
 </head>
 <body>
 <script>/* Nov 21 (Luka): site rule: a percentage whose decimal is zero drops it (61.0% -> 61%, 100.0% -> 100%; 61.4% stays).
@@ -1378,6 +1379,7 @@ tr.mark td,tr.mark.cupm td,.sched tr.mark td,.sched tr.mark.cupm td,.rc3-adv .rc
 </main>
 
 <main id="view-player" hidden></main>
+<main id="view-pseason" hidden></main>
 <main id="view-game" hidden></main>
 <main id="view-season" hidden></main>
 <main id="view-roster-tree" hidden>
@@ -4899,6 +4901,7 @@ window.renderPlayer=function(s){
   {const sk=el('div','skel-wrap');sk.setAttribute('aria-label','Loading');sk.innerHTML='<div class="skel skel-band"></div><div class="skel-row"><div class="skel skel-b"></div><div class="skel skel-b"></div></div><div class="skel skel-card"></div><div class="skel skel-card"></div>';body.appendChild(sk)}
   /* Nov 19 audit: his own game-archive file loads with the page, so this season's numbers come from the archive (the same counting as the season stats page) */const nk0=String(n).normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,''),AK='2026-27|'+nk0;
   const ppArch=()=>{PPD.arch=PPD.arch||{};if(PPD.arch[AK])return Promise.resolve();return cdbPFile(nk0).catch(()=>null).then(j=>{if(j)PPD.arch[AK]=j})};
+  /* Nov 22 (Luka): links to his season pages (game log and splits for each Cavs season since 2020-21) */fetch('/pdata/ps/index.json').then(r=>r.ok?r.json():null).catch(()=>null).then(I=>{const x=I&&I[s];if(!x||!x.s||!x.s.length)return;const row=el('p','ps-links');row.appendChild(el('span',null,'Season game logs: '));x.s.slice().reverse().forEach((se,k)=>{if(k)row.append(' · ');const a=el('a',null,se.replace('-','–'));a.href='/players/'+s+'/'+se;a.dataset.go='players/'+s+'/'+se;row.appendChild(a)});w.insertBefore(row,body)});
   Promise.all([ppLoad(),needChunk('pp'),ppArch()]).then(()=>{body.innerHTML='';try{ppBuild(p,body)}catch(e){console.error(e);body.appendChild(el('p','dim','Something went wrong loading this page.'))}
     /* links like /players/evan-mobley#ch-his open that chapter */
     const h=location.hash;if(/^#ch-[a-z]+$/.test(h)){const d=document.querySelector(h);if(d){d.open=true;setTimeout(()=>d.scrollIntoView({block:'start'}),150)}}}).catch(e=>{/* Nov 18 (Luka): never leave the loading boxes up forever */console.warn('player page',e);body.innerHTML='';const m=el('p','dim','This page didn’t load. ');const b=el('button','oo2-more','Try again');b.type='button';b.onclick=()=>location.reload();m.appendChild(b);body.appendChild(m)});
@@ -5788,7 +5791,7 @@ const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3PT%','tp'],['FG%','f
   /* Nov 5 (Luka): no sources footnote on player pages */
 }/*@/chunk*/
 
-const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge','player','roster-tree','game','history','season','about'];
+const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge','player','pseason','roster-tree','game','history','season','about'];
 /* page titles and descriptions per route (search engines and browser tabs) */
 const ROUTE_ALIAS={video:'media',rcf:'media/rcf'}; /* media/rcf now opens Media scrolled to the articles */
 function routeOf(){let r=location.pathname.replace(/^\/+|\/+$/g,'').toLowerCase();if(/index\.html$/.test(r)||location.protocol==='file:')r='';const h=location.hash.slice(1);if(!r&&h&&(SECTIONS.some(x=>x[0]===h)||ROUTE_ALIAS[h]))r=h;const AL={video:'media',rcf:'media/rcf'};return AL[r]||r||'home'}
@@ -5804,14 +5807,15 @@ function show(route){setTimeout(()=>statsBackChip(route),0);if(route==='home'){c
   let id=route.split('/')[0];const fxr=FOCUS[route];if(fxr)id=fxr[0];const toArt=route==='media/rcf';if(toArt)route='media';if(id==='media')id='video';
   if(id==='history'&&route.split('/')[1]){id='season';window.renderSeason&&renderSeason(route.split('/')[1])}
   if(id==='games'){id='game';if(!window.renderGame||!renderGame(route.split('/')[1]||'')){id='home';route='home'}}
-  if(id==='players'){id='player';if(!PP_VIS||!window.renderPlayer||!renderPlayer(route.split('/')[1]||'')){id='home';route='home'}}
-  const sec=id==='video'?'media':id==='player'?'roster':id==='roster-tree'?'moves':id==='game'?'schedule':id==='season'?'history':id;
+  if(id==='players'&&/^\d{4}-\d\d$/.test(route.split('/')[2]||'')){id='pseason';renderPSeason(route.split('/')[1],route.split('/')[2])}
+  else if(id==='players'){id='player';if(!PP_VIS||!window.renderPlayer||!renderPlayer(route.split('/')[1]||'')){id='home';route='home'}}
+  const sec=id==='video'?'media':id==='player'||id==='pseason'?'roster':id==='roster-tree'?'moves':id==='game'?'schedule':id==='season'?'history':id;
   if(!SECTIONS.some(s=>s[0]===sec)){id='home';route='home'}
   runView(id);
   BUILT.forEach(v=>{document.getElementById('view-'+v).hidden=id!==v});
   const stub=document.getElementById('view-stub');stub.hidden=BUILT.includes(id);
   tabs.querySelectorAll('[data-go]').forEach(b=>{if(b.dataset.go===sec)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
-  {const M=(id==='game'&&window.GAME_META)?GAME_META:PAGE_META[route]||PAGE_META[id]||PAGE_META.home;document.title=M[0];const set=(sel,v)=>{const e=document.querySelector(sel);if(e)e.setAttribute('content',v)};set('meta[name=description]',M[1]);set('meta[property="og:title"]',M[0]);set('meta[property="og:description"]',M[1])}
+  {const M=(id==='game'&&window.GAME_META)?GAME_META:(id==='pseason'&&window.PS_META)?PS_META:PAGE_META[route]||PAGE_META[id]||PAGE_META.home;document.title=M[0];const set=(sel,v)=>{const e=document.querySelector(sel);if(e)e.setAttribute('content',v)};set('meta[name=description]',M[1]);set('meta[property="og:title"]',M[0]);set('meta[property="og:description"]',M[1])}
   const path=route==='home'?'/':'/'+route;const cl=document.querySelector('link[rel=canonical]');if(cl)cl.href='https://cavsdatabase.com'+path;const ou=document.querySelector('meta[property="og:url"]');if(ou)ou.content='https://cavsdatabase.com'+path;
   window.scrollTo(0,0);
   if(window.scrambleView)scrambleView(id);
@@ -5823,6 +5827,35 @@ function show(route){setTimeout(()=>statsBackChip(route),0);if(route==='home'){c
   if(window.cdbA11y)cdbA11y(id);
   if(id==='home'&&window.resetCal){resetCal();const c=document.getElementById('dcal');if(c&&c.getBoundingClientRect().top<innerHeight){c.dataset.done=1;setTimeout(()=>c.classList.add('rip'),500)}}
 }
+/* Nov 22 (Luka): a page for every Cavs player's season since 2020-21 (/players/<name>/<season>): season line, splits,
+   highs and the full game log, from the NBA box scores in the game archive (scripts/player-seasons.mjs, pdata/ps) */
+window.renderPSeason=function(sl,se){const v=document.getElementById('view-pseason');v.innerHTML='';const w=el('div','wrap page ps');v.appendChild(w);
+  const sd=se.replace('-','–');const cur=PLAYERS.find(x=>slug(x[1])===sl);
+  const bc=el('div','dim');bc.style.fontSize='13px';const a1=el('a',null,'Home');a1.href='/';a1.dataset.go='home';const a2=el('a',null,'Roster');a2.href='/roster';a2.dataset.go='roster';bc.append(a1,' / ',a2,' / ');if(cur){const a3=el('a',null,cur[1]);a3.href='/players/'+sl;a3.dataset.go='players/'+sl;bc.append(a3)}else bc.append(sl.replace(/-/g,' '));bc.append(' / '+sd);w.appendChild(bc);
+  const body=el('div');body.appendChild(el('p','dim','Loading…'));w.appendChild(body);
+  Promise.all([fetch('/pdata/ps/'+se+'.json').then(r=>r.ok?r.json():null).catch(()=>null),fetch('/pdata/ps/index.json').then(r=>r.ok?r.json():null).catch(()=>null)]).then(([D,I])=>{body.innerHTML='';
+    const P=D&&D.p&&D.p[sl];if(!P){body.appendChild(el('p','dim','No Cavs games for this player in '+sd+'.'));return}
+    const n=P.n,G=P.g,C=D.cols,ix=k=>C.indexOf(k),sum=(L,k)=>L.reduce((a,r)=>a+r[ix(k)],0);
+    if(!cur){const bt=bc.lastChild&&bc.childNodes[bc.childNodes.length-2];if(bt&&bt.nodeType===3)bt.textContent=n}
+    window.PS_META=[n+' '+sd+' Stats & Game Log: Cavaliers | Cavs Database',n+'’s '+sd+' season with the Cleveland Cavaliers: per-game stats, shooting splits, home and away, by month, season highs and every game he played, from the NBA’s box scores.'];document.title=PS_META[0];
+    {const d=document.querySelector('meta[name=description]');if(d)d.content=PS_META[1]}
+    const hd=el('div','ps-hd');const h1=el('h1',null,n);h1.appendChild(el('span','ps-se',sd));hd.appendChild(h1);
+    const gs=sum(G,'gs');hd.appendChild(el('p','dim',(cur?(cur[2]||'')+' · ':'')+'Cleveland Cavaliers · '+G.length+' game'+(G.length>1?'s':'')+(gs?', '+gs+' start'+(gs>1?'s':''):'')+' · regular season, from the NBA’s box scores'));w.insertBefore(hd,body);
+    const f1=x=>{const r=Math.round(x*10)/10;return Number.isInteger(r)?String(r):r.toFixed(1)},pc=(m,a)=>a?f1(100*m/a)+'%':'–',ts=L=>{const d=2*(sum(L,'fga')+.44*sum(L,'fta'));return d?f1(100*sum(L,'pts')/d)+'%':'–'};
+    const card=(t,sub)=>{const c=el('section','gpc ps-c');const h=el('div','block-h');h.appendChild(el('h2',null,t));c.appendChild(h);if(sub)c.appendChild(el('p','ps-sub',sub));body.appendChild(c);return c};
+    /* season line */{const c=card('Per game');const g=G.length,pg=k=>f1(sum(G,k)/g);const tl=el('div','ps-tiles');[['PTS',pg('pts')],['REB',pg('reb')],['AST',pg('ast')],['STL',pg('stl')],['BLK',pg('blk')],['MIN',pg('min')],['FG%',pc(sum(G,'fgm'),sum(G,'fga'))],['3P%',pc(sum(G,'tpm'),sum(G,'tpa'))],['FT%',pc(sum(G,'ftm'),sum(G,'fta'))],['TS%',ts(G)]].forEach(([k,x])=>{const d=el('div');d.append(el('b',null,x),el('small',null,k));tl.appendChild(d)});c.appendChild(tl);
+      const tot=el('p','ps-sub','Totals: '+sum(G,'pts')+' points, '+sum(G,'reb')+' rebounds, '+sum(G,'ast')+' assists, '+sum(G,'tpm')+' threes · plus-minus '+(sum(G,'pm')>0?'+':'')+sum(G,'pm'));c.appendChild(tot)}
+    /* splits */{const c=card('Splits','Per game.');const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const rows=[['Season',G],['Home',G.filter(r=>r[2]==='H')],['Away',G.filter(r=>r[2]==='A')],['Wins',G.filter(r=>r[3]==='W')],['Losses',G.filter(r=>r[3]==='L')],];{const st=G.filter(r=>r[ix('gs')]),bn=G.filter(r=>!r[ix('gs')]);if(st.length&&bn.length)rows.push(['Starter',st],['Bench',bn])}
+      const ms=[...new Set(G.map(r=>r[0].slice(0,7)))];ms.forEach(m=>rows.push([MON[+m.slice(5)-1],G.filter(r=>r[0].startsWith(m))]));
+      const t=el('table','ppx-t ps-t');t.innerHTML='<thead><tr><th></th><th>G</th><th>Min</th><th>Pts</th><th>Reb</th><th>Ast</th><th>FG%</th><th>3P%</th><th>TS%</th></tr></thead>';const bd=el('tbody');
+      rows.forEach(([lab,L])=>{if(!L.length)return;const g=L.length,pg=k=>f1(sum(L,k)/g);const tr=el('tr');[lab,String(g),pg('min'),pg('pts'),pg('reb'),pg('ast'),pc(sum(L,'fgm'),sum(L,'fga')),pc(sum(L,'tpm'),sum(L,'tpa')),ts(L)].forEach((x,k)=>tr.appendChild(el(k?'td':'th',null,x)));bd.appendChild(tr)});t.appendChild(bd);const tw=el('div','tw');tw.appendChild(t);c.appendChild(tw)}
+    const gName=r=>{const d=new Date(r[0]+'T12:00:00');return d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' '+(r[2]==='H'?'vs ':'at ')+r[1]};
+    /* highs */{const c=card('Season highs');const ul=el('ul','rcp');[['Points','pts'],['Rebounds','reb'],['Assists','ast'],['Threes','tpm'],['Steals','stl'],['Blocks','blk']].forEach(([lab,k])=>{const mx=Math.max(...G.map(r=>r[ix(k)]));if(!(mx>0))return;const at=G.filter(r=>r[ix(k)]===mx);const li=el('li');li.append(el('b',null,lab),el('span',null,mx+' · '+(at.length>2?at.length+' times':at.map(gName).join(', '))));ul.appendChild(li)});c.appendChild(ul)}
+    /* game log */{const c=card('Game log','Every game he played, newest first.');const t=el('table','ppx-t ppx-gl ps-t');t.innerHTML='<thead><tr><th>Game</th><th>Res</th><th>Min</th><th>Pts</th><th>Reb</th><th>Ast</th><th>Stl</th><th>Blk</th><th>TO</th><th>FG</th><th>3P</th><th>FT</th><th>+/-</th></tr></thead>';const bd=el('tbody');
+      G.slice().reverse().forEach(r=>{const tr=el('tr');const g=k=>r[ix(k)];const pm=g('pm');[gName(r),r[3]+' '+r[4]+'–'+r[5],String(Math.round(g('min'))),String(g('pts')),String(g('reb')),String(g('ast')),String(g('stl')),String(g('blk')),String(g('to')),g('fgm')+'-'+g('fga'),g('tpm')+'-'+g('tpa'),g('ftm')+'-'+g('fta'),(pm>0?'+':pm<0?'−':'')+Math.abs(pm)].forEach((x,k)=>tr.appendChild(el(k?'td':'th',k===12?(pm>0?'up':pm<0?'dn':null):null,x)));bd.appendChild(tr)});t.appendChild(bd);const tw=el('div','tw');tw.appendChild(t);c.appendChild(tw)}
+    /* more */{const c=el('p','ps-links');const x=I&&I[sl];if(x&&x.s.length>1){c.appendChild(el('span',null,'Other seasons: '));x.s.filter(z=>z!==se).slice().reverse().forEach((z,k)=>{if(k)c.append(' · ');const a=el('a',null,z.replace('-','–'));a.href='/players/'+sl+'/'+z;a.dataset.go='players/'+sl+'/'+z;c.appendChild(a)});c.append(' · ')}
+      const sa=el('a',null,'Cavs '+sd+' season stats →');sa.href='/stats/'+se;c.appendChild(sa);if(cur){c.append(' · ');const pa=el('a',null,n+'’s player page →');pa.href='/players/'+sl;pa.dataset.go='players/'+sl;c.appendChild(pa)}body.appendChild(c)}
+  });return true};
 /* Nov 22 (Luka): pages for what people search ("Cavs draft picks", "Cavs trade exceptions", "Cavs injury report"). Each is
    one part of an existing page shown on its own, with its own title, heading and intro; the full page is a link away.
    [view, h2 headings to keep, page heading, intro, link to the full page] */

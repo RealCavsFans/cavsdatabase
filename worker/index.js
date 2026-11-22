@@ -54,7 +54,7 @@ async function sitemapSlugs(env, u) {
 async function vanity(env, u) {
   if (VAN && Date.now() - VAN_T < 36e5) return VAN;
   const xml = await (await env.ASSETS.fetch(new Request(u.origin + '/sitemap.xml'))).text();
-  const slugs = [...new Set([...xml.matchAll(/\/players\/([a-z0-9-]+)/g)].map(m => m[1]))];
+  const slugs = [...new Set([...xml.matchAll(/\/players\/([a-z0-9-]+)<\/loc>/g)].map(m => m[1]))];
   if (slugs.length < 8) throw new Error('sitemap unreadable');
   SLUGS = new Set(slugs);
   const m = new Map(), lastCount = {};

@@ -36,6 +36,8 @@ const META = Function('return ' + m[1])();
 const pm = html.match(/const PLAYERS=(\[[\s\S]*?\]);\n/);
 const slug = t => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 if (pm && /const PP_ON=true/.test(html)) for (const p of Function('return ' + pm[1])()) META['players/' + slug(p[1])] = [p[1] + ' Stats, Contract & Injury Status | Cavs Database', p[1] + '’s stats with context, injury status, contract and trade eligibility, and where he ranks in Cavs history. Updated after every game.'];
+// Nov 22 (Luka): one page per player per Cavs season since 2020-21 (players/<name>/<season>), from pdata/ps (scripts/player-seasons.mjs)
+try { const PS = JSON.parse(await readFile(new URL('pdata/ps/index.json', root), 'utf8')); for (const [s, x] of Object.entries(PS)) for (const se of x.s) { const sd = se.replace('-', '–'); META['players/' + s + '/' + se] = [x.n + ' ' + sd + ' Stats & Game Log: Cavaliers | Cavs Database', x.n + '’s ' + sd + ' season with the Cleveland Cavaliers: per-game stats, shooting splits, home and away, by month, season highs and every game he played, from the NBA’s box scores.']; } } catch {}
 // one page per Cavs season (history/1970-71 … ), titles matching the site's season page
 try { const HJ = JSON.parse(await readFile(new URL('pdata/history.json', root), 'utf8')); for (const x of HJ.seasons) { const sl = x.s.replace('–', '-');
   META['history/' + sl] = [x.s + ' Cleveland Cavaliers: Record, Playoffs, Roster & Leaders | Cavs Database', 'The ' + x.s + ' Cavaliers went ' + x.w + '–' + x.l + ' (' + x.div + '). ' + x.po + '. Season leaders, honors, coaches, key moves and the full roster.']; } } catch {}
@@ -110,7 +112,7 @@ for (const [route, [title, desc]] of Object.entries(META)) {
   if (route.startsWith('history/') && await exists(new URL('og/h/' + route.slice(8) + '.jpg', root))) img = 'og/h/' + route.slice(8) + '.jpg';  // season cards (scripts/og-seasons.mjs)
   if (route.startsWith('games/') && await exists(new URL('og/gp/' + route.slice(6) + '.jpg', root))) img = 'og/gp/' + route.slice(6) + '.jpg';  // upcoming games: preview card (scripts/og-live.mjs)
   if (route.startsWith('games/') && await exists(new URL('og/g/' + route.slice(6) + '.jpg', root))) img = 'og/g/' + route.slice(6) + '.jpg';  // finished games get their own score card (scripts/og-games.mjs)
-  if (route.startsWith('players/') && await exists(new URL('og/p/' + route.slice(8) + '.jpg', root))) img = 'og/p/' + route.slice(8) + '.jpg';  // player cards (scripts/og-live.mjs)
+  if (route.startsWith('players/') && await exists(new URL('og/p/' + route.slice(8).split('/')[0] + '.jpg', root))) img = 'og/p/' + route.slice(8).split('/')[0] + '.jpg';  // a player's season pages use his card too  // player cards (scripts/og-live.mjs)
   if (await exists(new URL(img, root))) {
     const u = 'https://cavsdatabase.com/' + img + '?v=' + (LIVE[img] || '3');  // live cards carry their fingerprint, so link previews refresh when the card changes
     out = out.replace(/<meta property="og:image" content="[^"]*">/, `<meta property="og:image" content="${u}">`)
