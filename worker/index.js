@@ -18,6 +18,8 @@ export default {
       try { return await seasonPage(request, env); } catch (e) { return env.ASSETS.fetch(new Request(u.origin + '/live.html', request)); }
     }
     /* Nov 22: a season link on the live page (/live?g=s2026-27) points search engines and previews at /stats/2026-27 */
+    /* Nov 22 (Luka): pages report their own script errors here; one phone alert per error per day (client-error.yml) */
+    if (u.pathname === '/err' && request.method === 'POST') { ctx.waitUntil(pageError(request, env).catch(() => {})); return new Response(null, { status: 204 }); }
     if (u.pathname === '/pbp' && request.method === 'GET') {
       try { return await onRequestGet({ request, env, waitUntil: p => ctx.waitUntil(p) }) }
       catch (e) { return new Response(JSON.stringify({ error: 'backup feed error' }), { status: 502, headers: { 'content-type': 'application/json' } }) }
@@ -62,4 +64,22 @@ async function vanity(env, u) {
   slugs.forEach(s => { const p = parts(s); const l = p[p.length - 1]; lastCount[l] = (lastCount[l] || 0) + 1; });
   slugs.forEach(s => { const p = parts(s); const l = p[p.length - 1]; m.set(s.replace(/-/g, ''), s); m.set(p.join(''), s); m.set(p[0][0] + l, s); if (lastCount[l] === 1) m.set(l, s); });
   VAN = m; VAN_T = Date.now(); return m;
+}
+
+async function pageError(request, env) {
+  if (!env.GH_TOKEN) return;
+  const ct = +(request.headers.get('content-length') || 0); if (ct > 4000) return;
+  let j; try { j = JSON.parse(await request.text()); } catch { return; }
+  const s = v => String(v || '').replace(/[\u0000-\u001f]/g, ' ').slice(0, 300);
+  const msg = s(j.m), page = s(j.p), where = s(j.w), ua = s(j.ua);
+  if (!msg || !/^https:\/\/(www\.)?cavsdatabase\.com\//.test(page)) return;
+  if (/Script error\.?$|ResizeObserver loop|AbortError|Load failed|Failed to fetch|NetworkError|chrome-extension|moz-extension|safari-extension/i.test(msg + ' ' + where)) return;
+  /* once a day per error and page */
+  const sig = msg.replace(/\d+/g, '#').slice(0, 120) + '|' + new URL(page).pathname.split('/').slice(0, 2).join('/');
+  const key = new Request('https://cache.cavsdatabase.com/err/' + encodeURIComponent(sig).slice(0, 400));
+  const cache = caches.default; if (await cache.match(key)) return;
+  await cache.put(key, new Response('1', { headers: { 'cache-control': 'max-age=86400' } }));
+  await fetch('https://api.github.com/repos/RealCavsFans/cavsdatabase/actions/workflows/client-error.yml/dispatches', {
+    method: 'POST', headers: { authorization: 'Bearer ' + env.GH_TOKEN, accept: 'application/vnd.github+json', 'x-github-api-version': '2022-11-28', 'user-agent': 'cavsdatabase-err', 'content-type': 'application/json' },
+    body: JSON.stringify({ ref: 'main', inputs: { msg, page, where, ua } }) });
 }

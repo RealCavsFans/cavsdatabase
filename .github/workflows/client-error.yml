@@ -1,0 +1,26 @@
+name: Page error report
+# Nov 22 (Luka): when a page breaks in a visitor's browser, the page reports it to the Worker (/err), which starts this job
+# at most once a day per error. It sends one push to Luka's phone (ntfy, NTFY_TOPIC secret). Nothing is saved to the repo.
+on:
+  workflow_dispatch:
+    inputs:
+      msg: { description: 'error message', required: true }
+      page: { description: 'page address', required: false }
+      where: { description: 'script and line', required: false }
+      ua: { description: 'browser', required: false }
+permissions:
+  contents: read
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          MSG: ${{ github.event.inputs.msg }}
+          PAGE: ${{ github.event.inputs.page }}
+          WHERE: ${{ github.event.inputs.where }}
+          UA: ${{ github.event.inputs.ua }}
+        run: |
+          printf 'Page: %s\nError: %s\nWhere: %s\nBrowser: %s\n' "$PAGE" "$MSG" "$WHERE" "$UA" | tee msg.txt
+          [ -n "$NTFY_TOPIC" ] || exit 0
+          curl -s -m 15 -H "Title: A page broke for a visitor" -H "Tags: warning" --data-binary @msg.txt "https://ntfy.sh/$NTFY_TOPIC" >/dev/null || true

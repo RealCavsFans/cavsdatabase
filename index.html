@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>/* Nov 22 (Luka): if a page breaks in a visitor's browser, tell us (the Worker sends one phone alert per error per day) */
+(function(){if(!/(^|\.)cavsdatabase\.com$/.test(location.hostname))return;var n=0;function send(m,w){try{if(n++>2||!m)return;var b=JSON.stringify({m:String(m).slice(0,300),w:String(w||'').slice(0,300),p:location.href.slice(0,300),ua:navigator.userAgent.slice(0,200)});if(navigator.sendBeacon)navigator.sendBeacon('/err',new Blob([b],{type:'application/json'}));else fetch('/err',{method:'POST',body:b,keepalive:true})}catch(e){}}
+addEventListener('error',function(e){if(!e||!e.message)return;var f=e.filename||'';if(f&&!/cavsdatabase\.com/.test(f))return;send(e.message,f.replace(/^https?:\/\/[^/]+/,'')+':'+(e.lineno||0)+':'+(e.colno||0))});
+addEventListener('unhandledrejection',function(e){var r=e&&e.reason;if(!r||!r.stack||!/cavsdatabase\.com/.test(r.stack))return;send((r.name||'Error')+': '+(r.message||r),String(r.stack).split('\n')[1]||'')})})();</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Everything Cavaliers. Everything you need. The Cavs record, next game and TV, key dates, injuries, salary cap and the Cleveland Charge, updated daily.">
 <title>Cleveland Cavaliers Schedule, Roster &amp; Salary Cap 2026–27 | Cavs Database</title>
