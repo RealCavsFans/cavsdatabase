@@ -437,7 +437,38 @@ if (!preseason) { try { const y = +g[0].slice(0, 4), mo = +g[0].slice(5, 7), s0 
   /* Nov 16 (Luka): who led the Cavs comes from the NBA's own final box score in the game archive (s.nb), like every other number here; ESPN's box.json only as the backup */
   if (hit) { const s = JSON.parse(await readFile(new URL(`live-archive/${se}/${hit.id}.json`, root), 'utf8')); const Cc = createRequire(import.meta.url)('../live-core.js'), Dg = Cc.prep(s);
     if (s.nb) arcRows = (Dg.roster['5'] || []).map(id => { const v = s.nb[id]; return v && v[0] > 0 ? [Dg.P[id].name, Math.round(v[0] / 60), v[1], v[8] + v[9], v[10]] : null; }).filter(Boolean); } } catch {} }
-const html = build(D, g, score, b.top || '', ourBox, { issueDay: today, boxRows: arcRows && arcRows.length ? arcRows : b.box, rcf, news, trivia: tq, since, sinceTs, qs: b.qs, milestone: milestone(), sotn, usedOtd: Object.values(sent).map(v => v.otd).filter(Boolean).slice(-60), test: !(LIVE && MODE !== 'test'), preseason });
+/* MOCK (Nov 22, Luka asked for a dark mode mockup): mail apps that honor dark mode (Apple Mail, Outlook) get the site's dark
+   colors, with gold in place of wine. Each colored element gets a class named for its light color; a dark-mode style block
+   remaps those classes. Mail apps that ignore it keep showing the light issue exactly as before. */
+const DARK = { '#F7F3EC': ['bg', '#14181D'], '#FFFDF8': ['bg', '#1B2027'], '#EEF0F2': ['bg', '#0E1114'], '#101419': ['fg', '#F1EEE8', '#2A3038'],
+  '#5D646C': ['fg', '#A7AEB6'], '#2F363E': ['fg', '#D3D7DC'], '#860038': ['fg', '#F2B231'], '#9A948B': ['fg', '#8D949C'], '#8A8F96': ['fg', '#8D949C'],
+  '#B9B2A8': ['bd', '#3A4048'], '#D9D4CC': ['bd', '#3A4048'] };
+const darkify = h => {
+  const css = [];
+  const out = h.replace(/<([a-z]+\d?)\b([^>]*?)\sstyle="([^"]*)"([^>]*)>/gi, (m, tag, pre, st, post) => {
+    const cls = new Set();
+    st.replace(/(^|;)\s*(color|background|background-color|border(?:-top|-bottom|-left|-right)?)\s*:\s*([^;]*)/gi, (_, __, prop, val) => {
+      const hx = (val.match(/#[0-9a-f]{6}\b/i) || [''])[0].toUpperCase(); const d = DARK[hx]; if (!d) return;
+      const k = prop.toLowerCase().replace('background-color', 'background'), name = 'dm-' + k.replace('border-', 'b').replace('background', 'bg').replace('color', 'c') + '-' + hx.slice(1).toLowerCase();
+      const to = k === 'color' ? (d[0] === 'fg' ? d[1] : null) : k === 'background' ? (d[0] === 'fg' ? d[2] || null : d[1]) : (d[0] === 'fg' ? (hx === '#101419' ? '#E6E2DA' : d[1]) : d[1]);
+      if (!to) return; cls.add(name);
+      const rule = k === 'color' ? `color:${to}!important` : k === 'background' ? `background:${to}!important;background-color:${to}!important` : `${k}-color:${to}!important`;
+      css.push([name, rule]);
+    });
+    const bg = /\sbgcolor="(#[0-9a-f]{6})"/i.exec(pre + post); if (bg && DARK[bg[1].toUpperCase()] && DARK[bg[1].toUpperCase()][0] === 'bg') { const name = 'dm-bg-' + bg[1].slice(1).toLowerCase(); cls.add(name); css.push([name, `background:${DARK[bg[1].toUpperCase()][1]}!important;background-color:${DARK[bg[1].toUpperCase()][1]}!important`]); }
+    if (!cls.size) return m;
+    const all = pre + post, cm = /\sclass="([^"]*)"/i.exec(all);
+    if (cm) return `<${tag}${pre.replace(cm[0], ` class="${cm[1]} ${[...cls].join(' ')}"`)} style="${st}"${post.replace(cm[0], ` class="${cm[1]} ${[...cls].join(' ')}"`)}>`;
+    return `<${tag}${pre} class="${[...cls].join(' ')}" style="${st}"${post}>`;
+  });
+  /* the footer wordmark: a light-text copy for dark mode (wine "cavs" would vanish); mail apps without dark mode never show it */
+  const out2 = out.replace(/(<img src="https:\/\/cavsdatabase\.com\/nl\/logo-t\.png"[^>]*?)style="([^"]*)"([^>]*>)/, (m, a, st, b) => `<div class="dm-lt">${a}style="${st}"${b}</div><!--[if !mso]><!--><div class="dm-dk" style="display:none;max-height:0;overflow:hidden;mso-hide:all">${a.replace('logo-t.png', 'logo-t-dark.png')}style="${st}"${b}</div><!--<![endif]-->`);
+  css.push(['dm-lt', 'display:none!important'], ['dm-dk', 'display:block!important;max-height:none!important;overflow:visible!important']);
+  const uniq = [...new Map(css.map(([n, r]) => [n, r])).entries()];
+  const block = `<meta name="color-scheme" content="light dark"><meta name="supported-color-schemes" content="light dark"><style>:root{color-scheme:light dark;supported-color-schemes:light dark}@media (prefers-color-scheme:dark){${uniq.map(([n, r]) => `.${n}{${r}}`).join('')}}${uniq.map(([n, r]) => `[data-ogsc] .${n}{${r}}`).join('')}</style>`;
+  return block + out2;
+};
+const html = darkify(build(D, g, score, b.top || '', ourBox, { issueDay: today, boxRows: arcRows && arcRows.length ? arcRows : b.box, rcf, news, trivia: tq, since, sinceTs, qs: b.qs, milestone: milestone(), sotn, usedOtd: Object.values(sent).map(v => v.otd).filter(Boolean).slice(-60), test: !(LIVE && MODE !== 'test'), preseason }));
 const [cs, os] = score.split('-').map(Number);
 const topBit = (() => { const t = arcRows && arcRows.length ? arcRows.slice().sort((x, y) => y[2] - x[2])[0] : null; if (t) return t[0].split(' ').filter(w => !/^(Jr\.?|Sr\.?|II|III|IV)$/.test(w)).slice(-1)[0] + ' ' + t[2]; return b.top ? b.top.split(':')[0].split(' ').slice(-1)[0] + ' ' + (b.top.match(/(\d+) pts/) || [])[1] : ''; })();
 const msBit = (() => { const m = (milestone() || '').match(/^(?!Milestone watch)(\S+ )?(\S+) (reached [\d,]+ career \w+|passed .+? for \d+\w+ on the Cavs' all-time \w+)/); return m ? `${m[2]} ${m[3].replace(/^reached/, 'hits').replace(/ on the Cavs' all-time (\w+)/, ' in Cavs $1').replace(/^passed .+? for/, 'moves to')}` : ''; })();
