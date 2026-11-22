@@ -52,9 +52,9 @@ async function currentGame(g) {
 function liveTags(gi) {
   const vs = (gi.home ? 'vs ' : 'at ') + gi.nick, lead = gi.cle >= gi.os ? 'Cavs ' + gi.cle + ', ' + gi.nick + ' ' + gi.os : gi.nick + ' ' + gi.os + ', Cavs ' + gi.cle;
   const when = new Date(gi.date).toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZone: 'America/New_York' }) + ' ET';
-  if (gi.state === 'in') return { title: 'LIVE: ' + lead + ' · ' + gi.detail + ' · cavs_db', desc: 'Follow Cavaliers ' + vs + ' live: box score, shot chart, lineups, runs and win probability, updated every 30 seconds.' };
-  if (gi.state === 'post') return { title: 'Final: ' + lead + ' · cavs_db', desc: 'Cavaliers ' + vs + ': box score, shot chart, lineups, on/off, assists and win probability.' };
-  return { title: 'Cavs ' + vs + ' · ' + when + ' · cavs_db', desc: 'The live tracker for Cavaliers ' + vs + ': box score, shot chart, lineups and win probability from tip to final.' };
+  if (gi.state === 'in') return { title: 'LIVE: ' + lead + ' · ' + gi.detail + ' | Cavs Database', desc: 'Follow Cavaliers ' + vs + ' live: box score, shot chart, lineups, runs and win probability, updated every 30 seconds.' };
+  if (gi.state === 'post') return { title: 'Final: ' + lead + ' | Cavs Database', desc: 'Cavaliers ' + vs + ': box score, shot chart, lineups, on/off, assists and win probability.' };
+  return { title: 'Cavs ' + vs + ' · ' + when + ' | Cavs Database', desc: 'The live tracker for Cavaliers ' + vs + ': box score, shot chart, lineups and win probability from tip to final.' };
 }
 async function liveNow(request, env, page, g) {
   const u = new URL(request.url); let gi = null; try { gi = await currentGame(g); } catch { gi = null; }
@@ -80,13 +80,13 @@ export async function liveMeta(request, env) {
   if (!info) return /^\d{6,12}$/.test(g) ? liveNow(request, env, page, g) : page;
   let title, desc, img = null;
   if (info.season) {
-    title = 'Cavs ' + info.season.replace('-', '–') + ' season stats · cavs_db';
+    title = 'Cavs ' + info.season.replace('-', '–') + ' season stats | Cavs Database';
     desc = 'Every Cavaliers game this season in one place: team and player stats, lineups, on/off, shot charts and the four factors.';
     img = '/og/stats.jpg?v=2'; /* Nov 14: versioned so X fetches it fresh. Nov 10 (Luka): season links get their own picture, not the live tracker's (source: scripts/og-stats.html) */
   } else {
     const { x, ab } = info, nick = NICK[ab] || NICK[x.opp] || ab, won = x.cle > x.os;
     const d = new Date(x.et + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
-    title = (won ? 'Cavs ' + x.cle + ', ' + nick + ' ' + x.os : nick + ' ' + x.os + ', Cavs ' + x.cle) + ' (' + d + ') · cavs_db';
+    title = (won ? 'Cavs ' + x.cle + ', ' + nick + ' ' + x.os : nick + ' ' + x.os + ', Cavs ' + x.cle) + ' (' + d + ') | Cavs Database';
     desc = 'Final: box score, shot chart, lineups, on/off, assists and win probability for Cavaliers ' + (x.ha === 'home' ? 'vs ' : 'at ') + nick + ', ' + d + '.';
     img = info.img;
   }
@@ -116,7 +116,7 @@ export async function seasonPage(request, env) {
   const page = await env.ASSETS.fetch(new Request(u.origin + '/live.html'));
   if (!page.ok) return page;
   const n = ((await idx.json().catch(() => [])) || []).length, sd = se.replace('-', '–'), url = u.origin + '/stats/' + se;
-  const title = 'Cavaliers ' + sd + ' Stats: Team & Player Stats, Lineups, On/Off | cavs_db';
+  const title = 'Cavaliers ' + sd + ' Stats: Team & Player Stats, Lineups, On/Off | Cavs Database';
   const desc = 'Cleveland Cavaliers ' + sd + ' season stats' + (n ? ' through ' + n + ' game' + (n > 1 ? 's' : '') : '') + ': team and player stats, lineups, on/off, shot charts, four factors and league ranks, from the NBA\u2019s own box scores.';
   const img = u.origin + '/og/stats.jpg?v=2';
   const set = (attr, val) => ({ element(e) { e.setAttribute(attr, val); } });

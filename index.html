@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Everything Cavaliers. Everything you need. The Cavs record, next game and TV, key dates, injuries, salary cap and the Cleveland Charge, updated daily.">
-<title>Cleveland Cavaliers Schedule, Roster &amp; Salary Cap 2026–27 | cavs_db</title>
+<title>Cleveland Cavaliers Schedule, Roster &amp; Salary Cap 2026–27 | Cavs Database</title>
 <meta name="msvalidate.01" content="5AE861CB57EC998AB47588ECC2B0DE67">
 <link rel="canonical" href="https://cavsdatabase.com/">
 <meta name="robots" content="index,follow,max-image-preview:large">
@@ -15,9 +15,9 @@
 /* Nov 13 (Luka): faster share images. The small warm-up pass before each image is only needed on Safari and iPhone browsers (their first pass can miss fonts and photos) */window.__capNeedWarm=()=>/AppleWebKit/.test(navigator.userAgent)&&!/Chrome\/|Chromium|Edg\//.test(navigator.userAgent);
 try{var t=localStorage.getItem('cdb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="cavs_db">
+<meta property="og:site_name" content="Cavs Database">
 <meta property="og:url" content="https://cavsdatabase.com/">
-<meta property="og:title" content="Cleveland Cavaliers Schedule, Roster &amp; Salary Cap 2026–27 | cavs_db">
+<meta property="og:title" content="Cleveland Cavaliers Schedule, Roster &amp; Salary Cap 2026–27 | Cavs Database">
 <meta property="og:description" content="Everything Cavaliers. Everything you need. The Cavs record, next game and TV, key dates, injuries, salary cap and the Cleveland Charge, updated daily.">
 <meta property="og:image" content="https://cavsdatabase.com/og.jpg?v=6">
 <meta property="og:image:width" content="1200">
@@ -26,7 +26,7 @@ try{var t=localStorage.getItem('cdb-theme');if(t)document.documentElement.setAtt
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://cavsdatabase.com/og.jpg?v=6">
 <meta name="twitter:site" content="@realcavsfans">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://cavsdatabase.com/#site","url":"https://cavsdatabase.com/","name":"cavs_db","alternateName":"cavsdatabase.com","description":"Cleveland Cavaliers reference: record, schedule, roster, salary cap, contracts, key dates, injuries and the Cleveland Charge.","inLanguage":"en-US","about":{"@type":"SportsTeam","name":"Cleveland Cavaliers","sport":"Basketball","memberOf":{"@type":"SportsOrganization","name":"NBA"},"sameAs":["https://www.nba.com/cavaliers","https://en.wikipedia.org/wiki/Cleveland_Cavaliers"]},"publisher":{"@type":"Organization","@id":"https://cavsdatabase.com/#org","name":"cavs_db","alternateName":"cavsdatabase.com","url":"https://cavsdatabase.com/"}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://cavsdatabase.com/#site","url":"https://cavsdatabase.com/","name":"Cavs Database","alternateName":["cavs_db","cavsdatabase.com"],"description":"Cleveland Cavaliers reference: record, schedule, roster, salary cap, contracts, key dates, injuries and the Cleveland Charge.","inLanguage":"en-US","about":{"@type":"SportsTeam","name":"Cleveland Cavaliers","sport":"Basketball","memberOf":{"@type":"SportsOrganization","name":"NBA"},"sameAs":["https://www.nba.com/cavaliers","https://en.wikipedia.org/wiki/Cleveland_Cavaliers"]},"publisher":{"@type":"Organization","@id":"https://cavsdatabase.com/#org","name":"Cavs Database","alternateName":["cavs_db","cavsdatabase.com"],"url":"https://cavsdatabase.com/"}}]}</script>
 <link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://cdn.nba.com">
 <link rel="apple-touch-icon" href="/icon-180.png">
@@ -3804,7 +3804,7 @@ window.renderGame=function(sl){if(SCHEDULE.findIndex(g=>gslug(g)===sl)<0)return 
 /*@chunk:game*/window.renderGame=function(sl){const i=SCHEDULE.findIndex(g=>gslug(g)===sl);if(i<0)return false;const g=SCHEDULE[i],o=g[1],H=g[2]==='H';const v=document.getElementById('view-game');v.textContent='';
   const res=SEASON.results.split('').filter(Boolean),r=res[i],sc=SCORES[g[0]];const fin=!!(r&&sc);const [cs,os]=sc?sc.split('-').map(Number):[];
   const dt=new Date(g[0]+'T12:00:00');const dLong=dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});const nk=GNICK[o]||TEAMS[o];
-  window.GAME_META=fin?['Cavs '+cs+', '+nk+' '+os+' ('+dLong+'): Box Score & Recap | cavs_db','Final: Cavaliers '+cs+', '+TEAMS[o]+' '+nk+' '+os+' on '+dLong+'. Box score, top performers, postgame video and Recap.']:['Cavs '+(H?'vs ':'at ')+nk+', '+dLong+': How to Watch, Preview & Injuries | cavs_db','Cavaliers '+(H?'vs ':'at ')+TEAMS[o]+' '+nk+' on '+dLong+': tip time, TV and radio, tale of the tape, injuries and the season series.'];
+  window.GAME_META=fin?['Cavs '+cs+', '+nk+' '+os+' ('+dLong+'): Box Score & Recap | Cavs Database','Final: Cavaliers '+cs+', '+TEAMS[o]+' '+nk+' '+os+' on '+dLong+'. Box score, top performers, postgame video and Recap.']:['Cavs '+(H?'vs ':'at ')+nk+', '+dLong+': How to Watch, Preview & Injuries | Cavs Database','Cavaliers '+(H?'vs ':'at ')+TEAMS[o]+' '+nk+' on '+dLong+': tip time, TV and radio, tale of the tape, injuries and the season series.'];
   const W=el('div','wrap page');v.appendChild(W);
   const hd=el('div');const cr=el('div','dim');cr.style.fontSize='13px';const a1=el('a',null,'Home');a1.href='/';a1.dataset.go='home';const a2=el('a',null,'Schedule');a2.href='/schedule';a2.dataset.go='schedule';cr.append(a1,' / ',a2,' / '+dLong.replace(/, \d{4}$/,'')+(H?' vs ':' at ')+TEAMS[o]);
   const h1=el('h1',null,fin?'Cavs '+cs+', '+nk+' '+os:'Cavs '+(H?'vs. ':'at ')+nk);h1.appendChild(el('span','gp-h1d',fin?'Final':dLong));h1.style.marginTop='6px';
@@ -4819,23 +4819,23 @@ function loadRcf(){if(rcfLoaded)return;rcfLoaded=true;
 })();
 /* page titles and descriptions (browser tab, search results, link previews); scripts/build-pages.mjs bakes them into per-page copies */
 const PAGE_META={
- 'home':['Cleveland Cavaliers Schedule, Roster & Salary Cap 2026–27 | cavs_db','Everything Cavaliers. Everything you need. The Cavs record, next game and TV, key dates, injuries, salary cap and the Cleveland Charge, updated daily.'],
- 'schedule':['Cavs Schedule & Standings 2026–27: How to Watch & Listen | cavs_db','All 82 Cavs games with how to watch and listen to each, results, East standings and the playoff race. National TV, DAZN, free over-the-air and radio for every game.'],
- 'roster':['Cavs Roster 2026–27: Depth Chart, Heights & Wingspans | cavs_db','Every Cavs player with height, wingspan, age, college, how he was acquired and his socials, plus the depth chart and combine measurements.'],
- 'staff':['Cavs Coaches & Front Office: Kenny Atkinson, Koby Altman | cavs_db','Kenny Atkinson, Koby Altman and the full Cavs coaching staff and front office, with career timelines, coaching records and crossover with current players.'],
- 'cap':['Cavs Salary Cap 2026–27: Contracts, Cap Space & Aprons | cavs_db','The Cavs cap sheet: every contract by season, the first-apron hard cap, tax bill, options, extension dates, two-way deals and a 145-term CBA glossary.'],
- 'assets':['Cavs Draft Picks & Trade Exceptions: Every Pick Owned & Owed | cavs_db','Every pick the Cavs own and owe through 2033 with protections and full trade history, plus trade exceptions left and unsigned draft rights.'],
- 'roster-tree':['How the Cavs Roster Was Built: Trade Trees 2026–27 | cavs_db','Every Cavs player by how he arrived, plus the trade trees behind Donovan Mitchell, Jarrett Allen, James Harden and Peyton Watson, back to the 2017 Kyrie Irving trade.'],
- 'moves':['Cavs Transactions & Trade History Since 2017 | cavs_db','Every Cavs trade, signing, extension, draft pick and waiver since 2017, with what moved in each deal.'],
- 'charge':['Cleveland Charge Schedule, Roster & Stats 2026–27 (G League) | cavs_db','The Cavs’ G League affiliate: full schedule with results, player stats and leaders, two-way and affiliate players, and coach and front office bios.'],
- 'history':['Cavs History: Every Season, Retired Numbers, Leaders & Draft Picks | cavs_db','Every Cleveland Cavaliers season since 1970: records, playoff results, coaches and leaders, plus retired numbers, all-time leaders, who wore each number, every draft pick and every head coach.'],
- 'media':['Cavs Press Conferences, Highlights & Articles | cavs_db','The latest Cavs press conferences and highlights from the team’s YouTube channel, plus articles and Recaps from RealCavsFans.com.'],
- 'resources':['Best Cavs & NBA Stats, Salary Cap and Draft Sites | cavs_db','cavs_db approved sites for NBA and Cavs knowledge.'],
- 'about':['About cavs_db: Contact, Tip Jar, Cavs & Coffee | cavs_db','What cavs_db is, how to reach us, the tip jar, the Cavs & Coffee newsletter and the app.']
+ 'home':['Cleveland Cavaliers Schedule, Roster & Salary Cap 2026–27 | Cavs Database','Everything Cavaliers. Everything you need. The Cavs record, next game and TV, key dates, injuries, salary cap and the Cleveland Charge, updated daily.'],
+ 'schedule':['Cavs Schedule & Standings 2026–27: How to Watch & Listen | Cavs Database','All 82 Cavs games with how to watch and listen to each, results, East standings and the playoff race. National TV, DAZN, free over-the-air and radio for every game.'],
+ 'roster':['Cavs Roster 2026–27: Depth Chart, Heights & Wingspans | Cavs Database','Every Cavs player with height, wingspan, age, college, how he was acquired and his socials, plus the depth chart and combine measurements.'],
+ 'staff':['Cavs Coaches & Front Office: Kenny Atkinson, Koby Altman | Cavs Database','Kenny Atkinson, Koby Altman and the full Cavs coaching staff and front office, with career timelines, coaching records and crossover with current players.'],
+ 'cap':['Cavs Salary Cap 2026–27: Contracts, Cap Space & Aprons | Cavs Database','The Cavs cap sheet: every contract by season, the first-apron hard cap, tax bill, options, extension dates, two-way deals and a 145-term CBA glossary.'],
+ 'assets':['Cavs Draft Picks & Trade Exceptions: Every Pick Owned & Owed | Cavs Database','Every pick the Cavs own and owe through 2033 with protections and full trade history, plus trade exceptions left and unsigned draft rights.'],
+ 'roster-tree':['How the Cavs Roster Was Built: Trade Trees 2026–27 | Cavs Database','Every Cavs player by how he arrived, plus the trade trees behind Donovan Mitchell, Jarrett Allen, James Harden and Peyton Watson, back to the 2017 Kyrie Irving trade.'],
+ 'moves':['Cavs Transactions & Trade History Since 2017 | Cavs Database','Every Cavs trade, signing, extension, draft pick and waiver since 2017, with what moved in each deal.'],
+ 'charge':['Cleveland Charge Schedule, Roster & Stats 2026–27 (G League) | Cavs Database','The Cavs’ G League affiliate: full schedule with results, player stats and leaders, two-way and affiliate players, and coach and front office bios.'],
+ 'history':['Cavs History: Every Season, Retired Numbers, Leaders & Draft Picks | Cavs Database','Every Cleveland Cavaliers season since 1970: records, playoff results, coaches and leaders, plus retired numbers, all-time leaders, who wore each number, every draft pick and every head coach.'],
+ 'media':['Cavs Press Conferences, Highlights & Articles | Cavs Database','The latest Cavs press conferences and highlights from the team’s YouTube channel, plus articles and Recaps from RealCavsFans.com.'],
+ 'resources':['Best Cavs & NBA Stats, Salary Cap and Draft Sites | Cavs Database','cavs_db approved sites for NBA and Cavs knowledge.'],
+ 'about':['About cavs_db: Contact, Tip Jar, Cavs & Coffee | Cavs Database','What cavs_db is, how to reach us, the tip jar, the Cavs & Coffee newsletter and the app.']
 };
 /* tip jar: set to the Buy Me a Coffee page address to show the footer link */
 /* player pages: /players/<name> — everything the site knows about one player, built from the same data as the rest of the site */
-const PP_TITLE=n=>n+' Stats, Contract & Injury Status | cavs_db';
+const PP_TITLE=n=>n+' Stats, Contract & Injury Status | Cavs Database';
 const PP_DESC=n=>n+'’s stats with context, injury status, contract and trade eligibility, and where he ranks in Cavs history. Updated after every game.';
 PLAYERS.forEach(p=>{PAGE_META['players/'+slug(p[1])]=[PP_TITLE(p[1]),PP_DESC(p[1])]});
 const ppHref=n=>{const p=PLAYERS.find(x=>x[1]===n);return p?'players/'+slug(n):null};
@@ -5951,7 +5951,7 @@ window.renderSeason=function(sl){const v=document.getElementById('view-season');
   const bc=el('div','dim');bc.style.fontSize='13px';const a1=el('a',null,'Home');a1.href='/';a1.dataset.go='home';const a2=el('a',null,'History');a2.href='/history';a2.dataset.go='history';bc.append(a1,' / ',a2,' / '+sl.replace('-','–'));w.appendChild(bc);
   const body=el('div');body.innerHTML='<div class="skel-wrap"><div class="skel skel-band"></div><div class="skel skel-card"></div><div class="skel skel-card"></div></div>';w.appendChild(body);
   getH().then(()=>{body.textContent='';const S=H.seasons,i=S.findIndex(x=>x.s===sl.replace('-','–'));if(i<0){body.appendChild(el('p','dim','No season found.'));return}
-   const x=S[i],LVc=LV[x.poLevel];const pct=(x.w/(x.w+x.l)).toFixed(3).replace(/^0/,'');document.title=x.s+' Cleveland Cavaliers: Record, Playoffs, Roster & Leaders | cavs_db';
+   const x=S[i],LVc=LV[x.poLevel];const pct=(x.w/(x.w+x.l)).toFixed(3).replace(/^0/,'');document.title=x.s+' Cleveland Cavaliers: Record, Playoffs, Roster & Leaders | Cavs Database';
    const band=el('section','sp-band');band.append(el('div','sp-k','Season '+(i+1)+' of '+S.length+' · '+LVc[0]),el('h1',null,x.s+' Cavaliers'),el('div','sp-m',x.w+'–'+x.l+' · '+x.div+(x.seed?' · No. '+x.seed+' seed in the East':'')));
    const nav=el('div','sp-nav');[[S[i-1],'← '],[S[i+1],'']].forEach(([y,pre],k)=>{if(!y){nav.appendChild(el('span'));return}const a=el('a',null,k?y.s+' →':pre+y.s);const q=y.s.replace('–','-');a.href='/history/'+q;a.dataset.go='history/'+q;nav.appendChild(a)});band.appendChild(nav);body.appendChild(band);
    const SE=(H.series||[]).filter(r=>r.s===x.s&&!/Play-in/.test(r.round)),pw=SE.reduce((t,r)=>t+(+r.score.split('–')[0]),0),pl=SE.reduce((t,r)=>t+(+r.score.split('–')[1]),0);
@@ -6250,7 +6250,7 @@ const INTRO_V='tait';
   t.innerHTML='';const i=document.createElement('i');i.textContent='✓';t.append(i,msg);if(btn){const b=document.createElement('button');b.type='button';b.textContent=btn;b.onclick=()=>{t.classList.remove('on');fn()};t.appendChild(b)}
   t.classList.add('on');clearTimeout(tt);if(msg.endsWith('…'))return;tt=setTimeout(()=>t.classList.remove('on'),btn?6000:2200)};
  const pageUrl=(route,id)=>'https://cavsdatabase.com'+(route==='home'?'/':'/'+route)+'#'+id;
- function share(route,id,label){const url=pageUrl(route,id),title=label+' | cavs_db',text=label+' · via cavs_db';
+ function share(route,id,label){const url=pageUrl(route,id),title=label+' | Cavs Database',text=label+' · via cavs_db';
   if(navigator.share&&coarse()){navigator.share({title,text,url}).catch(()=>{});return}
   sharePop(url,text)}
  /* desktop share menu: copy the link or post it with the text already filled in */
@@ -6800,10 +6800,10 @@ async function staffBold(ms,art){const T=x=>String(x&&x.textContent!=null?x.text
    if(/^players\//.test(route)){const last=boxes[boxes.length-1],tx=boxes.map(b=>b.textContent).join(' ');if(/\b\d+(st|nd|rd|th) of \d+/.test(tx)){capKeyEl=document.createElement('p');capKeyEl.className='capkey';capKeyEl.innerHTML='<b>How to read the ranks</b> · Ranks are against every NBA player in his position group with real minutes. 1st = the best (the fewest for turnovers and fouls)'+(/Usage/.test(tx)?'; for usage, 1st = the biggest role.':'.');last.appendChild(capKeyEl)}}
    /* MOCK (terminal look): player-page images become a dark cavs_db poster with the card's numbers as terminal output */
    if(TERM_ON&&/^players\//.test(route)&&boxes.length===1){const tcv=await termPoster(ms,route,label,boxes[0]);if(tcv){const blob=await new Promise(r=>tcv.toBlob(r,'image/png'));const name='cavsdb-'+id+'-'+new Date().toISOString().slice(0,10)+'.png';const file=new File([blob],name,{type:'image/png'});
-     const save=()=>{if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:label+' | cavs_db'}).catch(()=>{})}else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Image saved')}};
+     const save=()=>{if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:label+' | Cavs Database'}).catch(()=>{})}else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Image saved')}};
      if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]}))toast('Image ready','Save or share',save);else save();return}}
    if((route==='staff'&&boxes.length===1&&boxes[0].matches('article.co')||id==='cap-sheet'&&btn.dataset.yr&&btn.dataset.yr!=='all'||id==='aprons')&&window.__staffBold!==false){const tcv=await (route==='staff'?staffBold(ms,boxes[0]):id==='aprons'?aprBold(ms,boxes[0]):capSheetBold(ms,boxes[0].matches('table')?boxes[0]:document.querySelector('table.cap'),btn.dataset.yr)).catch(e=>{console.log('staff bold',e);return null});if(tcv){const blob=await new Promise(r=>tcv.toBlob(r,'image/png'));const name='cavsdb-'+id+'-'+new Date().toISOString().slice(0,10)+'.png';const file=new File([blob],name,{type:'image/png'});
-     const save=()=>{if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:label+' | cavs_db'}).catch(()=>{})}else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Image saved')}};
+     const save=()=>{if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:label+' | Cavs Database'}).catch(()=>{})}else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Image saved')}};
      if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]}))toast('Image ready','Save or share',save);else save();return}}
    /* links mean nothing on a picture: hide "… →" and "… ↗" links (and a line that holds only one) while drawing */
    boxes.forEach(bx=>bx.querySelectorAll('a').forEach(a=>{if(a.closest('td'))return;if(!/[→↗]\s*$/.test(a.textContent))return;const pa=a.parentElement;(pa&&pa!==bx&&pa.children.length===1&&pa.textContent.trim()===a.textContent.trim()?pa:a).setAttribute('data-caphide','')}));
@@ -6843,7 +6843,7 @@ async function staffBold(ms,art){const T=x=>String(x&&x.textContent!=null?x.text
    const now=new Date();
    const blob=await new Promise(r=>cv.toBlob(r,'image/png'));const name='cavsdb-'+id+'-'+now.toISOString().slice(0,10)+'.png';
    const file=new File([blob],name,{type:'image/png'});
-   const save=()=>{if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:label+' | cavs_db'}).catch(e=>{if(e&&e.name==='NotAllowedError')toast('Image ready','Save',save)})}else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Image saved')}};
+   const save=()=>{if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:label+' | Cavs Database'}).catch(e=>{if(e&&e.name==='NotAllowedError')toast('Image ready','Save',save)})}else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Image saved')}};
    if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]}))toast('Image ready','Save or share',save);else save();
   }catch(e){toast('Couldn’t make the image. Try again.')}
   finally{boxes.forEach(b=>{if(b.dataset.capw){b.style.maxWidth=b.dataset.capw==='-'?'':b.dataset.capw;delete b.dataset.capw}if(b.dataset.capw2){b.style.width=b.dataset.capw2==='-'?'':b.dataset.capw2;delete b.dataset.capw2}if(b.dataset.capw3){b.style.minWidth=b.dataset.capw3==='-'?'':b.dataset.capw3;b.style.width='';b.style.tableLayout='';delete b.dataset.capw3}b.querySelectorAll('[data-caphide]').forEach(x=>x.removeAttribute('data-caphide'))});if(capThSet){if(capTh0==null)document.documentElement.removeAttribute('data-theme');else document.documentElement.setAttribute('data-theme',capTh0)}document.querySelectorAll('[data-caphide]').forEach(x=>{if(/^H[23]$/.test(x.tagName))x.removeAttribute('data-caphide')});if(capKeyEl)capKeyEl.remove();boxes[0].removeAttribute('data-capfirst');boxes.forEach(bx=>bx.querySelectorAll('[data-caphide]').forEach(x=>x.removeAttribute('data-caphide')));if(capEl)capEl.classList.remove('capmode');btn.disabled=false}}
@@ -6928,7 +6928,7 @@ function capFoot(g,url,date,W,H,FT,pad,S,mono,wine,muted){const two=FT>45*S;g.te
    let cv=await ms.domToCanvas(node,opts);
    /* Nov 5 (Luka): the 16:9 cards get the same light/wine frame as every other grab */if(PC_GRABS){route=route||'home';const kt=(node.querySelector('.kk')||{}).textContent||label;const pg=route.split('/')[0];const pn=PG_NAME[pg]||pg;const slug=String(label||id).toLowerCase().replace(/[’']/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40);
      const ds=node.dataset;cv=await pcFrame(pcTrim(cv,20),{S:2,title:ds.pcTitle||kt,kicker:ds.pcKick||(pn+' · '+new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'})),tab:pg,slug,tag:ds.pcTag||(ds.pcTitle?'Injury report':pn),url:'cavsdatabase.com'+(route==='home'?'':'/'+route),head:ds.pcHead||null,badge:ds.pcBadge?{t:ds.pcBadge,bg:ds.pcBadgeOut?'#ffffff':'#F2B231',fg:ds.pcBadgeOut?'#860038':'#101419'}:null})}const blob=await new Promise(r=>cv.toBlob(r,'image/png'));const now=new Date();const name='cavsdb-'+id+'-'+now.toISOString().slice(0,10)+'.png';const file=new File([blob],name,{type:'image/png'});
-   const save=()=>{if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:label+' | cavs_db'}).catch(e=>{if(e&&e.name==='NotAllowedError')toast('Image ready','Save',save)})}else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Image saved')}};
+   const save=()=>{if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:label+' | Cavs Database'}).catch(e=>{if(e&&e.name==='NotAllowedError')toast('Image ready','Save',save)})}else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast('Image saved')}};
    if(coarse()&&navigator.canShare&&navigator.canShare({files:[file]}))toast('Image ready','Save or share',save);else save()}
   catch(e){try{console.warn('cardShot',e&&e.stack)}catch(_){}toast('Couldn’t make the image. Try again.')}finally{node.remove();btn.disabled=false}return true}
 /* Nov 12 (Luka, mock): the body graphic. window.__bodyV picks a version: 'O' outline (current), 'A' injury map (past listings faded), 'B' built from blocks,
