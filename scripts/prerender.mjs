@@ -67,6 +67,8 @@ export default async function prerender(root, META) {
       if (route !== 'home') await page.evaluate(r => go(r), route);
       await page.waitForTimeout(1200);
       const snap = await page.evaluate(() => { const m = [...document.querySelectorAll('main[id^="view-"]')].find(x => !x.hidden && x.id !== 'view-stub'); if (!m) return null; const c = m.cloneNode(true); c.querySelectorAll('.xtoast,.gwrap').forEach(x => x.remove()); return { id: m.id, html: c.outerHTML }; });
+      /* Nov 22 audit: the zero-decimal rule (61.0% -> 61%) also for the baked copy search engines read, chart tooltips included */
+      if (snap && !/<script/i.test(snap.html)) snap.html = snap.html.replace(/>([^<]+)</g, (m, x) => '>' + x.replace(/(\d)\.0%/g, '$1%') + '<');
       if (!data) data = await page.evaluate(() => ({ SCORES, SCHEDULE, PLAYERS: PLAYERS.map(p => p[1]), PL: PLAYERS, UPD: typeof SITE_UPDATED === 'string' ? SITE_UPDATED : '' }));
       if (data && !MODCTX) { const rj = async f => { try { return JSON.parse(await readFile(new URL(f, root), 'utf8')) } catch (e) { return null } };
         const v = await rj('videos.json'), r = await rj('rcf.json'); const sd = Object.keys(data.SCORES || {}).sort().pop();
