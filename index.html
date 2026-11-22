@@ -1038,6 +1038,7 @@ tr.mark td,tr.mark.cupm td,.sched tr.mark td,.sched tr.mark.cupm td,.rc3-adv .rc
 <style id="a11y-search">/* Nov 22 a11y: the search box shows where the keyboard is */.sh-s:focus-within{border-color:#f2b231!important;box-shadow:0 0 0 2px #f2b231}</style>
 <style id="home-browse">@media (min-width:1100px){.home{grid-template-areas:"col side" "browse side"}.home>.col{grid-area:col}.home>.side{grid-area:side;grid-row:1/span 2}.home>.home-browse{grid-area:browse}.home>.home-browse .block-h{margin-top:4px!important}}</style>
 <style id="fx-pages">.fx-hide{display:none!important}.fx-head{padding:20px 0 6px;max-width:760px}.fx-head h1{font:800 2.25rem/1.05 var(--cond);text-transform:uppercase;margin:0 0 8px}.fx-head p{margin:0 0 8px;color:var(--muted);font-size:.9375rem;line-height:1.5}.fx-head a{font-size:.875rem;color:var(--wine-ink)}main[data-fx="injury-report"] .inj-more{display:none}main[data-fx="injury-report"] .home{display:block!important}main[data-fx="injury-report"] .home>.side{display:block!important;max-width:720px}main[data-fx] .fx-head{padding-left:20px;padding-right:20px}@media(min-width:721px){main[data-fx] .fx-head{padding-left:0;padding-right:0;margin:0 auto;max-width:1160px}}</style>
+<style id="mock-rcp">.o-rcp .rcp-p{margin:2px 0 0;font:500 1rem/1.6 var(--sans);color:var(--fg)}.gp-bx2{font:800 .875rem var(--cond);letter-spacing:.06em;margin:22px 0 8px}</style>
 </head>
 <body>
 <script>/* Nov 21 (Luka): site rule: a percentage whose decimal is zero drops it (61.0% -> 61%, 100.0% -> 100%; 61.4% stays).
@@ -3868,6 +3869,23 @@ window.renderGame=function(sl){if(SCHEDULE.findIndex(g=>gslug(g)===sl)<0)return 
     {const rc=card('The game in numbers');rc.classList.add('o-num');rc.hidden=true;L.appendChild(rc);const y=+g[0].slice(0,4),se=+g[0].slice(5,7)>=8?y+'-'+String(y+1).slice(2):(y-1)+'-'+String(y).slice(2);
       fetch('/live-archive/'+se+'/index.json',{cache:'no-cache'}).then(x=>x.ok?x.json():null).catch(()=>null).then(ix=>{const e=ix&&ix.find(x=>x.et===g[0]);if(!e||!e.rc||!e.rc.length)return;
         const ul=el('ul','rcp');/* Nov 12 (Luka): the score is already at the top, so no Result line */e.rc.filter(([k])=>!/^result$/i.test(k)).forEach(([k,t])=>{const li=el('li');li.append(el('b',null,k),el('span',null,t));ul.appendChild(li)});const a=el('a','gp-go','Every stat from the game →');a.href='/live.html?g=a'+se+':'+e.id;a.textContent='Every stat →';a.classList.add('gp-hl');rc.querySelector('.block-h h2').after(a);rc.append(ul);rc.hidden=false})}grid.appendChild(bx);
+    /* MOCK (Nov 22, Luka: game pages for search): a short written recap, facts only, from the same numbers on the page */
+    const rcp=card('Recap');rcp.classList.add('o-rcp');rcp.hidden=true;
+    if(fin){const y=+g[0].slice(0,4),se=+g[0].slice(5,7)>=8?y+'-'+String(y+1).slice(2):(y-1)+'-'+String(y).slice(2);
+      Promise.all([fJ('/box.json').then(x=>x.ok?x.json():null).catch(()=>null),fetch('/live-archive/'+se+'/index.json').then(x=>x.ok?x.json():null).catch(()=>null)]).then(([B,ix])=>{
+        const b=B&&B[g[0]],e=ix&&ix.find(x=>x.et===g[0]);const R=Object.fromEntries(((e&&e.rc)||[]).map(([k,v])=>[k.toLowerCase(),v]));const won=cs>os;
+        const W2=res.slice(0,i+1).filter(x=>x==='W').length,L2=res.slice(0,i+1).filter(x=>x==='L').length;
+        const day=dt.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+        const line=s=>{const m=/^(.+?): (\d+) pts \((\d+)-(\d+) FG(?:, (\d+)-(\d+) 3PT)?\)(?:, (\d+) reb)?(?:, (\d+) ast)?/.exec(s||'');if(!m)return null;
+          return {n:m[1],t:m[2]+' points on '+m[3]+'-of-'+m[4]+' shooting'+(m[5]&&+m[6]?', '+m[5]+' of '+m[6]+' from three':'')+([m[7]&&+m[7]>=5?m[7]+' rebounds':'',m[8]&&+m[8]>=5?m[8]+' assists':''].filter(Boolean).length?', with '+[m[7]&&+m[7]>=5?m[7]+' rebounds':'',m[8]&&+m[8]>=5?m[8]+' assists':''].filter(Boolean).join(' and '):'')}};
+        const S=[];S.push('The Cavaliers '+(won?'beat':'lost to')+' the '+TEAMS[o]+' '+nk+' '+(won?cs+'–'+os:os+'–'+cs)+(H?' at Rocket Arena':' on the road')+' on '+day+', '+(won?'improving':'falling')+' to '+W2+'–'+L2+'.');
+        const ch=line(R['cavs high']);if(ch){const td=/(\d+) points.* (\d+) rebounds and (\d+) assists/.exec(ch.t);S.push(ch.n+' led the Cavs with '+ch.t+(td&&+td[1]>=10&&+td[2]>=10&&+td[3]>=10?', a triple-double':'')+'.')}
+        if(b&&b.qs&&b.qs.cle&&b.qs.opp){let bi=-1,bd=0;b.qs.cle.forEach((v,k)=>{const d=v-b.qs.opp[k];if(Math.abs(d)>Math.abs(bd)){bd=d;bi=k}});if(bi>=0&&Math.abs(bd)>=8){const q=bi<4?['first','second','third','fourth'][bi]+' quarter':'overtime';S.push(bd>0?'Cleveland '+(won?'took control in the '+q+', outscoring ':'won the '+q+', outscoring ')+TEAMS[o]+' '+b.qs.cle[bi]+'–'+b.qs.opp[bi]+'.':TEAMS[o]+' won the '+q+' '+b.qs.opp[bi]+'–'+b.qs.cle[bi]+'.')}}
+        const th=line(R['their high']);if(th)S.push(th.n+' led '+TEAMS[o]+' with '+th.t.replace(/ on \d+-of-\d+ shooting.*/,'')+'.');
+        const ff=/^Cavs won (\d) of 4(?:: ([^.]+))?\. Effective FG% (\d+(?:\.\d)?) to (\d+(?:\.\d)?)/.exec(R['four factors']||'');if(ff)S.push('The Cavs won '+(+ff[1]?ff[1]+' of the four factors'+(ff[2]?' ('+ff[2]+')':''):'none of the four factors')+', with an effective field goal percentage of '+ff[3]+' to '+ff[4]+'.');
+        const hi=((e&&e.rc)||[]).filter(([k])=>/season high/i.test(k)).map(([,v])=>v.replace(/, tying his most this season\.?$/,', matching his season best').replace(/, his most this season\.?$/,'')).map(v=>{const m=/^(.+?): (.+)$/.exec(v);return m?[m[1],m[2]]:null}).filter(Boolean);
+        if(hi.length){const by={};hi.forEach(([n,x])=>(by[n]=by[n]||[]).push(x));S.push('Season highs: '+Object.entries(by).map(([n,xs])=>n+' ('+xs.join(', ')+')').join('; ')+'.')}
+        if(S.length<2)return;rcp.appendChild(el('p','rcp-p',S.join(' ')));const f1=[...L.children].find(x=>x.matches&&x.matches('section.gpc'));L.insertBefore(rcp,f1||null);rcp.hidden=false});}
     fJ('/box.json').then(x=>x.ok?x.json():null).catch(()=>null).then(B=>{const b=B&&B[g[0]];if(!b)return;
       if(b.qs&&b.qs.cle&&b.qs.cle.length>=4){const lc=card('By quarter');lc.classList.add('o-q');const tb=el('table','gp-ls');const n=b.qs.cle.length;const lab=k=>k<4?String(k+1):(n>5?'OT'+(k-3):'OT');
         tb.innerHTML='<thead><tr><th></th>'+b.qs.cle.map((_,k)=>'<th>'+lab(k)+'</th>').join('')+'<th>F</th></tr></thead>';const bd=el('tbody');[['CLE',b.qs.cle,cs,1],[o,b.qs.opp,os,0]].forEach(([ab,q,t,me])=>{const tr=el('tr',me?'me':null);tr.appendChild(el('td',null,ab));q.forEach(v=>tr.appendChild(el('td',null,String(v))));tr.appendChild(el('td','f',String(t)));bd.appendChild(tr)});tb.appendChild(bd);lc.appendChild(tb);L.insertBefore(lc,tl)}
@@ -3889,7 +3907,7 @@ window.renderGame=function(sl){if(SCHEDULE.findIndex(g=>gslug(g)===sl)<0)return 
         const tr=el('tr','tot');tr.appendChild(el('td',null,'Team'));COLS.forEach(([,k],j)=>{const i=ix2[j];tr.appendChild(el('td',null,i<0||k==='MIN'||k==='+/-'?'':/FG|3PT|FT/.test(k)?ma(i):String(sum(i))))});bd.appendChild(tr);
         tb.appendChild(bd);wrp.textContent='';wrp.appendChild(tb)};
       const order=PL.slice().sort((a,b)=>(ab[a.team.id]==='CLE'?0:1)-(ab[b.team.id]==='CLE'?0:1));
-      order.forEach(t=>{const x=el('button',null,ab[t.team.id]||'');x.type='button';x.dataset.t=t.team.id;x.onclick=()=>show(t);sw.appendChild(x)});show(order[0]);
+      /* MOCK (Nov 22): both teams' box scores on the page, Cavs first, so all of it is there to read and search */sw.remove();show(order[1]);const opT=wrp.firstChild;show(order[0]);if(opT){const h3=el('h3','gp-bx2',(TEAMS[o]+' '+nk).toUpperCase());wrp.append(h3,opT);}
       const fl=el('a','gp-go gp-hl','Full box score →');fl.href='/live.html?g='+e.id;bx.querySelector('.block-h h2').after(fl);/* Nov 4: links sit in the card's header row, right side */bx.hidden=false;return true}catch(err){return false}};
     const oldBox=b=>{
       if(b.box&&b.box.length){const full=b.box.some(r=>r.length>7);const cols=full?['Min','Pts','Reb','Ast','Stl','Blk','FG','3PT','FT','TO','+/−']:['Min','Pts','Reb','Ast','+/−'];
