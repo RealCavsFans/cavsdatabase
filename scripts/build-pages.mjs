@@ -36,6 +36,9 @@ const META = Function('return ' + m[1])();
 const pm = html.match(/const PLAYERS=(\[[\s\S]*?\]);\n/);
 const slug = t => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 if (pm && /const PP_ON=true/.test(html)) for (const p of Function('return ' + pm[1])()) META['players/' + slug(p[1])] = [p[1] + ' Stats, Contract & Injury Status | Cavs Database', p[1] + '’s stats with context, injury status, contract and trade eligibility, and where he ranks in Cavs history. Updated after every game.'];
+// Nov 22 (Luka): Cavs vs every team (vs/<team>), titles matching the site's VS_META
+try { const g = n => Function('return ' + html.match(new RegExp('const ' + n + '=(\\{[^;]*?\\});'))[1])(); const TM = g('TEAMS'), NK = g('GNICK');
+  for (const ab of Object.keys(NK)) { if (ab === 'CLE' || !TM[ab]) continue; const nm = TM[ab] + ' ' + NK[ab]; META['vs/' + slug(nm)] = ['Cavs vs ' + NK[ab] + ': All-Time Record, Playoff Series & Every Meeting | Cavs Database', 'Cleveland Cavaliers vs ' + nm + ': all-time regular-season record, by decade, playoff series, the last 10 meetings, biggest wins and losses, and this season’s games.']; } } catch (e) { console.log('::warning::vs pages: ' + e.message); }
 // Nov 22 (Luka): one page per player per Cavs season since 2020-21 (players/<name>/<season>), from pdata/ps (scripts/player-seasons.mjs)
 try { const PS = JSON.parse(await readFile(new URL('pdata/ps/index.json', root), 'utf8')); for (const [s, x] of Object.entries(PS)) for (const se of x.s) { const sd = se.replace('-', '–'); META['players/' + s + '/' + se] = [x.n + ' ' + sd + ' Stats & Game Log: Cavaliers | Cavs Database', x.n + '’s ' + sd + ' season with the Cleveland Cavaliers: per-game stats, shooting splits, home and away, by month, season highs and every game he played, from the NBA’s box scores.']; } } catch {}
 // one page per Cavs season (history/1970-71 … ), titles matching the site's season page
