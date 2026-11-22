@@ -113,12 +113,32 @@ jobs:
         run: timeout 150 node scripts/smoke.mjs || { echo "::warning::smoke check hung or failed once; retrying"; timeout 150 node scripts/smoke.mjs; }
         env:
           CHROME_PATH: /usr/bin/google-chrome
+      # Nov 22 (Luka): layout check on phone and desktop (sideways scrolling, things past the screen edge, text spilling out,
+      # a page much shorter or taller than last build). Never blocks the build; one push per new problem; screenshots kept 7 days
+      - name: Layout check
+        timeout-minutes: 8
+        continue-on-error: true
+        run: |
+          timeout 420 node scripts/visual-check.mjs --shots /tmp/vis || true
+          if [ -f data/visual-alert.txt ] && [ -n "$NTFY_TOPIC" ]; then curl -s -m 15 -H "Title: Layout check found something" -H "Tags: warning" --data-binary @data/visual-alert.txt "https://ntfy.sh/$NTFY_TOPIC" || true; fi
+          rm -f data/visual-alert.txt
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2, pinned
+        if: always()
+        continue-on-error: true
+        with:
+          name: layout-screenshots
+          path: /tmp/vis
+          retention-days: 7
+          if-no-files-found: ignore
       - name: Commit if changed
         run: |
           git config user.name "cavsdatabase-bot"
           git config user.email "bot@cavsdatabase.com"
           # data only: the built pages and share images go to the 'deploy' branch (next step), not main
-          add(){ git add videos.json box.json rcf.json; for f in rcf-videos.json pdata/sos.json data/league-schedule.json data/rcf-first.json news.json news-status.txt niang.json pdata/niang-games.json cavs.ics box-status.txt pdata/league.json pdata/league-rates.json data/league-rates-cache.json pdata/milestones.json pdata/league-shots.json pdata/cle-rates.json pdata/dunks.json pdata/nba-cup.json pdata/charge-box.json; do [ -f "$f" ] && git add "$f"; done; [ -d img ] && git add img; git add index.html; true; }
+          add(){ git add videos.json box.json rcf.json; for f in rcf-videos.json pdata/sos.json data/league-schedule.json data/rcf-first.json news.json news-status.txt niang.json pdata/niang-games.json cavs.ics box-status.txt pdata/league.json pdata/league-rates.json data/league-rates-cache.json pdata/milestones.json pdata/league-shots.json pdata/cle-rates.json pdata/dunks.json pdata/nba-cup.json pdata/charge-box.json data/visual-check.json; do [ -f "$f" ] && git add "$f"; done; [ -d img ] && git add img; git add index.html; true; }
           add
           if git diff --cached --quiet; then exit 0; fi
           # scheduled runs: skip commits that are only timestamps and rebuilt page copies (scripts/changed.mjs)
