@@ -7,6 +7,8 @@
 //
 // SEASON=2026-27 node scripts/live-archive.mjs          (default: the current season)
 // SEASON=2025-26 node scripts/live-archive.mjs          (backfill a past season)
+// PO=1 SEASON=2025-26 node scripts/live-archive.mjs     (Nov 22, Luka: that season's playoff games, in live-archive/<season>/po/,
+//                                                       with their own season totals, so regular-season numbers never mix with them)
 import { CUR_SEASON } from './season.mjs';   // Nov 21: the season from one place
 import { loadFixes, applyFixes as applyFixesTo } from './nba-fixes.mjs';
 import fs from 'fs';
@@ -17,7 +19,8 @@ const C = require('../live-core.js');
 
 const SEASON = process.env.SEASON || CUR_SEASON;
 const ESPN_YEAR = +SEASON.slice(0, 4) + 1;           // ESPN names a season by the year it ends
-const DIR = path.join('live-archive', SEASON);
+const PO = process.env.PO === '1';
+const DIR = path.join('live-archive', SEASON, PO ? 'po' : '');
 const ESPN = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/';
 fs.mkdirSync(DIR, { recursive: true });
 /* Nov 2: the NBA's own files come first. When the NBA game store (the 'nba-data' branch, scripts/nba-store.mjs) is checked out
@@ -43,7 +46,7 @@ async function get(u) {
 }
 
 /* 1) which Cavs regular-season games are final */
-const sched = process.env.SKIP_FETCH ? { events: [] } : await get(`${ESPN}teams/5/schedule?season=${ESPN_YEAR}&seasontype=2`);
+const sched = process.env.SKIP_FETCH ? { events: [] } : await get(`${ESPN}teams/5/schedule?season=${ESPN_YEAR}&seasontype=${PO ? 3 : 2}`);
 if (!sched) console.log('No schedule from ESPN; trying the backup feed for missing games.');
 const finals = ((sched && sched.events) || []).filter(e => {
   const st = e.competitions && e.competitions[0] && e.competitions[0].status && e.competitions[0].status.type;
@@ -70,7 +73,7 @@ console.log(`${added} game file(s) written`);
 
 /* 2b) backup: a finished game ESPN never delivered comes from the site's /pbp backup (CBS, then Yahoo),
    saved as b<YYYYMMDD>.json with players matched to their ESPN ids by name. An ESPN copy, once it exists, replaces it. */
-if (SEASON === CUR_SEASON && !process.env.SKIP_FETCH && !NBA_MODE) {
+if (SEASON === CUR_SEASON && !PO && !process.env.SKIP_FETCH && !NBA_MODE) {
   const etOf = t => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(t));
   const espnFiles = fs.readdirSync(DIR).filter(f => /^\d+\.json$/.test(f));
   const have = new Set(), byName = {};
@@ -107,7 +110,7 @@ if (NBA_MODE) {
   const covered = new Set(), byName = {}; let nw = 0;
   for (const [gid, row] of Object.entries(nidx)) {
     if (row[1] !== 'CLE' && row[2] !== 'CLE') continue;
-    if (!gid.startsWith('002')) continue;   // regular season only, like ESPN's schedule (seasontype=2)
+    if (!gid.startsWith(PO ? '004' : '002')) continue;   // regular season only (or playoffs only with PO=1), like ESPN's schedule (seasontype=2 / 3)
     const d = row[0].slice(0, 4) + '-' + row[0].slice(4, 6) + '-' + row[0].slice(6, 8);
     let raw; try { raw = JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(NBA_DIR, SEASON, gid + '.json.gz')))); } catch (e) { console.log('NBA store: unreadable', gid, String(e)); continue; }
     applyFixes(gid, raw);

@@ -14,9 +14,11 @@ const seasons = fs.readdirSync(AR).filter(s => /^\d{4}-\d\d$/.test(s) && fs.exis
 const IDX = {}; let wrote = 0;
 for (const se of seasons) {
   const ix = JSON.parse(fs.readFileSync(AR + se + '/index.json', 'utf8')).filter(g => g.id && g.et && /^002/.test(g.id)).sort((a, b) => a.et.localeCompare(b.et));
+  /* Nov 22 (Luka): playoff games (live-archive/<season>/po) go in each player's po list, never in the regular-season log */
+  let pix = []; try { pix = JSON.parse(fs.readFileSync(AR + se + '/po/index.json', 'utf8')).filter(g => g.id && g.et && /^004/.test(g.id)).map(g => ({ ...g, po: 1 })).sort((a, b) => a.et.localeCompare(b.et)); } catch {}
   const P = {};
-  for (const g of ix) {
-    let D; try { D = JSON.parse(fs.readFileSync(AR + se + '/' + g.id + '.json', 'utf8')); } catch { continue; }
+  for (const g of [...ix, ...pix]) {
+    let D; try { D = JSON.parse(fs.readFileSync(AR + se + (g.po ? '/po/' : '/') + g.id + '.json', 'utf8')); } catch { continue; }
     const comp = D.header && D.header.competitions && D.header.competitions[0]; if (!comp || !D.boxscore || !D.boxscore.players) continue;
     const ab = {}; (comp.competitors || []).forEach(c => ab[c.team.id] = c.team.abbreviation);
     const t = D.boxscore.players.find(x => ab[x.team.id] === 'CLE'); if (!t || !t.statistics || !t.statistics[0]) continue;
@@ -29,13 +31,14 @@ for (const se of seasons) {
       const row = [g.et, g.opp, g.ha === 'home' ? 'H' : 'A', g.cle > g.os ? 'W' : 'L', g.cle, g.os, a.starter ? 1 : 0,
         Math.round(min * 10) / 10, +v('PTS') || 0, fgm, fga, tpm, tpa, ftm, fta, +v('OREB') || 0, +v('DREB') || 0, +v('REB') || 0, +v('AST') || 0, +v('STL') || 0, +v('BLK') || 0, +v('TO') || 0, +v('PF') || 0, +String(v('+/-') || '0').replace('+', '') || 0];
       const nm = a.athlete.displayName, k = slug(nm);
-      (P[k] = P[k] || { n: nm, id: String(a.athlete.id), g: [] }).g.push(row);
+      const o = (P[k] = P[k] || { n: nm, id: String(a.athlete.id), g: [] }); if (g.po) (o.po = o.po || []).push(row); else o.g.push(row);
     }
   }
   for (const [k, x] of Object.entries(P)) { if (x.g.length) (IDX[k] = IDX[k] || { n: x.n, s: [] }).s.push(se); }
+  for (const x of Object.values(P)) if (!x.g.length) x.g = [];
   const out = JSON.stringify({ season: se, cols: ['date', 'opp', 'ha', 'res', 'cle', 'os', 'gs', ...COLS], p: P });
   const f = OUT + se + '.json'; if (!fs.existsSync(f) || fs.readFileSync(f, 'utf8') !== out) { fs.writeFileSync(f, out); wrote++; }
-  console.log(`player-seasons ${se}: ${Object.keys(P).length} players, ${ix.length} games`);
+  console.log(`player-seasons ${se}: ${Object.keys(P).length} players, ${ix.length} games, ${pix.length} playoff games`);
 }
 const io = JSON.stringify(IDX); if (!fs.existsSync(OUT + 'index.json') || fs.readFileSync(OUT + 'index.json', 'utf8') !== io) { fs.writeFileSync(OUT + 'index.json', io); wrote++; }
 console.log(`player-seasons: ${Object.keys(IDX).length} players, ${Object.values(IDX).reduce((t, x) => t + x.s.length, 0)} player-seasons, ${wrote} files written`);

@@ -1031,7 +1031,7 @@ const ESPN='https://site.api.espn.com/apis/site/v2/sports/basketball/nba/';
 (function(){const b=()=>document.getElementById('theme');let m='auto';try{m=localStorage.getItem('cdb-theme')||'auto'}catch(e){}
   const ap=()=>{if(m==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.setAttribute('data-theme',m);const x=b();if(x)x.textContent=m==='auto'?'Auto':m==='dark'?'Dark':'Light'};ap();
   addEventListener('DOMContentLoaded',()=>{ap();b().onclick=()=>{m=m==='auto'?'dark':m==='dark'?'light':'auto';try{localStorage.setItem('cdb-theme',m)}catch(e){}ap()}})})();
-/* Nov 20 (Luka): every season with a Cavs game archive, newest first (the NBA's own game files go back to 2020-21) */const ARCH_SEASONS=['2026-27','2025-26','2024-25','2023-24','2022-23','2021-22','2020-21'];
+/* Nov 20 (Luka): every season with a Cavs game archive, newest first (the NBA's own game files go back to 2020-21) */const ARCHPO={};const ARCH_SEASONS=['2026-27','2025-26','2024-25','2023-24','2022-23','2021-22','2020-21'];
 const ARCH={},SEASON_TABS=['season','team','players','lineups','shots','ast','ff','share'];
 const POLL=15000;
 const $=id=>document.getElementById(id);
@@ -1124,7 +1124,7 @@ async function fetchGame(){
     if(espn){setData(espn,null);S.srcNBA=false;S.fail=0;return}
     S.fail=(S.fail||0)+1;if(S.fail<2){S.err='Could not load the game. Retrying.';return}S.bk=etDate(S.data&&S.data.date);S.bkN=0}
   if(S.bk&&!S.src&&!S.replay){/* backup mode: the NBA's feed before the other sites */const k=nbaKey(null);if(k){try{const nb=nbaBuild(await getJSON(k),null);if(nb){setData(nb,null);S.srcNBA=true;return}}catch(x){}}}
-  if(S.src||S.replay){try{setData(await getJSON(S.src?'/live-archive/'+S.src+'/'+S.ev+'.json':ESPN+'summary?event='+S.ev),null)}catch(e){S.err='Could not load the game. Retrying.'}return}
+  if(S.src||S.replay){try{setData(await getJSON(S.src?'/live-archive/'+S.src+(/^004/.test(S.ev)?'/po':'')+'/'+S.ev+'.json':ESPN+'summary?event='+S.ev),null)}catch(e){S.err='Could not load the game. Retrying.'}return}
   if(!S.bk){try{setData(await getJSON(ESPN+'summary?event='+S.ev),null);S.fail=0;return}catch(e){S.fail=(S.fail||0)+1;if(S.fail<2){S.err='Could not load the game. Retrying.';return}S.bk=etDate(S.data&&S.data.date);S.bkN=0}}
   else if(S.ev!=='b'&&++S.bkN%4===0){try{setData(await getJSON(ESPN+'summary?event='+S.ev),null);S.bk=null;S.fail=0;return}catch(e){}}
   try{const d=await getJSON('/pbp?d='+S.bk);if(!d.header)throw 0;setData(d,d.src==='schedule'?null:d.src||'backup')}catch(e){if(!S.data)S.err='Could not load the game. Retrying.'}
@@ -2571,6 +2571,7 @@ function milestoneCard(D,R){
       if(tied.length&&rk(v1)<=25)hits.push(`${D.P[id].name} tied ${tied.join(', ')} for ${ord(rk(v1))} on the Cavs all-time ${LIST[k]} list.`);
       if(!passed.length||tied.length){const ahead=others.filter(([,x])=>x>=v1).pop();if(ahead&&rk(v1)<=26&&ahead[1]-v1+1<=near[k])watch.push([ahead[1]-v1+1,`${D.P[id].name} is ${ahead[1]-v1+1} ${W[k]} from passing ${ahead[0]} for ${ord(rk(ahead[1]+1))} on the Cavs all-time ${LIST[k]} list.`])}}});
   if(!hits.length&&!watch.length)return null;
+  /* Nov 22: playoff games don't count toward regular-season career totals */if(/^004/.test(String(S.ev||'')))return null;
   const c=el('div','card msw');c.style.borderTop='2px solid var(--gold)';c.style.marginBottom='10px';head(c,'Milestone watch',preview?'Preview: tonight’s numbers added to career totals through 2025–26':'');/* Nov 13 (Luka): much smaller and more compact */
   const ul=el('ul','sw');hits.forEach(t=>{const li=el('li');li.style.gridTemplateColumns='auto 1fr';li.append(el('b',null,'★'),el('span',null,t));li.firstChild.style.color='var(--gold)';ul.appendChild(li)});
   watch.sort((a,b)=>a[0]-b[0]).slice(0,5).forEach(([,t])=>{const li=el('li');li.style.gridTemplateColumns='auto 1fr';li.append(el('b',null,'→'),el('span',null,t));ul.appendChild(li)});
@@ -5141,21 +5142,22 @@ function vPlays(v,D,R){
 
 /* ---------- boot ---------- */
 (async()=>{msLoad().then(()=>{if(S.data&&!S.season&&S.tab==='team')renderView()});await Promise.all(ARCH_SEASONS.map(async se=>{try{const r=await fetch('/live-archive/'+se+'/index.json',{cache:ARCH_SEASONS.indexOf(se)<2?'no-store':'default'});/* finished seasons don't change */if(r.ok)ARCH[se]=await r.json()}catch(e){}}));
+  /* Nov 22 (Luka): playoff games (live-archive/<season>/po/), listed with their season, kept out of the season totals */await Promise.all(ARCH_SEASONS.slice(1).map(async se=>{try{const r=await fetch('/live-archive/'+se+'/po/index.json');if(r.ok)ARCHPO[se]=(await r.json()).map(g=>Object.assign(g,{po:1}))}catch(e){}}));
   try{const r=await fetch('/live-base.json',{cache:'no-store'});if(r.ok){const j=await r.json();if(j&&j.t&&j.games>0&&j.season!=='2025-26')BLIVE=j}}catch(e){}
   const evs=await loadScoreboard();$('gsel').onchange=e=>{if(e.target.value==='pickprev'){prevPicker();return}const pp=document.getElementById('prevpk');if(pp)pp.remove();choose(e.target.value,true)};
 
 /* ---------- game picker (Nov 1 mock): replaces the long game menu ---------- */
 (function(){const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const box=document.getElementById('gp2');if(!box)return;
   let cur=null,open=false,se=ARCH_SEASONS[0],team=null,mon=null;
-  /* Nov 21 audit: 'r' is the old 2025-26 replay name; every other season is 'a<season>:<id>' */const val=(s2,g)=>s2==='2025-26'?'r'+g.id:'a'+s2+':'+g.id;
-  const games=s2=>(ARCH[s2]||[]).slice().sort((a,b)=>a.date<b.date?-1:1);
+  /* Nov 21 audit: 'r' is the old 2025-26 replay name; every other season is 'a<season>:<id>' */const val=(s2,g)=>s2==='2025-26'&&!g.po?'r'+g.id:'a'+s2+':'+g.id;
+  const games=s2=>(ARCH[s2]||[]).concat(ARCHPO[s2]||[]).sort((a,b)=>a.date<b.date?-1:1);
   const logo=ab=>{const i=el('img');i.alt='';i.loading='lazy';i.src='/img/tl/'+String(ab).toLowerCase()+'.png';i.onerror=()=>i.remove();return i};
   const dlab=g=>{const d=new Date(g.date);return MON[d.getMonth()]+' '+d.getDate()};
   const res=g=>(g.cle>g.os?'W ':'L ')+Math.max(g.cle,g.os)+'–'+Math.min(g.cle,g.os);
   const today=()=>{const o=[];const sel=$('gsel');[...sel.querySelectorAll('optgroup')].filter(gp=>gp.label==='Today').forEach(gp=>[...gp.children].forEach(x=>o.push([x.value,x.textContent])));return o};
   /* Nov 21 (Luka): every archived season, oldest first, so the arrows walk back through all of them */const order=()=>{const L=[];ARCH_SEASONS.slice().reverse().forEach(s2=>games(s2).forEach(g=>L.push(val(s2,g))));today().forEach(([v])=>{if(!L.includes(v))L.push(v)});return L};
-  const find=v=>{let m=/^a(\d{4}-\d\d):(\d+)$/.exec(v);if(m)return [m[1],(ARCH[m[1]]||[]).find(g=>g.id===m[2])];m=/^r(\d+)$/.exec(v);if(m)return ['2025-26',(ARCH['2025-26']||[]).find(g=>g.id===m[1])];return [null,null]};
-  const label=v=>{if(!v)return '';if(v[0]==='s')return [v.slice(1).replace('-','–')+' season','Season totals · '+((ARCH[v.slice(1)]||[]).length)+' games'];const [s2,g]=find(v);if(g)return [s2.replace('-','–'),dlab(g)+' '+(g.ha==='home'?'vs':'at')+' '+g.opp+' · '+res(g)];const t=today().find(x=>x[0]===v);return ['Today',t?t[1]:'Live game']};
+  const find=v=>{let m=/^a(\d{4}-\d\d):(\d+)$/.exec(v);if(m)return [m[1],(ARCH[m[1]]||[]).concat(ARCHPO[m[1]]||[]).find(g=>g.id===m[2])];m=/^r(\d+)$/.exec(v);if(m)return ['2025-26',(ARCH['2025-26']||[]).find(g=>g.id===m[1])];return [null,null]};
+  const label=v=>{if(!v)return '';if(v[0]==='s')return [v.slice(1).replace('-','–')+' season','Season totals · '+((ARCH[v.slice(1)]||[]).length)+' games'];const [s2,g]=find(v);if(g)return [s2.replace('-','–')+(g.po?' playoffs':''),dlab(g)+' '+(g.ha==='home'?'vs':'at')+' '+g.opp+' · '+res(g)];const t=today().find(x=>x[0]===v);return ['Today',t?t[1]:'Live game']};
   const go=v=>{open=false;draw();choose(v,true)};
   function draw(){box.textContent='';/* Nov 21 (Luka): on a season's totals the arrows step season to season */const L=cur&&cur[0]==='s'?ARCH_SEASONS.filter(s2=>(ARCH[s2]||[]).length).reverse().map(s2=>'s'+s2):order(),i=L.indexOf(cur);
     const pv=el('button','gp2-nav','‹');pv.type='button';pv.setAttribute('aria-label',cur&&cur[0]==='s'?'Previous season':'Previous game');pv.disabled=!(i>0);pv.onclick=()=>go(L[i-1]);

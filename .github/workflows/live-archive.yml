@@ -76,6 +76,12 @@ jobs:
         if: steps.gate.outputs.go == '1'
         env:
           SEASON: ${{ github.event.inputs.season || '2026-27' }}
+      # Nov 22 (Luka): playoff games, April through June, saved apart in live-archive/<season>/po
+      - run: |
+          M=$(date -u +%m); if [ "$M" -ge 4 ] && [ "$M" -le 6 ] || [ -n "${{ github.event.inputs.season }}" ]; then PO=1 node scripts/live-archive.mjs || true; fi
+        if: steps.gate.outputs.go == '1'
+        env:
+          SEASON: ${{ github.event.inputs.season || '2026-27' }}
       # Nov 7: the newly saved games against the official box score and line score; a push if anything is off
       - name: Check against the official box score
         if: steps.gate.outputs.go == '1'
