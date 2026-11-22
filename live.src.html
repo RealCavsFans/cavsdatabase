@@ -1038,7 +1038,11 @@ document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a)
 const NL_ON=false;{const f=document.getElementById('nlft');let st='';try{st=localStorage.getItem('cdb-nl')||''}catch(_){}if(f&&(NL_ON||/[?&]nl=footer/.test(location.search))&&st!=='sub')f.hidden=false;if(f)f.querySelector('form').addEventListener('submit',()=>{try{localStorage.setItem('cdb-nl','sub')}catch(_){}})}
 /* ---------- loading ---------- */
 const etDate=t=>new Date(t||Date.now()).toLocaleDateString('en-CA',{timeZone:'America/New_York'}).replace(/-/g,'');
-async function getJSON(u){const r=await fetch(u,{cache:'no-store'});if(!r.ok)throw new Error(r.status);return r.json()}
+/* Nov 21 speed audit: the site's own data files (/pdata, /live-archive) are fetched once per two minutes and shared by every card that asks
+   (Season stats asked for league.json three times and season.json twice). Each caller still gets its own parsed copy, so nothing is shared by accident.
+   Live feeds and everything else are fetched fresh, as before. */
+const GJ={};async function getJSON(u){if(/^\/(pdata|live-archive)\//.test(u)){const k=u,now=Date.now();let e=GJ[k];if(!e||now-e.t>120000){e=GJ[k]={t:now,p:fetch(u,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(r.status);return r.text()})};e.p.catch(()=>{if(GJ[k]===e)delete GJ[k]})}return JSON.parse(await e.p)}
+  const r=await fetch(u,{cache:'no-store'});if(!r.ok)throw new Error(r.status);return r.json()}
 const isCavs=e=>e.competitions[0].competitors.some(c=>c.id===CLE)?1:0;
 const rank=e=>({in:0,pre:1,post:2})[e.status.type.state];
 async function loadScoreboard(){

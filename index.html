@@ -2035,7 +2035,7 @@ OFFI().then(R=>{const t=R&&R.teams.CLE;if(!t||!t.filed)return;const by={};t.rows
   window.cdbInjMove=row=>{row.appendChild(sec);sec.classList.add('in-gdm');window.cdbGmPlace();[400,1500,4000].forEach(t=>setTimeout(window.cdbGmPlace,t))};
   window.cdbInjBack=()=>{if(sec.parentNode!==home){home.insertBefore(sec,nx&&nx.parentNode===home?nx:null);sec.classList.remove('in-gdm')}window.cdbGmPlace()}}
 /* games missed this season: Cavs players out of a regular-season game for injury or illness (from each final box score), and the salary paid for those games (2026–27 salary ÷ 82) */
-setTimeout(()=>{Promise.all([fJ('/box.json').then(r=>r.ok?r.json():null).catch(()=>null),fJ('/pdata/injury-history.json').then(r=>r.ok?r.json():{}).catch(()=>({})),fJ('/pdata/league-injuries-nba.json').then(r=>r.ok?r.json():null).catch(()=>null)]).then(([B,IH,LN])=>{if(!B)return;window.__BOXJ=B;const reg=new Set(SCHEDULE.map(g=>g[0]));const fin=Object.entries(B).filter(([d,g])=>reg.has(d)&&g.status==='final');if(!fin.length)return;
+/* Nov 21 speed audit: the games-missed card loads its three files (about 150 KB) only when its section comes near the screen, not on every page */(()=>{const run=()=>{Promise.all([fJ('/box.json').then(r=>r.ok?r.json():null).catch(()=>null),fJ('/pdata/injury-history.json').then(r=>r.ok?r.json():{}).catch(()=>({})),fJ('/pdata/league-injuries-nba.json').then(r=>r.ok?r.json():null).catch(()=>null)]).then(([B,IH,LN])=>{if(!B)return;window.__BOXJ=B;const reg=new Set(SCHEDULE.map(g=>g[0]));const fin=Object.entries(B).filter(([d,g])=>reg.has(d)&&g.status==='final');if(!fin.length)return;
   /* Nov 20 audit: games with the official NBA injury report saved (pdata/injury-history.json, the last report before tip) count from it: listed Out for an injury or illness and didn't play.
      G League assignments, two-way stints, suspensions and personal reasons aren't injuries. Earlier games use ESPN's list. */
   const NOTINJ=/G League|two-way|assignment|suspen|personal|not with team|league suspension/i;
@@ -2071,7 +2071,7 @@ setTimeout(()=>{Promise.all([fJ('/box.json').then(r=>r.ok?r.json():null).catch((
     const G=fin.length,per=Math.max(1,Math.ceil(G/20)),nb=Math.ceil(G/per);const t=el('div','gmt');t.innerHTML='<div class="gmt-h"><span>Player</span><span>Out of '+G+(per>1?' (1 sq = '+per+')':'')+'</span><span>G</span><span>Salary</span></div>'+
       rows.map(([n,g,c])=>{const f=Math.round(g/per);return '<div class="gmt-r"><span class="n">'+escH(n.replace(/ Jr\.$/,'').split(' ').slice(-1)[0].toUpperCase())+'</span><span class="bk">'+'<u></u>'.repeat(Math.min(nb,f))+'<s></s>'.repeat(Math.max(0,nb-f))+'</span><span class="g">'+g+'</span><b>'+(c?fm(c):'—')+'</b></div>'}).join('');
     det.appendChild(t);w.appendChild(det)}
-  card.appendChild(w);if(window.cdbGmPlace)window.cdbGmPlace()})},0);
+  card.appendChild(w);if(window.cdbGmPlace)window.cdbGmPlace()})};const el0=document.getElementById('inj');const host=el0&&(el0.closest('section')||el0);if(!host||!('IntersectionObserver' in window)){setTimeout(run,0);return}let done=false;const io=new IntersectionObserver(es=>{if(!done&&es.some(e=>e.isIntersecting)){done=true;io.disconnect();run()}},{rootMargin:'800px'});io.observe(host)})();
 
 /* Charge */
 (function(){
@@ -2630,7 +2630,7 @@ function confetti(){const c=document.createElement('canvas');c.id='confetti';doc
    Salaries: Capsheets (2026-27, the official figures), Spotrac for later seasons Capsheets doesn't show. Bird rights: Salary Swish. */
 const SEASONS=['2026–27','2027–28','2028–29','2029–30','2030–31'];
 /* Nov 21 audit: the current season's archive name, read from SEASONS, so the game archive paths roll over with it */const CUR_SE=SEASONS[0].replace('–','-'),PREV_SE=(+CUR_SE.slice(0,4)-1)+'-'+CUR_SE.slice(2,4);
-/* Nov 21 audit: a player's game-archive file is fetched once per page view (several sections read it; it was downloaded twice), kept for a minute so game-night refreshes still pick up new games */const cdbPFile=(()=>{const M={};return k=>{const o=M[k];if(o&&Date.now()-o.t<6e4)return o.p;const p0=fetch('/live-archive/'+CUR_SE+'/p/'+k+'.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null);M[k]={t:Date.now(),p:p0};p0.catch(()=>{delete M[k]});return p0}})();
+/* Nov 21 audit: a player's game-archive file is fetched once per page view (several sections read it; it was downloaded twice), kept for a minute so game-night refreshes still pick up new games */const cdbPFile=(()=>{const M={};/* Nov 21 speed audit: one fetch per player file per season, shared by every card; a missing file (he didn't play that season) is remembered, not asked for again */const f=(se,k)=>{const K=se+'|'+k,o=M[K];if(o&&(o.miss||Date.now()-o.t<6e4))return o.p;const e={t:Date.now()};e.p=fetch('/live-archive/'+se+'/p/'+k+'.json',{cache:'no-cache'}).then(r=>{if(r.status===404){e.miss=true;return null}return r.ok?r.json():null}).catch(()=>null);M[K]=e;return e.p};window.cdbPFileSe=f;return k=>f(CUR_SE,k)})();
 const ROSTER=[
   ['Donovan Mitchell','G',[50105628,61600000,66528000,71456000,[76384000,'P']],'Full Bird','2031 UFA',''],
   ['Evan Mobley','F/C',[50105628,53817156,57528684,61240212,'UFA'],'Full Bird','2030 UFA',''],
@@ -5218,7 +5218,7 @@ const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3PT%','tp'],['FG%','f
   {const c=card('Shots and passing','','Every shot he took, where it came from, and who he set up and who set him up. From our game archive, updated after every game.');const box=el('div','ppx-sp');box.appendChild(el('p','dim','Loading…'));c.appendChild(box);ov.appendChild(c);
     const nrm=x=>x.normalize('NFKD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(jr|sr|ii|iii|iv)\b/g,'').replace(/[^a-z]/g,'');const SEAS=[CUR_SE,PREV_SE];
     PPD.arch=PPD.arch||{};const gj=u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);/* his own small file per season; the whole season.json only if that's missing */
-    Promise.all(SEAS.map(se=>PPD.arch[se+'|'+nrm(n)]?0:gj('/live-archive/'+se+'/p/'+nrm(n)+'.json').then(j=>j||gj('/live-archive/'+se+'/season.json')).then(j=>{PPD.arch[se+'|'+nrm(n)]=j||{}}))).then(()=>{if(window.__dbPrev)setTimeout(window.__dbPrev);
+    Promise.all(SEAS.map(se=>PPD.arch[se+'|'+nrm(n)]?0:window.cdbPFileSe(se,nrm(n))/* Nov 21 speed audit: no season.json fallback: both seasons have player files, so a missing one means he didn't play (it was a 600 KB+ download for nothing) */.then(j=>{PPD.arch[se+'|'+nrm(n)]=j||{}}))).then(()=>{if(window.__dbPrev)setTimeout(window.__dbPrev);
       const have=SEAS.filter(se=>{const A=PPD.arch[se+'|'+nrm(n)];const id=A.P&&Object.keys(A.P).find(k=>nrm(A.P[k].name)===nrm(n));return id&&(A.shots||[]).some(x=>x[0]===id)});
       if(!have.length){c.remove();return}let cur=have[0];
       let ptSel=null;   /* shot diet: tap a tile to show only that kind of shot on the court */
@@ -5536,7 +5536,7 @@ const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3PT%','tp'],['FG%','f
     const fmtMinS=s=>Math.floor(s/60)+':'+String(Math.round(s%60)).padStart(2,'0');
     const poss=t=>t.np>0?t.np:t.fga-t.oreb+t.to+0.44*t.fta;/* counted possessions when the archive has them */
     /* his own small file (live-archive/<season>/p/<name>.json); the whole season.json only if that's missing */
-    {const K=SE+'|'+nrm(n);if(PPD.arch[K])go(PPD.arch[K]);else{const gj=u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);gj('/live-archive/'+SE+'/p/'+nrm(n)+'.json').then(j=>j||gj('/live-archive/'+SE+'/season.json')).then(j=>{PPD.arch[K]=j||{};go(PPD.arch[K])})}}}
+    {const K=SE+'|'+nrm(n);if(PPD.arch[K])go(PPD.arch[K]);else{const gj=u=>fetch(u,{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null);window.cdbPFileSe(SE,nrm(n)).then(j=>{PPD.arch[K]=j||{};go(PPD.arch[K])})}}}
   const va=chap('val','Role and value',stt==='TW'?'Two-way':stt==='Camp'?'Exhibit 10':'',false,'Role');
   {const vc=document.getElementById('ppx-valc');if(vc)va.appendChild(vc)}   /* value for his contract lives under Role and value (Oct 30) */
   const teamGames=games.length;
