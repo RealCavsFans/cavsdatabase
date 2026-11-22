@@ -39,9 +39,9 @@ addEventListener('unhandledrejection',function(e){var r=e&&e.reason;if(!r||!r.st
 @font-face{font-family:'Saira Condensed';font-style:normal;font-display:swap;font-weight:700;src:url(/fonts/saira-condensed-latin-700-normal.woff2) format('woff2')}
 @font-face{font-family:'Saira Condensed';font-style:normal;font-display:swap;font-weight:800;src:url(/fonts/saira-condensed-latin-800-normal.woff2) format('woff2')}
 :root{--wine:#860038;--gold:#F2B231;--ink:#101419;--bg:#f7f5f2;--card:#fff;--sub:#f4f1ec;--fg:#101419;--fg2:#3a3f46;--muted:#6b7078;--line:#e3e0db;--line2:#eeebe7;--track:#ebe8e3;--opp:#5b6470;--miss:#8a9099;--pos:#860038;--neg:#6b7078;--pmp:#1d6b3a;--pmn:#a3122e;--sans:'Archivo',system-ui,sans-serif;--mono:'Geist Mono',ui-monospace,monospace;--cond:'Saira Condensed','Archivo',sans-serif;--cf:#860038;--co:#5b6470;--gold-ink:#9C5A00;--wt:#860038;--press:#860038;--presst:#fff;/* Nov 17 (Luka, mock): one filter style site-wide: wine for the selected choice */color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e1116;--card:#161a21;--sub:#1d222b;--fg:#e8eaee;--fg2:#c3c7ce;--muted:#8d939d;--line:#2b313b;--line2:#222833;--track:#272d37;--miss:#7b828c;--pos:#F2B231;--neg:#8d939d;--pmp:#5cc98a;--pmn:#e5484d;--cf:#c23a64;--wine-ink:#F2B231;--gold-ink:#F2B231;--co:#8f9aa8;--wt:#F2B231;--press:#860038;--presst:#fff;color-scheme:dark}}
-:root[data-theme=dark]{--bg:#0e1116;--card:#161a21;--sub:#1d222b;--fg:#e8eaee;--fg2:#c3c7ce;--muted:#8d939d;--line:#2b313b;--line2:#222833;--track:#272d37;--miss:#7b828c;--pos:#F2B231;--neg:#8d939d;--pmp:#5cc98a;--pmn:#e5484d;--cf:#c23a64;--wine-ink:#F2B231;--gold-ink:#F2B231;--co:#8f9aa8;--wt:#F2B231;--press:#860038;--presst:#fff;color-scheme:dark}
-/* Nov 4: wine text is unreadable on the dark page, so Cavs text goes lifted wine (Luka) in dark mode */@media (prefers-color-scheme:dark){:root:not([data-theme=light]) :is(.sbc-ab.c,.sbc-ls tr.cle td.w,.rk.pc.pct9,.sbc-b button,.gp2-nav,.gp2-cur .c){color:#c23a64!important}}:root[data-theme=dark] :is(.sbc-ab.c,.sbc-ls tr.cle td.w,.rk.pc.pct9,.sbc-b button,.gp2-nav,.gp2-cur .c){color:#c23a64!important}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e1116;--card:#161a21;--sub:#1d222b;--fg:#e8eaee;--fg2:#c3c7ce;--muted:#8d939d;--line:#2b313b;--line2:#222833;--track:#272d37;--miss:#7b828c;--pos:#F2B231;--neg:#8d939d;--pmp:#5cc98a;--pmn:#e5484d;--cf:#F2B231;--wine-ink:#F2B231;--gold-ink:#F2B231;--co:#8f9aa8;--wt:#F2B231;--press:#860038;--presst:#fff;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#0e1116;--card:#161a21;--sub:#1d222b;--fg:#e8eaee;--fg2:#c3c7ce;--muted:#8d939d;--line:#2b313b;--line2:#222833;--track:#272d37;--miss:#7b828c;--pos:#F2B231;--neg:#8d939d;--pmp:#5cc98a;--pmn:#e5484d;--cf:#F2B231;--wine-ink:#F2B231;--gold-ink:#F2B231;--co:#8f9aa8;--wt:#F2B231;--press:#860038;--presst:#fff;color-scheme:dark}
+/* Nov 4: wine text is unreadable on the dark page; Nov 22: it goes gold, the dark-mode accent (the lifted wine read as pink) */@media (prefers-color-scheme:dark){:root:not([data-theme=light]) :is(.sbc-ab.c,.sbc-ls tr.cle td.w,.rk.pc.pct9,.sbc-b button,.gp2-nav,.gp2-cur .c){color:#F2B231!important}}:root[data-theme=dark] :is(.sbc-ab.c,.sbc-ls tr.cle td.w,.rk.pc.pct9,.sbc-b button,.gp2-nav,.gp2-cur .c){color:#F2B231!important}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font:400 0.9375rem/1.45 var(--sans)}
@@ -170,7 +170,7 @@ svg{display:block;width:100%;height:auto}
 .chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:2px 0 4px}
 .chips .lab{font:700 0.6875rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-right:2px}
 .chips button{font:600 0.8125rem var(--sans);padding:6px 10px;border:1px solid var(--line);background:var(--card);color:var(--fg2);cursor:pointer;border-radius:0}
-.chips button.in{background:var(--cf);border-color:var(--cf);color:#fff}
+.chips button.in{background:var(--press,var(--cf));border-color:var(--press,var(--cf));color:var(--presst,#fff)}
 .chips button.out{text-decoration:line-through;color:var(--muted);background:var(--sub)}
 .chips button.clr{border:0;background:none;color:var(--wt);text-decoration:underline}
 /* lineup player filter (Nov 4) */
@@ -665,7 +665,7 @@ tr.xs td:first-child{white-space:nowrap}@media (max-width:600px){tr.xs td:first-
 .pick.gp-old{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .gp2{display:flex;gap:6px;align-items:stretch;margin-bottom:12px;position:relative}
 .gp2>button{font:inherit;cursor:pointer;background:var(--card);border:1px solid var(--line);color:var(--fg)}
-.gp2-nav{width:40px;flex:none;font:700 1.125rem var(--sans)!important;color:var(--wine-ink,#860038)!important}.gp2-nav:disabled{opacity:.3;cursor:default}
+.gp2-nav{width:40px;flex:none;font:700 1.125rem var(--sans)!important;color:var(--wine-ink,#860038)!important}.gp2-nav:disabled{opacity:1;color:var(--line)!important;cursor:default}/* Nov 22: gray when there is nowhere to go, not faded wine */
 .gp2-cur{flex:1;min-width:0;display:flex;align-items:center;gap:10px;padding:9px 12px;text-align:left}
 .gp2-cur .k{font:700 .6875rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);flex:none}
 .gp2-cur .t{font:600 .875rem var(--sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
@@ -5161,7 +5161,7 @@ function vPlays(v,D,R){
   const today=()=>{const o=[];const sel=$('gsel');[...sel.querySelectorAll('optgroup')].filter(gp=>gp.label==='Today').forEach(gp=>[...gp.children].forEach(x=>o.push([x.value,x.textContent])));return o};
   /* Nov 21 (Luka): every archived season, oldest first, so the arrows walk back through all of them */const order=()=>{const L=[];ARCH_SEASONS.slice().reverse().forEach(s2=>games(s2).forEach(g=>L.push(val(s2,g))));today().forEach(([v])=>{if(!L.includes(v))L.push(v)});return L};
   const find=v=>{let m=/^a(\d{4}-\d\d):(\d+)$/.exec(v);if(m)return [m[1],(ARCH[m[1]]||[]).concat(ARCHPO[m[1]]||[]).find(g=>g.id===m[2])];m=/^r(\d+)$/.exec(v);if(m)return ['2025-26',(ARCH['2025-26']||[]).find(g=>g.id===m[1])];return [null,null]};
-  const label=v=>{if(!v)return '';if(v[0]==='s')return [v.slice(1).replace('-','–')+' season','Season totals · '+((ARCH[v.slice(1)]||[]).length)+' games'];if(v[0]==='p')return [v.slice(1).replace('-','–')+' playoffs','Playoff totals · '+((ARCHPO[v.slice(1)]||[]).length)+' games'];const [s2,g]=find(v);if(g)return [s2.replace('-','–')+(g.po?' playoffs':''),dlab(g)+' '+(g.ha==='home'?'vs':'at')+' '+g.opp+' · '+res(g)];const t=today().find(x=>x[0]===v);return ['Today',t?t[1]:'Live game']};
+  const label=v=>{if(!v)return '';if(v[0]==='s')return [v.slice(1).replace('-','–')+' season','All '+((ARCH[v.slice(1)]||[]).length)+' games']/* Nov 22: short enough for a phone; the season is already in the first line */;if(v[0]==='p')return [v.slice(1).replace('-','–')+' playoffs','All '+((ARCHPO[v.slice(1)]||[]).length)+' games'];const [s2,g]=find(v);if(g)return [s2.replace('-','–')+(g.po?' playoffs':''),dlab(g)+' '+(g.ha==='home'?'vs':'at')+' '+g.opp+' · '+res(g)];const t=today().find(x=>x[0]===v);return ['Today',t?t[1]:'Live game']};
   const go=v=>{open=false;draw();choose(v,true)};
   function draw(){box.textContent='';/* Nov 21 (Luka): on a season's totals the arrows step season to season */const L=cur&&cur[0]==='s'?ARCH_SEASONS.filter(s2=>(ARCH[s2]||[]).length).reverse().map(s2=>'s'+s2):cur&&cur[0]==='p'?ARCH_SEASONS.filter(s2=>(ARCHPO[s2]||[]).length).reverse().map(s2=>'p'+s2):order(),i=L.indexOf(cur);
     const pv=el('button','gp2-nav','‹');pv.type='button';pv.setAttribute('aria-label',cur&&cur[0]==='s'?'Previous season':'Previous game');pv.disabled=!(i>0);pv.onclick=()=>go(L[i-1]);
