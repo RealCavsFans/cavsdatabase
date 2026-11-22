@@ -168,10 +168,11 @@
    "v": 2,
    "et": "2026-11-20",
    "opp": "IND",
-   "status": "missing",
+   "status": "match",
    "url": "https://www.basketball-reference.com/boxscores/202611200CLE.html",
-   "at": "2026-11-21T17:35:57.723Z"
+   "at": "2026-11-22T08:46:03.576Z",
+   "players": 23
   }
  },
- "checked": "2026-11-21T17:35:57.724Z"
+ "checked": "2026-11-22T08:46:03.576Z"
 }
