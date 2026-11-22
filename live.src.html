@@ -1907,6 +1907,9 @@ const head=(c,title,sub)=>{c.appendChild(el('h2',null,title));if(SECX_ON&&window
 
 /* Game Score: PTS + 0.4 FGM − 0.7 FGA − 0.4 (FTA − FTM) + 0.7 OREB + 0.3 DREB + STL + 0.7 AST + 0.7 BLK − 0.4 PF − TOV */
 const gsOrd=n=>n+(n%100>=11&&n%100<=13?'th':['th','st','nd','rd'][n%10]||'th');const gmSc=b=>b.pts+.4*b.fgm-.7*b.fga-.4*(b.fta-b.ftm)+.7*b.oreb+.3*b.dreb+b.stl+.7*b.ast+.7*b.blk-.4*b.pf-b.to;
+/* Nov 21 audit: a player's on-floor possessions = the possessions that ended while his units were out there, summed first and then counted.
+   Adding each unit's own count put the box estimate on short stints where no possession ended (np 0), a possession or two high (ON NET 3.0 vs 2.9 on his player page). */
+const possSum=(L,sd)=>{const o={fga:0,oreb:0,to:0,fta:0,np:0};let has=false;L.forEach(l=>{const x=l[sd]||{};['fga','oreb','to','fta'].forEach(k=>o[k]+=x[k]||0);if(x.np!=null){has=true;o.np+=x.np}});if(!has)delete o.np;return poss(o)};
 /* sortable table */
 function dtable(id,cols,rows,opt={}){
   const st=S.sort[id]||(S.sort[id]={k:opt.def||null,asc:false});
@@ -2751,7 +2754,7 @@ function advView(c,D,R,t){
   const rows=D.roster[t.id].filter(id=>R.B[id].min>0).map(id=>{const b=R.B[id],mp=b.min/60,f=(tmMP/5)/mp;
     /* Nov 6 (Luka): NBA.com formulas, from what happened while he was on the floor (his five-man units) */
     const onL=L5.filter(l=>l.ids.includes(id));const sm=(sd,k)=>onL.reduce((s2,l)=>s2+((l[sd]||{})[k]||0),0);let pf=onL.reduce((s2,l)=>s2+l.pf,0),pa=onL.reduce((s2,l)=>s2+l.pa,0);
-    /* Nov 15 (Luka): possessions from the same five-man units as the points (his own tally ran a possession apart), so ON ORTG/DRTG match the On/off tab and his player page */let po=onL.reduce((s2,l)=>s2+poss(l.o),0),pd=onL.reduce((s2,l)=>s2+poss(l.d),0);
+    /* Nov 15 (Luka): possessions from the same five-man units as the points (his own tally ran a possession apart), so ON ORTG/DRTG match the On/off tab and his player page */let po=possSum(onL,'o'),pd=possSum(onL,'d');
     /* Nov 15 (Luka): player rebound rates use players' rebounds only (as Basketball Reference and NBA.com do): the units' own player-rebound counts (poreb/pdreb), or, in files built before those existed, the units' counts scaled by each side's player share */const tFGM=sm('o','fgm'),tFGA=sm('o','fga'),tFTA=sm('o','fta'),tTO=sm('o','to'),hasP=onL.some(l=>l.o&&(l.o.poreb!=null||l.o.pdreb!=null)),tORB=hasP?sm('o','poreb'):sm('o','oreb')*shTO,tDRB=hasP?sm('o','pdreb'):sm('o','dreb')*shTD,oORB=hasP?sm('d','poreb'):sm('d','oreb')*shOO,oDRB=hasP?sm('d','pdreb'):sm('d','dreb')*shOD,o2A=sm('d','fga')-sm('d','tpa');
     const tsa=b.fga+0.44*b.fta;const lts=lgTS();return {id,mp,tsa,ts:tsa?b.pts/(2*tsa):null,rts:tsa&&lts!=null?b.pts/(2*tsa)-lts:null,efg:b.fga?(b.fgm+.5*b.tpm)/b.fga:null,tpar:b.fga?b.tpa/b.fga:null,ftr:b.fga?b.fta/b.fga:null,
       /* a share can't pass 100% (a few minutes of scaled counts can) */orb:(tORB+oDRB)?Math.min(100,100*b.oreb/Math.max(tORB+oDRB,b.oreb)):null,drb:(tDRB+oORB)?Math.min(100,100*b.dreb/Math.max(tDRB+oORB,b.dreb)):null,trb:(tORB+tDRB+oORB+oDRB)?Math.min(100,100*(b.oreb+b.dreb)/Math.max(tORB+tDRB+oORB+oDRB,b.oreb+b.dreb)):null,
@@ -4208,7 +4211,7 @@ function vPlayers(v,D,R){
     if(!r){rows.push({name:p,_cls:'dnp',min:-1,dnp:true});return}
     r.name=p;r.ts=r.fga+r.fta?r.pts/(2*(r.fga+0.44*r.fta)):null;r.usg=null;
     {/* on-court net rating: points per 100 possessions scored minus allowed with him on (same count as the Advanced view) */
-      const onL=Object.values(R.L[t.id][5]).filter(l=>l.ids.includes(id));let po=onL.reduce((s2,l)=>s2+poss(l.o),0),pd=onL.reduce((s2,l)=>s2+poss(l.d),0);const pf=onL.reduce((s2,l)=>s2+l.pf,0),pa=onL.reduce((s2,l)=>s2+l.pa,0);r.net=po>=1&&pd>=1?pf/po*100-pa/pd*100:null}
+      const onL=Object.values(R.L[t.id][5]).filter(l=>l.ids.includes(id));let po=possSum(onL,'o'),pd=possSum(onL,'d');const pf=onL.reduce((s2,l)=>s2+l.pf,0),pa=onL.reduce((s2,l)=>s2+l.pa,0);r.net=po>=1&&pd>=1?pf/po*100-pa/pd*100:null}
     r._cls=R.B[id].on&&S.state==='in'?'':'';rows.push(r)});
   const nm=r=>{const s=el('span');const dot=el('span','oc'+(R.B[r.name.id].on&&S.state==='in'?'':' off'));s.append(dot,plink(D,r.name.id,r.name.short||r.name.name));return s};
   const d=x=>r=>r.dnp?'':x(r);
