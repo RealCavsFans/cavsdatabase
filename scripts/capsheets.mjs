@@ -28,7 +28,7 @@ for (const [ab, slug] of Object.entries(T)) {
     for (const row of h.slice(t0, t1).split(/<\/tr>/i)) {
       const c = [...row.matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map(m => text(m[1]));
       if (/^Total Payroll/i.test(c[0] || '')) break;
-      if (c.length >= 3 && /^\d+$/.test(c[0]) && c[1] && /\$\s*[\d,]+/.test(c[2])) sheet[c[1]] = +c[2].replace(/[^\d]/g, '');
+      if (c.length >= 3 && /^\d+$/.test(c[0]) && c[1] && /\$\s*[\d,]+/.test(c[2])) sheet[c[1].normalize('NFD').replace(/[\u0300-\u036f]/g, '')] = +c[2].replace(/[^\d]/g, '');
     }
     const n = Object.keys(sheet).length, sum = Object.values(sheet).reduce((a, b) => a + b, 0);
     if (n < 10 || n > 16 || sum < 1e8 || sum > 4e8) throw new Error(`${n} players, $${Math.round(sum / 1e6)}M`);
