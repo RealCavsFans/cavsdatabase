@@ -1,6 +1,18 @@
 {
  "articles": [
   {
+   "src": "Hoops Rumors",
+   "title": "And-Ones: Early All-Stars, Neto, Nunnally, Perry",
+   "link": "https://www.hoopsrumors.com/2026/11/and-ones-early-all-stars-neto-nunnally-perry.html",
+   "date": "2026-11-23T18:37:30.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "Cavaliers Youngsters Showing How Harden and Mitchell Need To Continue Playing",
+   "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxOWE9TYWd0MzBlNmg5V25lNXpXcEtjek8wSV9PYnlsUENtNTkyZUZEcWRienBMak11WDBNcVFhQjU4d3FWakMxTWJQQ0k2bUJ5MVYwcjlYRGZYY0MzYmx0OW1VSWpMWGtNc0d5UTNSYjVacG1tejhwM25yT3VuTGNjc3A2UkxjTGg1bVZveVNxQ3VmMHM4eU1lQXVlbFRhdXZ5TExIYmtob2VtUzdSLXBmN0xrSEdvd1FLWEJra0ROb21ab0Y1cTFN?oc=5",
+   "date": "2026-11-23T18:34:53.000Z"
+  },
+  {
    "src": "Fear The Sword",
    "title": "Watching the Market: Nov. 16-23 – The stars have aligned",
    "link": "https://www.fearthesword.com/cavs-analysis/54773/watching-the-market-nov-16-23-the-stars-have-aligned",
@@ -155,12 +167,6 @@
    "title": "Game Night Observations: Defensive Woes, Small Lineups and Building a House",
    "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9iY3hfWjFpQ3IwdGc3NW1QeHo0a2ZGMzB4SEhxUHdzUjVINjV2cFVxUlhWc21UeUxORGEtS1pOUjMtMmtna2ZYazhKSEF0ajA2aF8xUGZvM3JDZm1BdURDQ3c3eFFpak53MWFVM3VLVjM5UkZVTWVMZXZ0OTc1T1E?oc=5",
    "date": "2026-11-19T12:53:28.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "3 Keys to Unlocking the Cavs’ Championship Potential",
-   "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNX2k1Q3lVeElSa09hNDdXUUJxekh3czhqdEQzU1M1QjZJSEZIWFZKN01IRWp5ekhadW9FWFA0YjlUcFhpX3FPdS1sU2V6WWVLYWNWSWJNOG90VG10VXNrZENLVFI2bWdMaEM4NWo3OWdvcXJrM0NwUzVLeFRUNDhXbkNlZFB0ZWViS2xCcFR6RXA1OVZwTjlJbkVXcWNQblpJMWxQVg?oc=5",
-   "date": "2026-11-19T12:00:01.000Z"
   },
   {
    "src": "Fear The Sword",
@@ -365,12 +371,6 @@
    "title": "3 Things Cavs Will Have to Fix in Order to Compete With Mavs",
    "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPVUVMU2lNNFl2SVBSNUVIdlNETzFRQkJQcmxTRkJuX2VsQS02cHZIbjI1X2Q1UXc0S192TWV2dzlJWWowY29COFhyN3FETTdBR0V4dk12UVo0TlpDNXpzeWpjT1JOVDB2MVoxNVR4Z0hTbXhzRjBpVDNBRkJmaUlHU1RjVW8wN1RQMjJabnl5QnExdDF3QVo1V0tvQTJCNVlBb2Q4Wm9Ga0NCazJIdVBYSA?oc=5",
    "date": "2026-11-14T08:00:00.000Z"
-  },
-  {
-   "src": "Hoops Rumors",
-   "title": "Injury Notes: Lakers, Mobley, Nets, Missi",
-   "link": "https://www.hoopsrumors.com/2026/11/injury-notes-lakers-mobley-nets-missi-butler.html",
-   "date": "2026-11-14T05:01:06.000Z"
   }
  ],
  "podcasts": [
@@ -432,6 +432,13 @@
   }
  ],
  "videos": [
+  {
+   "src": "Locked On Cavs",
+   "title": "Harden’s impact is bigger than the highlight 51-point game",
+   "link": "https://www.youtube.com/watch?v=cdgx-pi-pKE",
+   "date": "2026-11-23T18:39:19.000Z",
+   "id": "cdgx-pi-pKE"
+  },
   {
    "src": "Ultimate Cleveland Sports Show",
    "title": "Does James Harden get enough respect for how incredible his career has been?",
@@ -613,13 +620,6 @@
    "link": "https://www.youtube.com/watch?v=20bo24mFQpw",
    "date": "2026-11-19T15:29:59.000Z",
    "id": "20bo24mFQpw"
-  },
-  {
-   "src": "Locked On Cavs",
-   "title": "REACTION: Cleveland Cavaliers LOSE To Memphis Grizzlies! | Where Was the DEFENSE?! | BIG Issues?!",
-   "link": "https://www.youtube.com/watch?v=CQF1UGaJrtk",
-   "date": "2026-11-19T06:00:08.000Z",
-   "id": "CQF1UGaJrtk"
   },
   {
    "src": "Cavs Roundtable",
