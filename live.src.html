@@ -3069,7 +3069,15 @@ async function mkFrame(x,kicker,title,sub,cmd,D,photoId){const W=1080,H=1350;tBg
   if(photoId){const img=await loadImg(hsUrl(D,photoId));head2(x,img,872,200,150,null,initials(D.P[photoId].name))}else await cleMark(x,930,196,230);
   brandBar(x,W,H);return {X:72,Y:430,W:936,H:H-58-430-30}}
 /* twist 2: one factual line at the bottom of every card, in the terminal's comment voice */
-const mkCtx=(x,c,t)=>{if(!t)return;const Y=c.Y+c.H-10;x.fillStyle=MK.line;x.fillRect(c.X,Y-48,c.W,2);x.font='600 24px "Geist Mono"';x.fillStyle=MK.wine;x.fillText('#',c.X,Y);x.fillStyle=MK.ink;let s=t;x.font='600 24px Archivo';while(x.measureText(s).width>c.W-50&&s.length>10)s=s.slice(0,-2);if(s!==t)s=s.replace(/\s+\S*$/,'')+'…';x.fillText(s,c.X+36,Y)};
+/* Nov 22 (Luka): on a filtered season card (picked games, opponent strength, a quarter, clutch, no garbage time) the # note says what
+   is counted instead of a fact, since a fact may not hold for that stretch: 'Only: Nov 11 vs NYK, Nov 13 at MIA … · Q4' */
+const sfNote=()=>{if(!S.season)return '';const f=S.sf||{},parts=[];const G=((S.data&&S.data.games)||[]).slice().sort((a,b)=>String(a.et).localeCompare(String(b.et)));
+  const md=d=>new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  if(f.games&&f.games.length&&G.length){parts.push(G.length<=4?G.map(g=>md(g.et)+' '+(g.ha==='home'?'vs':'at')+' '+g.opp).join(', '):G.length+' games, '+md(G[0].et)+' to '+md(G[G.length-1].et))}
+  if(f.tier){const T=(typeof TIERS!=='undefined'?TIERS:[]).find(z=>z[0]===f.tier);parts.push('vs '+(T?T[1].replace(' net rating','').toLowerCase()+' teams':'picked opponents'))}
+  if(S.per&&S.per!=='all'&&typeof perLabel==='function')parts.push(perLabel(S.per));
+  return parts.length?'Only: '+parts.join(' · '):''};
+const mkCtx=(x,c,t)=>{{const fn=sfNote();if(fn)t=fn}if(!t)return;const Y=c.Y+c.H-10;x.fillStyle=MK.line;x.fillRect(c.X,Y-48,c.W,2);x.font='600 24px "Geist Mono"';x.fillStyle=MK.wine;x.fillText('#',c.X,Y);x.fillStyle=MK.ink;let s=t;x.font='600 24px Archivo';while(x.measureText(s).width>c.W-50&&s.length>10)s=s.slice(0,-2);if(s!==t)s=s.replace(/\s+\S*$/,'')+'…';x.fillText(s,c.X+36,Y)};
 /* his share of the Cavs' shots, free throws and turnovers while he was on the floor (from the five-man units) */
 const ord=n=>{const s=["th","st","nd","rd"],v=n%100;return n+(s[(v-20)%10]||s[v]||s[0])};
 const mkUsg=(R,tid,id)=>{const b=R.B[id];if(!b)return null;let f=0,t=0,o=0;Object.values(R.L[tid][5]||{}).forEach(l=>{if(l.ids.includes(id)&&l.o){f+=l.o.fga||0;t+=l.o.fta||0;o+=l.o.to||0}});const d=f+.44*t+o;return d>0?(b.fga+.44*b.fta+b.to)/d:null};
