@@ -39,3 +39,4 @@ __pycache__/
 # Nov 22: written by build-pages (the app version for stale-page reloads)
 /app-version.json
 /live-version.json
+/og/game-finder.jpg

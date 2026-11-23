@@ -1048,6 +1048,13 @@ tr.mark td,tr.mark.cupm td,.sched tr.mark td,.sched tr.mark.cupm td,.rc3-adv .rc
 <style id="fx-pages">.fx-hide{display:none!important}.fx-head{padding:20px 0 6px;max-width:760px}.fx-head h1{font:800 2.25rem/1.05 var(--cond);text-transform:uppercase;margin:0 0 8px}.fx-head p{margin:0 0 8px;color:var(--muted);font-size:.9375rem;line-height:1.5}.fx-head a{font-size:.875rem;color:var(--wine-ink)}main[data-fx="injury-report"] .inj-more{display:none}main[data-fx="injury-report"] .home{display:block!important}main[data-fx="injury-report"] .home>.side{display:block!important;max-width:720px}main[data-fx] .fx-head{padding-left:20px;padding-right:20px}@media(min-width:721px){main[data-fx] .fx-head{padding-left:0;padding-right:0;margin:0 auto;max-width:1160px}}</style>
 <style>.gp-vs{margin:10px 0 0;font-size:.8125rem}.gp-vs a{color:var(--wine-ink);font-weight:700}</style>
 <style id="sc-win">.o-sc .block-h span.sc-win{font-weight:700;color:var(--fg);font-size:.9375rem;letter-spacing:.01em}</style><style id="sch-past">/* Nov 22 (Luka): phones: a played game reads as done: date, opponent and tags in gray, the result stays bold */@media(max-width:760px){table.sched tr:has(.reslink) td.mono,table.sched tr:has(.reslink) td.opp-cell,table.sched tr:has(.reslink) td.opp-cell a{color:var(--muted)!important}table.sched tr:has(.reslink) .rtag{filter:grayscale(1);opacity:.6}/* gray, never a faded wine (pink) */}</style>
+<style id="gfx">/* Nov 22 (Luka, mock): game finder */
+.gf-tease p{margin:0 0 10px;color:var(--muted);font-size:.9375rem}.gf-chips{display:flex;flex-wrap:wrap;gap:6px}.gf-chips a,.gf-chips button{border:1px solid var(--line);background:var(--card);padding:7px 12px;font:600 .8125rem var(--sans);color:var(--fg);text-decoration:none;cursor:pointer}.gf-chips a:hover,.gf-chips button:hover{border-color:#860038}.gf-chips button[aria-pressed=true]{background:var(--press,#860038);border-color:var(--press,#860038);color:var(--presst,#fff)}.gf-chips .gf-all{border-color:#860038;color:var(--wine-ink,#860038)}
+.gf-hero{background:linear-gradient(160deg,#8e2741,#5e0027);color:#fff;padding:20px 22px 18px;margin:12px 0 14px;border-bottom:4px solid #F2B231}.gf-hero small{display:block;font:800 .75rem var(--cond);letter-spacing:.14em;color:#F2B231}.gf-hero h1{margin:4px 0 2px;font:800 2.25rem/1 var(--cond);letter-spacing:.01em;text-transform:uppercase;color:#fff}.gf-hero p{margin:6px 0 0;color:rgba(255,255,255,.85);font-size:.9375rem}
+.gf-mode{display:flex;gap:0;margin:0 0 12px;border:1px solid var(--line);width:max-content}.gf-mode button{border:0;background:var(--card);padding:9px 16px;font:700 .8125rem var(--sans);color:var(--fg);cursor:pointer}.gf-mode button[aria-pressed=true]{background:var(--press,#860038);color:var(--presst,#fff)}
+.gf-f{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px 12px;background:var(--card);border:1px solid var(--line);padding:14px;margin:10px 0 14px}.gf-f label{display:flex;flex-direction:column;gap:4px;font:800 .6875rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}.gf-f input,.gf-f select{font:500 .9375rem var(--sans);padding:7px 8px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:0;min-width:0;width:100%}.gf-f .gf-wide{grid-column:span 2}@media(max-width:600px){.gf-f{grid-template-columns:1fr 1fr}.gf-hero h1{font-size:1.875rem}}
+.gf-sum{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin:4px 0 10px}.gf-sum b{font:800 1.75rem var(--cond)}.gf-sum span{color:var(--muted);font-size:.875rem}.gf-sum .gf-rec{font:700 .9375rem var(--mono);color:var(--fg)}
+.gf-t td,.gf-t th{white-space:nowrap}.gf-t td.gf-pn{font-family:var(--sans);font-weight:600;text-align:left}.gf-t td.gf-w{font-weight:700}.gf-t a{color:inherit}.gf-more{margin:12px 0;border:1px solid var(--line);background:var(--card);padding:9px 14px;font:600 .875rem var(--sans);cursor:pointer;color:var(--fg)}.gf-note{font-size:.75rem;color:var(--muted);margin:10px 0}.gf-fd{margin:10px 0 14px}.gf-fd>summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--card);padding:8px 14px;font:700 .8125rem var(--sans);color:var(--fg)}.gf-fd>summary::-webkit-details-marker{display:none}.gf-fd>summary::after{content:'▾';font-size:.75rem;color:var(--muted)}.gf-fd[open]>summary::after{content:'▴'}.gf-fn{color:var(--wine-ink,#860038);font-weight:700}.gf-fd .gf-f{margin-top:8px}</style>
 <style id="vsx">.vsx .gpc{margin-bottom:14px}.vsx-hero{background:linear-gradient(160deg,#8e2741,#5e0027);color:#fff;padding:20px 22px 18px;margin:12px 0 14px;border-bottom:4px solid #F2B231}
 .vsx-mu{display:flex;align-items:center;justify-content:space-between;gap:12px}.vsx-t{display:flex;align-items:center;gap:10px}.vsx-t img{width:44px;height:44px;object-fit:contain}.vsx-t b{font:800 1.75rem/1 var(--cond);letter-spacing:.02em}.vsx-vs{font:700 .875rem var(--mono);color:#F2B231}
 .vsx-rec{text-align:center;margin:14px 0 12px}.vsx-rec small{display:block;font:700 .6875rem var(--mono);letter-spacing:.14em;color:#F2B231}.vsx-rec b{display:block;font:800 3.5rem/1 var(--mono);margin:6px 0}.vsx-rec em{font:600 .8125rem var(--sans);font-style:normal;color:#f4d6dd}
@@ -1345,6 +1352,7 @@ tr.mark td,tr.mark.cupm td,.sched tr.mark td,.sched tr.mark.cupm td,.rc3-adv .rc
       <div class="hx-leg" id="hx-leg"></div><div class="hx-grid" id="hx-grid"><div class="skel skel-grid"></div></div><div class="hx-det" id="hx-det" hidden></div></section>
     <section id="hx-po"><div class="block-h"><h2>Playoff history</h2><span id="hx-po-n"></span></div><div class="hx-opp" id="hx-opp"></div><p class="dim hx-key"><span class="rt-key"><i class="on"></i>Won the series <i></i>Lost</span></p>
       <div class="tablebox"><table class="hx-t"><thead><tr><th>Season</th><th>Round</th><th>Opponent</th><th class="r">Result</th></tr></thead><tbody id="hx-po-b"></tbody></table></div><button type="button" class="hx-more" id="hx-po-more" hidden></button></section>
+    <section id="hx-gf"><div class="block-h"><h2>Find any game</h2><span>Every Cavs game since 1970–71</span></div><div class="gf-tease"><p>Search 4,500+ regular-season games by score, opponent, season or player line.</p><div class="gf-chips"><a href="/game-finder?p=40" data-go="game-finder?p=40">40-point games</a><a href="/game-finder?p=td" data-go="game-finder?p=td">Triple-doubles</a><a href="/game-finder?p=w30" data-go="game-finder?p=w30">Wins by 30+</a><a href="/game-finder?p=3s" data-go="game-finder?p=3s">10+ threes</a><a class="gf-all" href="/game-finder" data-go="game-finder">Open the game finder →</a></div></div></section>
     <section id="hx-vs"><div class="block-h"><h2>Cavs vs every team</h2><span>Regular season since 1970–71</span></div><div class="vsx-teams" id="hx-vs-g"></div></section>
     <section id="hx-hon"><div class="block-h"><h2>Honors</h2><span>While with Cleveland</span></div><div class="hx-aw" id="hx-aw"></div>
       <div class="cols hx-teams" id="hx-teams"></div></section>
@@ -1404,6 +1412,7 @@ tr.mark td,tr.mark.cupm td,.sched tr.mark td,.sched tr.mark.cupm td,.rc3-adv .rc
 <main id="view-player" hidden></main>
 <main id="view-pseason" hidden></main>
 <main id="view-vs" hidden></main>
+<main id="view-game-finder" hidden></main>
 <main id="view-game" hidden></main>
 <main id="view-season" hidden></main>
 <main id="view-roster-tree" hidden>
@@ -4856,7 +4865,7 @@ function loadRcf(){if(rcfLoaded)return;rcfLoaded=true;
 })();
 /* page titles and descriptions (browser tab, search results, link previews); scripts/build-pages.mjs bakes them into per-page copies */
 const PAGE_META={
-'draft-picks':['Cavs Draft Picks 2027–2033: Every Pick Owned & Owed, With Protections | Cavs Database','Every first- and second-round pick the Cleveland Cavaliers own and owe through 2033: protections, swaps, the Stepien Rule and the frozen 2033 first, plus the players they have drafted.'],
+'game-finder':['Cavs Game Finder: Search Every Game Since 1970 | Cavs Database','Find any Cleveland Cavaliers regular-season game since 1970–71: 40-point games, triple-doubles, blowouts, every game against a team, by season, score or player line.'],'draft-picks':['Cavs Draft Picks 2027–2033: Every Pick Owned & Owed, With Protections | Cavs Database','Every first- and second-round pick the Cleveland Cavaliers own and owe through 2033: protections, swaps, the Stepien Rule and the frozen 2033 first, plus the players they have drafted.'],
 'trade-exceptions':['Cavs Trade Exceptions 2026–27: Amounts, Expiration Dates & How They Work | Cavs Database','Every trade exception the Cleveland Cavaliers hold: how much is left, when each one expires, the trade that created it and what has been used, plus the mid-level and bi-annual exceptions.'],
  'home':['Cleveland Cavaliers Schedule, Roster & Salary Cap 2026–27 | Cavs Database','Everything Cavaliers. Everything you need. The Cavs record, next game and TV, key dates, injuries, salary cap and the Cleveland Charge, updated daily.'],
  'schedule':['Cavs Schedule & Standings 2026–27: How to Watch & Listen | Cavs Database','All 82 Cavs games with how to watch and listen to each, results, East standings and the playoff race. National TV, DAZN, free over-the-air and radio for every game.'],
@@ -5817,7 +5826,7 @@ const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3PT%','tp'],['FG%','f
   /* Nov 5 (Luka): no sources footnote on player pages */
 }/*@/chunk*/
 
-const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge','player','pseason','vs','roster-tree','game','history','season','about'];
+const BUILT=['home','roster','cap','assets','moves','resources','schedule','staff','video','charge','player','pseason','vs','game-finder','roster-tree','game','history','season','about'];
 /* page titles and descriptions per route (search engines and browser tabs) */
 const ROUTE_ALIAS={video:'media',rcf:'media/rcf'}; /* media/rcf now opens Media scrolled to the articles */
 function routeOf(){let r=location.pathname.replace(/^\/+|\/+$/g,'').toLowerCase();if(/index\.html$/.test(r)||location.protocol==='file:')r='';const h=location.hash.slice(1);if(!r&&h&&(SECTIONS.some(x=>x[0]===h)||ROUTE_ALIAS[h]))r=h;const AL={video:'media',rcf:'media/rcf'};return AL[r]||r||'home'}
@@ -5833,16 +5842,17 @@ function show(route){setTimeout(()=>statsBackChip(route),0);if(route==='home'){c
   let id=route.split('/')[0];const fxr=FOCUS[route];if(fxr)id=fxr[0];const toArt=route==='media/rcf';if(toArt)route='media';if(id==='media')id='video';
   if(id==='history'&&route.split('/')[1]){id='season';window.renderSeason&&renderSeason(route.split('/')[1])}
   if(id==='games'){id='game';if(!window.renderGame||!renderGame(route.split('/')[1]||'')){id='home';route='home'}}
+  if(id==='game-finder'&&window.renderFinder)renderFinder();/* Nov 22 (Luka, mock): find any game */
   if(id==='vs'){if(!renderVs(route.split('/')[1]||'')){id='home';route='home'}}
   else if(id==='players'&&/^\d{4}-\d\d$/.test(route.split('/')[2]||'')){id='pseason';renderPSeason(route.split('/')[1],route.split('/')[2])}
   else if(id==='players'){id='player';if(!PP_VIS||!window.renderPlayer||!renderPlayer(route.split('/')[1]||'')){id='home';route='home'}}
-  const sec=id==='video'?'media':id==='player'||id==='pseason'?'roster':id==='vs'?'history':id==='roster-tree'?'moves':id==='game'?'schedule':id==='season'?'history':id;
+  const sec=id==='video'?'media':id==='player'||id==='pseason'?'roster':id==='vs'||id==='game-finder'?'history':id==='roster-tree'?'moves':id==='game'?'schedule':id==='season'?'history':id;
   if(!SECTIONS.some(s=>s[0]===sec)){id='home';route='home'}
   runView(id);
   BUILT.forEach(v=>{document.getElementById('view-'+v).hidden=id!==v});
   const stub=document.getElementById('view-stub');stub.hidden=BUILT.includes(id);
   tabs.querySelectorAll('[data-go]').forEach(b=>{if(b.dataset.go===sec)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
-  {const M=(id==='game'&&window.GAME_META)?GAME_META:(id==='pseason'&&window.PS_META)?PS_META:(id==='vs'&&window.VS_META)?VS_META:PAGE_META[route]||PAGE_META[id]||PAGE_META.home;document.title=M[0];const set=(sel,v)=>{const e=document.querySelector(sel);if(e)e.setAttribute('content',v)};set('meta[name=description]',M[1]);set('meta[property="og:title"]',M[0]);set('meta[property="og:description"]',M[1])}
+  {const M=(id==='game'&&window.GAME_META)?GAME_META:(id==='pseason'&&window.PS_META)?PS_META:((id==='vs'||id==='game-finder')&&window.VS_META)?VS_META:PAGE_META[route]||PAGE_META[id]||PAGE_META.home;document.title=M[0];const set=(sel,v)=>{const e=document.querySelector(sel);if(e)e.setAttribute('content',v)};set('meta[name=description]',M[1]);set('meta[property="og:title"]',M[0]);set('meta[property="og:description"]',M[1])}
   const path=route==='home'?'/':'/'+route;const cl=document.querySelector('link[rel=canonical]');if(cl)cl.href='https://cavsdatabase.com'+path;const ou=document.querySelector('meta[property="og:url"]');if(ou)ou.content='https://cavsdatabase.com'+path;
   window.scrollTo(0,0);
   if(window.scrambleView)scrambleView(id);
@@ -6222,7 +6232,7 @@ onView('cap',()=>{(function(){const B=document.getElementById('sm-b');if(!B)retu
   const G={schedule:[['schedule','Schedule'],['live','Live Game'],['season','Season Stats']],team:[['roster','Roster'],['staff','Coaches & Front Office'],['charge','Charge']],cap:[['cap','Salary Cap'],['assets','Assets'],['moves','Transactions']],more:[['history','History'],['media','Media'],['resources','Resources'],['about','About'],['alerts','Game alerts']]};
   const FIRST={schedule:'schedule',team:'roster',cap:'cap',more:'history'};
   const route=()=>{const r=location.pathname.replace(/^\/|\.html$|\/$/g,'');return r||'home'};
-  const grpOf=r=>{if(r==='home')return 'home';if(/^games\//.test(r))return 'schedule';if(/^players\//.test(r))return 'team';if(/^(history\/|vs\/)/.test(r))return 'more';/* Nov 22: the vs pages are part of History (the bottom bar lit Home) */for(const [g,L] of Object.entries(G))if(L.some(([k])=>k===r))return g;return 'home'};
+  const grpOf=r=>{if(r==='home')return 'home';if(/^games\//.test(r))return 'schedule';if(/^players\//.test(r))return 'team';if(/^(history\/|vs\/|game-finder)/.test(r))return 'more';/* Nov 22: vs pages and the game finder are part of History */for(const [g,L] of Object.entries(G))if(L.some(([k])=>k===r))return g;return 'home'};
   const bar=el('nav','mbar');bar.setAttribute('aria-label','Sections');
   [['home','Home'],['schedule','Schedule']].concat(STATS_ON?[['stats','Stats']]:[],[['team','Team'],['cap','Cap'],['more','More']]).forEach(([k,l])=>{const a=el('a');
     if(k==='stats'){const lv=statsLive();a.href=statsHref();a.dataset.g='stats';a.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>';a.append(lv?'Live':l);if(lv)a.appendChild(el('i','dot'));bar.appendChild(a);return}
@@ -6269,7 +6279,7 @@ onView('resources',()=>{(function(){const box=document.getElementById('xf');if(!
   }).catch(()=>{})})();
 {const c=document.getElementById('cap-upd');if(c)c.textContent='Updated '+relDay(SITE_UPDATED)}
 /* real page addresses: /cap, /roster, /media/rcf … Old #links still work and are rewritten to the new address. */
-function go(route){route=ROUTE_ALIAS[route]||route;const path=route==='home'?'/':'/'+route;if(location.protocol!=='file:'&&location.pathname!==path){try{history.replaceState(Object.assign({},history.state,{y:scrollY}),'')}catch(_){}try{history.pushState({p:route},'',path+location.search)}catch(_){}}show(route)}
+function go(route){/* Nov 22: a route can carry its own ?query (game finder presets) */let qs=null;{const qi=route.indexOf('?');if(qi>=0){qs=route.slice(qi);route=route.slice(0,qi)}}route=ROUTE_ALIAS[route]||route;const path=route==='home'?'/':'/'+route;if(location.protocol!=='file:'&&(location.pathname!==path||(qs!=null&&location.search!==qs))){try{history.replaceState(Object.assign({},history.state,{y:scrollY}),'')}catch(_){}try{history.pushState({p:route},'',path+(qs!=null?qs:location.search))}catch(_){}}show(route)}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-go]');if(!t||e.metaKey||e.ctrlKey||e.shiftKey)return;e.preventDefault();go(t.dataset.go)});
 /* back/forward keep your place: each history entry remembers how far down you were; a new page still starts at the top */
 try{history.scrollRestoration='manual'}catch(_){}
@@ -7417,5 +7427,53 @@ document.addEventListener('click',e=>{const th=e.target.closest&&e.target.closes
  b.onclick=()=>{if(get()>0)history.back();else if(window.go)go('home');else location.href='/'};
  const ps=history.pushState;history.pushState=function(){const r=ps.apply(this,arguments);set(get()+1);upd();return r};addEventListener('popstate',()=>{set(get()-1);upd()});
  const st=document.createElement('style');st.textContent='.app-back{flex:none;width:38px;height:38px;margin-right:-6px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;color:#fff;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent}.app-back[hidden]{display:none}.app-back:active{opacity:.6}';document.head.appendChild(st)})();</script>
+<script>/* Nov 22 (Luka, mock): find any game. Every Cavs regular-season game since 1970-71 with the player lines (pdata/game-finder.json, built by scripts/game-finder.mjs).
+   Two ways in: team results (score, margin, opponent, season) or player games (a player and/or stat minimums). Presets for the common asks. Tap a column to sort. */
+(function(){let GF=null,state=null,started=false;const PRE={'40':{m:'p',pts:40},'50':{m:'p',pts:50},'td':{m:'p',td:'3'},'2020':{m:'p',pts:20,reb:20},'3s':{m:'p',tpm:10},'20a':{m:'p',ast:20},'w30':{m:'t',res:'W',mg:30},'l30':{m:'t',res:'L',mg:30},'140':{m:'t',pf:140}};
+ const PRE_L=[['40','40-point games'],['50','50-point games'],['td','Triple-doubles'],['2020','20-20 games'],['3s','10+ threes'],['20a','20+ assists'],['w30','Wins by 30+'],['l30','Losses by 30+'],['140','140+ points']];
+ const OPP=a=>(window.VS_FR&&VS_FR[a])||a;const dl=d=>{const [y,m,dd]=d.split('-');return +m+'/'+ +dd+'/'+y};
+ window.renderFinder=function(){const v=document.getElementById('view-game-finder');if(!v)return;window.VS_META=['Cavs Game Finder: Search Every Game Since 1970 | Cavs Database','Find any Cleveland Cavaliers regular-season game since 1970–71: 40-point games, triple-doubles, blowouts, every game against a team, by season, score or player line.'];
+  const q=new URLSearchParams(location.search);state=Object.assign({m:'t'},PRE[q.get('p')]||{},{pre:q.get('p')||''});
+  /* built in this visit (not a baked page copy): just redraw */if(started&&v.querySelector('.gf-b')){draw();return}started=true;F={};v.innerHTML='';const w=el('div','wrap page');v.appendChild(w);
+  const bc=el('div','dim');bc.style.fontSize='13px';const a1=el('a',null,'Home');a1.href='/';a1.dataset.go='home';const a2=el('a',null,'History');a2.href='/history';a2.dataset.go='history';bc.append(a1,' / ',a2,' / Game finder');w.appendChild(bc);
+  const hero=el('section','gf-hero');hero.append(el('small',null,'CAVS DATABASE · GAME FINDER'),el('h1',null,'Find any game'),el('p',null,'Every Cavs regular-season game since 1970–71, with the box score lines.'));w.appendChild(hero);
+  const body=el('div','gf-b');body.appendChild(el('p','dim','Loading 4,500+ games…'));w.appendChild(body);
+  fetch('/pdata/game-finder.json').then(r=>r.ok?r.json():null).catch(()=>null).then(j=>{if(!j){body.innerHTML='<p class="dim">Couldn’t load the games. Try again in a moment.</p>';return}GF=j;build(body);draw()})};
+ let F={};function build(body){body.innerHTML='';
+  const chips=el('div','gf-chips');chips.style.marginBottom='12px';PRE_L.forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.dataset.k=k;b.onclick=()=>{state=Object.assign({m:'t'},PRE[k],{pre:k});sync();draw()};chips.appendChild(b)});body.appendChild(chips);
+  const mode=el('div','gf-mode');[['t','Team results'],['p','Player games']].forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.dataset.m=k;b.onclick=()=>{state.m=k;state.pre='';draw()};mode.appendChild(b)});body.appendChild(mode);
+  const fd=document.createElement('details');fd.className='gf-fd';if(matchMedia('(min-width:761px)').matches)fd.open=true;const fs=document.createElement('summary');fs.innerHTML='Filters <span class="gf-fn"></span>';fd.appendChild(fs);
+  const f=el('div','gf-f');const seasons=[...new Set(GF.g.map(g=>g[0]))];
+  const inp=(k,lab,type,ph,cls)=>{const L=el('label',cls||null);L.append(lab);const i=document.createElement('input');i.type=type||'number';i.min=0;i.inputMode=type==='text'?'text':'numeric';if(ph)i.placeholder=ph;i.oninput=()=>{state[k]=i.value===''?undefined:(type==='text'?i.value:+i.value);state.pre='';draw()};L.appendChild(i);F[k]=i;f.appendChild(L);return L};
+  const sel=(k,lab,opts)=>{const L=el('label');L.append(lab);const s=document.createElement('select');opts.forEach(([v,t])=>{const o=document.createElement('option');o.value=v;o.textContent=t;s.appendChild(o)});s.onchange=()=>{state[k]=s.value||undefined;state.pre='';draw()};L.appendChild(s);F[k]=s;f.appendChild(L);return L};
+  const pl=inp('pl','Player','text','Any player','gf-wide gf-ponly');{const dlst=document.createElement('datalist');dlst.id='gf-names';const cnt={};GF.g.forEach(g=>g[5].forEach(r=>cnt[r[0]]=(cnt[r[0]]||0)+1));GF.n.map((n,i)=>[n,cnt[i]||0]).sort((a,b)=>b[1]-a[1]).forEach(([n])=>{const o=document.createElement('option');o.value=n;dlst.appendChild(o)});pl.appendChild(dlst);F.pl.setAttribute('list','gf-names')}
+  sel('td','Line',[['','Any line'],['3','Triple-double'],['2','Double-double']]).classList.add('gf-ponly');
+  [['pts','Points at least'],['reb','Rebounds at least'],['ast','Assists at least'],['tpm','Threes at least'],['stl','Steals at least'],['blk','Blocks at least']].forEach(([k,l])=>inp(k,l,'number','','gf-ponly'));
+  sel('opp','Opponent',[['','Any team']].concat(Object.keys(GNICK).filter(k=>k!=='CLE').sort((a,b)=>GNICK[a].localeCompare(GNICK[b])).map(k=>[k,GNICK[k]])));
+  sel('res','Result',[['','Win or loss'],['W','Wins'],['L','Losses']]);inp('mg','Margin at least','number','','gf-tonly');inp('pf','Cavs scored at least','number','','gf-tonly');inp('pa','Opponent held to','number','at most','gf-tonly');
+  sel('from','From season',seasons.map(x=>[x,x.replace('-','–')]));sel('to','To season',seasons.slice().reverse().map(x=>[x,x.replace('-','–')]));
+  const clr=el('button','gf-more','Clear');clr.type='button';clr.style.margin='0';clr.style.alignSelf='end';clr.onclick=()=>{state={m:state.m};sync();draw()};f.appendChild(clr);
+  fd.appendChild(f);body.appendChild(fd);body.appendChild(el('div','gf-res'));body.appendChild(el('p','gf-note','Regular season only. Threes counted from 1979–80, steals and blocks from 1973–74. This season through the last game; history from the NBA’s box scores.'))}
+ function sync(){for(const [k,i] of Object.entries(F)){const v=state[k];if(i.tagName==='SELECT')i.value=v==null?(k==='from'||k==='to'?i.options[0].value:''):v;else i.value=v==null?'':v}if(state.from==null&&F.from)F.from.value=F.from.options[0].value;if(state.to==null&&F.to)F.to.value=F.to.options[0].value}
+ let shown=100;function draw(){const v=document.getElementById('view-game-finder');if(!GF||!v)return;const body=v.querySelector('.gf-b');if(!body.querySelector('.gf-f'))return;sync();
+  body.querySelectorAll('.gf-chips button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===state.pre));body.querySelectorAll('.gf-mode button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m===state.m));
+  body.querySelectorAll('.gf-ponly').forEach(x=>x.hidden=state.m!=='p');body.querySelectorAll('.gf-tonly').forEach(x=>x.hidden=state.m!=='t');
+  {const n=Object.entries(state).filter(([k,v])=>v!=null&&v!==''&&!['m','pre'].includes(k)&&(state.m==='p'?!['mg','pf','pa'].includes(k):!['pl','pts','reb','ast','tpm','stl','blk','td'].includes(k))).length;const fn=body.querySelector('.gf-fn');if(fn)fn.textContent=n?'· '+n+' on':''}
+  const S=state,from=F.from.value,to=F.to.value,pid=S.pl?GF.n.findIndex(n=>n.toLowerCase()===String(S.pl).toLowerCase()):-2;
+  const okG=g=>{if(g[0]<from||g[0]>to)return false;if(S.opp&&OPP(g[2])!==S.opp)return false;const W=g[3]>g[4];if(S.res==='W'&&!W)return false;if(S.res==='L'&&W)return false;if(S.m==='t'){if(S.mg!=null&&Math.abs(g[3]-g[4])<S.mg)return false;if(S.pf!=null&&g[3]<S.pf)return false;if(S.pa!=null&&g[4]>S.pa)return false}return true};
+  const rows=[];const isTd=r=>[r[1],r[2],r[3],r[5],r[6]].filter(x=>x>=10).length>=+S.td;
+  for(const g of GF.g){if(!okG(g))continue;if(S.m==='t'){rows.push({g});continue}for(const r of g[5]){if(pid>=0&&r[0]!==pid)continue;if(pid===-1)continue;if(S.pts!=null&&r[1]<S.pts)continue;if(S.reb!=null&&r[2]<S.reb)continue;if(S.ast!=null&&r[3]<S.ast)continue;if(S.tpm!=null&&r[4]<S.tpm)continue;if(S.stl!=null&&r[5]<S.stl)continue;if(S.blk!=null&&r[6]<S.blk)continue;if(S.td&&!isTd(r))continue;
+    if(S.m==='p'&&pid===-2&&S.pts==null&&S.reb==null&&S.ast==null&&S.tpm==null&&S.stl==null&&S.blk==null&&!S.td)continue;rows.push({g,r})}}
+  rows.reverse();const res=body.querySelector('.gf-res');res.innerHTML='';
+  if(S.m==='p'&&!rows.length&&pid===-2&&S.pts==null&&!S.td&&S.reb==null&&S.ast==null&&S.tpm==null&&S.stl==null&&S.blk==null){res.appendChild(el('p','dim','Pick a player or set a stat minimum (or tap one of the buttons above).'));return}
+  if(pid===-1){res.appendChild(el('p','dim','No Cavs player by that name. Pick one from the list as you type.'));return}
+  const games=new Set(rows.map(x=>x.g)),Wn=[...games].filter(g=>g[3]>g[4]).length;const sm=el('div','gf-sum');sm.append(el('b',null,rows.length.toLocaleString()),el('span',null,S.m==='p'?'player games':'games'),el('span','gf-rec','Cavs '+Wn+'–'+(games.size-Wn)+' in them'));
+  if(S.m==='p'&&rows.length){const c={};rows.forEach(x=>c[x.r[0]]=(c[x.r[0]]||0)+1);const top=Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([i,k])=>GF.n[i]+' '+k);if(pid<0&&top.length)sm.appendChild(el('span',null,'Most: '+top.join(' · ')))}res.appendChild(sm);
+  if(!rows.length){res.appendChild(el('p','dim','No games match. Loosen a filter.'));return}
+  const t=el('table','ppx-t ppx-gl gf-t');const H=['Game','Season','Result'].concat(S.m==='p'?['Player','Pts','Reb','Ast','3PM','Stl','Blk']:['Margin']);t.innerHTML='<thead><tr>'+H.map(h=>'<th>'+h+'</th>').join('')+'</tr></thead>';const bd=el('tbody');
+  const dash=x=>x==null||x<0?'–':String(x);rows.slice(0,shown).forEach(({g,r})=>{const tr=el('tr');const W=g[3]>g[4];const gt=el('td','ppx-glg');gt.innerHTML='<span>'+dl(g[1])+'</span> <span>vs '+g[2]+'</span>';tr.append(gt,el('td',null,g[0].replace('-','–')),el('td','gf-w',(W?'W ':'L ')+g[3]+'–'+g[4]));
+   if(r)tr.append(el('td','gf-pn',GF.n[r[0]]),el('td','k',dash(r[1])),el('td',null,dash(r[2])),el('td',null,dash(r[3])),el('td',null,dash(r[4])),el('td',null,dash(r[5])),el('td',null,dash(r[6])));else{const m=g[3]-g[4];tr.appendChild(el('td',m>0?'up':'dn',(m>0?'+':'−')+Math.abs(m)))}bd.appendChild(tr)});t.appendChild(bd);
+  const tw=el('div','tw');tw.appendChild(t);res.appendChild(tw);if(rows.length>shown){const mb=el('button','gf-more','Show all '+rows.length.toLocaleString());mb.type='button';mb.onclick=()=>{shown=1e9;draw();shown=100};res.appendChild(mb)}}
+})();</script>
 </body>
 </html>

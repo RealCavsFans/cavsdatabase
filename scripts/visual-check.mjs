@@ -27,7 +27,7 @@ await new Promise(r => server.listen(0, '127.0.0.1', r));
 const base = 'http://127.0.0.1:' + server.address().port;
 const opts = { headless: true }; if (process.env.CHROME_PATH) opts.executablePath = process.env.CHROME_PATH;
 const browser = await launch(pw, opts);
-const ROUTES = ['/', '/schedule', '/roster', '/staff', '/cap', '/assets', '/moves', '/charge', '/history', '/media', '/resources', '/about', '/draft-picks', '/trade-exceptions', '/players/donovan-mitchell', '/players/donovan-mitchell/2025-26', '/games/2026-10-22-phi', '/stats/2026-27'];
+const ROUTES = ['/', '/schedule', '/roster', '/staff', '/cap', '/assets', '/moves', '/charge', '/history', '/media', '/resources', '/about', '/draft-picks', '/trade-exceptions', '/players/donovan-mitchell', '/players/donovan-mitchell/2025-26', '/games/2026-10-22-phi', '/stats/2026-27', '/game-finder'];
 const SIZES = [['phone', { width: 390, height: 844 }], ['desktop', { width: 1366, height: 900 }], ['phone-dark', { width: 390, height: 844 }]];
 const DARK_ROUTES = ['/', '/schedule', '/cap', '/players/donovan-mitchell', '/stats/2026-27'];  // Nov 22: dark mode on a phone, the main pages only
 let last = {}; try { last = JSON.parse(await readFile(new URL('data/visual-check.json', root), 'utf8')).h || {}; } catch {}

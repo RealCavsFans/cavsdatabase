@@ -185,9 +185,15 @@ ${rich}`,
 <div class="yrs">${Array.from({ length: 7 }, (_, k) => 2027 + k).map(y => `<span class="${firsts.some(p => +p[0] === y) ? 'h' : ''}">${y}</span>`).join('')}</div>`, 'draft-picks')]);
   const tpe = EXC.filter(e => /^Trade exception/.test(e[0])).map(e => [e[0].replace(/^Trade exception \((.*)\)$/, '$1'), e[1] - (e[4] || []).reduce((a, u) => a + u[2], 0), e[2]]).filter(e => e[1] > 0).sort((a, b) => b[1] - a[1]);
   const Mx = v => '$' + (v / 1e6).toFixed(v >= 1e7 ? 1 : 2).replace(/\.0+$/, '') + 'M';
-  cards.push(['og/trade-exceptions.jpg', page(`.L{position:absolute;left:64px;top:56px;right:64px}.rows{position:absolute;left:64px;right:64px;top:250px}.rows div{display:flex;align-items:baseline;gap:22px;padding:14px 0;border-top:2px solid rgba(255,255,255,.16)}.rows b{font:800 46px 'Geist Mono';color:#F2B231;min-width:270px}.rows span{font:700 30px Archivo;flex:1}.rows em{font:600 22px 'Geist Mono';font-style:normal;color:#F4D6DD}`,
+  cards.push(['og/trade-exceptions.jpg', page(`.L{position:absolute;left:64px;top:56px;right:64px}.rows{position:absolute;left:64px;right:64px;top:250px}.rows div{display:flex;align-items:baseline;gap:22px;padding:14px 0;border-top:2px solid rgba(255,255,255,.16)}.rows b{font:800 46px 'Geist Mono';color:#F2B231;min-width:270px}.rows span{font:700 30px Archivo;flex:1}.rows em{font:600 22px 'Geist Mono';font-style:normal;color:rgba(255,255,255,.75)}`,
     `<div class="L"><div class="k">${dash(CUR_SEASON)} · amount left · expires</div><div class="big" style="font-size:96px;margin-top:10px">Cavs trade exceptions</div></div><div class="rows">${tpe.slice(0, 3).map(e => `<div><b>${Mx(e[1])}</b><span>${esc(e[0])}</span><em>${esc(e[2])}</em></div>`).join('')}</div>`, 'trade-exceptions')]);
   /* Nov 22 (Luka): no injury report page, so no card */
+  /* Nov 22 (Luka): the game finder (/game-finder) */
+  try { const GF = JSON.parse(await readFile('pdata/game-finder.json', 'utf8')); const L = GF.g.flatMap(g => g[5]);
+    const p40 = L.filter(r => r[1] >= 40).length, td = L.filter(r => [r[1], r[2], r[3], r[5], r[6]].filter(x => x >= 10).length >= 3).length;
+    cards.push(['og/game-finder.jpg', page(`.L{position:absolute;left:64px;top:56px;right:64px}.n3{margin-top:26px}.yrs{position:absolute;left:64px;right:64px;top:420px;display:flex;gap:10px}.yrs span{flex:1;padding:14px 0;text-align:center;font:700 24px Archivo;background:rgba(255,255,255,.12)}.yrs span.h{background:#F2B231;color:#4a0020}`,
+      `<div class="L"><div class="k">Every game since 1970–71 · with the box score lines</div><div class="big" style="font-size:96px;margin-top:10px">Find any Cavs game</div><div class="n3"><div><b>${GF.g.length.toLocaleString('en-US')}</b><small>Games</small></div><div><b>${p40}</b><small>40-point games</small></div><div><b>${td}</b><small>Triple-doubles</small></div></div></div>
+<div class="yrs"><span class="h">40-point games</span><span>Triple-doubles</span><span>Wins by 30+</span><span>10+ threes</span></div>`, 'game-finder')]); } catch (e) { console.log('game finder card skipped:', e.message); }
 }
 
 /* Nov 22 (Luka): the remaining main pages get live cards too (they were title-only) */

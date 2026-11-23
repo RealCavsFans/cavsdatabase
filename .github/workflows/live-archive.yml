@@ -48,6 +48,9 @@ jobs:
             cavs.ics
             scripts/player-seasons.mjs
             pdata/ps
+            scripts/game-finder.mjs
+            pdata/game-finder.json
+            data/hist-old.json
           sparse-checkout-cone-mode: false
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
         if: steps.gate.outputs.go == '1'
@@ -98,13 +101,16 @@ jobs:
       # Nov 22 (Luka): player-season pages (pdata/ps), every Cavs player's game log per season
       - run: node scripts/player-seasons.mjs || true
         if: steps.gate.outputs.go == '1'
+      # Nov 22 (Luka): the game finder's data (this season's games join the history as they're played)
+      - run: node scripts/game-finder.mjs || true
+        if: steps.gate.outputs.go == '1'
       - name: Commit if changed
         if: steps.gate.outputs.go == '1'
         run: |
           [ -d live-archive ] || exit 0
           git config user.name "cavsdatabase-bot"
           git config user.email "bot@cavsdatabase.com"
-          git add live-archive; [ -f data/last-time.json ] && git add data/last-time.json || true; [ -d pdata/ps ] && git add pdata/ps || true
+          git add live-archive; [ -f data/last-time.json ] && git add data/last-time.json || true; [ -d pdata/ps ] && git add pdata/ps || true; [ -f pdata/game-finder.json ] && git add pdata/game-finder.json || true
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Update live game archive"
           for i in 1 2 3 4 5 6; do   # Nov 1: six tries with a random wait, so two jobs saving at once both get through
@@ -116,7 +122,7 @@ jobs:
             git fetch origin main && git reset --hard origin/main
             cp -r /tmp/la/. live-archive/
             SKIP_FETCH=1 node scripts/live-archive.mjs || true
-            node scripts/player-seasons.mjs || true; git add pdata/ps || true
+            node scripts/player-seasons.mjs || true; git add pdata/ps || true; node scripts/game-finder.mjs || true; git add pdata/game-finder.json || true
             git add live-archive; [ -f data/last-time.json ] && git add data/last-time.json || true
             if git diff --cached --quiet; then exit 0; fi
             git commit -m "Update live game archive"; sleep $((RANDOM % 20 + i * 10))
