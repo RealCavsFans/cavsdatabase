@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "Fear The Sword",
+   "title": "Cavs at Bulls: How to watch, odds, and injury report",
+   "link": "https://www.fearthesword.com/cavs-injury-report/54770/cavs-at-bulls-how-to-watch-odds-and-injury-report",
+   "date": "2026-11-23T16:30:00.000Z"
+  },
+  {
    "src": "Cavaliers on SI",
    "title": "This Player's Recent Shooting Offers Cavaliers Signs Of An Offensive Turnaround",
    "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOLWdzRXB3UDNaejdTVHE3eUs1NjdzeGlGX3FzLWpzN3JjdVVUVmNpZFFhTmlibTNUNWR4R3JCMXZOMkxYVFZ1bHhaMzQ5MDNkcGNLZU1sMUNPNFI0aTdIM3BKb0htbk9qVDdDMVl4dXZPOUNkUWdERkl3UWdmdVEyTFR2VTlocURlejFpS1kyZ05UMW91TUZqaDcyVVhtbnkwR1prMjUyYUNaaDBzX19MSmJNQTRWc1c4Rl9sT0xaY0gzU1BvVkN2dlV3?oc=5",
@@ -50,7 +56,7 @@
   },
   {
    "src": "Fear The Sword",
-   "title": "Harden’s 51 points leads Cavs over the Pacers",
+   "title": "James Harden’s 51 points lead Cavs over the Pacers",
    "link": "https://www.fearthesword.com/cavs-scores-results/54760/hardens-51-points-leads-cavs-over-the-pacers",
    "date": "2026-11-21T05:35:40.000Z"
   },
@@ -127,12 +133,6 @@
    "date": "2026-11-19T21:30:00.000Z"
   },
   {
-   "src": "Cavaliers on SI",
-   "title": "Why Sam Merrill Has Become Cavaliers’ Odd Man Out in 2026-27 Season",
-   "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPbDZDR0RJN1ZmNGRWaE9PX0s4dndfdFlQSlFDQ2RyMFRfdlRxb1NZX094eHVvRGNURlNCdS04UzF4VlgyTTNTbktUb1BYOThiem9HaTlvd1o4cmhDdTQ4OWphRGIzMVBtOEl1b04td1JxQmNqNTlfRkZQdjZJN2NMVmZRQmdneENqWHp5UVpTZURxTWE3OENxbWh5eDkwWmJQU3VoVFRibE1jMk8tUFpOcmdoWEVsckF2?oc=5",
-   "date": "2026-11-19T15:54:42.000Z"
-  },
-  {
    "src": "Hoops Rumors",
    "title": "And-Ones: Gasol, Ballmer, Cap Room, Neto, Proctor, More",
    "link": "https://www.hoopsrumors.com/2026/11/and-ones-gasol-ballmer-cap-room-neto-proctor-more.html",
@@ -191,12 +191,6 @@
    "title": "Jarrett Allen continues to give Cleveland more than basketball. His latest gestures are another reminder",
    "link": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxQMlhYemU5TGxPck5xeDVOelllaWVaMmUzT1Rxbmd4dUpONjB4aUlaaTV0Wnl5VnJTUzhBZnNaWGNxN0lxVnYwTGR1VG95Vl81MEYzSnNUMExsOHR6LURyTU9WMmx5Z0RPam0zelF2ZHJqb0hRak1IX0RKckhmYTd5OHBtNmtNLWRwRzhPcXpSdm9pcmJKMF84SkFEV3hoVU9vWThXUUctUTlSUWtKOVRLbUNNd21xRWlBVGRhV3R1aVpua1BfdVREZDZTeFlDZnlIdklPekQ3cm0xdTc1SG9JWQ?oc=5",
    "date": "2026-11-19T00:35:00.000Z"
-  },
-  {
-   "src": "Fear The Sword",
-   "title": "Cavs vs. Grizzlies game thread",
-   "link": "https://www.fearthesword.com/cavs-game-previews/54632/cavs-vs-grizzlies-game-thread",
-   "date": "2026-11-19T00:00:00.000Z"
   },
   {
    "src": "Cavaliers on SI",
@@ -299,6 +293,12 @@
    "title": "Cavs vs. Bulls: preview, odds, injury report, TV",
    "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQQXVzbzdxd1dDRDFEN0NQR2JNcjBsRzNKeFhGLXlDS0JKNjc0eTJIM0xDY0tYRVNZQWttcFk2TlZjaGRZYVpSamVFbkZJOFNKd21nVlo4LVNzS2FjbFUtWnFIRC1QdnpZQWxjMjRZbnF6VWMwYUpBQVJtejFsZVRFTmwtOUhWcHVjcW9kYjY3YWM?oc=5",
    "date": "2026-11-16T10:00:00.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "Unexpected Cavaliers Bench Piece Makes Every Chance Count in Saturday Night Win",
+   "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQb2R0YXpJQm5fazRUUEZpTUgwS1dQLXI5VXJGTVVYWmJGanlGZURiZ3gyYmVoc3JjMGtZWHp1R0dOcHFMWWdyQlZOMW95QW5rbnBrQmd3Z0dNUXZSUjZYY3RaOU1XbkJ1RnBaYjJ0UmltMXB3VmNOXzdjMWpPUERPakJfTmQ3Sk9jUEtRUGRLTkVxSmhIUGJMMklqTjZlUHdXZEFDeHVTZkJIbngwT0VJdHY2T25Zc0dEa012LTFIaWpUMmxGVDQ1emVB?oc=5",
+   "date": "2026-11-15T20:00:00.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -432,6 +432,13 @@
   }
  ],
  "videos": [
+  {
+   "src": "Ultimate Cleveland Sports Show",
+   "title": "Does James Harden get enough respect for how incredible his career has been?",
+   "link": "https://www.youtube.com/watch?v=zjZwqsiERcI",
+   "date": "2026-11-23T16:25:37.000Z",
+   "id": "zjZwqsiERcI"
+  },
   {
    "src": "Locked On Cavs",
    "title": "RESURGENCE: How James Harden RETURNED To Form! | Is Jaylon Tyson BACK For the Cleveland Cavaliers?!",
