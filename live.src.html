@@ -3876,8 +3876,8 @@ const BRec=(D,rest)=>{const [w,l]=sRec(D);const o=[['CAVS ',BL,'#fff'],[w+'–'+
 const BL10=D=>{const g=sGames(D).slice(-10),w=g.filter(z=>z.cle>z.os).length;return [['LAST '+g.length+' ',BL,'#fff'],[w+'–'+(g.length-w),BN,'#fff']]};
 const BGK=D=>S.season?sSea(D)+' season · '+sGames(D).length+' games':gKick(D);
 async function bFrame(x,D,kick,title,line,photoId){const W=1080,H=1350;tBg(x,W,H);tMark(x,72,96);
-  const nk=!S.season;if(!nk){x.fillStyle=TC.acc;x.font='700 26px Archivo';if('letterSpacing' in x)x.letterSpacing='5px';x.fillText(String(kick).toUpperCase(),72,170);if('letterSpacing' in x)x.letterSpacing='0px'}
-  window.__bannerSplit=photoId?650:790;const sp=Array.isArray(line),mw=photoId?560:640;let fs=124;x.font=`800 ${fs}px "Saira Condensed"`;const T=title.toUpperCase();while(x.measureText(T).width>mw&&fs>56){fs-=4;x.font=`800 ${fs}px "Saira Condensed"`}x.fillStyle=TC.hi;titleFx(x,T,72,nk?246:(sp?268:278),fs);
+  const nk=!S.season;if(!nk){x.fillStyle=TC.acc;x.font='700 26px Archivo';if('letterSpacing' in x)x.letterSpacing='5px';{const K=String(kick).toUpperCase(),m=x.measureText(K);/* Nov 22 (Luka): kicker and title line up on their visible left edge */x.fillText(K,72+(m.actualBoundingBoxLeft||0),170)};if('letterSpacing' in x)x.letterSpacing='0px'}
+  window.__bannerSplit=photoId?650:790;const sp=Array.isArray(line),mw=photoId?560:640;let fs=124;x.font=`800 ${fs}px "Saira Condensed"`;const T=title.toUpperCase();while(x.measureText(T).width>mw&&fs>56){fs-=4;x.font=`800 ${fs}px "Saira Condensed"`}x.fillStyle=TC.hi;titleFx(x,T,72+(x.measureText(T).actualBoundingBoxLeft||0),nk?246:(sp?268:278),fs);
   if(sp){const Y=nk?340:356,lim=photoId?660:740,ms=s=>{x.font=s[1];return x.measureText(s[0]).width};let tot=line.reduce((a,s)=>a+ms(s),0);const last=line[line.length-1];
     if(tot>lim&&/Archivo/.test(last[1])){const w0=ms(last),sz=Math.max(20,Math.floor(30*(w0-(tot-lim))/w0));last[1]=`600 ${sz}px Archivo`}
     let X=72;line.forEach(([t,f,c])=>{x.font=f;x.fillStyle=c||'#fff';x.fillText(t,X,/^\s*[–-]\s*$/.test(t)?Y-16:Y);X+=x.measureText(t).width})}
