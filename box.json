@@ -4620,7 +4620,24 @@
  },
  "2026-11-23": {
   "url": "https://www.nba.com/game/cle-vs-chi-0022600292/box-score",
-  "status": "scheduled"
+  "status": "scheduled",
+  "refs": [
+   [
+    "Crew chief",
+    "Pat O'Connell",
+    "73"
+   ],
+   [
+    "Referee",
+    "Erica Parker",
+    "49"
+   ],
+   [
+    "Umpire",
+    "Alicia Shivers",
+    "60"
+   ]
+  ]
  },
  "2026-11-25": {
   "url": "https://www.nba.com/game/cle-vs-nyk-0022600057/box-score",
