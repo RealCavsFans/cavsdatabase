@@ -27,13 +27,17 @@ window.__TRK = null; window.__TRKerr = null;
   // totals per group, in this column order
   const C = {
     hu: ['CONTESTED_SHOTS','CONTESTED_SHOTS_3PT','DEFLECTIONS','CHARGES_DRAWN','SCREEN_ASSISTS','SCREEN_AST_PTS','LOOSE_BALLS_RECOVERED','BOX_OUTS','DEF_BOXOUTS'],
-    dr: ['DRIVES','DRIVE_FGM','DRIVE_FGA','DRIVE_FTA','DRIVE_PTS','DRIVE_PASSES','DRIVE_AST','DRIVE_TOV'],
+    dr: ['DRIVES','DRIVE_FGM','DRIVE_FGA','DRIVE_FTA','DRIVE_PTS','DRIVE_PASSES','DRIVE_AST','DRIVE_TOV','DRIVE_PF'],
     cs: ['CATCH_SHOOT_FGM','CATCH_SHOOT_FGA','CATCH_SHOOT_FG3M','CATCH_SHOOT_FG3A','CATCH_SHOOT_PTS'],
     pu: ['PULL_UP_FGM','PULL_UP_FGA','PULL_UP_FG3M','PULL_UP_FG3A','PULL_UP_PTS'],
-    to: ['TOUCHES','FRONT_CT_TOUCHES','TIME_OF_POSS','ELBOW_TOUCHES','POST_TOUCHES','PAINT_TOUCHES'],
-    pa: ['PASSES_MADE','POTENTIAL_AST','AST_PTS_CREATED','SECONDARY_AST','AST']
+    to: ['TOUCHES','FRONT_CT_TOUCHES','TIME_OF_POSS','ELBOW_TOUCHES','POST_TOUCHES','PAINT_TOUCHES','POINTS'],
+    pa: ['PASSES_MADE','POTENTIAL_AST','AST_PTS_CREATED','SECONDARY_AST','AST'],
+    // Nov 23 (Luka): what happens on elbow, post and paint touches
+    el: ['ELBOW_TOUCHES','ELBOW_TOUCH_FGM','ELBOW_TOUCH_FGA','ELBOW_TOUCH_FTA','ELBOW_TOUCH_PTS','ELBOW_TOUCH_PASSES','ELBOW_TOUCH_AST','ELBOW_TOUCH_TOV','ELBOW_TOUCH_FOULS'],
+    po: ['POST_TOUCHES','POST_TOUCH_FGM','POST_TOUCH_FGA','POST_TOUCH_FTA','POST_TOUCH_PTS','POST_TOUCH_PASSES','POST_TOUCH_AST','POST_TOUCH_TOV','POST_TOUCH_FOULS'],
+    pn: ['PAINT_TOUCHES','PAINT_TOUCH_FGM','PAINT_TOUCH_FGA','PAINT_TOUCH_FTA','PAINT_TOUCH_PTS','PAINT_TOUCH_PASSES','PAINT_TOUCH_AST','PAINT_TOUCH_TOV','PAINT_TOUCH_FOULS']
   };
-  const M = { dr: 'Drives', cs: 'CatchShoot', pu: 'PullUpShot', to: 'Possessions', pa: 'Passing' };
+  const M = { dr: 'Drives', cs: 'CatchShoot', pu: 'PullUpShot', to: 'Possessions', pa: 'Passing', el: 'ElbowTouch', po: 'PostTouch', pn: 'PaintTouch' };
   const src = { hu: [rows((await get('https://stats.nba.com/stats/leaguehustlestatsplayer?' + Q))[0]), rows((await get('https://stats.nba.com/stats/leaguehustlestatsteam?' + Q))[0])] };
   for (const [k, m] of Object.entries(M)) src[k] = [rows((await get('https://stats.nba.com/stats/leaguedashptstats?' + Q + '&PlayerOrTeam=Player&PtMeasureType=' + m))[0]), rows((await get('https://stats.nba.com/stats/leaguedashptstats?' + Q + '&PlayerOrTeam=Team&PtMeasureType=' + m))[0])];
   const ab = {}; src.dr[1].forEach(r => ab[r.TEAM_ID] = r.TEAM_ABBREVIATION);

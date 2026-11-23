@@ -10,7 +10,7 @@ const bad = [];
 const teams = Object.keys(j.t || {});
 if (!/^\d{4}-\d\d$/.test(j.season || '')) bad.push('season');
 if (teams.length !== 30) bad.push(teams.length + ' teams in t');
-for (const [ab, x] of Object.entries(j.t || {})) for (const k of ['hu','dr','cs','pu','to','pa']) if (!Array.isArray(x[k]) || x[k].length !== j.cols[k].length) bad.push(ab + ' ' + k);
+for (const [ab, x] of Object.entries(j.t || {})) for (const k of ['hu','dr','cs','pu','to','pa','el','po','pn']) if (!Array.isArray(x[k]) || x[k].length !== j.cols[k].length) bad.push(ab + ' ' + k);
 const P = Object.entries(j.p || {});
 if (P.length < 8) bad.push(P.length + ' Cavs players');
 for (const [id, x] of P) if (!x.n || !(x.gp >= 0) || !Array.isArray(x.hu)) bad.push('player ' + id);
