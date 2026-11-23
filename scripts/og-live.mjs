@@ -58,7 +58,7 @@ body:after{content:'';position:absolute;left:0;right:0;bottom:0;height:10px;back
 .k{font:700 22px 'Geist Mono',monospace;letter-spacing:3px;color:#F2B231;text-transform:uppercase}
 .big{font:800 112px/0.92 'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:.5px}
 .chip{display:inline-block;background:rgba(255,255,255,.14);padding:7px 15px;font:700 21px Archivo;margin-right:8px}.chip.g{background:#F2B231;color:#4a0020}
-.n3{display:flex;gap:56px}.n3 b{display:block;font:800 64px/1 'Geist Mono',monospace}.n3 small{font:700 18px Archivo;letter-spacing:2px;color:#F4D6DD;text-transform:uppercase}`;
+.n3{display:flex;gap:56px}.n3 b{display:block;font:800 64px/1 'Geist Mono',monospace}.n3 small{font:700 18px Archivo;letter-spacing:2px;color:rgba(255,255,255,.82);text-transform:uppercase}`;
 const page = (css, body, path) => `<!doctype html><html><head><meta charset="utf-8"><style>${BASE}${css}</style></head><body>${body}<div class="ft"><span>cavsdatabase.com/${path}</span><span class="wm">${MARK}<span>cavs<em>_db</em></span></span></div></body></html>`;
 
 const LOGO_SC = {"atl": 0.92, "bkn": 0.92, "bos": 0.92, "cha": 0.92, "dal": 0.92, "den": 0.92, "det": 0.92, "gs": 0.92, "hou": 1.07, "ind": 0.96, "lac": 0.92, "lal": 1.18, "mem": 0.95, "mia": 0.95, "mil": 1.06, "min": 0.92, "no": 1.25, "ny": 1.04, "okc": 1.23, "orl": 1.1, "por": 0.97, "sa": 1.03, "tor": 0.92, "utah": 1.12, "wsh": 0.92};   // Nov 4: same per-logo scale as the site, so marks read the same size
@@ -85,7 +85,7 @@ for (const P of PLAYERS) {
     : `<div><b>${f}′${i2}″</b><small>Height</small></div><div><b>${age}</b><small>Age</small></div><div><b>${draft ? draft[0] : 'UDFA'}</b><small>${draft ? 'Draft · #' + draft[2] : 'Undrafted'}</small></div>`;
   const nm = esc(name).replace(' ', '<br>');
   cards.push([`og/p/${slug(name)}.jpg`, page(`.hs{position:absolute;right:10px;bottom:96px;height:470px;-webkit-mask-image:linear-gradient(#000 80%,transparent)}.num{position:absolute;right:40px;top:20px;font:800 300px/1 'Saira Condensed';color:rgba(255,255,255,.08)}
-.L{position:absolute;left:64px;top:62px;width:640px}.st{display:flex;gap:34px;margin-top:34px}.st div{border-left:4px solid #F2B231;padding-left:14px}.st b{display:block;font:800 60px/1 'Geist Mono',monospace}.st small{font:700 18px Archivo;letter-spacing:2px;color:#F4D6DD}
+.L{position:absolute;left:64px;top:62px;width:640px}.st{display:flex;gap:34px;margin-top:34px}.st div{border-left:4px solid #F2B231;padding-left:14px}.st b{display:block;font:800 60px/1 'Geist Mono',monospace}.st small{font:700 18px Archivo;letter-spacing:2px;color:rgba(255,255,255,.82)}
 .ct{margin-top:30px;font:600 25px Archivo}`,
     `<div class="num">${esc(num)}</div>${id ? `<img class="hs" src="../img/h/${id}.png" onerror="this.remove()">` : ''}<div class="L"><div class="k">#${esc(num)} · ${POS[pos] || esc(pos)}</div><div class="big" style="margin-top:14px;${name.length > 18 ? 'font-size:96px' : ''}">${nm}</div><div class="st">${stats}</div><div class="ct">${esc(deal)}</div></div>`,
     'players/' + slug(name))]);
@@ -131,13 +131,13 @@ SCHEDULE.forEach((g, i) => {
     rich = `<style>.T .tm{font-size:0!important;line-height:0}.T .tm span{display:none}.T .tm img{width:140px;height:140px;object-fit:contain;display:block}.T .tm.r img{margin-left:auto}.T .tm{display:flex!important;align-items:center;gap:24px}.T .tm.r{flex-direction:row-reverse}.T .tm.r img{margin-left:0!important}.T .tm small{font:700 44px 'Geist Mono'!important;letter-spacing:0!important;color:#fff!important;line-height:1!important;margin-top:0!important}.T{top:72px!important;grid-template-columns:auto auto auto!important;justify-content:center;column-gap:72px}.when{top:222px!important}.tape{top:282px!important}.inj{top:448px!important}/* Nov 4: X lays the page title over the bottom of a link card, so the wordmark moves to the top right on these */.ft{top:30px;bottom:auto;justify-content:flex-end}.ft>span:first-child{display:none}</style><div class="tape"><div class="th">${TS ? '' : '2025–26 · '}NBA rank</div>${tape}</div>${inj}`;
   }
   cards.push([`og/gp/${d}-${o.toLowerCase()}.jpg`, page(`.T{position:absolute;left:64px;right:64px;top:80px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
-.tm{font:800 170px/0.9 'Saira Condensed'}.tm.r{text-align:right}.tm small{display:block;font:700 22px Archivo;letter-spacing:2px;color:#F4D6DD;margin-top:8px}.tm span{display:block;font:600 34px 'Saira Condensed';letter-spacing:1px;text-transform:uppercase;color:#fff;opacity:.85}
+.tm{font:800 170px/0.9 'Saira Condensed'}.tm.r{text-align:right}.tm small{display:block;font:700 22px Archivo;letter-spacing:2px;color:rgba(255,255,255,.82);margin-top:8px}.tm span{display:block;font:600 34px 'Saira Condensed';letter-spacing:1px;text-transform:uppercase;color:#fff;opacity:.85}
 .at{font:600 48px 'Saira Condensed';color:#F2B231;text-align:center}.when{position:absolute;left:64px;right:64px;top:352px;text-align:center;font:700 34px Archivo}.when span{color:#F2B231}
 .row{position:absolute;left:64px;right:64px;top:440px;display:flex;justify-content:center}
-.tape{position:absolute;left:240px;right:240px;top:292px;display:grid;grid-template-columns:1fr auto 1fr;gap:4px 0;align-items:center}.tape .th{grid-column:1/-1;text-align:center;font:700 15px 'Geist Mono';letter-spacing:2px;color:#F4D6DD;text-transform:uppercase;margin-bottom:4px}
-.tape .v{display:flex;align-items:baseline;gap:10px;justify-content:center}.tape .v b{font:700 30px 'Geist Mono'}.tape .v small{font:700 17px 'Geist Mono';color:#F4D6DD}.tape .v.w b{color:#F2B231}
+.tape{position:absolute;left:240px;right:240px;top:292px;display:grid;grid-template-columns:1fr auto 1fr;gap:4px 0;align-items:center}.tape .th{grid-column:1/-1;text-align:center;font:700 15px 'Geist Mono';letter-spacing:2px;color:rgba(255,255,255,.82);text-transform:uppercase;margin-bottom:4px}
+.tape .v{display:flex;align-items:baseline;gap:10px;justify-content:center}.tape .v b{font:700 30px 'Geist Mono'}.tape .v small{font:700 17px 'Geist Mono';color:rgba(255,255,255,.82)}.tape .v.w b{color:#F2B231}
 .tape .l{font:600 24px 'Saira Condensed';letter-spacing:1.5px;text-transform:uppercase;text-align:center;padding:0 22px;color:#fff;opacity:.9}
-.inj{position:absolute;left:64px;right:64px;top:458px;display:flex;flex-direction:column;align-items:center;gap:6px;font:500 25px Archivo;color:#F4D6DD;text-align:center}.inj.sm{font-size:23px}.inj b{color:#F2B231;font-weight:700;margin-right:4px}.inj .sr{color:#fff;font-weight:700}`,
+.inj{position:absolute;left:64px;right:64px;top:458px;display:flex;flex-direction:column;align-items:center;gap:6px;font:500 25px Archivo;color:rgba(255,255,255,.82);text-align:center}.inj.sm{font-size:23px}.inj b{color:#F2B231;font-weight:700;margin-right:4px}.inj .sr{color:#fff;font-weight:700}`,
     `<div class="k" style="position:absolute;left:64px;top:38px">${kick}</div><div class="T"><div class="tm">${rich.includes('tape') ? `<img src="../img/tl5/cle.png" alt=""${lsc('cle')}>` : 'CLE'}<span>Cavaliers</span><small>${rich.includes('tape') && cs === '2026–27' ? cr : cs + ' · ' + cr}</small></div><div class="at">${ha === 'H' ? 'vs' : 'at'}</div><div class="tm r">${rich.includes('tape') ? `<img src="../img/tl5/${LG5[o] || o.toLowerCase()}.png" alt=""${lsc(LG5[o] || o.toLowerCase())}>` : o}<span>${esc(GNICK[o] || TEAMS[o])}</span><small>${rich.includes('tape') && os === '2026–27' ? orr : os + ' · ' + orr}</small></div></div>
 <div class="when">${dl} <span>·</span> ${hm} PM ET <span>·</span> ${esc(net)}${CAVS_RADIO ? ` <span>·</span> ${esc(CAVS_RADIO.split(' · ')[0])}` : ''}</div>
 ${rich}`,
@@ -153,7 +153,7 @@ ${rich}`,
   const lab = { 'Salary cap': 'Cap', 'Luxury tax': 'Tax', 'First apron': 'Apron 1', 'Second apron': 'Apron 2' };
   const roomTxt = room >= 1 ? '$' + room.toFixed(1) + 'M' : room > 0 ? '$' + Math.round(room * 1000) + 'K' : '$0';
   cards.push(['og/cap.jpg', page(`.L{position:absolute;left:64px;top:56px}.n3{margin-top:26px}
-.bar{position:absolute;left:64px;right:64px;top:388px;height:34px;background:rgba(255,255,255,.12)}.bar i{position:absolute;left:0;top:0;bottom:0;background:#F2B231}.bar s{position:absolute;top:-12px;bottom:-12px;width:3px;background:#fff}.bar s em{position:absolute;top:60px;left:-55px;width:113px;font:700 17px 'Geist Mono';font-style:normal;color:#F4D6DD;text-align:center}`,
+.bar{position:absolute;left:64px;right:64px;top:388px;height:34px;background:rgba(255,255,255,.12)}.bar i{position:absolute;left:0;top:0;bottom:0;background:#F2B231}.bar s{position:absolute;top:-12px;bottom:-12px;width:3px;background:#fff}.bar s em{position:absolute;top:60px;left:-55px;width:113px;font:700 17px 'Geist Mono';font-style:normal;color:rgba(255,255,255,.82);text-align:center}`,
     `<div class="L"><div class="k">${dash(CUR_SEASON)} Salary cap</div><div class="big" style="font-size:96px;margin-top:10px">Cavs cap sheet</div><div class="n3"><div><b>$${TEAM_SALARY.toFixed(1)}M</b><small>Team salary</small></div><div><b>$${TAX_BILL.toFixed(1)}M</b><small>Tax bill</small></div><div><b>${roomTxt}</b><small>Under hard cap</small></div></div></div>
 <div class="bar"><i style="width:${pct(TEAM_SALARY)}%"></i>${Object.keys(lab).filter(k => L[k]).map(k => `<s style="left:${pct(L[k])}%"><em>${lab[k]}</em></s>`).join('')}</div>`, 'cap')]);
 }
@@ -202,7 +202,7 @@ ${rich}`,
   const STAFF = grab('STAFF'), ATK = grab('ATK'), ACQ = grab('ACQ'), CHARGE = grab('CHARGE');
   const W = (SEASON.results || '').split('').filter(r => r === 'W').length, Lr = (SEASON.results || '').split('').filter(r => r === 'L').length;
   const rows = (css2, list) => `<div class="rows">${list.map(([a, b, c]) => `<div><b>${a}</b><span>${b}</span>${c ? `<em>${c}</em>` : ''}</div>`).join('')}</div>`;
-  const ROWS = `.L{position:absolute;left:64px;top:56px;right:64px}.rows{position:absolute;left:64px;right:64px;top:258px}.rows div{display:flex;align-items:baseline;gap:22px;padding:13px 0;border-top:2px solid rgba(255,255,255,.16)}.rows b{font:800 22px 'Geist Mono';letter-spacing:2px;color:#F2B231;min-width:250px;text-transform:uppercase}.rows span{font:700 34px Archivo;flex:1}.rows em{font:600 22px 'Geist Mono';font-style:normal;color:#F4D6DD}`;
+  const ROWS = `.L{position:absolute;left:64px;top:56px;right:64px}.rows{position:absolute;left:64px;right:64px;top:258px}.rows div{display:flex;align-items:baseline;gap:22px;padding:13px 0;border-top:2px solid rgba(255,255,255,.16)}.rows b{font:800 22px 'Geist Mono';letter-spacing:2px;color:#F2B231;min-width:250px;text-transform:uppercase}.rows span{font:700 34px Archivo;flex:1}.rows em{font:600 22px 'Geist Mono';font-style:normal;color:rgba(255,255,255,.82)}`;
   /* roster */
   { const ages = PLAYERS.map(p => +p[6]).filter(Boolean), inch = PLAYERS.map(p => { const m = /^(\d+)-(\d+)$/.exec(p[3] || ''); return m ? +m[1] * 12 + +m[2] : 0; }).filter(Boolean);
     const avgA = ages.reduce((a, b) => a + b, 0) / ages.length, avgH = Math.round(inch.reduce((a, b) => a + b, 0) / inch.length);
@@ -217,7 +217,7 @@ ${rich}`,
   /* roster tree */
   { const how = PLAYERS.map(p => (ACQ[p[1]] || [''])[0]), cnt = re => how.filter(h => re.test(h)).length;
     const dr = cnt(/^Draft/), tr = cnt(/trade/i), fa = cnt(/free agent|two-way|exhibit|10-day/i);
-    cards.push(['og/roster-tree.jpg', page(`.L{position:absolute;left:64px;top:56px;right:64px}.n3{margin-top:30px}.sub{position:absolute;left:64px;right:64px;top:430px;font:600 26px Archivo;color:#F4D6DD;border-top:2px solid rgba(255,255,255,.16);padding-top:18px}`,
+    cards.push(['og/roster-tree.jpg', page(`.L{position:absolute;left:64px;top:56px;right:64px}.n3{margin-top:30px}.sub{position:absolute;left:64px;right:64px;top:430px;font:600 26px Archivo;color:rgba(255,255,255,.82);border-top:2px solid rgba(255,255,255,.16);padding-top:18px}`,
       `<div class="L"><div class="k">Every player by how he arrived</div><div class="big" style="font-size:96px;margin-top:10px">How the roster was built</div><div class="n3"><div><b>${dr}</b><small>Drafted</small></div><div><b>${tr}</b><small>${R(tr, 'Trade')}</small></div><div><b>${fa}</b><small>Free agents</small></div></div></div><div class="sub">Trade trees back to 2017</div>`, 'roster-tree')]); }
   /* media */
   { let v = null, a = null; try { v = JSON.parse(await readFile(new URL('videos.json', root), 'utf8'))[0]; } catch {} try { a = JSON.parse(await readFile(new URL('rcf.json', root), 'utf8')).items[0]; } catch {}
@@ -243,7 +243,7 @@ ${rich}`,
 {
   const t = [...TX].sort((a, b) => b.d.localeCompare(a.d))[0], n = TX.length;
   const dl = new Date(t.d + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
-  cards.push(['og/moves.jpg', page(`.L{position:absolute;left:64px;top:56px;right:64px}.lt{margin-top:40px;border-left:6px solid #F2B231;padding-left:22px}.lt span{display:block;font:700 20px 'Geist Mono';letter-spacing:3px;color:#F2B231}.lt b{display:block;font:700 44px/1.15 Archivo;margin-top:8px}.cnt{position:absolute;left:64px;top:470px;font:600 24px Archivo;color:#F4D6DD}`,
+  cards.push(['og/moves.jpg', page(`.L{position:absolute;left:64px;top:56px;right:64px}.lt{margin-top:40px;border-left:6px solid #F2B231;padding-left:22px}.lt span{display:block;font:700 20px 'Geist Mono';letter-spacing:3px;color:#F2B231}.lt b{display:block;font:700 44px/1.15 Archivo;margin-top:8px}.cnt{position:absolute;left:64px;top:470px;font:600 24px Archivo;color:rgba(255,255,255,.82)}`,
     `<div class="L"><div class="k">Every Cavs move since 2017</div><div class="big" style="font-size:96px;margin-top:10px">Transactions</div><div class="lt"><span>LATEST · ${dl.toUpperCase()}</span><b>${esc(t.t)}</b></div></div><div class="cnt">${n} trades, signings, extensions and waivers</div>`, 'moves')]);
 }
 

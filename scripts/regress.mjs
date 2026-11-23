@@ -66,7 +66,7 @@ for (const f of fs.readdirSync(DIR).filter(f => f.endsWith('.json.gz')).sort()) 
   const hsl = h => { const r = parseInt(h.slice(0, 2), 16) / 255, g = parseInt(h.slice(2, 4), 16) / 255, b = parseInt(h.slice(4, 6), 16) / 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn; if (!d) return [0, 0, l]; let H = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; H *= 60; if (H < 0) H += 360; return [H, d / (1 - Math.abs(2 * l - 1)), l]; };
   const probs = [];
   for (const f of files) { let t = ''; try { t = fs2.readFileSync(f, 'utf8'); } catch { continue; } const c = noComments(t);
-    const hy = c.match(/\b(hard-cap\w*|most-used|trade-eligible)\b/gi); if (hy) probs.push(`${f}: ${[...new Set(hy)].join(', ')} should not be hyphenated`);
+    const hy = c.match(/\b(hard-cap\w*|most-used|trade-eligible|regular-season)\b/gi); if (hy) probs.push(`${f}: ${[...new Set(hy)].join(', ')} should not be hyphenated`);
     const pk = c.match(/(?:[:,(]\s*|['\"])(?:hot|deep|light)?pink\b(?![|\w])/gi); if (pk) probs.push(`${f}: pink color (${[...new Set(pk)].join(', ')})`);
     const nt = [...new Set([...c.matchAll(/#([0-9a-f]{6})\b/gi)].map(m => m[1].toLowerCase()).filter(h => { const [H, s, l] = hsl(h); return (H >= 290 || H <= 8) && s > .35 && l > .62 && !OKTINT.has(h); }))];
     if (nt.length) probs.push(`${f}: new pink-looking color${nt.length > 1 ? 's' : ''} #${nt.join(', #')} (wine tints read pink; use gray or an approved tint)`);

@@ -1,5 +1,5 @@
 // Game-high history for the recap's "most since" lines (Nov 1).
-// Reads Basketball Reference regular-season game logs: every Cavs team game since 1970–71, and the career game logs
+// Reads Basketball Reference regular season game logs: every Cavs team game since 1970–71, and the career game logs
 // of every player who has played for the Cavs this season. Keeps, per stat, only the games that beat every later game
 // (a "staircase"), which is all the recap needs to say "most since <date>" or "career high".
 // Writes pdata/highs-hist.json. History stops at the end of last season; this season's games come from the live archive.
@@ -33,7 +33,7 @@ const STATS = { pts: 'points', reb: 'rebounds', ast: 'assists', fgm: 'made field
 const stair = (games, k) => { const out = []; let best = -1; for (const g of games.slice().sort((a, b) => b.d.localeCompare(a.d))) { const v = g[k]; if (v == null || isNaN(v)) continue; if (v > best) { out.push([g.d, v, g.tm || undefined, g.opp].filter(x => x !== undefined)); best = v; } } return out; };
 const num = v => v === '' || v == null ? null : +v;
 
-let H = { how: 'Regular-season game logs from Basketball Reference. Per stat, only the games that beat every later game.', through: `${LAST - 1}–${String(LAST).slice(2)}`, team: null, teamFrom: null, players: {} };
+let H = { how: 'Regular season game logs from Basketball Reference. Per stat, only the games that beat every later game.', through: `${LAST - 1}–${String(LAST).slice(2)}`, team: null, teamFrom: null, players: {} };
 try { const old = JSON.parse(fs.readFileSync(OUT, 'utf8')); if (!process.env.FULL) H = { ...H, ...old, through: H.through }; } catch {}
 
 /* team: every season's game log, built once (FULL=1 rebuilds) */

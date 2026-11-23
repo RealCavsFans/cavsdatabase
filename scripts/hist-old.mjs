@@ -1,4 +1,4 @@
-// One-time pull (Nov 15, 2026, Luka): every Cavs regular-season box score from 1970–71 through 1999–2000 from Basketball Reference,
+// One-time pull (Nov 15, 2026, Luka): every Cavs regular season box score from 1970–71 through 1999–2000 from Basketball Reference,
 // for the "This day in Cavs history" facts (scripts/hist-facts.mjs). Resumable: keeps what it already has in data/hist-old.json
 // and saves after every season. About 3.5 seconds between requests to stay under Basketball Reference's rate limit.
 //   FROM=1971 TO=2000 node scripts/hist-old.mjs      (season end years)
@@ -21,7 +21,7 @@ async function get(u) {
   return null;
 }
 const cell = (row, k) => { const m = new RegExp(`data-stat="${k}"[^>]*>([\\s\\S]*?)</t[dh]>`).exec(row); return m ? dec(m[1]) : ''; };
-let D = { how: 'Cavs regular-season box scores from Basketball Reference (one-time pull, Nov 2026). pl rows: [name, pts, reb, ast, 3pm, stl, blk]', games: [] };
+let D = { how: 'Cavs regular season box scores from Basketball Reference (one-time pull, Nov 2026). pl rows: [name, pts, reb, ast, 3pm, stl, blk]', games: [] };
 try { D = JSON.parse(await readFile(OUT, 'utf8')); } catch { }
 const have = new Set(D.games.map(g => g.box));
 for (let yr = FROM; yr <= TO && Date.now() < STOP; yr++) {
