@@ -1,22 +1,22 @@
 {
- "checked": "2026-11-16T12:16:07.386Z",
- "total": 986,
+ "checked": "2026-11-23T11:02:28.339Z",
+ "total": 990,
  "broken": [],
  "unsure": [
-  [
-   "https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Transactions",
-   403
-  ],
-  [
-   "https://basketball.realgm.com/player/Chu-Maduabum/NBA/24596",
-   403
-  ],
   [
    "https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Transaction_History/2018",
    403
   ],
   [
+   "https://basketball.realgm.com/nba/teams/Cleveland-Cavaliers/5/Transactions",
+   403
+  ],
+  [
    "https://basketball.realgm.com/player/Ismael-Kamagate/Summary/132958",
+   403
+  ],
+  [
+   "https://basketball.realgm.com/player/Chu-Maduabum/NBA/24596",
    403
   ],
   [
@@ -28,11 +28,11 @@
    403
   ],
   [
-   "https://basketball.realgm.com/player/wd/Summary/121",
+   "https://basketball.realgm.com/player/wd/Summary/1639",
    403
   ],
   [
-   "https://basketball.realgm.com/player/wd/Summary/1639",
+   "https://basketball.realgm.com/player/wd/Summary/121",
    403
   ],
   [
@@ -44,11 +44,15 @@
    403
   ],
   [
-   "https://theanalyst.com/articles/the-biggest-blowouts-in-nba-history/",
-   403
+   "https://formsubmit.co/ajax/rcfwriter@gmail.com",
+   405
   ],
   [
    "https://theinsideshot.substack.com",
+   403
+  ],
+  [
+   "https://theanalyst.com/articles/the-biggest-blowouts-in-nba-history/",
    403
   ],
   [
@@ -64,15 +68,11 @@
    403
   ],
   [
-   "https://formsubmit.co/ajax/rcfwriter@gmail.com",
-   522
-  ],
-  [
-   "https://www.nbadraft.net/players/ismael-kamagate/",
+   "https://www.nbadraft.net/players/arturas-gudaitis/",
    403
   ],
   [
-   "https://www.nbadraft.net/players/arturas-gudaitis/",
+   "https://www.nbadraft.net/players/ismael-kamagate/",
    403
   ],
   [
