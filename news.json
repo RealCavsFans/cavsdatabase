@@ -1,12 +1,6 @@
 {
  "articles": [
   {
-   "src": "Cavaliers on SI",
-   "title": "Title: All Articles & News Stories | Cleveland Cavaliers On SI",
-   "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5hYUprX3Vpcm16RFFGZGhJTFlfY0lVVlV2NW42MGpodHN5UWJFMzduOWlUNGR4VFBrMERneUhzVElvbE5CRU1ocTVHaS1GcjRvUWhZ?oc=5",
-   "date": "2026-11-22T19:38:22.000Z"
-  },
-  {
    "src": "Hoops Rumors",
    "title": "Five Two-Way Players Making Early Cases For Promotions",
    "link": "https://www.hoopsrumors.com/2026/11/five-two-way-players-making-early-cases-for-promotions.html",
@@ -25,10 +19,22 @@
    "date": "2026-11-21T21:30:00.000Z"
   },
   {
+   "src": "Cavaliers on SI",
+   "title": "James Harden Speaks Out On Role Change With Cavaliers in 2026-27 Season",
+   "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPU3FBQ0UzdU0wRm5ON2drRkU0VXVjbjY1R1N3YmliUk1HeVlveWR6a1JjUnpLT0FsN3NXNmpzcWxMYWIyX1lkOWNCekI2Q1BXWnlEUDV6M1I1WE0xUDlpVVE0SFpMdEJHRGRTUXR3MmY2amp2VnpZeFR4NTlJOGVtVFdBTGFJR3E2b0dSTHF5MXBNQ0pIekNEdUpkSHo4VWs1SHVkTExuVGd4Z2RTblZ2LXc5UnJ5X0JTa0s4WDk0UQ?oc=5",
+   "date": "2026-11-21T17:18:21.000Z"
+  },
+  {
    "src": "Hoops Rumors",
    "title": "Central Notes: Claxton, Hezonja, Austin, Cunningham, Haliburton",
    "link": "https://www.hoopsrumors.com/2026/11/central-notes-claxton-hezonja-austin-cunningham-haliburton.html",
    "date": "2026-11-21T17:04:11.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "Cavaliers’ Latest Loss Revealed a Problem They Must Fix Before the Season Starts To Heat Up",
+   "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxQa3FibWZEN3BQaFdpSlFqeXBSSnc2Nk9ST3JtRlZ5ei1mZkhqSnljOHNwRHNEaGJsUHRFQzQtVGNJZ0N0SGdKemFpQWw5eFdrcXdFWFF4Yk9zZEQwaDFmTjJWSVphZ3MtaGpVQXAwSHdfQ1EycVRFbWI4Y2xvX1BhdGdGb203T2JHM1N4dFBlS1R1UUwyVlU0dUF6VzlWbUNGUUhaSzYtc0N2dXgxQm54cl9BcUJWOWpaVHQ4ay1DdnFubmVsVWZmNTUyUVJnM3pIeXhpZkg4UE8?oc=5",
+   "date": "2026-11-21T17:00:03.000Z"
   },
   {
    "src": "The Inside Shot",
@@ -86,9 +92,9 @@
   },
   {
    "src": "Cavaliers on SI",
-   "title": "5 Questions Cleveland Must Answer Before the NBA Trade Deadline",
-   "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNSXJKLWlOdE9kYUJ5eTlpMHpVWHB0cG16VVdNdzhjUngxaXBocmtGYXptM3JrZ1pFbDNfbXVaWTVvUEtnVTByRFBsek1UTlJmQk52akVyT09BNnVXTlhhYWdNZWljal9jUmJpdUdQck5LOHdBRnRhb3AzbDY4ZHk4Z21zWExVczFHSDl5a2tVZ3VMREFRYU9ibGRqLUtQR1FIa25pWE9leldDdEhJTjhrVmh6MHE?oc=5",
-   "date": "2026-11-20T23:00:01.000Z"
+   "title": "Cavaliers vs. Pacers: How to Watch, Starting Lineups, Injury Report and More",
+   "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOZmhJelN5MlVxcThYMXVzYWRaUjVZZU5KU0tjdWI1anZINFFDY3UzYUlYVFNZZEF4UTJnWXl4bmxxVHl6NnhZclM2LXJkbUlIQkxuSnA3N0dGTnRUZWZkekE5R1BqWHBNX3J1WFZfLXNITURTRVhocU9DeHJyUlB0RGdBbkJMUFpFWENaeTdiWTZXQ3hDdXhhRzBtZkRSTklKdjVSMmlVQ3duNlpMamotLXdxN25XMlZLLW1DaFpuUGk?oc=5",
+   "date": "2026-11-20T20:00:01.000Z"
   },
   {
    "src": "Fear The Sword",
@@ -133,6 +139,12 @@
    "date": "2026-11-19T16:17:00.000Z"
   },
   {
+   "src": "Cavaliers on SI",
+   "title": "Why Sam Merrill Has Become Cavaliers’ Odd Man Out in 2026-27 Season",
+   "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPbDZDR0RJN1ZmNGRWaE9PX0s4dndfdFlQSlFDQ2RyMFRfdlRxb1NZX094eHVvRGNURlNCdS04UzF4VlgyTTNTbktUb1BYOThiem9HaTlvd1o4cmhDdTQ4OWphRGIzMVBtOEl1b04td1JxQmNqNTlfRkZQdjZJN2NMVmZRQmdneENqWHp5UVpTZURxTWE3OENxbWh5eDkwWmJQU3VoVFRibE1jMk8tUFpOcmdoWEVsckF2?oc=5",
+   "date": "2026-11-19T15:54:42.000Z"
+  },
+  {
    "src": "Hoops Rumors",
    "title": "And-Ones: Gasol, Ballmer, Cap Room, Neto, Proctor, More",
    "link": "https://www.hoopsrumors.com/2026/11/and-ones-gasol-ballmer-cap-room-neto-proctor-more.html",
@@ -163,6 +175,12 @@
    "date": "2026-11-19T03:40:08.000Z"
   },
   {
+   "src": "Cavaliers on SI",
+   "title": "3 Key Takeaways in the Cleveland Cavaliers 124-121 Loss to the Memphis Grizzlies",
+   "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOeEFQQUE2N3FvY1pLWUg2ajNSOUVQdnA1ajY5SktPX09taFA3b25vTWlCUDBMQkhTNE55dlZvMHJ3X3JLa1h5UjN2YXQxUEJlUHpMMXZtZXoyTFN2TFlSRWpnOThrVnFnbVZrcGs2ZEZGVVhyd2oyTTE5dnZzRkJYMXNZcXlOSFBCTHB3SzFQbE5PRHJzWkRmZm5DWjFzYjhzWWUzYS1oMXdnQllYZTU4MVliZlJXVG13Um5QNEtoX1BUV0daSTQ5cGZDWQ?oc=5",
+   "date": "2026-11-19T03:31:41.000Z"
+  },
+  {
    "src": "cleveland.com",
    "title": "Cavs stumble late with two costly missed free throws in 124-121 loss to Memphis Grizzlies",
    "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPZ09POFZhd3pzWXV3MUNic0lzTVVRQ0p4OXpaTExLVU1KZWJYd0JmZnJvdVR2UUViTXlVb2R6U3pMNHhJV3hweTFwNDRkeUxrVlZsbHRmRldkYUEyTE5HOTBKWWRHcXBSRXZqYk42UVkzUWJodTlnSjBYa1FEdEw5N09UdVpsdzBfeTBUNUpHS0ZTcWFHMER2T0MwVW8xak0?oc=5",
@@ -185,6 +203,12 @@
    "title": "Cavs vs. Grizzlies game thread",
    "link": "https://www.fearthesword.com/cavs-game-previews/54632/cavs-vs-grizzlies-game-thread",
    "date": "2026-11-19T00:00:00.000Z"
+  },
+  {
+   "src": "Cavaliers on SI",
+   "title": "Cavaliers vs. Grizzlies: How to Watch, Starting Lineups, Injury Report and More",
+   "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQSWhWcFQ2T01NMWRYWjRSM1hvOUdRelFqNzdIUFppZmRlUHEySGFPRE1QdVRESVVBanZYNVJVR002cEhIUWJhM0lxQVlHMlJhVUZFdFQ1ZFhuaFhSMDJDRDV5dTdTRzNlbUdqcHVyRjgteFJBTnhiQkZ0dFBJajktS3ZTOVM0TG5UNXVIbXpLLUhIVUcyZFhGSmZVb2UzQS1jUjhwYk5FQ3E5MGZkTmNycEdPYTdldW5LM3hrbzVDcHRCUU9p?oc=5",
+   "date": "2026-11-18T22:53:22.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -211,28 +235,10 @@
    "date": "2026-11-18T10:00:00.000Z"
   },
   {
-   "src": "Cavaliers on SI",
-   "title": "Four Years Later, Mario Hezonja Proving to be Worth the Wait In Cleveland",
-   "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNM1MtNkp1ZG9fWFVXMWpYd3dFVFNJY3pjSVk1aXNPRlg0Z3VYWDY1WjVETlpmLTlIcWJjQTduYnVLTExRY09UdU0tM0o4cFBaMzlGcHhGOUh0S3AyWmQxQnlkUkRVcVZtNHkzS0NPbmxZZWxOdFFnQmVCRm10SjFibHk4c3NDREg0cXJTZGV5a1NzSFNFbXpJcU5oT3B1X1RUcHFUdUZkNEwyYmRqVUh2dWdVWXhGM0lkdWppOThlSUU?oc=5",
-   "date": "2026-11-17T19:00:01.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Cavs Young Emerging Star Earns Surprising Eastern Conference POTW Vote",
-   "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQSkNiVDJyNERybDRTM2d6Nl9RM2RadlRncHBKUGhEaVRvOWxuZDE5MGZxcFFhcFlSNUJFSEgyUl9BTnpsYmp3Njl2TENJVmVxUkRLSDhRTGxuek1wY0p2UWRnVk1DMmNQd1lJc0xUSk8wdmlsejlyN1R1SGc0WmhPRXNEbzlXOTdzN25fR2wteXFObU5YY3BNSHY1VjlVSWQ3SmphTFJaUzBCU1lZSDJnZW5VNm15bXJwTDN1a0t3?oc=5",
-   "date": "2026-11-17T18:13:08.000Z"
-  },
-  {
    "src": "Hoops Rumors",
    "title": "And-Ones: Konchar, Vegas, Coleman, Haynes, More",
    "link": "https://www.hoopsrumors.com/2026/11/and-ones-konchar-vegas-coleman-haynes-more.html",
    "date": "2026-11-17T17:50:50.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Norchad Omier makes his minutes count in Cavaliers’ win over Bulls",
-   "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPbEVSRnNFcWJic0NVX2d3Tm9fQ2FZN3dFOE1fNGlZTm5ZdkZDYjg3SGRibmxUV0l4UUpLM2l5eDk4eThzSjBPbDhGaXRkZnl4UC1yNy0zZFpJRDJET2RIb3RFQjl5d0dtN0lSbXAwLWhvVnR4cTFNQXpCUFlJMDh0aVQ3TXRKdXRNQlRHemlBM0dncHQ3UEJXYndSbVIwNFV1UXlocHQ1a3g5aGNUS1dnRy1DdHFtMTQ?oc=5",
-   "date": "2026-11-17T17:00:00.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -290,9 +296,9 @@
   },
   {
    "src": "Cavaliers on SI",
-   "title": "Cavs Young Guard Pair Providing Sensational Spark Amidst Team’s Identity Crisis",
-   "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOLTNFaDNUVUJ2ZmZIemhaUmZhNlVrdWhkSkhJZlNrcDFNejlEbU0wMEdUZ1FWcHVDVXZMV1FIZHJQQUpsM1VlMG52b0h3aExBS2g1N28wSGhiSWNmb1p4WFhNNWxoanZ2LTJCd2ZTVGYtUDhScXJ2ZGt5TGs1Ni1tTFI4bjBobDdtMlVFM1drLXRxQmxXSk1ONl9mSTdnMDQtTFBMR204UXpRekxmSk5UVFM0UzI0b2lwdFppRUlhU0F2Y2V6akZYbFFB?oc=5",
-   "date": "2026-11-16T18:00:03.000Z"
+   "title": "Cavaliers vs. Bulls: A Deep Dive into Another Central Division Matchup",
+   "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQQWlOeEdycVJENzVNY1IzVHVVTC1Fc29QWWtydG9BVHh0RkhQbHREMGI3OUM4Rzg2SGxTTGVMRDBVLUgxTVU4SHBCQVFFY0hFWmpiblkyZGZtM1RJeHBTa2k1c1FvcXZqcHJrTDJBc2I2TzFCU3J3cnhJdGdscnNVdl9MYU90bXBjQWtMUkpLSENPbVZIZVU1S0dGQTRSSDE3TmhJMUpsY2dQNTRidXNWVllBUVQtUlBHY3JB?oc=5",
+   "date": "2026-11-16T19:00:00.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -305,12 +311,6 @@
    "title": "Cavs vs. Bulls: preview, odds, injury report, TV",
    "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQQXVzbzdxd1dDRDFEN0NQR2JNcjBsRzNKeFhGLXlDS0JKNjc0eTJIM0xDY0tYRVNZQWttcFk2TlZjaGRZYVpSamVFbkZJOFNKd21nVlo4LVNzS2FjbFUtWnFIRC1QdnpZQWxjMjRZbnF6VWMwYUpBQVJtejFsZVRFTmwtOUhWcHVjcW9kYjY3YWM?oc=5",
    "date": "2026-11-16T10:00:00.000Z"
-  },
-  {
-   "src": "Cavaliers on SI",
-   "title": "Unexpected Cavaliers Bench Piece Makes Every Chance Count in Saturday Night Win",
-   "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQb2R0YXpJQm5fazRUUEZpTUgwS1dQLXI5VXJGTVVYWmJGanlGZURiZ3gyYmVoc3JjMGtZWHp1R0dOcHFMWWdyQlZOMW95QW5rbnBrQmd3Z0dNUXZSUjZYY3RaOU1XbkJ1RnBaYjJ0UmltMXB3VmNOXzdjMWpPUERPakJfTmQ3Sk9jUEtRUGRLTkVxSmhIUGJMMklqTjZlUHdXZEFDeHVTZkJIbngwT0VJdHY2T25Zc0dEa012LTFIaWpUMmxGVDQ1emVB?oc=5",
-   "date": "2026-11-15T20:00:00.000Z"
   },
   {
    "src": "Hoops Rumors",
