@@ -5270,5 +5270,42 @@ function prevPicker(){let w=document.getElementById('prevpk');if(w){w.remove()}w
  b.onclick=()=>{if(get()>0)history.back();else if(window.go)go('home');else location.href='/'};
  const ps=history.pushState;history.pushState=function(){const r=ps.apply(this,arguments);set(get()+1);upd();return r};addEventListener('popstate',()=>{set(get()-1);upd()});
  const st=document.createElement('style');st.textContent='.app-back{flex:none;width:38px;height:38px;margin-right:-6px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;color:#fff;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent}.app-back[hidden]{display:none}.app-back:active{opacity:.6}';document.head.appendChild(st)})();</script>
+<script>/* Nov 22 (Luka): Charge game share card. /live.html?chargecard=<ESPN game id> draws it with the same banner, terminal window and
+   status bar as the other share cards (data: pdata/charge-cards.json, scripts/charge-cards.mjs) and shows it with Save / Share. */
+(function(){const gid=new URLSearchParams(location.search).get('chargecard');if(!gid||!/^\d+$/.test(gid))return;
+ const ov=document.createElement('div');ov.className='ccard-ov';ov.innerHTML='<div class="ccard-in"><p class="ccard-msg">Making the Charge card…</p></div>';document.body.appendChild(ov);document.documentElement.style.overflow='hidden';
+ const st=document.createElement('style');st.textContent='.ccard-ov{position:fixed;inset:0;z-index:9999;background:var(--bg,#eef0f3);overflow:auto;display:flex;justify-content:center;padding:16px}.ccard-in{width:100%;max-width:560px;margin:auto 0}.ccard-in img{width:100%;height:auto;display:block;box-shadow:0 2px 12px rgba(0,0,0,.12)}.ccard-b{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.ccard-b a,.ccard-b button{flex:1;min-width:120px;text-align:center;padding:11px 14px;font:700 .875rem var(--sans,system-ui);border:1px solid var(--line,#dfe2e6);background:var(--card,#fff);color:var(--fg,#101419);text-decoration:none;cursor:pointer}.ccard-b .p{background:#860038;border-color:#860038;color:#fff}.ccard-msg{font:600 1rem var(--sans,system-ui);color:var(--muted,#6b727c);text-align:center}';document.head.appendChild(st);
+ const fail=t=>{ov.querySelector('.ccard-in').innerHTML='<p class="ccard-msg">'+t+'</p><div class="ccard-b"><a href="/charge">Back to the Charge →</a></div>'};
+ const run=async()=>{let J=null;try{J=await (await fetch('/pdata/charge-cards.json',{cache:'no-cache'})).json()}catch(e){}const d=J&&J[gid];if(!d){fail('No card for that game yet.');return}
+  const dt=new Date(d.date+'T12:00:00'),md=dt.toLocaleDateString('en-US',{month:'short',day:'numeric'}),nick=d.opp.split(' ').slice(-1)[0];
+  await cardFonts();tTheme(true);const s0=S.season;S.season=S.season||'2026-27';let out;
+  try{const A=document.createElement('canvas');A.width=1080;const nP=d.C.length;A.height=1350-(3-Math.min(3,nP))*156-(nP?0:56);const x=A.getContext('2d',{willReadFrequently:true});if(TC.light)autoInk(x);
+   const SC='"Saira Condensed"',line=[['CHARGE ','800 60px '+SC,'#F2B231'],[String(d.cs),'800 60px '+SC,'#fff'],['  '+(d.ha==='H'?'VS':'AT')+'  ','800 34px '+SC,'rgba(255,255,255,.6)'],[nick.toUpperCase()+' ','800 60px '+SC,'#fff'],[String(d.os),'800 60px '+SC,'#fff'],['   '+d.rec,'600 30px Archivo','rgba(255,255,255,.85)']];
+   const c=await bFrame(x,S.data||{},'Cleveland Charge · '+md,'Charge final',line,null);
+   {const W=1080,H=A.height,bh=58,y=H-bh,fs=22;let cx=0;x.font='700 '+fs+'px "Geist Mono"';const seg=(t,bg,fg,flex)=>{const w=flex?W-cx-flex:x.measureText(t).width+44;x.fillStyle=bg;x.fillRect(cx,y,w,bh);x.fillStyle=fg;x.fillText(t,cx+22,y+bh/2+fs*.36);cx+=w};const dd=md.toUpperCase(),dw=x.measureText(dd).width+44;seg('CAVS_DB','#F2B231','#101419');seg('CHARGE · FINAL','#860038','#fff');seg('CAVSDATABASE.COM/CHARGE',TC.sb,TC.soft,dw);seg(dd,TC.sb,TC.soft)}
+   const X=c.X,W=c.W;let Y=c.Y+10;const LS=v=>{if('letterSpacing' in x)x.letterSpacing=v};const lab=(t,y)=>{x.font='800 28px '+SC;LS('3px');x.fillStyle=MK.wine;x.fillText(t,X,y);LS('0px')};
+   const ini=n=>n.split(' ').map(w=>w[0]).slice(0,2).join('');
+   const circ=async(id,tx,cx,cy,r)=>{x.save();x.beginPath();x.arc(cx,cy,r,0,7);x.closePath();x.fillStyle='#eceef1';x.fill();x.clip();const im=id?await loadImg('/img/h/'+id+'.png'):null;if(im){const s=r*2.6;x.drawImage(im,cx-s/2,cy-r*.92,s,s*im.height/im.width)}else{x.fillStyle=MK.mut;x.font='700 '+Math.round(r*.7)+'px "Geist Mono"';const w=x.measureText(tx).width;x.fillText(tx,cx-w/2,cy+r*.25)}x.restore()};
+   if(nP){lab('CAVS PLAYERS',Y+20);Y+=40}
+   for(const l of d.C){const h=142;lPanel(x,X,Y,W,h,MK.wine);await circ(l.hs,ini(l.n),X+70,Y+78,46);
+    x.font='800 40px '+SC;x.fillStyle=MK.ink;x.fillText(l.n.toUpperCase(),X+132,Y+62);x.font='700 18px Archivo';LS('2px');x.fillStyle=MK.wine;x.fillText(l.tag,X+132,Y+92);LS('0px');
+    const ts=l.fga+l.fta?l.pts/(2*(l.fga+l.fta))*100:null;x.font='600 18px "Geist Mono"';x.fillStyle=MK.mut;x.fillText(l.min+' MIN · '+l.fgm+'-'+l.fga+' FG · '+l.tpm+'-'+l.tpa+' 3PT'+(ts==null?'':' · '+(Math.round(ts*10)/10).toFixed(1).replace(/\.0$/,'')+'% TS'),X+132,Y+122);
+    const sx=X+W-470;BR(x,String(l.pts),sx+92,Y+96,'800 84px '+SC,MK.ink);x.font='800 18px '+SC;x.fillStyle=MK.mut;x.fillText('PTS',sx+100,Y+96);
+    [['REB',l.reb],['AST',l.ast],['STL',l.stl],['BLK',l.blk]].forEach(([k,v],i)=>{const bx=sx+150+i*78;x.fillStyle='#f2f3f5';x.fillRect(bx,Y+38,70,72);x.font='800 36px '+SC;x.fillStyle=MK.ink;const w=x.measureText(String(v)).width;x.fillText(String(v),bx+35-w/2,Y+80);x.font='800 15px '+SC;x.fillStyle=MK.mut;const w2=x.measureText(k).width;x.fillText(k,bx+35-w2/2,Y+100)});
+    Y+=h+14}
+   if(nP)Y+=14;lab('CHARGE LEADERS',Y+20);Y+=40;const tw=(W-4*14)/5,th=268;
+   for(let i=0;i<d.lead.length;i++){const z=d.lead[i],tx=X+i*(tw+14);lPanel(x,tx,Y,tw,th,MK.wine);const one=z.who.length===1?z.who[0]:null;await circ(one&&one.hs,one?ini(one.n):'·',tx+tw/2,Y+70,44);
+    x.font='800 22px '+SC;LS('3px');x.fillStyle=MK.wine;let w=x.measureText(z.k).width;x.fillText(z.k,tx+tw/2-w/2,Y+146);LS('0px');
+    x.font='800 70px '+SC;x.fillStyle=MK.ink;w=x.measureText(String(z.v)).width;x.fillText(String(z.v),tx+tw/2-w/2,Y+212);
+    const nm=one?(one.n.split(' ')[0][0]+'. '+one.n.split(' ').slice(1).join(' ')):z.who.length+' tied';BFitF(x,nm,'700 21px Archivo',tw-20);x.fillStyle=MK.ink;w=x.measureText(nm).width;x.fillText(nm,tx+tw/2-w/2,Y+246)}
+   out=pcWrap(A,'charge-final');
+   /* the window tab says Charge, not the season */{const g2=out.getContext('2d'),M=36,HB=Math.round(372*.74),ty=HB+8+18,thh=36,fz=19,tab='cavs_db · charge · final · '+md.toLowerCase();g2.font='600 '+fz+'px "Geist Mono"';g2.fillStyle='#eef0f3';g2.fillRect(M-2,ty-2,Math.max(560,g2.measureText(tab).width+62),thh+1);const tw2=g2.measureText(tab).width+58,r=10,wy=ty+thh;g2.fillStyle='#e2e5e9';g2.beginPath();g2.moveTo(M,wy);g2.lineTo(M,ty+r);g2.quadraticCurveTo(M,ty,M+r,ty);g2.lineTo(M+tw2-r,ty);g2.quadraticCurveTo(M+tw2,ty,M+tw2,ty+r);g2.lineTo(M+tw2,wy);g2.fill();g2.fillStyle='#F2B231';g2.beginPath();g2.arc(M+22,ty+thh/2,6,0,7);g2.fill();g2.fillStyle='#5d646c';g2.fillText(tab,M+40,ty+thh/2+fz*.36)}
+  }catch(e){console.error(e);fail('Couldn’t make the card. Try again.');return}finally{S.season=s0}
+  const blob=await new Promise(r=>out.toBlob(r,'image/png'));const name='cavsdb-charge-'+d.date+'.png',file=new File([blob],name,{type:'image/png'});const url=URL.createObjectURL(blob);
+  const inn=ov.querySelector('.ccard-in');inn.innerHTML='';const img=document.createElement('img');img.src=url;img.alt='Charge final, '+md+': Charge '+d.cs+', '+d.opp+' '+d.os;inn.appendChild(img);const bb=document.createElement('div');bb.className='ccard-b';
+  const sv=document.createElement('a');sv.className='p';sv.href=url;sv.download=name;sv.textContent='Save image';bb.appendChild(sv);
+  if(navigator.canShare&&navigator.canShare({files:[file]})){const sh=document.createElement('button');sh.type='button';sh.textContent='Share';sh.onclick=()=>capShare(file,'Charge final | Cavs Database');bb.appendChild(sh)}
+  const bk=document.createElement('a');bk.href='/charge';bk.textContent='Back to the Charge →';bb.appendChild(bk);inn.appendChild(bb)};
+ const wait=()=>{if(typeof bFrame==='function'&&typeof pcWrap==='function'&&typeof S!=='undefined')run();else setTimeout(wait,200)};if(document.readyState==='complete')wait();else addEventListener('load',wait)})();</script>
 </body>
 </html>
