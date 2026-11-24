@@ -157,12 +157,6 @@
    "date": "2026-11-20T12:00:00.000Z"
   },
   {
-   "src": "cleveland.com",
-   "title": "Why Kenny Atkinson should keep the Cavs’ wing rotation a meritocracy — not a hierarchy",
-   "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQSzJ1Y1dSQXp3eWRxSFhzX2FmS1ZTdFJxZVhHRzFuUW5lYWk1N3pTTUZUblowRkczazRwTGtYZ1FLZmFhR19rQWdpWUNRS01FVFF0REF1el9uUWNNb3A2eDhZVWxSOVVDbV9WOGJRWEtkQkNwM3VIT1hHQWxBbVZwWGFWakowcml4NWdjNWY5SGg0Ti1nbXNxLTVxODY4VTVLTHRXeHJIVmRXOWZwMW1UaV9VbXhrSTdwcE56X25aWF9sSXlsMWc?oc=5",
-   "date": "2026-11-20T10:30:00.000Z"
-  },
-  {
    "src": "Cavaliers on SI",
    "title": "3 Cavs Players That Showed Something Meaningful In Nail-Biting Defeat to Grizzlies",
    "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxNNDh4MGpHRHEzeHhFTld5bzZ6TVh1SlJVdm5CYXZlQ3RIVlNvNEhXWUlUaVBuTWwwclljTjREYkpqazYzVFJ4TkxCRFVGMWFweVVoaHkzSkFONmV4MXg1czhhQ1o0cjVMV0dJSmI0bndlcm94bGJYS3hQTktfX3Y2a2NkUWg5bTlIQl9ESjRzd2h0YW05ZGdtdkNheUxmTjZQX0gxRGdYdENJQnNkNXV6OHZMYm9DX2k3cWs1MllZMVJucmhlM0RpMGNaczlkZw?oc=5",
@@ -343,6 +337,12 @@
    "date": "2026-11-15T10:57:23.000Z"
   },
   {
+   "src": "cleveland.com",
+   "title": "10 years after winning a championship with the Cavs, Kyrie Irving sees his Cleveland journey differently",
+   "link": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxOdVRfUkRyRHVleWJmTDB2SkZmMWcwa2IzSkVlb3Vya1A4dFBkanhPb3hXZ18ySThhczZLaG1ic1dEQWJfd0p0QmxBOERJY0R1dUdISTVINlE4cjV4SmROWnF6aGQ2YTktMVBBbkNWemNjTmF0R01sZFNzMjAtZV80Z2xBZTYtd3pWRFF0aTJEWjA4M3hBNzVBUkZQa3VwOUVnNmVMNWw5YWp4aXZqYjZMckZCLWNxNEh3bnRBdWhIcjJJT2IxS0tpX0t6N0NMT3BMUk1NS3VHSlZoNXRQWFpoWQ?oc=5",
+   "date": "2026-11-15T10:00:00.000Z"
+  },
+  {
    "src": "Cavaliers on SI",
    "title": "Title: All Articles & News Stories | Cleveland Cavaliers On SI - Page 233",
    "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1SRWV1SWl4VmgtdFJNa2s4Y2ZHeHZRRHFKUGNKUzB6b0JpN2tQYjktWXJILXVOcDgyUTlXekRYMTNQSUlGcUJsX3BHWEdVZktkcGE4MWU1RnE0STRtQ3RjUi1IX3dOOU1ReHc?oc=5",
@@ -439,25 +439,25 @@
  ],
  "videos": [
   {
-   "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: The Cleveland Cavaliers Are RAN OFF THE FLOOR vs the Chicago Bulls",
-   "link": "https://www.youtube.com/watch?v=iEGUgmJZ8B8",
-   "date": "2026-11-24T03:51:00.000Z",
-   "id": "iEGUgmJZ8B8"
+   "src": "The Chase Down Podcast",
+   "title": "Chase Down Podcast Live, presented by LECOM: Cavs Drop Tough Loss to Memphis",
+   "link": "https://www.youtube.com/watch?v=DkDpztGyZOk",
+   "date": "2026-11-24T04:41:39.000Z",
+   "id": "DkDpztGyZOk"
   },
   {
    "src": "It's Cavalier Podcast",
    "title": "REACTION: Cavs vs. Bulls",
    "link": "https://www.youtube.com/watch?v=Ntq4fY-EELY",
-   "date": "2026-11-24T03:33:55.000Z",
+   "date": "2026-11-24T04:17:25.000Z",
    "id": "Ntq4fY-EELY"
   },
   {
-   "src": "The Chase Down Podcast",
-   "title": "Chase Down Podcast Live, presented by LECOM: Cavs Drop Tough Loss to Memphis",
-   "link": "https://www.youtube.com/watch?v=DkDpztGyZOk",
-   "date": "2026-11-24T03:24:40.000Z",
-   "id": "DkDpztGyZOk"
+   "src": "Locked On Cavs",
+   "title": "CAVS POSTCAST: The Cleveland Cavaliers Are RAN OFF THE FLOOR vs the Chicago Bulls",
+   "link": "https://www.youtube.com/watch?v=iEGUgmJZ8B8",
+   "date": "2026-11-24T03:51:00.000Z",
+   "id": "iEGUgmJZ8B8"
   },
   {
    "src": "It's Cavalier Podcast",
