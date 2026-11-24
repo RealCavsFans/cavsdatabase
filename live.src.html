@@ -4270,13 +4270,28 @@ function pgCard(D,R,id){const p=D.P[id],b=R.B[id];if(!p||!b)return null;const t=
    w.querySelectorAll('.pgc-bar').forEach(bar=>{const i=bar.querySelector('i'),u=bar.querySelector('u');const Lf=i?parseFloat(i.style.left||'0'):0,Wd=i?parseFloat(i.style.width||'0'):0;const tk=u?parseFloat(u.style.left):null;const pm=bar.classList.contains('pgc-pm');bar.textContent='';bar.classList.add('seg');const n=30;
      for(let j=0;j<n;j++){const c=document.createElement('s');const a=j/n*100,b2=(j+1)/n*100;if(Wd>0&&b2>Lf+.01&&a<Lf+Wd-.01)c.className='on';if(pm&&j===n/2)c.classList.add('ctr');bar.appendChild(c)}if(tk!=null&&!isNaN(tk)){const t2=document.createElement('u');t2.style.left='calc('+tk+'% - 1px)';bar.appendChild(t2)}});
    return w}
+/* Nov 23 (Luka): a finished game's hustle and tracking for the Cavs, from NBA.com (pdata/game-tracking.json, pulled by the evening task the day after) */
+let GTK=null,GTKq=0;
+function gtkGame(){if(!S.ev||S.state==='in'||S.state==='pre')return null;if(!GTK){if(!GTKq){GTKq=1;fetch('/pdata/game-tracking.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(j=>{if(j){GTK=j;renderView()}}).catch(()=>{})}return null}return (GTK.g||{})[String(S.ev)]||null}
+function gtkView(c,D,G){const f1=v=>v==null||!isFinite(v)?'–':(Math.round(v*10)/10).toFixed(1).replace(/\.0$/,''),i0=v=>v==null?'–':String(Math.round(v));
+  const FN={min:x=>x.min,tch:x=>x.to&&x.to[0],top:x=>x.to&&x.to[1],dr:x=>x.dr&&x.dr[0],drp:x=>x.dr&&x.dr[1],pas:x=>x.pa&&x.pa[0],pot:x=>x.pa&&x.pa[1],apc:x=>x.pa&&x.pa[2],dfl:x=>x.hu&&x.hu[1],con:x=>x.hu&&x.hu[0],lb:x=>x.hu&&x.hu[5],box:x=>x.hu&&x.hu[6],scr:x=>x.hu&&x.hu[3],chg:x=>x.hu&&x.hu[2]};
+  let COL=[['min','Min',i0],['tch','Touches',i0],['top','Time of poss',f1],['dr','Drives',i0],['drp','Drive pts',i0],['pas','Passes',i0],['pot','Pot. ast',i0],['apc','Ast pts created',i0],['dfl','Defl',i0],['con','Contests',i0],['lb','Loose balls',i0],['box','Box outs',i0],['scr','Screen ast',i0],['chg','Charges',i0]];
+  const has=v=>v!=null&&isFinite(v)&&v!==0;
+  let rows=Object.entries(G.p||{}).map(([id,x])=>{const r={n:x.n,id};for(const k in FN){try{r[k]=FN[k](x)}catch(e){r[k]=null}}return r}).filter(r=>COL.some(([k])=>k!=='min'&&has(r[k])));
+  const T={min:null,to:G.t&&G.t.to,dr:G.t&&G.t.dr,pa:G.t&&G.t.pa,hu:G.t&&G.t.hu};
+  COL=COL.filter(([k])=>rows.some(r=>r[k]!=null&&isFinite(r[k])));
+  const ft=el('tr','tot');[['CAVS']].concat(COL.map(([k,,fm])=>{let v=null;try{v=k==='min'?null:FN[k](T)}catch(e){}return [k==='min'?'':fm(v)]})).forEach(([v])=>ft.appendChild(el('td',null,v)));
+  c.querySelector('h2')&&(c.querySelector('h2').textContent='Cavaliers hustle and tracking');
+  c.appendChild(dtable('gtk',[{h:'Player',k:'n'}].concat(COL.map(([k,h,fm])=>({h,k,f:r=>fm(r[k])}))),rows,{def:'tch',minW:980,foot:ft}));
+  c.appendChild(el('p','note','Touches = times he had the ball; time of poss = minutes with it. Drives = dribbling from 20+ feet to within 10 feet of the rim; drive pts are his points on them. Pot. ast = passes that led to a shot, made or missed; ast pts created = points from his assists. Contests = shots he had a hand up on; defl = deflections; screen ast = his screen freed a teammate for a made shot. NBA.com hustle stats and player tracking for this game; they come in after the final, so a game shows here the next evening.'))}
 function vPlayers(v,D,R){
   if(S.season)return seasonPlayers(v,D,R);
   if(!S.f.plTeam)S.f.plTeam=D.focus.id;const t=D.teams.find(x=>x.id===S.f.plTeam);
-  const c=el('div','card');head(c,t.loc+' '+t.name,perLabel(S.per)+' · tap a column to sort');const tbn=teamBtns(D,'plTeam');[['box','Box score'],['adv','Advanced'],['nbx','Scoring & Fouls'],['season','vs season']].filter(([k])=>k!=='nbx'||D.nbx).forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',S.f.plView===k);b.onclick=()=>{S.f.plView=k;renderView()};tbn.appendChild(b)});c.appendChild(tbn);
+  const c=el('div','card');head(c,t.loc+' '+t.name,perLabel(S.per)+' · tap a column to sort');const tbn=teamBtns(D,'plTeam');[['box','Box score'],['adv','Advanced'],['nbx','Scoring & Fouls'],['season','vs season'],['gtk','Hustle & tracking']].filter(([k])=>(k!=='nbx'||D.nbx)&&(k!=='gtk'||(t.abbr==='CLE'&&(S.per||'all')==='all'&&gtkGame()))).forEach(([k,l])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',S.f.plView===k);b.onclick=()=>{S.f.plView=k;renderView()};tbn.appendChild(b)});c.appendChild(tbn);
   if(S.f.plView==='nbx'&&D.nbx){nbxView(c,D,R,t);v.appendChild(c);return}
   if(S.f.plView==='season'){seasonView(c,D,R,t);v.appendChild(c);return}
   if(S.f.plView==='adv'){advView(c,D,R,t);v.appendChild(c);return}
+  if(S.f.plView==='gtk'){const G=t.abbr==='CLE'&&gtkGame();if(G){gtkView(c,D,G);v.appendChild(c);return}S.f.plView='box'}
   const useEspn=!S.replay&&S.per==='all'&&S.state!=='pre';
   const TT=R.T[t.id];const rows=[];
   D.roster[t.id].forEach(id=>{const p=D.P[id],b=R.B[id];let r;
