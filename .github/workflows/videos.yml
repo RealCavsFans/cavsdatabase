@@ -152,9 +152,10 @@ jobs:
             if git pull --rebase origin main && git push; then exit 0; fi
             git rebase --abort 2>/dev/null || true
             mkdir -p /tmp/keep && cp -r videos.json box.json rcf.json rcf-videos.json niang.json /tmp/keep/ 2>/dev/null || true; mkdir -p /tmp/keep/pdata && cp pdata/league.json pdata/league-rates.json pdata/niang-games.json pdata/league-shots.json pdata/sos.json pdata/nba-cup.json /tmp/keep/pdata/ 2>/dev/null || true
-            [ -d img ] && cp -r img /tmp/keep/ || true
+            [ -d img ] && mkdir -p /tmp/keepimg && cp -r img /tmp/keepimg/ || true   # Nov 23 (Luka): kept apart, and only new photos are put back below, so a replaced photo on main (Omier's Cavs headshot) is never overwritten by this run's older copy
             git fetch origin main && git reset --hard origin/main
             cp -r /tmp/keep/. . 2>/dev/null || true
+            [ -d /tmp/keepimg/img ] && cp -rn /tmp/keepimg/img/. img/ 2>/dev/null || true
             node scripts/team-stats.mjs || true; node scripts/cle-rates.mjs || true; node scripts/dunks.mjs || true; node scripts/nba-cup.mjs || true; node scripts/charge-espn.mjs || true; node scripts/charge-stats.mjs || true; node scripts/charge-cards.mjs || true
             CHROME_PATH=/usr/bin/google-chrome node scripts/build-pages.mjs --prerender
             add
