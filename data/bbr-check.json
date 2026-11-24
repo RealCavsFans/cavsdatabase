@@ -172,7 +172,16 @@
    "url": "https://www.basketball-reference.com/boxscores/202611200CLE.html",
    "at": "2026-11-22T08:46:03.576Z",
    "players": 23
+  },
+  "0022600292": {
+   "v": 2,
+   "et": "2026-11-23",
+   "opp": "CHI",
+   "status": "match",
+   "url": "https://www.basketball-reference.com/boxscores/202611230CHI.html",
+   "at": "2026-11-24T19:41:08.682Z",
+   "players": 22
   }
  },
- "checked": "2026-11-22T08:46:03.576Z"
+ "checked": "2026-11-24T19:41:08.682Z"
 }
