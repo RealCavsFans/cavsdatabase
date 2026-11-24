@@ -4623,37 +4623,7 @@
   "status": "final",
   "score": "108-122",
   "result": "L",
-  "refs": [
-   [
-    "Crew chief",
-    "Pat O'Connell",
-    "73"
-   ],
-   [
-    "Referee",
-    "Erica Parker",
-    "49"
-   ],
-   [
-    "Umpire",
-    "Alicia Shivers",
-    "60"
-   ]
-  ],
-  "qs": {
-   "cle": [
-    30,
-    20,
-    39,
-    19
-   ],
-   "opp": [
-    27,
-    45,
-    21,
-    29
-   ]
-  },
+  "top": "Donovan Mitchell: 28 pts, 3 reb, 5 ast",
   "out": [
    "Nae'Qwan Tomlin",
    "Evan Mobley"
@@ -4847,7 +4817,38 @@
     "2"
    ]
   ],
-  "top": "Donovan Mitchell: 28 pts, 3 reb, 5 ast"
+  "qs": {
+   "cle": [
+    30,
+    20,
+    39,
+    19
+   ],
+   "opp": [
+    27,
+    45,
+    21,
+    29
+   ]
+  },
+  "refs": [
+   [
+    "Crew chief",
+    "Pat O'Connell",
+    "73"
+   ],
+   [
+    "Referee",
+    "Erica Parker",
+    "49"
+   ],
+   [
+    "Umpire",
+    "Alicia Shivers",
+    "60"
+   ]
+  ],
+  "boxSrc": "NBA"
  },
  "2026-11-25": {
   "url": "https://www.nba.com/game/cle-vs-nyk-0022600057/box-score",
