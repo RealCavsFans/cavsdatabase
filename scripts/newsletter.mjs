@@ -432,10 +432,16 @@ function milestone() {
 /* Nov 15 (Luka): every other issue, a history question from the box scores of a game near this date (data/trivia-hist.json, every era) */
 let triviaH = []; try { triviaH = JSON.parse(await readFile(new URL('data/trivia-hist.json', root), 'utf8')); } catch {}
 const nIss = Object.keys(sent).length;
+/* Nov 24 (Luka): the trivia question never repeats the stat of This day in Cavs history (two rebound items in one issue is too much) */
+const otdX = (() => { const x = prep(D, g, score, b.top || '', b.url || D.box[g[0]] || SITE + '/schedule', { issueDay: today, rcf, news, trivia: null, since, sinceTs, usedOtd: Object.values(sent).map(v => v.otd).filter(Boolean).slice(-60) }); return x.otd || null; })();
+const statCat = t => { t = String(t || '').toLowerCase(); return /rebound/.test(t) ? 'reb' : /assist/.test(t) ? 'ast' : /steal/.test(t) ? 'stl' : /block/.test(t) ? 'blk' : /three|3-point|3s\b|3-pointer/.test(t) ? '3pt' : /\bpoints?\b|scored/.test(t) ? 'pts' : 'other'; };
+const otdCat = otdX ? statCat(otdX[2]) : null;
+const okQ = q => !otdCat || otdCat === 'other' || statCat(q.q) !== otdCat;
+const pickFrom = (L, i0) => { if (!L.length) return null; for (let k = 0; k < L.length; k++) { const q = L[(i0 + k) % L.length]; if (okQ(q)) return q; } return L[i0 % L.length]; };
 const tqH = (() => { if (!triviaH.length || nIss % 2 === 0) return null; const md0 = today.slice(5, 7) + today.slice(8, 10); const dd = m => { const a = new Date('2001-' + m.slice(0, 2) + '-' + m.slice(2) + 'T12:00:00Z'), b = new Date('2001-' + md0.slice(0, 2) + '-' + md0.slice(2) + 'T12:00:00Z'); return Math.abs(a - b) / 864e5; };
-  const near = triviaH.filter(x => dd(x.md) <= 7).sort((a, b) => dd(a.md) - dd(b.md) || a.y - b.y); return near.length ? near[Math.floor(nIss / 2) % near.length] : null; })();
-const tq = tqH || (trivia.length ? trivia[Math.floor(nIss / (triviaH.length ? 2 : 1)) % trivia.length] : null);
-const otdKey = (() => { const x = prep(D, g, score, b.top || '', b.url || D.box[g[0]] || SITE + '/schedule', { issueDay: today, rcf, news, trivia: null, since, sinceTs, usedOtd: Object.values(sent).map(v => v.otd).filter(Boolean).slice(-60) }); return x.otd ? x.otd[0] + '|' + x.otd[1] : null; })();
+  const near = triviaH.filter(x => dd(x.md) <= 7).sort((a, b) => dd(a.md) - dd(b.md) || a.y - b.y); const q = near.length ? pickFrom(near, Math.floor(nIss / 2)) : null; return q && okQ(q) ? q : null; })();
+const tq = tqH || (trivia.length ? pickFrom(trivia, Math.floor(nIss / (triviaH.length ? 2 : 1))) : null);
+const otdKey = otdX ? otdX[0] + '|' + otdX[1] : null;
 // stat of the night: removed Oct 29 (Luka's call)
 const sotn = null;
 let arcRows = null;
