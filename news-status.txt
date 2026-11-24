@@ -1,7 +1,7 @@
-2026-11-23T23:31:57.619Z
+2026-11-24T00:01:49.456Z
 NBA highlights: 7 new (YouTube API)
 Hoops Rumors: 15 from https://www.hoopsrumors.com/cleveland-cavaliers/feed
-Cavaliers on SI: FAILED no working feed found
+Cavaliers on SI: 15 from https://news.google.com/rss/search?q=site%3Asi.com%2Fnba%2Fcavaliers&hl=en-US&gl=US&ceid=US:en
 cleveland.com: 15 from https://news.google.com/rss/search?q=site%3Acleveland.com%2Fcavs&hl=en-US&gl=US&ceid=US:en
 Fear The Sword: 10 from https://www.fearthesword.com/rss/current.xml
 The Athletic: 4 from https://www.nytimes.com/athletic/rss/nba/cavaliers/
