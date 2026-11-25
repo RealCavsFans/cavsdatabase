@@ -1301,7 +1301,7 @@ tr.mark td,tr.mark.cupm td,.sched tr.mark td,.sched tr.mark.cupm td,.rc3-adv .rc
     <div class="ab2-trio">
       <section><h2 class="ab2-k">Say hi</h2><p>Questions, corrections or ideas? Every message is read.</p><a class="abt-mail" id="abt-mail"></a><button type="button" class="abt-btn" onclick="window.cdbFeedback&&window.cdbFeedback()">Send a message</button></section>
       <section><h2 class="ab2-k">Tip jar</h2><p>Saved you a few tabs or settled an argument? A tip covers hosting and the late nights after West Coast games.</p><a class="abt-btn" href="https://www.buymeacoffee.com/cavsdb" target="_blank" rel="noopener">☕ Buy cavs_db a coffee</a></section>
-      <section><h2 class="ab2-k">Privacy</h2><p>No account and no ads. Emails go through Buttondown and alerts through OneSignal, only if you sign up. Visits are counted with Cloudflare Web Analytics, which uses no cookies. Dark mode and other settings stay in your own browser.</p></section>
+      <section><h2 class="ab2-k">Privacy</h2><p>No account and no ads. Emails go through Buttondown and alerts through OneSignal, only if you sign up. Visits are counted with Cloudflare Web Analytics, which uses no cookies. If a page breaks, the error message, page address and browser type are sent so it can be fixed, nothing that identifies you. Dark mode and other settings stay in your own browser.</p></section>
     </div>
   </div>
 </main>
@@ -1380,7 +1380,7 @@ tr.mark td,tr.mark.cupm td,.sched tr.mark td,.sched tr.mark.cupm td,.rc3-adv .rc
     <section id="hx-ret" class="hx-top" aria-label="In the rafters: retired numbers"><div class="hx-ban" id="hx-ban"></div></section>
     <div>
       <div class="dim" style="font-size:0.8125rem"><a href="/" data-go="home">Home</a> / History</div>
-      <h1 style="margin-top:6px">56 seasons of Cavs basketball</h1>
+      <h1 style="margin-top:6px"><span id="hx-szn">57</span> seasons of Cavs basketball</h1>
       <p class="hx-tait"><span class="hx-q">“It’s basketball time at the <b id="hx-arena">Cleveland Arena</b>.”</span><small>Joe Tait opened every Cavs broadcast that way. Voice of the Cavs, 1970–81 and 1983–2011.</small></p>
     </div>
     <div class="tx-stats" id="hx-stats"><div class="skel skel-tile"></div><div class="skel skel-tile"></div><div class="skel skel-tile"></div></div>
@@ -1628,7 +1628,9 @@ onView('about',()=>{{const g=document.getElementById('tools-g');if(g&&g.childEle
   const T=[[I('<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/>'),'Add the schedule to your calendar','Every game with TV and radio, in Apple, Google or Outlook. Changes update on their own.',()=>{go('schedule');setTimeout(()=>{const b=document.getElementById('calbtn');if(b){b.scrollIntoView({block:'center'});b.click()}},350)}],
     [I('<path d="M3 12h4l3-8 4 16 3-8h4"/>'),'Follow a game live','Box score, shot charts, lineups and runs, updating during every Cavs game.',()=>{location.href='/live.html'}],
     [I('<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>'),'Save any card as an image','Tap the camera on a card to save or share it, ready for X or the group chat.',()=>{go('cap');setTimeout(()=>{const b=document.querySelector('#view-cap [title="Save as image"]');if(b){b.scrollIntoView({block:'center'});b.classList.add('pulse');setTimeout(()=>b.classList.remove('pulse'),2400)}},400)}],
-    [I('<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M8 7h8M8 11h6"/>'),'Look up any cap term','145 terms, from apron to Bird rights; underlined words explain themselves.',()=>{go('cap');setTimeout(()=>{const t=document.getElementById('glossary');if(t)t.scrollIntoView({behavior:'smooth'})},400)}],
+    [I('<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M8 7h8M8 11h6"/>'),'Look up any cap term','Every term, from apron to Bird rights; underlined words explain themselves.',()=>{go('cap');setTimeout(()=>{const t=document.getElementById('glossary');if(t)t.scrollIntoView({behavior:'smooth'})},400)}],
+    [I('<path d="M3 5h18M3 12h18M3 19h12"/>'),'Find any game since 1970','Every Cavs game by score, opponent, season or player line: 40-point nights, triple-doubles, wins by 30.',()=>{location.href='/game-finder'}],
+    [I('<path d="M7 4v16M17 4v16M3 12h18"/>'),'Cavs vs every team','The all-time record, every meeting and the playoff series against all 29 teams.',()=>{go('history');setTimeout(()=>{const t=document.getElementById('hx-vs');if(t)t.scrollIntoView({behavior:'smooth',block:'start'})},400)}],
     [I('<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>'),'Search everything','Players, staff, seasons, picks and terms. Press / on a keyboard.',()=>{const q=document.getElementById('q');if(q){scrollTo({top:0,behavior:'smooth'});setTimeout(()=>q.focus(),250)}}]];
   T.forEach(([ic,t,d,f])=>{const b=el('button','tool');b.type='button';b.innerHTML='<span class="tool-i">'+ic+'</span>';const tx=el('span','tool-t');tx.append(el('b',null,t),el('small',null,d));b.appendChild(tx);b.onclick=f;g.appendChild(b)})}}
 });
@@ -7560,5 +7562,6 @@ document.addEventListener('click',e=>{const th=e.target.closest&&e.target.closes
  const start=()=>{const pp=src();if(!pp){setTimeout(start,300);return}build();try{new MutationObserver(m=>{if(m.some(r=>!(r.target.closest&&r.target.closest('section.pl1'))))kick()}).observe(pp,{childList:true,subtree:true,characterData:true})}catch(e){}[1500,4000,9000].forEach(ms=>setTimeout(build,ms))};
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start()})();</script>
 
+<script>/* Nov 25: History's season count follows the calendar (1970-71 through the current season), like About's */try{const d=new Date(),y=d.getMonth()>=6?d.getFullYear():d.getFullYear()-1,e=document.getElementById('hx-szn');if(e)e.textContent=String(y-1970+1)}catch(e){}</script>
 </body>
 </html>
