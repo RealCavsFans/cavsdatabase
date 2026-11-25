@@ -1,0 +1,49 @@
+name: RAPM
+# Nov 25 (Luka): regularized adjusted plus-minus (scripts/rapm.mjs, Sill's 2010 method) from the NBA's own game files on the nba-data
+# branch. Nightly it refits every range of seasons that includes this season (pdata/rapm/<from>_<to>.json); finished ranges are
+# fit once and never change. Past seasons' stints are read once per run (RAPM_CACHE) and shared by the ranges.
+on:
+  schedule:
+    - cron: '41 12 * * *'   # 7:41 a.m. Eastern (8:41 in daylight time), after the morning game store run
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: rapm
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+        with:
+          sparse-checkout: |
+            scripts/rapm.mjs
+            scripts/rapm-all.sh
+            scripts/season.mjs
+            scripts/nba-fixes.mjs
+            pdata/nba-fixes.json
+            pdata/rapm
+            live-core.js
+          sparse-checkout-cone-mode: false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0, pinned
+        with:
+          ref: nba-data
+          path: nba-data
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444  # v5.0.0, pinned
+        with:
+          node-version: 22
+      - run: ONLY_CUR=1 NBA_DIR=nba-data RAPM_CACHE=/tmp/rapm-cache bash scripts/rapm-all.sh
+      - name: Commit if changed
+        run: |
+          git config user.name "cavsdatabase-bot"
+          git config user.email "bot@cavsdatabase.com"
+          git add pdata/rapm
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "RAPM"
+          for i in 1 2 3 4 5 6; do
+            if git pull --rebase -X theirs origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true; sleep $((RANDOM % 20 + i * 10))
+          done
+          exit 1

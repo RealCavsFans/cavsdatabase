@@ -31,7 +31,13 @@ const AB = { GSW: 'GS', NOP: 'NO', NYK: 'NY', SAS: 'SA', UTA: 'UTAH', WAS: 'WSH'
 const NAME = {}, TEAM = {}, PIDX = new Map(), pid = id => { if (!PIDX.has(id)) PIDX.set(id, PIDX.size); return PIDX.get(id); };
 const stints = [];   // { o:[5 idx], d:[5 idx], h:0/1, n, pts, g }
 let games = 0, skipped = 0;
+/* RAPM_CACHE=<dir>: each season's stints are saved there once (a finished season never changes), so fits over several ranges of
+   seasons don't re-read every game. The current season is always read fresh. */
+const CACHE = process.env.RAPM_CACHE || '', CUR = process.env.CUR_SEASON || '';
 for (const SEASON of SEASONS) {
+  const cf = CACHE && SEASON !== CUR ? path.join(CACHE, `stints-${SEASON}.json`) : '';
+  if (cf && fs.existsSync(cf)) { const J = JSON.parse(fs.readFileSync(cf, 'utf8')); Object.assign(NAME, J.NAME); Object.assign(TEAM, J.TEAM); for (const s of J.S) stints.push({ o: s[0].map(x => pid(x)), d: s[1].map(x => pid(x)), h: s[2], n: s[3], pts: s[4], g: games + s[5] }); games += J.games; continue; }
+  const g0 = games, s0 = stints.length;
   const dir = path.join(NBA_DIR, SEASON); if (!fs.existsSync(dir)) { console.log(`rapm: no store for ${SEASON}`); continue; }
   for (const f of fs.readdirSync(dir).filter(f => /^002\d+\.json\.gz$/.test(f)).sort()) {
     const gid = f.slice(0, 10); let raw;
@@ -51,7 +57,9 @@ for (const SEASON of SEASONS) {
     for (const row of M.values()) stints.push(row);
     games++;
   }
+  if (cf) { const nm = {}, tm = {}; const IDL = ids0(); const S2 = stints.slice(s0).map(s => { const o = s.o.map(i => IDL[i]), d = s.d.map(i => IDL[i]); [...o, ...d].forEach(id => { nm[id] = NAME[id]; tm[id] = TEAM[id]; }); return [o, d, s.h, s.n, s.pts, s.g - g0]; }); fs.mkdirSync(CACHE, { recursive: true }); fs.writeFileSync(cf, JSON.stringify({ games: games - g0, NAME: nm, TEAM: tm, S: S2 })); }
 }
+function ids0() { return [...PIDX.keys()]; }
 const P = PIDX.size, K = 2 * P + 1;   // columns: O for each player, D for each player, home
 const ids = [...PIDX.keys()];
 const totN = stints.reduce((a, s) => a + s.n, 0), totPts = stints.reduce((a, s) => a + s.pts, 0);
@@ -87,14 +95,14 @@ const pred = (x, mu, s) => { let v = mu + (s.h ? x[2 * P] : 0); for (const i of 
 /* ---------- lambda by 5-fold cross-validation over games ---------- */
 const FOLDS = 5, foldOf = g => (g * 2654435761 >>> 0) % FOLDS;   // games spread over the folds evenly, the same way every run
 const cvErr = {}; LAMBDAS.forEach(l => cvErr[l] = 0); let cvN = 0;
-for (let k = 0; k < FOLDS; k++) {
+for (let k = 0; k < (LAMBDAS.length > 1 ? FOLDS : 0); k++) {   // one lambda given (LAMBDAS=3000): no cross-validation, just the fit
   const tr = stints.filter(s => foldOf(s.g) !== k), te = stints.filter(s => foldOf(s.g) === k && s.n);
   const N = normal(tr);
   for (const l of LAMBDAS) { const x = solve(N, l); let e = 0; for (const s of te) { const r = 100 * s.pts / s.n - pred(x, N.mu, s); e += s.n * r * r; } cvErr[l] += e; }
   cvN += te.reduce((a, s) => a + s.n, 0);
 }
 const best = LAMBDAS.reduce((a, l) => cvErr[l] < cvErr[a] ? l : a, LAMBDAS[0]);
-console.log('rapm cross-validation (possession-weighted RMSE, pts/100): ' + LAMBDAS.map(l => `${l}: ${Math.sqrt(cvErr[l] / cvN).toFixed(3)}`).join(' · ') + ` -> lambda ${best}`);
+if (LAMBDAS.length > 1) console.log('rapm cross-validation (possession-weighted RMSE, pts/100): ' + LAMBDAS.map(l => `${l}: ${Math.sqrt(cvErr[l] / cvN).toFixed(3)}`).join(' · ') + ` -> lambda ${best}`);
 
 /* ---------- final fit on every game ---------- */
 const N = normal(stints), x = solve(N, best);
@@ -102,10 +110,10 @@ const poss = new Float64Array(P), dposs = new Float64Array(P);
 for (const s of stints) { for (const i of s.o) poss[i] += s.n; for (const i of s.d) dposs[i] += s.n; }
 const r1 = v => Math.round(v * 100) / 100;
 const players = {};
-ids.forEach((id, i) => { players[id] = { n: NAME[id] || id, t: TEAM[id] || '', o: r1(x[i]), d: r1(x[P + i]), rapm: r1(x[i] + x[P + i]), op: Math.round(poss[i]), dp: Math.round(dposs[i]) }; });
-const label = SEASONS.length === 1 ? SEASONS[0] : SEASONS[0] + '-to-' + SEASONS[SEASONS.length - 1];
-const out = { seasons: SEASONS, updated: new Date().toISOString(), method: 'Ridge-regularized adjusted plus-minus (Sill, MIT Sloan 2010): stints of the same ten players, points per 100 possessions weighted by possessions, offense and defense apart, home court in the model, penalty chosen by 5-fold cross-validation over games', lambda: best, cv: Object.fromEntries(LAMBDAS.map(l => [l, r1(Math.sqrt(cvErr[l] / cvN))])), mu: r1(N.mu), home: r1(x[2 * P]), games, stints: stints.length, possessions: totN, players };
-const file = process.env.OUT || `pdata/rapm-${label}.json`;
-fs.writeFileSync(file, JSON.stringify(out));
-const top = Object.values(players).filter(p => p.op + p.dp > 3000).sort((a, b) => b.rapm - a.rapm);
-console.log(`rapm -> ${file}: lambda ${best}, home ${out.home}. Top: ` + top.slice(0, 10).map(p => `${p.n} ${p.rapm > 0 ? '+' : ''}${p.rapm}`).join(', '));
+/* players: { nbaId: [name, last team, O, D, offensive possessions, defensive possessions] } (RAPM = O + D) */
+ids.forEach((id, i) => { players[id] = [NAME[id] || id, TEAM[id] || '', r1(x[i]), r1(x[P + i]), Math.round(poss[i]), Math.round(dposs[i])]; });
+const out = { seasons: SEASONS, updated: new Date().toISOString(), method: 'Ridge-regularized adjusted plus-minus (Sill, MIT Sloan 2010): regular season stints of the same ten players, points per 100 possessions weighted by possessions, offense and defense apart, home court in the model, penalty chosen by 5-fold cross-validation over games' + (LAMBDAS.length > 1 ? '' : ' (here the penalty the cross-validation chooses for multi-season fits, ' + best + ')'), lambda: best, ...(LAMBDAS.length > 1 ? { cv: Object.fromEntries(LAMBDAS.map(l => [l, r1(Math.sqrt(cvErr[l] / cvN))])) } : {}), mu: r1(N.mu), home: r1(x[2 * P]), games, possessions: totN, players };
+const file = process.env.OUT || `pdata/rapm/${SEASONS[0]}_${SEASONS[SEASONS.length - 1]}.json`;
+fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, JSON.stringify(out));
+const top = Object.values(players).filter(p => p[4] + p[5] > 3000).sort((a, b) => (b[2] + b[3]) - (a[2] + a[3]));
+console.log(`rapm -> ${file}: lambda ${best}, home ${out.home}. Top: ` + top.slice(0, 8).map(p => `${p[0]} ${(p[2] + p[3]).toFixed(1)}`).join(', '));

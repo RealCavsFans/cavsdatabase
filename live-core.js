@@ -13,7 +13,7 @@ const csec=c=>{const s=String(c||0);if(s.includes(':')){const[m,x]=s.split(':');
 const gt=(p,c)=>pstart(p)+plen(p)-csec(c);
 const pname=p=>p<=4?'Q'+p:(p===5?'OT':'OT'+(p-4));
 const perAt=t=>t<2880?1+Math.floor(t/720):5+Math.floor((t-2880)/300);
-const fmtMin=s=>{s=Math.round(s);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+/* Nov 25 (Luka): totals past 1,000 minutes (several seasons) show as whole minutes, so the column stays narrow */const fmtMin=s=>{s=Math.round(s);if(s>=60000)return Math.round(s/60).toLocaleString('en-US');return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
 const pct=(m,a,d=1)=>a?(m/a*100).toFixed(d)+'%':'–';   /* Nov 19 audit: every percentage to one decimal */
 const sgn=v=>(v>0?'+':v<0?'−':'')+Math.abs(v);
 const PERS=[['all','Game'],['h1','1st half'],['h2','2nd half'],null,['1','Q1'],['2','Q2'],['3','Q3'],['4','Q4'],['ot','OT'],null,['clutch','Clutch']];
