@@ -677,6 +677,7 @@ tr.xs td:first-child{white-space:nowrap}@media (max-width:600px){tr.xs td:first-
 .gp2-tot{margin-left:auto;font:600 .75rem var(--sans);color:var(--wine-ink,#860038);background:none;border:1px solid var(--line);padding:7px 10px;cursor:pointer}
 .gp2-today{display:flex;align-items:center;gap:8px;width:100%;font:600 .8125rem var(--sans);padding:8px 10px;margin-bottom:10px;border:1px solid var(--gold);background:color-mix(in srgb,var(--gold) 12%,var(--card));color:var(--fg);cursor:pointer;text-align:left}
 .gp2-today b{font:700 .6875rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--wine-ink,#860038)}
+.gp2-mx{margin:10px 0 12px;padding:10px 0 12px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.mx-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.mx-l{display:flex;align-items:center;gap:6px;font:600 .75rem var(--sans);color:var(--muted)}.mx-l select{font:700 .75rem var(--sans);padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--fg)}.mx-go{margin-left:auto}.mx-go:disabled{opacity:.5;cursor:default}.mx-note{font-size:.6875rem;color:var(--muted);margin-top:8px}@media (max-width:640px){.mx-l{flex:1 1 40%}.mx-l select{flex:1}.mx-seg{grid-template-columns:repeat(3,1fr)!important}.mx-seg button{white-space:nowrap;font-size:.6875rem;padding:8px 2px}.mx-go{flex:1 1 100%;margin-left:0}}
 .gp2-h{font:700 .6875rem var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:2px 0 6px}
 .gp2-tm{display:flex;gap:4px;overflow-x:auto;padding-bottom:6px;margin-bottom:8px;scrollbar-width:thin}
 .gp2-tm button{flex:none;width:38px;height:38px;border:1px solid var(--line2);background:var(--card);cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;font:700 .625rem var(--sans);color:var(--fg2)}
@@ -1045,7 +1046,24 @@ const ESPN='https://site.api.espn.com/apis/site/v2/sports/basketball/nba/';
 (function(){const b=()=>document.getElementById('theme');let m='auto';try{m=localStorage.getItem('cdb-theme')||'auto'}catch(e){}
   const ap=()=>{if(m==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.setAttribute('data-theme',m);const x=b();if(x)x.textContent=m==='auto'?'Auto':m==='dark'?'Dark':'Light'};ap();
   addEventListener('DOMContentLoaded',()=>{ap();b().onclick=()=>{m=m==='auto'?'dark':m==='dark'?'light':'auto';try{localStorage.setItem('cdb-theme',m)}catch(e){}ap()}})})();
-/* Nov 20 (Luka): every season with a Cavs game archive, newest first (the NBA's own game files go back to 2020-21) */const ARCHPO={},SLAB=x=>String(x||'').replace('/po','').replace('-','–')+(/\/po$/.test(x||'')?' playoffs':'');const ARCH_SEASONS=['2026-27','2025-26','2024-25','2023-24','2022-23','2021-22','2020-21'];
+/* Nov 20 (Luka): every season with a Cavs game archive, newest first (the NBA's own game files go back to 2020-21) */const ARCHPO={},SLAB=x=>{const m=/^(\d{4}-\d\d)~(\d{4}-\d\d)~([rpb])$/.exec(x||'');if(m)return (m[1]===m[2]?m[1].replace('-','–'):m[1].replace('-','–')+' to '+m[2].replace('-','–'))+(m[3]==='p'?' playoffs':m[3]==='b'?' + playoffs':'');return String(x||'').replace('/po','').replace('-','–')+(/\/po$/.test(x||'')?' playoffs':'')};const ARCH_SEASONS=['2026-27','2025-26','2024-25','2023-24','2022-23','2021-22','2020-21'];
+/* Nov 25 (Luka): several seasons at once, regular season, playoffs or both. S.season = '<from>~<to>~<r|p|b>'. Each part's season
+   file (live-archive/<season>[/po]/season.json, or a period file) is added together in the browser; every game keeps its own folder
+   (g.se) for its game file, and game-indexed rows (shots, assists, rotations, clutch games…) are shifted to the combined game list.
+   Players who share a last name across the seasons get a first initial (E. Mobley, I. Mobley). */
+let ARCHPO_OK=false;const MSE=x=>/~/.test(x||'');const gPath=(se,g)=>'/live-archive/'+(g.se||se)+'/'+g.id+'.json';
+function mxParts(x){const m=/^(\d{4}-\d\d)~(\d{4}-\d\d)~([rpb])$/.exec(x||'');if(!m)return [];const i=ARCH_SEASONS.indexOf(m[1]),j=ARCH_SEASONS.indexOf(m[2]);if(i<0||j<0)return [];const out=[];ARCH_SEASONS.slice(Math.min(i,j),Math.max(i,j)+1).reverse().forEach(se=>{if(m[3]!=='p')out.push(se);if(m[3]!=='r'&&!(ARCHPO_OK&&!(ARCHPO[se]||[]).length))out.push(se+'/po')});return out}
+function mxMerge(x,ok){const add=(a,b)=>{if(b==null)return a;if(a==null)return typeof b==='object'?JSON.parse(JSON.stringify(b)):b;if(typeof b==='number')return typeof a==='number'?a+b:a;if(typeof b!=='object')return a;if(Array.isArray(b)){if(!Array.isArray(a)||b.some(v=>typeof v!=='number'&&!Array.isArray(v)))return a;return b.map((v,i)=>add(a[i],v))}for(const k in b)a[k]=add(a[k],b[k]);return a};
+  const M={season:x,per:ok[0][1].per,updated:'',games:[],P:{},shots:[],oshots:[],asts:[],rot:{},gu:{},dx:{},cg:[],pz:{}};const SP=new Set(Object.keys(M));let off=0;
+  for(const [p,A] of ok){const po=/\/po$/.test(p);(A.games||[]).forEach(g=>M.games.push(Object.assign({},g,{se:p},po?{po:1}:{})));if((A.updated||'')>M.updated)M.updated=A.updated;Object.assign(M.P,A.P||{});
+    (A.shots||[]).forEach(r=>{r=r.slice();r[8]+=off;M.shots.push(r)});(A.oshots||[]).forEach(r=>{r=r.slice();r[7]+=off;M.oshots.push(r)});(A.asts||[]).forEach(r=>{r=r.slice();r[3]+=off;M.asts.push(r)});(A.cg||[]).forEach(r=>{r=r.slice();r[0]+=off;M.cg.push(r)});
+    for(const k of ['rot','gu'])for(const [id,v] of Object.entries(A[k]||{}))(M[k][id]=M[k][id]||[]).push(...v.map(r=>{r=r.slice();r[0]+=off;return r}));
+    for(const [id,v] of Object.entries(A.dx||{})){const d=M.dx[id]=M.dx[id]||{};for(const k in v){if(k==='blk')(d.blk=d.blk||[]).push(...v.blk.map(r=>{r=r.slice();r[3]+=off;return r}));else d[k]=add(d[k],v[k])}}
+    for(const [id,v] of Object.entries(A.pz||{})){const z=M.pz[id]=M.pz[id]||{};for(const [gi,a] of Object.entries(v))z[+gi+off]=a}
+    for(const k of Object.keys(A))if(!SP.has(k)&&k!=='season'&&k!=='per'&&k!=='updated')M[k]=add(M[k],A[k]);
+    off+=(A.games||[]).length}
+  return M}
+const MXC={};function mxLoad(x,file){const k=x+'|'+file;return MXC[k]||(MXC[k]=Promise.all(mxParts(x).map(p=>getJSON('/live-archive/'+p+'/'+file).then(j=>[p,j]).catch(()=>[p,null]))).then(a=>{const ok=a.filter(z=>z[1]);if(!ok.length){delete MXC[k];throw new Error('no season files')}return mxMerge(x,ok)}))}
 const ARCH={},SEASON_TABS=['season','team','players','lineups','shots','ast','ff','share'];
 const POLL=15000;
 const $=id=>document.getElementById(id);
@@ -1093,6 +1111,7 @@ async function choose(v,push){
   clearInterval(S.poll);S.playing=false;clearInterval(S.timer);
   S.season=null;S.src=null;S.data=null;S.bk=null;S.fail=0;S.feed=null;S.cur=Infinity;S.vt=0;S.per='all';
   if(v.startsWith('s')){S.season=v.slice(1);S.replay=false}
+  else if(/^m\d{4}-\d\d~\d{4}-\d\d~[rpb]$/.test(v)){S.season=v.slice(1);S.replay=false}
   else if(/^p\d{4}-\d\d$/.test(v)){/* Nov 22 (Luka): a season's playoff totals (live-archive/<season>/po) */S.season=v.slice(1)+'/po';S.replay=false}
   else if(v.startsWith('b')){S.bk=v.slice(1);S.ev='b';S.replay=false}
   else if(v.startsWith('a')){const[se,id]=v.slice(1).split(':');S.src=se;S.ev=id;S.replay=true;const m=espnToArch(id);if(m&&!(ARCH[se]||[]).some(g=>g.id===id)){S.src=m[0];S.ev=m[1]}}
@@ -2009,7 +2028,7 @@ function defCard(){if(!S.season||(S.per||'all')!=='all'||((S.sf||{}).games||[]).
 /* Nov 21 (Luka): play types (Team tab) and hustle and tracking (Players tab), from NBA.com: Synergy play types, hustle stats and Second Spectrum tracking.
    A nightly scheduled task reads them in a real browser on Luka's computer and saves pdata/tracking.json. Full season only, ranks among the 30 teams. */
 let TRKD=null,TRKq={},TRKA={};
-function trkData(){if(!S.season||(S.per||'all')!=='all'||((S.sf||{}).games||[]).length||(S.sf||{}).tier)return null;
+function trkData(){if(!S.season||MSE(S.season)||(S.per||'all')!=='all'||((S.sf||{}).games||[]).length||(S.sf||{}).tier)return null;
   /* Nov 25 (Luka): past seasons read pdata/tracking-<season>.json (pulled once from NBA.com; a finished season doesn't change) */const se=S.season;TRKD=TRKD&&TRKD.__se===se?TRKD:(TRKA[se]||null);
   if(!TRKD){if(!TRKq[se]){TRKq[se]=true;getJSON(se===CUR_SEASON?'/pdata/tracking.json':'/pdata/tracking-'+se+'.json').then(j=>{TRKA[se]=Object.assign(j||{},{__se:se});if(S.season===se&&(S.tab==='team'||S.tab==='players'))renderView()}).catch(()=>{TRKA[se]={__se:se}})}return null}
   return TRKD.season===S.season&&TRKD.t&&TRKD.t.CLE?TRKD:null}
@@ -2263,8 +2282,8 @@ const posOf=n=>{if(POS_FIX[normName(n||'')])return POS_FIX[normName(n||'')];cons
 const pctPosTg=c=>{if(!POS){posLoad().then(()=>{if(S.season&&S.tab==='players')renderView()})}const w=el('div','pp-row');const tg=el('div','oo2-tg sp-tg pp-pos');[['All NBA',false],['By position',true]].forEach(([l,on])=>{const b=el('button',null,l);b.type='button';b.setAttribute('aria-pressed',!!S.f.pctPos===on);b.onclick=()=>{S.f.pctPos=on;renderView()};tg.appendChild(b)});w.appendChild(tg);
   w.appendChild(el('span','pp-hint',S.f.pctPos?'Graded against his role group: Point, Combo, Wing, Forward or Big, from where he plays his minutes':'Graded against every NBA player with 10+ minutes a game'));c.appendChild(w)};
 const posTag=nm=>{const g=posOf(nm);return g?el('small','pgrp',g):null};
-/* Nov 25 (Luka): past seasons read their own league file (pdata/league-players-<season>.json, scripts/league-past.mjs) */let LGSE=null;const lgSe=()=>S.season&&S.season!==CUR_SEASON&&/^\d{4}-\d\d$/.test(S.season)?S.season:CUR_SEASON;function lgSync(){const se=lgSe();if(LGSE!==se){LGSE=se;LGS=null;LGP=null;lrcSync()}}
-function lgLoad(){lgSync();if(LGP)return LGP;return LGP=getJSON(LGSE===CUR_SEASON?'/pdata/league.json':'/pdata/league-players-'+LGSE+'.json').then(L=>{const T={};const z=()=>({pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,orb:0,drb:0,tov:0,ast:0,stl:0,blk:0,pf:0,paint:0,pot:0,fb:0,ex:0,np:0,forb:0,fdrb:0,ng:0,npg:0});
+/* Nov 25 (Luka): past seasons read their own league file (pdata/league-players-<season>.json, scripts/league-past.mjs) */let LGSE=null;const lgSe=()=>MSE(S.season)?'MX':S.season&&S.season!==CUR_SEASON&&/^\d{4}-\d\d$/.test(S.season)?S.season:CUR_SEASON;function lgSync(){const se=lgSe();if(LGSE!==se){LGSE=se;LGS=null;LGP=null;lrcSync()}}
+function lgLoad(){lgSync();if(LGP)return LGP;if(LGSE==='MX')return LGP=Promise.resolve(null);return LGP=getJSON(LGSE===CUR_SEASON?'/pdata/league.json':'/pdata/league-players-'+LGSE+'.json').then(L=>{const T={};const z=()=>({pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,orb:0,drb:0,tov:0,ast:0,stl:0,blk:0,pf:0,paint:0,pot:0,fb:0,ex:0,np:0,forb:0,fdrb:0,ng:0,npg:0});
   Object.values(L.tg||{}).forEach(g=>{if(g.cupFinal||!g.t||g.t.length!==2)return;const sec=2880+Math.max(0,(g.per||4)-4)*300;g.t.forEach((me,i)=>{const op=g.t[1-i];const x=T[me.ab]=T[me.ab]||{A:z(),O:z(),n:0,sec:0};x.n++;x.sec+=sec;for(const k in x.A){x.A[k]+=me[k]||0;x.O[k]+=op[k]||0}if(me.ast!=null){x.A.ex++;x.O.ex++}x.A.ng++;x.O.ng++;if(me.np!=null)x.A.npg++;if(op.np!=null)x.O.npg++})});
   /* Nov 6: full = every team's games carry possessions and rebounds counted from the NBA play-by-play (same count as ours) */const full=Object.values(T).every(x=>x.A.ng&&x.A.npg===x.A.ng&&x.O.npg===x.O.ng);
   LGS={T,P:L.players||{},games:(L.games||[]).length,full,TG:L.tg||{}};return LGS}).catch(()=>null)}
@@ -3064,7 +3083,7 @@ function brandMark(x,X,Y,sz){const k=sz/100;x.save();x.translate(X,Y);x.scale(k,
   x.strokeStyle=WINE;x.lineWidth=2.5;x.lineCap='butt';x.stroke(new Path2D('M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79'));x.restore()}
 function brandBar(x,W,H,note){/* terminal status bar */const bh=W>1500?64:58,y=H-bh,D=S.data||{},F=D.focus,O=D.other;let cx=0;const fs=W>1500?24:22;x.font=`700 ${fs}px "Geist Mono"`;
   const seg=(t,bg,fg,flex)=>{const w=flex?W-cx-(flex):x.measureText(t).width+44;x.fillStyle=bg;x.fillRect(cx,y,w,bh);x.fillStyle=fg;x.fillText(t,cx+22,y+bh/2+fs*.36);cx+=w};
-  const fin=S.state==='post';const mid=S.season?((D.season||'').replace('-','–')+' SEASON'):(F&&O?((F.ha==='home'?'VS ':'AT ')+O.abbr+(fin?' · FINAL':'')):'');
+  const fin=S.state==='post';const mid=S.season?(SLAB(D.season)+' SEASON'):(F&&O?((F.ha==='home'?'VS ':'AT ')+O.abbr+(fin?' · FINAL':'')):'');
   const dt=S.season?new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase():(D.date?new Date(D.date).toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase():'');
   seg('CAVS_DB',GOLD,'#101419');if(TC.pc&&!S.season){const fin=S.state==='post',R0=S.R,per=R0&&R0.lp?R0.lp.per:1;seg(fin?'FINAL'+(per>4?'/'+pname(per):''):(pname(per)+' '+(R0&&R0.lp?R0.lp.clock:'')),WINE,'#fff')}else if(mid)seg(mid,WINE,'#fff');x.font=`700 ${fs}px "Geist Mono"`;const dw=x.measureText(dt).width+44;if(TC.pc&&!dt){seg(S.season?'CAVSDATABASE.COM/STATS':'CAVSDATABASE.COM/LIVE',TC.sb,TC.soft,1);return}seg(S.season?'CAVSDATABASE.COM/STATS':'CAVSDATABASE.COM/LIVE',TC.sb,TC.soft,dw);seg(dt,TC.sb,TC.soft)}
 function cStat(x,v,l,X0,Y0,sz=96,c=TC.ink){num(x,v,X0,Y0,sz,c);lbl(x,l,X0+4,Y0+44,32)}
@@ -3095,9 +3114,9 @@ const ODES=[
 const wonNames=(D,R)=>{const A=R.T[D.focus.id],B=R.T[D.other.id],fa=factors(A,B),fb=factors(B,A);return FF.filter(([k,,,h])=>fa[k]!=null&&fb[k]!=null&&fa[k]!==fb[k]&&((fa[k]>fb[k])===h)).map(x=>x[1])};
 let BG=TC.bg,INK=TC.ink;const WINE='#860038',GOLD='#F2B231';let GREY=TC.grey,MUT=TC.mut;
 function footer(x){brandBar(x,1080,1350)}
-const scoreLine=(D,R)=>{if(S.season){const g=D.games||[],w=g.filter(x=>x.cle>x.os).length;return [`CLE ${w}–${g.length-w}`,(D.season||'').replace('-','–')+' · '+g.length+' GAMES']}const fin=S.state==='post',per=R.lp?R.lp.per:1;return [`${D.away.abbr} ${R.as}  ${D.home.abbr} ${R.hs}`,fin?'FINAL'+(per>4?'/'+pname(per):''):pname(per)+' '+(R.lp?R.lp.clock:'')]};
+const scoreLine=(D,R)=>{if(S.season){const g=D.games||[],w=g.filter(x=>x.cle>x.os).length;return [`CLE ${w}–${g.length-w}`,SLAB(D.season)+' · '+g.length+' GAMES']}const fin=S.state==='post',per=R.lp?R.lp.per:1;return [`${D.away.abbr} ${R.as}  ${D.home.abbr} ${R.hs}`,fin?'FINAL'+(per>4?'/'+pname(per):''):pname(per)+' '+(R.lp?R.lp.clock:'')]};
 /* Nov 2: one matchup format on every card, Cavs first, with the date */
-const atLbl=D=>TC.pc&&!S.season?gKick(D):S.season?(D.season||'').replace('-','–')+' Cavs':D.focus.abbr+(D.focus.ha==='home'?' vs ':' at ')+D.other.abbr+' · '+gDay(D);
+const atLbl=D=>TC.pc&&!S.season?gKick(D):S.season?SLAB(D.season)+' Cavs':D.focus.abbr+(D.focus.ha==='home'?' vs ':' at ')+D.other.abbr+' · '+gDay(D);
 /* Nov 11 (Luka): bigger, bolder share cards that keep the terminal look. A slim banner says what the card is; the terminal window
    below gives the numbers most of the card, a few at a time, very large. */
 const MK={page:'#eef0f3',ink:'#101419',mut:'#6b727c',line:'#dfe2e6',wine:'#860038',gold:'#F2B231',win:'#ffffff'};
@@ -3130,7 +3149,7 @@ let PAVG=null;async function posAvg(D,id){try{if(!PAVG)PAVG=await getJSON('/pdat
   return {pos,lab:{G:'guards',F:'forwards',C:'centers'}[pos],FG:s('fgm')/s('fga'),'3PT':s('tpm')/s('tpa'),FT:s('ftm')/s('fta'),'TS%':s('pts')/(2*(s('fga')+.44*s('fta'))),'USG%':ud?un/ud:null}}
 const MOCK_STATLINE={label:'Player card',pick:'player',async draw(x,D,R,id){const p=D.P[id],b=R.B[id];if(!p||!b)return;const n=S.season?(b.gp||1):1,pg=v=>S.season?(v/n).toFixed(1):String(v);
     const F=D.focus,O=D.other;const fs=F.ha==='home'?R.hs:R.as,os=F.ha==='home'?R.as:R.hs;
-    const kicker=S.season?(D.season||'').replace('-','–')+' season · '+n+' games':(F.ha==='home'?'vs ':'at ')+O.abbr+(S.state==='post'?' · '+(fs>os?'W ':'L ')+fs+'–'+os:'');
+    const kicker=S.season?SLAB(D.season)+' season · '+n+' games':(F.ha==='home'?'vs ':'at ')+O.abbr+(S.state==='post'?' · '+(fs>os?'W ':'L ')+fs+'–'+os:'');
     const c=await mkFrame(x,kicker,p.name,S.season?'Per game':(F.ha==='home'?'vs ':'at ')+O.abbr+(S.state==='post'?' · '+(fs>os?'W ':'L ')+fs+'–'+os:'')+' · '+Math.round(b.min/60)+' min','',D,id);
     /* his season, to compare a single game against */let sb=null;if(!S.season){const se=await lSeason(D).catch(()=>null);sb=se&&se.B?se.B(id):null}const sg=sb&&sb.gp?sb.gp:0,sav=k=>sg?(k==='reb'?(sb.oreb+sb.dreb)/sg:sb[k]/sg):null;
     const T=(X,Y,W,H,bg)=>{x.fillStyle=bg;x.fillRect(X,Y,W,H)};const fit=(v,max,sz)=>{x.font=`800 ${sz}px "Saira Condensed"`;while(x.measureText(v).width>max&&sz>40){sz-=4;x.font=`800 ${sz}px "Saira Condensed"`}return sz};
@@ -3190,7 +3209,7 @@ const MOCK_STATLINE={label:'Player card',pick:'player',async draw(x,D,R,id){cons
     mkCtx(x,c,ctx)}};
 const MOCK_TOPLU={label:'Best lineups card',async draw(x,D,R){const F=D.focus.id;const minSec=S.season?12*60:4*60;
     const rows=Object.values(R.L[F][5]||{}).filter(l=>l.sec>=minSec).map(l=>{const po=poss(l.o),pd=poss(l.d);return {l,net:po>=1&&pd>=1?l.pf/po*100-l.pa/pd*100:null,o:po>=1?l.pf/po*100:null,d:pd>=1?l.pa/pd*100:null}}).filter(r=>r.net!=null).sort((a,b)=>b.net-a.net).slice(0,5);
-    const c=await mkFrame(x,S.season?(D.season||'').replace('-','–')+' season · min. 12 minutes':'This game · min. 4 minutes','Best 5-man lineups','Net rating per 100 possessions','--lineups --top '+rows.length,D,null);
+    const c=await mkFrame(x,S.season?SLAB(D.season)+' season · min. 12 minutes':'This game · min. 4 minutes','Best 5-man lineups','Net rating per 100 possessions','--lineups --top '+rows.length,D,null);
     if(!rows.length){mkLbl(x,'No group has played enough minutes yet',c.X,c.Y+80,40);return}
     const rh=Math.min(186,(c.H-60)/rows.length);const all=[...new Set(rows.flatMap(r=>r.l.ids))];const IM={};await Promise.all(all.map(async i=>IM[i]=await loadImg(hsUrl(D,i))));
     const allU=Object.values(R.L[F][5]||{}),tot=allU.reduce((s,l)=>{s.pf+=l.pf;s.pa+=l.pa;for(const k in l.o)s.o[k]=(s.o[k]||0)+l.o[k];for(const k in l.d)s.d[k]=(s.d[k]||0)+l.d[k];return s},{pf:0,pa:0,o:{},d:{}}),tN=poss(tot.o)>=1&&poss(tot.d)>=1?tot.pf/poss(tot.o)*100-tot.pa/poss(tot.d)*100:null;
@@ -3328,7 +3347,7 @@ const CARDS={
     const TX=60+156+4*128+56,TW=W-TX-60;const starters=NN===5&&!S.season&&ids.every(i=>D.P[i].starter);
     const all=Object.values(L5).filter(z=>z.sec>=180).sort((a,b)=>(b.pf-b.pa)-(a.pf-a.pa));const best=all[0]===l&&all.length>1;
     const what=starters?'STARTING FIVE':NN===5?(best?'BEST FIVE':'FIVE-MAN UNIT'):(best?'BEST '+NW+'-MAN GROUP':NW+'-MAN GROUP');
-    const dd=new Date(D.date);const when=S.season?D.focus.abbr+' · '+(S.season||'').replace('-','–')+' SEASON':(D.focus.ha==='home'?D.focus.abbr+' VS '+D.other.abbr:D.focus.abbr+' AT '+D.other.abbr)+' · '+dd.toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase();
+    const dd=new Date(D.date);const when=S.season?D.focus.abbr+' · '+SLAB(S.season)+' SEASON':(D.focus.ha==='home'?D.focus.abbr+' VS '+D.other.abbr:D.focus.abbr+' AT '+D.other.abbr)+' · '+dd.toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase();
     x.fillStyle=GOLD;x.font='800 34px "Saira Condensed"';x.fillText(kick().toUpperCase()+what+' · '+when,TX,108);
     const nm=ids.map(i=>D.P[i].last.toUpperCase()).join(', ');let fs=96;x.fillStyle='#fff';x.font=`800 ${fs}px "Saira Condensed"`;while(x.measureText(nm).width>TW&&fs>48){fs-=4;x.font=`800 ${fs}px "Saira Condensed"`}x.fillText(nm,TX,108+fs*.95+6);
     {let X=TX;const Y=290;const seg=(t,f,c)=>{x.font=f;x.fillStyle=c;x.fillText(t,X,/^\s*[–-]\s*$/.test(t)?midY(Y,104,f):Y);X+=x.measureText(t).width};const o=S.season?'OPP':D.other.abbr;
@@ -3485,7 +3504,7 @@ const CARDS={
 };
 /* season share cards (season mode): the season so far, one player's season, and the per-game leaders */
 const sGames=D=>D.games||[];const sRec=D=>{const g=sGames(D);const w=g.filter(x=>x.cle>x.os).length;return [w,g.length-w]};
-const sSea=D=>(D.season||'').replace('-','–');const pg=(v,n)=>n?(v/n).toFixed(1):'–';const pc1=(m,a)=>a?(m/a*100).toFixed(1).replace(/\.0$/,'')+'%':'–';
+const sSea=D=>SLAB(D.season);const pg=(v,n)=>n?(v/n).toFixed(1):'–';const pc1=(m,a)=>a?(m/a*100).toFixed(1).replace(/\.0$/,'')+'%':'–';
 function sHead(x,D,title,sub,maxW=936){tBg(x,1080,1350);x.strokeStyle=TC.cline;x.setLineDash([6,6]);x.lineWidth=2;x.beginPath();x.moveTo(72,300);x.lineTo(1008,300);x.stroke();x.setLineDash([]);
   const n=sGames(D).length,[w,l]=sRec(D);x.fillStyle=GOLD;x.font='800 40px "Saira Condensed"';x.fillText((kick()+sSea(D)+' CAVS · '+n+' GAME'+(n===1?'':'S')+' · '+w+'–'+l).toUpperCase(),72,100);
   x.fillStyle='#fff';let fs=120;x.font=`800 ${fs}px "Saira Condensed"`;while(x.measureText(title).width>maxW&&fs>56){fs-=6;x.font=`800 ${fs}px "Saira Condensed"`}x.fillText(title,72,220);
@@ -3562,7 +3581,7 @@ function lGauge(x,X,Y,W,v,ref,refLab){const lo=-30,hi=30,P=z=>X+(Math.max(lo,Mat
   x.font='600 22px Archivo';x.fillStyle='rgba(255,255,255,.85)';x.fillText('−30',X,Y-14);const t='+30';x.fillText(t,X+W-x.measureText(t).width,Y-14)}
 const LX1=40,LSW=682,LMW=420,LXM=LX1+LSW+28,LX2=LXM+LMW+28,LY0=390,LBH=850;
 const gKick=D=>{let n='';try{n=recordThrough(D,S.R).res.length}catch(e){}return (n?'Game '+n+' · ':'')+gDay(D)};
-const lKick=D=>TC.pc&&!S.season?gKick(D).toUpperCase():S.season?D.focus.abbr+' · '+(S.season||'').replace('-','–')+' SEASON':(D.focus.ha==='home'?D.focus.abbr+' VS '+D.other.abbr:D.focus.abbr+' AT '+D.other.abbr)+' · '+new Date(D.date).toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase();
+const lKick=D=>TC.pc&&!S.season?gKick(D).toUpperCase():S.season?D.focus.abbr+' · '+SLAB(S.season)+' SEASON':(D.focus.ha==='home'?D.focus.abbr+' VS '+D.other.abbr:D.focus.abbr+' AT '+D.other.abbr)+' · '+new Date(D.date).toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase();
 const lScore=D=>{const R=S.R;if(S.season){const [sl,wh]=scoreLine(D,R);return [[sl+'  ','800 60px "Saira Condensed"','#fff'],[wh,'600 30px Archivo','rgba(255,255,255,.62)']]}const F=D.focus,fs=F.ha==='home'?R.hs:R.as,os=F.ha==='home'?R.as:R.hs;
   return [[F.abbr+' ','800 44px "Saira Condensed"','#fff'],[String(fs),'800 104px "Saira Condensed"','#fff'],[' – ','800 60px "Saira Condensed"','#fff'],[String(os),'800 104px "Saira Condensed"','rgba(255,255,255,.62)'],[' '+D.other.abbr,'800 44px "Saira Condensed"','#fff']]};
 const lSum=(L5,f)=>{const o={sec:0,pf:0,pa:0,o:{},d:{}};L5.filter(f).forEach(l=>{o.sec+=l.sec;o.pf+=l.pf;o.pa+=l.pa;['o','d'].forEach(s=>{for(const k in l[s])o[s][k]=(o[s][k]||0)+l[s][k]})});return o};
@@ -3572,7 +3591,7 @@ let LGF=null;async function lgFF(){if(LGF)return LGF;try{const L=await getJSON('
 /* team logo at the left of the header */
 async function lLogoHead(x,t){const im=await loadImg('/img/tl/'+String(t.abbr||'').toLowerCase()+'.png');if(!im)return 60;if(TC.pc){x.drawImage(im,70,70,240,240);return 380}x.drawImage(im,190-110,172-110,220,220);return 380}
 /* the season so far from the archive (this game included): team and opponent totals, every shot, each player's totals */
-let LSE={};async function lSeason(D){const se=D.season||S.src||CUR_SEASON;const key=se+'|'+(S.per||'all');if(LSE[key])return LSE[key];const DD=D.season?D:Object.assign({},D,{season:se,games:ARCH[se]||[]});
+let LSE={};async function lSeason(D){const se=D.season||S.src||CUR_SEASON;if(MSE(se))return null;const key=se+'|'+(S.per||'all');if(LSE[key])return LSE[key];const DD=D.season?D:Object.assign({},D,{season:se,games:ARCH[se]||[]});
   const r=await seasonShots(DD).catch(()=>null);if(!r||!r.runs||!r.runs.length)return null;const F={},O={};const add=(o,t)=>{if(!t)return;for(const k in t)if(typeof t[k]==='number')o[k]=(o[k]||0)+t[k]};
   r.runs.forEach(g=>{if(!g.T)return;add(F,g.T['5']);add(O,g.T[g.oid])});const B=id=>{const o={gp:0};r.runs.forEach(g=>{const b=g.B&&g.B[id];if(!b||!(b.min>0))return;o.gp++;for(const k in b)if(typeof b[k]==='number')o[k]=(o[k]||0)+b[k]});return o.gp?o:null};
   return LSE[key]={F,O,shots:r.shots,B,G:r.runs.length}}
@@ -3791,7 +3810,7 @@ const BFit=(x,s,max,sz,w=800,fam='"Saira Condensed"')=>{x.font=`${w} ${sz}px ${f
 const BTxt=(x,s,X,Y,sz,c,max)=>{if(max)BFit(x,s,max,sz);else x.font=`800 ${sz}px "Saira Condensed"`;x.fillStyle=c;x.fillText(String(s),X,Y);return x.measureText(String(s)).width};
 const BTicks=(x,X,Y,W,f,col,n=12,h=24)=>{const g=(W-(n-1)*4)/n,on=f==null?0:Math.round(Math.max(0,Math.min(1,f))*n);for(let t=0;t<n;t++){x.fillStyle=t<on?col:'#e3e6ea';x.fillRect(X+t*(g+4),Y,g,h)}};
 const BSg=v=>v==null||!isFinite(v)?'–':(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1);
-const BKick=D=>(S.season?(D.season||'').replace('-','–')+' season':((D.focus.ha==='home'?'vs ':'at ')+D.other.abbr+(D.date?' · '+new Date(D.date).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'')));
+const BKick=D=>(S.season?SLAB(D.season)+' season':((D.focus.ha==='home'?'vs ':'at ')+D.other.abbr+(D.date?' · '+new Date(D.date).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'')));
 async function BHead(x,D,id,cx,cy,r){head2(x,await loadImg(hsUrl(D,id)),cx,cy,r,null,initials(D.P[id].name))}
 const BTag=(x,t,cx,y,sz=24)=>{x.font=`800 ${sz}px "Saira Condensed"`;const w=x.measureText(t).width+16;x.fillStyle=MK.wine;x.fillRect(cx-w/2,y,w,sz+8);x.fillStyle='#fff';x.fillText(t,cx-w/2+8,y+sz+1)};
 
@@ -4199,7 +4218,7 @@ function plAvg(D,id,b){const L=plSeason();if(!L)return null;const d=new Date(D.d
 /* league player rates for the player card: AST%, TOV%, REB%, STL%+BLK% from pdata/league.json season totals (team totals from every team game line) */
 /* Nov 16 (Luka): every NBA player's rates counted on the floor from the NBA play-by-play (scripts/league-rates.mjs), the same
    way the Cavs' are, so league percentiles compare like with like; the box score estimates are only a fallback */
-let LRC=null,LRZ=null,LRSE=null;function lrcSync(){const se=lgSe();if(LRSE===se)return;LRSE=se;LRC=null;LRZ=null;lrcLoad(se)}
+let LRC=null,LRZ=null,LRSE=null;function lrcSync(){const se=lgSe();if(LRSE===se)return;LRSE=se;LRC=null;LRZ=null;if(se!=='MX')lrcLoad(se)}
 function lrcLoad(se){getJSON(se===CUR_SEASON?'/pdata/league-rates.json':'/pdata/league-rates-'+se+'.json').then(J=>{if(LRSE!==se||!J||!J.p||!J.cols||J.season!==se)return;const o={};Object.values(J.p).forEach(a=>{const r={};J.cols.forEach((k,i)=>r[k]=a[2+i]);o[normName(a[0])]=r});LRC=o;LRT=null;/* Nov 16 (Luka): every player's zone makes and attempts from our own count of the NBA play-by-play, for the zone rank card */if(J.z){const zp={};let mg=1;const gi=J.cols.indexOf('g');Object.entries(J.z).forEach(([id,v])=>{const a=J.p[id];if(!a)return;zp[normName(a[0])]=[0,1,2,3,4].map(i=>[v[2*i],v[2*i+1]]);mg=Math.max(mg,a[2+gi]||0)});LRZ={p:zp,games:mg}}if(S.season&&S.tab==='players'||(S.f&&S.f.pgc))renderView()}).catch(()=>{})}
 setTimeout(()=>{try{lrcSync()}catch(e){}},0);
 function lrCounted(n){const r=LRC&&LRC[normName(n)];if(!r||!(r.sec>0))return {};const q=(a,b)=>b>0?100*a/b:null;const o={ast:q(r.ast,r.tFGM-r.fgm),stl:q(r.stl,r.pd),blk:q(r.blk,r.o2A),orb:q(r.oreb,r.tORB+r.oDRB),drb:q(r.dreb,r.tDRB+r.oORB),trb:q(r.oreb+r.dreb,r.tORB+r.tDRB+r.oORB+r.oDRB),usg:q(r.fga+.44*r.fta+r.to,r.tFGA+.44*r.tFTA+r.tTO)};Object.keys(o).forEach(k=>{if(o[k]==null)delete o[k]});return o}
@@ -4376,10 +4395,10 @@ function luSpread(D,t,l){const w=el('div','lsp');const o=l.o,d=l.d;if(o.fgm==nul
 const LUDC={};
 /* every archived game's shots for the season, each tagged with the ten on the floor (cached with luDeep) */
 /* each player's points by quarter in one game */const ptsByQ=pl=>{const o={};(pl||[]).forEach(p=>{if(p.sc&&p.val>0&&p.ids&&p.ids[0]){const q=o[p.ids[0]]||(o[p.ids[0]]={});q[p.per]=(q[p.per]||0)+p.val}});return o};
-async function seasonShots(D){const se=D.season,per=S.per||'all';const runs=await Promise.all((D.games||[]).map(async g=>{const k=g.id+'|'+JSON.stringify(per);if(LUDC[k])return LUDC[k];const s=await(ARCHF[g.id]||(ARCHF[g.id]=getJSON('/live-archive/'+se+'/'+g.id+'.json'))).catch(()=>null);if(!s)return null;const Dg=prep(s);if(Dg.focus.id!=='5')return null;const Rg=deriveCore(Dg,Dg.plays,per);return LUDC[k]={oid:Dg.other.id,shots:Rg.shots,PL:Rg.PL||[],T:Rg.T,B:Rg.B,PQ:ptsByQ(Rg.plays)}}));const ok=runs.filter(Boolean);return {shots:ok.flatMap(r=>r.shots),PL:ok.flatMap(r=>r.PL),runs:ok}}
-async function luDeep(D,l,box){const se=D.season,per=S.per||'all',key=l.ids.slice().sort().join(','),gs=D.games||[];
+async function seasonShots(D){const se=D.season,per=S.per||'all';const runs=await Promise.all((D.games||[]).map(async g=>{const k=g.id+'|'+JSON.stringify(per);if(LUDC[k])return LUDC[k];const s=await(ARCHF[g.id]||(ARCHF[g.id]=getJSON(gPath(se,g)))).catch(()=>null);if(!s)return null;const Dg=prep(s);if(Dg.focus.id!=='5')return null;const Rg=deriveCore(Dg,Dg.plays,per);return LUDC[k]={oid:Dg.other.id,shots:Rg.shots,PL:Rg.PL||[],T:Rg.T,B:Rg.B,PQ:ptsByQ(Rg.plays)}}));const ok=runs.filter(Boolean);return {shots:ok.flatMap(r=>r.shots),PL:ok.flatMap(r=>r.PL),runs:ok}}
+async function luDeep(D,l,box){const se=D.season,per=S.per||'all',key=l.ids.slice().sort().join(','),gs=(D.games||[]).filter(g=>!g.pl||l.ids.every(i=>g.pl.includes(i)))/* Nov 25: only the games all five played */;
   box.appendChild(el('p','note','Loading this group’s shots and possessions…'));
-  const runs=await Promise.all(gs.map(async g=>{const k=g.id+'|'+JSON.stringify(per);if(LUDC[k])return LUDC[k];const s=await(ARCHF[g.id]||(ARCHF[g.id]=getJSON('/live-archive/'+se+'/'+g.id+'.json'))).catch(()=>null);if(!s)return null;const Dg=prep(s);if(Dg.focus.id!=='5')return null;const Rg=deriveCore(Dg,Dg.plays,per);return LUDC[k]={oid:Dg.other.id,shots:Rg.shots,PL:Rg.PL||[],T:Rg.T,B:Rg.B,PQ:ptsByQ(Rg.plays)}}));
+  const runs=await Promise.all(gs.map(async g=>{const k=g.id+'|'+JSON.stringify(per);if(LUDC[k])return LUDC[k];const s=await(ARCHF[g.id]||(ARCHF[g.id]=getJSON(gPath(se,g)))).catch(()=>null);if(!s)return null;const Dg=prep(s);if(Dg.focus.id!=='5')return null;const Rg=deriveCore(Dg,Dg.plays,per);return LUDC[k]={oid:Dg.other.id,shots:Rg.shots,PL:Rg.PL||[],T:Rg.T,B:Rg.B,PQ:ptsByQ(Rg.plays)}}));
   box.textContent='';const ok=runs.filter(Boolean);if(!ok.some(r=>r.shots.some(q=>q.on))){box.appendChild(el('p','note','Shot and possession detail fills in after the archive rebuilds.'));return}
   const own=[],alw=[],tOwn=[],tAlw=[],po=[],pd=[];ok.forEach(r=>{r.shots.forEach(q=>{if(q.t==='5'){tOwn.push(q);if(q.on===key)own.push(q)}else{tAlw.push(q);if(q.od===key)alw.push(q)}});r.PL.forEach(q=>{if(q.team==='5'){if(q.on===key)po.push(q)}else if(q.od===key)pd.push(q)})});
   const Zs=sh=>{const Z=ZN.map(()=>[0,0]);sh.forEach(q=>{Z[q.zi][1]++;if(q.m)Z[q.zi][0]++});return withCorners(Z,sh)};
@@ -4515,7 +4534,7 @@ function lshLine(ab,key,zoneOnly){const se=S.src||CUR_SEASON;if(S.season)return 
   Object.entries(LSH.g||{}).forEach(([id,g])=>{const v=g.t&&g.t[ab];if(!v||id===String(S.ev))return;const nP=(v.length-2-ZN.length*2)/4,Z0=2+nP*4;/* Nov 3: shot types per game from the array's length (a 9th type, floaters, was added) */if(key.pt!=null&&key.pt>=nP)return;n++;
     if(key.pt!=null){const k=2+key.pt*4;m+=v[k];a+=v[k+1];pts+=v[k+2];as+=v[k+3];tot+=v[0]}else{const k=Z0+key.zi*2;m+=v[k];a+=v[k+1];pts+=v[k]*(key.zi>=3?3:2);tot+=v[1]}});
   if(!n)return null;return {lab:ab+' season ('+n+'g)',n,m:m/n,a:a/n,fr:tot?a/tot:null,fg:a?m/a:null,pps:a?pts/a:null,as:m?as/m:null}}
-function shCmp(D,t){const se=S.season||S.src||CUR_SEASON;const key=se;
+function shCmp(D,t){const se=S.season||S.src||CUR_SEASON;if(MSE(se))return null;const key=se;
   if(!SHC[key]){SHC[key]={loading:true};(async()=>{try{const J=await getJSON('/live-archive/'+se+'/season.json');const prev=se===ARCH_SEASONS[0]?ARCH_SEASONS[1]:null;const useCur=true/* Nov 4: this season's ratings from game one (was last season's until 15 games) */;
       const NR=await netRanks(useCur?se:prev);SHC[key]={J,NR,rkLab:useCur?(SLAB(se)+' net rating'):('last season’s net rating, until 15 games in')}}catch(e){SHC[key]={err:true}}renderView()})()}
   const c=SHC[key];if(c.loading||c.err)return c;
@@ -4671,14 +4690,14 @@ function lineupTypeCard(D,R){const L5=Object.values(((R.L||{})['5']||{})[5]||{})
     c.appendChild(car);c.appendChild(dots)}else c.appendChild(box);
   howTo(c,'Five-man units grouped by who is on the floor. Starting five = the five with the most starts: '+st.map(i=>P[i].last).join(', ')+'. Minutes are total minutes together.');return c}
 /* Nov 13 (Luka): season Season tab: starts vs closes and run differential, built from each archived game's play-by-play */
-const GDER={};async function seasonGames(D){const se=D.season;const G=(D.games||[]);const out=[];for(const g of G){const key=se+'|'+g.id+'|'+(S.per||'all');if(!GDER[key]){const f=await(ARCHF[g.id]||(ARCHF[g.id]=getJSON('/live-archive/'+se+'/'+g.id+'.json')));const DD=prep(f);GDER[key]={D:DD,R:deriveCore(DD,DD.plays,'all')}}out.push(GDER[key])}return out}
+const GDER={};async function seasonGames(D){const se=D.season;if(MSE(se))return [];const G=(D.games||[]);const out=[];for(const g of G){const key=se+'|'+g.id+'|'+(S.per||'all');if(!GDER[key]){const f=await(ARCHF[g.id]||(ARCHF[g.id]=getJSON(gPath(se,g))));const DD=prep(f);GDER[key]={D:DD,R:deriveCore(DD,DD.plays,'all')}}out.push(GDER[key])}return out}
 function scAt(X,t){const fh=X.D.focus.ha==='home';let s=null;for(const p of X.R.plays){if(p.t>t)break;s=p}if(!s)return [0,0];return fh?[s.hs,s.as]:[s.as,s.hs]}
-async function startsClosesCard(c,D){const xs=await seasonGames(D);if(!xs.length){c.appendChild(el('p','empty','No games yet.'));return}const n=xs.length;
+async function startsClosesCard(c,D){const xs=await seasonGames(D);if(!xs.length){c.appendChild(el('p','empty',MSE(D.season)?'Pick a single season for this one.':'No games yet.'));return}const n=xs.length;
   const rows=[1,2,3,4].map(q=>{const t0=pstart(q);const w=(a,b)=>{let f=0,o=0;xs.forEach(X=>{const s1=scAt(X,a),s2=scAt(X,b);f+=s2[0]-s1[0];o+=s2[1]-s1[1]});return [f/n,o/n]};return {q,st:w(t0,t0+180),cl:w(t0+540,t0+720)}});
   const t=el('table','zt');t.innerHTML='<tr><th></th><th>First 3 min</th><th>+/-</th><th>Last 3 min</th><th>+/-</th></tr>';const f1=x=>x.toFixed(1),dd=x=>(x>0.05?'+':x<-0.05?'−':'')+Math.abs(x).toFixed(1);
   rows.forEach(r=>{const a=r.st[0]-r.st[1],b=r.cl[0]-r.cl[1];const tr=el('tr');tr.append(el('td',null,'Q'+r.q),el('td',null,f1(r.st[0])+'–'+f1(r.st[1])),el('td',pmCls(a),dd(a)),el('td',null,f1(r.cl[0])+'–'+f1(r.cl[1])),el('td',pmCls(b),dd(b)));t.appendChild(tr)});
   const w=el('div','tw');w.appendChild(t);c.appendChild(w);c.appendChild(el('p','note','Points per game, Cavs–opponents, in the first and last 3 minutes of each quarter. '+n+' game'+(n===1?'':'s')+'.'))}
-async function runDiffCard(c,D){const xs=await seasonGames(D);if(!xs.length){c.appendChild(el('p','empty','No games yet.'));return}let us=0,them=0;const byQ=[0,0,0,0,0],byQo=[0,0,0,0,0],big=[];
+async function runDiffCard(c,D){const xs=await seasonGames(D);if(!xs.length){c.appendChild(el('p','empty',MSE(D.season)?'Pick a single season for this one.':'No games yet.'));return}let us=0,them=0;const byQ=[0,0,0,0,0],byQo=[0,0,0,0,0],big=[];
   xs.forEach(X=>{(X.R.runs||[]).forEach(r=>{if(r.pts<10)return;const q=Math.min(4,(r.start&&r.start.per)||1);if(r.t==='5'){us++;byQ[q]++}else{them++;byQo[q]++}big.push({r,X})})});
   /* Nov 13 (Luka): sized like the cards around it: one strip of numbers, quarters across, biggest runs both ways */
   const sg=v=>(v>0?'+':v<0?'−':'')+Math.abs(v);const d=us-them;
@@ -4823,7 +4842,7 @@ function vSeason(v,D,R){
 
   seasonExtras(v,D,R);
 }
-const QFC={};function qFiles(se){return QFC[se]||(QFC[se]=Promise.all(['q1','q2','q3','q4','clutch'].map(k=>getJSON('/live-archive/'+se+'/season-p-'+k+'.json').then(j=>[k,j]).catch(()=>[k,null]))).then(a=>{QFC[se+'|r']=Object.fromEntries(a)}))}
+const QFC={};function qFiles(se){return QFC[se]||(QFC[se]=Promise.all(['q1','q2','q3','q4','clutch'].map(k=>(MSE(se)?mxLoad(se,'season-p-'+k+'.json'):getJSON('/live-archive/'+se+'/season-p-'+k+'.json')).then(j=>[k,j]).catch(()=>[k,null]))).then(a=>{QFC[se+'|r']=Object.fromEntries(a)}))}
 function qFilt(J,ids){const F=QFC[J.season+'|r'];if(!F)return null;const set=new Set(ids),tq={};
   for(const k of ['q1','q2','q3','q4','clutch']){const f=F[k];if(!f)return null;const o={pf:0,pa:0,po:0,pd:0,sec:0};(f.games||[]).forEach(g=>{if(!set.has(g.id))return;o.pf+=g.pp?g.pp[0]:0;o.pa+=g.pp?g.pp[1]:0;o.po+=g.t?g.t[12]||0:0;o.pd+=g.u?g.u[12]||0:0;o.sec+=g.ps||0});tq[k]=o}
   const cg=(F.clutch.games||[]).map(g=>g.ps>0&&set.has(g.id)?[J.games.findIndex(x=>x.id===g.id),g.pp[0],g.pp[1]]:null).filter(x=>x&&x[0]>=0);return {tq,cg}}
@@ -4911,9 +4930,10 @@ function seasonFrom(se,files,games,per='all'){
     for(const [h,v] of Object.entries(R.pc[D.other.id]||{})){pcO[h]=pcO[h]||{n:0,pts:0};pcO[h].n+=v.n;pcO[h].pts+=v.pts}
     for(const [key,tid] of [['cle','5'],['opp',D.other.id]])for(const q of (R.PL||[]).filter(q=>q.team===tid)){const k=isTrans(q)?'t':q.how!=='oreb'?'h':null;if(k){cx[key][k][0]++;cx[key][k][1]+=q.pts}}});
   return {season:se,games:gs,P,B,gp,L,shots,oshots,asts,pz,T,pc,pcO,cx}}
-async function seasonFiltered(se,full){const f=S.sf||{};const gsel=f.games&&f.games.length?new Set(f.games):null;const per=S.per||'all';if(!gsel&&!f.tier){if(per==='all')return full;const key=perKey(per);if(key){try{return await getJSON('/live-archive/'+se+'/season-p-'+key+'.json')}catch(e){}}}const NR=await netRanks(se);
-  const games=full.games.filter(g=>(!gsel||gsel.has(g.id))&&inTier(NR.rk[g.opp],NR.n,f.tier));S.sfN=games.length;if(!games.length)return Object.assign({},full,{games:[],P:full.P,B:{},gp:{},L:{2:{},3:{},4:{},5:{}},shots:[],asts:[],pz:{},T:{cle:{z:ZN.map(()=>[0,0])},opp:{z:ZN.map(()=>[0,0])}},pc:{}});
-  const files=await Promise.all(games.map(g=>ARCHF[g.id]||(ARCHF[g.id]=getJSON('/live-archive/'+se+'/'+g.id+'.json'))));return seasonFrom(se,files,games,per)}
+async function seasonFiltered(se,full){const f=S.sf||{};const gsel=f.games&&f.games.length?new Set(f.games):null;const per=S.per||'all';if(!gsel&&!f.tier){if(per==='all')return full;const key=perKey(per);if(key){try{return await(MSE(se)?mxLoad(se,'season-p-'+key+'.json'):getJSON('/live-archive/'+se+'/season-p-'+key+'.json'))}catch(e){}}}
+  /* Nov 25: opponent strength by each game's own season (several seasons at once, and a season's playoffs) */const NRM={};if(f.tier)for(const s2 of new Set(full.games.map(g=>String(g.se||se).replace('/po',''))))NRM[s2]=await netRanks(s2);const nrOf=g=>NRM[String(g.se||se).replace('/po','')]||{rk:{},n:30};
+  const games=full.games.filter(g=>(!gsel||gsel.has(g.id))&&(!f.tier||inTier(nrOf(g).rk[g.opp],nrOf(g).n,f.tier)));S.sfN=games.length;if(!games.length)return Object.assign({},full,{games:[],P:full.P,B:{},gp:{},L:{2:{},3:{},4:{},5:{}},shots:[],asts:[],pz:{},T:{cle:{z:ZN.map(()=>[0,0])},opp:{z:ZN.map(()=>[0,0])}},pc:{}});
+  const files=await Promise.all(games.map(g=>ARCHF[g.id]||(ARCHF[g.id]=getJSON(gPath(se,g)))));return seasonFrom(se,files,games,per)}
 /* the ready-made season file for a period (live-archive/<season>/season-p-<key>.json); combinations without one are built from the game files */
 const perKey=p=>p==='clutch'?'clutch':p==='nogt'?'nogt':Array.isArray(p)?(eqSet(p,[1,2])?'h1':eqSet(p,[3,4])?'h2':p.length===1&&p[0]<=4?'q'+p[0]:null):null;
 /* Nov 13 (Luka): the season filters in force (games picked, opponent strength, garbage time, period), for share images */
@@ -4941,9 +4961,9 @@ function seasonFilterBar(){const D=S.data;const f=S.sf=S.sf||{};const w=el('div'
   if(f.tier)w.appendChild(el('span','sfn dim','Strength = '+(S.season===CUR_SEASON?'net rating rank among all 30 teams so far this season, on counted possessions':'final '+SLAB(S.season)+' net rating rank among all 30 teams, on counted possessions')));
   return w}
 async function loadSeason(se){
-  let j;try{if(!S.sfull||S.sfull.season!==se){S.sfull=await getJSON('/live-archive/'+se+'/season.json');if(!SEASONTAB_ON)S.sf={}}j=SEASONTAB_ON?await seasonFiltered(se,S.sfull):S.sfull}catch(e){S.err='Could not load the season archive.';return}
+  let j;try{if(!S.sfull||S.sfull.season!==se){S.sfull=await(MSE(se)?mxLoad(se,'season.json'):getJSON('/live-archive/'+se+'/season.json'));if(!SEASONTAB_ON)S.sf={}}j=SEASONTAB_ON?await seasonFiltered(se,S.sfull):S.sfull}catch(e){S.err='Could not load the season archive.';return}
   const focus={id:'5',ha:'home',abbr:'CLE',name:'Cavaliers',loc:'Cleveland',c:'var(--cf)',rec:''},other={id:'opp',ha:'away',abbr:'OPP',name:'Opponents',loc:'',c:'var(--co)',rec:''};
-  const P={};Object.entries(j.P).forEach(([id,p])=>P[id]=Object.assign({id,team:'5',starter:false},p));
+  const P={};Object.entries(j.P).forEach(([id,p])=>P[id]=Object.assign({id,team:'5',starter:false},p));{const n={};Object.values(P).forEach(p=>{n[p.last]=(n[p.last]||0)+1});Object.values(P).forEach(p=>{if(n[p.last]>1&&p.name)p.last=p.name.trim()[0]+'. '+p.last})}
   const ids=Object.keys(j.B).sort((a,b)=>j.B[b].min-j.B[a].min);
   const D={season:se,teams:[focus,other],focus,other,home:focus,away:other,P,roster:{'5':ids,opp:[]},plays:[],wp:{},esp:{},games:j.games};
   const B={};Object.keys(P).forEach(id=>B[id]=Object.assign({min:0,pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,oreb:0,dreb:0,ast:0,stl:0,blk:0,to:0,pf:0,pm:0,gs:0},j.B[id]||{},{gp:j.gp[id]||0}));
@@ -5212,13 +5232,13 @@ function vPlays(v,D,R){
 
 /* ---------- boot ---------- */
 (async()=>{msLoad().then(()=>{if(S.data&&!S.season&&S.tab==='team')renderView()});await Promise.all(ARCH_SEASONS.map(async se=>{try{const r=await fetch('/live-archive/'+se+'/index.json',{cache:ARCH_SEASONS.indexOf(se)<2?'no-store':'default'});/* finished seasons don't change */if(r.ok)ARCH[se]=await r.json()}catch(e){}}));
-  /* Nov 22 (Luka): playoff games (live-archive/<season>/po/), listed with their season, kept out of the season totals */await Promise.all(ARCH_SEASONS.slice(1).map(async se=>{try{const r=await fetch('/live-archive/'+se+'/po/index.json');if(r.ok){ARCHPO[se]=(await r.json()).map(g=>Object.assign(g,{po:1}));ARCH[se+'/po']=ARCHPO[se]}}catch(e){}}));
+  /* Nov 22 (Luka): playoff games (live-archive/<season>/po/), listed with their season, kept out of the season totals */await Promise.all(ARCH_SEASONS.slice(1).map(async se=>{try{const r=await fetch('/live-archive/'+se+'/po/index.json');if(r.ok){ARCHPO[se]=(await r.json()).map(g=>Object.assign(g,{po:1}));ARCH[se+'/po']=ARCHPO[se]}}catch(e){}}));ARCHPO_OK=true;
   try{const r=await fetch('/live-base.json',{cache:'no-store'});if(r.ok){const j=await r.json();if(j&&j.t&&j.games>0&&j.season!=='2025-26')BLIVE=j}}catch(e){}
   const evs=await loadScoreboard();$('gsel').onchange=e=>{if(e.target.value==='pickprev'){prevPicker();return}const pp=document.getElementById('prevpk');if(pp)pp.remove();choose(e.target.value,true)};
 
 /* ---------- game picker (Nov 1 mock): replaces the long game menu ---------- */
 (function(){const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const box=document.getElementById('gp2');if(!box)return;
-  let cur=null,open=false,se=ARCH_SEASONS[0],team=null,mon=null;
+  let cur=null,open=false,se=ARCH_SEASONS[0],team=null,mon=null,mxA=null,mxB=null,mxM='r';
   /* Nov 21 audit: 'r' is the old 2025-26 replay name; every other season is 'a<season>:<id>' */const val=(s2,g)=>s2==='2025-26'&&!g.po?'r'+g.id:'a'+s2+':'+g.id;
   const games=s2=>(ARCH[s2]||[]).concat(ARCHPO[s2]||[]).sort((a,b)=>a.date<b.date?-1:1);
   const logo=ab=>{const i=el('img');i.alt='';i.loading='lazy';i.src='/img/tl/'+String(ab).toLowerCase()+'.png';i.onerror=()=>i.remove();return i};
@@ -5227,7 +5247,8 @@ function vPlays(v,D,R){
   const today=()=>{const o=[];const sel=$('gsel');[...sel.querySelectorAll('optgroup')].filter(gp=>gp.label==='Today').forEach(gp=>[...gp.children].forEach(x=>o.push([x.value,x.textContent])));return o};
   /* Nov 21 (Luka): every archived season, oldest first, so the arrows walk back through all of them */const order=()=>{const L=[];ARCH_SEASONS.slice().reverse().forEach(s2=>games(s2).forEach(g=>L.push(val(s2,g))));today().forEach(([v])=>{if(!L.includes(v))L.push(v)});return L};
   const find=v=>{let m=/^a(\d{4}-\d\d):(\d+)$/.exec(v);if(m)return [m[1],(ARCH[m[1]]||[]).concat(ARCHPO[m[1]]||[]).find(g=>g.id===m[2])];m=/^r(\d+)$/.exec(v);if(m)return ['2025-26',(ARCH['2025-26']||[]).find(g=>g.id===m[1])];return [null,null]};
-  const label=v=>{if(!v)return '';if(v[0]==='s')return [v.slice(1).replace('-','–')+' season','All '+((ARCH[v.slice(1)]||[]).length)+' games']/* Nov 22: short enough for a phone; the season is already in the first line */;if(v[0]==='p')return [v.slice(1).replace('-','–')+' playoffs','All '+((ARCHPO[v.slice(1)]||[]).length)+' games'];const [s2,g]=find(v);if(g)return [s2.replace('-','–')+(g.po?' playoffs':''),dlab(g)+' '+(g.ha==='home'?'vs':'at')+' '+g.opp+' · '+res(g)];const t=today().find(x=>x[0]===v);return ['Today',t?t[1]:'Live game']};
+  const mxN=(a,b,m)=>{let r=0,p=0,n=0;const i=ARCH_SEASONS.indexOf(a),j=ARCH_SEASONS.indexOf(b);ARCH_SEASONS.slice(Math.min(i,j),Math.max(i,j)+1).forEach(s2=>{n++;if(m!=='p')r+=(ARCH[s2]||[]).length;if(m!=='r')p+=(ARCHPO[s2]||[]).length});return {r,p,n}};
+  const label=v=>{if(!v)return '';{const m=/^m(\d{4}-\d\d)~(\d{4}-\d\d)~([rpb])$/.exec(v);if(m){const c=mxN(m[1],m[2],m[3]);return [m[1]===m[2]?m[1].replace('-','–'):m[1].replace('-','–')+' to '+m[2].replace('-','–'),(m[3]==='r'?'Regular season':m[3]==='p'?'Playoffs':'Regular season + playoffs')+' · '+(c.r+c.p)+' games']}}if(v[0]==='s')return [v.slice(1).replace('-','–')+' season','All '+((ARCH[v.slice(1)]||[]).length)+' games']/* Nov 22: short enough for a phone; the season is already in the first line */;if(v[0]==='p')return [v.slice(1).replace('-','–')+' playoffs','All '+((ARCHPO[v.slice(1)]||[]).length)+' games'];const [s2,g]=find(v);if(g)return [s2.replace('-','–')+(g.po?' playoffs':''),dlab(g)+' '+(g.ha==='home'?'vs':'at')+' '+g.opp+' · '+res(g)];const t=today().find(x=>x[0]===v);return ['Today',t?t[1]:'Live game']};
   const go=v=>{open=false;draw();choose(v,true)};
   function draw(){box.textContent='';/* Nov 21 (Luka): on a season's totals the arrows step season to season */const L=cur&&cur[0]==='s'?ARCH_SEASONS.filter(s2=>(ARCH[s2]||[]).length).reverse().map(s2=>'s'+s2):cur&&cur[0]==='p'?ARCH_SEASONS.filter(s2=>(ARCHPO[s2]||[]).length).reverse().map(s2=>'p'+s2):order(),i=L.indexOf(cur);
     const pv=el('button','gp2-nav','‹');pv.type='button';pv.setAttribute('aria-label',cur&&cur[0]==='s'?'Previous season':'Previous game');pv.disabled=!(i>0);pv.onclick=()=>go(L[i-1]);
@@ -5238,6 +5259,14 @@ function vPlays(v,D,R){
     /* season switch and season totals */
     const r1=el('div','gp2-row');const seg=el('div','gp2-seg');/* Nov 21 (Luka): every archived season, not just this one and last */ARCH_SEASONS.forEach(s2=>{if(!(ARCH[s2]||[]).length)return;const x=el('button',s2===se?'on':null,s2.replace('-','–'));x.type='button';x.onclick=()=>{se=s2;mon=null;draw()};seg.appendChild(x)});
     const tot=el('button','gp2-tot',SLAB(se)+' season totals →');tot.type='button';tot.onclick=()=>go('s'+se);r1.append(seg,tot);if((ARCHPO[se]||[]).length){const pt=el('button','gp2-tot',SLAB(se)+' playoff totals →');pt.type='button';pt.onclick=()=>go('p'+se);r1.appendChild(pt)}pn.appendChild(r1);
+    /* Nov 25 (Luka): combine seasons: a range of seasons, regular season, playoffs or both, added up on every tab */
+    {const SE=ARCH_SEASONS.filter(s2=>(ARCH[s2]||[]).length).slice().reverse();const cm=/^m(\d{4}-\d\d)~(\d{4}-\d\d)~([rpb])$/.exec(cur||'');if(cm&&!mxA){mxA=cm[1];mxB=cm[2];mxM=cm[3]}if(!mxA||!SE.includes(mxA))mxA=SE[Math.max(0,SE.length-3)];if(!mxB||!SE.includes(mxB))mxB=SE[SE.length-1];if(SE.indexOf(mxA)>SE.indexOf(mxB)){const t=mxA;mxA=mxB;mxB=t}
+     const mx=el('div','gp2-mx');mx.appendChild(el('div','gp2-h','Combine seasons'));const row=el('div','mx-row');
+     const sel=(lab,v,f)=>{const l=el('label','mx-l');l.append(lab);const s3=el('select');s3.setAttribute('aria-label',lab+' season');SE.forEach(s2=>{const o=el('option',null,s2.replace('-','–'));o.value=s2;if(s2===v)o.selected=true;s3.appendChild(o)});s3.onchange=()=>{f(s3.value);draw()};l.appendChild(s3);return l};
+     row.append(sel('From',mxA,v2=>mxA=v2),sel('to',mxB,v2=>mxB=v2));
+     const sg=el('div','gp2-seg mx-seg');[['r','Regular season'],['p','Playoffs'],['b','Both']].forEach(([k,l])=>{const b=el('button',mxM===k?'on':null,l);b.type='button';b.onclick=()=>{mxM=k;draw()};sg.appendChild(b)});row.appendChild(sg);
+     const c=mxN(mxA,mxB,mxM),n=c.r+c.p;const go2=el('button','gp2-tot mx-go',n?'Show '+n+' games →':'No games');go2.type='button';go2.disabled=!n;go2.onclick=()=>go('m'+mxA+'~'+mxB+'~'+mxM);row.appendChild(go2);mx.appendChild(row);
+     mx.appendChild(el('div','mx-note',c.n+' season'+(c.n===1?'':'s')+' · '+(mxM!=='p'?c.r+' regular season':'')+(mxM==='b'?' + ':'')+(mxM!=='r'?c.p+' playoff':'')+' games · lineups, on/off, players, shots and four factors all add up across them'));pn.appendChild(mx)}
     /* today's game */
     today().forEach(([v,t2])=>{const x=el('button','gp2-today');x.type='button';x.append(el('b',null,'Today'),el('span',null,t2));x.onclick=()=>go(v);pn.appendChild(x)});
     /* opponents */
@@ -5260,7 +5289,7 @@ function prevPicker(){let w=document.getElementById('prevpk');if(w){w.remove()}w
   const ms=el('select');ms.setAttribute('aria-label','Month');months.forEach(m=>{const o=el('option',null,new Date(m+'-15').toLocaleDateString('en-US',{month:'long',year:'numeric'}));o.value=m;ms.appendChild(o)});ms.value=months[months.length-1];
   const gs=el('select');gs.setAttribute('aria-label','Game');const fill=()=>{gs.textContent='';const o0=el('option',null,'Pick a game');o0.value='';gs.appendChild(o0);L.filter(g=>mk(g)===ms.value).forEach(g=>{const o=el('option',null,gl(g));o.value='r'+g.id;gs.appendChild(o)})};fill();
   ms.onchange=fill;gs.onchange=()=>{if(gs.value)choose(gs.value,true)};w.append(ms,gs);$('gsel').closest('.pick').after(w)}
-  let pick=new URLSearchParams(location.search).get('g');if(pick&&!/^(r?\d{6,12}|[sp]\d{4}-\d\d|b\d{8}|a\d{4}-\d\d:\d{6,12})$/.test(pick))pick=null;/* only known game address shapes */
+  let pick=new URLSearchParams(location.search).get('g');if(pick&&!/^(r?\d{6,12}|[sp]\d{4}-\d\d|m\d{4}-\d\d~\d{4}-\d\d~[rpb]|b\d{8}|a\d{4}-\d\d:\d{6,12})$/.test(pick))pick=null;/* only known game address shapes */
   if(!pick){const cav=evs.find(isCavs);pick=cav?cav.id:S.bkOpt||'r'+REPLAYS[0][0]}
   choose(pick,false).then(()=>{
     /* back to the saved spot: ?resume=1 (Stats tab / Back to stats) or the browser's back button */
