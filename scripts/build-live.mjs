@@ -11,7 +11,12 @@ export async function buildLive(root = new URL('../', import.meta.url)) {
   // Nov 4: the Cavs schedule (date, opponent, home/away, tip) is copied from index.html so share cards can name the next game
   const idx = await readFile(new URL('index.html', root), 'utf8').catch(() => '');
   const sch = (idx.match(/const SCHEDULE=(\[[\s\S]*?\n\s*\]);/) || [])[1] || 'null';
-  const src = (await readFile(new URL('live.src.html', root), 'utf8')).replace('/*@SCHED*/null', () => sch).replace(/live-core\.js\?v=[0-9a-f]+/, () => 'live-core.js?v=' + createHash('sha1').update(core).digest('hex').slice(0, 10));
+  let src = (await readFile(new URL('live.src.html', root), 'utf8')).replace('/*@SCHED*/null', () => sch).replace(/live-core\.js\?v=[0-9a-f]+/, () => 'live-core.js?v=' + createHash('sha1').update(core).digest('hex').slice(0, 10));
+  // Nov 25 (Luka): every player with a page under /players gets his name linked on the live page, even if live.src.html's PP list missed him
+  { const pages = (await readdir(new URL('players/', root)).catch(() => [])).filter(f => /^[a-z0-9-]+\.html$/.test(f)).map(f => f.slice(0, -5));
+    const m = src.match(/const PP=\{([^}]*)\}/); if (m) { const have = new Set([...m[1].matchAll(/"[^"]+":"([^"]+)"/g)].map(x => x[1]));
+      const add = pages.filter(sl => !have.has(sl)).map(sl => `"${sl.replace(/-(jr|sr|ii|iii|iv)$/, '').replace(/[^a-z]/g, '')}":"${sl}"`);
+      if (add.length) src = src.replace(m[0], () => m[0].slice(0, -1) + (m[1].trim() ? ',' : '') + add.join(',') + '}'); } }
   const sm = src.match(/<style>([\s\S]*?)<\/style>/);
   const jm = [...src.matchAll(/<script>([\s\S]*?)<\/script>/g)].sort((x, y) => y[1].length - x[1].length)[0];
   if (!sm || !jm || jm[1].length < 50000) { await writeFile(new URL('live.html', root), src); return 'live.html: copied as is'; }
