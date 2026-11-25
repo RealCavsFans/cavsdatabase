@@ -7595,5 +7595,17 @@ document.addEventListener('click',e=>{const th=e.target.closest&&e.target.closes
   document.addEventListener('mouseover',ev=>{if(touch())return;const e=pick(ev);if(e===hov)return;hov=e;clearTimeout(tm);if(!e){kill();return}tm=setTimeout(()=>show(e),250)},true);
   addEventListener('scroll',()=>{if(tip&&touch())kill()},{passive:true})})();
 </script>
+<style>/* Nov 25 (Luka): History lists on phones */.hx-clh{display:none!important}.hx-clb{display:block;width:100%;margin:8px 0 4px!important;text-align:center;font-size:.8125rem!important}</style>
+<script>/* Nov 25 (Luka): History on phones: each long list shows its first few, with a button to open the full list (less scrolling) */
+(function(){const mq=matchMedia('(max-width:600px)');
+  const T=[['#hx-vs-g',':scope',6,n=>'All '+n+' teams'],['#hx-aw','ul',3,n=>'All '+n],['#hx-teams','ul,.hx-ar',3,n=>'All '+n],['#hx-lead-l',':scope',5,n=>'Show top '+n],['#hx-rec-l',':scope',5,n=>'All '+n+' records'],['#hx-coach-b',':scope',6,n=>'All '+n+' coaches']];
+  const clamp=(L,n,lab)=>{const kids=[...L.children];const anchor=L.closest('.tablebox')||L;let b=anchor.nextElementSibling;if(!(b&&b.classList.contains('hx-clb')))b=null;
+    if(!mq.matches||kids.length<=n+1){kids.forEach(k=>k.classList.remove('hx-clh'));if(b)b.remove();return}
+    const open=L.dataset.clo==='1';kids.forEach((k,i)=>k.classList.toggle('hx-clh',!open&&i>=n));
+    if(!b){b=document.createElement('button');b.type='button';b.className='gf-more hx-clb';anchor.after(b);b.onclick=()=>{const o=L.dataset.clo!=='1';L.dataset.clo=o?'1':'';clamp(L,n,lab);if(!o)anchor.scrollIntoView({block:'nearest'})}}
+    b.textContent=open?'Show fewer ▴':lab(kids.length)+' ▾'};
+  const run=()=>T.forEach(([sel,sub,n,lab])=>{const C=document.querySelector(sel);if(!C)return;(sub===':scope'?[C]:[...C.querySelectorAll(sub)]).forEach(L=>clamp(L,n,lab))});
+  T.forEach(([sel])=>{const C=document.querySelector(sel);if(!C)return;new MutationObserver(ms=>{if(ms.some(m=>[...m.addedNodes].some(x=>x.nodeType===1&&!x.classList.contains('hx-clb')))){C.dataset.clo='';run()}}).observe(C,{childList:true,subtree:true})});
+  mq.addEventListener('change',run);run()})();</script>
 </body>
 </html>
