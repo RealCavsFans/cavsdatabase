@@ -10,7 +10,8 @@ for (const k of ['hu', 'to', 'dr', 'pa']) if (!Array.isArray(j.cols?.[k])) bad.p
 for (const [gid, G] of Object.entries(j.g || {})) {
   if (!/^\d{10}$/.test(gid)) bad.push('game id ' + gid);
   const P = Object.entries(G.p || {}); if (P.length < 5) bad.push(gid + ': ' + P.length + ' players');
-  for (const [, x] of P) if (!x.n || !Array.isArray(x.hu)) bad.push(gid + ': player row');
+  /* Nov 24 audit: a player can be missing one group for a night (no hustle row after a short stint), so each row needs a name and at least one group, and every group it has must be the right length */
+  for (const [, x] of P) { const ks = ['hu', 'to', 'dr', 'pa'].filter(k => x[k] != null); if (!x.n || !ks.length || ks.some(k => !Array.isArray(x[k]) || x[k].length !== j.cols[k].length)) bad.push(gid + ': player row ' + (x.n || '?')) }
 }
 if (bad.length) { console.error('game-tracking-save: not saved:', bad.slice(0, 8).join('; ')); process.exit(1) }
 const out = 'pdata/game-tracking.json';
