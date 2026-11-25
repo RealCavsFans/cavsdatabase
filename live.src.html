@@ -2817,12 +2817,12 @@ function runDetail(D,R,r){
 function advView(c,D,R,t){
   const o=D.teams.find(x=>x.id!==t.id);const T=R.T[t.id],O=R.T[o.id];const tmMP=T.sec*5/60||1;
   const tORB=T.oreb+T.toreb,tDRB=T.dreb+T.tdreb,oORB=O.oreb+O.toreb,oDRB=O.dreb+O.tdreb;const oPoss=poss({fga:O.fga,oreb:O.oreb,to:O.to,fta:O.fta,np:O.np});
-  const L5=Object.values(R.L[t.id][5]);const shr=(p,tm)=>p+tm>0?p/(p+tm):1;const shTO=shr(T.oreb,T.toreb||0),shTD=shr(T.dreb,T.tdreb||0),shOO=shr(O.oreb,O.toreb||0),shOD=shr(O.dreb,O.tdreb||0);
+  const L5=Object.values(R.L[t.id][5]);
   const rows=D.roster[t.id].filter(id=>R.B[id].min>0).map(id=>{const b=R.B[id],mp=b.min/60,f=(tmMP/5)/mp;
     /* Nov 6 (Luka): NBA.com formulas, from what happened while he was on the floor (his five-man units) */
     const onL=L5.filter(l=>l.ids.includes(id));const sm=(sd,k)=>onL.reduce((s2,l)=>s2+((l[sd]||{})[k]||0),0);let pf=onL.reduce((s2,l)=>s2+l.pf,0),pa=onL.reduce((s2,l)=>s2+l.pa,0);
     /* Nov 15 (Luka): possessions from the same five-man units as the points (his own tally ran a possession apart), so ON ORTG/DRTG match the On/off tab and his player page */let po=possSum(onL,'o'),pd=possSum(onL,'d');
-    /* Nov 15 (Luka): player rebound rates use players' rebounds only (as Basketball Reference and NBA.com do): the units' own player-rebound counts (poreb/pdreb), or, in files built before those existed, the units' counts scaled by each side's player share */const tFGM=sm('o','fgm'),tFGA=sm('o','fga'),tFTA=sm('o','fta'),tTO=sm('o','to'),hasP=onL.some(l=>l.o&&(l.o.poreb!=null||l.o.pdreb!=null)),tORB=hasP?sm('o','poreb'):sm('o','oreb')*shTO,tDRB=hasP?sm('o','pdreb'):sm('o','dreb')*shTD,oORB=hasP?sm('d','poreb'):sm('d','oreb')*shOO,oDRB=hasP?sm('d','pdreb'):sm('d','dreb')*shOD,o2A=sm('d','fga')-sm('d','tpa');
+    /* Nov 24 audit: player rebound rates count every rebound chance while he was on the floor, team rebounds included, as NBA.com does (checked to the third decimal against NBA.com's OREB% and DREB%; the Nov 15 player-rebounds-only count ran 1 to 3 points high) */const tFGM=sm('o','fgm'),tFGA=sm('o','fga'),tFTA=sm('o','fta'),tTO=sm('o','to'),tORB=sm('o','oreb'),tDRB=sm('o','dreb'),oORB=sm('d','oreb'),oDRB=sm('d','dreb'),o2A=sm('d','fga')-sm('d','tpa');
     const tsa=b.fga+0.44*b.fta;const lts=lgTS();return {id,mp,tsa,ts:tsa?b.pts/(2*tsa):null,rts:tsa&&lts!=null?b.pts/(2*tsa)-lts:null,efg:b.fga?(b.fgm+.5*b.tpm)/b.fga:null,tpar:b.fga?b.tpa/b.fga:null,ftr:b.fga?b.fta/b.fga:null,
       /* a share can't pass 100% (a few minutes of scaled counts can) */orb:(tORB+oDRB)?Math.min(100,100*b.oreb/Math.max(tORB+oDRB,b.oreb)):null,drb:(tDRB+oORB)?Math.min(100,100*b.dreb/Math.max(tDRB+oORB,b.dreb)):null,trb:(tORB+tDRB+oORB+oDRB)?Math.min(100,100*(b.oreb+b.dreb)/Math.max(tORB+tDRB+oORB+oDRB,b.oreb+b.dreb)):null,
       ast:(tFGM-b.fgm)>0?100*b.ast/(tFGM-b.fgm):null,stl:pd?100*b.stl/pd:null,blk:o2A>0?100*b.blk/o2A:null,

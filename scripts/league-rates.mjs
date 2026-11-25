@@ -17,7 +17,7 @@ const OUT = 'pdata/league-rates.json', CACHE = 'data/league-rates-cache.json';
 // per player per game: his own numbers, then what his team and the opponent did while he was on the floor
 const COLS = ['g', 'sec', 'fgm', 'fga', 'fta', 'to', 'ast', 'stl', 'blk', 'oreb', 'dreb', 'tFGM', 'tFGA', 'tFTA', 'tTO', 'tORB', 'tDRB', 'oORB', 'oDRB', 'o2A', 'po', 'pd'];
 let idx; try { idx = JSON.parse(fs.readFileSync(path.join(DIR, 'index.json'), 'utf8')); } catch { console.log('league-rates: no NBA store here'); process.exit(0); }
-let cache = {}; try { const c = JSON.parse(fs.readFileSync(CACHE, 'utf8')); if (c.season === SEASON) cache = c.g || {}; } catch {}
+let cache = {}; try { const c = JSON.parse(fs.readFileSync(CACHE, 'utf8')); if (c.season === SEASON && c.v === 2) cache = c.g || {}; /* v2 (Nov 24): rebound chances with team rebounds */ } catch {}
 const FIX = loadFixes(ROOT);
 let read = 0, failed = 0;
 for (const [gid, row] of Object.entries(idx)) {
@@ -34,7 +34,7 @@ for (const [gid, row] of Object.entries(idx)) {
         const b = R.B[id]; if (!b || !(b.min > 0)) continue;
         const on = L5.filter(l => l.ids.includes(id)), sm = (sd, k) => on.reduce((s, l) => s + ((l[sd] || {})[k] || 0), 0);
         out[id] = [D.P[id].name, t.abbr, 1, Math.round(b.min), b.fgm, b.fga, b.fta, b.to, b.ast, b.stl, b.blk, b.oreb, b.dreb,
-          sm('o', 'fgm'), sm('o', 'fga'), sm('o', 'fta'), sm('o', 'to'), sm('o', 'poreb'), sm('o', 'pdreb'), sm('d', 'poreb'), sm('d', 'pdreb'), sm('d', 'fga') - sm('d', 'tpa'),
+          sm('o', 'fgm'), sm('o', 'fga'), sm('o', 'fta'), sm('o', 'to'), sm('o', 'oreb'), sm('o', 'dreb'), sm('d', 'oreb'), sm('d', 'dreb') /* Nov 24 audit: rebound chances include team rebounds, as NBA.com */, sm('d', 'fga') - sm('d', 'tpa'),
           Math.round(on.reduce((s, l) => s + C.poss(l.o), 0) * 10) / 10, Math.round(on.reduce((s, l) => s + C.poss(l.d), 0) * 10) / 10];
       }
     }
@@ -56,7 +56,7 @@ for (const { p } of Object.values(cache)) for (const [id, r] of Object.entries(p
 }
 const DK = {}; for (const { dk } of Object.values(cache)) for (const [id, v] of Object.entries(dk || {})) DK[id] = (DK[id] || 0) + v;
 const Z = {}; for (const { z } of Object.values(cache)) for (const [id, v] of Object.entries(z || {})) { const o = Z[id] || (Z[id] = Array(10).fill(0)); v.forEach((x, i) => o[i] += x); }
-fs.mkdirSync('data', { recursive: true }); fs.writeFileSync(CACHE, JSON.stringify({ season: SEASON, g: cache }));
+fs.mkdirSync('data', { recursive: true }); fs.writeFileSync(CACHE, JSON.stringify({ season: SEASON, v: 2, g: cache }));
 const TM = {}; for (const { t } of Object.values(cache)) for (const [ab, r] of Object.entries(t || {})) (TM[ab] = TM[ab] || []).push(r);
 for (const k in TM) TM[k].sort((a, b) => a[0] < b[0] ? -1 : 1);
 fs.writeFileSync(OUT, JSON.stringify({ season: SEASON, updated: new Date().toISOString(), games: Object.keys(cache).length, cols: COLS, p: P, zcols: 'makes, attempts for at rim, short mid, long mid, corner 3, above the break 3', z: Z, dk: DK, tcols: ['d', 'poss', 'opp_poss', 'pts', 'opp_pts', 'sec'], t: TM }));

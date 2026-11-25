@@ -5698,7 +5698,7 @@ const sets={G:[['PTS','pts'],['AST','ast'],['REB','reb'],['3PT%','tp'],['FG%','f
       const onN=o.po&&o.pd?o.pf/o.po*100-o.pa/o.pd*100:null,offN=offPo>50&&offPd>50?((tm.pf-o.pf)/offPo*100-(tm.pa-o.pa)/offPd*100):null;
       const zt=L.z.reduce((t,x)=>t+x[1],0);
       return {gp:g,gs:L.gs,min:L.sec/60/g,pts:L.pts/g,reb:(L.oreb+L.dreb)/g,ast:L.ast/g,stl:L.stl/g,blk:L.blk/g,tov:L.tov/g,fg:q(L.fgm,L.fga),tp:q(L.tpm,L.tpa),ft:q(L.ftm,L.fta),ts:q(L.pts,2*tsa),
-        usg:q(tsa+L.tov,(oo.fga||0)+.44*(oo.fta||0)+(oo.to||0)),astp:q(L.ast,(oo.fgm||0)-L.fgm),orbp:q(L.oreb,(oo.poreb||oo.oreb||0)+(od.pdreb||od.dreb||0)),drbp:q(L.dreb,(oo.pdreb||oo.dreb||0)+(od.poreb||od.oreb||0)),stlp:q(L.stl,o.pd),blkp:q(L.blk,(od.fga||0)-(od.tpa||0)),tovp:q(L.tov,tsa+L.tov),
+        usg:q(tsa+L.tov,(oo.fga||0)+.44*(oo.fta||0)+(oo.to||0)),astp:q(L.ast,(oo.fgm||0)-L.fgm),orbp:q(L.oreb,(oo.oreb||0)+(od.dreb||0)),drbp:q(L.dreb,(oo.dreb||0)+(od.oreb||0))/* Nov 24 audit: team rebounds count as chances, as NBA.com does */,stlp:q(L.stl,o.pd),blkp:q(L.blk,(od.fga||0)-(od.tpa||0)),tovp:q(L.tov,tsa+L.tov),
         z:L.z.map(([m,a])=>[zt?a/zt:null,q(m,a)]),za:zt,onN,offN,diff:onN!=null&&offN!=null?onN-offN:null,onMin:(o.sec||0)/60}};
     const TABS=[['Per game',[['GP','gp',v=>v],['GS','gs',v=>v],['MIN','min',f1],['PTS','pts',f1],['REB','reb',f1],['AST','ast',f1],['STL','stl',f1],['BLK','blk',f1],['TOV','tov',f1],['FG%','fg',pc],['3P%','tp',pc],['FT%','ft',pc],['TS%','ts',pc]]],
       ['Advanced',[['USG%','usg',pc],['AST%','astp',pc],['OREB%','orbp',pc],['DREB%','drbp',pc],['STL%','stlp',pc],['BLK%','blkp',pc],['TOV%','tovp',pc]]],
