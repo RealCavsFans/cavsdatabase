@@ -1,6 +1,12 @@
 {
  "articles": [
   {
+   "src": "Cavaliers on SI",
+   "title": "The Studs and the Duds: Looking at Cavs Five-Man Units Top to Bottom",
+   "link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPT3cxemVqQUk1b05vV1lMNzlzaGNQZ2FDeXVKakt6YzFsY1p1ZXVZTFgwNmhCX05obGpnSDNBV09vdDB0d2ZwRlgwMnBZQm9qckttanBKZ0Jkc3BfNWlsbDFKTzEyZE9XR1lEUFBhaUxnTzl5aFU2VjhWOVV4eC0zMGlvd04wV2RLbTVhdS02OVFlYVZOS1N3b1ZuLTdyWjNBSVF0d3MySjNocUZtNS1YaXp0RTlsWk9LNEE?oc=5",
+   "date": "2026-11-25T16:30:00.000Z"
+  },
+  {
    "src": "cleveland.com",
    "title": "The Cavs decision to trade for James Harden solidified their identity. Now they must figure out how to make it work",
    "link": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxOVDdMU1hTZnNNeG5BRkY1Wk82dnNxeWJvNFlfN0VyRXlpdnFvRmdZRWtXVFRYMFhHaDUzelJ0QjFGSndJQkpnSFVsSHRIQXRHMHM4OVNqUUVSLV9TOVNVQ3NScGU0Ulo5X3gwVWt4QVZ5OWdUcGl2UVdQbUhiWkZibHZVR3pMX0t1S3FMUnQ4MGw3bW9XUGtULVdWanM5V3RtYlNLMkhKUVFTdXB0SnlQb2pGNHJUTXJ0WlBCS3VhWFN1OW03NkwxejZndDlacUFvV0NPcTV1blNpTWdkY0ozTWpSODBUVkV1NWdfc1pucw?oc=5",
@@ -83,6 +89,12 @@
    "title": "This Player's Recent Shooting Offers Cavaliers Signs Of An Offensive Turnaround",
    "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOLWdzRXB3UDNaejdTVHE3eUs1NjdzeGlGX3FzLWpzN3JjdVVUVmNpZFFhTmlibTNUNWR4R3JCMXZOMkxYVFZ1bHhaMzQ5MDNkcGNLZU1sMUNPNFI0aTdIM3BKb0htbk9qVDdDMVl4dXZPOUNkUWdERkl3UWdmdVEyTFR2VTlocURlejFpS1kyZ05UMW91TUZqaDcyVVhtbnkwR1prMjUyYUNaaDBzX19MSmJNQTRWc1c4Rl9sT0xaY0gzU1BvVkN2dlV3?oc=5",
    "date": "2026-11-23T14:16:53.000Z"
+  },
+  {
+   "src": "cleveland.com",
+   "title": "Cavs at Bulls: preview, odds, injury report, TV",
+   "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPeGVGUzJiU0ZoZlczLTE2Q21odks2d1hxdFIwbngwREhlVElRQXp4RW14QW1GbzFuSFdjZWVja3cwLVZfOS1fVVRYN0tVSFY4X2dWNDVGODNacWZtVml0OTJjUjlReEFqMU1BTktTZTQ2cmlseUt2S3hLb05LX2VMT0NQaHZFaDBqR1BRWHlHVHo?oc=5",
+   "date": "2026-11-23T10:00:00.000Z"
   },
   {
    "src": "Hoops Rumors",
@@ -241,12 +253,6 @@
    "date": "2026-11-18T22:53:22.000Z"
   },
   {
-   "src": "Cavaliers on SI",
-   "title": "3 Numbers That Tell The Story of Cavs-Grizzlies Matchup",
-   "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNcHRHUi12N3NfTDJSZ0FtRG50WEtkLVVUZVlKZU9LVVJIeWpiOGc5cGhZUkhGUW9maGdLNmVRVjlqTmw2RWl0M3Z1QTBFbjhCM2JDQnhCTzlROGt6NExWeTZ2NjVnOUJQbFg3TmhkcnFpUnlEdTk4dDlvaWtqOEFNUndveS1KeXRZel9GVm1hUUJmekE4UUZIdFdILXBkbXVuZ2hBRE5TbEdRdw?oc=5",
-   "date": "2026-11-18T20:00:02.000Z"
-  },
-  {
    "src": "Hoops Rumors",
    "title": "Cavaliers Sign Zack Austin To Two-Way Contract",
    "link": "https://www.hoopsrumors.com/2026/11/cavaliers-sign-zack-austin-to-two-way-contract.html",
@@ -307,12 +313,6 @@
    "date": "2026-11-17T10:13:00.000Z"
   },
   {
-   "src": "cleveland.com",
-   "title": "Cavs’ Peyton Watson leaves win vs. Bulls after scary fall",
-   "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPcUxubGhIbm00dmhGZmJoU0ZPU3V2VS1aaHg2bkRQLXZNYWRvc01hODUxTVd2Tm9GN3RXNUpMOV82dHgzUlZmOWNval9OVzVodUtERlR5S3E0ZFN4VVVOZWtLbG9mS2JMYzBXNnFIbDg1Z3NfMW1FWmZFNXNndWdMZmJKSmRJbFRVRkZqY0lIOHJlNGdHZEhzWUUtUGRtY1NW?oc=5",
-   "date": "2026-11-17T08:00:00.000Z"
-  },
-  {
    "src": "Cavaliers on SI",
    "title": "3 Game-Changing Numbers From Cavaliers Win Against Chicago Bulls",
    "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPR2N6RlR2aGljNlJjeGx2bHY0TmoyYlVMeWhzd3ZjWGFSSjloN2N0WkxJMDhjT2hJeE52VklQQy05OFhVWGhjNFN2c1kwc0xiUWowbFZ3dGZ3RzdyckpDRWZGOW8tejJqZ2kzbk5QZno3RXpBSlpOd0ZJSkFIck81bl9OV1lWUFVwa0dwZUJ1TXZQc1piaE1qcDdHZ1JQR2VKUTMtbDFkQUlmVTZWWGlrOVRJM2Q0UQ?oc=5",
@@ -353,12 +353,6 @@
    "title": "NBA Teams With Open Roster Spots",
    "link": "https://www.hoopsrumors.com/2026/11/nba-teams-with-open-roster-spots-20.html",
    "date": "2026-11-15T18:03:42.000Z"
-  },
-  {
-   "src": "Hoops Rumors",
-   "title": "Central Notes: Zubac, Bulls, Swain, Robinson, Kyrie",
-   "link": "https://www.hoopsrumors.com/2026/11/central-notes-zubac-bulls-swain-robinson-kyrie.html",
-   "date": "2026-11-15T16:39:40.000Z"
   }
  ],
  "podcasts": [
@@ -427,6 +421,34 @@
   }
  ],
  "videos": [
+  {
+   "src": "Ultimate Cleveland Sports Show",
+   "title": "What Thanksgiving foods would these prominent Cleveland athletes be? Jose, Harden, Denzel Ward, DW4?",
+   "link": "https://www.youtube.com/watch?v=MCDsxg7FmPg",
+   "date": "2026-11-25T17:05:15.000Z",
+   "id": "MCDsxg7FmPg"
+  },
+  {
+   "src": "Locked On Cavs",
+   "title": "CAVS POSTCAST: The Cleveland Cavaliers Face the New York Knicks in Final Game of Group Play for Cup",
+   "link": "https://www.youtube.com/watch?v=vXUNmTUe-2c",
+   "date": "2026-11-25T17:00:06.000Z",
+   "id": "vXUNmTUe-2c"
+  },
+  {
+   "src": "Ultimate Cleveland Sports Show",
+   "title": "Donovan Mitchell has a chance to change the Cavaliers' season by making a statement vs. the Knicks.",
+   "link": "https://www.youtube.com/watch?v=6g4q43TL0Uc",
+   "date": "2026-11-25T16:25:11.000Z",
+   "id": "6g4q43TL0Uc"
+  },
+  {
+   "src": "Ultimate Cleveland Sports Show",
+   "title": "How will the Cleveland Cavaliers respond against the Knicks after getting embarrassed by the Bulls?",
+   "link": "https://www.youtube.com/watch?v=4L8LP_wVQSk",
+   "date": "2026-11-25T15:40:50.000Z",
+   "id": "4L8LP_wVQSk"
+  },
   {
    "src": "Locked On Cavs",
    "title": "The Cleveland Cavaliers MUST Find Consistency to be Taken Seriously! | Evan Mobley UPDATE!",
@@ -596,13 +618,6 @@
    "id": "D49_9-Wru5o"
   },
   {
-   "src": "Locked On Cavs",
-   "title": "CAVS POSTCAST: James Harden Scores 51 in VINTAGE Performances for the Cavaliers in Win vs Pacers",
-   "link": "https://www.youtube.com/watch?v=1PckZIIfirc",
-   "date": "2026-11-21T03:32:17.000Z",
-   "id": "1PckZIIfirc"
-  },
-  {
    "src": "Cavs Roundtable",
    "title": "Cleveland Cavaliers: Kenny Atkinson Left Speechless By James Harden's 51-Point Game",
    "link": "https://www.youtube.com/watch?v=DwQVyPsSEzA",
@@ -687,32 +702,11 @@
    "id": "yz_-sGIv6jM"
   },
   {
-   "src": "Ultimate Cleveland Sports Show",
-   "title": "The Memphis Grizzlies style of play might be the biggest test of the season so far for the Cavaliers",
-   "link": "https://www.youtube.com/watch?v=-IZObNOONI8",
-   "date": "2026-11-18T17:00:30.000Z",
-   "id": "-IZObNOONI8"
-  },
-  {
    "src": "The Chase Down Podcast",
    "title": "Chase Down Podcast Live, presented by LECOM: Young Backcourt Pops in Cavs Wins!",
    "link": "https://www.youtube.com/watch?v=Eg4Hei0vz6I",
    "date": "2026-11-18T15:42:38.000Z",
    "id": "Eg4Hei0vz6I"
-  },
-  {
-   "src": "Ultimate Cleveland Sports Show",
-   "title": "Which current Cleveland athlete would make the best James Bond?",
-   "link": "https://www.youtube.com/watch?v=8HZfia3g3UE",
-   "date": "2026-11-17T16:33:57.000Z",
-   "id": "8HZfia3g3UE"
-  },
-  {
-   "src": "Ultimate Cleveland Sports Show",
-   "title": "How concerned are you about Evan Mobley's toe injury that could keep him out for the next few weeks?",
-   "link": "https://www.youtube.com/watch?v=VTKK2fduj_s",
-   "date": "2026-11-17T16:23:50.000Z",
-   "id": "VTKK2fduj_s"
   },
   {
    "src": "It's Cavalier Podcast",
