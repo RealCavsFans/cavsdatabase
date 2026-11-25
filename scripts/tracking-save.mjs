@@ -2,7 +2,7 @@
 //   node scripts/tracking-save.mjs <file holding window.__TRK, joined from its slices>
 // Checks the shape first and changes nothing if it looks wrong. Prints "no change" when only the date would move.
 import fs from 'node:fs';
-const f = process.argv[2]; if (!f) { console.error('usage: node scripts/tracking-save.mjs <file>'); process.exit(2) }
+const f = process.argv[2]; if (!f) { console.error('usage: node scripts/tracking-save.mjs <file> [out]'); process.exit(2) }
 let raw = fs.readFileSync(f, 'utf8').trim();
 if (raw.startsWith('"')) raw = JSON.parse(raw);           // the javascript tool may hand the string back JSON-quoted
 const j = JSON.parse(raw);
@@ -18,7 +18,7 @@ for (const k of ['off','def']) { const T = j.pt?.t?.[k] || {}; if (Object.keys(T
 if (!j.pt?.t?.off?.Isolation?.CLE) bad.push('no CLE play types');
 if (bad.length) { console.error('tracking-save: not saved:', bad.slice(0, 8).join('; ')); process.exit(1) }
 j.updated = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
-const out = 'pdata/tracking.json';
+const out = process.argv[3] || 'pdata/tracking.json';  // Nov 25: past seasons save to pdata/tracking-<season>.json
 let old = null; try { old = JSON.parse(fs.readFileSync(out, 'utf8')) } catch {}
 const same = old && JSON.stringify({ ...old, updated: '' }) === JSON.stringify({ ...j, updated: '' });
 if (same) { console.log('no change'); process.exit(0) }

@@ -13,7 +13,7 @@ import { createRequire } from 'module';
 import { loadFixes, applyFixes } from './nba-fixes.mjs';
 const C = createRequire(import.meta.url)('../live-core.js');
 const SEASON = process.env.SEASON || CUR_SEASON, ROOT = process.argv[2] || 'nba-data', DIR = path.join(ROOT, SEASON);
-const OUT = 'pdata/league-rates.json', CACHE = 'data/league-rates-cache.json';
+const OUT = SEASON === CUR_SEASON ? 'pdata/league-rates.json' : `pdata/league-rates-${SEASON}.json`, CACHE = SEASON === CUR_SEASON ? 'data/league-rates-cache.json' : `data/league-rates-cache-${SEASON}.json`;  /* Nov 25: past seasons get their own file (SEASON=2025-26) */
 // per player per game: his own numbers, then what his team and the opponent did while he was on the floor
 const COLS = ['g', 'sec', 'fgm', 'fga', 'fta', 'to', 'ast', 'stl', 'blk', 'oreb', 'dreb', 'tFGM', 'tFGA', 'tFTA', 'tTO', 'tORB', 'tDRB', 'oORB', 'oDRB', 'o2A', 'po', 'pd'];
 let idx; try { idx = JSON.parse(fs.readFileSync(path.join(DIR, 'index.json'), 'utf8')); } catch { console.log('league-rates: no NBA store here'); process.exit(0); }

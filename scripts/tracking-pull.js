@@ -7,6 +7,9 @@
 window.__TRK = null; window.__TRKerr = null;
 (async () => { try {
   const S = 'SEASON';
+  // Nov 25 (Luka): past seasons: the task may replace [] below with that season's Cavs player ids (from live-archive/<season>/season.json),
+  // so players traded away before the season ended still count as Cavs
+  const IDS = new Set([].map(String));
   const get = async u => { for (let k = 0; k < 3; k++) { try { const c = new AbortController(), tm = setTimeout(() => c.abort(), 20000); const r = await fetch(u, { signal: c.signal }); clearTimeout(tm); if (r.ok) return (await r.json()).resultSets } catch (e) {} await new Promise(r => setTimeout(r, 5000 * (k + 1))) } throw new Error('stats.nba.com failed: ' + u.split('?')[0].split('/').pop()) };
   const rows = rs => { const H = rs.headers; return rs.rowSet.map(r => Object.fromEntries(H.map((h, i) => [h, r[i]]))) };
   const r1 = x => x == null ? null : Math.round(x * 10) / 10;
@@ -52,10 +55,19 @@ window.__TRK = null; window.__TRKerr = null;
   const top = Math.max(...Object.values(P).map(x => x.gp));
   const Qd = Object.entries(P).filter(([, x]) => x.gp >= Math.ceil(top / 2) && x.min / x.gp >= 15);
   const cle = {};
-  for (const [id, x] of Object.entries(P)) if (x.t === 'CLE') { x.rk = {}; cle[id] = x }
+  for (const [id, x] of Object.entries(P)) if (x.t === 'CLE' || IDS.has(String(id))) { x.rk = {}; cle[id] = x }
   for (const [key, [g, i]] of Object.entries(RK)) {
     const v = Qd.filter(([, x]) => x[g]).map(([id, x]) => [id, x[g][i] / x.gp]).sort((a, b) => b[1] - a[1]);
     v.forEach(([id], j) => { if (cle[id]) cle[id].rk[key] = j + 1 });
+  }
+  // Nov 25 (Luka): every Cavs player's numbers are his Cavs games only (a player traded to or from the Cavs counts just his time here): the numbers come from the Cavs-only rows (TeamID filter);
+  // his ranks stay among the whole league's qualified players
+  {
+    const QC = Q.replace('TeamID=0', 'TeamID=1610612739'), cs = { hu: rows((await get('https://stats.nba.com/stats/leaguehustlestatsplayer?' + QC))[0]) };
+    for (const [k, m] of Object.entries(M)) cs[k] = rows((await get('https://stats.nba.com/stats/leaguedashptstats?' + QC + '&PlayerOrTeam=Player&PtMeasureType=' + m))[0]);
+    for (const [id, x] of Object.entries(cle)) { let seen = false;
+      for (const k of Object.keys(C)) { const r = (cs[k] || []).find(z => String(z.PLAYER_ID) === String(id)); if (!r) { delete x[k]; continue } seen = true; x[k] = C[k].map(c => rd(c, r[c])); x.gp = r.GP ?? r.G ?? x.gp; x.min = Math.round(r.MIN || 0) }
+      if (!seen) delete cle[id] }
   }
   for (const x of Object.values(cle)) { delete x.t; x.rk = Object.keys(x.rk).length ? x.rk : undefined }
   window.__TRK = JSON.stringify({ season: S, updated: '', source: 'NBA.com (stats.nba.com), regular season: Synergy play types, hustle stats and Second Spectrum player tracking', cols: C, q: Qd.length, pt, p: cle, t: T });
