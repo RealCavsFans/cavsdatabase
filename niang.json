@@ -5,13 +5,6 @@
  "url": "https://www.espn.com/mens-college-basketball/game/_/gameId/401921811",
  "next": [
   {
-   "d": "2026-11-25",
-   "opp": "Arizona State",
-   "ha": "N",
-   "t": "2:00 PM ET",
-   "tv": "CBSSN"
-  },
-  {
    "d": "2026-11-26",
    "opp": "SMU",
    "ha": "N",
@@ -24,6 +17,13 @@
    "ha": "H",
    "t": "9:00 PM ET",
    "tv": "SEC Network"
+  },
+  {
+   "d": "2026-12-05",
+   "opp": "Hofstra",
+   "ha": "H",
+   "t": "2:00 PM ET",
+   "tv": "SECN+"
   }
  ],
  "season": {
