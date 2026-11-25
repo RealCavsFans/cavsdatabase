@@ -179,7 +179,7 @@ function deriveCore(D,plays,F){
 /* NBA.com definitions: TOV% = TOV / possessions; FTA rate = FTA / FGA; OREB% = offensive rebounds of missed field goals, team rebounds included / all rebounds of those misses (Nov 6; falls back to player rebounds when the play-by-play counts aren't there) */
 function factors(a,b){const pa=poss({fga:a.fga,oreb:a.oreb,to:a.to,fta:a.fta,np:a.np});
   return {efg:a.fga?(a.fgm+0.5*a.tpm)/a.fga:null,tov:pa>0?a.to/pa:null,/* Nov 6: NBA.com TOV% = turnovers per possession */orb:(a.forb||0)+(b.fdrb||0)>0?a.forb/(a.forb+b.fdrb):(a.oreb+b.dreb)?a.oreb/(a.oreb+b.dreb):null,ftr:a.fga?a.fta/a.fga:null}}/* Nov 6: NBA.com FTA rate = FTA / FGA */
-const FF=[['efg','Shooting','eFG%',true],['tov','Ball security','TOV%',false],['orb','Second chances','Offensive rebound rate',true],['ftr','Getting to the line','Free throw rate',true]];
+const FF=[['efg','Shooting','eFG%',true],['tov','Ball security','TOV%',false],['orb','Second chances','Offensive rebound rate',true],['ftr','Getting to the line','FTA rate',true]];
 const CLE='5',C3=Math.sqrt(23.75**2-22**2);
 
 /* ---------- game highs (Nov 1): "most since", career and season highs for the recap ----------
