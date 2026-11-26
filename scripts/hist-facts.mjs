@@ -17,7 +17,7 @@ const rows = [];
 for (const g of games) {
   if (+g.s.slice(0, 4) >= curStart) continue;   // this season stays with the game pages
   if (!g.pl || g.p == null) continue;
-  const win = g.p > g.op, opp = NICK[g.o] || g.o, res = 'a ' + Math.max(g.p, g.op) + '–' + Math.min(g.p, g.op) + (win ? ' win over the ' : ' loss to the ') + opp;
+  const win = g.p > g.op, opp = NICK[g.o] || g.o, res = (/^(8|18)/.test(String(Math.max(g.p, g.op))) ? 'an ' : 'a ') + Math.max(g.p, g.op) + '–' + Math.min(g.p, g.op) + (win ? ' win over the ' : ' loss to the ') + opp;
   let best = null;
   for (const r of g.pl) {
     const [nm0, pts, reb, ast, tpm, stl, blk] = r; const nm = FULL[nm0] || nm0;
