@@ -4855,37 +4855,7 @@
   "status": "final",
   "score": "102-121",
   "result": "L",
-  "refs": [
-   [
-    "Crew chief",
-    "Josh Tiven",
-    "58"
-   ],
-   [
-    "Referee",
-    "Tre Maddox",
-    "23"
-   ],
-   [
-    "Umpire",
-    "Biniam Maru",
-    "94"
-   ]
-  ],
-  "qs": {
-   "cle": [
-    34,
-    27,
-    24,
-    17
-   ],
-   "opp": [
-    23,
-    33,
-    26,
-    39
-   ]
-  },
+  "top": "Donovan Mitchell: 30 pts, 4 reb, 4 ast",
   "out": [
    "Nae'Qwan Tomlin",
    "Evan Mobley"
@@ -5062,7 +5032,38 @@
     "2"
    ]
   ],
-  "top": "Donovan Mitchell: 30 pts, 4 reb, 4 ast"
+  "qs": {
+   "cle": [
+    34,
+    27,
+    24,
+    17
+   ],
+   "opp": [
+    23,
+    33,
+    26,
+    39
+   ]
+  },
+  "refs": [
+   [
+    "Crew chief",
+    "Josh Tiven",
+    "58"
+   ],
+   [
+    "Referee",
+    "Tre Maddox",
+    "23"
+   ],
+   [
+    "Umpire",
+    "Biniam Maru",
+    "94"
+   ]
+  ],
+  "boxSrc": "NBA"
  },
  "2026-11-29": {
   "url": "https://www.nba.com/game/mia-vs-cle-0022600305/box-score",
