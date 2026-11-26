@@ -1838,7 +1838,7 @@ const nr14=L14.CLE?sgn(L14.CLE[0]):'—';
   .forEach(([k,v])=>{const d=el('div');const dd=el('dd');const m=String(v).match(/^(.*?) (\(.*\))$/);if(m)dd.append(m[1],el('small',null,' '+m[2]));else dd.textContent=v;d.append(el('dt',null,k),dd);sp.appendChild(d)});
 /* conference and division rank sit beside the record tiles, with the standings link under them */
 {const box=el('div','rkbox');[['East rank',SEASON.eastRank,15],['Central rank',SEASON.centralRank,5]].forEach(([k,v,n])=>{const dl=el('dl','rk');const dd=el('dd',null,v&&v!=='—'?v:'—');if(v&&v!=='—')dd.appendChild(el('small',null,'of '+n));dl.append(el('dt',null,k),dd);box.appendChild(dl)});
- const a=el('a','home-std','Standings →');a.href='/schedule';a.dataset.go='schedule';box.appendChild(a);document.querySelector('.grec .gbig').appendChild(box)}
+ const a=el('a','home-std','Standings →');a.href='/schedule';a.dataset.go='schedule';box.appendChild(a);document.querySelector('.grec .gbig').appendChild(box);/* Nov 26 (Luka): double-digit records: the tiles scale down on phones so the ranks stay on one line */const gb=document.querySelector('.grec .gbig');const cnt=()=>{gb.dataset.n=gb.querySelectorAll('.flap').length};cnt();try{new MutationObserver(cnt).observe(gb,{childList:true,subtree:true})}catch(e){}}
 const strip=document.getElementById('strip');for(let i=0;i<82;i++)strip.appendChild(el('span',res[i]==='W'?'w':res[i]==='L'?'l':null));
 /* season pace: games over/under .500 as a line over the tracker, dashed out to game 82 at the current pace (from game 5 on) */
 if(res.length>=5){const wins=res.filter(x=>x==='W').length,pace=Math.round(wins/res.length*82);let d=0;const pts=[[0,0]];res.forEach((x,i)=>{d+=x==='W'?1:-1;pts.push([i+1,d])});
@@ -7610,5 +7610,6 @@ document.addEventListener('click',e=>{const th=e.target.closest&&e.target.closes
   T.forEach(([sel])=>{const C=document.querySelector(sel);if(!C)return;new MutationObserver(ms=>{if(ms.some(m=>[...m.addedNodes].some(x=>x.nodeType===1&&!x.classList.contains('hx-clb')))){C.dataset.clo='';run()}}).observe(C,{childList:true,subtree:true})});
   mq.addEventListener('change',run);run()})();</script>
 <style>/* Nov 25 (Luka): the pipeline as a row under the cap box (non-game days, computers) */section.pl1.pl1-main{margin-top:16px;padding:16px 20px}section.pl1.pl1-main .pl1-g{grid-template-columns:repeat(auto-fit,minmax(138px,1fr));gap:8px}section.pl1.pl1-main .pl1-t{padding:8px 9px;gap:5px}section.pl1.pl1-main .pl1-hs{width:32px;height:32px}section.pl1.pl1-main .pl1-n{font-size:.9375rem}section.pl1.pl1-main .pl1-s{gap:8px;padding:3px 6px}section.pl1.pl1-main .pl1-s b{font-size:.875rem}section.pl1.pl1-main .pl1-nx{font-size:.6875rem}</style>
+<style>/* Nov 26 (Luka): record tiles scale for 3 and 4 digits on phones; ranks stay on one line */@media (max-width:600px){.grec .gbig[data-n="3"] .flap{zoom:.68}.grec .gbig[data-n="4"] .flap,.grec .gbig[data-n="5"] .flap{zoom:.58}.grec .gbig[data-n="3"]>i,.grec .gbig[data-n="4"]>i{width:16px}.rkbox .rk dd{white-space:nowrap}.grec .gbig[data-n="3"] .flap b,.grec .gbig[data-n="4"] .flap b,.grec .gbig[data-n="5"] .flap b{font-size:60px}}</style>
 </body>
 </html>
