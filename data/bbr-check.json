@@ -182,7 +182,16 @@
    "at": "2026-11-25T08:46:05.408Z",
    "second": true,
    "players": 22
+  },
+  "0022600057": {
+   "v": 2,
+   "et": "2026-11-25",
+   "opp": "NY",
+   "status": "match",
+   "url": "https://www.basketball-reference.com/boxscores/202611250NYK.html",
+   "at": "2026-11-26T18:37:06.752Z",
+   "players": 22
   }
  },
- "checked": "2026-11-25T08:46:05.408Z"
+ "checked": "2026-11-26T18:37:06.752Z"
 }
