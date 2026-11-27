@@ -5,13 +5,6 @@
  "url": "https://www.espn.com/mens-college-basketball/game/_/gameId/401921669",
  "next": [
   {
-   "d": "2026-11-26",
-   "opp": "SMU",
-   "ha": "N",
-   "t": "7:00 PM ET",
-   "tv": "CBSSN"
-  },
-  {
    "d": "2026-12-01",
    "opp": "Wake Forest",
    "ha": "H",
@@ -24,6 +17,13 @@
    "ha": "H",
    "t": "2:00 PM ET",
    "tv": "SECN+"
+  },
+  {
+   "d": "2026-12-13",
+   "opp": "Houston",
+   "ha": "N",
+   "t": "3:30 PM ET",
+   "tv": "ESPN"
   }
  ],
  "season": {
