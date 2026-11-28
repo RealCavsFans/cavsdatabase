@@ -1,0 +1,14 @@
+// Cloudflare Worker config: serve the repo as static files; only /pbp and /live.html run worker/index.js.
+{
+  "name": "cavsdatabase",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-09-01",
+  // Nov 14: every 5 minutes, start the GitHub jobs that are due (worker/timer.js); GitHub's own scheduler skips runs
+  "triggers": { "crons": ["*/5 * * * *"] },
+  "assets": {
+    "directory": "./",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/pbp", "/nba", "/live.html", "/live", "/coffee", "/newsletter", "/stats", "/stats/*", "/players/*", "/err", "/records", "/injury-report"]
+  }
+}

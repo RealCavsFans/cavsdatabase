@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /mockups/
+Disallow: /nl/
+Disallow: /embed/
+Disallow: /pbp
+
+Sitemap: https://cavsdatabase.com/sitemap.xml

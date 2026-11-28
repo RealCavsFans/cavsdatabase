@@ -1,0 +1,584 @@
+{
+ "_about": "Nov 25 (Luka): one glossary for the whole site. Hover a term on a computer or tap it on a phone for a plain explanation (t) and, where it applies, why our number can differ from other sites (w). a = other spellings of the same label. The technical detail stays in each card's Stats explained.",
+ "terms": {
+  "ORTG": {
+   "n": "Offensive rating",
+   "t": "Points scored per 100 possessions.",
+   "w": "We count possessions from the play-by-play, so it can differ a few tenths from NBA.com.",
+   "a": [
+    "Off rtg",
+    "Offensive rating",
+    "ON ORTG"
+   ]
+  },
+  "DRTG": {
+   "n": "Defensive rating",
+   "t": "Points allowed per 100 possessions. Lower is better.",
+   "w": "We count possessions from the play-by-play, so it can differ a few tenths from NBA.com.",
+   "a": [
+    "Def rtg",
+    "Defensive rating",
+    "ON DRTG"
+   ]
+  },
+  "NET RTG": {
+   "n": "Net rating",
+   "t": "Points scored minus points allowed per 100 possessions. Above zero means outscoring opponents.",
+   "w": "We count possessions from the play-by-play, so it can differ a few tenths from NBA.com.",
+   "a": [
+    "Net rating",
+    "Net",
+    "ON NET",
+    "Net rtg"
+   ]
+  },
+  "Net, last 2 wks": {
+   "t": "Net rating over the last two weeks of games: who's playing well right now."
+  },
+  "Pace": {
+   "t": "Possessions per 48 minutes: how fast a team plays.",
+   "w": "Counted from the play-by-play, so it can differ slightly from NBA.com."
+  },
+  "Poss": {
+   "n": "Possessions",
+   "t": "Times a team had the ball. Here also how much the number can be trusted: Noise under 100, Thin 100–300, Fair 300–750, Solid 750+.",
+   "a": [
+    "POSS",
+    "Possessions"
+   ]
+  },
+  "Noise": {
+   "t": "Under 100 possessions: too few for the number to mean much yet."
+  },
+  "Thin": {
+   "t": "100–300 possessions: a hint, still easily swung by luck."
+  },
+  "Fair": {
+   "t": "300–750 possessions: starting to mean something."
+  },
+  "Solid": {
+   "t": "750+ possessions: a number you can lean on."
+  },
+  "Adj. net": {
+   "n": "Adjusted net rating",
+   "t": "Net rating with the luck of opponents' threes and free throws taken out: they count at the opponents' average instead of what they actually made.",
+   "w": "Not an NBA.com stat; it's the Nylon Calculus luck adjustment.",
+   "a": [
+    "ADJ. NET"
+   ]
+  },
+  "RAPM": {
+   "n": "Regularized adjusted plus-minus",
+   "t": "How many points per 100 possessions a player adds over an average player, with every teammate and opponent on the floor accounted for.",
+   "w": "Our own fit of every NBA possession with the published method (Sill, 2010). Other sites' RAPM uses different settings and seasons, so numbers differ a bit."
+  },
+  "+/-": {
+   "n": "Plus-minus",
+   "t": "The score difference while he (or the group) was on the floor.",
+   "a": [
+    "Plus-minus",
+    "+/- TOTAL",
+    "+/- PER G"
+   ]
+  },
+  "ON +/-": {
+   "t": "The team's score difference with him on the floor."
+  },
+  "OFF +/-": {
+   "t": "The team's score difference with him on the bench."
+  },
+  "ON − OFF": {
+   "t": "How much better (or worse) the team did with him on than off. Raw: it doesn't adjust for who he played with.",
+   "a": [
+    "ON - OFF"
+   ]
+  },
+  "TS%": {
+   "n": "True shooting",
+   "t": "Scoring efficiency that counts threes and free throws: points per shooting chance.",
+   "a": [
+    "True shooting",
+    "TS"
+   ]
+  },
+  "eFG%": {
+   "n": "Effective field goal %",
+   "t": "Field goal % with a made three worth 1.5 makes, since it's worth more points.",
+   "a": [
+    "EFG%"
+   ]
+  },
+  "rTS%": {
+   "n": "Relative true shooting",
+   "t": "True shooting compared with the NBA average. Plus is better than average."
+  },
+  "USG%": {
+   "n": "Usage",
+   "t": "Share of the team's plays he finished with a shot, free throws or a turnover while on the floor.",
+   "a": [
+    "Usage"
+   ]
+  },
+  "AST%": {
+   "n": "Assist rate",
+   "t": "Share of teammates' made shots he assisted while on the floor."
+  },
+  "TOV%": {
+   "n": "Turnover rate",
+   "t": "Turnovers per 100 plays used. Lower is better.",
+   "a": [
+    "TOV% (lower wins)"
+   ]
+  },
+  "ORB%": {
+   "n": "Offensive rebound rate",
+   "t": "Share of their own missed shots a team (or player) rebounded.",
+   "w": "Includes team rebounds, like NBA.com.",
+   "a": [
+    "OREB%",
+    "Offensive rebound rate"
+   ]
+  },
+  "DRB%": {
+   "n": "Defensive rebound rate",
+   "t": "Share of opponents' misses a team (or player) rebounded.",
+   "w": "Includes team rebounds, like NBA.com.",
+   "a": [
+    "DREB%"
+   ]
+  },
+  "TRB%": {
+   "n": "Rebound rate",
+   "t": "Share of all missed shots rebounded while on the floor.",
+   "a": [
+    "REB%"
+   ]
+  },
+  "STL%": {
+   "n": "Steal rate",
+   "t": "Steals per 100 opponent possessions while on the floor."
+  },
+  "BLK%": {
+   "n": "Block rate",
+   "t": "Share of opponents' two-point tries blocked while on the floor."
+  },
+  "FTA rate": {
+   "n": "Free throw rate",
+   "t": "Free throw attempts per field goal attempt: how often they get to the line.",
+   "a": [
+    "FTAr",
+    "Getting to the line"
+   ]
+  },
+  "3PAr": {
+   "n": "Three-point rate",
+   "t": "Share of field goal attempts that are threes.",
+   "a": [
+    "3PT rate",
+    "3PT rate"
+   ]
+  },
+  "Pts/poss": {
+   "n": "Points per possession",
+   "t": "Points scored each time they had the ball.",
+   "a": [
+    "Per",
+    "Points per chance",
+    "PPP"
+   ]
+  },
+  "Second chance": {
+   "t": "Points scored after an offensive rebound.",
+   "w": "From the NBA's official box score, so it matches NBA.com.",
+   "a": [
+    "2ND CH."
+   ]
+  },
+  "Fast-break points": {
+   "t": "Points the official scorer counts as fast-break baskets.",
+   "w": "A scorer's judgment call, so it won't match our transition count exactly.",
+   "a": [
+    "Fast break",
+    "FAST BREAK"
+   ]
+  },
+  "Bench points": {
+   "t": "Points scored by players who didn't start."
+  },
+  "PAINT": {
+   "n": "Points in the paint",
+   "t": "Points from shots inside the painted area.",
+   "a": [
+    "Points in the paint",
+    "Paint",
+    "In the paint"
+   ]
+  },
+  "Transition": {
+   "t": "Possessions that start with a steal or defensive rebound and end in a shot, foul or turnover within 7 seconds.",
+   "w": "Our count from the play-by-play; the NBA's fast-break points is the scorer's call, so they differ."
+  },
+  "Halfcourt": {
+   "t": "Every possession that isn't transition: the offense gets set up."
+  },
+  "Clutch": {
+   "t": "The last five minutes with the score within five points, the NBA's definition."
+  },
+  "Garbage time": {
+   "t": "Late minutes with the game decided, when starters mostly sit.",
+   "w": "We use the Cleaning the Glass rule; other sites define it differently or not at all."
+  },
+  "At the rim": {
+   "t": "Shots within 4 feet of the basket."
+  },
+  "Short midrange": {
+   "t": "Two-pointers from 4 to 14 feet."
+  },
+  "Long midrange": {
+   "t": "Two-pointers from 14 feet out to the three-point line."
+  },
+  "Corner 3": {
+   "t": "Threes from along the baseline, the shortest three (22 feet)."
+  },
+  "Above-the-break 3": {
+   "t": "Every three that isn't from the corner (23 feet 9 inches)."
+  },
+  "0-2 ft": {
+   "t": "Very tight: the closest defender was within 2 feet when the shot went up.",
+   "w": "From NBA.com player tracking."
+  },
+  "2-4 ft": {
+   "t": "Tight: the closest defender was 2 to 4 feet away.",
+   "w": "From NBA.com player tracking."
+  },
+  "4-6 ft": {
+   "t": "Open: the closest defender was 4 to 6 feet away.",
+   "w": "From NBA.com player tracking."
+  },
+  "6+ ft": {
+   "t": "Wide open: no defender within 6 feet.",
+   "w": "From NBA.com player tracking."
+  },
+  "Unassisted FG points": {
+   "t": "Points from baskets he made without an assist: shots he created himself."
+  },
+  "Putback points a game": {
+   "t": "Points from scoring right after an offensive rebound."
+  },
+  "PTS CREATED": {
+   "n": "Points created",
+   "t": "His own points plus the points from baskets he assisted."
+  },
+  "Run differential": {
+   "t": "Unanswered scoring runs of 10 or more points: how many each team had and how much they swung games."
+  },
+  "First 3 min": {
+   "t": "Score difference in the first three minutes of each quarter."
+  },
+  "Last 3 min": {
+   "t": "Score difference in the last three minutes of each quarter."
+  },
+  "Led after": {
+   "t": "Games the Cavs led at the end of that quarter, and their record in them."
+  },
+  "Trailed after": {
+   "t": "Games the Cavs trailed at the end of that quarter, and their record in them."
+  },
+  "Lead changes": {
+   "t": "Times the lead switched from one team to the other."
+  },
+  "Times tied": {
+   "t": "Times the score was tied after the opening tip."
+  },
+  "Longest lead held": {
+   "t": "The longest stretch one team stayed ahead without the lead changing."
+  },
+  "Biggest run": {
+   "t": "The most points in a row by one team without the other scoring."
+  },
+  "Runs and droughts": {
+   "t": "Runs: 8–0 or better. Droughts: 3+ minutes without a made basket."
+  },
+  "Win chance": {
+   "t": "ESPN's live win probability: how often a team in that spot goes on to win.",
+   "w": "ESPN's model, not ours.",
+   "a": [
+    "Win probability"
+   ]
+  },
+  "Ball security": {
+   "t": "One of the four factors: turnover rate. Lower is better."
+  },
+  "Shot quality vs shot making": {
+   "t": "Quality: how good the shots were, from where and how open. Making: how much better or worse they shot than that would predict."
+  },
+  "Remaining SOS": {
+   "n": "Remaining strength of schedule",
+   "t": "How tough the rest of the schedule is: opponents' average win %. 1st = hardest.",
+   "a": [
+    "SOS",
+    "Strength of schedule"
+   ]
+  },
+  "On pace for": {
+   "t": "The final record if they keep winning at the same rate."
+  },
+  "GB": {
+   "n": "Games back",
+   "t": "How many games behind the team at the top of the standings."
+  },
+  "L10": {
+   "n": "Last 10",
+   "t": "Record over the last 10 games."
+  },
+  "Div": {
+   "n": "Division",
+   "t": "Record against division opponents."
+  },
+  "Conf": {
+   "n": "Conference",
+   "t": "Record against Eastern Conference opponents."
+  },
+  "Back-to-backs": {
+   "t": "Games on consecutive nights.",
+   "a": [
+    "B2B"
+   ]
+  },
+  "3 games in 4 nights": {
+   "t": "Three games in four nights, one of the toughest stretches.",
+   "a": [
+    "3 in 4"
+   ]
+  },
+  "Rest edge": {
+   "t": "Games where the Cavs had more rest days than their opponent."
+  },
+  "Opp rested": {
+   "t": "The opponent had more rest than the Cavs."
+  },
+  "Both B2B": {
+   "t": "Both teams playing the second night of a back-to-back."
+  },
+  "Opp +1 day": {
+   "t": "The opponent had one more day of rest."
+  },
+  "Opp 3 in 4": {
+   "t": "The opponent was playing its third game in four nights."
+  },
+  "Time-zone changes": {
+   "t": "Games after traveling across time zones."
+  },
+  "Longest road trip": {
+   "t": "The most road games in a row."
+  },
+  "Longest homestand": {
+   "t": "The most home games in a row."
+  },
+  "Salary cap": {
+   "t": "The payroll line a team must be under to sign free agents with cap space.",
+   "a": [
+    "Cap",
+    "Under cap",
+    "Under the cap"
+   ]
+  },
+  "Tax": {
+   "n": "Luxury tax",
+   "t": "Payroll over this line at season's end pays a tax that grows the further over a team is.",
+   "a": [
+    "Luxury tax",
+    "Over tax",
+    "Over the tax"
+   ]
+  },
+  "First apron": {
+   "t": "A payroll line above the tax. Teams over it lose some trade and signing tools.",
+   "a": [
+    "1st apron",
+    "Over 1st apron",
+    "Apron 1"
+   ]
+  },
+  "Second apron": {
+   "t": "The highest payroll line. Teams over it lose the most trade and signing tools.",
+   "a": [
+    "2nd apron",
+    "Over 2nd apron",
+    "Apron 2"
+   ]
+  },
+  "Hard cap": {
+   "t": "Using certain tools locks payroll under an apron for the rest of the season, no exceptions.",
+   "a": [
+    "hard capped",
+    "hard caps at 1st apron",
+    "hard caps at 2nd apron",
+    "Hard capped at the first apron"
+   ]
+  },
+  "Room under 1st apron": {
+   "t": "How much more payroll the team can add before hitting the first apron."
+  },
+  "Projected tax bill": {
+   "t": "What the team would owe in luxury tax if payroll stayed where it is.",
+   "w": "Tax is set on the season's final payroll, so this moves with every signing, trade and waiver."
+  },
+  "Dead money": {
+   "t": "Salary still owed to players no longer on the team. It still counts on the cap."
+  },
+  "Cap holds": {
+   "t": "Placeholders on the cap for the team's own free agents and unsigned picks, until they sign or are renounced."
+  },
+  "Bird rights": {
+   "t": "Lets a team re-sign its own free agent even when over the cap.",
+   "a": [
+    "Bird"
+   ]
+  },
+  "Full Bird": {
+   "t": "Three or more seasons with the team: can be re-signed for up to the max, over the cap."
+  },
+  "Early Bird": {
+   "t": "Two seasons with the team: can be re-signed over the cap, with a smaller raise limit than Full Bird."
+  },
+  "Non-Bird": {
+   "t": "One season with the team: can be re-signed over the cap, but only for a modest raise."
+  },
+  "UFA": {
+   "n": "Unrestricted free agent",
+   "t": "Free to sign with any team."
+  },
+  "RFA": {
+   "n": "Restricted free agent",
+   "t": "Can sign an offer from another team, but his team can match it and keep him."
+  },
+  "Two-way": {
+   "t": "Splits time between the Cavs and the Charge. Can be active for up to 50 NBA games and doesn't count against the cap.",
+   "a": [
+    "Two-way contract",
+    "Two-way contracts",
+    "Two-way now",
+    "Cavs two-way"
+   ]
+  },
+  "games used": {
+   "t": "NBA games a two-way player has been active for, out of 50 a season."
+  },
+  "Exhibit 10": {
+   "t": "A non-guaranteed deal that can be turned into a two-way. If he's cut and joins the Charge, he can earn a bonus."
+  },
+  "Minimum contract": {
+   "t": "The lowest salary a player can sign for, set by years in the league.",
+   "a": [
+    "minimum"
+   ]
+  },
+  "Non-taxpayer mid-level": {
+   "n": "Non-taxpayer mid-level exception",
+   "t": "Lets a team over the cap sign free agents up to a set amount. Using it hard caps the team at the first apron.",
+   "a": [
+    "Non-taxpayer mid-level exception",
+    "NT-MLE"
+   ]
+  },
+  "Taxpayer mid-level exception": {
+   "t": "A smaller mid-level for teams over the first apron. Using it hard caps the team at the second apron.",
+   "a": [
+    "Taxpayer mid-level",
+    "T-MLE"
+   ]
+  },
+  "Room mid-level exception": {
+   "t": "For teams under the cap: a signing tool left after using their cap space.",
+   "a": [
+    "Room mid-level",
+    "Room MLE"
+   ]
+  },
+  "Bi-annual exception": {
+   "t": "A small signing tool usable every other year. Using it hard caps the team at the first apron.",
+   "a": [
+    "Bi-annual"
+   ]
+  },
+  "Trade exception": {
+   "t": "A credit from sending out more salary than taken back in a trade. Lets the team absorb a player later without matching salary, until it expires.",
+   "a": [
+    "TPE"
+   ]
+  },
+  "Cash sent": {
+   "t": "Cash the Cavs have sent in trades this season, out of the league's yearly limit.",
+   "a": [
+    "Cash received",
+    "Cash in trades",
+    "Send cash in a trade"
+   ]
+  },
+  "Draft rights": {
+   "t": "The Cavs control his NBA rights. He can keep playing elsewhere until they sign him."
+  },
+  "Firsts held": {
+   "t": "First-round picks the Cavs own in future drafts.",
+   "a": [
+    "Second held",
+    "Seconds held"
+   ]
+  },
+  "Affiliate": {
+   "t": "A G League player on the Charge's own roster, not under an NBA contract."
+  },
+  "Assignment": {
+   "t": "A Cavs player sent down to play Charge games, still on the Cavs roster."
+  },
+  "Games missed": {
+   "t": "Games players sat out for an injury or illness this season, added up across the roster.",
+   "w": "Read from the NBA's official injury report before each tip; two-way players and rest days don't count."
+  },
+  "Salary of games missed": {
+   "t": "Salary paid for those missed games: each player's salary divided by 82, times games missed."
+  },
+  "Typical return": {
+   "t": "How long NBA players usually miss with this injury.",
+   "w": "From Hashtag Basketball's NBA injury log since 2011. A general estimate, not team guidance."
+  },
+  "Playoff trips": {
+   "t": "Seasons the Cavs made the playoffs (play-in losses don't count)."
+  },
+  "FG% allowed": {
+   "t": "What the players he guarded shot against him.",
+   "w": "From NBA.com matchup tracking, which credits partial possessions."
+  },
+  "vs their usual FG%": {
+   "t": "How much better or worse players shot against him than they normally do."
+  },
+  "partial possessions guarded": {
+   "t": "NBA tracking splits each possession by how long he guarded each player, so these add up in fractions."
+  },
+  "Him on": {
+   "t": "How the team did with him on the floor."
+  },
+  "Him off": {
+   "t": "How the team did with him on the bench."
+  },
+  "Second chances": {
+   "t": "What happens after an offensive rebound: the extra chances (and points) from grabbing their own misses."
+  },
+  "FG%": {
+   "n": "Field goal %",
+   "t": "Share of shots made, threes and twos together."
+  },
+  "3PT%": {
+   "n": "Three-point %",
+   "t": "Share of threes made.",
+   "a": [
+    "3P%"
+   ]
+  },
+  "FT%": {
+   "n": "Free throw %",
+   "t": "Share of free throws made."
+  }
+ }
+}

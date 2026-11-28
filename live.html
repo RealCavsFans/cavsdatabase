@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>/* Nov 22 (Luka): if a page breaks in a visitor's browser, tell us (the Worker sends one phone alert per error per day) */
+(function(){if(!/(^|\.)cavsdatabase\.com$/.test(location.hostname))return;var n=0;function send(m,w){try{if(n++>2||!m)return;var b=JSON.stringify({m:String(m).slice(0,300),w:String(w||'').slice(0,300),p:location.href.slice(0,300),ua:navigator.userAgent.slice(0,200)});if(navigator.sendBeacon)navigator.sendBeacon('/err',new Blob([b],{type:'application/json'}));else fetch('/err',{method:'POST',body:b,keepalive:true})}catch(e){}}
+addEventListener('error',function(e){if(!e||!e.message)return;var f=e.filename||'';if(f&&!/cavsdatabase\.com/.test(f))return;send(e.message,f.replace(/^https?:\/\/[^/]+/,'')+':'+(e.lineno||0)+':'+(e.colno||0))});
+addEventListener('unhandledrejection',function(e){var r=e&&e.reason;if(!r||!r.stack||!/cavsdatabase\.com/.test(r.stack))return;send((r.name||'Error')+': '+(r.message||r),String(r.stack).split('\n')[1]||'')})})();</script>
+<script>/* Nov 22 (Luka): season stats get their own address for search, /stats/2026-27. The page reads its season from the
+   path the same way it reads ?g=s2026-27, so every season link keeps working */
+(function(){var m=/^\/stats\/(\d{4}-\d\d)\/?$/.exec(location.pathname);if(!m)return;var s='s'+m[1],g0=URLSearchParams.prototype.get;
+ URLSearchParams.prototype.get=function(k){var v=g0.call(this,k);return v==null&&k==='g'?s:v}})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Live game · Cavs Database</title>
+<meta name="description" content="Live Cavaliers box score, shot chart, lineups, assists, four factors and win probability, updated every 30 seconds.">
+<meta name="theme-color" content="#860038">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cavs Database">
+<meta property="og:url" content="https://cavsdatabase.com/live">
+<meta property="og:title" content="Live game · Cavs Database">
+<meta property="og:description" content="Live Cavaliers box score, shot chart, lineups, assists, four factors and win probability, updated every 30 seconds.">
+<meta property="og:image" content="https://cavsdatabase.com/og/live.jpg?v=1">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="cavs_db live game tracker: box score, shot chart, lineups, assists and win probability">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cavsdatabase.com/og/live.jpg?v=1">
+<meta name="twitter:site" content="@realcavsfans">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icon-180.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="apple-mobile-web-app-title" content="cavs_db">
+<link rel="stylesheet" href="/a/live.66a7f9673d.css">
+<script>
+/* Nov 19 (Luka): small sample tag; the words come from CSS so share images and table text don't pick them up */function ssT(t){const e=document.createElement('small');e.className='ss-tag';e.dataset.t=t;return e}
+/* Nov 4: team logos drawn at the same visual size. Each mark is scaled by how much of its square image the artwork fills, relative to the Cavs C (made from img/tl by alpha bounding box). Applies to every logo from /img/tl or /img/tl5, also ones added later. */
+(function(){const SC=window.LOGO_SC={"atl":0.92,"bkn":0.92,"bos":0.92,"cha":0.92,"dal":0.92,"den":0.92,"det":0.92,"gs":0.92,"hou":1.07,"ind":0.96,"lac":0.92,"lal":1.18,"mem":0.95,"mia":0.95,"mil":1.06,"min":0.92,"no":1.25,"ny":1.04,"okc":1.23,"orl":1.1,"por":0.97,"sa":1.03,"tor":0.92,"utah":1.12,"wsh":0.92};const fit=im=>{const m=/\/img\/tl5?\/([a-z]+)\.png/.exec(im.getAttribute("src")||"");if(!m||im.dataset.lsc)return;im.dataset.lsc=1;const v=SC[m[1]];if(v)im.style.scale=String(v)};const all=r=>{if(r.tagName==="IMG")fit(r);else if(r.querySelectorAll)r.querySelectorAll("img").forEach(fit)};const go=()=>{all(document.body);new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(all))).observe(document.body,{childList:true,subtree:true})};if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();
+</script>
+</head>
+<body>
+<script>/* Nov 21 (Luka): site rule: a percentage whose decimal is zero drops it (61.0% -> 61%, 100.0% -> 100%; 61.4% stays).
+   Applied to everything the page shows, the saved images included (their text is drawn with fillText). */
+(function(){const RE=/(\d)\.0%/g,fx=v=>v.indexOf('.0%')<0?v:v.replace(RE,'$1%');window.cdbPct0=fx;
+ try{const P=CanvasRenderingContext2D.prototype;['fillText','strokeText','measureText'].forEach(k=>{const o=P[k];P[k]=function(t,...a){return o.call(this,typeof t==='string'?fx(t):t,...a)}})}catch(e){}
+ const skip=n=>{const p=n.parentNode;return !p||/^(SCRIPT|STYLE|TEXTAREA|INPUT|OPTION)$/.test(p.nodeName)||(p.isContentEditable)};
+ const fix=n=>{if(n.nodeType===3){if(!skip(n)){const v=n.nodeValue,w=fx(v);if(w!==v)n.nodeValue=w}return}if(n.nodeType!==1||/^(SCRIPT|STYLE|TEXTAREA)$/.test(n.nodeName))return;if((n.textContent||'').indexOf('.0%')<0)return;const tw=document.createTreeWalker(n,NodeFilter.SHOW_TEXT);let t;while((t=tw.nextNode())){if(skip(t))continue;const v=t.nodeValue,w=fx(v);if(w!==v)t.nodeValue=w}};
+ const mo=new MutationObserver(ms=>{for(const m of ms){if(m.type==='characterData')fix(m.target);else m.addedNodes.forEach(fix)}});
+ const go=()=>{fix(document.body);mo.observe(document.body,{childList:true,subtree:true,characterData:true})};if(document.body)go();else addEventListener('DOMContentLoaded',go)})();</script>
+
+<header class="sh"><div class="sh-in"><a class="sh-b" href="/" aria-label="cavs_db home"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M14 26L40 50L14 74" stroke="#F2B231" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="70" cy="64" r="20" fill="#F2B231"/><path d="M50 64H90M70 44V84M57 49C63 55 63 73 57 79M83 49C77 55 77 73 83 79" stroke="#860038" stroke-width="2" fill="none"/></svg><span>cavs<i>_db</i></span></a><nav class="sh-n" aria-label="Site"><a href="/">Home</a><a href="/schedule">Schedule</a><a href="/live.html" class="on" aria-current="page">Stats</a><a href="/roster">Roster</a><a href="/staff">Staff</a><a href="/cap">Cap</a><a href="/assets">Assets</a><a href="/moves">Transactions</a><a href="/charge">Charge</a><a href="/history">History</a><a href="/media">Media</a><a href="/resources">Resources</a></nav><form class="sh-s" action="/" method="get" role="search"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.82)" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input name="s" type="search" placeholder="Search" aria-label="Search the site"></form><button type="button" class="tt" id="theme" aria-label="Color theme">Auto</button></div></header><nav class="sh-sub" aria-label="Pages"><a href="/schedule">Schedule</a><a href="/live.html" id="sub-live" class="on" aria-current="page">Live Game</a><a href="/stats/2026-27" id="sub-season">Season Stats</a></nav>
+<main class="wrap">
+ <div class="pick gp-old"><label for="gsel">Game</label><select id="gsel"></select></div>
+ <div class="gp2" id="gp2"></div>
+ <section class="card sb" id="sb" aria-live="polite"><div class="empty">Loading…</div></section>
+ <div class="card rpw" id="rpw" hidden></div>
+ <div class="meta"><span id="upd"></span></div>
+ <div class="stick"><nav class="seg" role="tablist" id="seg" aria-label="Sections"></nav><div class="per" id="per" role="group" aria-label="Period"></div></div>
+ <div id="view"></div>
+</main>
+<section class="nlft" id="nlft" hidden aria-label="Cavs &amp; Coffee newsletter"><div><div class="t"><b><img src="/nl/icon-mug.png" alt="" width="42" height="32">Cavs <i>&amp;</i> Coffee</b><p>Your Cavs news, served unfiltered.</p><small>Free · No ads · All Cavs</small></div><form action="https://buttondown.com/api/emails/embed-subscribe/cavscoffee" method="post"><input type="email" name="email" required placeholder="you@email.com" aria-label="Your email"><input type="hidden" name="embed" value="1"><button type="submit">Pour me a cup</button></form></div></section>
+<div class="foot">Lineups, minutes and possessions are rebuilt from the play-by-play and may differ slightly from official numbers.
+<details class="hwc"><summary>How we count</summary><ul>
+<li><b>Possessions:</b> counted play by play, the way NBA.com counts them. A possession ends on a made basket, a defensive rebound, a turnover or the end of a period; an offensive rebound continues it. Every game is checked each morning against NBA.com’s official count (pbpstats until NBA.com has it).</li>
+<li><b>Pace:</b> 48 × (both teams’ possessions ÷ 2) ÷ (minutes ÷ 5).</li>
+<li><b>ORTG / DRTG / NET RTG:</b> points scored per 100 of the Cavs’ possessions, points allowed per 100 of the opponent’s possessions, and ORTG minus DRTG.</li>
+<li><b>TS% (true shooting):</b> points ÷ (2 × (FGA + 0.44 × FTA)). <b>eFG%:</b> (FGM + 0.5 × 3PM) ÷ FGA. <b>Relative TS% (rTS%):</b> TS% minus the whole NBA’s TS% this season (every team, not by position). <b>FTA rate:</b> free throw attempts ÷ FGA. <b>3PT rate:</b> threes ÷ FGA.</li>
+<li><b>TOV%:</b> turnovers per possession. <b>AST%:</b> assisted share of made shots. <b>STL%:</b> steals per 100 opponent possessions. <b>BLK%:</b> share of opponent twos blocked.</li>
+<li><b>Rebounds:</b> REB, OREB and DREB in box scores are players’ rebounds, matching the NBA box score. <b>OREB%, DREB% and REB%</b> use every rebound of a missed shot, team rebounds included (a miss that goes out of bounds), as NBA.com counts them.</li>
+<li><b>Transition:</b> a shot, foul or turnover within 7 seconds of a steal or defensive rebound; dead-ball turnovers don’t start one. It won’t always match the NBA’s fast break points, which are scored by hand.</li>
+<li><b>Garbage time</b> (the “No garbage time” view): 4th quarter or overtime, a lead of 25+ with 9–12 minutes left, 20+ with 6–9 left or 10+ with 6 or fewer left, and no more than two of the 10 starters on the floor. Only the last unbroken stretch to the final buzzer counts, the Cleaning the Glass rule. That view also leaves out possessions that start with under 2 seconds left in the 1st–3rd quarters. End-of-quarter heaves are never shot attempts in our counts.</li>
+<li><b>Shot zones:</b> at the rim within 4 ft; short midrange 4–14 ft; long midrange 14 ft to the arc; corner 3; above-the-break 3. Every shot, garbage time included.</li>
+<li><b>Averages over several games:</b> every rate is figured from the totals of those games (all points ÷ all possessions, all rebounds ÷ all chances), never an average of each game’s rate, so the game log, team stats and splits agree. Percentages are shown to one decimal.</li>
+<li><b>NBA ranks:</b> every team’s ratings, pace, rebound rates and box-score stats come from the NBA’s own box scores and play-by-play, counted the same way as the Cavs’. A few play-by-play splits (how possessions started) use pbpstats.</li>
+</ul></details></div>
+<nav class="sh-bar" aria-label="Sections"><a href="/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</a><a href="/schedule"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Schedule</a><a href="/stats/2026-27" class="on" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Stats</a><a href="/roster"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M16 14.6c2.8.2 4.7 2 5.4 5"/></svg>Team</a><a href="/cap"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 8.5c-.6-1-1.8-1.6-3-1.6-1.8 0-3 1-3 2.4 0 3.3 6.2 1.9 6.2 5.1 0 1.4-1.4 2.6-3.2 2.6-1.4 0-2.7-.7-3.2-1.6M12 5v2M12 17v2"/></svg>Cap</a><a href="/history"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>More</a></nav>
+<script src="/live-core.js?v=db97613294"></script>
+<script src="/a/live.3379e70fc0.js"></script>
+<script>/* stat bars grow in: any bar sized by an inline % width (or height) fills from zero the first time it scrolls into view on each page; off for reduced motion */
+(function(){if(!('IntersectionObserver' in window)||!Element.prototype.animate)return;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  let seen=new WeakSet();const io=new IntersectionObserver(es=>{es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const t=e.target,v=t.dataset.bgv;
+    t.animate(v?[{transform:'scaleY(0)'},{transform:'scaleY(1)'}]:[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{duration:750,easing:'cubic-bezier(.2,.75,.25,1)',delay:Math.min(240,(+t.dataset.bgi||0)*40),fill:'backwards'})})},{threshold:.2});
+  const scan=()=>{let k=0;document.querySelectorAll('[style*="width"],[style*="height"]').forEach(x=>{if(seen.has(x))return;const s=x.style;const w=/%$/.test(s.width),h=/%$/.test(s.height)&&!w;if(!w&&!h)return;
+    if(x.closest('[hidden],.cap-stage,.shot-stage')||x.textContent.trim().length>6)return;if(document.documentElement.classList.contains('rfx')&&x.closest('#view,#sb')){seen.add(x);return}/* Nov 13 (Luka): refresh redraws don't regrow the bars */const r=x.getBoundingClientRect();if(!r.width&&!r.height)return;if(w&&r.height>28)return;if(h&&r.width>60)return;
+    seen.add(x);x.style.transformOrigin=h?'bottom':'left';if(h)x.dataset.bgv=1;x.dataset.bgi=k++%8;io.observe(x)})};
+  let tm=0;const later=()=>{if(tm)return;tm=setTimeout(()=>{tm=0;scan()},120)};new MutationObserver(later).observe(document.body,{childList:true,subtree:true});
+  addEventListener('popstate',()=>{seen=new WeakSet();later()});window.cdbBarsReset=()=>{seen=new WeakSet();later()};later()})();
+
+/* Nov 13 UX audit: a game-picker list that would run past the right edge of a small phone shifts left to fit */
+(function(){const fit=()=>document.querySelectorAll('.sgp-l').forEach(l=>{if(!l.offsetParent)return;l.style.marginLeft='';const r=l.getBoundingClientRect(),o=r.right-(innerWidth-8);if(o>0)l.style.marginLeft=(-o)+'px'});addEventListener('click',()=>requestAnimationFrame(fit),true);addEventListener('resize',fit);setTimeout(fit,1500)})();
+</script>
+<script>/* Nov 14 (Luka): terminal bar fills snap to whole blocks, so no bar ends in a sliver of a block */
+(function(){const SEL='.ppx .pct>i,.dbt .rk .t>i,.ppx-pb .t>i,.ppx-share .t>i,.ppx-elig>i,.ppx-ar .b>i,.wf-bar>i,.tkc-tk>i,.tkc-h>i';
+ const snap=()=>{const pitch=matchMedia('(max-width:640px)').matches?9:12;/* the width stays as set (share images read it); min/max-width hold the snapped size */document.querySelectorAll(SEL).forEach(i=>{const w=i.style.width;if(!/%$/.test(w))return;const p=parseFloat(w);const W=i.parentElement.getBoundingClientRect().width;if(!W)return;const n=p>0?Math.max(1,Math.round(W*p/100/pitch)):0;const px=n*pitch+'px';if(i.style.maxWidth!==px){i.style.maxWidth=px;i.style.minWidth=px}})};
+ let t=0;const go=()=>{clearTimeout(t);t=setTimeout(snap,80)};new MutationObserver(go).observe(document.body,{childList:true,subtree:true});addEventListener('resize',go);go()})();</script>
+<script>/* Nov 17 (Luka): tapping a menu or tab-bar link for the page you're already on scrolls back to the top */document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[href]');if(!a||e.metaKey||e.ctrlKey||e.shiftKey||a.target==='_blank')return;let u;try{u=new URL(a.href,location.href)}catch(_){return}if(u.origin!==location.origin||u.hash)return;const norm=x=>x.replace(/\/index\.html$/,'/').replace(/\/$/,'')||'/';const isSt=x=>/^\/stats/.test(x.pathname)||(/live\.html$/.test(x.pathname)&&/g=s20/.test(x.search));const same=(norm(u.pathname)===norm(location.pathname)&&(u.search===location.search||!u.search))||(isSt(u)&&isSt(location));if(same&&scrollY>40&&a.closest('nav,header,.tabbar,.bnav,[role=tablist],.subnav,.segs')){e.preventDefault();e.stopImmediatePropagation();scrollTo({top:0,behavior:'smooth'})}},true);</script>
+<style>.sr{position:absolute!important;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}</style>
+<script>/* Nov 22 a11y audit: the season and game views draw their headings on the fly; give the page one heading, names for
+   empty header cells and charts named after their card. Changes nothing anyone sees. */
+(function(){let t0=0;const run=()=>{t0=0;const m=document.querySelector('main')||document.body;
+ if(!document.querySelector('h1')){const h=document.createElement('h1');h.className='sr';h.id='a11y-h1';m.prepend(h)}
+ const h1=document.getElementById('a11y-h1');if(h1){const s=document.title.replace(/\s*·\s*Cavs Database$/,'');if(h1.textContent!==s)h1.textContent=s}
+ m.querySelectorAll('thead th,tr:first-child>th:first-child').forEach(th=>{if(!th.textContent.trim()&&!th.querySelector('img,svg')&&!th.hasAttribute('aria-label')){const s=document.createElement('span');s.className='sr';s.textContent=th.cellIndex===0?'Row':'Column';th.appendChild(s)}});
+ m.querySelectorAll('canvas:not([aria-hidden]):not([role])').forEach(c=>{const card=c.closest('section,.card,details,figure');const h=card&&card.querySelector('h2,h3,summary');if(h&&h.textContent.trim()){c.setAttribute('role','img');c.setAttribute('aria-label',h.textContent.trim().replace(/\s+/g,' ').slice(0,80)+' chart')}else c.setAttribute('aria-hidden','true')})};
+ new MutationObserver(()=>{if(!t0)t0=setTimeout(run,600)}).observe(document.body,{childList:true,subtree:true});run()})();
+</script>
+<script>/* Nov 22 (Luka): a page left open on a phone (a background tab, the home-screen app) can sit on an old version for hours.
+   Each build writes /app-version.json with the app file's name; when the page comes back to the front after 2+ minutes, or every 20
+   minutes while open, it checks, and if a newer version is out it reloads (right away when it returns to the front, otherwise on the next tap to another page). */
+(function(){const s=document.querySelector('script[src^="/a/live."]');if(!s||!window.fetch)return;const cur=(s.getAttribute('src').match(/live\.([0-9a-f]+)\.js/)||[])[1];if(!cur)return;
+ let stale=false,hidAt=0,last=0;const chk=()=>{last=Date.now();return fetch('/live-version.json?t='+last,{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.v&&j.v!==cur)stale=true;return stale}).catch(()=>false)};
+ document.addEventListener('visibilitychange',()=>{if(document.hidden){hidAt=Date.now();return}if(hidAt&&Date.now()-hidAt>12e4)chk().then(x=>{if(x)location.reload()})});
+ setInterval(()=>{if(!document.hidden&&Date.now()-last>12e5)chk()},6e4);setTimeout(chk,15e3);
+ const ps=history.pushState;history.pushState=function(){const r=ps.apply(this,arguments);if(stale)setTimeout(()=>location.reload(),0);return r}})();</script>
+<script>/* Nov 22 (Luka): the home-screen app has no browser back button, so it gets its own, left of the logo, whenever there's somewhere to go back to (or you're off the home page) */
+(function(){const app=window.__cdbApp||matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;if(!app)return;
+ const K='cdbDepth';const get=()=>{try{return +sessionStorage.getItem(K)||0}catch(e){return 0}},set=v=>{try{sessionStorage.setItem(K,String(Math.max(0,v)))}catch(e){}};
+ {const nv=(performance.getEntriesByType&&performance.getEntriesByType('navigation')[0]||{}).type;const same=document.referrer&&document.referrer.indexOf(location.origin)===0;if(nv==='back_forward')set(get()-1);else if(nv==='navigate')set(same?get()+1:0)}
+ const brand=document.querySelector('.gbrand,.sh-b');if(!brand)return;const b=document.createElement('button');b.type='button';b.className='app-back';b.setAttribute('aria-label','Back');b.innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>';brand.before(b);
+ const home=()=>location.pathname==='/'||location.pathname==='/home';const upd=()=>{b.hidden=!(get()>0||!home())};upd();
+ b.onclick=()=>{if(get()>0)history.back();else if(window.go)go('home');else location.href='/'};
+ const ps=history.pushState;history.pushState=function(){const r=ps.apply(this,arguments);set(get()+1);upd();return r};addEventListener('popstate',()=>{set(get()-1);upd()});
+ const st=document.createElement('style');st.textContent='.app-back{flex:none;width:38px;height:38px;margin-right:-6px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;color:#fff;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent}.app-back[hidden]{display:none}.app-back:active{opacity:.6}';document.head.appendChild(st)})();</script>
+<script>/* Nov 22 (Luka): Charge game share card. /live.html?chargecard=<ESPN game id> draws it with the same banner, terminal window and
+   status bar as the other share cards (data: pdata/charge-cards.json, scripts/charge-cards.mjs) and shows it with Save / Share. */
+(function(){const gid=new URLSearchParams(location.search).get('chargecard');if(!gid||!/^\d+$/.test(gid))return;
+ const ov=document.createElement('div');ov.className='ccard-ov';ov.innerHTML='<div class="ccard-in"><p class="ccard-msg">Making the Charge card…</p></div>';document.body.appendChild(ov);document.documentElement.style.overflow='hidden';
+ const st=document.createElement('style');st.textContent='.ccard-ov{position:fixed;inset:0;z-index:9999;background:var(--bg,#eef0f3);overflow:auto;display:flex;justify-content:center;padding:16px}.ccard-in{width:100%;max-width:560px;margin:auto 0}.ccard-in img{width:100%;height:auto;display:block;box-shadow:0 2px 12px rgba(0,0,0,.12)}.ccard-b{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.ccard-b a,.ccard-b button{flex:1;min-width:120px;text-align:center;padding:11px 14px;font:700 .875rem var(--sans,system-ui);border:1px solid var(--line,#dfe2e6);background:var(--card,#fff);color:var(--fg,#101419);text-decoration:none;cursor:pointer}.ccard-b .p{background:#860038;border-color:#860038;color:#fff}.ccard-msg{font:600 1rem var(--sans,system-ui);color:var(--muted,#6b727c);text-align:center}';document.head.appendChild(st);
+ const fail=t=>{ov.querySelector('.ccard-in').innerHTML='<p class="ccard-msg">'+t+'</p><div class="ccard-b"><a href="/charge">Back to the Charge →</a></div>'};
+ const run=async()=>{let J=null;try{J=await (await fetch('/pdata/charge-cards.json',{cache:'no-cache'})).json()}catch(e){}const d=J&&J[gid];if(!d){fail('No card for that game yet.');return}
+  const dt=new Date(d.date+'T12:00:00'),md=dt.toLocaleDateString('en-US',{month:'short',day:'numeric'}),nick=d.opp.split(' ').slice(-1)[0];
+  await cardFonts();tTheme(true);const s0=S.season;S.season=S.season||'2026-27';let out;
+  try{const A=document.createElement('canvas');A.width=1080;const nP=d.C.length;A.height=1350-(3-Math.min(3,nP))*156-(nP?0:56);const x=A.getContext('2d',{willReadFrequently:true});if(TC.light)autoInk(x);
+   const SC='"Saira Condensed"',line=[['CHARGE ','800 60px '+SC,'#F2B231'],[String(d.cs),'800 60px '+SC,'#fff'],['  '+(d.ha==='H'?'VS':'AT')+'  ','800 34px '+SC,'rgba(255,255,255,.6)'],[nick.toUpperCase()+' ','800 60px '+SC,'#fff'],[String(d.os),'800 60px '+SC,'#fff'],['   '+d.rec,'600 30px Archivo','rgba(255,255,255,.85)']];
+   const c=await bFrame(x,S.data||{},'Cleveland Charge · '+md,'Charge final',line,null);
+   {const W=1080,H=A.height,bh=58,y=H-bh,fs=22;let cx=0;x.font='700 '+fs+'px "Geist Mono"';const seg=(t,bg,fg,flex)=>{const w=flex?W-cx-flex:x.measureText(t).width+44;x.fillStyle=bg;x.fillRect(cx,y,w,bh);x.fillStyle=fg;x.fillText(t,cx+22,y+bh/2+fs*.36);cx+=w};const dd=md.toUpperCase(),dw=x.measureText(dd).width+44;seg('CAVS_DB','#F2B231','#101419');seg('CHARGE · FINAL','#860038','#fff');seg('CAVSDATABASE.COM/CHARGE',TC.sb,TC.soft,dw);seg(dd,TC.sb,TC.soft)}
+   const X=c.X,W=c.W;let Y=c.Y+10;const LS=v=>{if('letterSpacing' in x)x.letterSpacing=v};const lab=(t,y)=>{x.font='800 28px '+SC;LS('3px');x.fillStyle=MK.wine;x.fillText(t,X,y);LS('0px')};
+   const ini=n=>n.split(' ').map(w=>w[0]).slice(0,2).join('');
+   const circ=async(id,tx,cx,cy,r)=>{x.save();x.beginPath();x.arc(cx,cy,r,0,7);x.closePath();x.fillStyle='#eceef1';x.fill();x.clip();const im=id?await loadImg('/img/h/'+id+'.png'):null;if(im){const s=r*2.6;x.drawImage(im,cx-s/2,cy-r*.92,s,s*im.height/im.width)}else{x.fillStyle=MK.mut;x.font='700 '+Math.round(r*.7)+'px "Geist Mono"';const w=x.measureText(tx).width;x.fillText(tx,cx-w/2,cy+r*.25)}x.restore()};
+   if(nP){lab('CAVS PLAYERS',Y+20);Y+=40}
+   for(const l of d.C){const h=142;lPanel(x,X,Y,W,h,MK.wine);await circ(l.hs,ini(l.n),X+70,Y+78,46);
+    x.font='800 40px '+SC;x.fillStyle=MK.ink;x.fillText(l.n.toUpperCase(),X+132,Y+62);x.font='700 18px Archivo';LS('2px');x.fillStyle=MK.wine;x.fillText(l.tag,X+132,Y+92);LS('0px');
+    const ts=l.fga+l.fta?l.pts/(2*(l.fga+l.fta))*100:null;x.font='600 18px "Geist Mono"';x.fillStyle=MK.mut;x.fillText(l.min+' MIN · '+l.fgm+'-'+l.fga+' FG · '+l.tpm+'-'+l.tpa+' 3PT'+(ts==null?'':' · '+(Math.round(ts*10)/10).toFixed(1).replace(/\.0$/,'')+'% TS'),X+132,Y+122);
+    const sx=X+W-470;BR(x,String(l.pts),sx+92,Y+96,'800 84px '+SC,MK.ink);x.font='800 18px '+SC;x.fillStyle=MK.mut;x.fillText('PTS',sx+100,Y+96);
+    [['REB',l.reb],['AST',l.ast],['STL',l.stl],['BLK',l.blk]].forEach(([k,v],i)=>{const bx=sx+150+i*78;x.fillStyle='#f2f3f5';x.fillRect(bx,Y+38,70,72);x.font='800 36px '+SC;x.fillStyle=MK.ink;const w=x.measureText(String(v)).width;x.fillText(String(v),bx+35-w/2,Y+80);x.font='800 15px '+SC;x.fillStyle=MK.mut;const w2=x.measureText(k).width;x.fillText(k,bx+35-w2/2,Y+100)});
+    Y+=h+14}
+   if(nP)Y+=14;lab('CHARGE LEADERS',Y+20);Y+=40;const tw=(W-4*14)/5,th=268;
+   for(let i=0;i<d.lead.length;i++){const z=d.lead[i],tx=X+i*(tw+14);lPanel(x,tx,Y,tw,th,MK.wine);const one=z.who.length===1?z.who[0]:null;await circ(one&&one.hs,one?ini(one.n):'·',tx+tw/2,Y+70,44);
+    x.font='800 22px '+SC;LS('3px');x.fillStyle=MK.wine;let w=x.measureText(z.k).width;x.fillText(z.k,tx+tw/2-w/2,Y+146);LS('0px');
+    x.font='800 70px '+SC;x.fillStyle=MK.ink;w=x.measureText(String(z.v)).width;x.fillText(String(z.v),tx+tw/2-w/2,Y+212);
+    const nm=one?(one.n.split(' ')[0][0]+'. '+one.n.split(' ').slice(1).join(' ')):z.who.length+' tied';BFitF(x,nm,'700 21px Archivo',tw-20);x.fillStyle=MK.ink;w=x.measureText(nm).width;x.fillText(nm,tx+tw/2-w/2,Y+246)}
+   out=pcWrap(A,'charge-final');
+   /* the window tab says Charge, not the season */{const g2=out.getContext('2d'),M=36,HB=Math.round(372*.74),ty=HB+8+18,thh=36,fz=19,tab='cavs_db · charge · final · '+md.toLowerCase();g2.font='600 '+fz+'px "Geist Mono"';g2.fillStyle='#eef0f3';g2.fillRect(M-2,ty-2,Math.max(560,g2.measureText(tab).width+62),thh+1);const tw2=g2.measureText(tab).width+58,r=10,wy=ty+thh;g2.fillStyle='#e2e5e9';g2.beginPath();g2.moveTo(M,wy);g2.lineTo(M,ty+r);g2.quadraticCurveTo(M,ty,M+r,ty);g2.lineTo(M+tw2-r,ty);g2.quadraticCurveTo(M+tw2,ty,M+tw2,ty+r);g2.lineTo(M+tw2,wy);g2.fill();g2.fillStyle='#F2B231';g2.beginPath();g2.arc(M+22,ty+thh/2,6,0,7);g2.fill();g2.fillStyle='#5d646c';g2.fillText(tab,M+40,ty+thh/2+fz*.36)}
+  }catch(e){console.error(e);fail('Couldn’t make the card. Try again.');return}finally{S.season=s0}
+  const blob=await new Promise(r=>out.toBlob(r,'image/png'));const name='cavsdb-charge-'+d.date+'.png',file=new File([blob],name,{type:'image/png'});const url=URL.createObjectURL(blob);
+  const inn=ov.querySelector('.ccard-in');inn.innerHTML='';const img=document.createElement('img');img.src=url;img.alt='Charge final, '+md+': Charge '+d.cs+', '+d.opp+' '+d.os;inn.appendChild(img);const bb=document.createElement('div');bb.className='ccard-b';
+  const sv=document.createElement('a');sv.className='p';sv.href=url;sv.download=name;sv.textContent='Save image';bb.appendChild(sv);
+  if(navigator.canShare&&navigator.canShare({files:[file]})){const sh=document.createElement('button');sh.type='button';sh.textContent='Share';sh.onclick=()=>capShare(file,'Charge final | Cavs Database');bb.appendChild(sh)}
+  const bk=document.createElement('a');bk.href='/charge';bk.textContent='Back to the Charge →';bb.appendChild(bk);inn.appendChild(bb)};
+ const wait=()=>{if(typeof bFrame==='function'&&typeof pcWrap==='function'&&typeof S!=='undefined')run();else setTimeout(wait,200)};if(document.readyState==='complete')wait();else addEventListener('load',wait)})();</script>
+</body>
+</html>
